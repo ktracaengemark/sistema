@@ -1,2 +1,4 @@
-Não vi nada escrito nesse arquivo. estou escrevendo agora. 
+﻿Não vi nada escrito nesse arquivo. estou escrevendo agora. 
 Acrescenta uma linha com um texto qualquer só pra testar.
+Eu realmente não tinha escrito nada.
+Pronto!
