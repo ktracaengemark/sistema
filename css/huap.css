@@ -1,0 +1,230 @@
+/*!
+ * HUAP - Rodrigo Campos
+ */
+
+.teste {
+    background-color: red;
+    color: green;
+}
+
+div.clickable-row, tr.clickable-row {
+    cursor: pointer;
+}
+
+/* SHADE DAYS IN THE PAST */
+td.fc-day.fc-past {
+    background-color: lightgray;
+}
+
+.hidediv {
+    position: absolute; 
+    top: 20px; 
+    z-index: 10000; 
+    width:600px; 
+    margin-left:-300px; 
+    left:50%;
+}
+
+.center-pills {
+    display: flex;
+    justify-content: center;
+}
+
+body.dragging, body.dragging * {
+    cursor: move !important;
+}
+
+.dragged {
+    position: absolute;
+    opacity: 0.5;
+    z-index: 2000;
+}
+
+a.divhover:hover {
+    text-decoration: none;
+}
+
+div.divhover {
+    text-decoration: none;
+    color: black;
+}
+
+div.divhover:hover {
+    text-decoration: none;
+    background-color: #f5f5f5;
+}
+
+ol.example li.placeholder {
+    position: relative;
+    /** More li styles **/
+}
+ol.example li.placeholder:before {
+    position: absolute;
+    /** Define arrowhead **/
+}
+
+/** 
+Callouts
+http://cpratt.co/twitter-bootstrap-callout-css-styles/
+http://scottdorman.github.io/bootstrap-flat/components.html#callouts
+**/
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+.bs-callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+.bs-callout p:last-child {
+    margin-bottom: 0;
+}
+.bs-callout code {
+    border-radius: 3px;
+}
+.bs-callout+.bs-callout {
+    margin-top: -5px;
+}
+.bs-callout-default {
+    border-left-color: #777;
+}
+.bs-callout-default h4 {
+    color: #777;
+}
+.bs-callout-primary {
+    border-left-color: #428bca;
+}
+.bs-callout-primary h4 {
+    color: #428bca;
+}
+.bs-callout-success {
+    border-left-color: #5cb85c;
+}
+.bs-callout-success h4 {
+    color: #5cb85c;
+}
+.bs-callout-danger {
+    border-left-color: #d9534f;
+}
+.bs-callout-danger h4 {
+    color: #d9534f;
+}
+.bs-callout-warning {
+    border-left-color: #f0ad4e;
+}
+.bs-callout-warning h4 {
+    color: #f0ad4e;
+}
+.bs-callout-info {
+    border-left-color: #5bc0de;
+}
+.bs-callout-info h4 {
+    color: #5bc0de;
+}
+
+
+.callout {
+    margin: 20px 0;
+    padding: 15px 30px 15px 15px;
+    border: none;
+    border-left: 4px solid transparent;
+}
+
+.callout h4 {
+    margin-top: 0;
+    color: inherit;
+}
+
+.callout .callout-link {
+    font-weight: bold;
+}
+
+.callout > p,
+.callout > ul {
+    margin-bottom: 0;
+}
+
+.callout > p + p {
+    margin-top: 5px;
+}
+
+.callout-success {
+    background-color: #e7fadf;
+    border-color: #b9ceab;
+}
+
+.callout-success hr {
+    border-top-color: #c9e2b3;
+}
+
+.callout-success .callout-link {
+    color: #356635;
+}
+
+.callout-info {
+    background-color: #f0f7fd;
+    border-color: #d0e3f0;
+}
+
+.callout-info hr {
+    border-top-color: #a6e1ec;
+}
+
+.callout-info .callout-link {
+    color: #2d6987;
+}
+
+.callout-warning {
+    background-color: #fefbed;
+    border-color: #f1e7bc;
+}
+
+.callout-warning hr {
+    border-top-color: #f8e5be;
+}
+
+.callout-warning .callout-link {
+    color: #a47e3c;
+}
+
+.callout-danger {
+    background-color: #fcf2f2;
+    border-color: #dFb5b4;
+}
+
+.callout-danger hr {
+    border-top-color: #e6c1c7;
+}
+
+.callout-danger .callout-link {
+    color: #953b39;
+}
+
+
+/*
+Para o alinhamento do modal da agenda, centralizando em relação a tela
+*/
+
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none; /* This makes sure that we can still click outside of the modal to close it */
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events: all;
+}
