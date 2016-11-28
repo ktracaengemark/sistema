@@ -124,3 +124,65 @@ DEBUG - 2016-11-28 16:54:43 --> File loaded: C:\xampp\htdocs\sistema\application
 DEBUG - 2016-11-28 16:54:43 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
 DEBUG - 2016-11-28 16:54:43 --> Final output sent to browser
 DEBUG - 2016-11-28 16:54:43 --> Total execution time: 0.6741
+DEBUG - 2016-11-28 22:21:07 --> Config Class Initialized
+DEBUG - 2016-11-28 22:21:07 --> Hooks Class Initialized
+DEBUG - 2016-11-28 22:21:08 --> UTF-8 Support Disabled
+DEBUG - 2016-11-28 22:21:08 --> Utf8 Class Initialized
+DEBUG - 2016-11-28 22:21:08 --> URI Class Initialized
+DEBUG - 2016-11-28 22:21:08 --> No URI present. Default controller set.
+DEBUG - 2016-11-28 22:21:08 --> Router Class Initialized
+DEBUG - 2016-11-28 22:21:09 --> Output Class Initialized
+DEBUG - 2016-11-28 22:21:09 --> Security Class Initialized
+DEBUG - 2016-11-28 22:21:09 --> Input Class Initialized
+DEBUG - 2016-11-28 22:21:09 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-28 22:21:10 --> Language Class Initialized
+DEBUG - 2016-11-28 22:21:10 --> Loader Class Initialized
+DEBUG - 2016-11-28 22:21:10 --> Controller Class Initialized
+DEBUG - 2016-11-28 22:21:10 --> Model Class Initialized
+DEBUG - 2016-11-28 22:21:11 --> Model Class Initialized
+DEBUG - 2016-11-28 22:21:11 --> Database Driver Class Initialized
+DEBUG - 2016-11-28 22:21:12 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-28 22:21:12 --> User Agent Class Initialized
+DEBUG - 2016-11-28 22:21:12 --> Helper loaded: form_helper
+DEBUG - 2016-11-28 22:21:13 --> Helper loaded: url_helper
+DEBUG - 2016-11-28 22:21:13 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-28 22:21:13 --> Form Validation Class Initialized
+DEBUG - 2016-11-28 22:21:13 --> User_agent has already been instantiated as 'agent'. Second attempt aborted.
+DEBUG - 2016-11-28 22:21:13 --> Native_session Class Initialized
+DEBUG - 2016-11-28 22:21:13 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/headerlogin.php
+DEBUG - 2016-11-28 22:21:13 --> File loaded: C:\xampp\htdocs\sistema\application\views\login/form_login.php
+DEBUG - 2016-11-28 22:21:13 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footerlogin.php
+DEBUG - 2016-11-28 22:21:14 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
+DEBUG - 2016-11-28 22:21:14 --> Final output sent to browser
+DEBUG - 2016-11-28 22:21:14 --> Total execution time: 7.0132
+DEBUG - 2016-11-28 22:22:19 --> Config Class Initialized
+DEBUG - 2016-11-28 22:22:19 --> Hooks Class Initialized
+DEBUG - 2016-11-28 22:22:19 --> UTF-8 Support Disabled
+DEBUG - 2016-11-28 22:22:19 --> Utf8 Class Initialized
+DEBUG - 2016-11-28 22:22:19 --> URI Class Initialized
+DEBUG - 2016-11-28 22:22:19 --> No URI present. Default controller set.
+DEBUG - 2016-11-28 22:22:19 --> Router Class Initialized
+DEBUG - 2016-11-28 22:22:20 --> Output Class Initialized
+DEBUG - 2016-11-28 22:22:20 --> Security Class Initialized
+DEBUG - 2016-11-28 22:22:20 --> Input Class Initialized
+DEBUG - 2016-11-28 22:22:20 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-28 22:22:20 --> Language Class Initialized
+DEBUG - 2016-11-28 22:22:20 --> Loader Class Initialized
+DEBUG - 2016-11-28 22:22:20 --> Controller Class Initialized
+DEBUG - 2016-11-28 22:22:20 --> Model Class Initialized
+DEBUG - 2016-11-28 22:22:20 --> Model Class Initialized
+DEBUG - 2016-11-28 22:22:20 --> Database Driver Class Initialized
+DEBUG - 2016-11-28 22:22:20 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-28 22:22:20 --> User Agent Class Initialized
+DEBUG - 2016-11-28 22:22:20 --> Helper loaded: form_helper
+DEBUG - 2016-11-28 22:22:20 --> Helper loaded: url_helper
+DEBUG - 2016-11-28 22:22:20 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-28 22:22:20 --> Form Validation Class Initialized
+DEBUG - 2016-11-28 22:22:20 --> User_agent has already been instantiated as 'agent'. Second attempt aborted.
+DEBUG - 2016-11-28 22:22:20 --> Native_session Class Initialized
+DEBUG - 2016-11-28 22:22:20 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/headerlogin.php
+DEBUG - 2016-11-28 22:22:20 --> File loaded: C:\xampp\htdocs\sistema\application\views\login/form_login.php
+DEBUG - 2016-11-28 22:22:21 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footerlogin.php
+DEBUG - 2016-11-28 22:22:21 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
+DEBUG - 2016-11-28 22:22:21 --> Final output sent to browser
+DEBUG - 2016-11-28 22:22:21 --> Total execution time: 1.4669
