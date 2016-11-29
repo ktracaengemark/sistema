@@ -349,3 +349,403 @@ DEBUG - 2016-11-29 01:00:56 --> Input Class Initialized
 DEBUG - 2016-11-29 01:00:56 --> Global POST, GET and COOKIE data sanitized
 DEBUG - 2016-11-29 01:00:56 --> Language Class Initialized
 ERROR - 2016-11-29 01:00:56 --> 404 Page Not Found: Css/jquery.ui.css
+DEBUG - 2016-11-29 02:29:47 --> Config Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:29:47 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> URI Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> No URI present. Default controller set.
+DEBUG - 2016-11-29 02:29:47 --> Router Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> Output Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> Security Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> Input Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:29:47 --> Language Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> Loader Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> Controller Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> Model Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> Model Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> Database Driver Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:29:47 --> User Agent Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> Helper loaded: form_helper
+DEBUG - 2016-11-29 02:29:47 --> Helper loaded: url_helper
+DEBUG - 2016-11-29 02:29:47 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:29:47 --> Form Validation Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> User_agent has already been instantiated as 'agent'. Second attempt aborted.
+DEBUG - 2016-11-29 02:29:47 --> Native_session Class Initialized
+DEBUG - 2016-11-29 02:29:47 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/headerlogin.php
+DEBUG - 2016-11-29 02:29:47 --> File loaded: C:\xampp\htdocs\sistema\application\views\login/form_login.php
+DEBUG - 2016-11-29 02:29:47 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footerlogin.php
+DEBUG - 2016-11-29 02:29:47 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
+DEBUG - 2016-11-29 02:29:47 --> Final output sent to browser
+DEBUG - 2016-11-29 02:29:47 --> Total execution time: 0.7726
+DEBUG - 2016-11-29 02:29:50 --> Config Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:29:50 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> URI Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> Router Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> Output Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> Security Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> Input Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:29:50 --> Language Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> Loader Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> Controller Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> Model Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> Model Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> Database Driver Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:29:50 --> User Agent Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> Helper loaded: form_helper
+DEBUG - 2016-11-29 02:29:50 --> Helper loaded: url_helper
+DEBUG - 2016-11-29 02:29:50 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:29:50 --> Form Validation Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> User_agent has already been instantiated as 'agent'. Second attempt aborted.
+DEBUG - 2016-11-29 02:29:50 --> Native_session Class Initialized
+DEBUG - 2016-11-29 02:29:50 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/headerlogin.php
+DEBUG - 2016-11-29 02:29:50 --> Language file loaded: language/portuguese-brazilian/form_validation_lang.php
+DEBUG - 2016-11-29 02:29:51 --> Session has already been instantiated as 'session'. Second attempt aborted.
+DEBUG - 2016-11-29 02:29:51 --> Config Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:29:51 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> URI Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> Router Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> Output Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> Security Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> Input Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:29:51 --> Language Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> Loader Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> Controller Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> Helper loaded: form_helper
+DEBUG - 2016-11-29 02:29:51 --> Helper loaded: url_helper
+DEBUG - 2016-11-29 02:29:51 --> Helper loaded: date_helper
+DEBUG - 2016-11-29 02:29:51 --> Helper loaded: string_helper
+DEBUG - 2016-11-29 02:29:51 --> Form Validation Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> Model Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> Database Driver Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:29:51 --> User Agent Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> Model Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:29:51 --> Native_session Class Initialized
+DEBUG - 2016-11-29 02:29:51 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/header.php
+DEBUG - 2016-11-29 02:29:51 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/nav_principal.php
+DEBUG - 2016-11-29 02:29:51 --> File loaded: C:\xampp\htdocs\sistema\application\views\agenda/tela_agenda.php
+DEBUG - 2016-11-29 02:29:51 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
+DEBUG - 2016-11-29 02:29:51 --> Final output sent to browser
+DEBUG - 2016-11-29 02:29:51 --> Total execution time: 0.7096
+DEBUG - 2016-11-29 02:29:52 --> Config Class Initialized
+DEBUG - 2016-11-29 02:29:52 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:29:52 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:29:52 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:29:52 --> URI Class Initialized
+DEBUG - 2016-11-29 02:29:52 --> Router Class Initialized
+DEBUG - 2016-11-29 02:29:52 --> Output Class Initialized
+DEBUG - 2016-11-29 02:29:52 --> Security Class Initialized
+DEBUG - 2016-11-29 02:29:52 --> Input Class Initialized
+DEBUG - 2016-11-29 02:29:52 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:29:52 --> Language Class Initialized
+ERROR - 2016-11-29 02:29:52 --> 404 Page Not Found: Css/jquery.ui.css
+DEBUG - 2016-11-29 02:29:56 --> Config Class Initialized
+DEBUG - 2016-11-29 02:29:56 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:29:56 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:29:56 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:29:56 --> URI Class Initialized
+DEBUG - 2016-11-29 02:29:56 --> Router Class Initialized
+DEBUG - 2016-11-29 02:29:56 --> Output Class Initialized
+DEBUG - 2016-11-29 02:29:56 --> Security Class Initialized
+DEBUG - 2016-11-29 02:29:56 --> Input Class Initialized
+DEBUG - 2016-11-29 02:29:56 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:29:56 --> Language Class Initialized
+DEBUG - 2016-11-29 02:29:56 --> Loader Class Initialized
+DEBUG - 2016-11-29 02:29:56 --> Controller Class Initialized
+DEBUG - 2016-11-29 02:29:57 --> Helper loaded: form_helper
+DEBUG - 2016-11-29 02:29:57 --> Helper loaded: url_helper
+DEBUG - 2016-11-29 02:29:57 --> Helper loaded: date_helper
+DEBUG - 2016-11-29 02:29:57 --> Helper loaded: string_helper
+DEBUG - 2016-11-29 02:29:57 --> Form Validation Class Initialized
+DEBUG - 2016-11-29 02:29:57 --> Model Class Initialized
+DEBUG - 2016-11-29 02:29:57 --> Database Driver Class Initialized
+DEBUG - 2016-11-29 02:29:57 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:29:57 --> User Agent Class Initialized
+DEBUG - 2016-11-29 02:29:57 --> Model Class Initialized
+DEBUG - 2016-11-29 02:29:57 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:29:57 --> Model Class Initialized
+DEBUG - 2016-11-29 02:29:57 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:29:57 --> Native_session Class Initialized
+DEBUG - 2016-11-29 02:29:57 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/header.php
+DEBUG - 2016-11-29 02:29:57 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/nav_principal.php
+DEBUG - 2016-11-29 02:29:57 --> File loaded: C:\xampp\htdocs\sistema\application\views\cliente/pesq_cliente.php
+DEBUG - 2016-11-29 02:29:57 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
+DEBUG - 2016-11-29 02:29:57 --> Final output sent to browser
+DEBUG - 2016-11-29 02:29:57 --> Total execution time: 1.0618
+DEBUG - 2016-11-29 02:29:57 --> Config Class Initialized
+DEBUG - 2016-11-29 02:29:57 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:29:57 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:29:57 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:29:57 --> URI Class Initialized
+DEBUG - 2016-11-29 02:29:57 --> Router Class Initialized
+DEBUG - 2016-11-29 02:29:57 --> Output Class Initialized
+DEBUG - 2016-11-29 02:29:57 --> Security Class Initialized
+DEBUG - 2016-11-29 02:29:57 --> Input Class Initialized
+DEBUG - 2016-11-29 02:29:58 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:29:58 --> Language Class Initialized
+ERROR - 2016-11-29 02:29:58 --> 404 Page Not Found: Css/jquery.ui.css
+DEBUG - 2016-11-29 02:30:02 --> Config Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:30:02 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> URI Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> Router Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> Output Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> Security Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> Input Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:30:02 --> Language Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> Loader Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> Controller Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> Helper loaded: form_helper
+DEBUG - 2016-11-29 02:30:02 --> Helper loaded: url_helper
+DEBUG - 2016-11-29 02:30:02 --> Helper loaded: date_helper
+DEBUG - 2016-11-29 02:30:02 --> Helper loaded: string_helper
+DEBUG - 2016-11-29 02:30:02 --> Form Validation Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> Model Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> Database Driver Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:30:02 --> User Agent Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> Model Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:30:02 --> Model Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:30:02 --> Native_session Class Initialized
+DEBUG - 2016-11-29 02:30:02 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/header.php
+DEBUG - 2016-11-29 02:30:02 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/nav_principal.php
+DEBUG - 2016-11-29 02:30:02 --> Language file loaded: language/portuguese-brazilian/form_validation_lang.php
+DEBUG - 2016-11-29 02:30:03 --> File loaded: C:\xampp\htdocs\sistema\application\views\cliente/list_cliente.php
+DEBUG - 2016-11-29 02:30:03 --> File loaded: C:\xampp\htdocs\sistema\application\views\cliente/pesq_cliente.php
+DEBUG - 2016-11-29 02:30:03 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
+DEBUG - 2016-11-29 02:30:03 --> Config Class Initialized
+DEBUG - 2016-11-29 02:30:03 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:30:03 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:30:03 --> Final output sent to browser
+DEBUG - 2016-11-29 02:30:03 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:30:03 --> Total execution time: 1.0516
+DEBUG - 2016-11-29 02:30:03 --> URI Class Initialized
+DEBUG - 2016-11-29 02:30:03 --> Router Class Initialized
+DEBUG - 2016-11-29 02:30:03 --> Output Class Initialized
+DEBUG - 2016-11-29 02:30:03 --> Security Class Initialized
+DEBUG - 2016-11-29 02:30:03 --> Input Class Initialized
+DEBUG - 2016-11-29 02:30:03 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:30:03 --> Language Class Initialized
+ERROR - 2016-11-29 02:30:03 --> 404 Page Not Found: Css/jquery.ui.css
+DEBUG - 2016-11-29 02:30:05 --> Config Class Initialized
+DEBUG - 2016-11-29 02:30:05 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:30:05 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:30:05 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:30:05 --> URI Class Initialized
+DEBUG - 2016-11-29 02:30:05 --> Router Class Initialized
+DEBUG - 2016-11-29 02:30:05 --> Output Class Initialized
+DEBUG - 2016-11-29 02:30:05 --> Security Class Initialized
+DEBUG - 2016-11-29 02:30:05 --> Input Class Initialized
+DEBUG - 2016-11-29 02:30:05 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:30:05 --> Language Class Initialized
+DEBUG - 2016-11-29 02:30:05 --> Loader Class Initialized
+DEBUG - 2016-11-29 02:30:05 --> Controller Class Initialized
+DEBUG - 2016-11-29 02:30:05 --> Helper loaded: form_helper
+DEBUG - 2016-11-29 02:30:05 --> Helper loaded: url_helper
+DEBUG - 2016-11-29 02:30:05 --> Helper loaded: date_helper
+DEBUG - 2016-11-29 02:30:05 --> Helper loaded: string_helper
+DEBUG - 2016-11-29 02:30:05 --> Form Validation Class Initialized
+DEBUG - 2016-11-29 02:30:05 --> Model Class Initialized
+DEBUG - 2016-11-29 02:30:06 --> Database Driver Class Initialized
+DEBUG - 2016-11-29 02:30:06 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:30:06 --> User Agent Class Initialized
+DEBUG - 2016-11-29 02:30:06 --> Model Class Initialized
+DEBUG - 2016-11-29 02:30:06 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:30:06 --> Model Class Initialized
+DEBUG - 2016-11-29 02:30:06 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:30:06 --> Native_session Class Initialized
+DEBUG - 2016-11-29 02:30:06 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/header.php
+DEBUG - 2016-11-29 02:30:06 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/nav_principal.php
+ERROR - 2016-11-29 02:30:06 --> Severity: Notice --> Undefined index: idApp_Profissional C:\xampp\htdocs\sistema\application\views\contatocliente\list_contatocliente.php 52
+ERROR - 2016-11-29 02:30:06 --> Severity: Notice --> Undefined index: idApp_ContatoProf C:\xampp\htdocs\sistema\application\views\contatocliente\list_contatocliente.php 52
+ERROR - 2016-11-29 02:30:06 --> Severity: Notice --> Undefined index: idApp_Profissional C:\xampp\htdocs\sistema\application\views\contatocliente\list_contatocliente.php 55
+DEBUG - 2016-11-29 02:30:06 --> File loaded: C:\xampp\htdocs\sistema\application\views\contatocliente/list_contatocliente.php
+DEBUG - 2016-11-29 02:30:06 --> File loaded: C:\xampp\htdocs\sistema\application\views\cliente/nav_secundario.php
+DEBUG - 2016-11-29 02:30:07 --> File loaded: C:\xampp\htdocs\sistema\application\views\cliente/tela_cliente.php
+DEBUG - 2016-11-29 02:30:07 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
+DEBUG - 2016-11-29 02:30:07 --> Final output sent to browser
+DEBUG - 2016-11-29 02:30:07 --> Config Class Initialized
+DEBUG - 2016-11-29 02:30:07 --> Total execution time: 1.6813
+DEBUG - 2016-11-29 02:30:07 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:30:07 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:30:07 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:30:07 --> URI Class Initialized
+DEBUG - 2016-11-29 02:30:07 --> Router Class Initialized
+DEBUG - 2016-11-29 02:30:07 --> Output Class Initialized
+DEBUG - 2016-11-29 02:30:07 --> Security Class Initialized
+DEBUG - 2016-11-29 02:30:07 --> Input Class Initialized
+DEBUG - 2016-11-29 02:30:07 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:30:07 --> Language Class Initialized
+ERROR - 2016-11-29 02:30:07 --> 404 Page Not Found: Css/jquery.ui.css
+DEBUG - 2016-11-29 02:30:07 --> Config Class Initialized
+DEBUG - 2016-11-29 02:30:07 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:30:07 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:30:07 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:30:07 --> URI Class Initialized
+DEBUG - 2016-11-29 02:30:08 --> Router Class Initialized
+DEBUG - 2016-11-29 02:30:08 --> Output Class Initialized
+DEBUG - 2016-11-29 02:30:08 --> Security Class Initialized
+DEBUG - 2016-11-29 02:30:08 --> Input Class Initialized
+DEBUG - 2016-11-29 02:30:08 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:30:08 --> Language Class Initialized
+ERROR - 2016-11-29 02:30:08 --> 404 Page Not Found: Faviconico/index
+DEBUG - 2016-11-29 02:30:27 --> Config Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:30:27 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> URI Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> Router Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> Output Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> Security Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> Input Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:30:27 --> Language Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> Loader Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> Controller Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> Helper loaded: form_helper
+DEBUG - 2016-11-29 02:30:27 --> Helper loaded: url_helper
+DEBUG - 2016-11-29 02:30:27 --> Helper loaded: date_helper
+DEBUG - 2016-11-29 02:30:27 --> Helper loaded: string_helper
+DEBUG - 2016-11-29 02:30:27 --> Form Validation Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> Model Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> Database Driver Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:30:27 --> User Agent Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> Model Class Initialized
+DEBUG - 2016-11-29 02:30:27 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:30:28 --> Model Class Initialized
+DEBUG - 2016-11-29 02:30:28 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:30:28 --> Model Class Initialized
+DEBUG - 2016-11-29 02:30:28 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:30:28 --> Native_session Class Initialized
+DEBUG - 2016-11-29 02:30:28 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/header.php
+DEBUG - 2016-11-29 02:30:28 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/nav_principal.php
+DEBUG - 2016-11-29 02:30:28 --> File loaded: C:\xampp\htdocs\sistema\application\views\cliente/nav_secundario.php
+DEBUG - 2016-11-29 02:30:28 --> File loaded: C:\xampp\htdocs\sistema\application\views\contatocliente/form_contatocliente.php
+DEBUG - 2016-11-29 02:30:28 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
+DEBUG - 2016-11-29 02:30:28 --> Final output sent to browser
+DEBUG - 2016-11-29 02:30:28 --> Total execution time: 1.3225
+DEBUG - 2016-11-29 02:30:28 --> Config Class Initialized
+DEBUG - 2016-11-29 02:30:28 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:30:28 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:30:28 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:30:28 --> URI Class Initialized
+DEBUG - 2016-11-29 02:30:28 --> Router Class Initialized
+DEBUG - 2016-11-29 02:30:28 --> Output Class Initialized
+DEBUG - 2016-11-29 02:30:28 --> Security Class Initialized
+DEBUG - 2016-11-29 02:30:28 --> Input Class Initialized
+DEBUG - 2016-11-29 02:30:28 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:30:28 --> Language Class Initialized
+ERROR - 2016-11-29 02:30:28 --> 404 Page Not Found: Css/jquery.ui.css
+DEBUG - 2016-11-29 02:31:09 --> Config Class Initialized
+DEBUG - 2016-11-29 02:31:09 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:31:09 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:31:09 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:31:09 --> URI Class Initialized
+DEBUG - 2016-11-29 02:31:09 --> Router Class Initialized
+DEBUG - 2016-11-29 02:31:09 --> Output Class Initialized
+DEBUG - 2016-11-29 02:31:09 --> Security Class Initialized
+DEBUG - 2016-11-29 02:31:09 --> Input Class Initialized
+DEBUG - 2016-11-29 02:31:09 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:31:09 --> Language Class Initialized
+DEBUG - 2016-11-29 02:31:09 --> Loader Class Initialized
+DEBUG - 2016-11-29 02:31:09 --> Controller Class Initialized
+DEBUG - 2016-11-29 02:31:09 --> Helper loaded: form_helper
+DEBUG - 2016-11-29 02:31:09 --> Helper loaded: url_helper
+DEBUG - 2016-11-29 02:31:09 --> Helper loaded: date_helper
+DEBUG - 2016-11-29 02:31:09 --> Helper loaded: string_helper
+DEBUG - 2016-11-29 02:31:09 --> Form Validation Class Initialized
+DEBUG - 2016-11-29 02:31:09 --> Model Class Initialized
+DEBUG - 2016-11-29 02:31:10 --> Database Driver Class Initialized
+DEBUG - 2016-11-29 02:31:10 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:31:10 --> User Agent Class Initialized
+DEBUG - 2016-11-29 02:31:10 --> Model Class Initialized
+DEBUG - 2016-11-29 02:31:10 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:31:10 --> Model Class Initialized
+DEBUG - 2016-11-29 02:31:10 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:31:10 --> Model Class Initialized
+DEBUG - 2016-11-29 02:31:10 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:31:10 --> Native_session Class Initialized
+DEBUG - 2016-11-29 02:31:10 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/header.php
+DEBUG - 2016-11-29 02:31:10 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/nav_principal.php
+DEBUG - 2016-11-29 02:31:10 --> XSS Filtering completed
+DEBUG - 2016-11-29 02:31:10 --> XSS Filtering completed
+DEBUG - 2016-11-29 02:31:10 --> XSS Filtering completed
+DEBUG - 2016-11-29 02:31:10 --> XSS Filtering completed
+DEBUG - 2016-11-29 02:31:10 --> XSS Filtering completed
+DEBUG - 2016-11-29 02:31:10 --> XSS Filtering completed
+DEBUG - 2016-11-29 02:31:10 --> XSS Filtering completed
+DEBUG - 2016-11-29 02:31:10 --> XSS Filtering completed
+DEBUG - 2016-11-29 02:31:10 --> File loaded: C:\xampp\htdocs\sistema\application\views\cliente/nav_secundario.php
+DEBUG - 2016-11-29 02:31:10 --> Language file loaded: language/portuguese-brazilian/form_validation_lang.php
+DEBUG - 2016-11-29 02:31:10 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:31:11 --> Config Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:31:11 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> URI Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Router Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Output Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Security Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Input Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:31:11 --> Language Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Loader Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Controller Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Helper loaded: form_helper
+DEBUG - 2016-11-29 02:31:11 --> Helper loaded: url_helper
+DEBUG - 2016-11-29 02:31:11 --> Helper loaded: date_helper
+DEBUG - 2016-11-29 02:31:11 --> Helper loaded: string_helper
+DEBUG - 2016-11-29 02:31:11 --> Form Validation Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Model Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Database Driver Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:31:11 --> User Agent Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Model Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:31:11 --> Model Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:31:11 --> Model Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-11-29 02:31:11 --> Native_session Class Initialized
+DEBUG - 2016-11-29 02:31:11 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/header.php
+DEBUG - 2016-11-29 02:31:11 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/nav_principal.php
+ERROR - 2016-11-29 02:31:12 --> Severity: Notice --> Undefined index: idApp_Profissional C:\xampp\htdocs\sistema\application\views\contatocliente\list_contatocliente.php 52
+ERROR - 2016-11-29 02:31:12 --> Severity: Notice --> Undefined index: idApp_ContatoProf C:\xampp\htdocs\sistema\application\views\contatocliente\list_contatocliente.php 52
+ERROR - 2016-11-29 02:31:12 --> Severity: Notice --> Undefined index: idApp_Profissional C:\xampp\htdocs\sistema\application\views\contatocliente\list_contatocliente.php 55
+ERROR - 2016-11-29 02:31:12 --> Severity: Notice --> Undefined index: idApp_Profissional C:\xampp\htdocs\sistema\application\views\contatocliente\list_contatocliente.php 52
+ERROR - 2016-11-29 02:31:12 --> Severity: Notice --> Undefined index: idApp_ContatoProf C:\xampp\htdocs\sistema\application\views\contatocliente\list_contatocliente.php 52
+ERROR - 2016-11-29 02:31:12 --> Severity: Notice --> Undefined index: idApp_Profissional C:\xampp\htdocs\sistema\application\views\contatocliente\list_contatocliente.php 55
+DEBUG - 2016-11-29 02:31:12 --> File loaded: C:\xampp\htdocs\sistema\application\views\contatocliente/list_contatocliente.php
+DEBUG - 2016-11-29 02:31:12 --> File loaded: C:\xampp\htdocs\sistema\application\views\cliente/nav_secundario.php
+DEBUG - 2016-11-29 02:31:12 --> File loaded: C:\xampp\htdocs\sistema\application\views\contatocliente/tela_contatocliente.php
+DEBUG - 2016-11-29 02:31:12 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
+DEBUG - 2016-11-29 02:31:12 --> Final output sent to browser
+DEBUG - 2016-11-29 02:31:12 --> Total execution time: 1.0387
+DEBUG - 2016-11-29 02:31:12 --> Config Class Initialized
+DEBUG - 2016-11-29 02:31:12 --> Hooks Class Initialized
+DEBUG - 2016-11-29 02:31:12 --> UTF-8 Support Disabled
+DEBUG - 2016-11-29 02:31:12 --> Utf8 Class Initialized
+DEBUG - 2016-11-29 02:31:12 --> URI Class Initialized
+DEBUG - 2016-11-29 02:31:12 --> Router Class Initialized
+DEBUG - 2016-11-29 02:31:12 --> Output Class Initialized
+DEBUG - 2016-11-29 02:31:12 --> Security Class Initialized
+DEBUG - 2016-11-29 02:31:12 --> Input Class Initialized
+DEBUG - 2016-11-29 02:31:12 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-11-29 02:31:12 --> Language Class Initialized
+ERROR - 2016-11-29 02:31:12 --> 404 Page Not Found: Css/jquery.ui.css
