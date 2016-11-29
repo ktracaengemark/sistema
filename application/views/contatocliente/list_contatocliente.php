@@ -3,7 +3,7 @@
 <div class="row">
     <div class="btn-group" role="group">
         <a class="btn btn-lg btn-primary active"> 
-            <span class="glyphicon glyphicon-sort-by-attributes"></span> <?php echo '<b>Total de Contatos:</b> ' . $query->num_rows() ?>
+            <span class="glyphicon glyphicon-sort-by-attributes"></span> <?php echo '<b>Total de ContatoProfs:</b> ' . $query->num_rows() ?>
         </a>        
     </div>
 
@@ -49,10 +49,10 @@ foreach ($query->result_array() as $row) {
             <a class="btn btn-<?php echo $row['class']; ?>" href="<?php echo base_url() . 'contatocliente/alterar/' . $row['idApp_ContatoCliente'] ?>" role="button"> 
                 <span class="glyphicon glyphicon-edit"></span> Editar Dados
             </a>          
-            <!--<a class="btn btn-<?php echo $row['class']; ?>" href="<?php echo base_url() . 'consulta/cadastrar/' . $row['idApp_Cliente'] . '/' . $row['idApp_ContatoCliente'] ?>" role="button"> 
+            <!--<a class="btn btn-<?php echo $row['class']; ?>" href="<?php echo base_url() . 'consulta/cadastrar/' . $row['idApp_Profissional'] . '/' . $row['idApp_ContatoProf'] ?>" role="button"> 
                 <span class="glyphicon glyphicon-time"></span> Marcar Sessão
             </a>            
-            <a class="btn btn-<?php echo $row['class']; ?>" href="<?php echo base_url() . 'consulta/listar/' . $row['idApp_Cliente'] ?>" role="button"> 
+            <a class="btn btn-<?php echo $row['class']; ?>" href="<?php echo base_url() . 'consulta/listar/' . $row['idApp_Profissional'] ?>" role="button"> 
                 <span class="glyphicon glyphicon-list"></span> Listar Sessões
             </a>-->  
             
@@ -60,34 +60,28 @@ foreach ($query->result_array() as $row) {
             
             <h4>
                 <span class="<?php echo $row['icon']; ?>"></span> 
-                <?php echo $row['NomeContatoCliente'] . ' <code><small>Identificador: ' . $row['idApp_ContatoCliente'] . '</small></code>'; ?>
+                <?php echo $row['NomeContatoCliente']; ?>
                 <?php echo $row['vida']; ?>
-            </h4> 
-
-            
-            
-            <p>
-                
 				<?php if ($row['RelaPes']) { ?>
 				<span class="glyphicon glyphicon-user"></span> <b>Relação:</b> <?php echo $row['RelaPes']; ?>
 				<?php } ?>
-				<?php } if ($row['Sexo']) { ?>
-                <span class="<?php echo $row['icon-sex']; ?>"></span> <b> - Sexo:</b> <?php echo $row['Sexo']; ?>
-                <?php } ?>
-			<P/>
+            </h4> 
 
-			<P>
+            <p>
+                <?php if ($row['DataNascimento']) { ?>
+                <span class="glyphicon glyphicon-gift"></span> <b>Data de Nascimento:</b> <?php echo $row['DataNascimento']; ?> -
+                    <b>Idade:</b> <?php echo $row['Idade']; ?> -
+                <?php } if ($row['Sexo']) { ?>
+                <span class="<?php echo $row['icon-sex']; ?>"></span> <b>Sexo:</b> <?php echo $row['Sexo']; ?>
+                <?php } ?>
+
+            </p>
+			<p>
 				<?php if ($row['Telefone1']) { ?>
 				<span class="glyphicon glyphicon-phone-alt"></span> <b>Telefone:</b> <?php echo $row['Telefone1']; ?>
 				<?php } ?>
 			</p>
-			<P>
-				<?php if ($row['DataNascimento']) { ?>
-                <span class="glyphicon glyphicon-gift"></span> <b>Data de Nascimento:</b> <?php echo $row['DataNascimento']; ?> -
-                    <b>Idade:</b> <?php echo $row['Idade']; ?><b> anos</b> 
-	
-            </p>
-			<hr>
+
             <p>
                 <span class="glyphicon glyphicon-pencil"></span> <b>Obs:</b> <?php echo nl2br($row['Obs']); ?>
             </p>
