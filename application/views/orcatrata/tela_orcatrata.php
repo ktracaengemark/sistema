@@ -11,11 +11,11 @@
             <?php
             if (!$list) {
             ?>
-                <a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>orcatrata/cadastrar" role="button"> 
-                    <span class="glyphicon glyphicon-plus"></span> Cadastrar Novo OrÃ§amento
+                <a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>orcatrata/cadastrar" role="button">
+                    <span class="glyphicon glyphicon-plus"></span> Cadastrar Novo Orçamento
                 </a>
                 <br><br>
-                <div class="alert alert-info" role="alert"><b>Nenhum OrÃ§amento Cadastrado</b></div>
+                <div class="alert alert-info" role="alert"><b>Nenhum orçamento cadastrado</b></div>
             <?php
             } else {
                 echo $list;

@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class TipoDespesa extends CI_Controller {
+class Formapag extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -13,7 +13,7 @@ class TipoDespesa extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Tipodespesa_model', 'Contatocliente_model'));
+        $this->load->model(array('Basico_model', 'Formapag_model', 'Contatocliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -49,18 +49,18 @@ class TipoDespesa extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'idSis_Usuario',
-			'idTab_TipoDespesa',
-            'TipoDespesa',
+			'idTab_FormaPag',
+            'FormaPag',
             #'ValorVenda',
                 ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $this->form_validation->set_rules('TipoDespesa', 'Nome do Serviço', 'required|trim');
+        $this->form_validation->set_rules('FormaPag', 'Nome do Serviço', 'required|trim');
         #$this->form_validation->set_rules('ValorVenda', 'Valor do Serviço', 'required|trim');
 
         $data['titulo'] = 'Cadastrar Serviço';
-        $data['form_open_path'] = 'tipodespesa/cadastrar';
+        $data['form_open_path'] = 'formapag/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
         $data['panel'] = 'primary';
@@ -75,15 +75,15 @@ class TipoDespesa extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->Tipodespesa_model->lista_tipodespesa(TRUE);
-        $data['list'] = $this->load->view('tipodespesa/list_tipodespesa', $data, TRUE);
+        $data['q'] = $this->Formapag_model->lista_formapag(TRUE);
+        $data['list'] = $this->load->view('formapag/list_formapag', $data, TRUE);
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
-            $this->load->view('tipodespesa/pesq_tipodespesa', $data);
+            $this->load->view('formapag/pesq_formapag', $data);
         } else {
 
-            $data['query']['TipoDespesa'] = trim(mb_strtoupper($data['query']['TipoDespesa'], 'ISO-8859-1'));
+            $data['query']['FormaPag'] = trim(mb_strtoupper($data['query']['FormaPag'], 'ISO-8859-1'));
            # $data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
             $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
@@ -91,20 +91,20 @@ class TipoDespesa extends CI_Controller {
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
 
-            $data['idTab_TipoDespesa'] = $this->Tipodespesa_model->set_tipodespesa($data['query']);
+            $data['idTab_FormaPag'] = $this->Formapag_model->set_formapag($data['query']);
 
-            if ($data['idTab_TipoDespesa'] === FALSE) {
+            if ($data['idTab_FormaPag'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
                 $this->basico->erro($msg);
-                $this->load->view('tipodespesa/cadastrar', $data);
+                $this->load->view('formapag/cadastrar', $data);
             } else {
 
-                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_TipoDespesa'], FALSE);
-                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_TipoDespesa', 'CREATE', $data['auditoriaitem']);
+                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_FormaPag'], FALSE);
+                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_FormaPag', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'tipodespesa/cadastrar' . $data['msg']);
+                redirect(base_url() . 'formapag/cadastrar' . $data['msg']);
                 exit();
             }
         }
@@ -123,23 +123,23 @@ class TipoDespesa extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'idSis_Usuario',
-			'idTab_TipoDespesa',
-            'TipoDespesa',
+			'idTab_FormaPag',
+            'FormaPag',
            # 'ValorVenda',
                 ), TRUE));
 
 
         if ($id)
-            $data['query'] = $this->Tipodespesa_model->get_tipodespesa($id);
+            $data['query'] = $this->Formapag_model->get_formapag($id);
 
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $this->form_validation->set_rules('TipoDespesa', 'Nome do Serviço', 'required|trim');
-       # $this->form_validation->set_rules('ValorVenda', 'Valor do Serviço', 'required|trim');
+        $this->form_validation->set_rules('FormaPag', 'Nome do Serviço', 'required|trim');
+        #$this->form_validation->set_rules('ValorVenda', 'Valor do Serviço', 'required|trim');
 
         $data['titulo'] = 'Editar Serviço';
-        $data['form_open_path'] = 'tipodespesa/alterar';
+        $data['form_open_path'] = 'formapag/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';
         $data['panel'] = 'primary';
@@ -154,37 +154,37 @@ class TipoDespesa extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->Tipodespesa_model->lista_tipodespesa(TRUE);
-        $data['list'] = $this->load->view('tipodespesa/list_tipodespesa', $data, TRUE);
+        $data['q'] = $this->Formapag_model->lista_formapag(TRUE);
+        $data['list'] = $this->load->view('formapag/list_formapag', $data, TRUE);
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
-            $this->load->view('tipodespesa/pesq_tipodespesa', $data);
+            $this->load->view('formapag/pesq_formapag', $data);
         } else {
 
-            $data['query']['TipoDespesa'] = trim(mb_strtoupper($data['query']['TipoDespesa'], 'ISO-8859-1'));
+            $data['query']['FormaPag'] = trim(mb_strtoupper($data['query']['FormaPag'], 'ISO-8859-1'));
          #   $data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
             $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
-            $data['anterior'] = $this->Tipodespesa_model->get_tipodespesa($data['query']['idTab_TipoDespesa']);
+            $data['anterior'] = $this->Formapag_model->get_formapag($data['query']['idTab_FormaPag']);
             $data['campos'] = array_keys($data['query']);
 
-            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_TipoDespesa'], TRUE);
+            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_FormaPag'], TRUE);
 
-            if ($data['auditoriaitem'] && $this->Tipodespesa_model->update_tipodespesa($data['query'], $data['query']['idTab_TipoDespesa']) === FALSE) {
+            if ($data['auditoriaitem'] && $this->Formapag_model->update_formapag($data['query'], $data['query']['idTab_FormaPag']) === FALSE) {
                 $data['msg'] = '?m=2';
-                redirect(base_url() . 'tipodespesa/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
+                redirect(base_url() . 'formapag/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
                 exit();
             } else {
 
                 if ($data['auditoriaitem'] === FALSE) {
                     $data['msg'] = '';
                 } else {
-                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_TipoDespesa', 'UPDATE', $data['auditoriaitem']);
+                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_FormaPag', 'UPDATE', $data['auditoriaitem']);
                     $data['msg'] = '?m=1';
                 }
 
-                redirect(base_url() . 'tipodespesa/cadastrar/' . $data['msg']);
+                redirect(base_url() . 'formapag/cadastrar/' . $data['msg']);
                 exit();
             }
         }
@@ -202,19 +202,19 @@ class TipoDespesa extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = $this->input->post(array(
-            'idTab_TipoDespesa',
-            'TipoDespesa',
+            'idTab_FormaPag',
+            'FormaPag',
                 ), TRUE);
 
         if ($id)
-            $data['query'] = $this->Tipodespesa_model->get_tipodespesa($id);
+            $data['query'] = $this->Formapag_model->get_formapag($id);
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $this->form_validation->set_rules('TipoDespesa', 'Nome do TipoDespesa', 'required|trim');
+        $this->form_validation->set_rules('FormaPag', 'Nome do FormaPag', 'required|trim');
 
-        $data['titulo'] = 'Editar TipoDespesa';
-        $data['form_open_path'] = 'tipodespesa/alterar';
+        $data['titulo'] = 'Editar FormaPag';
+        $data['form_open_path'] = 'formapag/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';
         $data['panel'] = 'primary';
@@ -229,36 +229,36 @@ class TipoDespesa extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->Tipodespesa_model->lista_tipodespesa(TRUE);
-        $data['list'] = $this->load->view('tipodespesa/list_tipodespesa', $data, TRUE);
+        $data['q'] = $this->Formapag_model->lista_formapag(TRUE);
+        $data['list'] = $this->load->view('formapag/list_formapag', $data, TRUE);
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
-            $this->load->view('tipodespesa/pesq_tipodespesa', $data);
+            $this->load->view('formapag/pesq_formapag', $data);
         } else {
 
-            $data['query']['TipoDespesa'] = trim(mb_strtoupper($data['query']['TipoDespesa'], 'ISO-8859-1'));
+            $data['query']['FormaPag'] = trim(mb_strtoupper($data['query']['FormaPag'], 'ISO-8859-1'));
             $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
-            $data['anterior'] = $this->Tipodespesa_model->get_tipodespesa($data['query']['idTab_TipoDespesa']);
+            $data['anterior'] = $this->Formapag_model->get_formapag($data['query']['idTab_FormaPag']);
             $data['campos'] = array_keys($data['query']);
 
-            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_TipoDespesa'], TRUE);
+            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_FormaPag'], TRUE);
 
-            if ($data['auditoriaitem'] && $this->Tipodespesa_model->update_tipodespesa($data['query'], $data['query']['idTab_TipoDespesa']) === FALSE) {
+            if ($data['auditoriaitem'] && $this->Formapag_model->update_formapag($data['query'], $data['query']['idTab_FormaPag']) === FALSE) {
                 $data['msg'] = '?m=2';
-                redirect(base_url() . 'tipodespesa/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
+                redirect(base_url() . 'formapag/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
                 exit();
             } else {
 
                 if ($data['auditoriaitem'] === FALSE) {
                     $data['msg'] = '';
                 } else {
-                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_TipoDespesa', 'UPDATE', $data['auditoriaitem']);
+                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_FormaPag', 'UPDATE', $data['auditoriaitem']);
                     $data['msg'] = '?m=1';
                 }
 
-                redirect(base_url() . 'tipodespesa/cadastrar/tipodespesa/' . $data['msg']);
+                redirect(base_url() . 'formapag/cadastrar/formapag/' . $data['msg']);
                 exit();
             }
         }

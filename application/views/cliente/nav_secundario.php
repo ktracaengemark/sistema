@@ -11,7 +11,7 @@
 <ul class="nav nav-sidebar">
     <li <?php if (preg_match("/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
         <a href="<?php echo base_url() . 'cliente/prontuario/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
-            <span class="glyphicon glyphicon-user"> </span> Inf. do Cliente <span class="sr-only">(current)</span>
+            <span class="glyphicon glyphicon-user"> </span> Dados do Cliente <span class="sr-only">(current)</span>
         </a>
     </li>
 
@@ -23,10 +23,10 @@
 
     <li <?php if (preg_match("/contatocliente\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
         <a href="<?php echo base_url() . 'contatocliente/pesquisar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
-            <span class="fa fa-user-plus"></span> Contatos e Resp.
+            <span class="fa fa-user-plus"></span> Contatos
         </a>
     </li>
- 
+
     <li <?php if (preg_match("/consulta\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
         <a href="<?php echo base_url() . 'consulta/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
             <span class="glyphicon glyphicon-time"></span> Marcar Sessão
@@ -38,26 +38,26 @@
             <span class="glyphicon glyphicon-list"></span> Listar Sessões
         </a>
     </li>
-	
+
 	<li <?php if (preg_match("/orcatrata\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
         <a href="<?php echo base_url() . 'orcatrata/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
-            <span class="glyphicon glyphicon-plus"></span> Novo Orçam/Pl.Tratam
+            <span class="glyphicon glyphicon-plus"></span> Novo Orçamento/Tratamento
         </a>
     </li>
-	
-	<li <?php if (preg_match("/orcatrata\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
+
+	<li <?php if (preg_match("/orcatrata\/pesquisar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
         <a href="<?php echo base_url() . 'orcatrata/pesquisar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
-            <span class="glyphicon glyphicon-list"></span> Listar Orçam/Pl.Tratam
+            <span class="glyphicon glyphicon-list"></span> Listar Orçamentos/Tratamentos
         </a>
     </li>
-	
+
     <li <?php if (preg_match("/tratamentos\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
         <a href="<?php echo base_url() . 'tratamentos/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
             <span class="glyphicon glyphicon-time"></span> Modelo/Orçam/Pl.Trata.
         </a>
     </li>
 
-	   
+
 </ul>
 
 <?php } ?>

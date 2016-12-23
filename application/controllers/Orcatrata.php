@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class OrcaTrata extends CI_Controller {
+class Orcatrata extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -107,7 +107,7 @@ class OrcaTrata extends CI_Controller {
         $data['select']['TipoConcluido'] = $this->Basico_model->select_tipo_concluido();
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
 
-		$data['titulo'] = 'Cad. Orçamento/ Pl. Trat.';
+		$data['titulo'] = 'Cadastar Orçamento/Tratamento';
         $data['form_open_path'] = 'orcatrata/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -331,7 +331,7 @@ class OrcaTrata extends CI_Controller {
         $data['select']['StatusOrca'] = $this->Orcatrata_model->select_status_orca();
         $data['select']['FormaPag'] = $this->Formapag_model->select_formapag();
 
-        $data['titulo'] = 'Editar Dados';
+        $data['titulo'] = 'Editar Orçamento/Tratamento';
         $data['form_open_path'] = 'orcatrata/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';
