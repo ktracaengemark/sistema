@@ -9,7 +9,7 @@
         <link rel="icon" href="../../favicon.ico">
 
         <!-- <title>ROMATI - Agenda online de pacientes</title>-->
-        <title>ROMATI - Agenda Pet Online</title>
+        <title>KTRACA Sistemas</title>
 
         <!-- Bootstrap core CSS -->
         <link href="<?php echo base_url(); ?>css/bootstrap.min.css" rel="stylesheet">
@@ -19,4 +19,4 @@
 
     </head>
 
-    <body>      
+    <body>

@@ -1,6 +1,6 @@
-<?php 
+<?php
 #versão antiga do controle de sessão
-#if (!isset($_SESSION['log'])) redirect('login/sair'); 
+#if (!isset($_SESSION['log'])) redirect('login/sair');
 
 #tempo de sessão = 5 horas
 $tempo = 18000;
@@ -8,7 +8,7 @@ $tempo = 18000;
 
 #controle de sessão
 if ( (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $tempo)) || !isset($_SESSION['log'])) {
-    redirect('login/sair/FALSE');    
+    redirect('login/sair/FALSE');
 }
 $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
@@ -26,10 +26,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         <link rel="icon" href="../../favicon.ico">
 
         <!-- <title>ROMATI - Agenda online de pacientes</title>-->
-        <title>ROMATI - Agenda Pet Online</title>        
+        <title>KTRACA Sistemas</title>        
 
         <!-- HUAP CSS Custom -->
-        <link rel="stylesheet" href="<?php echo base_url(); ?>css/huap.css">        
+        <link rel="stylesheet" href="<?php echo base_url(); ?>css/huap.css">
 
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap.css">
@@ -41,15 +41,15 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap-datetimepicker.min.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/clockpicker.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/dashboard.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>css/chosen.css">    
+        <link rel="stylesheet" href="<?php echo base_url(); ?>css/chosen.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/fileinput.min.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/fullcalendar.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/calendrical.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>css/font-awesome/css/font-awesome.min.css">        
+        <link rel="stylesheet" href="<?php echo base_url(); ?>css/font-awesome/css/font-awesome.min.css">
 
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/select2.min.css" rel="stylesheet" />
-        
+
 
     </head>
 
-    <body>      
+    <body>
