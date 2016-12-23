@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class OrcaTrata_model extends CI_Model {
+class Orcatrata_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
@@ -12,7 +12,7 @@ class OrcaTrata_model extends CI_Model {
         $this->load->library('basico');
         $this->load->model(array('Basico_model'));
     }
-    
+
     public function set_orcatrata($data) {
 
         $query = $this->db->insert('App_OrcaTrata', $data);
@@ -48,25 +48,25 @@ class OrcaTrata_model extends CI_Model {
             return $this->db->insert_id();
         }
     }
-	
+
     public function get_orcatrata($data) {
-        $query = $this->db->query('SELECT * FROM App_OrcaTrata WHERE idApp_OrcaTrata = ' . $data);       
+        $query = $this->db->query('SELECT * FROM App_OrcaTrata WHERE idApp_OrcaTrata = ' . $data);
         $query = $query->result_array();
 
         return $query[0];
     }
-	
-	public function get_procedimento($data) {        
-		$query = $this->db->query('SELECT * FROM App_Procedimento WHERE idApp_OrcaTrata = ' . $data);       
+
+	public function get_procedimento($data) {
+		$query = $this->db->query('SELECT * FROM App_Procedimento WHERE idApp_OrcaTrata = ' . $data);
         $query = $query->result_array();
 
         return $query[0];
     }
-	
-	public function get_parcelasrec($data) {        
-		$query = $this->db->query('SELECT * FROM App_ParcelasRec WHERE idApp_OrcaTrata = ' . $data);       
+
+	public function get_parcelasrec($data) {
+		$query = $this->db->query('SELECT * FROM App_ParcelasRec WHERE idApp_OrcaTrata = ' . $data);
         $query = $query->result_array();
-		
+
         return $query[0];
     }
 
@@ -88,7 +88,7 @@ class OrcaTrata_model extends CI_Model {
             return TRUE;
         }
     }
-	
+
 	public function update_procedimento($data, $id) {
 
         unset($data['Id']);
@@ -107,7 +107,7 @@ class OrcaTrata_model extends CI_Model {
             return TRUE;
         }
     }
-	
+
 	public function update_parcelasrec($data, $id) {
 
         unset($data['Id']);
@@ -136,7 +136,7 @@ class OrcaTrata_model extends CI_Model {
             return TRUE;
         }
     }
-	
+
 	public function delete_procedimento($data) {
         $query = $this->db->delete('App_Procedimento', array('idApp_Procedimento' => $data));
 
@@ -146,7 +146,7 @@ class OrcaTrata_model extends CI_Model {
             return TRUE;
         }
     }
-	
+
 	public function delete_parcelasrec($data) {
         $query = $this->db->delete('App_ParcelasRec', array('idApp_ParcelasRec' => $data));
 
@@ -190,7 +190,7 @@ class OrcaTrata_model extends CI_Model {
             }
         }
     }
-    
+
    /* public function select_status_vida($data = FALSE) {
 
         if ($data === TRUE) {
@@ -221,6 +221,6 @@ class OrcaTrata_model extends CI_Model {
         }
 
         return $array;
-    }	
+    }
 
 }

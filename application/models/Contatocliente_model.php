@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class ContatoCliente_model extends CI_Model {
+class Contatocliente_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
@@ -12,7 +12,7 @@ class ContatoCliente_model extends CI_Model {
         $this->load->library('basico');
         $this->load->model(array('Basico_model'));
     }
-    
+
     public function set_contatocliente($data) {
 
         $query = $this->db->insert('App_ContatoCliente', $data);
@@ -49,7 +49,7 @@ class ContatoCliente_model extends CI_Model {
           . 'P.Sexo = S.idTab_Sexo AND '
           . 'P.Municipio = M.idTab_Municipio'
           );
-         * 
+         *
          */
         $query = $query->result_array();
 
@@ -114,7 +114,7 @@ class ContatoCliente_model extends CI_Model {
             }
         }
     }
-    
+
     public function select_status_vida($data = FALSE) {
 
         if ($data === TRUE) {
@@ -129,6 +129,6 @@ class ContatoCliente_model extends CI_Model {
         }
 
         return $array;
-    }    
+    }
 
 }

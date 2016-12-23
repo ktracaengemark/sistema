@@ -4,14 +4,14 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class RelaPes_model extends CI_Model {
+class Relapes_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
         $this->load->database();
         $this->load->library('basico');
     }
-   
+
     public function set_relapes($data) {
 
         $query = $this->db->insert('Tab_RelaPes', $data);
@@ -58,7 +58,7 @@ class RelaPes_model extends CI_Model {
                 #. 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                 #. 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
                 . 'ORDER BY RelaPes ASC ');
-        
+
         /*
           echo $this->db->last_query();
           $query = $query->result_array();
@@ -82,7 +82,7 @@ class RelaPes_model extends CI_Model {
             }
         }
     }
-	
+
 	public function select_relapes($data = FALSE) {
 
         if ($data === TRUE) {
@@ -91,16 +91,16 @@ class RelaPes_model extends CI_Model {
                     . 'idTab_RelaPes, '
                     . 'RelaPes '
                     . 'FROM '
-                    . 'Tab_RelaPes '					
+                    . 'Tab_RelaPes '
 					#. 'WHERE '
                    # . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                    # . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo']);
-					. 'ORDER BY RelaPes ASC ');		
-					
+					. 'ORDER BY RelaPes ASC ');
+
         } else {
             #$query = $this->db->query('SELECT  idTab_RelaPes, RelaPes FROM Tab_RelaPes  WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
 			$query = $this->db->query('SELECT  idTab_RelaPes, RelaPes FROM Tab_RelaPes ORDER BY RelaPes ASC ');
-            
+
             $array = array();
             foreach ($query->result() as $row) {
                 #$array[$row->idTab_RelaPes] = $row->RelaPes;
@@ -110,7 +110,7 @@ class RelaPes_model extends CI_Model {
 
         return $array;
     }
-	
+
 	/*public function select_relapes($data = FALSE) {
 
         if ($data === TRUE) {
@@ -128,5 +128,5 @@ class RelaPes_model extends CI_Model {
 
         return $array;
     }*/
-    
+
 }

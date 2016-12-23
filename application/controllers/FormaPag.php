@@ -13,7 +13,7 @@ class FormaPag extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'FormaPag_model', 'ContatoCliente_model'));
+        $this->load->model(array('Basico_model', 'Formapag_model', 'Contatocliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -37,7 +37,7 @@ class FormaPag extends CI_Controller {
         #load footer view
         $this->load->view('basico/footer');
     }
-    
+
     public function cadastrar($tabela = NULL) {
 
         if ($this->input->get('m') == 1)
@@ -65,17 +65,17 @@ class FormaPag extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 1;
-        $data['button'] = 
+        $data['button'] =
                 '
                 <button class="btn btn-sm btn-primary" name="pesquisar" value="0" type="submit">
                     <span class="glyphicon glyphicon-plus"></span> Cadastrar
                 </button>
-        ';        
+        ';
 
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->FormaPag_model->lista_formapag(TRUE);
+        $data['q'] = $this->Formapag_model->lista_formapag(TRUE);
         $data['list'] = $this->load->view('formapag/list_formapag', $data, TRUE);
 
         #run form validation
@@ -91,7 +91,7 @@ class FormaPag extends CI_Controller {
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
 
-            $data['idTab_FormaPag'] = $this->FormaPag_model->set_formapag($data['query']);
+            $data['idTab_FormaPag'] = $this->Formapag_model->set_formapag($data['query']);
 
             if ($data['idTab_FormaPag'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
@@ -130,13 +130,13 @@ class FormaPag extends CI_Controller {
 
 
         if ($id)
-            $data['query'] = $this->FormaPag_model->get_formapag($id);
-        
-        
+            $data['query'] = $this->Formapag_model->get_formapag($id);
+
+
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         $this->form_validation->set_rules('FormaPag', 'Nome do Serviço', 'required|trim');
-        #$this->form_validation->set_rules('ValorVenda', 'Valor do Serviço', 'required|trim');        
+        #$this->form_validation->set_rules('ValorVenda', 'Valor do Serviço', 'required|trim');
 
         $data['titulo'] = 'Editar Serviço';
         $data['form_open_path'] = 'formapag/alterar';
@@ -144,7 +144,7 @@ class FormaPag extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
-        $data['button'] = 
+        $data['button'] =
                 '
                 <button class="btn btn-sm btn-warning" name="pesquisar" value="0" type="submit">
                     <span class="glyphicon glyphicon-edit"></span> Salvar Alteração
@@ -154,7 +154,7 @@ class FormaPag extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->FormaPag_model->lista_formapag(TRUE);
+        $data['q'] = $this->Formapag_model->lista_formapag(TRUE);
         $data['list'] = $this->load->view('formapag/list_formapag', $data, TRUE);
 
         #run form validation
@@ -166,12 +166,12 @@ class FormaPag extends CI_Controller {
          #   $data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
             $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
-            $data['anterior'] = $this->FormaPag_model->get_formapag($data['query']['idTab_FormaPag']);
+            $data['anterior'] = $this->Formapag_model->get_formapag($data['query']['idTab_FormaPag']);
             $data['campos'] = array_keys($data['query']);
 
             $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_FormaPag'], TRUE);
 
-            if ($data['auditoriaitem'] && $this->FormaPag_model->update_formapag($data['query'], $data['query']['idTab_FormaPag']) === FALSE) {
+            if ($data['auditoriaitem'] && $this->Formapag_model->update_formapag($data['query'], $data['query']['idTab_FormaPag']) === FALSE) {
                 $data['msg'] = '?m=2';
                 redirect(base_url() . 'formapag/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
                 exit();
@@ -190,8 +190,8 @@ class FormaPag extends CI_Controller {
         }
 
         $this->load->view('basico/footer');
-    }        
-  
+    }
+
     public function excluir($id = FALSE) {
 
         if ($this->input->get('m') == 1)
@@ -207,7 +207,7 @@ class FormaPag extends CI_Controller {
                 ), TRUE);
 
         if ($id)
-            $data['query'] = $this->FormaPag_model->get_formapag($id);
+            $data['query'] = $this->Formapag_model->get_formapag($id);
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
@@ -219,7 +219,7 @@ class FormaPag extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
-        $data['button'] = 
+        $data['button'] =
                 '
                 <button class="btn btn-sm btn-warning" name="pesquisar" value="0" type="submit">
                     <span class="glyphicon glyphicon-edit"></span> Salvar Alteração
@@ -229,7 +229,7 @@ class FormaPag extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->FormaPag_model->lista_formapag(TRUE);
+        $data['q'] = $this->Formapag_model->lista_formapag(TRUE);
         $data['list'] = $this->load->view('formapag/list_formapag', $data, TRUE);
 
         #run form validation
@@ -240,12 +240,12 @@ class FormaPag extends CI_Controller {
             $data['query']['FormaPag'] = trim(mb_strtoupper($data['query']['FormaPag'], 'ISO-8859-1'));
             $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
-            $data['anterior'] = $this->FormaPag_model->get_formapag($data['query']['idTab_FormaPag']);
+            $data['anterior'] = $this->Formapag_model->get_formapag($data['query']['idTab_FormaPag']);
             $data['campos'] = array_keys($data['query']);
 
             $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_FormaPag'], TRUE);
 
-            if ($data['auditoriaitem'] && $this->FormaPag_model->update_formapag($data['query'], $data['query']['idTab_FormaPag']) === FALSE) {
+            if ($data['auditoriaitem'] && $this->Formapag_model->update_formapag($data['query'], $data['query']['idTab_FormaPag']) === FALSE) {
                 $data['msg'] = '?m=2';
                 redirect(base_url() . 'formapag/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
                 exit();
@@ -265,6 +265,6 @@ class FormaPag extends CI_Controller {
 
         $this->load->view('basico/footer');
     }
-    
-    
+
+
 }

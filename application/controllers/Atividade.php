@@ -13,7 +13,7 @@ class Atividade extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Atividade_model', 'ContatoCliente_model'));
+        $this->load->model(array('Basico_model', 'Atividade_model', 'Contatocliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -62,12 +62,12 @@ class Atividade extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 1;
-        $data['button'] = 
+        $data['button'] =
                 '
                 <button class="btn btn-sm btn-primary" name="pesquisar" value="0" type="submit">
                     <span class="glyphicon glyphicon-plus"></span> Cadastrar
                 </button>
-        ';        
+        ';
 
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
@@ -135,7 +135,7 @@ class Atividade extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
-        $data['button'] = 
+        $data['button'] =
                 '
                 <button class="btn btn-sm btn-warning" name="pesquisar" value="0" type="submit">
                     <span class="glyphicon glyphicon-edit"></span> Salvar Alteração

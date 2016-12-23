@@ -13,7 +13,7 @@ class Servico extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Servico_model', 'ContatoCliente_model'));
+        $this->load->model(array('Basico_model', 'Servico_model', 'Contatocliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -37,7 +37,7 @@ class Servico extends CI_Controller {
         #load footer view
         $this->load->view('basico/footer');
     }
-    
+
     public function cadastrar($tabela = NULL) {
 
         if ($this->input->get('m') == 1)
@@ -65,12 +65,12 @@ class Servico extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 1;
-        $data['button'] = 
+        $data['button'] =
                 '
                 <button class="btn btn-sm btn-primary" name="pesquisar" value="0" type="submit">
                     <span class="glyphicon glyphicon-plus"></span> Cadastrar
                 </button>
-        ';        
+        ';
 
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
@@ -131,12 +131,12 @@ class Servico extends CI_Controller {
 
         if ($id)
             $data['query'] = $this->Servico_model->get_servico($id);
-        
-        
+
+
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         $this->form_validation->set_rules('NomeServico', 'Nome do Serviço', 'required|trim');
-        $this->form_validation->set_rules('ValorServVenda', 'Valor do Serviço', 'required|trim');        
+        $this->form_validation->set_rules('ValorServVenda', 'Valor do Serviço', 'required|trim');
 
         $data['titulo'] = 'Editar Serviço';
         $data['form_open_path'] = 'servico/alterar';
@@ -144,7 +144,7 @@ class Servico extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
-        $data['button'] = 
+        $data['button'] =
                 '
                 <button class="btn btn-sm btn-warning" name="pesquisar" value="0" type="submit">
                     <span class="glyphicon glyphicon-edit"></span> Salvar Alteração
@@ -190,8 +190,8 @@ class Servico extends CI_Controller {
         }
 
         $this->load->view('basico/footer');
-    }        
-  
+    }
+
     public function excluir($id = FALSE) {
 
         if ($this->input->get('m') == 1)
@@ -219,7 +219,7 @@ class Servico extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
-        $data['button'] = 
+        $data['button'] =
                 '
                 <button class="btn btn-sm btn-warning" name="pesquisar" value="0" type="submit">
                     <span class="glyphicon glyphicon-edit"></span> Salvar Alteração
@@ -265,6 +265,6 @@ class Servico extends CI_Controller {
 
         $this->load->view('basico/footer');
     }
-    
-    
+
+
 }

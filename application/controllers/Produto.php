@@ -13,7 +13,7 @@ class Produto extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Produto_model', 'ContatoCliente_model'));
+        $this->load->model(array('Basico_model', 'Produto_model', 'Contatocliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -67,12 +67,12 @@ class Produto extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 1;
-        $data['button'] = 
+        $data['button'] =
                 '
                 <button class="btn btn-sm btn-primary" name="pesquisar" value="0" type="submit">
                     <span class="glyphicon glyphicon-plus"></span> Cadastrar
                 </button>
-        ';        
+        ';
 
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
@@ -115,7 +115,7 @@ class Produto extends CI_Controller {
 
         $this->load->view('basico/footer');
     }
-    
+
     public function alterar($id = FALSE) {
 
         if ($this->input->get('m') == 1)
@@ -135,20 +135,20 @@ class Produto extends CI_Controller {
                 ), TRUE));
 
         if ($id)
-            $data['query'] = $this->Produto_model->get_produto($id);       
-        
+            $data['query'] = $this->Produto_model->get_produto($id);
+
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         $this->form_validation->set_rules('NomeProduto', 'Nome do Produto', 'required|trim');
         $this->form_validation->set_rules('ValorProdVenda', 'Valor de Venda', 'required|trim');
-        
+
         $data['titulo'] = 'Editar Produto';
         $data['form_open_path'] = 'produto/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
-        $data['button'] = 
+        $data['button'] =
                 '
                 <button class="btn btn-sm btn-warning" name="pesquisar" value="0" type="submit">
                     <span class="glyphicon glyphicon-edit"></span> Salvar Alteração
@@ -196,8 +196,8 @@ class Produto extends CI_Controller {
         }
 
         $this->load->view('basico/footer');
-    }            
-       
+    }
+
     public function excluir($id = FALSE) {
 
         if ($this->input->get('m') == 1)
@@ -225,7 +225,7 @@ class Produto extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
-        $data['button'] = 
+        $data['button'] =
                 '
                 <button class="btn btn-sm btn-warning" name="pesquisar" value="0" type="submit">
                     <span class="glyphicon glyphicon-edit"></span> Salvar Alteração
@@ -271,6 +271,6 @@ class Produto extends CI_Controller {
 
         $this->load->view('basico/footer');
     }
-    
-    
+
+
 }

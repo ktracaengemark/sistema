@@ -13,7 +13,7 @@ class RelaPes extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'RelaPes_model', 'ContatoCliente_model'));
+        $this->load->model(array('Basico_model', 'Relapes_model', 'Contatocliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -62,17 +62,17 @@ class RelaPes extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 1;
-        $data['button'] = 
+        $data['button'] =
                 '
                 <button class="btn btn-sm btn-primary" name="pesquisar" value="0" type="submit">
                     <span class="glyphicon glyphicon-plus"></span> Cadastrar
                 </button>
-        ';        
+        ';
 
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->RelaPes_model->lista_relapes(TRUE);
+        $data['q'] = $this->Relapes_model->lista_relapes(TRUE);
         $data['list'] = $this->load->view('relapes/list_relapes', $data, TRUE);
 
         #run form validation
@@ -87,7 +87,7 @@ class RelaPes extends CI_Controller {
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
 
-            $data['idTab_RelaPes'] = $this->RelaPes_model->set_relapes($data['query']);
+            $data['idTab_RelaPes'] = $this->Relapes_model->set_relapes($data['query']);
 
             if ($data['idTab_RelaPes'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
@@ -123,7 +123,7 @@ class RelaPes extends CI_Controller {
                 ), TRUE);
 
         if ($id)
-            $data['query'] = $this->RelaPes_model->get_relapes($id);
+            $data['query'] = $this->Relapes_model->get_relapes($id);
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
@@ -135,7 +135,7 @@ class RelaPes extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
-        $data['button'] = 
+        $data['button'] =
                 '
                 <button class="btn btn-sm btn-warning" name="pesquisar" value="0" type="submit">
                     <span class="glyphicon glyphicon-edit"></span> Salvar Alteração
@@ -145,7 +145,7 @@ class RelaPes extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->RelaPes_model->lista_relapes(TRUE);
+        $data['q'] = $this->Relapes_model->lista_relapes(TRUE);
         $data['list'] = $this->load->view('relapes/list_relapes', $data, TRUE);
 
         #run form validation
@@ -156,12 +156,12 @@ class RelaPes extends CI_Controller {
             $data['query']['RelaPes'] = trim(mb_strtoupper($data['query']['RelaPes'], 'ISO-8859-1'));
             $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
-            $data['anterior'] = $this->RelaPes_model->get_relapes($data['query']['idTab_RelaPes']);
+            $data['anterior'] = $this->Relapes_model->get_relapes($data['query']['idTab_RelaPes']);
             $data['campos'] = array_keys($data['query']);
 
             $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_RelaPes'], TRUE);
 
-            if ($data['auditoriaitem'] && $this->RelaPes_model->update_relapes($data['query'], $data['query']['idTab_RelaPes']) === FALSE) {
+            if ($data['auditoriaitem'] && $this->Relapes_model->update_relapes($data['query'], $data['query']['idTab_RelaPes']) === FALSE) {
                 $data['msg'] = '?m=2';
                 redirect(base_url() . 'relapes/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
                 exit();

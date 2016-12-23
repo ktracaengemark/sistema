@@ -4,14 +4,14 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class RelaCom_model extends CI_Model {
+class Relacom_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
         $this->load->database();
         $this->load->library('basico');
     }
-   
+
     public function set_relacom($data) {
 
         $query = $this->db->insert('Tab_RelaCom', $data);
@@ -58,7 +58,7 @@ class RelaCom_model extends CI_Model {
                 #. 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                # . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
                 . 'ORDER BY RelaCom ASC ');
-        
+
         /*
           echo $this->db->last_query();
           $query = $query->result_array();
@@ -82,7 +82,7 @@ class RelaCom_model extends CI_Model {
             }
         }
     }
-	
+
 	public function select_relacom($data = FALSE) {
 
         if ($data === TRUE) {
@@ -91,12 +91,12 @@ class RelaCom_model extends CI_Model {
                     . 'idTab_RelaCom, '
                     . 'RelaCom '
                     . 'FROM '
-                    . 'Tab_RelaCom '					
+                    . 'Tab_RelaCom '
 					#. 'WHERE '
                     #. 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                     #. 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo']);
-					. 'ORDER BY RelaCom ASC ');		
-					
+					. 'ORDER BY RelaCom ASC ');
+
         } else {
             #$query = $this->db->query('SELECT  idTab_RelaCom, RelaCom FROM Tab_RelaCom  WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
             $query = $this->db->query('SELECT  idTab_RelaCom, RelaCom FROM Tab_RelaCom  ORDER BY RelaCom ASC ');
@@ -109,7 +109,7 @@ class RelaCom_model extends CI_Model {
 
         return $array;
     }
-	
+
 	/*public function select_relacom($data = FALSE) {
 
         if ($data === TRUE) {
@@ -127,5 +127,5 @@ class RelaCom_model extends CI_Model {
 
         return $array;
     }*/
-    
+
 }

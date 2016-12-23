@@ -13,7 +13,7 @@ class RelaCom extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'RelaCom_model', 'ContatoCliente_model'));
+        $this->load->model(array('Basico_model', 'Relacom_model', 'Contatocliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -62,17 +62,17 @@ class RelaCom extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 1;
-        $data['button'] = 
+        $data['button'] =
                 '
                 <button class="btn btn-sm btn-primary" name="pesquisar" value="0" type="submit">
                     <span class="glyphicon glyphicon-plus"></span> Cadastrar
                 </button>
-        ';        
+        ';
 
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->RelaCom_model->lista_relacom(TRUE);
+        $data['q'] = $this->Relacom_model->lista_relacom(TRUE);
         $data['list'] = $this->load->view('relacom/list_relacom', $data, TRUE);
 
         #run form validation
@@ -87,7 +87,7 @@ class RelaCom extends CI_Controller {
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
 
-            $data['idTab_RelaCom'] = $this->RelaCom_model->set_relacom($data['query']);
+            $data['idTab_RelaCom'] = $this->Relacom_model->set_relacom($data['query']);
 
             if ($data['idTab_RelaCom'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
@@ -123,7 +123,7 @@ class RelaCom extends CI_Controller {
                 ), TRUE);
 
         if ($id)
-            $data['query'] = $this->RelaCom_model->get_relacom($id);
+            $data['query'] = $this->Relacom_model->get_relacom($id);
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
@@ -135,7 +135,7 @@ class RelaCom extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
-        $data['button'] = 
+        $data['button'] =
                 '
                 <button class="btn btn-sm btn-warning" name="pesquisar" value="0" type="submit">
                     <span class="glyphicon glyphicon-edit"></span> Salvar Alteração
@@ -145,7 +145,7 @@ class RelaCom extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->RelaCom_model->lista_relacom(TRUE);
+        $data['q'] = $this->Relacom_model->lista_relacom(TRUE);
         $data['list'] = $this->load->view('relacom/list_relacom', $data, TRUE);
 
         #run form validation
@@ -156,12 +156,12 @@ class RelaCom extends CI_Controller {
             $data['query']['RelaCom'] = trim(mb_strtoupper($data['query']['RelaCom'], 'ISO-8859-1'));
             $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
-            $data['anterior'] = $this->RelaCom_model->get_relacom($data['query']['idTab_RelaCom']);
+            $data['anterior'] = $this->Relacom_model->get_relacom($data['query']['idTab_RelaCom']);
             $data['campos'] = array_keys($data['query']);
 
             $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_RelaCom'], TRUE);
 
-            if ($data['auditoriaitem'] && $this->RelaCom_model->update_relacom($data['query'], $data['query']['idTab_RelaCom']) === FALSE) {
+            if ($data['auditoriaitem'] && $this->Relacom_model->update_relacom($data['query'], $data['query']['idTab_RelaCom']) === FALSE) {
                 $data['msg'] = '?m=2';
                 redirect(base_url() . 'relacom/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
                 exit();

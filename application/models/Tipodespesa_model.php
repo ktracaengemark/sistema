@@ -4,14 +4,14 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class TipoDespesa_model extends CI_Model {
+class Tipodespesa_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
         $this->load->database();
         $this->load->library('basico');
     }
-       
+
     public function set_tipodespesa($data) {
 
         $query = $this->db->insert('Tab_TipoDespesa', $data);
@@ -22,15 +22,15 @@ class TipoDespesa_model extends CI_Model {
             #return TRUE;
             return $this->db->insert_id();
         }
-    }    
-    
+    }
+
     public function get_tipodespesa($data) {
         $query = $this->db->query('SELECT * FROM Tab_TipoDespesa WHERE idTab_TipoDespesa = ' . $data);
         $query = $query->result_array();
 
         return $query[0];
     }
-    
+
     public function update_tipodespesa($data, $id) {
 
         unset($data['Id']);
@@ -49,7 +49,7 @@ class TipoDespesa_model extends CI_Model {
             return TRUE;
         }
     }
- 
+
     public function lista_tipodespesa($x) {
 
         $query = $this->db->query('SELECT * '
@@ -58,7 +58,7 @@ class TipoDespesa_model extends CI_Model {
                 #. 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                 #. 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
                 . 'ORDER BY idTab_TipoDespesa ASC ');
-        
+
         /*
           echo $this->db->last_query();
           $query = $query->result_array();
@@ -100,7 +100,7 @@ class TipoDespesa_model extends CI_Model {
         } else {
             #$query = $this->db->query('SELECT idTab_TipoDespesa, TipoDespesa FROM Tab_TipoDespesa WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
 			$query = $this->db->query('SELECT idTab_TipoDespesa, TipoDespesa FROM Tab_TipoDespesa ORDER BY idTab_TipoDespesa ASC ');
-            
+
             $array = array();
             foreach ($query->result() as $row) {
                 $array[$row->idTab_TipoDespesa] = $row->TipoDespesa;
@@ -108,6 +108,6 @@ class TipoDespesa_model extends CI_Model {
         }
 
         return $array;
-    }    
-    
+    }
+
 }

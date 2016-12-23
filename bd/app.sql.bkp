@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.2
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Tempo de geração: 23/12/2016 às 20:10
--- Versão do servidor: 5.5.53
--- Versão do PHP: 5.6.28
+-- Host: 127.0.0.1
+-- Generation Time: 24-Nov-2016 às 22:11
+-- Versão do servidor: 10.1.16-MariaDB
+-- PHP Version: 5.5.38
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,16 +17,16 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `app`
+-- Database: `app`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_Agenda`
+-- Estrutura da tabela `app_agenda`
 --
 
-CREATE TABLE `App_Agenda` (
+CREATE TABLE `app_agenda` (
   `idApp_Agenda` int(11) NOT NULL,
   `NomeAgenda` varchar(255) DEFAULT NULL,
   `HorarioInicio` time DEFAULT NULL,
@@ -35,10 +35,10 @@ CREATE TABLE `App_Agenda` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabela de agendas dos usuários';
 
 --
--- Fazendo dump de dados para tabela `App_Agenda`
+-- Extraindo dados da tabela `app_agenda`
 --
 
-INSERT INTO `App_Agenda` (`idApp_Agenda`, `NomeAgenda`, `HorarioInicio`, `HorarioTermino`, `idSis_Usuario`) VALUES
+INSERT INTO `app_agenda` (`idApp_Agenda`, `NomeAgenda`, `HorarioInicio`, `HorarioTermino`, `idSis_Usuario`) VALUES
 (1, 'Padrão', NULL, NULL, 1),
 (2, 'Padrão', NULL, NULL, 2),
 (3, 'Padrão', NULL, NULL, 3),
@@ -75,10 +75,10 @@ INSERT INTO `App_Agenda` (`idApp_Agenda`, `NomeAgenda`, `HorarioInicio`, `Horari
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_Atividade`
+-- Estrutura da tabela `app_atividade`
 --
 
-CREATE TABLE `App_Atividade` (
+CREATE TABLE `app_atividade` (
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
   `idApp_Atividade` int(11) NOT NULL,
@@ -87,10 +87,10 @@ CREATE TABLE `App_Atividade` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `App_Atividade`
+-- Extraindo dados da tabela `app_atividade`
 --
 
-INSERT INTO `App_Atividade` (`idSis_Usuario`, `idTab_Modulo`, `idApp_Atividade`, `Atividade`, `Obs`) VALUES
+INSERT INTO `app_atividade` (`idSis_Usuario`, `idTab_Modulo`, `idApp_Atividade`, `Atividade`, `Obs`) VALUES
 (32, 1, 1, 'VENDA DE PRODUTOS ODONTOLÓGICOS', NULL),
 (31, 1, 2, 'PROTÉTICO', NULL),
 (31, 1, 3, 'RH ESTAGIÁRIOS', NULL);
@@ -98,10 +98,10 @@ INSERT INTO `App_Atividade` (`idSis_Usuario`, `idTab_Modulo`, `idApp_Atividade`,
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_Cliente`
+-- Estrutura da tabela `app_cliente`
 --
 
-CREATE TABLE `App_Cliente` (
+CREATE TABLE `app_cliente` (
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
   `idApp_Cliente` int(11) NOT NULL,
@@ -120,10 +120,10 @@ CREATE TABLE `App_Cliente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Responsável = Cliente ou paciente ou Pet ( depende da empresa que estiver usando osistema) ';
 
 --
--- Fazendo dump de dados para tabela `App_Cliente`
+-- Extraindo dados da tabela `app_cliente`
 --
 
-INSERT INTO `App_Cliente` (`idSis_Usuario`, `idTab_Modulo`, `idApp_Cliente`, `NomeCliente`, `DataNascimento`, `Telefone1`, `Telefone2`, `Telefone3`, `Sexo`, `Endereco`, `Bairro`, `Municipio`, `Obs`, `Email`, `RegistroFicha`) VALUES
+INSERT INTO `app_cliente` (`idSis_Usuario`, `idTab_Modulo`, `idApp_Cliente`, `NomeCliente`, `DataNascimento`, `Telefone1`, `Telefone2`, `Telefone3`, `Sexo`, `Endereco`, `Bairro`, `Municipio`, `Obs`, `Email`, `RegistroFicha`) VALUES
 (31, 1, 1, 'JOAO', '0000-00-00', '(21) 99462-6618', '', '', '', '', '', 0, '', '', ''),
 (28, 1, 2, 'JOAO', '0000-00-00', '21994626618', '', '', '', '', '', 0, '', '', ''),
 (31, 1, 3, 'JOSE', '0000-00-00', '(11) 11111-1111', '', '', '', '', '', 0, '', '', ''),
@@ -141,10 +141,10 @@ INSERT INTO `App_Cliente` (`idSis_Usuario`, `idTab_Modulo`, `idApp_Cliente`, `No
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_ClientePet`
+-- Estrutura da tabela `app_clientepet`
 --
 
-CREATE TABLE `App_ClientePet` (
+CREATE TABLE `app_clientepet` (
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
   `idApp_ClientePet` int(11) NOT NULL,
@@ -164,10 +164,10 @@ CREATE TABLE `App_ClientePet` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_Consulta`
+-- Estrutura da tabela `app_consulta`
 --
 
-CREATE TABLE `App_Consulta` (
+CREATE TABLE `app_consulta` (
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
   `idApp_Consulta` int(11) NOT NULL,
@@ -191,10 +191,10 @@ CREATE TABLE `App_Consulta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabela de consulta dos pacientes (agendamentos)';
 
 --
--- Fazendo dump de dados para tabela `App_Consulta`
+-- Extraindo dados da tabela `app_consulta`
 --
 
-INSERT INTO `App_Consulta` (`idSis_Usuario`, `idTab_Modulo`, `idApp_Consulta`, `idApp_Agenda`, `idApp_Responsavel`, `idApp_Cliente`, `idApp_Dependente`, `idApp_ContatoCliente`, `idApp_Profissional`, `idApp_Pet`, `idApp_Veterinario`, `idApp_Paciente`, `DataInicio`, `DataFim`, `idTab_TipoConsulta`, `idTab_Status`, `Procedimento`, `Obs`, `Evento`, `Paciente`) VALUES
+INSERT INTO `app_consulta` (`idSis_Usuario`, `idTab_Modulo`, `idApp_Consulta`, `idApp_Agenda`, `idApp_Responsavel`, `idApp_Cliente`, `idApp_Dependente`, `idApp_ContatoCliente`, `idApp_Profissional`, `idApp_Pet`, `idApp_Veterinario`, `idApp_Paciente`, `DataInicio`, `DataFim`, `idTab_TipoConsulta`, `idTab_Status`, `Procedimento`, `Obs`, `Evento`, `Paciente`) VALUES
 (31, 1, 14, 31, NULL, 6, NULL, 0, 6, NULL, NULL, NULL, '2016-11-24 10:00:00', '2016-11-24 10:30:00', 1, 1, '', '', NULL, 'R'),
 (31, 1, 15, 31, NULL, 7, NULL, 0, 6, NULL, NULL, NULL, '2016-11-25 10:00:00', '2016-11-25 10:30:00', 1, 1, '', '', NULL, 'R'),
 (31, 1, 16, 31, NULL, 13, NULL, 0, 6, NULL, NULL, NULL, '2016-11-26 10:00:00', '2016-11-26 10:30:00', 1, 2, '', '', NULL, 'R');
@@ -202,10 +202,10 @@ INSERT INTO `App_Consulta` (`idSis_Usuario`, `idTab_Modulo`, `idApp_Consulta`, `
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_Contato`
+-- Estrutura da tabela `app_contato`
 --
 
-CREATE TABLE `App_Contato` (
+CREATE TABLE `app_contato` (
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
   `idApp_Empresa` int(11) NOT NULL,
@@ -222,10 +222,10 @@ CREATE TABLE `App_Contato` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_ContatoCliente`
+-- Estrutura da tabela `app_contatocliente`
 --
 
-CREATE TABLE `App_ContatoCliente` (
+CREATE TABLE `app_contatocliente` (
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
   `idApp_ContatoCliente` int(11) NOT NULL,
@@ -241,10 +241,10 @@ CREATE TABLE `App_ContatoCliente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Dependente = Contato ';
 
 --
--- Fazendo dump de dados para tabela `App_ContatoCliente`
+-- Extraindo dados da tabela `app_contatocliente`
 --
 
-INSERT INTO `App_ContatoCliente` (`idSis_Usuario`, `idTab_Modulo`, `idApp_ContatoCliente`, `idApp_Cliente`, `NomeContatoCliente`, `Telefone1`, `RelaPes`, `idTab_RelaPes`, `Sexo`, `DataNascimento`, `Obs`, `StatusVida`) VALUES
+INSERT INTO `app_contatocliente` (`idSis_Usuario`, `idTab_Modulo`, `idApp_ContatoCliente`, `idApp_Cliente`, `NomeContatoCliente`, `Telefone1`, `RelaPes`, `idTab_RelaPes`, `Sexo`, `DataNascimento`, `Obs`, `StatusVida`) VALUES
 (31, 1, 1, 1, 'MARIA DOS SANTOS', '(33) 33333-3333', 'PAE / MÃE', NULL, '2', '0000-00-00', '', NULL),
 (31, 1, 2, 4, 'SILVIA', '(21) 99464-8682', 'PAE / MÃE', NULL, '2', '1963-05-30', '', ''),
 (32, 1, 3, 5, 'MRCIO RODRIGUES DIAS', '(21) 99888-5772', 'PAI / MAE', NULL, '1', '1972-06-17', '', ''),
@@ -256,10 +256,10 @@ INSERT INTO `App_ContatoCliente` (`idSis_Usuario`, `idTab_Modulo`, `idApp_Contat
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_ContatoClientePet`
+-- Estrutura da tabela `app_contatoclientepet`
 --
 
-CREATE TABLE `App_ContatoClientePet` (
+CREATE TABLE `app_contatoclientepet` (
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
   `idApp_ContatoClientePet` int(11) NOT NULL,
@@ -275,10 +275,10 @@ CREATE TABLE `App_ContatoClientePet` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_ContatoProf`
+-- Estrutura da tabela `app_contatoprof`
 --
 
-CREATE TABLE `App_ContatoProf` (
+CREATE TABLE `app_contatoprof` (
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
   `idApp_Profissional` int(11) NOT NULL,
@@ -295,10 +295,10 @@ CREATE TABLE `App_ContatoProf` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_Despesa`
+-- Estrutura da tabela `app_despesa`
 --
 
-CREATE TABLE `App_Despesa` (
+CREATE TABLE `app_despesa` (
   `idApp_Despesa` int(11) NOT NULL,
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
@@ -315,10 +315,10 @@ CREATE TABLE `App_Despesa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `App_Despesa`
+-- Extraindo dados da tabela `app_despesa`
 --
 
-INSERT INTO `App_Despesa` (`idApp_Despesa`, `idSis_Usuario`, `idTab_Modulo`, `Despesa`, `TipoDespesa`, `DataDesp`, `DataVencDesp`, `FormaPag`, `ValorDesp`, `QtdParcDesp`, `ValorTotalDesp`, `Empresa`, `ObsDesp`) VALUES
+INSERT INTO `app_despesa` (`idApp_Despesa`, `idSis_Usuario`, `idTab_Modulo`, `Despesa`, `TipoDespesa`, `DataDesp`, `DataVencDesp`, `FormaPag`, `ValorDesp`, `QtdParcDesp`, `ValorTotalDesp`, `Empresa`, `ObsDesp`) VALUES
 (5, 31, 1, 'Ficou bomtest1', NULL, '2016-11-24', NULL, 2, NULL, NULL, NULL, 1, 'oiiiiiiii'),
 (6, 31, 1, 'novoteste2', 3, '2016-11-22', '2016-11-24', 3, NULL, NULL, NULL, 1, 'cheguei nde'),
 (7, 31, 1, 'teste4', 4, '2016-11-23', '2016-12-10', 1, NULL, NULL, NULL, 1, 'teste empresa'),
@@ -327,10 +327,10 @@ INSERT INTO `App_Despesa` (`idApp_Despesa`, `idSis_Usuario`, `idTab_Modulo`, `De
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_Empresa`
+-- Estrutura da tabela `app_empresa`
 --
 
-CREATE TABLE `App_Empresa` (
+CREATE TABLE `app_empresa` (
   `idApp_Empresa` int(11) NOT NULL,
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
@@ -355,20 +355,20 @@ CREATE TABLE `App_Empresa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `App_Empresa`
+-- Extraindo dados da tabela `app_empresa`
 --
 
-INSERT INTO `App_Empresa` (`idApp_Empresa`, `idSis_Usuario`, `idTab_Modulo`, `NomeEmpresa`, `idApp_Atividade`, `Atividade`, `Cnpj`, `Cep`, `DataNascimento`, `Telefone1`, `Telefone2`, `Telefone3`, `NomeContato`, `TelefoneContato`, `Sexo`, `Endereco`, `Bairro`, `Municipio`, `Uf`, `Obs`, `Email`) VALUES
+INSERT INTO `app_empresa` (`idApp_Empresa`, `idSis_Usuario`, `idTab_Modulo`, `NomeEmpresa`, `idApp_Atividade`, `Atividade`, `Cnpj`, `Cep`, `DataNascimento`, `Telefone1`, `Telefone2`, `Telefone3`, `NomeContato`, `TelefoneContato`, `Sexo`, `Endereco`, `Bairro`, `Municipio`, `Uf`, `Obs`, `Email`) VALUES
 (1, 31, 1, 'CIEE', NULL, 'RH ESTAGIÁRIOS', '', NULL, '0000-00-00', '(11) 11111-1111', '', '', NULL, NULL, '', '', '', 0, NULL, '', ''),
 (2, 31, 1, 'ADRIANO', NULL, 'PROTÉTICO', '', NULL, '0000-00-00', '(23) 23232-3232', '', '', NULL, NULL, '', '', '', 0, NULL, '', '');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_OrcaTrata`
+-- Estrutura da tabela `app_orcatrata`
 --
 
-CREATE TABLE `App_OrcaTrata` (
+CREATE TABLE `app_orcatrata` (
   `idApp_OrcaTrata` int(11) NOT NULL,
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
@@ -389,10 +389,10 @@ CREATE TABLE `App_OrcaTrata` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `App_OrcaTrata`
+-- Extraindo dados da tabela `app_orcatrata`
 --
 
-INSERT INTO `App_OrcaTrata` (`idApp_OrcaTrata`, `idSis_Usuario`, `idTab_Modulo`, `idApp_Cliente`, `idApp_Profissional`, `DataOrca`, `StatusOrca`, `idTab_TipoConcluido`, `DataConcl`, `DataRet`, `ValorOrca`, `FormaPag`, `QtdParcOrca`, `DataVencOrca`, `ObsOrca`, `ValorEntOrca`, `ValorResOrca`) VALUES
+INSERT INTO `app_orcatrata` (`idApp_OrcaTrata`, `idSis_Usuario`, `idTab_Modulo`, `idApp_Cliente`, `idApp_Profissional`, `DataOrca`, `StatusOrca`, `idTab_TipoConcluido`, `DataConcl`, `DataRet`, `ValorOrca`, `FormaPag`, `QtdParcOrca`, `DataVencOrca`, `ObsOrca`, `ValorEntOrca`, `ValorResOrca`) VALUES
 (22, 31, 1, 4, NULL, '2016-11-24', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (23, 31, 1, 4, NULL, '2016-11-26', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (24, 31, 1, 4, NULL, '2016-11-22', 'S', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -407,10 +407,10 @@ INSERT INTO `App_OrcaTrata` (`idApp_OrcaTrata`, `idSis_Usuario`, `idTab_Modulo`,
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_ParcelasDesp`
+-- Estrutura da tabela `app_parcelasdesp`
 --
 
-CREATE TABLE `App_ParcelasDesp` (
+CREATE TABLE `app_parcelasdesp` (
   `idApp_ParcelasDesp` int(11) NOT NULL,
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
@@ -424,10 +424,10 @@ CREATE TABLE `App_ParcelasDesp` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `App_ParcelasDesp`
+-- Extraindo dados da tabela `app_parcelasdesp`
 --
 
-INSERT INTO `App_ParcelasDesp` (`idApp_ParcelasDesp`, `idSis_Usuario`, `idTab_Modulo`, `idApp_Despesa`, `ParcDesp`, `ValorParcDesp`, `DataVencParcDesp`, `ValorPagoDesp`, `DataPagoDesp`, `QuitDesp`) VALUES
+INSERT INTO `app_parcelasdesp` (`idApp_ParcelasDesp`, `idSis_Usuario`, `idTab_Modulo`, `idApp_Despesa`, `ParcDesp`, `ValorParcDesp`, `DataVencParcDesp`, `ValorPagoDesp`, `DataPagoDesp`, `QuitDesp`) VALUES
 (3, 31, 1, 5, '10', '500.00', NULL, NULL, NULL, NULL),
 (4, 31, 1, 6, '50', '1.00', NULL, NULL, NULL, NULL),
 (5, 31, 1, 7, '1', '125.00', NULL, NULL, NULL, NULL),
@@ -436,10 +436,10 @@ INSERT INTO `App_ParcelasDesp` (`idApp_ParcelasDesp`, `idSis_Usuario`, `idTab_Mo
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_ParcelasRec`
+-- Estrutura da tabela `app_parcelasrec`
 --
 
-CREATE TABLE `App_ParcelasRec` (
+CREATE TABLE `app_parcelasrec` (
   `idApp_ParcelasRec` int(11) NOT NULL,
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
@@ -453,10 +453,10 @@ CREATE TABLE `App_ParcelasRec` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `App_ParcelasRec`
+-- Extraindo dados da tabela `app_parcelasrec`
 --
 
-INSERT INTO `App_ParcelasRec` (`idApp_ParcelasRec`, `idSis_Usuario`, `idTab_Modulo`, `idApp_OrcaTrata`, `ParcRec`, `ValorParcRec`, `DataVencRec`, `ValorPagoRec`, `DataPagoRec`, `QuitRec`) VALUES
+INSERT INTO `app_parcelasrec` (`idApp_ParcelasRec`, `idSis_Usuario`, `idTab_Modulo`, `idApp_OrcaTrata`, `ParcRec`, `ValorParcRec`, `DataVencRec`, `ValorPagoRec`, `DataPagoRec`, `QuitRec`) VALUES
 (2, 31, 1, 22, '24', NULL, NULL, NULL, NULL, NULL),
 (3, 31, 1, 23, '26', NULL, NULL, NULL, NULL, NULL),
 (4, 31, 1, 24, '5', NULL, NULL, NULL, NULL, NULL),
@@ -471,10 +471,10 @@ INSERT INTO `App_ParcelasRec` (`idApp_ParcelasRec`, `idSis_Usuario`, `idTab_Modu
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_Procedimento`
+-- Estrutura da tabela `app_procedimento`
 --
 
-CREATE TABLE `App_Procedimento` (
+CREATE TABLE `app_procedimento` (
   `idApp_Procedimento` int(11) NOT NULL,
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
@@ -485,10 +485,10 @@ CREATE TABLE `App_Procedimento` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `App_Procedimento`
+-- Extraindo dados da tabela `app_procedimento`
 --
 
-INSERT INTO `App_Procedimento` (`idApp_Procedimento`, `idSis_Usuario`, `idTab_Modulo`, `idApp_OrcaTrata`, `Profissional`, `DataProcedimento`, `Proc`) VALUES
+INSERT INTO `app_procedimento` (`idApp_Procedimento`, `idSis_Usuario`, `idTab_Modulo`, `idApp_OrcaTrata`, `Profissional`, `DataProcedimento`, `Proc`) VALUES
 (20, 31, 1, 22, NULL, '2016-11-24', NULL),
 (21, 31, 1, 23, NULL, '2016-11-26', NULL),
 (22, 31, 1, 24, NULL, '2016-11-22', NULL),
@@ -503,10 +503,10 @@ INSERT INTO `App_Procedimento` (`idApp_Procedimento`, `idSis_Usuario`, `idTab_Mo
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_ProdComp`
+-- Estrutura da tabela `app_prodcomp`
 --
 
-CREATE TABLE `App_ProdComp` (
+CREATE TABLE `app_prodcomp` (
   `idApp_ProdComp` int(11) NOT NULL,
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
@@ -520,10 +520,10 @@ CREATE TABLE `App_ProdComp` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_ProdVend`
+-- Estrutura da tabela `app_prodvend`
 --
 
-CREATE TABLE `App_ProdVend` (
+CREATE TABLE `app_prodvend` (
   `idApp_ProdVend` int(11) NOT NULL,
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
@@ -537,10 +537,10 @@ CREATE TABLE `App_ProdVend` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_Profissional`
+-- Estrutura da tabela `app_profissional`
 --
 
-CREATE TABLE `App_Profissional` (
+CREATE TABLE `app_profissional` (
   `idApp_Profissional` int(11) NOT NULL,
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
@@ -563,10 +563,10 @@ CREATE TABLE `App_Profissional` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `App_Profissional`
+-- Extraindo dados da tabela `app_profissional`
 --
 
-INSERT INTO `App_Profissional` (`idApp_Profissional`, `idSis_Usuario`, `idTab_Modulo`, `NomeProfissional`, `DataNascimento`, `Telefone1`, `Telefone2`, `Telefone3`, `Sexo`, `Endereco`, `Bairro`, `Municipio`, `Uf`, `Obs`, `Email`, `idApp_Atividade`, `Funcao`, `Cnpj`, `Cep`) VALUES
+INSERT INTO `app_profissional` (`idApp_Profissional`, `idSis_Usuario`, `idTab_Modulo`, `NomeProfissional`, `DataNascimento`, `Telefone1`, `Telefone2`, `Telefone3`, `Sexo`, `Endereco`, `Bairro`, `Municipio`, `Uf`, `Obs`, `Email`, `idApp_Atividade`, `Funcao`, `Cnpj`, `Cep`) VALUES
 (1, 31, 1, 'ANTONIO', '0000-00-00', '(11) 11111-1111', '', '', '', '', '', 0, NULL, '', '', NULL, 'CABELEREIRA', '', NULL),
 (2, 28, 1, 'DR LARISSA', '0000-00-00', '(11) 11111-1111', '', '', '', '', '', 0, NULL, '', '', NULL, 'DENTISTA', '', NULL),
 (3, 28, 1, 'DR JOAO', '0000-00-00', '(22) 22222-2222', '', '', '', '', '', 0, NULL, '', '', NULL, 'DENTISTA', '', NULL),
@@ -578,10 +578,10 @@ INSERT INTO `App_Profissional` (`idApp_Profissional`, `idSis_Usuario`, `idTab_Mo
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_ServComp`
+-- Estrutura da tabela `app_servcomp`
 --
 
-CREATE TABLE `App_ServComp` (
+CREATE TABLE `app_servcomp` (
   `idApp_ServComp` int(11) NOT NULL,
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
@@ -595,10 +595,10 @@ CREATE TABLE `App_ServComp` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `App_ServVend`
+-- Estrutura da tabela `app_servvend`
 --
 
-CREATE TABLE `App_ServVend` (
+CREATE TABLE `app_servvend` (
   `idApp_ServVend` int(11) NOT NULL,
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
@@ -613,10 +613,10 @@ CREATE TABLE `App_ServVend` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Sis_Auditoria`
+-- Estrutura da tabela `sis_auditoria`
 --
 
-CREATE TABLE `Sis_Auditoria` (
+CREATE TABLE `sis_auditoria` (
   `idSis_Auditoria` int(11) NOT NULL,
   `Tabela` varchar(45) DEFAULT NULL,
   `idSis_Usuario` int(11) NOT NULL,
@@ -629,10 +629,10 @@ CREATE TABLE `Sis_Auditoria` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Sis_Auditoria`
+-- Extraindo dados da tabela `sis_auditoria`
 --
 
-INSERT INTO `Sis_Auditoria` (`idSis_Auditoria`, `Tabela`, `idSis_Usuario`, `DataAuditoria`, `Operacao`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
+INSERT INTO `sis_auditoria` (`idSis_Auditoria`, `Tabela`, `idSis_Usuario`, `DataAuditoria`, `Operacao`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
 (1, 'Sis_Usuario', 1, '2015-08-28 22:07:48', 'CREATE', '200.20.0.142', 'Linux', 'Chrome', '44.0.2403.157'),
 (2, 'App_Agenda', 1, '2015-08-28 22:07:48', 'CREATE', '200.20.0.142', 'Linux', 'Chrome', '44.0.2403.157'),
 (3, 'Sis_Usuario', 1, '2015-08-28 22:08:03', 'UPDATE', '200.20.0.142', 'Linux', 'Chrome', '44.0.2403.157'),
@@ -1073,7 +1073,7 @@ INSERT INTO `Sis_Auditoria` (`idSis_Auditoria`, `Tabela`, `idSis_Usuario`, `Data
 (438, 'App_Consulta', 1, '2016-05-02 00:20:25', 'UPDATE', '127.0.0.1', 'Linux', 'Chrome', '49.0.2623.75'),
 (439, 'App_Consulta', 1, '2016-05-02 00:37:15', 'CREATE', '127.0.0.1', 'Linux', 'Chrome', '49.0.2623.75'),
 (440, 'App_Consulta', 1, '2016-05-02 00:39:08', 'UPDATE', '127.0.0.1', 'Linux', 'Chrome', '49.0.2623.75');
-INSERT INTO `Sis_Auditoria` (`idSis_Auditoria`, `Tabela`, `idSis_Usuario`, `DataAuditoria`, `Operacao`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
+INSERT INTO `sis_auditoria` (`idSis_Auditoria`, `Tabela`, `idSis_Usuario`, `DataAuditoria`, `Operacao`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
 (441, 'App_Consulta', 1, '2016-05-02 00:40:46', 'UPDATE', '127.0.0.1', 'Linux', 'Chrome', '49.0.2623.75'),
 (442, 'App_Pet', 1, '2016-05-02 04:28:22', 'CREATE', '127.0.0.1', 'Linux', 'Chrome', '49.0.2623.75'),
 (443, 'App_Pet', 1, '2016-05-02 04:29:16', 'UPDATE', '127.0.0.1', 'Linux', 'Chrome', '49.0.2623.75'),
@@ -1523,7 +1523,7 @@ INSERT INTO `Sis_Auditoria` (`idSis_Auditoria`, `Tabela`, `idSis_Usuario`, `Data
 (887, 'App_Pet', 2, '2016-08-25 14:46:14', 'CREATE', '177.41.34.21', 'Linux', 'Chrome', '51.0.2704.63'),
 (888, 'App_Consulta', 2, '2016-08-25 14:47:06', 'CREATE', '177.41.34.21', 'Linux', 'Chrome', '51.0.2704.63'),
 (889, 'App_Consulta', 2, '2016-08-25 14:47:16', 'UPDATE', '177.41.34.21', 'Linux', 'Chrome', '51.0.2704.63');
-INSERT INTO `Sis_Auditoria` (`idSis_Auditoria`, `Tabela`, `idSis_Usuario`, `DataAuditoria`, `Operacao`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
+INSERT INTO `sis_auditoria` (`idSis_Auditoria`, `Tabela`, `idSis_Usuario`, `DataAuditoria`, `Operacao`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
 (890, 'App_Responsavel', 2, '2016-08-25 14:49:15', 'CREATE', '177.41.34.21', 'Linux', 'Chrome', '51.0.2704.63'),
 (891, 'App_Pet', 2, '2016-08-25 14:50:03', 'CREATE', '177.41.34.21', 'Linux', 'Chrome', '51.0.2704.63'),
 (892, 'App_Consulta', 2, '2016-08-25 14:51:02', 'CREATE', '177.41.34.21', 'Linux', 'Chrome', '51.0.2704.63'),
@@ -1963,7 +1963,7 @@ INSERT INTO `Sis_Auditoria` (`idSis_Auditoria`, `Tabela`, `idSis_Usuario`, `Data
 (1326, 'App_Responsavel', 28, '2016-11-08 19:58:22', 'CREATE', '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.71'),
 (1327, 'App_Profissional', 28, '2016-11-08 20:32:41', 'CREATE', '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.71'),
 (1328, 'App_Profissional', 28, '2016-11-08 20:34:38', 'UPDATE', '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.71');
-INSERT INTO `Sis_Auditoria` (`idSis_Auditoria`, `Tabela`, `idSis_Usuario`, `DataAuditoria`, `Operacao`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
+INSERT INTO `sis_auditoria` (`idSis_Auditoria`, `Tabela`, `idSis_Usuario`, `DataAuditoria`, `Operacao`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
 (1329, 'App_Profissional', 28, '2016-11-08 20:57:00', 'CREATE', '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.71'),
 (1330, 'App_Profissional', 28, '2016-11-08 20:59:27', 'UPDATE', '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.71'),
 (1331, 'App_Profissional', 28, '2016-11-08 21:04:20', 'CREATE', '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.71'),
@@ -2398,7 +2398,7 @@ INSERT INTO `Sis_Auditoria` (`idSis_Auditoria`, `Tabela`, `idSis_Usuario`, `Data
 (1760, 'Tab_TipoDespesa', 31, '2016-11-20 03:50:21', 'UPDATE', '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99'),
 (1761, 'Tab_TipoDespesa', 31, '2016-11-20 03:52:07', 'UPDATE', '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99'),
 (1762, 'App_Cliente', 31, '2016-11-20 04:13:54', 'CREATE', '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99');
-INSERT INTO `Sis_Auditoria` (`idSis_Auditoria`, `Tabela`, `idSis_Usuario`, `DataAuditoria`, `Operacao`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
+INSERT INTO `sis_auditoria` (`idSis_Auditoria`, `Tabela`, `idSis_Usuario`, `DataAuditoria`, `Operacao`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
 (1763, 'App_ContatoCliente', 31, '2016-11-20 04:14:34', 'CREATE', '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99'),
 (1764, 'App_Profissional', 31, '2016-11-20 04:23:48', 'CREATE', '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99'),
 (1765, 'App_Profissional', 31, '2016-11-20 04:24:16', 'UPDATE', '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99'),
@@ -2506,10 +2506,10 @@ INSERT INTO `Sis_Auditoria` (`idSis_Auditoria`, `Tabela`, `idSis_Usuario`, `Data
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Sis_AuditoriaAcesso`
+-- Estrutura da tabela `sis_auditoriaacesso`
 --
 
-CREATE TABLE `Sis_AuditoriaAcesso` (
+CREATE TABLE `sis_auditoriaacesso` (
   `idSis_AuditoriaAcesso` int(11) NOT NULL,
   `SessionId` varchar(45) DEFAULT NULL,
   `Data` timestamp NULL DEFAULT NULL,
@@ -2522,10 +2522,10 @@ CREATE TABLE `Sis_AuditoriaAcesso` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Sis_AuditoriaAcesso`
+-- Extraindo dados da tabela `sis_auditoriaacesso`
 --
 
-INSERT INTO `Sis_AuditoriaAcesso` (`idSis_AuditoriaAcesso`, `SessionId`, `Data`, `Operacao`, `idSis_Usuario`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
+INSERT INTO `sis_auditoriaacesso` (`idSis_AuditoriaAcesso`, `SessionId`, `Data`, `Operacao`, `idSis_Usuario`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
 (1, 'jr8lreqajvc2je2udcafigqjs3', '2015-08-28 22:08:10', 'LOGIN', 1, '200.20.0.142', 'Linux', 'Chrome', '44.0.2403.157'),
 (2, 'jr8lreqajvc2je2udcafigqjs3', '2015-08-28 22:08:18', 'LOGOUT', 1, '200.20.0.142', 'Linux', 'Chrome', '44.0.2403.157'),
 (3, 'upvakve0l0ev96s1ll5hg6a032', '2015-08-31 17:50:08', 'LOGIN', 2, '179.155.3.191', 'Windows 8.1', 'Chrome', '44.0.2403.157'),
@@ -2928,7 +2928,7 @@ INSERT INTO `Sis_AuditoriaAcesso` (`idSis_AuditoriaAcesso`, `SessionId`, `Data`,
 (400, 'cpvp2rk802k5kkuv75ebujllc0', '2016-05-18 02:23:33', 'TIMEOUT', 1, '127.0.0.1', 'Linux', 'Chrome', '49.0.2623.75'),
 (401, 'd3ff5e5iaapnqe8r1a61gj38a4', '2016-05-18 02:23:39', 'LOGIN', 1, '127.0.0.1', 'Linux', 'Chrome', '49.0.2623.75'),
 (402, 'd3ff5e5iaapnqe8r1a61gj38a4', '2016-05-18 02:43:06', 'LOGOUT', 1, '127.0.0.1', 'Linux', 'Chrome', '49.0.2623.75');
-INSERT INTO `Sis_AuditoriaAcesso` (`idSis_AuditoriaAcesso`, `SessionId`, `Data`, `Operacao`, `idSis_Usuario`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
+INSERT INTO `sis_auditoriaacesso` (`idSis_AuditoriaAcesso`, `SessionId`, `Data`, `Operacao`, `idSis_Usuario`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
 (403, 's9nuap0bdtjsigb0v7cpm79910', '2016-05-18 02:43:13', 'LOGIN', 4, '127.0.0.1', 'Linux', 'Chrome', '49.0.2623.75'),
 (404, 's9nuap0bdtjsigb0v7cpm79910', '2016-05-18 02:43:19', 'LOGOUT', 4, '127.0.0.1', 'Linux', 'Chrome', '49.0.2623.75'),
 (405, 'jfa5sohhokpudqc2vb5lojrpe1', '2016-05-18 02:43:27', 'LOGIN', 6, '127.0.0.1', 'Linux', 'Chrome', '49.0.2623.75'),
@@ -3325,7 +3325,7 @@ INSERT INTO `Sis_AuditoriaAcesso` (`idSis_AuditoriaAcesso`, `SessionId`, `Data`,
 (796, 'q7ek0vckg61mrcg8av92g1b005', '2016-11-22 01:53:27', 'LOGOUT', 31, '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99'),
 (797, '2tsm44f1t3ubdcuo4i9skloo90', '2016-11-22 01:53:46', 'LOGIN', 28, '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99'),
 (798, 'vehajetpg1nc1cd8norudhd867', '2016-11-22 02:42:07', 'LOGIN', 31, '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99');
-INSERT INTO `Sis_AuditoriaAcesso` (`idSis_AuditoriaAcesso`, `SessionId`, `Data`, `Operacao`, `idSis_Usuario`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
+INSERT INTO `sis_auditoriaacesso` (`idSis_AuditoriaAcesso`, `SessionId`, `Data`, `Operacao`, `idSis_Usuario`, `Ip`, `So`, `Navegador`, `NavegadorVersao`) VALUES
 (799, '6fjali7e6j2mdsltah1tdebto1', '2016-11-22 02:42:08', 'LOGIN', 31, '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99'),
 (800, 'unh6266ljiu1qilpkqi7g61c65', '2016-11-22 02:44:02', 'LOGIN', 31, '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99'),
 (801, 'j132smnved6fg32shojhs9ie70', '2016-11-22 13:51:23', 'LOGIN', 31, '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99'),
@@ -3342,16 +3342,15 @@ INSERT INTO `Sis_AuditoriaAcesso` (`idSis_AuditoriaAcesso`, `SessionId`, `Data`,
 (812, '106afrc446nvabs6n7nv2u2q20', '2016-11-24 16:58:23', 'LOGIN', 31, '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99'),
 (813, 'kul281916aqligq2gnbb586j23', '2016-11-24 19:17:56', 'LOGIN', 31, '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99'),
 (814, 'ucg9613b0u2kbsd6n89ul367p4', '2016-11-24 19:46:40', 'LOGIN', 31, '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99'),
-(815, 'unvf9mmpqe520hqoo2vovk9m63', '2016-11-24 20:15:01', 'LOGIN', 31, '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99'),
-(816, '0o6nll28qmfjjteq2ch22iki83', '2016-12-23 22:07:45', 'LOGIN', 1, '127.0.0.1', 'Linux', 'Chrome', '52.0.2743.82');
+(815, 'unvf9mmpqe520hqoo2vovk9m63', '2016-11-24 20:15:01', 'LOGIN', 31, '::1', 'Unknown Windows OS', 'Chrome', '54.0.2840.99');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Sis_AuditoriaItem`
+-- Estrutura da tabela `sis_auditoriaitem`
 --
 
-CREATE TABLE `Sis_AuditoriaItem` (
+CREATE TABLE `sis_auditoriaitem` (
   `idSis_AuditoriaItem` int(11) NOT NULL,
   `idSis_Auditoria` int(11) NOT NULL,
   `Coluna` varchar(100) DEFAULT NULL,
@@ -3361,10 +3360,10 @@ CREATE TABLE `Sis_AuditoriaItem` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Sis_AuditoriaItem`
+-- Extraindo dados da tabela `sis_auditoriaitem`
 --
 
-INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
+INSERT INTO `sis_auditoriaitem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
 (1, 1, 'Email', NULL, 'rpcrodrigo@gmail.com', 1),
 (2, 1, 'Usuario', NULL, 'smadruga82', 1),
 (3, 1, 'Nome', NULL, 'Rodrigo Campos', 1),
@@ -4409,7 +4408,7 @@ INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Colu
 (1042, 159, 'idTab_Status', '1', '3', 67),
 (1043, 159, 'DataInicio', '2015-08-22 11:00:00', '2015-08-22 11:00', 67),
 (1044, 159, 'DataFim', '2015-08-22 11:30:00', '2015-08-22 11:30', 67);
-INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
+INSERT INTO `sis_auditoriaitem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
 (1045, 160, 'idApp_Agenda', NULL, '2', 68),
 (1046, 160, 'idApp_Paciente', NULL, '30', 68),
 (1047, 160, 'idTab_TipoConsulta', NULL, '1', 68),
@@ -5357,8 +5356,8 @@ INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Colu
 (1989, 323, 'DataInicio', NULL, '2016-01-23 11:00', 153),
 (1990, 323, 'DataFim', NULL, '2016-01-23 11:30', 153),
 (1991, 323, 'idTab_Status', NULL, '1', 153),
-(1992, 324, 'Email', NULL, 'angelica_Nutri@hotmail.com', 5),
-(1993, 324, 'Usuario', NULL, 'angelica_Nutri@hotmail.com', 5),
+(1992, 324, 'Email', NULL, 'angelica_nutri@hotmail.com', 5),
+(1993, 324, 'Usuario', NULL, 'angelica_nutri@hotmail.com', 5),
 (1994, 324, 'Nome', NULL, 'Angélica Mascaranhas', 5),
 (1995, 324, 'Senha', NULL, 'f24aad83c0cb34bb2eec24f514aafabc', 5),
 (1996, 324, 'DataNascimento', NULL, '1981-10-07', 5),
@@ -5414,7 +5413,7 @@ INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Colu
 (2046, 335, 'DataFim', NULL, '2016-01-30 21:00', 160),
 (2047, 336, 'idApp_Agenda', NULL, '2', 161),
 (2048, 336, 'Evento', NULL, '1', 161);
-INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
+INSERT INTO `sis_auditoriaitem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
 (2049, 336, 'Obs', NULL, 'Levar Bernardo pra Casa', 161),
 (2050, 336, 'DataInicio', NULL, '2016-01-31 07:00', 161),
 (2051, 336, 'DataFim', NULL, '2016-01-31 20:00', 161),
@@ -6402,7 +6401,7 @@ INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Colu
 (3034, 554, 'DataNascimento', NULL, '2011-11-11', 19),
 (3035, 554, 'Sexo', NULL, '1', 19),
 (3036, 554, 'Codigo', NULL, 'da63473fa423275f5d8224ed1bed873c', 19);
-INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
+INSERT INTO `sis_auditoriaitem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
 (3037, 555, 'NomeAgenda', NULL, 'Padrão', 19),
 (3038, 555, 'idSis_Usuario', NULL, '19', 19),
 (3039, 556, 'Email', NULL, 'rcampos3@ic.uff.br', 20),
@@ -7431,7 +7430,7 @@ INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Colu
 (4062, 727, 'Cor', NULL, 'amarelo', 36),
 (4063, 727, 'idApp_Responsavel', NULL, '51', 36),
 (4064, 728, 'idApp_Agenda', NULL, '2', 259);
-INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
+INSERT INTO `sis_auditoriaitem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
 (4065, 728, 'idApp_Responsavel', NULL, '51', 259),
 (4066, 728, 'idApp_Pet', NULL, '36', 259),
 (4067, 728, 'idApp_Veterinario', NULL, '6', 259),
@@ -8465,7 +8464,7 @@ INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Colu
 (5095, 887, 'StatusVida', NULL, 'V', 74),
 (5096, 887, 'DataNascimento', NULL, '2015-08-04', 74),
 (5097, 887, 'Sexo', NULL, '2', 74);
-INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
+INSERT INTO `sis_auditoriaitem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
 (5098, 887, 'Especie', NULL, 'canina', 74),
 (5099, 887, 'Raca', NULL, 'pihcher', 74),
 (5100, 887, 'Cor', NULL, 'amarelo', 74),
@@ -9464,7 +9463,7 @@ INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Colu
 (6093, 1046, 'DataFim', NULL, '2015-02-28 14:00', 344),
 (6094, 1046, 'idTab_Status', NULL, '1', 344),
 (6095, 1046, 'idTab_Modulo', NULL, '1', 344);
-INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
+INSERT INTO `sis_auditoriaitem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
 (6096, 1047, 'idApp_Agenda', NULL, '23', 345),
 (6097, 1047, 'idApp_Responsavel', NULL, '143', 345),
 (6098, 1047, 'Paciente', NULL, 'R', 345),
@@ -10440,7 +10439,7 @@ INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Colu
 (7068, 1190, 'Nome', NULL, 'Antonio', 28),
 (7069, 1190, 'Senha', NULL, '202cb962ac59075b964b07152d234b70', 28),
 (7070, 1190, 'DataNascimento', NULL, '1987-12-12', 28);
-INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
+INSERT INTO `sis_auditoriaitem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
 (7071, 1190, 'Celular', NULL, '2143658709', 28),
 (7072, 1190, 'Sexo', NULL, '1', 28),
 (7073, 1190, 'Codigo', NULL, '194474edbd16f60329e7ccd1ef96ca52', 28),
@@ -11443,7 +11442,7 @@ INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Colu
 (8070, 1407, 'idSis_Usuario', NULL, '30', 22),
 (8071, 1407, 'idTab_Modulo', NULL, '1', 22),
 (8072, 1408, 'NomeEmpresa', NULL, 'RODRIGO', 10);
-INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
+INSERT INTO `sis_auditoriaitem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
 (8073, 1408, 'Atividade', NULL, 'PROGRAMADOR', 10),
 (8074, 1408, 'Telefone1', NULL, '(57) 57567-6767', 10),
 (8075, 1408, 'idSis_Usuario', NULL, '30', 10),
@@ -12489,7 +12488,7 @@ INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Colu
 (9115, 1645, 'Telefone1', NULL, '(21) 97673-4841', 4),
 (9116, 1645, 'idSis_Usuario', NULL, '31', 4),
 (9117, 1645, 'idTab_Modulo', NULL, '1', 4);
-INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
+INSERT INTO `sis_auditoriaitem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
 (9118, 1646, 'idSis_Usuario', NULL, '31', 7),
 (9119, 1646, 'idApp_Agenda', NULL, '31', 7),
 (9120, 1646, 'idApp_Cliente', NULL, '4', 7),
@@ -13562,7 +13561,7 @@ INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Colu
 (10187, 1846, 'idTab_TipoDespesa', '5', '4', 4),
 (10188, 1846, 'ValorTotal', '50.00', '400.00', 4),
 (10189, 1846, 'ValorParc', '5.00', '400.00', 4);
-INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
+INSERT INTO `sis_auditoriaitem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Coluna`, `ValorAnterior`, `ValorAtual`, `ChavePrimaria`) VALUES
 (10190, 1846, 'DataVenc', '2016-11-20', '2016-11-17', 4),
 (10191, 1846, 'DataDespesa', '2016-11-20', '2016-10-17', 4),
 (10192, 1846, 'idTab_FormaPag', '8', '1', 4),
@@ -13701,10 +13700,10 @@ INSERT INTO `Sis_AuditoriaItem` (`idSis_AuditoriaItem`, `idSis_Auditoria`, `Colu
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Sis_Permissao`
+-- Estrutura da tabela `sis_permissao`
 --
 
-CREATE TABLE `Sis_Permissao` (
+CREATE TABLE `sis_permissao` (
   `idSis_Permissao` int(11) NOT NULL,
   `idSis_Usuario` int(11) NOT NULL,
   `Nivel` int(5) DEFAULT NULL,
@@ -13714,10 +13713,10 @@ CREATE TABLE `Sis_Permissao` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Sis_Usuario`
+-- Estrutura da tabela `sis_usuario`
 --
 
-CREATE TABLE `Sis_Usuario` (
+CREATE TABLE `sis_usuario` (
   `idSis_Usuario` int(11) NOT NULL,
   `Email` varchar(100) DEFAULT NULL,
   `Usuario` varchar(45) DEFAULT NULL,
@@ -13731,15 +13730,15 @@ CREATE TABLE `Sis_Usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Sis_Usuario`
+-- Extraindo dados da tabela `sis_usuario`
 --
 
-INSERT INTO `Sis_Usuario` (`idSis_Usuario`, `Email`, `Usuario`, `Nome`, `Senha`, `Inativo`, `Codigo`, `DataNascimento`, `Celular`, `Sexo`) VALUES
+INSERT INTO `sis_usuario` (`idSis_Usuario`, `Email`, `Usuario`, `Nome`, `Senha`, `Inativo`, `Codigo`, `DataNascimento`, `Celular`, `Sexo`) VALUES
 (1, 'rpcrodrigo@gmail.com', 'smadruga82', 'Rodrigo Campos', '202cb962ac59075b964b07152d234b70', 0, 'NULL', '1982-02-22', '21 991026575', '1'),
 (2, 'marciorodeng@gmail.com', 'marciorodeng@gmail.com', 'Márcio Rodrigues Dias ', '624f71c9e8aec9b87381e7a82d0a69b3', 0, '0c35707ac08c17b8ef5c08c98fb6b803', '1972-06-17', '21998885772', '1'),
 (3, 'marcio.dias@diagnext.com', 'marcio.dias@gmail.com', 'Age Vet', '624f71c9e8aec9b87381e7a82d0a69b3', 0, 'NULL', '1972-06-17', '998885772', '1'),
 (4, 'rodrigopc@id.uff.br', 'teste', 'Teste da silva', '202cb962ac59075b964b07152d234b70', 0, '1e4f0fbfd91f2f50efcb683c5dd9d438', '2011-11-11', '', '1'),
-(5, 'angelica_Nutri@hotmail.com', 'angelica_Nutri@hotmail.com', 'Angélica Mascaranhas', 'f24aad83c0cb34bb2eec24f514aafabc', 0, '3eed5b0c7070c8c20b3387082709f9c9', '1981-10-07', '991832591', '2'),
+(5, 'angelica_nutri@hotmail.com', 'angelica_nutri@hotmail.com', 'Angélica Mascaranhas', 'f24aad83c0cb34bb2eec24f514aafabc', 0, '3eed5b0c7070c8c20b3387082709f9c9', '1981-10-07', '991832591', '2'),
 (6, 'rodrigo@huap.uff.br', 'teste2', 'Rodrigo Campos', '202cb962ac59075b964b07152d234b70', 0, '7a0e615189c43a80d2e6cc1de8af2492', '1982-02-22', '', '1'),
 (7, 'rcampos@ic.uff.br2', 'rcampos2', 'testalindo da silva', '202cb962ac59075b964b07152d234b70', 0, '495a71cce8417cd3257b5b794b0a0988', '1982-02-22', '', '1'),
 (8, 'rcampos@ic.uff.br2', 'rcampos2', 'testalindo da silva', '202cb962ac59075b964b07152d234b70', 0, 'c45306a627275e73d2acfef159f5443d', '1982-02-22', '', '1'),
@@ -13771,10 +13770,10 @@ INSERT INTO `Sis_Usuario` (`idSis_Usuario`, `Email`, `Usuario`, `Nome`, `Senha`,
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_EstadoCivil`
+-- Estrutura da tabela `tab_estadocivil`
 --
 
-CREATE TABLE `Tab_EstadoCivil` (
+CREATE TABLE `tab_estadocivil` (
   `idTab_EstadoCivil` int(11) NOT NULL,
   `EstadoCivil` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabela de estado civil';
@@ -13782,10 +13781,10 @@ CREATE TABLE `Tab_EstadoCivil` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_FormaPag`
+-- Estrutura da tabela `tab_formapag`
 --
 
-CREATE TABLE `Tab_FormaPag` (
+CREATE TABLE `tab_formapag` (
   `idTab_FormaPag` int(11) NOT NULL,
   `FormaPag` varchar(45) DEFAULT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
@@ -13793,10 +13792,10 @@ CREATE TABLE `Tab_FormaPag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Tab_FormaPag`
+-- Extraindo dados da tabela `tab_formapag`
 --
 
-INSERT INTO `Tab_FormaPag` (`idTab_FormaPag`, `FormaPag`, `idTab_Modulo`, `idSis_Usuario`) VALUES
+INSERT INTO `tab_formapag` (`idTab_FormaPag`, `FormaPag`, `idTab_Modulo`, `idSis_Usuario`) VALUES
 (1, 'DINHEIRO', 1, 30),
 (2, 'CHEQUE', 1, 30),
 (3, 'CARTÃO DE CRÉDITO', 1, 31),
@@ -13810,10 +13809,10 @@ INSERT INTO `Tab_FormaPag` (`idTab_FormaPag`, `FormaPag`, `idTab_Modulo`, `idSis
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_Funcao`
+-- Estrutura da tabela `tab_funcao`
 --
 
-CREATE TABLE `Tab_Funcao` (
+CREATE TABLE `tab_funcao` (
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
   `idTab_Funcao` int(11) NOT NULL,
@@ -13822,10 +13821,10 @@ CREATE TABLE `Tab_Funcao` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Tab_Funcao`
+-- Extraindo dados da tabela `tab_funcao`
 --
 
-INSERT INTO `Tab_Funcao` (`idSis_Usuario`, `idTab_Modulo`, `idTab_Funcao`, `Funcao`, `Obs`) VALUES
+INSERT INTO `tab_funcao` (`idSis_Usuario`, `idTab_Modulo`, `idTab_Funcao`, `Funcao`, `Obs`) VALUES
 (31, 1, 1, 'CABELEREIRA', NULL),
 (28, 1, 2, 'DENTISTA', NULL),
 (28, 1, 3, 'MÉDICO', NULL),
@@ -13837,19 +13836,19 @@ INSERT INTO `Tab_Funcao` (`idSis_Usuario`, `idTab_Modulo`, `idTab_Funcao`, `Func
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_Modulo`
+-- Estrutura da tabela `tab_modulo`
 --
 
-CREATE TABLE `Tab_Modulo` (
+CREATE TABLE `tab_modulo` (
   `idTab_Modulo` int(11) NOT NULL,
   `Modulo` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Tab_Modulo`
+-- Extraindo dados da tabela `tab_modulo`
 --
 
-INSERT INTO `Tab_Modulo` (`idTab_Modulo`, `Modulo`) VALUES
+INSERT INTO `tab_modulo` (`idTab_Modulo`, `Modulo`) VALUES
 (1, 'Odonto'),
 (2, 'Pet'),
 (3, 'Médica'),
@@ -13859,20 +13858,20 @@ INSERT INTO `Tab_Modulo` (`idTab_Modulo`, `Modulo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_Municipio`
+-- Estrutura da tabela `tab_municipio`
 --
 
-CREATE TABLE `Tab_Municipio` (
+CREATE TABLE `tab_municipio` (
   `idTab_Municipio` int(11) NOT NULL,
   `NomeMunicipio` varchar(255) DEFAULT NULL,
   `Uf` char(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Tab_Municipio`
+-- Extraindo dados da tabela `tab_municipio`
 --
 
-INSERT INTO `Tab_Municipio` (`idTab_Municipio`, `NomeMunicipio`, `Uf`) VALUES
+INSERT INTO `tab_municipio` (`idTab_Municipio`, `NomeMunicipio`, `Uf`) VALUES
 (110001, 'ALTA FLORESTA D''OESTE', 'RO'),
 (110002, 'ARIQUEMES', 'RO'),
 (110003, 'CABIXI', 'RO'),
@@ -15542,7 +15541,7 @@ INSERT INTO `Tab_Municipio` (`idTab_Municipio`, `NomeMunicipio`, `Uf`) VALUES
 (270160, 'CANAPI', 'AL'),
 (270170, 'CAPELA', 'AL'),
 (270180, 'CARNEIROS', 'AL');
-INSERT INTO `Tab_Municipio` (`idTab_Municipio`, `NomeMunicipio`, `Uf`) VALUES
+INSERT INTO `tab_municipio` (`idTab_Municipio`, `NomeMunicipio`, `Uf`) VALUES
 (270190, 'CHA PRETA', 'AL'),
 (270200, 'COITE DO NOIA', 'AL'),
 (270210, 'COLONIA LEOPOLDINA', 'AL'),
@@ -17235,7 +17234,7 @@ INSERT INTO `Tab_Municipio` (`idTab_Municipio`, `NomeMunicipio`, `Uf`) VALUES
 (350800, 'BURI', 'SP'),
 (350810, 'BURITAMA', 'SP'),
 (350820, 'BURITIZAL', 'SP');
-INSERT INTO `Tab_Municipio` (`idTab_Municipio`, `NomeMunicipio`, `Uf`) VALUES
+INSERT INTO `tab_municipio` (`idTab_Municipio`, `NomeMunicipio`, `Uf`) VALUES
 (350830, 'CABRALIA PAULISTA', 'SP'),
 (350840, 'CABREUVA', 'SP'),
 (350850, 'CACAPAVA', 'SP'),
@@ -18934,7 +18933,7 @@ INSERT INTO `Tab_Municipio` (`idTab_Municipio`, `NomeMunicipio`, `Uf`) VALUES
 (432160, 'TRAMANDAI', 'RS'),
 (432162, 'TRAVESSEIRO', 'RS'),
 (432163, 'TRES ARROIOS', 'RS');
-INSERT INTO `Tab_Municipio` (`idTab_Municipio`, `NomeMunicipio`, `Uf`) VALUES
+INSERT INTO `tab_municipio` (`idTab_Municipio`, `NomeMunicipio`, `Uf`) VALUES
 (432166, 'TRES CACHOEIRAS', 'RS'),
 (432170, 'TRES COROAS', 'RS'),
 (432180, 'TRES DE MAIO', 'RS'),
@@ -19469,10 +19468,10 @@ INSERT INTO `Tab_Municipio` (`idTab_Municipio`, `NomeMunicipio`, `Uf`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_Nacionalidade`
+-- Estrutura da tabela `tab_nacionalidade`
 --
 
-CREATE TABLE `Tab_Nacionalidade` (
+CREATE TABLE `tab_nacionalidade` (
   `idTab_Nacionalidade` int(11) NOT NULL,
   `Nacionalidade` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -19480,10 +19479,10 @@ CREATE TABLE `Tab_Nacionalidade` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_Produto`
+-- Estrutura da tabela `tab_produto`
 --
 
-CREATE TABLE `Tab_Produto` (
+CREATE TABLE `tab_produto` (
   `idTab_Produto` int(11) NOT NULL,
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
@@ -19495,19 +19494,19 @@ CREATE TABLE `Tab_Produto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Tab_Produto`
+-- Extraindo dados da tabela `tab_produto`
 --
 
-INSERT INTO `Tab_Produto` (`idTab_Produto`, `idSis_Usuario`, `idTab_Modulo`, `NomeProduto`, `Unidade`, `ValorProdVenda`, `ValorCompra`, `Quantidade`) VALUES
+INSERT INTO `tab_produto` (`idTab_Produto`, `idSis_Usuario`, `idTab_Modulo`, `NomeProduto`, `Unidade`, `ValorProdVenda`, `ValorCompra`, `Quantidade`) VALUES
 (1, 31, 1, 'PENTE PRA CARECA', 'unidade', '10.00', '0.00', '0.00');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_RelaCom`
+-- Estrutura da tabela `tab_relacom`
 --
 
-CREATE TABLE `Tab_RelaCom` (
+CREATE TABLE `tab_relacom` (
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
   `idTab_RelaCom` int(11) NOT NULL,
@@ -19516,10 +19515,10 @@ CREATE TABLE `Tab_RelaCom` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Tab_RelaCom`
+-- Extraindo dados da tabela `tab_relacom`
 --
 
-INSERT INTO `Tab_RelaCom` (`idSis_Usuario`, `idTab_Modulo`, `idTab_RelaCom`, `RelaCom`, `Obs`) VALUES
+INSERT INTO `tab_relacom` (`idSis_Usuario`, `idTab_Modulo`, `idTab_RelaCom`, `RelaCom`, `Obs`) VALUES
 (31, 1, 1, 'ADMINISTRADOR', NULL),
 (31, 1, 2, 'DONO', NULL),
 (31, 1, 3, 'GERENTE', NULL),
@@ -19528,10 +19527,10 @@ INSERT INTO `Tab_RelaCom` (`idSis_Usuario`, `idTab_Modulo`, `idTab_RelaCom`, `Re
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_RelaPes`
+-- Estrutura da tabela `tab_relapes`
 --
 
-CREATE TABLE `Tab_RelaPes` (
+CREATE TABLE `tab_relapes` (
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
   `idTab_RelaPes` int(11) NOT NULL,
@@ -19540,10 +19539,10 @@ CREATE TABLE `Tab_RelaPes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Tab_RelaPes`
+-- Extraindo dados da tabela `tab_relapes`
 --
 
-INSERT INTO `Tab_RelaPes` (`idSis_Usuario`, `idTab_Modulo`, `idTab_RelaPes`, `RelaPes`, `Obs`) VALUES
+INSERT INTO `tab_relapes` (`idSis_Usuario`, `idTab_Modulo`, `idTab_RelaPes`, `RelaPes`, `Obs`) VALUES
 (31, 1, 1, 'OUTROS', NULL),
 (31, 1, 2, 'TIO / TIA', NULL),
 (31, 1, 3, 'AVÔ / AVÓ', NULL),
@@ -19556,10 +19555,10 @@ INSERT INTO `Tab_RelaPes` (`idSis_Usuario`, `idTab_Modulo`, `idTab_RelaPes`, `Re
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_Servico`
+-- Estrutura da tabela `tab_servico`
 --
 
-CREATE TABLE `Tab_Servico` (
+CREATE TABLE `tab_servico` (
   `idTab_Servico` int(11) NOT NULL,
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
@@ -19568,29 +19567,29 @@ CREATE TABLE `Tab_Servico` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Tab_Servico`
+-- Extraindo dados da tabela `tab_servico`
 --
 
-INSERT INTO `Tab_Servico` (`idTab_Servico`, `idSis_Usuario`, `idTab_Modulo`, `NomeServico`, `ValorServVenda`) VALUES
+INSERT INTO `tab_servico` (`idTab_Servico`, `idSis_Usuario`, `idTab_Modulo`, `NomeServico`, `ValorServVenda`) VALUES
 (1, 31, 1, 'PERMANENTE PRA CARECA LONGA', '200.00');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_Sexo`
+-- Estrutura da tabela `tab_sexo`
 --
 
-CREATE TABLE `Tab_Sexo` (
+CREATE TABLE `tab_sexo` (
   `idTab_Sexo` int(11) NOT NULL,
   `Sexo` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `Abrev` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabela de sexo';
 
 --
--- Fazendo dump de dados para tabela `Tab_Sexo`
+-- Extraindo dados da tabela `tab_sexo`
 --
 
-INSERT INTO `Tab_Sexo` (`idTab_Sexo`, `Sexo`, `Abrev`) VALUES
+INSERT INTO `tab_sexo` (`idTab_Sexo`, `Sexo`, `Abrev`) VALUES
 (1, 'MASCULINO', 'M'),
 (2, 'FEMININO', 'F'),
 (3, 'OUTRO', 'O');
@@ -19598,19 +19597,19 @@ INSERT INTO `Tab_Sexo` (`idTab_Sexo`, `Sexo`, `Abrev`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_Status`
+-- Estrutura da tabela `tab_status`
 --
 
-CREATE TABLE `Tab_Status` (
+CREATE TABLE `tab_status` (
   `idTab_Status` int(11) NOT NULL,
   `Status` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Tab_Status`
+-- Extraindo dados da tabela `tab_status`
 --
 
-INSERT INTO `Tab_Status` (`idTab_Status`, `Status`) VALUES
+INSERT INTO `tab_status` (`idTab_Status`, `Status`) VALUES
 (1, 'Agendada'),
 (2, 'Confirmada'),
 (3, 'Compareceu'),
@@ -19621,108 +19620,108 @@ INSERT INTO `Tab_Status` (`idTab_Status`, `Status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_StatusOrca`
+-- Estrutura da tabela `tab_statusorca`
 --
 
-CREATE TABLE `Tab_StatusOrca` (
+CREATE TABLE `tab_statusorca` (
   `idTab_StatusOrca` int(11) NOT NULL,
   `StatusOrca` varchar(45) DEFAULT NULL,
   `Abrev` varchar(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Tab_StatusOrca`
+-- Extraindo dados da tabela `tab_statusorca`
 --
 
-INSERT INTO `Tab_StatusOrca` (`idTab_StatusOrca`, `StatusOrca`, `Abrev`) VALUES
+INSERT INTO `tab_statusorca` (`idTab_StatusOrca`, `StatusOrca`, `Abrev`) VALUES
 (1, 'Não', 'N'),
 (2, 'Sim', 'S');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_StatusSN`
+-- Estrutura da tabela `tab_statussn`
 --
 
-CREATE TABLE `Tab_StatusSN` (
+CREATE TABLE `tab_statussn` (
   `idTab_StatusSN` int(11) NOT NULL,
   `StatusSN` varchar(45) DEFAULT NULL,
   `Abrev` varchar(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Tab_StatusSN`
+-- Extraindo dados da tabela `tab_statussn`
 --
 
-INSERT INTO `Tab_StatusSN` (`idTab_StatusSN`, `StatusSN`, `Abrev`) VALUES
+INSERT INTO `tab_statussn` (`idTab_StatusSN`, `StatusSN`, `Abrev`) VALUES
 (1, 'Não', 'N'),
 (2, 'Sim', 'S');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_StatusVida`
+-- Estrutura da tabela `tab_statusvida`
 --
 
-CREATE TABLE `Tab_StatusVida` (
+CREATE TABLE `tab_statusvida` (
   `idTab_StatusVida` int(11) NOT NULL,
   `StatusVida` varchar(45) DEFAULT NULL,
   `Abrev` varchar(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Tab_StatusVida`
+-- Extraindo dados da tabela `tab_statusvida`
 --
 
-INSERT INTO `Tab_StatusVida` (`idTab_StatusVida`, `StatusVida`, `Abrev`) VALUES
+INSERT INTO `tab_statusvida` (`idTab_StatusVida`, `StatusVida`, `Abrev`) VALUES
 (1, 'Sim', 'V'),
 (2, 'Não', 'O');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_TipoConcluido`
+-- Estrutura da tabela `tab_tipoconcluido`
 --
 
-CREATE TABLE `Tab_TipoConcluido` (
+CREATE TABLE `tab_tipoconcluido` (
   `idTab_TipoConcluido` int(11) NOT NULL,
   `TipoConcluido` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Tab_TipoConcluido`
+-- Extraindo dados da tabela `tab_tipoconcluido`
 --
 
-INSERT INTO `Tab_TipoConcluido` (`idTab_TipoConcluido`, `TipoConcluido`) VALUES
+INSERT INTO `tab_tipoconcluido` (`idTab_TipoConcluido`, `TipoConcluido`) VALUES
 (1, 'Não'),
 (2, 'Sim');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_TipoConsulta`
+-- Estrutura da tabela `tab_tipoconsulta`
 --
 
-CREATE TABLE `Tab_TipoConsulta` (
+CREATE TABLE `tab_tipoconsulta` (
   `idTab_TipoConsulta` int(11) NOT NULL,
   `TipoConsulta` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Tab_TipoConsulta`
+-- Extraindo dados da tabela `tab_tipoconsulta`
 --
 
-INSERT INTO `Tab_TipoConsulta` (`idTab_TipoConsulta`, `TipoConsulta`) VALUES
+INSERT INTO `tab_tipoconsulta` (`idTab_TipoConsulta`, `TipoConsulta`) VALUES
 (1, 'Rotina'),
 (2, 'Encaixe');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_TipoDespesa`
+-- Estrutura da tabela `tab_tipodespesa`
 --
 
-CREATE TABLE `Tab_TipoDespesa` (
+CREATE TABLE `tab_tipodespesa` (
   `idTab_TipoDespesa` int(11) NOT NULL,
   `idSis_Usuario` int(11) NOT NULL,
   `idTab_Modulo` int(11) DEFAULT NULL,
@@ -19731,10 +19730,10 @@ CREATE TABLE `Tab_TipoDespesa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `Tab_TipoDespesa`
+-- Extraindo dados da tabela `tab_tipodespesa`
 --
 
-INSERT INTO `Tab_TipoDespesa` (`idTab_TipoDespesa`, `idSis_Usuario`, `idTab_Modulo`, `TipoDespesa`, `ObsTipoDespesa`) VALUES
+INSERT INTO `tab_tipodespesa` (`idTab_TipoDespesa`, `idSis_Usuario`, `idTab_Modulo`, `TipoDespesa`, `ObsTipoDespesa`) VALUES
 (1, 31, 1, 'INFRA ESTRUTURA - LUZ, TELEF., ALUGUEL, COND., ÁGUA, INTERNET, ETC..', NULL),
 (2, 31, 1, 'FUNCIONÁRIOS, PROFISSIONAIS, PROLABORES, ENCARCOS, ETC..', NULL),
 (3, 31, 1, 'FORNECEDORES E PRESTADORES DE SERVIÇO', NULL),
@@ -19744,756 +19743,756 @@ INSERT INTO `Tab_TipoDespesa` (`idTab_TipoDespesa`, `idSis_Usuario`, `idTab_Modu
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `Tab_Uf`
+-- Estrutura da tabela `tab_uf`
 --
 
-CREATE TABLE `Tab_Uf` (
+CREATE TABLE `tab_uf` (
   `idTab_Uf` int(11) NOT NULL,
   `Uf` varchar(2) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `NomeUf` varchar(60) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Índices de tabelas apagadas
+-- Indexes for dumped tables
 --
 
 --
--- Índices de tabela `App_Agenda`
+-- Indexes for table `app_agenda`
 --
-ALTER TABLE `App_Agenda`
+ALTER TABLE `app_agenda`
   ADD PRIMARY KEY (`idApp_Agenda`),
   ADD KEY `fk_App_Agenda_Sistema_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `App_Atividade`
+-- Indexes for table `app_atividade`
 --
-ALTER TABLE `App_Atividade`
+ALTER TABLE `app_atividade`
   ADD PRIMARY KEY (`idApp_Atividade`),
   ADD KEY `fk_App_Dentista_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `App_Cliente`
+-- Indexes for table `app_cliente`
 --
-ALTER TABLE `App_Cliente`
+ALTER TABLE `app_cliente`
   ADD PRIMARY KEY (`idApp_Cliente`),
   ADD KEY `fk_Responsavel_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `App_ClientePet`
+-- Indexes for table `app_clientepet`
 --
-ALTER TABLE `App_ClientePet`
+ALTER TABLE `app_clientepet`
   ADD PRIMARY KEY (`idApp_ClientePet`),
   ADD KEY `fk_App_ClientePet_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `App_Consulta`
+-- Indexes for table `app_consulta`
 --
-ALTER TABLE `App_Consulta`
+ALTER TABLE `app_consulta`
   ADD PRIMARY KEY (`idApp_Consulta`),
   ADD KEY `fk_App_Compromisso_App_Agenda1_idx` (`idApp_Agenda`),
   ADD KEY `fk_App_Consulta_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `App_Contato`
+-- Indexes for table `app_contato`
 --
-ALTER TABLE `App_Contato`
+ALTER TABLE `app_contato`
   ADD PRIMARY KEY (`idApp_Contato`),
   ADD KEY `fk_App_Contato_App_Empresa1_idx` (`idApp_Empresa`),
   ADD KEY `fk_App_Contato_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `App_ContatoCliente`
+-- Indexes for table `app_contatocliente`
 --
-ALTER TABLE `App_ContatoCliente`
+ALTER TABLE `app_contatocliente`
   ADD PRIMARY KEY (`idApp_ContatoCliente`),
   ADD KEY `fk_App_Dependente_Sis_Usuario1_idx` (`idSis_Usuario`),
   ADD KEY `fk_App_ContatoCliente_App_Cliente1_idx` (`idApp_Cliente`);
 
 --
--- Índices de tabela `App_ContatoClientePet`
+-- Indexes for table `app_contatoclientepet`
 --
-ALTER TABLE `App_ContatoClientePet`
+ALTER TABLE `app_contatoclientepet`
   ADD PRIMARY KEY (`idApp_ContatoClientePet`),
   ADD KEY `fk_App_Dependente_Sis_Usuario1_idx` (`idSis_Usuario`),
   ADD KEY `fk_App_ContatoClientePet_App_ClientePet1_idx` (`idApp_ClientePet`);
 
 --
--- Índices de tabela `App_ContatoProf`
+-- Indexes for table `app_contatoprof`
 --
-ALTER TABLE `App_ContatoProf`
+ALTER TABLE `app_contatoprof`
   ADD PRIMARY KEY (`idApp_ContatoProf`),
-  ADD KEY `fk_App_Contato_Copy1_App_Profissional1_idx` (`idApp_Profissional`),
+  ADD KEY `fk_App_Contato_copy1_App_Profissional1_idx` (`idApp_Profissional`),
   ADD KEY `fk_App_ContatoProf_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `App_Despesa`
+-- Indexes for table `app_despesa`
 --
-ALTER TABLE `App_Despesa`
+ALTER TABLE `app_despesa`
   ADD PRIMARY KEY (`idApp_Despesa`),
   ADD KEY `fk_App_Despesa_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `App_Empresa`
+-- Indexes for table `app_empresa`
 --
-ALTER TABLE `App_Empresa`
+ALTER TABLE `app_empresa`
   ADD PRIMARY KEY (`idApp_Empresa`),
   ADD KEY `fk_App_Dentista_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `App_OrcaTrata`
+-- Indexes for table `app_orcatrata`
 --
-ALTER TABLE `App_OrcaTrata`
+ALTER TABLE `app_orcatrata`
   ADD PRIMARY KEY (`idApp_OrcaTrata`),
   ADD KEY `fk_App_Tratamentos_Sis_Usuario1_idx` (`idSis_Usuario`),
   ADD KEY `fk_App_Tratamentos_App_Cliente1_idx` (`idApp_Cliente`);
 
 --
--- Índices de tabela `App_ParcelasDesp`
+-- Indexes for table `app_parcelasdesp`
 --
-ALTER TABLE `App_ParcelasDesp`
+ALTER TABLE `app_parcelasdesp`
   ADD PRIMARY KEY (`idApp_ParcelasDesp`),
   ADD KEY `fk_App_ParcelasDespesa_App_Despesa1_idx` (`idApp_Despesa`),
   ADD KEY `fk_App_ParcelasDespesa_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `App_ParcelasRec`
+-- Indexes for table `app_parcelasrec`
 --
-ALTER TABLE `App_ParcelasRec`
+ALTER TABLE `app_parcelasrec`
   ADD PRIMARY KEY (`idApp_ParcelasRec`),
   ADD KEY `fk_App_ParcelasReceita_Sis_Usuario1_idx` (`idSis_Usuario`),
   ADD KEY `fk_App_ParcRec_App_OrcaTrata1_idx` (`idApp_OrcaTrata`);
 
 --
--- Índices de tabela `App_Procedimento`
+-- Indexes for table `app_procedimento`
 --
-ALTER TABLE `App_Procedimento`
+ALTER TABLE `app_procedimento`
   ADD PRIMARY KEY (`idApp_Procedimento`),
   ADD KEY `fk_App_Procedimento_Sis_Usuario1_idx` (`idSis_Usuario`),
   ADD KEY `fk_App_Procedimento_App_OrcaTrata1_idx` (`idApp_OrcaTrata`);
 
 --
--- Índices de tabela `App_ProdComp`
+-- Indexes for table `app_prodcomp`
 --
-ALTER TABLE `App_ProdComp`
+ALTER TABLE `app_prodcomp`
   ADD PRIMARY KEY (`idApp_ProdComp`),
   ADD KEY `fk_App_ProdComp_Sis_Usuario1_idx` (`idSis_Usuario`),
   ADD KEY `fk_App_ProdComp_App_Despesa1_idx` (`idApp_Despesa`);
 
 --
--- Índices de tabela `App_ProdVend`
+-- Indexes for table `app_prodvend`
 --
-ALTER TABLE `App_ProdVend`
+ALTER TABLE `app_prodvend`
   ADD PRIMARY KEY (`idApp_ProdVend`),
   ADD KEY `fk_App_Produto_Sis_Usuario1_idx` (`idSis_Usuario`),
   ADD KEY `fk_App_Produto_App_OrcaTrata1_idx` (`idApp_OrcaTrata`);
 
 --
--- Índices de tabela `App_Profissional`
+-- Indexes for table `app_profissional`
 --
-ALTER TABLE `App_Profissional`
+ALTER TABLE `app_profissional`
   ADD PRIMARY KEY (`idApp_Profissional`),
   ADD KEY `fk_App_Dentista_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `App_ServComp`
+-- Indexes for table `app_servcomp`
 --
-ALTER TABLE `App_ServComp`
+ALTER TABLE `app_servcomp`
   ADD PRIMARY KEY (`idApp_ServComp`),
   ADD KEY `fk_App_ProdComp_Sis_Usuario1_idx` (`idSis_Usuario`),
   ADD KEY `fk_App_ProdComp_App_Despesa1_idx` (`idApp_Despesa`);
 
 --
--- Índices de tabela `App_ServVend`
+-- Indexes for table `app_servvend`
 --
-ALTER TABLE `App_ServVend`
+ALTER TABLE `app_servvend`
   ADD PRIMARY KEY (`idApp_ServVend`),
   ADD KEY `fk_App_Servico_Sis_Usuario1_idx` (`idSis_Usuario`),
   ADD KEY `fk_App_Servico_App_OrcaTrata1_idx` (`idApp_OrcaTrata`);
 
 --
--- Índices de tabela `Sis_Auditoria`
+-- Indexes for table `sis_auditoria`
 --
-ALTER TABLE `Sis_Auditoria`
+ALTER TABLE `sis_auditoria`
   ADD PRIMARY KEY (`idSis_Auditoria`),
   ADD KEY `fk_Sishuap_Auditoria__Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `Sis_AuditoriaAcesso`
+-- Indexes for table `sis_auditoriaacesso`
 --
-ALTER TABLE `Sis_AuditoriaAcesso`
+ALTER TABLE `sis_auditoriaacesso`
   ADD PRIMARY KEY (`idSis_AuditoriaAcesso`),
   ADD KEY `fk_Sishuap_AuditoriaAcesso__Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `Sis_AuditoriaItem`
+-- Indexes for table `sis_auditoriaitem`
 --
-ALTER TABLE `Sis_AuditoriaItem`
+ALTER TABLE `sis_auditoriaitem`
   ADD PRIMARY KEY (`idSis_AuditoriaItem`),
   ADD KEY `fk_Sistema_AuditoriaItem_Sistema_Auditoria1_idx` (`idSis_Auditoria`);
 
 --
--- Índices de tabela `Sis_Permissao`
+-- Indexes for table `sis_permissao`
 --
-ALTER TABLE `Sis_Permissao`
+ALTER TABLE `sis_permissao`
   ADD PRIMARY KEY (`idSis_Permissao`),
   ADD KEY `fk_SishuapPermissao_SishuapUsuario1_idx` (`idSis_Usuario`),
   ADD KEY `fk_Sis_Permissao_App_Agenda1_idx` (`idApp_Agenda`);
 
 --
--- Índices de tabela `Sis_Usuario`
+-- Indexes for table `sis_usuario`
 --
-ALTER TABLE `Sis_Usuario`
+ALTER TABLE `sis_usuario`
   ADD PRIMARY KEY (`idSis_Usuario`);
 
 --
--- Índices de tabela `Tab_EstadoCivil`
+-- Indexes for table `tab_estadocivil`
 --
-ALTER TABLE `Tab_EstadoCivil`
+ALTER TABLE `tab_estadocivil`
   ADD PRIMARY KEY (`idTab_EstadoCivil`),
   ADD UNIQUE KEY `EstadoCivil` (`EstadoCivil`);
 
 --
--- Índices de tabela `Tab_FormaPag`
+-- Indexes for table `tab_formapag`
 --
-ALTER TABLE `Tab_FormaPag`
+ALTER TABLE `tab_formapag`
   ADD PRIMARY KEY (`idTab_FormaPag`),
   ADD KEY `fk_Tab_FormaPag_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `Tab_Funcao`
+-- Indexes for table `tab_funcao`
 --
-ALTER TABLE `Tab_Funcao`
+ALTER TABLE `tab_funcao`
   ADD PRIMARY KEY (`idTab_Funcao`),
   ADD KEY `fk_App_Servicos_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `Tab_Modulo`
+-- Indexes for table `tab_modulo`
 --
-ALTER TABLE `Tab_Modulo`
+ALTER TABLE `tab_modulo`
   ADD PRIMARY KEY (`idTab_Modulo`);
 
 --
--- Índices de tabela `Tab_Municipio`
+-- Indexes for table `tab_municipio`
 --
-ALTER TABLE `Tab_Municipio`
+ALTER TABLE `tab_municipio`
   ADD PRIMARY KEY (`idTab_Municipio`);
 
 --
--- Índices de tabela `Tab_Nacionalidade`
+-- Indexes for table `tab_nacionalidade`
 --
-ALTER TABLE `Tab_Nacionalidade`
+ALTER TABLE `tab_nacionalidade`
   ADD PRIMARY KEY (`idTab_Nacionalidade`);
 
 --
--- Índices de tabela `Tab_Produto`
+-- Indexes for table `tab_produto`
 --
-ALTER TABLE `Tab_Produto`
+ALTER TABLE `tab_produto`
   ADD PRIMARY KEY (`idTab_Produto`),
   ADD KEY `fk_App_Produtos_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `Tab_RelaCom`
+-- Indexes for table `tab_relacom`
 --
-ALTER TABLE `Tab_RelaCom`
+ALTER TABLE `tab_relacom`
   ADD PRIMARY KEY (`idTab_RelaCom`),
   ADD KEY `fk_App_Servicos_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `Tab_RelaPes`
+-- Indexes for table `tab_relapes`
 --
-ALTER TABLE `Tab_RelaPes`
+ALTER TABLE `tab_relapes`
   ADD PRIMARY KEY (`idTab_RelaPes`),
   ADD KEY `fk_App_Servicos_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `Tab_Servico`
+-- Indexes for table `tab_servico`
 --
-ALTER TABLE `Tab_Servico`
+ALTER TABLE `tab_servico`
   ADD PRIMARY KEY (`idTab_Servico`),
   ADD KEY `fk_App_Servicos_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `Tab_Sexo`
+-- Indexes for table `tab_sexo`
 --
-ALTER TABLE `Tab_Sexo`
+ALTER TABLE `tab_sexo`
   ADD PRIMARY KEY (`idTab_Sexo`);
 
 --
--- Índices de tabela `Tab_Status`
+-- Indexes for table `tab_status`
 --
-ALTER TABLE `Tab_Status`
+ALTER TABLE `tab_status`
   ADD PRIMARY KEY (`idTab_Status`);
 
 --
--- Índices de tabela `Tab_StatusOrca`
+-- Indexes for table `tab_statusorca`
 --
-ALTER TABLE `Tab_StatusOrca`
+ALTER TABLE `tab_statusorca`
   ADD PRIMARY KEY (`idTab_StatusOrca`);
 
 --
--- Índices de tabela `Tab_StatusSN`
+-- Indexes for table `tab_statussn`
 --
-ALTER TABLE `Tab_StatusSN`
+ALTER TABLE `tab_statussn`
   ADD PRIMARY KEY (`idTab_StatusSN`);
 
 --
--- Índices de tabela `Tab_StatusVida`
+-- Indexes for table `tab_statusvida`
 --
-ALTER TABLE `Tab_StatusVida`
+ALTER TABLE `tab_statusvida`
   ADD PRIMARY KEY (`idTab_StatusVida`);
 
 --
--- Índices de tabela `Tab_TipoConcluido`
+-- Indexes for table `tab_tipoconcluido`
 --
-ALTER TABLE `Tab_TipoConcluido`
+ALTER TABLE `tab_tipoconcluido`
   ADD PRIMARY KEY (`idTab_TipoConcluido`);
 
 --
--- Índices de tabela `Tab_TipoConsulta`
+-- Indexes for table `tab_tipoconsulta`
 --
-ALTER TABLE `Tab_TipoConsulta`
+ALTER TABLE `tab_tipoconsulta`
   ADD PRIMARY KEY (`idTab_TipoConsulta`);
 
 --
--- Índices de tabela `Tab_TipoDespesa`
+-- Indexes for table `tab_tipodespesa`
 --
-ALTER TABLE `Tab_TipoDespesa`
+ALTER TABLE `tab_tipodespesa`
   ADD PRIMARY KEY (`idTab_TipoDespesa`),
   ADD KEY `fk_App_Servicos_Sis_Usuario1_idx` (`idSis_Usuario`);
 
 --
--- Índices de tabela `Tab_Uf`
+-- Indexes for table `tab_uf`
 --
-ALTER TABLE `Tab_Uf`
+ALTER TABLE `tab_uf`
   ADD PRIMARY KEY (`idTab_Uf`);
 
 --
--- AUTO_INCREMENT de tabelas apagadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de tabela `App_Agenda`
+-- AUTO_INCREMENT for table `app_agenda`
 --
-ALTER TABLE `App_Agenda`
+ALTER TABLE `app_agenda`
   MODIFY `idApp_Agenda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
--- AUTO_INCREMENT de tabela `App_Atividade`
+-- AUTO_INCREMENT for table `app_atividade`
 --
-ALTER TABLE `App_Atividade`
+ALTER TABLE `app_atividade`
   MODIFY `idApp_Atividade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT de tabela `App_Cliente`
+-- AUTO_INCREMENT for table `app_cliente`
 --
-ALTER TABLE `App_Cliente`
+ALTER TABLE `app_cliente`
   MODIFY `idApp_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
--- AUTO_INCREMENT de tabela `App_ClientePet`
+-- AUTO_INCREMENT for table `app_clientepet`
 --
-ALTER TABLE `App_ClientePet`
+ALTER TABLE `app_clientepet`
   MODIFY `idApp_ClientePet` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de tabela `App_Consulta`
+-- AUTO_INCREMENT for table `app_consulta`
 --
-ALTER TABLE `App_Consulta`
+ALTER TABLE `app_consulta`
   MODIFY `idApp_Consulta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
--- AUTO_INCREMENT de tabela `App_Contato`
+-- AUTO_INCREMENT for table `app_contato`
 --
-ALTER TABLE `App_Contato`
+ALTER TABLE `app_contato`
   MODIFY `idApp_Contato` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de tabela `App_ContatoCliente`
+-- AUTO_INCREMENT for table `app_contatocliente`
 --
-ALTER TABLE `App_ContatoCliente`
+ALTER TABLE `app_contatocliente`
   MODIFY `idApp_ContatoCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT de tabela `App_ContatoClientePet`
+-- AUTO_INCREMENT for table `app_contatoclientepet`
 --
-ALTER TABLE `App_ContatoClientePet`
+ALTER TABLE `app_contatoclientepet`
   MODIFY `idApp_ContatoClientePet` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de tabela `App_ContatoProf`
+-- AUTO_INCREMENT for table `app_contatoprof`
 --
-ALTER TABLE `App_ContatoProf`
+ALTER TABLE `app_contatoprof`
   MODIFY `idApp_ContatoProf` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de tabela `App_Despesa`
+-- AUTO_INCREMENT for table `app_despesa`
 --
-ALTER TABLE `App_Despesa`
+ALTER TABLE `app_despesa`
   MODIFY `idApp_Despesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
--- AUTO_INCREMENT de tabela `App_Empresa`
+-- AUTO_INCREMENT for table `app_empresa`
 --
-ALTER TABLE `App_Empresa`
+ALTER TABLE `app_empresa`
   MODIFY `idApp_Empresa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT de tabela `App_OrcaTrata`
+-- AUTO_INCREMENT for table `app_orcatrata`
 --
-ALTER TABLE `App_OrcaTrata`
+ALTER TABLE `app_orcatrata`
   MODIFY `idApp_OrcaTrata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
--- AUTO_INCREMENT de tabela `App_ParcelasDesp`
+-- AUTO_INCREMENT for table `app_parcelasdesp`
 --
-ALTER TABLE `App_ParcelasDesp`
+ALTER TABLE `app_parcelasdesp`
   MODIFY `idApp_ParcelasDesp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT de tabela `App_ParcelasRec`
+-- AUTO_INCREMENT for table `app_parcelasrec`
 --
-ALTER TABLE `App_ParcelasRec`
+ALTER TABLE `app_parcelasrec`
   MODIFY `idApp_ParcelasRec` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
--- AUTO_INCREMENT de tabela `App_Procedimento`
+-- AUTO_INCREMENT for table `app_procedimento`
 --
-ALTER TABLE `App_Procedimento`
+ALTER TABLE `app_procedimento`
   MODIFY `idApp_Procedimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
--- AUTO_INCREMENT de tabela `App_ProdComp`
+-- AUTO_INCREMENT for table `app_prodcomp`
 --
-ALTER TABLE `App_ProdComp`
+ALTER TABLE `app_prodcomp`
   MODIFY `idApp_ProdComp` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de tabela `App_ProdVend`
+-- AUTO_INCREMENT for table `app_prodvend`
 --
-ALTER TABLE `App_ProdVend`
+ALTER TABLE `app_prodvend`
   MODIFY `idApp_ProdVend` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de tabela `App_Profissional`
+-- AUTO_INCREMENT for table `app_profissional`
 --
-ALTER TABLE `App_Profissional`
+ALTER TABLE `app_profissional`
   MODIFY `idApp_Profissional` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT de tabela `App_ServComp`
+-- AUTO_INCREMENT for table `app_servcomp`
 --
-ALTER TABLE `App_ServComp`
+ALTER TABLE `app_servcomp`
   MODIFY `idApp_ServComp` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de tabela `App_ServVend`
+-- AUTO_INCREMENT for table `app_servvend`
 --
-ALTER TABLE `App_ServVend`
+ALTER TABLE `app_servvend`
   MODIFY `idApp_ServVend` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de tabela `Sis_Auditoria`
+-- AUTO_INCREMENT for table `sis_auditoria`
 --
-ALTER TABLE `Sis_Auditoria`
+ALTER TABLE `sis_auditoria`
   MODIFY `idSis_Auditoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1866;
 --
--- AUTO_INCREMENT de tabela `Sis_AuditoriaAcesso`
+-- AUTO_INCREMENT for table `sis_auditoriaacesso`
 --
-ALTER TABLE `Sis_AuditoriaAcesso`
-  MODIFY `idSis_AuditoriaAcesso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=817;
+ALTER TABLE `sis_auditoriaacesso`
+  MODIFY `idSis_AuditoriaAcesso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=816;
 --
--- AUTO_INCREMENT de tabela `Sis_AuditoriaItem`
+-- AUTO_INCREMENT for table `sis_auditoriaitem`
 --
-ALTER TABLE `Sis_AuditoriaItem`
+ALTER TABLE `sis_auditoriaitem`
   MODIFY `idSis_AuditoriaItem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10324;
 --
--- AUTO_INCREMENT de tabela `Sis_Permissao`
+-- AUTO_INCREMENT for table `sis_permissao`
 --
-ALTER TABLE `Sis_Permissao`
+ALTER TABLE `sis_permissao`
   MODIFY `idSis_Permissao` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de tabela `Sis_Usuario`
+-- AUTO_INCREMENT for table `sis_usuario`
 --
-ALTER TABLE `Sis_Usuario`
+ALTER TABLE `sis_usuario`
   MODIFY `idSis_Usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
--- AUTO_INCREMENT de tabela `Tab_EstadoCivil`
+-- AUTO_INCREMENT for table `tab_estadocivil`
 --
-ALTER TABLE `Tab_EstadoCivil`
+ALTER TABLE `tab_estadocivil`
   MODIFY `idTab_EstadoCivil` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de tabela `Tab_FormaPag`
+-- AUTO_INCREMENT for table `tab_formapag`
 --
-ALTER TABLE `Tab_FormaPag`
+ALTER TABLE `tab_formapag`
   MODIFY `idTab_FormaPag` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
--- AUTO_INCREMENT de tabela `Tab_Funcao`
+-- AUTO_INCREMENT for table `tab_funcao`
 --
-ALTER TABLE `Tab_Funcao`
+ALTER TABLE `tab_funcao`
   MODIFY `idTab_Funcao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT de tabela `Tab_Modulo`
+-- AUTO_INCREMENT for table `tab_modulo`
 --
-ALTER TABLE `Tab_Modulo`
+ALTER TABLE `tab_modulo`
   MODIFY `idTab_Modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT de tabela `Tab_Municipio`
+-- AUTO_INCREMENT for table `tab_municipio`
 --
-ALTER TABLE `Tab_Municipio`
+ALTER TABLE `tab_municipio`
   MODIFY `idTab_Municipio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000000;
 --
--- AUTO_INCREMENT de tabela `Tab_Nacionalidade`
+-- AUTO_INCREMENT for table `tab_nacionalidade`
 --
-ALTER TABLE `Tab_Nacionalidade`
+ALTER TABLE `tab_nacionalidade`
   MODIFY `idTab_Nacionalidade` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de tabela `Tab_Produto`
+-- AUTO_INCREMENT for table `tab_produto`
 --
-ALTER TABLE `Tab_Produto`
+ALTER TABLE `tab_produto`
   MODIFY `idTab_Produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT de tabela `Tab_RelaCom`
+-- AUTO_INCREMENT for table `tab_relacom`
 --
-ALTER TABLE `Tab_RelaCom`
+ALTER TABLE `tab_relacom`
   MODIFY `idTab_RelaCom` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT de tabela `Tab_RelaPes`
+-- AUTO_INCREMENT for table `tab_relapes`
 --
-ALTER TABLE `Tab_RelaPes`
+ALTER TABLE `tab_relapes`
   MODIFY `idTab_RelaPes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
--- AUTO_INCREMENT de tabela `Tab_Servico`
+-- AUTO_INCREMENT for table `tab_servico`
 --
-ALTER TABLE `Tab_Servico`
+ALTER TABLE `tab_servico`
   MODIFY `idTab_Servico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT de tabela `Tab_Sexo`
+-- AUTO_INCREMENT for table `tab_sexo`
 --
-ALTER TABLE `Tab_Sexo`
+ALTER TABLE `tab_sexo`
   MODIFY `idTab_Sexo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT de tabela `Tab_Status`
+-- AUTO_INCREMENT for table `tab_status`
 --
-ALTER TABLE `Tab_Status`
+ALTER TABLE `tab_status`
   MODIFY `idTab_Status` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT de tabela `Tab_StatusOrca`
+-- AUTO_INCREMENT for table `tab_statusorca`
 --
-ALTER TABLE `Tab_StatusOrca`
+ALTER TABLE `tab_statusorca`
   MODIFY `idTab_StatusOrca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT de tabela `Tab_StatusSN`
+-- AUTO_INCREMENT for table `tab_statussn`
 --
-ALTER TABLE `Tab_StatusSN`
+ALTER TABLE `tab_statussn`
   MODIFY `idTab_StatusSN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT de tabela `Tab_StatusVida`
+-- AUTO_INCREMENT for table `tab_statusvida`
 --
-ALTER TABLE `Tab_StatusVida`
+ALTER TABLE `tab_statusvida`
   MODIFY `idTab_StatusVida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT de tabela `Tab_TipoConcluido`
+-- AUTO_INCREMENT for table `tab_tipoconcluido`
 --
-ALTER TABLE `Tab_TipoConcluido`
+ALTER TABLE `tab_tipoconcluido`
   MODIFY `idTab_TipoConcluido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT de tabela `Tab_TipoConsulta`
+-- AUTO_INCREMENT for table `tab_tipoconsulta`
 --
-ALTER TABLE `Tab_TipoConsulta`
+ALTER TABLE `tab_tipoconsulta`
   MODIFY `idTab_TipoConsulta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT de tabela `Tab_TipoDespesa`
+-- AUTO_INCREMENT for table `tab_tipodespesa`
 --
-ALTER TABLE `Tab_TipoDespesa`
+ALTER TABLE `tab_tipodespesa`
   MODIFY `idTab_TipoDespesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT de tabela `Tab_Uf`
+-- AUTO_INCREMENT for table `tab_uf`
 --
-ALTER TABLE `Tab_Uf`
+ALTER TABLE `tab_uf`
   MODIFY `idTab_Uf` int(11) NOT NULL AUTO_INCREMENT;
 --
--- Restrições para dumps de tabelas
+-- Constraints for dumped tables
 --
 
 --
--- Restrições para tabelas `App_Agenda`
+-- Limitadores para a tabela `app_agenda`
 --
-ALTER TABLE `App_Agenda`
-  ADD CONSTRAINT `fk_App_Agenda_Sistema_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_agenda`
+  ADD CONSTRAINT `fk_App_Agenda_Sistema_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_Atividade`
+-- Limitadores para a tabela `app_atividade`
 --
-ALTER TABLE `App_Atividade`
-  ADD CONSTRAINT `fk_App_Profissional_Sis_Usuario11` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_atividade`
+  ADD CONSTRAINT `fk_App_Profissional_Sis_Usuario11` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_Cliente`
+-- Limitadores para a tabela `app_cliente`
 --
-ALTER TABLE `App_Cliente`
-  ADD CONSTRAINT `fk_Responsavel_Sis_Usuario10` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_cliente`
+  ADD CONSTRAINT `fk_Responsavel_Sis_Usuario10` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_ClientePet`
+-- Limitadores para a tabela `app_clientepet`
 --
-ALTER TABLE `App_ClientePet`
-  ADD CONSTRAINT `fk_App_ClientePet_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_clientepet`
+  ADD CONSTRAINT `fk_App_ClientePet_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_Consulta`
+-- Limitadores para a tabela `app_consulta`
 --
-ALTER TABLE `App_Consulta`
-  ADD CONSTRAINT `fk_App_Compromisso_App_Agenda2` FOREIGN KEY (`idApp_Agenda`) REFERENCES `App_Agenda` (`idApp_Agenda`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_App_Consulta_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_consulta`
+  ADD CONSTRAINT `fk_App_Compromisso_App_Agenda2` FOREIGN KEY (`idApp_Agenda`) REFERENCES `app_agenda` (`idApp_Agenda`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_App_Consulta_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_Contato`
+-- Limitadores para a tabela `app_contato`
 --
-ALTER TABLE `App_Contato`
-  ADD CONSTRAINT `fk_App_Contato_App_Empresa1` FOREIGN KEY (`idApp_Empresa`) REFERENCES `App_Empresa` (`idApp_Empresa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_App_Contato_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_contato`
+  ADD CONSTRAINT `fk_App_Contato_App_Empresa1` FOREIGN KEY (`idApp_Empresa`) REFERENCES `app_empresa` (`idApp_Empresa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_App_Contato_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_ContatoCliente`
+-- Limitadores para a tabela `app_contatocliente`
 --
-ALTER TABLE `App_ContatoCliente`
-  ADD CONSTRAINT `fk_App_ContatoCliente_App_Cliente1` FOREIGN KEY (`idApp_Cliente`) REFERENCES `App_Cliente` (`idApp_Cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_App_Dependente_Sis_Usuario10` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_contatocliente`
+  ADD CONSTRAINT `fk_App_ContatoCliente_App_Cliente1` FOREIGN KEY (`idApp_Cliente`) REFERENCES `app_cliente` (`idApp_Cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_App_Dependente_Sis_Usuario10` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_ContatoClientePet`
+-- Limitadores para a tabela `app_contatoclientepet`
 --
-ALTER TABLE `App_ContatoClientePet`
-  ADD CONSTRAINT `fk_App_ContatoClientePet_App_ClientePet1` FOREIGN KEY (`idApp_ClientePet`) REFERENCES `App_ClientePet` (`idApp_ClientePet`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_App_Dependente_Sis_Usuario100` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_contatoclientepet`
+  ADD CONSTRAINT `fk_App_ContatoClientePet_App_ClientePet1` FOREIGN KEY (`idApp_ClientePet`) REFERENCES `app_clientepet` (`idApp_ClientePet`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_App_Dependente_Sis_Usuario100` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_ContatoProf`
+-- Limitadores para a tabela `app_contatoprof`
 --
-ALTER TABLE `App_ContatoProf`
-  ADD CONSTRAINT `fk_App_ContatoProf_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_App_Contato_Copy1_App_Profissional1` FOREIGN KEY (`idApp_Profissional`) REFERENCES `App_Profissional` (`idApp_Profissional`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_contatoprof`
+  ADD CONSTRAINT `fk_App_ContatoProf_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_App_Contato_copy1_App_Profissional1` FOREIGN KEY (`idApp_Profissional`) REFERENCES `app_profissional` (`idApp_Profissional`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_Despesa`
+-- Limitadores para a tabela `app_despesa`
 --
-ALTER TABLE `App_Despesa`
-  ADD CONSTRAINT `fk_App_Despesa_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_despesa`
+  ADD CONSTRAINT `fk_App_Despesa_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_Empresa`
+-- Limitadores para a tabela `app_empresa`
 --
-ALTER TABLE `App_Empresa`
-  ADD CONSTRAINT `fk_App_Profissional_Sis_Usuario100` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_empresa`
+  ADD CONSTRAINT `fk_App_Profissional_Sis_Usuario100` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_OrcaTrata`
+-- Limitadores para a tabela `app_orcatrata`
 --
-ALTER TABLE `App_OrcaTrata`
-  ADD CONSTRAINT `fk_App_Tratamentos_App_Cliente100` FOREIGN KEY (`idApp_Cliente`) REFERENCES `App_Cliente` (`idApp_Cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_App_Tratamentos_Sis_Usuario100` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_orcatrata`
+  ADD CONSTRAINT `fk_App_Tratamentos_App_Cliente100` FOREIGN KEY (`idApp_Cliente`) REFERENCES `app_cliente` (`idApp_Cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_App_Tratamentos_Sis_Usuario100` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_ParcelasDesp`
+-- Limitadores para a tabela `app_parcelasdesp`
 --
-ALTER TABLE `App_ParcelasDesp`
-  ADD CONSTRAINT `fk_App_ParcelasDespesa_App_Despesa1` FOREIGN KEY (`idApp_Despesa`) REFERENCES `App_Despesa` (`idApp_Despesa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_App_ParcelasDespesa_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_parcelasdesp`
+  ADD CONSTRAINT `fk_App_ParcelasDespesa_App_Despesa1` FOREIGN KEY (`idApp_Despesa`) REFERENCES `app_despesa` (`idApp_Despesa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_App_ParcelasDespesa_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_ParcelasRec`
+-- Limitadores para a tabela `app_parcelasrec`
 --
-ALTER TABLE `App_ParcelasRec`
-  ADD CONSTRAINT `fk_App_ParcRec_App_OrcaTrata1` FOREIGN KEY (`idApp_OrcaTrata`) REFERENCES `App_OrcaTrata` (`idApp_OrcaTrata`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_App_ParcelasReceita_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_parcelasrec`
+  ADD CONSTRAINT `fk_App_ParcRec_App_OrcaTrata1` FOREIGN KEY (`idApp_OrcaTrata`) REFERENCES `app_orcatrata` (`idApp_OrcaTrata`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_App_ParcelasReceita_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_Procedimento`
+-- Limitadores para a tabela `app_procedimento`
 --
-ALTER TABLE `App_Procedimento`
-  ADD CONSTRAINT `fk_App_Procedimento_App_OrcaTrata1` FOREIGN KEY (`idApp_OrcaTrata`) REFERENCES `App_OrcaTrata` (`idApp_OrcaTrata`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_App_Procedimento_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_procedimento`
+  ADD CONSTRAINT `fk_App_Procedimento_App_OrcaTrata1` FOREIGN KEY (`idApp_OrcaTrata`) REFERENCES `app_orcatrata` (`idApp_OrcaTrata`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_App_Procedimento_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_ProdComp`
+-- Limitadores para a tabela `app_prodcomp`
 --
-ALTER TABLE `App_ProdComp`
-  ADD CONSTRAINT `fk_App_ProdComp_App_Despesa1` FOREIGN KEY (`idApp_Despesa`) REFERENCES `App_Despesa` (`idApp_Despesa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_App_ProdComp_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_prodcomp`
+  ADD CONSTRAINT `fk_App_ProdComp_App_Despesa1` FOREIGN KEY (`idApp_Despesa`) REFERENCES `app_despesa` (`idApp_Despesa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_App_ProdComp_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_ProdVend`
+-- Limitadores para a tabela `app_prodvend`
 --
-ALTER TABLE `App_ProdVend`
-  ADD CONSTRAINT `fk_App_Produto_App_OrcaTrata1` FOREIGN KEY (`idApp_OrcaTrata`) REFERENCES `App_OrcaTrata` (`idApp_OrcaTrata`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_App_Produto_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_prodvend`
+  ADD CONSTRAINT `fk_App_Produto_App_OrcaTrata1` FOREIGN KEY (`idApp_OrcaTrata`) REFERENCES `app_orcatrata` (`idApp_OrcaTrata`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_App_Produto_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_Profissional`
+-- Limitadores para a tabela `app_profissional`
 --
-ALTER TABLE `App_Profissional`
-  ADD CONSTRAINT `fk_App_Profissional_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_profissional`
+  ADD CONSTRAINT `fk_App_Profissional_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_ServComp`
+-- Limitadores para a tabela `app_servcomp`
 --
-ALTER TABLE `App_ServComp`
-  ADD CONSTRAINT `fk_App_ProdComp_App_Despesa10` FOREIGN KEY (`idApp_Despesa`) REFERENCES `App_Despesa` (`idApp_Despesa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_App_ProdComp_Sis_Usuario10` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_servcomp`
+  ADD CONSTRAINT `fk_App_ProdComp_App_Despesa10` FOREIGN KEY (`idApp_Despesa`) REFERENCES `app_despesa` (`idApp_Despesa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_App_ProdComp_Sis_Usuario10` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `App_ServVend`
+-- Limitadores para a tabela `app_servvend`
 --
-ALTER TABLE `App_ServVend`
-  ADD CONSTRAINT `fk_App_Servico_App_OrcaTrata1` FOREIGN KEY (`idApp_OrcaTrata`) REFERENCES `App_OrcaTrata` (`idApp_OrcaTrata`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_App_Servico_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `app_servvend`
+  ADD CONSTRAINT `fk_App_Servico_App_OrcaTrata1` FOREIGN KEY (`idApp_OrcaTrata`) REFERENCES `app_orcatrata` (`idApp_OrcaTrata`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_App_Servico_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `Sis_Auditoria`
+-- Limitadores para a tabela `sis_auditoria`
 --
-ALTER TABLE `Sis_Auditoria`
-  ADD CONSTRAINT `fk_Sis_Auditoria__Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `sis_auditoria`
+  ADD CONSTRAINT `fk_Sis_Auditoria__Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `Sis_AuditoriaAcesso`
+-- Limitadores para a tabela `sis_auditoriaacesso`
 --
-ALTER TABLE `Sis_AuditoriaAcesso`
-  ADD CONSTRAINT `fk_Sis_AuditoriaAcesso__Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `sis_auditoriaacesso`
+  ADD CONSTRAINT `fk_Sis_AuditoriaAcesso__Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `Sis_AuditoriaItem`
+-- Limitadores para a tabela `sis_auditoriaitem`
 --
-ALTER TABLE `Sis_AuditoriaItem`
-  ADD CONSTRAINT `fk_Sis_AuditoriaItem_Sis_Auditoria1` FOREIGN KEY (`idSis_Auditoria`) REFERENCES `Sis_Auditoria` (`idSis_Auditoria`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `sis_auditoriaitem`
+  ADD CONSTRAINT `fk_Sis_AuditoriaItem_Sis_Auditoria1` FOREIGN KEY (`idSis_Auditoria`) REFERENCES `sis_auditoria` (`idSis_Auditoria`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `Sis_Permissao`
+-- Limitadores para a tabela `sis_permissao`
 --
-ALTER TABLE `Sis_Permissao`
-  ADD CONSTRAINT `fk_Sis_Permissao_App_Agenda1` FOREIGN KEY (`idApp_Agenda`) REFERENCES `App_Agenda` (`idApp_Agenda`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `sis_permissao`
+  ADD CONSTRAINT `fk_Sis_Permissao_App_Agenda1` FOREIGN KEY (`idApp_Agenda`) REFERENCES `app_agenda` (`idApp_Agenda`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `Tab_FormaPag`
+-- Limitadores para a tabela `tab_formapag`
 --
-ALTER TABLE `Tab_FormaPag`
-  ADD CONSTRAINT `fk_Tab_FormaPag_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `tab_formapag`
+  ADD CONSTRAINT `fk_Tab_FormaPag_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `Tab_Funcao`
+-- Limitadores para a tabela `tab_funcao`
 --
-ALTER TABLE `Tab_Funcao`
-  ADD CONSTRAINT `fk_Tab_Servico_Sis_Usuario100` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `tab_funcao`
+  ADD CONSTRAINT `fk_Tab_Servico_Sis_Usuario100` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `Tab_Produto`
+-- Limitadores para a tabela `tab_produto`
 --
-ALTER TABLE `Tab_Produto`
-  ADD CONSTRAINT `fk_Tab_Produto_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `tab_produto`
+  ADD CONSTRAINT `fk_Tab_Produto_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `Tab_RelaCom`
+-- Limitadores para a tabela `tab_relacom`
 --
-ALTER TABLE `Tab_RelaCom`
-  ADD CONSTRAINT `fk_Tab_Servico_Sis_Usuario10000` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `tab_relacom`
+  ADD CONSTRAINT `fk_Tab_Servico_Sis_Usuario10000` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `Tab_RelaPes`
+-- Limitadores para a tabela `tab_relapes`
 --
-ALTER TABLE `Tab_RelaPes`
-  ADD CONSTRAINT `fk_Tab_Servico_Sis_Usuario1000` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `tab_relapes`
+  ADD CONSTRAINT `fk_Tab_Servico_Sis_Usuario1000` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `Tab_Servico`
+-- Limitadores para a tabela `tab_servico`
 --
-ALTER TABLE `Tab_Servico`
-  ADD CONSTRAINT `fk_Tab_Servico_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `tab_servico`
+  ADD CONSTRAINT `fk_Tab_Servico_Sis_Usuario1` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `Tab_TipoDespesa`
+-- Limitadores para a tabela `tab_tipodespesa`
 --
-ALTER TABLE `Tab_TipoDespesa`
-  ADD CONSTRAINT `fk_Tab_Servico_Sis_Usuario101` FOREIGN KEY (`idSis_Usuario`) REFERENCES `Sis_Usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `tab_tipodespesa`
+  ADD CONSTRAINT `fk_Tab_Servico_Sis_Usuario101` FOREIGN KEY (`idSis_Usuario`) REFERENCES `sis_usuario` (`idSis_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

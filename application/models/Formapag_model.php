@@ -4,14 +4,14 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class FormaPag_model extends CI_Model {
+class Formapag_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
         $this->load->database();
         $this->load->library('basico');
     }
-       
+
     public function set_formapag($data) {
 
         $query = $this->db->insert('Tab_FormaPag', $data);
@@ -22,15 +22,15 @@ class FormaPag_model extends CI_Model {
             #return TRUE;
             return $this->db->insert_id();
         }
-    }    
-    
+    }
+
     public function get_formapag($data) {
         $query = $this->db->query('SELECT * FROM Tab_FormaPag WHERE idTab_FormaPag = ' . $data);
         $query = $query->result_array();
 
         return $query[0];
     }
-    
+
     public function update_formapag($data, $id) {
 
         unset($data['Id']);
@@ -49,7 +49,7 @@ class FormaPag_model extends CI_Model {
             return TRUE;
         }
     }
- 
+
    /* public function lista_formapag($x) {
 
         $query = $this->db->query('SELECT * '
@@ -58,7 +58,7 @@ class FormaPag_model extends CI_Model {
                 . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                 . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
                 . 'ORDER BY FormaPag ASC ');
-        
+
         /*
           echo $this->db->last_query();
           $query = $query->result_array();
@@ -66,7 +66,7 @@ class FormaPag_model extends CI_Model {
           print_r($query);
           echo "</pre>";
           exit();
-        
+
         if ($query->num_rows() === 0) {
             return FALSE;
         } else {
@@ -90,7 +90,7 @@ class FormaPag_model extends CI_Model {
                 #. 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                 #. 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
                 . 'ORDER BY idTab_FormaPag ASC ');
-        
+
         /*
           echo $this->db->last_query();
           $query = $query->result_array();
@@ -114,7 +114,7 @@ class FormaPag_model extends CI_Model {
             }
         }
     }
-	
+
     public function select_formapag($data = FALSE) {
 
         if ($data === TRUE) {
@@ -139,6 +139,6 @@ class FormaPag_model extends CI_Model {
         }
 
         return $array;
-    }    
-    
+    }
+
 }
