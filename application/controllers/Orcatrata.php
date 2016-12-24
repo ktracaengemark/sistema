@@ -96,7 +96,7 @@ class Orcatrata extends CI_Controller {
         $this->form_validation->set_rules('DataOrca', 'DataOrca', 'required|trim');
         #$this->form_validation->set_rules('DataProcedimento', 'DataProcedimento', 'required|trim');
         #$this->form_validation->set_rules('ParcRec', 'ParcRec', 'required|trim');
-        $this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+        #$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
 
 
         $data['select']['StatusOrca'] = $this->Orcatrata_model->select_status_orca();
