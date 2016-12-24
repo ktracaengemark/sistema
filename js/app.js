@@ -422,6 +422,15 @@ $(document).ready(function () {
         //alert('oi');
     });
 
+    $("input[id$='hide']").change(function () {
+        var n = $(this).attr("name");
+        $("#" + n).hide();
+    });
+    $("input[id$='show']").change(function () {
+        var n = $(this).attr("name");
+        $("#" + n).show();
+    });        
+
     /*
      * As duas funções a seguir servem para exibir ou ocultar uma div em função
      * do seu nome

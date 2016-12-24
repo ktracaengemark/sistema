@@ -24,11 +24,9 @@
         <script src='<?php echo base_url(); ?>js/pt-br.js'></script>        
         <script src='<?php echo base_url(); ?>js/jquery.calendrical.js'></script>
         <script src='<?php echo base_url(); ?>js/knockout-min.js'></script>
-		<script src='<?php echo base_url(); ?>js/jquery.js"></script>
-		<script src='<?php echo base_url(); ?>js/jquery.js"></script>
-        <script src='<?php echo base_url(); ?>js/jquery.ui.js"></script>
-		<script type="text/javascript" src="js/main.js"></script>
-		<script src='<?php echo base_url(); ?>js/main.js'></script>
+        <!--<script src='<?php echo base_url(); ?>js/jquery-ui.js'></script>
+        <!--<script type='text/javascript" src="js/main.js'></script>
+        <script src='<?php echo base_url(); ?>js/main.js'></script>-->
         
         <!-- teste -->
        

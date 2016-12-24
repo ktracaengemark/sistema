@@ -35,7 +35,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap.css">
 
         <!-- Custom styles for this template -->
-		<link rel="stylesheet" href="<?php echo base_url(); ?>css/jquery.ui.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>css/jquery-ui.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap-table.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap-datepicker.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap-datetimepicker.min.css">

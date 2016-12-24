@@ -1,7 +1,10 @@
 <?php
+
 #controlador de Login
 defined('BASEPATH') OR exit('No direct script access allowed');
+
 class Tratamentos extends CI_Controller {
+
     public function __construct() {
         parent::__construct();
         #load libraries
@@ -13,6 +16,7 @@ class Tratamentos extends CI_Controller {
         $this->load->view('basico/header');
         $this->load->view('basico/nav_principal');
     }
+
     public function index() {
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -24,6 +28,7 @@ class Tratamentos extends CI_Controller {
         #load footer view
         $this->load->view('basico/footer');
     }
+
     public function cadastrar($idApp_Cliente = NULL, $idApp_ContatoCliente = NULL) {
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -32,41 +37,41 @@ class Tratamentos extends CI_Controller {
         else
             $data['msg'] = '';
         $data['query'] = quotes_to_entities($this->input->post(array(
-            'idApp_Tratamentos',
-            'idApp_Agenda',
-            'idApp_Cliente',
-            'Data',
-            'HoraInicio',
-            'HoraFim',
-            'Paciente',
-            'idTab_TipoTratamentos',
-            'idApp_ContatoCliente',
-            'idApp_Profissional',
-            'Procedimento',
-            'Obs',
-                ), TRUE));
+                    'idApp_Tratamentos',
+                    'idApp_Agenda',
+                    'idApp_Cliente',
+                    'Data',
+                    'HoraInicio',
+                    'HoraFim',
+                    'Paciente',
+                    'idTab_TipoTratamentos',
+                    'idApp_ContatoCliente',
+                    'idApp_Profissional',
+                    'Procedimento',
+                    'Obs',
+                        ), TRUE));
 
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
         //comentado fim) mas por enquanto, se está funcionando, vou deixar assim.
 
 
         $data['servico'] = quotes_to_entities($this->input->post(array(
-            'SCount',
-            'idTab_Servico1',
-            'ValorServVenda1',
-        ), TRUE));
+                    'SCount',
+                    'idTab_Servico1',
+                    'ValorServVenda1',
+                        ), TRUE));
 
 
         $data['servico'] = array();
 
         $data['produto'] = quotes_to_entities($this->input->post(array(
-            'PCount',
-            'idTab_Produto1',
-            'ValorProdVenda1',
-            'Quantidade1',
-        ), TRUE));
+                    'PCount',
+                    'idTab_Produto1',
+                    'ValorProdVenda1',
+                    'Quantidade1',
+                        ), TRUE));
 
-		$data['produto'] = array();
+        $data['produto'] = array();
 
         $data['orcamento']['OrcamentoTotal'] = $this->input->post('OrcamentoTotal');
         (!$this->input->post('SCount')) ? $data['servico']['SCount'] = 1 : $data['servico']['SCount'] = $this->input->post('SCount');
@@ -76,36 +81,33 @@ class Tratamentos extends CI_Controller {
         //$data['lista']['Produtos'] = $this->Tratamentos_model->lista_produtos();
 
         /*
-        echo $data['lista']['Servicos']['1'];
-              echo '<br>';
-              echo "<pre>";
-              print_r($data['lista']['Servicos']);
-              echo "</pre>";
-              exit();
+          echo $data['lista']['Servicos']['1'];
+          echo '<br>';
+          echo "<pre>";
+          print_r($data['lista']['Servicos']);
+          echo "</pre>";
+          exit();
          */
         $sq = '';
-        if ($data['servico']['SCount']>1) {
+        if ($data['servico']['SCount'] > 1) {
 
-            $j=1;
-            for($i=1;$i<=$data['servico']['SCount'];$i++) {
+            $j = 1;
+            for ($i = 1; $i <= $data['servico']['SCount']; $i++) {
 
-                if ($this->input->post('idTab_Servico'.$i)) {
-                    $data['servico']['idTab_Servico'.$j] = $this->input->post('idTab_Servico'.$i);
+                if ($this->input->post('idTab_Servico' . $i)) {
+                    $data['servico']['idTab_Servico' . $j] = $this->input->post('idTab_Servico' . $i);
                     //$data['servico']['ValorServVenda'.$j] = $data['lista']['Servicos'][$this->input->post('idTab_Servico'.$i)];
-                    $data['servico']['ValorServVenda'.$j] = $this->input->post('ValorServVenda'.$i);
+                    $data['servico']['ValorServVenda' . $j] = $this->input->post('ValorServVenda' . $i);
 
-                    $sq = $sq . '("' . $this->input->post('idTab_Servico'.$i) . '", ';
+                    $sq = $sq . '("' . $this->input->post('idTab_Servico' . $i) . '", ';
                     //$sq = $sq . '\'' . $this->input->post('ValorServVenda'.$i) . '\'), ';
                     $sq = $sq . '"0.00"), ';
 
                     $j++;
                 }
-
             }
-            $data['servico']['SCount'] = $j-1;
-
-        }
-        else {
+            $data['servico']['SCount'] = $j - 1;
+        } else {
 
             $data['servico']['idTab_Servico1'] = $this->input->post('idTab_Servico1');
             $data['servico']['ValorServVenda1'] = $this->input->post('ValorServVenda1');
@@ -115,43 +117,39 @@ class Tratamentos extends CI_Controller {
             //$j=1;
             $data['servico']['SCount'] = 1;
         }
-        $sq = substr($sq, 0, strlen($sq)-2);
+        $sq = substr($sq, 0, strlen($sq) - 2);
 
         /*
-              echo '<br>';
-              echo "<pre>";
-              print_r($data['servico']);
-              echo "</pre>";
-              exit();
-          */
+          echo '<br>';
+          echo "<pre>";
+          print_r($data['servico']);
+          echo "</pre>";
+          exit();
+         */
         $pq = '';
-        if ($data['produto']['PCount']>1) {
+        if ($data['produto']['PCount'] > 1) {
 
-            $j=1;
-            for($i=0;$i<=$data['produto']['PCount'];$i++) {
+            $j = 1;
+            for ($i = 0; $i <= $data['produto']['PCount']; $i++) {
 
-                if ($this->input->post('idTab_Produto'.$i)) {
-                    $data['produto']['idTab_Produto'.$j] = $this->input->post('idTab_Produto'.$i);
-                    $data['produto']['ValorProdVenda'.$j] = $this->input->post('ValorProdVenda'.$i);
-                    $data['produto']['Quantidade'.$j] = $this->input->post('Quantidade'.$i);
-                    $data['produto']['SubtotalProduto'.$j] = $this->input->post('SubtotalProduto'.$i);
+                if ($this->input->post('idTab_Produto' . $i)) {
+                    $data['produto']['idTab_Produto' . $j] = $this->input->post('idTab_Produto' . $i);
+                    $data['produto']['ValorProdVenda' . $j] = $this->input->post('ValorProdVenda' . $i);
+                    $data['produto']['Quantidade' . $j] = $this->input->post('Quantidade' . $i);
+                    $data['produto']['SubtotalProduto' . $j] = $this->input->post('SubtotalProduto' . $i);
 
-                    $pq = $pq . '(\'' . $this->input->post('idTab_Produto'.$i) . '\', ';
+                    $pq = $pq . '(\'' . $this->input->post('idTab_Produto' . $i) . '\', ';
                     //$pq = $pq . '\'' . $this->input->post('ValorProdVenda'.$i) . '\', ';
                     $pq = $pq . '\'0.00\', ';
-                    $pq = $pq . '\'' . $this->input->post('Quantidade'.$i) . '\'), ';
+                    $pq = $pq . '\'' . $this->input->post('Quantidade' . $i) . '\'), ';
 
                     $j++;
-
                 }
-
             }
-            $data['produto']['PCount'] = $j-1;
+            $data['produto']['PCount'] = $j - 1;
             //echo '<br>';
             //exit();
-
-        }
-        else {
+        } else {
 
             $data['produto']['idTab_Produto1'] = $this->input->post('idTab_Produto1');
             $data['produto']['ValorProdVenda1'] = $this->input->post('ValorProdVenda1');
@@ -164,15 +162,15 @@ class Tratamentos extends CI_Controller {
 
             $data['produto']['PCount'] = 1;
         }
-        $pq = substr($pq, 0, strlen($pq)-2);
+        $pq = substr($pq, 0, strlen($pq) - 2);
 
         /*
-              echo '<br>';
-              echo "<pre>";
-              print_r($data['produto']);
-              echo "</pre>";
-              exit();
-        */
+          echo '<br>';
+          echo "<pre>";
+          print_r($data['produto']);
+          echo "</pre>";
+          exit();
+         */
 
         //Fim do trecho de código que dá pra melhorar
 
@@ -199,7 +197,7 @@ class Tratamentos extends CI_Controller {
         );
 
         ($data['query']['Paciente'] == 'D') ?
-            $data['div']['Paciente'] = '' : $data['div']['Paciente'] = 'style="display: none;"';
+                        $data['div']['Paciente'] = '' : $data['div']['Paciente'] = 'style="display: none;"';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
@@ -216,7 +214,7 @@ class Tratamentos extends CI_Controller {
         $data['select']['Servico'] = $this->Basico_model->select_servico();
         $data['select']['Produto'] = $this->Basico_model->select_produto();
         $data['select']['ContatoCliente'] = $this->Tratamentos_model->select_contatocliente_cliente($data['query']['idApp_Cliente']);
-        $data['select']['Paciente'] = array (
+        $data['select']['Paciente'] = array(
             'R' => 'O Próprio',
             'D' => 'ContatoCliente',
         );
@@ -231,24 +229,16 @@ class Tratamentos extends CI_Controller {
         $data['timepicker'] = 'TimePicker';
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
-
-
-		if ($data['query']['Obs'])
+        if ($data['query']['Obs'])
             $data['collapse'] = '';
-
         else
             $data['collapse'] = 'class="collapse"';
 
         #$data['sidebar'] = 'col-sm-3 col-md-2';
         #$data['main'] = 'col-sm-7 col-md-8';
-
-
-
-
-
         #run form validation
         if ($this->form_validation->run() === FALSE) {
-        //if (1==1) {
+            //if (1==1) {
             $this->load->view('tratamentos/form_tratamentos', $data);
         } else {
             $data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
@@ -273,8 +263,8 @@ class Tratamentos extends CI_Controller {
                 $this->load->view('tratamentos/form_tratamentos', $data);
             } else {
 
-                $this->Tratamentos_model->set_dados_dinamicos('App_Servico','idTab_Servico, ValorServVenda',$sq);
-                $this->Tratamentos_model->set_dados_dinamicos('App_Produto','idTab_Produto, ValorProdVenda, Quantidade',$pq);
+                $this->Tratamentos_model->set_dados_dinamicos('App_Servico', 'idTab_Servico, ValorServVenda', $sq);
+                $this->Tratamentos_model->set_dados_dinamicos('App_Produto', 'idTab_Produto, ValorProdVenda, Quantidade', $pq);
                 $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idApp_Tratamentos'], FALSE);
                 $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Tratamentos', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
@@ -285,6 +275,7 @@ class Tratamentos extends CI_Controller {
         }
         $this->load->view('basico/footer');
     }
+
     public function alterar($idApp_Cliente = FALSE, $idApp_Tratamentos = FALSE) {
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -319,8 +310,7 @@ class Tratamentos extends CI_Controller {
             $data['query']['Data'] = $this->basico->mascara_data($dataini[0], 'barras');
             $data['query']['HoraInicio'] = substr($dataini[1], 0, 5);
             $data['query']['HoraFim'] = substr($datafim[1], 0, 5);
-        }
-        else {
+        } else {
             $data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
             $data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraFim'];
         }
@@ -344,7 +334,7 @@ class Tratamentos extends CI_Controller {
         );
 
         ($data['query']['Paciente'] == 'D') ?
-            $data['div']['Paciente'] = '' : $data['div']['Paciente'] = 'style="display: none;"';
+                        $data['div']['Paciente'] = '' : $data['div']['Paciente'] = 'style="display: none;"';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
@@ -358,7 +348,7 @@ class Tratamentos extends CI_Controller {
         $data['select']['TipoTratamentos'] = $this->Basico_model->select_tipo_tratamentos();
         $data['select']['Profissional'] = $this->Basico_model->select_profissional();
         $data['select']['ContatoCliente'] = $this->Tratamentos_model->select_contatocliente_cliente($data['query']['idApp_Cliente']);
-        $data['select']['Paciente'] = array (
+        $data['select']['Paciente'] = array(
             'R' => 'O Próprio',
             'D' => 'ContatoCliente',
         );
@@ -373,9 +363,8 @@ class Tratamentos extends CI_Controller {
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
 
-		if ($data['query']['Obs'])
+        if ($data['query']['Obs'])
             $data['collapse'] = '';
-
         else
             $data['collapse'] = 'class="collapse"';
 
@@ -418,6 +407,7 @@ class Tratamentos extends CI_Controller {
         }
         $this->load->view('basico/footer');
     }
+
     public function listar($idApp_Cliente = NULL) {
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -443,9 +433,11 @@ class Tratamentos extends CI_Controller {
         $this->load->view('tratamentos/list_tratamentos', $data);
         $this->load->view('basico/footer');
     }
+
     /*
      * Cadastrar/Alterar Eventos
      */
+
     public function cadastrar_evento($idApp_Cliente = NULL, $idApp_Agenda = NULL) {
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -507,6 +499,7 @@ class Tratamentos extends CI_Controller {
         }
         $this->load->view('basico/footer');
     }
+
     public function alterar_evento($idApp_Tratamentos = FALSE) {
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -580,4 +573,5 @@ class Tratamentos extends CI_Controller {
         }
         $this->load->view('basico/footer');
     }
+
 }
