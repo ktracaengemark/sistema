@@ -19,6 +19,88 @@
 
                 <!--App_OrcaTrata-->
 
+<!--
+                <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="heading1" data-toggle="collapse" data-parent="#accordion1" data-target="#collapse1">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle">
+                                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                                    Orçamento - Produtos e Serviços
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse <?php echo $orcamentoin ?>" role="tabpanel" aria-labelledby="heading1">
+                            <div class="panel-body">
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="ValorOrca">Orçamento:</label><br>
+                                            <div class="input-group" id="txtHint">
+                                                <span class="input-group-addon" id="basic-addon1">R$</span>
+                                                <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
+                                                       name="ValorOrca" value="<?php echo $orcatrata['ValorOrca'] ?>">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="ValorEntOrca">Entrada:</label><br>
+                                            <div class="input-group" id="txtHint">
+                                                <span class="input-group-addon" id="basic-addon1">R$</span>
+                                                <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
+                                                       name="ValorEntOrca" value="<?php echo $orcatrata['ValorEntOrca'] ?>">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="ValorResOrca">Resta:</label><br>
+                                            <div class="input-group" id="txtHint">
+                                                <span class="input-group-addon" id="basic-addon1">R$</span>
+                                                <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
+                                                       name="ValorResOrca" value="<?php echo $orcatrata['ValorResOrca'] ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+-->
+
+                <div class="form-group">
+                    <div class="row">                        
+                        <div class="col-md-3">
+                            <label for="ValorOrca">Orçamento:</label><br>
+                            <div class="input-group" id="txtHint">
+                                <span class="input-group-addon" id="basic-addon1">R$</span>
+                                <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
+                                       name="ValorOrca" value="<?php echo $orcatrata['ValorOrca'] ?>">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="ValorEntOrca">Entrada:</label><br>
+                            <div class="input-group" id="txtHint">
+                                <span class="input-group-addon" id="basic-addon1">R$</span>
+                                <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
+                                       name="ValorEntOrca" value="<?php echo $orcatrata['ValorEntOrca'] ?>">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="ValorResOrca">Resta:</label><br>
+                            <div class="input-group" id="txtHint">
+                                <span class="input-group-addon" id="basic-addon1">R$</span>
+                                <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
+                                       name="ValorResOrca" value="<?php echo $orcatrata['ValorResOrca'] ?>">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-2">
@@ -128,55 +210,6 @@
                     </div>
 
                     <hr>
-
-                    <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-danger">
-                            <div class="panel-heading" role="tab" id="heading1" data-toggle="collapse" data-parent="#accordion1" data-target="#collapse1">
-                                <h4 class="panel-title">
-                                    <a class="accordion-toggle">
-                                        <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                                        Orçamento - Produtos e Serviços
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapse1" class="panel-collapse collapse <?php echo $orcamentoin ?>" role="tabpanel" aria-labelledby="heading1">
-                                <div class="panel-body">
-
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label for="ValorOrca">Orçamento:</label><br>
-                                                <div class="input-group" id="txtHint">
-                                                    <span class="input-group-addon" id="basic-addon1">R$</span>
-                                                    <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
-                                                           name="ValorOrca" value="<?php echo $orcatrata['ValorOrca'] ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <label for="ValorEntOrca">Entrada:</label><br>
-                                                <div class="input-group" id="txtHint">
-                                                    <span class="input-group-addon" id="basic-addon1">R$</span>
-                                                    <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
-                                                           name="ValorEntOrca" value="<?php echo $orcatrata['ValorEntOrca'] ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <label for="ValorResOrca">Resta:</label><br>
-                                                <div class="input-group" id="txtHint">
-                                                    <span class="input-group-addon" id="basic-addon1">R$</span>
-                                                    <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
-                                                           name="ValorResOrca" value="<?php echo $orcatrata['ValorResOrca'] ?>">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-warning">
