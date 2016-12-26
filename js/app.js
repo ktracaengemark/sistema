@@ -12,13 +12,13 @@ var agora = n.substring(0, tam);
  var items = [];
  alert('la vai');
  $.getJSON("dt.json", function (data) {
- 
- 
+
+
  $.each(data, function (key, val) {
  items.push(val + '<br>');
  });
- 
- 
+
+
  alert('opa');
  });
  $("#demo").html(items);
@@ -35,30 +35,55 @@ $.getJSON("rpc/dt.json", function (result) {
         $teste.append("<option>" + result.value + "</option>");
         alert(result.length);
     }
-    
+
 });
  */
 
+ /*
+  * Função criada para funcionar junto com o recurso de hide/show do jquery nos
+  * casos de radio button, que exigem um tratamento especial para funcionar
+  * corretamente
+  *
+  * @param {string} campo
+  * @param {string} hideshow
+  */
+ function radioButtonColorNS(campo, hideshow) {
+
+     if (hideshow == 'show') {
+        active = 'show';
+        not = 'hide';
+     } else {
+        active = 'hide';
+        not = 'show';
+     }
+
+     $('label[name="StatusOrca_' + not + '"]').removeClass();
+     $('label[name="StatusOrca_' + not + '"]').addClass("btn btn-default");
+
+     $('label[name="StatusOrca_' + active + '"]').removeClass();
+     $('label[name="StatusOrca_' + active + '"]').addClass("btn btn-warning active");
+
+ }
 
 /*
  * Função responsável por capturar o serviço/produto selecionado e buscar seu valor
  * correspondente no arquivo Valor_json.php. Após obter o valor ele é
  * aplicado no campo de Valor correspondente.
- * 
+ *
  * @param {int} id
  * @param {string} campo
  * @param {string} tabela
  * @returns {decimal}
  */
 function buscaValor(id, campo, tabela) {
-    
+
     //sequencia de comandos necessária para estrair a pasta raiz do endereço,
     //ou seja, qual módulo está sendo utilizado (ex: salao, odonto, etc)
     str = window.location.pathname;
     str = str.substring(1);
     pos = str.indexOf('/');
     str = str.substring(0, pos);
-       
+
     $.ajax({
         // url para o arquivo json.php
         url: window.location.origin + "/" + str + "/Valor_json.php?tabela=" + tabela,
@@ -69,94 +94,94 @@ function buscaValor(id, campo, tabela) {
 
             // executo este laço para ecessar os itens do objeto javaScript
             for ($i = 0; $i < data.length; $i++) {
-                
+
                 if (data[$i].id == id) {
-                    
+
                     //carrega o valor no campo de acordo com a opção selecionada
                     $('#'+campo).val(data[$i].valor);
-                    
+
                     //para cada valor carregado o orçamento é calculado/atualizado
                     //através da chamada de sua função
                     calculaOrcamento();
                     break;
-                }                    
-                
+                }
+
             }//fim do laço
 
         }
     });//termina o ajax
-    
+
 
 }
 
 /*
  * Função responsável por calcular o subtotal dos campos de produto
- * 
+ *
  * @param {int} quant
  * @param {string} campo
  * @param {int} num
  * @returns {decimal}
  */
 function calculaSubtotal(quant, campo, num) {
-    
+
     //variável valor recebe o valor do produto selecionado
     var valor = $("#idTab_Produto"+num).val();
-    
+
     //o subtotal é calculado como o produto da quantidade pelo seu valor
     var subtotal = (quant * valor.replace(",","."));
     subtotal = subtotal.toFixed(2).replace(".",",");
     //o subtotal é escrito no seu campo no formulário
     $('#Quantidade'+num).val(subtotal);
-    
+
     //para cada vez que o subtotal for calculado o orçamento também será atualizado
     calculaOrcamento();
-    
+
 }
 
 /*
  * Função responsável por calcular o orçamento total
- * 
+ *
  * @returns {int}
  */
 function calculaOrcamento() {
-    
+
     //captura o número incrementador do formulário, que controla quantos campos
     //foram acrescidos tanto para serviços quanto para produtos
     var sc = parseFloat($('#SCount').val().replace(",","."));
     var pc = parseFloat($('#PCount').val().replace(",","."));
     //define o subtotal inicial em 0.00
     var subtotal = 0.00;
-        
+
     //variável incrementadora
-    var i = 1;       
+    var i = 1;
     //percorre todos os campos de serviço, somando seus valores
     while (i <= sc) {
-        
+
         //soma os valores apenas dos campos que existirem, o que forem apagados
         //ou removidos são ignorados
         if ($('#idTab_Servico'+i).val())
             subtotal += parseFloat($('#idTab_Servico'+i).val().replace(",","."));
-        
+
         //incrementa a variável i
         i++;
     }
-    
+
     //faz o mesmo que o laço anterior mas agora para produtos
-    var i = 1;    
+    var i = 1;
     while (i <= pc) {
-        
+
         if ($('#Quantidade'+i).val())
             subtotal += parseFloat($('#Quantidade'+i).val().replace(",","."));
-        
+
         i++;
-    }    
-    
-    //calcula o subtotal, configurando para duas casas decimais e trocando o 
+    }
+
+    //calcula o subtotal, configurando para duas casas decimais e trocando o
     //ponto para o vírgula como separador de casas decimais
     subtotal = subtotal.toFixed(2).replace(".",",");
-    
+
     //escreve o subtotal no campo do formulário
-    $('#OrcamentoTotal').val(subtotal);  
+    $('#OrcamentoTotal').val(subtotal);
 }
 
 $("#first-choice").change(function () {
@@ -218,9 +243,9 @@ $(document).ready(function () {
             $(this).val(first + '-' + lastfour);
         }
     });
-    
-    $("[data-toggle='tooltip']").tooltip();    
-       
+
+    $("[data-toggle='tooltip']").tooltip();
+
     $('input:radio[id="radio"]').change(function() {
 
         var value = $(this).val();
@@ -233,33 +258,33 @@ $(document).ready(function () {
             var btn = "btn btn-primary active";
         else
             var btn = "btn btn-danger active";
-        
+
         $('label[name="radio"]').removeClass();
         $('label[name="radio"]').addClass("btn btn-default");
         $('#radio'+ value).addClass(btn);
 
-    });    
+    });
 
     $('input:radio[id="radiogeral"]').change(function() {
-        
+
         var value = $(this).val();
         var name = $(this).attr("name");
-        
+
         $('label[name="radio_' + name + '"]').removeClass();
         $('label[name="radio_' + name + '"]').addClass("btn btn-default");
         $('#radiogeral'+ value).addClass("btn btn-warning active");
 
-    });     
+    });
 
     var ps = 1; //initlal text box count
     $(".add_field_button").click(function(e){ //on add input button click
         e.preventDefault();
-        
-        //alert( $("#SCount").val() );      
+
+        //alert( $("#SCount").val() );
         ps++; //text box increment
         $("#SCount").val(ps);
-        
-        //$(".input_fields_wrap").append('<div><input type="text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box 
+
+        //$(".input_fields_wrap").append('<div><input type="text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
         $(".input_fields_wrap").append('\
             <div class="form-group" id="1div'+ps+'">\
                 <div class="row">\
@@ -319,19 +344,19 @@ $(document).ready(function () {
     });
 
     $(".input_fields_wrap").on("click",".remove_field", function(e){ //user click on remove text
-        $("#1div"+$(this).attr("id")).remove();  
+        $("#1div"+$(this).attr("id")).remove();
         //após remover o campo refaz o cálculo do orçamento
-        calculaOrcamento();        
+        calculaOrcamento();
     })
 
     //adiciona campos dinamicamente
     var pc = 1; //initlal text box count
     $(".add_field_button2").click(function(e){ //on add input button click
         e.preventDefault();
-        
+
         pc++; //text box increment
         $("#PCount").val(pc);
-        
+
         $(".input_fields_wrap2").append('\
             <div class="form-group" id="2div'+pc+'">\
                 <div class="row">\
@@ -416,20 +441,11 @@ $(document).ready(function () {
     $("#addValues").change(function () {
         //var n = $(this).attr("value");
         //var n = $("option:selected", this);
-        
+
         alert (this.value);
-                
+
         //alert('oi');
     });
-
-    $("input[id$='hide']").change(function () {
-        var n = $(this).attr("name");
-        $("#" + n).hide();
-    });
-    $("input[id$='show']").change(function () {
-        var n = $(this).attr("name");
-        $("#" + n).show();
-    });        
 
     /*
      * As duas funções a seguir servem para exibir ou ocultar uma div em função
@@ -442,38 +458,40 @@ $(document).ready(function () {
     $("input[id$='show']").click(function () {
         var n = $(this).attr("name");
         $("#" + n).show();
-    });    
-    
+    });
+
     /*
-     * Mesma função que a de cima mas com uma modificação para funcionar nos 
+     * Mesma função que a de cima mas com uma modificação para funcionar nos
      * radios buttons
      */
-    $("input[id$='radiohide']").click(function () {
-        var n = $(this).attr("name");
-        $("#" + n).hide();
-    });
-    $("input[id$='radioshow']").click(function () {
-        var n = $(this).attr("name");
-        $("#" + n).show();
-    });  
-    
+     $("input[id$='hide']").change(function () {
+         var n = $(this).attr("name");
+         $("#" + n).hide();
+         radioButtonColorNS(n, 'hide');
+     });
+     $("input[id$='show']").change(function () {
+         var n = $(this).attr("name");
+         $("#" + n).show();
+         radioButtonColorNS(n, 'show');
+     });
+
     /*
-     * A função a seguir servem para exibir ou ocultar uma div em função do 
+     * A função a seguir servem para exibir ou ocultar uma div em função do
      * valor selecionado no select/pulldown
      */
     $('#SelectShowHide').change(function () {
         $('.colors').hide();
         $('.div' + $(this).val()).show();
     });
-    
+
     $('#SelectShowHideId').change(function () {
         var n = $(this).attr("name");
         //alert(n + $(this).val());
         //$('#' + n).hide();
         $('.' + n).hide();
         $('#' + n + $(this).val()).show();
-    });    
-    
+    });
+
     $('.Chosen').chosen({
         disable_search_threshold: 10,
         multiple_text: "Selecione uma ou mais opções",
@@ -820,14 +838,14 @@ $('#calendar').fullCalendar({
         if (event.Evento == 1)
             var title = "<b>Evento Agendado</b><br><br><b>Obs:</b> " + event.Obs;
         else {
-            
+
             if (event.Paciente == 'D')
                 var title = "<b>" + event.title + "</b><br><b>Responsável:</b> " + event.subtitle + "<br>\n\<b>Tipo de Consulta:</b> " + event.TipoConsulta + "<br><b>Procedimento:</b> " + event.Procedimento + "<br><b>Profissional:</b> " + event.Profissional;
             else
                 var title = "<b>" + event.title + "</b><br>\n\<b>Tipo de Consulta:</b> " + event.TipoConsulta + "<br><b>Procedimento:</b> " + event.Procedimento + "<br><b>Profissional:</b> " + event.Profissional;
         }
-            
-        
+
+
         $(element).tooltip({
             title: title,
             container: 'body',
@@ -875,8 +893,8 @@ function redirecionar(x) {
 }
 
 /*
- * Função para capturar a url com o objetivo de obter a data, após criar/alterar 
- * uma consulta, e assim usar a função gotoDate do Fullcalendar para mostrar a 
+ * Função para capturar a url com o objetivo de obter a data, após criar/alterar
+ * uma consulta, e assim usar a função gotoDate do Fullcalendar para mostrar a
  * agenda na data escolhida
  */
 var getUrlParameter = function getUrlParameter(sParam) {

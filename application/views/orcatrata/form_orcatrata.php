@@ -34,7 +34,7 @@
 
 
                         <div class="col-md-2 form-inline">
-                            <label for="StatusOrca">Orçamento Aprovado?:</label><br>
+                            <label for="StatusOrca">Orçamento Aprovado?</label><br>
                             <div class="form-group">
                                 <div class="btn-group" data-toggle="buttons">
                                     <?php
@@ -46,14 +46,14 @@
 
                                         if ($orcatrata['StatusOrca'] == $key) {
                                             echo ''
-                                            . '<label class="btn btn-warning active" name="StatusOrca">'
+                                            . '<label class="btn btn-warning active" name="StatusOrca_' . $hideshow . '">'
                                             . '<input type="radio" name="StatusOrca" id="' . $hideshow . '" '
                                             . 'autocomplete="off" value="' . $key . '" checked>' . $row
                                             . '</label>'
                                             ;
                                         } else {
                                             echo ''
-                                            . '<label class="btn btn-warning" name="StatusOrca">'
+                                            . '<label class="btn btn-default" name="StatusOrca_' . $hideshow . '">'
                                             . '<input type="radio" name="StatusOrca" id="' . $hideshow . '" '
                                             . 'autocomplete="off" value="' . $key . '" >' . $row
                                             . '</label>'
@@ -64,14 +64,14 @@
 
                                 </div>
                             </div>
-                        </div>     
+                        </div>
 
                     </div>
                 </div>
 
-                <div id="StatusOrca" <?php echo $div['StatusOrca']; ?>>                
+                <div id="StatusOrca" <?php echo $div['StatusOrca']; ?>>
 
-                    <hr>                                
+                    <hr>
 
                     <div class="form-group">
                         <div class="row">
@@ -125,7 +125,7 @@
                             </div>
 
                         </div>
-                    </div>             
+                    </div>
 
                     <hr>
 
@@ -176,7 +176,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>  
+                    </div>
 
                     <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-warning">
@@ -298,7 +298,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                
+                    </div>
 
                     <div class="panel-group" id="accordion3" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-success">
@@ -357,7 +357,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                
+                    </div>
 
                     <hr>
 

@@ -35,10 +35,10 @@ class Login extends CI_Controller {
 
     public function index() {
 
-        #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] = 
+        #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'salao';
         $_SESSION['log']['idTab_Modulo'] = 1;
-        
+
         ###################################################
         #só pra eu saber quando estou no banco de testes ou de produção
         #$CI = & get_instance();
@@ -98,7 +98,7 @@ class Login extends CI_Controller {
                 #$this->basico->erro($msg);
                 $data['msg'] = $this->basico->msg('<strong>Senha</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
                 $this->load->view('form_login', $data);
-                                        
+
             } else {
                 #initialize session
                 $this->load->driver('session');
@@ -126,7 +126,7 @@ class Login extends CI_Controller {
 
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'odonto';
         $_SESSION['log']['idTab_Modulo'] = 1;
-        
+
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
@@ -252,9 +252,9 @@ class Login extends CI_Controller {
     }
 
     public function confirmar($codigo) {
-        
+
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'odonto';
-        $_SESSION['log']['idTab_Modulo'] = 1;        
+        $_SESSION['log']['idTab_Modulo'] = 1;
 
         $data['anterior'] = array(
             'Inativo' => '1',
@@ -285,8 +285,8 @@ class Login extends CI_Controller {
     public function recuperar() {
 
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'odonto';
-        $_SESSION['log']['idTab_Modulo'] = 1;        
-        
+        $_SESSION['log']['idTab_Modulo'] = 1;
+
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
@@ -342,7 +342,7 @@ class Login extends CI_Controller {
                 $this->email->send();
 
                 $data['aviso'] = ''
-                        . '   
+                        . '
                     <div class="alert alert-success" role="alert">
                         <h4>
                             <p><b>Link enviado com sucesso!</b></p>
@@ -362,9 +362,9 @@ class Login extends CI_Controller {
     }
 
     public function trocar_senha($codigo = NULL) {
-        
+
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'odonto';
-        $_SESSION['log']['idTab_Modulo'] = 1;        
+        $_SESSION['log']['idTab_Modulo'] = 1;
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -452,7 +452,7 @@ class Login extends CI_Controller {
 
         #clear de session data
         $this->session->unset_userdata('log');
-        session_unset();     // unset $_SESSION variable for the run-time 
+        session_unset();     // unset $_SESSION variable for the run-time
         session_destroy();   // destroy session data in storage
 
         /*
@@ -464,7 +464,7 @@ class Login extends CI_Controller {
           $this->basico->alerta($msg);
           $this->load->view('login');
           $this->load->view('basico/footer');
-         * 
+         *
          */
 
         redirect(base_url() . 'login/' . $data['msg']);
