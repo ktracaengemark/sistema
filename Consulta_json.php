@@ -1,18 +1,19 @@
 <?php
-#$link = mysql_connect('159.203.125.243', 'usuario', '20UtpJ15');
-$link = mysql_connect('localhost', 'root', '');
+
+session_start();
+
+
+$link = mysql_connect($_SESSION['db']['hostname'], $_SESSION['db']['username'], $_SESSION['db']['password']);
 if (!$link) {
     die('Não foi possível conectar: ' . mysql_error());
 }
 
-$db = mysql_select_db('app', $link);
+$db = mysql_select_db($_SESSION['db']['database'], $link);
 if (!$db) {
     die('Não foi possível selecionar banco de dados: ' . mysql_error());
 }
 
 #echo 'Conexão bem sucedida';
-
-session_start();
 
 $result = mysql_query(
         'SELECT
@@ -24,14 +25,14 @@ $result = mysql_query(
             C.DataInicio,
             C.DataFim,
             C.Procedimento,
-            C.Paciente, 
+            C.Paciente,
             C.Obs,
             C.idTab_Status,
             TC.TipoConsulta,
             C.Evento
-        FROM 
+        FROM
             app.App_Agenda AS A,
-            app.App_Consulta AS C 
+            app.App_Consulta AS C
                 LEFT JOIN app.App_Cliente AS R ON C.idApp_Cliente = R.idApp_Cliente
                 LEFT JOIN app.App_ContatoCliente AS D ON C.idApp_ContatoCliente = D.idApp_ContatoCliente
                 LEFT JOIN app.App_Profissional AS P ON C.idApp_Profissional = P.idApp_Profissional
@@ -51,17 +52,17 @@ while ($row = mysql_fetch_assoc($result)) {
         $title = utf8_encode($row['Obs']);
     } else {
         $c = '/' . $row['idApp_Cliente'];
-        
+
         if ($row['Paciente'] == 'D') {
             $title = utf8_encode($row['NomeContatoCliente']);
             $subtitle = utf8_encode($row['NomeCliente']);
-            $profissional = utf8_encode($row['NomeProfissional']);               
+            $profissional = utf8_encode($row['NomeProfissional']);
         }
         else {
             $title = utf8_encode($row['NomeCliente']);
-            $profissional = utf8_encode($row['NomeProfissional']);               
+            $profissional = utf8_encode($row['NomeProfissional']);
         }
-        
+
     }
 
     $url = 'consulta/alterar' . $c . '/' . $row['idApp_Consulta'];

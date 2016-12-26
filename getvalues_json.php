@@ -1,18 +1,19 @@
 <?php
 
-$link = mysql_connect('159.203.125.243', 'usuario', '20UtpJ15');
+session_start();
+
+
+$link = mysql_connect($_SESSION['db']['hostname'], $_SESSION['db']['username'], $_SESSION['db']['password']);
 if (!$link) {
     die('Não foi possível conectar: ' . mysql_error());
 }
 
-$db = mysql_select_db('app', $link);
+$db = mysql_select_db($_SESSION['db']['database'], $link);
 if (!$db) {
     die('Não foi possível selecionar banco de dados: ' . mysql_error());
 }
 
 #echo 'Conexão bem sucedida';
-
-session_start();
 
 if ($_GET['q']==1) {
 
@@ -21,8 +22,8 @@ if ($_GET['q']==1) {
                 idTab_Servico,
                 NomeServico,
                 ValorVenda
-            FROM 
-                Tab_Servico 
+            FROM
+                Tab_Servico
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id']
@@ -45,8 +46,8 @@ elseif ($_GET['q'] == 2) {
                 idTab_Produto,
                 NomeProduto,
                 ValorVenda
-            FROM 
-                Tab_Produto 
+            FROM
+                Tab_Produto
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id']
@@ -59,10 +60,10 @@ elseif ($_GET['q'] == 2) {
             'name' => utf8_encode($row['NomeProduto']),
             'value' => $row['ValorVenda'],
         );
-    } 
-    
+    }
+
 }
-    
+
 echo json_encode($event_array);
 mysql_close($link);
 ?>

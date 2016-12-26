@@ -106,6 +106,12 @@ class Login extends CI_Controller {
                 $_SESSION['log']['Usuario'] = $query['Usuario'];
                 $_SESSION['log']['id'] = $query['idSis_Usuario'];
 
+                $this->load->database();
+                $_SESSION['db']['hostname'] = $this->db->hostname;
+                $_SESSION['db']['username'] = $this->db->username;
+                $_SESSION['db']['password'] = $this->db->password;
+                $_SESSION['db']['database'] = $this->db->database;
+
                 if ($this->Login_model->set_acesso($_SESSION['log']['id'], 'LOGIN') === FALSE) {
                     $msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
 

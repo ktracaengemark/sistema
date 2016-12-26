@@ -1,27 +1,28 @@
 <?php
 
-$link = mysql_connect('159.203.125.243', 'usuario', '20UtpJ15');
+session_start();
+
+
+$link = mysql_connect($_SESSION['db']['hostname'], $_SESSION['db']['username'], $_SESSION['db']['password']);
 if (!$link) {
     die('Não foi possível conectar: ' . mysql_error());
 }
 
-$db = mysql_select_db('app', $link);
+$db = mysql_select_db($_SESSION['db']['database'], $link);
 if (!$db) {
     die('Não foi possível selecionar banco de dados: ' . mysql_error());
 }
 
 #echo 'Conexão bem sucedida';
 
-session_start();
-
 $result = mysql_query(
         'SELECT
             *
-        FROM 
+        FROM
             app.Tab_' . $_GET['tabela'] . ' AS T
         WHERE
             T.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-            T.idSis_Usuario = ' . $_SESSION['log']['id'] . '          
+            T.idSis_Usuario = ' . $_SESSION['log']['id'] . '
         ORDER BY T.Nome' . $_GET['tabela'] . ' ASC'
 );
 
