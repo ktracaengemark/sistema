@@ -394,7 +394,8 @@
                                             <div class="input-group" id="txtHint">
                                                 <span class="input-group-addon" id="basic-addon1">R$</span>
                                                 <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
-                                                       name="ValorEntOrca" value="<?php echo $orcatrata['ValorEntOrca'] ?>">
+                                                    onkeyup="calculaResta(this.value)"
+                                                    name="ValorEntOrca" value="<?php echo $orcatrata['ValorEntOrca'] ?>">
                                             </div>
                                         </div>
 
@@ -402,7 +403,7 @@
                                             <label for="ValorResOrca">Resta:</label><br>
                                             <div class="input-group" id="txtHint">
                                                 <span class="input-group-addon" id="basic-addon1">R$</span>
-                                                <input type="text" class="form-control Valor" id="ValorResOrca" maxlength="10" placeholder="0,00"
+                                                <input type="text" class="form-control Valor" id="ValorResOrca" maxlength="10" placeholder="0,00" readonly=""
                                                        name="ValorResOrca" value="<?php echo $orcatrata['ValorResOrca'] ?>">
                                             </div>
                                         </div>
@@ -477,7 +478,7 @@
 
                                 <!--App_parcelasRec-->
                                 <div class="input_fields_parcelas">
-    
+
                                 </div>
 
                             </div>

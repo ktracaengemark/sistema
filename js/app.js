@@ -16,6 +16,49 @@ pos = app.indexOf('/');
 app = app.substring(0, pos);
 
 /*
+ * Função responsável por aplicar a máscara de valor real com separação de
+ * decimais e milhares.
+ *
+ * @param {float} value
+ * @returns {decimal}
+ */
+function mascaraValorReal(value) {
+
+    var r;
+
+    r = value.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+    r = r.replace(/[,.]/g, function (m) {
+        // m is the match found in the string
+        // If `,` is matched return `.`, if `.` matched return `,`
+        return m === ',' ? '.' : ',';
+    });
+
+    return r;
+
+}
+
+/*
+ * Função responsável por calcular o subtotal dos campos de produto
+ *
+ * @param {int} quant
+ * @param {string} campo
+ * @param {int} num
+ * @returns {decimal}
+ */
+function calculaResta(entrada) {
+
+    //recebe o valor do orçamento
+    var orcamento = $("#ValorOrca").val();
+    var resta = (orcamento.replace(".","").replace(",",".") - entrada.replace(".","").replace(",","."));
+
+    resta = mascaraValorReal(resta);
+
+    //o valor é escrito no seu campo no formulário
+    $('#ValorResOrca').val(resta);
+
+}
+
+/*
  * Função responsável por calcular as parcelas do orçamento em função do dados
  * informados no formulário (valor restante / parcelas e datas do vencimento)
  */
@@ -27,8 +70,8 @@ function calculaParcelas() {
     var vencimento = $("#DataVencOrca").val();
 
     //valor de cada parcela
-    var parcorca = (resta.replace(",",".") / parcelas);
-    parcorca = parcorca.toFixed(2).replace(".",",");
+    var parcorca = (resta.replace(".","").replace(",",".") / parcelas);
+    parcorca = mascaraValorReal(parcorca);
 
     //pega a data do primeiro vencimento e separa em dia, mês e ano
     var split = vencimento.split("/");
@@ -194,17 +237,17 @@ function calculaSubtotal(valor, campo, num, tipo) {
         var data = $("#Qtd"+num).val();
 
         //o subtotal é calculado como o produto da quantidade pelo seu valor
-        var subtotal = (valor.replace(",",".") * data);
+        var subtotal = (valor.replace(".","").replace(",",".") * data);
         //alert('>>>'+valor+' :: '+campo+' :: '+num+' :: '+tipo+'<<<');
     } else {
         //variável valor recebe o valor do produto selecionado
         var data = $("#idTab_Produto"+num).val();
 
         //o subtotal é calculado como o produto da quantidade pelo seu valor
-        var subtotal = (valor * data.replace(",","."));
+        var subtotal = (valor * data.replace(".","").replace(",","."));
     }
 
-    subtotal = subtotal.toFixed(2).replace(".",",");
+    subtotal = mascaraValorReal(subtotal);
     //o subtotal é escrito no seu campo no formulário
     $('#QuantidadeProduto'+num).val(subtotal);
 
@@ -222,8 +265,8 @@ function calculaOrcamento() {
 
     //captura o número incrementador do formulário, que controla quantos campos
     //foram acrescidos tanto para serviços quanto para produtos
-    var sc = parseFloat($('#SCount').val().replace(",","."));
-    var pc = parseFloat($('#PCount').val().replace(",","."));
+    var sc = parseFloat($('#SCount').val().replace(".","").replace(",","."));
+    var pc = parseFloat($('#PCount').val().replace(".","").replace(",","."));
     //define o subtotal inicial em 0.00
     var subtotal = 0.00;
 
@@ -235,7 +278,7 @@ function calculaOrcamento() {
         //soma os valores apenas dos campos que existirem, o que forem apagados
         //ou removidos são ignorados
         if ($('#idTab_Servico'+i).val())
-            subtotal += parseFloat($('#idTab_Servico'+i).val().replace(",","."));
+            subtotal += parseFloat($('#idTab_Servico'+i).val().replace(".","").replace(",","."));
 
         //incrementa a variável i
         i++;
@@ -246,14 +289,14 @@ function calculaOrcamento() {
     while (i <= pc) {
 
         if ($('#QuantidadeProduto'+i).val())
-            subtotal += parseFloat($('#QuantidadeProduto'+i).val().replace(",","."));
+            subtotal += parseFloat($('#QuantidadeProduto'+i).val().replace(".","").replace(",","."));
 
         i++;
     }
 
     //calcula o subtotal, configurando para duas casas decimais e trocando o
     //ponto para o vírgula como separador de casas decimais
-    subtotal = subtotal.toFixed(2).replace(".",",");
+    subtotal = mascaraValorReal(subtotal);
 
     //escreve o subtotal no campo do formulário
     $('#ValorOrca').val(subtotal);
