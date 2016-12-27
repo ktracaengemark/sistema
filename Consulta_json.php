@@ -2,7 +2,6 @@
 
 session_start();
 
-
 $link = mysql_connect($_SESSION['db']['hostname'], $_SESSION['db']['username'], $_SESSION['db']['password']);
 if (!$link) {
     die('Não foi possível conectar: ' . mysql_error());

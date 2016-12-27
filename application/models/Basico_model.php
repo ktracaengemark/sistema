@@ -120,7 +120,7 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_tipo_concluido($data = FALSE) {
 
         if ($data === TRUE) {
@@ -136,7 +136,7 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_tipo_tratamentos($data = FALSE) {
 
         if ($data === TRUE) {
@@ -207,8 +207,8 @@ class Basico_model extends CI_Model {
             while (isset($data['auditoriaitem'][$i])) {
                 $data['auditoriaitem'][$i]['idSis_Auditoria'] = $this->db->insert_id();
                 $i++;
-            }                       
-            
+            }
+
             $this->db->insert_batch('Sis_AuditoriaItem', $data['auditoriaitem']);
         }
     }
@@ -246,7 +246,7 @@ class Basico_model extends CI_Model {
             return '';
         }
     }
-    
+
 	public function select_profissional($data = FALSE) {
 
         if ($data === TRUE) {
@@ -261,7 +261,7 @@ class Basico_model extends CI_Model {
                     . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] );
         } else {
             $query = $this->db->query('SELECT idApp_Profissional, NomeProfissional FROM App_Profissional WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
-            
+
             $array = array();
             foreach ($query->result() as $row) {
                 $array[$row->idApp_Profissional] = $row->NomeProfissional;
@@ -270,7 +270,7 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_produto($data = FALSE) {
 
         if ($data === TRUE) {
@@ -278,10 +278,10 @@ class Basico_model extends CI_Model {
                 'SELECT '
                     . 'idTab_Produto, '
                     . 'NomeProduto, '
-                    . 'Quantidade, '
-                    . 'Unidade, '
-                    . 'ValorCompra, '
-                    . 'ValorProdVenda '
+                    . 'QuantidadeProduto, '
+                    . 'UnidadeProduto, '
+                    . 'ValorCompraProduto, '
+                    . 'ValorVendaProduto '
                     . 'FROM '
                     . 'Tab_Produto '
                     . 'WHERE '
@@ -292,15 +292,15 @@ class Basico_model extends CI_Model {
                 'SELECT '
                     . 'idTab_Produto, '
                     . 'NomeProduto, '
-                    . 'Quantidade, '
-                    . 'Unidade, '
-                    . 'ValorCompra, '
-                    . 'ValorProdVenda '
+                    . 'QuantidadeProduto, '
+                    . 'UnidadeProduto, '
+                    . 'ValorCompraProduto, '
+                    . 'ValorVendaProduto '
                     . 'FROM '
                     . 'Tab_Produto '
                     . 'WHERE '
                     . 'idSis_Usuario = ' . $_SESSION['log']['id']);
-            
+
             $array = array();
             foreach ($query->result() as $row) {
                 $array[$row->idTab_Produto] = $row->NomeProduto;
@@ -309,7 +309,7 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_servico($data = FALSE) {
 
         if ($data === TRUE) {
@@ -317,15 +317,15 @@ class Basico_model extends CI_Model {
                 'SELECT '
                     . 'idTab_Servico, '
                     . 'NomeServico, '
-                    . 'ValorServVenda '
+                    . 'ValorVendaServico '
                     . 'FROM '
                     . 'Tab_Servico '
                     . 'WHERE '
                     . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                     . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] );
         } else {
-            $query = $this->db->query('SELECT idTab_Servico, NomeServico, ValorServVenda FROM Tab_Servico WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
-            
+            $query = $this->db->query('SELECT idTab_Servico, NomeServico, ValorVendaServico FROM Tab_Servico WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
+
             $array = array();
             foreach ($query->result() as $row) {
                 $array[$row->idTab_Servico] = $row->NomeServico;

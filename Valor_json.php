@@ -2,7 +2,6 @@
 
 session_start();
 
-
 $link = mysql_connect($_SESSION['db']['hostname'], $_SESSION['db']['username'], $_SESSION['db']['password']);
 if (!$link) {
     die('Não foi possível conectar: ' . mysql_error());
@@ -30,7 +29,7 @@ while ($row = mysql_fetch_assoc($result)) {
 
     $event_array[] = array(
         'id' => $row['idTab_' . $_GET['tabela']],
-        'valor' => str_replace(".", ",", $row['ValorVenda']),
+        'valor' => str_replace(".", ",", $row['ValorVenda' . $_GET['tabela']]),
     );
 }
 

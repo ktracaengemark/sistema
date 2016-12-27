@@ -2,7 +2,6 @@
 
 session_start();
 
-
 $link = mysql_connect($_SESSION['db']['hostname'], $_SESSION['db']['username'], $_SESSION['db']['password']);
 if (!$link) {
     die('Não foi possível conectar: ' . mysql_error());
@@ -21,7 +20,7 @@ if ($_GET['q']==1) {
             'SELECT
                 idTab_Servico,
                 NomeServico,
-                ValorVenda
+                ValorVendaServico
             FROM
                 Tab_Servico
             WHERE
@@ -34,7 +33,7 @@ if ($_GET['q']==1) {
         $event_array[] = array(
             'id' => $row['idTab_Servico'],
             'name' => utf8_encode($row['NomeServico']),
-            'value' => $row['ValorVenda'],
+            'value' => $row['ValorVendaServico'],
         );
     }
 
@@ -45,7 +44,7 @@ elseif ($_GET['q'] == 2) {
             'SELECT
                 idTab_Produto,
                 NomeProduto,
-                ValorVenda
+                ValorVendaProduto
             FROM
                 Tab_Produto
             WHERE
@@ -58,7 +57,7 @@ elseif ($_GET['q'] == 2) {
         $event_array[] = array(
             'id' => $row['idTab_Produto'],
             'name' => utf8_encode($row['NomeProduto']),
-            'value' => $row['ValorVenda'],
+            'value' => $row['ValorVendaProduto'],
         );
     }
 

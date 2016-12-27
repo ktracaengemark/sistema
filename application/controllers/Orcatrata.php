@@ -90,6 +90,131 @@ class Orcatrata extends CI_Controller {
                     'QuitRec',
                         ), TRUE));
 
+        //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
+        //comentado fim) mas por enquanto, se está funcionando, vou deixar assim.
+
+
+        $data['servico'] = quotes_to_entities($this->input->post(array(
+                    'SCount',
+                    'idTab_Servico1',
+                    'ValorVendaServico1',
+                        ), TRUE));
+
+
+        $data['servico'] = array();
+
+        $data['produto'] = quotes_to_entities($this->input->post(array(
+                    'PCount',
+                    'idTab_Produto1',
+                    'ValorVendaProduto1',
+                    'QuantidadeProduto1',
+                        ), TRUE));
+
+        $data['produto'] = array();
+
+        $data['orcamento']['OrcamentoTotal'] = $this->input->post('OrcamentoTotal');
+        (!$this->input->post('SCount')) ? $data['servico']['SCount'] = 1 : $data['servico']['SCount'] = $this->input->post('SCount');
+        (!$this->input->post('PCount')) ? $data['produto']['PCount'] = 1 : $data['produto']['PCount'] = $this->input->post('PCount');
+
+        //$data['lista']['Servicos'] = $this->Tratamentos_model->lista_servicos();
+        //$data['lista']['Produtos'] = $this->Tratamentos_model->lista_produtos();
+
+        /*
+          echo $data['lista']['Servicos']['1'];
+          echo '<br>';
+          echo "<pre>";
+          print_r($data['lista']['Servicos']);
+          echo "</pre>";
+          exit();
+         */
+        $sq = '';
+        if ($data['servico']['SCount'] > 1) {
+
+            $j = 1;
+            for ($i = 1; $i <= $data['servico']['SCount']; $i++) {
+
+                if ($this->input->post('idTab_Servico' . $i)) {
+                    $data['servico']['idTab_Servico' . $j] = $this->input->post('idTab_Servico' . $i);
+                    //$data['servico']['ValorVendaServico'.$j] = $data['lista']['Servicos'][$this->input->post('idTab_Servico'.$i)];
+                    $data['servico']['ValorVendaServico' . $j] = $this->input->post('ValorVendaServico' . $i);
+
+                    $sq = $sq . '("' . $this->input->post('idTab_Servico' . $i) . '", ';
+                    //$sq = $sq . '\'' . $this->input->post('ValorVendaServico'.$i) . '\'), ';
+                    $sq = $sq . '"0.00"), ';
+
+                    $j++;
+                }
+            }
+            $data['servico']['SCount'] = $j - 1;
+        } else {
+
+            $data['servico']['idTab_Servico1'] = $this->input->post('idTab_Servico1');
+            $data['servico']['ValorVendaServico1'] = $this->input->post('ValorVendaServico1');
+            $sq = $sq . '("' . $this->input->post('idTab_Servico1') . '", ';
+            //$sq = $sq . '\'' . $this->input->post('ValorVendaServico1') . '\'), ';
+            $sq = $sq . '"0.00"), ';
+            //$j=1;
+            $data['servico']['SCount'] = 1;
+        }
+        $sq = substr($sq, 0, strlen($sq) - 2);
+
+        /*
+          echo '<br>';
+          echo "<pre>";
+          print_r($data['servico']);
+          echo "</pre>";
+          exit();
+         */
+        $pq = '';
+        if ($data['produto']['PCount'] > 1) {
+
+            $j = 1;
+            for ($i = 0; $i <= $data['produto']['PCount']; $i++) {
+
+                if ($this->input->post('idTab_Produto' . $i)) {
+                    $data['produto']['idTab_Produto' . $j] = $this->input->post('idTab_Produto' . $i);
+                    $data['produto']['ValorVendaProduto' . $j] = $this->input->post('ValorVendaProduto' . $i);
+                    $data['produto']['QuantidadeProduto' . $j] = $this->input->post('QuantidadeProduto' . $i);
+                    $data['produto']['SubtotalProduto' . $j] = $this->input->post('SubtotalProduto' . $i);
+
+                    $pq = $pq . '(\'' . $this->input->post('idTab_Produto' . $i) . '\', ';
+                    //$pq = $pq . '\'' . $this->input->post('ValorVendaProduto'.$i) . '\', ';
+                    $pq = $pq . '\'0.00\', ';
+                    $pq = $pq . '\'' . $this->input->post('QuantidadeProduto' . $i) . '\'), ';
+
+                    $j++;
+                }
+            }
+            $data['produto']['PCount'] = $j - 1;
+            //echo '<br>';
+            //exit();
+        } else {
+
+            $data['produto']['idTab_Produto1'] = $this->input->post('idTab_Produto1');
+            $data['produto']['ValorVendaProduto1'] = $this->input->post('ValorVendaProduto1');
+            $data['produto']['QuantidadeProduto1'] = $this->input->post('QuantidadeProduto1');
+            $data['produto']['SubtotalProduto1'] = $this->input->post('SubtotalProduto1');
+            $pq = $pq . '(\'' . $this->input->post('idTab_Produto1') . '\', ';
+            //$pq = $pq . '\'' . $this->input->post('ValorVendaProduto1') . '\', ';
+            $pq = $pq . '\'0.00\', ';
+            $pq = $pq . '\'' . $this->input->post('QuantidadeProduto1') . '\'), ';
+
+            $data['produto']['PCount'] = 1;
+        }
+        $pq = substr($pq, 0, strlen($pq) - 2);
+
+        /*
+          echo '<br>';
+          echo "<pre>";
+          print_r($data['produto']);
+          echo "</pre>";
+          exit();
+         */
+
+        //Fim do trecho de código que dá pra melhorar
+
+
+
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #### App_OrcaTrata ####
@@ -103,6 +228,8 @@ class Orcatrata extends CI_Controller {
         $data['select']['FormaPag'] = $this->Formapag_model->select_formapag();
         $data['select']['TipoConcluido'] = $this->Basico_model->select_tipo_concluido();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
+        $data['select']['Servico'] = $this->Basico_model->select_servico();
+        $data['select']['Produto'] = $this->Basico_model->select_produto();
 
         $data['titulo'] = 'Cadastar Orçamento/Tratamento';
         $data['form_open_path'] = 'orcatrata/cadastrar';
@@ -111,12 +238,12 @@ class Orcatrata extends CI_Controller {
         $data['panel'] = 'primary';
         $data['metodo'] = 1;
 
-        if ($data['parcelasrec']['ParcRec'] || $data['parcelasrec']['ValorParcRec'] || $data['parcelasrec']['DataVencRec'] || 
+        if ($data['parcelasrec']['ParcRec'] || $data['parcelasrec']['ValorParcRec'] || $data['parcelasrec']['DataVencRec'] ||
                 $data['parcelasrec']['ValorPagoRec'] || $data['parcelasrec']['DataPagoRec'] || $data['parcelasrec']['QuitRec'])
             $data['collapse'] = '';
         else
-            $data['collapse'] = 'class="collapse"';        
-        
+            $data['collapse'] = 'class="collapse"';
+
         if ($data['orcatrata']['ValorOrca'] || $data['orcatrata']['ValorEntOrca'] || $data['orcatrata']['ValorResOrca'])
             $data['orcamentoin'] = 'in';
         else
@@ -125,25 +252,25 @@ class Orcatrata extends CI_Controller {
         if ($data['orcatrata']['FormaPag'] || $data['orcatrata']['QtdParcOrca'] || $data['orcatrata']['DataVencOrca'])
             $data['parcelasin'] = 'in';
         else
-            $data['parcelasin'] = '';        
+            $data['parcelasin'] = '';
 
         if ($data['procedimento']['DataProcedimento'] || $data['procedimento']['Proc'])
             $data['tratamentosin'] = 'in';
         else
-            $data['tratamentosin'] = '';     
-        
-        
+            $data['tratamentosin'] = '';
+
+
         #Ver uma solução melhor para este campo
-        (!$data['orcatrata']['StatusOrca']) ? $data['orcatrata']['StatusOrca'] = 'N' : FALSE;       
-        
+        (!$data['orcatrata']['StatusOrca']) ? $data['orcatrata']['StatusOrca'] = 'N' : FALSE;
+
         $data['radio'] = array(
             'StatusOrca' => $this->basico->radio_checked($data['orcatrata']['StatusOrca'], 'Orçaento Aprovado', 'NS'),
-        );        
-        
+        );
+
         ($data['orcatrata']['StatusOrca'] == 'S') ?
-            $data['div']['StatusOrca'] = '' : $data['div']['StatusOrca'] = 'style="display: none;"';    
-        
-        
+            $data['div']['StatusOrca'] = '' : $data['div']['StatusOrca'] = 'style="display: none;"';
+
+
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 

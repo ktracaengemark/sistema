@@ -8,6 +8,13 @@ var n = date.toISOString();
 var tam = n.length - 5;
 var agora = n.substring(0, tam);
 
+//sequencia de comandos necessária para estrair a pasta raiz do endereço,
+//ou seja, qual módulo está sendo utilizado (ex: salao, odonto, etc)
+app = window.location.pathname;
+app = app.substring(1);
+pos = app.indexOf('/');
+app = app.substring(0, pos);
+
 /*
  var items = [];
  alert('la vai');
@@ -77,16 +84,9 @@ $.getJSON("rpc/dt.json", function (result) {
  */
 function buscaValor(id, campo, tabela) {
 
-    //sequencia de comandos necessária para estrair a pasta raiz do endereço,
-    //ou seja, qual módulo está sendo utilizado (ex: salao, odonto, etc)
-    str = window.location.pathname;
-    str = str.substring(1);
-    pos = str.indexOf('/');
-    str = str.substring(0, pos);
-
     $.ajax({
         // url para o arquivo json.php
-        url: window.location.origin + "/" + str + "/Valor_json.php?tabela=" + tabela,
+        url: window.location.origin + "/" + app + "/Valor_json.php?tabela=" + tabela,
         // dataType json
         dataType: "json",
         // função para de sucesso
@@ -122,16 +122,26 @@ function buscaValor(id, campo, tabela) {
  * @param {int} num
  * @returns {decimal}
  */
-function calculaSubtotal(quant, campo, num) {
+function calculaSubtotal(valor, campo, num, tipo) {
 
-    //variável valor recebe o valor do produto selecionado
-    var valor = $("#idTab_Produto"+num).val();
+    if (tipo == 'VP') {
+        //variável valor recebe o valor do produto selecionado
+        var data = $("#Qtd"+num).val();
 
-    //o subtotal é calculado como o produto da quantidade pelo seu valor
-    var subtotal = (quant * valor.replace(",","."));
+        //o subtotal é calculado como o produto da quantidade pelo seu valor
+        var subtotal = (valor.replace(",",".") * data);
+        //alert('>>>'+valor+' :: '+campo+' :: '+num+' :: '+tipo+'<<<');
+    } else {
+        //variável valor recebe o valor do produto selecionado
+        var data = $("#idTab_Produto"+num).val();
+
+        //o subtotal é calculado como o produto da quantidade pelo seu valor
+        var subtotal = (valor * data.replace(",","."));
+    }
+
     subtotal = subtotal.toFixed(2).replace(".",",");
     //o subtotal é escrito no seu campo no formulário
-    $('#Quantidade'+num).val(subtotal);
+    $('#QuantidadeProduto'+num).val(subtotal);
 
     //para cada vez que o subtotal for calculado o orçamento também será atualizado
     calculaOrcamento();
@@ -170,8 +180,8 @@ function calculaOrcamento() {
     var i = 1;
     while (i <= pc) {
 
-        if ($('#Quantidade'+i).val())
-            subtotal += parseFloat($('#Quantidade'+i).val().replace(",","."));
+        if ($('#QuantidadeProduto'+i).val())
+            subtotal += parseFloat($('#QuantidadeProduto'+i).val().replace(",","."));
 
         i++;
     }
@@ -181,7 +191,7 @@ function calculaOrcamento() {
     subtotal = subtotal.toFixed(2).replace(".",",");
 
     //escreve o subtotal no campo do formulário
-    $('#OrcamentoTotal').val(subtotal);
+    $('#ValorOrca').val(subtotal);
 }
 
 $("#first-choice").change(function () {
@@ -295,11 +305,11 @@ $(document).ready(function () {
                         </select>\
                     </div>\
                     <div class="col-md-3">\
-                        <label for="ValorServico">Valor do Serviço:</label><br>\
+                        <label for="ValorVendaServico">Valor do Serviço:</label><br>\
                         <div class="input-group" id="txtHint">\
                             <span class="input-group-addon" id="basic-addon1">R$</span>\
-                            <input type="text" class="form-control Valor" id="idTab_Servico'+ps+'" maxlength="10" placeholder="0,00" readonly=""\
-                                   name="ValorServico'+ps+'" value="">\
+                            <input type="text" class="form-control Valor" id="idTab_Servico'+ps+'" maxlength="10" placeholder="0,00" \
+                                   name="ValorVendaServico'+ps+'" value="">\
                         </div>\
                     </div>\
                     <div class="col-md-3">\
@@ -320,7 +330,7 @@ $(document).ready(function () {
 
         //request the JSON data and parse into the select element
         $.ajax({
-            url: window.location.origin+'/salao/getvalues_json.php?q=1',
+            url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=1',
             dataType: 'JSON',
             type: "GET",
             success: function (data) {
@@ -334,7 +344,7 @@ $(document).ready(function () {
                 })
             },
             error: function () {
-                alert('erro');
+                //alert('erro listadinamicaA');
                 //if there is an error append a 'none available' option
                 $select.html('<option id="-1">ERRO</option>');
             }
@@ -370,22 +380,24 @@ $(document).ready(function () {
                         <label for="ValorProduto">Valor do Produto:</label><br>\
                         <div class="input-group id="txtHint">\
                             <span class="input-group-addon" id="basic-addon1">R$</span>\
-                            <input type="text" class="form-control Valor" id="idTab_Produto'+pc+'" maxlength="10" placeholder="0,00" readonly=""\
-                                   name="ValorProduto'+pc+'" value="">\
+                            <input type="text" class="form-control Valor" id="idTab_Produto'+pc+'" maxlength="10" placeholder="0,00" \
+                                onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'VP\')"\
+                                name="ValorProduto'+pc+'" value="">\
                         </div>\
                     </div>\
                     <div class="col-md-1">\
-                        <label for="QuantidadeCompra">Qtd:</label><br>\
+                        <label for="QuantidadeProduto">Qtd:</label><br>\
                         <div class="input-group">\
-                            <input type="text" class="form-control" maxlength="3" placeholder="0" onkeyup="calculaSubtotal(this.value,this.name,'+pc+')"\
-                                   name="QuantidadeCompra'+pc+'" value="">\
+                            <input type="text" class="form-control" maxlength="3" id="Qtd'+pc+'" placeholder="0"\
+                                onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'QTD\')"\
+                                name="QuantidadeProduto'+pc+'" value="">\
                         </div>\
                     </div>\
                     <div class="col-md-3">\
                         <label for="Subtotal">Subtotal:</label><br>\
                         <div class="input-group id="txtHint">\
                             <span class="input-group-addon" id="basic-addon1">R$</span>\
-                            <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="Quantidade'+pc+'"\
+                            <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="QuantidadeProduto'+pc+'"\
                                    name="Subtotal'+pc+'" value="">\
                         </div>\
                     </div>\
@@ -405,7 +417,7 @@ $(document).ready(function () {
 
         //request the JSON data and parse into the select element
         $.ajax({
-            url: window.location.origin+'/salao/getvalues_json.php?q=2',
+            url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=2',
             dataType: 'JSON',
             type: "GET",
             success: function (data) {
@@ -419,7 +431,7 @@ $(document).ready(function () {
                 })
             },
             error: function () {
-                alert('erro');
+                //alert('erro listadinamicaB');
                 //if there is an error append a 'none available' option
                 $select.html('<option id="-1">ERRO</option>');
             }
