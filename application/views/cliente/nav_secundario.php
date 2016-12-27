@@ -27,7 +27,7 @@
         </a>
     </li>
 
-    <li <?php if (preg_match("/consulta\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
+    <li <?php if (preg_match("/consulta\/(cadastrar|alterar)\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
         <a href="<?php echo base_url() . 'consulta/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
             <span class="glyphicon glyphicon-time"></span> Marcar Sessão
         </a>
@@ -51,11 +51,11 @@
         </a>
     </li>
 
-    <li <?php if (preg_match("/tratamentos\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
+    <!--<li <?php if (preg_match("/tratamentos\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
         <a href="<?php echo base_url() . 'tratamentos/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
             <span class="glyphicon glyphicon-time"></span> Modelo/Orçam/Pl.Trata.
         </a>
-    </li>
+    </li>-->
 
 
 </ul>

@@ -16,35 +16,100 @@ pos = app.indexOf('/');
 app = app.substring(0, pos);
 
 /*
- var items = [];
- alert('la vai');
- $.getJSON("dt.json", function (data) {
+ * Função responsável por calcular as parcelas do orçamento em função do dados
+ * informados no formulário (valor restante / parcelas e datas do vencimento)
+ */
+function calculaParcelas() {
 
+    //captura os valores dos campos indicados
+    var resta = $("#ValorResOrca").val();
+    var parcelas = $("#QtdParcOrca").val();
+    var vencimento = $("#DataVencOrca").val();
 
- $.each(data, function (key, val) {
- items.push(val + '<br>');
- });
+    //valor de cada parcela
+    var parcorca = (resta.replace(",",".") / parcelas);
+    parcorca = parcorca.toFixed(2).replace(".",",");
 
+    //pega a data do primeiro vencimento e separa em dia, mês e ano
+    var split = vencimento.split("/");
 
- alert('opa');
- });
- $("#demo").html(items);
- alert('fim');
-*/
-/*
-$.getJSON("rpc/dt.json", function (result) {
+    //define a data do primeiro vencimento no formato do momentjs
+    var currentDate = moment(split[2]+'-'+split[1]+'-'+split[0]);
 
-    var $teste = $("#teste");
-    $teste.empty();
+    //console.log(currentDate.format('DD-MM-YYYY'));
+    //console.log(futureMonth.format('DD-MM-YYYY'));
+    //alert('>>v '+vencimento+'::d1 '+currentDate.format('DD/MM/YYYY')+'::d2 '+futureMonth.format('DD/MM/YYYY')+'::d3 '+futureMonthEnd.format('DD/MM/YYYY')+'<<');
 
-    for (var i = 0; i < result.length; i++) {
-        //options += '<option value="' + result[i].ImageFolderID + '">' + result[i].Name + '</option>';
-        $teste.append("<option>" + result.value + "</option>");
-        alert(result.length);
+    //caso as parcelas já tenham sido geradas elas serão excluídas para que
+    //sejam geradas novas parcelas
+    $(".input_fields_parcelas").empty();
+
+    //gera os campos de parcelas
+    for (i=1; i<=parcelas; i++) {
+
+        //calcula as datas das próximas parcelas
+        var futureMonth = moment(currentDate).add(i, 'M');
+        var futureMonthEnd = moment(futureMonth).endOf('month');
+
+        if(currentDate.date() != futureMonth.date() && futureMonth.isSame(futureMonthEnd.format('YYYY-MM-DD')))
+            futureMonth = futureMonth.add(i, 'd');
+
+        $(".input_fields_parcelas").append('\
+            <div class="form-group">\
+                <div class="row">\
+                    <div class="col-md-1">\
+                        <label for="ParcRec">Parcela:</label><br>\
+                        <input type="text" class="form-control" maxlength="6"\
+                               name="ParcRec" value="'+i+'">\
+                    </div>\
+                    <div class="col-md-2">\
+                        <label for="ValorParcRec">Valor Parcela:</label><br>\
+                        <div class="input-group" id="txtHint">\
+                            <span class="input-group-addon" id="basic-addon1">R$</span>\
+                            <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
+                                   name="ValorParcRec" value="'+parcorca+'">\
+                        </div>\
+                    </div>\
+                    <div class="col-md-2">\
+                        <label for="DataVencRec">Data Venc. Parc.</label>\
+                        <div class="input-group">\
+                            <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
+                                   name="DataVencRec" value="'+futureMonth.format('DD/MM/YYYY')+'">\
+                            <span class="input-group-addon" disabled>\
+                                <span class="glyphicon glyphicon-calendar"></span>\
+                            </span>\
+                        </div>\
+                    </div>\
+                    <div class="col-md-2">\
+                        <label for="ValorPagoRec">Valor Pago:</label><br>\
+                        <div class="input-group" id="txtHint">\
+                            <span class="input-group-addon" id="basic-addon1">R$</span>\
+                            <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
+                                   name="ValorPagoRec" value="">\
+                        </div>\
+                    </div>\
+                    <div class="col-md-2">\
+                        <label for="DataPagoRec">Data Pag.</label>\
+                        <div class="input-group">\
+                            <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
+                                   name="DataPagoRec" value="">\
+                            <span class="input-group-addon" disabled>\
+                                <span class="glyphicon glyphicon-calendar"></span>\
+                            </span>\
+                        </div>\
+                    </div>\
+                    <div class="col-md-1">\
+                        <label for="QuitRec">Qt?</label><br>\
+                        <input type="text" class="form-control" maxlength="1"\
+                               name="QuitRec" value="">\
+                    </div>\
+                </div>\
+            </div>'
+        );
+
     }
 
-});
- */
+}
 
  /*
   * Função criada para funcionar junto com o recurso de hide/show do jquery nos
