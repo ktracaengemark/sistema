@@ -15,6 +15,38 @@ app = app.substring(1);
 pos = app.indexOf('/');
 app = app.substring(0, pos);
 
+//variável de opções necessária para o funcionamento do datepiker em divs
+//geradas dinamicamente
+var dateTimePickerOptions = {
+    tooltips: {
+        today: 'Hoje',
+        clear: 'Limpar seleção',
+        close: 'Fechar este menu',
+        selectMonth: 'Selecione um mês',
+        prevMonth: 'Mês anterior',
+        nextMonth: 'Próximo mês',
+        selectYear: 'Selecione um ano',
+        prevYear: 'Ano anterior',
+        nextYear: 'Próximo ano',
+        selectDecade: 'Selecione uma década',
+        prevDecade: 'Década anterior',
+        nextDecade: 'Próxima década',
+        prevCentury: 'Centenário anterior',
+        nextCentury: 'Próximo centenário',
+        incrementHour: 'Aumentar hora',
+        decrementHour: 'Diminuir hora',
+        incrementMinute: 'Aumentar minutos',
+        decrementMinute: 'Diminuir minutos',
+        incrementSecond: 'Aumentar segundos',
+        decrementSecond: 'Diminuir segundos'
+    },
+    showTodayButton: true,
+    showClose: true,
+    format: 'DD/MM/YYYY',
+    //minDate: moment(m + '/' + d + '/' + y),
+    locale: 'pt-br'
+}
+
 /*
  * Função responsável por aplicar a máscara de valor real com separação de
  * decimais e milhares.
@@ -59,6 +91,11 @@ function calculaResta(entrada) {
 }
 
 /*
+$(document).on('focus',".input_fields_parcelas", function(){
+    $(this).datepicker();
+});
+*/
+/*
  * Função responsável por calcular as parcelas do orçamento em função do dados
  * informados no formulário (valor restante / parcelas e datas do vencimento)
  */
@@ -102,21 +139,21 @@ function calculaParcelas() {
                 <div class="row">\
                     <div class="col-md-1">\
                         <label for="ParcRec">Parcela:</label><br>\
-                        <input type="text" class="form-control" maxlength="6"\
-                               name="ParcRec" value="'+i+'">\
+                        <input type="text" class="form-control" maxlength="6" readonly=""\
+                               name="ParcRec" value="'+i+'/'+parcelas+'">\
                     </div>\
                     <div class="col-md-2">\
                         <label for="ValorParcRec">Valor Parcela:</label><br>\
                         <div class="input-group" id="txtHint">\
                             <span class="input-group-addon" id="basic-addon1">R$</span>\
-                            <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
+                            <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly=""\
                                    name="ValorParcRec" value="'+parcorca+'">\
                         </div>\
                     </div>\
                     <div class="col-md-2">\
                         <label for="DataVencRec">Data Venc. Parc.</label>\
                         <div class="input-group">\
-                            <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
+                            <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA" readonly=""\
                                    name="DataVencRec" value="'+futureMonth.format('DD/MM/YYYY')+'">\
                             <span class="input-group-addon" disabled>\
                                 <span class="glyphicon glyphicon-calendar"></span>\
@@ -133,8 +170,8 @@ function calculaParcelas() {
                     </div>\
                     <div class="col-md-2">\
                         <label for="DataPagoRec">Data Pag.</label>\
-                        <div class="input-group">\
-                            <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
+                        <div class="input-group DatePicker">\
+                            <input type="text" class="form-control Date" id="DataPagoRec'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
                                    name="DataPagoRec" value="">\
                             <span class="input-group-addon" disabled>\
                                 <span class="glyphicon glyphicon-calendar"></span>\
@@ -151,7 +188,8 @@ function calculaParcelas() {
         );
 
     }
-
+    //habilita o botão de calendário após a geração dos campos dinâmicos
+    $('.DatePicker').datetimepicker(dateTimePickerOptions);
 }
 
  /*
@@ -211,6 +249,7 @@ function buscaValor(id, campo, tabela) {
                     //para cada valor carregado o orçamento é calculado/atualizado
                     //através da chamada de sua função
                     calculaOrcamento();
+                    calculaResta($("#ValorEntOrca").val())
                     break;
                 }
 
@@ -251,8 +290,10 @@ function calculaSubtotal(valor, campo, num, tipo) {
     //o subtotal é escrito no seu campo no formulário
     $('#QuantidadeProduto'+num).val(subtotal);
 
-    //para cada vez que o subtotal for calculado o orçamento também será atualizado
+    //para cada vez que o subtotal for calculado o orçamento e o total restante
+    //também serão atualizados
     calculaOrcamento();
+    calculaResta($("#ValorEntOrca").val())
 
 }
 
@@ -463,8 +504,9 @@ $(document).ready(function () {
 
     $(".input_fields_wrap").on("click",".remove_field", function(e){ //user click on remove text
         $("#1div"+$(this).attr("id")).remove();
-        //após remover o campo refaz o cálculo do orçamento
+        //após remover o campo refaz o cálculo do orçamento e total restante
         calculaOrcamento();
+        calculaResta($("#ValorEntOrca").val())
     })
 
     //adiciona campos dinamicamente
@@ -551,8 +593,9 @@ $(document).ready(function () {
     //Remove os campos adicionados dinamicamente
     $(".input_fields_wrap2").on("click",".remove_field2", function(e){ //user click on remove text
         $("#2div"+$(this).attr("id")).remove();
-        //após remover o campo refaz o cálculo do orçamento
+        //após remover o campo refaz o cálculo do orçamento e total restante
         calculaOrcamento();
+        calculaResta($("#ValorEntOrca").val())
     })
 
     /*
@@ -620,41 +663,12 @@ $(document).ready(function () {
         width: "100%"
     });
     $("button.fc-today-button").click(function () {
-//datepickerinline.today(this);
         $('#datepickerinline').datetimepicker({
             today: '2011-01-01',
         });
         alert(date);
     });
-    $('.DatePicker').datetimepicker({
-        tooltips: {
-            today: 'Hoje',
-            clear: 'Limpar seleção',
-            close: 'Fechar este menu',
-            selectMonth: 'Selecione um mês',
-            prevMonth: 'Mês anterior',
-            nextMonth: 'Próximo mês',
-            selectYear: 'Selecione um ano',
-            prevYear: 'Ano anterior',
-            nextYear: 'Próximo ano',
-            selectDecade: 'Selecione uma década',
-            prevDecade: 'Década anterior',
-            nextDecade: 'Próxima década',
-            prevCentury: 'Centenário anterior',
-            nextCentury: 'Próximo centenário',
-            incrementHour: 'Aumentar hora',
-            decrementHour: 'Diminuir hora',
-            incrementMinute: 'Aumentar minutos',
-            decrementMinute: 'Diminuir minutos',
-            incrementSecond: 'Aumentar segundos',
-            decrementSecond: 'Diminuir segundos'
-        },
-        showTodayButton: true,
-        showClose: true,
-        format: 'DD/MM/YYYY',
-        //minDate: moment(m + '/' + d + '/' + y),
-        locale: 'pt-br'
-    });
+    $('.DatePicker').datetimepicker(dateTimePickerOptions);
     $('.TimePicker').datetimepicker({
         tooltips: {
             today: 'Hoje',
