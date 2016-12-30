@@ -22,7 +22,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-2">
-                            <label for="DataOrca">Data do Orçamento:</label>
+                            <label for="DataOrca">Data do Orçamento</label>
                             <div class="input-group <?php echo $datepicker; ?>">
                                 <input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
                                        autofocus name="DataOrca" value="<?php echo $orcatrata['DataOrca']; ?>">
