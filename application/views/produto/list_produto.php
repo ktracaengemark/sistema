@@ -27,7 +27,7 @@
                     #echo '<td>' . str_replace('.',',',$row['Quantidade']) . '</td>';
                     echo '<td>' . str_replace('.',',',$row['Unidade']) . '</td>';                    
                     #echo '<td>' . str_replace('.',',',$row['ValorCompra']) . '</td>';
-                    echo '<td>' . str_replace('.',',',$row['ValorProdVenda']) . '</td>';
+                    echo '<td>' . str_replace('.',',',$row['ValorVendaProduto']) . '</td>';
                     echo '<td></td>';
                 echo '</tr>';            
 

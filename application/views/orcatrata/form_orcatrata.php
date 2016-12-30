@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="col-md-2 form-inline">
-                            <label for="StatusOrca">Orçamento Aprovado?</label><br>
+                            <label for="StatusOrca">Orçam. Aprov.?</label><br>
                             <div class="form-group">
                                 <div class="btn-group" data-toggle="buttons">
                                     <?php
@@ -86,11 +86,13 @@
                         </div>
                     </div>
                 </div>
+				
+				<hr>
 
                 <div class="form-group" id="StatusOrca" <?php echo $div['StatusOrca']; ?>>
                     <div class="row">
                         <div class="col-md-2 form-inline">
-                            <label for="idTab_TipoConcluido">Tratamento Concluído?</label><br>
+                            <label for="idTab_TipoConcluido">Serv. Concl.?</label><br>
                             <div class="form-group">
                                 <div class="btn-group" data-toggle="buttons">
                                     <?php
@@ -455,7 +457,7 @@
                                                    name="QtdParcOrca" value="<?php echo $orcatrata['QtdParcOrca'] ?>">
                                         </div>
                                         <div class="col-md-2">
-                                            <label for="DataVencOrca">Data do 1º Vencimento:</label>
+                                            <label for="DataVencOrca">Data do 1º Venc.:</label>
                                             <div class="input-group <?php echo $datepicker; ?>">
                                                 <input type="text" class="form-control Date" id="DataVencOrca" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
                                                        name="DataVencOrca" value="<?php echo $orcatrata['DataVencOrca']; ?>">
@@ -511,7 +513,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label for="Profissional">Profissional Responsável</label>
+                                            <label for="Profissional">Profissional</label>
                                             <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
                                                 <span class="glyphicon glyphicon-plus"></span> <b>Profissional</b>
                                             </a>

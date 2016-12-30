@@ -21,7 +21,7 @@
 
                 echo '<tr class="clickable-row" data-href="' . $url . '">';
                     echo '<td>' . $row['NomeServico'] . '</td>';
-                    echo '<td>' . str_replace('.',',',$row['ValorServVenda']) . '</td>';
+                    echo '<td>' . str_replace('.',',',$row['ValorVendaServico']) . '</td>';
                     echo '<td></td>';
                 echo '</tr>';            
 
