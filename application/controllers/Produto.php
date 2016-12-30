@@ -51,7 +51,7 @@ class Produto extends CI_Controller {
             'idTab_Produto',
             'NomeProduto',
             #'Quantidade',
-            'Unidade',
+            'UnidadeProduto',
             #'ValorCompra',
             'ValorVendaProduto',
                 ), TRUE));
@@ -129,7 +129,7 @@ class Produto extends CI_Controller {
             'idTab_Produto',
             'NomeProduto',
             #'Quantidade',
-            'Unidade',
+            'UnidadeProduto',
             #'ValorCompra',
             'ValorVendaProduto',
                 ), TRUE));

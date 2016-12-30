@@ -25,7 +25,7 @@
                 echo '<tr class="clickable-row" data-href="' . $url . '">';
                     echo '<td>' . str_replace('.',',',$row['NomeProduto']) . '</td>';
                     #echo '<td>' . str_replace('.',',',$row['Quantidade']) . '</td>';
-                    echo '<td>' . str_replace('.',',',$row['Unidade']) . '</td>';                    
+                    echo '<td>' . str_replace('.',',',$row['UnidadeProduto']) . '</td>';                    
                     #echo '<td>' . str_replace('.',',',$row['ValorCompra']) . '</td>';
                     echo '<td>' . str_replace('.',',',$row['ValorVendaProduto']) . '</td>';
                     echo '<td></td>';

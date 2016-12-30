@@ -21,9 +21,9 @@
                         </div>
 						
 						<div class="col-md-2">
-                            <label for="Unidade">Unidade de Medida:</label><br>
+                            <label for="UnidadeProduto">Unid. de Medida:</label><br>
                             <input type="text" class="form-control" maxlength="20"
-                                   autofocus name="Unidade" value="<?php echo $query['Unidade'] ?>">
+                                   autofocus name="UnidadeProduto" value="<?php echo $query['UnidadeProduto'] ?>">
                         </div>
 						
 						<div class="col-md-3">

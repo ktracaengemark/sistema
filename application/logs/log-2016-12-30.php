@@ -1591,3 +1591,222 @@ DEBUG - 2016-12-30 12:47:09 --> File loaded: C:\xampp\htdocs\sistema\application
 DEBUG - 2016-12-30 12:47:09 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
 DEBUG - 2016-12-30 12:47:09 --> Final output sent to browser
 DEBUG - 2016-12-30 12:47:09 --> Total execution time: 2.6296
+DEBUG - 2016-12-30 12:58:01 --> Config Class Initialized
+DEBUG - 2016-12-30 12:58:01 --> Hooks Class Initialized
+DEBUG - 2016-12-30 12:58:01 --> UTF-8 Support Disabled
+DEBUG - 2016-12-30 12:58:01 --> Utf8 Class Initialized
+DEBUG - 2016-12-30 12:58:01 --> URI Class Initialized
+DEBUG - 2016-12-30 12:58:01 --> Router Class Initialized
+DEBUG - 2016-12-30 12:58:01 --> Output Class Initialized
+DEBUG - 2016-12-30 12:58:01 --> Security Class Initialized
+DEBUG - 2016-12-30 12:58:01 --> Input Class Initialized
+DEBUG - 2016-12-30 12:58:01 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-12-30 12:58:02 --> Language Class Initialized
+DEBUG - 2016-12-30 12:58:02 --> Loader Class Initialized
+DEBUG - 2016-12-30 12:58:02 --> Controller Class Initialized
+DEBUG - 2016-12-30 12:58:02 --> Helper loaded: form_helper
+DEBUG - 2016-12-30 12:58:02 --> Helper loaded: url_helper
+DEBUG - 2016-12-30 12:58:02 --> Helper loaded: date_helper
+DEBUG - 2016-12-30 12:58:02 --> Helper loaded: string_helper
+DEBUG - 2016-12-30 12:58:02 --> Form Validation Class Initialized
+DEBUG - 2016-12-30 12:58:02 --> Model Class Initialized
+DEBUG - 2016-12-30 12:58:02 --> Database Driver Class Initialized
+DEBUG - 2016-12-30 12:58:02 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:58:02 --> User Agent Class Initialized
+DEBUG - 2016-12-30 12:58:02 --> Model Class Initialized
+DEBUG - 2016-12-30 12:58:02 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:58:02 --> Model Class Initialized
+DEBUG - 2016-12-30 12:58:03 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:58:03 --> Model Class Initialized
+DEBUG - 2016-12-30 12:58:03 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:58:03 --> Model Class Initialized
+DEBUG - 2016-12-30 12:58:03 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:58:03 --> Native_session Class Initialized
+DEBUG - 2016-12-30 12:58:03 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/header.php
+DEBUG - 2016-12-30 12:58:03 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/nav_principal.php
+DEBUG - 2016-12-30 12:58:04 --> File loaded: C:\xampp\htdocs\sistema\application\views\cliente/nav_secundario.php
+ERROR - 2016-12-30 12:58:04 --> Severity: Notice --> Undefined variable: query C:\xampp\htdocs\sistema\application\views\orcatrata\form_orcatrata.php 45
+ERROR - 2016-12-30 12:58:04 --> Severity: Notice --> Undefined variable: query C:\xampp\htdocs\sistema\application\views\orcatrata\form_orcatrata.php 45
+DEBUG - 2016-12-30 12:58:04 --> File loaded: C:\xampp\htdocs\sistema\application\views\orcatrata/form_orcatrata.php
+DEBUG - 2016-12-30 12:58:04 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
+DEBUG - 2016-12-30 12:58:04 --> Final output sent to browser
+DEBUG - 2016-12-30 12:58:04 --> Total execution time: 2.8819
+DEBUG - 2016-12-30 12:58:08 --> Config Class Initialized
+DEBUG - 2016-12-30 12:58:08 --> Hooks Class Initialized
+DEBUG - 2016-12-30 12:58:08 --> UTF-8 Support Disabled
+DEBUG - 2016-12-30 12:58:08 --> Utf8 Class Initialized
+DEBUG - 2016-12-30 12:58:08 --> URI Class Initialized
+DEBUG - 2016-12-30 12:58:08 --> Router Class Initialized
+DEBUG - 2016-12-30 12:58:08 --> Output Class Initialized
+DEBUG - 2016-12-30 12:58:08 --> Security Class Initialized
+DEBUG - 2016-12-30 12:58:08 --> Input Class Initialized
+DEBUG - 2016-12-30 12:58:08 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-12-30 12:58:08 --> Language Class Initialized
+DEBUG - 2016-12-30 12:58:08 --> Loader Class Initialized
+DEBUG - 2016-12-30 12:58:08 --> Controller Class Initialized
+DEBUG - 2016-12-30 12:58:08 --> Helper loaded: form_helper
+DEBUG - 2016-12-30 12:58:08 --> Helper loaded: url_helper
+DEBUG - 2016-12-30 12:58:08 --> Helper loaded: date_helper
+DEBUG - 2016-12-30 12:58:08 --> Helper loaded: string_helper
+DEBUG - 2016-12-30 12:58:08 --> Form Validation Class Initialized
+DEBUG - 2016-12-30 12:58:08 --> Model Class Initialized
+DEBUG - 2016-12-30 12:58:08 --> Database Driver Class Initialized
+DEBUG - 2016-12-30 12:58:09 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:58:09 --> User Agent Class Initialized
+DEBUG - 2016-12-30 12:58:09 --> Model Class Initialized
+DEBUG - 2016-12-30 12:58:09 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:58:09 --> Model Class Initialized
+DEBUG - 2016-12-30 12:58:09 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:58:09 --> Native_session Class Initialized
+DEBUG - 2016-12-30 12:58:09 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/header.php
+DEBUG - 2016-12-30 12:58:09 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/nav_principal.php
+DEBUG - 2016-12-30 12:58:09 --> File loaded: C:\xampp\htdocs\sistema\application\views\produto/list_produto.php
+ERROR - 2016-12-30 12:58:09 --> Severity: Notice --> Undefined index: Quantidade C:\xampp\htdocs\sistema\application\views\produto\pesq_produto.php 47
+ERROR - 2016-12-30 12:58:09 --> Severity: Notice --> Undefined index: ValorCompra C:\xampp\htdocs\sistema\application\views\produto\pesq_produto.php 61
+DEBUG - 2016-12-30 12:58:09 --> File loaded: C:\xampp\htdocs\sistema\application\views\produto/pesq_produto.php
+DEBUG - 2016-12-30 12:58:09 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
+DEBUG - 2016-12-30 12:58:09 --> Final output sent to browser
+DEBUG - 2016-12-30 12:58:09 --> Total execution time: 1.8941
+DEBUG - 2016-12-30 12:58:29 --> Config Class Initialized
+DEBUG - 2016-12-30 12:58:29 --> Hooks Class Initialized
+DEBUG - 2016-12-30 12:58:29 --> UTF-8 Support Disabled
+DEBUG - 2016-12-30 12:58:29 --> Utf8 Class Initialized
+DEBUG - 2016-12-30 12:58:29 --> URI Class Initialized
+DEBUG - 2016-12-30 12:58:29 --> Router Class Initialized
+DEBUG - 2016-12-30 12:58:29 --> Output Class Initialized
+DEBUG - 2016-12-30 12:58:29 --> Security Class Initialized
+DEBUG - 2016-12-30 12:58:29 --> Input Class Initialized
+DEBUG - 2016-12-30 12:58:29 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-12-30 12:58:29 --> Language Class Initialized
+DEBUG - 2016-12-30 12:58:29 --> Loader Class Initialized
+DEBUG - 2016-12-30 12:58:29 --> Controller Class Initialized
+DEBUG - 2016-12-30 12:58:29 --> Helper loaded: form_helper
+DEBUG - 2016-12-30 12:58:29 --> Helper loaded: url_helper
+DEBUG - 2016-12-30 12:58:29 --> Helper loaded: date_helper
+DEBUG - 2016-12-30 12:58:29 --> Helper loaded: string_helper
+DEBUG - 2016-12-30 12:58:29 --> Form Validation Class Initialized
+DEBUG - 2016-12-30 12:58:29 --> Model Class Initialized
+DEBUG - 2016-12-30 12:58:29 --> Database Driver Class Initialized
+DEBUG - 2016-12-30 12:58:30 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:58:30 --> User Agent Class Initialized
+DEBUG - 2016-12-30 12:58:30 --> Model Class Initialized
+DEBUG - 2016-12-30 12:58:30 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:58:30 --> Model Class Initialized
+DEBUG - 2016-12-30 12:58:30 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:58:30 --> Native_session Class Initialized
+DEBUG - 2016-12-30 12:58:30 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/header.php
+DEBUG - 2016-12-30 12:58:30 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/nav_principal.php
+DEBUG - 2016-12-30 12:58:30 --> XSS Filtering completed
+DEBUG - 2016-12-30 12:58:30 --> XSS Filtering completed
+DEBUG - 2016-12-30 12:58:30 --> XSS Filtering completed
+DEBUG - 2016-12-30 12:58:30 --> XSS Filtering completed
+DEBUG - 2016-12-30 12:58:30 --> File loaded: C:\xampp\htdocs\sistema\application\views\produto/list_produto.php
+DEBUG - 2016-12-30 12:58:30 --> Language file loaded: language/portuguese-brazilian/form_validation_lang.php
+DEBUG - 2016-12-30 12:58:31 --> Config Class Initialized
+DEBUG - 2016-12-30 12:58:31 --> Hooks Class Initialized
+DEBUG - 2016-12-30 12:58:31 --> UTF-8 Support Disabled
+DEBUG - 2016-12-30 12:58:31 --> Utf8 Class Initialized
+DEBUG - 2016-12-30 12:58:31 --> URI Class Initialized
+DEBUG - 2016-12-30 12:58:31 --> Router Class Initialized
+DEBUG - 2016-12-30 12:58:31 --> Output Class Initialized
+DEBUG - 2016-12-30 12:58:31 --> Security Class Initialized
+DEBUG - 2016-12-30 12:58:31 --> Input Class Initialized
+DEBUG - 2016-12-30 12:58:31 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-12-30 12:58:31 --> Language Class Initialized
+DEBUG - 2016-12-30 12:58:31 --> Loader Class Initialized
+DEBUG - 2016-12-30 12:58:31 --> Controller Class Initialized
+DEBUG - 2016-12-30 12:58:31 --> Helper loaded: form_helper
+DEBUG - 2016-12-30 12:58:31 --> Helper loaded: url_helper
+DEBUG - 2016-12-30 12:58:31 --> Helper loaded: date_helper
+DEBUG - 2016-12-30 12:58:31 --> Helper loaded: string_helper
+DEBUG - 2016-12-30 12:58:31 --> Form Validation Class Initialized
+DEBUG - 2016-12-30 12:58:31 --> Model Class Initialized
+DEBUG - 2016-12-30 12:58:31 --> Database Driver Class Initialized
+DEBUG - 2016-12-30 12:58:32 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:58:32 --> User Agent Class Initialized
+DEBUG - 2016-12-30 12:58:32 --> Model Class Initialized
+DEBUG - 2016-12-30 12:58:32 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:58:32 --> Model Class Initialized
+DEBUG - 2016-12-30 12:58:32 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:58:32 --> Native_session Class Initialized
+DEBUG - 2016-12-30 12:58:32 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/header.php
+DEBUG - 2016-12-30 12:58:32 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/nav_principal.php
+DEBUG - 2016-12-30 12:58:32 --> File loaded: C:\xampp\htdocs\sistema\application\views\produto/list_produto.php
+ERROR - 2016-12-30 12:58:32 --> Severity: Notice --> Undefined index: Quantidade C:\xampp\htdocs\sistema\application\views\produto\pesq_produto.php 47
+ERROR - 2016-12-30 12:58:32 --> Severity: Notice --> Undefined index: ValorCompra C:\xampp\htdocs\sistema\application\views\produto\pesq_produto.php 61
+DEBUG - 2016-12-30 12:58:32 --> File loaded: C:\xampp\htdocs\sistema\application\views\produto/pesq_produto.php
+DEBUG - 2016-12-30 12:58:32 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
+DEBUG - 2016-12-30 12:58:32 --> Final output sent to browser
+DEBUG - 2016-12-30 12:58:33 --> Total execution time: 1.7054
+DEBUG - 2016-12-30 12:59:54 --> Config Class Initialized
+DEBUG - 2016-12-30 12:59:54 --> Hooks Class Initialized
+DEBUG - 2016-12-30 12:59:54 --> UTF-8 Support Disabled
+DEBUG - 2016-12-30 12:59:54 --> Utf8 Class Initialized
+DEBUG - 2016-12-30 12:59:54 --> URI Class Initialized
+DEBUG - 2016-12-30 12:59:54 --> Router Class Initialized
+DEBUG - 2016-12-30 12:59:54 --> Output Class Initialized
+DEBUG - 2016-12-30 12:59:54 --> Security Class Initialized
+DEBUG - 2016-12-30 12:59:54 --> Input Class Initialized
+DEBUG - 2016-12-30 12:59:55 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-12-30 12:59:55 --> Language Class Initialized
+DEBUG - 2016-12-30 12:59:55 --> Loader Class Initialized
+DEBUG - 2016-12-30 12:59:55 --> Controller Class Initialized
+DEBUG - 2016-12-30 12:59:55 --> Helper loaded: form_helper
+DEBUG - 2016-12-30 12:59:55 --> Helper loaded: url_helper
+DEBUG - 2016-12-30 12:59:55 --> Helper loaded: date_helper
+DEBUG - 2016-12-30 12:59:55 --> Helper loaded: string_helper
+DEBUG - 2016-12-30 12:59:55 --> Form Validation Class Initialized
+DEBUG - 2016-12-30 12:59:55 --> Model Class Initialized
+DEBUG - 2016-12-30 12:59:55 --> Database Driver Class Initialized
+DEBUG - 2016-12-30 12:59:55 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:59:55 --> User Agent Class Initialized
+DEBUG - 2016-12-30 12:59:55 --> Model Class Initialized
+DEBUG - 2016-12-30 12:59:55 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:59:56 --> Model Class Initialized
+DEBUG - 2016-12-30 12:59:56 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 12:59:56 --> Native_session Class Initialized
+DEBUG - 2016-12-30 12:59:56 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/header.php
+DEBUG - 2016-12-30 12:59:56 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/nav_principal.php
+DEBUG - 2016-12-30 12:59:56 --> File loaded: C:\xampp\htdocs\sistema\application\views\produto/list_produto.php
+ERROR - 2016-12-30 12:59:56 --> Severity: Notice --> Undefined index: Quantidade C:\xampp\htdocs\sistema\application\views\produto\pesq_produto.php 47
+ERROR - 2016-12-30 12:59:56 --> Severity: Notice --> Undefined index: ValorCompra C:\xampp\htdocs\sistema\application\views\produto\pesq_produto.php 61
+DEBUG - 2016-12-30 12:59:56 --> File loaded: C:\xampp\htdocs\sistema\application\views\produto/pesq_produto.php
+DEBUG - 2016-12-30 12:59:56 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
+DEBUG - 2016-12-30 12:59:56 --> Final output sent to browser
+DEBUG - 2016-12-30 12:59:56 --> Total execution time: 1.8362
+DEBUG - 2016-12-30 13:00:34 --> Config Class Initialized
+DEBUG - 2016-12-30 13:00:34 --> Hooks Class Initialized
+DEBUG - 2016-12-30 13:00:34 --> UTF-8 Support Disabled
+DEBUG - 2016-12-30 13:00:34 --> Utf8 Class Initialized
+DEBUG - 2016-12-30 13:00:34 --> URI Class Initialized
+DEBUG - 2016-12-30 13:00:35 --> Router Class Initialized
+DEBUG - 2016-12-30 13:00:35 --> Output Class Initialized
+DEBUG - 2016-12-30 13:00:35 --> Security Class Initialized
+DEBUG - 2016-12-30 13:00:35 --> Input Class Initialized
+DEBUG - 2016-12-30 13:00:35 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2016-12-30 13:00:35 --> Language Class Initialized
+DEBUG - 2016-12-30 13:00:35 --> Loader Class Initialized
+DEBUG - 2016-12-30 13:00:35 --> Controller Class Initialized
+DEBUG - 2016-12-30 13:00:35 --> Helper loaded: form_helper
+DEBUG - 2016-12-30 13:00:35 --> Helper loaded: url_helper
+DEBUG - 2016-12-30 13:00:35 --> Helper loaded: date_helper
+DEBUG - 2016-12-30 13:00:35 --> Helper loaded: string_helper
+DEBUG - 2016-12-30 13:00:35 --> Form Validation Class Initialized
+DEBUG - 2016-12-30 13:00:35 --> Model Class Initialized
+DEBUG - 2016-12-30 13:00:35 --> Database Driver Class Initialized
+DEBUG - 2016-12-30 13:00:35 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 13:00:36 --> User Agent Class Initialized
+DEBUG - 2016-12-30 13:00:36 --> Model Class Initialized
+DEBUG - 2016-12-30 13:00:36 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 13:00:36 --> Model Class Initialized
+DEBUG - 2016-12-30 13:00:36 --> Basico class already loaded. Second attempt ignored.
+DEBUG - 2016-12-30 13:00:36 --> Native_session Class Initialized
+DEBUG - 2016-12-30 13:00:36 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/header.php
+DEBUG - 2016-12-30 13:00:36 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/nav_principal.php
+DEBUG - 2016-12-30 13:00:36 --> File loaded: C:\xampp\htdocs\sistema\application\views\produto/list_produto.php
+ERROR - 2016-12-30 13:00:36 --> Severity: Notice --> Undefined index: Quantidade C:\xampp\htdocs\sistema\application\views\produto\pesq_produto.php 47
+ERROR - 2016-12-30 13:00:36 --> Severity: Notice --> Undefined index: ValorCompra C:\xampp\htdocs\sistema\application\views\produto\pesq_produto.php 61
+DEBUG - 2016-12-30 13:00:36 --> File loaded: C:\xampp\htdocs\sistema\application\views\produto/pesq_produto.php
+DEBUG - 2016-12-30 13:00:36 --> File loaded: C:\xampp\htdocs\sistema\application\views\basico/footer.php
+DEBUG - 2016-12-30 13:00:36 --> Final output sent to browser
+DEBUG - 2016-12-30 13:00:36 --> Total execution time: 1.7640
