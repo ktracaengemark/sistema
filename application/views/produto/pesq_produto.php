@@ -21,17 +21,17 @@
                         </div>
 						
 						<div class="col-md-2">
-                            <label for="Unidade">Unidade de Medida:</label><br>
+                            <label for="UnidadeProduto">Unid. de Medida:</label><br>
                             <input type="text" class="form-control" maxlength="20"
-                                   autofocus name="Unidade" value="<?php echo $query['Unidade'] ?>">
+                                   autofocus name="UnidadeProduto" value="<?php echo $query['UnidadeProduto'] ?>">
                         </div>
 						
 						<div class="col-md-3">
-                            <label for="ValorProdVenda">Valor de Venda: *</label><br>
+                            <label for="ValorVendaProduto">Valor de Venda: *</label><br>
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon1">R$</span>
                                 <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
-                                       autofocus name="ValorProdVenda" value="<?php echo $query['ValorProdVenda'] ?>">
+                                       autofocus name="ValorVendaProduto" value="<?php echo $query['ValorVendaProduto'] ?>">
                             </div>
                         </div>
 						
