@@ -161,7 +161,7 @@
 
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="idTab_Servico">Serviço:</label>
                                             <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>servico/cadastrar/servico" role="button">
                                                 <span class="glyphicon glyphicon-plus"></span> <b>Novo Serviço</b>
@@ -181,13 +181,33 @@
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-3">
-                                            <label for="ValorVendaServico">Valor do Serviço:</label>
+                                        <div class="col-md-2">
+                                            <label for="ValorVendaServico1">Valor do Serviço:</label>
                                             <div class="input-group" id="txtHint">
                                                 <span class="input-group-addon" id="basic-addon1">R$</span>
                                                 <input type="text" class="form-control Valor" id="idTab_Servico1" maxlength="10" placeholder="0,00"
                                                        name="ValorVendaServico1" value="<?php echo $servico['ValorVendaServico1'] ?>">
 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="ObsServico1">Obs:</label><br>
+                                            <input type="text" class="form-control" id="ObsServico1" maxlength="3"
+                                                   name="ObsServico1" value="<?php echo $servico['ObsServico1'] ?>">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="QuitRec">Concluído? </label><br>
+                                            <div class="form-group">
+                                                <div class="btn-group" data-toggle="buttons">
+                                                    <label class="btn btn-warning active" name="radio_ConcluidoServico1" id="radio_ConcluidoServico1N">
+                                                    <input type="radio" name="idTab_TipoConcluido'+i+'" id="radiogeral"
+                                                        autocomplete="off" value="N" checked>Não
+                                                    </label>
+                                                    <label class="btn btn-default" name="radio_ConcluidoServico1" id="radio_ConcluidoServico1S">
+                                                    <input type="radio" name="idTab_TipoConcluido'+i+'" id="radiogeral"
+                                                        autocomplete="off" value="S" checked>Sim
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
 

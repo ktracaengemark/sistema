@@ -98,10 +98,9 @@ class Orcatrata extends CI_Controller {
                     'SCount',
                     'idTab_Servico1',
                     'ValorVendaServico1',
+                    'ObsServico1',
                         ), TRUE));
-
-
-        $data['servico'] = array();
+        //$data['servico'] = array();
 
         $data['produto'] = quotes_to_entities($this->input->post(array(
                     'PCount',
@@ -109,8 +108,7 @@ class Orcatrata extends CI_Controller {
                     'ValorVendaProduto1',
                     'QuantidadeProduto1',
                         ), TRUE));
-
-        $data['produto'] = array();
+        //$data['produto'] = array();
 
         $data['orcamento']['OrcamentoTotal'] = $this->input->post('OrcamentoTotal');
         (!$this->input->post('SCount')) ? $data['servico']['SCount'] = 1 : $data['servico']['SCount'] = $this->input->post('SCount');

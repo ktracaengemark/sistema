@@ -140,21 +140,21 @@ function calculaParcelas() {
                     <div class="col-md-1">\
                         <label for="ParcRec">Parcela:</label><br>\
                         <input type="text" class="form-control" maxlength="6" readonly=""\
-                               name="ParcRec" value="'+i+'/'+parcelas+'">\
+                               name="ParcRec'+i+'" value="'+i+'/'+parcelas+'">\
                     </div>\
                     <div class="col-md-2">\
                         <label for="ValorParcRec">Valor Parcela:</label><br>\
                         <div class="input-group" id="txtHint">\
                             <span class="input-group-addon" id="basic-addon1">R$</span>\
                             <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly=""\
-                                   name="ValorParcRec" value="'+parcorca+'">\
+                                   name="ValorParcRec'+i+'" value="'+parcorca+'">\
                         </div>\
                     </div>\
                     <div class="col-md-2">\
                         <label for="DataVencRec">Data Venc. Parc.</label>\
                         <div class="input-group">\
                             <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA" readonly=""\
-                                   name="DataVencRec" value="'+futureMonth.format('DD/MM/YYYY')+'">\
+                                   name="DataVencRec'+i+'" value="'+futureMonth.format('DD/MM/YYYY')+'">\
                             <span class="input-group-addon" disabled>\
                                 <span class="glyphicon glyphicon-calendar"></span>\
                             </span>\
@@ -165,23 +165,33 @@ function calculaParcelas() {
                         <div class="input-group" id="txtHint">\
                             <span class="input-group-addon" id="basic-addon1">R$</span>\
                             <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
-                                   name="ValorPagoRec" value="">\
+                                   name="ValorPagoRec'+i+'" value="">\
                         </div>\
                     </div>\
                     <div class="col-md-2">\
                         <label for="DataPagoRec">Data Pag.</label>\
                         <div class="input-group DatePicker">\
                             <input type="text" class="form-control Date" id="DataPagoRec'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
-                                   name="DataPagoRec" value="">\
+                                   name="DataPagoRec'+i+'" value="">\
                             <span class="input-group-addon" disabled>\
                                 <span class="glyphicon glyphicon-calendar"></span>\
                             </span>\
                         </div>\
                     </div>\
-                    <div class="col-md-1">\
-                        <label for="QuitRec">Qt?</label><br>\
-                        <input type="text" class="form-control" maxlength="1"\
-                               name="QuitRec" value="">\
+                    <div class="col-md-3">\
+                        <label for="QuitRec">Quitado?</label><br>\
+                        <div class="form-group">\
+                            <div class="btn-group" data-toggle="buttons">\
+                                <label class="btn btn-warning active" name="radio_idTab_TipoConcluido'+i+'" id="radio_idTab_TipoConcluido'+i+'N">\
+                                <input type="radio" name="idTab_TipoConcluido'+i+'" id="radiogeraldinamico"\
+                                    autocomplete="off" value="N" checked>Não\
+                                </label>\
+                                <label class="btn btn-default" name="radio_idTab_TipoConcluido'+i+'" id="radio_idTab_TipoConcluido'+i+'S">\
+                                <input type="radio" name="idTab_TipoConcluido'+i+'" id="radiogeraldinamico"\
+                                    autocomplete="off" value="S" checked>Sim\
+                                </label>\
+                            </div>\
+                        </div>\
                     </div>\
                 </div>\
             </div>'
@@ -190,6 +200,19 @@ function calculaParcelas() {
     }
     //habilita o botão de calendário após a geração dos campos dinâmicos
     $('.DatePicker').datetimepicker(dateTimePickerOptions);
+
+    //permite o uso de radio buttons nesse bloco dinâmico
+    $('input:radio[id="radiogeraldinamico"]').change(function() {
+
+        var value = $(this).val();
+        var name = $(this).attr("name");
+
+        $('label[name="radio_' + name + '"]').removeClass();
+        $('label[name="radio_' + name + '"]').addClass("btn btn-default");
+        $('#radio_' + name + value).addClass("btn btn-warning active");
+        //$('#radiogeral'+ value).addClass("btn btn-warning active");
+
+    });
 }
 
  /*
@@ -434,6 +457,19 @@ $(document).ready(function () {
         $('#radiogeral'+ value).addClass("btn btn-warning active");
 
     });
+
+    //permite o uso de radio buttons nesse bloco dinâmico
+    $('input:radio[id="radiogeraldinamico"]').change(function() {
+
+        var value = $(this).val();
+        var name = $(this).attr("name");
+
+        $('label[name="radio_' + name + '"]').removeClass();
+        $('label[name="radio_' + name + '"]').addClass("btn btn-default");
+        $('#radio_' + name + value).addClass("btn btn-warning active");
+        //$('#radiogeral'+ value).addClass("btn btn-warning active");
+
+    });    
 
     var ps = 1; //initlal text box count
     $(".add_field_button").click(function(e){ //on add input button click
