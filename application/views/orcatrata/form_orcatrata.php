@@ -157,82 +157,14 @@
                         <div id="collapse1" class="panel-collapse collapse <?php echo $orcamentoin ?>" role="tabpanel" aria-labelledby="heading1">
                             <div class="panel-body">
 
-<!--#######################################-->
+                                <!--#######################################-->
 
                                 <input type="hidden" name="SCount" id="SCount" value="<?php echo $servico['SCount']; ?>"/>
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <label for="idTab_Servico">Serviço:</label>
-                                            <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>servico/cadastrar/servico" role="button">
-                                                <span class="glyphicon glyphicon-plus"></span> <b>Novo Serviço</b>
-                                            </a>
-                                            <!--<select data-placeholder="Selecione uma opção..." class="form-control" onchange="addValues(this.value)" <?php echo $readonly; ?>-->
-                                            <select data-placeholder="Selecione uma opção..." class="form-control" onchange="buscaValor(this.value,this.name,'Servico')" <?php echo $readonly; ?>
-                                                    id="lista" name="idTab_Servico1">
-                                                <option value="">-- Selecione um Serviço --</option>
-                                                <?php
-                                                foreach ($select['Servico'] as $key => $row) {
-                                                    if ($servico['idTab_Servico1'] == $key) {
-                                                        echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-                                                    } else {
-                                                        echo '<option value="' . $key . '">' . $row . '</option>';
-                                                    }
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="ValorVendaServico1">Valor do Serviço:</label>
-                                            <div class="input-group" id="txtHint">
-                                                <span class="input-group-addon" id="basic-addon1">R$</span>
-                                                <input type="text" class="form-control Valor" id="idTab_Servico1" maxlength="10" placeholder="0,00"
-                                                       name="ValorVendaServico1" value="<?php echo $servico['ValorVendaServico1'] ?>">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label for="ObsServico1">Obs:</label><br>
-                                            <input type="text" class="form-control" id="ObsServico1" maxlength="250"
-                                                   name="ObsServico1" value="<?php echo $servico['ObsServico1'] ?>">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="ConcluidoServico">Concluído?</label><br>
-                                            <div class="form-group">
-                                                <div class="btn-group" data-toggle="buttons">
-                                                    <?php
-                                                    foreach ($select['ConcluidoServico'] as $key => $row) {
-                                                        (!$servico['ConcluidoServico1']) ? $servico['ConcluidoServico1'] = 'N' : FALSE;
-
-                                                        if ($servico['ConcluidoServico1'] == $key) {
-                                                            echo ''
-                                                            . '<label class="btn btn-warning active" name="radio_ConcluidoServico1" id="radio_ConcluidoServico1' .  $key . '">'
-                                                            . '<input type="radio" name="ConcluidoServico1" id="radiogeraldinamico" '
-                                                            . 'autocomplete="off" value="' . $key . '" checked>' . $row
-                                                            . '</label>'
-                                                            ;
-                                                        } else {
-                                                            echo ''
-                                                            . '<label class="btn btn-default" name="radio_ConcluidoServico1" id="radio_ConcluidoServico1' .  $key . '">'
-                                                            . '<input type="radio" name="ConcluidoServico1" id="radiogeraldinamico" '
-                                                            . 'autocomplete="off" value="' . $key . '" >' . $row
-                                                            . '</label>'
-                                                            ;
-                                                        }
-                                                    }
-                                                    ?>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
 
                                 <div class="input_fields_wrap">
 
                                 <?php
-                                for ($i=2; $i <= $servico['SCount']; $i++) {
+                                for ($i=1; $i <= $servico['SCount']; $i++) {
                                 ?>
 
                                 <div class="form-group" id="1div<?php echo $i ?>">
@@ -457,21 +389,21 @@
                                         </div>
 
                                         <div class="col-md-3">
-                                            <label for="ValorEntOrca">Entrada:</label><br>
+                                            <label for="ValorEntradaOrca">Entrada:</label><br>
                                             <div class="input-group" id="txtHint">
                                                 <span class="input-group-addon" id="basic-addon1">R$</span>
-                                                <input type="text" class="form-control Valor" id="ValorEntOrca" maxlength="10" placeholder="0,00"
+                                                <input type="text" class="form-control Valor" id="ValorEntradaOrca" maxlength="10" placeholder="0,00"
                                                     onkeyup="calculaResta(this.value)"
-                                                    name="ValorEntOrca" value="<?php echo $orcatrata['ValorEntOrca'] ?>">
+                                                    name="ValorEntradaOrca" value="<?php echo $orcatrata['ValorEntradaOrca'] ?>">
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
-                                            <label for="ValorResOrca">Resta:</label><br>
+                                            <label for="ValorRestanteOrca">Resta:</label><br>
                                             <div class="input-group" id="txtHint">
                                                 <span class="input-group-addon" id="basic-addon1">R$</span>
-                                                <input type="text" class="form-control Valor" id="ValorResOrca" maxlength="10" placeholder="0,00" readonly=""
-                                                       name="ValorResOrca" value="<?php echo $orcatrata['ValorResOrca'] ?>">
+                                                <input type="text" class="form-control Valor" id="ValorRestanteOrca" maxlength="10" placeholder="0,00" readonly=""
+                                                       name="ValorRestanteOrca" value="<?php echo $orcatrata['ValorRestanteOrca'] ?>">
                                             </div>
                                         </div>
                                     </div>
