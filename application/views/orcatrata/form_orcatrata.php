@@ -86,7 +86,7 @@
                         </div>
                     </div>
                 </div>
-				
+
 				<hr>
 
                 <div class="form-group" id="StatusOrca" <?php echo $div['StatusOrca']; ?>>
@@ -194,21 +194,34 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label for="ObsServico1">Obs:</label><br>
-                                            <input type="text" class="form-control" id="ObsServico1" maxlength="3"
+                                            <input type="text" class="form-control" id="ObsServico1" maxlength="250"
                                                    name="ObsServico1" value="<?php echo $servico['ObsServico1'] ?>">
                                         </div>
                                         <div class="col-md-2">
-                                            <label for="QuitRec">Concluído? </label><br>
+                                            <label for="ConcluidoServico">Concluído?</label><br>
                                             <div class="form-group">
                                                 <div class="btn-group" data-toggle="buttons">
-                                                    <label class="btn btn-warning active" name="radio_ConcluidoServico1" id="radio_ConcluidoServico1N">
-                                                    <input type="radio" name="idTab_TipoConcluido'+i+'" id="radiogeral"
-                                                        autocomplete="off" value="N" checked>Não
-                                                    </label>
-                                                    <label class="btn btn-default" name="radio_ConcluidoServico1" id="radio_ConcluidoServico1S">
-                                                    <input type="radio" name="idTab_TipoConcluido'+i+'" id="radiogeral"
-                                                        autocomplete="off" value="S" checked>Sim
-                                                    </label>
+                                                    <?php
+                                                    foreach ($select['ConcluidoServico'] as $key => $row) {
+                                                        (!$servico['ConcluidoServico1']) ? $servico['ConcluidoServico1'] = 'N' : FALSE;
+
+                                                        if ($servico['ConcluidoServico1'] == $key) {
+                                                            echo ''
+                                                            . '<label class="btn btn-warning active" name="radio_ConcluidoServico1" id="radio_ConcluidoServico1' .  $key . '">'
+                                                            . '<input type="radio" name="ConcluidoServico1" id="radiogeraldinamico" '
+                                                            . 'autocomplete="off" value="' . $key . '" checked>' . $row
+                                                            . '</label>'
+                                                            ;
+                                                        } else {
+                                                            echo ''
+                                                            . '<label class="btn btn-default" name="radio_ConcluidoServico1" id="radio_ConcluidoServico1' .  $key . '">'
+                                                            . '<input type="radio" name="ConcluidoServico1" id="radiogeraldinamico" '
+                                                            . 'autocomplete="off" value="' . $key . '" >' . $row
+                                                            . '</label>'
+                                                            ;
+                                                        }
+                                                    }
+                                                    ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -224,7 +237,7 @@
 
                                 <div class="form-group" id="1div<?php echo $i ?>">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="idTab_Servico">Serviço:</label>
                                             <select data-placeholder="Selecione uma opção..." class="form-control" onchange="buscaValor(this.value,this.name,'Servico')" <?php echo $readonly; ?>
                                                     id="lista" name="idTab_Servico<?php echo $i ?>">
@@ -240,7 +253,7 @@
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label for="ValorVendaServico">Valor do Serviço:</label>
                                             <div class="input-group" id="txtHint">
                                                 <span class="input-group-addon" id="basic-addon1">R$</span>
@@ -250,12 +263,44 @@
 
                                         </div>
                                         <div class="col-md-3">
+                                            <label for="ObsServico<?php echo $i ?>">Obs:</label><br>
+                                            <input type="text" class="form-control" id="ObsServico<?php echo $i ?>" maxlength="250"
+                                                   name="ObsServico<?php echo $i ?>" value="<?php echo $servico['ObsServico'.$i] ?>">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="ConcluidoServico">Concluído? </label><br>
+                                            <div class="form-group">
+                                                <div class="btn-group" data-toggle="buttons">
+                                                    <?php
+                                                    foreach ($select['ConcluidoServico'] as $key => $row) {
+                                                        (!$servico['ConcluidoServico'. $i]) ? $servico['ConcluidoServico'. $i] = '1' : FALSE;
+
+                                                        if ($servico['ConcluidoServico'. $i] == $key) {
+                                                            echo ''
+                                                            . '<label class="btn btn-warning active" name="radio_ConcluidoServico' . $i . '" id="radio_ConcluidoServico' . $i .  $key . '">'
+                                                            . '<input type="radio" name="ConcluidoServico' . $i . '" id="radiogeraldinamico" '
+                                                            . 'autocomplete="off" value="' . $key . '" checked>' . $row
+                                                            . '</label>'
+                                                            ;
+                                                        } else {
+                                                            echo ''
+                                                            . '<label class="btn btn-default" name="radio_ConcluidoServico' . $i . '" id="radio_ConcluidoServico' . $i .  $key . '">'
+                                                            . '<input type="radio" name="ConcluidoServico' . $i . '" id="radiogeraldinamico" '
+                                                            . 'autocomplete="off" value="' . $key . '" >' . $row
+                                                            . '</label>'
+                                                            ;
+                                                        }
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
                                             <label><br></label><br>
                                             <button type="button" id="<?php echo $i ?>" class="remove_field btn btn-danger">
                                                 <span class="glyphicon glyphicon-trash"></span>
                                             </button>
                                         </div>
-
                                     </div>
                                 </div>
 
@@ -268,7 +313,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <a class="add_field_button btn btn-xs btn-warning">
+                                            <a class="btn btn-xs btn-warning" onclick="adicionaServico()">
                                                 <span class="glyphicon glyphicon-plus"></span>
                                             </a>
                                         </div>

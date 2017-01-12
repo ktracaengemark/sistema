@@ -99,6 +99,7 @@ class Orcatrata extends CI_Controller {
                     'idTab_Servico1',
                     'ValorVendaServico1',
                     'ObsServico1',
+                    'ConcluidoServico1',
                         ), TRUE));
         //$data['servico'] = array();
 
@@ -133,8 +134,9 @@ class Orcatrata extends CI_Controller {
 
                 if ($this->input->post('idTab_Servico' . $i)) {
                     $data['servico']['idTab_Servico' . $j] = $this->input->post('idTab_Servico' . $i);
-                    //$data['servico']['ValorVendaServico'.$j] = $data['lista']['Servicos'][$this->input->post('idTab_Servico'.$i)];
                     $data['servico']['ValorVendaServico' . $j] = $this->input->post('ValorVendaServico' . $i);
+                    $data['servico']['ObsServico' . $j] = $this->input->post('ObsServico' . $i);
+                    $data['servico']['ConcluidoServico' . $j] = $this->input->post('ConcluidoServico' . $i);
 
                     $sq = $sq . '("' . $this->input->post('idTab_Servico' . $i) . '", ';
                     //$sq = $sq . '\'' . $this->input->post('ValorVendaServico'.$i) . '\'), ';
@@ -148,6 +150,8 @@ class Orcatrata extends CI_Controller {
 
             $data['servico']['idTab_Servico1'] = $this->input->post('idTab_Servico1');
             $data['servico']['ValorVendaServico1'] = $this->input->post('ValorVendaServico1');
+            $data['servico']['ObsServico1'] = $this->input->post('ObsServico1');
+            $data['servico']['ConcluidoServico1'] = $this->input->post('ConcluidoServico1');
             $sq = $sq . '("' . $this->input->post('idTab_Servico1') . '", ';
             //$sq = $sq . '\'' . $this->input->post('ValorVendaServico1') . '\'), ';
             $sq = $sq . '"0.00"), ';
@@ -225,6 +229,7 @@ class Orcatrata extends CI_Controller {
         $data['select']['StatusOrca'] = $this->Orcatrata_model->select_status_orca();
         $data['select']['FormaPag'] = $this->Formapag_model->select_formapag();
         $data['select']['TipoConcluido'] = $this->Basico_model->select_tipo_concluido();
+        $data['select']['ConcluidoServico'] = $this->Basico_model->select_status_sn();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
         $data['select']['Servico'] = $this->Basico_model->select_servico();
         $data['select']['Produto'] = $this->Basico_model->select_produto();

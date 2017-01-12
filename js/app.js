@@ -215,6 +215,108 @@ function calculaParcelas() {
     });
 }
 
+/*
+ * Função responsável por adicionar novos campos de serviço dinamicamente no
+ * formulário de orçamento/tratametno
+ */
+function adicionaServico() {
+
+    var ps = $("#SCount").val(); //initlal text box count
+
+    //alert( $("#SCount").val() );
+    ps++; //text box increment
+    $("#SCount").val(ps);
+    //console.log(ps);
+
+    $(".input_fields_wrap").append('\
+        <div class="form-group" id="1div'+ps+'">\
+            <div class="row">\
+                <div class="col-md-3">\
+                    <label for="idTab_Servico">Serviços:</label><br>\
+                    <select class="form-control" id="listadinamica'+ps+'" onchange="buscaValor(this.value,this.name,\'Servico\')" name="idTab_Servico'+ps+'">\
+                        <option value="">-- Selecione uma opção --</option>\
+                    </select>\
+                </div>\
+                <div class="col-md-2">\
+                    <label for="ValorVendaServico">Valor do Serviço:</label><br>\
+                    <div class="input-group" id="txtHint">\
+                        <span class="input-group-addon" id="basic-addon1">R$</span>\
+                        <input type="text" class="form-control Valor" id="idTab_Servico'+ps+'" maxlength="10" placeholder="0,00" \
+                               name="ValorVendaServico'+ps+'" value="">\
+                    </div>\
+                </div>\
+                <div class="col-md-3">\
+                    <label for="ObsServico'+ps+'">Obs:</label><br>\
+                    <input type="text" class="form-control" id="ObsServico'+ps+'" maxlength="250"\
+                           name="ObsServico'+ps+'" value="">\
+                </div>\
+                <div class="col-md-2">\
+                    <label for="ConcluidoServico">Concluído? </label><br>\
+                    <div class="form-group">\
+                        <div class="btn-group" data-toggle="buttons">\
+                            <label class="btn btn-warning active" name="radio_ConcluidoServico'+ps+'" id="radio_ConcluidoServico'+ps+'N">\
+                            <input type="radio" name="ConcluidoServico'+ps+'" id="radiogeraldinamico"\
+                                autocomplete="off" value="N" checked>Não\
+                            </label>\
+                            <label class="btn btn-default" name="radio_ConcluidoServico'+ps+'" id="radio_ConcluidoServico'+ps+'S">\
+                            <input type="radio" name="ConcluidoServico'+ps+'" id="radiogeraldinamico"\
+                                autocomplete="off" value="S">Sim\
+                            </label>\
+                        </div>\
+                    </div>\
+                </div>\
+                <div class="col-md-2">\
+                    <label><br></label><br>\
+                    <a href="#" id="'+ps+'" class="remove_field btn btn-danger">\
+                        <span class="glyphicon glyphicon-trash"></span>\
+                    </a>\
+                </div>\
+            </div>\
+        </div>'
+    ); //add input box
+
+    //get a reference to the select element
+    $select = $('#listadinamica'+ps);
+
+    //request the JSON data and parse into the select element
+    $.ajax({
+        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=1',
+        dataType: 'JSON',
+        type: "GET",
+        success: function (data) {
+            //clear the current content of the select
+            $select.html('');
+            //iterate over the data and append a select option
+            $select.append('<option value="">-- Selecione uma opção --</option>');
+            $.each(data, function (key, val) {
+                //alert(val.id);
+                $select.append('<option value="' + val.id + '">' + val.name + '</option>');
+            })
+        },
+        error: function () {
+            //alert('erro listadinamicaA');
+            //if there is an error append a 'none available' option
+            $select.html('<option id="-1">ERRO</option>');
+        }
+
+    });
+
+    //permite o uso de radio buttons nesse bloco dinâmico
+    $('input:radio[id="radiogeraldinamico"]').change(function() {
+
+        var value = $(this).val();
+        var name = $(this).attr("name");
+
+        //console.log(value + ' <<>> ' + name);
+
+        $('label[name="radio_' + name + '"]').removeClass();
+        $('label[name="radio_' + name + '"]').addClass("btn btn-default");
+        $('#radio_' + name + value).addClass("btn btn-warning active");
+        //$('#radiogeral'+ value).addClass("btn btn-warning active");
+
+    });
+}
+
  /*
   * Função criada para funcionar junto com o recurso de hide/show do jquery nos
   * casos de radio button, que exigem um tratamento especial para funcionar
@@ -452,6 +554,8 @@ $(document).ready(function () {
         var value = $(this).val();
         var name = $(this).attr("name");
 
+        //alert(name + ' ' + value);
+
         $('label[name="radio_' + name + '"]').removeClass();
         $('label[name="radio_' + name + '"]').addClass("btn btn-default");
         $('#radiogeral'+ value).addClass("btn btn-warning active");
@@ -464,86 +568,14 @@ $(document).ready(function () {
         var value = $(this).val();
         var name = $(this).attr("name");
 
+        //alert(name + ' ' + value);
+
         $('label[name="radio_' + name + '"]').removeClass();
         $('label[name="radio_' + name + '"]').addClass("btn btn-default");
         $('#radio_' + name + value).addClass("btn btn-warning active");
         //$('#radiogeral'+ value).addClass("btn btn-warning active");
 
-    });    
-
-    var ps = 1; //initlal text box count
-    $(".add_field_button").click(function(e){ //on add input button click
-        e.preventDefault();
-
-        //alert( $("#SCount").val() );
-        ps++; //text box increment
-        $("#SCount").val(ps);
-
-        //$(".input_fields_wrap").append('<div><input type="text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
-        $(".input_fields_wrap").append('\
-            <div class="form-group" id="1div'+ps+'">\
-                <div class="row">\
-                    <div class="col-md-4">\
-                        <label for="idTab_Servico">Serviços:</label><br>\
-                        <select class="form-control" id="listadinamica'+ps+'" onchange="buscaValor(this.value,this.name,\'Servico\')" name="idTab_Servico'+ps+'">\
-                            <option value="">-- Selecione uma opção --</option>\
-                        </select>\
-                    </div>\
-                    <div class="col-md-3">\
-                        <label for="ValorVendaServico">Valor do Serviço:</label><br>\
-                        <div class="input-group" id="txtHint">\
-                            <span class="input-group-addon" id="basic-addon1">R$</span>\
-                            <input type="text" class="form-control Valor" id="idTab_Servico'+ps+'" maxlength="10" placeholder="0,00" \
-                                   name="ValorVendaServico'+ps+'" value="">\
-                        </div>\
-                    </div>\
-                    <div class="col-md-3">\
-                        <label><br></label><br>\
-                        <a href="#" id="'+ps+'" class="remove_field btn btn-danger">\
-                            <span class="glyphicon glyphicon-trash"></span>\
-                        </a>\
-                    </div>\
-                </div>\
-            </div>'
-        ); //add input box
-        //$(".input_fields_wrap").append('<select id="listadinamica'+ps+'"></select>'); //add input box
-        //$("#listadinamica"+ps).append($("<option></option>").val(1).html("um"));
-        //$("#listadinamica"+ps).append($("<option></option>").val(2).html("dois"));
-
-        //get a reference to the select element
-        $select = $('#listadinamica'+ps);
-
-        //request the JSON data and parse into the select element
-        $.ajax({
-            url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=1',
-            dataType: 'JSON',
-            type: "GET",
-            success: function (data) {
-                //clear the current content of the select
-                $select.html('');
-                //iterate over the data and append a select option
-                $select.append('<option value="">-- Selecione uma opção --</option>');
-                $.each(data, function (key, val) {
-                    //alert(val.id);
-                    $select.append('<option value="' + val.id + '">' + val.name + '</option>');
-                })
-            },
-            error: function () {
-                //alert('erro listadinamicaA');
-                //if there is an error append a 'none available' option
-                $select.html('<option id="-1">ERRO</option>');
-            }
-
-        });
-
     });
-
-    $(".input_fields_wrap").on("click",".remove_field", function(e){ //user click on remove text
-        $("#1div"+$(this).attr("id")).remove();
-        //após remover o campo refaz o cálculo do orçamento e total restante
-        calculaOrcamento();
-        calculaResta($("#ValorEntOrca").val())
-    })
 
     //adiciona campos dinamicamente
     var pc = 1; //initlal text box count
@@ -625,6 +657,14 @@ $(document).ready(function () {
         });
 
     });
+
+    //Remove os campos adicionados dinamicamente
+    $(".input_fields_wrap").on("click",".remove_field", function(e){ //user click on remove text
+        $("#1div"+$(this).attr("id")).remove();
+        //após remover o campo refaz o cálculo do orçamento e total restante
+        calculaOrcamento();
+        calculaResta($("#ValorEntOrca").val())
+    })
 
     //Remove os campos adicionados dinamicamente
     $(".input_fields_wrap2").on("click",".remove_field2", function(e){ //user click on remove text
