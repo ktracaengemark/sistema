@@ -48,67 +48,64 @@ class Orcatrata extends CI_Controller {
             $data['msg'] = '';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $data['orcatrata'] = quotes_to_entities($this->input->post(array(
-                    #### App_OrcaTrata ####
-                    'idApp_OrcaTrata',
-                    'idApp_Cliente',
-                    'DataOrca',
-                    'DataConcl',
-                    'DataRet',
-                    'StatusOrca',
-                    'ObsOrca',
-                    'idApp_Profissional',
-                    'FormaPag',
-                    'QtdParcOrca',
-                    'DataVencOrca',
-                    'idTab_TipoConcluido',
-                    'ValorOrca',
-                    'ValorEntOrca',
-                    'ValorResOrca',
-                    'orcamentoin',
-                    'parcelasin',
-                    'tratametnoin',
-                        ), TRUE));
+            #### App_OrcaTrata ####
+            'idApp_OrcaTrata',
+            'idApp_Cliente',
+            'DataOrca',
+            'ProfissionalOrca',
+            'AprovadoOrca',
+            'ServicoConcluido',
+            'DataConclusao',
+            'DataRetorno',
+            'ValorOrca',
+            'ValorEntradaOrca',
+            'ValorRestanteOrca',
+            'FormaPagamento',
+            'QtdParcOrca',
+            'DataVencimentoOrca',
+            'ObsOrca',
+        ), TRUE));
 
         $data['procedimento'] = quotes_to_entities($this->input->post(array(
-                    #### App_Procedimento ####
-                    'idApp_OrcaTrata',
-                    'idApp_Procedimento',
-                    'DataProcedimento',
-                    'Proc',
-                    'Profissional',
-                        ), TRUE));
+            #### App_Procedimento ####
+            'idApp_Procedimento',
+            'idApp_OrcaTrata',
+            'Profissional',
+            'DataProcedimento',
+            'Procedimento',
+        ), TRUE));
 
         $data['parcelasrec'] = quotes_to_entities($this->input->post(array(
-                    #### App_ParcRec ####
-                    'idApp_OrcaTrata',
-                    'idApp_ParcelasRec',
-                    'ParcRec',
-                    'ValorParcRec',
-                    'ValorPagoRec',
-                    'DataVencRec',
-                    'DataPagoRec',
-                    'QuitRec',
-                        ), TRUE));
+            #### App_ParcRec ####
+            'idApp_OrcaTrata',
+            'idApp_ParcelasRec',
+            'ParcelaRecebiveis',
+            'ValorParcelaRecebiveis',
+            'ValorPagoRecebiveis',
+            'DataVencimentoRecebiveis',
+            'DataPagoRecebiveis',
+            'QuitadoRecebiveis',
+        ), TRUE));
 
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
         //comentado fim) mas por enquanto, se está funcionando, vou deixar assim.
 
 
         $data['servico'] = quotes_to_entities($this->input->post(array(
-                    'SCount',
-                    'idTab_Servico1',
-                    'ValorVendaServico1',
-                    'ObsServico1',
-                    'ConcluidoServico1',
-                        ), TRUE));
+            'SCount',
+            'idTab_Servico1',
+            'ValorVendaServico1',
+            'ObsServico1',
+            'ConcluidoServico1',
+        ), TRUE));
         //$data['servico'] = array();
 
         $data['produto'] = quotes_to_entities($this->input->post(array(
-                    'PCount',
-                    'idTab_Produto1',
-                    'ValorVendaProduto1',
-                    'QuantidadeProduto1',
-                        ), TRUE));
+            'PCount',
+            'idTab_Produto1',
+            'ValorVendaProduto1',
+            'QuantidadeProduto1',
+        ), TRUE));
         //$data['produto'] = array();
 
         $data['orcamento']['OrcamentoTotal'] = $this->input->post('OrcamentoTotal');
@@ -177,7 +174,7 @@ class Orcatrata extends CI_Controller {
                     $data['produto']['idTab_Produto' . $j] = $this->input->post('idTab_Produto' . $i);
                     $data['produto']['ValorVendaProduto' . $j] = $this->input->post('ValorVendaProduto' . $i);
                     $data['produto']['QuantidadeProduto' . $j] = $this->input->post('QuantidadeProduto' . $i);
-                    $data['produto']['SubtotalProduto' . $j] = $this->input->post('SubtotalProduto' . $i);
+                    #$data['produto']['SubtotalProduto' . $j] = $this->input->post('SubtotalProduto' . $i);
 
                     $pq = $pq . '(\'' . $this->input->post('idTab_Produto' . $i) . '\', ';
                     //$pq = $pq . '\'' . $this->input->post('ValorVendaProduto'.$i) . '\', ';
@@ -195,7 +192,7 @@ class Orcatrata extends CI_Controller {
             $data['produto']['idTab_Produto1'] = $this->input->post('idTab_Produto1');
             $data['produto']['ValorVendaProduto1'] = $this->input->post('ValorVendaProduto1');
             $data['produto']['QuantidadeProduto1'] = $this->input->post('QuantidadeProduto1');
-            $data['produto']['SubtotalProduto1'] = $this->input->post('SubtotalProduto1');
+            #$data['produto']['SubtotalProduto1'] = $this->input->post('SubtotalProduto1');
             $pq = $pq . '(\'' . $this->input->post('idTab_Produto1') . '\', ';
             //$pq = $pq . '\'' . $this->input->post('ValorVendaProduto1') . '\', ';
             $pq = $pq . '\'0.00\', ';
@@ -215,8 +212,6 @@ class Orcatrata extends CI_Controller {
 
         //Fim do trecho de código que dá pra melhorar
 
-
-
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #### App_OrcaTrata ####
@@ -226,7 +221,7 @@ class Orcatrata extends CI_Controller {
         #$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
 
 
-        $data['select']['StatusOrca'] = $this->Orcatrata_model->select_status_orca();
+        $data['select']['AprovadoOrca'] = $this->Orcatrata_model->select_status_orca();
         $data['select']['FormaPag'] = $this->Formapag_model->select_formapag();
         $data['select']['TipoConcluido'] = $this->Basico_model->select_tipo_concluido();
         $data['select']['ConcluidoServico'] = $this->Basico_model->select_status_sn();
@@ -264,14 +259,14 @@ class Orcatrata extends CI_Controller {
 
 
         #Ver uma solução melhor para este campo
-        (!$data['orcatrata']['StatusOrca']) ? $data['orcatrata']['StatusOrca'] = 'N' : FALSE;
+        (!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
 
         $data['radio'] = array(
-            'StatusOrca' => $this->basico->radio_checked($data['orcatrata']['StatusOrca'], 'Orçaento Aprovado', 'NS'),
+            'AprovadoOrca' => $this->basico->radio_checked($data['orcatrata']['AprovadoOrca'], 'Orçaento Aprovado', 'NS'),
         );
 
-        ($data['orcatrata']['StatusOrca'] == 'S') ?
-            $data['div']['StatusOrca'] = '' : $data['div']['StatusOrca'] = 'style="display: none;"';
+        ($data['orcatrata']['AprovadoOrca'] == 'S') ?
+            $data['div']['AprovadoOrca'] = '' : $data['div']['AprovadoOrca'] = 'style="display: none;"';
 
 
         $data['sidebar'] = 'col-sm-3 col-md-2';
@@ -301,7 +296,7 @@ class Orcatrata extends CI_Controller {
             $data['orcatrata']['DataOrca'] = $this->basico->mascara_data($data['orcatrata']['DataOrca'], 'mysql');
             $data['orcatrata']['DataConcl'] = $this->basico->mascara_data($data['orcatrata']['DataConcl'], 'mysql');
             $data['orcatrata']['DataRet'] = $this->basico->mascara_data($data['orcatrata']['DataRet'], 'mysql');
-            $data['orcatrata']['StatusOrca'] = $data['orcatrata']['StatusOrca'];
+            $data['orcatrata']['AprovadoOrca'] = $data['orcatrata']['AprovadoOrca'];
             $data['orcatrata']['ObsOrca'] = nl2br($data['orcatrata']['ObsOrca']);
             $data['orcatrata']['idApp_Profissional'] = $data['orcatrata']['idApp_Profissional'];
             $data['orcatrata']['FormaPag'] = $data['orcatrata']['FormaPag'];

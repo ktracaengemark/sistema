@@ -33,16 +33,16 @@
                         </div>
 
                         <div class="col-md-4">
-                            <label for="idApp_Profissional">Prof. *</label>
+                            <label for="ProfissionalOrca">Prof. *</label>
                             <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
                                 <span class="glyphicon glyphicon-plus"></span> <b>Novo Prof.</b>
                             </a>
                             <select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-                                    id="idApp_Profissional" name="idApp_Profissional">
+                                    id="ProfissionalOrca" name="ProfissionalOrca">
                                 <option value="">-- Selecione um Prof. --</option>
                                 <?php
                                 foreach ($select['Profissional'] as $key => $row) {
-                                    if ($query['idApp_Profissional'] == $key) {
+                                    if ($query['ProfissionalOrca'] == $key) {
                                         echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
                                     } else {
                                         echo '<option value="' . $key . '">' . $row . '</option>';
@@ -53,27 +53,27 @@
                         </div>
 
                         <div class="col-md-2 form-inline">
-                            <label for="StatusOrca">Orçam. Aprov.?</label><br>
+                            <label for="AprovadoOrca">Orçam. Aprov.?</label><br>
                             <div class="form-group">
                                 <div class="btn-group" data-toggle="buttons">
                                     <?php
-                                    foreach ($select['StatusOrca'] as $key => $row) {
-                                        if (!$orcatrata['StatusOrca'])
-                                            $orcatrata['StatusOrca'] = 'N';
+                                    foreach ($select['AprovadoOrca'] as $key => $row) {
+                                        if (!$orcatrata['AprovadoOrca'])
+                                            $orcatrata['AprovadoOrca'] = 'N';
 
                                         ($key == 'S') ? $hideshow = 'show' : $hideshow = 'hide';
 
-                                        if ($orcatrata['StatusOrca'] == $key) {
+                                        if ($orcatrata['AprovadoOrca'] == $key) {
                                             echo ''
-                                            . '<label class="btn btn-warning active" name="StatusOrca_' . $hideshow . '">'
-                                            . '<input type="radio" name="StatusOrca" id="' . $hideshow . '" '
+                                            . '<label class="btn btn-warning active" name="AprovadoOrca_' . $hideshow . '">'
+                                            . '<input type="radio" name="AprovadoOrca" id="' . $hideshow . '" '
                                             . 'autocomplete="off" value="' . $key . '" checked>' . $row
                                             . '</label>'
                                             ;
                                         } else {
                                             echo ''
-                                            . '<label class="btn btn-default" name="StatusOrca_' . $hideshow . '">'
-                                            . '<input type="radio" name="StatusOrca" id="' . $hideshow . '" '
+                                            . '<label class="btn btn-default" name="AprovadoOrca_' . $hideshow . '">'
+                                            . '<input type="radio" name="AprovadoOrca" id="' . $hideshow . '" '
                                             . 'autocomplete="off" value="' . $key . '" >' . $row
                                             . '</label>'
                                             ;
@@ -89,27 +89,27 @@
 
 				<hr>
 
-                <div class="form-group" id="StatusOrca" <?php echo $div['StatusOrca']; ?>>
+                <div class="form-group" id="AprovadoOrca" <?php echo $div['AprovadoOrca']; ?>>
                     <div class="row">
                         <div class="col-md-2 form-inline">
-                            <label for="idTab_TipoConcluido">Serv. Concl.?</label><br>
+                            <label for="ServicoConcluido">Serv. Concl.?</label><br>
                             <div class="form-group">
                                 <div class="btn-group" data-toggle="buttons">
                                     <?php
                                     foreach ($select['TipoConcluido'] as $key => $row) {
-                                        (!$orcatrata['idTab_TipoConcluido']) ? $orcatrata['idTab_TipoConcluido'] = '1' : FALSE;
+                                        (!$orcatrata['ServicoConcluido']) ? $orcatrata['ServicoConcluido'] = '1' : FALSE;
 
-                                        if ($orcatrata['idTab_TipoConcluido'] == $key) {
+                                        if ($orcatrata['ServicoConcluido'] == $key) {
                                             echo ''
-                                            . '<label class="btn btn-warning active" name="radio_idTab_TipoConcluido" id="radiogeral' . $key . '">'
-                                            . '<input type="radio" name="idTab_TipoConcluido" id="radiogeral" '
+                                            . '<label class="btn btn-warning active" name="radio_ServicoConcluido" id="radiogeral' . $key . '">'
+                                            . '<input type="radio" name="ServicoConcluido" id="radiogeral" '
                                             . 'autocomplete="off" value="' . $key . '" checked>' . $row
                                             . '</label>'
                                             ;
                                         } else {
                                             echo ''
-                                            . '<label class="btn btn-default" name="radio_idTab_TipoConcluido" id="radiogeral' . $key . '">'
-                                            . '<input type="radio" name="idTab_TipoConcluido" id="radiogeral" '
+                                            . '<label class="btn btn-default" name="radio_ServicoConcluido" id="radiogeral' . $key . '">'
+                                            . '<input type="radio" name="ServicoConcluido" id="radiogeral" '
                                             . 'autocomplete="off" value="' . $key . '" >' . $row
                                             . '</label>'
                                             ;
@@ -120,20 +120,20 @@
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <label for="DataConcl">Data da Conclusão</label>
+                            <label for="DataConclusao">Data da Conclusão</label>
                             <div class="input-group <?php echo $datepicker; ?>">
                                 <input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-                                       name="DataConcl" value="<?php echo $orcatrata['DataConcl']; ?>">
+                                       name="DataConclusao" value="<?php echo $orcatrata['DataConclusao']; ?>">
                                 <span class="input-group-addon" disabled>
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <label for="DataRet">Data do Retorno</label>
+                            <label for="DataRetorno">Data do Retorno</label>
                             <div class="input-group <?php echo $datepicker; ?>">
                                 <input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-                                       name="DataRet" value="<?php echo $orcatrata['DataRet']; ?>">
+                                       name="DataRetorno" value="<?php echo $orcatrata['DataRetorno']; ?>">
                                 <span class="input-group-addon" disabled>
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
