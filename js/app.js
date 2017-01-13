@@ -583,7 +583,7 @@ $(document).ready(function () {
     });
 
     //adiciona campos dinamicamente
-    var pc = 1; //initlal text box count
+    var pc = $("#PCount").val(); //initlal text box count
     $(".add_field_button2").click(function(e){ //on add input button click
         e.preventDefault();
 
