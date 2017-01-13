@@ -86,7 +86,7 @@ function calculaResta(entrada) {
     resta = mascaraValorReal(resta);
 
     //o valor é escrito no seu campo no formulário
-    $('#ValorResOrca').val(resta);
+    $('#ValorRestanteOrca').val(resta);
 
 }
 
@@ -102,9 +102,9 @@ $(document).on('focus',".input_fields_parcelas", function(){
 function calculaParcelas() {
 
     //captura os valores dos campos indicados
-    var resta = $("#ValorResOrca").val();
-    var parcelas = $("#QtdParcOrca").val();
-    var vencimento = $("#DataVencOrca").val();
+    var resta = $("#ValorRestanteOrca").val();
+    var parcelas = $("#QtdParcelasOrca").val();
+    var vencimento = $("#DataVencimentoOrca").val();
 
     //valor de cada parcela
     var parcorca = (resta.replace(".","").replace(",",".") / parcelas);
@@ -138,56 +138,56 @@ function calculaParcelas() {
             <div class="form-group">\
                 <div class="row">\
                     <div class="col-md-1">\
-                        <label for="ParcRec">Parcela:</label><br>\
+                        <label for="ParcelaRecebiveis">Parcela:</label><br>\
                         <input type="text" class="form-control" maxlength="6" readonly=""\
-                               name="ParcRec'+i+'" value="'+i+'/'+parcelas+'">\
+                               name="ParcelaRecebiveis'+i+'" value="'+i+'/'+parcelas+'">\
                     </div>\
                     <div class="col-md-2">\
-                        <label for="ValorParcRec">Valor Parcela:</label><br>\
+                        <label for="ValorParcelaRecebiveis">Valor Parcela:</label><br>\
                         <div class="input-group" id="txtHint">\
                             <span class="input-group-addon" id="basic-addon1">R$</span>\
                             <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly=""\
-                                   name="ValorParcRec'+i+'" value="'+parcorca+'">\
+                                   name="ValorParcelaRecebiveis'+i+'" value="'+parcorca+'">\
                         </div>\
                     </div>\
                     <div class="col-md-2">\
-                        <label for="DataVencRec">Data Venc. Parc.</label>\
+                        <label for="DataVencimentoRecebiveis">Data Venc. Parc.</label>\
                         <div class="input-group">\
                             <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA" readonly=""\
-                                   name="DataVencRec'+i+'" value="'+futureMonth.format('DD/MM/YYYY')+'">\
+                                   name="DataVencimentoRecebiveis'+i+'" value="'+futureMonth.format('DD/MM/YYYY')+'">\
                             <span class="input-group-addon" disabled>\
                                 <span class="glyphicon glyphicon-calendar"></span>\
                             </span>\
                         </div>\
                     </div>\
                     <div class="col-md-2">\
-                        <label for="ValorPagoRec">Valor Pago:</label><br>\
+                        <label for="ValorPagoRecebiveis">Valor Pago:</label><br>\
                         <div class="input-group" id="txtHint">\
                             <span class="input-group-addon" id="basic-addon1">R$</span>\
                             <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
-                                   name="ValorPagoRec'+i+'" value="">\
+                                   name="ValorPagoRecebiveis'+i+'" value="">\
                         </div>\
                     </div>\
                     <div class="col-md-2">\
-                        <label for="DataPagoRec">Data Pag.</label>\
+                        <label for="DataPagoRecebiveis">Data Pag.</label>\
                         <div class="input-group DatePicker">\
-                            <input type="text" class="form-control Date" id="DataPagoRec'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
-                                   name="DataPagoRec'+i+'" value="">\
+                            <input type="text" class="form-control Date" id="DataPagoRecebiveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
+                                   name="DataPagoRecebiveis'+i+'" value="">\
                             <span class="input-group-addon" disabled>\
                                 <span class="glyphicon glyphicon-calendar"></span>\
                             </span>\
                         </div>\
                     </div>\
                     <div class="col-md-3">\
-                        <label for="QuitRec">Quitado?</label><br>\
+                        <label for="QuitadoRecebiveis">Quitado?</label><br>\
                         <div class="form-group">\
                             <div class="btn-group" data-toggle="buttons">\
-                                <label class="btn btn-warning active" name="radio_idTab_TipoConcluido'+i+'" id="radio_idTab_TipoConcluido'+i+'N">\
-                                <input type="radio" name="idTab_TipoConcluido'+i+'" id="radiogeraldinamico"\
+                                <label class="btn btn-warning active" name="radio_QuitadoRecebiveis'+i+'" id="radio_QuitadoRecebiveis'+i+'N">\
+                                <input type="radio" name="QuitadoRecebiveis'+i+'" id="radiogeraldinamico"\
                                     autocomplete="off" value="N" checked>Não\
                                 </label>\
-                                <label class="btn btn-default" name="radio_idTab_TipoConcluido'+i+'" id="radio_idTab_TipoConcluido'+i+'S">\
-                                <input type="radio" name="idTab_TipoConcluido'+i+'" id="radiogeraldinamico"\
+                                <label class="btn btn-default" name="radio_QuitadoRecebiveis'+i+'" id="radio_QuitadoRecebiveis'+i+'S">\
+                                <input type="radio" name="QuitadoRecebiveis'+i+'" id="radiogeraldinamico"\
                                     autocomplete="off" value="S" checked>Sim\
                                 </label>\
                             </div>\
@@ -206,6 +206,8 @@ function calculaParcelas() {
 
         var value = $(this).val();
         var name = $(this).attr("name");
+
+        //console.log(value + ' <<>> ' + name);
 
         $('label[name="radio_' + name + '"]').removeClass();
         $('label[name="radio_' + name + '"]').addClass("btn btn-default");
@@ -233,7 +235,7 @@ function adicionaServico() {
             <div class="row">\
                 <div class="col-md-3">\
                     <label for="idTab_Servico">Serviços:</label><br>\
-                    <select class="form-control" id="listadinamica'+ps+'" onchange="buscaValor(this.value,this.name,\'Servico\')" name="idTab_Servico'+ps+'">\
+                    <select class="form-control" id="listadinamica'+ps+'" onchange="buscaValor(this.value,this.name,\'Servico\','+ps+')" name="idTab_Servico'+ps+'">\
                         <option value="">-- Selecione uma opção --</option>\
                     </select>\
                 </div>\
@@ -242,6 +244,7 @@ function adicionaServico() {
                     <div class="input-group" id="txtHint">\
                         <span class="input-group-addon" id="basic-addon1">R$</span>\
                         <input type="text" class="form-control Valor" id="idTab_Servico'+ps+'" maxlength="10" placeholder="0,00" \
+                               onkeyup="calculaOrcamento()"\
                                name="ValorVendaServico'+ps+'" value="">\
                     </div>\
                 </div>\
@@ -312,7 +315,6 @@ function adicionaServico() {
         $('label[name="radio_' + name + '"]').removeClass();
         $('label[name="radio_' + name + '"]').addClass("btn btn-default");
         $('#radio_' + name + value).addClass("btn btn-warning active");
-        //$('#radiogeral'+ value).addClass("btn btn-warning active");
 
     });
 }
@@ -327,19 +329,19 @@ function adicionaServico() {
   */
  function radioButtonColorNS(campo, hideshow) {
 
-     if (hideshow == 'show') {
-        active = 'show';
-        not = 'hide';
+     if (hideshow == 'showradio') {
+        active = 'showradio';
+        not = 'hideradio';
      } else {
-        active = 'hide';
-        not = 'show';
+        active = 'hideradio';
+        not = 'showradio';
      }
 
-     $('label[name="StatusOrca_' + not + '"]').removeClass();
-     $('label[name="StatusOrca_' + not + '"]').addClass("btn btn-default");
+     $('label[name="' + campo + '_' + not + '"]').removeClass();
+     $('label[name="' + campo + '_' + not + '"]').addClass("btn btn-default");
 
-     $('label[name="StatusOrca_' + active + '"]').removeClass();
-     $('label[name="StatusOrca_' + active + '"]').addClass("btn btn-warning active");
+     $('label[name="' + campo + '_' + active + '"]').removeClass();
+     $('label[name="' + campo + '_' + active + '"]').addClass("btn btn-warning active");
 
  }
 
@@ -353,7 +355,7 @@ function adicionaServico() {
  * @param {string} tabela
  * @returns {decimal}
  */
-function buscaValor(id, campo, tabela) {
+function buscaValor(id, campo, tabela, num) {
 
     $.ajax({
         // url para o arquivo json.php
@@ -363,18 +365,22 @@ function buscaValor(id, campo, tabela) {
         // função para de sucesso
         success: function (data) {
 
-            // executo este laço para ecessar os itens do objeto javaScript
-            for ($i = 0; $i < data.length; $i++) {
+            // executo este laço para acessar os itens do objeto javaScript
+            for (i = 0; i < data.length; i++) {
 
-                if (data[$i].id == id) {
+                if (data[i].id == id) {
 
                     //carrega o valor no campo de acordo com a opção selecionada
-                    $('#'+campo).val(data[$i].valor);
+                    $('#'+campo).val(data[i].valor);
+
+                    if (tabela == 'Produto' && $("#Qtd"+num).val()) {
+                        calculaSubtotal($("#idTab_Produto"+num).val(),$("#Qtd"+num).val(),num,'PROD');
+                        break;
+                    }
 
                     //para cada valor carregado o orçamento é calculado/atualizado
                     //através da chamada de sua função
                     calculaOrcamento();
-                    calculaResta($("#ValorEntOrca").val())
                     break;
                 }
 
@@ -403,22 +409,24 @@ function calculaSubtotal(valor, campo, num, tipo) {
         //o subtotal é calculado como o produto da quantidade pelo seu valor
         var subtotal = (valor.replace(".","").replace(",",".") * data);
         //alert('>>>'+valor+' :: '+campo+' :: '+num+' :: '+tipo+'<<<');
-    } else {
+    } else if (tipo == 'QTD') {
         //variável valor recebe o valor do produto selecionado
         var data = $("#idTab_Produto"+num).val();
 
         //o subtotal é calculado como o produto da quantidade pelo seu valor
         var subtotal = (valor * data.replace(".","").replace(",","."));
+    } else {
+        //o subtotal é calculado como o produto da quantidade pelo seu valor
+        var subtotal = (valor.replace(".","").replace(",",".") * campo.replace(".","").replace(",","."));
     }
 
     subtotal = mascaraValorReal(subtotal);
     //o subtotal é escrito no seu campo no formulário
-    $('#QuantidadeProduto'+num).val(subtotal);
+    $('#SubtotalProduto'+num).val(subtotal);
 
     //para cada vez que o subtotal for calculado o orçamento e o total restante
     //também serão atualizados
     calculaOrcamento();
-    calculaResta($("#ValorEntOrca").val())
 
 }
 
@@ -454,8 +462,8 @@ function calculaOrcamento() {
     var i = 1;
     while (i <= pc) {
 
-        if ($('#QuantidadeProduto'+i).val())
-            subtotal += parseFloat($('#QuantidadeProduto'+i).val().replace(".","").replace(",","."));
+        if ($('#SubtotalProduto'+i).val())
+            subtotal += parseFloat($('#SubtotalProduto'+i).val().replace(".","").replace(",","."));
 
         i++;
     }
@@ -466,6 +474,7 @@ function calculaOrcamento() {
 
     //escreve o subtotal no campo do formulário
     $('#ValorOrca').val(subtotal);
+    calculaResta($("#ValorEntradaOrca").val());
 }
 
 $("#first-choice").change(function () {
@@ -549,31 +558,27 @@ $(document).ready(function () {
 
     });
 
-    $('input:radio[id="radiogeral"]').change(function() {
+    //permite o uso de radio buttons em blocos estáticos
+    $('input:radio[id="radiobutton"]').change(function() {
 
         var value = $(this).val();
         var name = $(this).attr("name");
 
-        //alert(name + ' ' + value);
-
-        $('label[name="radio_' + name + '"]').removeClass();
-        $('label[name="radio_' + name + '"]').addClass("btn btn-default");
-        $('#radiogeral'+ value).addClass("btn btn-warning active");
+        $('label[name="radiobutton_' + name + '"]').removeClass();
+        $('label[name="radiobutton_' + name + '"]').addClass("btn btn-default");
+        $('#radiobutton'+ value).addClass("btn btn-warning active");
 
     });
 
-    //permite o uso de radio buttons nesse bloco dinâmico
-    $('input:radio[id="radiogeraldinamico"]').change(function() {
+    //permite o uso de radio buttons em blocos dinâmicos
+    $('input:radio[id="radiobuttondinamico"]').change(function() {
 
         var value = $(this).val();
         var name = $(this).attr("name");
 
-        //alert(name + ' ' + value);
-
-        $('label[name="radio_' + name + '"]').removeClass();
-        $('label[name="radio_' + name + '"]').addClass("btn btn-default");
-        $('#radio_' + name + value).addClass("btn btn-warning active");
-        //$('#radiogeral'+ value).addClass("btn btn-warning active");
+        $('label[name="radiobutton_' + name + '"]').removeClass();
+        $('label[name="radiobutton_' + name + '"]').addClass("btn btn-default");
+        $('#radiobutton_' + name + value).addClass("btn btn-warning active");
 
     });
 
@@ -590,17 +595,17 @@ $(document).ready(function () {
                 <div class="row">\
                     <div class="col-md-4">\
                         <label for="idTab_Produto">Produto:</label><br>\
-                        <select class="form-control" id="listadinamicab'+pc+'" onchange="buscaValor(this.value,this.name,\'Produto\')" name="idTab_Produto'+pc+'">\
+                        <select class="form-control" id="listadinamicab'+pc+'" onchange="buscaValor(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
                             <option value="">-- Selecione uma opção --</option>\
                         </select>\
                     </div>\
                     <div class="col-md-3">\
-                        <label for="ValorProduto">Valor do Produto:</label><br>\
+                        <label for="ValorVendaProduto">Valor do Produto:</label><br>\
                         <div class="input-group id="txtHint">\
                             <span class="input-group-addon" id="basic-addon1">R$</span>\
                             <input type="text" class="form-control Valor" id="idTab_Produto'+pc+'" maxlength="10" placeholder="0,00" \
                                 onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'VP\')"\
-                                name="ValorProduto'+pc+'" value="">\
+                                name="ValorVendaProduto'+pc+'" value="">\
                         </div>\
                     </div>\
                     <div class="col-md-1">\
@@ -612,11 +617,11 @@ $(document).ready(function () {
                         </div>\
                     </div>\
                     <div class="col-md-3">\
-                        <label for="Subtotal">Subtotal:</label><br>\
+                        <label for="SubtotalProduto">Subtotal:</label><br>\
                         <div class="input-group id="txtHint">\
                             <span class="input-group-addon" id="basic-addon1">R$</span>\
-                            <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="QuantidadeProduto'+pc+'"\
-                                   name="Subtotal'+pc+'" value="">\
+                            <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalProduto'+pc+'"\
+                                   name="SubtotalProduto'+pc+'" value="">\
                         </div>\
                     </div>\
                     <div class="col-md-1">\
@@ -663,7 +668,6 @@ $(document).ready(function () {
         $("#1div"+$(this).attr("id")).remove();
         //após remover o campo refaz o cálculo do orçamento e total restante
         calculaOrcamento();
-        calculaResta($("#ValorEntOrca").val())
     })
 
     //Remove os campos adicionados dinamicamente
@@ -671,7 +675,6 @@ $(document).ready(function () {
         $("#2div"+$(this).attr("id")).remove();
         //após remover o campo refaz o cálculo do orçamento e total restante
         calculaOrcamento();
-        calculaResta($("#ValorEntOrca").val())
     })
 
     /*
@@ -701,17 +704,17 @@ $(document).ready(function () {
 
     /*
      * Mesma função que a de cima mas com uma modificação para funcionar nos
-     * radios buttons
+     * radios buttons e permitir a alternância da cor do botão
      */
-     $("input[id$='hide']").change(function () {
+     $("input[id$='hideradio']").change(function () {
          var n = $(this).attr("name");
          $("#" + n).hide();
-         radioButtonColorNS(n, 'hide');
+         radioButtonColorNS(n, 'hideradio');
      });
-     $("input[id$='show']").change(function () {
+     $("input[id$='showradio']").change(function () {
          var n = $(this).attr("name");
          $("#" + n).show();
-         radioButtonColorNS(n, 'show');
+         radioButtonColorNS(n, 'showradio');
      });
 
     /*
