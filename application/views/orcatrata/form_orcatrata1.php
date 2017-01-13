@@ -22,7 +22,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-2">
-                            <label for="DataOrca">Data do Orçamento:</label>
+                            <label for="DataOrca">Data do Orçamento</label>
                             <div class="input-group <?php echo $datepicker; ?>">
                                 <input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
                                        autofocus name="DataOrca" value="<?php echo $orcatrata['DataOrca']; ?>">
@@ -33,16 +33,16 @@
                         </div>
 
                         <div class="col-md-4">
-                            <label for="ProfissionalOrca">Profissional:</label>
+                            <label for="ProfissionalOrca">Prof. *</label>
                             <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
-                                <span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
+                                <span class="glyphicon glyphicon-plus"></span> <b>Novo Prof.</b>
                             </a>
                             <select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
                                     id="ProfissionalOrca" name="ProfissionalOrca">
                                 <option value="">-- Selecione um Prof. --</option>
                                 <?php
                                 foreach ($select['Profissional'] as $key => $row) {
-                                    if ($orcatrata['ProfissionalOrca'] == $key) {
+                                    if ($query['ProfissionalOrca'] == $key) {
                                         echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
                                     } else {
                                         echo '<option value="' . $key . '">' . $row . '</option>';
@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="col-md-2 form-inline">
-                            <label for="AprovadoOrca">Orçamento Aprovado?</label><br>
+                            <label for="AprovadoOrca">Orçam. Aprov.?</label><br>
                             <div class="form-group">
                                 <div class="btn-group" data-toggle="buttons">
                                     <?php
@@ -61,7 +61,7 @@
                                         if (!$orcatrata['AprovadoOrca'])
                                             $orcatrata['AprovadoOrca'] = 'N';
 
-                                        ($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+                                        ($key == 'S') ? $hideshow = 'show' : $hideshow = 'hide';
 
                                         if ($orcatrata['AprovadoOrca'] == $key) {
                                             echo ''
@@ -87,13 +87,12 @@
                     </div>
                 </div>
 
+				<hr>
+
                 <div class="form-group" id="AprovadoOrca" <?php echo $div['AprovadoOrca']; ?>>
-
-	                <hr>
-
                     <div class="row">
                         <div class="col-md-2 form-inline">
-                            <label for="ServicoConcluido">Serviço Concluído?</label><br>
+                            <label for="ServicoConcluido">Serv. Concl.?</label><br>
                             <div class="form-group">
                                 <div class="btn-group" data-toggle="buttons">
                                     <?php
@@ -102,15 +101,15 @@
 
                                         if ($orcatrata['ServicoConcluido'] == $key) {
                                             echo ''
-                                            . '<label class="btn btn-warning active" name="radiobutton_ServicoConcluido" id="radiobutton' . $key . '">'
-                                            . '<input type="radio" name="ServicoConcluido" id="radiobutton" '
+                                            . '<label class="btn btn-warning active" name="radio_ServicoConcluido" id="radiogeral' . $key . '">'
+                                            . '<input type="radio" name="ServicoConcluido" id="radiogeral" '
                                             . 'autocomplete="off" value="' . $key . '" checked>' . $row
                                             . '</label>'
                                             ;
                                         } else {
                                             echo ''
-                                            . '<label class="btn btn-default" name="radiobutton_ServicoConcluido" id="radiobutton' . $key . '">'
-                                            . '<input type="radio" name="ServicoConcluido" id="radiobutton" '
+                                            . '<label class="btn btn-default" name="radio_ServicoConcluido" id="radiogeral' . $key . '">'
+                                            . '<input type="radio" name="ServicoConcluido" id="radiogeral" '
                                             . 'autocomplete="off" value="' . $key . '" >' . $row
                                             . '</label>'
                                             ;
@@ -121,7 +120,7 @@
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <label for="DataConclusao">Data da Conclusão:</label>
+                            <label for="DataConclusao">Data da Conclusão</label>
                             <div class="input-group <?php echo $datepicker; ?>">
                                 <input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
                                        name="DataConclusao" value="<?php echo $orcatrata['DataConclusao']; ?>">
@@ -131,7 +130,7 @@
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <label for="DataRetorno">Data do Retorno:</label>
+                            <label for="DataRetorno">Data do Retorno</label>
                             <div class="input-group <?php echo $datepicker; ?>">
                                 <input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
                                        name="DataRetorno" value="<?php echo $orcatrata['DataRetorno']; ?>">
@@ -172,12 +171,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label for="idTab_Servico">Serviço:</label>
-                                            <?php if ($i == 1) { ?>
-                                            <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>servico/cadastrar/servico" role="button">
-                                                <span class="glyphicon glyphicon-plus"></span> <b>Novo Serviço</b>
-                                            </a>
-                                            <?php } ?>
-                                            <select data-placeholder="Selecione uma opção..." class="form-control" onchange="buscaValor(this.value,this.name,'Servico',<?php echo $i ?>)" <?php echo $readonly; ?>
+                                            <select data-placeholder="Selecione uma opção..." class="form-control" onchange="buscaValor(this.value,this.name,'Servico')" <?php echo $readonly; ?>
                                                     id="lista" name="idTab_Servico<?php echo $i ?>">
                                                 <option value="">-- Selecione um Serviço --</option>
                                                 <?php
@@ -196,8 +190,7 @@
                                             <div class="input-group" id="txtHint">
                                                 <span class="input-group-addon" id="basic-addon1">R$</span>
                                                 <input type="text" class="form-control Valor" id="idTab_Servico<?php echo $i ?>" maxlength="10" placeholder="0,00"
-                                                    onkeyup="calculaOrcamento()"
-                                                    name="ValorVendaServico<?php echo $i ?>" value="<?php echo $servico['ValorVendaServico'.$i] ?>">
+                                                       name="ValorVendaServico<?php echo $i ?>" value="">
                                             </div>
 
                                         </div>
@@ -212,19 +205,19 @@
                                                 <div class="btn-group" data-toggle="buttons">
                                                     <?php
                                                     foreach ($select['ConcluidoServico'] as $key => $row) {
-                                                        (!$servico['ConcluidoServico'. $i]) ? $servico['ConcluidoServico'. $i] = 'N' : FALSE;
+                                                        (!$servico['ConcluidoServico'. $i]) ? $servico['ConcluidoServico'. $i] = '1' : FALSE;
 
                                                         if ($servico['ConcluidoServico'. $i] == $key) {
                                                             echo ''
-                                                            . '<label class="btn btn-warning active" name="radiobutton_ConcluidoServico' . $i . '" id="radiobutton_ConcluidoServico' . $i .  $key . '">'
-                                                            . '<input type="radio" name="ConcluidoServico' . $i . '" id="radiobuttondinamico" '
+                                                            . '<label class="btn btn-warning active" name="radio_ConcluidoServico' . $i . '" id="radio_ConcluidoServico' . $i .  $key . '">'
+                                                            . '<input type="radio" name="ConcluidoServico' . $i . '" id="radiogeraldinamico" '
                                                             . 'autocomplete="off" value="' . $key . '" checked>' . $row
                                                             . '</label>'
                                                             ;
                                                         } else {
                                                             echo ''
-                                                            . '<label class="btn btn-default" name="radiobutton_ConcluidoServico' . $i . '" id="radiobutton_ConcluidoServico' . $i .  $key . '">'
-                                                            . '<input type="radio" name="ConcluidoServico' . $i . '" id="radiobuttondinamico" '
+                                                            . '<label class="btn btn-default" name="radio_ConcluidoServico' . $i . '" id="radio_ConcluidoServico' . $i .  $key . '">'
+                                                            . '<input type="radio" name="ConcluidoServico' . $i . '" id="radiogeraldinamico" '
                                                             . 'autocomplete="off" value="' . $key . '" >' . $row
                                                             . '</label>'
                                                             ;
@@ -263,22 +256,65 @@
 
                                 <input type="hidden" name="PCount" id="PCount" value="<?php echo $produto['PCount']; ?>"/>
 
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="idTab_Produto">Produto:</label>
+                                            <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produto/cadastrar/produto" role="button">
+                                                <span class="glyphicon glyphicon-plus"></span> <b>Novo Produto</b>
+                                            </a>
+                                            <select data-placeholder="Selecione uma opção..." class="form-control" onchange="buscaValor(this.value,this.name,'Produto','1')" <?php echo $readonly; ?>
+                                                    id="idTab_Produto" name="idTab_Produto1">
+                                                <option value="">-- Selecione um Produto --</option>
+                                                <?php
+                                                foreach ($select['Produto'] as $key => $row) {
+                                                    if ($produto['idTab_Produto1'] == $key) {
+                                                        echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+                                                    } else {
+                                                        echo '<option value="' . $key . '">' . $row . '</option>';
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="ValorVendaProduto">Valor do Produto:</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon" id="basic-addon1">R$</span>
+                                                <input type="text" class="form-control Valor" id="idTab_Produto1" maxlength="10" placeholder="0,00"
+                                                    onkeyup="calculaSubtotal(this.value,this.name,'1','VP')"
+                                                    name="ValorVendaProduto1" value="<?php echo $produto['ValorVendaProduto1'] ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label for="QuantidadeProduto">Qtd:</label>
+                                            <input type="text" class="form-control" maxlength="3" id="Qtd1" placeholder="0"
+                                                onkeyup="calculaSubtotal(this.value,this.name,'1','QTD')"
+                                               name="QuantidadeProduto1" value="<?php echo $produto['QuantidadeProduto1'] ?>">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="SubtotalProduto">Subtotal:</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon" id="basic-addon1">R$</span>
+                                                <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="QuantidadeProduto1"
+                                                       name="SubtotalProduto1" value="<?php echo $produto['SubtotalProduto1'] ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="input_fields_wrap2">
 
                                 <?php
-                                for ($i=1; $i <= $produto['PCount']; $i++) {
+                                for ($i=2; $i <= $produto['PCount']; $i++) {
                                 ?>
 
                                 <div class="form-group" id="2div<?php echo $i ?>">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="idTab_Produto">Produto:</label>
-                                            <?php if ($i == 1) { ?>
-                                            <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produto/cadastrar/produto" role="button">
-                                                <span class="glyphicon glyphicon-plus"></span> <b>Novo Produto</b>
-                                            </a>
-                                            <?php } ?>
-                                            <select data-placeholder="Selecione uma opção..." class="form-control" onchange="buscaValor(this.value,this.name,'Produto',<?php echo $i ?>)" <?php echo $readonly; ?>
+                                            <select data-placeholder="Selecione uma opção..." class="form-control" onchange="buscaValor(this.value,this.name,'Produto','<?php echo $i ?>')" <?php echo $readonly; ?>
                                                      id="listadinamicab<?php echo $i ?>" name="idTab_Produto<?php echo $i ?>">
                                                 <option value="">-- Selecione um Produto --</option>
                                                 <?php
@@ -312,7 +348,7 @@
                                             <label for="SubtotalProduto">Subtotal:</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon" id="basic-addon1">R$</span>
-                                                <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalProduto<?php echo $i ?>"
+                                                <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="QuantidadeProduto<?php echo $i ?>"
                                                        name="SubtotalProduto<?php echo $i ?>" value="<?php echo $produto['SubtotalProduto'.$i] ?>">
                                             </div>
                                         </div>
@@ -394,13 +430,16 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label for="FormaPagamento">Forma de Pagamento:</label>
+                                            <label for="FormaPag">Forma de Pagamento:</label>
+                                            <!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>formapag/cadastrar/formapag" role="button">
+                                                <span class="glyphicon glyphicon-plus"></span> <b>Forma Pag</b>
+                                            </a>-->
                                             <select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-                                                    id="FormaPagamento" name="FormaPagamento">
+                                                    id="FormaPag" name="FormaPag">
                                                 <option value="">-- Sel. Forma --</option>
                                                 <?php
-                                                foreach ($select['FormaPagamento'] as $key => $row) {
-                                                    if ($orcatrata['FormaPagamento'] == $key) {
+                                                foreach ($select['FormaPag'] as $key => $row) {
+                                                    if ($orcatrata['FormaPag'] == $key) {
                                                         echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
                                                     } else {
                                                         echo '<option value="' . $key . '">' . $row . '</option>';
@@ -410,15 +449,15 @@
                                             </select>
                                         </div>
                                         <div class="col-md-2">
-                                            <label for="QtdParcelasOrca">Qtd de Parcelas:</label><br>
-                                            <input type="text" class="form-control" id="QtdParcelasOrca" maxlength="3"
-                                                   name="QtdParcelasOrca" value="<?php echo $orcatrata['QtdParcelasOrca'] ?>">
+                                            <label for="QtdParcOrca">Qtd de Parcelas:</label><br>
+                                            <input type="text" class="form-control" id="QtdParcOrca" maxlength="3"
+                                                   name="QtdParcOrca" value="<?php echo $orcatrata['QtdParcOrca'] ?>">
                                         </div>
                                         <div class="col-md-2">
-                                            <label for="DataVencimentoOrca">Data do 1º Vencimento:</label>
+                                            <label for="DataVencOrca">Data do 1º Venc.:</label>
                                             <div class="input-group <?php echo $datepicker; ?>">
-                                                <input type="text" class="form-control Date" id="DataVencimentoOrca" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-                                                       name="DataVencimentoOrca" value="<?php echo $orcatrata['DataVencimentoOrca']; ?>">
+                                                <input type="text" class="form-control Date" id="DataVencOrca" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+                                                       name="DataVencOrca" value="<?php echo $orcatrata['DataVencOrca']; ?>">
                                                 <span class="input-group-addon" disabled>
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -461,7 +500,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label for="DataProcedimento">Data do Procedimento:</label>
+                                            <label for="DataProcedimento">Data do Procedimento</label>
                                             <div class="input-group <?php echo $datepicker; ?>">
                                                 <input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
                                                        name="DataProcedimento" value="<?php echo $procedimento['DataProcedimento']; ?>">
@@ -471,9 +510,9 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label for="Profissional">Profissional:</label>
+                                            <label for="Profissional">Profissional</label>
                                             <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
-                                                <span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
+                                                <span class="glyphicon glyphicon-plus"></span> <b>Profissional</b>
                                             </a>
                                             <select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
                                                     id="Profissional" name="Profissional">
@@ -490,9 +529,9 @@
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="Procedimento">Procedimento:</label>
-                                            <textarea class="form-control" id="Procedimento" <?php echo $readonly; ?>
-                                                      name="Procedimento"><?php echo $procedimento['Procedimento']; ?></textarea>
+                                            <label for="Proc">Procedimento:</label>
+                                            <textarea class="form-control" id="Proc" <?php echo $readonly; ?>
+                                                      name="Proc"><?php echo $procedimento['Proc']; ?></textarea>
                                         </div>
                                     </div>
                                 </div>
