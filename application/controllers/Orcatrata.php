@@ -75,18 +75,6 @@ class Orcatrata extends CI_Controller {
             'Procedimento',
         ), TRUE));
 
-        $data['parcelasrec'] = quotes_to_entities($this->input->post(array(
-            #### App_ParcRec ####
-            'idApp_OrcaTrata',
-            'idApp_ParcelasRec',
-            'ParcelaRecebiveis',
-            'ValorParcelaRecebiveis',
-            'DataVencimentoRecebiveis',
-            'ValorPagoRecebiveis',
-            'DataPagoRecebiveis',
-            'QuitadoRecebiveis',
-        ), TRUE));
-
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
         //comentado fim) mas por enquanto, se está funcionando, vou deixar assim.
 
@@ -112,10 +100,10 @@ class Orcatrata extends CI_Controller {
             for ($i = 1; $i <= $data['servico']['SCount']; $i++) {
 
                 if ($this->input->post('idTab_Servico' . $i)) {
-                    $data['servico']['idTab_Servico' . $j] = $this->input->post('idTab_Servico' . $i);
-                    $data['servico']['ValorVendaServico' . $j] = $this->input->post('ValorVendaServico' . $i);
-                    $data['servico']['ObsServico' . $j] = $this->input->post('ObsServico' . $i);
-                    $data['servico']['ConcluidoServico' . $j] = $this->input->post('ConcluidoServico' . $i);
+                    $data['servico'][$j]['idTab_Servico'] = $this->input->post('idTab_Servico' . $i);
+                    $data['servico'][$j]['ValorVendaServico'] = $this->input->post('ValorVendaServico' . $i);
+                    $data['servico'][$j]['ObsServico'] = $this->input->post('ObsServico' . $i);
+                    $data['servico'][$j]['ConcluidoServico'] = $this->input->post('ConcluidoServico' . $i);
 
                     $sq = $sq . '("' . $this->input->post('idTab_Servico' . $i) . '", ';
                     //$sq = $sq . '\'' . $this->input->post('ValorVendaServico'.$i) . '\'), ';
@@ -127,10 +115,10 @@ class Orcatrata extends CI_Controller {
             $data['servico']['SCount'] = $j - 1;
         } else {
 
-            $data['servico']['idTab_Servico1'] = $this->input->post('idTab_Servico1');
-            $data['servico']['ValorVendaServico1'] = $this->input->post('ValorVendaServico1');
-            $data['servico']['ObsServico1'] = $this->input->post('ObsServico1');
-            $data['servico']['ConcluidoServico1'] = $this->input->post('ConcluidoServico1');
+            $data['servico'][1]['idTab_Servico'] = $this->input->post('idTab_Servico1');
+            $data['servico'][1]['ValorVendaServico'] = $this->input->post('ValorVendaServico1');
+            $data['servico'][1]['ObsServico'] = $this->input->post('ObsServico1');
+            $data['servico'][1]['ConcluidoServico'] = $this->input->post('ConcluidoServico1');
             $sq = $sq . '("' . $this->input->post('idTab_Servico1') . '", ';
             //$sq = $sq . '\'' . $this->input->post('ValorVendaServico1') . '\'), ';
             $sq = $sq . '"0.00"), ';
@@ -153,10 +141,10 @@ class Orcatrata extends CI_Controller {
             for ($i = 0; $i <= $data['produto']['PCount']; $i++) {
 
                 if ($this->input->post('idTab_Produto' . $i)) {
-                    $data['produto']['idTab_Produto' . $j] = $this->input->post('idTab_Produto' . $i);
-                    $data['produto']['ValorVendaProduto' . $j] = $this->input->post('ValorVendaProduto' . $i);
-                    $data['produto']['QuantidadeProduto' . $j] = $this->input->post('QuantidadeProduto' . $i);
-                    $data['produto']['SubtotalProduto' . $j] = $this->input->post('SubtotalProduto' . $i);
+                    $data['produto'][$j]['idTab_Produto'] = $this->input->post('idTab_Produto' . $i);
+                    $data['produto'][$j]['ValorVendaProduto'] = $this->input->post('ValorVendaProduto' . $i);
+                    $data['produto'][$j]['QuantidadeProduto'] = $this->input->post('QuantidadeProduto' . $i);
+                    $data['produto'][$j]['SubtotalProduto'] = $this->input->post('SubtotalProduto' . $i);
 
                     $pq = $pq . '(\'' . $this->input->post('idTab_Produto' . $i) . '\', ';
                     //$pq = $pq . '\'' . $this->input->post('ValorVendaProduto'.$i) . '\', ';
@@ -171,10 +159,10 @@ class Orcatrata extends CI_Controller {
             //exit();
         } else {
 
-            $data['produto']['idTab_Produto1'] = $this->input->post('idTab_Produto1');
-            $data['produto']['ValorVendaProduto1'] = $this->input->post('ValorVendaProduto1');
-            $data['produto']['QuantidadeProduto1'] = $this->input->post('QuantidadeProduto1');
-            $data['produto']['SubtotalProduto1'] = $this->input->post('SubtotalProduto1');
+            $data['produto'][1]['idTab_Produto'] = $this->input->post('idTab_Produto1');
+            $data['produto'][1]['ValorVendaProduto'] = $this->input->post('ValorVendaProduto1');
+            $data['produto'][1]['QuantidadeProduto'] = $this->input->post('QuantidadeProduto1');
+            $data['produto'][1]['SubtotalProduto'] = $this->input->post('SubtotalProduto1');
 
             $pq = $pq . '(\'' . $this->input->post('idTab_Produto1') . '\', ';
             //$pq = $pq . '\'' . $this->input->post('ValorVendaProduto1') . '\', ';
@@ -192,6 +180,22 @@ class Orcatrata extends CI_Controller {
           echo "</pre>";
           exit();
          */
+
+        if ($data['orcatrata']['QtdParcelasOrca'] > 0) {
+
+            for ($i = 0; $i <= $data['orcatrata']['QtdParcelasOrca']; $i++) {
+
+                $data['parcelasrec'][$i]['ParcelaRecebiveis'] = $this->input->post('ParcelaRecebiveis' . $i);
+                $data['parcelasrec'][$i]['ValorParcelaRecebiveis'] = $this->input->post('ValorParcelaRecebiveis' . $i);
+                $data['parcelasrec'][$i]['DataVencimentoRecebiveis'] = $this->input->post('DataVencimentoRecebiveis' . $i);
+                $data['parcelasrec'][$i]['ValorPagoRecebiveis'] = $this->input->post('ValorPagoRecebiveis' . $i);
+                $data['parcelasrec'][$i]['DataPagoRecebiveis'] = $this->input->post('DataPagoRecebiveis' . $i);
+                $data['parcelasrec'][$i]['QuitadoRecebiveis'] = $this->input->post('QuitadoRecebiveis' . $i);
+
+            }
+            //echo '<br>';
+            //exit();
+        }
 
         //Fim do trecho de código que dá pra melhorar
 
@@ -218,12 +222,6 @@ class Orcatrata extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 1;
-
-        if ($data['parcelasrec']['ParcelaRecebiveis'] || $data['parcelasrec']['ValorParcelaRecebiveis'] || $data['parcelasrec']['DataVencimentoRecebiveis'] ||
-                $data['parcelasrec']['ValorPagoRecebiveis'] || $data['parcelasrec']['DataPagoRecebiveis'] || $data['parcelasrec']['QuitadoRecebiveis'])
-            $data['collapse'] = '';
-        else
-            $data['collapse'] = 'class="collapse"';
 
         if ($data['orcatrata']['ValorOrca'] || $data['orcatrata']['ValorEntradaOrca'] || $data['orcatrata']['ValorRestanteOrca'])
             $data['orcamentoin'] = 'in';
