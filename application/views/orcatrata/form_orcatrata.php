@@ -304,7 +304,7 @@
                                         </div>
                                         <div class="col-md-1">
                                             <label for="QuantidadeProduto">Qtd:</label>
-                                            <input type="text" class="form-control" maxlength="3" id="Qtd<?php echo $i ?>" placeholder="0"
+                                            <input type="text" class="form-control Numero" maxlength="3" id="Qtd<?php echo $i ?>" placeholder="0"
                                                     onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','QTD')"
                                                     name="QuantidadeProduto<?php echo $i ?>" value="<?php echo $produto[$i]['QuantidadeProduto'] ?>">
                                         </div>
@@ -411,7 +411,7 @@
                                         </div>
                                         <div class="col-md-2">
                                             <label for="QtdParcelasOrca">Qtd de Parcelas:</label><br>
-                                            <input type="text" class="form-control" id="QtdParcelasOrca" maxlength="3"
+                                            <input type="text" class="form-control Numero" id="QtdParcelasOrca" maxlength="3" placeholder="0"
                                                    name="QtdParcelasOrca" value="<?php echo $orcatrata['QtdParcelasOrca'] ?>">
                                         </div>
                                         <div class="col-md-2">
@@ -490,14 +490,27 @@
                                                 <label for="QuitadoRecebiveis">Quitado?</label><br>
                                                 <div class="form-group">
                                                     <div class="btn-group" data-toggle="buttons">
-                                                        <label class="btn btn-warning active" name="radio_QuitadoRecebiveis<?php echo $i ?>" id="radio_QuitadoRecebiveis<?php echo $i ?>N">
-                                                        <input type="radio" name="QuitadoRecebiveis<?php echo $i ?>" id="radiogeraldinamico"
-                                                            autocomplete="off" value="N" checked>Não
-                                                        </label>
-                                                        <label class="btn btn-default" name="radio_QuitadoRecebiveis<?php echo $i ?>" id="radio_QuitadoRecebiveis<?php echo $i ?>S">
-                                                        <input type="radio" name="QuitadoRecebiveis<?php echo $i ?>" id="radiogeraldinamico"
-                                                            autocomplete="off" value="S" checked>Sim
-                                                        </label>
+                                                        <?php
+                                                        foreach ($select['QuitadoRecebiveis'] as $key => $row) {
+                                                            (!$parcelasrec[$i]['QuitadoRecebiveis']) ? $parcelasrec[$i]['QuitadoRecebiveis'] = 'N' : FALSE;
+
+                                                            if ($parcelasrec[$i]['QuitadoRecebiveis'] == $key) {
+                                                                echo ''
+                                                                . '<label class="btn btn-warning active" name="radiobutton_QuitadoRecebiveis' . $i . '" id="radiobutton_QuitadoRecebiveis' . $i .  $key . '">'
+                                                                . '<input type="radio" name="QuitadoRecebiveis' . $i . '" id="radiobuttondinamico" '
+                                                                . 'autocomplete="off" value="' . $key . '" checked>' . $row
+                                                                . '</label>'
+                                                                ;
+                                                            } else {
+                                                                echo ''
+                                                                . '<label class="btn btn-default" name="radiobutton_QuitadoRecebiveis' . $i . '" id="radiobutton_QuitadoRecebiveis' . $i .  $key . '">'
+                                                                . '<input type="radio" name="QuitadoRecebiveis' . $i . '" id="radiobuttondinamico" '
+                                                                . 'autocomplete="off" value="' . $key . '" >' . $row
+                                                                . '</label>'
+                                                                ;
+                                                            }
+                                                        }
+                                                        ?>
                                                     </div>
                                                 </div>
                                             </div>

@@ -183,7 +183,7 @@ class Orcatrata extends CI_Controller {
 
         if ($data['orcatrata']['QtdParcelasOrca'] > 0) {
 
-            for ($i = 0; $i <= $data['orcatrata']['QtdParcelasOrca']; $i++) {
+            for ($i = 1; $i <= $data['orcatrata']['QtdParcelasOrca']; $i++) {
 
                 $data['parcelasrec'][$i]['ParcelaRecebiveis'] = $this->input->post('ParcelaRecebiveis' . $i);
                 $data['parcelasrec'][$i]['ValorParcelaRecebiveis'] = $this->input->post('ValorParcelaRecebiveis' . $i);
@@ -196,6 +196,14 @@ class Orcatrata extends CI_Controller {
             //echo '<br>';
             //exit();
         }
+
+        /*
+          echo '<br>';
+          echo "<pre>";
+          print_r($data['parcelasrec']);
+          echo "</pre>";
+          //exit();
+        */
 
         //Fim do trecho de código que dá pra melhorar
 
@@ -212,6 +220,7 @@ class Orcatrata extends CI_Controller {
         $data['select']['FormaPagamento'] = $this->Formapag_model->select_formapag();
         $data['select']['TipoConcluido'] = $this->Basico_model->select_tipo_concluido();
         $data['select']['ConcluidoServico'] = $this->Basico_model->select_status_sn();
+        $data['select']['QuitadoRecebiveis'] = $this->Basico_model->select_status_sn();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
         $data['select']['Servico'] = $this->Basico_model->select_servico();
         $data['select']['Produto'] = $this->Basico_model->select_produto();
@@ -243,7 +252,7 @@ class Orcatrata extends CI_Controller {
         (!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
 
         $data['radio'] = array(
-            'AprovadoOrca' => $this->basico->radio_checked($data['orcatrata']['AprovadoOrca'], 'Orçaento Aprovado', 'NS'),
+            'AprovadoOrca' => $this->basico->radio_checked($data['orcatrata']['AprovadoOrca'], 'Orçamento Aprovado', 'NS'),
         );
 
         ($data['orcatrata']['AprovadoOrca'] == 'S') ?

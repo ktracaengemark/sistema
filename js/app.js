@@ -188,7 +188,7 @@ function calculaParcelas() {
                                 </label>\
                                 <label class="btn btn-default" name="radio_QuitadoRecebiveis'+i+'" id="radio_QuitadoRecebiveis'+i+'S">\
                                 <input type="radio" name="QuitadoRecebiveis'+i+'" id="radiogeraldinamico"\
-                                    autocomplete="off" value="S" checked>Sim\
+                                    autocomplete="off" value="S">Sim\
                                 </label>\
                             </div>\
                         </div>\
@@ -522,7 +522,8 @@ $(document).ready(function () {
     $(".Cep").mask("99999-999");
     $(".TituloEleitor").mask("9999.9999.9999");
     $(".Valor").mask("#.##0,00", {reverse: true});
-
+    $('.Numero').mask('0#');
+    
     $(".Celular").mask("(99) 99999-9999");
     $(".CelularVariavel").on("blur", function () {
         var last = $(this).val().substr($(this).val().indexOf("-") + 1);
