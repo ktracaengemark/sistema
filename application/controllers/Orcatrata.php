@@ -66,21 +66,13 @@ class Orcatrata extends CI_Controller {
             'ObsOrca',
         ), TRUE));
 
-        $data['procedimento'] = quotes_to_entities($this->input->post(array(
-            #### App_Procedimento ####
-            'idApp_Procedimento',
-            'idApp_OrcaTrata',
-            'Profissional',
-            'DataProcedimento',
-            'Procedimento',
-        ), TRUE));
-
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
         //comentado fim) mas por enquanto, se está funcionando, vou deixar assim.
 
         $data['orcamento']['OrcamentoTotal'] = $this->input->post('OrcamentoTotal');
         (!$this->input->post('SCount')) ? $data['count']['SCount'] = 1 : $data['count']['SCount'] = $this->input->post('SCount');
         (!$this->input->post('PCount')) ? $data['count']['PCount'] = 1 : $data['count']['PCount'] = $this->input->post('PCount');
+        (!$this->input->post('PMCount')) ? $data['count']['PMCount'] = 1 : $data['count']['PMCount'] = $this->input->post('PMCount');
 
         //$data['lista']['Servicos'] = $this->Tratamentos_model->lista_servicos();
         //$data['lista']['Produtos'] = $this->Tratamentos_model->lista_produtos();
@@ -172,6 +164,39 @@ class Orcatrata extends CI_Controller {
           //exit();
         */
 
+        //echo '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'.$data['count']['PMCount'].':::<br>';
+        if ($data['count']['PMCount'] > 1) {
+
+            $j = 1;
+            for ($i = 1; $i <= $data['count']['PMCount']; $i++) {
+
+                if ($this->input->post('DataProcedimento' . $i) || $this->input->post('Profissional' . $i) ||
+                        $this->input->post('Procedimento' . $i)) {
+                    $data['procedimento'][$j]['DataProcedimento'] = $this->input->post('DataProcedimento' . $i);
+                    $data['procedimento'][$j]['Profissional'] = $this->input->post('Profissional' . $i);
+                    $data['procedimento'][$j]['Procedimento'] = $this->input->post('Procedimento' . $i);
+                    $j++;
+                }
+
+            }
+            $data['count']['PMCount'] = $j - 1;
+
+        } else {
+
+            $data['procedimento'][1]['DataProcedimento'] = $this->input->post('DataProcedimento1');
+            $data['procedimento'][1]['Profissional'] = $this->input->post('Profissional1');
+            $data['procedimento'][1]['Procedimento'] = $this->input->post('Procedimento1');
+
+        }
+
+        /*
+          echo '<br>';
+          echo "<pre>";
+          print_r($data['procedimento']);
+          echo "</pre>";
+          //exit();
+        */
+
         //Fim do trecho de código que dá pra melhorar
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -181,7 +206,6 @@ class Orcatrata extends CI_Controller {
         #$this->form_validation->set_rules('DataProcedimento', 'DataProcedimento', 'required|trim');
         #$this->form_validation->set_rules('ParcelaRecebiveis', 'ParcelaRecebiveis', 'required|trim');
         #$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
-
 
         $data['select']['AprovadoOrca'] = $this->Orcatrata_model->select_status_orca();
         $data['select']['FormaPagamento'] = $this->Formapag_model->select_formapag();
@@ -209,7 +233,7 @@ class Orcatrata extends CI_Controller {
         else
             $data['parcelasin'] = '';
 
-        if ($data['procedimento']['DataProcedimento'] || $data['procedimento']['Procedimento'])
+        if ($data['procedimento'][1]['DataProcedimento'] || $data['procedimento'][1]['Profissional'])
             $data['tratamentosin'] = 'in';
         else
             $data['tratamentosin'] = '';
@@ -263,44 +287,62 @@ class Orcatrata extends CI_Controller {
             $data['orcatrata']['idApp_OrcaTrata'] = $this->Orcatrata_model->set_orcatrata($data['orcatrata']);
 
             #### App_ServicoVenda ####
-            $max = count($data['servico']);
-            for($j=1;$j<=$max;$j++) {
-                $data['servico'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
-                $data['servico'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-                $data['servico'][$j]['idApp_OrcaTrata'] = $data['orcatrata']['idApp_OrcaTrata'];
+            if (isset($data['servico'])) {
+                $max = count($data['servico']);
+                for($j=1;$j<=$max;$j++) {
+                    $data['servico'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
+                    $data['servico'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+                    $data['servico'][$j]['idApp_OrcaTrata'] = $data['orcatrata']['idApp_OrcaTrata'];
 
-                $data['servico'][$j]['ValorVendaServico'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorVendaServico']));
+                    $data['servico'][$j]['ValorVendaServico'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorVendaServico']));
+                }
+                $data['servico']['idApp_ServicoVenda'] = $this->Orcatrata_model->set_servico_venda($data['servico']);
             }
-            $data['servico']['idApp_ServicoVenda'] = $this->Orcatrata_model->set_servico_venda($data['servico']);
 
             #### App_ProdutoVenda ####
-            $max = count($data['produto']);
-            for($j=1;$j<=$max;$j++) {
-                $data['produto'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
-                $data['produto'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-                $data['produto'][$j]['idApp_OrcaTrata'] = $data['orcatrata']['idApp_OrcaTrata'];
+            if (isset($data['produto'])) {
+                $max = count($data['produto']);
+                for($j=1;$j<=$max;$j++) {
+                    $data['produto'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
+                    $data['produto'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+                    $data['produto'][$j]['idApp_OrcaTrata'] = $data['orcatrata']['idApp_OrcaTrata'];
 
-                $data['produto'][$j]['ValorVendaProduto'] = str_replace(',', '.', str_replace('.', '', $data['produto'][$j]['ValorVendaProduto']));
-                unset($data['produto'][$j]['SubtotalProduto']);
+                    $data['produto'][$j]['ValorVendaProduto'] = str_replace(',', '.', str_replace('.', '', $data['produto'][$j]['ValorVendaProduto']));
+                    unset($data['produto'][$j]['SubtotalProduto']);
+                }
+                $data['produto']['idApp_ProdutoVenda'] = $this->Orcatrata_model->set_produto_venda($data['produto']);
             }
-            $data['produto']['idApp_ProdutoVenda'] = $this->Orcatrata_model->set_produto_venda($data['produto']);
 
             #### App_ParcelasRec ####
-            $max = count($data['parcelasrec']);
-            for($j=1;$j<=$max;$j++) {
-                $data['parcelasrec'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
-                $data['parcelasrec'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-                $data['parcelasrec'][$j]['idApp_OrcaTrata'] = $data['orcatrata']['idApp_OrcaTrata'];
+            if (isset($data['parcelasrec'])) {
+                $max = count($data['parcelasrec']);
+                for($j=1;$j<=$max;$j++) {
+                    $data['parcelasrec'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
+                    $data['parcelasrec'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+                    $data['parcelasrec'][$j]['idApp_OrcaTrata'] = $data['orcatrata']['idApp_OrcaTrata'];
 
-                $data['parcelasrec'][$j]['ValorParcelaRecebiveis'] = str_replace(',', '.', str_replace('.', '', $data['parcelasrec'][$j]['ValorParcelaRecebiveis']));
-                $data['parcelasrec'][$j]['DataVencimentoRecebiveis'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimentoRecebiveis'], 'mysql');
-                $data['parcelasrec'][$j]['ValorPagoRecebiveis'] = str_replace(',', '.', str_replace('.', '', $data['parcelasrec'][$j]['ValorPagoRecebiveis']));
-                $data['parcelasrec'][$j]['DataPagoRecebiveis'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPagoRecebiveis'], 'mysql');
+                    $data['parcelasrec'][$j]['ValorParcelaRecebiveis'] = str_replace(',', '.', str_replace('.', '', $data['parcelasrec'][$j]['ValorParcelaRecebiveis']));
+                    $data['parcelasrec'][$j]['DataVencimentoRecebiveis'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimentoRecebiveis'], 'mysql');
+                    $data['parcelasrec'][$j]['ValorPagoRecebiveis'] = str_replace(',', '.', str_replace('.', '', $data['parcelasrec'][$j]['ValorPagoRecebiveis']));
+                    $data['parcelasrec'][$j]['DataPagoRecebiveis'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPagoRecebiveis'], 'mysql');
 
+                }
+                $data['parcelasrec']['idApp_ParcelasRecebiveis'] = $this->Orcatrata_model->set_parcelasrec($data['parcelasrec']);
             }
-            $data['parcelasrec']['idApp_ParcelasRecebiveis'] = $this->Orcatrata_model->set_parcelasrec_venda($data['parcelasrec']);
 
             #### App_Procedimento ####
+            if (isset($data['procedimento'])) {
+                $max = count($data['procedimento']);
+                for($j=1;$j<=$max;$j++) {
+                    $data['procedimento'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
+                    $data['procedimento'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+                    $data['procedimento'][$j]['idApp_OrcaTrata'] = $data['orcatrata']['idApp_OrcaTrata'];
+
+                    $data['procedimento'][$j]['DataProcedimento'] = $this->basico->mascara_data($data['procedimento'][$j]['DataProcedimento'], 'mysql');
+
+                }
+                $data['procedimento']['idApp_Procedimento'] = $this->Orcatrata_model->set_procedimento($data['procedimento']);
+            }
 
 /*
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -480,6 +522,7 @@ class Orcatrata extends CI_Controller {
             $data['parcelasrec']['DataVencimentoRecebiveis'] = $this->basico->mascara_data($data['parcelasrec']['DataVencimentoRecebiveis'], 'mysql');
             $data['parcelasrec']['DataPagoRecebiveis'] = $this->basico->mascara_data($data['parcelasrec']['DataPagoRecebiveis'], 'mysql');
             $data['parcelasrec']['QuitadoRecebiveis'] = $data['parcelasrec']['QuitadoRecebiveis'];
+
 ////////////////////////////////////////////////////  FIM   //////////////////////////////////////////////////////////////////////////////////
             //*******CORRIGIR -  ALTERAR PARA ENTRAR COM TODAS AS MUDANÇAS NA TABELA DE LOG*****
             $data['anterior1'] = $this->Orcatrata_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata']);

@@ -62,6 +62,28 @@ elseif ($_GET['q'] == 2) {
     }
 
 }
+elseif ($_GET['q'] == 3) {
+
+    $result = mysql_query(
+            'SELECT
+                idApp_Profissional,
+                NomeProfissional
+            FROM
+                App_Profissional
+            WHERE
+                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['id']
+    );
+
+    while ($row = mysql_fetch_assoc($result)) {
+
+        $event_array[] = array(
+            'id' => $row['idApp_Profissional'],
+            'name' => utf8_encode($row['NomeProfissional']),
+        );
+    }
+
+}
 
 echo json_encode($event_array);
 mysql_close($link);

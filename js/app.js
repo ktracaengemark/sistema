@@ -319,6 +319,84 @@ function adicionaServico() {
     });
 }
 
+/*
+ * Função responsável por adicionar novos campos de Procedimento dinamicamente no
+ * formulário de orçamento/tratametno
+ */
+function adicionaProcedimento() {
+
+    var pc = $("#PMCount").val(); //initlal text box count
+
+    //alert( $("#SCount").val() );
+    pc++; //text box increment
+    $("#PMCount").val(pc);
+    //console.log(ps);
+
+    $(".input_fields_wrap3").append('\
+        <div class="form-group" id="3div'+pc+'">\
+            <div class="row">\
+                <div class="col-md-3">\
+                    <label for="DataProcedimento'+pc+'">Data do Procedimento:</label>\
+                    <div class="input-group DatePicker">\
+                        <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
+                               name="DataProcedimento'+pc+'" value="">\
+                        <span class="input-group-addon" disabled>\
+                            <span class="glyphicon glyphicon-calendar"></span>\
+                        </span>\
+                    </div>\
+                </div>\
+                <div class="col-md-3">\
+                    <label for="Profissional'+pc+'">Profissional:</label>\
+                    <select data-placeholder="Selecione uma opção..." class="form-control"\
+                             id="listadinamicac'+pc+'" name="Profissional'+pc+'">\
+                        <option value="">-- Selecione uma opção --</option>\
+                    </select>\
+                </div>\
+                <div class="col-md-4">\
+                    <label for="Procedimento'+pc+'">Procedimento:</label>\
+                    <textarea class="form-control" id="Procedimento'+pc+'"\
+                              name="Procedimento'+pc+'"></textarea>\
+                </div>\
+                <div class="col-md-1">\
+                    <label><br></label><br>\
+                    <button type="button" id="'+pc+'" class="remove_field3 btn btn-danger">\
+                        <span class="glyphicon glyphicon-trash"></span>\
+                    </button>\
+                </div>\
+            </div>\
+        </div>'
+    ); //add input box
+    //habilita o botão de calendário após a geração dos campos dinâmicos
+    $('.DatePicker').datetimepicker(dateTimePickerOptions);
+
+    //get a reference to the select element
+    $select = $('#listadinamicac'+pc);
+
+    //request the JSON data and parse into the select element
+    $.ajax({
+        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=3',
+        dataType: 'JSON',
+        type: "GET",
+        success: function (data) {
+            //clear the current content of the select
+            $select.html('');
+            //iterate over the data and append a select option
+            $select.append('<option value="">-- Selecione uma opção --</option>');
+            $.each(data, function (key, val) {
+                //alert(val.id);
+                $select.append('<option value="' + val.id + '">' + val.name + '</option>');
+            })
+        },
+        error: function () {
+            //alert('erro listadinamicaB');
+            //if there is an error append a 'none available' option
+            $select.html('<option id="-1">ERRO</option>');
+        }
+
+    });
+
+}
+
  /*
   * Função criada para funcionar junto com o recurso de hide/show do jquery nos
   * casos de radio button, que exigem um tratamento especial para funcionar
@@ -676,6 +754,11 @@ $(document).ready(function () {
         $("#2div"+$(this).attr("id")).remove();
         //após remover o campo refaz o cálculo do orçamento e total restante
         calculaOrcamento();
+    })
+
+    //Remove os campos adicionados dinamicamente
+    $(".input_fields_wrap3").on("click",".remove_field3", function(e){ //user click on remove text
+        $("#3div"+$(this).attr("id")).remove();
     })
 
     /*
