@@ -25,6 +25,51 @@ class Orcatrata_model extends CI_Model {
         }
     }
 
+    public function set_servico_venda($data) {
+
+        /*
+        //echo $this->db->last_query();
+        echo '<br>';
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
+        //exit ();
+        */
+
+        $query = $this->db->insert_batch('App_ServicoVenda', $data);
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            #return TRUE;
+            return $this->db->insert_id();
+        }
+    }
+
+    public function set_produto_venda($data) {
+
+        $query = $this->db->insert_batch('App_ProdutoVenda', $data);
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            #return TRUE;
+            return $this->db->insert_id();
+        }
+    }
+
+    public function set_parcelasrec_venda($data) {
+
+        $query = $this->db->insert_batch('App_ParcelasRecebiveis', $data);
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            #return TRUE;
+            return $this->db->insert_id();
+        }
+    }
+
     public function set_procedimento($data) {
 
         $query = $this->db->insert('App_Procedimento', $data);

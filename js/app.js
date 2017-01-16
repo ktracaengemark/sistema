@@ -523,7 +523,7 @@ $(document).ready(function () {
     $(".TituloEleitor").mask("9999.9999.9999");
     $(".Valor").mask("#.##0,00", {reverse: true});
     $('.Numero').mask('0#');
-    
+
     $(".Celular").mask("(99) 99999-9999");
     $(".CelularVariavel").on("blur", function () {
         var last = $(this).val().substr($(this).val().indexOf("-") + 1);
@@ -610,11 +610,11 @@ $(document).ready(function () {
                         </div>\
                     </div>\
                     <div class="col-md-1">\
-                        <label for="QuantidadeProduto">Qtd:</label><br>\
+                        <label for="QtdVendaProduto">Qtd:</label><br>\
                         <div class="input-group">\
                             <input type="text" class="form-control" maxlength="3" id="Qtd'+pc+'" placeholder="0"\
                                 onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'QTD\')"\
-                                name="QuantidadeProduto'+pc+'" value="">\
+                                name="QtdVendaProduto'+pc+'" value="">\
                         </div>\
                     </div>\
                     <div class="col-md-3">\

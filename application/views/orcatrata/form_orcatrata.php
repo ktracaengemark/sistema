@@ -160,12 +160,12 @@
 
                                 <!--#######################################-->
 
-                                <input type="hidden" name="SCount" id="SCount" value="<?php echo $servico['SCount']; ?>"/>
+                                <input type="hidden" name="SCount" id="SCount" value="<?php echo $count['SCount']; ?>"/>
 
                                 <div class="input_fields_wrap">
 
                                 <?php
-                                for ($i=1; $i <= $servico['SCount']; $i++) {
+                                for ($i=1; $i <= $count['SCount']; $i++) {
                                 ?>
 
                                 <div class="form-group" id="1div<?php echo $i ?>">
@@ -261,12 +261,12 @@
 
                                 <hr>
 
-                                <input type="hidden" name="PCount" id="PCount" value="<?php echo $produto['PCount']; ?>"/>
+                                <input type="hidden" name="PCount" id="PCount" value="<?php echo $count['PCount']; ?>"/>
 
                                 <div class="input_fields_wrap2">
 
                                 <?php
-                                for ($i=1; $i <= $produto['PCount']; $i++) {
+                                for ($i=1; $i <= $count['PCount']; $i++) {
                                 ?>
 
                                 <div class="form-group" id="2div<?php echo $i ?>">
@@ -303,10 +303,10 @@
                                             </div>
                                         </div>
                                         <div class="col-md-1">
-                                            <label for="QuantidadeProduto">Qtd:</label>
+                                            <label for="QtdVendaProduto">Qtd:</label>
                                             <input type="text" class="form-control Numero" maxlength="3" id="Qtd<?php echo $i ?>" placeholder="0"
                                                     onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','QTD')"
-                                                    name="QuantidadeProduto<?php echo $i ?>" value="<?php echo $produto[$i]['QuantidadeProduto'] ?>">
+                                                    name="QtdVendaProduto<?php echo $i ?>" value="<?php echo $produto[$i]['QtdVendaProduto'] ?>">
                                         </div>
                                         <div class="col-md-3">
                                             <label for="SubtotalProduto">Subtotal:</label>
