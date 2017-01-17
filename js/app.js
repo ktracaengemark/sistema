@@ -125,14 +125,14 @@ function calculaParcelas() {
     $(".input_fields_parcelas").empty();
 
     //gera os campos de parcelas
-    for (i=0; i=parcelas; i++) {
+    for (i=0; i<parcelas; i++) {
 
         //calcula as datas das próximas parcelas
-        var futureMonth = moment(currentDate).add(i-1, 'M');
+        var futureMonth = moment(currentDate).add(i, 'M');
         var futureMonthEnd = moment(futureMonth).endOf('month');
 
         if(currentDate.date() != futureMonth.date() && futureMonth.isSame(futureMonthEnd.format('YYYY-MM-DD')))
-            futureMonth = futureMonth.add(i-1, 'd');
+            futureMonth = futureMonth.add(i, 'd');
 
         $(".input_fields_parcelas").append('\
             <div class="form-group">\
@@ -140,7 +140,7 @@ function calculaParcelas() {
                     <div class="col-md-1">\
                         <label for="ParcelaRecebiveis">Parcela:</label><br>\
                         <input type="text" class="form-control" maxlength="6" readonly=""\
-                               name="ParcelaRecebiveis'+i+'" value="'+i+'/'+parcelas+'">\
+                               name="ParcelaRecebiveis'+i+'" value="'+(i+1)+'/'+parcelas+'">\
                     </div>\
                     <div class="col-md-2">\
                         <label for="ValorParcelaRecebiveis">Valor Parcela:</label><br>\
@@ -523,7 +523,7 @@ function calculaOrcamento() {
     var subtotal = 0.00;
 
     //variável incrementadora
-    var i = 1;
+    var i = 0;
     //percorre todos os campos de serviço, somando seus valores
     while (i <= sc) {
 
@@ -537,7 +537,7 @@ function calculaOrcamento() {
     }
 
     //faz o mesmo que o laço anterior mas agora para produtos
-    var i = 1;
+    var i = 0;
     while (i <= pc) {
 
         if ($('#SubtotalProduto'+i).val())
@@ -690,7 +690,7 @@ $(document).ready(function () {
                     <div class="col-md-1">\
                         <label for="QtdVendaProduto">Qtd:</label><br>\
                         <div class="input-group">\
-                            <input type="text" class="form-control" maxlength="3" id="Qtd'+pc+'" placeholder="0"\
+                            <input type="text" class="form-control Numero" maxlength="3" id="Qtd'+pc+'" placeholder="0"\
                                 onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'QTD\')"\
                                 name="QtdVendaProduto'+pc+'" value="">\
                         </div>\

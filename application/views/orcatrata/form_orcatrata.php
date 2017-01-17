@@ -165,7 +165,7 @@
                                 <div class="input_fields_wrap">
 
                                 <?php
-                                for ($i=0; $i < $count['SCount']; $i++) {
+                                for ($i=0; $i <= $count['SCount']; $i++) {
                                 ?>
 
                                 <div class="form-group" id="1div<?php echo $i ?>">
@@ -266,7 +266,7 @@
                                 <div class="input_fields_wrap2">
 
                                 <?php
-                                for ($i=0; $i < $count['PCount']; $i++) {
+                                for ($i=0; $i <= $count['PCount']; $i++) {
                                 ?>
 
                                 <div class="form-group" id="2div<?php echo $i ?>">
@@ -546,7 +546,7 @@
                                 <div class="input_fields_wrap3">
 
                                 <?php
-                                for ($i=0; $i < $count['PMCount']; $i++) {
+                                for ($i=0; $i <= $count['PMCount']; $i++) {
                                 ?>
 
                                 <div class="form-group" id="3div<?php echo $i ?>">
