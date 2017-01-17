@@ -173,7 +173,7 @@ class Basico {
           echo "<pre>";
           print_r($query['auditoriaitem']);
           echo "</pre>";
-         * 
+         *
          */
         if ($query['auditoriaitem']) {
             return $query;
@@ -262,7 +262,7 @@ class Basico {
             return 'primary';
         else
             return 'danger';
-        
+
     }
 
 
@@ -289,6 +289,18 @@ class Basico {
             return FALSE;
         }
 
-    }    
-    
+    }
+
+    function mascara_palavra_completa($data, $opcao) {
+
+        if ($opcao == 'NS') {
+
+            if ($data == 'S')
+                return 'Sim';
+            else
+                return 'Não';
+
+        }
+    }
+
 }

@@ -364,7 +364,7 @@ class Orcatrata extends CI_Controller {
                 //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_OrcaTrata', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'orcatrata/pesquisar/' . $_SESSION['Cliente']['idApp_Cliente'] . $data['msg']);
+                redirect(base_url() . 'orcatrata/listar/' . $_SESSION['Cliente']['idApp_Cliente'] . $data['msg']);
                 exit();
             }
         }
@@ -646,7 +646,7 @@ class Orcatrata extends CI_Controller {
         $this->load->view('basico/footer');
     }
 
-    public function pesquisar($id = FALSE) {
+    public function listar($id = NULL) {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -655,18 +655,10 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 
-        if ($this->input->get('start') && $this->input->get('end')) {
-            //$data['start'] = substr($this->input->get('start'),0,-3);
-            //$data['end'] = substr($this->input->get('end'),0,-3);
-            $_SESSION['agenda']['HoraInicio'] = substr($this->input->get('start'), 0, -3);
-            $_SESSION['agenda']['HoraFim'] = substr($this->input->get('end'), 0, -3);
-        }
 
-        $_SESSION['Cliente'] = $this->Cliente_model->get_cliente($id, TRUE);
-
-        //echo date('d/m/Y H:i:s', $data['start'],0,-3));
-
-        $data['query'] = $this->Orcatrata_model->lista_orcatrata(TRUE);
+        //$_SESSION['OrcaTrata'] = $this->Orcatrata_model->get_cliente($id, TRUE);
+        $_SESSION['OrcaTrata']['idApp_Cliente'] = $id;
+        $data['query'] = $this->Orcatrata_model->list_orcatrata(TRUE);
         /*
           echo "<pre>";
           print_r($data['query']);

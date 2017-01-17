@@ -190,20 +190,28 @@ class Orcatrata_model extends CI_Model {
         }
     }
 
-    public function lista_orcatrata($x) {
+    public function list_orcatrata($x) {
 
-        $query = $this->db->query('SELECT * '
-                . 'FROM App_OrcaTrata WHERE '
-                . 'idApp_Cliente = ' . $_SESSION['Cliente']['idApp_Cliente'] . ' '
-                #. 'ORDER BY idApp_OrcaTrata DESC ');
-				. 'ORDER BY DataOrca DESC ');
+        $query = $this->db->query('SELECT '
+                . 'OT.idApp_OrcaTrata, '
+                . 'OT.DataOrca, '
+                . 'P.NomeProfissional AS ProfissionalOrca, '
+                . 'OT.AprovadoOrca, '
+                . 'OT.ObsOrca '
+                . 'FROM '
+                . 'App_OrcaTrata AS OT, '
+                . 'App_Profissional AS P '
+                . 'WHERE '
+                . 'OT.idApp_Cliente = ' . $_SESSION['OrcaTrata']['idApp_Cliente'] . ' AND '
+                . 'OT.ProfissionalOrca = P.idApp_Profissional '
+				. 'ORDER BY OT.DataOrca DESC ');
         /*
           echo $this->db->last_query();
           echo "<pre>";
           print_r($query);
           echo "</pre>";
           exit();
-         */
+          */
         if ($query->num_rows() === 0) {
             return FALSE;
         } else {
@@ -211,12 +219,8 @@ class Orcatrata_model extends CI_Model {
                 return TRUE;
             } else {
                 foreach ($query->result() as $row) {
-                    #$row->Idade = $this->basico->calcula_idade($row->DataOrca);
-                    $row->DataVenc = $this->basico->mascara_data($row->DataVencOrca, 'barras');
 					$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
-					$row->DataRet = $this->basico->mascara_data($row->DataRet, 'barras');
-					$row->DataConcl = $this->basico->mascara_data($row->DataConcl, 'barras');
-                   # $row->Sexo = $this->Basico_model->get_sexo($row->Sexo);
+                    $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
                 }
 
                 return $query;

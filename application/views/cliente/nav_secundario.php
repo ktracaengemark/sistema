@@ -41,13 +41,13 @@
 
 	<li <?php if (preg_match("/orcatrata\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
         <a href="<?php echo base_url() . 'orcatrata/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
-            <span class="glyphicon glyphicon-plus"></span> Novo Orçamento/Tratamento
+            <span class="glyphicon glyphicon-plus"></span> Novo Orçamento
         </a>
     </li>
 
-	<li <?php if (preg_match("/orcatrata\/pesquisar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
-        <a href="<?php echo base_url() . 'orcatrata/pesquisar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
-            <span class="glyphicon glyphicon-list"></span> Listar Orçamentos/Tratamentos
+	<li <?php if (preg_match("/orcatrata\/listar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
+        <a href="<?php echo base_url() . 'orcatrata/listar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+            <span class="glyphicon glyphicon-list-alt"></span> Listar Orçamentos/Tratamentos
         </a>
     </li>
 
