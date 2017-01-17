@@ -47,7 +47,7 @@
 
 	<li <?php if (preg_match("/orcatrata\/listar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
         <a href="<?php echo base_url() . 'orcatrata/listar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
-            <span class="glyphicon glyphicon-list-alt"></span> Listar Orçamentos/Tratamentos
+            <span class="glyphicon glyphicon-list-alt"></span> Listar Orçamentos
         </a>
     </li>
 

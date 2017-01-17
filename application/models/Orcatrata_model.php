@@ -86,108 +86,44 @@ class Orcatrata_model extends CI_Model {
         $query = $this->db->query('SELECT * FROM App_OrcaTrata WHERE idApp_OrcaTrata = ' . $data);
         $query = $query->result_array();
 
+        /*
+        //echo $this->db->last_query();
+        echo '<br>';
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit ();
+        */
+
         return $query[0];
     }
 
-	public function get_procedimento($data) {
+	public function get_servico($data) {
+		$query = $this->db->query('SELECT * FROM App_ServicoVenda WHERE idApp_OrcaTrata = ' . $data);
+        $query = $query->result_array();
+
+        return $query;
+    }
+
+    public function get_produto($data) {
+		$query = $this->db->query('SELECT * FROM App_ProdutoVenda WHERE idApp_OrcaTrata = ' . $data);
+        $query = $query->result_array();
+
+        return $query;
+    }
+
+    public function get_parcelasrec($data) {
+		$query = $this->db->query('SELECT * FROM App_ParcelasRecebiveis WHERE idApp_OrcaTrata = ' . $data);
+        $query = $query->result_array();
+
+        return $query;
+    }
+
+    public function get_procedimento($data) {
 		$query = $this->db->query('SELECT * FROM App_Procedimento WHERE idApp_OrcaTrata = ' . $data);
         $query = $query->result_array();
 
-        return $query[0];
-    }
-
-	public function get_parcelasrec($data) {
-		$query = $this->db->query('SELECT * FROM App_ParcelasRec WHERE idApp_OrcaTrata = ' . $data);
-        $query = $query->result_array();
-
-        return $query[0];
-    }
-
-    public function update_orcatrata($data, $id) {
-
-        unset($data['Id']);
-        $query = $this->db->update('App_OrcaTrata', $data, array('idApp_OrcaTrata' => $id));
-        /*
-          echo $this->db->last_query();
-          echo '<br>';
-          echo "<pre>";
-          print_r($query);
-          echo "</pre>";
-          exit ();
-         */
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
-	public function update_procedimento($data, $id) {
-
-        unset($data['Id']);
-        $query = $this->db->update('App_Procedimento', $data, array('idApp_Procedimento' => $id));
-        /*
-          echo $this->db->last_query();
-          echo '<br>';
-          echo "<pre>";
-          print_r($query);
-          echo "</pre>";
-          exit ();
-         */
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
-	public function update_parcelasrec($data, $id) {
-
-        unset($data['Id']);
-        $query = $this->db->update('App_ParcelasRec', $data, array('idApp_ParcelasRec' => $id));
-        /*
-          echo $this->db->last_query();
-          echo '<br>';
-          echo "<pre>";
-          print_r($query);
-          echo "</pre>";
-          exit ();
-         */
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
-    public function delete_orcatrata($data) {
-        $query = $this->db->delete('App_OrcaTrata', array('idApp_OrcaTrata' => $data));
-
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
-	public function delete_procedimento($data) {
-        $query = $this->db->delete('App_Procedimento', array('idApp_Procedimento' => $data));
-
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
-	public function delete_parcelasrec($data) {
-        $query = $this->db->delete('App_ParcelasRec', array('idApp_ParcelasRec' => $data));
-
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
+        return $query;
     }
 
     public function list_orcatrata($x) {
@@ -218,6 +154,7 @@ class Orcatrata_model extends CI_Model {
             if ($x === FALSE) {
                 return TRUE;
             } else {
+
                 foreach ($query->result() as $row) {
 					$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
                     $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
@@ -226,38 +163,6 @@ class Orcatrata_model extends CI_Model {
                 return $query;
             }
         }
-    }
-
-   /* public function select_status_vida($data = FALSE) {
-
-        if ($data === TRUE) {
-            $array = $this->db->query('SELECT * FROM Tab_StatusOrca');
-        } else {
-            $query = $this->db->query('SELECT * FROM Tab_StatusOrca');
-
-            $array = array();
-            foreach ($query->result() as $row) {
-                $array[$row->Abrev] = $row->StatusOrca;
-            }
-        }
-
-        return $array;
-    }*/
-
-	public function select_status_orca($data = FALSE) {
-
-        if ($data === TRUE) {
-            $array = $this->db->query('SELECT * FROM Tab_StatusOrca');
-        } else {
-            $query = $this->db->query('SELECT * FROM Tab_StatusOrca');
-
-            $array = array();
-            foreach ($query->result() as $row) {
-                $array[$row->Abrev] = $row->StatusOrca;
-            }
-        }
-
-        return $array;
     }
 
 }

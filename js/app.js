@@ -125,7 +125,7 @@ function calculaParcelas() {
     $(".input_fields_parcelas").empty();
 
     //gera os campos de parcelas
-    for (i=1; i<=parcelas; i++) {
+    for (i=0; i=parcelas; i++) {
 
         //calcula as datas das próximas parcelas
         var futureMonth = moment(currentDate).add(i-1, 'M');

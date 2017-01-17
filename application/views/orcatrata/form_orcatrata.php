@@ -97,8 +97,8 @@
                             <div class="form-group">
                                 <div class="btn-group" data-toggle="buttons">
                                     <?php
-                                    foreach ($select['TipoConcluido'] as $key => $row) {
-                                        (!$orcatrata['ServicoConcluido']) ? $orcatrata['ServicoConcluido'] = '1' : FALSE;
+                                    foreach ($select['ServicoConcluido'] as $key => $row) {
+                                        (!$orcatrata['ServicoConcluido']) ? $orcatrata['ServicoConcluido'] = 'N' : FALSE;
 
                                         if ($orcatrata['ServicoConcluido'] == $key) {
                                             echo ''
@@ -165,14 +165,14 @@
                                 <div class="input_fields_wrap">
 
                                 <?php
-                                for ($i=1; $i <= $count['SCount']; $i++) {
+                                for ($i=0; $i < $count['SCount']; $i++) {
                                 ?>
 
                                 <div class="form-group" id="1div<?php echo $i ?>">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label for="idTab_Servico">Serviço:</label>
-                                            <?php if ($i == 1) { ?>
+                                            <?php if ($i == 0) { ?>
                                             <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>servico/cadastrar/servico" role="button">
                                                 <span class="glyphicon glyphicon-plus"></span> <b>Novo Serviço</b>
                                             </a>
@@ -266,14 +266,14 @@
                                 <div class="input_fields_wrap2">
 
                                 <?php
-                                for ($i=1; $i <= $count['PCount']; $i++) {
+                                for ($i=0; $i < $count['PCount']; $i++) {
                                 ?>
 
                                 <div class="form-group" id="2div<?php echo $i ?>">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="idTab_Produto">Produto:</label>
-                                            <?php if ($i == 1) { ?>
+                                            <?php if ($i == 0) { ?>
                                             <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produto/cadastrar/produto" role="button">
                                                 <span class="glyphicon glyphicon-plus"></span> <b>Novo Produto</b>
                                             </a>
@@ -440,7 +440,7 @@
                                 <div class="input_fields_parcelas">
 
                                 <?php
-                                for ($i=1; $i <= $orcatrata['QtdParcelasOrca']; $i++) {
+                                for ($i=0; $i < $orcatrata['QtdParcelasOrca']; $i++) {
                                 ?>
 
                                     <div class="form-group">
@@ -546,7 +546,7 @@
                                 <div class="input_fields_wrap3">
 
                                 <?php
-                                for ($i=1; $i <= $count['PMCount']; $i++) {
+                                for ($i=0; $i < $count['PMCount']; $i++) {
                                 ?>
 
                                 <div class="form-group" id="3div<?php echo $i ?>">
@@ -563,7 +563,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label for="Profissional<?php echo $i ?>">Profissional:</label>
-                                            <?php if ($i == 1) { ?>
+                                            <?php if ($i == 0) { ?>
                                             <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
                                                 <span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
                                             </a>
