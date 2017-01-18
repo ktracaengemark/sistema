@@ -69,11 +69,52 @@ class Orcatrata extends CI_Controller {
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
         //comentado fim) mas por enquanto, se está funcionando, vou deixar assim.
 
-        $data['orcamento']['OrcamentoTotal'] = $this->input->post('OrcamentoTotal');
         (!$this->input->post('SCount')) ? $data['count']['SCount'] = 0 : $data['count']['SCount'] = $this->input->post('SCount');
         (!$this->input->post('PCount')) ? $data['count']['PCount'] = 0 : $data['count']['PCount'] = $this->input->post('PCount');
         (!$this->input->post('PMCount')) ? $data['count']['PMCount'] = 0 : $data['count']['PMCount'] = $this->input->post('PMCount');
 
+        $j = 1;
+        for ($i = 1; $i <= $data['count']['SCount']; $i++) {
+
+            if ($this->input->post('idTab_Servico' . $i)) {
+                $data['servico'][$j]['idTab_Servico'] = $this->input->post('idTab_Servico' . $i);
+                $data['servico'][$j]['ValorVendaServico'] = $this->input->post('ValorVendaServico' . $i);
+                $data['servico'][$j]['ObsServico'] = $this->input->post('ObsServico' . $i);
+                $data['servico'][$j]['ConcluidoServico'] = $this->input->post('ConcluidoServico' . $i);
+                $j++;
+            }
+
+        }
+        $data['count']['SCount'] = $j - 1;
+
+        $j = 1;
+        for ($i = 1; $i <= $data['count']['PCount']; $i++) {
+
+            if ($this->input->post('idTab_Produto' . $i)) {
+                $data['produto'][$j]['idTab_Produto'] = $this->input->post('idTab_Produto' . $i);
+                $data['produto'][$j]['ValorVendaProduto'] = $this->input->post('ValorVendaProduto' . $i);
+                $data['produto'][$j]['QtdVendaProduto'] = $this->input->post('QtdVendaProduto' . $i);
+                $data['produto'][$j]['SubtotalProduto'] = $this->input->post('SubtotalProduto' . $i);
+                $j++;
+            }
+        }
+        $data['count']['PCount'] = $j - 1;
+
+        $j = 1;
+        for ($i = 1; $i <= $data['count']['PMCount']; $i++) {
+
+            if ($this->input->post('DataProcedimento' . $i) || $this->input->post('Profissional' . $i) ||
+                    $this->input->post('Procedimento' . $i)) {
+                $data['procedimento'][$j]['DataProcedimento'] = $this->input->post('DataProcedimento' . $i);
+                $data['procedimento'][$j]['Profissional'] = $this->input->post('Profissional' . $i);
+                $data['procedimento'][$j]['Procedimento'] = $this->input->post('Procedimento' . $i);
+                $j++;
+            }
+
+        }
+        $data['count']['PMCount'] = $j - 1;
+
+        /*
         if ($data['count']['SCount'] >= 1) {
 
             $j = 0;
@@ -104,6 +145,8 @@ class Orcatrata extends CI_Controller {
         echo "</pre>";
         //exit ();
         */
+
+        /*
         if ($data['count']['PCount'] >= 1) {
 
             $j = 0;
@@ -127,7 +170,7 @@ class Orcatrata extends CI_Controller {
             $data['produto'][0]['SubtotalProduto'] = $this->input->post('SubtotalProduto0');
 
         }
-
+        */
         if ($data['orcatrata']['QtdParcelasOrca'] > 0) {
 
             for ($i = 1; $i <= $data['orcatrata']['QtdParcelasOrca']; $i++) {
@@ -143,6 +186,7 @@ class Orcatrata extends CI_Controller {
 
         }
 
+        /*
         if ($data['count']['PMCount'] >= 1) {
 
             $j = 0;
@@ -166,7 +210,7 @@ class Orcatrata extends CI_Controller {
             $data['procedimento'][0]['Procedimento'] = $this->input->post('Procedimento0');
 
         }
-
+        */
         //Fim do trecho de código que dá pra melhorar
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -203,7 +247,8 @@ class Orcatrata extends CI_Controller {
         else
             $data['parcelasin'] = '';
 
-        if ($data['procedimento'][0]['DataProcedimento'] || $data['procedimento'][0]['Profissional'])
+        //if ($data['procedimento'][0]['DataProcedimento'] || $data['procedimento'][0]['Profissional'])
+        if (isset($data['procedimento']))
             $data['tratamentosin'] = 'in';
         else
             $data['tratamentosin'] = '';
@@ -255,13 +300,14 @@ class Orcatrata extends CI_Controller {
             $data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['orcatrata']['idApp_OrcaTrata'] = $this->Orcatrata_model->set_orcatrata($data['orcatrata']);
-
+            /*
             echo count($data['servico']);
             echo '<br>';
             echo "<pre>";
             print_r($data['servico']);
             echo "</pre>";
             exit ();
+            */
 
             #### App_ServicoVenda ####
             if (isset($data['servico'])) {
@@ -380,77 +426,51 @@ class Orcatrata extends CI_Controller {
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
         //comentado fim) mas por enquanto, se está funcionando, vou deixar assim.
 
-        $data['orcamento']['OrcamentoTotal'] = $this->input->post('OrcamentoTotal');
         (!$this->input->post('SCount')) ? $data['count']['SCount'] = 0 : $data['count']['SCount'] = $this->input->post('SCount');
         (!$this->input->post('PCount')) ? $data['count']['PCount'] = 0 : $data['count']['PCount'] = $this->input->post('PCount');
         (!$this->input->post('PMCount')) ? $data['count']['PMCount'] = 0 : $data['count']['PMCount'] = $this->input->post('PMCount');
 
-        //$data['lista']['Servicos'] = $this->Tratamentos_model->lista_servicos();
-        //$data['lista']['Produtos'] = $this->Tratamentos_model->lista_produtos();
 
-        /*
-          echo $data['lista']['Servicos']['1'];
-          echo '<br>';
-          echo "<pre>";
-          print_r($data['lista']['Servicos']);
-          echo "</pre>";
-          exit();
-         */
-        if ($data['count']['SCount'] >= 1) {
+                $j = 1;
+                for ($i = 1; $i <= $data['count']['SCount']; $i++) {
 
-            $j = 0;
-            for ($i = 0; $i <= $data['count']['SCount']; $i++) {
+                    if ($this->input->post('idTab_Servico' . $i)) {
+                        $data['servico'][$j]['idTab_Servico'] = $this->input->post('idTab_Servico' . $i);
+                        $data['servico'][$j]['ValorVendaServico'] = $this->input->post('ValorVendaServico' . $i);
+                        $data['servico'][$j]['ObsServico'] = $this->input->post('ObsServico' . $i);
+                        $data['servico'][$j]['ConcluidoServico'] = $this->input->post('ConcluidoServico' . $i);
+                        $j++;
+                    }
 
-                if ($this->input->post('idTab_Servico' . $i)) {
-                    $data['servico'][$j]['idTab_Servico'] = $this->input->post('idTab_Servico' . $i);
-                    $data['servico'][$j]['ValorVendaServico'] = $this->input->post('ValorVendaServico' . $i);
-                    $data['servico'][$j]['ObsServico'] = $this->input->post('ObsServico' . $i);
-                    $data['servico'][$j]['ConcluidoServico'] = $this->input->post('ConcluidoServico' . $i);
-                    $j++;
                 }
-            }
-            $data['count']['SCount'] = $j - 1;
+                $data['count']['SCount'] = $j - 1;
 
-        } else {
+                $j = 1;
+                for ($i = 1; $i <= $data['count']['PCount']; $i++) {
 
-            $data['servico'][0]['idTab_Servico'] = $this->input->post('idTab_Servico0');
-            $data['servico'][0]['ValorVendaServico'] = $this->input->post('ValorVendaServico0');
-            $data['servico'][0]['ObsServico'] = $this->input->post('ObsServico0');
-            $data['servico'][0]['ConcluidoServico'] = $this->input->post('ConcluidoServico0');
-
-        }
-
-        if ($data['count']['PCount'] >= 1) {
-
-            $j = 0;
-            for ($i = 0; $i <= $data['count']['PCount']; $i++) {
-
-                if ($this->input->post('idTab_Produto' . $i)) {
-                    $data['produto'][$j]['idTab_Produto'] = $this->input->post('idTab_Produto' . $i);
-                    $data['produto'][$j]['ValorVendaProduto'] = $this->input->post('ValorVendaProduto' . $i);
-                    $data['produto'][$j]['QtdVendaProduto'] = $this->input->post('QtdVendaProduto' . $i);
-                    $data['produto'][$j]['SubtotalProduto'] = $this->input->post('SubtotalProduto' . $i);
-                    $j++;
+                    if ($this->input->post('idTab_Produto' . $i)) {
+                        $data['produto'][$j]['idTab_Produto'] = $this->input->post('idTab_Produto' . $i);
+                        $data['produto'][$j]['ValorVendaProduto'] = $this->input->post('ValorVendaProduto' . $i);
+                        $data['produto'][$j]['QtdVendaProduto'] = $this->input->post('QtdVendaProduto' . $i);
+                        $data['produto'][$j]['SubtotalProduto'] = $this->input->post('SubtotalProduto' . $i);
+                        $j++;
+                    }
                 }
-            }
-            $data['count']['PCount'] = $j - 1;
+                $data['count']['PCount'] = $j - 1;
 
-        } else {
+                $j = 1;
+                for ($i = 1; $i <= $data['count']['PMCount']; $i++) {
 
-            $data['produto'][0]['idTab_Produto'] = $this->input->post('idTab_Produto0');
-            $data['produto'][0]['ValorVendaProduto'] = $this->input->post('ValorVendaProduto0');
-            $data['produto'][0]['QtdVendaProduto'] = $this->input->post('QtdVendaProduto0');
-            $data['produto'][0]['SubtotalProduto'] = $this->input->post('SubtotalProduto0');
+                    if ($this->input->post('DataProcedimento' . $i) || $this->input->post('Profissional' . $i) ||
+                            $this->input->post('Procedimento' . $i)) {
+                        $data['procedimento'][$j]['DataProcedimento'] = $this->input->post('DataProcedimento' . $i);
+                        $data['procedimento'][$j]['Profissional'] = $this->input->post('Profissional' . $i);
+                        $data['procedimento'][$j]['Procedimento'] = $this->input->post('Procedimento' . $i);
+                        $j++;
+                    }
 
-        }
-
-        /*
-          echo '<br>';
-          echo "<pre>";
-          print_r($data['produto']);
-          echo "</pre>";
-          exit();
-         */
+                }
+                $data['count']['PMCount'] = $j - 1;
 
         if ($data['orcatrata']['QtdParcelasOrca'] > 0) {
 
@@ -475,39 +495,6 @@ class Orcatrata extends CI_Controller {
           //exit();
         */
 
-        //echo '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'.$data['count']['PMCount'].':::<br>';
-        if ($data['count']['PMCount'] >= 1) {
-
-            $j = 0;
-            for ($i = 0; $i <= $data['count']['PMCount']; $i++) {
-
-                if ($this->input->post('DataProcedimento' . $i) || $this->input->post('Profissional' . $i) ||
-                        $this->input->post('Procedimento' . $i)) {
-                    $data['procedimento'][$j]['DataProcedimento'] = $this->input->post('DataProcedimento' . $i);
-                    $data['procedimento'][$j]['Profissional'] = $this->input->post('Profissional' . $i);
-                    $data['procedimento'][$j]['Procedimento'] = $this->input->post('Procedimento' . $i);
-                    $j++;
-                }
-
-            }
-            $data['count']['PMCount'] = $j - 1;
-
-        } else {
-
-            $data['procedimento'][0]['DataProcedimento'] = $this->input->post('DataProcedimento0');
-            $data['procedimento'][0]['Profissional'] = $this->input->post('Profissional0');
-            $data['procedimento'][0]['Procedimento'] = $this->input->post('Procedimento0');
-
-        }
-
-        /*
-          echo '<br>';
-          echo "<pre>";
-          print_r($data['procedimento']);
-          echo "</pre>";
-          //exit();
-        */
-
         //Fim do trecho de código que dá pra melhorar
 
         if ($id) {
@@ -520,7 +507,10 @@ class Orcatrata extends CI_Controller {
 
             #### App_ServicoVenda ####
             $data['servico'] = $this->Orcatrata_model->get_servico($id);
-            $data['count']['SCount'] = count($data['servico'])-1;
+            if (count($data['servico']) > 0) {
+                $data['servico'] = array_combine(range(1, count($data['servico'])), array_values($data['servico']));
+                echo $data['count']['SCount'] = count($data['servico']);
+            }
 
             /*
             echo $data['count']['SCount'];
@@ -528,40 +518,59 @@ class Orcatrata extends CI_Controller {
             echo "<pre>";
             print_r($data['servico']);
             echo "</pre>";
-            //exit();
 
-            /*
-            if (isset($data['servico'])) {
-                $max = count($data['servico']);
-                for($j=1;$j<=$max;$j++) {
-                    $data['servico'][$j]['idTab_Servico'] = $this->input->post('idTab_Servico' . $i);
-                    $data['servico'][$j]['ValorVendaServico'] = $this->input->post('ValorVendaServico' . $i);
-                    $data['servico'][$j]['ObsServico'] = $this->input->post('ObsServico' . $i);
-                    $data['servico'][$j]['ConcluidoServico'] = $this->input->post('ConcluidoServico' . $i);
+            $data['servico'] = array_combine(range(1, count($data['servico'])), array_values($data['servico']));
 
-                    $data['servico'][$j]['ValorVendaServico'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorVendaServico']));
-                }
-                $data['servico']['idApp_ServicoVenda'] = $this->Orcatrata_model->set_servico_venda($data['servico']);
-            }
+            echo '<br>';
+            echo "<pre>";
+            print_r($data['servico']);
+            echo "</pre>";
+
+            exit();
             */
 
             #### App_ProdutoVenda ####
             $data['produto'] = $this->Orcatrata_model->get_produto($id);
-            $data['count']['PCount'] = count($data['produto'])-1;
-            if (isset($data['produto'])) {
+            if (count($data['produto']) > 0) {
+                $data['produto'] = array_combine(range(1, count($data['produto'])), array_values($data['produto']));
+                $data['count']['PCount'] = count($data['produto']);
 
-                for($j=0;$j<=$data['count']['PCount'];$j++)
-                    $data['produto'][$j]['SubtotalProduto'] = $data['produto'][$j]['ValorVendaProduto'] * $data['produto'][$j]['QtdVendaProduto'];
+                if (isset($data['produto'])) {
 
+                    for($j=1;$j<=$data['count']['PCount'];$j++)
+                        $data['produto'][$j]['SubtotalProduto'] = $data['produto'][$j]['ValorVendaProduto'] * $data['produto'][$j]['QtdVendaProduto'];
+
+                }
             }
 
             #### App_ParcelasRecebiveis ####
             $data['parcelasrec'] = $this->Orcatrata_model->get_parcelasrec($id);
-            //$data['count']['PCount'] = count($data['produto']);
+            if (count($data['parcelasrec']) > 0) {
+                $data['parcelasrec'] = array_combine(range(1, count($data['parcelasrec'])), array_values($data['parcelasrec']));
+
+                if (isset($data['parcelasrec'])) {
+
+                    for($j=1; $j <= $data['orcatrata']['QtdParcelasOrca']; $j++) {
+                        $data['parcelasrec'][$j]['DataVencimentoRecebiveis'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimentoRecebiveis'], 'barras');
+                        $data['parcelasrec'][$j]['DataPagoRecebiveis'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPagoRecebiveis'], 'barras');
+                    }
+
+                }
+            }
 
             #### App_Procedimento ####
             $data['procedimento'] = $this->Orcatrata_model->get_procedimento($id);
-            $data['count']['PMCount'] = count($data['procedimento'])-1;
+            if (count($data['procedimento']) > 0) {
+                $data['procedimento'] = array_combine(range(1, count($data['procedimento'])), array_values($data['procedimento']));
+                $data['count']['PMCount'] = count($data['procedimento']);
+
+                if (isset($data['procedimento'])) {
+
+                    for($j=1; $j <= $data['count']['PMCount']; $j++)
+                        $data['procedimento'][$j]['DataProcedimento'] = $this->basico->mascara_data($data['procedimento'][$j]['DataProcedimento'], 'barras');
+
+                }
+            }
 
         }
 
@@ -589,8 +598,8 @@ class Orcatrata extends CI_Controller {
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
 
-        if ($data['orcatrata']['ValorOrca'] || $data['orcatrata']['ValorEntradaOrca'] || $data['orcatrata']['ValorRestanteOrca'])
-        //if ($data['count']['SCount'] > 0 || $data['count']['PCount'] > 0)
+        //if ($data['orcatrata']['ValorOrca'] || $data['orcatrata']['ValorEntradaOrca'] || $data['orcatrata']['ValorRestanteOrca'])
+        if ($data['count']['SCount'] > 0 || $data['count']['PCount'] > 0)
             $data['orcamentoin'] = 'in';
         else
             $data['orcamentoin'] = '';

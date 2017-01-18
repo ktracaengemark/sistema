@@ -125,7 +125,7 @@ function calculaParcelas() {
     $(".input_fields_parcelas").empty();
 
     //gera os campos de parcelas
-    for (i=0; i<parcelas; i++) {
+    for (i=1; i<=parcelas; i++) {
 
         //calcula as datas das próximas parcelas
         var futureMonth = moment(currentDate).add(i, 'M');
@@ -140,7 +140,7 @@ function calculaParcelas() {
                     <div class="col-md-1">\
                         <label for="ParcelaRecebiveis">Parcela:</label><br>\
                         <input type="text" class="form-control" maxlength="6" readonly=""\
-                               name="ParcelaRecebiveis'+i+'" value="'+(i+1)+'/'+parcelas+'">\
+                               name="ParcelaRecebiveis'+i+'" value="'+i+'/'+parcelas+'">\
                     </div>\
                     <div class="col-md-2">\
                         <label for="ValorParcelaRecebiveis">Valor Parcela:</label><br>\

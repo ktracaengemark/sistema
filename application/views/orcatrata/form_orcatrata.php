@@ -165,7 +165,7 @@
                                 <div class="input_fields_wrap">
 
                                 <?php
-                                for ($i=0; $i <= $count['SCount']; $i++) {
+                                for ($i=1; $i <= $count['SCount']; $i++) {
                                 ?>
 
                                 <div class="form-group" id="1div<?php echo $i ?>">
@@ -253,7 +253,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <a class="btn btn-xs btn-warning" onclick="adicionaServico()">
-                                                <span class="glyphicon glyphicon-plus"></span>
+                                                <span class="glyphicon glyphicon-plus"></span> Adicionar Serviço
                                             </a>
                                         </div>
                                     </div>
@@ -266,7 +266,7 @@
                                 <div class="input_fields_wrap2">
 
                                 <?php
-                                for ($i=0; $i <= $count['PCount']; $i++) {
+                                for ($i=1; $i <= $count['PCount']; $i++) {
                                 ?>
 
                                 <div class="form-group" id="2div<?php echo $i ?>">
@@ -335,7 +335,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <a class="add_field_button2 btn btn-xs btn-warning">
-                                                <span class="glyphicon glyphicon-plus"></span>
+                                                <span class="glyphicon glyphicon-plus"></span> Adicionar Produto
                                             </a>
                                         </div>
                                     </div>
@@ -397,7 +397,7 @@
                                             <label for="FormaPagamento">Forma de Pagamento:</label>
                                             <select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
                                                     id="FormaPagamento" name="FormaPagamento">
-                                                <option value="">-- Sel. Forma --</option>
+                                                <option value="">-- Selecione uma opção --</option>
                                                 <?php
                                                 foreach ($select['FormaPagamento'] as $key => $row) {
                                                     if ($orcatrata['FormaPagamento'] == $key) {
@@ -440,7 +440,7 @@
                                 <div class="input_fields_parcelas">
 
                                 <?php
-                                for ($i=0; $i < $orcatrata['QtdParcelasOrca']; $i++) {
+                                for ($i=1; $i <= $orcatrata['QtdParcelasOrca']; $i++) {
                                 ?>
 
                                     <div class="form-group">
@@ -546,7 +546,7 @@
                                 <div class="input_fields_wrap3">
 
                                 <?php
-                                for ($i=0; $i <= $count['PMCount']; $i++) {
+                                for ($i=1; $i <= $count['PMCount']; $i++) {
                                 ?>
 
                                 <div class="form-group" id="3div<?php echo $i ?>">
@@ -606,7 +606,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <a class="add_field_button3 btn btn-xs btn-warning" onclick="adicionaProcedimento()">
-                                                <span class="glyphicon glyphicon-plus"></span>
+                                                <span class="glyphicon glyphicon-plus"></span> Adicionar Procedimento
                                             </a>
                                         </div>
                                     </div>
