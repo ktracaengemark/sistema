@@ -165,4 +165,47 @@ class Orcatrata_model extends CI_Model {
         }
     }
 
+    public function update_orcatrata($data, $id) {
+
+        unset($data['idApp_OrcaTrata']);
+        $query = $this->db->update('App_OrcaTrata', $data, array('idApp_OrcaTrata' => $id));
+        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
+
+    }
+
+    public function update_servico_venda($data) {
+
+        $query = $this->db->update_batch('App_ServicoVenda', $data, 'idApp_ServicoVenda');
+        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
+
+    }
+
+    public function update_produto_venda($data) {
+
+        $query = $this->db->update_batch('App_ProdutoVenda', $data, 'idApp_ProdutoVenda');
+        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
+
+    }
+
+    public function update_parcelasrec($data) {
+
+        $query = $this->db->update_batch('App_ParcelasRecebiveis', $data, 'idApp_ParcelasRecebiveis');
+        /*
+          echo $this->db->last_query();
+          echo '<br>';
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit ();
+        */
+        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
+
+    }
+
+    public function update_procedimento($data) {
+
+        $query = $this->db->update_batch('App_Procedimento', $data, 'idApp_Procedimento');
+        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
+
+    }
 }

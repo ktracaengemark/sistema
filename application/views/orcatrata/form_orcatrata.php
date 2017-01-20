@@ -168,11 +168,15 @@
                                 for ($i=1; $i <= $count['SCount']; $i++) {
                                 ?>
 
+                                <?php if ($metodo > 1) { ?>
+                                <input type="hidden" name="idApp_ServicoVenda<?php echo $i ?>" value="<?php echo $servico[$i]['idApp_ServicoVenda']; ?>"/>
+                                <?php } ?>
+
                                 <div class="form-group" id="1div<?php echo $i ?>">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label for="idTab_Servico">Serviço:</label>
-                                            <?php if ($i == 0) { ?>
+                                            <?php if ($i == 1) { ?>
                                             <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>servico/cadastrar/servico" role="button">
                                                 <span class="glyphicon glyphicon-plus"></span> <b>Novo Serviço</b>
                                             </a>
@@ -269,11 +273,15 @@
                                 for ($i=1; $i <= $count['PCount']; $i++) {
                                 ?>
 
+                                <?php if ($metodo > 1) { ?>
+                                <input type="hidden" name="idApp_ProdutoVenda<?php echo $i ?>" value="<?php echo $produto[$i]['idApp_ProdutoVenda']; ?>"/>
+                                <?php } ?>
+
                                 <div class="form-group" id="2div<?php echo $i ?>">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="idTab_Produto">Produto:</label>
-                                            <?php if ($i == 0) { ?>
+                                            <?php if ($i == 1) { ?>
                                             <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produto/cadastrar/produto" role="button">
                                                 <span class="glyphicon glyphicon-plus"></span> <b>Novo Produto</b>
                                             </a>
@@ -443,6 +451,10 @@
                                 for ($i=1; $i <= $orcatrata['QtdParcelasOrca']; $i++) {
                                 ?>
 
+                                    <?php if ($metodo > 1) { ?>
+                                    <input type="hidden" name="idApp_ParcelasRecebiveis<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['idApp_ParcelasRecebiveis']; ?>"/>
+                                    <?php } ?>
+
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-1">
@@ -549,6 +561,10 @@
                                 for ($i=1; $i <= $count['PMCount']; $i++) {
                                 ?>
 
+                                <?php if ($metodo > 1) { ?>
+                                <input type="hidden" name="idApp_Procedimento<?php echo $i ?>" value="<?php echo $procedimento[$i]['idApp_Procedimento']; ?>"/>
+                                <?php } ?>
+
                                 <div class="form-group" id="3div<?php echo $i ?>">
                                     <div class="row">
                                         <div class="col-md-3">
@@ -563,7 +579,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label for="Profissional<?php echo $i ?>">Profissional:</label>
-                                            <?php if ($i == 0) { ?>
+                                            <?php if ($i == 1) { ?>
                                             <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
                                                 <span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
                                             </a>
@@ -635,8 +651,10 @@
                     <div class="row">
                         <input type="hidden" name="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>">
                         <input type="hidden" name="idApp_OrcaTrata" value="<?php echo $orcatrata['idApp_OrcaTrata']; ?>">
+                        <?php if ($metodo > 1) { ?>
                         <!--<input type="hidden" name="idApp_Procedimento" value="<?php echo $procedimento['idApp_Procedimento']; ?>">
                         <input type="hidden" name="idApp_ParcelasRec" value="<?php echo $parcelasrec['idApp_ParcelasRec']; ?>">-->
+                        <?php } ?>
                         <?php if ($metodo == 3) { ?>
                             <div class="col-md-12 text-center">
                                 <button class="btn btn-lg btn-danger" id="inputDb" data-loading-text="Aguarde..." name="submit" value="1" type="submit">
