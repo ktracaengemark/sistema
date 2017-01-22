@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="col-md-2 form-inline">
-                            <label for="AprovadoOrca">Orçamento Aprovado?</label><br>
+                            <label for="AprovadoOrca">Orçam. Aprovado?</label><br>
                             <div class="form-group">
                                 <div class="btn-group" data-toggle="buttons">
                                     <?php
@@ -84,6 +84,13 @@
                                 </div>
                             </div>
                         </div>
+						
+						<div class="col-md-4">
+                            <label for="ObsOrca">OBS:</label>
+                            <textarea class="form-control" id="ObsOrca" <?php echo $readonly; ?>
+                                      name="ObsOrca"><?php echo $orcatrata['ObsOrca']; ?></textarea>
+                        </div>
+						
                     </div>
                 </div>
 
@@ -348,6 +355,8 @@
                                         </div>
                                     </div>
                                 </div>
+								
+								<hr>
 <!--#######################################-->
                                 <div class="form-group">
                                     <div class="row">
@@ -423,7 +432,7 @@
                                                    name="QtdParcelasOrca" value="<?php echo $orcatrata['QtdParcelasOrca'] ?>">
                                         </div>
                                         <div class="col-md-2">
-                                            <label for="DataVencimentoOrca">Data do 1º Vencimento:</label>
+                                            <label for="DataVencimentoOrca">Data do 1º Venc.</label>
                                             <div class="input-group <?php echo $datepicker; ?>">
                                                 <input type="text" class="form-control Date" id="DataVencimentoOrca" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
                                                        name="DataVencimentoOrca" value="<?php echo $orcatrata['DataVencimentoOrca']; ?>">
@@ -635,17 +644,13 @@
 
                 <hr>
 
-                <div class="form-group">
+                <!--<div class="form-group">
                     <div class="row">
-                        <div class="col-md-7">
-                            <label for="ObsOrca">OBS:</label>
-                            <textarea class="form-control" id="ObsOrca" <?php echo $readonly; ?>
-                                      name="ObsOrca"><?php echo $orcatrata['ObsOrca']; ?></textarea>
-                        </div>
+                        ""obs""
                     </div>
                 </div>
 
-                <hr>
+                <hr>-->
 
                 <div class="form-group">
                     <div class="row">
