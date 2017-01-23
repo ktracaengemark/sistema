@@ -138,7 +138,7 @@ function calculaParcelas() {
             <div class="form-group">\
                 <div class="row">\
                     <div class="col-md-1">\
-                        <label for="ParcelaRecebiveis">Parcelas:</label><br>\
+                        <label for="ParcelaRecebiveis">Parcela:</label><br>\
                         <input type="text" class="form-control" maxlength="6" readonly=""\
                                name="ParcelaRecebiveis'+i+'" value="'+i+'/'+parcelas+'">\
                     </div>\

@@ -569,10 +569,13 @@ class Orcatrata extends CI_Controller {
             $data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['orcatrata']['idApp_OrcaTrata']);
 
             #### App_ServicoVenda ####
-            if (isset($data['servico'])) {
+            $data['update']['servico']['anterior'] = $this->Orcatrata_model->get_servico($data['orcatrata']['idApp_OrcaTrata']);
+            if (isset($data['servico']) || (!isset($data['servico']) && isset($data['update']['servico']['anterior']) ) ) {
 
-                $data['servico'] = array_values($data['servico']);
-                $data['update']['servico']['anterior'] = $this->Orcatrata_model->get_servico($data['orcatrata']['idApp_OrcaTrata']);
+                if (isset($data['servico']))
+                    $data['servico'] = array_values($data['servico']);
+                else
+                    $data['servico'] = array();
 
                 //faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
                 $data['update']['servico'] = $this->basico->tratamento_array_multidimensional($data['servico'], $data['update']['servico']['anterior'], 'idApp_ServicoVenda');
@@ -603,10 +606,13 @@ class Orcatrata extends CI_Controller {
             }
 
             #### App_ProdutoVenda ####
-            if (isset($data['produto'])) {
+            $data['update']['produto']['anterior'] = $this->Orcatrata_model->get_produto($data['orcatrata']['idApp_OrcaTrata']);
+            if (isset($data['produto']) || (!isset($data['produto']) && isset($data['update']['produto']['anterior']) ) ) {
 
-                $data['produto'] = array_values($data['produto']);
-                $data['update']['produto']['anterior'] = $this->Orcatrata_model->get_produto($data['orcatrata']['idApp_OrcaTrata']);
+                if (isset($data['servico']))
+                    $data['produto'] = array_values($data['produto']);
+                else
+                    $data['produto'] = array();
 
                 //faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
                 $data['update']['produto'] = $this->basico->tratamento_array_multidimensional($data['produto'], $data['update']['produto']['anterior'], 'idApp_ProdutoVenda');
@@ -639,10 +645,13 @@ class Orcatrata extends CI_Controller {
             }
 
             #### App_ParcelasRec ####
-            if (isset($data['parcelasrec'])) {
+            $data['update']['parcelasrec']['anterior'] = $this->Orcatrata_model->get_parcelasrec($data['orcatrata']['idApp_OrcaTrata']);
+            if (isset($data['parcelasrec']) || (!isset($data['parcelasrec']) && isset($data['update']['parcelasrec']['anterior']) ) ) {
 
-                $data['parcelasrec'] = array_values($data['parcelasrec']);
-                $data['update']['parcelasrec']['anterior'] = $this->Orcatrata_model->get_parcelasrec($data['orcatrata']['idApp_OrcaTrata']);
+                if (isset($data['servico']))
+                    $data['parcelasrec'] = array_values($data['parcelasrec']);
+                else
+                    $data['parcelasrec'] = array();
 
                 //faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
                 $data['update']['parcelasrec'] = $this->basico->tratamento_array_multidimensional($data['parcelasrec'], $data['update']['parcelasrec']['anterior'], 'idApp_ParcelasRecebiveis');
@@ -680,10 +689,13 @@ class Orcatrata extends CI_Controller {
             }
 
             #### App_Procedimento ####
-            if (isset($data['procedimento'])) {
+            $data['update']['procedimento']['anterior'] = $this->Orcatrata_model->get_procedimento($data['orcatrata']['idApp_OrcaTrata']);
+            if (isset($data['procedimento']) || (!isset($data['procedimento']) && isset($data['update']['procedimento']['anterior']) ) ) {
 
-                $data['procedimento'] = array_values($data['procedimento']);
-                $data['update']['procedimento']['anterior'] = $this->Orcatrata_model->get_procedimento($data['orcatrata']['idApp_OrcaTrata']);
+                if (isset($data['servico']))
+                    $data['procedimento'] = array_values($data['procedimento']);
+                else
+                    $data['procedimento'] = array();
 
                 //faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
                 $data['update']['procedimento'] = $this->basico->tratamento_array_multidimensional($data['procedimento'], $data['update']['procedimento']['anterior'], 'idApp_Procedimento');
