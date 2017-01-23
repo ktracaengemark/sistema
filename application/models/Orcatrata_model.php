@@ -129,18 +129,16 @@ class Orcatrata_model extends CI_Model {
     public function list_orcatrata($x) {
 
         $query = $this->db->query('SELECT '
-                . 'OT.idApp_OrcaTrata, '
-                . 'OT.DataOrca, '
-                . 'P.NomeProfissional AS ProfissionalOrca, '
-                . 'OT.AprovadoOrca, '
-                . 'OT.ObsOrca '
-                . 'FROM '
-                . 'App_OrcaTrata AS OT, '
-                . 'App_Profissional AS P '
-                . 'WHERE '
-                . 'OT.idApp_Cliente = ' . $_SESSION['OrcaTrata']['idApp_Cliente'] . ' AND '
-                . 'OT.ProfissionalOrca = P.idApp_Profissional '
-				. 'ORDER BY OT.DataOrca DESC ');
+            . 'OT.idApp_OrcaTrata, '
+            . 'OT.DataOrca, '
+            . 'OT.ProfissionalOrca, '
+            . 'OT.AprovadoOrca, '
+            . 'OT.ObsOrca '
+            . 'FROM '
+            . 'App_OrcaTrata AS OT '
+            . 'WHERE '
+            . 'OT.idApp_Cliente = ' . $_SESSION['OrcaTrata']['idApp_Cliente'] . ' '
+            . 'ORDER BY OT.DataOrca DESC ');
         /*
           echo $this->db->last_query();
           echo "<pre>";
@@ -158,6 +156,7 @@ class Orcatrata_model extends CI_Model {
                 foreach ($query->result() as $row) {
 					$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
                     $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
+                    $row->ProfissionalOrca = $this->get_profissional($row->ProfissionalOrca);
                 }
 
                 return $query;
@@ -190,14 +189,6 @@ class Orcatrata_model extends CI_Model {
     public function update_parcelasrec($data) {
 
         $query = $this->db->update_batch('App_ParcelasRecebiveis', $data, 'idApp_ParcelasRecebiveis');
-        /*
-          echo $this->db->last_query();
-          echo '<br>';
-          echo "<pre>";
-          print_r($query);
-          echo "</pre>";
-          exit ();
-        */
         return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
 
     }
@@ -278,6 +269,13 @@ class Orcatrata_model extends CI_Model {
         } else {
             return TRUE;
         }
+    }
+
+    public function get_profissional($data) {
+		$query = $this->db->query('SELECT NomeProfissional FROM App_Profissional WHERE idApp_Profissional = ' . $data);
+        $query = $query->result_array();
+
+        return (isset($query[0]['NomeProfissional'])) ? $query[0]['NomeProfissional'] : FALSE;
     }
 
 }

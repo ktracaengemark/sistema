@@ -809,7 +809,7 @@ class Orcatrata extends CI_Controller {
 
         //$_SESSION['OrcaTrata'] = $this->Orcatrata_model->get_cliente($id, TRUE);
         $_SESSION['OrcaTrata']['idApp_Cliente'] = $id;
-        $data['query'] = $this->Orcatrata_model->list_orcatrata(TRUE);
+        $data['query'] = $this->Orcatrata_model->list_orcatrata(TRUE, TRUE);
         /*
           echo "<pre>";
           print_r($data['query']);
