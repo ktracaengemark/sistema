@@ -303,4 +303,71 @@ class Basico {
         }
     }
 
+    function tratamento_array_multidimensional($data, $anterior, $campo) {
+
+        $max = count($data);
+        $maxanterior = count($anterior);
+
+        $array['inserir'] = array();
+        $array['alterar'] = array();
+        $array['excluir'] = array();
+
+        for($i=0;$i<$max;$i++) {
+
+            //identifica os itens adicionados
+            if (!$data[$i][$campo]) {
+                $array['inserir'][] = $data[$i];
+            }
+            //identifica os itens alterados
+            else {
+
+                for($j=0;$j<$maxanterior;$j++) {
+                    if ($data[$i][$campo] == $anterior[$j][$campo])
+                        $array['alterar'][] = $data[$i];
+                }
+
+            }
+
+        }
+
+        //identifica os itens excluídos
+        for($i=0;$i<$maxanterior;$i++)
+            $array['excluir'][] = $anterior[$i][$campo];
+
+        $maxinserir = count($array['alterar']);
+        $excluir = array();
+        for($i=0;$i<$maxanterior;$i++) {
+
+            for($j=0;$j<$maxinserir;$j++) {
+                if ($array['excluir'][$i] == $array['alterar'][$j][$campo]) {
+                    unset($array['excluir'][$i]);
+                    break;
+                }
+            }
+
+        }
+        $array['excluir'] = array_values($array['excluir']);
+
+        /*
+        echo '<br>';
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
+
+        echo '<br>';
+        echo "<pre>";
+        print_r($anterior);
+        echo "</pre>";
+
+        echo '<br>';
+        echo "<pre>";
+        print_r($array);
+        echo "</pre>";
+        exit ();
+        */
+
+        return $array;
+
+    }
+
 }

@@ -208,4 +208,55 @@ class Orcatrata_model extends CI_Model {
         return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
 
     }
+
+    public function delete_servico_venda($data) {
+
+        $this->db->where_in('idApp_ServicoVenda', $data);
+        $this->db->delete('App_ServicoVenda');
+
+        //$query = $this->db->delete('App_ServicoVenda', array('idApp_ServicoVenda' => $data));
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
+    public function delete_produto_venda($data) {
+
+        $this->db->where_in('idApp_ProdutoVenda', $data);
+        $this->db->delete('App_ProdutoVenda');
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
+    public function delete_parcelasrec($data) {
+
+        $this->db->where_in('idApp_ParcelasRecebiveis', $data);
+        $this->db->delete('App_ParcelasRecebiveis');
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
+    public function delete_procedimento($data) {
+
+        $this->db->where_in('idApp_Procedimento', $data);
+        $this->db->delete('App_Procedimento');
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
 }
