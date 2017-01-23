@@ -25,7 +25,11 @@ foreach ($query->result_array() as $row) {
             <a class="btn btn-info" href="<?php echo base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] ?>" role="button">
                 <span class="glyphicon glyphicon-edit"></span> Editar Dados
             </a>
-
+            <!--
+            <a type="button" class="btn btn-danger" href="<?php echo base_url() . 'orcatrata/excluir/' . $row['idApp_OrcaTrata'] ?>" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
+                <span class="glyphicon glyphicon-trash"></span>
+            </a>
+            -->
             <br><br>
 
             <h4>

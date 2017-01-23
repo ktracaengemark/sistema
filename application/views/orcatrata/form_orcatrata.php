@@ -84,13 +84,13 @@
                                 </div>
                             </div>
                         </div>
-						
+
 						<div class="col-md-4">
                             <label for="ObsOrca">OBS:</label>
                             <textarea class="form-control" id="ObsOrca" <?php echo $readonly; ?>
                                       name="ObsOrca"><?php echo $orcatrata['ObsOrca']; ?></textarea>
                         </div>
-						
+
                     </div>
                 </div>
 
@@ -355,7 +355,7 @@
                                         </div>
                                     </div>
                                 </div>
-								
+
 								<hr>
 <!--#######################################-->
                                 <div class="form-group">
@@ -642,16 +642,6 @@
                     </div>
                 </div>
 
-                <hr>
-
-                <!--<div class="form-group">
-                    <div class="row">
-                        ""obs""
-                    </div>
-                </div>
-
-                <hr>-->
-
                 <div class="form-group">
                     <div class="row">
                         <input type="hidden" name="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>">
@@ -660,7 +650,8 @@
                         <!--<input type="hidden" name="idApp_Procedimento" value="<?php echo $procedimento['idApp_Procedimento']; ?>">
                         <input type="hidden" name="idApp_ParcelasRec" value="<?php echo $parcelasrec['idApp_ParcelasRec']; ?>">-->
                         <?php } ?>
-                        <?php if ($metodo == 3) { ?>
+                        <?php if ($metodo == 2) { ?>
+                            <!--
                             <div class="col-md-12 text-center">
                                 <button class="btn btn-lg btn-danger" id="inputDb" data-loading-text="Aguarde..." name="submit" value="1" type="submit">
                                     <span class="glyphicon glyphicon-trash"></span> Excluir
@@ -669,6 +660,46 @@
                                             return true;">
                                     <span class="glyphicon glyphicon-ban-circle"></span> Cancelar
                                 </button>
+                            </div>
+                            <button type="button" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
+                            </button>                        -->
+
+                            <div class="col-md-6">
+                                <button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
+                                    <span class="glyphicon glyphicon-save"></span> Salvar
+                                </button>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <button  type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
+                                    <span class="glyphicon glyphicon-trash"></span> Excluir
+                                </button>
+                            </div>
+
+                            <div class="modal fade bs-excluir-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-danger">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">Tem certeza que deseja excluir?</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Ao confirmar a exclusão todos os dados serão excluídos do banco de dados. Esta operação é irreversível.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="col-md-6 text-left">
+                                                <button type="button" class="btn btn-warning" data-dismiss="modal">
+                                                    <span class="glyphicon glyphicon-ban-circle"></span> Cancelar
+                                                </button>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a class="btn btn-danger" href="<?php echo base_url() . 'orcatrata/excluir/' . $orcatrata['idApp_OrcaTrata'] ?>" role="button">
+                                                    <span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         <?php } else { ?>
                             <div class="col-md-6">

@@ -259,4 +259,25 @@ class Orcatrata_model extends CI_Model {
         }
     }
 
+    public function delete_orcatrata($id) {
+
+        /*
+        $tables = array('App_ServicoVenda', 'App_ProdutoVenda', 'App_ParcelasRecebiveis', 'App_Procedimento', 'App_OrcaTrata');
+        $this->db->where('idApp_Orcatrata', $id);
+        $this->db->delete($tables);
+        */
+
+        $query = $this->db->delete('App_ServicoVenda', array('idApp_Orcatrata' => $id));
+        $query = $this->db->delete('App_ProdutoVenda', array('idApp_Orcatrata' => $id));
+        $query = $this->db->delete('App_ParcelasRecebiveis', array('idApp_Orcatrata' => $id));
+        $query = $this->db->delete('App_Procedimento', array('idApp_Orcatrata' => $id));
+        $query = $this->db->delete('App_OrcaTrata', array('idApp_Orcatrata' => $id));
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
 }

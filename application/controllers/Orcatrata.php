@@ -754,69 +754,33 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $data['query'] = $this->input->post(array(
-            'idApp_OrcaTrata',
-            'submit'
-                ), TRUE);
-
-        if ($id) {
-            $data['query'] = $this->Orcatrata_model->get_orcatrata($id);
-            $data['query']['DataConcl'] = $this->basico->mascara_data($data['query']['DataConcl'], 'barras');
-            $data['query']['OrcaTrataDataConcl'] = $this->basico->mascara_data($data['query']['OrcaTrataDataConcl'], 'barras');
-            $data['query']['DataRet'] = $this->basico->mascara_data($data['query']['DataRet'], 'barras');
-            $data['query']['OrcaTrataDataRet'] = $this->basico->mascara_data($data['query']['OrcaTrataDataRet'], 'barras');
-            $data['query']['DataVenc'] = $this->basico->mascara_data($data['query']['DataVenc'], 'barras');
-            $data['query']['OrcaTrataDataVenc'] = $this->basico->mascara_data($data['query']['OrcaTrataDataVenc'], 'barras');
-            $data['query']['DataOrca'] = $this->basico->mascara_data($data['query']['DataOrca'], 'barras');
-            $data['query']['OrcaTrataDataOrca'] = $this->basico->mascara_data($data['query']['OrcaTrataDataOrca'], 'barras');
-        }
-
-        $data['select']['Municipio'] = $this->Basico_model->select_municipio();
-        # $data['select']['Sexo'] = $this->Basico_model->select_sexo();
-
-        $data['titulo'] = 'Tem certeza que deseja excluir o registro abaixo?';
-        $data['form_open_path'] = 'orcatrata/excluir';
-        $data['readonly'] = 'readonly';
-        $data['disabled'] = 'disabled';
-        $data['panel'] = 'danger';
-        $data['metodo'] = 3;
-
-        if ($data['orcatrata']['FormaPagamento'])
-            $data['collapse'] = '';
-        else
-            $data['collapse'] = 'class="collapse"';
-
-        $data['tela'] = $this->load->view('orcatrata/form_orcatrata', $data, TRUE);
-
-        $data['sidebar'] = 'col-sm-3 col-md-2 sidebar';
-        $data['main'] = 'col-sm-7 col-sm-offset-3 col-md-8 col-md-offset-2 main';
-
-
-
+        /*
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('orcatrata/tela_orcatrata', $data);
         } else {
 
-            if ($data['query']['idApp_OrcaTrata'] === FALSE) {
+            if (!$id) {
                 $data['msg'] = '?m=2';
                 $this->load->view('orcatrata/form_orcatrata', $data);
             } else {
 
+                /*
                 $data['anterior'] = $this->Orcatrata_model->get_orcatrata($data['query']['idApp_OrcaTrata']);
                 $data['campos'] = array_keys($data['anterior']);
 
                 $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], NULL, $data['campos'], $data['query']['idApp_OrcaTrata'], FALSE, TRUE);
                 $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_OrcaTrata', 'DELETE', $data['auditoriaitem']);
+                */
 
-                $this->Orcatrata_model->delete_orcatrata($data['query']['idApp_OrcaTrata']);
+                $this->Orcatrata_model->delete_orcatrata($id);
 
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'orcatrata' . $data['msg']);
+                redirect(base_url() . 'orcatrata/listar/' . $_SESSION['Cliente']['idApp_Cliente'] . $data['msg']);
                 exit();
-            }
-        }
+            //}
+        //}
 
         $this->load->view('basico/footer');
     }
