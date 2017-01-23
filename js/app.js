@@ -128,17 +128,17 @@ function calculaParcelas() {
     for (i=1; i<=parcelas; i++) {
 
         //calcula as datas das próximas parcelas
-        var futureMonth = moment(currentDate).add(i, 'M');
+        var futureMonth = moment(currentDate).add(i-1, 'M');
         var futureMonthEnd = moment(futureMonth).endOf('month');
 
         if(currentDate.date() != futureMonth.date() && futureMonth.isSame(futureMonthEnd.format('YYYY-MM-DD')))
-            futureMonth = futureMonth.add(i, 'd');
+            futureMonth = futureMonth.add(i-1, 'd');
 
         $(".input_fields_parcelas").append('\
             <div class="form-group">\
                 <div class="row">\
                     <div class="col-md-1">\
-                        <label for="ParcelaRecebiveis">Parcela:</label><br>\
+                        <label for="ParcelaRecebiveis">Parcelas:</label><br>\
                         <input type="text" class="form-control" maxlength="6" readonly=""\
                                name="ParcelaRecebiveis'+i+'" value="'+i+'/'+parcelas+'">\
                     </div>\
