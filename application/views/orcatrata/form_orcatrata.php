@@ -380,6 +380,17 @@
                                         </div>
 
                                         <div class="col-md-3">
+                                            <label for="DataEntradaOrca">Data da Entrada:</label>
+                                            <div class="input-group <?php echo $datepicker; ?>">
+                                                <input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+                                                       name="DataEntradaOrca" value="<?php echo $orcatrata['DataEntradaOrca']; ?>">
+                                                <span class="input-group-addon" disabled>
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
                                             <label for="ValorRestanteOrca">Resta:</label><br>
                                             <div class="input-group" id="txtHint">
                                                 <span class="input-group-addon" id="basic-addon1">R$</span>
