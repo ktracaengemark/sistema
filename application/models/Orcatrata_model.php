@@ -126,7 +126,45 @@ class Orcatrata_model extends CI_Model {
         return $query;
     }
 
-    public function list_orcatrata($x) {
+    public function list_orcamento($id, $aprovado, $completo) {
+
+        $query = $this->db->query('SELECT '
+            . 'OT.idApp_OrcaTrata, '
+            . 'OT.DataOrca, '
+            . 'OT.ProfissionalOrca, '
+            . 'OT.AprovadoOrca, '
+            . 'OT.ObsOrca '
+            . 'FROM '
+            . 'App_OrcaTrata AS OT '
+            . 'WHERE '
+            . 'OT.idApp_Cliente = ' . $id . ' AND '
+            . 'OT.AprovadoOrca = "' . $aprovado . '" '
+            . 'ORDER BY OT.DataOrca DESC ');
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+          */
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+            if ($completo === FALSE) {
+                return TRUE;
+            } else {
+
+                foreach ($query->result() as $row) {
+					$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
+                    $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
+                    $row->ProfissionalOrca = $this->get_profissional($row->ProfissionalOrca);
+                }
+                return $query;
+            }
+        }
+    }
+
+    public function list_orcatrataBKP($x) {
 
         $query = $this->db->query('SELECT '
             . 'OT.idApp_OrcaTrata, '

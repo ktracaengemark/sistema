@@ -613,7 +613,7 @@ class Orcatrata extends CI_Controller {
             $data['update']['produto']['anterior'] = $this->Orcatrata_model->get_produto($data['orcatrata']['idApp_OrcaTrata']);
             if (isset($data['produto']) || (!isset($data['produto']) && isset($data['update']['produto']['anterior']) ) ) {
 
-                if (isset($data['servico']))
+                if (isset($data['produto']))
                     $data['produto'] = array_values($data['produto']);
                 else
                     $data['produto'] = array();
@@ -802,6 +802,38 @@ class Orcatrata extends CI_Controller {
     }
 
     public function listar($id = NULL) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+
+        //$_SESSION['OrcaTrata'] = $this->Orcatrata_model->get_cliente($id, TRUE);
+        //$_SESSION['OrcaTrata']['idApp_Cliente'] = $id;
+        $data['aprovado'] = $this->Orcatrata_model->list_orcamento($id, 'S', TRUE);
+        $data['naoaprovado'] = $this->Orcatrata_model->list_orcamento($id, 'N', TRUE);
+
+        //$data['aprovado'] = array();
+        //$data['naoaprovado'] = array();
+        /*
+          echo "<pre>";
+          print_r($data['query']);
+          echo "</pre>";
+          exit();
+         */
+
+        $data['list'] = $this->load->view('orcatrata/list_orcatrata', $data, TRUE);
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+
+        $this->load->view('orcatrata/tela_orcatrata', $data);
+
+        $this->load->view('basico/footer');
+    }
+
+    public function listarBKP($id = NULL) {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
