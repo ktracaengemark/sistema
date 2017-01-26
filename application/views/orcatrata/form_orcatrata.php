@@ -180,76 +180,96 @@
                                 <?php } ?>
 
                                 <div class="form-group" id="1div<?php echo $i ?>">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <label for="idTab_Servico">Serviço:</label>
-                                            <?php if ($i == 1) { ?>
-                                            <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>servico/cadastrar/servico" role="button">
-                                                <span class="glyphicon glyphicon-plus"></span> <b>Novo Serviço</b>
-                                            </a>
-                                            <?php } ?>
-                                            <select data-placeholder="Selecione uma opção..." class="form-control" onchange="buscaValor(this.value,this.name,'Servico',<?php echo $i ?>)" <?php echo $readonly; ?>
-                                                    id="lista" name="idTab_Servico<?php echo $i ?>">
-                                                <option value="">-- Selecione uma opção --</option>
-                                                <?php
-                                                foreach ($select['Servico'] as $key => $row) {
-                                                    if ($servico[$i]['idTab_Servico'] == $key) {
-                                                        echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-                                                    } else {
-                                                        echo '<option value="' . $key . '">' . $row . '</option>';
-                                                    }
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="ValorVendaServico">Valor do Serviço:</label>
-                                            <div class="input-group" id="txtHint">
-                                                <span class="input-group-addon" id="basic-addon1">R$</span>
-                                                <input type="text" class="form-control Valor" id="idTab_Servico<?php echo $i ?>" maxlength="10" placeholder="0,00"
-                                                    onkeyup="calculaOrcamento()"
-                                                    name="ValorVendaServico<?php echo $i ?>" value="<?php echo $servico[$i]['ValorVendaServico'] ?>">
-                                            </div>
-
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label for="ObsServico<?php echo $i ?>">Obs:</label><br>
-                                            <input type="text" class="form-control" id="ObsServico<?php echo $i ?>" maxlength="250"
-                                                   name="ObsServico<?php echo $i ?>" value="<?php echo $servico[$i]['ObsServico'] ?>">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="ConcluidoServico">Concluído? </label><br>
-                                            <div class="form-group">
-                                                <div class="btn-group" data-toggle="buttons">
-                                                    <?php
-                                                    foreach ($select['ConcluidoServico'] as $key => $row) {
-                                                        (!$servico[$i]['ConcluidoServico']) ? $servico[$i]['ConcluidoServico'] = 'N' : FALSE;
-
-                                                        if ($servico[$i]['ConcluidoServico'] == $key) {
-                                                            echo ''
-                                                            . '<label class="btn btn-warning active" name="radiobutton_ConcluidoServico' . $i . '" id="radiobutton_ConcluidoServico' . $i .  $key . '">'
-                                                            . '<input type="radio" name="ConcluidoServico' . $i . '" id="radiobuttondinamico" '
-                                                            . 'autocomplete="off" value="' . $key . '" checked>' . $row
-                                                            . '</label>'
-                                                            ;
-                                                        } else {
-                                                            echo ''
-                                                            . '<label class="btn btn-default" name="radiobutton_ConcluidoServico' . $i . '" id="radiobutton_ConcluidoServico' . $i .  $key . '">'
-                                                            . '<input type="radio" name="ConcluidoServico' . $i . '" id="radiobuttondinamico" '
-                                                            . 'autocomplete="off" value="' . $key . '" >' . $row
-                                                            . '</label>'
-                                                            ;
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="idTab_Servico">Serviço:</label>
+                                                    <?php if ($i == 1) { ?>
+                                                    <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>servico/cadastrar/servico" role="button">
+                                                        <span class="glyphicon glyphicon-plus"></span> <b>Novo Serviço</b>
+                                                    </a>
+                                                    <?php } ?>
+                                                    <select data-placeholder="Selecione uma opção..." class="form-control" onchange="buscaValor(this.value,this.name,'Servico',<?php echo $i ?>)" <?php echo $readonly; ?>
+                                                            id="lista" name="idTab_Servico<?php echo $i ?>">
+                                                        <option value="">-- Selecione uma opção --</option>
+                                                        <?php
+                                                        foreach ($select['Servico'] as $key => $row) {
+                                                            if ($servico[$i]['idTab_Servico'] == $key) {
+                                                                echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+                                                            } else {
+                                                                echo '<option value="' . $key . '">' . $row . '</option>';
+                                                            }
                                                         }
-                                                    }
-                                                    ?>
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="ValorVendaServico">Valor do Serviço:</label>
+                                                    <div class="input-group" id="txtHint">
+                                                        <span class="input-group-addon" id="basic-addon1">R$</span>
+                                                        <input type="text" class="form-control Valor" id="idTab_Servico<?php echo $i ?>" maxlength="10" placeholder="0,00"
+                                                            onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','VP','Servico')"
+                                                            name="ValorVendaServico<?php echo $i ?>" value="<?php echo $servico[$i]['ValorVendaServico'] ?>">
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label for="QtdVendaServico">Qtd:</label>
+                                                    <input type="text" class="form-control Numero" maxlength="3" id="QtdVendaServico<?php echo $i ?>" placeholder="0"
+                                                            onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','QTD','Servico')"
+                                                            name="QtdVendaServico<?php echo $i ?>" value="<?php echo $servico[$i]['QtdVendaServico'] ?>">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="SubtotalServico">Subtotal:</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" id="basic-addon1">R$</span>
+                                                        <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalServico<?php echo $i ?>"
+                                                               name="SubtotalServico<?php echo $i ?>" value="<?php echo $servico[$i]['SubtotalServico'] ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label><br></label><br>
+                                                    <button type="button" id="<?php echo $i ?>" class="remove_field btn btn-danger">
+                                                        <span class="glyphicon glyphicon-trash"></span>
+                                                    </button>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label><br></label><br>
-                                            <button type="button" id="<?php echo $i ?>" class="remove_field btn btn-danger">
-                                                <span class="glyphicon glyphicon-trash"></span>
-                                            </button>
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <label for="ObsServico<?php echo $i ?>">Obs:</label><br>
+                                                    <input type="text" class="form-control" id="ObsServico<?php echo $i ?>" maxlength="250"
+                                                           name="ObsServico<?php echo $i ?>" value="<?php echo $servico[$i]['ObsServico'] ?>">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="ConcluidoServico">Concluído? </label><br>
+                                                    <div class="form-group">
+                                                        <div class="btn-group" data-toggle="buttons">
+                                                            <?php
+                                                            foreach ($select['ConcluidoServico'] as $key => $row) {
+                                                                (!$servico[$i]['ConcluidoServico']) ? $servico[$i]['ConcluidoServico'] = 'N' : FALSE;
+
+                                                                if ($servico[$i]['ConcluidoServico'] == $key) {
+                                                                    echo ''
+                                                                    . '<label class="btn btn-warning active" name="radiobutton_ConcluidoServico' . $i . '" id="radiobutton_ConcluidoServico' . $i .  $key . '">'
+                                                                    . '<input type="radio" name="ConcluidoServico' . $i . '" id="radiobuttondinamico" '
+                                                                    . 'autocomplete="off" value="' . $key . '" checked>' . $row
+                                                                    . '</label>'
+                                                                    ;
+                                                                } else {
+                                                                    echo ''
+                                                                    . '<label class="btn btn-default" name="radiobutton_ConcluidoServico' . $i . '" id="radiobutton_ConcluidoServico' . $i .  $key . '">'
+                                                                    . '<input type="radio" name="ConcluidoServico' . $i . '" id="radiobuttondinamico" '
+                                                                    . 'autocomplete="off" value="' . $key . '" >' . $row
+                                                                    . '</label>'
+                                                                    ;
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -285,57 +305,61 @@
                                 <?php } ?>
 
                                 <div class="form-group" id="2div<?php echo $i ?>">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label for="idTab_Produto">Produto:</label>
-                                            <?php if ($i == 1) { ?>
-                                            <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produto/cadastrar/produto" role="button">
-                                                <span class="glyphicon glyphicon-plus"></span> <b>Novo Produto</b>
-                                            </a>
-                                            <?php } ?>
-                                            <select data-placeholder="Selecione uma opção..." class="form-control" onchange="buscaValor(this.value,this.name,'Produto',<?php echo $i ?>)" <?php echo $readonly; ?>
-                                                     id="listadinamicab<?php echo $i ?>" name="idTab_Produto<?php echo $i ?>">
-                                                <option value="">-- Selecione uma opção --</option>
-                                                <?php
-                                                foreach ($select['Produto'] as $key => $row) {
-                                                    if ($produto[$i]['idTab_Produto'] == $key) {
-                                                        echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-                                                    } else {
-                                                        echo '<option value="' . $key . '">' . $row . '</option>';
-                                                    }
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="idTab_Produto">Produto:</label>
+                                                    <?php if ($i == 1) { ?>
+                                                    <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produto/cadastrar/produto" role="button">
+                                                        <span class="glyphicon glyphicon-plus"></span> <b>Novo Produto</b>
+                                                    </a>
+                                                    <?php } ?>
+                                                    <select data-placeholder="Selecione uma opção..." class="form-control" onchange="buscaValor(this.value,this.name,'Produto',<?php echo $i ?>)" <?php echo $readonly; ?>
+                                                             id="listadinamicab<?php echo $i ?>" name="idTab_Produto<?php echo $i ?>">
+                                                        <option value="">-- Selecione uma opção --</option>
+                                                        <?php
+                                                        foreach ($select['Produto'] as $key => $row) {
+                                                            if ($produto[$i]['idTab_Produto'] == $key) {
+                                                                echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+                                                            } else {
+                                                                echo '<option value="' . $key . '">' . $row . '</option>';
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
 
-                                        <div class="col-md-3">
-                                            <label for="ValorVendaProduto">Valor do Produto:</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1">R$</span>
-                                                <input type="text" class="form-control Valor" id="idTab_Produto<?php echo $i ?>" maxlength="10" placeholder="0,00"
-                                                    onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','VP')"
-                                                    name="ValorVendaProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ValorVendaProduto'] ?>">
+                                                <div class="col-md-3">
+                                                    <label for="ValorVendaProduto">Valor do Produto:</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" id="basic-addon1">R$</span>
+                                                        <input type="text" class="form-control Valor" id="idTab_Produto<?php echo $i ?>" maxlength="10" placeholder="0,00"
+                                                            onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','VP','Produto')"
+                                                            name="ValorVendaProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ValorVendaProduto'] ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label for="QtdVendaProduto">Qtd:</label>
+                                                    <input type="text" class="form-control Numero" maxlength="3" id="QtdVendaProduto<?php echo $i ?>" placeholder="0"
+                                                            onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','QTD','Produto')"
+                                                            name="QtdVendaProduto<?php echo $i ?>" value="<?php echo $produto[$i]['QtdVendaProduto'] ?>">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="SubtotalProduto">Subtotal:</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" id="basic-addon1">R$</span>
+                                                        <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalProduto<?php echo $i ?>"
+                                                               name="SubtotalProduto<?php echo $i ?>" value="<?php echo $produto[$i]['SubtotalProduto'] ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label><br></label><br>
+                                                    <button type="button" id="<?php echo $i ?>" class="remove_field2 btn btn-danger">
+                                                        <span class="glyphicon glyphicon-trash"></span>
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <label for="QtdVendaProduto">Qtd:</label>
-                                            <input type="text" class="form-control Numero" maxlength="3" id="Qtd<?php echo $i ?>" placeholder="0"
-                                                    onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','QTD')"
-                                                    name="QtdVendaProduto<?php echo $i ?>" value="<?php echo $produto[$i]['QtdVendaProduto'] ?>">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label for="SubtotalProduto">Subtotal:</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1">R$</span>
-                                                <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalProduto<?php echo $i ?>"
-                                                       name="SubtotalProduto<?php echo $i ?>" value="<?php echo $produto[$i]['SubtotalProduto'] ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <label><br></label><br>
-                                            <button type="button" id="<?php echo $i ?>" class="remove_field2 btn btn-danger">
-                                                <span class="glyphicon glyphicon-trash"></span>
-                                            </button>
                                         </div>
                                     </div>
                                 </div>

@@ -5,26 +5,25 @@
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" ><a href="#anterior" aria-controls="anterior" role="tab" data-toggle="tab">Orçamentos Não Aprovados</a></li>
-    			<li role="presentation" class="active"><a href="#proxima" aria-controls="proxima" role="tab" data-toggle="tab">Orçamentos Aprovados</a></li>
-
+    			<li role="presentation"><a href="#proxima" aria-controls="proxima" role="tab" data-toggle="tab">Orçamentos Aprovados</a></li>
+                <li role="presentation" class="active"><a href="#anterior" aria-controls="anterior" role="tab" data-toggle="tab">Orçamentos Não Aprovados</a></li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
 
-                <!-- Histórico de Consultas -->
-                <div role="tabpanel" class="tab-pane" id="anterior">
+    			<!-- Próximas Consultas -->
+                <div role="tabpanel" class="tab-pane" id="proxima">
 
                     <?php
-                    if ($naoaprovado) {
+                    if ($aprovado) {
 
-                        foreach ($naoaprovado->result_array() as $row) {
+                        foreach ($aprovado->result_array() as $row) {
                     ?>
 
-                    <div class="bs-callout bs-callout-danger" id=callout-overview-not-both>
+                    <div class="bs-callout bs-callout-success" id=callout-overview-not-both>
 
-                        <a class="btn btn-danger" href="<?php echo base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] ?>" role="button">
+                        <a class="btn btn-success" href="<?php echo base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] ?>" role="button">
                             <span class="glyphicon glyphicon-edit"></span> Editar Dados
                         </a>
 
@@ -57,18 +56,18 @@
 
                 </div>
 
-    			<!-- Próximas Consultas -->
-                <div role="tabpanel" class="tab-pane active" id="proxima">
+                <!-- Histórico de Consultas -->
+                <div role="tabpanel" class="tab-pane active" id="anterior">
 
                     <?php
-                    if ($aprovado) {
+                    if ($naoaprovado) {
 
-                        foreach ($aprovado->result_array() as $row) {
+                        foreach ($naoaprovado->result_array() as $row) {
                     ?>
 
-                    <div class="bs-callout bs-callout-success" id=callout-overview-not-both>
+                    <div class="bs-callout bs-callout-danger" id=callout-overview-not-both>
 
-                        <a class="btn btn-success" href="<?php echo base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] ?>" role="button">
+                        <a class="btn btn-danger" href="<?php echo base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] ?>" role="button">
                             <span class="glyphicon glyphicon-edit"></span> Editar Dados
                         </a>
 

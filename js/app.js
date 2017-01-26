@@ -218,108 +218,6 @@ function calculaParcelas() {
 }
 
 /*
- * Função responsável por adicionar novos campos de serviço dinamicamente no
- * formulário de orçamento/tratametno
- */
-function adicionaServico() {
-
-    var ps = $("#SCount").val(); //initlal text box count
-
-    //alert( $("#SCount").val() );
-    ps++; //text box increment
-    $("#SCount").val(ps);
-    //console.log(ps);
-
-    $(".input_fields_wrap").append('\
-        <div class="form-group" id="1div'+ps+'">\
-            <div class="row">\
-                <div class="col-md-3">\
-                    <label for="idTab_Servico">Serviços:</label><br>\
-                    <select class="form-control" id="listadinamica'+ps+'" onchange="buscaValor(this.value,this.name,\'Servico\','+ps+')" name="idTab_Servico'+ps+'">\
-                        <option value="">-- Selecione uma opção --</option>\
-                    </select>\
-                </div>\
-                <div class="col-md-2">\
-                    <label for="ValorVendaServico">Valor do Serviço:</label><br>\
-                    <div class="input-group" id="txtHint">\
-                        <span class="input-group-addon" id="basic-addon1">R$</span>\
-                        <input type="text" class="form-control Valor" id="idTab_Servico'+ps+'" maxlength="10" placeholder="0,00" \
-                               onkeyup="calculaOrcamento()"\
-                               name="ValorVendaServico'+ps+'" value="">\
-                    </div>\
-                </div>\
-                <div class="col-md-3">\
-                    <label for="ObsServico'+ps+'">Obs:</label><br>\
-                    <input type="text" class="form-control" id="ObsServico'+ps+'" maxlength="250"\
-                           name="ObsServico'+ps+'" value="">\
-                </div>\
-                <div class="col-md-2">\
-                    <label for="ConcluidoServico">Concluído? </label><br>\
-                    <div class="form-group">\
-                        <div class="btn-group" data-toggle="buttons">\
-                            <label class="btn btn-warning active" name="radio_ConcluidoServico'+ps+'" id="radio_ConcluidoServico'+ps+'N">\
-                            <input type="radio" name="ConcluidoServico'+ps+'" id="radiogeraldinamico"\
-                                autocomplete="off" value="N" checked>Não\
-                            </label>\
-                            <label class="btn btn-default" name="radio_ConcluidoServico'+ps+'" id="radio_ConcluidoServico'+ps+'S">\
-                            <input type="radio" name="ConcluidoServico'+ps+'" id="radiogeraldinamico"\
-                                autocomplete="off" value="S">Sim\
-                            </label>\
-                        </div>\
-                    </div>\
-                </div>\
-                <div class="col-md-2">\
-                    <label><br></label><br>\
-                    <a href="#" id="'+ps+'" class="remove_field btn btn-danger">\
-                        <span class="glyphicon glyphicon-trash"></span>\
-                    </a>\
-                </div>\
-            </div>\
-        </div>'
-    ); //add input box
-
-    //get a reference to the select element
-    $select = $('#listadinamica'+ps);
-
-    //request the JSON data and parse into the select element
-    $.ajax({
-        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=1',
-        dataType: 'JSON',
-        type: "GET",
-        success: function (data) {
-            //clear the current content of the select
-            $select.html('');
-            //iterate over the data and append a select option
-            $select.append('<option value="">-- Selecione uma opção --</option>');
-            $.each(data, function (key, val) {
-                //alert(val.id);
-                $select.append('<option value="' + val.id + '">' + val.name + '</option>');
-            })
-        },
-        error: function () {
-            //alert('erro listadinamicaA');
-            //if there is an error append a 'none available' option
-            $select.html('<option id="-1">ERRO</option>');
-        }
-
-    });
-
-    //permite o uso de radio buttons nesse bloco dinâmico
-    $('input:radio[id="radiogeraldinamico"]').change(function() {
-
-        var value = $(this).val();
-        var name = $(this).attr("name");
-
-        //console.log(value + ' <<>> ' + name);
-
-        $('label[name="radio_' + name + '"]').removeClass();
-        $('label[name="radio_' + name + '"]').addClass("btn btn-default");
-        $('#radio_' + name + value).addClass("btn btn-warning active");
-
-    });
-}
-
-/*
  * Função responsável por adicionar novos campos de Procedimento dinamicamente no
  * formulário de orçamento/tratametno
  */
@@ -451,8 +349,9 @@ function buscaValor(id, campo, tabela, num) {
                     //carrega o valor no campo de acordo com a opção selecionada
                     $('#'+campo).val(data[i].valor);
 
-                    if (tabela == 'Produto' && $("#Qtd"+num).val()) {
-                        calculaSubtotal($("#idTab_Produto"+num).val(),$("#Qtd"+num).val(),num,'PROD');
+                    //if (tabela == area && $("#QtdVenda"+tabela+num).val()) {
+                    if ($("#QtdVenda"+tabela+num).val()) {
+                        calculaSubtotal($("#idTab_"+tabela+num).val(),$("#QtdVenda"+tabela+num).val(),num,'OUTRO',tabela);
                         break;
                     }
 
@@ -478,18 +377,18 @@ function buscaValor(id, campo, tabela, num) {
  * @param {int} num
  * @returns {decimal}
  */
-function calculaSubtotal(valor, campo, num, tipo) {
+function calculaSubtotal(valor, campo, num, tipo, tabela) {
 
     if (tipo == 'VP') {
         //variável valor recebe o valor do produto selecionado
-        var data = $("#Qtd"+num).val();
+        var data = $("#QtdVenda"+tabela+num).val();
 
         //o subtotal é calculado como o produto da quantidade pelo seu valor
         var subtotal = (valor.replace(".","").replace(",",".") * data);
         //alert('>>>'+valor+' :: '+campo+' :: '+num+' :: '+tipo+'<<<');
     } else if (tipo == 'QTD') {
         //variável valor recebe o valor do produto selecionado
-        var data = $("#idTab_Produto"+num).val();
+        var data = $("#idTab_"+tabela+num).val();
 
         //o subtotal é calculado como o produto da quantidade pelo seu valor
         var subtotal = (valor * data.replace(".","").replace(",","."));
@@ -500,7 +399,7 @@ function calculaSubtotal(valor, campo, num, tipo) {
 
     subtotal = mascaraValorReal(subtotal);
     //o subtotal é escrito no seu campo no formulário
-    $('#SubtotalProduto'+num).val(subtotal);
+    $('#Subtotal'+tabela+num).val(subtotal);
 
     //para cada vez que o subtotal for calculado o orçamento e o total restante
     //também serão atualizados
@@ -529,8 +428,9 @@ function calculaOrcamento() {
 
         //soma os valores apenas dos campos que existirem, o que forem apagados
         //ou removidos são ignorados
-        if ($('#idTab_Servico'+i).val())
-            subtotal += parseFloat($('#idTab_Servico'+i).val().replace(".","").replace(",","."));
+        if ($('#SubtotalServico'+i).val())
+            //subtotal += parseFloat($('#idTab_Servico'+i).val().replace(".","").replace(",","."));
+            subtotal += parseFloat($('#SubtotalServico'+i).val().replace(".","").replace(",","."));
 
         //incrementa a variável i
         i++;
@@ -553,6 +453,130 @@ function calculaOrcamento() {
     //escreve o subtotal no campo do formulário
     $('#ValorOrca').val(subtotal);
     calculaResta($("#ValorEntradaOrca").val());
+}
+
+/*
+ * Função responsável por adicionar novos campos de serviço dinamicamente no
+ * formulário de orçamento/tratametno
+ */
+function adicionaServico() {
+
+    var ps = $("#SCount").val(); //initlal text box count
+
+    //alert( $("#SCount").val() );
+    ps++; //text box increment
+    $("#SCount").val(ps);
+    //console.log(ps);
+
+    $(".input_fields_wrap").append('\
+        <div class="form-group" id="1div'+ps+'">\
+            <div class="panel panel-info">\
+                <div class="panel-heading">\
+                    <div class="row">\
+                        <div class="col-md-4">\
+                            <label for="idTab_Servico">Serviços:</label><br>\
+                            <select class="form-control" id="listadinamica'+ps+'" onchange="buscaValor(this.value,this.name,\'Servico\','+ps+')" name="idTab_Servico'+ps+'">\
+                                <option value="">-- Selecione uma opção --</option>\
+                            </select>\
+                        </div>\
+                        <div class="col-md-3">\
+                            <label for="ValorVendaServico">Valor do Serviço:</label><br>\
+                            <div class="input-group" id="txtHint">\
+                                <span class="input-group-addon" id="basic-addon1">R$</span>\
+                                <input type="text" class="form-control Valor" id="idTab_Servico'+ps+'" maxlength="10" placeholder="0,00" \
+                                    onkeyup="calculaSubtotal(this.value,this.name,'+ps+',\'VP\',\'Servico\')"\
+                                    name="ValorVendaServico'+ps+'" value="">\
+                            </div>\
+                        </div>\
+                        <div class="col-md-1">\
+                            <label for="QtdVendaServico">Qtd:</label><br>\
+                            <div class="input-group">\
+                                <input type="text" class="form-control Numero" maxlength="3" id="QtdVendaServico'+ps+'" placeholder="0"\
+                                    onkeyup="calculaSubtotal(this.value,this.name,'+ps+',\'QTD\',\'Servico\')"\
+                                    name="QtdVendaServico'+ps+'" value="">\
+                            </div>\
+                        </div>\
+                        <div class="col-md-3">\
+                            <label for="SubtotalServico">Subtotal:</label><br>\
+                            <div class="input-group id="txtHint">\
+                                <span class="input-group-addon" id="basic-addon1">R$</span>\
+                                <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalServico'+ps+'"\
+                                       name="SubtotalServico'+ps+'" value="">\
+                            </div>\
+                        </div>\
+                        <div class="col-md-1">\
+                            <label><br></label><br>\
+                            <a href="#" id="'+ps+'" class="remove_field btn btn-danger">\
+                                <span class="glyphicon glyphicon-trash"></span>\
+                            </a>\
+                        </div>\
+                    </div>\
+                    <div class="row">\
+                        <div class="col-md-10">\
+                            <label for="ObsServico'+ps+'">Obs:</label><br>\
+                            <input type="text" class="form-control" id="ObsServico'+ps+'" maxlength="250"\
+                                   name="ObsServico'+ps+'" value="">\
+                        </div>\
+                        <div class="col-md-2">\
+                            <label for="ConcluidoServico">Concluído? </label><br>\
+                            <div class="form-group">\
+                                <div class="btn-group" data-toggle="buttons">\
+                                    <label class="btn btn-warning active" name="radio_ConcluidoServico'+ps+'" id="radio_ConcluidoServico'+ps+'N">\
+                                    <input type="radio" name="ConcluidoServico'+ps+'" id="radiogeraldinamico"\
+                                        autocomplete="off" value="N" checked>Não\
+                                    </label>\
+                                    <label class="btn btn-default" name="radio_ConcluidoServico'+ps+'" id="radio_ConcluidoServico'+ps+'S">\
+                                    <input type="radio" name="ConcluidoServico'+ps+'" id="radiogeraldinamico"\
+                                        autocomplete="off" value="S">Sim\
+                                    </label>\
+                                </div>\
+                            </div>\
+                        </div>\
+                    </div>\
+                </div>\
+            </div>\
+        </div>'
+    ); //add input box
+
+    //get a reference to the select element
+    $select = $('#listadinamica'+ps);
+
+    //request the JSON data and parse into the select element
+    $.ajax({
+        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=1',
+        dataType: 'JSON',
+        type: "GET",
+        success: function (data) {
+            //clear the current content of the select
+            $select.html('');
+            //iterate over the data and append a select option
+            $select.append('<option value="">-- Selecione uma opção --</option>');
+            $.each(data, function (key, val) {
+                //alert(val.id);
+                $select.append('<option value="' + val.id + '">' + val.name + '</option>');
+            })
+        },
+        error: function () {
+            //alert('erro listadinamicaA');
+            //if there is an error append a 'none available' option
+            $select.html('<option id="-1">ERRO</option>');
+        }
+
+    });
+
+    //permite o uso de radio buttons nesse bloco dinâmico
+    $('input:radio[id="radiogeraldinamico"]').change(function() {
+
+        var value = $(this).val();
+        var name = $(this).attr("name");
+
+        //console.log(value + ' <<>> ' + name);
+
+        $('label[name="radio_' + name + '"]').removeClass();
+        $('label[name="radio_' + name + '"]').addClass("btn btn-default");
+        $('#radio_' + name + value).addClass("btn btn-warning active");
+
+    });
 }
 
 $("#first-choice").change(function () {
@@ -671,43 +695,47 @@ $(document).ready(function () {
 
         $(".input_fields_wrap2").append('\
             <div class="form-group" id="2div'+pc+'">\
-                <div class="row">\
-                    <div class="col-md-4">\
-                        <label for="idTab_Produto">Produto:</label><br>\
-                        <select class="form-control" id="listadinamicab'+pc+'" onchange="buscaValor(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
-                            <option value="">-- Selecione uma opção --</option>\
-                        </select>\
-                    </div>\
-                    <div class="col-md-3">\
-                        <label for="ValorVendaProduto">Valor do Produto:</label><br>\
-                        <div class="input-group id="txtHint">\
-                            <span class="input-group-addon" id="basic-addon1">R$</span>\
-                            <input type="text" class="form-control Valor" id="idTab_Produto'+pc+'" maxlength="10" placeholder="0,00" \
-                                onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'VP\')"\
-                                name="ValorVendaProduto'+pc+'" value="">\
+                <div class="panel panel-info">\
+                    <div class="panel-heading">\
+                        <div class="row">\
+                            <div class="col-md-4">\
+                                <label for="idTab_Produto">Produto:</label><br>\
+                                <select class="form-control" id="listadinamicab'+pc+'" onchange="buscaValor(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
+                                    <option value="">-- Selecione uma opção --</option>\
+                                </select>\
+                            </div>\
+                            <div class="col-md-3">\
+                                <label for="ValorVendaProduto">Valor do Produto:</label><br>\
+                                <div class="input-group id="txtHint">\
+                                    <span class="input-group-addon" id="basic-addon1">R$</span>\
+                                    <input type="text" class="form-control Valor" id="idTab_Produto'+pc+'" maxlength="10" placeholder="0,00" \
+                                        onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'VP\',\'Produto\')"\
+                                        name="ValorVendaProduto'+pc+'" value="">\
+                                </div>\
+                            </div>\
+                            <div class="col-md-1">\
+                                <label for="QtdVendaProduto">Qtd:</label><br>\
+                                <div class="input-group">\
+                                    <input type="text" class="form-control Numero" maxlength="3" id="QtdVendaProduto'+pc+'" placeholder="0"\
+                                        onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'QTD\',\'Produto\')"\
+                                        name="QtdVendaProduto'+pc+'" value="">\
+                                </div>\
+                            </div>\
+                            <div class="col-md-3">\
+                                <label for="SubtotalProduto">Subtotal:</label><br>\
+                                <div class="input-group id="txtHint">\
+                                    <span class="input-group-addon" id="basic-addon1">R$</span>\
+                                    <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalProduto'+pc+'"\
+                                           name="SubtotalProduto'+pc+'" value="">\
+                                </div>\
+                            </div>\
+                            <div class="col-md-1">\
+                                <label><br></label><br>\
+                                <a href="#" id="'+pc+'" class="remove_field2 btn btn-danger">\
+                                    <span class="glyphicon glyphicon-trash"></span>\
+                                </a>\
+                            </div>\
                         </div>\
-                    </div>\
-                    <div class="col-md-1">\
-                        <label for="QtdVendaProduto">Qtd:</label><br>\
-                        <div class="input-group">\
-                            <input type="text" class="form-control Numero" maxlength="3" id="Qtd'+pc+'" placeholder="0"\
-                                onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'QTD\')"\
-                                name="QtdVendaProduto'+pc+'" value="">\
-                        </div>\
-                    </div>\
-                    <div class="col-md-3">\
-                        <label for="SubtotalProduto">Subtotal:</label><br>\
-                        <div class="input-group id="txtHint">\
-                            <span class="input-group-addon" id="basic-addon1">R$</span>\
-                            <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalProduto'+pc+'"\
-                                   name="SubtotalProduto'+pc+'" value="">\
-                        </div>\
-                    </div>\
-                    <div class="col-md-1">\
-                        <label><br></label><br>\
-                        <a href="#" id="'+pc+'" class="remove_field2 btn btn-danger">\
-                            <span class="glyphicon glyphicon-trash"></span>\
-                        </a>\
                     </div>\
                 </div>\
             </div>'

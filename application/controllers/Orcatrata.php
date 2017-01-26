@@ -80,6 +80,8 @@ class Orcatrata extends CI_Controller {
             if ($this->input->post('idTab_Servico' . $i)) {
                 $data['servico'][$j]['idTab_Servico'] = $this->input->post('idTab_Servico' . $i);
                 $data['servico'][$j]['ValorVendaServico'] = $this->input->post('ValorVendaServico' . $i);
+                $data['servico'][$j]['QtdVendaServico'] = $this->input->post('QtdVendaServico' . $i);
+                $data['servico'][$j]['SubtotalServico'] = $this->input->post('SubtotalServico' . $i);
                 $data['servico'][$j]['ObsServico'] = $this->input->post('ObsServico' . $i);
                 $data['servico'][$j]['ConcluidoServico'] = $this->input->post('ConcluidoServico' . $i);
                 $j++;
@@ -238,6 +240,7 @@ class Orcatrata extends CI_Controller {
                     $data['servico'][$j]['idApp_OrcaTrata'] = $data['orcatrata']['idApp_OrcaTrata'];
 
                     $data['servico'][$j]['ValorVendaServico'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorVendaServico']));
+                    unset($data['servico'][$j]['SubtotalServico']);
                 }
                 $data['servico']['idApp_ServicoVenda'] = $this->Orcatrata_model->set_servico_venda($data['servico']);
             }
@@ -359,6 +362,8 @@ class Orcatrata extends CI_Controller {
                 $data['servico'][$j]['idApp_ServicoVenda'] = $this->input->post('idApp_ServicoVenda' . $i);
                 $data['servico'][$j]['idTab_Servico'] = $this->input->post('idTab_Servico' . $i);
                 $data['servico'][$j]['ValorVendaServico'] = $this->input->post('ValorVendaServico' . $i);
+                $data['servico'][$j]['QtdVendaServico'] = $this->input->post('QtdVendaServico' . $i);
+                $data['servico'][$j]['SubtotalServico'] = $this->input->post('SubtotalServico' . $i);
                 $data['servico'][$j]['ObsServico'] = $this->input->post('ObsServico' . $i);
                 $data['servico'][$j]['ConcluidoServico'] = $this->input->post('ConcluidoServico' . $i);
                 $j++;
@@ -428,6 +433,12 @@ class Orcatrata extends CI_Controller {
             if (count($data['servico']) > 0) {
                 $data['servico'] = array_combine(range(1, count($data['servico'])), array_values($data['servico']));
                 $data['count']['SCount'] = count($data['servico']);
+
+                if (isset($data['servico'])) {
+
+                    for($j=1;$j<=$data['count']['SCount'];$j++)
+                        $data['servico'][$j]['SubtotalServico'] = number_format(($data['servico'][$j]['ValorVendaServico'] * $data['servico'][$j]['QtdVendaServico']), 2, ',', '.');
+                }
             }
 
             #### App_ProdutoVenda ####
@@ -592,11 +603,13 @@ class Orcatrata extends CI_Controller {
                     $data['update']['servico']['inserir'][$j]['idApp_OrcaTrata'] = $data['orcatrata']['idApp_OrcaTrata'];
 
                     $data['update']['servico']['inserir'][$j]['ValorVendaServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['inserir'][$j]['ValorVendaServico']));
+                    unset($data['update']['servico']['inserir'][$j]['SubtotalServico']);
                 }
 
                 $max = count($data['update']['servico']['alterar']);
                 for($j=0;$j<$max;$j++) {
                     $data['update']['servico']['alterar'][$j]['ValorVendaServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['alterar'][$j]['ValorVendaServico']));
+                    unset($data['update']['servico']['alterar'][$j]['SubtotalServico']);
                 }
 
                 if (count($data['update']['servico']['inserir']))
