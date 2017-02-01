@@ -230,6 +230,9 @@ function adicionaProcedimento() {
     $("#PMCount").val(pc);
     //console.log(ps);
 
+    //Captura a data do dia e carrega no campo correspondente
+    var currentDate = moment();
+
     $(".input_fields_wrap3").append('\
         <div class="form-group" id="3div'+pc+'">\
             <div class="row">\
@@ -237,7 +240,7 @@ function adicionaProcedimento() {
                     <label for="DataProcedimento'+pc+'">Data do Procedimento:</label>\
                     <div class="input-group DatePicker">\
                         <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
-                               name="DataProcedimento'+pc+'" value="">\
+                               name="DataProcedimento'+pc+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
                         <span class="input-group-addon" disabled>\
                             <span class="glyphicon glyphicon-calendar"></span>\
                         </span>\
