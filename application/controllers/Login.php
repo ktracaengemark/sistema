@@ -208,10 +208,10 @@ class Login extends CI_Controller {
 
                 $this->load->library('email');
 
-                $this->email->from('nao_responda@romati.com.br', 'ROMATI');
+                $this->email->from('contato@ktracaengemark.com.br', 'KTRACA Engenharia & Marketing');
                 $this->email->to($data['query']['Email']);
 
-                $this->email->subject('[ROMATI] Confirmação de registro - Usuário: ' . $data['query']['Usuario']);
+                $this->email->subject('[KTRACA] Confirmação de registro - Usuário: ' . $data['query']['Usuario']);
                 /*
                   $this->email->message('Por favor, clique no link a seguir para confirmar seu registro: '
                   . 'http://www.romati.com.br/app/login/confirmar/' . $data['query']['Codigo']);
@@ -243,7 +243,7 @@ class Login extends CI_Controller {
                   <p>Clique no botão abaixo e retorne para a tela de login para entrar no sistema.</p>
                   </h4>
                   <br>
-                  <a class="btn btn-primary" href="http://www.romati.com.br/odonto/" role="button">Acessar o aplicativo</a>
+                  <a class="btn btn-primary" href="' . base_url() . '" role="button">Acessar o aplicativo</a>
                   </div> '
                         . '';
 
@@ -338,12 +338,13 @@ class Login extends CI_Controller {
 
                 $this->load->library('email');
 
-                $this->email->from('nao_responda@romati.com.br', 'ROMATI');
+                $this->email->from('contato@ktracaengemark.com.br', 'KTRACA Engenharia & Marketing');
                 $this->email->to($id['Email']);
 
-                $this->email->subject('[ROMATI] Alteração de Senha - Usuário: ' . $data['query']['Usuario']);
+                $this->email->subject('[KTRACA] Alteração de Senha - Usuário: ' . $data['query']['Usuario']);
                 $this->email->message('Por favor, clique no link a seguir para alterar sua senha: '
-                        . 'http://www.romati.com.br/app/login/trocar_senha/' . $data['query']['Codigo']);
+                        //. 'http://www.romati.com.br/app/login/trocar_senha/' . $data['query']['Codigo']);
+                        . base_url() . 'login/trocar_senha/' . $data['query']['Codigo']);
 
                 $this->email->send();
 
