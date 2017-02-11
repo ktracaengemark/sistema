@@ -41,6 +41,7 @@ class Relatorio_model extends CI_Model {
                 app.App_ParcelasRecebiveis AS PR
 
             WHERE
+                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
                 ' . $data['Pesquisa'] . ' >= "' . $data['DataInicio'] . '" AND
                 ' . $consulta . '
                 C.idApp_Cliente = OT.idApp_Cliente AND
@@ -98,5 +99,5 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-    
+
 }
