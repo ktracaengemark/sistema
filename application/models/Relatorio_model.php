@@ -36,16 +36,15 @@ class Relatorio_model extends CI_Model {
                 PR.QuitadoRecebiveis
 
             FROM
-                app.App_Cliente AS C,
-                app.App_OrcaTrata AS OT,
-                app.App_ParcelasRecebiveis AS PR
+                App_Cliente AS C,
+                App_OrcaTrata AS OT
+                    LEFT JOIN App_ParcelasRecebiveis AS PR ON OT.idApp_OrcaTrata = PR.idApp_OrcaTrata
 
             WHERE
                 C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
                 ' . $data['Pesquisa'] . ' >= "' . $data['DataInicio'] . '" AND
                 ' . $consulta . '
-                C.idApp_Cliente = OT.idApp_Cliente AND
-                OT.idApp_OrcaTrata = PR.idApp_OrcaTrata
+                C.idApp_Cliente = OT.idApp_Cliente
 
             ORDER BY
                 C.NomeCliente ASC,
