@@ -65,7 +65,7 @@ class Relatorio_model extends CI_Model {
             return TRUE;
         } else {
 
-            $entrada=$somaparcela=$somapago=$ant=0;
+            $somaentrada=$somaparcela=$somapago=$balanco=$ant=0;
             foreach ($query->result() as $row) {
 				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
                 $row->DataEntradaOrca = $this->basico->mascara_data($row->DataEntradaOrca, 'barras');
@@ -79,20 +79,23 @@ class Relatorio_model extends CI_Model {
                 #o valor da entrada que pode aparecer mais de uma vez
                 if ($ant != $row->idApp_OrcaTrata) {
                     $ant = $row->idApp_OrcaTrata;
-                    $somapago += $row->ValorPagoRecebiveis + $row->ValorEntradaOrca;
+                    $somaentrada += $row->ValorEntradaOrca;
                 }
-                else {
-                    $somapago += $row->ValorPagoRecebiveis;
-                }
+
+                $somapago += $row->ValorPagoRecebiveis;
                 $somaparcela += $row->ValorParcelaRecebiveis;
 
                 $row->ValorEntradaOrca = number_format($row->ValorEntradaOrca, 2, ',', '.');
                 $row->ValorParcelaRecebiveis = number_format($row->ValorParcelaRecebiveis, 2, ',', '.');
                 $row->ValorPagoRecebiveis = number_format($row->ValorPagoRecebiveis, 2, ',', '.');
             }
+            $balanco = $somapago + $somaparcela + $somaentrada;
+
             $query->soma = new stdClass();
             $query->soma->somaparcela = number_format($somaparcela, 2, ',', '.');
             $query->soma->somapago = number_format($somapago, 2, ',', '.');
+            $query->soma->somaentrada = number_format($somaentrada, 2, ',', '.');
+            $query->soma->balanco = number_format($balanco, 2, ',', '.');
 
             return $query;
         }

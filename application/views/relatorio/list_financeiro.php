@@ -1,7 +1,13 @@
 <div class="panel panel-default">
     <div class="panel-body">
 
-        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <label for="DataFim">Total Entrada/À vista:</label>
+            <div class="input-group">
+                <span class="input-group-addon">R$</span>
+                <input type="text" class="form-control" disabled aria-label="Total Pago" value="<?php echo $report->soma->somaentrada ?>">
+            </div>
+        </div>
 
         <div class="col-md-3">
             <label for="DataFim">Total Pago:</label>
@@ -19,7 +25,14 @@
             </div>
         </div>
 
-        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <label for="DataFim">Balanço do Período:</label>
+            <div class="input-group">
+                <span class="input-group-addon">R$</span>
+                <input type="text" class="form-control" disabled aria-label="Total a receber" value="<?php echo $report->soma->balanco ?>">
+            </div>
+        </div>
+
 
     </div>
 </div>

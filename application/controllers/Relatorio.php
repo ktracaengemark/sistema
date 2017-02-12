@@ -76,10 +76,10 @@ class Relatorio extends CI_Controller {
 
             /*
               echo "<pre>";
-              print_r($data['query']);
+              print_r($data['report']);
               echo "</pre>";
               exit();
-             */
+              */
 
             $data['list'] = $this->load->view('relatorio/list_financeiro', $data, TRUE);
             //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
