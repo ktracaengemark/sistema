@@ -79,12 +79,12 @@ class Relatorio_model extends CI_Model {
                 #o valor da entrada que pode aparecer mais de uma vez
                 if ($ant != $row->idApp_OrcaTrata) {
                     $ant = $row->idApp_OrcaTrata;
-                    $somaparcela += $row->ValorParcelaRecebiveis + $row->ValorEntradaOrca;
+                    $somapago += $row->ValorPagoRecebiveis + $row->ValorEntradaOrca;
                 }
                 else {
-                    $somaparcela += $row->ValorParcelaRecebiveis;
+                    $somapago += $row->ValorPagoRecebiveis;
                 }
-                $somapago += $row->ValorPagoRecebiveis;
+                $somaparcela += $row->ValorParcelaRecebiveis;
 
                 $row->ValorEntradaOrca = number_format($row->ValorEntradaOrca, 2, ',', '.');
                 $row->ValorParcelaRecebiveis = number_format($row->ValorParcelaRecebiveis, 2, ',', '.');
