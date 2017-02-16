@@ -104,6 +104,8 @@ class Login extends CI_Controller {
                 $this->load->driver('session');
 
                 $_SESSION['log']['Usuario'] = $query['Usuario'];
+                //se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
+                #$_SESSION['log']['Usuario'] = (strlen($query['Usuario']) > 20) ? substr($query['Usuario'], 0, 20) : $query['Usuario'];
                 $_SESSION['log']['id'] = $query['idSis_Usuario'];
 
                 $this->load->database();

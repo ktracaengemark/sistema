@@ -13,8 +13,8 @@
             <div class="panel-body">
 
                 <?php echo form_open($form_open_path, 'role="form"'); ?>
-                    
-				<div class="form-group">	
+
+				<div class="form-group">
 					<div class="row">
                         <div class="col-md-3">
                             <label for="Despesa">Nome do Despesa: *</label><br>
@@ -23,7 +23,7 @@
                         </div>
 						<div class="col-md-3">
 								<label for="TipoDespesa">Tipo Despesa</label>
-								<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>tipodespesa/cadastrar/tipodespesa" role="button"> 
+								<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>tipodespesa/cadastrar/tipodespesa" role="button">
 									<span class="glyphicon glyphicon-plus"></span> <b>Forma Pag</b>
 								</a>-->
 								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
@@ -37,12 +37,12 @@
 											echo '<option value="' . $key . '">' . $row . '</option>';
 										}
 									}
-									?>   
-								</select>          
+									?>
+								</select>
 							</div>
-						
+
 						<div class="col-md-3">
-							<label for="ValorTotalDesp">Valor Total da Desp.:</label><br>						
+							<label for="ValorTotalDesp">Valor Total da Desp.:</label><br>
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">R$</span>
 								<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
@@ -59,8 +59,8 @@
                                 </span>
                             </div>
                         </div>
-						
-						 
+
+
 						<!--<div class="col-md-2">
                             <label for="Unidade">Unidade de Medida:</label><br>
                             <input type="text" class="form-control" maxlength="20"
@@ -68,7 +68,7 @@
                         </div>-->
 
                     </div>
-				</div>	
+				</div>
 				<hr>
 
 				<div class="form-group">
@@ -77,19 +77,19 @@
 							<button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#FormaPagamento" aria-expanded="false" aria-controls="FormaPagamento">
 								<span class="glyphicon glyphicon-menu-down"></span> Forma de Pagamento - Parcelas -
 							</button>
-						</div>						
-					</div>	
-				</div> 
-					
+						</div>
+					</div>
+				</div>
+
 					<hr>
-					
+
 				<div <?php echo $collapse; ?> id="FormaPagamento">
-				
-					<div class="form-group">	
-						<div class="row">	
+
+					<div class="form-group">
+						<div class="row">
 							<div class="col-md-3">
 								<label for="FormaPag">Forma Pag</label>
-								<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>formapag/cadastrar/formapag" role="button"> 
+								<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>formapag/cadastrar/formapag" role="button">
 									<span class="glyphicon glyphicon-plus"></span> <b>Forma Pag</b>
 								</a>-->
 								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
@@ -103,20 +103,20 @@
 											echo '<option value="' . $key . '">' . $row . '</option>';
 										}
 									}
-									?>   
-								</select>          
+									?>
+								</select>
 							</div>
-							
-							
-							
-							
-									   
+
+
+
+
+
 							<div class="col-md-1">
 								<label for="QtdParcDesp">Qt.Parc.</label><br>
 									<input type="text" class="form-control" maxlength="3"
 										   name="QtdParcDesp" value="<?php echo $despesa['QtdParcDesp'] ?>">
 							</div>
-							
+
 							<div class="col-md-3">
 								<label for="ValorDesp">Valor das Parcelas: *</label><br>
 								<div class="input-group">
@@ -125,9 +125,9 @@
 											name="ValorDesp" value="<?php echo $despesa['ValorDesp'] ?>">
 								</div>
 							</div>
-							
+
 							<div class="col-md-3">
-								<label for="DataVencDesp">Data 1ºVenc</label>
+								<label for="DataVencDesp">Data 1�Venc</label>
 								<div class="input-group <?php echo $datepicker; ?>">
 									<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
 										name="DataVencDesp" value="<?php echo $despesa['DataVencDesp']; ?>">
@@ -137,16 +137,16 @@
 								</div>
 							</div>
 							<br>
-							<div class="form-group">								
+							<div class="form-group">
 								<div class="col-md-2 text-right">
 									<button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#Parcelas" aria-expanded="false" aria-controls="Parcelas">
-										<span class="glyphicon glyphicon-menu-down"></span> Gerar Parc. 
+										<span class="glyphicon glyphicon-menu-down"></span> Gerar Parc.
 									</button>
-								</div>															
+								</div>
 							</div>
 						</div>
 					</div>
-					
+
                     <hr>
 					<!--"App_ParcelasDesp"-->
 					<div <?php echo $collapse; ?> id="Parcelas">
@@ -198,16 +198,16 @@
 									<input type="text" class="form-control" maxlength="1"
 									name="QuitDesp" value="<?php echo $parcelasdesp['QuitDesp'] ?>">
 							</div>
-									
+
 							</div>
 						</div>
-					</div>	
+					</div>
 					<hr>
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-4">
 								<label for="Empresa">Empresa</label>
-								<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>empresa/cadastrar/empresa" role="button"> 
+								<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>empresa/cadastrar/empresa" role="button">
 									<span class="glyphicon glyphicon-plus"></span> <b>Empresa</b>
 								</a>
 								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
@@ -221,8 +221,8 @@
 											echo '<option value="' . $key . '">' . $row . '</option>';
 										}
 									}
-									?>   
-								</select>          
+									?>
+								</select>
 							</div>
 							<div class="col-md-6">
 								<label for="ObsDesp">OBS:</label>
@@ -231,9 +231,9 @@
 							</div>
 						</div>
 					</div>
-				</div>	
+				</div>
 					<hr>
-                  
+
                     <div class="row">
                         <div class="col-md-2">
                             <?php echo $button ?>
@@ -241,12 +241,12 @@
 
                         <input type="hidden" name="idApp_Despesa" value="<?php echo $despesa['idApp_Despesa']; ?>">
 						<input type="hidden" name="idApp_ParcelasDesp" value="<?php echo $parcelasdesp['idApp_ParcelasDesp']; ?>">
-					
-                    </div>                
+
+                    </div>
                 </form>
 
-                <br>                
-                
+                <br>
+
                 <?php if (isset($list)) echo $list; ?>
 
             </div>
