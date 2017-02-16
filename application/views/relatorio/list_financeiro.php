@@ -42,7 +42,7 @@
 
         <div>
 
-            <table class="table table-bordered table-condensed">
+            <table class="table table-bordered table-condensed table-hover">
 
                 <thead>
                     <tr>
@@ -66,7 +66,8 @@
                     <?php
                     foreach ($report->result_array() as $row) {
 
-                        echo '<tr>';
+                        #echo '<tr>';
+                        echo '<tr class="clickable-row" data-href="' . base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] . '">';
                             echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
 
                             echo '<td>' . $row['NomeCliente'] . '</td>';

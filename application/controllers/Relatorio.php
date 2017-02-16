@@ -54,21 +54,23 @@ class Relatorio extends CI_Controller {
         ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        $this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
 
+        /*
         $data['select']['Pesquisa'] = array(
             'DataEntradaOrca' => 'Data de Entrada',
             'DataVencimentoRecebiveis' => 'Data de Vencimento da Parcela',
         );
+        */
 
         $data['titulo'] = 'Relatório Financeiro - Recebíveis';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
 
-            $data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
+            #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 

@@ -16,7 +16,24 @@ class Relatorio_model extends CI_Model {
 
     public function list_orcamento($data, $completo) {
 
+        /*
         $consulta = ($data['DataFim']) ? $data['Pesquisa'] . ' <= "' . $data['DataFim'] . '" AND ' : FALSE;
+        ' . $data['Pesquisa'] . ' >= "' . $data['DataInicio'] . '" AND
+        ' . $consulta . '
+        ' . $data['Pesquisa'] . ' ASC,
+        #C.NomeCliente ASC
+        */
+
+        if ($data['DataFim']) {
+            $consulta =
+            '(OT.DataEntradaOrca >= "' . $data['DataInicio'] . '" AND OT.DataEntradaOrca <= "' . $data['DataFim'] . '") OR
+            (PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '" AND PR.DataVencimentoRecebiveis <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+            '(OT.DataEntradaOrca >= "' . $data['DataInicio'] . '") OR
+            (PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '")';
+        }
 
         $query = $this->db->query('
             SELECT
@@ -42,15 +59,12 @@ class Relatorio_model extends CI_Model {
 
             WHERE
                 C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-                ' . $data['Pesquisa'] . ' >= "' . $data['DataInicio'] . '" AND
-                ' . $consulta . '
+                (' . $consulta . ') AND
                 C.idApp_Cliente = OT.idApp_Cliente
 
             ORDER BY
-                C.NomeCliente ASC,
-                ' . $data['Pesquisa'] . ' ASC,
+                OT.DataOrca ASC,
                 PR.ParcelaRecebiveis ASC
-
         ');
 
         /*
@@ -80,6 +94,10 @@ class Relatorio_model extends CI_Model {
                 if ($ant != $row->idApp_OrcaTrata) {
                     $ant = $row->idApp_OrcaTrata;
                     $somaentrada += $row->ValorEntradaOrca;
+                }
+                else {
+                    $row->ValorEntradaOrca = FALSE;
+                    $row->DataEntradaOrca = FALSE;
                 }
 
                 $somapago += $row->ValorPagoRecebiveis;

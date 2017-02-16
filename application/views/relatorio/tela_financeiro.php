@@ -22,6 +22,7 @@
                     <div class="form-group">
                         <div class="row">
 
+                            <!--
                             <div class="col-md-4">
                                 <label for="Pesquisa">Pesquisar: *</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control"
@@ -38,6 +39,10 @@
                                     ?>
                                 </select>
                             </div>
+                            -->
+
+                            <div class="col-md-2"></div>
+
                             <div class="col-md-4">
                                 <label for="DataInicio">Data Início: *</label>
                                 <div class="input-group DatePicker">
@@ -58,6 +63,8 @@
                                     </span>
                                 </div>
                             </div>
+
+                            <div class="col-md-2"></div>
 
                         </div>
                     </div>
