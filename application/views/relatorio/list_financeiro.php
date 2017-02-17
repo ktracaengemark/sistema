@@ -21,7 +21,7 @@
             <label for="DataFim">Total a receber:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total a receber" value="<?php echo $report->soma->somaparcela ?>">
+                <input type="text" class="form-control" disabled aria-label="Total a receber" value="<?php echo $report->soma->somareceber ?>">
             </div>
         </div>
 

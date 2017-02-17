@@ -329,11 +329,13 @@ class Orcatrata extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $data['orcatrata'] = quotes_to_entities($this->input->post(array(
             #### App_OrcaTrata ####
             'idApp_OrcaTrata',
-            'idApp_Cliente',
+            #Não há a necessidade de atualizar o valor do campo a seguir
+            #'idApp_Cliente',
             'DataOrca',
             'ProfissionalOrca',
             'AprovadoOrca',
@@ -430,6 +432,11 @@ class Orcatrata extends CI_Controller {
             $data['orcatrata']['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntradaOrca'], 'barras');
             $data['orcatrata']['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata']['DataVencimentoOrca'], 'barras');
 
+            #### Carrega os dados do cliente nas variáves de sessão ####
+            $this->load->model('Cliente_model');
+            $_SESSION['Cliente'] = $this->Cliente_model->get_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+            #$_SESSION['log']['idApp_Cliente'] = $_SESSION['Cliente']['idApp_Cliente'];
+
             #### App_ServicoVenda ####
             $data['servico'] = $this->Orcatrata_model->get_servico($id);
             if (count($data['servico']) > 0) {
@@ -486,7 +493,6 @@ class Orcatrata extends CI_Controller {
             }
 
         }
-
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
