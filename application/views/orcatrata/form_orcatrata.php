@@ -63,7 +63,7 @@
                
 	                <hr>
 
-                    <div class="row">
+				<div class="row">
 					<div class="col-md-2 form-inline">
 						<label for="AprovadoOrca">Orçam. Aprovado?</label><br>
 						<div class="form-group">
@@ -136,18 +136,18 @@
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
-                        </div>
-                        <div class="col-md-2">
-                            <label for="DataRetorno">Data do Retorno:</label>
-                            <div class="input-group <?php echo $datepicker; ?>">
-                                <input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-                                       name="DataRetorno" value="<?php echo $orcatrata['DataRetorno']; ?>">
-                                <span class="input-group-addon" disabled>
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>
+                        </div>                       
                     </div>
+					<div class="col-md-2">
+						<label for="DataRetorno">Data do Retorno:</label>
+						<div class="input-group <?php echo $datepicker; ?>">
+							<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+								   name="DataRetorno" value="<?php echo $orcatrata['DataRetorno']; ?>">
+							<span class="input-group-addon" disabled>
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
                 </div>
 
                 <hr>

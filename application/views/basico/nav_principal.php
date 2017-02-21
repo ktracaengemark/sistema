@@ -1,7 +1,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
 
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-9">
 
             <ul class="nav navbar-nav">
                 <li>
@@ -71,7 +71,7 @@
 
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-3">
             <div class="btn-toolbar navbar-form navbar-right" role="toolbar" aria-label="...">
                 <div class="btn-group" role="group" aria-label="...">
                     <button type="button" class="btn active" id="countdowndiv">

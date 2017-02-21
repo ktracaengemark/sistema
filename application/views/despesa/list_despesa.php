@@ -5,7 +5,8 @@
         <tr>
             <th>Despesa</th>
 			<th>Tipo Desp.</th>
-			<th>Valor das Parc.</th>
+			<th>Valor das Parc.</th>			
+			<!--<th>ValorTotalDesp</th>-->
 			<th>Dt Despesa</th>
 			
 			<th>Forma Pag.</th>
@@ -38,7 +39,7 @@
                     echo '<td>' . str_replace('.',',',$row['Despesa']) . '</td>';
 					echo '<td>' . str_replace('.',',',$row['TipoDespesa']) . '</td>';
 					echo '<td>' . str_replace('.',',',$row['ValorDesp']) . '</td>';
-					#echo '<td>' . str_replace('.',',',$row['ValorTotal']) . '</td>';
+					#echo '<td>' . str_replace('.',',',$row['ValorTotalDesp']) . '</td>';
 					echo '<td>' . str_replace('.',',',$row['DataDesp']) . '</td>';
 					
 					echo '<td>' . str_replace('.',',',$row['FormaPag']) . '</td>';

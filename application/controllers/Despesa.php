@@ -88,7 +88,7 @@ class Despesa extends CI_Controller {
 		#### App_Despesa ####
 		$this->form_validation->set_rules('DataDesp', 'DataDesp', 'required|trim');
 
-		$this->form_validation->set_rules('ParcDesp', 'ParcDesp', 'required|trim');
+		#$this->form_validation->set_rules('ParcDesp', 'ParcDesp', 'required|trim');
 		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
 
 
@@ -289,7 +289,7 @@ class Despesa extends CI_Controller {
 		#### App_Despesa ####
 		$this->form_validation->set_rules('DataDesp', 'DataDesp', 'required|trim');
 		#$this->form_validation->set_rules('DataProcedimento', 'DataProcedimento', 'required|trim');
-		$this->form_validation->set_rules('ParcDesp', 'ParcDesp', 'required|trim');
+		#$this->form_validation->set_rules('ParcDesp', 'ParcDesp', 'required|trim');
 		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
 
 		#$data['select']['TipoConcluido'] = $this->Basico_model->select_tipo_concluido();
