@@ -95,7 +95,7 @@ class Despesa_model extends CI_Model {
                 D.idApp_Despesa,
                 D.Despesa,
                 TD.TipoDespesa,
-                D.ValorDesp,
+                D.ValorTotalDesp,
                 D.DataDesp,
                 FP.FormaPag,
                 D.DataVencDesp,
@@ -129,14 +129,14 @@ class Despesa_model extends CI_Model {
             if ($x === FALSE) {
                 return TRUE;
             } else {
-                #foreach ($query->result_array() as $row) {
-                #    $row->idTab_FormaPag = $row->idTab_FormaPag;
-                #    $row->FormaPag = $row->FormaPag;
-					#$row->DataVenc = $this->basico->mascara_data($row->DataVenc, 'barras');
-					#$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
-                #}
-                $query = $query->result_array();
+
+                foreach ($query->result() as $row) {
+					$row->DataDesp = $this->basico->mascara_data($row->DataDesp, 'barras');
+                    $row->DataVencDesp = $this->basico->mascara_data($row->DataVencDesp, 'barras');
+                    $row->ValorTotalDesp = number_format($row->ValorTotalDesp, 2, ',', '.');
+                }
                 return $query;
+
             }
         }
     }

@@ -5,22 +5,22 @@
         <tr>
             <th>Despesa</th>
 			<th>Tipo Desp.</th>
-			<th>Valor das Parc.</th>			
+			<th>Valor Total Desp.</th>
 			<!--<th>ValorTotalDesp</th>-->
 			<th>Dt Despesa</th>
-			
+
 			<th>Forma Pag.</th>
-			
+
 			<th>Dt Venc Desp</th>
 			<th>Empresa</th>
             <!--<th>Qtd Parc.</th>
             <th>Unidade de Medida</th>
             <th>Valor Parc.</th>
 			<th>Dt Venc.</th>-->
-			
-            
-			
-			
+
+
+
+
             <th></th>
         </tr>
     </thead>
@@ -29,36 +29,35 @@
         $i=0;
         if ($q) {
 
-            foreach ($q as $row)
-            {
+            foreach ($q->result_array() as $row) {
 
                 $url = base_url() . 'despesa/alterar/' . $row['idApp_Despesa'];
                 #$url = '';
 
                 echo '<tr class="clickable-row" data-href="' . $url . '">';
-                    echo '<td>' . str_replace('.',',',$row['Despesa']) . '</td>';
-					echo '<td>' . str_replace('.',',',$row['TipoDespesa']) . '</td>';
-					echo '<td>' . str_replace('.',',',$row['ValorDesp']) . '</td>';
-					#echo '<td>' . str_replace('.',',',$row['ValorTotalDesp']) . '</td>';
-					echo '<td>' . str_replace('.',',',$row['DataDesp']) . '</td>';
-					
-					echo '<td>' . str_replace('.',',',$row['FormaPag']) . '</td>';
-					
-					echo '<td>' . str_replace('.',',',$row['DataVencDesp']) . '</td>';
-					echo '<td>' . str_replace('.',',',$row['Empresa']) . '</td>';
-					
-                   # echo '<td>' . str_replace('.',',',$row['QtdParc']) . '</td>';
-                   # echo '<td>' . str_replace('.',',',$row['Unidade']) . '</td>';                    
-                   
-					#echo '<td>' . str_replace('.',',',$row['DataVenc']) . '</td>';
-					                    
-				    
+                    echo '<td>' . $row['Despesa'] . '</td>';
+					echo '<td>' . $row['TipoDespesa'] . '</td>';
+					echo '<td>R$ ' . $row['ValorTotalDesp'] . '</td>';
+					#echo '<td>' . $row['ValorTotalDesp'] . '</td>';
+					echo '<td>' . $row['DataDesp'] . '</td>';
+
+					echo '<td>' . $row['FormaPag'] . '</td>';
+
+					echo '<td>' . $row['DataVencDesp'] . '</td>';
+					echo '<td>' . $row['Empresa'] . '</td>';
+
+                   # echo '<td>' . $row['QtdParc'] . '</td>';
+                   # echo '<td>' . $row['Unidade'] . '</td>';
+
+					#echo '<td>' . $row['DataVenc'] . '</td>';
+
+
                     echo '<td></td>';
-                echo '</tr>';            
+                echo '</tr>';
 
                 $i++;
             }
-            
+
         }
         ?>
 
@@ -69,6 +68,3 @@
         </tr>
     </tfoot>
 </table>
-
-
-
