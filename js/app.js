@@ -146,14 +146,14 @@ function calculaParcelas() {
                         <label for="ValorParcelaRecebiveis">Valor Parcela:</label><br>\
                         <div class="input-group" id="txtHint">\
                             <span class="input-group-addon" id="basic-addon1">R$</span>\
-                            <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly=""\
+                            <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
                                    name="ValorParcelaRecebiveis'+i+'" value="'+parcorca+'">\
                         </div>\
                     </div>\
                     <div class="col-md-2">\
                         <label for="DataVencimentoRecebiveis">Data Venc. Parc.</label>\
-                        <div class="input-group">\
-                            <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA" readonly=""\
+                        <div class="input-group DatePicker">\
+                            <input type="text" class="form-control Date" id="DataPagoRecebiveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
                                    name="DataVencimentoRecebiveis'+i+'" value="'+futureMonth.format('DD/MM/YYYY')+'">\
                             <span class="input-group-addon" disabled>\
                                 <span class="glyphicon glyphicon-calendar"></span>\
@@ -228,7 +228,14 @@ function adicionaProcedimento() {
     //alert( $("#SCount").val() );
     pc++; //text box increment
     $("#PMCount").val(pc);
-    //console.log(ps);
+    //console.log(pc);
+
+    if (pc >= 2) {
+        //console.log( $("#listadinamicac"+(pc-1)).val() );
+        var chosen;
+        chosen = $("#listadinamicac"+(pc-1)).val();
+        //console.log( chosen + ' :: ' + pc );
+    }
 
     //Captura a data do dia e carrega no campo correspondente
     var currentDate = moment();
@@ -285,7 +292,10 @@ function adicionaProcedimento() {
             $select.append('<option value="">-- Selecione uma opção --</option>');
             $.each(data, function (key, val) {
                 //alert(val.id);
-                $select.append('<option value="' + val.id + '">' + val.name + '</option>');
+                if (val.id == chosen)
+                    $select.append('<option value="' + val.id + '" selected="selected">' + val.name + '</option>');
+                else
+                    $select.append('<option value="' + val.id + '">' + val.name + '</option>');
             })
         },
         error: function () {
@@ -672,7 +682,7 @@ $(document).ready(function () {
 
         $('label[name="radiobutton_' + name + '"]').removeClass();
         $('label[name="radiobutton_' + name + '"]').addClass("btn btn-default");
-        $('#radiobutton'+ value).addClass("btn btn-warning active");
+        $('#radiobutton_' + name + value).addClass("btn btn-warning active");
 
     });
 

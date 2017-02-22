@@ -55,6 +55,7 @@ class Orcatrata extends CI_Controller {
             'ProfissionalOrca',
             'AprovadoOrca',
             'ServicoConcluido',
+            'QuitadoOrca',
             'DataConclusao',
             'DataRetorno',
             'ValorOrca',
@@ -149,6 +150,7 @@ class Orcatrata extends CI_Controller {
         $data['select']['FormaPagamento'] = $this->Formapag_model->select_formapag();
         $data['select']['ServicoConcluido'] = $this->Basico_model->select_status_sn();
         $data['select']['ConcluidoServico'] = $this->Basico_model->select_status_sn();
+        $data['select']['QuitadoOrca'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoRecebiveis'] = $this->Basico_model->select_status_sn();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
         $data['select']['Servico'] = $this->Basico_model->select_servico();
@@ -340,6 +342,7 @@ class Orcatrata extends CI_Controller {
             'ProfissionalOrca',
             'AprovadoOrca',
             'ServicoConcluido',
+            'QuitadoOrca',
             'DataConclusao',
             'DataRetorno',
             'ValorOrca',
@@ -506,6 +509,7 @@ class Orcatrata extends CI_Controller {
         $data['select']['FormaPagamento'] = $this->Formapag_model->select_formapag();
         $data['select']['ServicoConcluido'] = $this->Basico_model->select_status_sn();
         $data['select']['ConcluidoServico'] = $this->Basico_model->select_status_sn();
+        $data['select']['QuitadoOrca'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoRecebiveis'] = $this->Basico_model->select_status_sn();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
         $data['select']['Servico'] = $this->Basico_model->select_servico();
