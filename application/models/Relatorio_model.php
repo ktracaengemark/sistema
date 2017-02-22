@@ -14,7 +14,7 @@ class Relatorio_model extends CI_Model {
     }
 
 
-    public function list_orcamento($data, $completo) {
+    public function list_financeiro($data, $completo) {
 
         /*
         $consulta = ($data['DataFim']) ? $data['Pesquisa'] . ' <= "' . $data['DataFim'] . '" AND ' : FALSE;
@@ -26,13 +26,13 @@ class Relatorio_model extends CI_Model {
 
         if ($data['DataFim']) {
             $consulta =
-            '(OT.DataEntradaOrca >= "' . $data['DataInicio'] . '" AND OT.DataEntradaOrca <= "' . $data['DataFim'] . '") OR
-            (PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '" AND PR.DataVencimentoRecebiveis <= "' . $data['DataFim'] . '")';
+                '(OT.DataEntradaOrca >= "' . $data['DataInicio'] . '" AND OT.DataEntradaOrca <= "' . $data['DataFim'] . '") OR
+                (PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '" AND PR.DataVencimentoRecebiveis <= "' . $data['DataFim'] . '")';
         }
         else {
             $consulta =
-            '(OT.DataEntradaOrca >= "' . $data['DataInicio'] . '") OR
-            (PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '")';
+                '(OT.DataEntradaOrca >= "' . $data['DataInicio'] . '") OR
+                (PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '")';
         }
 
         $query = $this->db->query('
@@ -124,5 +124,83 @@ class Relatorio_model extends CI_Model {
         }
 
     }
+
+    public function list_orcamento($data, $completo) {
+
+        if ($data['DataFim']) {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
+        }
+
+        $filtro = ($data['Filtro'] != '#') ? 'OT.AprovadoOrca = "' . $data['Filtro'] . '" AND ' : FALSE;
+
+        $query = $this->db->query('
+            SELECT
+                C.NomeCliente,
+
+                OT.idApp_OrcaTrata,
+                OT.AprovadoOrca,
+                OT.DataOrca,
+                OT.ValorOrca,
+
+                OT.ServicoConcluido,
+                OT.QuitadoORca,
+                OT.DataConclusao,
+                OT.DataRetorno
+
+            FROM
+                App_Cliente AS C,
+                App_OrcaTrata AS OT
+
+            WHERE
+                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                (' . $consulta . ') AND
+                ' . $filtro . '
+                C.idApp_Cliente = OT.idApp_Cliente
+
+            ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+
+        ');
+
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+          */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            $somaorcamento=0;
+            foreach ($query->result() as $row) {
+				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
+                $row->DataConclusao = $this->basico->mascara_data($row->DataConclusao, 'barras');
+                $row->DataRetorno = $this->basico->mascara_data($row->DataRetorno, 'barras');
+
+                $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
+                $row->ServicoConcluido = $this->basico->mascara_palavra_completa($row->ServicoConcluido, 'NS');
+                $row->QuitadoORca = $this->basico->mascara_palavra_completa($row->QuitadoORca, 'NS');
+
+                $somaorcamento += $row->ValorOrca;
+
+                $row->ValorOrca = number_format($row->ValorOrca, 2, ',', '.');
+
+            }
+            $query->soma = new stdClass();
+            $query->soma->somaorcamento = number_format($somaorcamento, 2, ',', '.');
+
+            return $query;
+        }
+
+    }
+
 
 }
