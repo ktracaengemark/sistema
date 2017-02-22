@@ -622,7 +622,35 @@
 						<div class="form-group">
 
                             <div id="AprovadoOrca" <?php echo $div['AprovadoOrca']; ?>>
+								<div class="col-md-2 form-inline">
+    								<label for="QuitadoOrca">Orçamento Quitado?</label><br>
+    								<div class="form-group">
+    									<div class="btn-group" data-toggle="buttons">
+    										<?php
+    										foreach ($select['QuitadoOrca'] as $key => $row) {
+    											(!$orcatrata['QuitadoOrca']) ? $orcatrata['QuitadoOrca'] = 'N' : FALSE;
 
+    											if ($orcatrata['QuitadoOrca'] == $key) {
+    												echo ''
+    												. '<label class="btn btn-warning active" name="radiobutton_QuitadoOrca" id="radiobutton_QuitadoOrca' . $key . '">'
+    												. '<input type="radio" name="QuitadoOrca" id="radiobutton" '
+    												. 'autocomplete="off" value="' . $key . '" checked>' . $row
+    												. '</label>'
+    												;
+    											} else {
+    												echo ''
+    												. '<label class="btn btn-default" name="radiobutton_QuitadoOrca" id="radiobutton_QuitadoOrca' . $key . '">'
+    												. '<input type="radio" name="QuitadoOrca" id="radiobutton" '
+    												. 'autocomplete="off" value="' . $key . '" >' . $row
+    												. '</label>'
+    												;
+    											}
+    										}
+    										?>
+    									</div>
+    								</div>
+    							</div>
+								
     							<div class="col-md-2 form-inline">
     								<label for="ServicoConcluido">Serviço Concluído?</label><br>
     								<div class="form-group">
@@ -651,36 +679,7 @@
     									</div>
     								</div>
     							</div>
-
-                                <div class="col-md-2 form-inline">
-    								<label for="QuitadoOrca">Orçamento Quitado?</label><br>
-    								<div class="form-group">
-    									<div class="btn-group" data-toggle="buttons">
-    										<?php
-    										foreach ($select['QuitadoOrca'] as $key => $row) {
-    											(!$orcatrata['QuitadoOrca']) ? $orcatrata['QuitadoOrca'] = 'N' : FALSE;
-
-    											if ($orcatrata['QuitadoOrca'] == $key) {
-    												echo ''
-    												. '<label class="btn btn-warning active" name="radiobutton_QuitadoOrca" id="radiobutton_QuitadoOrca' . $key . '">'
-    												. '<input type="radio" name="QuitadoOrca" id="radiobutton" '
-    												. 'autocomplete="off" value="' . $key . '" checked>' . $row
-    												. '</label>'
-    												;
-    											} else {
-    												echo ''
-    												. '<label class="btn btn-default" name="radiobutton_QuitadoOrca" id="radiobutton_QuitadoOrca' . $key . '">'
-    												. '<input type="radio" name="QuitadoOrca" id="radiobutton" '
-    												. 'autocomplete="off" value="' . $key . '" >' . $row
-    												. '</label>'
-    												;
-    											}
-    										}
-    										?>
-    									</div>
-    								</div>
-    							</div>
-
+                               
     							<div class="col-md-2">
     								<label for="DataConclusao">Data da Conclusão:</label>
     								<div class="input-group <?php echo $datepicker; ?>">

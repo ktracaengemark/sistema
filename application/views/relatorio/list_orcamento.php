@@ -1,17 +1,3 @@
-<div class="panel panel-default">
-    <div class="panel-body">
-
-        <div class="col-md-2">
-            <label for="DataFim">Total dos Orçamentos:</label>
-            <div class="input-group">
-                <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total Orcamentos" value="<?php echo $report->soma->somaorcamento ?>">
-            </div>
-        </div>
-
-    </div>
-</div>
-
 <div class="container-fluid">
     <div class="row">
 
@@ -21,15 +7,15 @@
 
                 <thead>
                     <tr>
-                        <th class="active">#</th>
+                        <th class="active">Orçam.</th>
 
                         <th class="active">Cliente</th>
                         <th class="active">Aprovado?</th>
                         <th class="active">Data do Orçamento</th>
                         <th class="active">Valor Orçamento</th>
-
+						<th class="active">Orçamento Quitado?</th>
                         <th class="active">Serviço Concluído?</th>
-                        <th class="active">Orçamento Quitado?</th>
+                        
                         <th class="active">Data Conclusão</th>
                         <th class="active">Data Retorno</th>
                     </tr>
@@ -48,9 +34,9 @@
                             echo '<td>' . $row['AprovadoOrca'] . '</td>';
                             echo '<td>' . $row['DataOrca'] . '</td>';
                             echo '<td class="text-right">R$ ' . $row['ValorOrca'] . '</td>';
-
+							echo '<td>' . $row['QuitadoORca'] . '</td>';
                             echo '<td>' . $row['ServicoConcluido'] . '</td>';
-                            echo '<td>' . $row['QuitadoORca'] . '</td>';
+                            
                             echo '<td>' . $row['DataConclusao'] . '</td>';
                             echo '<td>' . $row['DataRetorno'] . '</td>';
                         echo '</tr>';
@@ -70,4 +56,17 @@
 
     </div>
 
+</div>
+<div class="panel panel-default">
+    <div class="panel-body">
+
+        <div class="col-md-2">
+            <label for="DataFim">Total dos Orçamentos:</label>
+            <div class="input-group">
+                <span class="input-group-addon">R$</span>
+                <input type="text" class="form-control" disabled aria-label="Total Orcamentos" value="<?php echo $report->soma->somaorcamento ?>">
+            </div>
+        </div>
+
+    </div>
 </div>
