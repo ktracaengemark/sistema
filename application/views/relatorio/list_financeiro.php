@@ -1,15 +1,17 @@
 <div class="panel panel-default">
     <div class="panel-body">
 
-        <div class="col-md-3">
+        <div class="col-md-1"></div>
+
+        <div class="col-md-2">
             <label for="DataFim">Total Entrada/À vista:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total Pago" value="<?php echo $report->soma->somaentrada ?>">
+                <input type="text" class="form-control" disabled aria-label="Total Entrada" value="<?php echo $report->soma->somaentrada ?>">
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="DataFim">Total Pago:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
@@ -17,7 +19,15 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
+            <label for="DataFim">Total Real/Caixa:</label>
+            <div class="input-group">
+                <span class="input-group-addon">R$</span>
+                <input type="text" class="form-control" disabled aria-label="Total Real" value="<?php echo $report->soma->somareal ?>">
+            </div>
+        </div>
+
+        <div class="col-md-2">
             <label for="DataFim">Total a receber:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
@@ -25,14 +35,15 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="DataFim">Balanço do Período:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total a receber" value="<?php echo $report->soma->balanco ?>">
+                <input type="text" class="form-control" disabled aria-label="Total do Período" value="<?php echo $report->soma->balanco ?>">
             </div>
         </div>
 
+        <div class="col-md-1"></div>
 
     </div>
 </div>

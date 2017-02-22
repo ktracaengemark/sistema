@@ -60,11 +60,13 @@ class Relatorio_model extends CI_Model {
             WHERE
                 C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
                 (' . $consulta . ') AND
+                OT.AprovadoOrca = "S" AND
                 C.idApp_Cliente = OT.idApp_Cliente
 
             ORDER BY
                 OT.DataOrca ASC,
-                PR.ParcelaRecebiveis ASC
+                PR.ParcelaRecebiveis ASC,
+                C.NomeCliente ASC
         ');
 
         /*
@@ -79,7 +81,7 @@ class Relatorio_model extends CI_Model {
             return TRUE;
         } else {
 
-            $somaentrada=$somareceber=$somapago=$balanco=$ant=0;
+            $somaentrada=$somareceber=$somapago=$somareal=$balanco=$ant=0;
             foreach ($query->result() as $row) {
 				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
                 $row->DataEntradaOrca = $this->basico->mascara_data($row->DataEntradaOrca, 'barras');
@@ -108,11 +110,13 @@ class Relatorio_model extends CI_Model {
                 $row->ValorPagoRecebiveis = number_format($row->ValorPagoRecebiveis, 2, ',', '.');
             }
             $somareceber -= $somapago;
+            $somareal = $somapago + $somaentrada;
             $balanco = $somapago + $somareceber + $somaentrada;
 
             $query->soma = new stdClass();
             $query->soma->somareceber = number_format($somareceber, 2, ',', '.');
             $query->soma->somapago = number_format($somapago, 2, ',', '.');
+            $query->soma->somareal = number_format($somareal, 2, ',', '.');
             $query->soma->somaentrada = number_format($somaentrada, 2, ',', '.');
             $query->soma->balanco = number_format($balanco, 2, ',', '.');
 
