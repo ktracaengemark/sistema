@@ -107,7 +107,8 @@ class Relatorio extends CI_Controller {
             'DataFim',
             'Ordenamento',
             'Campo',
-            'Filtro',
+            'AprovadoOrca',
+            'QuitadoOrca',
         ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -115,7 +116,13 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
 
-        $data['select']['Filtro'] = array(
+        $data['select']['AprovadoOrca'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+        $data['select']['QuitadoOrca'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
             'S' => 'Sim',
@@ -130,7 +137,7 @@ class Relatorio extends CI_Controller {
             'OT.ValorOrca' => 'Valor do Orçamento',
 
             'OT.ServicoConcluido' => 'Serviço Concluído?',
-            'OT.QuitadoORca' => 'Orçamento Quitado?',
+            'OT.QuitadoOrca' => 'Orçamento Quitado?',
             'OT.DataConclusao' => 'Data de Conclusão',
             'OT.DataRetorno' => 'Data de Retorno',
         );
@@ -152,7 +159,8 @@ class Relatorio extends CI_Controller {
 
             $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
-            $data['bd']['Filtro'] = $data['query']['Filtro'];
+            $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+            $data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
 
             $data['report'] = $this->Relatorio_model->list_orcamento($data['bd'],TRUE);
 
