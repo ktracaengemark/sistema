@@ -2,12 +2,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <!--
-        <div class="col-sm-3 col-md-2 sidebar">
-            <?php echo $nav_secundario; ?>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        -->
+
         <div class="main">
 
             <?php echo validation_errors(); ?>
@@ -21,25 +16,6 @@
 
                     <div class="form-group">
                         <div class="row">
-
-                            <!--
-                            <div class="col-md-4">
-                                <label for="Pesquisa">Pesquisar: *</label>
-                                <select data-placeholder="Selecione uma opção..." class="form-control"
-                                        id="Pesquisa" name="Pesquisa">
-                                    <option value="">-- Selecione uma opção --</option>
-                                    <?php
-                                    foreach ($select['Pesquisa'] as $key => $row) {
-                                        if ($query['Pesquisa'] == $key) {
-                                            echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-                                        } else {
-                                            echo '<option value="' . $key . '">' . $row . '</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            -->
 
                             <div class="col-md-2"></div>
 
