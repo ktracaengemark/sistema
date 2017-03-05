@@ -203,5 +203,68 @@ class Relatorio_model extends CI_Model {
 
     }
 
+    public function list_clientes($data, $completo) {
+
+        $data['Campo'] = (!$data['Campo']) ? 'C.NomeCliente' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+
+        $query = $this->db->query('
+            SELECT
+                C.idApp_Cliente,
+                C.NomeCliente,
+
+                C.DataNascimento,
+                C.Telefone1,
+                C.Telefone2,
+                C.Telefone3,
+                C.Sexo,
+                C.Endereco,
+                C.Bairro,
+                CONCAT(M.NomeMunicipio, "/", M.Uf) AS Municipio,
+                C.Email
+
+            FROM
+                App_Cliente AS C
+                    LEFT JOIN Tab_Municipio AS M ON C.Municipio = M.idTab_Municipio
+
+            WHERE
+                C.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+
+
+            ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+
+        /*
+        #AND
+        #C.idApp_Cliente = OT.idApp_Cliente
+
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+				$row->DataNascimento = $this->basico->mascara_data($row->DataNascimento, 'barras');
+
+                #$row->Sexo = $this->basico->get_sexo($row->Sexo);
+                #$row->Sexo = ($row->Sexo == 2) ? 'F' : 'M';
+                
+                $row->Telefone = ($row->Telefone1) ? $row->Telefone1 : FALSE;
+                $row->Telefone .= ($row->Telefone2) ? ' / ' . $row->Telefone2 : FALSE;
+                $row->Telefone .= ($row->Telefone3) ? ' / ' . $row->Telefone3 : FALSE;
+
+            }
+
+            return $query;
+        }
+
+    }
 
 }

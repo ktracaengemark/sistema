@@ -50,6 +50,7 @@
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo base_url() ?>relatorio/financeiro">Financeiro</a></li>
                         <li><a href="<?php echo base_url() ?>relatorio/orcamento">Orçamento</a></li>
+                        <li><a href="<?php echo base_url() ?>relatorio/clientes">Clientes</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>">Estoque</a></li>
 					</ul>

@@ -183,4 +183,68 @@ class Relatorio extends CI_Controller {
 
     }
 
+    public function clientes() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'Ordenamento',
+            'Campo',
+        ), TRUE));
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+
+
+        $data['select']['Campo'] = array(
+            'C.NomeCliente' => 'Nome do Cliente',
+
+            'C.DataNascimento' => 'Data de Nascimento',
+            'C.Sexo' => 'Sexo',
+            'C.Bairro' => 'Bairro',
+            'C.Municipio' => 'Município',
+            'C.Email' => 'E-mail',
+
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+
+        $data['titulo'] = 'Relatório de Clientes';
+
+        #run form validation
+        if ($this->form_validation->run() !== TRUE) {
+
+            $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+
+            $data['report'] = $this->Relatorio_model->list_clientes($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_clientes', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_clientes', $data);
+
+        $this->load->view('basico/footer');
+
+
+
+    }
+
+
 }
