@@ -98,7 +98,7 @@ class Basico_model extends CI_Model {
 
             $array = array();
             foreach ($query->result() as $row) {
-                $array[$row->idTab_Sexo] = $row->Sexo;
+                $array[$row->Abrev] = $row->Sexo;
             }
         }
 
@@ -234,7 +234,8 @@ class Basico_model extends CI_Model {
 
         if (isset($data) && $data) {
 
-            $query = $this->db->query('SELECT * FROM Tab_Sexo WHERE idTab_Sexo = ' . $data);
+            #$query = $this->db->query('SELECT * FROM Tab_Sexo WHERE idTab_Sexo = ' . $data);
+            $query = $this->db->query('SELECT * FROM Tab_Sexo WHERE Abrev = "' . $data . '"');
 
             if ($query->num_rows() === 0) {
                 return '';
