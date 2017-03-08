@@ -59,6 +59,48 @@
                                 </span>
                             </div>
                         </div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-md-3">
+							<label for="FormaPag">Forma Pag</label>
+							<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>formapag/cadastrar/formapag" role="button">
+								<span class="glyphicon glyphicon-plus"></span> <b>Forma Pag</b>
+							</a>-->
+							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+									id="FormaPag" name="FormaPag">
+								<option value="">-- Sel. Forma --</option>
+								<?php
+								foreach ($select['FormaPag'] as $key => $row) {
+									if ($despesa['FormaPag'] == $key) {
+										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+									} else {
+										echo '<option value="' . $key . '">' . $row . '</option>';
+									}
+								}
+								?>
+							</select>
+						</div>
+						
+						<div class="col-md-4">
+							<label for="Empresa">Empresa</label>
+							<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>empresa/cadastrar/empresa" role="button">
+								<span class="glyphicon glyphicon-plus"></span> <b>Empresa</b>
+							</a>
+							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+									id="Empresa" name="Empresa">
+								<option value="">-- Sel. Empresa --</option>
+								<?php
+								foreach ($select['Empresa'] as $key => $row) {
+									if ($despesa['Empresa'] == $key) {
+										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+									} else {
+										echo '<option value="' . $key . '">' . $row . '</option>';
+									}
+								}
+								?>
+							</select>
+						</div>
 
 
 						<!--<div class="col-md-2">
@@ -75,7 +117,7 @@
 					<div class="row">
 						<div class="col-md-12 text-center">
 							<button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#FormaPagamento" aria-expanded="false" aria-controls="FormaPagamento">
-								<span class="glyphicon glyphicon-menu-down"></span> Forma de Pagamento - Parcelas -
+								<span class="glyphicon glyphicon-menu-down"></span> Parcelas / Faturado
 							</button>
 						</div>
 					</div>
@@ -87,29 +129,6 @@
 
 					<div class="form-group">
 						<div class="row">
-							<div class="col-md-3">
-								<label for="FormaPag">Forma Pag</label>
-								<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>formapag/cadastrar/formapag" role="button">
-									<span class="glyphicon glyphicon-plus"></span> <b>Forma Pag</b>
-								</a>-->
-								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-										id="FormaPag" name="FormaPag">
-									<option value="">-- Sel. Forma --</option>
-									<?php
-									foreach ($select['FormaPag'] as $key => $row) {
-										if ($despesa['FormaPag'] == $key) {
-											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-										} else {
-											echo '<option value="' . $key . '">' . $row . '</option>';
-										}
-									}
-									?>
-								</select>
-							</div>
-
-
-
-
 
 							<div class="col-md-1">
 								<label for="QtdParcDesp">Qt.Parc.</label><br>
@@ -204,26 +223,7 @@
 					</div>
 					<hr>
 					<div class="form-group">
-						<div class="row">
-							<div class="col-md-4">
-								<label for="Empresa">Empresa</label>
-								<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>empresa/cadastrar/empresa" role="button">
-									<span class="glyphicon glyphicon-plus"></span> <b>Empresa</b>
-								</a>
-								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-										id="Empresa" name="Empresa">
-									<option value="">-- Sel. Empresa --</option>
-									<?php
-									foreach ($select['Empresa'] as $key => $row) {
-										if ($despesa['Empresa'] == $key) {
-											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-										} else {
-											echo '<option value="' . $key . '">' . $row . '</option>';
-										}
-									}
-									?>
-								</select>
-							</div>
+						<div class="row">							
 							<div class="col-md-6">
 								<label for="ObsDesp">OBS:</label>
 								<textarea class="form-control" id="ObsDesp" <?php echo $readonly; ?>

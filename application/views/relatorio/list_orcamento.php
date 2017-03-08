@@ -33,7 +33,7 @@
                             echo '<td>' . $row['NomeCliente'] . '</td>';
                             echo '<td>' . $row['AprovadoOrca'] . '</td>';
                             echo '<td>' . $row['DataOrca'] . '</td>';
-                            echo '<td class="text-right">R$ ' . $row['ValorOrca'] . '</td>';
+                            echo '<td class="text-left">R$ ' . $row['ValorOrca'] . '</td>';
 							echo '<td>' . $row['QuitadoOrca'] . '</td>';
                             echo '<td>' . $row['ServicoConcluido'] . '</td>';
 

@@ -50,7 +50,10 @@
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo base_url() ?>relatorio/financeiro">Financeiro</a></li>
                         <li><a href="<?php echo base_url() ?>relatorio/orcamento">Orçamento</a></li>
+						<li><a href="<?php echo base_url() ?>relatorio/despesa">Despesas</a></li>
                         <li><a href="<?php echo base_url() ?>relatorio/clientes">Clientes</a></li>
+						<li><a href="<?php echo base_url() ?>relatorio/profissionais">Profissionais</a></li>
+						<li><a href="<?php echo base_url() ?>relatorio/empresas">Fornecedores</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>">Estoque</a></li>
 					</ul>
@@ -61,7 +64,7 @@
 					<ul class="dropdown-menu">
 					    <li><a href="<?php echo base_url() ?>profissional/pesquisar">Pesquisar/Cadastrar Funcionários/Profissionais</a></li>
 					    <li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>empresa/pesquisar">Pesquisar/Cadastrar Empresas/Prestadores de Serviço</a></li>
+						<li><a href="<?php echo base_url() ?>empresa/pesquisar">Pesquisar/Cadastrar Fornecedores</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>funcao/cadastrar/funcao">Função dos Funcionários/Profissionais</a></li>
 						<li><a href="<?php echo base_url() ?>atividade/cadastrar/atividade">Atividade das Empresas/Prestadores de Serviço</a></li>

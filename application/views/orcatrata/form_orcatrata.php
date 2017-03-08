@@ -623,7 +623,7 @@
 
                             <div id="AprovadoOrca" <?php echo $div['AprovadoOrca']; ?>>
 								<div class="col-md-2 form-inline">
-    								<label for="QuitadoOrca">Orçamento Quitado?</label><br>
+    								<label for="QuitadoOrca">Orçam. Quitado?</label><br>
     								<div class="form-group">
     									<div class="btn-group" data-toggle="buttons">
     										<?php

@@ -11,7 +11,7 @@
 <ul class="nav nav-sidebar">
     <li <?php if (preg_match("/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
         <a href="<?php echo base_url() . 'profissional/prontuario/' . $_SESSION['Profissional']['idApp_Profissional']; ?>">
-            <span class="glyphicon glyphicon-user"> </span> Informações da Profissional/Pessoa <span class="sr-only">(current)</span>
+            <span class="glyphicon glyphicon-user"> </span> Dados do Profissional<span class="sr-only">(current)</span>
         </a>
     </li>
 

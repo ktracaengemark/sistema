@@ -18,18 +18,18 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-4">
-                            <label for="NomeProfissional">Nome do Funcionário ou Profissional: *</label>
+                            <label for="NomeProfissional">Nome Profissional:*</label>
                             <input type="text" class="form-control" id="NomeProfissional" maxlength="255" <?php echo $readonly; ?>
                                    name="NomeProfissional" autofocus value="<?php echo $query['NomeProfissional']; ?>">
                         </div>
 						<div class="col-md-4">
-                            <label for="Telefone1">Telefone Principal: *</label>
+                            <label for="Telefone1">Telefone Principal:*</label>
                             <input type="text" class="form-control Celular CelularVariavel" id="Telefone1" maxlength="20" <?php echo $readonly; ?>
                                    name="Telefone1" placeholder="(99) 99999-9999" value="<?php echo $query['Telefone1']; ?>">
                         </div>
 												
 						<div class="col-md-4">
-                            <label for="Funcao">Funcao: *</label>
+                            <label for="Funcao">Funcao:*</label>
                             <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>funcao/cadastrar/funcao" role="button"> 
                                 <span class="glyphicon glyphicon-plus"></span> <b>Nova Funcao</b>
                             </a>
@@ -47,7 +47,32 @@
                                 ?>   
                             </select>          
                         </div>
-																																								
+					</div>
+				</div>
+				<div class="form-group">
+                    <div class="row">		
+						<div class="col-md-4">
+							<label for="DataNascimento">Data de Nascimento:</label>
+							<input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
+								   name="DataNascimento" placeholder="DD/MM/AAAA" value="<?php echo $query['DataNascimento']; ?>">
+						</div>
+						
+						<div class="col-md-4">
+							<label for="Sexo">Sexo:</label>
+							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+									id="Sexo" name="Sexo">
+								<option value="">-- Selecione uma opção --</option>
+								<?php
+								foreach ($select['Sexo'] as $key => $row) {
+									if ($query['Sexo'] == $key) {
+										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+									} else {
+										echo '<option value="' . $key . '">' . $row . '</option>';
+									}
+								}
+								?>   
+							</select>
+						</div>						
                     </div>
                 </div> 
 
@@ -64,53 +89,26 @@
 
                 <div <?php echo $collapse; ?> id="DadosComplementares">
 
-				<div class="form-group">
-                    <div class="row">
-                        
-                        <div class="col-md-4">
-                            <label for="Telefone2">Telefone ou Celular:</label>
-                            <input type="text" class="form-control Celular CelularVariavel" id="Telefone2" maxlength="20" <?php echo $readonly; ?>
-                                   name="Telefone2" value="<?php echo $query['Telefone2']; ?>">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="Telefone3">Telefone ou Celular:</label>
-                            <input type="text" class="form-control Celular CelularVariavel" id="Telefone3" maxlength="20" <?php echo $readonly; ?>
-                                   name="Telefone3" value="<?php echo $query['Telefone3']; ?>">
-                        </div>                    
-                    </div>
-                </div>
-					
 					<div class="form-group">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="Cnpj">Cnpj:</label>
-                                <input type="text" class="form-control" maxlength="45" <?php echo $readonly; ?>
-                                       name="Cnpj" value="<?php echo $query['Cnpj']; ?>">
-                            </div>                        
-                            <div class="col-md-4">
-                                <label for="DataNascimento">Data de Nascimento:</label>
-                                <input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
-                                       name="DataNascimento" placeholder="DD/MM/AAAA" value="<?php echo $query['DataNascimento']; ?>">
-                            </div>                        
-                            <div class="col-md-4">
-                                <label for="Sexo">Sexo:</label>
-                                <select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-                                        id="Sexo" name="Sexo">
-                                    <option value="">-- Selecione uma opção --</option>
-                                    <?php
-                                    foreach ($select['Sexo'] as $key => $row) {
-                                        if ($query['Sexo'] == $key) {
-                                            echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-                                        } else {
-                                            echo '<option value="' . $key . '">' . $row . '</option>';
-                                        }
-                                    }
-                                    ?>   
-                                </select>
-                            </div>                        
-                        </div>
-                    </div>                 
-
+						<div class="row">                        
+							<div class="col-md-4">
+								<label for="Telefone2">Telefone ou Celular:</label>
+								<input type="text" class="form-control Celular CelularVariavel" id="Telefone2" maxlength="20" <?php echo $readonly; ?>
+									   name="Telefone2" value="<?php echo $query['Telefone2']; ?>">
+							</div>
+							<div class="col-md-4">
+								<label for="Telefone3">Telefone ou Celular:</label>
+								<input type="text" class="form-control Celular CelularVariavel" id="Telefone3" maxlength="20" <?php echo $readonly; ?>
+									   name="Telefone3" value="<?php echo $query['Telefone3']; ?>">
+							</div>					
+							<div class="col-md-4">
+								<label for="Cnpj">CPF:</label>
+								<input type="text" class="form-control" maxlength="45" <?php echo $readonly; ?>
+									   name="Cnpj" value="<?php echo $query['Cnpj']; ?>">
+							</div>                                                                                                                                					
+						</div>
+					</div>
+					               
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">

@@ -370,13 +370,15 @@ class Profissional extends CI_Controller {
         $data['query']['Idade'] = $this->basico->calcula_idade($data['query']['DataNascimento']);
         $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'barras');
 
+		/*
         if ($data['query']['Sexo'] == 1)
             $data['query']['profile'] = 'm';
         elseif ($data['query']['Sexo'] == 2)
             $data['query']['profile'] = 'f';
         else
             $data['query']['profile'] = 'o';
-
+		*/
+		$data['query']['profile'] = ($data['query']['Sexo']) ? strtolower($data['query']['Sexo']) : 'o';
         $data['query']['Sexo'] = $this->Basico_model->get_sexo($data['query']['Sexo']);
 
         $data['query']['Telefone'] = $data['query']['Telefone1'];

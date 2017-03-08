@@ -37,7 +37,7 @@
                 echo '<tr class="clickable-row" data-href="' . $url . '">';
                     echo '<td>' . $row['Despesa'] . '</td>';
 					echo '<td>' . $row['TipoDespesa'] . '</td>';
-					echo '<td class="text-right">R$ ' . $row['ValorTotalDesp'] . '</td>';
+					echo '<td class="text-left">R$ ' . $row['ValorTotalDesp'] . '</td>';
 					#echo '<td>' . $row['ValorTotalDesp'] . '</td>';
 					echo '<td>' . $row['DataDesp'] . '</td>';
 

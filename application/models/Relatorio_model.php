@@ -202,6 +202,80 @@ class Relatorio_model extends CI_Model {
         }
 
     }
+	
+	public function list_despesa($data, $completo) {
+
+        if ($data['DataFim']) {
+            $consulta =
+                '(D.DataDesp >= "' . $data['DataInicio'] . '" AND D.DataDesp <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(D.DataDesp >= "' . $data['DataInicio'] . '")';
+        }
+
+        #$filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
+        #$filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
+
+        $query = $this->db->query('
+            SELECT
+                D.Despesa,
+                D.idApp_Despesa,
+                TD.TipoDespesa,
+                D.DataDesp,
+                D.ValorTotalDesp,
+				FP.FormaPag,
+				E.NomeEmpresa AS Empresa
+
+            FROM                
+                App_Despesa AS D
+                    LEFT JOIN Tab_TipoDespesa AS TD ON TD.idTab_TipoDespesa = D.TipoDespesa
+                    LEFT JOIN Tab_FormaPag    AS FP ON FP.idTab_FormaPag    = D.FormaPag
+                    LEFT JOIN App_Empresa     AS E  ON E.idApp_Empresa      = D.Empresa
+
+            WHERE
+                D.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				D.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				(' . $consulta . ')
+
+            ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+          */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            $somadespesa=0;
+            foreach ($query->result() as $row) {
+				$row->DataDesp = $this->basico->mascara_data($row->DataDesp, 'barras');
+                #$row->DataConclusao = $this->basico->mascara_data($row->DataConclusao, 'barras');
+                #$row->DataRetorno = $this->basico->mascara_data($row->DataRetorno, 'barras');
+
+                #$row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
+                #$row->ServicoConcluido = $this->basico->mascara_palavra_completa($row->ServicoConcluido, 'NS');
+                #$row->QuitadoOrca = $this->basico->mascara_palavra_completa($row->QuitadoOrca, 'NS');
+
+                $somadespesa += $row->ValorTotalDesp;
+
+                $row->ValorTotalDesp = number_format($row->ValorTotalDesp, 2, ',', '.');
+
+            }
+            $query->soma = new stdClass();
+            $query->soma->somadespesa = number_format($somadespesa, 2, ',', '.');
+
+            return $query;
+        }
+
+    }
 
     public function list_clientes($data, $completo) {
 
@@ -267,4 +341,131 @@ class Relatorio_model extends CI_Model {
 
     }
 
+	public function list_profissionais($data, $completo) {
+
+        $data['Campo'] = (!$data['Campo']) ? 'P.NomeProfissional' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+
+        $query = $this->db->query('
+            SELECT
+                P.idApp_Profissional,
+                P.NomeProfissional,
+				P.Funcao,
+                P.DataNascimento,
+                P.Telefone1,
+                P.Telefone2,
+                P.Telefone3,
+                P.Sexo,
+                P.Endereco,
+                P.Bairro,
+                CONCAT(M.NomeMunicipio, "/", M.Uf) AS Municipio,
+                P.Email
+
+            FROM
+                App_Profissional AS P
+                    LEFT JOIN Tab_Municipio AS M ON P.Municipio = M.idTab_Municipio
+
+            WHERE
+                P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+
+
+            ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+
+        /*
+        #AND
+        #P.idApp_Profissional = OT.idApp_Cliente
+
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+				$row->DataNascimento = $this->basico->mascara_data($row->DataNascimento, 'barras');
+
+                #$row->Sexo = $this->basico->get_sexo($row->Sexo);
+                #$row->Sexo = ($row->Sexo == 2) ? 'F' : 'M';
+                
+                $row->Telefone = ($row->Telefone1) ? $row->Telefone1 : FALSE;
+                $row->Telefone .= ($row->Telefone2) ? ' / ' . $row->Telefone2 : FALSE;
+                $row->Telefone .= ($row->Telefone3) ? ' / ' . $row->Telefone3 : FALSE;
+
+            }
+
+            return $query;
+        }
+
+    }
+	
+	public function list_empresas($data, $completo) {
+
+        $data['Campo'] = (!$data['Campo']) ? 'E.NomeEmpresa' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+
+        $query = $this->db->query('
+            SELECT
+                E.idApp_Empresa,
+                E.NomeEmpresa,
+				E.Atividade,
+                E.DataNascimento,
+                E.Telefone1,
+                E.Telefone2,
+                E.Telefone3,
+                E.Sexo,
+                E.Endereco,
+                E.Bairro,
+                CONCAT(M.NomeMunicipio, "/", M.Uf) AS Municipio,
+                E.Email
+
+            FROM
+                App_Empresa AS E
+                    LEFT JOIN Tab_Municipio AS M ON E.Municipio = M.idTab_Municipio
+
+            WHERE
+                E.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+
+
+            ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+
+        /*
+        #AND
+        #P.idApp_Profissional = OT.idApp_Cliente
+
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+				$row->DataNascimento = $this->basico->mascara_data($row->DataNascimento, 'barras');
+
+                #$row->Sexo = $this->basico->get_sexo($row->Sexo);
+                #$row->Sexo = ($row->Sexo == 2) ? 'F' : 'M';
+                
+                $row->Telefone = ($row->Telefone1) ? $row->Telefone1 : FALSE;
+                $row->Telefone .= ($row->Telefone2) ? ' / ' . $row->Telefone2 : FALSE;
+                $row->Telefone .= ($row->Telefone3) ? ' / ' . $row->Telefone3 : FALSE;
+
+            }
+
+            return $query;
+        }
+
+    }
 }
