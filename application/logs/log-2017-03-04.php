@@ -8,3 +8,4 @@ ERROR - 2017-03-04 22:08:21 --> Severity: Notice --> Undefined property: stdClas
 ERROR - 2017-03-04 22:12:22 --> Severity: Notice --> Undefined index: profile /var/www/html/sistema/application/views/cliente/tela_cliente.php 12
 ERROR - 2017-03-04 22:13:23 --> Severity: Notice --> Undefined variable: data /var/www/html/sistema/application/controllers/Login.php 479
 ERROR - 2017-03-04 22:14:57 --> 404 Page Not Found: Arquivos/imagens
+ERROR - 2017-03-04 22:26:46 --> Severity: Notice --> Undefined variable: data /var/www/html/sistema/application/controllers/Login.php 479
