@@ -22,12 +22,7 @@
                             <input type="text" class="form-control" id="NomeCliente" maxlength="255" <?php echo $readonly; ?>
                                    name="NomeCliente" autofocus value="<?php echo $query['NomeCliente']; ?>">
                         </div>
-						<div class="col-md-3">
-                            <label for="Telefone1">Telefone Principal: *</label>
-                            <input type="text" class="form-control Celular CelularVariavel" id="Telefone1" maxlength="20" <?php echo $readonly; ?>
-                                   name="Telefone1" placeholder="(99) 99999-9999" value="<?php echo $query['Telefone1']; ?>">
-                        </div>
-						<div class="col-md-3">
+						<div class="col-md-5">
 							<label for="Sexo">Sexo:</label>
 							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 									id="Sexo" name="Sexo">
@@ -42,6 +37,20 @@
 								}
 								?>   
 							</select>
+						</div>
+					</div>
+				</div> 	
+				<div class="form-group">	
+					<div class="row">
+						<div class="col-md-5">
+                            <label for="Telefone1">Telefone Principal: *</label>
+                            <input type="text" class="form-control Celular CelularVariavel" id="Telefone1" maxlength="20" <?php echo $readonly; ?>
+                                   name="Telefone1" placeholder="(99) 99999-9999" value="<?php echo $query['Telefone1']; ?>">
+                        </div>				
+						<div class="col-md-5">
+							<label for="DataNascimento">Data de Nascimento:</label>
+							<input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
+								   name="DataNascimento" placeholder="DD/MM/AAAA" value="<?php echo $query['DataNascimento']; ?>">
 						</div>
 						
                     </div>
@@ -67,12 +76,7 @@
                                 <label for="RegistroFicha">Ficha Nº:</label>
                                 <input type="text" class="form-control" maxlength="45" <?php echo $readonly; ?>
                                        name="RegistroFicha" value="<?php echo $query['RegistroFicha']; ?>">
-                            </div>                        
-                            <div class="col-md-4">
-                                <label for="DataNascimento">Data de Nascimento:</label>
-                                <input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
-                                       name="DataNascimento" placeholder="DD/MM/AAAA" value="<?php echo $query['DataNascimento']; ?>">
-                            </div>
+                            </div>                                                   
 							<div class="col-md-6">
                                 <label for="Email">E-mail:</label>
                                 <input type="text" class="form-control" id="Bairro" maxlength="100" <?php echo $readonly; ?>

@@ -81,7 +81,7 @@ class Empresa extends CI_Controller {
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Atividade'] = $this->Atividade_model->select_atividade();
 		
-        $data['titulo'] = 'Cad. Empresa / Prest. de Serviço';
+        $data['titulo'] = 'Cadastrar Empresa';
         $data['form_open_path'] = 'empresa/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -315,7 +315,7 @@ class Empresa extends CI_Controller {
             $_SESSION['agenda']['HoraFim'] = substr($this->input->get('end'),0,-3);            
         }
         
-        $data['titulo'] = "Pesq. Prestadores de Serviço ou Empresas";
+        $data['titulo'] = "Pesq. Empresas";
         
         $data['Pesquisa'] = $this->input->post('Pesquisa');
         //echo date('d/m/Y H:i:s', $data['start'],0,-3));

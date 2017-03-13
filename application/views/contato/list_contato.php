@@ -49,18 +49,12 @@ foreach ($query->result_array() as $row) {
             <a class="btn btn-<?php echo $row['class']; ?>" href="<?php echo base_url() . 'contato/alterar/' . $row['idApp_Contato'] ?>" role="button"> 
                 <span class="glyphicon glyphicon-edit"></span> Editar Dados
             </a>          
-            <!--<a class="btn btn-<?php echo $row['class']; ?>" href="<?php echo base_url() . 'consulta/cadastrar/' . $row['idApp_Empresa'] . '/' . $row['idApp_Contato'] ?>" role="button"> 
-                <span class="glyphicon glyphicon-time"></span> Marcar Sessão
-            </a>            
-            <a class="btn btn-<?php echo $row['class']; ?>" href="<?php echo base_url() . 'consulta/listar/' . $row['idApp_Empresa'] ?>" role="button"> 
-                <span class="glyphicon glyphicon-list"></span> Listar Sessões
-            </a> --> 
             
             <br><br>
             
             <h4>
                 <span class="<?php echo $row['icon']; ?>"></span> 
-                Nome Contato: <?php echo $row['NomeContato'] . ' <code><small>Identificador: ' . $row['idApp_Contato'] . '</small></code>'; ?>
+                <?php echo $row['NomeContato'] . '</small></code>'; ?>
                 <?php echo $row['vida']; ?>
             </h4> 
 

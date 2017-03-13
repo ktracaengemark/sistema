@@ -12,7 +12,7 @@
             <div class="panel-heading"><strong><?php echo $titulo; ?></strong></div>
             <div class="panel-body">
 
-                <p>Nome do <b>Prest.Serv./Empresa ou Atividade ou Telefone</b>:</p>
+                <p>Nome da <b>Empresa</b>:</p>
 
                 <div class="row">
                     <?php echo form_open('empresa/pesquisar', 'role="form"'); ?>
