@@ -68,7 +68,6 @@ class Profissional_model extends CI_Model {
                 . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                 . 'idTab_Modulo = 1 AND '
                 . '(NomeProfissional like "%' . $data . '%" OR '
-				. 'Funcao like "%' . $data . '%" OR '
                 #. 'DataNascimento = "' . $this->basico->mascara_data($data, 'mysql') . '" OR '
                 #. 'NomeProfissional like "%' . $data . '%" OR '
                 
@@ -96,7 +95,7 @@ class Profissional_model extends CI_Model {
             }
         }
     }
-    
+	
 	public function select_profissional($data = FALSE) {
 
         if ($data === TRUE) {
@@ -104,22 +103,21 @@ class Profissional_model extends CI_Model {
                 'SELECT '
                     . 'idApp_Profissional, '
                     . 'NomeProfissional '
-					. 'Funcao '
                     . 'FROM '
                     . 'App_Profissional '
                     . 'WHERE '
                     . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                     . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] );
         } else {
-            $query = $this->db->query('SELECT idApp_Profissional, NomeProfissional, Funcao FROM App_Profissional WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
+            $query = $this->db->query('SELECT idApp_Profissional, NomeProfissional FROM App_Profissional WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
             
             $array = array();
             foreach ($query->result() as $row) {
                 $array[$row->idApp_Profissional] = $row->NomeProfissional;
-				
             }
         }
 
         return $array;
     }
+    
 }

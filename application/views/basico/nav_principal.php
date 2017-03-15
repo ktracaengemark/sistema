@@ -3,20 +3,21 @@
     <div class="row">
         <div class="col-md-9">
 
-            <ul class="nav navbar-nav">
-                <li>					
-                    <?php echo form_open(base_url() . 'cliente/pesquisar', 'class="navbar-form navbar-left"'); ?>
-                    <div class="input-group">
-                        <input type="text" placeholder="Pesquisar" class="form-control" name="Pesquisa" value="">
-                        <span class="input-group-btn">
-                            <button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-search"></span></button>
-                        </span>
-                    </div>
-                    </form>
-                </li>
-				<li class="active"><a class="navbar-brand" href="<?php echo base_url(); ?>agenda">AGENDA</a></li>
-
-                <li class="dropdown">
+            <ul class="nav navbar-nav navbar-left"> 			
+				<li>												
+					<?php echo form_open(base_url() . 'cliente/pesquisar', 'class="navbar-form navbar-left"'); ?>
+					<form>
+					<div class="input-group">
+						<input type="text" placeholder="Pesquisar Cliente" class="form-control" name="Pesquisa" value="">
+						<span class="input-group-btn">
+							<button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+						</span>
+					</div>						
+					</form>
+					<li><a class="navbar-brand" href="<?php echo base_url(); ?>agenda">AGENDA</a></li>
+				</li>				
+				
+				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cadastros<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Clientes</a></li>
@@ -40,31 +41,30 @@
 						<li><a href="<?php echo base_url() ?>servico/cadastrar">Tabela de Preço de Serviços</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>produto/cadastrar">Tabela de Preço de Produtos</a></li>
+						<li role="separator" class="divider"></li>
 					</ul>
 				</li>
 				
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Marcações<span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Anotações<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Consultas, Reuniões & Sessões</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>profissional/pesquisar">Bloco de Tarefas</a></li>
+						<li role="separator" class="divider"></li>
 					</ul>
 				</li>
 				
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movimentos<span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movimentações<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Entradas</a></li>
+						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Orçamentos /Entradas</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>despesa/cadastrar/despesa">Saídas</a></li>
+						<li><a href="<?php echo base_url() ?>despesa/cadastrar/despesa">Despesas /Saídas</a></li>
+						<li role="separator" class="divider"></li>
+
 					</ul>
 				</li>
-				
-				<!--<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">xxxxxxx<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						
-					</ul>
-				</li>-->
 	
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relatórios<span class="caret"></span></a>
@@ -81,12 +81,12 @@
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/financeiro">Financeiro</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>">Estoque</a></li>				
+						<li><a href="<?php echo base_url() ?>">Estoque</a></li>
+						<li role="separator" class="divider"></li>
 					</ul>
 				</li>
-
-                <!--<li class="active"><a class="navbar-brand" href="<?php echo base_url(); ?>teste">TESTE</a></li>-->
-            </ul>
+																													
+			</ul>	
 
         </div>
 

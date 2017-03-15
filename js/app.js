@@ -308,6 +308,97 @@ function adicionaProcedimento() {
 
 }
 
+/*
+ * Função responsável por adicionar novos campos de Procedtarefa dinamicamente no
+ * formulário de tarefa
+ */
+function adicionaProcedtarefa() {
+
+    var pc = $("#PTCount").val(); //initlal text box count
+
+    //alert( $("#SCount").val() );
+    pc++; //text box increment
+    $("#PTCount").val(pc);
+    //console.log(pc);
+
+    if (pc >= 2) {
+        //console.log( $("#listadinamicac"+(pc-1)).val() );
+        var chosen;
+        chosen = $("#listadinamicac"+(pc-1)).val();
+        //console.log( chosen + ' :: ' + pc );
+    }
+
+    //Captura a data do dia e carrega no campo correspondente
+    var currentDate = moment();
+
+    $(".input_fields_wrap3").append('\
+        <div class="form-group" id="3div'+pc+'">\
+            <div class="row">\
+                <div class="col-md-3">\
+                    <label for="DataProcedtarefa'+pc+'">Data da Ação:</label>\
+                    <div class="input-group DatePicker">\
+                        <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
+                               name="DataProcedtarefa'+pc+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
+                        <span class="input-group-addon" disabled>\
+                            <span class="glyphicon glyphicon-calendar"></span>\
+                        </span>\
+                    </div>\
+                </div>\
+                <div class="col-md-3">\
+                    <label for="Profissional'+pc+'">Profissional:</label>\
+                    <select data-placeholder="Selecione uma opção..." class="form-control"\
+                             id="listadinamicac'+pc+'" name="Profissional'+pc+'">\
+                        <option value="">-- Selecione uma opção --</option>\
+                    </select>\
+                </div>\
+                <div class="col-md-4">\
+                    <label for="Procedtarefa'+pc+'">Ação:</label>\
+                    <textarea class="form-control" id="Procedtarefa'+pc+'"\
+                              name="Procedtarefa'+pc+'"></textarea>\
+                </div>\
+                <div class="col-md-1">\
+                    <label><br></label><br>\
+                    <button type="button" id="'+pc+'" class="remove_field3 btn btn-danger">\
+                        <span class="glyphicon glyphicon-trash"></span>\
+                    </button>\
+                </div>\
+            </div>\
+        </div>'
+    ); //add input box
+    //habilita o botão de calendário após a geração dos campos dinâmicos
+    $('.DatePicker').datetimepicker(dateTimePickerOptions);
+
+    //get a reference to the select element
+    $select = $('#listadinamicac'+pc);
+
+    //request the JSON data and parse into the select element
+    $.ajax({
+        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=3',
+        dataType: 'JSON',
+        type: "GET",
+        success: function (data) {
+            //clear the current content of the select
+            $select.html('');
+            //iterate over the data and append a select option
+            $select.append('<option value="">-- Selecione uma opção --</option>');
+            $.each(data, function (key, val) {
+                //alert(val.id);
+                if (val.id == chosen)
+                    $select.append('<option value="' + val.id + '" selected="selected">' + val.name + '</option>');
+                else
+                    $select.append('<option value="' + val.id + '">' + val.name + '</option>');
+            })
+        },
+        error: function () {
+            //alert('erro listadinamicaB');
+            //if there is an error append a 'none available' option
+            $select.html('<option id="-1">ERRO</option>');
+        }
+
+    });
+
+}
+
  /*
   * Função criada para funcionar junto com o recurso de hide/show do jquery nos
   * casos de radio button, que exigem um tratamento especial para funcionar
@@ -1178,9 +1269,9 @@ $('#calendar').fullCalendar({
         else {
 
             if (event.Paciente == 'D')
-                var title = "<b>" + event.title + "</b><br><b>Responsável:</b> " + event.subtitle + "<br>\n\<b>Tipo de Consulta:</b> " + event.TipoConsulta + "<br><b>Procedimento:</b> " + event.Procedimento + "<br><b>Profissional:</b> " + event.Profissional;
+                var title = "<b>" + event.title + "</b><br><b>Responsável:</b> " + event.subtitle + "<br>\n\<b>Tipo de Consulta:</b> " + event.TipoConsulta + "<br><b>Obs:</b> " + event.Obs + "<br><b>Profissional:</b> " + event.Profissional;
             else
-                var title = "<b>" + event.title + "</b><br>\n\<b>Tipo de Consulta:</b> " + event.TipoConsulta + "<br><b>Procedimento:</b> " + event.Procedimento + "<br><b>Profissional:</b> " + event.Profissional;
+                var title = "<b>" + event.title + "</b><br>\n\<b>Tipo de Consulta:</b> " + event.TipoConsulta + "<br><b>Obs:</b> " + event.Obs + "<br><b>Profissional:</b> " + event.Profissional;
         }
 
 

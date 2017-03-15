@@ -127,11 +127,11 @@
                     <?php
                     if (!$list) {
                     ?>
-                        <a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>contatoProf/cadastrar" role="button"> 
-                            <span class="glyphicon glyphicon-plus"></span> Cadastrar Novo ContatoProf
+                        <a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>contatoprof/cadastrar" role="button"> 
+                            <span class="glyphicon glyphicon-plus"></span> Cadastrar Novo Contatoprof
                         </a>
                         <br><br>
-                        <div class="alert alert-info" role="alert"><b>Nenhum contatoProf cadastrado</b></div>
+                        <div class="alert alert-info" role="alert"><b>Nenhum contatoprof cadastrado</b></div>
                     <?php
                     } else {
                         echo $list;

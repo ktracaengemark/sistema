@@ -12,8 +12,8 @@ class Contatoprof_model extends CI_Model {
         $this->load->library('basico');
         $this->load->model(array('Basico_model'));
     }
-
-    public function set_contatoProf($data) {
+    
+    public function set_contatoprof($data) {
 
         $query = $this->db->insert('App_ContatoProf', $data);
 
@@ -25,15 +25,15 @@ class Contatoprof_model extends CI_Model {
         }
     }
 
-    public function get_contatoProf($data) {
+    public function get_contatoprof($data) {
         $query = $this->db->query('SELECT * FROM App_ContatoProf WHERE idApp_ContatoProf = ' . $data);
-
+        
         $query = $query->result_array();
 
         return $query[0];
     }
 
-    public function update_contatoProf($data, $id) {
+    public function update_contatoprof($data, $id) {
 
         unset($data['Id']);
         $query = $this->db->update('App_ContatoProf', $data, array('idApp_ContatoProf' => $id));
@@ -52,7 +52,7 @@ class Contatoprof_model extends CI_Model {
         }
     }
 
-    public function delete_contatoProf($data) {
+    public function delete_contatoprof($data) {
         $query = $this->db->delete('App_ContatoProf', array('idApp_ContatoProf' => $data));
 
         if ($this->db->affected_rows() === 0) {
@@ -62,7 +62,7 @@ class Contatoprof_model extends CI_Model {
         }
     }
 
-    public function lista_contatoProf($x) {
+    public function lista_contatoprof($x) {
 
         $query = $this->db->query('SELECT * '
                 . 'FROM App_ContatoProf WHERE '
@@ -91,7 +91,7 @@ class Contatoprof_model extends CI_Model {
             }
         }
     }
-
+    
     public function select_status_vida($data = FALSE) {
 
         if ($data === TRUE) {
@@ -106,6 +106,6 @@ class Contatoprof_model extends CI_Model {
         }
 
         return $array;
-    }
+    }    
 
 }

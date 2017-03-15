@@ -13,7 +13,7 @@ class Contato extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Contato_model', 'Empresa_model'));
+        $this->load->model(array('Basico_model', 'Contato_model', 'Relacom_model', 'Empresa_model'));
         $this->load->driver('session');
 
         #load header view
@@ -54,6 +54,7 @@ class Contato extends CI_Controller {
             'StatusVida',
             'DataNascimento',
             'Sexo',
+			'RelaCom',
 			'TelefoneContato',
             'Obs',
             'idApp_Empresa',
@@ -65,10 +66,11 @@ class Contato extends CI_Controller {
 
         $this->form_validation->set_rules('NomeContato', 'Nome do Responsável', 'required|trim');
         $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
-		 $this->form_validation->set_rules('TelefoneContato', 'TelefoneContato', 'required|trim');
-        $data['select']['Sexo'] = $this->Basico_model->select_sexo();
+		$this->form_validation->set_rules('TelefoneContato', 'TelefoneContato', 'required|trim');
+        $this->form_validation->set_rules('RelaCom', 'RelaCom', 'required|trim');
+		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contato_model->select_status_vida();
-
+		$data['select']['RelaCom'] = $this->Relacom_model->select_relacom();
         $data['titulo'] = 'Cadastrar Contato';
         $data['form_open_path'] = 'contato/cadastrar';
         $data['readonly'] = '';
@@ -128,6 +130,7 @@ class Contato extends CI_Controller {
             'StatusVida',
             'DataNascimento',
             'Sexo',
+			'RelaCom',
             'TelefoneContato',
             'Obs',
             'idApp_Empresa',
@@ -144,9 +147,10 @@ class Contato extends CI_Controller {
         $this->form_validation->set_rules('NomeContato', 'Nome do Responsável', 'required|trim');
         $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
 		$this->form_validation->set_rules('TelefoneContato', 'TelefoneContato', 'required|trim');
-        $data['select']['Sexo'] = $this->Basico_model->select_sexo();
+        $this->form_validation->set_rules('RelaCom', 'RelaCom', 'required|trim');
+		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contato_model->select_status_vida();
-               
+        $data['select']['RelaCom'] = $this->Relacom_model->select_relacom();       
         $data['titulo'] = 'Editar Dados';
         $data['form_open_path'] = 'contato/alterar';
         $data['readonly'] = '';

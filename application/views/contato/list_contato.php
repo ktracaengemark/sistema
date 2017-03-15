@@ -1,19 +1,19 @@
 <?php (isset($contato)) ? $query = $contato : FALSE; ?>
+<div class="container-fluid">
+	<div class="row">
+		<div class="btn-group" role="group">
+			<a class="btn btn-lg btn-primary active"> 
+				<span class="glyphicon glyphicon-sort-by-attributes"></span> <?php echo '<b>Total de Contatos:</b> ' . $query->num_rows() ?>
+			</a>        
+		</div>
 
-<div class="row">
-    <div class="btn-group" role="group">
-        <a class="btn btn-lg btn-primary active"> 
-            <span class="glyphicon glyphicon-sort-by-attributes"></span> <?php echo '<b>Total de Contatos:</b> ' . $query->num_rows() ?>
-        </a>        
-    </div>
-
-    <div class="btn-group" role="group">
-        <a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>contato/cadastrar" role="button"> 
-            <span class="glyphicon glyphicon-plus"></span> Cadastrar Novo Contato
-        </a>
-    </div>
-</div>        
-
+		<div class="btn-group" role="group">
+			<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>contato/cadastrar" role="button"> 
+				<span class="glyphicon glyphicon-plus"></span> Cadastrar Novo Contato
+			</a>
+		</div>
+	</div>        
+</div>
 <br>
 
 <?php
@@ -56,26 +56,29 @@ foreach ($query->result_array() as $row) {
                 <span class="<?php echo $row['icon']; ?>"></span> 
                 <?php echo $row['NomeContato'] . '</small></code>'; ?>
                 <?php echo $row['vida']; ?>
-            </h4> 
-
-            
-            
+				
+			</h4>	
+			<h5>
+				<?php if ($row['RelaCom']) { ?>	
+				<span class="glyphicon glyphicon-user"></span> <b>Relação:</b> <?php echo $row['RelaCom']; ?>
+				<?php } ?>
+			</h5>
+ 
             <p>
                 <?php if ($row['DataNascimento']) { ?>
-                <span class="glyphicon glyphicon-gift"></span> <b>Data de Nascimento:</b> <?php echo $row['DataNascimento']; ?> --
+                <span class="glyphicon glyphicon-gift"></span> <b>Aniver.:</b> <?php echo $row['DataNascimento']; ?>-
                     
-					<b>Idade:</b> <?php echo $row['Idade']; ?> -
-                
+					<b>Idade:</b> <?php echo $row['Idade']; ?> 
+            </p>
+			<p>
 				<?php } if ($row['Sexo']) { ?>
-                <span class="<?php echo $row['icon-sex']; ?>"></span> <b>Sexo:</b> <?php echo $row['Sexo']; ?> --										
+                <span class="<?php echo $row['icon-sex']; ?>"></span> <b>Sexo:</b> <?php echo $row['Sexo']; ?>										
                 <?php } ?>
-				
+			</p>
+			<p>	
 				<?php if ($row['TelefoneContato']) { ?>
 				<span class="glyphicon glyphicon-phone-alt"></span> <b>Telefone:</b> <?php echo $row['TelefoneContato']; ?>
 				<?php } ?>
-				
-				
-				
             </p>
 
             <p>
