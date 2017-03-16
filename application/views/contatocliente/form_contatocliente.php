@@ -55,7 +55,7 @@
                                    name="DataNascimento" placeholder="DD/MM/AAAA" value="<?php echo $query['DataNascimento']; ?>">
                         </div>					
 						<div class="col-md-4">
-                            <label for="RelaPes">Relação*</label>
+                            <label for="RelaPes">Relação Pessoal</label>
                             <!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>relapes/cadastrar/relapes" role="button"> 
                                 <span class="glyphicon glyphicon-plus"></span> <b>Nova Relação</b>
                             </a>-->
@@ -73,6 +73,25 @@
                                 ?>   
                             </select>          
                         </div>
+						<div class="col-md-4">
+								<label for="RelaCom">Relação Comerc.</label>
+								<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>relacom/cadastrar/relacom" role="button"> 
+									<span class="glyphicon glyphicon-plus"></span> <b>Nova Relação</b>
+								</a>-->
+								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+										id="RelaCom" name="RelaCom">
+									<option value="">-- Selecione uma Relação --</option>
+									<?php
+									foreach ($select['RelaCom'] as $key => $row) {
+										if ($query['RelaCom'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>   
+								</select>          
+							</div>
 						<div class="col-md-4">
                             <label for="Obs">OBS:</label>
                             <textarea class="form-control" id="Obs" <?php echo $readonly; ?>

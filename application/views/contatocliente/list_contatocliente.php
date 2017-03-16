@@ -57,21 +57,29 @@ foreach ($query->result_array() as $row) {
                 <?php echo $row['NomeContatoCliente']; ?>
                 <?php echo $row['vida']; ?>
 			</h4>
+			<p>
+				<?php } if ($row['Sexo']) { ?>
+                <span class="<?php echo $row['icon-sex']; ?>"></span> <b>Sexo:</b> <?php echo $row['Sexo']; ?>
+                <?php } ?>
+
+            </p>
 			<h5>
 				<?php if ($row['RelaPes']) { ?>
-				<span class="glyphicon glyphicon-user"></span> <b>Relação:</b> <?php echo $row['RelaPes']; ?>
+				<span class="glyphicon glyphicon-user"></span> <b>Relação Pes.:</b> <?php echo $row['RelaPes']; ?>
 				<?php } ?>
-            </h5> 
+            </h5>
+			<!--<h5>
+				<?php if ($row['RelaCom']) { ?>	
+				<span class="glyphicon glyphicon-user"></span> <b>Relação Com.:</b> <?php echo $row['RelaCom']; ?>
+				<?php } ?>
+			</h5>-->
 
             <p>
                 <?php if ($row['DataNascimento']) { ?>
                 <span class="glyphicon glyphicon-gift"></span> <b>Data de Nascimento:</b> <?php echo $row['DataNascimento']; ?> -
                     <b>Idade:</b> <?php echo $row['Idade']; ?> -
-                <?php } if ($row['Sexo']) { ?>
-                <span class="<?php echo $row['icon-sex']; ?>"></span> <b>Sexo:</b> <?php echo $row['Sexo']; ?>
-                <?php } ?>
-
             </p>
+			
 			<p>
 				<?php if ($row['Telefone1']) { ?>
 				<span class="glyphicon glyphicon-phone-alt"></span> <b>Telefone:</b> <?php echo $row['Telefone1']; ?>
