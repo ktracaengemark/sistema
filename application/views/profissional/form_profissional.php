@@ -22,13 +22,7 @@
 							<input type="text" class="form-control" id="NomeProfissional" maxlength="255" <?php echo $readonly; ?>
 								   name="NomeProfissional" autofocus value="<?php echo $query['NomeProfissional']; ?>">
 						</div>
-						<br>
-						<div class="col-md-4">
-							<label for="Telefone1">Telefone Principal:*</label>
-							<input type="text" class="form-control Celular CelularVariavel" id="Telefone1" maxlength="20" <?php echo $readonly; ?>
-								   name="Telefone1" placeholder="(99) 99999-9999" value="<?php echo $query['Telefone1']; ?>">
-						</div>							
-						<br>							
+						
 						<div class="col-md-4">
 							<label for="Sexo">Sexo:</label>
 							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
@@ -45,13 +39,22 @@
 								?>   
 							</select>
 						</div>
-						<br>
+						
+						<div class="col-md-4">
+							<label for="Telefone1">Telefone Principal:*</label>
+							<input type="text" class="form-control Celular CelularVariavel" id="Telefone1" maxlength="20" <?php echo $readonly; ?>
+								   name="Telefone1" placeholder="(99) 99999-9999" value="<?php echo $query['Telefone1']; ?>">
+						</div>							
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
 						<div class="col-md-4">
 							<label for="DataNascimento">Data de Nascimento:</label>
 							<input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
 								   name="DataNascimento" placeholder="DD/MM/AAAA" value="<?php echo $query['DataNascimento']; ?>">
 						</div>
-						<br>						
+											
 						<div class="col-md-4">
 							<label for="Funcao">Funcao:*</label>
 							<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>funcao/cadastrar/funcao" role="button"> 
@@ -100,20 +103,14 @@
 							<label for="Telefone3">Telefone ou Celular:</label>
 							<input type="text" class="form-control Celular CelularVariavel" id="Telefone3" maxlength="20" <?php echo $readonly; ?>
 								   name="Telefone3" value="<?php echo $query['Telefone3']; ?>">
-						</div>                    
+						</div> 
+						<div class="col-md-4">
+							<label for="Cnpj">CPF:</label>
+							<input type="text" class="form-control" maxlength="45" <?php echo $readonly; ?>
+								   name="Cnpj" value="<?php echo $query['Cnpj']; ?>">
+						</div> 
 					</div>
 				</div>
-					
-					<div class="form-group">
-						<div class="row">
-							<div class="col-md-4">
-								<label for="Cnpj">Cnpj:</label>
-								<input type="text" class="form-control" maxlength="45" <?php echo $readonly; ?>
-									   name="Cnpj" value="<?php echo $query['Cnpj']; ?>">
-							</div>                        								                        
-						</div>
-					</div>                 
-
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-6">

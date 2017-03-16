@@ -76,18 +76,18 @@
                             <label for="Telefone3">Telefone ou Celular:</label>
                             <input type="text" class="form-control Celular CelularVariavel" id="Telefone3" maxlength="20" <?php echo $readonly; ?>
                                    name="Telefone3" value="<?php echo $query['Telefone3']; ?>">
-                        </div>                    
+                        </div>
+						<div class="col-md-4">
+							<label for="Cnpj">Cnpj:</label>
+							<input type="text" class="form-control" maxlength="45" <?php echo $readonly; ?>
+								   name="Cnpj" value="<?php echo $query['Cnpj']; ?>">
+						</div>
                     </div>
                 </div>
-					
+					<!--
 					<div class="form-group">
                         <div class="row">
-                            <div class="col-md-4">
-                                <label for="Cnpj">Cnpj:</label>
-                                <input type="text" class="form-control" maxlength="45" <?php echo $readonly; ?>
-                                       name="Cnpj" value="<?php echo $query['Cnpj']; ?>">
-                            </div>                        
-                            <div class="col-md-4">
+							<div class="col-md-4">
                                 <label for="DataNascimento">Data de Nascimento:</label>
                                 <input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
                                        name="DataNascimento" placeholder="DD/MM/AAAA" value="<?php echo $query['DataNascimento']; ?>">
@@ -107,10 +107,10 @@
                                     }
                                     ?>   
                                 </select>
-                            </div>                        
+                            </div>							
                         </div>
                     </div>                 
-
+					-->
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">

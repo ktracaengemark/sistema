@@ -11,7 +11,7 @@
 						<span class="glyphicon glyphicon-user"> </span> Visualizar<span class="sr-only">(current)</span>
 					</a>
 				</li>
-
+				<li role="separator" class="divider"></li>
 				<li <?php if (preg_match("/profissional\/alterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
 					<a href="<?php echo base_url() . 'profissional/alterar/' . $_SESSION['Profissional']['idApp_Profissional']; ?>">
 						<span class="glyphicon glyphicon-edit"></span> Editar
