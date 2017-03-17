@@ -55,7 +55,7 @@ class Contatocliente extends CI_Controller {
             'DataNascimento',
             'Sexo',
 			'RelaPes',
-			#'RelaCom',
+			'RelaCom',
             'Telefone1',
             'Obs',
             'idApp_Cliente',
@@ -73,7 +73,7 @@ class Contatocliente extends CI_Controller {
 		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contatocliente_model->select_status_vida();
 		$data['select']['RelaPes'] = $this->Relapes_model->select_relapes();
-        #$data['select']['RelaCom'] = $this->Relacom_model->select_relacom();
+        $data['select']['RelaCom'] = $this->Relacom_model->select_relacom();
 		$data['titulo'] = 'Contatos e Responsáveis';
         $data['form_open_path'] = 'contatocliente/cadastrar';
         $data['readonly'] = '';
@@ -137,7 +137,7 @@ class Contatocliente extends CI_Controller {
             'Obs',
             'idApp_Cliente',
 			'RelaPes',
-			#'RelaCom',
+			'RelaCom',
             'Telefone1',
                 ), TRUE);
 
@@ -157,7 +157,7 @@ class Contatocliente extends CI_Controller {
 		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contatocliente_model->select_status_vida();
         $data['select']['RelaPes'] = $this->Relapes_model->select_relapes();
-        #$data['select']['RelaCom'] = $this->Relacom_model->select_relacom();       
+        $data['select']['RelaCom'] = $this->Relacom_model->select_relacom();       
 		$data['titulo'] = 'Editar Dados';
         $data['form_open_path'] = 'contatocliente/alterar';
         $data['readonly'] = '';

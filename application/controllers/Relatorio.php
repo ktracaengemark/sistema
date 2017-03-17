@@ -463,9 +463,113 @@ class Relatorio extends CI_Controller {
 
         $this->load->view('basico/footer');
 
+    }
+	
+	public function orcamentopc() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'DataInicio',
+            'DataFim',
+            'Ordenamento',
+            'Campo',
+            'AprovadoOrca',
+            'QuitadoOrca',
+			'ServicoConcluido',
+        ), TRUE));
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+        $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+
+        $data['select']['AprovadoOrca'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+        $data['select']['QuitadoOrca'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+		
+		$data['select']['ServicoConcluido'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+        $data['select']['Campo'] = array(
+            'C.NomeCliente' => 'Nome do Cliente',
+
+            'OT.idApp_OrcaTrata' => 'Número do Orçamento',
+            'OT.AprovadoOrca' => 'Orçamento Aprovado?',
+            'OT.DataOrca' => 'Data do Orçamento',
+            'OT.ValorOrca' => 'Valor do Orçamento',
+
+            'OT.ServicoConcluido' => 'Serviço Concluído?',
+            'OT.QuitadoOrca' => 'Orçamento Quitado?',
+            'OT.DataConclusao' => 'Data de Conclusão',
+            'OT.DataRetorno' => 'Renovação',
+			
+			'PC.DataProcedimento' => 'Data do Procedimento',
+			'PC.Profissional' => 'Profissional',
+			'PC.Procedimento' => 'Procedimento',
+			
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+
+
+        $data['titulo'] = 'Relatório de Orçam. X Procedimentos';
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+            #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
+            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+
+            $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+            $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+            $data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
+			$data['bd']['ServicoConcluido'] = $data['query']['ServicoConcluido'];
+			
+			#$data['bd']['DataProcedimento'] = $this->basico->mascara_data($data['query']['DataProcedimento'], 'mysql');
+			
+
+            $data['report'] = $this->Relatorio_model->list_orcamentopc($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_orcamentopc', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_orcamentopc', $data);
+
+        $this->load->view('basico/footer');
+
 
 
     }
-
+	
 
 }

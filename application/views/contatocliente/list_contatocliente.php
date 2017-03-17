@@ -68,11 +68,11 @@ foreach ($query->result_array() as $row) {
 				<span class="glyphicon glyphicon-user"></span> <b>Relação Pes.:</b> <?php echo $row['RelaPes']; ?>
 				<?php } ?>
             </h5>
-			<!--<h5>
+			<h5>
 				<?php if ($row['RelaCom']) { ?>	
 				<span class="glyphicon glyphicon-user"></span> <b>Relação Com.:</b> <?php echo $row['RelaCom']; ?>
 				<?php } ?>
-			</h5>-->
+			</h5>
 
             <p>
                 <?php if ($row['DataNascimento']) { ?>

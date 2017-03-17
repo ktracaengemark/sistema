@@ -468,4 +468,92 @@ class Relatorio_model extends CI_Model {
         }
 
     }
+	
+	public function list_orcamentopc($data, $completo) {
+
+        if ($data['DataFim']) {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
+        }
+
+        $filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
+        $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
+		$filtro3 = ($data['ServicoConcluido'] != '#') ? 'OT.ServicoConcluido = "' . $data['ServicoConcluido'] . '" AND ' : FALSE;
+
+        $query = $this->db->query('
+            SELECT
+                C.NomeCliente,
+
+                OT.idApp_OrcaTrata,
+                OT.AprovadoOrca,
+                OT.DataOrca,
+                OT.ValorOrca,
+
+                OT.ServicoConcluido,
+                OT.QuitadoOrca,
+                OT.DataConclusao,
+                OT.DataRetorno,
+				
+				PC.DataProcedimento,
+				PC.Profissional,				
+				PC.Procedimento
+
+			FROM
+                App_Cliente AS C,
+                App_OrcaTrata AS OT
+					LEFT JOIN App_Procedimento AS PC ON OT.idApp_OrcaTrata = PC.idApp_OrcaTrata	
+					
+			WHERE
+                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                (' . $consulta . ') AND
+                ' . $filtro1 . '
+                ' . $filtro2 . '
+				' . $filtro3 . '
+                C.idApp_Cliente = OT.idApp_Cliente
+
+            ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+          */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            $somaorcamento=0;
+            foreach ($query->result() as $row) {
+				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
+                $row->DataConclusao = $this->basico->mascara_data($row->DataConclusao, 'barras');
+                $row->DataRetorno = $this->basico->mascara_data($row->DataRetorno, 'barras');
+				
+                $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
+                $row->ServicoConcluido = $this->basico->mascara_palavra_completa($row->ServicoConcluido, 'NS');
+                $row->QuitadoOrca = $this->basico->mascara_palavra_completa($row->QuitadoOrca, 'NS');
+
+				$row->DataProcedimento = $this->basico->mascara_data($row->DataProcedimento, 'barras');
+				
+                $somaorcamento += $row->ValorOrca;
+
+                $row->ValorOrca = number_format($row->ValorOrca, 2, ',', '.');
+
+            }
+            $query->soma = new stdClass();
+            $query->soma->somaorcamento = number_format($somaorcamento, 2, ',', '.');
+
+            return $query;
+        }
+
+    }
+	
 }
