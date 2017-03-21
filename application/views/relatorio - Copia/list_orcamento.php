@@ -10,17 +10,14 @@
                         <th class="active">Orçam.</th>
 
                         <th class="active">Cliente</th>
-                        <th class="active">Data do Orçam.</th>
-						<th class="active">Aprovado?</th>                        
-                        <!--<th class="active">Valor Orçamento</th>-->
-						<th class="active">Orçam. Quitado?</th>
-                        <th class="active">Serviço Concl.?</th>
+                        <th class="active">Aprovado?</th>
+                        <th class="active">Data do Orçamento</th>
+                        <th class="active">Valor Orçamento</th>
+						<th class="active">Orçamento Quitado?</th>
+                        <th class="active">Serviço Concluído?</th>
+
                         <th class="active">Data Conclusão</th>
-						<th class="active">Data Proced.</th>
-						<th class="active">Profis.</th>
-						<th class="active">Procedimento</th>
-						<th class="active">Proced. Conl.?</th>
-						<th class="active">Renovação</th>
+                        <th class="active">Data Retorno</th>
                     </tr>
                 </thead>
 
@@ -34,17 +31,14 @@
                             echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
 
                             echo '<td>' . $row['NomeCliente'] . '</td>';
+                            echo '<td>' . $row['AprovadoOrca'] . '</td>';
                             echo '<td>' . $row['DataOrca'] . '</td>';
-							echo '<td>' . $row['AprovadoOrca'] . '</td>';                            
-                           # echo '<td class="text-left">R$ ' . $row['ValorOrca'] . '</td>';
+                            echo '<td class="text-left">R$ ' . $row['ValorOrca'] . '</td>';
 							echo '<td>' . $row['QuitadoOrca'] . '</td>';
                             echo '<td>' . $row['ServicoConcluido'] . '</td>';
+
                             echo '<td>' . $row['DataConclusao'] . '</td>';
-							echo '<td>' . $row['DataProcedimento'] . '</td>';
-							echo '<td>' . $row['Profissional'] . '</td>';
-							echo '<td>' . $row['Procedimento'] . '</td>';
-							echo '<td>' . $row['ConcluidoProcedimento'] . '</td>';
-							echo '<td>' . $row['DataRetorno'] . '</td>';
+                            echo '<td>' . $row['DataRetorno'] . '</td>';
                         echo '</tr>';
                     }
                     ?>
@@ -63,7 +57,6 @@
     </div>
 
 </div>
-<!--
 <div class="panel panel-default">
     <div class="panel-body">
 
@@ -77,4 +70,3 @@
 
     </div>
 </div>
--->

@@ -115,6 +115,7 @@ class Orcatrata extends CI_Controller {
                 $data['procedimento'][$j]['DataProcedimento'] = $this->input->post('DataProcedimento' . $i);
                 $data['procedimento'][$j]['Profissional'] = $this->input->post('Profissional' . $i);
                 $data['procedimento'][$j]['Procedimento'] = $this->input->post('Procedimento' . $i);
+				$data['procedimento'][$j]['ConcluidoProcedimento'] = $this->input->post('ConcluidoProcedimento' . $i);
                 $j++;
             }
 
@@ -150,7 +151,8 @@ class Orcatrata extends CI_Controller {
         $data['select']['FormaPagamento'] = $this->Formapag_model->select_formapag();
         $data['select']['ServicoConcluido'] = $this->Basico_model->select_status_sn();
         $data['select']['ConcluidoServico'] = $this->Basico_model->select_status_sn();
-        $data['select']['QuitadoOrca'] = $this->Basico_model->select_status_sn();
+        $data['select']['ConcluidoProcedimento'] = $this->Basico_model->select_status_sn();
+		$data['select']['QuitadoOrca'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoRecebiveis'] = $this->Basico_model->select_status_sn();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
         $data['select']['Servico'] = $this->Basico_model->select_servico();
@@ -402,6 +404,7 @@ class Orcatrata extends CI_Controller {
                 $data['procedimento'][$j]['DataProcedimento'] = $this->input->post('DataProcedimento' . $i);
                 $data['procedimento'][$j]['Profissional'] = $this->input->post('Profissional' . $i);
                 $data['procedimento'][$j]['Procedimento'] = $this->input->post('Procedimento' . $i);
+				$data['procedimento'][$j]['ConcluidoProcedimento'] = $this->input->post('ConcluidoProcedimento' . $i);
                 $j++;
             }
 
@@ -509,7 +512,8 @@ class Orcatrata extends CI_Controller {
         $data['select']['FormaPagamento'] = $this->Formapag_model->select_formapag();
         $data['select']['ServicoConcluido'] = $this->Basico_model->select_status_sn();
         $data['select']['ConcluidoServico'] = $this->Basico_model->select_status_sn();
-        $data['select']['QuitadoOrca'] = $this->Basico_model->select_status_sn();
+        $data['select']['ConcluidoProcedimento'] = $this->Basico_model->select_status_sn();
+		$data['select']['QuitadoOrca'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoRecebiveis'] = $this->Basico_model->select_status_sn();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
         $data['select']['Servico'] = $this->Basico_model->select_servico();

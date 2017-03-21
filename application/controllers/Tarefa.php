@@ -50,7 +50,7 @@ class Tarefa extends CI_Controller {
         $data['tarefa'] = quotes_to_entities($this->input->post(array(
             #### App_Tarefa ####
             'idApp_Tarefa',
-            'idApp_Profissional',
+            #'idApp_Profissional',
             'DataTarefa',
             'ProfissionalTarefa',
             'AprovadoTarefa',
@@ -140,7 +140,7 @@ class Tarefa extends CI_Controller {
         $data['datepicker'] = 'DatePicker';
         $data['timepicker'] = 'TimePicker';
 
-        $data['nav_secundario'] = $this->load->view('profissional/nav_secundario', $data, TRUE);
+        $data['nav_secundario'] = $this->load->view('tarefa/nav_secundario', $data, TRUE);
 
         /*
           echo '<br>';
@@ -210,7 +210,7 @@ class Tarefa extends CI_Controller {
                 //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Tarefa', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'tarefa/listar/' . $_SESSION['Profissional']['idApp_Profissional'] . $data['msg']);
+                redirect(base_url() . 'tarefa/listar/' . $data['msg']);
                 exit();
             }
         }
@@ -281,7 +281,7 @@ class Tarefa extends CI_Controller {
 
 				#### Carrega os dados do profissional nas variáves de sessão ####
 				$this->load->model('Profissional_model');
-				$_SESSION['Profissional'] = $this->Profissional_model->get_profissional($data['tarefa']['idApp_Profissional'], TRUE);
+				#$_SESSION['Profissional'] = $this->Profissional_model->get_profissional($data['tarefa']['idApp_Profissional'], TRUE);
 				#$_SESSION['log']['idApp_Profissional'] = $_SESSION['Profissional']['idApp_Profissional'];
 
 		
@@ -577,7 +577,7 @@ class Tarefa extends CI_Controller {
 					//$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Tarefa', 'CREATE', $data['auditoriaitem']);
 					$data['msg'] = '?m=1';
 
-					redirect(base_url() . 'tarefa/listar/' . $_SESSION['Profissional']['idApp_Profissional'] . $data['msg']);
+					redirect(base_url() . 'tarefa/listar/' . $data['msg']);
 					exit();
 				}
 			}
@@ -618,7 +618,7 @@ class Tarefa extends CI_Controller {
 
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'tarefa/listar/' . $_SESSION['Profissional']['idApp_Profissional'] . $data['msg']);
+                redirect(base_url() . 'tarefa/listar/' . $data['msg']);
                 exit();
             //}
         //}
@@ -669,7 +669,7 @@ class Tarefa extends CI_Controller {
 
 
         //$_SESSION['Tarefa'] = $this->Tarefa_model->get_profissional($id, TRUE);
-        $_SESSION['Tarefa']['idApp_Profissional'] = $id;
+        #$_SESSION['Tarefa']['idApp_Profissional'] = $id;
         $data['query'] = $this->Tarefa_model->list_tarefa(TRUE, TRUE);
         /*
           echo "<pre>";

@@ -482,6 +482,7 @@ class Relatorio extends CI_Controller {
             'AprovadoOrca',
             'QuitadoOrca',
 			'ServicoConcluido',
+			'ConcluidoProcedimento',
         ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -506,6 +507,11 @@ class Relatorio extends CI_Controller {
             'N' => 'Não',
             'S' => 'Sim',
         );
+		$data['select']['ConcluidoProcedimento'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
 
         $data['select']['Campo'] = array(
             'C.NomeCliente' => 'Nome do Cliente',
@@ -523,6 +529,7 @@ class Relatorio extends CI_Controller {
 			'PC.DataProcedimento' => 'Data do Procedimento',
 			'PC.Profissional' => 'Profissional',
 			'PC.Procedimento' => 'Procedimento',
+			'PC.ConcluidoProcedimento' => 'Proc. Concl.?',
 			
         );
 
@@ -546,6 +553,7 @@ class Relatorio extends CI_Controller {
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
             $data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
 			$data['bd']['ServicoConcluido'] = $data['query']['ServicoConcluido'];
+			$data['bd']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
 			
 			#$data['bd']['DataProcedimento'] = $this->basico->mascara_data($data['query']['DataProcedimento'], 'mysql');
 			

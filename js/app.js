@@ -260,11 +260,26 @@ function adicionaProcedimento() {
                         <option value="">-- Selecione uma opção --</option>\
                     </select>\
                 </div>\
-                <div class="col-md-4">\
+                <div class="col-md-3">\
                     <label for="Procedimento'+pc+'">Procedimento:</label>\
                     <textarea class="form-control" id="Procedimento'+pc+'"\
                               name="Procedimento'+pc+'"></textarea>\
                 </div>\
+				<div class="col-md-2">\
+					<label for="ConcluidoProcedimento">Proc. Concl.? </label><br>\
+					<div class="form-group">\
+						<div class="btn-group" data-toggle="buttons">\
+							<label class="btn btn-warning active" name="radio_ConcluidoProcedimento'+pc+'" id="radio_ConcluidoProcedimento'+pc+'N">\
+							<input type="radio" name="ConcluidoProcedimento'+pc+'" id="radiogeraldinamico"\
+								autocomplete="off" value="N" checked>Não\
+							</label>\
+							<label class="btn btn-default" name="radio_ConcluidoProcedimento'+pc+'" id="radio_ConcluidoProcedimento'+pc+'S">\
+							<input type="radio" name="ConcluidoProcedimento'+pc+'" id="radiogeraldinamico"\
+								autocomplete="off" value="S">Sim\
+							</label>\
+						</div>\
+					</div>\
+				</div>\
                 <div class="col-md-1">\
                     <label><br></label><br>\
                     <button type="button" id="'+pc+'" class="remove_field3 btn btn-danger">\
@@ -322,9 +337,9 @@ function adicionaProcedtarefa() {
     //console.log(pc);
 
     if (pc >= 2) {
-        //console.log( $("#listadinamicac"+(pc-1)).val() );
+        //console.log( $("#listadinamicad"+(pc-1)).val() );
         var chosen;
-        chosen = $("#listadinamicac"+(pc-1)).val();
+        chosen = $("#listadinamicad"+(pc-1)).val();
         //console.log( chosen + ' :: ' + pc );
     }
 
@@ -347,15 +362,30 @@ function adicionaProcedtarefa() {
                 <div class="col-md-3">\
                     <label for="Profissional'+pc+'">Profissional:</label>\
                     <select data-placeholder="Selecione uma opção..." class="form-control"\
-                             id="listadinamicac'+pc+'" name="Profissional'+pc+'">\
+                             id="listadinamicad'+pc+'" name="Profissional'+pc+'">\
                         <option value="">-- Selecione uma opção --</option>\
                     </select>\
                 </div>\
-                <div class="col-md-4">\
+                <div class="col-md-3">\
                     <label for="Procedtarefa'+pc+'">Ação:</label>\
                     <textarea class="form-control" id="Procedtarefa'+pc+'"\
                               name="Procedtarefa'+pc+'"></textarea>\
                 </div>\
+				<div class="col-md-2">\
+					<label for="ConcluidoProcedtarefa">Ação Concl.? </label><br>\
+					<div class="form-group">\
+						<div class="btn-group" data-toggle="buttons">\
+							<label class="btn btn-warning active" name="radio_ConcluidoProcedtarefa'+pc+'" id="radio_ConcluidoProcedtarefa'+pc+'N">\
+							<input type="radio" name="ConcluidoProcedtarefa'+pc+'" id="radiogeraldinamico"\
+								autocomplete="off" value="N" checked>Não\
+							</label>\
+							<label class="btn btn-default" name="radio_ConcluidoProcedtarefa'+pc+'" id="radio_ConcluidoProcedtarefa'+pc+'S">\
+							<input type="radio" name="ConcluidoProcedtarefa'+pc+'" id="radiogeraldinamico"\
+								autocomplete="off" value="S">Sim\
+							</label>\
+						</div>\
+					</div>\
+				</div>\
                 <div class="col-md-1">\
                     <label><br></label><br>\
                     <button type="button" id="'+pc+'" class="remove_field3 btn btn-danger">\
@@ -369,7 +399,7 @@ function adicionaProcedtarefa() {
     $('.DatePicker').datetimepicker(dateTimePickerOptions);
 
     //get a reference to the select element
-    $select = $('#listadinamicac'+pc);
+    $select = $('#listadinamicad'+pc);
 
     //request the JSON data and parse into the select element
     $.ajax({

@@ -483,7 +483,8 @@ class Relatorio_model extends CI_Model {
         $filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ServicoConcluido'] != '#') ? 'OT.ServicoConcluido = "' . $data['ServicoConcluido'] . '" AND ' : FALSE;
-
+		$filtro4 = ($data['ConcluidoProcedimento'] != '#') ? 'PC.ConcluidoProcedimento = "' . $data['ConcluidoProcedimento'] . '" AND ' : FALSE;
+		
         $query = $this->db->query('
             SELECT
                 C.NomeCliente,
@@ -500,7 +501,8 @@ class Relatorio_model extends CI_Model {
 				
 				PC.DataProcedimento,
 				PC.Profissional,				
-				PC.Procedimento
+				PC.Procedimento,
+				PC.ConcluidoProcedimento
 
 			FROM
                 App_Cliente AS C,
@@ -513,6 +515,7 @@ class Relatorio_model extends CI_Model {
                 ' . $filtro1 . '
                 ' . $filtro2 . '
 				' . $filtro3 . '
+				' . $filtro4 . '
                 C.idApp_Cliente = OT.idApp_Cliente
 
             ORDER BY
@@ -542,7 +545,7 @@ class Relatorio_model extends CI_Model {
                 $row->QuitadoOrca = $this->basico->mascara_palavra_completa($row->QuitadoOrca, 'NS');
 
 				$row->DataProcedimento = $this->basico->mascara_data($row->DataProcedimento, 'barras');
-				
+				$row->ConcluidoProcedimento = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimento, 'NS');
                 $somaorcamento += $row->ValorOrca;
 
                 $row->ValorOrca = number_format($row->ValorOrca, 2, ',', '.');

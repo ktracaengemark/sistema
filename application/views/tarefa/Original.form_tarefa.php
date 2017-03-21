@@ -1,22 +1,10 @@
 <?php if (isset($msg)) echo $msg; ?>
 <div class="container-fluid">
-	<div class="form-group">
-		<div class="row">
-			<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>tarefa/cadastrar" role="button"> 
-				<span class="glyphicon glyphicon-plus"></span> Cadastrar Nova Tarefa
-			</a>
-			
-			<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>tarefa/listar" role="button"> 
-				<span class="glyphicon glyphicon-plus"></span> Listar Tarefas
-			</a>
-		</div>	
-	</div>
 	<div class="row">
 
-		<!--<div class="col-sm-3 col-md-2 sidebar">
+		<div class="col-sm-3 col-md-2 sidebar">
 			<?php echo $nav_secundario; ?>
-		</div>-->
-		
+		</div>
 
 		<div class="col-sm-7 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
@@ -137,36 +125,6 @@
 												<textarea class="form-control" id="Procedtarefa<?php echo $i ?>" <?php echo $readonly; ?>
 														  name="Procedtarefa<?php echo $i ?>"><?php echo $procedtarefa[$i]['Procedtarefa']; ?></textarea>
 											</div>
-											
-											<div class="col-md-2">
-												<label for="ConcluidoProcedtarefa">Ação Concl.? </label><br>
-												<div class="form-group">
-													<div class="btn-group" data-toggle="buttons">
-														<?php
-														foreach ($select['ConcluidoProcedtarefa'] as $key => $row) {
-															(!$procedtarefa[$i]['ConcluidoProcedtarefa']) ? $procedtarefa[$i]['ConcluidoProcedtarefa'] = 'N' : FALSE;
-
-															if ($procedtarefa[$i]['ConcluidoProcedtarefa'] == $key) {
-																echo ''
-																. '<label class="btn btn-warning active" name="radiobutton_ConcluidoProcedtarefa' . $i . '" id="radiobutton_ConcluidoProcedtarefa' . $i .  $key . '">'
-																. '<input type="radio" name="ConcluidoProcedtarefa' . $i . '" id="radiobuttondinamico" '
-																. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																. '</label>'
-																;
-															} else {
-																echo ''
-																. '<label class="btn btn-default" name="radiobutton_ConcluidoProcedtarefa' . $i . '" id="radiobutton_ConcluidoProcedtarefa' . $i .  $key . '">'
-																. '<input type="radio" name="ConcluidoProcedtarefa' . $i . '" id="radiobuttondinamico" '
-																. 'autocomplete="off" value="' . $key . '" >' . $row
-																. '</label>'
-																;
-															}
-														}
-														?>
-													</div>
-												</div>
-											</div>
-
 											<div class="col-md-1">
 												<label><br></label><br>
 												<button type="button" id="<?php echo $i ?>" class="remove_field3 btn btn-danger">

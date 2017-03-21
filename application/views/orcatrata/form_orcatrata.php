@@ -547,11 +547,39 @@
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="Procedimento<?php echo $i ?>">Procedimento:</label>
                                             <textarea class="form-control" id="Procedimento<?php echo $i ?>" <?php echo $readonly; ?>
                                                       name="Procedimento<?php echo $i ?>"><?php echo $procedimento[$i]['Procedimento']; ?></textarea>
                                         </div>
+										<div class="col-md-2">
+											<label for="ConcluidoProcedimento">Proc. Concl.? </label><br>
+											<div class="form-group">
+												<div class="btn-group" data-toggle="buttons">
+													<?php
+													foreach ($select['ConcluidoProcedimento'] as $key => $row) {
+														(!$procedimento[$i]['ConcluidoProcedimento']) ? $procedimento[$i]['ConcluidoProcedimento'] = 'N' : FALSE;
+
+														if ($procedimento[$i]['ConcluidoProcedimento'] == $key) {
+															echo ''
+															. '<label class="btn btn-warning active" name="radiobutton_ConcluidoProcedimento' . $i . '" id="radiobutton_ConcluidoProcedimento' . $i .  $key . '">'
+															. '<input type="radio" name="ConcluidoProcedimento' . $i . '" id="radiobuttondinamico" '
+															. 'autocomplete="off" value="' . $key . '" checked>' . $row
+															. '</label>'
+															;
+														} else {
+															echo ''
+															. '<label class="btn btn-default" name="radiobutton_ConcluidoProcedimento' . $i . '" id="radiobutton_ConcluidoProcedimento' . $i .  $key . '">'
+															. '<input type="radio" name="ConcluidoProcedimento' . $i . '" id="radiobuttondinamico" '
+															. 'autocomplete="off" value="' . $key . '" >' . $row
+															. '</label>'
+															;
+														}
+													}
+													?>
+												</div>
+											</div>
+										</div>
                                         <div class="col-md-1">
                                             <label><br></label><br>
                                             <button type="button" id="<?php echo $i ?>" class="remove_field3 btn btn-danger">

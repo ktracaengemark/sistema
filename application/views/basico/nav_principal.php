@@ -50,7 +50,7 @@
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Consultas, Reuniões & Sessões</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>profissional/pesquisar">Bloco de Tarefas</a></li>
+						<li><a href="<?php echo base_url() ?>tarefa/cadastrar">Tarefas</a></li>
 						<li role="separator" class="divider"></li>
 					</ul>
 				</li>
