@@ -24,27 +24,7 @@
 			<a href="<?php echo base_url() . 'contatoprof/pesquisar/' . $_SESSION['Profissional']['idApp_Profissional']; ?>">
 				<span class="fa fa-user-plus"></span> Contatoprofs
 			</a>
-		</li>
-		
-		<li class="dropdown">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-				<span class="glyphicon glyphicon-list"></span> Tarefas<span class="caret"></span>
-			</a>
-			<ul class="dropdown-menu">
-				<li <?php if (preg_match("/tarefa\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
-					<a href="<?php echo base_url() . 'tarefa/cadastrar/' . $_SESSION['Profissional']['idApp_Profissional']; ?>">
-						<span class="glyphicon glyphicon-plus"></span> Cadastrar
-					</a>
-				</li>				
-				<li role="separator" class="divider"></li>
-				<li <?php if (preg_match("/tarefa\/listar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
-					<a href="<?php echo base_url() . 'tarefa/listar/' . $_SESSION['Profissional']['idApp_Profissional']; ?>">
-						<span class="glyphicon glyphicon-list-alt"></span> Listar
-					</a>
-				</li>											
-			</ul>
-		</li>
-	
+		</li>	
 	</ul>
 	<ul class="nav nav-sidebar">
 		<li>
