@@ -1,12 +1,20 @@
 <div class="container-fluid">
+
+	<div class="form-group">
+		<div class="row">
+			<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>tarefa/cadastrar" role="button"> 
+				<span class="glyphicon glyphicon-plus"></span> Cadastrar Nova Tarefa
+			</a>
+		</div>	
+	</div>
     <div class="row">
 
         <div>
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-    			<li role="presentation"><a href="#proxima" aria-controls="proxima" role="tab" data-toggle="tab">Concluída.</a></li>
-                <li role="presentation" class="active"><a href="#anterior" aria-controls="anterior" role="tab" data-toggle="tab"><strong>Não</strong> Concluída</a></li>
+    			<li role="presentation"><a href="#proxima" aria-controls="proxima" role="tab" data-toggle="tab">Concluída</a></li>
+                <li role="presentation" class="active"><a href="#anterior" aria-controls="anterior" role="tab" data-toggle="tab">Não Concluída</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -29,23 +37,22 @@
 
                         <br><br>
 
-                        <h3>
-							<span class="glyphicon glyphicon-pencil"></span> <b>Tarefa:</b> <?php echo nl2br($row['ObsTarefa']); ?>                           
-                        </h3>
-						<h4>
-                            <span class="glyphicon glyphicon-calendar"></span> <b>Data Limite:</b> <?php echo $row['DataTarefa']; ?>
+                        <h4>
+                            <span class="glyphicon glyphicon-pencil"></span> <b>Tarefa:</b> <?php echo nl2br($row['ObsTarefa']); ?>							
                         </h4>
-						<br>
+						<p>                           
+							<?php if ($row['DataTarefa']) { ?>
+                            <span class="glyphicon glyphicon-calendar"></span> <b>Criada:</b> <?php echo $row['DataTarefa']; ?> -
+                            <?php } if ($row['DataPrazoTarefa']) { ?>
+                            <span class="glyphicon glyphicon-calendar"></span> <b>Prazo:</b> <?php echo $row['DataPrazoTarefa']; ?>
+                            <?php } ?>						
+						</p>
                         <p>
-                            
-							<?php if ($row['ProfissionalTarefa']) { ?>
-                            <span class="glyphicon glyphicon-user"></span> <b>Responsável:</b> <?php echo $row['ProfissionalTarefa']; ?> -
-                        </p>
-						<p>
-							<?php } if ($row['AprovadoTarefa']) { ?>
+                            <?php if ($row['ProfissionalTarefa']) { ?>
+                            <span class="glyphicon glyphicon-user"></span> <b>Profissional:</b> <?php echo $row['ProfissionalTarefa']; ?> -
+                            <?php } if ($row['AprovadoTarefa']) { ?>
                             <span class="glyphicon glyphicon-thumbs-up"></span> <b>Tarefa Concluída?</b> <?php echo $row['AprovadoTarefa']; ?>
                             <?php } ?>
-
                         </p>
                         
 
@@ -76,24 +83,26 @@
                         </a>
 
                         <br><br>
-						<h3>
-							<span class="glyphicon glyphicon-pencil"></span> <b>Tarefa:</b> <?php echo nl2br($row['ObsTarefa']); ?>                           
-                        </h3>
+
                         <h4>
-							<span class="glyphicon glyphicon-calendar"></span> <b>Data Limite:</b> <?php echo $row['DataTarefa']; ?>                          
+                            <span class="glyphicon glyphicon-pencil"></span> <b>Tarefa:</b> <?php echo nl2br($row['ObsTarefa']); ?>							
                         </h4>
-						<br>
+						<p>                           
+							<?php if ($row['DataTarefa']) { ?>
+                            <span class="glyphicon glyphicon-calendar"></span> <b>Criada:</b> <?php echo $row['DataTarefa']; ?> -
+                            <?php } if ($row['DataPrazoTarefa']) { ?>
+                            <span class="glyphicon glyphicon-calendar"></span> <b>Prazo:</b> <?php echo $row['DataPrazoTarefa']; ?>
+                            <?php } ?>						
+						</p>
+
                         <p>
                             <?php if ($row['ProfissionalTarefa']) { ?>
-                            <span class="glyphicon glyphicon-user"></span> <b>Responsável:</b> <?php echo $row['ProfissionalTarefa']; ?> -
-                        </p>
-						<p>		
-							<?php } if ($row['AprovadoTarefa']) { ?>
-                            <span class="glyphicon glyphicon-thumbs-up"></span> <b>Tarefa Concluída?</b> <?php echo $row['AprovadoTarefa']; ?>
+                            <span class="glyphicon glyphicon-user"></span> <b>Profissional:</b> <?php echo $row['ProfissionalTarefa']; ?> -
+                            <?php } if ($row['AprovadoTarefa']) { ?>
+                            <span class="glyphicon glyphicon-thumbs-down"></span> <b>Tarefa Concluída?</b> <?php echo $row['AprovadoTarefa']; ?>
                             <?php } ?>
 
-                        </p>
-                        
+                        </p>                       
 
                     </div>
 

@@ -197,7 +197,7 @@ class Contato extends CI_Controller {
         $this->load->view('basico/footer');
     }
 
-    public function excluir($id = FALSE) {
+     public function excluir($id = FALSE) {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -206,57 +206,19 @@ class Contato extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $data['query'] = $this->input->post(array(
-            'idApp_Contato',
-            'submit'
-                ), TRUE);
-
-        if ($id) {
-            $data['query'] = $this->Contato_model->get_contato($id);
-            $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'barras');
-            $data['query']['ContatoDataNascimento'] = $this->basico->mascara_data($data['query']['ContatoDataNascimento'], 'barras');
-        }
-
-        $data['select']['Municipio'] = $this->Basico_model->select_municipio();
-        $data['select']['Sexo'] = $this->Basico_model->select_sexo();
-
-        $data['titulo'] = 'Tem certeza que deseja excluir o registro abaixo?';
-        $data['form_open_path'] = 'contato/excluir';
-        $data['readonly'] = 'readonly';
-        $data['disabled'] = 'disabled';
-        $data['panel'] = 'danger';
-        $data['metodo'] = 3;
-
-        $data['tela'] = $this->load->view('contato/form_contato', $data, TRUE);
-
-        #run form validation
-        if ($this->form_validation->run() === FALSE) {
-            $this->load->view('contato/tela_contato', $data);
-        } else {
-
-            if ($data['query']['idApp_Contato'] === FALSE) {
-                $data['msg'] = '?m=2';
-                $this->load->view('contato/form_contato', $data);
-            } else {
-
-                $data['anterior'] = $this->Contato_model->get_contato($data['query']['idApp_Contato']);
-                $data['campos'] = array_keys($data['anterior']);
-
-                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], NULL, $data['campos'], $data['query']['idApp_Contato'], FALSE, TRUE);
-                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Contato', 'DELETE', $data['auditoriaitem']);
-
-                $this->Contato_model->delete_contato($data['query']['idApp_Contato']);
+                $this->Contato_model->delete_contato($id);
 
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'contato' . $data['msg']);
+                redirect(base_url() . 'contato/pesquisar/' . $_SESSION['Empresa']['idApp_Empresa'] . $data['msg']);
                 exit();
-            }
-        }
+            
+        
 
         $this->load->view('basico/footer');
     }
 
+    
     public function pesquisar($id = FALSE) {
 
         if ($this->input->get('m') == 1)

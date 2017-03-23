@@ -24,7 +24,8 @@
 			<a href="<?php echo base_url() . 'contatoprof/pesquisar/' . $_SESSION['Profissional']['idApp_Profissional']; ?>">
 				<span class="fa fa-user-plus"></span> Contatoprofs
 			</a>
-		</li>	
+		</li>
+
 	</ul>
 	<ul class="nav nav-sidebar">
 		<li>

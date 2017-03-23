@@ -14,7 +14,7 @@
 
                 <?php echo form_open($form_open_path, 'role="form"'); ?>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="NomeProduto">Nome do Produto: *</label><br>
                             <input type="text" class="form-control" maxlength="200"
                                    autofocus name="NomeProduto" value="<?php echo $query['NomeProduto'] ?>">
@@ -24,6 +24,15 @@
                             <label for="UnidadeProduto">Unid. de Medida:</label><br>
                             <input type="text" class="form-control" maxlength="20"
                                    autofocus name="UnidadeProduto" value="<?php echo $query['UnidadeProduto'] ?>">
+                        </div>
+						
+						<div class="col-md-3">
+                            <label for="ValorCompraProduto">Valor de Compra: *</label><br>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">R$</span>
+                                <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
+                                       autofocus name="ValorCompraProduto" value="<?php echo $query['ValorCompraProduto'] ?>">
+                            </div>
                         </div>
 						
 						<div class="col-md-3">

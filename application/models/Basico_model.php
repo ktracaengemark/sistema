@@ -319,6 +319,7 @@ class Basico_model extends CI_Model {
                     . 'idTab_Servico, '
                     . 'NomeServico, '
                     . 'ValorVendaServico '
+					. 'ValorCompraServico '
                     . 'FROM '
                     . 'Tab_Servico '
                     . 'WHERE '

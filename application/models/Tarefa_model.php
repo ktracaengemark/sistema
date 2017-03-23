@@ -129,17 +129,18 @@ class Tarefa_model extends CI_Model {
     public function list_tarefa($id, $aprovado, $completo) {
 
         $query = $this->db->query('SELECT '
-            . 'OT.idApp_Tarefa, '
-            . 'OT.DataTarefa, '
-            . 'OT.ProfissionalTarefa, '
-            . 'OT.AprovadoTarefa, '
-            . 'OT.ObsTarefa '
+            . 'TF.idApp_Tarefa, '
+            . 'TF.DataTarefa, '
+			. 'TF.DataPrazoTarefa, '
+            . 'TF.ProfissionalTarefa, '
+            . 'TF.AprovadoTarefa, '
+            . 'TF.ObsTarefa '
             . 'FROM '
-            . 'App_Tarefa AS OT '
+            . 'App_Tarefa AS TF '
             . 'WHERE '
-            . 'OT.idApp_Profissional = ' . $id . ' AND '
-            . 'OT.AprovadoTarefa = "' . $aprovado . '" '
-            . 'ORDER BY OT.DataTarefa DESC ');
+            #. 'TF.idApp_Cliente = ' . $id . ' AND '
+            . 'TF.AprovadoTarefa = "' . $aprovado . '" '
+            . 'ORDER BY TF.DataTarefa DESC ');
         /*
           echo $this->db->last_query();
           echo "<pre>";
@@ -156,6 +157,7 @@ class Tarefa_model extends CI_Model {
 
                 foreach ($query->result() as $row) {
 					$row->DataTarefa = $this->basico->mascara_data($row->DataTarefa, 'barras');
+					$row->DataPrazoTarefa = $this->basico->mascara_data($row->DataPrazoTarefa, 'barras');
                     $row->AprovadoTarefa = $this->basico->mascara_palavra_completa($row->AprovadoTarefa, 'NS');
                     $row->ProfissionalTarefa = $this->get_profissional($row->ProfissionalTarefa);
                 }
@@ -167,16 +169,17 @@ class Tarefa_model extends CI_Model {
     public function list_tarefaBKP($x) {
 
         $query = $this->db->query('SELECT '
-            . 'OT.idApp_Tarefa, '
-            . 'OT.DataTarefa, '
-            . 'OT.ProfissionalTarefa, '
-            . 'OT.AprovadoTarefa, '
-            . 'OT.ObsTarefa '
+            . 'TF.idApp_Tarefa, '
+            . 'TF.DataTarefa, '
+			. 'TF.DataPrazoTarefa, '
+            . 'TF.ProfissionalTarefa, '
+            . 'TF.AprovadoTarefa, '
+            . 'TF.ObsTarefa '
             . 'FROM '
-            . 'App_Tarefa AS OT '
+            . 'App_Tarefa AS TF '
             . 'WHERE '
-            . 'OT.idApp_Profissional = ' . $_SESSION['Tarefa']['idApp_Profissional'] . ' '
-            . 'ORDER BY OT.DataTarefa DESC ');
+            #. 'TF.idApp_Cliente = ' . $_SESSION['Tarefa']['idApp_Cliente'] . ' '
+            . 'ORDER BY TF.DataTarefa DESC ');
         /*
           echo $this->db->last_query();
           echo "<pre>";
@@ -193,6 +196,7 @@ class Tarefa_model extends CI_Model {
 
                 foreach ($query->result() as $row) {
 					$row->DataTarefa = $this->basico->mascara_data($row->DataTarefa, 'barras');
+					$row->DataPrazoTarefa = $this->basico->mascara_data($row->DataPrazoTarefa, 'barras');
                     $row->AprovadoTarefa = $this->basico->mascara_palavra_completa($row->AprovadoTarefa, 'NS');
                     $row->ProfissionalTarefa = $this->get_profissional($row->ProfissionalTarefa);
                 }

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
 
-     <div class="row">
+    <div class="row">
         <div class="col-md-9">
 
             <ul class="nav navbar-nav navbar-left"> 			
@@ -48,9 +48,13 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Anotações<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Consultas, Reuniões & Sessões</a></li>
+						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Orçamentos & Entradas</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>tarefa/cadastrar">Tarefas</a></li>
+						<li><a href="<?php echo base_url() ?>despesa/cadastrar/despesa">Despesas & Saídas</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Consultas & Reuniões</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>tarefa/listar">Tarefas & A Fazer</a></li>
 						<li role="separator" class="divider"></li>
 					</ul>
 				</li>
@@ -58,9 +62,9 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Financeiro<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Orçamentos & Entradas</a></li>
+						<li><a href="<?php echo base_url() ?>relatorio/orcamento">Orçamentos & Pagamentos</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>despesa/cadastrar/despesa">Despesas & Saídas</a></li>
+						<li><a href="<?php echo base_url() ?>relatorio/despesa">Despesas & Saídas</a></li>
 						<li role="separator" class="divider"></li>
 
 					</ul>

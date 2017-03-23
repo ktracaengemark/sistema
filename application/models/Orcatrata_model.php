@@ -131,6 +131,7 @@ class Orcatrata_model extends CI_Model {
         $query = $this->db->query('SELECT '
             . 'OT.idApp_OrcaTrata, '
             . 'OT.DataOrca, '
+			. 'OT.DataPrazo, '
             . 'OT.ProfissionalOrca, '
             . 'OT.AprovadoOrca, '
             . 'OT.ObsOrca '
@@ -156,6 +157,7 @@ class Orcatrata_model extends CI_Model {
 
                 foreach ($query->result() as $row) {
 					$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
+					$row->DataPrazo = $this->basico->mascara_data($row->DataPrazo, 'barras');
                     $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
                     $row->ProfissionalOrca = $this->get_profissional($row->ProfissionalOrca);
                 }
@@ -169,6 +171,7 @@ class Orcatrata_model extends CI_Model {
         $query = $this->db->query('SELECT '
             . 'OT.idApp_OrcaTrata, '
             . 'OT.DataOrca, '
+			. 'OT.DataPrazo, '
             . 'OT.ProfissionalOrca, '
             . 'OT.AprovadoOrca, '
             . 'OT.ObsOrca '
@@ -193,7 +196,8 @@ class Orcatrata_model extends CI_Model {
 
                 foreach ($query->result() as $row) {
 					$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
-                    $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
+					$row->DataPrazo = $this->basico->mascara_data($row->DataPrazo, 'barras');                   
+					$row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
                     $row->ProfissionalOrca = $this->get_profissional($row->ProfissionalOrca);
                 }
 

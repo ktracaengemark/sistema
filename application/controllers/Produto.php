@@ -51,15 +51,17 @@ class Produto extends CI_Controller {
             'idTab_Produto',
             'NomeProduto',
             #'Quantidade',
-            'UnidadeProduto',
-            #'ValorCompra',
+            'UnidadeProduto',          
             'ValorVendaProduto',
+			'ValorCompraProduto',
+			
                 ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         $this->form_validation->set_rules('NomeProduto', 'Nome do Produto', 'required|trim');
         $this->form_validation->set_rules('ValorVendaProduto', 'Valor de Venda', 'required|trim');
+		#$this->form_validation->set_rules('ValorCompraProduto', 'Valor de Compra', 'required|trim');
 
         $data['titulo'] = 'Cadastrar Produto';
         $data['form_open_path'] = 'produto/cadastrar';
@@ -87,8 +89,8 @@ class Produto extends CI_Controller {
 
             $data['query']['NomeProduto'] = trim(mb_strtoupper($data['query']['NomeProduto'], 'ISO-8859-1'));
             #$data['query']['Quantidade'] = str_replace(',','.',str_replace('.','',$data['query']['Quantidade']));
-            #$data['query']['ValorCompra'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompra']));
             $data['query']['ValorVendaProduto'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVendaProduto']));
+			$data['query']['ValorCompraProduto'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraProduto']));
             $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
@@ -130,8 +132,9 @@ class Produto extends CI_Controller {
             'NomeProduto',
             #'Quantidade',
             'UnidadeProduto',
-            #'ValorCompra',
             'ValorVendaProduto',
+			'ValorCompraProduto',
+			
                 ), TRUE));
 
         if ($id)
@@ -141,6 +144,7 @@ class Produto extends CI_Controller {
 
         $this->form_validation->set_rules('NomeProduto', 'Nome do Produto', 'required|trim');
         $this->form_validation->set_rules('ValorVendaProduto', 'Valor de Venda', 'required|trim');
+		#$this->form_validation->set_rules('ValorCompraProduto', 'Valor de Compra', 'required|trim');
 
         $data['titulo'] = 'Editar Produto';
         $data['form_open_path'] = 'produto/alterar';
@@ -170,7 +174,8 @@ class Produto extends CI_Controller {
             #$data['query']['Quantidade'] = str_replace(',','.',str_replace('.','',$data['query']['Quantidade']));
             #$data['query']['ValorCompra'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompra']));
             $data['query']['ValorVendaProduto'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVendaProduto']));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['ValorCompraProduto'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraProduto']));
+			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
             $data['anterior'] = $this->Produto_model->get_produto($data['query']['idTab_Produto']);
             $data['campos'] = array_keys($data['query']);

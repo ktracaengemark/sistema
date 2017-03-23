@@ -516,7 +516,7 @@
 
                                 <div class="form-group" id="3div<?php echo $i ?>">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label for="DataProcedimento<?php echo $i ?>">Data do Procedimento:</label>
                                             <div class="input-group <?php echo $datepicker; ?>">
                                                 <input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
@@ -526,12 +526,22 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+										<div class="col-md-2">
+											<label for="DataProcedimentoLimite<?php echo $i ?>">Data Limite:</label>
+											<div class="input-group <?php echo $datepicker; ?>">
+												<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+													   name="DataProcedimentoLimite<?php echo $i ?>" value="<?php echo $procedimento[$i]['DataProcedimentoLimite']; ?>">
+												<span class="input-group-addon" disabled>
+													<span class="glyphicon glyphicon-calendar"></span>
+												</span>
+											</div>
+										</div>
+                                        <div class="col-md-2">
                                             <label for="Profissional<?php echo $i ?>">Profissional:</label>
                                             <?php if ($i == 1) { ?>
-                                            <a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
+                                            <!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
                                                 <span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
-                                            </a>
+                                            </a>-->
                                             <?php } ?>
                                             <select data-placeholder="Selecione uma opção..." class="form-control"
                                                      id="listadinamicac<?php echo $i ?>" name="Profissional<?php echo $i ?>">
@@ -547,11 +557,39 @@
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="Procedimento<?php echo $i ?>">Procedimento:</label>
                                             <textarea class="form-control" id="Procedimento<?php echo $i ?>" <?php echo $readonly; ?>
                                                       name="Procedimento<?php echo $i ?>"><?php echo $procedimento[$i]['Procedimento']; ?></textarea>
                                         </div>
+										<div class="col-md-2">
+											<label for="ConcluidoProcedimento">Proc. Concl.? </label><br>
+											<div class="form-group">
+												<div class="btn-group" data-toggle="buttons">
+													<?php
+													foreach ($select['ConcluidoProcedimento'] as $key => $row) {
+														(!$procedimento[$i]['ConcluidoProcedimento']) ? $procedimento[$i]['ConcluidoProcedimento'] = 'N' : FALSE;
+
+														if ($procedimento[$i]['ConcluidoProcedimento'] == $key) {
+															echo ''
+															. '<label class="btn btn-warning active" name="radiobutton_ConcluidoProcedimento' . $i . '" id="radiobutton_ConcluidoProcedimento' . $i .  $key . '">'
+															. '<input type="radio" name="ConcluidoProcedimento' . $i . '" id="radiobuttondinamico" '
+															. 'autocomplete="off" value="' . $key . '" checked>' . $row
+															. '</label>'
+															;
+														} else {
+															echo ''
+															. '<label class="btn btn-default" name="radiobutton_ConcluidoProcedimento' . $i . '" id="radiobutton_ConcluidoProcedimento' . $i .  $key . '">'
+															. '<input type="radio" name="ConcluidoProcedimento' . $i . '" id="radiobuttondinamico" '
+															. 'autocomplete="off" value="' . $key . '" >' . $row
+															. '</label>'
+															;
+														}
+													}
+													?>
+												</div>
+											</div>
+										</div>
                                         <div class="col-md-1">
                                             <label><br></label><br>
                                             <button type="button" id="<?php echo $i ?>" class="remove_field3 btn btn-danger">
@@ -693,6 +731,16 @@
                             </div>
 
     						<div class="col-md-2">
+								<label for="DataPrazo">Data do Prazo:</label>
+								<div class="input-group <?php echo $datepicker; ?>">
+									<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+										   autofocus name="DataPrazo" value="<?php echo $orcatrata['DataPrazo']; ?>">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</div>
+							<div class="col-md-2">
     							<label for="DataRetorno">Data do Retorno:</label>
     							<div class="input-group <?php echo $datepicker; ?>">
     								<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"

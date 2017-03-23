@@ -13,7 +13,7 @@ class Relatorio extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Relatorio_model'));
+        $this->load->model(array('Basico_model', 'Profissional_model', 'Relatorio_model'));
         $this->load->driver('session');
 
         #load header view
@@ -483,6 +483,7 @@ class Relatorio extends CI_Controller {
             'QuitadoOrca',
 			'ServicoConcluido',
 			'ConcluidoProcedimento',
+			
         ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -513,24 +514,22 @@ class Relatorio extends CI_Controller {
             'S' => 'Sim',
         );
 
-        $data['select']['Campo'] = array(
-            'C.NomeCliente' => 'Nome do Cliente',
-
-            'OT.idApp_OrcaTrata' => 'Número do Orçamento',
+        $data['select']['Campo'] = array(            
+            'OT.idApp_OrcaTrata' => 'Número do Orçamento',			
+			'C.NomeCliente' => 'Nome do Cliente',
+			'OT.DataOrca' => 'Data do Orçamento',
             'OT.AprovadoOrca' => 'Orçamento Aprovado?',
-            'OT.DataOrca' => 'Data do Orçamento',
-            'OT.ValorOrca' => 'Valor do Orçamento',
-
-            'OT.ServicoConcluido' => 'Serviço Concluído?',
+			'OT.ValorOrca' => 'Valor do Orçamento',
             'OT.QuitadoOrca' => 'Orçamento Quitado?',
+			'OT.ServicoConcluido' => 'Serviço Concluído?',           
             'OT.DataConclusao' => 'Data de Conclusão',
-            'OT.DataRetorno' => 'Renovação',
-			
+            'OT.DataRetorno' => 'Renovação',			
 			'PC.DataProcedimento' => 'Data do Procedimento',
 			'PC.Profissional' => 'Profissional',
-			'PC.Procedimento' => 'Procedimento',
-			'PC.ConcluidoProcedimento' => 'Proc. Concl.?',
-			
+			'PC.Procedimento' => 'Procedimento',			
+			'PC.ConcluidoProcedimento' => 'Proc. Concl.?',			
+			'PC.DataProcedimentoLimite' => 'Data Limite',
+			'OT.DataPrazo' => 'Data Prazo',
         );
 
         $data['select']['Ordenamento'] = array(
@@ -539,7 +538,7 @@ class Relatorio extends CI_Controller {
         );
 
 
-        $data['titulo'] = 'Relatório de Orçam. X Procedimentos';
+        $data['titulo'] = 'Relatório de Orçamentos X Procedimentos';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {

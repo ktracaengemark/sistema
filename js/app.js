@@ -243,7 +243,7 @@ function adicionaProcedimento() {
     $(".input_fields_wrap3").append('\
         <div class="form-group" id="3div'+pc+'">\
             <div class="row">\
-                <div class="col-md-3">\
+                <div class="col-md-2">\
                     <label for="DataProcedimento'+pc+'">Data do Procedimento:</label>\
                     <div class="input-group DatePicker">\
                         <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
@@ -253,7 +253,17 @@ function adicionaProcedimento() {
                         </span>\
                     </div>\
                 </div>\
-                <div class="col-md-3">\
+				<div class="col-md-2">\
+					<label for="DataProcedimentoLimite'+pc+'">Data Limite:</label>\
+					<div class="input-group DatePicker">\
+						<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
+							   name="DataProcedimentoLimite'+pc+'">\
+						<span class="input-group-addon" disabled>\
+							<span class="glyphicon glyphicon-calendar"></span>\
+						</span>\
+					</div>\
+				</div>\
+                <div class="col-md-2">\
                     <label for="Profissional'+pc+'">Profissional:</label>\
                     <select data-placeholder="Selecione uma opção..." class="form-control"\
                              id="listadinamicac'+pc+'" name="Profissional'+pc+'">\
@@ -329,58 +339,68 @@ function adicionaProcedimento() {
  */
 function adicionaProcedtarefa() {
 
-    var pc = $("#PTCount").val(); //initlal text box count
+    var pt = $("#PTCount").val(); //initlal text box count
 
     //alert( $("#SCount").val() );
-    pc++; //text box increment
-    $("#PTCount").val(pc);
-    //console.log(pc);
+    pt++; //text box increment
+    $("#PTCount").val(pt);
+    //console.log(pt);
 
-    if (pc >= 2) {
-        //console.log( $("#listadinamicad"+(pc-1)).val() );
+    if (pt >= 2) {
+        //console.log( $("#listadinamicad"+(pt-1)).val() );
         var chosen;
-        chosen = $("#listadinamicad"+(pc-1)).val();
-        //console.log( chosen + ' :: ' + pc );
+        chosen = $("#listadinamicad"+(pt-1)).val();
+        //console.log( chosen + ' :: ' + pt );
     }
 
     //Captura a data do dia e carrega no campo correspondente
     var currentDate = moment();
 
     $(".input_fields_wrap3").append('\
-        <div class="form-group" id="3div'+pc+'">\
+        <div class="form-group" id="3div'+pt+'">\
             <div class="row">\
-                <div class="col-md-3">\
-                    <label for="DataProcedtarefa'+pc+'">Data da Ação:</label>\
+                <div class="col-md-2">\
+                    <label for="DataProcedtarefa'+pt+'">Data da Ação:</label>\
                     <div class="input-group DatePicker">\
                         <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
-                               name="DataProcedtarefa'+pc+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
+                               name="DataProcedtarefa'+pt+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
                         <span class="input-group-addon" disabled>\
                             <span class="glyphicon glyphicon-calendar"></span>\
                         </span>\
                     </div>\
                 </div>\
-                <div class="col-md-3">\
-                    <label for="Profissional'+pc+'">Profissional:</label>\
+				<div class="col-md-2">\
+					<label for="DataProcedtarefaLimite'+pt+'">Data Limite:</label>\
+					<div class="input-group DatePicker">\
+						<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
+							   name="DataProcedtarefaLimite'+pt+'">\
+						<span class="input-group-addon" disabled>\
+							<span class="glyphicon glyphicon-calendar"></span>\
+						</span>\
+					</div>\
+				</div>\
+                <div class="col-md-2">\
+                    <label for="Profissional'+pt+'">Profissional:</label>\
                     <select data-placeholder="Selecione uma opção..." class="form-control"\
-                             id="listadinamicad'+pc+'" name="Profissional'+pc+'">\
+                             id="listadinamicad'+pt+'" name="Profissional'+pt+'">\
                         <option value="">-- Selecione uma opção --</option>\
                     </select>\
                 </div>\
                 <div class="col-md-3">\
-                    <label for="Procedtarefa'+pc+'">Ação:</label>\
-                    <textarea class="form-control" id="Procedtarefa'+pc+'"\
-                              name="Procedtarefa'+pc+'"></textarea>\
+                    <label for="Procedtarefa'+pt+'">Ação:</label>\
+                    <textarea class="form-control" id="Procedtarefa'+pt+'"\
+                              name="Procedtarefa'+pt+'"></textarea>\
                 </div>\
 				<div class="col-md-2">\
 					<label for="ConcluidoProcedtarefa">Ação Concl.? </label><br>\
 					<div class="form-group">\
 						<div class="btn-group" data-toggle="buttons">\
-							<label class="btn btn-warning active" name="radio_ConcluidoProcedtarefa'+pc+'" id="radio_ConcluidoProcedtarefa'+pc+'N">\
-							<input type="radio" name="ConcluidoProcedtarefa'+pc+'" id="radiogeraldinamico"\
+							<label class="btn btn-warning active" name="radio_ConcluidoProcedtarefa'+pt+'" id="radio_ConcluidoProcedtarefa'+pt+'N">\
+							<input type="radio" name="ConcluidoProcedtarefa'+pt+'" id="radiogeraldinamico"\
 								autocomplete="off" value="N" checked>Não\
 							</label>\
-							<label class="btn btn-default" name="radio_ConcluidoProcedtarefa'+pc+'" id="radio_ConcluidoProcedtarefa'+pc+'S">\
-							<input type="radio" name="ConcluidoProcedtarefa'+pc+'" id="radiogeraldinamico"\
+							<label class="btn btn-default" name="radio_ConcluidoProcedtarefa'+pt+'" id="radio_ConcluidoProcedtarefa'+pt+'S">\
+							<input type="radio" name="ConcluidoProcedtarefa'+pt+'" id="radiogeraldinamico"\
 								autocomplete="off" value="S">Sim\
 							</label>\
 						</div>\
@@ -388,7 +408,7 @@ function adicionaProcedtarefa() {
 				</div>\
                 <div class="col-md-1">\
                     <label><br></label><br>\
-                    <button type="button" id="'+pc+'" class="remove_field3 btn btn-danger">\
+                    <button type="button" id="'+pt+'" class="remove_field3 btn btn-danger">\
                         <span class="glyphicon glyphicon-trash"></span>\
                     </button>\
                 </div>\
@@ -399,7 +419,7 @@ function adicionaProcedtarefa() {
     $('.DatePicker').datetimepicker(dateTimePickerOptions);
 
     //get a reference to the select element
-    $select = $('#listadinamicad'+pc);
+    $select = $('#listadinamicad'+pt);
 
     //request the JSON data and parse into the select element
     $.ajax({
