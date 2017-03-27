@@ -16,26 +16,47 @@ class Relatorio_model extends CI_Model {
 
     public function list_financeiro($data, $completo) {
 
-        /*
-        $consulta = ($data['DataFim']) ? $data['Pesquisa'] . ' <= "' . $data['DataFim'] . '" AND ' : FALSE;
-        ' . $data['Pesquisa'] . ' >= "' . $data['DataInicio'] . '" AND
-        ' . $consulta . '
-        ' . $data['Pesquisa'] . ' ASC,
-        #C.NomeCliente ASC
-        */
-
         if ($data['DataFim']) {
-            $consulta =
-                '(OT.DataEntradaOrca >= "' . $data['DataInicio'] . '" AND OT.DataEntradaOrca <= "' . $data['DataFim'] . '") OR
-                (PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '" AND PR.DataVencimentoRecebiveis <= "' . $data['DataFim'] . '")';
+            $consulta1 =
+                '(OT.DataEntradaOrca >= "' . $data['DataInicio'] . '" AND OT.DataEntradaOrca <= "' . $data['DataFim'] . '")';
+
+            $consulta2 =
+                '(PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '" AND PR.DataVencimentoRecebiveis <= "' . $data['DataFim'] . '")';
         }
         else {
-            $consulta =
-                '(OT.DataEntradaOrca >= "' . $data['DataInicio'] . '") OR
-                (PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '")';
+            $consulta1 =
+                '(OT.DataEntradaOrca >= "' . $data['DataInicio'] . '")';
+
+            $consulta2 =
+                '(PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '")';
         }
 
-        $query = $this->db->query('
+        $query1 = $this->db->query('
+            SELECT
+                C.NomeCliente,
+
+                OT.idApp_OrcaTrata,
+                OT.AprovadoOrca,
+                OT.DataOrca,
+                OT.DataEntradaOrca,
+                OT.ValorEntradaOrca
+
+            FROM
+                App_Cliente AS C,
+                App_OrcaTrata AS OT
+
+            WHERE
+                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                (' . $consulta1 . ') AND
+                OT.AprovadoOrca = "S" AND
+                C.idApp_Cliente = OT.idApp_Cliente
+
+            ORDER BY
+                OT.DataOrca ASC,
+                C.NomeCliente ASC
+        ');
+
+        $query2 = $this->db->query('
             SELECT
                 C.NomeCliente,
 
@@ -54,12 +75,15 @@ class Relatorio_model extends CI_Model {
 
             FROM
                 App_Cliente AS C,
+                App_ParcelasRecebiveis AS PR,
                 App_OrcaTrata AS OT
-                    LEFT JOIN App_ParcelasRecebiveis AS PR ON OT.idApp_OrcaTrata = PR.idApp_OrcaTrata
 
             WHERE
                 C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-                (' . $consulta . ') AND
+                (
+                    (' . $consulta2 . ') AND
+                    OT.idApp_OrcaTrata = PR.idApp_OrcaTrata
+                ) AND
                 OT.AprovadoOrca = "S" AND
                 C.idApp_Cliente = OT.idApp_Cliente
 
@@ -69,27 +93,101 @@ class Relatorio_model extends CI_Model {
                 C.NomeCliente ASC
         ');
 
-        /*
-          echo $this->db->last_query();
-          echo "<pre>";
-          print_r($query);
-          echo "</pre>";
-          exit();
-          */
+        #$query = array_merge($query1, $query2);
 
         if ($completo === FALSE) {
             return TRUE;
         } else {
 
             $somaentrada=$somareceber=$somapago=$somareal=$balanco=$ant=0;
-            foreach ($query->result() as $row) {
-				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
-                $row->DataEntradaOrca = $this->basico->mascara_data($row->DataEntradaOrca, 'barras');
-                $row->DataVencimentoRecebiveis = $this->basico->mascara_data($row->DataVencimentoRecebiveis, 'barras');
-                $row->DataPagoRecebiveis = $this->basico->mascara_data($row->DataPagoRecebiveis, 'barras');
+            #$query = new stdClass();
+            #$query->soma = new stdClass();
+            $query = array();
+            $i=0;
 
-                $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
-                $row->QuitadoRecebiveis = $this->basico->mascara_palavra_completa($row->QuitadoRecebiveis, 'NS');
+            /*
+            foreach ($query1->result() as $row) {
+                $query->$i = new stdClass();
+                $query['report'][$i]['NomeCliente = $row->NomeCliente;
+                $i++;
+            }
+
+            foreach ($query2->result() as $row) {
+                $query->$i = new stdClass();
+                $query['report'][$i]['NomeCliente = $row->NomeCliente;
+                $i++;
+            }
+
+
+            echo "<pre>";
+            print_r($query);
+            echo "</pre>";
+            exit();
+            */
+
+            #Query1
+            foreach ($query1->result() as $row) {
+                #$query['report'][$i] = new stdClass();
+
+                $query['report'][$i]['NomeCliente'] = $row->NomeCliente;
+
+                $query['report'][$i]['idApp_OrcaTrata'] = $row->idApp_OrcaTrata;
+                $query['report'][$i]['AprovadoOrca'] = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
+                $query['report'][$i]['DataOrca'] = $this->basico->mascara_data($row->DataOrca, 'barras');
+                $query['report'][$i]['DataEntradaOrca'] = $this->basico->mascara_data($row->DataEntradaOrca, 'barras');
+
+                $query['report'][$i]['ParcelaRecebiveis'] = FALSE;
+                $query['report'][$i]['DataVencimentoRecebiveis'] = FALSE;
+                $query['report'][$i]['ValorParcelaRecebiveis'] = FALSE;
+                $query['report'][$i]['DataPagoRecebiveis'] = FALSE;
+                $query['report'][$i]['ValorPagoRecebiveis'] = FALSE;
+                $query['report'][$i]['QuitadoRecebiveis'] = FALSE;
+
+                #esse trecho pode ser melhorado, serve para somar apenas uma vez
+                #o valor da entrada que pode aparecer mais de uma vez
+                if ($ant != $row->idApp_OrcaTrata) {
+                    $ant = $row->idApp_OrcaTrata;
+                    $somaentrada += $row->ValorEntradaOrca;
+                }
+                else {
+                    $row->ValorEntradaOrca = FALSE;
+                    $row->DataEntradaOrca = FALSE;
+                }
+
+                $query['report'][$i]['ValorEntradaOrca'] = number_format($row->ValorEntradaOrca, 2, ',', '.');
+
+                $i++;
+            }
+            $somareceber -= $somapago;
+            $somareal = $somapago + $somaentrada;
+            $balanco = $somapago + $somareceber + $somaentrada;
+
+            /*
+            $query['somareceber'] = number_format($somareceber, 2, ',', '.');
+            $query['somapago'] = number_format($somapago, 2, ',', '.');
+            $query['somareal'] = number_format($somareal, 2, ',', '.');
+            $query['somaentrada'] = number_format($somaentrada, 2, ',', '.');
+            $query['balanco'] = number_format($balanco, 2, ',', '.');
+            */
+
+            #Query2
+            foreach ($query2->result() as $row) {
+                #$query->$i = new stdClass();
+
+                $query['report'][$i]['NomeCliente'] = $row->NomeCliente;
+
+                $query['report'][$i]['idApp_OrcaTrata'] = $row->idApp_OrcaTrata;
+                $query['report'][$i]['AprovadoOrca'] = $row->AprovadoOrca;
+                $query['report'][$i]['DataOrca'] = $this->basico->mascara_data($row->DataOrca, 'barras');
+                $query['report'][$i]['DataEntradaOrca'] = $this->basico->mascara_data($row->DataEntradaOrca, 'barras');
+
+                $query['report'][$i]['DataVencimentoRecebiveis'] = $this->basico->mascara_data($row->DataVencimentoRecebiveis, 'barras');
+                $query['report'][$i]['DataPagoRecebiveis'] = $this->basico->mascara_data($row->DataPagoRecebiveis, 'barras');
+
+                $query['report'][$i]['AprovadoOrca'] = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
+                $query['report'][$i]['QuitadoRecebiveis'] = $this->basico->mascara_palavra_completa($row->QuitadoRecebiveis, 'NS');
+
+                $query['report'][$i]['ParcelaRecebiveis'] = $row->ParcelaRecebiveis;
 
                 #esse trecho pode ser melhorado, serve para somar apenas uma vez
                 #o valor da entrada que pode aparecer mais de uma vez
@@ -105,20 +203,31 @@ class Relatorio_model extends CI_Model {
                 $somapago += $row->ValorPagoRecebiveis;
                 $somareceber += $row->ValorParcelaRecebiveis;
 
-                $row->ValorEntradaOrca = number_format($row->ValorEntradaOrca, 2, ',', '.');
-                $row->ValorParcelaRecebiveis = number_format($row->ValorParcelaRecebiveis, 2, ',', '.');
-                $row->ValorPagoRecebiveis = number_format($row->ValorPagoRecebiveis, 2, ',', '.');
+                $query['report'][$i]['ValorEntradaOrca'] = number_format($row->ValorEntradaOrca, 2, ',', '.');
+                $query['report'][$i]['ValorParcelaRecebiveis'] = number_format($row->ValorParcelaRecebiveis, 2, ',', '.');
+                $query['report'][$i]['ValorPagoRecebiveis'] = number_format($row->ValorPagoRecebiveis, 2, ',', '.');
+
+
+                $i++;
             }
             $somareceber -= $somapago;
             $somareal = $somapago + $somaentrada;
             $balanco = $somapago + $somareceber + $somaentrada;
 
-            $query->soma = new stdClass();
-            $query->soma->somareceber = number_format($somareceber, 2, ',', '.');
-            $query->soma->somapago = number_format($somapago, 2, ',', '.');
-            $query->soma->somareal = number_format($somareal, 2, ',', '.');
-            $query->soma->somaentrada = number_format($somaentrada, 2, ',', '.');
-            $query->soma->balanco = number_format($balanco, 2, ',', '.');
+            #$query->soma = new stdClass();
+            $query['somareceber'] = number_format($somareceber, 2, ',', '.');
+            $query['somapago'] = number_format($somapago, 2, ',', '.');
+            $query['somareal'] = number_format($somareal, 2, ',', '.');
+            $query['somaentrada'] = number_format($somaentrada, 2, ',', '.');
+            $query['balanco'] = number_format($balanco, 2, ',', '.');
+
+            /*
+            #echo $this->db->last_query();
+            echo "<pre>";
+            print_r($query);
+            echo "</pre>";
+            exit();
+            */
 
             return $query;
         }
@@ -202,7 +311,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_despesa($data, $completo) {
 
         if ($data['DataFim']) {
@@ -227,7 +336,7 @@ class Relatorio_model extends CI_Model {
 				FP.FormaPag,
 				E.NomeEmpresa AS Empresa
 
-            FROM                
+            FROM
                 App_Despesa AS D
                     LEFT JOIN Tab_TipoDespesa AS TD ON TD.idTab_TipoDespesa = D.TipoDespesa
                     LEFT JOIN Tab_FormaPag    AS FP ON FP.idTab_FormaPag    = D.FormaPag
@@ -329,7 +438,7 @@ class Relatorio_model extends CI_Model {
 
                 #$row->Sexo = $this->basico->get_sexo($row->Sexo);
                 #$row->Sexo = ($row->Sexo == 2) ? 'F' : 'M';
-                
+
                 $row->Telefone = ($row->Telefone1) ? $row->Telefone1 : FALSE;
                 $row->Telefone .= ($row->Telefone2) ? ' / ' . $row->Telefone2 : FALSE;
                 $row->Telefone .= ($row->Telefone3) ? ' / ' . $row->Telefone3 : FALSE;
@@ -393,7 +502,7 @@ class Relatorio_model extends CI_Model {
 
                 #$row->Sexo = $this->basico->get_sexo($row->Sexo);
                 #$row->Sexo = ($row->Sexo == 2) ? 'F' : 'M';
-                
+
                 $row->Telefone = ($row->Telefone1) ? $row->Telefone1 : FALSE;
                 $row->Telefone .= ($row->Telefone2) ? ' / ' . $row->Telefone2 : FALSE;
                 $row->Telefone .= ($row->Telefone3) ? ' / ' . $row->Telefone3 : FALSE;
@@ -404,7 +513,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_empresas($data, $completo) {
 
         $data['Campo'] = (!$data['Campo']) ? 'E.NomeEmpresa' : $data['Campo'];
@@ -457,7 +566,7 @@ class Relatorio_model extends CI_Model {
 
                 #$row->Sexo = $this->basico->get_sexo($row->Sexo);
                 #$row->Sexo = ($row->Sexo == 2) ? 'F' : 'M';
-                
+
                 $row->Telefone = ($row->Telefone1) ? $row->Telefone1 : FALSE;
                 $row->Telefone .= ($row->Telefone2) ? ' / ' . $row->Telefone2 : FALSE;
                 $row->Telefone .= ($row->Telefone3) ? ' / ' . $row->Telefone3 : FALSE;
@@ -468,7 +577,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_orcamentopc($data, $completo) {
 
         if ($data['DataFim']) {
@@ -484,8 +593,8 @@ class Relatorio_model extends CI_Model {
         $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ServicoConcluido'] != '#') ? 'OT.ServicoConcluido = "' . $data['ServicoConcluido'] . '" AND ' : FALSE;
 		$filtro4 = ($data['ConcluidoProcedimento'] != '#') ? 'PC.ConcluidoProcedimento = "' . $data['ConcluidoProcedimento'] . '" AND ' : FALSE;
-		
-		
+
+
         $query = $this->db->query('
             SELECT
                 C.NomeCliente,
@@ -500,9 +609,9 @@ class Relatorio_model extends CI_Model {
                 OT.QuitadoOrca,
                 OT.DataConclusao,
                 OT.DataRetorno,
-				
+
 				PC.DataProcedimento,
-				PR.NomeProfissional,				
+				PR.NomeProfissional,
 				PC.Procedimento,
 				PC.ConcluidoProcedimento,
 				PC.DataProcedimentoLimite
@@ -512,14 +621,14 @@ class Relatorio_model extends CI_Model {
                 App_OrcaTrata AS OT
 					LEFT JOIN App_Procedimento AS PC ON OT.idApp_OrcaTrata = PC.idApp_OrcaTrata
 					LEFT JOIN App_Profissional AS PR ON PR.idApp_Profissional = PC.Profissional
-					
+
 			WHERE
                 C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
                 (' . $consulta . ') AND
                 ' . $filtro1 . '
                 ' . $filtro2 . '
 				' . $filtro3 . '
-				' . $filtro4 . '			
+				' . $filtro4 . '
                 C.idApp_Cliente = OT.idApp_Cliente
 
             ORDER BY
@@ -544,7 +653,7 @@ class Relatorio_model extends CI_Model {
                 $row->DataPrazo = $this->basico->mascara_data($row->DataPrazo, 'barras');
 				$row->DataConclusao = $this->basico->mascara_data($row->DataConclusao, 'barras');
                 $row->DataRetorno = $this->basico->mascara_data($row->DataRetorno, 'barras');
-				
+
                 $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
                 $row->ServicoConcluido = $this->basico->mascara_palavra_completa($row->ServicoConcluido, 'NS');
                 $row->QuitadoOrca = $this->basico->mascara_palavra_completa($row->QuitadoOrca, 'NS');
@@ -552,7 +661,7 @@ class Relatorio_model extends CI_Model {
 				$row->DataProcedimento = $this->basico->mascara_data($row->DataProcedimento, 'barras');
 				$row->ConcluidoProcedimento = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimento, 'NS');
                 $row->DataProcedimentoLimite = $this->basico->mascara_data($row->DataProcedimentoLimite, 'barras');
-				
+
 				$somaorcamento += $row->ValorOrca;
 
                 $row->ValorOrca = number_format($row->ValorOrca, 2, ',', '.');
@@ -565,5 +674,5 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 }

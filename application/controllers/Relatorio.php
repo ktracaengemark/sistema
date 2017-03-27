@@ -182,7 +182,7 @@ class Relatorio extends CI_Controller {
 
 
     }
-	
+
 	public function despesa() {
 
         if ($this->input->get('m') == 1)
@@ -205,7 +205,7 @@ class Relatorio extends CI_Controller {
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
-		
+
 		/*
         $data['select']['AprovadoOrca'] = array(
             '#' => 'TODOS',
@@ -219,9 +219,9 @@ class Relatorio extends CI_Controller {
             'S' => 'Sim',
         );
 		*/
-		
+
         $data['select']['Campo'] = array(
-            
+
             'D.idApp_Despesa' => 'Número da Despesa',
 			'D.Despesa' => 'Desc. da Despesa',
             'D.TipoDespesa' => 'Tipo de Despesa',
@@ -340,7 +340,7 @@ class Relatorio extends CI_Controller {
 
 
     }
-	
+
 	public function profissionais() {
 
         if ($this->input->get('m') == 1)
@@ -403,7 +403,7 @@ class Relatorio extends CI_Controller {
 
 
     }
-	
+
 	public function empresas() {
 
         if ($this->input->get('m') == 1)
@@ -464,7 +464,7 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-	
+
 	public function orcamentopc() {
 
         if ($this->input->get('m') == 1)
@@ -483,7 +483,7 @@ class Relatorio extends CI_Controller {
             'QuitadoOrca',
 			'ServicoConcluido',
 			'ConcluidoProcedimento',
-			
+
         ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -502,7 +502,7 @@ class Relatorio extends CI_Controller {
             'N' => 'Não',
             'S' => 'Sim',
         );
-		
+
 		$data['select']['ServicoConcluido'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
@@ -514,20 +514,20 @@ class Relatorio extends CI_Controller {
             'S' => 'Sim',
         );
 
-        $data['select']['Campo'] = array(            
-            'OT.idApp_OrcaTrata' => 'Número do Orçamento',			
+        $data['select']['Campo'] = array(
+            'OT.idApp_OrcaTrata' => 'Número do Orçamento',
 			'C.NomeCliente' => 'Nome do Cliente',
 			'OT.DataOrca' => 'Data do Orçamento',
             'OT.AprovadoOrca' => 'Orçamento Aprovado?',
 			'OT.ValorOrca' => 'Valor do Orçamento',
             'OT.QuitadoOrca' => 'Orçamento Quitado?',
-			'OT.ServicoConcluido' => 'Serviço Concluído?',           
+			'OT.ServicoConcluido' => 'Serviço Concluído?',
             'OT.DataConclusao' => 'Data de Conclusão',
-            'OT.DataRetorno' => 'Renovação',			
+            'OT.DataRetorno' => 'Renovação',
 			'PC.DataProcedimento' => 'Data do Procedimento',
 			'PC.Profissional' => 'Profissional',
-			'PC.Procedimento' => 'Procedimento',			
-			'PC.ConcluidoProcedimento' => 'Proc. Concl.?',			
+			'PC.Procedimento' => 'Procedimento',
+			'PC.ConcluidoProcedimento' => 'Proc. Concl.?',
 			'PC.DataProcedimentoLimite' => 'Data Limite',
 			'OT.DataPrazo' => 'Data Prazo',
         );
@@ -553,9 +553,9 @@ class Relatorio extends CI_Controller {
             $data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
 			$data['bd']['ServicoConcluido'] = $data['query']['ServicoConcluido'];
 			$data['bd']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
-			
+
 			#$data['bd']['DataProcedimento'] = $this->basico->mascara_data($data['query']['DataProcedimento'], 'mysql');
-			
+
 
             $data['report'] = $this->Relatorio_model->list_orcamentopc($data['bd'],TRUE);
 
@@ -577,6 +577,6 @@ class Relatorio extends CI_Controller {
 
 
     }
-	
+
 
 }
