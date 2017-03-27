@@ -128,19 +128,22 @@ class Tarefa_model extends CI_Model {
 
     public function list_tarefa($id, $aprovado, $completo) {
 
-        $query = $this->db->query('SELECT '
-            . 'TF.idApp_Tarefa, '
-            . 'TF.DataTarefa, '
-			. 'TF.DataPrazoTarefa, '
-            . 'TF.ProfissionalTarefa, '
-            . 'TF.AprovadoTarefa, '
-            . 'TF.ObsTarefa '
-            . 'FROM '
-            . 'App_Tarefa AS TF '
-            . 'WHERE '
-            #. 'TF.idApp_Cliente = ' . $id . ' AND '
-            . 'TF.AprovadoTarefa = "' . $aprovado . '" '
-            . 'ORDER BY TF.DataTarefa DESC ');
+        $query = $this->db->query('
+            SELECT
+                TF.idApp_Tarefa,
+                TF.DataTarefa,
+    			TF.DataPrazoTarefa,
+                TF.ProfissionalTarefa,
+                TF.AprovadoTarefa,
+                TF.ObsTarefa
+            FROM
+                App_Tarefa AS TF
+            WHERE
+                TF.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                TF.AprovadoTarefa = "' . $aprovado . '"
+            ORDER BY
+                TF.DataTarefa DESC
+        ');
         /*
           echo $this->db->last_query();
           echo "<pre>";
