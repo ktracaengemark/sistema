@@ -253,16 +253,6 @@ function adicionaProcedimento() {
                         </span>\
                     </div>\
                 </div>\
-				<div class="col-md-2">\
-					<label for="DataProcedimentoLimite'+pc+'">Data Limite:</label>\
-					<div class="input-group DatePicker">\
-						<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
-							   name="DataProcedimentoLimite'+pc+'">\
-						<span class="input-group-addon" disabled>\
-							<span class="glyphicon glyphicon-calendar"></span>\
-						</span>\
-					</div>\
-				</div>\
                 <div class="col-md-2">\
                     <label for="Profissional'+pc+'">Profissional:</label>\
                     <select data-placeholder="Selecione uma opção..." class="form-control"\
@@ -369,16 +359,6 @@ function adicionaProcedtarefa() {
                         </span>\
                     </div>\
                 </div>\
-				<div class="col-md-2">\
-					<label for="DataProcedtarefaLimite'+pt+'">Data Limite:</label>\
-					<div class="input-group DatePicker">\
-						<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
-							   name="DataProcedtarefaLimite'+pt+'">\
-						<span class="input-group-addon" disabled>\
-							<span class="glyphicon glyphicon-calendar"></span>\
-						</span>\
-					</div>\
-				</div>\
                 <div class="col-md-2">\
                     <label for="Profissional'+pt+'">Profissional:</label>\
                     <select data-placeholder="Selecione uma opção..." class="form-control"\

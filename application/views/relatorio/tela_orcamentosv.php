@@ -12,7 +12,7 @@
                 <div class="panel-heading"><strong><?php echo $titulo; ?></strong></div>
                 <div class="panel-body">
 
-                    <?php echo form_open('relatorio/orcamentopc', 'role="form"'); ?>
+                    <?php echo form_open('relatorio/orcamentosv', 'role="form"'); ?>
 
                     <div class="form-group">
                         <div class="row">

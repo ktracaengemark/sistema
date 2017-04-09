@@ -7,7 +7,17 @@
 <div class="col-md-2">
     
     <div id="datepickerinline"></div>    
-    
+	<div class="form-group">
+		<div class="row">
+			<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>tarefa/listar" role="button"> 
+				<span class="glyphicon glyphicon-list"></span> Listar Tarefa
+			</a>
+		<hr>	
+			<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>tarefa/cadastrar" role="button"> 
+				<span class="glyphicon glyphicon-plus"></span> Nova Tarefa
+			</a>
+		</div>	
+	</div>    
     <table class="table table-condensed table-bordered">
         <tr class="active text-active">
             <th colspan="2" class="col-md-12 text-center"><b>Estatísticas - <?php echo date('m/Y', time()) ?></b></th>

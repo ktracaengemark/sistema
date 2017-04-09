@@ -16,10 +16,10 @@
 						<th class="active">Orçam. Quitado?</th>-->
                         <th class="active">Serviço Concl.?</th>
                         <th class="active">Data Conclusão</th>
-						<!--<th class="active">Data Retorno</th>
-						<th class="active">Produto.</th>-->
+						<!--<th class="active">Data Retorno</th>-->
+						<th class="active">Serviço</th>
+						<th class="active">Data Proced.</th>
 						<th class="active">Profis.</th>
-						<th class="active">Data Proced.</th>						
 						<th class="active">Procedimento</th>
 						<th class="active">Proced. Conl.?</th>
 						
@@ -43,9 +43,9 @@
                             echo '<td>' . $row['ServicoConcluido'] . '</td>';
                             echo '<td>' . $row['DataConclusao'] . '</td>';
 							#echo '<td>' . $row['DataRetorno'] . '</td>';
-							#echo '<td>' . $row['NomeProduto'] . '</td>';
+							echo '<td>' . $row['NomeServico'] . '</td>';
+							echo '<td>' . $row['DataProcedimento'] . '</td>';
 							echo '<td>' . $row['NomeProfissional'] . '</td>';
-							echo '<td>' . $row['DataProcedimento'] . '</td>';							
 							echo '<td>' . $row['Procedimento'] . '</td>';
 							echo '<td>' . $row['ConcluidoProcedimento'] . '</td>';
 							

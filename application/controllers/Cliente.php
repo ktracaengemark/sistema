@@ -66,8 +66,8 @@ class Cliente extends CI_Controller {
             'Obs',
 			'Email',
 
-
             'RegistroFicha',
+			'Associado',
         ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -80,7 +80,8 @@ class Cliente extends CI_Controller {
 
         $data['select']['Municipio'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
-
+		$data['select']['Associado'] = $this->Basico_model->select_status_sn();
+		
         $data['titulo'] = 'Cadastrar Cliente';
         $data['form_open_path'] = 'cliente/cadastrar';
         $data['readonly'] = '';
@@ -161,6 +162,7 @@ class Cliente extends CI_Controller {
             'idSis_Usuario',
             'Email',
             'RegistroFicha',
+			'Associado',
         ), TRUE);
 
         if ($id) {
@@ -178,7 +180,8 @@ class Cliente extends CI_Controller {
 
         $data['select']['Municipio'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
-
+		$data['select']['Associado'] = $this->Basico_model->select_status_sn();
+		
         $data['titulo'] = 'Editar Dados';
         $data['form_open_path'] = 'cliente/alterar';
         $data['readonly'] = '';

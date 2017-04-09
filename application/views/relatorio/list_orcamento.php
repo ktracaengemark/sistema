@@ -18,6 +18,8 @@
 
                         <th class="active">Data Conclusão</th>
                         <th class="active">Data Retorno</th>
+						<th class="active">Profissional</th>
+
                     </tr>
                 </thead>
 
@@ -39,6 +41,9 @@
 
                             echo '<td>' . $row['DataConclusao'] . '</td>';
                             echo '<td>' . $row['DataRetorno'] . '</td>';
+							echo '<td>' . $row['NomeProfissional'] . '</td>';
+
+							
                         echo '</tr>';
                     }
                     ?>

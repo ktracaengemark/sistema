@@ -7,7 +7,7 @@
             <label for="DataFim">Total Entrada/À vista:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total Entrada" value="<?php echo $report['somaentrada'] ?>">
+                <input type="text" class="form-control" disabled aria-label="Total Entrada" value="<?php echo $report->soma->somaentrada ?>">
             </div>
         </div>
 
@@ -15,7 +15,7 @@
             <label for="DataFim">Total Pago:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total Pago" value="<?php echo $report['somapago'] ?>">
+                <input type="text" class="form-control" disabled aria-label="Total Pago" value="<?php echo $report->soma->somapago ?>">
             </div>
         </div>
 
@@ -23,7 +23,7 @@
             <label for="DataFim">Total Real/Caixa:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total Real" value="<?php echo $report['somareal'] ?>">
+                <input type="text" class="form-control" disabled aria-label="Total Real" value="<?php echo $report->soma->somareal ?>">
             </div>
         </div>
 
@@ -31,7 +31,7 @@
             <label for="DataFim">Total a receber:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total a receber" value="<?php echo $report['somareceber'] ?>">
+                <input type="text" class="form-control" disabled aria-label="Total a receber" value="<?php echo $report->soma->somareceber ?>">
             </div>
         </div>
 
@@ -39,7 +39,7 @@
             <label for="DataFim">Balanço do Período:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total do Período" value="<?php echo $report['balanco'] ?>">
+                <input type="text" class="form-control" disabled aria-label="Total do Período" value="<?php echo $report->soma->balanco ?>">
             </div>
         </div>
 
@@ -75,8 +75,7 @@
                 <tbody>
 
                     <?php
-                    $i=0;
-                    foreach ($report['report'] as $row) {
+                    foreach ($report->result_array() as $row) {
 
                         #echo '<tr>';
                         echo '<tr class="clickable-row" data-href="' . base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] . '">';
@@ -95,8 +94,6 @@
                             echo '<td class="text-right">R$ ' . $row['ValorPagoRecebiveis'] . '</td>';
                             echo '<td>' . $row['QuitadoRecebiveis'] . '</td>';
                         echo '</tr>';
-
-                        $i++;
                     }
                     ?>
 
@@ -104,7 +101,7 @@
 
                 <tfoot>
                     <tr>
-                        <th colspan="12" class="active">Total encontrado: <?php echo $i; ?> resultado(s)</th>
+                        <th colspan="12" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
                     </tr>
                 </tfoot>
             </table>

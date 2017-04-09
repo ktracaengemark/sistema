@@ -108,6 +108,7 @@ class Profissional_model extends CI_Model {
                     . 'WHERE '
                     . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                     . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] );
+					
         } else {
             $query = $this->db->query('SELECT idApp_Profissional, NomeProfissional FROM App_Profissional WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
             

@@ -63,7 +63,35 @@
 								   name="Email" value="<?php echo $query['Email']; ?>">
 						</div>
                     </div>
-                </div>                                  
+                </div>
+				<div class="col-md-2">
+					<label for="Associado">Associado?</label><br>
+					<div class="form-group">
+						<div class="btn-group" data-toggle="buttons">
+							<?php
+							foreach ($select['Associado'] as $key => $row) {
+								(!$query['Associado']) ? $query['Associado'] = 'N' : FALSE;
+
+								if ($query['Associado'] == $key) {
+									echo ''
+									. '<label class="btn btn-warning active" name="radiobutton_Associado" id="radiobutton_Associado' . $key . '">'
+									. '<input type="radio" name="Associado" id="radiobutton" '
+									. 'autocomplete="off" value="' . $key . '" checked>' . $row
+									. '</label>'
+									;
+								} else {
+									echo ''
+									. '<label class="btn btn-default" name="radiobutton_Associado" id="radiobutton_Associado' . $key . '">'
+									. '<input type="radio" name="Associado" id="radiobutton" '
+									. 'autocomplete="off" value="' . $key . '" >' . $row
+									. '</label>'
+									;
+								}
+							}
+							?>
+						</div>
+					</div>
+				</div>
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-12 text-center">
