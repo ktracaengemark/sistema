@@ -301,7 +301,8 @@ class Relatorio extends CI_Controller {
 
 
         $data['select']['Campo'] = array(
-            'C.NomeCliente' => 'Nome do Cliente',
+            'C.idApp_Cliente' => 'nº Cliente',
+			'C.NomeCliente' => 'Nome do Cliente',
             'C.DataNascimento' => 'Data de Nascimento',
             'C.Sexo' => 'Sexo',
             'C.Bairro' => 'Bairro',
@@ -609,6 +610,7 @@ class Relatorio extends CI_Controller {
             'Campo',
             'AprovadoTarefa',
             'QuitadoTarefa',
+			'ServicoConcluido',
         ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -635,7 +637,8 @@ class Relatorio extends CI_Controller {
 			'TF.idApp_Tarefa' => 'Número do Tarefas',
 			'TF.ObsTarefa' => 'Tarefa',
             'TF.DataTarefa' => 'Data do Tarefa',
-            'TF.QuitadoTarefa' => 'É Prioridade?',
+            'TF.ServicoConcluido' => 'É Rotina?',
+			'TF.QuitadoTarefa' => 'É Prioridade?',
 			'TF.DataPrazoTarefa' => 'Prazo da Tarefa',
 			'TF.AprovadoTarefa' => 'Tarefa Concl.?',			
 			'TF.DataConclusao' => 'Data da Concl.',
@@ -665,6 +668,7 @@ class Relatorio extends CI_Controller {
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoTarefa'] = $data['query']['AprovadoTarefa'];
             $data['bd']['QuitadoTarefa'] = $data['query']['QuitadoTarefa'];
+			$data['bd']['ServicoConcluido'] = $data['query']['ServicoConcluido'];
 
             $data['report'] = $this->Relatorio_model->list_tarefa($data['bd'],TRUE);
 

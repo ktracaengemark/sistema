@@ -10,6 +10,7 @@
                         
 						<th class="active">N.Tarefa</th>
 						<th class="active">Criada em:</th>
+						<th class="active">Rotina?:</th>
 						<th class="active">Prioridade?</th>
 						<th class="active">Prazo de Conclusão</th>
 						
@@ -34,6 +35,7 @@
                         echo '<tr class="clickable-row" data-href="' . base_url() . 'tarefa/alterar/' . $row['idApp_Tarefa'] . '">';
                             echo '<td>' . $row['idApp_Tarefa'] . '</td>';
 							echo '<td>' . $row['DataTarefa'] . '</td>';
+							echo '<td>' . $row['ServicoConcluido'] . '</td>'; // = Rotina
 							echo '<td>' . $row['QuitadoTarefa'] . '</td>'; // = Prioridade
 							echo '<td>' . $row['DataPrazoTarefa'] . '</td>';
 							

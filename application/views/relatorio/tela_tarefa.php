@@ -37,7 +37,7 @@
                                     </span>
                                 </div>
                             </div>
-
+						<!--
                             <div class="col-md-1">
                                 <label for="AprovadoTarefa">Concluída</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -108,7 +108,7 @@
                                 </div>
 
                             </div>
-
+						-->
                         </div>
                     </div>
 
