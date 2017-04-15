@@ -32,6 +32,21 @@
                                     ?>
                                 </select>
                             </div>
+							<div class="col-md-2">
+                                <label for="Ordenamento">Nome do Profissional:</label>
+                                <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+                                        id="NomeProfissional" name="NomeProfissional">
+                                    <?php
+                                    foreach ($select['NomeProfissional'] as $key => $row) {
+                                        if ($query['NomeProfissional'] == $key) {
+                                            echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+                                        } else {
+                                            echo '<option value="' . $key . '">' . $row . '</option>';
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
 
                             <div class="col-md-2">
                                 <label for="DataInicio">Data Orçam.- Início: *</label>

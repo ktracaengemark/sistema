@@ -203,7 +203,8 @@ class Relatorio extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = quotes_to_entities($this->input->post(array(
-            'DataInicio',
+            'TipoDespesa',
+			'DataInicio',
             'DataFim',
             'Ordenamento',
             'Campo',
@@ -252,14 +253,16 @@ class Relatorio extends CI_Controller {
             'DESC' => 'Decrescente',
         );
 
-
+		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipodespesa();
+		
         $data['titulo'] = 'Relatório de Despesas';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
 
             #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
-            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
+			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 
             $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
@@ -503,6 +506,7 @@ class Relatorio extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'NomeCliente',
+			'NomeProfissional',
             'DataInicio',
             'DataFim',
             'Ordenamento',
@@ -569,15 +573,17 @@ class Relatorio extends CI_Controller {
         );
 
         $data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
-
-        $data['titulo'] = 'Clientes X Procedimentos';
+		$data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional();
+        
+		$data['titulo'] = 'Clientes X Procedimentos';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
 
             #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
             $data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
-            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['NomeProfissional'] = $data['query']['NomeProfissional'];
+			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 
             $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];

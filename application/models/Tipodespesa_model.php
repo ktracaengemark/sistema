@@ -57,7 +57,7 @@ class Tipodespesa_model extends CI_Model {
                 #. 'WHERE '
                 #. 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                 #. 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
-                . 'ORDER BY idTab_TipoDespesa ASC ');
+                . 'ORDER BY TipoDespesa ASC ');
 
         /*
           echo $this->db->last_query();
@@ -93,13 +93,13 @@ class Tipodespesa_model extends CI_Model {
                     #. 'ValorVenda '
                     . 'FROM '
                     . 'Tab_TipoDespesa '
-                    . 'ORDER BY idTab_TipoDespesa ASC ');
+                    . 'ORDER BY TipoDespesa ASC ');
 					#. 'WHERE '
                     #. 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                    # . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] );
         } else {
             #$query = $this->db->query('SELECT idTab_TipoDespesa, TipoDespesa FROM Tab_TipoDespesa WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
-			$query = $this->db->query('SELECT idTab_TipoDespesa, TipoDespesa FROM Tab_TipoDespesa ORDER BY idTab_TipoDespesa ASC ');
+			$query = $this->db->query('SELECT idTab_TipoDespesa, TipoDespesa FROM Tab_TipoDespesa ORDER BY TipoDespesa ASC ');
 
             $array = array();
             foreach ($query->result() as $row) {
