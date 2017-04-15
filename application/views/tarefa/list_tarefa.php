@@ -1,11 +1,14 @@
 <div class="container-fluid">
 
 	<div class="form-group">
-		<div class="row">
+		<div class="row">			
 			<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>tarefa/cadastrar" role="button"> 
-				<span class="glyphicon glyphicon-plus"></span> Cadastrar Nova Tarefa
+				<span class="glyphicon glyphicon-plus"></span> Nova Tarefa
 			</a>
-		</div>	
+			<a class="btn btn-lg btn-info" href="<?php echo base_url() ?>agenda" role="button"> 
+				<span class="glyphicon glyphicon-calendar"></span> Agenda
+			</a>						
+		</div>		
 	</div>
     <div class="row">
 
