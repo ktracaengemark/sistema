@@ -26,7 +26,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         <link rel="icon" href="../../favicon.ico">
 
         <!-- <title>ROMATI - Agenda online de pacientes</title>-->
-        <title>KTRACA Sistemas</title>        
+        <title><?php echo $_SESSION['log']['Usuario'] ?> - KTRACA Sistemas</title>        
 
         <!-- HUAP CSS Custom -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/huap.css">
