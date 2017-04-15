@@ -23,6 +23,7 @@ class Relatorio_model extends CI_Model {
         #C.NomeCliente ASC
         */
 
+        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
         if ($data['DataFim']) {
             $consulta =
                 '(OT.DataEntradaOrca >= "' . $data['DataInicio'] . '" AND OT.DataEntradaOrca <= "' . $data['DataFim'] . '") OR
@@ -61,6 +62,7 @@ class Relatorio_model extends CI_Model {
                 (' . $consulta . ') AND
                 OT.AprovadoOrca = "S" AND
                 C.idApp_Cliente = OT.idApp_Cliente
+                ' . $data['NomeCliente'] . '
 
             ORDER BY
                 OT.DataOrca ASC,
@@ -135,6 +137,8 @@ class Relatorio_model extends CI_Model {
                 '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
         }
 
+        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+
         $filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 
@@ -152,19 +156,20 @@ class Relatorio_model extends CI_Model {
                 OT.DataConclusao,
                 OT.DataRetorno,
 				PR.NomeProfissional
-				
+
 
             FROM
                 App_Cliente AS C,
                 App_OrcaTrata AS OT
-				LEFT JOIN App_Profissional AS PR ON PR.idApp_Profissional = OT.ProfissionalOrca  
+				LEFT JOIN App_Profissional AS PR ON PR.idApp_Profissional = OT.ProfissionalOrca
 
             WHERE
                 C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
                 (' . $consulta . ') AND
                 ' . $filtro1 . '
-                ' . $filtro2 . '				
+                ' . $filtro2 . '
                 C.idApp_Cliente = OT.idApp_Cliente
+                ' . $data['NomeCliente'] . '
 
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -204,7 +209,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_despesa($data, $completo) {
 
         if ($data['DataFim']) {
@@ -229,7 +234,7 @@ class Relatorio_model extends CI_Model {
 				FP.FormaPag,
 				E.NomeEmpresa AS Empresa
 
-            FROM                
+            FROM
                 App_Despesa AS D
                     LEFT JOIN Tab_TipoDespesa AS TD ON TD.idTab_TipoDespesa = D.TipoDespesa
                     LEFT JOIN Tab_FormaPag    AS FP ON FP.idTab_FormaPag    = D.FormaPag
@@ -281,11 +286,12 @@ class Relatorio_model extends CI_Model {
 
     public function list_clientes($data, $completo) {
 
+        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
         $data['Campo'] = (!$data['Campo']) ? 'C.NomeCliente' : $data['Campo'];
         $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 
         $query = $this->db->query('
-            SELECT               
+            SELECT
 				C.idApp_Cliente,
                 C.NomeCliente,
                 C.DataNascimento,
@@ -307,13 +313,13 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_ContatoCliente AS CC ON C.idApp_Cliente = CC.idApp_Cliente
             WHERE
                 C.idSis_Usuario = ' . $_SESSION['log']['id'] . '
-
+                ' . $data['NomeCliente'] . '
 
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
-
         /*
+
         #AND
         #C.idApp_Cliente = OT.idApp_Cliente
 
@@ -333,11 +339,11 @@ class Relatorio_model extends CI_Model {
 
                 #$row->Sexo = $this->basico->get_sexo($row->Sexo);
                 #$row->Sexo = ($row->Sexo == 2) ? 'F' : 'M';
-                
+
                 $row->Telefone1 = ($row->Telefone1) ? $row->Telefone1 : FALSE;
 				$row->Telefone2 = ($row->Telefone2) ? $row->Telefone2 : FALSE;
 				$row->Telefone3 = ($row->Telefone3) ? $row->Telefone3 : FALSE;
-				
+
                 #$row->Telefone .= ($row->Telefone2) ? ' / ' . $row->Telefone2 : FALSE;
                 #$row->Telefone .= ($row->Telefone3) ? ' / ' . $row->Telefone3 : FALSE;
 
@@ -350,6 +356,7 @@ class Relatorio_model extends CI_Model {
 
 	public function list_profissionais($data, $completo) {
 
+        $data['NomeProfissional'] = ($data['NomeProfissional']) ? ' AND P.idApp_Profissional = ' . $data['NomeProfissional'] : FALSE;
         $data['Campo'] = (!$data['Campo']) ? 'P.NomeProfissional' : $data['Campo'];
         $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 
@@ -377,7 +384,7 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_ContatoProf AS CP ON P.idApp_Profissional = CP.idApp_Profissional
             WHERE
                 P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
-
+                ' . $data['NomeProfissional'] . '
 
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -403,7 +410,7 @@ class Relatorio_model extends CI_Model {
 
                 #$row->Sexo = $this->basico->get_sexo($row->Sexo);
                 #$row->Sexo = ($row->Sexo == 2) ? 'F' : 'M';
-                
+
                 $row->Telefone = ($row->Telefone1) ? $row->Telefone1 : FALSE;
                 $row->Telefone .= ($row->Telefone2) ? ' / ' . $row->Telefone2 : FALSE;
                 $row->Telefone .= ($row->Telefone3) ? ' / ' . $row->Telefone3 : FALSE;
@@ -414,7 +421,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_empresas($data, $completo) {
 
         $data['Campo'] = (!$data['Campo']) ? 'E.NomeEmpresa' : $data['Campo'];
@@ -470,7 +477,7 @@ class Relatorio_model extends CI_Model {
 
                 #$row->Sexo = $this->basico->get_sexo($row->Sexo);
                 #$row->Sexo = ($row->Sexo == 2) ? 'F' : 'M';
-                
+
                 $row->Telefone = ($row->Telefone1) ? $row->Telefone1 : FALSE;
                 $row->Telefone .= ($row->Telefone2) ? ' / ' . $row->Telefone2 : FALSE;
                 $row->Telefone .= ($row->Telefone3) ? ' / ' . $row->Telefone3 : FALSE;
@@ -481,7 +488,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_orcamentopc($data, $completo) {
 
         if ($data['DataFim']) {
@@ -493,12 +500,14 @@ class Relatorio_model extends CI_Model {
                 '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
         }
 
+        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+
         $filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
         #$filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ServicoConcluido'] != '#') ? 'OT.ServicoConcluido = "' . $data['ServicoConcluido'] . '" AND ' : FALSE;
 		$filtro4 = ($data['ConcluidoProcedimento'] != '#') ? 'PC.ConcluidoProcedimento = "' . $data['ConcluidoProcedimento'] . '" AND ' : FALSE;
-		
-		
+
+
         $query = $this->db->query('
             SELECT
                 C.NomeCliente,
@@ -510,14 +519,14 @@ class Relatorio_model extends CI_Model {
                 OT.ValorOrca,
 
                 OT.ServicoConcluido,
-                
+
                 OT.DataConclusao,
-               				
-				
+
+
 				TPD.NomeProduto,
-				
+
 				PC.DataProcedimento,
-				PR.NomeProfissional,				
+				PR.NomeProfissional,
 				PC.Procedimento,
 				PC.ConcluidoProcedimento
 
@@ -526,17 +535,18 @@ class Relatorio_model extends CI_Model {
                 App_OrcaTrata AS OT
 					LEFT JOIN App_ProdutoVenda AS PD ON OT.idApp_OrcaTrata = PD.idApp_OrcaTrata
 					LEFT JOIN Tab_Produto AS TPD ON TPD.idTab_Produto = PD.idTab_Produto
-					LEFT JOIN App_Procedimento AS PC ON OT.idApp_OrcaTrata = PC.idApp_OrcaTrata					
+					LEFT JOIN App_Procedimento AS PC ON OT.idApp_OrcaTrata = PC.idApp_OrcaTrata
 					LEFT JOIN App_Profissional AS PR ON PR.idApp_Profissional = PC.Profissional
-					
+
 			WHERE
                 C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
                 (' . $consulta . ') AND
                 ' . $filtro1 . '
-               
+
 				' . $filtro3 . '
-				' . $filtro4 . '			
+				' . $filtro4 . '
                 C.idApp_Cliente = OT.idApp_Cliente
+                ' . $data['NomeCliente'] . '
 
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -560,7 +570,7 @@ class Relatorio_model extends CI_Model {
                 $row->DataPrazo = $this->basico->mascara_data($row->DataPrazo, 'barras');
 				$row->DataConclusao = $this->basico->mascara_data($row->DataConclusao, 'barras');
                 #$row->DataRetorno = $this->basico->mascara_data($row->DataRetorno, 'barras');
-				
+
                 $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
                 $row->ServicoConcluido = $this->basico->mascara_palavra_completa($row->ServicoConcluido, 'NS');
                 #$row->QuitadoOrca = $this->basico->mascara_palavra_completa($row->QuitadoOrca, 'NS');
@@ -568,7 +578,7 @@ class Relatorio_model extends CI_Model {
 				$row->DataProcedimento = $this->basico->mascara_data($row->DataProcedimento, 'barras');
 				$row->ConcluidoProcedimento = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimento, 'NS');
 
-				
+
 				$somaorcamento += $row->ValorOrca;
 
                 $row->ValorOrca = number_format($row->ValorOrca, 2, ',', '.');
@@ -581,7 +591,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_tarefa($data, $completo) {
 
         if ($data['DataFim']) {
@@ -593,17 +603,19 @@ class Relatorio_model extends CI_Model {
                 '(TF.DataTarefa >= "' . $data['DataInicio'] . '")';
         }
 
+        $data['NomeProfissional'] = ($data['NomeProfissional']) ? ' AND P.idApp_Profissional = ' . $data['NomeProfissional'] : FALSE;
+
         $filtro1 = ($data['AprovadoTarefa'] != '#') ? 'TF.AprovadoTarefa = "' . $data['AprovadoTarefa'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoTarefa'] != '#') ? 'TF.QuitadoTarefa = "' . $data['QuitadoTarefa'] . '" AND ' : FALSE;
 
         $query = $this->db->query('
             SELECT
-                
-				PR.NomeProfissional,
+
+				P.NomeProfissional,
                 TF.idApp_Tarefa,
 				TF.ObsTarefa,
                 TF.AprovadoTarefa,
-                TF.DataTarefa,               
+                TF.DataTarefa,
 				TF.QuitadoTarefa,
 				TF.ServicoConcluido,
 				TF.DataPrazoTarefa,
@@ -611,22 +623,23 @@ class Relatorio_model extends CI_Model {
 				PT.Procedtarefa,
 				PT.DataProcedtarefa,
 				PT.ConcluidoProcedtarefa
-					
+
             FROM
-                
+
                 App_Tarefa AS TF
-					LEFT JOIN App_Profissional AS PR ON PR.idApp_Profissional = TF.ProfissionalTarefa
+					LEFT JOIN App_Profissional AS P ON P.idApp_Profissional = TF.ProfissionalTarefa
 					LEFT JOIN App_Procedtarefa AS PT ON TF.idApp_Tarefa = PT.idApp_Tarefa
-					
+
             WHERE
-                TF.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND                
+                TF.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				TF.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				TF.AprovadoTarefa = "N" AND
-				(' . $consulta . ')   
-              
+				(' . $consulta . ')
+                ' . $data['NomeProfissional'] . '                
+
             ORDER BY
                 TF.ProfissionalTarefa ASC,
-				TF.ServicoConcluido DESC,				
+				TF.ServicoConcluido DESC,
 				TF.QuitadoTarefa DESC,
 				TF.DataPrazoTarefa ASC
         ');
@@ -649,7 +662,7 @@ class Relatorio_model extends CI_Model {
 				$row->DataPrazoTarefa = $this->basico->mascara_data($row->DataPrazoTarefa, 'barras');
 				$row->DataProcedtarefa = $this->basico->mascara_data($row->DataProcedtarefa, 'barras');
 				$row->DataConclusao = $this->basico->mascara_data($row->DataConclusao, 'barras');
-                
+
 				$row->AprovadoTarefa = $this->basico->mascara_palavra_completa($row->AprovadoTarefa, 'NS');
                 $row->QuitadoTarefa = $this->basico->mascara_palavra_completa($row->QuitadoTarefa, 'NS');
 				$row->ConcluidoProcedtarefa = $this->basico->mascara_palavra_completa($row->ConcluidoProcedtarefa, 'NS');
@@ -662,19 +675,19 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_clienteprod($data, $completo) {
 
         $data['Campo'] = (!$data['Campo']) ? 'C.NomeCliente' : $data['Campo'];
         $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 		#$filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
-		
+
         $query = $this->db->query('
             SELECT
-                
+
                 C.NomeCliente,
 				OT.idApp_OrcaTrata,
-				OT.AprovadoOrca, 
+				OT.AprovadoOrca,
 				PD.QtdVendaProduto,
 				TPD.NomeProduto,
 				PC.Procedimento,
@@ -686,7 +699,7 @@ class Relatorio_model extends CI_Model {
 				LEFT JOIN App_ProdutoVenda AS PD ON OT.idApp_OrcaTrata = PD.idApp_OrcaTrata
 				LEFT JOIN Tab_Produto AS TPD ON TPD.idTab_Produto = PD.idTab_Produto
 				LEFT JOIN App_Procedimento AS PC ON OT.idApp_OrcaTrata = PC.idApp_OrcaTrata
-				
+
             WHERE
                 C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 
@@ -717,14 +730,14 @@ class Relatorio_model extends CI_Model {
 				$row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
 
 				$row->ConcluidoProcedimento = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimento, 'NS');
-				
+
             }
 
             return $query;
         }
 
     }
-	
+
 	public function list_orcamentosv($data, $completo) {
 
         if ($data['DataFim']) {
@@ -736,12 +749,14 @@ class Relatorio_model extends CI_Model {
                 '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
         }
 
+        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+
         $filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
         #$filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ServicoConcluido'] != '#') ? 'OT.ServicoConcluido = "' . $data['ServicoConcluido'] . '" AND ' : FALSE;
 		$filtro4 = ($data['ConcluidoProcedimento'] != '#') ? 'PC.ConcluidoProcedimento = "' . $data['ConcluidoProcedimento'] . '" AND ' : FALSE;
-		
-		
+
+
         $query = $this->db->query('
             SELECT
                 C.NomeCliente,
@@ -753,13 +768,13 @@ class Relatorio_model extends CI_Model {
                 OT.ValorOrca,
 
                 OT.ServicoConcluido,
-                
+
                 OT.DataConclusao,
 
 				TSV.NomeServico,
-				
+
 				PC.DataProcedimento,
-				PR.NomeProfissional,				
+				PR.NomeProfissional,
 				PC.Procedimento,
 				PC.ConcluidoProcedimento
 
@@ -768,17 +783,18 @@ class Relatorio_model extends CI_Model {
                 App_OrcaTrata AS OT
 					LEFT JOIN App_ServicoVenda AS SV ON OT.idApp_OrcaTrata = SV.idApp_OrcaTrata
 					LEFT JOIN Tab_Servico AS TSV ON TSV.idTab_Servico = SV.idTab_Servico
-					LEFT JOIN App_Procedimento AS PC ON OT.idApp_OrcaTrata = PC.idApp_OrcaTrata					
+					LEFT JOIN App_Procedimento AS PC ON OT.idApp_OrcaTrata = PC.idApp_OrcaTrata
 					LEFT JOIN App_Profissional AS PR ON PR.idApp_Profissional = PC.Profissional
-					
+
 			WHERE
                 C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
                 (' . $consulta . ') AND
                 ' . $filtro1 . '
-               
+
 				' . $filtro3 . '
-				' . $filtro4 . '			
+				' . $filtro4 . '
                 C.idApp_Cliente = OT.idApp_Cliente
+                ' . $data['NomeCliente'] . '
 
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -802,7 +818,7 @@ class Relatorio_model extends CI_Model {
                 $row->DataPrazo = $this->basico->mascara_data($row->DataPrazo, 'barras');
 				$row->DataConclusao = $this->basico->mascara_data($row->DataConclusao, 'barras');
                 #$row->DataRetorno = $this->basico->mascara_data($row->DataRetorno, 'barras');
-				
+
                 $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
                 $row->ServicoConcluido = $this->basico->mascara_palavra_completa($row->ServicoConcluido, 'NS');
                 #$row->QuitadoOrca = $this->basico->mascara_palavra_completa($row->QuitadoOrca, 'NS');
@@ -810,7 +826,7 @@ class Relatorio_model extends CI_Model {
 				$row->DataProcedimento = $this->basico->mascara_data($row->DataProcedimento, 'barras');
 				$row->ConcluidoProcedimento = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimento, 'NS');
 
-				
+
 				$somaorcamento += $row->ValorOrca;
 
                 $row->ValorOrca = number_format($row->ValorOrca, 2, ',', '.');
@@ -823,5 +839,51 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
+    public function select_cliente() {
+
+        $query = $this->db->query('
+            SELECT
+                C.idApp_Cliente,
+                C.NomeCliente
+            FROM
+                App_Cliente AS C
+            WHERE
+                C.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+            ORDER BY
+                NomeCliente ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idApp_Cliente] = $row->NomeCliente;
+        }
+
+        return $array;
+    }
+
+    public function select_profissional() {
+
+        $query = $this->db->query('
+            SELECT
+                P.idApp_Profissional,
+                P.NomeProfissional
+            FROM
+                App_Profissional AS P
+            WHERE
+                P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+            ORDER BY
+                NomeProfissional ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idApp_Profissional] = $row->NomeProfissional;
+        }
+
+        return $array;
+    }
+
 }

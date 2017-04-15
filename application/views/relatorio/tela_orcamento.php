@@ -18,6 +18,22 @@
                         <div class="row">
 
                             <div class="col-md-2">
+                                <label for="Ordenamento">Nome do Cliente:</label>
+                                <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+                                        id="NomeCliente" name="NomeCliente">
+                                    <?php
+                                    foreach ($select['NomeCliente'] as $key => $row) {
+                                        if ($query['NomeCliente'] == $key) {
+                                            echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+                                        } else {
+                                            echo '<option value="' . $key . '">' . $row . '</option>';
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
                                 <label for="DataInicio">Data Início: *</label>
                                 <div class="input-group DatePicker">
                                     <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
@@ -70,7 +86,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label for="Ordenamento">Ordenamento:</label>
 
                                 <div class="form-group">
@@ -106,7 +122,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>							
+                            </div>
                         </div>
                     </div>
 

@@ -17,7 +17,31 @@
                     <div class="form-group">
                         <div class="row">
 
-                            <div class="col-md-3"></div>
+                            <div class="col-md-1"></div>
+
+                            <div class="col-md-4">
+                                <label for="Ordenamento">Nome do Cliente:</label>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+                                                    id="NomeCliente" name="NomeCliente">
+                                                <?php
+                                                foreach ($select['NomeCliente'] as $key => $row) {
+                                                    if ($query['NomeCliente'] == $key) {
+                                                        echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+                                                    } else {
+                                                        echo '<option value="' . $key . '">' . $row . '</option>';
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
 
                             <div class="col-md-6">
                                 <label for="Ordenamento">Ordenamento:</label>
@@ -58,7 +82,7 @@
 
                             </div>
 
-                            <div class="col-md-3"></div>
+                            <div class="col-md-1"></div>
 
                         </div>
                     </div>
