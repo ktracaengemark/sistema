@@ -13,7 +13,7 @@
 				<span class="glyphicon glyphicon-plus"></span> Nova Tarefa
 			</a>
 			<hr>
-			<a class="btn btn-lg btn-success" href="<?php echo base_url() ?>tarefa/listar" role="button"> 
+			<a class="btn btn-lg btn-success" href="<?php echo base_url() ?>relatorio/tarefa" role="button"> 
 				<span class="glyphicon glyphicon-list"></span> Lista Tarefa
 			</a>
 		</div>	

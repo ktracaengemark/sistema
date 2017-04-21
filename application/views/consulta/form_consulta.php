@@ -34,9 +34,9 @@
                         <div class="col-md-7 form-inline">
                             <div class="form-group">
                                 <label for="Hora">Hora: *</label><br>
-                                De
+                                De 
                                 <div class="col-md-4 input-group <?php echo $timepicker; ?>">
-                                    <input type="tel" class="form-control Time" <?php echo $readonly; ?> maxlength="5"  placeholder="HH:MM"
+                                    <input type="text" class="form-control Time" <?php echo $readonly; ?> maxlength="5"  placeholder="HH:MM"
                                            accept=""name="HoraInicio" value="<?php echo $query['HoraInicio']; ?>">
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-time"></span>
@@ -45,7 +45,7 @@
 
                                 Até
                                 <div class="col-md-4 input-group <?php echo $timepicker; ?>">
-                                    <input type="tel" class="form-control Time" <?php echo $readonly; ?> maxlength="5" placeholder="HH:MM"
+                                    <input type="text" class="form-control Time" <?php echo $readonly; ?> maxlength="5" placeholder="HH:MM"
                                            accept=""name="HoraFim" value="<?php echo $query['HoraFim']; ?>">
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-time"></span>
@@ -54,15 +54,15 @@
                             </div>
                         </div>
 
-
+						
                     </div>
-
+	
                 </div>
-
+				
 			<hr>
-
+				
                 <div class="form-group">
-                    <div class="row">
+                    <div class="row">					
 						<div class="col-md-3 form-inline">
                             <label for="idTab_TipoConsulta">Tipo de Consulta:</label><br>
                             <div class="form-group">
@@ -87,14 +87,14 @@
                                             ;
                                         }
                                     }
-                                    ?>
+                                    ?>  
                                 </div>
                             </div>
                         </div>
 
 						<div class="col-md-4">
 							<label for="idApp_Profissional">Profissional: *</label>
-							<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
+							<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button"> 
 								<span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
 							</a>
 							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
@@ -108,17 +108,17 @@
 										echo '<option value="' . $key . '">' . $row . '</option>';
 									}
 								}
-								?>
-							</select>
-						</div>
-					</div>
-				</div>
-
+								?>   
+							</select>          
+						</div>						
+					</div> 							
+				</div>                             
+                
 				<hr>
-
+				
                 <div class="form-group">
                     <div class="row">
-						<div class="form-group">
+						<div class="form-group">                      
                             <div class="col-md-8 form-inline">
                                 <label for="idTab_Status">Status:</label><br>
                                 <div class="form-group">
@@ -144,27 +144,27 @@
                                                 ;
                                             }
                                         }
-                                        ?>
+                                        ?>                                    
                                     </div>
                                 </div>
-                            </div>
+                            </div> 
 					    </div>
 					</div>
                 </div>
-
+				
 				<hr>
-
+						
 				<div class="form-group">
-					<div class="row">
+					<div class="row">	
 						<div class="col-md-8">
 							<label for="Obs">Obs:</label>
 							<textarea class="form-control" id="Obs"
 									  name="Obs"><?php echo $query['Obs']; ?></textarea>
 						</div>
 					</div>
-				</div>
-
-
+				</div>	
+                      
+				
 				<hr>
                 <!--<br>-->
 
@@ -174,7 +174,7 @@
                         <input type="hidden" name="idApp_Agenda" value="<?php echo $_SESSION['log']['Agenda']; ?>">
                         <input type="hidden" name="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>">
                         <?php if ($metodo == 3) { ?>
-                            <div class="col-md-12 text-center">
+                            <div class="col-md-12 text-center">                            
                                 <button class="btn btn-lg btn-danger" id="inputDb" data-loading-text="Aguarde..." name="submit" value="1" type="submit">
                                     <span class="glyphicon glyphicon-trash"></span> Excluir
                                 </button>
@@ -182,16 +182,16 @@
                                                 return true;">
                                     <span class="glyphicon glyphicon-ban-circle"></span> Cancelar
                                 </button>
-                            </div>
+                            </div>                        
                         <?php } else { ?>
-                            <div class="col-md-6">
+                            <div class="col-md-6">                            
                                 <button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
                                     <span class="glyphicon glyphicon-save"></span> Salvar
-                                </button>
+                                </button>                            
                             </div>
                         <?php } ?>
                     </div>
-                </div>
+                </div>                
 
                 </form>
 

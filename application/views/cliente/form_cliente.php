@@ -35,26 +35,26 @@
 										echo '<option value="' . $key . '">' . $row . '</option>';
 									}
 								}
-								?>
+								?>   
 							</select>
 						</div>
 						<div class="col-md-4">
                             <label for="Telefone1">Telefone Principal: *</label>
-                            <input type="tel" class="form-control Celular CelularVariavel" id="Telefone1" <?php echo $readonly; ?>
-                                   name="Telefone1" placeholder="(99) 99999-9999" value="<?php echo $query['Telefone1']; ?>">
-                        </div>
+                            <input type="text" class="form-control Celular CelularVariavel" id="Telefone1" maxlength="14" <?php echo $readonly; ?>
+                                   name="Telefone1" placeholder="(99) 999999999" value="<?php echo $query['Telefone1']; ?>">
+                        </div>						
 					</div>
-				</div>
-				<div class="form-group">
+				</div> 	
+				<div class="form-group">	
 					<div class="row">
 						<div class="col-md-4">
 							<label for="Telefone2">Telefone ou Celular:</label>
-							<input type="tel" class="form-control Celular CelularVariavel" id="Telefone2" <?php echo $readonly; ?>
-								   name="Telefone2" value="<?php echo $query['Telefone2']; ?>">
-						</div>
+							<input type="text" class="form-control Celular CelularVariavel" id="Telefone2" maxlength="14" <?php echo $readonly; ?>
+								   name="Telefone2" placeholder="(99) 999999999" value="<?php echo $query['Telefone2']; ?>">
+						</div>				
 						<div class="col-md-4">
 							<label for="DataNascimento">Data de Nascimento:</label>
-							<input type="tel" class="form-control Date" <?php echo $readonly; ?>
+							<input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
 								   name="DataNascimento" placeholder="DD/MM/AAAA" value="<?php echo $query['DataNascimento']; ?>">
 						</div>
 						<div class="col-md-4">
@@ -64,6 +64,7 @@
 						</div>
                     </div>
                 </div>
+				<!--
 				<div class="col-md-2">
 					<label for="Associado">Associado?</label><br>
 					<div class="form-group">
@@ -92,17 +93,18 @@
 						</div>
 					</div>
 				</div>
+				-->
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#DadosComplementares" aria-expanded="false" aria-controls="DadosComplementares">
                                 <span class="glyphicon glyphicon-menu-down"></span> Completar Dados
                             </button>
-                        </div>
+                        </div>                
                     </div>
-                </div>
+                </div>                 
 
-                <div <?php echo $collapse; ?> id="DadosComplementares">
+                <div <?php echo $collapse; ?> id="DadosComplementares">													
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">
@@ -116,7 +118,7 @@
                                        name="Bairro" value="<?php echo $query['Bairro']; ?>">
                             </div>
                         </div>
-                    </div>
+                    </div> 
 
                     <div class="form-group">
                         <div class="row">
@@ -135,10 +137,10 @@
                                     }
                                     ?>
                                 </select>
-                            </div>
+                            </div>							
 							<div class="col-md-3">
 								<label for="Telefone3">Telefone ou Celular:</label>
-								<input type="tel" class="form-control Celular CelularVariavel" id="Telefone3" <?php echo $readonly; ?>
+								<input type="text" class="form-control Celular CelularVariavel" id="Telefone3" maxlength="20" <?php echo $readonly; ?>
 									   name="Telefone3" value="<?php echo $query['Telefone3']; ?>">
 							</div>
 							<div class="col-md-3">
@@ -147,7 +149,7 @@
                                        name="RegistroFicha" value="<?php echo $query['RegistroFicha']; ?>">
                             </div>
                         </div>
-                    </div>
+                    </div> 
 
                     <div class="form-group">
                         <div class="row">
@@ -157,9 +159,9 @@
                                           name="Obs"><?php echo $query['Obs']; ?></textarea>
                             </div>
                         </div>
-                    </div>
+                    </div>                 
 
-                </div>
+                </div>                                    
 
                 <br>
 
@@ -167,7 +169,7 @@
                     <div class="row">
                         <input type="hidden" name="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>">
                         <?php if ($metodo == 3) { ?>
-                            <div class="col-md-12 text-center">
+                            <div class="col-md-12 text-center">                            
                                 <button class="btn btn-lg btn-danger" id="inputDb" data-loading-text="Aguarde..." name="submit" value="1" type="submit">
                                     <span class="glyphicon glyphicon-trash"></span> Excluir
                                 </button>
@@ -175,16 +177,16 @@
                                         return true;">
                                     <span class="glyphicon glyphicon-ban-circle"></span> Cancelar
                                 </button>
-                            </div>
+                            </div>                        
                         <?php } else { ?>
-                            <div class="col-md-6">
+                            <div class="col-md-6">                            
                                 <button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." name="submit" value="1" type="submit">
                                     <span class="glyphicon glyphicon-save"></span> Salvar
-                                </button>
+                                </button>                            
                             </div>
                         <?php } ?>
                     </div>
-                </div>
+                </div>                
 
                 </form>
 

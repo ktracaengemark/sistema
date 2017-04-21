@@ -637,6 +637,9 @@ class Relatorio extends CI_Controller {
 			'ServicoConcluido',
         ), TRUE));
 
+	if (!$data['query']['DataInicio'])			
+           $data['query']['DataInicio'] = '01/01/2017';
+
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');

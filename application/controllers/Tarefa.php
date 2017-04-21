@@ -203,7 +203,8 @@ class Tarefa extends CI_Controller {
                 //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Tarefa', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'tarefa/listar/' . $data['msg']);
+                #redirect(base_url() . 'tarefa/listar/' . $data['msg']);
+				redirect(base_url() . 'relatorio/tarefa/' . $data['msg']);
                 exit();
             }
         }
@@ -433,7 +434,8 @@ class Tarefa extends CI_Controller {
                 //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Tarefa', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'tarefa/listar/' . $data['msg']);
+                #redirect(base_url() . 'tarefa/listar/' . $data['msg']);
+				redirect(base_url() . 'relatorio/tarefa/' . $data['msg']);
                 exit();
             }
         }
@@ -455,7 +457,8 @@ class Tarefa extends CI_Controller {
 
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'tarefa/listar/' . $data['msg']);
+                #redirect(base_url() . 'tarefa/listar/' . $data['msg']);
+				redirect(base_url() . 'relatorio/tarefa/' . $data['msg']);
                 exit();
             //}
         //}

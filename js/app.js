@@ -760,7 +760,7 @@ $(document).ready(function () {
     $(".Valor").mask("#.##0,00", {reverse: true});
     $('.Numero').mask('0#');
 
-    $(".Celular").mask("(99) 99999-9999");
+    $(".Celular").mask("(99) 999999999");
     $(".CelularVariavel").on("blur", function () {
         var last = $(this).val().substr($(this).val().indexOf("-") + 1);
 

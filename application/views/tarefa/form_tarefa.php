@@ -2,7 +2,7 @@
 <div class="container-fluid">
 	<div class="row">	
 		<div class="col-sm-7 col-sm-offset-3 col-md-10 col-md-offset-2 main">								
-					<a class="btn btn-lg btn-success" href="<?php echo base_url() ?>tarefa/listar" role="button"> 
+					<a class="btn btn-lg btn-success" href="<?php echo base_url() ?>relatorio/tarefa" role="button"> 
 						<span class="glyphicon glyphicon-list"></span> Lista Tarefa
 					</a>
 			        <a class="btn btn-lg btn-info" href="<?php echo base_url() ?>agenda" role="button"> 

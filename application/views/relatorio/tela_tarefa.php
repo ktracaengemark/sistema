@@ -15,9 +15,8 @@
                     <?php echo form_open('relatorio/tarefa', 'role="form"'); ?>
 
                     <div class="form-group">
-                        <div class="row">
-
-                            <div class="col-md-4">
+                        <div class="row">							
+                            <div class="col-md-2">
                                 <label for="Ordenamento">Nome do Profissional:</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
                                         id="NomeProfissional" name="NomeProfissional">
@@ -53,7 +52,7 @@
                                     </span>
                                 </div>
                             </div>
-						<!--
+						
                             <div class="col-md-1">
                                 <label for="AprovadoTarefa">Concluída</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -69,7 +68,7 @@
                                     ?>
                                 </select>
                             </div>
-
+						<!--
                             <div class="col-md-1">
                                 <label for="QuitadoTarefa">Prioridade</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -125,16 +124,25 @@
 
                             </div>
 						-->
-                        </div>
+                        </div>						
                     </div>
-
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-md-12 text-center">
+                            <div class="col-md-2 text-left">
                                 <button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
                                     <span class="glyphicon glyphicon-search"></span> Pesquisar
                                 </button>
                             </div>
+							<div class="col-md-2 text-left">											
+									<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>tarefa/cadastrar" role="button"> 
+										<span class="glyphicon glyphicon-plus"></span> Nova Tarefa
+									</a>
+							</div>		
+							<div class="col-md-2 text-left">											
+									<a class="btn btn-lg btn-info" href="<?php echo base_url() ?>agenda" role="button"> 
+										<span class="glyphicon glyphicon-calendar"></span> Agenda
+									</a>															
+							</div>
                         </div>
                     </div>
 
