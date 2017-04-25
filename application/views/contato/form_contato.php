@@ -44,8 +44,8 @@
 							
 							<div class="col-md-4">
 								<label for="TelefoneContato">Telefone Principal: *</label>
-								<input type="text" class="form-control Celular CelularVariavel" id="TelefoneContato" maxlength="20" <?php echo $readonly; ?>
-									   name="TelefoneContato" placeholder="(99) 99999-9999" value="<?php echo $query['TelefoneContato']; ?>">
+								<input type="text" class="form-control Celular CelularVariavel" id="TelefoneContato" maxlength="14" <?php echo $readonly; ?>
+									   name="TelefoneContato" placeholder="(99) 999999999" value="<?php echo $query['TelefoneContato']; ?>">
 							</div>
 							
 							
