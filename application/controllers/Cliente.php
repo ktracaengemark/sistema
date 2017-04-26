@@ -414,7 +414,7 @@ class Cliente extends CI_Controller {
     function get_cliente($data) {
 
         if ($this->Cliente_model->lista_cliente($data, FALSE) === FALSE) {
-            $this->form_validation->set_message('get_cliente', '<strong>Paciente</strong> não encontrado.');
+            $this->form_validation->set_message('get_cliente', '<strong>Cliente</strong> não encontrado.');
             return FALSE;
         } else {
             return TRUE;

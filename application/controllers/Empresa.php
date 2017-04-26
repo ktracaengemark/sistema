@@ -410,7 +410,7 @@ class Empresa extends CI_Controller {
     function get_empresa($data) {
 
         if ($this->Empresa_model->lista_empresa($data, FALSE) === FALSE) {
-            $this->form_validation->set_message('get_empresa', '<strong>Paciente</strong> não encontrado.');
+            $this->form_validation->set_message('get_empresa', '<strong>Empresa</strong> não encontrado.');
             return FALSE;
         } else {
             return TRUE;

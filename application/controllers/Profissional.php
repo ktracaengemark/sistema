@@ -414,7 +414,7 @@ class Profissional extends CI_Controller {
     function get_profissional($data) {
 
         if ($this->Profissional_model->lista_profissional($data, FALSE) === FALSE) {
-            $this->form_validation->set_message('get_profissional', '<strong>Paciente</strong> não encontrado.');
+            $this->form_validation->set_message('get_profissional', '<strong>Profissional</strong> não encontrado.');
             return FALSE;
         } else {
             return TRUE;
