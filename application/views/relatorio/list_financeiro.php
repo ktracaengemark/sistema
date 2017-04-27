@@ -63,6 +63,8 @@
                         <th class="active">Data do Orçamento</th>
                         <th class="active">Data Entrada</th>
                         <th class="active">Valor Entrada</th>
+						<th class="active">Quitado</th>
+						<th class="active">Serv. Concl.</th>
                         <th class="active">Parcela</th>
                         <th class="active">Vencimento</th>
                         <th class="active">À receber</th>
@@ -86,7 +88,8 @@
                             echo '<td>' . $row['DataOrca'] . '</td>';
                             echo '<td>' . $row['DataEntradaOrca'] . '</td>';
                             echo '<td class="text-right">R$ ' . $row['ValorEntradaOrca'] . '</td>';
-
+							echo '<td>' . $row['QuitadoOrca'] . '</td>';
+							echo '<td>' . $row['ServicoConcluido'] . '</td>';
                             echo '<td>' . $row['ParcelaRecebiveis'] . '</td>';
                             echo '<td>' . $row['DataVencimentoRecebiveis'] . '</td>';
                             echo '<td class="text-right">R$ ' . $row['ValorParcelaRecebiveis'] . '</td>';
