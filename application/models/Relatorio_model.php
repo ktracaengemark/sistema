@@ -23,17 +23,21 @@ class Relatorio_model extends CI_Model {
         #C.NomeCliente ASC
         */
 
-        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+        
         if ($data['DataFim']) {
             $consulta =
-                '(OT.DataEntradaOrca >= "' . $data['DataInicio'] . '" AND OT.DataEntradaOrca <= "' . $data['DataFim'] . '") OR
+                '(PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '" AND PR.DataVencimentoRecebiveis <= "' . $data['DataFim'] . '") OR
                 (PR.DataPagoRecebiveis >= "' . $data['DataInicio'] . '" AND PR.DataPagoRecebiveis <= "' . $data['DataFim'] . '")';
         }
         else {
             $consulta =
-                '(OT.DataEntradaOrca >= "' . $data['DataInicio'] . '") OR
+                '(PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '") OR
                 (PR.DataPagoRecebiveis >= "' . $data['DataInicio'] . '")';
         }
+		
+		$data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+		$filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
+        $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 
         $query = $this->db->query('
             SELECT
@@ -61,14 +65,13 @@ class Relatorio_model extends CI_Model {
             WHERE
                 C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
                 (' . $consulta . ') AND
-                OT.AprovadoOrca = "S" AND
+                ' . $filtro1 . '
+                ' . $filtro2 . '                
                 C.idApp_Cliente = OT.idApp_Cliente
                 ' . $data['NomeCliente'] . '
 
             ORDER BY
-                OT.DataOrca ASC,
-                PR.ParcelaRecebiveis ASC,
-                C.NomeCliente ASC
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
 
         /*
@@ -114,8 +117,8 @@ class Relatorio_model extends CI_Model {
                 $row->ValorPagoRecebiveis = number_format($row->ValorPagoRecebiveis, 2, ',', '.');
             }
             $somareceber -= $somapago;
-            $somareal = $somapago + $somaentrada;
-            $balanco = $somapago + $somareceber + $somaentrada;
+            $somareal = $somapago;
+            $balanco = $somapago + $somareceber;
 
             $query->soma = new stdClass();
             $query->soma->somareceber = number_format($somareceber, 2, ',', '.');
@@ -153,6 +156,8 @@ class Relatorio_model extends CI_Model {
                 OT.AprovadoOrca,
                 OT.DataOrca,
                 OT.ValorOrca,
+				OT.ValorEntradaOrca,
+				OT.ValorRestanteOrca,
 
                 OT.ServicoConcluido,
                 OT.QuitadoOrca,
@@ -191,6 +196,8 @@ class Relatorio_model extends CI_Model {
         } else {
 
             $somaorcamento=0;
+			$somadesconto=0;
+			$somarestante=0;
             foreach ($query->result() as $row) {
 				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
                 $row->DataConclusao = $this->basico->mascara_data($row->DataConclusao, 'barras');
@@ -201,12 +208,21 @@ class Relatorio_model extends CI_Model {
                 $row->QuitadoOrca = $this->basico->mascara_palavra_completa($row->QuitadoOrca, 'NS');
 
                 $somaorcamento += $row->ValorOrca;
-
                 $row->ValorOrca = number_format($row->ValorOrca, 2, ',', '.');
+				
+				$somadesconto += $row->ValorEntradaOrca;
+                $row->ValorEntradaOrca = number_format($row->ValorEntradaOrca, 2, ',', '.');
+				
+				$somarestante += $row->ValorRestanteOrca;
+                $row->ValorRestanteOrca = number_format($row->ValorRestanteOrca, 2, ',', '.');
+				
+				
 
             }
             $query->soma = new stdClass();
             $query->soma->somaorcamento = number_format($somaorcamento, 2, ',', '.');
+			$query->soma->somadesconto = number_format($somadesconto, 2, ',', '.');
+			$query->soma->somarestante = number_format($somarestante, 2, ',', '.');
 
             return $query;
         }

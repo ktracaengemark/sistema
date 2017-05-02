@@ -51,22 +51,65 @@ class Relatorio extends CI_Controller {
             'NomeCliente',
             'DataInicio',
             'DataFim',
+			'Ordenamento',
+            'Campo',
+            'AprovadoOrca',
+            'QuitadoOrca',
         ), TRUE));
 
-        $data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
+        if (!$data['query']['DataInicio'])			
+           $data['query']['DataInicio'] = '01/01/2017';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
 
-        /*
+        $data['select']['AprovadoOrca'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+        $data['select']['QuitadoOrca'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+        $data['select']['Campo'] = array(
+            'C.NomeCliente' => 'Nome do Cliente',
+
+            'OT.idApp_OrcaTrata' => 'Número do Orçamento',
+            'OT.AprovadoOrca' => 'Orçamento Aprovado?',
+            'OT.DataOrca' => 'Data do Orçamento',
+            'OT.ValorOrca' => 'Valor do Orçamento',
+
+            'OT.ServicoConcluido' => 'Serviço Concluído?',
+            'OT.QuitadoOrca' => 'Orçamento Quitado?',
+            'OT.DataConclusao' => 'Data de Conclusão',
+            'OT.DataRetorno' => 'Data de Retorno',
+			'OT.ProfissionalOrca' => 'Profissional',
+			'PR.DataVencimentoRecebiveis' => 'Data do Venc.',
+			'PR.DataPagoRecebiveis' => 'Data do Pagam.',
+
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+		
+		$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
+		
+		/*
         $data['select']['Pesquisa'] = array(
             'DataEntradaOrca' => 'Data de Entrada',
             'DataVencimentoRecebiveis' => 'Data de Vencimento da Parcela',
         );
         */
 
+		
         $data['titulo'] = 'Relatório Financeiro - Recebíveis';
 
         #run form validation
@@ -76,6 +119,12 @@ class Relatorio extends CI_Controller {
             $data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			
+			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+            $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+            $data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
+
 
             $data['report'] = $this->Relatorio_model->list_financeiro($data['bd'],TRUE);
 
@@ -115,6 +164,9 @@ class Relatorio extends CI_Controller {
             'QuitadoOrca',
 
         ), TRUE));
+		
+		if (!$data['query']['DataInicio'])			
+           $data['query']['DataInicio'] = '01/01/2017';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
@@ -141,6 +193,8 @@ class Relatorio extends CI_Controller {
             'OT.AprovadoOrca' => 'Orçamento Aprovado?',
             'OT.DataOrca' => 'Data do Orçamento',
             'OT.ValorOrca' => 'Valor do Orçamento',
+			'OT.ValorEntradaOrca' => 'Valor do Desconto',
+			'OT.ValorRestanteOrca' => 'Valor a Receber',
 
             'OT.ServicoConcluido' => 'Serviço Concluído?',
             'OT.QuitadoOrca' => 'Orçamento Quitado?',
@@ -212,6 +266,9 @@ class Relatorio extends CI_Controller {
             #'QuitadoOrca',
         ), TRUE));
 
+		if (!$data['query']['DataInicio'])			
+           $data['query']['DataInicio'] = '01/01/2017';
+	   
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
@@ -517,6 +574,9 @@ class Relatorio extends CI_Controller {
 			'ConcluidoProcedimento',
 
         ), TRUE));
+		
+		if (!$data['query']['DataInicio'])			
+           $data['query']['DataInicio'] = '01/01/2017';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');

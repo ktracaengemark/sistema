@@ -12,7 +12,9 @@
                         <th class="active">Cliente</th>
                         <th class="active">Aprovado?</th>
                         <th class="active">Data do Orçamento</th>
-                        <th class="active">Valor Orçamento</th>
+                        <th class="active">Valor do Orçamento</th>
+						<th class="active">Valor do Desconto</th>
+						<th class="active">Valor A Receber</th>
 						<th class="active">Orçamento Quitado?</th>
                         <th class="active">Serviço Concluído?</th>
 
@@ -36,6 +38,8 @@
                             echo '<td>' . $row['AprovadoOrca'] . '</td>';
                             echo '<td>' . $row['DataOrca'] . '</td>';
                             echo '<td class="text-left">R$ ' . $row['ValorOrca'] . '</td>';
+							echo '<td class="text-left">R$ ' . $row['ValorEntradaOrca'] . '</td>';
+							echo '<td class="text-left">R$ ' . $row['ValorRestanteOrca'] . '</td>';
 							echo '<td>' . $row['QuitadoOrca'] . '</td>';
                             echo '<td>' . $row['ServicoConcluido'] . '</td>';
 
@@ -70,6 +74,20 @@
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
                 <input type="text" class="form-control" disabled aria-label="Total Orcamentos" value="<?php echo $report->soma->somaorcamento ?>">
+            </div>
+        </div>
+		<div class="col-md-2">
+            <label for="DataFim">Total dos Descontos:</label>
+            <div class="input-group">
+                <span class="input-group-addon">R$</span>
+                <input type="text" class="form-control" disabled aria-label="Total Descontos" value="<?php echo $report->soma->somadesconto ?>">
+            </div>
+        </div>
+		<div class="col-md-2">
+            <label for="DataFim">Total A Receber:</label>
+            <div class="input-group">
+                <span class="input-group-addon">R$</span>
+                <input type="text" class="form-control" disabled aria-label="Total Restante" value="<?php echo $report->soma->somarestante ?>">
             </div>
         </div>
 

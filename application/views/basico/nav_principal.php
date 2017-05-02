@@ -85,7 +85,7 @@
 						<li role="separator" class="divider"></li>											
 						<li><a href="<?php echo base_url() ?>relatorio/orcamentosv">Clientes & Serviços</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/orcamento">Clientes & Valores</a></li>
+						<li><a href="<?php echo base_url() ?>relatorio/orcamento">Clientes & Orçamentos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/financeiro">Entradas & Pagamentos</a></li>
 						<li role="separator" class="divider"></li>
