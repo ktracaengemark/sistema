@@ -51,7 +51,7 @@
 									</span>
 								</div>
 							</div>
-							
+
 							<div class="col-md-4">
 								<label for="ProfissionalOrca">Profissional:</label>
 								<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
@@ -90,7 +90,7 @@
 									</a>
 								</h4>
 							</div>
-                              
+
 							<div id="collapse1" class="panel-collapse collapsed collapse" role="tabpanel" aria-labelledby="heading1" aria-expanded="false" style="height: 0px;">
 								<div class="panel-body">
 
@@ -321,16 +321,16 @@
 														   name="ValorOrca" value="<?php echo $orcatrata['ValorOrca'] ?>">
 												</div>
 											</div>
-											
+
 											<div class="col-md-3">
 												<label for="ValorEntradaOrca">Desconto</label><br>
 												<div class="input-group" id="txtHint">
 													<span class="input-group-addon" id="basic-addon1">R$</span>
-													<input type="text" class="form-control Valor" id="ValorEntradaOrca" maxlength="10" placeholder="0,00" 
+													<input type="text" class="form-control Valor" id="ValorEntradaOrca" maxlength="10" placeholder="0,00"
 														onkeyup="calculaResta(this.value)"
 														name="ValorEntradaOrca" value="<?php echo $orcatrata['ValorEntradaOrca'] ?>">
 												</div>
-											</div>											
+											</div>
 
 											<div class="col-md-3">
 												<label for="ValorRestanteOrca">Resta Pagar:</label><br>
@@ -379,7 +379,7 @@
 													?>
 												</select>
 											</div>
-											
+
 											<div class="col-md-2">
 												<label for="QtdParcelasOrca">Qtd de Parcelas:</label><br>
 												<input type="text" class="form-control Numero" id="QtdParcelasOrca" maxlength="3" placeholder="0"
@@ -501,7 +501,7 @@
 							</div>
 						</div>
 					</div>
-												
+
 					<hr>
 
 					<div class="form-group">
@@ -570,7 +570,7 @@
 											</div>
 										</div>
 									</div>
-									
+
 									<div class="col-md-2 form-inline">
 										<label for="ServicoConcluido">Serviço Concluído?</label><br>
 										<div class="form-group">
@@ -599,7 +599,7 @@
 											</div>
 										</div>
 									</div>
-								   
+
 									<div class="col-md-2">
 										<label for="DataConclusao">Data da Conclusão:</label>
 										<div class="input-group <?php echo $datepicker; ?>">
@@ -662,7 +662,7 @@
 																			<span class="glyphicon glyphicon-calendar"></span>
 																		</span>
 																	</div>
-																</div>																
+																</div>
 																<div class="col-md-2">
 																	<label for="Profissional<?php echo $i ?>">Profissional:</label>
 																	<?php if ($i == 1) { ?>
@@ -747,13 +747,13 @@
 											</div>
 										</div>
 									</div>
-								</div>  													
-							</div>							
-						</div>							
+								</div>
+							</div>
+						</div>
 					</div>
-					
+
 					<hr>
-										
+
 					<div class="form-group">
 						<div class="row">
 							<input type="hidden" name="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>">
@@ -796,7 +796,8 @@
 												<h4 class="modal-title">Tem certeza que deseja excluir?</h4>
 											</div>
 											<div class="modal-body">
-												<p>Ao confirmar a exclusão todos os dados serão excluídos do banco de dados. Esta operação é irreversível.</p>
+												<p>Ao confirmar esta operação todos os dados serão excluídos permanentemente do sistema. 
+                                                    Esta operação é irreversível.</p>
 											</div>
 											<div class="modal-footer">
 												<div class="col-md-6 text-left">
