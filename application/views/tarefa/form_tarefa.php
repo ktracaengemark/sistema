@@ -154,17 +154,7 @@
 									<?php } ?>
 
 									<div class="form-group" id="3div<?php echo $i ?>">
-										<div class="row">
-											<div class="col-md-2">
-												<label for="DataProcedtarefa<?php echo $i ?>">Data da Ação:</label>
-												<div class="input-group <?php echo $datepicker; ?>">
-													<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-														   name="DataProcedtarefa<?php echo $i ?>" value="<?php echo $procedtarefa[$i]['DataProcedtarefa']; ?>">
-													<span class="input-group-addon" disabled>
-														<span class="glyphicon glyphicon-calendar"></span>
-													</span>
-												</div>
-											</div>											
+										<div class="row">																					
 											<div class="col-md-2">
 												<label for="Profissional<?php echo $i ?>">Profissional:</label>
 												<?php if ($i == 1) { ?>
@@ -190,6 +180,16 @@
 												<label for="Procedtarefa<?php echo $i ?>">Ação:</label>
 												<textarea class="form-control" id="Procedtarefa<?php echo $i ?>" <?php echo $readonly; ?>
 														  name="Procedtarefa<?php echo $i ?>"><?php echo $procedtarefa[$i]['Procedtarefa']; ?></textarea>
+											</div>
+											<div class="col-md-2">
+												<label for="DataProcedtarefa<?php echo $i ?>">Data da Ação:</label>
+												<div class="input-group <?php echo $datepicker; ?>">
+													<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+														   name="DataProcedtarefa<?php echo $i ?>" value="<?php echo $procedtarefa[$i]['DataProcedtarefa']; ?>">
+													<span class="input-group-addon" disabled>
+														<span class="glyphicon glyphicon-calendar"></span>
+													</span>
+												</div>
 											</div>
 											<div class="col-md-2">
 												<label for="ConcluidoProcedtarefa">Ação. Concl.? </label><br>

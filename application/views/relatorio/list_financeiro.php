@@ -3,13 +3,13 @@
 
         <div class="col-md-1"></div>
 
-        <div class="col-md-2">
+        <!--<div class="col-md-2">
             <label for="DataFim">Total de Desconto:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
                 <input type="text" class="form-control" disabled aria-label="Total Entrada" value="<?php echo $report->soma->somaentrada ?>">
             </div>
-        </div>
+        </div>-->
 
         <div class="col-md-2">
             <label for="DataFim">Total Pago:</label>
@@ -19,13 +19,13 @@
             </div>
         </div>
 
-        <div class="col-md-2">
+        <!--<div class="col-md-2">
             <label for="DataFim">Total Real/Caixa:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
                 <input type="text" class="form-control" disabled aria-label="Total Real" value="<?php echo $report->soma->somareal ?>">
             </div>
-        </div>
+        </div>-->
 
         <div class="col-md-2">
             <label for="DataFim">Total a receber:</label>
@@ -62,9 +62,9 @@
                         <th class="active">Data do Orçamento</th>
                         <!--<th class="active">Data Entrada</th>
                         <th class="active">Valor Entrada</th>-->
-						<th class="active">Aprovado?</th>
-						<th class="active">Orç.Quit.?</th>
-						<th class="active">Serv. Concl.</th>
+						<th class="active">Orç. Aprovado?</th>
+						<th class="active">Orç. Quitado?</th>
+						<th class="active">Serv. Concl.?</th>
                         <th class="active">Parcela</th>
                         <th class="active">Vencimento</th>
                         <th class="active">À receber</th>
@@ -103,7 +103,7 @@
 
                 <tfoot>
                     <tr>
-                        <th colspan="12" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
+                        <th colspan="3" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
                     </tr>
                 </tfoot>
             </table>

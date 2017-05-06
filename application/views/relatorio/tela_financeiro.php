@@ -17,8 +17,6 @@
                     <div class="form-group">
                         <div class="row">
 
-                            <div class="col-md-1"></div>
-
                             <div class="col-md-2">
                                 <label for="Ordenamento">Nome do Cliente:</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -55,7 +53,8 @@
                                     </span>
                                 </div>
                             </div>
-							<div class="col-md-1">
+
+                            <div class="col-md-1">
                                 <label for="AprovadoOrca">Aprovado?</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
                                         id="AprovadoOrca" name="AprovadoOrca">
@@ -86,6 +85,22 @@
                                     ?>
                                 </select>
                             </div>
+							
+							<div class="col-md-1">
+                                <label for="ServicoConcluido">Serv. Concl.?</label>
+                                <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+                                        id="ServicoConcluido" name="ServicoConcluido">
+                                    <?php
+                                    foreach ($select['ServicoConcluido'] as $key => $row) {
+                                        if ($query['ServicoConcluido'] == $key) {
+                                            echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+                                        } else {
+                                            echo '<option value="' . $key . '">' . $row . '</option>';
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
 
                             <div class="col-md-3">
                                 <label for="Ordenamento">Ordenamento:</label>
@@ -107,7 +122,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
                                                     id="Ordenamento" name="Ordenamento">
                                                 <?php
@@ -124,9 +139,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-md-1"></div>
-
                         </div>
                     </div>
 

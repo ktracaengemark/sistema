@@ -17,7 +17,23 @@
                     <div class="form-group">
                         <div class="row">							
                             <div class="col-md-2">
-                                <label for="Ordenamento">Nome do Profissional:</label>
+                                <label for="Ordenamento">Profissional:</label>
+                                <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+                                        id="Profissional" name="Profissional">
+                                    <?php
+                                    foreach ($select['Profissional'] as $key => $row) {
+                                        if ($query['Profissional'] == $key) {
+                                            echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+                                        } else {
+                                            echo '<option value="' . $key . '">' . $row . '</option>';
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+							
+							<div class="col-md-2">
+                                <label for="Ordenamento">Responsável:</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
                                         id="NomeProfissional" name="NomeProfissional">
                                     <?php
@@ -31,6 +47,7 @@
                                     ?>
                                 </select>
                             </div>
+							
 
                             <div class="col-md-2">
                                 <label for="DataInicio">Data Orçam.- Início: *</label>
@@ -52,7 +69,7 @@
                                     </span>
                                 </div>
                             </div>
-						
+						<!--
                             <div class="col-md-1">
                                 <label for="AprovadoTarefa">Concluída</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -68,7 +85,7 @@
                                     ?>
                                 </select>
                             </div>
-						<!--
+						
                             <div class="col-md-1">
                                 <label for="QuitadoTarefa">Prioridade</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"

@@ -55,6 +55,7 @@ class Relatorio extends CI_Controller {
             'Campo',
             'AprovadoOrca',
             'QuitadoOrca',
+			'ServicoConcluido',
         ), TRUE));
 
         if (!$data['query']['DataInicio'])			
@@ -72,6 +73,12 @@ class Relatorio extends CI_Controller {
         );
 
         $data['select']['QuitadoOrca'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+		
+		$data['select']['ServicoConcluido'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
             'S' => 'Sim',
@@ -110,7 +117,7 @@ class Relatorio extends CI_Controller {
         */
 
 		
-        $data['titulo'] = 'Relatório Financeiro - Recebíveis';
+        $data['titulo'] = 'Orçamentos & Pagamentos';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -124,7 +131,7 @@ class Relatorio extends CI_Controller {
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
             $data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
-
+			$data['bd']['ServicoConcluido'] = $data['query']['ServicoConcluido'];
 
             $data['report'] = $this->Relatorio_model->list_financeiro($data['bd'],TRUE);
 
@@ -162,6 +169,7 @@ class Relatorio extends CI_Controller {
             'Campo',
             'AprovadoOrca',
             'QuitadoOrca',
+			'ServicoConcluido',
 
         ), TRUE));
 		
@@ -185,6 +193,12 @@ class Relatorio extends CI_Controller {
             'N' => 'Não',
             'S' => 'Sim',
         );
+		
+		$data['select']['ServicoConcluido'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
 
         $data['select']['Campo'] = array(
             'C.NomeCliente' => 'Nome do Cliente',
@@ -192,6 +206,8 @@ class Relatorio extends CI_Controller {
             'OT.idApp_OrcaTrata' => 'Número do Orçamento',
             'OT.AprovadoOrca' => 'Orçamento Aprovado?',
             'OT.DataOrca' => 'Data do Orçamento',
+			'OT.DataEntradaOrca' => 'Validade do Orçamento',
+			'OT.DataPrazo' => 'Data da Entrega',
             'OT.ValorOrca' => 'Valor do Orçamento',
 			'OT.ValorEntradaOrca' => 'Valor do Desconto',
 			'OT.ValorRestanteOrca' => 'Valor a Receber',
@@ -211,7 +227,7 @@ class Relatorio extends CI_Controller {
 
         $data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
 
-        $data['titulo'] = 'Relatório de Orçamentos X Valores';
+        $data['titulo'] = 'Clientes & Orçamentos';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -225,6 +241,7 @@ class Relatorio extends CI_Controller {
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
             $data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
+			$data['bd']['ServicoConcluido'] = $data['query']['ServicoConcluido'];
 
             $data['report'] = $this->Relatorio_model->list_orcamento($data['bd'],TRUE);
 
@@ -688,6 +705,7 @@ class Relatorio extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'NomeProfissional',
+			'Profissional',
             'DataInicio',
             'DataFim',
             'Ordenamento',
@@ -721,6 +739,7 @@ class Relatorio extends CI_Controller {
            # 'C.NomeCliente' => 'Nome do Cliente',
 
 			'TF.ProfissionalTarefa' => 'Responsável',
+			'PT.Profissional' => 'Quem Faz',
 			'TF.idApp_Tarefa' => 'Número do Tarefas',
 			'TF.ObsTarefa' => 'Tarefa',
             'TF.DataTarefa' => 'Data do Tarefa',
@@ -732,6 +751,7 @@ class Relatorio extends CI_Controller {
 			'PT.Procedtarefa' => 'Procedimento',
 			'PT.DataProcedtarefa' => 'Data do Proced.',
 			'PT.ConcluidoProcedtarefa' => 'Proced. Concl.?',
+			
 
 
         );
@@ -742,6 +762,7 @@ class Relatorio extends CI_Controller {
         );
 
         $data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional();
+		$data['select']['Profissional'] = $this->Relatorio_model->select_profissional2();
 
         $data['titulo'] = 'Tarefas X Profissionais';
 
@@ -750,6 +771,7 @@ class Relatorio extends CI_Controller {
 
             #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
             $data['bd']['NomeProfissional'] = $data['query']['NomeProfissional'];
+			$data['bd']['Profissional'] = $data['query']['Profissional'];
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 
