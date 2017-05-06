@@ -197,7 +197,7 @@ class Contatoprof extends CI_Controller {
         $this->load->view('basico/footer');
     }
 
-    public function excluir($id = FALSE) {
+    public function excluir2($id = FALSE) {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -256,7 +256,28 @@ class Contatoprof extends CI_Controller {
 
         $this->load->view('basico/footer');
     }
+	
+	public function excluir($id = FALSE) {
 
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+                $this->Contatoprof_model->delete_contatoprof($id);
+
+                $data['msg'] = '?m=1';
+
+				redirect(base_url() . 'contatoprof/pesquisar/' . $_SESSION['Profissional']['idApp_Profissional'] . $data['msg']);
+				exit();
+            //}
+        //}
+
+        $this->load->view('basico/footer');
+    }
+	
     public function pesquisar($id = FALSE) {
 
         if ($this->input->get('m') == 1)

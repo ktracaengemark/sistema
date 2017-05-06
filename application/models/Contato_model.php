@@ -52,9 +52,8 @@ class Contato_model extends CI_Model {
         }
     }
 
-    public function delete_contato($data) {
-        $query = $this->db->delete('App_Contato', array('idApp_Contato' => $id));
-		#$query = $this->db->delete('App_Contato', array('idApp_Contato' => $data));
+    public function delete_contato($data) {        
+		$query = $this->db->delete('App_Contato', array('idApp_Contato' => $data));
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
