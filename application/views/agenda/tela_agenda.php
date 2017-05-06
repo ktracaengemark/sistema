@@ -4,20 +4,23 @@
 <div id="datepickerinline" class="col-md-2"></div>
 <div id="calendar" class="col-md-8"></div>-->
 
-<div class="col-md-2">
-    
-    <div id="datepickerinline"></div>    
-	<div class="form-group">
+<div class="col-md-3">           
+	<div class="form-group col-md-6">
 		<div class="row">
 			<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>tarefa/cadastrar" role="button"> 
 				<span class="glyphicon glyphicon-plus"></span> Nova Tarefa
 			</a>
-			<hr>
+		</div>
+	</div>	
+	<div class="form-group col-md-6">	
+		<div class="row">	
 			<a class="btn btn-lg btn-success" href="<?php echo base_url() ?>relatorio/tarefa" role="button"> 
 				<span class="glyphicon glyphicon-list"></span> Lista Tarefa
 			</a>
 		</div>	
-	</div>    
+	</div>
+	
+    <div id="datepickerinline"></div> 
     <table class="table table-condensed table-bordered">
         <tr class="active text-active">
             <th colspan="2" class="col-md-12 text-center"><b>Estatísticas - <?php echo date('m/Y', time()) ?></b></th>
@@ -84,7 +87,7 @@
     </table>
     
 </div>
-<div id="calendar" class="col-md-10"></div>
+<div id="calendar" class="col-md-9"></div>
 
 <div id="fluxo" class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="fluxo" aria-hidden="true">
     <div class="vertical-alignment-helper">
@@ -92,8 +95,8 @@
             <div class="modal-content">
 
                 <div class="modal-body text-center">
-                    <button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary">Marcar Consulta</button>
-					<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info">Agendar Evento</button>
+                    <button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary">Consulta/Sessão</button> ou
+					<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info">Outro Evento</button>
                     
                     <input type="hidden" id="start" />
                     <input type="hidden" id="end" />

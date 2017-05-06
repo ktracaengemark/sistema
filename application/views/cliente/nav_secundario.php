@@ -43,7 +43,7 @@
 	
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-			<span class="glyphicon glyphicon-calendar"></span> Agenda<span class="caret"></span>
+			<span class="glyphicon glyphicon-calendar"></span> Consultas/Sessões<span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
 			<li <?php if (preg_match("/consulta\/(cadastrar|alterar)\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
