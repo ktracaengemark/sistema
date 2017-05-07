@@ -607,7 +607,15 @@ function adicionaServico() {
             <div class="panel panel-info">\
                 <div class="panel-heading">\
                     <div class="row">\
-                        <div class="col-md-4">\
+						<div class="col-md-1">\
+                            <label for="QtdVendaServico">Qtd:</label><br>\
+                            <div class="input-group">\
+                                <input type="text" class="form-control Numero" maxlength="3" id="QtdVendaServico'+ps+'" placeholder="0"\
+                                    onkeyup="calculaSubtotal(this.value,this.name,'+ps+',\'QTD\',\'Servico\')"\
+                                    name="QtdVendaServico'+ps+'" value="">\
+                            </div>\
+                        </div>\
+						<div class="col-md-4">\
                             <label for="idTab_Servico">Serviços:</label><br>\
                             <select class="form-control" id="listadinamica'+ps+'" onchange="buscaValor(this.value,this.name,\'Servico\','+ps+')" name="idTab_Servico'+ps+'">\
                                 <option value="">-- Selecione uma opção --</option>\
@@ -620,14 +628,6 @@ function adicionaServico() {
                                 <input type="text" class="form-control Valor" id="idTab_Servico'+ps+'" maxlength="10" placeholder="0,00" \
                                     onkeyup="calculaSubtotal(this.value,this.name,'+ps+',\'VP\',\'Servico\')"\
                                     name="ValorVendaServico'+ps+'" value="">\
-                            </div>\
-                        </div>\
-                        <div class="col-md-1">\
-                            <label for="QtdVendaServico">Qtd:</label><br>\
-                            <div class="input-group">\
-                                <input type="text" class="form-control Numero" maxlength="3" id="QtdVendaServico'+ps+'" placeholder="0"\
-                                    onkeyup="calculaSubtotal(this.value,this.name,'+ps+',\'QTD\',\'Servico\')"\
-                                    name="QtdVendaServico'+ps+'" value="">\
                             </div>\
                         </div>\
                         <div class="col-md-3">\
@@ -832,6 +832,14 @@ $(document).ready(function () {
                 <div class="panel panel-info">\
                     <div class="panel-heading">\
                         <div class="row">\
+                            <div class="col-md-1">\
+                                <label for="QtdVendaProduto">Qtd:</label><br>\
+                                <div class="input-group">\
+                                    <input type="text" class="form-control Numero" maxlength="3" id="QtdVendaProduto'+pc+'" placeholder="0"\
+                                        onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'QTD\',\'Produto\')"\
+                                        name="QtdVendaProduto'+pc+'" value="">\
+                                </div>\
+                            </div>\
                             <div class="col-md-4">\
                                 <label for="idTab_Produto">Produto:</label><br>\
                                 <select class="form-control" id="listadinamicab'+pc+'" onchange="buscaValor(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
@@ -845,14 +853,6 @@ $(document).ready(function () {
                                     <input type="text" class="form-control Valor" id="idTab_Produto'+pc+'" maxlength="10" placeholder="0,00" \
                                         onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'VP\',\'Produto\')"\
                                         name="ValorVendaProduto'+pc+'" value="">\
-                                </div>\
-                            </div>\
-                            <div class="col-md-1">\
-                                <label for="QtdVendaProduto">Qtd:</label><br>\
-                                <div class="input-group">\
-                                    <input type="text" class="form-control Numero" maxlength="3" id="QtdVendaProduto'+pc+'" placeholder="0"\
-                                        onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'QTD\',\'Produto\')"\
-                                        name="QtdVendaProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
                             <div class="col-md-3">\
