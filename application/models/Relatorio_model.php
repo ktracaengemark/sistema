@@ -635,10 +635,12 @@ class Relatorio_model extends CI_Model {
         }
 
         $data['NomeProfissional'] = ($data['NomeProfissional']) ? ' AND P.idApp_Profissional = ' . $data['NomeProfissional'] : FALSE;
-		
+		$data['Profissional'] = ($data['Profissional']) ? ' AND P2.idApp_Profissional = ' . $data['Profissional'] : FALSE;
         $filtro5 = ($data['AprovadoTarefa'] != '#') ? 'TF.AprovadoTarefa = "' . $data['AprovadoTarefa'] . '" AND ' : FALSE;
         $filtro6 = ($data['QuitadoTarefa'] != '#') ? 'TF.QuitadoTarefa = "' . $data['QuitadoTarefa'] . '" AND ' : FALSE;
-
+		$filtro7 = ($data['ServicoConcluido'] != '#') ? 'TF.ServicoConcluido = "' . $data['ServicoConcluido'] . '" AND ' : FALSE;
+		$filtro8 = ($data['ConcluidoProcedtarefa'] != '#') ? 'PT.ConcluidoProcedtarefa = "' . $data['ConcluidoProcedtarefa'] . '" AND ' : FALSE;
+		
         $query = $this->db->query('
             SELECT
 
@@ -667,12 +669,16 @@ class Relatorio_model extends CI_Model {
             WHERE
                 TF.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				TF.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND			
+					'.$filtro5.'
+					'.$filtro6.'
+					'.$filtro7.'
+					'.$filtro8.'
 				(' . $consulta . ')
-                ' . $data['NomeProfissional'] . '
+                ' . $data['NomeProfissional'] . ' 
+				' . $data['Profissional'] . '
 				                 
-
             ORDER BY
-				TF.AprovadoTarefa ASC
+				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
 				
         ');
 
@@ -697,6 +703,7 @@ class Relatorio_model extends CI_Model {
 
 				$row->AprovadoTarefa = $this->basico->mascara_palavra_completa($row->AprovadoTarefa, 'NS');
                 $row->QuitadoTarefa = $this->basico->mascara_palavra_completa($row->QuitadoTarefa, 'NS');
+				$row->ServicoConcluido = $this->basico->mascara_palavra_completa($row->ServicoConcluido, 'NS');
 				$row->ConcluidoProcedtarefa = $this->basico->mascara_palavra_completa($row->ConcluidoProcedtarefa, 'NS');
 
             }

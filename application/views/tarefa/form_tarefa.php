@@ -21,19 +21,14 @@
 					<!--App_Tarefa-->
 
 					<div class="form-group">
-						<div class="row">                      							
-							<div class="col-md-3">
-								<label for="ObsTarefa">Tarefa:</label>
-								<textarea class="form-control" id="ObsTarefa" <?php echo $readonly; ?>
-									autofocus name="ObsTarefa"><?php echo $tarefa['ObsTarefa']; ?></textarea>
-							</div>
+						<div class="row">                      														
 							<div class="col-md-3">
 								<label for="ProfissionalTarefa">Responsável da Tarefa:</label>
 								<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
 									<span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
 								</a>-->
 								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-										id="ProfissionalTarefa" name="ProfissionalTarefa">
+										id="ProfissionalTarefa" autofocus name="ProfissionalTarefa">
 									<option value="">-- Selecione uma opção --</option>
 									<?php
 									foreach ($select['Profissional'] as $key => $row) {
@@ -45,6 +40,11 @@
 									}
 									?>
 								</select>
+							</div>
+							<div class="col-md-3">
+								<label for="ObsTarefa">Tarefa / Missão:</label>
+								<textarea class="form-control" id="ObsTarefa" <?php echo $readonly; ?>
+									autofocus name="ObsTarefa"><?php echo $tarefa['ObsTarefa']; ?></textarea>
 							</div>
 							<div class="col-md-2">
 								<label for="ServicoConcluido">Rotina?</label><br>

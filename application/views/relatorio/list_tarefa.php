@@ -7,22 +7,20 @@
 
                 <thead>
                     <tr>                       											
-																							
-                        
-						<th class="active">Profissional</th>
+																							                       
+						<th class="active">Profissional</th>						
 						<th class="active">Ação</th>
-						<th class="active">Data da Ação</th>												
 						<th class="active">Ação Concluída?</th>
-						<th class="active">Tarefa</th>
-						<th class="active">Responsável</th>	
+						<th class="active">Data da Ação</th>
+						<th class="active">Responsável</th>
+						<th class="active">Tarefa / Missão</th>						
 						<th class="active">Tarefa Concluída?</th>
 						<th class="active">Data da Conclusão</th>
+						<th class="active">Rotina?:</th>
+						<th class="active">Prioridade?</th>												
 						<!--<th class="active">N.Tarefa</th>-->
 						<th class="active">Criada em:</th>
-						<th class="active">Prazo de Conclusão</th>
-						<th class="active">Rotina?:</th>
-						<th class="active">Prioridade?</th>
-						
+						<th class="active">Prazo de Conclusão</th>												
 						
                     </tr>
                 </thead>
@@ -35,19 +33,20 @@
                         #echo '<tr>';
                         echo '<tr class="clickable-row" data-href="' . base_url() . 'tarefa/alterar/' . $row['idApp_Tarefa'] . '">';
                             																																																							
-							echo '<td>' . $row['Profissional'] . '</td>';
+							echo '<td>' . $row['Profissional'] . '</td>';							
 							echo '<td>' . $row['Procedtarefa'] . '</td>';
-							echo '<td>' . $row['DataProcedtarefa'] . '</td>';							
 							echo '<td>' . $row['ConcluidoProcedtarefa'] . '</td>';
-							echo '<td>' . $row['ObsTarefa'] . '</td>'; //  = Tarefa
+							echo '<td>' . $row['DataProcedtarefa'] . '</td>';
 							echo '<td>' . $row['NomeProfissional'] . '</td>';
+							echo '<td>' . $row['ObsTarefa'] . '</td>'; //  = Tarefa							
 							echo '<td>' . $row['AprovadoTarefa'] . '</td>'; // = Tarefa Concluída?
 							echo '<td>' . $row['DataConclusao'] . '</td>';
+							echo '<td>' . $row['ServicoConcluido'] . '</td>'; // = Rotina
+							echo '<td>' . $row['QuitadoTarefa'] . '</td>'; // = Prioridade														
 							#echo '<td>' . $row['idApp_Tarefa'] . '</td>';
 							echo '<td>' . $row['DataTarefa'] . '</td>';
 							echo '<td>' . $row['DataPrazoTarefa'] . '</td>';														
-							echo '<td>' . $row['ServicoConcluido'] . '</td>'; // = Rotina
-							echo '<td>' . $row['QuitadoTarefa'] . '</td>'; // = Prioridade
+							
                         echo '</tr>';
                     }
                     ?>
