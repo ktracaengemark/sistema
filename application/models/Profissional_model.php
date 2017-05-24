@@ -51,8 +51,19 @@ class Profissional_model extends CI_Model {
         }
     }
 
-    public function delete_profissional($data) {
+    public function delete_profissional2($data) {
         $query = $this->db->delete('App_Profissional', array('idApp_Profissional' => $data));
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+	
+	public function delete_profissional($id) {
+        $query = $this->db->delete('App_ContatoProf', array('idApp_Profissional' => $id));
+		$query = $this->db->delete('App_Profissional', array('idApp_Profissional' => $id));
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;

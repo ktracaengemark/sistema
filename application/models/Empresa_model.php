@@ -51,8 +51,19 @@ class Empresa_model extends CI_Model {
         }
     }
 
-    public function delete_empresa($data) {
+    public function delete_empresa2($data) {
         $query = $this->db->delete('App_Empresa', array('idApp_Empresa' => $data));
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+	
+	public function delete_empresa($id) {
+        $query = $this->db->delete('App_Contato', array('idApp_Empresa' => $id));
+		$query = $this->db->delete('App_Empresa', array('idApp_Empresa' => $id));
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
