@@ -10,15 +10,21 @@
                 <input type="text" class="form-control" disabled aria-label="Total Entrada" value="<?php echo $report->soma->somaentrada ?>">
             </div>
         </div>-->
-
-        <div class="col-md-2">
-            <label for="DataFim">Total Pago:</label>
+		<div class="col-md-2">
+            <label for="DataFim">Total Recebido:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total Pago" value="<?php echo $report->soma->somapago ?>">
+                <input type="text" class="form-control" disabled aria-label="Total Pago" value="<?php echo $report->soma->somarecebido ?>">
             </div>
         </div>
-
+		<div class="col-md-2">
+            <label for="DataFim">Total a Receber:</label>
+            <div class="input-group">
+                <span class="input-group-addon">R$</span>
+                <input type="text" class="form-control" disabled aria-label="Total a receber" value="<?php echo $report->soma->somareceber ?>">
+            </div>
+        </div>
+       
         <!--<div class="col-md-2">
             <label for="DataFim">Total Real/Caixa:</label>
             <div class="input-group">
@@ -28,24 +34,17 @@
         </div>-->
 
         <div class="col-md-2">
-            <label for="DataFim">Total a receber:</label>
+            <label for="DataFim">Total do Período:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total a receber" value="<?php echo $report->soma->somareceber ?>">
-            </div>
-        </div>
-
-        <div class="col-md-2">
-            <label for="DataFim">Balanço do Período:</label>
-            <div class="input-group">
-                <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total do Período" value="<?php echo $report->soma->balanco ?>">
+                <input type="text" class="form-control" disabled aria-label="Total Entrada" value="<?php echo $report->soma->balanco ?>">
             </div>
         </div>
 
         <div class="col-md-1"></div>
 
-    </div>
+    </div>	
+	
 </div>
 
 <div class="container-fluid">
@@ -67,9 +66,9 @@
 						<th class="active">Serv. Concl.?</th>
                         <th class="active">Parcela</th>
                         <th class="active">Vencimento</th>
-                        <th class="active">À receber</th>
-                        <th class="active">Data Pgto</th>
-                        <th class="active">Valor Pago</th>
+                        <th class="active">À Receber</th>
+                        <th class="active">Data Recebido</th>
+                        <th class="active">Valor Recebido</th>
                         <th class="active">Parc. Quit.?</th>
                     </tr>
                 </thead>

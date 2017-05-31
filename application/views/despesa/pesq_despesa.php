@@ -22,24 +22,24 @@
                                    autofocus name="Despesa" value="<?php echo $despesa['Despesa'] ?>">
                         </div>
 						<div class="col-md-3">
-								<label for="TipoDespesa">Tipo Despesa</label>
-								<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>tipodespesa/cadastrar/tipodespesa" role="button">
-									<span class="glyphicon glyphicon-plus"></span> <b>Forma Pag</b>
-								</a>-->
-								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-										id="TipoDespesa" name="TipoDespesa">
-									<option value="">-- Sel. Tipo Despesa --</option>
-									<?php
-									foreach ($select['TipoDespesa'] as $key => $row) {
-										if ($despesa['TipoDespesa'] == $key) {
-											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-										} else {
-											echo '<option value="' . $key . '">' . $row . '</option>';
-										}
+							<label for="TipoDespesa">Tipo Despesa</label>
+							<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>tipodespesa/cadastrar/tipodespesa" role="button">
+								<span class="glyphicon glyphicon-plus"></span> <b>Forma Pag</b>
+							</a>-->
+							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+									id="TipoDespesa" name="TipoDespesa">
+								<option value="">-- Sel. Tipo Despesa --</option>
+								<?php
+								foreach ($select['TipoDespesa'] as $key => $row) {
+									if ($despesa['TipoDespesa'] == $key) {
+										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+									} else {
+										echo '<option value="' . $key . '">' . $row . '</option>';
 									}
-									?>
-								</select>
-							</div>
+								}
+								?>
+							</select>
+						</div>
 
 						<div class="col-md-3">
 							<label for="ValorTotalDesp">Valor Total da Desp.:</label><br>
