@@ -20,6 +20,23 @@
                                    autofocus name="NomeProduto" value="<?php echo $query['NomeProduto'] ?>">
                         </div>
 						
+						<div class="col-md-3">
+							<label for="TipoProduto">Tipo Produto</label>								
+							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+									id="TipoProduto" name="TipoProduto">
+								<option value="">-- Sel. Tipo Produto --</option>
+								<?php
+								foreach ($select['TipoProduto'] as $key => $row) {
+									if ($query['TipoProduto'] == $key) {
+										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+									} else {
+										echo '<option value="' . $key . '">' . $row . '</option>';
+									}
+								}
+								?>
+							</select>
+						</div>
+						
 						<div class="col-md-2">
                             <label for="UnidadeProduto">Unid. de Medida:</label><br>
                             <input type="text" class="form-control" maxlength="20"

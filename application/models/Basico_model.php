@@ -352,5 +352,21 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
+	
+	public function select_tipoproduto($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query('SELECT * FROM Tab_TipoProduto');
+        } else {
+            $query = $this->db->query('SELECT * FROM Tab_TipoProduto');
+
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->Abrev] = $row->TipoProduto;
+            }
+        }
+
+        return $array;
+    }
 
 }
