@@ -36,7 +36,7 @@ class Login extends CI_Controller {
     public function index() {
 
         #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
-        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'salao';
+        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'ktraca';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
         ###################################################
@@ -120,7 +120,7 @@ class Login extends CI_Controller {
                     $this->basico->erro($msg);
                     $this->load->view('form_login');
                 } else {
-                    redirect('agenda');
+                    redirect('cliente');
                 }
             }
         }
