@@ -151,6 +151,316 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
+	
+	public function receitas() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'NomeCliente',
+            'DataInicio',
+            'DataFim',
+			'Ordenamento',
+            'Campo',
+            'AprovadoOrca',
+            'QuitadoOrca',
+			'ServicoConcluido',
+			'QuitadoRecebiveis',
+        ), TRUE));
+
+        if (!$data['query']['DataInicio'])			
+           $data['query']['DataInicio'] = '01/01/2017';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+        $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+
+        $data['select']['AprovadoOrca'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+        $data['select']['QuitadoOrca'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+		
+		$data['select']['ServicoConcluido'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+		
+		$data['select']['QuitadoRecebiveis'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+        $data['select']['Campo'] = array(
+            'PR.DataVencimentoRecebiveis' => 'Data do Venc.',
+			'PR.DataPagoRecebiveis' => 'Data do Pagam.',
+			'PR.QuitadoRecebiveis' => 'Quit.Parc.',
+			'C.NomeCliente' => 'Nome do Cliente',
+            'OT.idApp_OrcaTrata' => 'Número do Orçamento',
+            'OT.AprovadoOrca' => 'Orçamento Aprovado?',
+            'OT.DataOrca' => 'Data do Orçamento',
+            'OT.ValorOrca' => 'Valor do Orçamento',
+            'OT.ServicoConcluido' => 'Serviço Concluído?',
+            'OT.QuitadoOrca' => 'Orçamento Quitado?',
+            'OT.DataConclusao' => 'Data de Conclusão',
+            'OT.DataRetorno' => 'Data de Retorno',
+			'OT.ProfissionalOrca' => 'Profissional',
+			
+
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+		
+		$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
+		
+		/*
+        $data['select']['Pesquisa'] = array(
+            'DataEntradaOrca' => 'Data de Entrada',
+            'DataVencimentoRecebiveis' => 'Data de Vencimento da Parcela',
+        );
+        */
+
+		
+        $data['titulo'] = 'Orçamentos & Pagamentos';
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+            #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
+            $data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
+            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			
+			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+            $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+            $data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
+			$data['bd']['ServicoConcluido'] = $data['query']['ServicoConcluido'];
+			$data['bd']['QuitadoRecebiveis'] = $data['query']['QuitadoRecebiveis'];
+
+            $data['report'] = $this->Relatorio_model->list_receitas($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_receitas', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_receitas', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+	
+	public function despesas() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'TipoDespesa',
+            'DataInicio',
+            'DataFim',
+			'Ordenamento',
+            'Campo',
+			'AprovadoDespesas',
+            'QuitadoDespesas',
+			'ServicoConcluidoDespesas',
+			'QuitadoPagaveis',
+          
+        ), TRUE));
+
+        if (!$data['query']['DataInicio'])			
+           $data['query']['DataInicio'] = '01/01/2016';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+        $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+
+		$data['select']['AprovadoDespesas'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+        $data['select']['QuitadoDespesas'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+		
+		$data['select']['ServicoConcluidoDespesas'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+		
+		$data['select']['QuitadoPagaveis'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+        $data['select']['Campo'] = array(
+            
+            'PP.DataVencimentoPagaveis' => 'Data do Venc.',
+			'PP.DataPagoPagaveis' => 'Data do Pagam.',
+			'PP.QuitadoPagaveis' => 'Quit.Parc.',
+			'DS.idApp_Despesas' => 'Número da Despesa',
+            'DS.DataDespesas' => 'Data da Despesa',
+            'DS.ValorDespesas' => 'Valor da Despesa',
+			'DS.Despesa' => 'Desc. da Despesa',
+			'DS.TipoDespesa' => 'Tipo de Despesa',
+            'DS.AprovadoDespesas' => 'Despesa Aprovada?',
+            'DS.QuitadoDespesas' => 'Despesa Quitada?',
+			'DS.ServicoConcluidoDespesas' => 'Serviço Concluído?',
+            
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+						
+		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipodespesa();
+		
+        $data['titulo'] = 'Relatório de Despesas & Saídas';
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+            #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
+
+            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
+			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+			$data['bd']['AprovadoDespesas'] = $data['query']['AprovadoDespesas'];
+            $data['bd']['QuitadoDespesas'] = $data['query']['QuitadoDespesas'];
+			$data['bd']['ServicoConcluidoDespesas'] = $data['query']['ServicoConcluidoDespesas'];
+			$data['bd']['QuitadoPagaveis'] = $data['query']['QuitadoPagaveis'];
+
+            $data['report'] = $this->Relatorio_model->list_despesas($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_despesas', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_despesas', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+	
+	public function balanco() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+
+            'DataInicio',
+            'DataFim',
+			'Ordenamento',
+            'Campo',
+          
+        ), TRUE));
+
+        if (!$data['query']['DataInicio'])			
+           $data['query']['DataInicio'] = '01/01/2017';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+        $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+
+
+
+        $data['select']['Campo'] = array(
+            
+            'PP.DataVencimentoPagaveis' => 'Data do Venc.',
+			'PP.DataPagoPagaveis' => 'Data do Pagam.',
+
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+						
+
+		
+        $data['titulo'] = 'Relatório de Despesas & Saídas';
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+            #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
+
+            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+
+			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+
+
+            $data['report'] = $this->Relatorio_model->list_balanco($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_balanco', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_balanco', $data);
+
+        $this->load->view('basico/footer');
+
+    }
 
     public function orcamento() {
 
@@ -314,6 +624,11 @@ class Relatorio extends CI_Controller {
             'D.ValorTotalDesp' => 'Valor da Despesa',
 			'D.FormaPag' => 'Forma de Pag.',
 			'D.Empresa' => 'Fornecedor',
+			
+			'OT.idApp_OrcaTrata' => 'Número do Orçamento',
+
+            'OT.DataOrca' => 'Data do Orçamento',
+            'OT.ValorOrca' => 'Valor do Orçamento',
 			/*
             'OT.ServicoConcluido' => 'Serviço Concluído?',
             'OT.QuitadoOrca' => 'Orçamento Quitado?',
@@ -714,6 +1029,8 @@ class Relatorio extends CI_Controller {
             'QuitadoTarefa',
 			'ServicoConcluido',
 			'ConcluidoProcedtarefa',
+			'ObsTarefa',
+			'Procedtarefa',
 			
         ), TRUE));
 
@@ -775,7 +1092,9 @@ class Relatorio extends CI_Controller {
 
         $data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional();
 		$data['select']['Profissional'] = $this->Relatorio_model->select_profissional2();
-
+		$data['select']['ObsTarefa'] = $this->Relatorio_model->select_obstarefa();
+		$data['select']['Procedtarefa'] = $this->Relatorio_model->select_procedtarefa();
+		
         $data['titulo'] = 'Tarefas X Profissionais';
 
         #run form validation
@@ -793,6 +1112,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['QuitadoTarefa'] = $data['query']['QuitadoTarefa'];
 			$data['bd']['ServicoConcluido'] = $data['query']['ServicoConcluido'];
 			$data['bd']['ConcluidoProcedtarefa'] = $data['query']['ConcluidoProcedtarefa'];
+			$data['bd']['ObsTarefa'] = $data['query']['ObsTarefa'];
+			$data['bd']['Procedtarefa'] = $data['query']['Procedtarefa'];
 			
 
             $data['report'] = $this->Relatorio_model->list_tarefa($data['bd'],TRUE);
@@ -1000,6 +1321,93 @@ class Relatorio extends CI_Controller {
         }
 
         $this->load->view('relatorio/tela_orcamentosv', $data);
+
+        $this->load->view('basico/footer');
+
+
+
+    }
+	
+	public function estoque() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'NomeCliente',
+            'DataInicio',
+            'DataFim',
+            'Ordenamento',
+            'Campo',
+            'AprovadoOrca',
+
+        ), TRUE));
+		
+		if (!$data['query']['DataInicio'])			
+           $data['query']['DataInicio'] = '01/01/2017';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+        $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+
+        $data['select']['AprovadoOrca'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+        $data['select']['Campo'] = array(
+            'C.NomeCliente' => 'Nome do Cliente',
+			'OT.idApp_OrcaTrata' => 'Número do Orçamento',
+			'OT.DataOrca' => 'Data do Orçamento',
+			'OT.AprovadoOrca' => 'Orçamento Aprovado?',
+			'OT.ValorOrca' => 'Valor do Orçamento',
+			'PD.QtdVendaProduto' => 'Qtd. do Produto',
+			'PD.idTab_Produto' => 'Produto',
+			'PD.ValorVendaProduto' => 'Valor da Venda',
+
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+
+        $data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
+
+        $data['titulo'] = 'Relatório de Estoque';
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+            #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
+            $data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
+            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+
+            $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+            $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+
+            $data['report'] = $this->Relatorio_model->list_estoque($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_estoque', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_estoque', $data);
 
         $this->load->view('basico/footer');
 
