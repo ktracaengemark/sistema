@@ -4,7 +4,8 @@
     <thead>
         <tr>
             <th>Serviço</th>
-            <th>Valor</th>
+            <th>Valor de Compra</th>
+			<th>Valor de Venda</th>
             <th></th>
         </tr>
     </thead>
@@ -21,6 +22,7 @@
 
                 echo '<tr class="clickable-row" data-href="' . $url . '">';
                     echo '<td>' . $row['NomeServico'] . '</td>';
+					echo '<td>' . str_replace('.',',',$row['ValorCompraServico']) . '</td>';
                     echo '<td>' . str_replace('.',',',$row['ValorVendaServico']) . '</td>';
                     echo '<td></td>';
                 echo '</tr>';            

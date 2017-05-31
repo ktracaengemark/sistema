@@ -49,6 +49,16 @@ class Servico_model extends CI_Model {
             return TRUE;
         }
     }
+	
+	public function delete_servico($data) {        
+		$query = $this->db->delete('Tab_Servico', array('idTab_Servico' => $data));
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
  
     public function lista_servico($x) {
 

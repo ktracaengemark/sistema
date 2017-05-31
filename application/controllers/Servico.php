@@ -52,6 +52,7 @@ class Servico extends CI_Controller {
 			'idTab_Servico',
             'NomeServico',
             'ValorVendaServico',
+			'ValorCompraServico',
                 ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -85,7 +86,8 @@ class Servico extends CI_Controller {
 
             $data['query']['NomeServico'] = trim(mb_strtoupper($data['query']['NomeServico'], 'ISO-8859-1'));
             $data['query']['ValorVendaServico'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVendaServico']));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['ValorCompraServico'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraServico']));
+			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
             $data['campos'] = array_keys($data['query']);
@@ -126,6 +128,7 @@ class Servico extends CI_Controller {
 			'idTab_Servico',
             'NomeServico',
             'ValorVendaServico',
+			'ValorCompraServico',
                 ), TRUE));
 
 
@@ -164,7 +167,8 @@ class Servico extends CI_Controller {
 
             $data['query']['NomeServico'] = trim(mb_strtoupper($data['query']['NomeServico'], 'ISO-8859-1'));
             $data['query']['ValorVendaServico'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVendaServico']));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['ValorCompraServico'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraServico']));
+			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
             $data['anterior'] = $this->Servico_model->get_servico($data['query']['idTab_Servico']);
             $data['campos'] = array_keys($data['query']);
@@ -192,7 +196,7 @@ class Servico extends CI_Controller {
         $this->load->view('basico/footer');
     }
 
-    public function excluir($id = FALSE) {
+    public function excluir2($id = FALSE) {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -265,6 +269,26 @@ class Servico extends CI_Controller {
 
         $this->load->view('basico/footer');
     }
+	
+	public function excluir($id = FALSE) {
 
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+                $this->Servico_model->delete_servico($id);
+
+                $data['msg'] = '?m=1';
+
+				redirect(base_url() . 'servico/cadastrar/' . $data['msg']);
+				exit();
+            //}
+        //}
+
+        $this->load->view('basico/footer');
+    }
 
 }

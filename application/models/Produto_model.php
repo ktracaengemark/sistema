@@ -48,7 +48,17 @@ class Produto_model extends CI_Model {
         } else {
             return TRUE;
         }
-    }    
+    }
+
+	public function delete_produto($data) {        
+		$query = $this->db->delete('Tab_Produto', array('idTab_Produto' => $data));
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
     
     public function lista_produto($x) {
 
