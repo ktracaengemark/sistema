@@ -1287,7 +1287,7 @@ $(document).ready(function () {
                                 <label for="QtdCompraProduto">Qtd:</label><br>\
                                 <div class="input-group">\
                                     <input type="text" class="form-control Numero" maxlength="3" id="QtdCompraProduto'+pc+'" placeholder="0"\
-                                        onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'QTD\',\'Produto\')"\
+                                        onkeyup="calculaSubtotalCompra(this.value,this.name,'+pc+',\'QTD\',\'Produto\')"\
                                         name="QtdCompraProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
@@ -1302,7 +1302,7 @@ $(document).ready(function () {
                                 <div class="input-group id="txtHint">\
                                     <span class="input-group-addon" id="basic-addon1">R$</span>\
                                     <input type="text" class="form-control Valor" id="idTab_Produto'+pc+'" maxlength="10" placeholder="0,00" \
-                                        onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'VP\',\'Produto\')"\
+                                        onkeyup="calculaSubtotalCompra(this.value,this.name,'+pc+',\'VP\',\'Produto\')"\
                                         name="ValorCompraProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
@@ -1371,7 +1371,7 @@ $(document).ready(function () {
                                 <label for="QtdCompraProduto">Qtd:</label><br>\
                                 <div class="input-group">\
                                     <input type="text" class="form-control Numero" maxlength="3" id="QtdCompraProduto'+pc+'" placeholder="0"\
-                                        onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'QTD\',\'Produto\')"\
+                                        onkeyup="calculaSubtotalCompra(this.value,this.name,'+pc+',\'QTD\',\'Produto\')"\
                                         name="QtdCompraProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
@@ -1386,7 +1386,7 @@ $(document).ready(function () {
                                 <div class="input-group id="txtHint">\
                                     <span class="input-group-addon" id="basic-addon1">R$</span>\
                                     <input type="text" class="form-control Valor" id="idTab_Produto'+pc+'" maxlength="10" placeholder="0,00" \
-                                        onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'VP\',\'Produto\')"\
+                                        onkeyup="calculaSubtotalCompra(this.value,this.name,'+pc+',\'VP\',\'Produto\')"\
                                         name="ValorCompraProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
