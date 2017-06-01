@@ -19,8 +19,7 @@ if ($_GET['q']==1) {
     $result = mysql_query(
             'SELECT
                 idTab_Servico,
-                NomeServico,
-				TipoServico,
+                CONCAT(TipoServico, " --- ", NomeServico, " --- R$ ", ValorCompraServico) AS NomeServico,
                 ValorCompraServico
             FROM
                 Tab_Servico
@@ -45,9 +44,8 @@ elseif ($_GET['q'] == 2) {
     $result = mysql_query(
             'SELECT
                 idTab_Produto,
-                NomeProduto,
-				TipoProduto,
-                ValorCompraProduto
+				CONCAT(TipoProduto, " --- ", NomeProduto, " ::: ", UnidadeProduto, " --- R$ ", ValorCompraProduto) AS NomeProduto,
+				ValorCompraProduto
             FROM
                 Tab_Produto
             WHERE

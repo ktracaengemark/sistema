@@ -333,7 +333,7 @@
 								<label for="ValorDespesas">Valor Despesas:</label><br>
 								<div class="input-group" id="txtHint">
 									<span class="input-group-addon" id="basic-addon1">R$</span>
-									<input type="text" class="form-control Valor" id="ValorDespesas" maxlength="10" placeholder="0,00" readonly=""
+									<input type="text" class="form-control Valor" id="ValorDespesas" maxlength="10" placeholder="0,00" 
 										   name="ValorDespesas" value="<?php echo $despesas['ValorDespesas'] ?>">
 								</div>
 							</div>
@@ -396,15 +396,7 @@
 									</span>
 								</div>
 							</div>
-							<br>
-							<div class="form-group">
-								<div class="col-md-3 text-left">
-									<button class="btn btn-warning" type="button" data-toggle="collapse" onclick="calculaParcelasPagaveis()"
-											data-target="#Parcelas" aria-expanded="false" aria-controls="Parcelas">
-										<span class="glyphicon glyphicon-menu-down"></span> Gerar Parcelas
-									</button>
-								</div>
-							</div>
+							<br>							
 						</div>
 					</div>
 					<hr>
@@ -419,6 +411,19 @@
 								</h4>
 							</div>
 							<div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2" aria-expanded="false" style="height: 0px;">
+								<div class="form-group">
+									<div class="row">
+										<br>
+										<div class="form-group">
+											<div class="col-md-4 text-right">
+												<button class="btn btn-danger" type="button" data-toggle="collapse" onclick="calculaParcelasPagaveis()"
+														data-target="#Parcelas" aria-expanded="false" aria-controls="Parcelas">
+													<span class="glyphicon glyphicon-menu-down"></span> Gerar Parcelas
+												</button>
+											</div>
+										</div>
+									</div>	
+								</div>		
 								<div class="panel-body">
 								
 									<!--App_parcelasRec-->

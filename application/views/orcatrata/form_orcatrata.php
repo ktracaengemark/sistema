@@ -315,7 +315,7 @@
 								<label for="ValorOrca">Orçamento:</label><br>
 								<div class="input-group" id="txtHint">
 									<span class="input-group-addon" id="basic-addon1">R$</span>
-									<input type="text" class="form-control Valor" id="ValorOrca" maxlength="10" placeholder="0,00" readonly=""
+									<input type="text" class="form-control Valor" id="ValorOrca" maxlength="10" placeholder="0,00" 
 										   name="ValorOrca" value="<?php echo $orcatrata['ValorOrca'] ?>">
 								</div>
 							</div>
@@ -375,15 +375,7 @@
 									</span>
 								</div>
 							</div>
-							<br>
-							<div class="form-group">
-								<div class="col-md-3 text-left">
-									<button class="btn btn-warning" type="button" data-toggle="collapse" onclick="calculaParcelas()" 
-											data-target="#Parcelas" aria-expanded="false" aria-controls="Parcelas">
-										<span class="glyphicon glyphicon-menu-down"></span> Gerar Parcelas
-									</button>
-								</div>
-							</div>
+							<br>							
 						</div>
 					</div>
 					<hr>
@@ -396,8 +388,21 @@
 										Parcelas
 									</a>
 								</h4>
-							</div>
+							</div>							
 							<div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2" aria-expanded="false" style="height: 0px;">
+								<div class="form-group">
+									<div class="row">												
+										<br>
+										<div class="form-group">
+											<div class="col-md-4 text-right">
+												<button class="btn btn-danger" type="button" data-toggle="collapse" onclick="calculaParcelas()" 
+														data-target="#Parcelas" aria-expanded="false" aria-controls="Parcelas">
+													<span class="glyphicon glyphicon-menu-down"></span> Gerar Parcelas
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
 								<div class="panel-body">									
 									<!--App_parcelasRec-->
 									<div class="input_fields_parcelas">
@@ -410,6 +415,7 @@
 										<input type="hidden" name="idApp_ParcelasRecebiveis<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['idApp_ParcelasRecebiveis']; ?>"/>
 										<?php } ?>
 
+										
 										<div class="form-group">
 											<div class="row">
 												<div class="col-md-1">
