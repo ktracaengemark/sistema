@@ -288,10 +288,8 @@ class Relatorio extends CI_Controller {
             'DataInicio',
             'DataFim',
 			'Ordenamento',
-            'Campo',
-			'AprovadoDespesas',
-            'QuitadoDespesas',
-			'ServicoConcluidoDespesas',
+            'Campo',	
+            'QuitadoDespesas',			
 			'QuitadoPagaveis',
           
         ), TRUE));
@@ -302,26 +300,14 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
-
-		$data['select']['AprovadoDespesas'] = array(
-            '#' => 'TODOS',
-            'N' => 'Não',
-            'S' => 'Sim',
-        );
-
-        $data['select']['QuitadoDespesas'] = array(
-            '#' => 'TODOS',
-            'N' => 'Não',
-            'S' => 'Sim',
-        );
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');		
 		
-		$data['select']['ServicoConcluidoDespesas'] = array(
+		$data['select']['QuitadoDespesas'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
             'S' => 'Sim',
         );
-		
+						
 		$data['select']['QuitadoPagaveis'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
@@ -337,10 +323,8 @@ class Relatorio extends CI_Controller {
             'DS.DataDespesas' => 'Data da Despesa',
             'DS.ValorDespesas' => 'Valor da Despesa',
 			'DS.Despesa' => 'Desc. da Despesa',
-			'DS.TipoDespesa' => 'Tipo de Despesa',
-            'DS.AprovadoDespesas' => 'Despesa Aprovada?',
-            'DS.QuitadoDespesas' => 'Despesa Quitada?',
-			'DS.ServicoConcluidoDespesas' => 'Serviço Concluído?',
+			'DS.TipoDespesa' => 'Tipo de Despesa',           
+            'DS.QuitadoDespesas' => 'Despesa Quitada?',			
             
         );
 
@@ -362,10 +346,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];
-			$data['bd']['AprovadoDespesas'] = $data['query']['AprovadoDespesas'];
-            $data['bd']['QuitadoDespesas'] = $data['query']['QuitadoDespesas'];
-			$data['bd']['ServicoConcluidoDespesas'] = $data['query']['ServicoConcluidoDespesas'];
+            $data['bd']['Campo'] = $data['query']['Campo'];		
+            $data['bd']['QuitadoDespesas'] = $data['query']['QuitadoDespesas'];		
 			$data['bd']['QuitadoPagaveis'] = $data['query']['QuitadoPagaveis'];
 
             $data['report'] = $this->Relatorio_model->list_despesas($data['bd'],TRUE);

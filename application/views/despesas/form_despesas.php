@@ -17,26 +17,7 @@
                 <!--App_Despesas-->
 
                 <div class="form-group">
-						<div class="row">
-							<div class="col-md-3">
-								<label for="ProfissionalDespesas">Profissional:</label>
-								<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
-									<span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
-								</a>
-								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-										id="ProfissionalDespesas" name="ProfissionalDespesas">
-									<option value="">-- Selecione uma opção --</option>
-									<?php
-									foreach ($select['Profissional'] as $key => $row) {
-										if ($orcatrata['ProfissionalDespesas'] == $key) {
-											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-										} else {
-											echo '<option value="' . $key . '">' . $row . '</option>';
-										}
-									}
-									?>
-								</select>
-							</div>							
+						<div class="row">														
 							<!--<div class="col-md-2">
 								<label for="DataEntradaDespesas">Validade do Orç.:</label>
 								<div class="input-group <?php echo $datepicker; ?>">
@@ -54,7 +35,7 @@
 							</div>
 							
 							<div class="col-md-3">
-								<label for="TipoDespesa">Tipo Despesa</label>
+								<label for="TipoDespesa">Tipo de Despesa</label>
 								<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>tipodespesa/cadastrar/tipodespesa" role="button">
 									<span class="glyphicon glyphicon-plus"></span> <b>Forma Pag</b>
 								</a>-->
@@ -82,6 +63,26 @@
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
 								</div>
+							</div>
+							
+							<div class="col-md-3">
+								<label for="ProfissionalDespesas">Profissional:</label>
+								<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
+									<span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
+								</a>
+								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+										id="ProfissionalDespesas" name="ProfissionalDespesas">
+									<option value="">-- Selecione uma opção --</option>
+									<?php
+									foreach ($select['Profissional'] as $key => $row) {
+										if ($despesas['ProfissionalDespesas'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>
+								</select>
 							</div>
 						</div>
 					</div>
@@ -336,7 +337,7 @@
 										   name="ValorDespesas" value="<?php echo $despesas['ValorDespesas'] ?>">
 								</div>
 							</div>
-
+							
 							<div class="col-md-3">
 								<label for="ValorEntradaDespesas">Desconto</label><br>
 								<div class="input-group" id="txtHint">
@@ -346,7 +347,7 @@
 										name="ValorEntradaDespesas" value="<?php echo $despesas['ValorEntradaDespesas'] ?>">
 								</div>
 							</div>
-
+							
 							<div class="col-md-3">
 								<label for="ValorRestanteDespesas">Valor A Pagar:</label><br>
 								<div class="input-group" id="txtHint">
@@ -361,65 +362,65 @@
 					
 					<hr>
 					
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-3">
+								<label for="FormaPagamentoDespesas">Forma de Pagamento:</label>
+								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+										id="FormaPagamentoDespesas" name="FormaPagamentoDespesas">
+									<option value="">-- Selecione uma opção --</option>
+									<?php
+									foreach ($select['FormaPagamentoDespesas'] as $key => $row) {
+										if ($despesas['FormaPagamentoDespesas'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>
+								</select>
+							</div>
+
+							<div class="col-md-2">
+								<label for="QtdParcelasDespesas">Qtd de Parcelas:</label><br>
+								<input type="text" class="form-control Numero" id="QtdParcelasDespesas" maxlength="3" placeholder="0"
+									   name="QtdParcelasDespesas" value="<?php echo $despesas['QtdParcelasDespesas'] ?>">
+							</div>
+							<div class="col-md-2">
+								<label for="DataVencimentoDespesas">Data do 1º Venc.</label>
+								<div class="input-group <?php echo $datepicker; ?>">
+									<input type="text" class="form-control Date" id="DataVencimentoDespesas" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+										   name="DataVencimentoDespesas" value="<?php echo $despesas['DataVencimentoDespesas']; ?>">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</div>
+							<br>
+							<div class="form-group">
+								<div class="col-md-3 text-left">
+									<button class="btn btn-warning" type="button" data-toggle="collapse" onclick="calculaParcelasPagaveis()"
+											data-target="#Parcelas" aria-expanded="false" aria-controls="Parcelas">
+										<span class="glyphicon glyphicon-menu-down"></span> Gerar Parcelas
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr>
 					<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
 						<div class="panel panel-info">
 							<div class="panel-heading" role="tab" id="heading2" data-toggle="collapse" data-parent="#accordion2" data-target="#collapse2">
 								<h4 class="panel-title">
 									<a class="accordion-toggle">
 										<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-										Forma de Pagamento & Parcelas
+										 Parcelas
 									</a>
 								</h4>
 							</div>
 							<div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2" aria-expanded="false" style="height: 0px;">
 								<div class="panel-body">
-
-									<div class="form-group">
-										<div class="row">
-											<div class="col-md-3">
-												<label for="FormaPagamentoDespesas">Forma de Pagamento:</label>
-												<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-														id="FormaPagamentoDespesas" name="FormaPagamentoDespesas">
-													<option value="">-- Selecione uma opção --</option>
-													<?php
-													foreach ($select['FormaPagamentoDespesas'] as $key => $row) {
-														if ($despesas['FormaPagamentoDespesas'] == $key) {
-															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-														} else {
-															echo '<option value="' . $key . '">' . $row . '</option>';
-														}
-													}
-													?>
-												</select>
-											</div>
-
-											<div class="col-md-2">
-												<label for="QtdParcelasDespesas">Qtd de Parcelas:</label><br>
-												<input type="text" class="form-control Numero" id="QtdParcelasDespesas" maxlength="3" placeholder="0"
-													   name="QtdParcelasDespesas" value="<?php echo $despesas['QtdParcelasDespesas'] ?>">
-											</div>
-											<div class="col-md-2">
-												<label for="DataVencimentoDespesas">Data do 1º Venc.</label>
-												<div class="input-group <?php echo $datepicker; ?>">
-													<input type="text" class="form-control Date" id="DataVencimentoDespesas" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-														   name="DataVencimentoDespesas" value="<?php echo $despesas['DataVencimentoDespesas']; ?>">
-													<span class="input-group-addon" disabled>
-														<span class="glyphicon glyphicon-calendar"></span>
-													</span>
-												</div>
-											</div>
-											<br>
-											<div class="form-group">
-												<div class="col-md-3 text-right">
-													<button class="btn btn-warning" type="button" data-toggle="collapse" onclick="calculaParcelasPagaveis()"
-															data-target="#Parcelas" aria-expanded="false" aria-controls="Parcelas">
-														<span class="glyphicon glyphicon-menu-down"></span> Gerar Parcelas
-													</button>
-												</div>
-											</div>
-										</div>
-									</div>
-
+								
 									<!--App_parcelasRec-->
 									<div class="input_fields_parcelas">
 
@@ -524,6 +525,48 @@
 								<textarea class="form-control" id="ObsDespesas" <?php echo $readonly; ?>
 										  name="ObsDespesas"><?php echo $despesas['ObsDespesas']; ?></textarea>
 							</div>
+							
+							<div class="col-md-2 form-inline">
+								<label for="QuitadoDespesas">Despesa Quitada?</label><br>
+								<div class="form-group">
+									<div class="btn-group" data-toggle="buttons">
+										<?php
+										foreach ($select['QuitadoDespesas'] as $key => $row) {
+											(!$despesas['QuitadoDespesas']) ? $despesas['QuitadoDespesas'] = 'N' : FALSE;
+
+											if ($despesas['QuitadoDespesas'] == $key) {
+												echo ''
+												. '<label class="btn btn-warning active" name="radiobutton_QuitadoDespesas" id="radiobutton_QuitadoDespesas' . $key . '">'
+												. '<input type="radio" name="QuitadoDespesas" id="radiobutton" '
+												. 'autocomplete="off" value="' . $key . '" checked>' . $row
+												. '</label>'
+												;
+											} else {
+												echo ''
+												. '<label class="btn btn-default" name="radiobutton_QuitadoDespesas" id="radiobutton_QuitadoDespesas' . $key . '">'
+												. '<input type="radio" name="QuitadoDespesas" id="radiobutton" '
+												. 'autocomplete="off" value="' . $key . '" >' . $row
+												. '</label>'
+												;
+											}
+										}
+										?>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-2">
+								<label for="DataConclusaoDespesas">Data da Quitação:</label>
+								<div class="input-group <?php echo $datepicker; ?>">
+									<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+										   name="DataConclusaoDespesas" value="<?php echo $despesas['DataConclusaoDespesas']; ?>">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</div>
+							<!--
+							
 							<div class="col-md-2 form-inline">
 								<label for="AprovadoDespesas">Despesa Aprovada?</label><br>
 								<div class="form-group">
@@ -588,52 +631,8 @@
 												?>
 											</div>
 										</div>
-									</div>
-									
-									<div class="col-md-2 form-inline">
-										<label for="QuitadoDespesas">Despesa Quitada?</label><br>
-										<div class="form-group">
-											<div class="btn-group" data-toggle="buttons">
-												<?php
-												foreach ($select['QuitadoDespesas'] as $key => $row) {
-													(!$despesas['QuitadoDespesas']) ? $despesas['QuitadoDespesas'] = 'N' : FALSE;
-
-													if ($despesas['QuitadoDespesas'] == $key) {
-														echo ''
-														. '<label class="btn btn-warning active" name="radiobutton_QuitadoDespesas" id="radiobutton_QuitadoDespesas' . $key . '">'
-														. '<input type="radio" name="QuitadoDespesas" id="radiobutton" '
-														. 'autocomplete="off" value="' . $key . '" checked>' . $row
-														. '</label>'
-														;
-													} else {
-														echo ''
-														. '<label class="btn btn-default" name="radiobutton_QuitadoDespesas" id="radiobutton_QuitadoDespesas' . $key . '">'
-														. '<input type="radio" name="QuitadoDespesas" id="radiobutton" '
-														. 'autocomplete="off" value="' . $key . '" >' . $row
-														. '</label>'
-														;
-													}
-												}
-												?>
-											</div>
-										</div>
-									</div>
-
-									
-
-									<div class="col-md-2">
-										<label for="DataConclusaoDespesas">Data da Quitação:</label>
-										<div class="input-group <?php echo $datepicker; ?>">
-											<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-												   name="DataConclusaoDespesas" value="<?php echo $despesas['DataConclusaoDespesas']; ?>">
-											<span class="input-group-addon" disabled>
-												<span class="glyphicon glyphicon-calendar"></span>
-											</span>
-										</div>
-									</div>
-									
-									
-									
+									</div>																																				
+									<!--
 									<div class="col-md-2">
 										<label for="DataRetornoDespesas">Data do Retorno:</label>
 										<div class="input-group <?php echo $datepicker; ?>">
@@ -644,6 +643,7 @@
 											</span>
 										</div>
 									</div>
+									
 									<br>
 									<br>
 									<br>
@@ -651,6 +651,7 @@
 									
 								</div>
 							</div>
+							-->
 						</div>
 					</div>
 

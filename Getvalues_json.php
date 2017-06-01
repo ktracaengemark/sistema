@@ -20,13 +20,14 @@ if ($_GET['q']==1) {
             'SELECT
                 idTab_Servico,
                 NomeServico,
+				TipoServico,
                 ValorVendaServico
             FROM
                 Tab_Servico
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY NomeServico ASC'
+                ORDER BY TipoServico DESC, NomeServico ASC'
     );
 
     while ($row = mysql_fetch_assoc($result)) {
@@ -45,13 +46,14 @@ elseif ($_GET['q'] == 2) {
             'SELECT
                 idTab_Produto,
                 NomeProduto,
+				TipoProduto,
                 ValorVendaProduto
             FROM
                 Tab_Produto
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY NomeProduto ASC'
+                ORDER BY TipoProduto DESC, NomeProduto ASC'
     );
 
     while ($row = mysql_fetch_assoc($result)) {

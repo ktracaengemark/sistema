@@ -62,12 +62,18 @@ class Servico_model extends CI_Model {
  
     public function lista_servico($x) {
 
-        $query = $this->db->query('SELECT * '
-                . 'FROM Tab_Servico '
-                . 'WHERE '
-                . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
-                . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
-                . 'ORDER BY NomeServico ASC ');
+		$query = $this->db->query(
+                'SELECT '
+                    . 'idTab_Servico, '
+                    . 'NomeServico, '
+                    . 'TipoServico, '
+                    . 'ValorCompraServico, '
+                    . 'ValorVendaServico '
+                    . 'FROM '
+                    . 'Tab_Servico '
+                    . 'WHERE '
+                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' ' 
+					. 'ORDER BY TipoServico ASC, NomeServico ASC ');
         
         /*
           echo $this->db->last_query();

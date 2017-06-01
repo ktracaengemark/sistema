@@ -93,9 +93,9 @@ class Tarefa extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #### App_Tarefa ####
-        $this->form_validation->set_rules('DataTarefa', 'Data do Tarefa', 'required|trim|valid_date');
+        $this->form_validation->set_rules('DataTarefa', 'Data da Tarefa', 'required|trim|valid_date');
         #$this->form_validation->set_rules('DataProcedtarefa', 'DataProcedtarefa', 'required|trim');
-        #$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+        $this->form_validation->set_rules('ProfissionalTarefa', 'Profissional', 'required|trim');
 
         $data['select']['AprovadoTarefa'] = $this->Basico_model->select_status_sn();
         $data['select']['ServicoConcluido'] = $this->Basico_model->select_status_sn();
@@ -296,9 +296,9 @@ class Tarefa extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #### App_Tarefa ####
-        $this->form_validation->set_rules('DataTarefa', 'Data do Tarefa', 'required|trim|valid_date');        
+        $this->form_validation->set_rules('DataTarefa', 'Data da Tarefa', 'required|trim|valid_date');        
 		#$this->form_validation->set_rules('DataProcedtarefa', 'DataProcedtarefa', 'required|trim');      
-        #$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+        $this->form_validation->set_rules('ProfissionalTarefa', 'Profissional', 'required|trim');
 
         $data['select']['AprovadoTarefa'] = $this->Basico_model->select_status_sn();        
         $data['select']['ServicoConcluido'] = $this->Basico_model->select_status_sn();        

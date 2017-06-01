@@ -53,7 +53,7 @@
                                     </span>
                                 </div>
                             </div>
-							
+							<!--
 							<div class="col-md-1">
                                 <label for="AprovadoDespesas">Desp.Aprov.?</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -69,7 +69,7 @@
                                     ?>
                                 </select>
                             </div>
-
+							-->
                             <div class="col-md-1">
                                 <label for="QuitadoDespesas">Desp.Quit.?</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -85,7 +85,7 @@
                                     ?>
                                 </select>
                             </div>
-							
+							<!--
 							<div class="col-md-1">
                                 <label for="ServicoConcluidoDespesas">Desp. Concl.?</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -101,7 +101,7 @@
                                     ?>
                                 </select>
                             </div>
-							
+							-->
 							<div class="col-md-1">
                                 <label for="QuitadoPagaveis">Parc. Quit.?</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"

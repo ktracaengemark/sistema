@@ -62,12 +62,19 @@ class Produto_model extends CI_Model {
     
     public function lista_produto($x) {
 
-        $query = $this->db->query('SELECT * '
-                . 'FROM Tab_Produto '
-                . 'WHERE '
-                . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
-                . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
-                . 'ORDER BY NomeProduto ASC ');
+        $query = $this->db->query(
+                'SELECT '
+                    . 'idTab_Produto, '
+                    . 'NomeProduto, '
+                    . 'TipoProduto, '
+                    . 'UnidadeProduto, '
+                    . 'ValorCompraProduto, '
+                    . 'ValorVendaProduto '
+                    . 'FROM '
+                    . 'Tab_Produto '
+                    . 'WHERE '
+                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' ' 
+					. 'ORDER BY TipoProduto ASC, NomeProduto ASC ');
         
         /*
           echo $this->db->last_query();
@@ -100,28 +107,34 @@ class Produto_model extends CI_Model {
                 'SELECT '
                     . 'idTab_Produto, '
                     . 'NomeProduto, '
+					. 'TipoProduto, '
                     . 'Quantidade, '
-                    . 'Unidade, '
-                    . 'ValorCompra, '
-                    . 'ValorProdVenda '
+                    . 'UnidadeProduto, '
+                    . 'ValorCompraProduto, '
+                    . 'ValorVendaProduto '
                     . 'FROM '
                     . 'Tab_Produto '
                     . 'WHERE '
                     . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
-                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] );
+                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
+					. 'ORDER BY TipoProduto ASC, NomeProduto ASC ');
+					
         } else {
             $query = $this->db->query(
                 'SELECT '
                     . 'idTab_Produto, '
                     . 'NomeProduto, '
+					. 'TipoProduto, '
                     . 'Quantidade, '
-                    . 'Unidade, '
-                    . 'ValorCompra, '
-                    . 'ValorProdVenda '
+                    . 'UnidadeProduto, '
+                    . 'ValorCompraProduto, '
+                    . 'ValorVendaProduto '
                     . 'FROM '
                     . 'Tab_Produto '
                     . 'WHERE '
-                    . 'idSis_Usuario = ' . $_SESSION['log']['id']);
+                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
+					. 'ORDER BY TipoProduto ASC, NomeProduto ASC ');
             
             $array = array();
             foreach ($query->result() as $row) {

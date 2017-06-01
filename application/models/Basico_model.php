@@ -279,6 +279,7 @@ class Basico_model extends CI_Model {
                 'SELECT '
                     . 'idTab_Produto, '
                     . 'NomeProduto, '
+					. 'TipoProduto, '
                     . 'QuantidadeProduto, '
                     . 'UnidadeProduto, '
                     . 'ValorCompraProduto, '
@@ -287,12 +288,14 @@ class Basico_model extends CI_Model {
                     . 'Tab_Produto '
                     . 'WHERE '
                     . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
-                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] );
+                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
+					. 'ORDER BY TipoProduto ASC, NomeProduto ASC ');
         } else {
             $query = $this->db->query(
                 'SELECT '
                     . 'idTab_Produto, '
                     . 'NomeProduto, '
+					. 'TipoProduto, '
                     . 'QuantidadeProduto, '
                     . 'UnidadeProduto, '
                     . 'ValorCompraProduto, '
@@ -300,7 +303,8 @@ class Basico_model extends CI_Model {
                     . 'FROM '
                     . 'Tab_Produto '
                     . 'WHERE '
-                    . 'idSis_Usuario = ' . $_SESSION['log']['id']);
+                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' ' 
+					. 'ORDER BY TipoProduto ASC, NomeProduto ASC ');
 
             $array = array();
             foreach ($query->result() as $row) {

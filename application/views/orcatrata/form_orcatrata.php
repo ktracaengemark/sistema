@@ -52,7 +52,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<label for="ProfissionalOrca">Profissional:</label>
 								<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
 									<span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
@@ -71,11 +71,6 @@
 									?>
 								</select>
 							</div>
-							<div class="col-md-4">
-								<label for="ObsOrca">OBS:</label>
-								<textarea class="form-control" id="ObsOrca" <?php echo $readonly; ?>
-										  name="ObsOrca"><?php echo $orcatrata['ObsOrca']; ?></textarea>
-							</div>
 						</div>
 					</div>
 
@@ -86,7 +81,7 @@
                             <div class="panel-heading collapsed" role="tab" id="heading1" data-toggle="collapse" data-parent="#accordion1" data-target="#collapse1" aria-expanded="false">								<h4 class="panel-title">
 									<a class="accordion-toggle">
 										<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-										Orçamento - Produtos e Serviços
+										Serviços & Produtos
 									</a>
 								</h4>
 							</div>
@@ -307,106 +302,103 @@
 												</a>
 											</div>
 										</div>
-									</div>
-
-									<hr>
-	<!--#######################################-->
-									<div class="form-group">
-										<div class="row">
-											<div class="col-md-3">
-												<label for="ValorOrca">Orçamento:</label><br>
-												<div class="input-group" id="txtHint">
-													<span class="input-group-addon" id="basic-addon1">R$</span>
-													<input type="text" class="form-control Valor" id="ValorOrca" maxlength="10" placeholder="0,00" readonly=""
-														   name="ValorOrca" value="<?php echo $orcatrata['ValorOrca'] ?>">
-												</div>
-											</div>
-
-											<div class="col-md-3">
-												<label for="ValorEntradaOrca">Desconto</label><br>
-												<div class="input-group" id="txtHint">
-													<span class="input-group-addon" id="basic-addon1">R$</span>
-													<input type="text" class="form-control Valor" id="ValorEntradaOrca" maxlength="10" placeholder="0,00"
-														onkeyup="calculaResta(this.value)"
-														name="ValorEntradaOrca" value="<?php echo $orcatrata['ValorEntradaOrca'] ?>">
-												</div>
-											</div>
-
-											<div class="col-md-3">
-												<label for="ValorRestanteOrca">Resta Pagar:</label><br>
-												<div class="input-group" id="txtHint">
-													<span class="input-group-addon" id="basic-addon1">R$</span>
-													<input type="text" class="form-control Valor" id="ValorRestanteOrca" maxlength="10" placeholder="0,00" readonly=""
-														   name="ValorRestanteOrca" value="<?php echo $orcatrata['ValorRestanteOrca'] ?>">
-												</div>
-											</div>
-										</div>
-									</div>
-
+									</div>								
 								</div>
 							</div>
 						</div>
 					</div>
+		<!--#######################################-->				
+					<hr>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-3">
+								<label for="ValorOrca">Orçamento:</label><br>
+								<div class="input-group" id="txtHint">
+									<span class="input-group-addon" id="basic-addon1">R$</span>
+									<input type="text" class="form-control Valor" id="ValorOrca" maxlength="10" placeholder="0,00" readonly=""
+										   name="ValorOrca" value="<?php echo $orcatrata['ValorOrca'] ?>">
+								</div>
+							</div>
 
+							<div class="col-md-3">
+								<label for="ValorEntradaOrca">Desconto</label><br>
+								<div class="input-group" id="txtHint">
+									<span class="input-group-addon" id="basic-addon1">R$</span>
+									<input type="text" class="form-control Valor" id="ValorEntradaOrca" maxlength="10" placeholder="0,00"
+										onkeyup="calculaResta(this.value)"
+										name="ValorEntradaOrca" value="<?php echo $orcatrata['ValorEntradaOrca'] ?>">
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<label for="ValorRestanteOrca">Resta Pagar:</label><br>
+								<div class="input-group" id="txtHint">
+									<span class="input-group-addon" id="basic-addon1">R$</span>
+									<input type="text" class="form-control Valor" id="ValorRestanteOrca" maxlength="10" placeholder="0,00" 
+										   name="ValorRestanteOrca" value="<?php echo $orcatrata['ValorRestanteOrca'] ?>">
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-3">
+								<label for="FormaPagamento">Forma de Pagamento:</label>
+								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+										id="FormaPagamento" name="FormaPagamento">
+									<option value="">-- Selecione uma opção --</option>
+									<?php
+									foreach ($select['FormaPagamento'] as $key => $row) {
+										if ($orcatrata['FormaPagamento'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>
+								</select>
+							</div>
+
+							<div class="col-md-2">
+								<label for="QtdParcelasOrca">Qtd de Parcelas:</label><br>
+								<input type="text" class="form-control Numero" id="QtdParcelasOrca" maxlength="3" placeholder="0"
+									   name="QtdParcelasOrca" value="<?php echo $orcatrata['QtdParcelasOrca'] ?>">
+							</div>
+							<div class="col-md-2">
+								<label for="DataVencimentoOrca">Data do 1º Venc.</label>
+								<div class="input-group <?php echo $datepicker; ?>">
+									<input type="text" class="form-control Date" id="DataVencimentoOrca" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+										   name="DataVencimentoOrca" value="<?php echo $orcatrata['DataVencimentoOrca']; ?>">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</div>
+							<br>
+							<div class="form-group">
+								<div class="col-md-3 text-left">
+									<button class="btn btn-warning" type="button" data-toggle="collapse" onclick="calculaParcelas()" 
+											data-target="#Parcelas" aria-expanded="false" aria-controls="Parcelas">
+										<span class="glyphicon glyphicon-menu-down"></span> Gerar Parcelas
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr>
 					<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
 						<div class="panel panel-info">
 							<div class="panel-heading" role="tab" id="heading2" data-toggle="collapse" data-parent="#accordion2" data-target="#collapse2">
 								<h4 class="panel-title">
 									<a class="accordion-toggle">
 										<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-										Forma de Pagam. & Parcelas
+										Parcelas
 									</a>
 								</h4>
 							</div>
 							<div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2" aria-expanded="false" style="height: 0px;">
-								<div class="panel-body">
-
-									<div class="form-group">
-										<div class="row">
-											<div class="col-md-3">
-												<label for="FormaPagamento">Forma de Pagamento:</label>
-												<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-														id="FormaPagamento" name="FormaPagamento">
-													<option value="">-- Selecione uma opção --</option>
-													<?php
-													foreach ($select['FormaPagamento'] as $key => $row) {
-														if ($orcatrata['FormaPagamento'] == $key) {
-															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-														} else {
-															echo '<option value="' . $key . '">' . $row . '</option>';
-														}
-													}
-													?>
-												</select>
-											</div>
-
-											<div class="col-md-2">
-												<label for="QtdParcelasOrca">Qtd de Parcelas:</label><br>
-												<input type="text" class="form-control Numero" id="QtdParcelasOrca" maxlength="3" placeholder="0"
-													   name="QtdParcelasOrca" value="<?php echo $orcatrata['QtdParcelasOrca'] ?>">
-											</div>
-											<div class="col-md-2">
-												<label for="DataVencimentoOrca">Data do 1º Venc.</label>
-												<div class="input-group <?php echo $datepicker; ?>">
-													<input type="text" class="form-control Date" id="DataVencimentoOrca" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-														   name="DataVencimentoOrca" value="<?php echo $orcatrata['DataVencimentoOrca']; ?>">
-													<span class="input-group-addon" disabled>
-														<span class="glyphicon glyphicon-calendar"></span>
-													</span>
-												</div>
-											</div>
-											<br>
-											<div class="form-group">
-												<div class="col-md-3 text-right">
-													<button class="btn btn-warning" type="button" data-toggle="collapse" onclick="calculaParcelas()"
-															data-target="#Parcelas" aria-expanded="false" aria-controls="Parcelas">
-														<span class="glyphicon glyphicon-menu-down"></span> Gerar Parcelas
-													</button>
-												</div>
-											</div>
-										</div>
-									</div>
-
+								<div class="panel-body">									
 									<!--App_parcelasRec-->
 									<div class="input_fields_parcelas">
 
@@ -506,6 +498,11 @@
 
 					<div class="form-group">
 						<div class="row">
+							<div class="col-md-2">
+								<label for="ObsOrca">OBS:</label>
+								<textarea class="form-control" id="ObsOrca" <?php echo $readonly; ?>
+										  name="ObsOrca"><?php echo $orcatrata['ObsOrca']; ?></textarea>
+							</div>
 							<div class="col-md-2 form-inline">
 								<label for="AprovadoOrca">Orçam. Aprovado?</label><br>
 								<div class="form-group">
@@ -623,7 +620,8 @@
 									<br>
 									<br>
 									<br>
-									<br>
+									<br>								
+									<hr>
 									<div class="container-fluid">
 										<div class="panel-group" id="accordion3" role="tablist" aria-multiselectable="true">
 											<div class="panel panel-info">

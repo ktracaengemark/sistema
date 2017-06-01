@@ -46,7 +46,7 @@
 								<textarea class="form-control" id="ObsTarefa" <?php echo $readonly; ?>
 									autofocus name="ObsTarefa"><?php echo $tarefa['ObsTarefa']; ?></textarea>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-2 text-left">
 								<label for="ServicoConcluido">Rotina?</label><br>
 								<div class="form-group">
 									<div class="btn-group" data-toggle="buttons">
@@ -74,7 +74,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-2 text-left" >
 								<label for="QuitadoTarefa">Prioridade?</label><br>
 								<div class="form-group">
 									<div class="btn-group" data-toggle="buttons">
@@ -102,7 +102,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-2 text-left">
 								<label for="DataTarefa">Criada em:</label>
 								<div class="input-group <?php echo $datepicker; ?>">
 									<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
@@ -112,7 +112,7 @@
 									</span>
 								</div>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-2 text-left">
 								<label for="DataPrazoTarefa">Prazo Final:</label>
 								<div class="input-group <?php echo $datepicker; ?>">
 									<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"

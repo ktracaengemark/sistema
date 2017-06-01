@@ -130,10 +130,13 @@ class Despesas extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #### App_Despesas ####
-        $this->form_validation->set_rules('DataDespesas', 'Data do Despesas', 'required|trim|valid_date');
-        #$this->form_validation->set_rules('DataProcedimento', 'DataProcedimento', 'required|trim');
-        #$this->form_validation->set_rules('ParcelaPagaveis', 'ParcelaPagaveis', 'required|trim');
-        #$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+        $this->form_validation->set_rules('DataDespesas', 'Data da Despesa', 'required|trim|valid_date');
+        $this->form_validation->set_rules('Despesa', 'Despesa', 'required|trim');
+        $this->form_validation->set_rules('TipoDespesa', 'Tipo de Despesa', 'required|trim');
+        $this->form_validation->set_rules('ProfissionalDespesas', 'Profissional', 'required|trim');
+		$this->form_validation->set_rules('FormaPagamentoDespesas', 'Forma de Pagamento', 'required|trim');
+		$this->form_validation->set_rules('QtdParcelasDespesas', 'Qtd de Parcelas', 'required|trim');
+		$this->form_validation->set_rules('DataVencimentoDespesas', 'Data do 1ºVenc.', 'required|trim|valid_date');
 		$data['select']['TipoDespesa'] = $this->Tipodespesa_model->select_tipodespesa();
         $data['select']['AprovadoDespesas'] = $this->Basico_model->select_status_sn();
         $data['select']['FormaPagamentoDespesas'] = $this->Formapag_model->select_formapag();
@@ -211,6 +214,7 @@ class Despesas extends CI_Controller {
             $data['despesas']['ValorEntradaDespesas'] = str_replace(',', '.', str_replace('.', '', $data['despesas']['ValorEntradaDespesas']));
             $data['despesas']['DataEntradaDespesas'] = $this->basico->mascara_data($data['despesas']['DataEntradaDespesas'], 'mysql');
             $data['despesas']['ValorRestanteDespesas'] = str_replace(',', '.', str_replace('.', '', $data['despesas']['ValorRestanteDespesas']));
+			
 
             $data['despesas']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['despesas']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
@@ -259,7 +263,6 @@ class Despesas extends CI_Controller {
                     $data['parcelaspag'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
                     $data['parcelaspag'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
                     $data['parcelaspag'][$j]['idApp_Despesas'] = $data['despesas']['idApp_Despesas'];
-
                     $data['parcelaspag'][$j]['ValorParcelaPagaveis'] = str_replace(',', '.', str_replace('.', '', $data['parcelaspag'][$j]['ValorParcelaPagaveis']));
                     $data['parcelaspag'][$j]['DataVencimentoPagaveis'] = $this->basico->mascara_data($data['parcelaspag'][$j]['DataVencimentoPagaveis'], 'mysql');
                     $data['parcelaspag'][$j]['ValorPagoPagaveis'] = str_replace(',', '.', str_replace('.', '', $data['parcelaspag'][$j]['ValorPagoPagaveis']));
@@ -395,7 +398,8 @@ class Despesas extends CI_Controller {
             #### App_Despesas ####
             $data['despesas'] = $this->Despesas_model->get_despesas($id);
             $data['despesas']['DataDespesas'] = $this->basico->mascara_data($data['despesas']['DataDespesas'], 'barras');
-
+			$data['despesas']['Despesa'] = $data['despesas']['Despesa'];
+			$data['despesas']['TipoDespesa'] = $data['despesas']['TipoDespesa'];			
 			$data['despesas']['DataConclusaoDespesas'] = $this->basico->mascara_data($data['despesas']['DataConclusaoDespesas'], 'barras');
             $data['despesas']['DataRetornoDespesas'] = $this->basico->mascara_data($data['despesas']['DataRetornoDespesas'], 'barras');
             $data['despesas']['DataEntradaDespesas'] = $this->basico->mascara_data($data['despesas']['DataEntradaDespesas'], 'barras');
@@ -452,10 +456,14 @@ class Despesas extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #### App_Despesas ####
-        $this->form_validation->set_rules('DataDespesas', 'Data do Despesas', 'required|trim|valid_date');        
-		#$this->form_validation->set_rules('DataProcedimento', 'DataProcedimento', 'required|trim');
-        #$this->form_validation->set_rules('ParcelaPagaveis', 'ParcelaPagaveis', 'required|trim');
-        #$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+        $this->form_validation->set_rules('DataDespesas', 'Data da Despesa', 'required|trim|valid_date');
+        $this->form_validation->set_rules('Despesa', 'Despesa', 'required|trim');
+        $this->form_validation->set_rules('TipoDespesa', 'Tipo de Despesa', 'required|trim');
+        $this->form_validation->set_rules('ProfissionalDespesas', 'Profissional', 'required|trim');
+		$this->form_validation->set_rules('FormaPagamentoDespesas', 'Forma de Pagamento', 'required|trim');
+		$this->form_validation->set_rules('QtdParcelasDespesas', 'Qtd de Parcelas', 'required|trim');
+		$this->form_validation->set_rules('DataVencimentoDespesas', 'Data do 1ºVenc.', 'required|trim|valid_date');
+		
 		$data['select']['TipoDespesa'] = $this->Tipodespesa_model->select_tipodespesa();
         $data['select']['AprovadoDespesas'] = $this->Basico_model->select_status_sn();
         $data['select']['FormaPagamentoDespesas'] = $this->Formapag_model->select_formapag();
@@ -523,7 +531,8 @@ class Despesas extends CI_Controller {
             ////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
             #### App_Despesas ####
             $data['despesas']['DataDespesas'] = $this->basico->mascara_data($data['despesas']['DataDespesas'], 'mysql');
-
+			$data['despesas']['Despesa'] = $data['despesas']['Despesa'];
+			$data['despesas']['TipoDespesa'] = $data['despesas']['TipoDespesa'];			
 			$data['despesas']['DataConclusaoDespesas'] = $this->basico->mascara_data($data['despesas']['DataConclusaoDespesas'], 'mysql');
             $data['despesas']['DataRetornoDespesas'] = $this->basico->mascara_data($data['despesas']['DataRetornoDespesas'], 'mysql');
             $data['despesas']['DataVencimentoDespesas'] = $this->basico->mascara_data($data['despesas']['DataVencimentoDespesas'], 'mysql');
@@ -639,7 +648,6 @@ class Despesas extends CI_Controller {
                     $data['update']['parcelaspag']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
                     $data['update']['parcelaspag']['inserir'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
                     $data['update']['parcelaspag']['inserir'][$j]['idApp_Despesas'] = $data['despesas']['idApp_Despesas'];
-
                     $data['update']['parcelaspag']['inserir'][$j]['ValorParcelaPagaveis'] = str_replace(',', '.', str_replace('.', '', $data['update']['parcelaspag']['inserir'][$j]['ValorParcelaPagaveis']));
                     $data['update']['parcelaspag']['inserir'][$j]['DataVencimentoPagaveis'] = $this->basico->mascara_data($data['update']['parcelaspag']['inserir'][$j]['DataVencimentoPagaveis'], 'mysql');
                     $data['update']['parcelaspag']['inserir'][$j]['ValorPagoPagaveis'] = str_replace(',', '.', str_replace('.', '', $data['update']['parcelaspag']['inserir'][$j]['ValorPagoPagaveis']));

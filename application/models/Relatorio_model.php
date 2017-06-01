@@ -291,9 +291,7 @@ class Relatorio_model extends CI_Model {
         }
 		
 		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TD.idTab_TipoDespesa = ' . $data['TipoDespesa'] : FALSE;
-		$filtro1 = ($data['AprovadoDespesas'] != '#') ? 'DS.AprovadoDespesas = "' . $data['AprovadoDespesas'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoDespesas'] != '#') ? 'DS.QuitadoDespesas = "' . $data['QuitadoDespesas'] . '" AND ' : FALSE;
-		$filtro3 = ($data['ServicoConcluidoDespesas'] != '#') ? 'DS.ServicoConcluidoDespesas = "' . $data['ServicoConcluidoDespesas'] . '" AND ' : FALSE;
 		$filtro4 = ($data['QuitadoPagaveis'] != '#') ? 'PP.QuitadoPagaveis = "' . $data['QuitadoPagaveis'] . '" AND ' : FALSE;
 		
         $query = $this->db->query('
@@ -305,9 +303,7 @@ class Relatorio_model extends CI_Model {
                 DS.DataDespesas,
                 DS.DataEntradaDespesas,
                 DS.ValorEntradaDespesas,
-				DS.AprovadoDespesas,
 				DS.QuitadoDespesas,
-				DS.ServicoConcluidoDespesas,
                 PP.ParcelaPagaveis,
                 PP.DataVencimentoPagaveis,
                 PP.ValorParcelaPagaveis,
@@ -322,10 +318,8 @@ class Relatorio_model extends CI_Model {
                     LEFT JOIN Tab_TipoDespesa AS TD ON TD.idTab_TipoDespesa = DS.TipoDespesa
 
             WHERE
-                DS.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-                ' . $filtro1 . '
-                ' . $filtro2 . '
-				' . $filtro3 . '
+                DS.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND               
+				' . $filtro2 . '				
 				' . $filtro4 . '
 				(' . $consulta . ') 
 				' . $data['TipoDespesa'] . '
@@ -351,10 +345,8 @@ class Relatorio_model extends CI_Model {
 				$row->DataDespesas = $this->basico->mascara_data($row->DataDespesas, 'barras');
                 $row->DataEntradaDespesas = $this->basico->mascara_data($row->DataEntradaDespesas, 'barras');
                 $row->DataVencimentoPagaveis = $this->basico->mascara_data($row->DataVencimentoPagaveis, 'barras');
-                $row->DataPagoPagaveis = $this->basico->mascara_data($row->DataPagoPagaveis, 'barras');
-				$row->AprovadoDespesas = $this->basico->mascara_palavra_completa($row->AprovadoDespesas, 'NS');
-				$row->QuitadoDespesas = $this->basico->mascara_palavra_completa($row->QuitadoDespesas, 'NS');
-				$row->ServicoConcluidoDespesas = $this->basico->mascara_palavra_completa($row->ServicoConcluidoDespesas, 'NS');
+                $row->DataPagoPagaveis = $this->basico->mascara_data($row->DataPagoPagaveis, 'barras');	
+				$row->QuitadoDespesas = $this->basico->mascara_palavra_completa($row->QuitadoDespesas, 'NS');				
                 $row->QuitadoPagaveis = $this->basico->mascara_palavra_completa($row->QuitadoPagaveis, 'NS');
 
                 #esse trecho pode ser melhorado, serve para somar apenas uma vez
