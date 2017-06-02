@@ -44,7 +44,7 @@ elseif ($_GET['q'] == 2) {
     $result = mysql_query(
             'SELECT
                 idTab_Produto,
-				CONCAT(TipoProduto, " --- ", NomeProduto, " ::: ", UnidadeProduto, " --- R$ ", ValorCompraProduto) AS NomeProduto,
+				CONCAT(TipoProduto, " --- ", NomeProduto, " --- ", UnidadeProduto, " --- R$ ", ValorCompraProduto) AS NomeProduto,
 				ValorCompraProduto
             FROM
                 Tab_Produto

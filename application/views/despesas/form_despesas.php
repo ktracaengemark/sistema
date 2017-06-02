@@ -352,7 +352,7 @@
 								<label for="ValorRestanteDespesas">Valor A Pagar:</label><br>
 								<div class="input-group" id="txtHint">
 									<span class="input-group-addon" id="basic-addon1">R$</span>
-									<input type="text" class="form-control Valor" id="ValorRestanteDespesas" maxlength="10" placeholder="0,00" 
+									<input type="text" class="form-control Valor" id="ValorRestanteDespesas" maxlength="10" placeholder="0,00" readonly=""
 										   name="ValorRestanteDespesas" value="<?php echo $despesas['ValorRestanteDespesas'] ?>">
 								</div>
 							</div>

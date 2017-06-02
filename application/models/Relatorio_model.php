@@ -195,7 +195,7 @@ class Relatorio_model extends CI_Model {
 
             WHERE
                 C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-                (' . $consulta . ') AND
+                (' . $consulta . ') AND				
                 ' . $filtro1 . '
                 ' . $filtro2 . '
                 ' . $filtro3 . '

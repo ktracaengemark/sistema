@@ -25,7 +25,8 @@ if ($_GET['q']==1) {
                 Tab_Servico
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TipoServico = "V"
                 ORDER BY TipoServico DESC, NomeServico ASC'
     );
 
@@ -44,13 +45,14 @@ elseif ($_GET['q'] == 2) {
     $result = mysql_query(
             'SELECT                
 				idTab_Produto,
-				CONCAT(TipoProduto, " --- ", NomeProduto, " ::: ", UnidadeProduto, " --- R$ ", ValorVendaProduto) AS NomeProduto,
+				CONCAT(TipoProduto, " --- ", NomeProduto, " --- ", UnidadeProduto, " --- R$ ", ValorVendaProduto) AS NomeProduto,
 				ValorVendaProduto
             FROM
                 Tab_Produto
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TipoProduto = "V"
                 ORDER BY TipoProduto DESC, NomeProduto ASC'
     );
 
