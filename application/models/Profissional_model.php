@@ -113,7 +113,7 @@ class Profissional_model extends CI_Model {
             $array = $this->db->query(					
 				'SELECT                
 				idApp_Profissional,
-				CONCAT(Funcao, " --- ", NomeProfissional) AS NomeProfissional				
+				CONCAT(NomeProfissional, " --- ", Funcao) AS NomeProfissional				
             FROM
                 App_Profissional
             WHERE
@@ -126,7 +126,7 @@ class Profissional_model extends CI_Model {
             $query = $this->db->query(
                 'SELECT                
 				idApp_Profissional,
-				CONCAT(Funcao, " --- ", NomeProfissional) AS NomeProfissional				
+				CONCAT(NomeProfissional, " --- ", Funcao) AS NomeProfissional				
             FROM
                 App_Profissional
             WHERE
