@@ -288,7 +288,9 @@ class Relatorio extends CI_Controller {
             'DataInicio',
             'DataFim',
 			'Ordenamento',
-            'Campo',	
+            'Campo',
+			'AprovadoDespesas',
+			'ServicoConcluidoDespesas',
             'QuitadoDespesas',			
 			'QuitadoPagaveis',
           
@@ -301,6 +303,18 @@ class Relatorio extends CI_Controller {
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');		
+		
+		$data['select']['AprovadoDespesas'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+		
+		$data['select']['ServicoConcluidoDespesas'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
 		
 		$data['select']['QuitadoDespesas'] = array(
             '#' => 'TODOS',
@@ -346,7 +360,9 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];		
+            $data['bd']['Campo'] = $data['query']['Campo'];	
+			$data['bd']['AprovadoDespesas'] = $data['query']['AprovadoDespesas'];	
+			$data['bd']['ServicoConcluidoDespesas'] = $data['query']['ServicoConcluidoDespesas'];	
             $data['bd']['QuitadoDespesas'] = $data['query']['QuitadoDespesas'];		
 			$data['bd']['QuitadoPagaveis'] = $data['query']['QuitadoPagaveis'];
 

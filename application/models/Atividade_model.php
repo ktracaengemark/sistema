@@ -87,18 +87,27 @@ class Atividade_model extends CI_Model {
 
         if ($data === TRUE) {
             $array = $this->db->query(
-                'SELECT * '
+                'SELECT '
                     . 'idApp_Atividade, '
                     . 'Atividade '
                     . 'FROM '
                     . 'App_Atividade '					
 					. 'WHERE '
                     . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
-                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo']);
-							
+                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo']. ' '
+					. 'ORDER BY Atividade ASC ');		
 					
         } else {
-            $query = $this->db->query('SELECT  idApp_Atividade, Atividade FROM App_Atividade  WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
+            $query = $this->db->query(
+				'SELECT '
+                    . 'idApp_Atividade, '
+                    . 'Atividade '
+                    . 'FROM '
+                    . 'App_Atividade '					
+					. 'WHERE '
+                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo']. ' '
+					. 'ORDER BY Atividade ASC ');
             
             $array = array();
             foreach ($query->result() as $row) {

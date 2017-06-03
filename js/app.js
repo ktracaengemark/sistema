@@ -379,17 +379,7 @@ function adicionaProcedimento() {
     $(".input_fields_wrap3").append('\
         <div class="form-group" id="3div'+pc+'">\
             <div class="row">\
-                <div class="col-md-2">\
-                    <label for="DataProcedimento'+pc+'">Data do Procedimento:</label>\
-                    <div class="input-group DatePicker">\
-                        <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
-                               name="DataProcedimento'+pc+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
-                        <span class="input-group-addon" disabled>\
-                            <span class="glyphicon glyphicon-calendar"></span>\
-                        </span>\
-                    </div>\
-                </div>\
-                <div class="col-md-2">\
+                <div class="col-md-3">\
                     <label for="Profissional'+pc+'">Profissional:</label>\
                     <select data-placeholder="Selecione uma opção..." class="form-control"\
                              id="listadinamicac'+pc+'" name="Profissional'+pc+'">\
@@ -400,6 +390,16 @@ function adicionaProcedimento() {
                     <label for="Procedimento'+pc+'">Procedimento:</label>\
                     <textarea class="form-control" id="Procedimento'+pc+'"\
                               name="Procedimento'+pc+'"></textarea>\
+                </div>\
+				<div class="col-md-2">\
+                    <label for="DataProcedimento'+pc+'">Data do Procedimento:</label>\
+                    <div class="input-group DatePicker">\
+                        <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
+                               name="DataProcedimento'+pc+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
+                        <span class="input-group-addon" disabled>\
+                            <span class="glyphicon glyphicon-calendar"></span>\
+                        </span>\
+                    </div>\
                 </div>\
 				<div class="col-md-2">\
 					<label for="ConcluidoProcedimento">Proc. Concl.? </label><br>\
@@ -485,7 +485,7 @@ function adicionaProcedtarefa() {
     $(".input_fields_wrap3").append('\
         <div class="form-group" id="3div'+pt+'">\
             <div class="row">\
-                <div class="col-md-2">\
+                <div class="col-md-3">\
                     <label for="Profissional'+pt+'">Profissional:</label>\
                     <select data-placeholder="Selecione uma opção..." class="form-control"\
                              id="listadinamicad'+pt+'" name="Profissional'+pt+'">\

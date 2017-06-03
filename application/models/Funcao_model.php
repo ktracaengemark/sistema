@@ -87,18 +87,27 @@ class Funcao_model extends CI_Model {
 
         if ($data === TRUE) {
             $array = $this->db->query(
-                'SELECT * '
+                'SELECT '
                     . 'idTab_Funcao, '
                     . 'Funcao '
                     . 'FROM '
                     . 'Tab_Funcao '					
 					. 'WHERE '
                     . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
-                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo']);
-							
+                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
+					. 'ORDER BY Funcao ASC ');		
 					
         } else {
-            $query = $this->db->query('SELECT  idTab_Funcao, Funcao FROM Tab_Funcao  WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
+            $query = $this->db->query(
+				'SELECT '
+                    . 'idTab_Funcao, '
+                    . 'Funcao '
+                    . 'FROM '
+                    . 'Tab_Funcao '					
+					. 'WHERE '
+                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
+					. 'ORDER BY Funcao ASC ');
             
             $array = array();
             foreach ($query->result() as $row) {
@@ -110,22 +119,5 @@ class Funcao_model extends CI_Model {
         return $array;
     }
 	
-	/*public function select_funcao($data = FALSE) {
-
-        if ($data === TRUE) {
-            $array = $this->db->query('SELECT * FROM Tab_Funcao ORDER BY Funcao ASC');
-        } else {
-            $query = $this->db->query('SELECT * FROM Tab_Funcao ORDER BY Funcao ASC');
-
-            $array = array();
-            #$array[0] = ':: SELECIONE ::';
-            foreach ($query->result() as $row) {
-                #$array[$row->idTab_Municipio] = $row->NomeMunicipio;
-				$array[$row->Funcao] = $row->Funcao;
-            }
-        }
-
-        return $array;
-    }*/
     
 }

@@ -110,18 +110,30 @@ class Profissional_model extends CI_Model {
 	public function select_profissional($data = FALSE) {
 
         if ($data === TRUE) {
-            $array = $this->db->query(
-                'SELECT '
-                    . 'idApp_Profissional, '
-                    . 'NomeProfissional '
-                    . 'FROM '
-                    . 'App_Profissional '
-                    . 'WHERE '
-                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
-                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] );
+            $array = $this->db->query(					
+				'SELECT                
+				idApp_Profissional,
+				CONCAT(Funcao, " --- ", NomeProfissional) AS NomeProfissional				
+            FROM
+                App_Profissional
+            WHERE
+                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                ORDER BY Funcao ASC, NomeProfissional ASC'
+    );
 					
         } else {
-            $query = $this->db->query('SELECT idApp_Profissional, NomeProfissional FROM App_Profissional WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
+            $query = $this->db->query(
+                'SELECT                
+				idApp_Profissional,
+				CONCAT(Funcao, " --- ", NomeProfissional) AS NomeProfissional				
+            FROM
+                App_Profissional
+            WHERE
+                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                ORDER BY Funcao ASC, NomeProfissional ASC'
+    );
             
             $array = array();
             foreach ($query->result() as $row) {

@@ -291,6 +291,8 @@ class Relatorio_model extends CI_Model {
         }
 		
 		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TD.idTab_TipoDespesa = ' . $data['TipoDespesa'] : FALSE;
+		$filtro1 = ($data['AprovadoDespesas'] != '#') ? 'DS.AprovadoDespesas = "' . $data['AprovadoDespesas'] . '" AND ' : FALSE;
+		$filtro3 = ($data['ServicoConcluidoDespesas'] != '#') ? 'DS.ServicoConcluidoDespesas = "' . $data['ServicoConcluidoDespesas'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoDespesas'] != '#') ? 'DS.QuitadoDespesas = "' . $data['QuitadoDespesas'] . '" AND ' : FALSE;
 		$filtro4 = ($data['QuitadoPagaveis'] != '#') ? 'PP.QuitadoPagaveis = "' . $data['QuitadoPagaveis'] . '" AND ' : FALSE;
 		
@@ -303,6 +305,8 @@ class Relatorio_model extends CI_Model {
                 DS.DataDespesas,
                 DS.DataEntradaDespesas,
                 DS.ValorEntradaDespesas,
+				DS.AprovadoDespesas,
+				DS.ServicoConcluidoDespesas,
 				DS.QuitadoDespesas,
                 PP.ParcelaPagaveis,
                 PP.DataVencimentoPagaveis,
@@ -319,6 +323,8 @@ class Relatorio_model extends CI_Model {
 
             WHERE
                 DS.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND               
+				' . $filtro1 . '
+				' . $filtro3 . '
 				' . $filtro2 . '				
 				' . $filtro4 . '
 				(' . $consulta . ') 
@@ -346,6 +352,8 @@ class Relatorio_model extends CI_Model {
                 $row->DataEntradaDespesas = $this->basico->mascara_data($row->DataEntradaDespesas, 'barras');
                 $row->DataVencimentoPagaveis = $this->basico->mascara_data($row->DataVencimentoPagaveis, 'barras');
                 $row->DataPagoPagaveis = $this->basico->mascara_data($row->DataPagoPagaveis, 'barras');	
+				$row->AprovadoDespesas = $this->basico->mascara_palavra_completa($row->AprovadoDespesas, 'NS');
+				$row->ServicoConcluidoDespesas = $this->basico->mascara_palavra_completa($row->ServicoConcluidoDespesas, 'NS');
 				$row->QuitadoDespesas = $this->basico->mascara_palavra_completa($row->QuitadoDespesas, 'NS');				
                 $row->QuitadoPagaveis = $this->basico->mascara_palavra_completa($row->QuitadoPagaveis, 'NS');
 

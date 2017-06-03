@@ -127,9 +127,10 @@
 
 						<hr>
 						
+					
 					<div class="panel-group" id="accordion3" role="tablist" aria-multiselectable="true">
 						<div class="panel panel-info">
-							<div class="panel-heading" role="tab" id="heading3" data-toggle="collapse" data-parent="#accordion3" data-target="#collapse3">
+							 <div class="panel-heading" role="tab" id="heading3" data-toggle="collapse" data-parent="#accordion3" data-target="#collapse3">
 								<h4 class="panel-title">
 									<a class="accordion-toggle">
 										<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
@@ -138,7 +139,7 @@
 								</h4>
 							</div>
 
-							<div id="collapse3" class="panel-collapse collapse <?php echo $tratamentosin ?>" role="tabpanel" aria-labelledby="heading3">
+							<div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading3" aria-expanded="false" style="height: 0px;">
 								<div class="panel-body">
 
 									<input type="hidden" name="PTCount" id="PTCount" value="<?php echo $count['PTCount']; ?>"/>
@@ -155,7 +156,7 @@
 
 									<div class="form-group" id="3div<?php echo $i ?>">
 										<div class="row">																					
-											<div class="col-md-2">
+											<div class="col-md-3">
 												<label for="Profissional<?php echo $i ?>">Profissional:</label>
 												<?php if ($i == 1) { ?>
 												<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
@@ -386,12 +387,13 @@
 
 					</form>
 
-				</div>
+					
 
+
+				</div>
 
 			</div>
 
 		</div>
-
 	</div>
-</div>
+</div>	

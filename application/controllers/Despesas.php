@@ -173,11 +173,21 @@ class Despesas extends CI_Controller {
         (!$data['despesas']['AprovadoDespesas']) ? $data['despesas']['AprovadoDespesas'] = 'N' : FALSE;
 
         $data['radio'] = array(
-            'AprovadoDespesas' => $this->basico->radio_checked($data['despesas']['AprovadoDespesas'], 'Despesas Aprovado', 'NS'),
+            'AprovadoDespesas' => $this->basico->radio_checked($data['despesas']['AprovadoDespesas'], 'Despesa Quitada', 'NS'),
         );
 
         ($data['despesas']['AprovadoDespesas'] == 'S') ?
             $data['div']['AprovadoDespesas'] = '' : $data['div']['AprovadoDespesas'] = 'style="display: none;"';
+			
+			
+		(!$data['despesas']['QuitadoDespesas']) ? $data['despesas']['QuitadoDespesas'] = 'N' : FALSE;
+
+        $data['radio'] = array(
+            'QuitadoDespesas' => $this->basico->radio_checked($data['despesas']['QuitadoDespesas'], 'Despesa Quitada', 'NS'),
+        );
+
+        ($data['despesas']['QuitadoDespesas'] == 'S') ?
+            $data['div']['QuitadoDespesas'] = '' : $data['div']['QuitadoDespesas'] = 'style="display: none;"';
 
 
         $data['sidebar'] = 'col-sm-3 col-md-2';
@@ -500,11 +510,21 @@ class Despesas extends CI_Controller {
         (!$data['despesas']['AprovadoDespesas']) ? $data['despesas']['AprovadoDespesas'] = 'N' : FALSE;
 
         $data['radio'] = array(
-            'AprovadoDespesas' => $this->basico->radio_checked($data['despesas']['AprovadoDespesas'], 'Despesas Aprovado', 'NS'),
+            'AprovadoDespesas' => $this->basico->radio_checked($data['despesas']['AprovadoDespesas'], 'Despesa Quitada', 'NS'),
         );
 
         ($data['despesas']['AprovadoDespesas'] == 'S') ?
             $data['div']['AprovadoDespesas'] = '' : $data['div']['AprovadoDespesas'] = 'style="display: none;"';
+			
+			
+		 (!$data['despesas']['QuitadoDespesas']) ? $data['despesas']['QuitadoDespesas'] = 'N' : FALSE;
+
+        $data['radio'] = array(
+            'QuitadoDespesas' => $this->basico->radio_checked($data['despesas']['QuitadoDespesas'], 'Despesa Quitada', 'NS'),
+        );
+
+        ($data['despesas']['QuitadoDespesas'] == 'S') ?
+            $data['div']['QuitadoDespesas'] = '' : $data['div']['QuitadoDespesas'] = 'style="display: none;"';
 
 
         $data['sidebar'] = 'col-sm-3 col-md-2';
