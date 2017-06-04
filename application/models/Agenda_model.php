@@ -164,6 +164,7 @@ class Agenda_model extends CI_Model {
             SELECT 
                 D.idApp_Profissional, 
                 D.idApp_ContatoProf,
+                D.NomeContatoProf,
                 D.DataNascimento
             FROM 
                 app.App_ContatoProf AS D,

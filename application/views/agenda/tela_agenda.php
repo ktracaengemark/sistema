@@ -97,6 +97,7 @@
             }
         
         }
+		
 		if ($query['contatoprof_aniversariantes'] != FALSE) {
             
             foreach ($query['contatoprof_aniversariantes']->result_array() as $row) {
@@ -109,6 +110,7 @@
             }   
         
         }
+		
         ?>        
     </table>
     
