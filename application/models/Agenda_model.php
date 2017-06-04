@@ -122,5 +122,76 @@ class Agenda_model extends CI_Model {
             return $query;
         }
     }
+	
+	public function profissional_aniversariantes($data) {
+
+        $query = $this->db->query('
+            SELECT 
+                idApp_Profissional, 
+                NomeProfissional,
+                DataNascimento
+            FROM 
+                app.App_Profissional
+            WHERE 
+                idSis_Usuario = ' . $data . ' AND 
+                (DAY(DataNascimento) = ' . date('d', time()) . ' AND MONTH(DataNascimento) = ' . date('m', time()) . ')
+            ORDER BY NomeProfissional ASC');
+
+        /*
+          echo $this->db->last_query();
+          echo '<br>';
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit ();
+         */
+
+        if ($query->num_rows() === 0)
+            return FALSE;
+        else {
+
+            foreach ($query->result() as $row) {
+                $row->Idade = $this->basico->calcula_idade($row->DataNascimento);
+            }            
+            return $query;
+        }
+        
+    }
+	
+	public function contatoprof_aniversariantes($data) {
+
+        $query = $this->db->query('
+            SELECT 
+                D.idApp_Profissional, 
+                D.idApp_ContatoProf,
+                D.DataNascimento
+            FROM 
+                app.App_ContatoProf AS D,
+                app.App_Profissional AS R
+            WHERE 
+                R.idSis_Usuario = ' . $data . ' AND 
+                (DAY(D.DataNascimento) =  ' . date('d', time()) . '  AND MONTH(D.DataNascimento) = ' . date('m', time()) . ') AND
+                R.idApp_Profissional = D.idApp_Profissional            
+            ORDER BY D.NomeContatoProf ASC');
+
+        /*
+          echo $this->db->last_query();
+          echo '<br>';
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit ();
+         */
+
+        if ($query->num_rows() === 0)
+            return FALSE;
+        else {
+
+            foreach ($query->result() as $row) {
+                $row->Idade = $this->basico->calcula_idade($row->DataNascimento);
+            }
+            return $query;
+        }
+    }
 
 }

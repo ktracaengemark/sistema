@@ -36,7 +36,8 @@ class Agenda extends CI_Controller {
         $data['query']['estatisticas'] = $this->Agenda_model->resumo_estatisticas($_SESSION['log']['id']);
         $data['query']['cliente_aniversariantes'] = $this->Agenda_model->cliente_aniversariantes($_SESSION['log']['id']);
         $data['query']['contatocliente_aniversariantes'] = $this->Agenda_model->contatocliente_aniversariantes($_SESSION['log']['id']);
-        $this->load->view('agenda/tela_agenda', $data);
+        $data['query']['profissional_aniversariantes'] = $this->Agenda_model->profissional_aniversariantes($_SESSION['log']['id']);
+		$this->load->view('agenda/tela_agenda', $data);
 
         #load footer view
         $this->load->view('basico/footer');

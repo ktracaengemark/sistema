@@ -82,7 +82,33 @@
                 echo '</tr>';            
             }   
         
-        }        
+        }
+
+		if ($query['profissional_aniversariantes'] != FALSE) {
+                    
+            foreach ($query['profissional_aniversariantes']->result_array() as $row) {
+                $url = base_url() . 'profissional/prontuario/' . $row['idApp_Profissional'];
+
+                echo '<tr class="clickable-row" data-href="' . $url . '" data-original-title="' . $row['Idade'] . ' anos" data-container="body"
+                        data-toggle="tooltip" data-placement="right" title="">';
+                    echo '<td>' . $row['NomeProfissional'] . '</td>';
+                echo '</tr>';            
+
+            }
+        
+        }
+		if ($query['contatoprof_aniversariantes'] != FALSE) {
+            
+            foreach ($query['contatoprof_aniversariantes']->result_array() as $row) {
+                $url = base_url() . 'profissional/prontuario/' . $row['idApp_Profissional'];
+
+                echo '<tr class="clickable-row" data-href="' . $url . '" data-original-title="' . $row['Idade'] . ' anos" data-container="body"
+                        data-toggle="tooltip" data-placement="right" title="">';
+                    echo '<td>' . $row['NomeContatoProf'] . '</td>';
+                echo '</tr>';            
+            }   
+        
+        }
         ?>        
     </table>
     
