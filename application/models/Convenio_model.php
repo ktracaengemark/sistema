@@ -49,6 +49,16 @@ class Convenio_model extends CI_Model {
             return TRUE;
         }
     }
+	
+	public function delete_convenio($data) {        
+		$query = $this->db->delete('Tab_Convenio', array('idTab_Convenio' => $data));
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
 
     public function lista_convenio($x) {
 
