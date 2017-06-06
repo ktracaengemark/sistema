@@ -37,7 +37,9 @@
 						<li><a href="<?php echo base_url() ?>funcao/cadastrar/funcao">Função dos Profis.</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>atividade/cadastrar/atividade">Atividade das Empresas</a></li>
-						<li role="separator" class="divider"></li>						
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>convenio/cadastrar">Convênio</a></li>
+						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>servico/cadastrar">Tabela de Preço de Serviços</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>produto/cadastrar">Tabela de Preço de Produtos</a></li>

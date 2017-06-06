@@ -13,7 +13,7 @@ class Servico extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Servico_model', 'Contatocliente_model'));
+        $this->load->model(array('Basico_model', 'Convenio_model', 'Servico_model', 'Contatocliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -54,14 +54,16 @@ class Servico extends CI_Controller {
             'ValorVendaServico',
 			'ValorCompraServico',
 			'TipoServico',
+			'Convenio',
                 ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         $this->form_validation->set_rules('NomeServico', 'Nome do Serviço', 'required|trim');
         $this->form_validation->set_rules('ValorVendaServico', 'Valor do Serviço', 'required|trim');
-
+		
 		$data['select']['TipoServico'] = $this->Basico_model->select_tipoproduto(); 
+		$data['select']['Convenio'] = $this->Convenio_model->select_convenio(); 
 		
         $data['titulo'] = 'Cadastrar Serviço';
         $data['form_open_path'] = 'servico/cadastrar';
@@ -91,6 +93,7 @@ class Servico extends CI_Controller {
             $data['query']['ValorVendaServico'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVendaServico']));
             $data['query']['ValorCompraServico'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraServico']));
 			$data['query']['TipoServico'] = $data['query']['TipoServico'];
+			$data['query']['Convenio'] = $data['query']['Convenio'];
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
@@ -99,6 +102,7 @@ class Servico extends CI_Controller {
 
             $data['idTab_Servico'] = $this->Servico_model->set_servico($data['query']);
 
+			
             if ($data['idTab_Servico'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
@@ -134,6 +138,7 @@ class Servico extends CI_Controller {
             'ValorVendaServico',
 			'ValorCompraServico',
 			'TipoServico',
+			'Convenio',
                 ), TRUE));
 
 
@@ -147,6 +152,7 @@ class Servico extends CI_Controller {
         $this->form_validation->set_rules('ValorVendaServico', 'Valor do Serviço', 'required|trim');
 
 		$data['select']['TipoServico'] = $this->Basico_model->select_tipoproduto(); 
+		$data['select']['Convenio'] = $this->Convenio_model->select_convenio();
 		
         $data['titulo'] = 'Editar Serviço';
         $data['form_open_path'] = 'servico/alterar';
@@ -176,6 +182,7 @@ class Servico extends CI_Controller {
             $data['query']['ValorVendaServico'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVendaServico']));
             $data['query']['ValorCompraServico'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraServico']));
 			$data['query']['TipoServico'] = $data['query']['TipoServico'];
+			$data['query']['Convenio'] = $data['query']['Convenio'];
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
             $data['anterior'] = $this->Servico_model->get_servico($data['query']['idTab_Servico']);

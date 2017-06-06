@@ -13,7 +13,7 @@ class Despesas extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Despesas_model', 'Tipodespesa_model', 'Profissional_model', 'Formapag_model', 'Cliente_model'));
+        $this->load->model(array('Basico_model', 'Servico_model', 'Produto_model', 'Despesas_model', 'Tipodespesa_model', 'Profissional_model', 'Formapag_model', 'Cliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -146,8 +146,8 @@ class Despesas extends CI_Controller {
 		$data['select']['QuitadoDespesas'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoPagaveis'] = $this->Basico_model->select_status_sn();
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        $data['select']['Servico'] = $this->Basico_model->select_servico();
-        $data['select']['Produto'] = $this->Basico_model->select_produto();
+        $data['select']['Servico'] = $this->Servico_model->select_servico();
+        $data['select']['Produto'] = $this->Produto_model->select_produto();
 
         $data['titulo'] = 'Cadastar Despesas';
         $data['form_open_path'] = 'despesas/cadastrar';
@@ -483,8 +483,8 @@ class Despesas extends CI_Controller {
 		$data['select']['QuitadoDespesas'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoPagaveis'] = $this->Basico_model->select_status_sn();
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        $data['select']['Servico'] = $this->Basico_model->select_servico();
-        $data['select']['Produto'] = $this->Basico_model->select_produto();
+        $data['select']['Servico'] = $this->Servico_model->select_servico();
+        $data['select']['Produto'] = $this->Produto_model->select_produto();
 
         $data['titulo'] = 'Editar Despesas';
         $data['form_open_path'] = 'despesas/alterar';

@@ -19,7 +19,8 @@ if ($_GET['q']==1) {
     $result = mysql_query(
             'SELECT
                 idTab_Servico,
-                CONCAT(TipoServico, " --- ", NomeServico, " --- R$ ", ValorVendaServico) AS NomeServico,
+				TipoServico,
+                CONCAT(Convenio, " --- ", NomeServico, " --- R$ ", ValorVendaServico) AS NomeServico,
                 ValorVendaServico
             FROM
                 Tab_Servico
@@ -27,7 +28,7 @@ if ($_GET['q']==1) {
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				TipoServico = "V"
-                ORDER BY TipoServico DESC, NomeServico ASC'
+                ORDER BY Convenio ASC, NomeServico ASC'
     );
 
     while ($row = mysql_fetch_assoc($result)) {
@@ -45,7 +46,8 @@ elseif ($_GET['q'] == 2) {
     $result = mysql_query(
             'SELECT                
 				idTab_Produto,
-				CONCAT(TipoProduto, " --- ", NomeProduto, " --- ", UnidadeProduto, " --- R$ ", ValorVendaProduto) AS NomeProduto,
+				TipoProduto,
+				CONCAT(Convenio, " --- ", NomeProduto, " --- ", UnidadeProduto, " --- R$ ", ValorVendaProduto) AS NomeProduto,
 				ValorVendaProduto
             FROM
                 Tab_Produto
@@ -53,7 +55,7 @@ elseif ($_GET['q'] == 2) {
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				TipoProduto = "V"
-                ORDER BY TipoProduto DESC, NomeProduto ASC'
+                ORDER BY Convenio ASC, NomeProduto ASC'
     );
 
     while ($row = mysql_fetch_assoc($result)) {

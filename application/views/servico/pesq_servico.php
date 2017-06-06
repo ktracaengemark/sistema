@@ -14,17 +14,12 @@
 
                 <?php echo form_open($form_open_path, 'role="form"'); ?>
                     <div class="row">
-                        <div class="col-md-4">
-                            <label for="NomeServico">Nome do Servico:</label><br>
-                            <input type="text" class="form-control" maxlength="200"
-                                   autofocus name="NomeServico" value="<?php echo $query['NomeServico'] ?>">
-                        </div>
-						
+                        						
 						<div class="col-md-3">
-							<label for="TipoServico">Tipo Serviço</label>								
+							<label for="TipoServico">Tipo Servico</label>								
 							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-									id="TipoServico" name="TipoServico">
-								<option value="">-- Sel. Tipo Produto --</option>
+									id="TipoServico" autofocus name="TipoServico">
+								<option value="">-- Sel. Tipo de Servico --</option>
 								<?php
 								foreach ($select['TipoServico'] as $key => $row) {
 									if ($query['TipoServico'] == $key) {
@@ -38,11 +33,34 @@
 						</div>
 						
 						<div class="col-md-3">
+							<label for="Convenio">Convenio</label>								
+							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+									id="Convenio" name="Convenio">
+								<option value="">-- Convenio --</option>
+								<?php
+								foreach ($select['Convenio'] as $key => $row) {
+									if ($query['Convenio'] == $key) {
+										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+									} else {
+										echo '<option value="' . $key . '">' . $row . '</option>';
+									}
+								}
+								?>
+							</select>
+						</div>
+						
+						<div class="col-md-4">
+                            <label for="NomeServico">Nome do Servico:</label><br>
+                            <input type="text" class="form-control" maxlength="200"
+                                    name="NomeServico" value="<?php echo $query['NomeServico'] ?>">
+                        </div>
+						
+						<div class="col-md-3">
                             <label for="ValorCompraServico">Valor de Compra: *</label><br>
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon1">R$</span>
                                 <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
-                                       autofocus name="ValorCompraServico" value="<?php echo $query['ValorCompraServico'] ?>">
+                                        name="ValorCompraServico" value="<?php echo $query['ValorCompraServico'] ?>">
                             </div>
                         </div>
 
@@ -51,7 +69,7 @@
                             <div class="input-group" id="txtHint">
                                 <span class="input-group-addon" id="basic-addon1">R$</span>
                                 <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
-                                       autofocus name="ValorVendaServico" value="<?php echo $query['ValorVendaServico'] ?>">
+                                        name="ValorVendaServico" value="<?php echo $query['ValorVendaServico'] ?>">
                             </div>
                         </div>
 

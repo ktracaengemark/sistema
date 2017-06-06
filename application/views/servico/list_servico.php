@@ -2,9 +2,10 @@
 
 <table class="table table-hover">
     <thead>
-        <tr>
-            <th>Serviço</th>
+        <tr>           
 			<th>Tipo de Serviço</th>
+			<th>Convenio</th>
+			<th>Servico</th>
             <th>Valor de Compra</th>
 			<th>Valor de Venda</th>
             <th></th>
@@ -21,9 +22,10 @@
                 $url = base_url() . 'servico/alterar/' . $row['idTab_Servico'];
                 #$url = '';
 
-                echo '<tr class="clickable-row" data-href="' . $url . '">';
-                    echo '<td>' . $row['NomeServico'] . '</td>';
+                echo '<tr class="clickable-row" data-href="' . $url . '">';                   
 					echo '<td>' . str_replace('.',',',$row['TipoServico']) . '</td>';
+					echo '<td>' . str_replace('.',',',$row['Convenio']) . '</td>';
+					echo '<td>' . $row['NomeServico'] . '</td>';
 					echo '<td>' . str_replace('.',',',$row['ValorCompraServico']) . '</td>';
                     echo '<td>' . str_replace('.',',',$row['ValorVendaServico']) . '</td>';
                     echo '<td></td>';

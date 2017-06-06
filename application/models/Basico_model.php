@@ -290,26 +290,28 @@ class Basico_model extends CI_Model {
         if ($data === TRUE) {
             $array = $this->db->query(
                 'SELECT                
-				idTab_Produto,
-				CONCAT(TipoProduto, " --- ", NomeProduto, " --- ", UnidadeProduto) AS NomeProduto				
+				idTab_Produto,				
+				CONCAT(Convenio, " --- ", NomeProduto, " --- ", UnidadeProduto, " --- ", ValorVendaProduto) AS NomeProduto				
             FROM
                 Tab_Produto
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY TipoProduto DESC, NomeProduto ASC'
+                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TipoProduto = "V"
+                ORDER BY Convenio ASC, NomeProduto ASC'
     );
         } else {
             $query = $this->db->query(
                 'SELECT                
 				idTab_Produto,
-				CONCAT(TipoProduto, " --- ", NomeProduto, " --- ", UnidadeProduto) AS NomeProduto				
+				CONCAT(Convenio, " --- ", NomeProduto, " --- ", UnidadeProduto, " --- ", ValorVendaProduto) AS NomeProduto				
             FROM
                 Tab_Produto
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY TipoProduto DESC, NomeProduto ASC'
+                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TipoProduto = "V"
+                ORDER BY Convenio ASC, NomeProduto ASC'
     );
 
             $array = array();
@@ -327,25 +329,27 @@ class Basico_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				idTab_Servico,
-				CONCAT(TipoServico, " --- ", NomeServico) AS NomeServico				
+				CONCAT(Convenio, " --- ", NomeServico, " --- R$", ValorVendaServico) AS NomeServico				
             FROM
                 Tab_Servico
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY TipoServico DESC, NomeServico ASC'
+                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TipoServico = "V"
+                ORDER BY Convenio ASC, NomeServico ASC'
     );
         } else {
             $query = $this->db->query(
                 'SELECT                
 				idTab_Servico,
-				CONCAT(TipoServico, " --- ", NomeServico) AS NomeServico				
+				CONCAT(Convenio, " --- ", NomeServico, " --- R$", ValorVendaServico) AS NomeServico				
             FROM
                 Tab_Servico
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY TipoServico DESC, NomeServico ASC'
+                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TipoServico = "V"
+                ORDER BY Convenio ASC, NomeServico ASC'
     );
 
             $array = array();
