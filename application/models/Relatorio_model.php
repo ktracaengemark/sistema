@@ -204,7 +204,12 @@ class Relatorio_model extends CI_Model {
                 ' . $data['NomeCliente'] . '
 
             ORDER BY
-                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+                C.NomeCliente,
+				OT.AprovadoOrca DESC,
+				PR.DataVencimentoRecebiveis
+				
+				
+				
         ');
 
         /*
@@ -331,7 +336,8 @@ class Relatorio_model extends CI_Model {
 				' . $data['TipoDespesa'] . '
 
             ORDER BY
-                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+                DS.AprovadoDespesas DESC,
+				PP.DataVencimentoPagaveis
         ');
 
         /*
@@ -595,7 +601,10 @@ class Relatorio_model extends CI_Model {
                 ' . $data['NomeCliente'] . '
 
             ORDER BY
-                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+                C.NomeCliente,
+				OT.AprovadoOrca ASC,
+				OT.DataOrca
+				
         ');
 
         /*
@@ -964,20 +973,14 @@ class Relatorio_model extends CI_Model {
         $query = $this->db->query('
             SELECT
                 C.NomeCliente,
-
                 OT.idApp_OrcaTrata,
                 OT.AprovadoOrca,
                 OT.DataOrca,
 				OT.DataPrazo,
                 OT.ValorOrca,
-
                 OT.ServicoConcluido,
-
                 OT.DataConclusao,
-
-
 				TPD.NomeProduto,
-
 				PC.DataProcedimento,
 				PR.NomeProfissional,
 				PC.Procedimento,
@@ -1005,7 +1008,12 @@ class Relatorio_model extends CI_Model {
 				
 
             ORDER BY
-                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+                C.NomeCliente ASC,
+				OT.AprovadoOrca DESC,
+				OT.ServicoConcluido,
+				PC.DataProcedimento,
+				PC.ConcluidoProcedimento
+				
         ');
 
         /*
@@ -1112,7 +1120,11 @@ class Relatorio_model extends CI_Model {
 				' . $data['Procedtarefa'] . '
 				                 
             ORDER BY
-				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+				P.NomeProfissional ASC,
+				TF.AprovadoTarefa ASC,
+				TF.ServicoConcluido Desc,			
+				PT.ConcluidoProcedtarefa ASC,
+				TF.QuitadoTarefa
 				
         ');
 

@@ -22,21 +22,21 @@
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Clientes & Contatos</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>profissional/pesquisar">Profis & Contatos</a></li>
+						<li><a href="<?php echo base_url() ?>profissional/pesquisar">Funcionários & Contatos</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>empresa/pesquisar">Empresas & Contatos</a></li>
+						<li><a href="<?php echo base_url() ?>empresa/pesquisar">Fornecedores & Contatos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Orçamentos & Entradas</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Consultas & Reuniões</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>tarefa/cadastrar">Tarefas & A Fazer</a></li>
+						<li><a href="<?php echo base_url() ?>tarefa/cadastrar">Funcionários & Tarefas</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>despesas/cadastrar">Despesas & Saídas</a></li>
 						<li role="separator" class="divider"></li>												
-						<li><a href="<?php echo base_url() ?>funcao/cadastrar/funcao">Função dos Profis.</a></li>
+						<li><a href="<?php echo base_url() ?>funcao/cadastrar/funcao">Função dos Funcionários</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>atividade/cadastrar/atividade">Atividade das Empresas</a></li>
+						<li><a href="<?php echo base_url() ?>atividade/cadastrar/atividade">Atividade dos Fornecedores</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>convenio/cadastrar">Convênio</a></li>
 						<li role="separator" class="divider"></li>
@@ -93,18 +93,18 @@
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo base_url() ?>relatorio/clientes">Clientes & Contatos</a></li>											
 						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>relatorio/profissionais">Funcionários & Contatos.</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>relatorio/empresas">Fornecedores & Contatos.</a></li>
+						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/orcamentopc">Clientes & Procedimentos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/orcamento">Clientes & Orçamentos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/receitas">Clientes & Pagamentos</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/profissionais">Profis. & Contatos.</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/tarefa">Profis. & Tarefas</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/empresas">Empresas & Contatos.</a></li>
-						<li role="separator" class="divider"></li>
+						<li role="separator" class="divider"></li>						
+						<li><a href="<?php echo base_url() ?>relatorio/tarefa">Funcionários & Tarefas</a></li>
+						<li role="separator" class="divider"></li>						
 						<li><a href="<?php echo base_url() ?>relatorio/despesas">Despesas & Saídas</a></li>
 						<li role="separator" class="divider"></li>						
 						<!--<li><a href="<?php echo base_url() ?>relatorio/orcamentosv">Clientes & Serviços</a></li>

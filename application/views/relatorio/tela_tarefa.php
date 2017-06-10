@@ -141,7 +141,7 @@
                                     ?>
                                 </select>
                             </div>							
-							
+							<!--
                             <div class="col-md-4">
                                 <label for="Ordenamento">Ordenamento:</label>
 
@@ -178,9 +178,8 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-							
+							-->
 							<div class="col-md-2">
                                 <label for="DataInicio">Data Orçam.- Início: *</label>
                                 <div class="input-group DatePicker">

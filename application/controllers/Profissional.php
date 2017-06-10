@@ -81,7 +81,7 @@ class Profissional extends CI_Controller {
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
 
-        $data['titulo'] = 'Cadastrar Profissionais & Funcionários';
+        $data['titulo'] = 'Cadastrar Funcionários';
         $data['form_open_path'] = 'profissional/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -338,7 +338,7 @@ class Profissional extends CI_Controller {
             $_SESSION['agenda']['HoraFim'] = substr($this->input->get('end'),0,-3);
         }
 
-        $data['titulo'] = "Pesquisar Func./Prof.";
+        $data['titulo'] = "Pesquisar Funcionário";
 
         $data['Pesquisa'] = $this->input->post('Pesquisa');
         //echo date('d/m/Y H:i:s', $data['start'],0,-3));
@@ -435,7 +435,7 @@ class Profissional extends CI_Controller {
     function get_profissional($data) {
 
         if ($this->Profissional_model->lista_profissional($data, FALSE) === FALSE) {
-            $this->form_validation->set_message('get_profissional', '<strong>Profissional</strong> não encontrado.');
+            $this->form_validation->set_message('get_profissional', '<strong>Funcionário</strong> não encontrado.');
             return FALSE;
         } else {
             return TRUE;

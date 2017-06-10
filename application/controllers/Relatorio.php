@@ -788,7 +788,7 @@ class Relatorio extends CI_Controller {
 
         $data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional();
 
-        $data['titulo'] = 'Relatório de Profissionais';
+        $data['titulo'] = 'Relatório de Funcionários';
 
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
@@ -1093,7 +1093,7 @@ class Relatorio extends CI_Controller {
 		$data['select']['ObsTarefa'] = $this->Relatorio_model->select_obstarefa();
 		$data['select']['Procedtarefa'] = $this->Relatorio_model->select_procedtarefa();
 		
-        $data['titulo'] = 'Tarefas X Profissionais';
+        $data['titulo'] = 'Funcionários & Tarefas';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {

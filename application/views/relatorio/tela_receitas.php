@@ -117,7 +117,7 @@
                                     ?>
                                 </select>
                             </div>
-
+							<!--
                             <div class="col-md-3">
                                 <label for="Ordenamento">Ordenamento:</label>
 
@@ -155,6 +155,7 @@
                                     </div>
                                 </div>
                             </div>
+							-->
                         </div>
                     </div>
 

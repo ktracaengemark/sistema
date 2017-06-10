@@ -18,7 +18,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-4">
-                            <label for="NomeEmpresa">Empresa ou Prest. de Serviço: *</label>
+                            <label for="NomeEmpresa">Fornecedor *</label>
                             <input type="text" class="form-control" id="NomeEmpresa" maxlength="255" <?php echo $readonly; ?>
                                    name="NomeEmpresa" autofocus value="<?php echo $query['NomeEmpresa']; ?>">
                         </div>

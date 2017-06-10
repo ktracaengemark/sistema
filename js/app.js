@@ -149,65 +149,69 @@ function calculaParcelas() {
 
         $(".input_fields_parcelas").append('\
             <div class="form-group">\
-                <div class="row">\
-                    <div class="col-md-1">\
-                        <label for="ParcelaRecebiveis">Parcela:</label><br>\
-                        <input type="text" class="form-control" maxlength="6" readonly=""\
-                               name="ParcelaRecebiveis'+i+'" value="'+i+'/'+parcelas+'">\
-                    </div>\
-                    <div class="col-md-2">\
-                        <label for="ValorParcelaRecebiveis">Valor Parcela:</label><br>\
-                        <div class="input-group" id="txtHint">\
-                            <span class="input-group-addon" id="basic-addon1">R$</span>\
-                            <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
-                                   name="ValorParcelaRecebiveis'+i+'" value="'+parcorca+'">\
-                        </div>\
-                    </div>\
-                    <div class="col-md-2">\
-                        <label for="DataVencimentoRecebiveis">Data Venc. Parc.</label>\
-                        <div class="input-group DatePicker">\
-                            <input type="text" class="form-control Date" id="DataPagoRecebiveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
-                                   name="DataVencimentoRecebiveis'+i+'" value="'+futureMonth.format('DD/MM/YYYY')+'">\
-                            <span class="input-group-addon" disabled>\
-                                <span class="glyphicon glyphicon-calendar"></span>\
-                            </span>\
-                        </div>\
-                    </div>\
-                    <div class="col-md-2">\
-                        <label for="ValorPagoRecebiveis">Valor Pago:</label><br>\
-                        <div class="input-group" id="txtHint">\
-                            <span class="input-group-addon" id="basic-addon1">R$</span>\
-                            <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
-                                   name="ValorPagoRecebiveis'+i+'" value="">\
-                        </div>\
-                    </div>\
-                    <div class="col-md-2">\
-                        <label for="DataPagoRecebiveis">Data Pag.</label>\
-                        <div class="input-group DatePicker">\
-                            <input type="text" class="form-control Date" id="DataPagoRecebiveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
-                                   name="DataPagoRecebiveis'+i+'" value="">\
-                            <span class="input-group-addon" disabled>\
-                                <span class="glyphicon glyphicon-calendar"></span>\
-                            </span>\
-                        </div>\
-                    </div>\
-                    <div class="col-md-3">\
-                        <label for="QuitadoRecebiveis">Quitado?</label><br>\
-                        <div class="form-group">\
-                            <div class="btn-group" data-toggle="buttons">\
-                                <label class="btn btn-warning active" name="radio_QuitadoRecebiveis'+i+'" id="radio_QuitadoRecebiveis'+i+'N">\
-                                <input type="radio" name="QuitadoRecebiveis'+i+'" id="radiogeraldinamico"\
-                                    autocomplete="off" value="N" checked>Não\
-                                </label>\
-                                <label class="btn btn-default" name="radio_QuitadoRecebiveis'+i+'" id="radio_QuitadoRecebiveis'+i+'S">\
-                                <input type="radio" name="QuitadoRecebiveis'+i+'" id="radiogeraldinamico"\
-                                    autocomplete="off" value="S">Sim\
-                                </label>\
-                            </div>\
-                        </div>\
-                    </div>\
-                </div>\
-            </div>'
+				<div class="panel panel-info">\
+					<div class="panel-heading">\
+						<div class="row">\
+							<div class="col-md-1">\
+								<label for="ParcelaRecebiveis">Parcela:</label><br>\
+								<input type="text" class="form-control" maxlength="6" readonly=""\
+									   name="ParcelaRecebiveis'+i+'" value="'+i+'/'+parcelas+'">\
+							</div>\
+							<div class="col-md-2">\
+								<label for="ValorParcelaRecebiveis">Valor Parcela:</label><br>\
+								<div class="input-group" id="txtHint">\
+									<span class="input-group-addon" id="basic-addon1">R$</span>\
+									<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
+										   name="ValorParcelaRecebiveis'+i+'" value="'+parcorca+'">\
+								</div>\
+							</div>\
+							<div class="col-md-2">\
+								<label for="DataVencimentoRecebiveis">Data Venc. Parc.</label>\
+								<div class="input-group DatePicker">\
+									<input type="text" class="form-control Date" id="DataPagoRecebiveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
+										   name="DataVencimentoRecebiveis'+i+'" value="'+futureMonth.format('DD/MM/YYYY')+'">\
+									<span class="input-group-addon" disabled>\
+										<span class="glyphicon glyphicon-calendar"></span>\
+									</span>\
+								</div>\
+							</div>\
+							<div class="col-md-2">\
+								<label for="ValorPagoRecebiveis">Valor Pago:</label><br>\
+								<div class="input-group" id="txtHint">\
+									<span class="input-group-addon" id="basic-addon1">R$</span>\
+									<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
+										   name="ValorPagoRecebiveis'+i+'" value="">\
+								</div>\
+							</div>\
+							<div class="col-md-2">\
+								<label for="DataPagoRecebiveis">Data Pag.</label>\
+								<div class="input-group DatePicker">\
+									<input type="text" class="form-control Date" id="DataPagoRecebiveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
+										   name="DataPagoRecebiveis'+i+'" value="">\
+									<span class="input-group-addon" disabled>\
+										<span class="glyphicon glyphicon-calendar"></span>\
+									</span>\
+								</div>\
+							</div>\
+							<div class="col-md-3">\
+								<label for="QuitadoRecebiveis">Quitado?</label><br>\
+								<div class="form-group">\
+									<div class="btn-group" data-toggle="buttons">\
+										<label class="btn btn-warning active" name="radio_QuitadoRecebiveis'+i+'" id="radio_QuitadoRecebiveis'+i+'N">\
+										<input type="radio" name="QuitadoRecebiveis'+i+'" id="radiogeraldinamico"\
+											autocomplete="off" value="N" checked>Não\
+										</label>\
+										<label class="btn btn-default" name="radio_QuitadoRecebiveis'+i+'" id="radio_QuitadoRecebiveis'+i+'S">\
+										<input type="radio" name="QuitadoRecebiveis'+i+'" id="radiogeraldinamico"\
+											autocomplete="off" value="S">Sim\
+										</label>\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
+					</div>\
+				</div>\
+			</div>'
         );
 
     }
@@ -270,66 +274,70 @@ function calculaParcelasPagaveis() {
             futureMonth = futureMonth.add(i-1, 'd');
 
         $(".input_fields_parcelas").append('\
-            <div class="form-group">\
-                <div class="row">\
-                    <div class="col-md-1">\
-                        <label for="ParcelaPagaveis">Parcela:</label><br>\
-                        <input type="text" class="form-control" maxlength="6" readonly=""\
-                               name="ParcelaPagaveis'+i+'" value="'+i+'/'+parcelas+'">\
-                    </div>\
-                    <div class="col-md-2">\
-                        <label for="ValorParcelaPagaveis">Valor Parcela:</label><br>\
-                        <div class="input-group" id="txtHint">\
-                            <span class="input-group-addon" id="basic-addon1">R$</span>\
-                            <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
-                                   name="ValorParcelaPagaveis'+i+'" value="'+parcdesp+'">\
-                        </div>\
-                    </div>\
-                    <div class="col-md-2">\
-                        <label for="DataVencimentoPagaveis">Data Venc. Parc.</label>\
-                        <div class="input-group DatePicker">\
-                            <input type="text" class="form-control Date" id="DataPagoPagaveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
-                                   name="DataVencimentoPagaveis'+i+'" value="'+futureMonth.format('DD/MM/YYYY')+'">\
-                            <span class="input-group-addon" disabled>\
-                                <span class="glyphicon glyphicon-calendar"></span>\
-                            </span>\
-                        </div>\
-                    </div>\
-                    <div class="col-md-2">\
-                        <label for="ValorPagoPagaveis">Valor Pago:</label><br>\
-                        <div class="input-group" id="txtHint">\
-                            <span class="input-group-addon" id="basic-addon1">R$</span>\
-                            <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
-                                   name="ValorPagoPagaveis'+i+'" value="">\
-                        </div>\
-                    </div>\
-                    <div class="col-md-2">\
-                        <label for="DataPagoPagaveis">Data Pag.</label>\
-                        <div class="input-group DatePicker">\
-                            <input type="text" class="form-control Date" id="DataPagoPagaveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
-                                   name="DataPagoPagaveis'+i+'" value="">\
-                            <span class="input-group-addon" disabled>\
-                                <span class="glyphicon glyphicon-calendar"></span>\
-                            </span>\
-                        </div>\
-                    </div>\
-                    <div class="col-md-3">\
-                        <label for="QuitadoPagaveis">Quitado?</label><br>\
-                        <div class="form-group">\
-                            <div class="btn-group" data-toggle="buttons">\
-                                <label class="btn btn-warning active" name="radio_QuitadoPagaveis'+i+'" id="radio_QuitadoPagaveis'+i+'N">\
-                                <input type="radio" name="QuitadoPagaveis'+i+'" id="radiogeraldinamico"\
-                                    autocomplete="off" value="N" checked>Não\
-                                </label>\
-                                <label class="btn btn-default" name="radio_QuitadoPagaveis'+i+'" id="radio_QuitadoPagaveis'+i+'S">\
-                                <input type="radio" name="QuitadoPagaveis'+i+'" id="radiogeraldinamico"\
-                                    autocomplete="off" value="S">Sim\
-                                </label>\
-                            </div>\
-                        </div>\
-                    </div>\
-                </div>\
-            </div>'
+			<div class="form-group">\
+				<div class="panel panel-info">\
+					<div class="panel-heading">\
+						<div class="row">\
+							<div class="col-md-1">\
+								<label for="ParcelaPagaveis">Parcela:</label><br>\
+								<input type="text" class="form-control" maxlength="6" readonly=""\
+									   name="ParcelaPagaveis'+i+'" value="'+i+'/'+parcelas+'">\
+							</div>\
+							<div class="col-md-2">\
+								<label for="ValorParcelaPagaveis">Valor Parcela:</label><br>\
+								<div class="input-group" id="txtHint">\
+									<span class="input-group-addon" id="basic-addon1">R$</span>\
+									<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
+										   name="ValorParcelaPagaveis'+i+'" value="'+parcdesp+'">\
+								</div>\
+							</div>\
+							<div class="col-md-2">\
+								<label for="DataVencimentoPagaveis">Data Venc. Parc.</label>\
+								<div class="input-group DatePicker">\
+									<input type="text" class="form-control Date" id="DataPagoPagaveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
+										   name="DataVencimentoPagaveis'+i+'" value="'+futureMonth.format('DD/MM/YYYY')+'">\
+									<span class="input-group-addon" disabled>\
+										<span class="glyphicon glyphicon-calendar"></span>\
+									</span>\
+								</div>\
+							</div>\
+							<div class="col-md-2">\
+								<label for="ValorPagoPagaveis">Valor Pago:</label><br>\
+								<div class="input-group" id="txtHint">\
+									<span class="input-group-addon" id="basic-addon1">R$</span>\
+									<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
+										   name="ValorPagoPagaveis'+i+'" value="">\
+								</div>\
+							</div>\
+							<div class="col-md-2">\
+								<label for="DataPagoPagaveis">Data Pag.</label>\
+								<div class="input-group DatePicker">\
+									<input type="text" class="form-control Date" id="DataPagoPagaveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
+										   name="DataPagoPagaveis'+i+'" value="">\
+									<span class="input-group-addon" disabled>\
+										<span class="glyphicon glyphicon-calendar"></span>\
+									</span>\
+								</div>\
+							</div>\
+							<div class="col-md-3">\
+								<label for="QuitadoPagaveis">Quitado?</label><br>\
+								<div class="form-group">\
+									<div class="btn-group" data-toggle="buttons">\
+										<label class="btn btn-warning active" name="radio_QuitadoPagaveis'+i+'" id="radio_QuitadoPagaveis'+i+'N">\
+										<input type="radio" name="QuitadoPagaveis'+i+'" id="radiogeraldinamico"\
+											autocomplete="off" value="N" checked>Não\
+										</label>\
+										<label class="btn btn-default" name="radio_QuitadoPagaveis'+i+'" id="radio_QuitadoPagaveis'+i+'S">\
+										<input type="radio" name="QuitadoPagaveis'+i+'" id="radiogeraldinamico"\
+											autocomplete="off" value="S">Sim\
+										</label>\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
+					</div>\
+				</div>\
+			</div>'
         );
 
     }
@@ -378,51 +386,55 @@ function adicionaProcedimento() {
 
     $(".input_fields_wrap3").append('\
         <div class="form-group" id="3div'+pc+'">\
-            <div class="row">\
-                <div class="col-md-3">\
-                    <label for="Profissional'+pc+'">Profissional:</label>\
-                    <select data-placeholder="Selecione uma opção..." class="form-control"\
-                             id="listadinamicac'+pc+'" name="Profissional'+pc+'">\
-                        <option value="">-- Selecione uma opção --</option>\
-                    </select>\
-                </div>\
-                <div class="col-md-3">\
-                    <label for="Procedimento'+pc+'">Procedimento:</label>\
-                    <textarea class="form-control" id="Procedimento'+pc+'"\
-                              name="Procedimento'+pc+'"></textarea>\
-                </div>\
-				<div class="col-md-2">\
-                    <label for="DataProcedimento'+pc+'">Data do Procedimento:</label>\
-                    <div class="input-group DatePicker">\
-                        <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
-                               name="DataProcedimento'+pc+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
-                        <span class="input-group-addon" disabled>\
-                            <span class="glyphicon glyphicon-calendar"></span>\
-                        </span>\
-                    </div>\
-                </div>\
-				<div class="col-md-2">\
-					<label for="ConcluidoProcedimento">Proc. Concl.? </label><br>\
-					<div class="form-group">\
-						<div class="btn-group" data-toggle="buttons">\
-							<label class="btn btn-warning active" name="radio_ConcluidoProcedimento'+pc+'" id="radio_ConcluidoProcedimento'+pc+'N">\
-							<input type="radio" name="ConcluidoProcedimento'+pc+'" id="radiogeraldinamico"\
-								autocomplete="off" value="N" checked>Não\
-							</label>\
-							<label class="btn btn-default" name="radio_ConcluidoProcedimento'+pc+'" id="radio_ConcluidoProcedimento'+pc+'S">\
-							<input type="radio" name="ConcluidoProcedimento'+pc+'" id="radiogeraldinamico"\
-								autocomplete="off" value="S">Sim\
-							</label>\
+			<div class="panel panel-info">\
+				<div class="panel-heading">\
+					<div class="row">\
+						<div class="col-md-3">\
+							<label for="Profissional'+pc+'">Profissional:</label>\
+							<select data-placeholder="Selecione uma opção..." class="form-control"\
+									 id="listadinamicac'+pc+'" name="Profissional'+pc+'">\
+								<option value="">-- Selecione uma opção --</option>\
+							</select>\
+						</div>\
+						<div class="col-md-3">\
+							<label for="Procedimento'+pc+'">Procedimento:</label>\
+							<textarea class="form-control" id="Procedimento'+pc+'"\
+									  name="Procedimento'+pc+'"></textarea>\
+						</div>\
+						<div class="col-md-2">\
+							<label for="DataProcedimento'+pc+'">Data do Procedimento:</label>\
+							<div class="input-group DatePicker">\
+								<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
+									   name="DataProcedimento'+pc+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
+								<span class="input-group-addon" disabled>\
+									<span class="glyphicon glyphicon-calendar"></span>\
+								</span>\
+							</div>\
+						</div>\
+						<div class="col-md-2">\
+							<label for="ConcluidoProcedimento">Proc. Concl.? </label><br>\
+							<div class="form-group">\
+								<div class="btn-group" data-toggle="buttons">\
+									<label class="btn btn-warning active" name="radio_ConcluidoProcedimento'+pc+'" id="radio_ConcluidoProcedimento'+pc+'N">\
+									<input type="radio" name="ConcluidoProcedimento'+pc+'" id="radiogeraldinamico"\
+										autocomplete="off" value="N" checked>Não\
+									</label>\
+									<label class="btn btn-default" name="radio_ConcluidoProcedimento'+pc+'" id="radio_ConcluidoProcedimento'+pc+'S">\
+									<input type="radio" name="ConcluidoProcedimento'+pc+'" id="radiogeraldinamico"\
+										autocomplete="off" value="S">Sim\
+									</label>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="col-md-1">\
+							<label><br></label><br>\
+							<button type="button" id="'+pc+'" class="remove_field3 btn btn-danger">\
+								<span class="glyphicon glyphicon-trash"></span>\
+							</button>\
 						</div>\
 					</div>\
 				</div>\
-                <div class="col-md-1">\
-                    <label><br></label><br>\
-                    <button type="button" id="'+pc+'" class="remove_field3 btn btn-danger">\
-                        <span class="glyphicon glyphicon-trash"></span>\
-                    </button>\
-                </div>\
-            </div>\
+			</div>\
         </div>'
     ); //add input box
     //habilita o botão de calendário após a geração dos campos dinâmicos
@@ -484,51 +496,55 @@ function adicionaProcedtarefa() {
 
     $(".input_fields_wrap3").append('\
         <div class="form-group" id="3div'+pt+'">\
-            <div class="row">\
-                <div class="col-md-3">\
-                    <label for="Profissional'+pt+'">Profissional:</label>\
-                    <select data-placeholder="Selecione uma opção..." class="form-control"\
-                             id="listadinamicad'+pt+'" name="Profissional'+pt+'">\
-                        <option value="">-- Selecione uma opção --</option>\
-                    </select>\
-                </div>\
-                <div class="col-md-3">\
-                    <label for="Procedtarefa'+pt+'">Ação:</label>\
-                    <textarea class="form-control" id="Procedtarefa'+pt+'"\
-                              name="Procedtarefa'+pt+'"></textarea>\
-                </div>\
-                <div class="col-md-2">\
-                    <label for="DataProcedtarefa'+pt+'">Data da Ação:</label>\
-                    <div class="input-group DatePicker">\
-                        <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
-                               name="DataProcedtarefa'+pt+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
-                        <span class="input-group-addon" disabled>\
-                            <span class="glyphicon glyphicon-calendar"></span>\
-                        </span>\
-                    </div>\
-                </div>\
-				<div class="col-md-2">\
-					<label for="ConcluidoProcedtarefa">Ação Concl.? </label><br>\
-					<div class="form-group">\
-						<div class="btn-group" data-toggle="buttons">\
-							<label class="btn btn-warning active" name="radio_ConcluidoProcedtarefa'+pt+'" id="radio_ConcluidoProcedtarefa'+pt+'N">\
-							<input type="radio" name="ConcluidoProcedtarefa'+pt+'" id="radiogeraldinamico"\
-								autocomplete="off" value="N" checked>Não\
-							</label>\
-							<label class="btn btn-default" name="radio_ConcluidoProcedtarefa'+pt+'" id="radio_ConcluidoProcedtarefa'+pt+'S">\
-							<input type="radio" name="ConcluidoProcedtarefa'+pt+'" id="radiogeraldinamico"\
-								autocomplete="off" value="S">Sim\
-							</label>\
+			<div class="panel panel-info">\
+				<div class="panel-heading">\
+					<div class="row">\
+						<div class="col-md-3">\
+							<label for="Profissional'+pt+'">Profissional:</label>\
+							<select data-placeholder="Selecione uma opção..." class="form-control"\
+									 id="listadinamicad'+pt+'" name="Profissional'+pt+'">\
+								<option value="">-- Selecione uma opção --</option>\
+							</select>\
+						</div>\
+						<div class="col-md-3">\
+							<label for="Procedtarefa'+pt+'">Ação:</label>\
+							<textarea class="form-control" id="Procedtarefa'+pt+'"\
+									  name="Procedtarefa'+pt+'"></textarea>\
+						</div>\
+						<div class="col-md-2">\
+							<label for="DataProcedtarefa'+pt+'">Data da Ação:</label>\
+							<div class="input-group DatePicker">\
+								<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
+									   name="DataProcedtarefa'+pt+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
+								<span class="input-group-addon" disabled>\
+									<span class="glyphicon glyphicon-calendar"></span>\
+								</span>\
+							</div>\
+						</div>\
+						<div class="col-md-2">\
+							<label for="ConcluidoProcedtarefa">Ação Concl.? </label><br>\
+							<div class="form-group">\
+								<div class="btn-group" data-toggle="buttons">\
+									<label class="btn btn-warning active" name="radio_ConcluidoProcedtarefa'+pt+'" id="radio_ConcluidoProcedtarefa'+pt+'N">\
+									<input type="radio" name="ConcluidoProcedtarefa'+pt+'" id="radiogeraldinamico"\
+										autocomplete="off" value="N" checked>Não\
+									</label>\
+									<label class="btn btn-default" name="radio_ConcluidoProcedtarefa'+pt+'" id="radio_ConcluidoProcedtarefa'+pt+'S">\
+									<input type="radio" name="ConcluidoProcedtarefa'+pt+'" id="radiogeraldinamico"\
+										autocomplete="off" value="S">Sim\
+									</label>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="col-md-1">\
+							<label><br></label><br>\
+							<button type="button" id="'+pt+'" class="remove_field3 btn btn-danger">\
+								<span class="glyphicon glyphicon-trash"></span>\
+							</button>\
 						</div>\
 					</div>\
 				</div>\
-                <div class="col-md-1">\
-                    <label><br></label><br>\
-                    <button type="button" id="'+pt+'" class="remove_field3 btn btn-danger">\
-                        <span class="glyphicon glyphicon-trash"></span>\
-                    </button>\
-                </div>\
-            </div>\
+			</div>\
         </div>'
     ); //add input box
     //habilita o botão de calendário após a geração dos campos dinâmicos

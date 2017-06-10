@@ -81,7 +81,7 @@ class Empresa extends CI_Controller {
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Atividade'] = $this->Atividade_model->select_atividade();
 		
-        $data['titulo'] = 'Cadastrar Empresa';
+        $data['titulo'] = 'Cadastrar Fornecedor';
         $data['form_open_path'] = 'empresa/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -336,7 +336,7 @@ class Empresa extends CI_Controller {
             $_SESSION['agenda']['HoraFim'] = substr($this->input->get('end'),0,-3);            
         }
         
-        $data['titulo'] = "Pesq. Empresas";
+        $data['titulo'] = "Pesquisar Fornecedor";
         
         $data['Pesquisa'] = $this->input->post('Pesquisa');
         //echo date('d/m/Y H:i:s', $data['start'],0,-3));
@@ -431,7 +431,7 @@ class Empresa extends CI_Controller {
     function get_empresa($data) {
 
         if ($this->Empresa_model->lista_empresa($data, FALSE) === FALSE) {
-            $this->form_validation->set_message('get_empresa', '<strong>Empresa</strong> não encontrado.');
+            $this->form_validation->set_message('get_empresa', '<strong>Fornecedor</strong> não encontrado.');
             return FALSE;
         } else {
             return TRUE;

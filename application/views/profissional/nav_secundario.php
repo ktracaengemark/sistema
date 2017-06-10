@@ -3,7 +3,7 @@
 	<ul class="nav nav-sidebar">
 		<li class="dropdown">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-				<span class="glyphicon glyphicon-user"> </span> Dados do Profissional<span class="caret"></span>			
+				<span class="glyphicon glyphicon-user"> </span> Dados do Funcionário<span class="caret"></span>			
 			</a>	
 			<ul class="dropdown-menu">	
 				<li <?php if (preg_match("/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
@@ -22,7 +22,7 @@
 
 		<li <?php if (preg_match("/contatoprof\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
 			<a href="<?php echo base_url() . 'contatoprof/pesquisar/' . $_SESSION['Profissional']['idApp_Profissional']; ?>">
-				<span class="fa fa-user-plus"></span> Contatoprofs
+				<span class="fa fa-user-plus"></span> Contatos
 			</a>
 		</li>
 

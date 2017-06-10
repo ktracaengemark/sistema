@@ -3,7 +3,7 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>Func./Empresa</th>
+            <th>Fornecedor</th>
             <th>Atividade</th>
 			<!--<th>Nascimento</th>-->
             <th>Telefone</th>
