@@ -407,6 +407,61 @@ class Relatorio_model extends CI_Model {
 
     }
 	
+	public function list_consumo($data, $completo) {
+       
+        if ($data['DataFim']) {
+            $consulta =
+                '(DataConsumo >= "' . $data['DataInicio'] . '" AND DataConsumo <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(DataConsumo >= "' . $data['DataInicio'] . '")';
+        }
+				
+        $query = $this->db->query('
+            SELECT
+
+                CP.idApp_Consumo,
+                CP.DataConsumo,
+				PD.QtdConsumoProduto,
+				TPD.NomeProduto
+
+            FROM
+
+                App_Consumo AS CP
+					LEFT JOIN App_ProdutoConsumo AS PD ON CP.idApp_Consumo = PD.idApp_Consumo
+					LEFT JOIN Tab_Produto AS TPD ON TPD.idTab_Produto = PD.idTab_Produto
+
+            WHERE
+                CP.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND               
+				(' . $consulta . ') 
+
+
+            ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+          */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            $somapago=$somapagar=$somaentrada=$somareceber=$somarecebido=$somareal=$balanco=$ant=0;
+            foreach ($query->result() as $row) {
+				$row->DataConsumo = $this->basico->mascara_data($row->DataConsumo, 'barras');             
+            }           
+            return $query;
+        }
+
+    }
+	
 	public function list_balanco($data, $completo) {
        
         if ($data['DataFim']) {
@@ -1122,8 +1177,10 @@ class Relatorio_model extends CI_Model {
             ORDER BY
 				P.NomeProfissional ASC,
 				TF.AprovadoTarefa ASC,
-				TF.ServicoConcluido Desc,			
+				TF.ServicoConcluido Desc,
 				PT.ConcluidoProcedtarefa ASC,
+				PT.DataProcedtarefa ASC,
+				TF.DataPrazoTarefa ASC,											
 				TF.QuitadoTarefa
 				
         ');
@@ -1402,12 +1459,12 @@ class Relatorio_model extends CI_Model {
 
         $query = $this->db->query('
             SELECT
-                C.idApp_Cliente,
-                C.NomeCliente
+                idApp_Cliente,
+                CONCAT(NomeCliente, " --- ", Telefone1, " --- ", DataNascimento) As NomeCliente
             FROM
-                App_Cliente AS C
+                App_Cliente 
             WHERE
-                C.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                idSis_Usuario = ' . $_SESSION['log']['id'] . '
             ORDER BY
                 NomeCliente ASC
         ');
@@ -1415,7 +1472,7 @@ class Relatorio_model extends CI_Model {
         $array = array();
         $array[0] = ':: Todos ::';
         foreach ($query->result() as $row) {
-            $array[$row->idApp_Cliente] = $row->NomeCliente;
+			$array[$row->idApp_Cliente] = $row->NomeCliente;
         }
 
         return $array;

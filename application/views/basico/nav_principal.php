@@ -30,10 +30,12 @@
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Consultas & Reuniões</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>tarefa/cadastrar">Funcionários & Tarefas</a></li>
+						<li><a href="<?php echo base_url() ?>tarefa/cadastrar">Tarefas dos Funcionários</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>despesas/cadastrar">Despesas & Saídas</a></li>
-						<li role="separator" class="divider"></li>												
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>consumo/cadastrar">Consumo de Produtos</a></li>
+						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>funcao/cadastrar/funcao">Função dos Funcionários</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>atividade/cadastrar/atividade">Atividade dos Fornecedores</a></li>
@@ -103,10 +105,12 @@
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/receitas">Clientes & Pagamentos</a></li>
 						<li role="separator" class="divider"></li>						
-						<li><a href="<?php echo base_url() ?>relatorio/tarefa">Funcionários & Tarefas</a></li>
+						<li><a href="<?php echo base_url() ?>relatorio/tarefa">Tarefas dos Funcionários</a></li>
 						<li role="separator" class="divider"></li>						
 						<li><a href="<?php echo base_url() ?>relatorio/despesas">Despesas & Saídas</a></li>
-						<li role="separator" class="divider"></li>						
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>relatorio/consumo">Consumo de Produtos</a></li>
+						<li role="separator" class="divider"></li>
 						<!--<li><a href="<?php echo base_url() ?>relatorio/orcamentosv">Clientes & Serviços</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/clienteprod">Clientes & Produtos</a></li>

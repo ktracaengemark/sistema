@@ -1143,7 +1143,7 @@ $(document).ready(function () {
     $(".Valor").mask("#.##0,00", {reverse: true});
     $('.Numero').mask('0#');
 
-    $(".Celular").mask("(99) 999999999");
+    $(".Celular").mask("(99)999999999");
     $(".CelularVariavel").on("blur", function () {
         var last = $(this).val().substr($(this).val().indexOf("-") + 1);
 
@@ -1453,6 +1453,73 @@ $(document).ready(function () {
         });
 
     });
+	
+	//adiciona campos dinamicamente
+    var pc = $("#PCount").val(); //initlal text box count
+    $(".add_field_button7").click(function(e){ //on add input button click
+        e.preventDefault();
+
+        pc++; //text box increment
+        $("#PCount").val(pc);
+	
+		$(".input_fields_wrap7").append('\
+            <div class="form-group" id="7div'+pc+'">\
+                <div class="panel panel-info">\
+                    <div class="panel-heading">\
+                        <div class="row">\
+                            <div class="col-md-1">\
+                                <label for="QtdConsumoProduto">Qtd:</label><br>\
+                                <div class="input-group">\
+                                    <input type="text" class="form-control Numero" maxlength="3" id="QtdConsumoProduto'+pc+'" placeholder="0"\
+                                        onkeyup="calculaSubtotalCompra(this.value,this.name,'+pc+',\'QTD\',\'Produto\')"\
+                                        name="QtdConsumoProduto'+pc+'" value="">\
+                                </div>\
+                            </div>\
+                            <div class="col-md-4">\
+                                <label for="idTab_Produto">Produto:</label><br>\
+                                <select class="form-control" id="listadinamicab'+pc+'" onchange="buscaValorCompra(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
+                                    <option value="">-- Selecione uma opção --</option>\
+                                </select>\
+                            </div>\
+                            <div class="col-md-1">\
+                                <label><br></label><br>\
+                                <a href="#" id="'+pc+'" class="remove_field7 btn btn-danger">\
+                                    <span class="glyphicon glyphicon-trash"></span>\
+                                </a>\
+                            </div>\
+                        </div>\
+                    </div>\
+                </div>\
+            </div>'
+        ); //add input box
+		
+        //get a reference to the select element
+        $select = $('#listadinamicab'+pc);
+
+        //request the JSON data and parse into the select element
+        $.ajax({
+            url: window.location.origin+ '/' + app + '/GetvaluesCompra_json.php?q=2',
+            dataType: 'JSON',
+            type: "GET",
+            success: function (data) {
+                //clear the current content of the select
+                $select.html('');
+                //iterate over the data and append a select option
+                $select.append('<option value="">-- Selecione uma opção --</option>');
+                $.each(data, function (key, val) {
+                    //alert(val.id);
+                    $select.append('<option value="' + val.id + '">' + val.name + '</option>');
+                })
+            },
+            error: function () {
+                //alert('erro listadinamicaB');
+                //if there is an error append a 'none available' option
+                $select.html('<option id="-1">ERRO</option>');
+            }
+
+        });
+
+    });
 
     //Remove os campos adicionados dinamicamente
     $(".input_fields_wrap").on("click",".remove_field", function(e){ //user click on remove text
@@ -1487,6 +1554,11 @@ $(document).ready(function () {
         $("#6div"+$(this).attr("id")).remove();
         //após remover o campo refaz o cálculo do orçamento e total restante
         calculaDespesas();
+    })
+	
+	//Remove os campos adicionados dinamicamente
+    $(".input_fields_wrap7").on("click",".remove_field7", function(e){ //user click on remove text
+        $("#7div"+$(this).attr("id")).remove();
     })
 
     //Remove os campos adicionados dinamicamente
