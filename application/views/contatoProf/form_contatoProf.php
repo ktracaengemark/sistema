@@ -43,7 +43,7 @@
 							<div class="col-md-4">
 								<label for="TelefoneContatoProf">Telefone Principal: *</label>
 								<input type="text" class="form-control Celular CelularVariavel" id="TelefoneContatoProf" maxlength="14" <?php echo $readonly; ?>
-									   name="TelefoneContatoProf" placeholder="(99) 999999999" value="<?php echo $query['TelefoneContatoProf']; ?>">
+									   name="TelefoneContatoProf" placeholder="(99)999999999" value="<?php echo $query['TelefoneContatoProf']; ?>">
 							</div>
 						
 							 
