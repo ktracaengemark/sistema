@@ -68,15 +68,15 @@ elseif ($_GET['q'] == 2) {
 elseif ($_GET['q'] == 3) {
 
     $result = mysql_query(
-            'SELECT
-                idApp_Profissional,
-                NomeProfissional
+            'SELECT                
+				idApp_Profissional,
+				CONCAT(Funcao, " --- ", NomeProfissional) AS NomeProfissional				
             FROM
                 App_Profissional
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY NomeProfissional ASC'
+                ORDER BY Funcao ASC, NomeProfissional ASC'
     );
 
     while ($row = mysql_fetch_assoc($result)) {
