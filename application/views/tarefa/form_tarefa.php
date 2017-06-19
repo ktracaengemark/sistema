@@ -104,26 +104,32 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-2 text-left">
-										<label for="DataTarefa">Criada em:</label>
-										<div class="input-group <?php echo $datepicker; ?>">
-											<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-												   autofocus name="DataTarefa" value="<?php echo $tarefa['DataTarefa']; ?>">
-											<span class="input-group-addon" disabled>
-												<span class="glyphicon glyphicon-calendar"></span>
-											</span>
+									<div class="col-md-8 text-left" >
+										<div class="form-group">
+											<div class="row">
+												<div class="col-md-3 text-left">
+													<label for="DataTarefa">Tarefa Criada em:</label>
+													<div class="input-group <?php echo $datepicker; ?>">
+														<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+															   autofocus name="DataTarefa" value="<?php echo $tarefa['DataTarefa']; ?>">
+														<span class="input-group-addon" disabled>
+															<span class="glyphicon glyphicon-calendar"></span>
+														</span>
+													</div>
+												</div>
+												<div class="col-md-3 text-left">
+													<label for="DataPrazoTarefa">Prazo para Conclusão:</label>
+													<div class="input-group <?php echo $datepicker; ?>">
+														<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+															   autofocus name="DataPrazoTarefa" value="<?php echo $tarefa['DataPrazoTarefa']; ?>">
+														<span class="input-group-addon" disabled>
+															<span class="glyphicon glyphicon-calendar"></span>
+														</span>
+													</div>
+												</div>
+											</div>
 										</div>
-									</div>
-									<div class="col-md-2 text-left">
-										<label for="DataPrazoTarefa">Prazo Final:</label>
-										<div class="input-group <?php echo $datepicker; ?>">
-											<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-												   autofocus name="DataPrazoTarefa" value="<?php echo $tarefa['DataPrazoTarefa']; ?>">
-											<span class="input-group-addon" disabled>
-												<span class="glyphicon glyphicon-calendar"></span>
-											</span>
-										</div>
-									</div>														
+									</div>	
 								</div>
 							</div>	
 						</div>		

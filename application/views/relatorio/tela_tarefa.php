@@ -181,7 +181,7 @@
                             </div>
 							-->
 							<div class="col-md-2">
-                                <label for="DataInicio">Data Orçam.- Início: *</label>
+                                <label for="DataInicio">Data da Tarefa.- Início: *</label>
                                 <div class="input-group DatePicker">
                                     <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
                                            autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
@@ -191,7 +191,7 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <label for="DataFim">Data Orçam.- Fim: (opcional)</label>
+                                <label for="DataFim">Data da Tarefa.- Fim: (opcional)</label>
                                 <div class="input-group DatePicker">
                                     <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
                                            autofocus name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
@@ -199,7 +199,29 @@
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
-                            </div>						
+                            </div>
+							<!--
+							<div class="col-md-2">
+                                <label for="DataInicio2">Data Ação.- Início: </label>
+                                <div class="input-group DatePicker">
+                                    <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+                                           autofocus name="DataInicio2" value="<?php echo set_value('DataInicio2', $query['DataInicio2']); ?>">
+                                    <span class="input-group-addon" disabled>
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="DataFim2">Data Ação.- Fim: (opcional)</label>
+                                <div class="input-group DatePicker">
+                                    <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+                                           autofocus name="DataFim2" value="<?php echo set_value('DataFim2', $query['DataFim2']); ?>">
+                                    <span class="input-group-addon" disabled>
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+							-->
                         </div>						
                     </div>
                     <div class="form-group">
