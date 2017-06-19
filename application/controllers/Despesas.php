@@ -655,7 +655,7 @@ class Despesas extends CI_Controller {
             $data['update']['parcelaspag']['anterior'] = $this->Despesas_model->get_parcelaspag($data['despesas']['idApp_Despesas']);
             if (isset($data['parcelaspag']) || (!isset($data['parcelaspag']) && isset($data['update']['parcelaspag']['anterior']) ) ) {
 
-                if (isset($data['servico']))
+                if (isset($data['parcelaspag']))
                     $data['parcelaspag'] = array_values($data['parcelaspag']);
                 else
                     $data['parcelaspag'] = array();
