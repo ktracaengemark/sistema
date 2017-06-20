@@ -15,6 +15,9 @@ app = app.substring(1);
 pos = app.indexOf('/');
 app = app.substring(0, pos);
 
+//Captura a data do dia e carrega no campo correspondente
+var currentDate = moment();
+
 //variável de opções necessária para o funcionamento do datepiker em divs
 //geradas dinamicamente
 var dateTimePickerOptions = {
@@ -45,6 +48,35 @@ var dateTimePickerOptions = {
     format: 'DD/MM/YYYY',
     //minDate: moment(m + '/' + d + '/' + y),
     locale: 'pt-br'
+}
+
+/*
+ * Função responsável por carregar valores nos respectivos campos do orcatrata
+ * caso o botão Quitado seja alterado para SIM
+ *
+ * @param {int} quant
+ * @param {string} campo
+ * @param {int} num
+ * @returns {decimal}
+ */
+function carregaQuitado(value, name, i) {
+
+    if (value == "S") {
+
+        if (!$("#ValorPagoRecebiveis"+i).val() || $("#ValorPagoRecebiveis"+i).val() == "0,00")
+            $("#ValorPagoRecebiveis"+i).val($("#ValorParcelaRecebiveis"+i).val())
+
+        if (!$("#DataPagoRecebiveis"+i).val())
+            $("#DataPagoRecebiveis"+i).val(currentDate.format('DD/MM/YYYY'))
+
+    }
+    else {
+
+        $("#ValorPagoRecebiveis"+i).val("")
+        $("#DataPagoRecebiveis"+i).val("")
+
+    }
+
 }
 
 /*
@@ -1257,7 +1289,7 @@ $(document).ready(function () {
                 </div>\
             </div>'
         ); //add input box
-		
+
         //get a reference to the select element
         $select = $('#listadinamicab'+pc);
 
@@ -1285,7 +1317,7 @@ $(document).ready(function () {
         });
 
     });
-	
+
 	//adiciona campos dinamicamente
     var pc = $("#PCount").val(); //initlal text box count
     $(".add_field_button4").click(function(e){ //on add input button click
@@ -1293,7 +1325,7 @@ $(document).ready(function () {
 
         pc++; //text box increment
         $("#PCount").val(pc);
-	
+
 		$(".input_fields_wrap4").append('\
             <div class="form-group" id="4div'+pc+'">\
                 <div class="panel panel-info">\
@@ -1341,7 +1373,7 @@ $(document).ready(function () {
                 </div>\
             </div>'
         ); //add input box
-		
+
         //get a reference to the select element
         $select = $('#listadinamicab'+pc);
 
@@ -1369,7 +1401,7 @@ $(document).ready(function () {
         });
 
     });
-	
+
 	//adiciona campos dinamicamente
     var pc = $("#PCount").val(); //initlal text box count
     $(".add_field_button6").click(function(e){ //on add input button click
@@ -1377,7 +1409,7 @@ $(document).ready(function () {
 
         pc++; //text box increment
         $("#PCount").val(pc);
-	
+
 		$(".input_fields_wrap6").append('\
             <div class="form-group" id="6div'+pc+'">\
                 <div class="panel panel-info">\
@@ -1425,7 +1457,7 @@ $(document).ready(function () {
                 </div>\
             </div>'
         ); //add input box
-		
+
         //get a reference to the select element
         $select = $('#listadinamicab'+pc);
 
@@ -1453,7 +1485,7 @@ $(document).ready(function () {
         });
 
     });
-	
+
 	//adiciona campos dinamicamente
     var pc = $("#PCount").val(); //initlal text box count
     $(".add_field_button7").click(function(e){ //on add input button click
@@ -1461,7 +1493,7 @@ $(document).ready(function () {
 
         pc++; //text box increment
         $("#PCount").val(pc);
-	
+
 		$(".input_fields_wrap7").append('\
             <div class="form-group" id="7div'+pc+'">\
                 <div class="panel panel-info">\
@@ -1492,7 +1524,7 @@ $(document).ready(function () {
                 </div>\
             </div>'
         ); //add input box
-		
+
         //get a reference to the select element
         $select = $('#listadinamicab'+pc);
 
@@ -1534,28 +1566,28 @@ $(document).ready(function () {
         //após remover o campo refaz o cálculo do orçamento e total restante
         calculaOrcamento();
     })
-	
+
 	//Remove os campos adicionados dinamicamente
     $(".input_fields_wrap4").on("click",".remove_field4", function(e){ //user click on remove text
         $("#4div"+$(this).attr("id")).remove();
         //após remover o campo refaz o cálculo do orçamento e total restante
         calculaOrcamento();
     })
-	
+
 	//Remove os campos adicionados dinamicamente
     $(".input_fields_wrap5").on("click",".remove_field5", function(e){ //user click on remove text
         $("#5div"+$(this).attr("id")).remove();
         //após remover o campo refaz o cálculo da despesa e total restante
         calculaDespesas();
     })
-	
+
 	//Remove os campos adicionados dinamicamente
     $(".input_fields_wrap6").on("click",".remove_field6", function(e){ //user click on remove text
         $("#6div"+$(this).attr("id")).remove();
         //após remover o campo refaz o cálculo do orçamento e total restante
         calculaDespesas();
     })
-	
+
 	//Remove os campos adicionados dinamicamente
     $(".input_fields_wrap7").on("click",".remove_field7", function(e){ //user click on remove text
         $("#7div"+$(this).attr("id")).remove();

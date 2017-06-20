@@ -75,7 +75,7 @@
 									</div>
 								</div>
 							</div>
-						</div>		
+						</div>
 					</div>
 
 						<hr>
@@ -147,7 +147,7 @@
 																name="ValorVendaServico<?php echo $i ?>" value="<?php echo $servico[$i]['ValorVendaServico'] ?>">
 														</div>
 
-													</div>												
+													</div>
 													<div class="col-md-3">
 														<label for="SubtotalServico">Subtotal:</label>
 														<div class="input-group">
@@ -272,7 +272,7 @@
 																onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','VP','Produto')"
 																name="ValorVendaProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ValorVendaProduto'] ?>">
 														</div>
-													</div>													
+													</div>
 													<div class="col-md-3">
 														<label for="SubtotalProduto">Subtotal:</label>
 														<div class="input-group">
@@ -306,18 +306,18 @@
 												</a>
 											</div>
 										</div>
-									</div>								
+									</div>
 								</div>
 								<div class="panel-body">
 									<div class="form-group">
 										<div class="panel panel-info">
-											<div class="panel-heading">									
+											<div class="panel-heading">
 												<div class="row">
 													<div class="col-md-3">
 														<label for="ValorOrca">Orçamento:</label><br>
 														<div class="input-group" id="txtHint">
 															<span class="input-group-addon" id="basic-addon1">R$</span>
-															<input type="text" class="form-control Valor" id="ValorOrca" maxlength="10" placeholder="0,00" 
+															<input type="text" class="form-control Valor" id="ValorOrca" maxlength="10" placeholder="0,00"
 																   name="ValorOrca" value="<?php echo $orcatrata['ValorOrca'] ?>">
 														</div>
 													</div>
@@ -341,14 +341,14 @@
 														</div>
 													</div>
 												</div>
-											</div>	
-										</div>		
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-		<!--#######################################-->				
+		<!--#######################################-->
 					<!--
 					<div class="panel-group" id="accordion4" role="tablist" aria-multiselectable="true">
 						<div class="panel panel-info">
@@ -362,11 +362,11 @@
 
 							<div id="collapse4" class="panel-collapse collapsed collapse" role="tabpanel" aria-labelledby="heading4" aria-expanded="false" style="height: 0px;">
 								<div class="panel-body">
-					
-									
-								</div>	
-							</div>		
-						</div>			
+
+
+								</div>
+							</div>
+						</div>
 					</div>
 					-->
 					<hr>
@@ -379,10 +379,10 @@
 										Forma de Pagamento / Parcelas
 									</a>
 								</h4>
-							</div>							
+							</div>
 							<div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2" aria-expanded="false" style="height: 0px;">
 								<div class="panel-body">
-									<div class="form-group">	
+									<div class="form-group">
 										<div class="panel panel-info">
 											<div class="panel-heading">
 												<div class="row">
@@ -421,18 +421,18 @@
 													<br>
 													<div class="form-group">
 														<div class="col-md-4 text-left">
-															<button class="btn btn-danger" type="button" data-toggle="collapse" onclick="calculaParcelas()" 
+															<button class="btn btn-danger" type="button" data-toggle="collapse" onclick="calculaParcelas()"
 																	data-target="#Parcelas" aria-expanded="false" aria-controls="Parcelas">
 																<span class="glyphicon glyphicon-menu-down"></span> Gerar Parcelas
 															</button>
 														</div>
-													</div>							
+													</div>
 												</div>
-											</div>	
+											</div>
 										</div>
-									</div>	
-								</div>	
-								<div class="panel-body">									
+									</div>
+								</div>
+								<div class="panel-body">
 									<!--App_parcelasRec-->
 									<div class="input_fields_parcelas">
 
@@ -444,10 +444,10 @@
 										<input type="hidden" name="idApp_ParcelasRecebiveis<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['idApp_ParcelasRecebiveis']; ?>"/>
 										<?php } ?>
 
-										
+
 										<div class="form-group">
 											<div class="panel panel-info">
-												<div class="panel-heading">										
+												<div class="panel-heading">
 													<div class="row">
 														<div class="col-md-1">
 															<label for="ParcelaRecebiveis">Parcela:</label><br>
@@ -458,7 +458,7 @@
 															<label for="ValorParcelaRecebiveis">Valor Parcela:</label><br>
 															<div class="input-group" id="txtHint">
 																<span class="input-group-addon" id="basic-addon1">R$</span>
-																<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
+																<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" id="ValorParcelaRecebiveis<?php echo $i ?>"
 																	   name="ValorParcelaRecebiveis<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['ValorParcelaRecebiveis'] ?>">
 															</div>
 														</div>
@@ -476,7 +476,7 @@
 															<label for="ValorPagoRecebiveis">Valor Pago:</label><br>
 															<div class="input-group" id="txtHint">
 																<span class="input-group-addon" id="basic-addon1">R$</span>
-																<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
+																<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" id="ValorPagoRecebiveis<?php echo $i ?>"
 																	   name="ValorPagoRecebiveis<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['ValorPagoRecebiveis'] ?>">
 															</div>
 														</div>
@@ -502,6 +502,7 @@
 																			echo ''
 																			. '<label class="btn btn-warning active" name="radiobutton_QuitadoRecebiveis' . $i . '" id="radiobutton_QuitadoRecebiveis' . $i .  $key . '">'
 																			. '<input type="radio" name="QuitadoRecebiveis' . $i . '" id="radiobuttondinamico" '
+                                                                            . 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
 																			. 'autocomplete="off" value="' . $key . '" checked>' . $row
 																			. '</label>'
 																			;
@@ -509,6 +510,7 @@
 																			echo ''
 																			. '<label class="btn btn-default" name="radiobutton_QuitadoRecebiveis' . $i . '" id="radiobutton_QuitadoRecebiveis' . $i .  $key . '">'
 																			. '<input type="radio" name="QuitadoRecebiveis' . $i . '" id="radiobuttondinamico" '
+                                                                            . 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
 																			. 'autocomplete="off" value="' . $key . '" >' . $row
 																			. '</label>'
 																			;
@@ -519,8 +521,8 @@
 															</div>
 														</div>
 													</div>
-												</div>	
-											</div>		
+												</div>
+											</div>
 										</div>
 
 									<?php
@@ -659,8 +661,8 @@
 									<br>
 									<br>
 									<br>
-									<br>								
-									
+									<br>
+
 									<div class="container-fluid">
 										<hr>
 										<div class="panel-group" id="accordion3" role="tablist" aria-multiselectable="true">
@@ -691,7 +693,7 @@
 
 														<div class="form-group" id="3div<?php echo $i ?>">
 															<div class="panel panel-info">
-																<div class="panel-heading">		
+																<div class="panel-heading">
 																	<div class="row">
 																		<div class="col-md-3">
 																			<label for="Profissional<?php echo $i ?>">Profissional:</label>
@@ -764,8 +766,8 @@
 																			</button>
 																		</div>
 																	</div>
-																</div>	
-															</div>		
+																</div>
+															</div>
 														</div>
 
 														<?php
@@ -838,7 +840,7 @@
 												<h4 class="modal-title">Tem certeza que deseja excluir?</h4>
 											</div>
 											<div class="modal-body">
-												<p>Ao confirmar esta operação todos os dados serão excluídos permanentemente do sistema. 
+												<p>Ao confirmar esta operação todos os dados serão excluídos permanentemente do sistema.
                                                     Esta operação é irreversível.</p>
 											</div>
 											<div class="modal-footer">
