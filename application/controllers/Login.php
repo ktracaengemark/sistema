@@ -160,7 +160,7 @@ class Login extends CI_Controller {
         $this->form_validation->set_rules('Nome', 'Nome e Sobrenome', 'required|trim');
         $this->form_validation->set_rules('Senha', 'Senha', 'required|trim');
         $this->form_validation->set_rules('Confirma', 'Confirmar Senha', 'required|trim|matches[Senha]');
-        $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'required|trim|valid_date');
+        #$this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'required|trim|valid_date');
 
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 

@@ -2,7 +2,13 @@
     <div class="row">
 
         <div>
-
+			<table class="table table-bordered table-condensed table-hover">	
+				<tfoot>
+                    <tr>
+                        <th colspan="9" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
+                    </tr>
+                </tfoot>
+			</table>
             <table class="table table-bordered table-condensed table-hover">
 
                 <thead>
@@ -50,11 +56,6 @@
 
                 </tbody>
 
-                <tfoot>
-                    <tr>
-                        <th colspan="9" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
-                    </tr>
-                </tfoot>
             </table>
 
         </div>

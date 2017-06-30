@@ -473,7 +473,7 @@
 																<label for="ValorParcelaPagaveis">Valor Parcela:</label><br>
 																<div class="input-group" id="txtHint">
 																	<span class="input-group-addon" id="basic-addon1">R$</span>
-																	<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
+																	<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" id="ValorParcelaPagaveis<?php echo $i ?>"
 																		   name="ValorParcelaPagaveis<?php echo $i ?>" value="<?php echo $parcelaspag[$i]['ValorParcelaPagaveis'] ?>">
 																</div>
 															</div>
@@ -491,7 +491,7 @@
 																<label for="ValorPagoPagaveis">Valor Pago:</label><br>
 																<div class="input-group" id="txtHint">
 																	<span class="input-group-addon" id="basic-addon1">R$</span>
-																	<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
+																	<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" id="ValorPagoPagaveis<?php echo $i ?>"
 																		   name="ValorPagoPagaveis<?php echo $i ?>" value="<?php echo $parcelaspag[$i]['ValorPagoPagaveis'] ?>">
 																</div>
 															</div>
@@ -517,6 +517,7 @@
 																				echo ''
 																				. '<label class="btn btn-warning active" name="radiobutton_QuitadoPagaveis' . $i . '" id="radiobutton_QuitadoPagaveis' . $i .  $key . '">'
 																				. '<input type="radio" name="QuitadoPagaveis' . $i . '" id="radiobuttondinamico" '
+																				. 'onchange="carregaQuitadoDespesas(this.value,this.name,'.$i.')" '
 																				. 'autocomplete="off" value="' . $key . '" checked>' . $row
 																				. '</label>'
 																				;
@@ -524,6 +525,7 @@
 																				echo ''
 																				. '<label class="btn btn-default" name="radiobutton_QuitadoPagaveis' . $i . '" id="radiobutton_QuitadoPagaveis' . $i .  $key . '">'
 																				. '<input type="radio" name="QuitadoPagaveis' . $i . '" id="radiobuttondinamico" '
+																				. 'onchange="carregaQuitadoDespesas(this.value,this.name,'.$i.')" '
 																				. 'autocomplete="off" value="' . $key . '" >' . $row
 																				. '</label>'
 																				;

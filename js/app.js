@@ -59,6 +59,8 @@ var dateTimePickerOptions = {
  * @param {int} num
  * @returns {decimal}
  */
+ 
+ /*Carrega a Data do Dia do lançamento*/
 function carregaQuitado(value, name, i, cadastrar = 0) {
 
     if (value == "S") {
@@ -79,6 +81,91 @@ function carregaQuitado(value, name, i, cadastrar = 0) {
 
         $("#ValorPagoRecebiveis"+i).val("")
         $("#DataPagoRecebiveis"+i).val("")
+
+    }
+
+}
+
+/*Carrega a Data do Dia do Vencimento*/
+function carregaQuitado2(value, name, i, cadastrar = 0) {
+
+    if (value == "S") {
+
+        if (!$("#ValorPagoRecebiveis"+i).val() || $("#ValorPagoRecebiveis"+i).val() == "0,00")
+            $("#ValorPagoRecebiveis"+i).val($("#ValorParcelaRecebiveis"+i).val())
+		
+		if (!$("#DataPagoRecebiveis"+i).val()) {
+            if (cadastrar == 1)
+                $("#DataPagoRecebiveis"+i).val($("#DataVencimentoRecebiveis"+i).val())
+            else
+                $("#DataPagoRecebiveis"+i).val($("#DataVencimentoRecebiveis"+i).val())
+        }
+
+    }
+    else {
+
+        $("#ValorPagoRecebiveis"+i).val("")
+        $("#DataPagoRecebiveis"+i).val("")
+
+    }
+
+}
+
+/*
+ * Função responsável por carregar valores nos respectivos campos do despesas
+ * caso o botão Quitado seja alterado para SIM
+ *
+ * @param {int} quant
+ * @param {string} campo
+ * @param {int} num
+ * @returns {decimal}
+ */
+ 
+ /*Carrega a Data do Dia do lançamento*/
+function carregaQuitadoDespesas(value, name, i, cadastrar = 0) {
+
+    if (value == "S") {
+
+        if (!$("#ValorPagoPagaveis"+i).val() || $("#ValorPagoPagaveis"+i).val() == "0,00")
+            $("#ValorPagoPagaveis"+i).val($("#ValorParcelaPagaveis"+i).val())
+
+		if (!$("#DataPagoPagaveis"+i).val()) {
+            if (cadastrar == 1)
+                $("#DataPagoPagaveis"+i).val($("#DataVencimentoPagaveis"+i).val())
+            else
+                $("#DataPagoPagaveis"+i).val(currentDate.format('DD/MM/YYYY'))
+        }
+
+    }
+    else {
+
+        $("#ValorPagoPagaveis"+i).val("")
+        $("#DataPagoPagaveis"+i).val("")
+
+    }
+
+}
+
+/*Carrega a Data do Dia do Vencimento*/
+function carregaQuitadoDespesas2(value, name, i, cadastrar = 0) {
+
+    if (value == "S") {
+
+        if (!$("#ValorPagoPagaveis"+i).val() || $("#ValorPagoPagaveis"+i).val() == "0,00")
+            $("#ValorPagoPagaveis"+i).val($("#ValorParcelaPagaveis"+i).val())
+		
+		if (!$("#DataPagoPagaveis"+i).val()) {
+            if (cadastrar == 1)
+                $("#DataPagoPagaveis"+i).val($("#DataVencimentoPagaveis"+i).val())
+            else
+                $("#DataPagoPagaveis"+i).val($("#DataVencimentoPagaveis"+i).val())
+        }
+
+    }
+    else {
+
+        $("#ValorPagoPagaveis"+i).val("")
+        $("#DataPagoPagaveis"+i).val("")
 
     }
 
@@ -325,13 +412,13 @@ function calculaParcelasPagaveis() {
 								<div class="input-group" id="txtHint">\
 									<span class="input-group-addon" id="basic-addon1">R$</span>\
 									<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
-										   name="ValorParcelaPagaveis'+i+'" value="'+parcdesp+'">\
+										    id="ValorParcelaPagaveis'+i+'" name="ValorParcelaPagaveis'+i+'" value="'+parcdesp+'">\
 								</div>\
 							</div>\
 							<div class="col-md-2">\
 								<label for="DataVencimentoPagaveis">Data Venc. Parc.</label>\
 								<div class="input-group DatePicker">\
-									<input type="text" class="form-control Date" id="DataPagoPagaveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
+									<input type="text" class="form-control Date" id="DataVencimentoPagaveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
 										   name="DataVencimentoPagaveis'+i+'" value="'+futureMonth.format('DD/MM/YYYY')+'">\
 									<span class="input-group-addon" disabled>\
 										<span class="glyphicon glyphicon-calendar"></span>\
@@ -343,7 +430,7 @@ function calculaParcelasPagaveis() {
 								<div class="input-group" id="txtHint">\
 									<span class="input-group-addon" id="basic-addon1">R$</span>\
 									<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"\
-										   name="ValorPagoPagaveis'+i+'" value="">\
+										    id="ValorPagoPagaveis'+i+'" name="ValorPagoPagaveis'+i+'" value="">\
 								</div>\
 							</div>\
 							<div class="col-md-2">\
@@ -362,11 +449,11 @@ function calculaParcelasPagaveis() {
 									<div class="btn-group" data-toggle="buttons">\
 										<label class="btn btn-warning active" name="radio_QuitadoPagaveis'+i+'" id="radio_QuitadoPagaveis'+i+'N">\
 										<input type="radio" name="QuitadoPagaveis'+i+'" id="radiogeraldinamico"\
-											autocomplete="off" value="N" checked>Não\
+											onchange="carregaQuitadoDespesas(this.value,this.name,'+i+',1)" autocomplete="off" value="N" checked>Não\
 										</label>\
 										<label class="btn btn-default" name="radio_QuitadoPagaveis'+i+'" id="radio_QuitadoPagaveis'+i+'S">\
 										<input type="radio" name="QuitadoPagaveis'+i+'" id="radiogeraldinamico"\
-											autocomplete="off" value="S">Sim\
+											onchange="carregaQuitadoDespesas(this.value,this.name,'+i+',1)" autocomplete="off" value="S">Sim\
 										</label>\
 									</div>\
 								</div>\
@@ -1180,7 +1267,7 @@ $(document).ready(function () {
     $(".Valor").mask("#.##0,00", {reverse: true});
     $('.Numero').mask('0#');
 
-    $(".Celular").mask("(99)999999999");
+    $(".Celular").mask("99999999999");
     $(".CelularVariavel").on("blur", function () {
         var last = $(this).val().substr($(this).val().indexOf("-") + 1);
 
