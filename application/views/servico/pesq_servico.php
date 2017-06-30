@@ -14,23 +14,11 @@
 
                 <?php echo form_open($form_open_path, 'role="form"'); ?>
                     <div class="row">
-                        						
-						<div class="col-md-3">
-							<label for="TipoServico">Tipo Servico</label>								
-							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-									id="TipoServico" autofocus name="TipoServico">
-								<option value="">-- Sel. Tipo de Servico --</option>
-								<?php
-								foreach ($select['TipoServico'] as $key => $row) {
-									if ($query['TipoServico'] == $key) {
-										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-									} else {
-										echo '<option value="' . $key . '">' . $row . '</option>';
-									}
-								}
-								?>
-							</select>
-						</div>
+						<div class="col-md-4">
+                            <label for="NomeServico">Nome do Servico:</label><br>
+                            <input type="text" class="form-control" maxlength="200"
+                                   autofocus name="NomeServico" value="<?php echo $query['NomeServico'] ?>">
+                        </div>
 						
 						<div class="col-md-3">
 							<label for="Convenio">Convenio</label>								
@@ -49,12 +37,23 @@
 							</select>
 						</div>
 						
-						<div class="col-md-4">
-                            <label for="NomeServico">Nome do Servico:</label><br>
-                            <input type="text" class="form-control" maxlength="200"
-                                    name="NomeServico" value="<?php echo $query['NomeServico'] ?>">
-                        </div>
-						
+						<div class="col-md-3">
+							<label for="TipoServico">Tipo Servico</label>								
+							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+									id="TipoServico" autofocus name="TipoServico">
+								<option value="">-- Sel. Tipo de Servico --</option>
+								<?php
+								foreach ($select['TipoServico'] as $key => $row) {
+									if ($query['TipoServico'] == $key) {
+										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+									} else {
+										echo '<option value="' . $key . '">' . $row . '</option>';
+									}
+								}
+								?>
+							</select>
+						</div>
+																														
 						<div class="col-md-3">
                             <label for="ValorCompraServico">Valor de Compra: *</label><br>
                             <div class="input-group">

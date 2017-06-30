@@ -1178,9 +1178,9 @@ class Relatorio_model extends CI_Model {
 				P.NomeProfissional ASC,
 				TF.AprovadoTarefa ASC,
 				TF.ServicoConcluido Desc,
+				TF.DataPrazoTarefa ASC,
 				PT.ConcluidoProcedtarefa ASC,
-				PT.DataProcedtarefa ASC,
-				TF.DataPrazoTarefa ASC,											
+				PT.DataProcedtarefa ASC,														
 				TF.QuitadoTarefa
 				
         ');

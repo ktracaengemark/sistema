@@ -81,7 +81,7 @@ class Servico_model extends CI_Model {
 
             ORDER BY
                 D.TipoServico DESC,
-				D.Convenio ASC,
+				D.Convenio DESC,
 				D.NomeServico ASC
 				
         ');
@@ -147,7 +147,7 @@ class Servico_model extends CI_Model {
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-                ORDER BY TipoServico DESC, Convenio ASC, NomeServico ASC'
+                ORDER BY TipoServico DESC, Convenio DESC, NomeServico ASC'
     );
         } else {
             $query = $this->db->query(
@@ -159,7 +159,7 @@ class Servico_model extends CI_Model {
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-                ORDER BY TipoServico DESC, Convenio ASC, NomeServico ASC'
+                ORDER BY TipoServico DESC, Convenio DESC, NomeServico ASC'
     );
 
             $array = array();
@@ -183,7 +183,7 @@ class Servico_model extends CI_Model {
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-                ORDER BY TipoServico DESC, Convenio ASC, NomeServico ASC'
+                ORDER BY TipoServico DESC, Convenio DESC, NomeServico ASC'
     );
         } else {
             $query = $this->db->query(
@@ -195,7 +195,7 @@ class Servico_model extends CI_Model {
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-                ORDER BY TipoServico DESC, Convenio ASC, NomeServico ASC'
+                ORDER BY TipoServico DESC, Convenio DESC, NomeServico ASC'
     );
 
             $array = array();

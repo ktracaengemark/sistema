@@ -16,13 +16,13 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label for="Convenio">Nome do Convenio:</label><br>
-                            <input type="text" class="form-control" maxlength="200"
+                            <input type="text" class="form-control" maxlength="30"
                                    autofocus name="Convenio" value="<?php echo $query['Convenio'] ?>">
                         </div>
 						
 						<div class="col-md-3">
                             <label for="Abrev">Abrev.:</label><br>
-                            <input type="text" class="form-control" maxlength="200"
+                            <input type="text" class="form-control" maxlength="5"
                                    autofocus name="Abrev" value="<?php echo $query['Abrev'] ?>">
                         </div>
 						

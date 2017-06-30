@@ -169,12 +169,43 @@ class Basico_model extends CI_Model {
         return $array;
     }
 
-    public function select_municipio($data = FALSE) {
+    public function select_municipio2($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query('SELECT * FROM Tab_Municipio ORDER BY NomeMunicipio ASC');
         } else {
             $query = $this->db->query('SELECT * FROM Tab_Municipio ORDER BY NomeMunicipio ASC');
+
+            $array = array();
+            #$array[0] = ':: SELECIONE ::';
+            foreach ($query->result() as $row) {
+                $array[$row->idTab_Municipio] = $row->NomeMunicipio;
+            }
+        }
+
+        return $array;
+    }
+	
+	public function select_municipio($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query(
+				'SELECT
+					idTab_Municipio,
+					CONCAT(Uf, " - ", NomeMunicipio) AS NomeMunicipio
+				FROM 
+					Tab_Municipio 
+				ORDER BY NomeMunicipio ASC, Uf ASC'
+				);
+        } else {
+            $query = $this->db->query(
+				'SELECT
+					idTab_Municipio,
+					CONCAT(Uf, " - ", NomeMunicipio) AS NomeMunicipio
+				FROM 
+					Tab_Municipio 
+				ORDER BY Uf ASC, NomeMunicipio ASC'
+				);
 
             $array = array();
             #$array[0] = ':: SELECIONE ::';
@@ -298,7 +329,7 @@ class Basico_model extends CI_Model {
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				TipoProduto = "V"
-                ORDER BY Convenio ASC, NomeProduto ASC'
+                ORDER BY Convenio DESC, NomeProduto ASC'
     );
         } else {
             $query = $this->db->query(
@@ -311,7 +342,7 @@ class Basico_model extends CI_Model {
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				TipoProduto = "V"
-                ORDER BY Convenio ASC, NomeProduto ASC'
+                ORDER BY Convenio DESC, NomeProduto ASC'
     );
 
             $array = array();
@@ -336,7 +367,7 @@ class Basico_model extends CI_Model {
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				TipoServico = "V"
-                ORDER BY Convenio ASC, NomeServico ASC'
+                ORDER BY Convenio DESC, NomeServico ASC'
     );
         } else {
             $query = $this->db->query(
@@ -349,7 +380,7 @@ class Basico_model extends CI_Model {
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				TipoServico = "V"
-                ORDER BY Convenio ASC, NomeServico ASC'
+                ORDER BY Convenio DESC, NomeServico ASC'
     );
 
             $array = array();

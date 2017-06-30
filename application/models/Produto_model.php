@@ -123,7 +123,7 @@ class Produto_model extends CI_Model {
 
             ORDER BY
                 D.TipoProduto DESC,
-				D.Convenio ASC,
+				D.Convenio DESC,
 				D.NomeProduto ASC
 				
         ');
@@ -244,7 +244,7 @@ class Produto_model extends CI_Model {
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-                ORDER BY TipoProduto DESC, Convenio ASC, NomeProduto ASC'
+                ORDER BY TipoProduto DESC, Convenio DESC, NomeProduto ASC'
     );
         } else {
             $query = $this->db->query(
@@ -256,7 +256,7 @@ class Produto_model extends CI_Model {
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-                ORDER BY TipoProduto DESC, Convenio ASC, NomeProduto ASC'
+                ORDER BY TipoProduto DESC, Convenio DESC, NomeProduto ASC'
     );
 
             $array = array();
