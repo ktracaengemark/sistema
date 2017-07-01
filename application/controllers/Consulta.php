@@ -73,7 +73,7 @@ class Consulta extends CI_Controller {
             $data['query']['Paciente'] = 'D';
         }
 
-        if (isset($_SESSION['agenda'])) {
+        if (isset($_SESSION['agenda']) && !$data['query']['HoraInicio'] && !$data['query']['HoraFim']) {
             $data['query']['Data'] = date('d/m/Y', $_SESSION['agenda']['HoraInicio']);
             $data['query']['HoraInicio'] = date('H:i', $_SESSION['agenda']['HoraInicio']);
             $data['query']['HoraFim'] = date('H:i', $_SESSION['agenda']['HoraFim']);
