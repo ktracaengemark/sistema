@@ -73,7 +73,7 @@ elseif ($_GET['q'] == 3) {
     $result = mysql_query(
             'SELECT                
 				idApp_Profissional,
-				CONCAT(Funcao, " --- ", NomeProfissional) AS NomeProfissional				
+				CONCAT(NomeProfissional, " --- ", Funcao) AS NomeProfissional				
             FROM
                 App_Profissional
             WHERE

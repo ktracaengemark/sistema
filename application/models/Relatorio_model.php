@@ -830,8 +830,8 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_ContatoCliente AS CC ON C.idApp_Cliente = CC.idApp_Cliente
             WHERE
                 C.idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ' . $data['NomeCliente'] . '
-
+			   ' . $data['NomeCliente'] . ' 
+				  
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');

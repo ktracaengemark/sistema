@@ -57,13 +57,15 @@ class Agenda_model extends CI_Model {
             SELECT 
                 idApp_Cliente, 
                 NomeCliente,
-                DataNascimento
+                DataNascimento,
+				Telefone1
+				
             FROM 
                 app.App_Cliente
             WHERE 
                 idSis_Usuario = ' . $data . ' AND 
-                (DAY(DataNascimento) = ' . date('d', time()) . ' AND MONTH(DataNascimento) = ' . date('m', time()) . ')
-            ORDER BY NomeCliente ASC');
+                (MONTH(DataNascimento) = ' . date('m', time()) . ')
+            ORDER BY DAY(DataNascimento) ASC');
 
         /*
           echo $this->db->last_query();
@@ -79,11 +81,10 @@ class Agenda_model extends CI_Model {
         else {
 
             foreach ($query->result() as $row) {
-                $row->Idade = $this->basico->calcula_idade($row->DataNascimento);
+				$row->Idade = $this->basico->calcula_idade($row->DataNascimento);
             }            
             return $query;
         }
-        
     }
 
     public function contatocliente_aniversariantes($data) {
@@ -93,15 +94,16 @@ class Agenda_model extends CI_Model {
                 D.idApp_Cliente, 
                 D.idApp_ContatoCliente,
                 D.NomeContatoCliente,
-                D.DataNascimento
+                D.DataNascimento,
+				D.Telefone1
             FROM 
                 app.App_ContatoCliente AS D,
                 app.App_Cliente AS R
             WHERE 
                 R.idSis_Usuario = ' . $data . ' AND 
-                (DAY(D.DataNascimento) =  ' . date('d', time()) . '  AND MONTH(D.DataNascimento) = ' . date('m', time()) . ') AND
+                (MONTH(D.DataNascimento) = ' . date('m', time()) . ') AND
                 R.idApp_Cliente = D.idApp_Cliente            
-            ORDER BY D.NomeContatoCliente ASC');
+            ORDER BY DAY(D.DataNascimento) ASC');
 
         /*
           echo $this->db->last_query();
@@ -129,13 +131,14 @@ class Agenda_model extends CI_Model {
             SELECT 
                 idApp_Profissional, 
                 NomeProfissional,
-                DataNascimento
+                DataNascimento,
+				Telefone1
             FROM 
                 app.App_Profissional
             WHERE 
                 idSis_Usuario = ' . $data . ' AND 
-                (DAY(DataNascimento) = ' . date('d', time()) . ' AND MONTH(DataNascimento) = ' . date('m', time()) . ')
-            ORDER BY NomeProfissional ASC');
+                (MONTH(DataNascimento) = ' . date('m', time()) . ')
+            ORDER BY DAY(DataNascimento) ASC');
 
         /*
           echo $this->db->last_query();
@@ -165,15 +168,16 @@ class Agenda_model extends CI_Model {
                 D.idApp_Profissional, 
                 D.idApp_ContatoProf,
                 D.NomeContatoProf,
-                D.DataNascimento
+                D.DataNascimento,
+				D.TelefoneContatoProf
             FROM 
                 app.App_ContatoProf AS D,
                 app.App_Profissional AS R
             WHERE 
                 R.idSis_Usuario = ' . $data . ' AND 
-                (DAY(D.DataNascimento) =  ' . date('d', time()) . '  AND MONTH(D.DataNascimento) = ' . date('m', time()) . ') AND
+                (MONTH(D.DataNascimento) = ' . date('m', time()) . ') AND
                 R.idApp_Profissional = D.idApp_Profissional            
-            ORDER BY D.NomeContatoProf ASC');
+            ORDER BY DAY(D.DataNascimento) ASC');
 
         /*
           echo $this->db->last_query();

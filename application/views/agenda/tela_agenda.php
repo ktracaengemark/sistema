@@ -19,8 +19,9 @@
 			</a>
 		</div>	
 	</div>
-	
-    <div id="datepickerinline"></div> 
+			
+    <div id="datepickerinline"></div>
+
     <table class="table table-condensed table-bordered">
         <tr class="active text-active">
             <th colspan="2" class="col-md-12 text-center"><b>Estatísticas - <?php echo date('m/Y', time()) ?></b></th>
@@ -50,13 +51,13 @@
             <th><?php if (isset($query['estatisticas'][6])) { echo $query['estatisticas'][6]; } else { echo 0; } ?></th>
         </tr>        
     </table>
-           
-    <table class="table table-condensed table-bordered table-striped"">
+	          
+    <table class="table table-condensed table-bordered table-striped"">		
         <tr class="active text-active">
-            <th colspan="2" class="col-md-12 text-center"><b>Aniversariantes - <?php echo date('d/m/Y', time()) ?></b></th>
+            <th colspan="3" class="col-md-12 text-center"><b>Aniversariantes - <?php echo date('m/Y', time()) ?></b></th>
         </tr>
         <?php
-
+						
         if ($query['cliente_aniversariantes'] != FALSE) {
                     
             foreach ($query['cliente_aniversariantes']->result_array() as $row) {
@@ -65,6 +66,8 @@
                 echo '<tr class="clickable-row" data-href="' . $url . '" data-original-title="' . $row['Idade'] . ' anos" data-container="body"
                         data-toggle="tooltip" data-placement="right" title="">';
                     echo '<td>' . $row['NomeCliente'] . '</td>';
+					echo '<td>' . $row['DataNascimento'] . '</td>';
+					echo '<td>' . $row['Telefone1'] . '</td>';
                 echo '</tr>';            
 
             }
@@ -79,6 +82,8 @@
                 echo '<tr class="clickable-row" data-href="' . $url . '" data-original-title="' . $row['Idade'] . ' anos" data-container="body"
                         data-toggle="tooltip" data-placement="right" title="">';
                     echo '<td>' . $row['NomeContatoCliente'] . '</td>';
+					echo '<td>' . $row['DataNascimento'] . '</td>';
+					echo '<td>' . $row['Telefone1'] . '</td>';
                 echo '</tr>';            
             }   
         
@@ -92,6 +97,8 @@
                 echo '<tr class="clickable-row" data-href="' . $url . '" data-original-title="' . $row['Idade'] . ' anos" data-container="body"
                         data-toggle="tooltip" data-placement="right" title="">';
                     echo '<td>' . $row['NomeProfissional'] . '</td>';
+					echo '<td>' . $row['DataNascimento'] . '</td>';
+					echo '<td>' . $row['Telefone1'] . '</td>';
                 echo '</tr>';            
 
             }
@@ -106,6 +113,8 @@
                 echo '<tr class="clickable-row" data-href="' . $url . '" data-original-title="' . $row['Idade'] . ' anos" data-container="body"
                         data-toggle="tooltip" data-placement="right" title="">';
                     echo '<td>' . $row['NomeContatoProf'] . '</td>';
+					echo '<td>' . $row['DataNascimento'] . '</td>';
+					echo '<td>' . $row['TelefoneContatoProf'] . '</td>';
                 echo '</tr>';            
             }   
         
