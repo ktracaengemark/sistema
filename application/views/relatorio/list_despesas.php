@@ -51,7 +51,7 @@
 
         <div>
 
-            <table class="table table-bordered table-condensed table-hover">
+            <table class="table table-bordered table-condensed table-striped">
 
                 <thead>
                     <tr>
