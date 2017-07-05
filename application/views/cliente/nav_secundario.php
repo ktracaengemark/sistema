@@ -18,16 +18,22 @@
 				<a href="<?php echo base_url() . 'cliente/prontuario/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
 					<span class="glyphicon glyphicon-user"> </span> Visualizar <span class="sr-only">(current)</span>
 				</a>
-			</li>				
+			</li>
 			<li role="separator" class="divider"></li>
 			<li <?php if (preg_match("/cliente\/alterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
 				<a href="<?php echo base_url() . 'cliente/alterar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
 					<span class="glyphicon glyphicon-edit"></span> Editar
 				</a>
-			</li>											
+			</li>
+            <!--<li role="separator" class="divider"></li>
+            <li <?php if (preg_match("/cliente\/excluir\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+				<a href="<?php echo base_url() . 'cliente/excluir/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+					<span class="glyphicon glyphicon-trash"></span> Excluir
+				</a>
+			</li>-->
 		</ul>
 	</li>
-	
+
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 			<span class="fa fa-user-plus"></span> Contatos<span class="caret"></span>
@@ -37,10 +43,10 @@
 				<a href="<?php echo base_url() . 'contatocliente/pesquisar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
 					<span class="fa fa-user-plus"></span> Visualizar
 				</a>
-			</li>																			
+			</li>
 		</ul>
 	</li>
-	
+
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 			<span class="glyphicon glyphicon-calendar"></span> Consultas/Sessões<span class="caret"></span>
@@ -50,16 +56,16 @@
 				<a href="<?php echo base_url() . 'consulta/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
 					<span class="glyphicon glyphicon-time"></span> Cadastrar Sessões
 				</a>
-			</li>				
+			</li>
 			<li role="separator" class="divider"></li>
 			<li <?php if (preg_match("/consulta\/listar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
 				<a href="<?php echo base_url() . 'consulta/listar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
 					<span class="glyphicon glyphicon-list"></span> Listar Sessões
 				</a>
-			</li>											
+			</li>
 		</ul>
 	</li>
-	
+
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 			<span class="glyphicon glyphicon-usd"></span> Orçamentos<span class="caret"></span>
@@ -69,13 +75,13 @@
 				<a href="<?php echo base_url() . 'orcatrata/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
 					<span class="glyphicon glyphicon-plus"></span> Cadastrar
 				</a>
-			</li>				
+			</li>
 			<li role="separator" class="divider"></li>
 			<li <?php if (preg_match("/orcatrata\/listar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
 				<a href="<?php echo base_url() . 'orcatrata/listar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
 					<span class="glyphicon glyphicon-list-alt"></span> Listar
 				</a>
-			</li>											
+			</li>
 		</ul>
 	</li>
 

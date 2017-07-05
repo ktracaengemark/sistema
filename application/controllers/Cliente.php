@@ -81,7 +81,7 @@ class Cliente extends CI_Controller {
         $data['select']['Municipio'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Associado'] = $this->Basico_model->select_status_sn();
-		
+
         $data['titulo'] = 'Cadastrar Cliente';
         $data['form_open_path'] = 'cliente/cadastrar';
         $data['readonly'] = '';
@@ -181,7 +181,7 @@ class Cliente extends CI_Controller {
         $data['select']['Municipio'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Associado'] = $this->Basico_model->select_status_sn();
-		
+
         $data['titulo'] = 'Editar Dados';
         $data['form_open_path'] = 'cliente/alterar';
         $data['readonly'] = '';
@@ -237,6 +237,25 @@ class Cliente extends CI_Controller {
     }
 
     public function excluir($id = FALSE) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $this->Cliente_model->delete_cliente($id);
+
+        $data['msg'] = '?m=1';
+
+		redirect(base_url() . 'agenda/' . $data['msg']);
+		exit();
+
+        $this->load->view('basico/footer');
+    }
+
+    public function excluirBKP($id = FALSE) {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
