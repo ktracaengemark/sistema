@@ -102,13 +102,13 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 
-    #'hostname' => '159.203.125.243',
-	#'username' => 'usuario',
-	#'password' => '20UtpJ15',
+    'hostname' => '159.203.125.243',
+	'username' => 'usuario',
+	'password' => '20UtpJ15',
 
-    'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',    
+    #'hostname' => 'localhost',
+	#'username' => 'root',
+	#'password' => '',    
 
     #'database' => 'ci',
     'database' => 'app',
