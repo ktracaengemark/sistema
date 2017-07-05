@@ -25,7 +25,7 @@
 						<div class="col-md-4">
                             <label for="Telefone1">Telefone Principal: *</label>
                             <input type="text" class="form-control Celular CelularVariavel" id="Telefone1" maxlength="14" <?php echo $readonly; ?>
-                                   name="Telefone1" placeholder="99999999999" value="<?php echo $query['Telefone1']; ?>">
+                                   name="Telefone1" placeholder="(XX)999999999" value="<?php echo $query['Telefone1']; ?>">
                         </div>
 												
 						<div class="col-md-4">
@@ -70,12 +70,12 @@
                         <div class="col-md-4">
                             <label for="Telefone2">Telefone ou Celular:</label>
                             <input type="text" class="form-control Celular CelularVariavel" id="Telefone2" maxlength="20" <?php echo $readonly; ?>
-                                   name="Telefone2" placeholder="99999999999" value="<?php echo $query['Telefone2']; ?>">
+                                   name="Telefone2" placeholder="(XX)999999999" value="<?php echo $query['Telefone2']; ?>">
                         </div>
                         <div class="col-md-4">
                             <label for="Telefone3">Telefone ou Celular:</label>
                             <input type="text" class="form-control Celular CelularVariavel" id="Telefone3" maxlength="20" <?php echo $readonly; ?>
-                                   name="Telefone3" placeholder="99999999999" value="<?php echo $query['Telefone3']; ?>">
+                                   name="Telefone3" placeholder="(XX)999999999" value="<?php echo $query['Telefone3']; ?>">
                         </div>
 						<div class="col-md-4">
 							<label for="Cnpj">Cnpj:</label>
