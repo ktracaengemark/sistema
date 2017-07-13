@@ -321,33 +321,37 @@ class Basico_model extends CI_Model {
         if ($data === TRUE) {
             $array = $this->db->query(
                 'SELECT                
-				idTab_Produto,				
-				CONCAT(Convenio, " --- ", NomeProduto, " --- ", UnidadeProduto, " --- ", ValorVendaProduto) AS NomeProduto				
+				P.idTab_Produto,				
+				CONCAT(CO.Convenio, " --- ", PB.ProdutoBase, " --- ", PB.UnidadeProdutoBase, " --- ", P.ValorVendaProduto) AS ProdutoBase				
             FROM
-                Tab_Produto
+                Tab_Produto AS P
+				LEFT JOIN Tab_ProdutoBase AS PB ON PB.idTab_ProdutoBase = P.ProdutoBase    
+				LEFT JOIN Tab_Convenio AS CO ON CO.idTab_Convenio = P.Convenio
             WHERE
-                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-				TipoProduto = "V"
-                ORDER BY Convenio DESC, NomeProduto ASC'
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                P.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+
+			ORDER BY CO.Convenio DESC, PB.ProdutoBase ASC'
     );
         } else {
             $query = $this->db->query(
                 'SELECT                
-				idTab_Produto,
-				CONCAT(Convenio, " --- ", NomeProduto, " --- ", UnidadeProduto, " --- ", ValorVendaProduto) AS NomeProduto				
+				P.idTab_Produto,				
+				CONCAT(CO.Convenio, " --- ", PB.ProdutoBase, " --- ", PB.UnidadeProdutoBase, " --- ", P.ValorVendaProduto) AS ProdutoBase				
             FROM
-                Tab_Produto
+                Tab_Produto AS P
+				LEFT JOIN Tab_ProdutoBase AS PB ON PB.idTab_ProdutoBase = P.ProdutoBase    
+				LEFT JOIN Tab_Convenio AS CO ON CO.idTab_Convenio = P.Convenio
             WHERE
-                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-				TipoProduto = "V"
-                ORDER BY Convenio DESC, NomeProduto ASC'
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                P.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+
+			ORDER BY CO.Convenio DESC, PB.ProdutoBase ASC'
     );
 
             $array = array();
             foreach ($query->result() as $row) {
-                $array[$row->idTab_Produto] = $row->NomeProduto;
+                $array[$row->idTab_Produto] = $row->ProdutoBase;
             }
         }
 
@@ -359,33 +363,35 @@ class Basico_model extends CI_Model {
         if ($data === TRUE) {
             $array = $this->db->query(
                 'SELECT                
-				idTab_Servico,
-				CONCAT(Convenio, " --- ", NomeServico, " --- R$", ValorVendaServico) AS NomeServico				
+				S.idTab_Servico,
+				CONCAT(CO.Convenio, " --- ", SB.ServicoBase, " --- R$", S.ValorVendaServico) AS ServicoBase				
             FROM
-                Tab_Servico
+                Tab_Servico AS S
+                LEFT JOIN Tab_ServicoBase AS SB ON SB.idTab_ServicoBase = S.ServicoBase    
+				LEFT JOIN Tab_Convenio AS CO ON CO.idTab_Convenio = S.Convenio
             WHERE
-                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-				TipoServico = "V"
-                ORDER BY Convenio DESC, NomeServico ASC'
+                S.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                S.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+			ORDER BY CO.Convenio DESC, SB.ServicoBase ASC'
     );
         } else {
             $query = $this->db->query(
                 'SELECT                
-				idTab_Servico,
-				CONCAT(Convenio, " --- ", NomeServico, " --- R$", ValorVendaServico) AS NomeServico				
+				S.idTab_Servico,
+				CONCAT(CO.Convenio, " --- ", SB.ServicoBase, " --- R$", S.ValorVendaServico) AS ServicoBase				
             FROM
-                Tab_Servico
+                Tab_Servico AS S
+                LEFT JOIN Tab_ServicoBase AS SB ON SB.idTab_ServicoBase = S.ServicoBase    
+				LEFT JOIN Tab_Convenio AS CO ON CO.idTab_Convenio = S.Convenio
             WHERE
-                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-				TipoServico = "V"
-                ORDER BY Convenio DESC, NomeServico ASC'
+                S.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                S.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+			ORDER BY CO.Convenio DESC, SB.ServicoBase ASC'
     );
 
             $array = array();
             foreach ($query->result() as $row) {
-                $array[$row->idTab_Servico] = $row->NomeServico;
+                $array[$row->idTab_Servico] = $row->ServicoBase;
             }
         }
 

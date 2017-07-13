@@ -109,5 +109,32 @@ class Tipodespesa_model extends CI_Model {
 
         return $array;
     }
+	
+	public function select_tipoconsumo($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query(
+                'SELECT '
+                    . 'idTab_TipoConsumo, '
+                    . 'TipoConsumo, '
+                    #. 'ValorVenda '
+                    . 'FROM '
+                    . 'Tab_TipoConsumo '
+                    . 'ORDER BY TipoConsumo ASC ');
+					#. 'WHERE '
+                    #. 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                   # . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] );
+        } else {
+            #$query = $this->db->query('SELECT idTab_TipoConsumo, TipoConsumo FROM Tab_TipoConsumo WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
+			$query = $this->db->query('SELECT idTab_TipoConsumo, TipoConsumo FROM Tab_TipoConsumo ORDER BY TipoConsumo ASC ');
+
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->idTab_TipoConsumo] = $row->TipoConsumo;
+            }
+        }
+
+        return $array;
+    }
 
 }

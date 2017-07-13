@@ -307,6 +307,7 @@ class Relatorio_model extends CI_Model {
                 DS.idApp_Despesas,
 				DS.Despesa,
 				TD.TipoDespesa,
+				DS.TipoProduto,
                 DS.DataDespesas,
                 DS.DataEntradaDespesas,
                 DS.ValorEntradaDespesas,
@@ -333,7 +334,8 @@ class Relatorio_model extends CI_Model {
 				' . $filtro2 . '				
 				' . $filtro4 . '
 				(' . $consulta . ') 
-				' . $data['TipoDespesa'] . '
+				' . $data['TipoDespesa'] . ' AND
+				DS.TipoProduto = "D"
 
             ORDER BY
                 DS.AprovadoDespesas DESC,
@@ -411,31 +413,38 @@ class Relatorio_model extends CI_Model {
        
         if ($data['DataFim']) {
             $consulta =
-                '(DataConsumo >= "' . $data['DataInicio'] . '" AND DataConsumo <= "' . $data['DataFim'] . '")';
+                '(DS.DataDespesas >= "' . $data['DataInicio'] . '" AND DS.DataDespesas <= "' . $data['DataFim'] . '")';
         }
         else {
             $consulta =
-                '(DataConsumo >= "' . $data['DataInicio'] . '")';
+                '(DS.DataDespesas >= "' . $data['DataInicio'] . '")';
         }
-				
+		
+		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TD.idTab_TipoConsumo = ' . $data['TipoDespesa'] : FALSE;
+		
         $query = $this->db->query('
             SELECT
 
-                CP.idApp_Consumo,
-                CP.DataConsumo,
-				PD.QtdConsumoProduto,
-				TPD.NomeProduto
+                DS.idApp_Despesas,
+				DS.Despesa,
+				TD.TipoConsumo,
+				DS.TipoProduto,
+                DS.DataDespesas,
+				PD.QtdCompraProduto,
+				TPD.ProdutoBase
 
             FROM
 
-                App_Consumo AS CP
-					LEFT JOIN App_ProdutoConsumo AS PD ON CP.idApp_Consumo = PD.idApp_Consumo
-					LEFT JOIN Tab_Produto AS TPD ON TPD.idTab_Produto = PD.idTab_Produto
+                App_Despesas AS DS							
+                    LEFT JOIN Tab_TipoConsumo AS TD ON TD.idTab_TipoConsumo = DS.TipoDespesa
+					LEFT JOIN App_ProdutoCompra AS PD ON DS.idApp_Despesas = PD.idApp_Despesas
+					LEFT JOIN Tab_ProdutoBase AS TPD ON TPD.idTab_ProdutoBase = PD.idTab_Produto
 
             WHERE
-                CP.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND               
+                DS.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND			
 				(' . $consulta . ') 
-
+				' . $data['TipoDespesa'] . ' AND
+				DS.TipoProduto = "C"
 
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -455,12 +464,77 @@ class Relatorio_model extends CI_Model {
 
             $somapago=$somapagar=$somaentrada=$somareceber=$somarecebido=$somareal=$balanco=$ant=0;
             foreach ($query->result() as $row) {
-				$row->DataConsumo = $this->basico->mascara_data($row->DataConsumo, 'barras');             
-            }           
+				$row->DataDespesas = $this->basico->mascara_data($row->DataDespesas, 'barras');
+				                
+            }
             return $query;
         }
 
     }
+	
+	public function list_consumoBKP($data, $completo) {
+       
+        if ($data['DataFim']) {
+            $consulta =
+                '(DS.DataDespesas >= "' . $data['DataInicio'] . '" AND DS.DataDespesas <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(DS.DataDespesas >= "' . $data['DataInicio'] . '")';
+        }
+		
+		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TD.idTab_TipoConsumo = ' . $data['TipoDespesa'] : FALSE;
+		
+        $query = $this->db->query('
+            SELECT
+
+                DS.idApp_Despesas,
+				DS.Despesa,
+				TD.TipoConsumo,
+				DS.TipoProduto,
+                DS.DataDespesas,
+				PD.QtdCompraProduto,
+				TPD.NomeProduto
+
+            FROM
+
+                App_Despesas AS DS							
+                    LEFT JOIN Tab_TipoConsumo AS TD ON TD.idTab_TipoConsumo = DS.TipoDespesa
+					LEFT JOIN App_ProdutoCompra AS PD ON DS.idApp_Despesas = PD.idApp_Despesas
+					LEFT JOIN Tab_Produto AS TPD ON TPD.idTab_Produto = PD.idTab_Produto
+
+            WHERE
+                DS.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND			
+				(' . $consulta . ') 
+				' . $data['TipoDespesa'] . ' AND
+				DS.TipoProduto = "C"
+
+            ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+          */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            $somapago=$somapagar=$somaentrada=$somareceber=$somarecebido=$somareal=$balanco=$ant=0;
+            foreach ($query->result() as $row) {
+				$row->DataDespesas = $this->basico->mascara_data($row->DataDespesas, 'barras');
+				                
+            }
+            return $query;
+        }
+
+    }
+	
 	
 	public function list_balanco($data, $completo) {
        
@@ -704,6 +778,57 @@ class Relatorio_model extends CI_Model {
             $query->soma->somaorcamento = number_format($somaorcamento, 2, ',', '.');
 			$query->soma->somadesconto = number_format($somadesconto, 2, ',', '.');
 			$query->soma->somarestante = number_format($somarestante, 2, ',', '.');
+
+            return $query;
+        }
+
+    }
+	
+	public function list_orcacom($data, $completo) {
+
+        if ($data['DataFim']) {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
+        }
+		
+        $query = $this->db->query('
+            SELECT
+                OT.idApp_OrcaTrata,
+                OT.DataOrca,
+				PR.NomeProfissional
+
+            FROM
+                App_OrcaTrata AS OT
+				LEFT JOIN App_Profissional AS PR ON PR.idApp_Profissional = OT.ProfissionalOrca
+
+            WHERE
+                OT.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+				
+            ORDER BY
+				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+				
+        ');
+
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+          */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
+
+            }
 
             return $query;
         }
@@ -1177,10 +1302,10 @@ class Relatorio_model extends CI_Model {
             ORDER BY
 				P.NomeProfissional ASC,
 				TF.AprovadoTarefa ASC,
-				TF.ServicoConcluido Desc,
-				TF.DataPrazoTarefa ASC,
+				TF.ServicoConcluido DESC,
+				TF.DataPrazoTarefa DESC,
 				PT.ConcluidoProcedtarefa ASC,
-				PT.DataProcedtarefa ASC,														
+				PT.DataProcedtarefa DESC,														
 				TF.QuitadoTarefa
 				
         ');
@@ -1541,6 +1666,28 @@ class Relatorio_model extends CI_Model {
         $array[0] = ':: Todos ::';
         foreach ($query->result() as $row) {
             $array[$row->idTab_TipoDespesa] = $row->TipoDespesa;
+        }
+
+        return $array;
+    }
+	
+	public function select_tipoconsumo() {
+
+        $query = $this->db->query('
+            SELECT
+                TD.idTab_TipoConsumo,
+                TD.TipoConsumo
+            FROM
+                Tab_TipoConsumo AS TD
+            
+            ORDER BY
+                TipoConsumo ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idTab_TipoConsumo] = $row->TipoConsumo;
         }
 
         return $array;

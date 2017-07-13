@@ -18,51 +18,53 @@ if ($_GET['q']==1) {
 
     $result = mysql_query(
             'SELECT
-                idTab_Servico,
-				TipoServico,
-                CONCAT(Convenio, " --- ", NomeServico, " --- R$ ", ValorVendaServico) AS NomeServico,
-                ValorVendaServico
+                S.idTab_Servico,
+                CONCAT(CO.Convenio, " --- ", SB.ServicoBase, " --- R$ ", S.ValorVendaServico) AS ServicoBase,
+                S.ValorVendaServico
             FROM
-                Tab_Servico
+                Tab_Servico AS S
+				LEFT JOIN Tab_ServicoBase AS SB ON SB.idTab_ServicoBase = S.ServicoBase
+				LEFT JOIN Tab_Convenio AS CO ON CO.idTab_Convenio = S.Convenio
             WHERE
-                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-				TipoServico = "V"
-                ORDER BY Convenio DESC, NomeServico ASC'
+                S.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                S.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+			ORDER BY CO.Convenio DESC, SB.ServicoBase ASC'
     );
 
     while ($row = mysql_fetch_assoc($result)) {
 
         $event_array[] = array(
             'id' => $row['idTab_Servico'],
-            'name' => utf8_encode($row['NomeServico']),
+            'name' => utf8_encode($row['ServicoBase']),
             'value' => $row['ValorVendaServico'],
         );
     }
 
 }
+
 elseif ($_GET['q'] == 2) {
 
     $result = mysql_query(
-            'SELECT                
-				idTab_Produto,
-				TipoProduto,
-				CONCAT(Convenio, " --- ", NomeProduto, " --- ", UnidadeProduto, " --- R$ ", ValorVendaProduto) AS NomeProduto,
-				ValorVendaProduto
+            'SELECT
+                P.idTab_Produto,
+				CONCAT(CO.Convenio, " --- ", PB.ProdutoBase, " --- ", PB.UnidadeProdutoBase, " --- R$ ", P.ValorVendaProduto) AS ProdutoBase,
+				P.ValorVendaProduto
             FROM
-                Tab_Produto
+                Tab_Produto AS P
+				LEFT JOIN Tab_ProdutoBase AS PB ON PB.idTab_ProdutoBase = P.ProdutoBase
+				LEFT JOIN Tab_Convenio AS CO ON CO.idTab_Convenio = P.Convenio
+				
             WHERE
-                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-				TipoProduto = "V"
-                ORDER BY Convenio DESC, NomeProduto ASC'
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+				ORDER BY CO.Convenio DESC, PB.ProdutoBase ASC '
     );
 
     while ($row = mysql_fetch_assoc($result)) {
 
         $event_array[] = array(
             'id' => $row['idTab_Produto'],
-            'name' => utf8_encode($row['NomeProduto']),
+            'name' => utf8_encode($row['ProdutoBase']),
             'value' => $row['ValorVendaProduto'],
         );
     }

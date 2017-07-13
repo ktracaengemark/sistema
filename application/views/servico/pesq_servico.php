@@ -14,17 +14,11 @@
 
                 <?php echo form_open($form_open_path, 'role="form"'); ?>
                     <div class="row">
-						<div class="col-md-4">
-                            <label for="NomeServico">Nome do Servico:</label><br>
-                            <input type="text" class="form-control" maxlength="200"
-                                   autofocus name="NomeServico" value="<?php echo $query['NomeServico'] ?>">
-                        </div>
-						
 						<div class="col-md-3">
 							<label for="Convenio">Convenio</label>								
 							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-									id="Convenio" name="Convenio">
-								<option value="">-- Convenio --</option>
+									id="Convenio" autofocus name="Convenio">
+								<option value="">--Selecione o Convenio --</option>
 								<?php
 								foreach ($select['Convenio'] as $key => $row) {
 									if ($query['Convenio'] == $key) {
@@ -36,7 +30,31 @@
 								?>
 							</select>
 						</div>
+						<div class="col-md-6">
+							<label for="ServicoBase">Servico</label>								
+							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+									id="ServicoBase" name="ServicoBase">
+								<option value="">--Selecione o Servico --</option>
+								<?php
+								foreach ($select['ServicoBase'] as $key => $row) {
+									if ($query['ServicoBase'] == $key) {
+										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+									} else {
+										echo '<option value="' . $key . '">' . $row . '</option>';
+									}
+								}
+								?>
+							</select>
+						</div>
+						<!--
+						<div class="col-md-4">
+                            <label for="NomeServico">Nome do Servico:</label><br>
+                            <input type="text" class="form-control" maxlength="200"
+                                   autofocus name="NomeServico" value="<?php echo $query['NomeServico'] ?>">
+                        </div>
+						-->
 						
+						<!--
 						<div class="col-md-3">
 							<label for="TipoServico">Tipo Servico</label>								
 							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
@@ -62,7 +80,7 @@
                                         name="ValorCompraServico" value="<?php echo $query['ValorCompraServico'] ?>">
                             </div>
                         </div>
-
+						-->
                         <div class="col-md-3">
                             <label for="ValorVendaServico">Valor do Venda:</label><br>
                             <div class="input-group" id="txtHint">
@@ -71,9 +89,6 @@
                                         name="ValorVendaServico" value="<?php echo $query['ValorVendaServico'] ?>">
                             </div>
                         </div>
-
-                        <input type="hidden" name="idTab_Servico" value="<?php echo $query['idTab_Servico']; ?>">
-
                     </div>
 
                     <br>

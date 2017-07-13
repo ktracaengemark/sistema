@@ -13,7 +13,7 @@ class Despesas extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Servico_model', 'Produto_model', 'Despesas_model', 'Tipodespesa_model', 'Profissional_model', 'Formapag_model', 'Cliente_model'));
+        $this->load->model(array('Basico_model', 'Servico_model', 'Produto_model', 'ServicoBase_model', 'ProdutoBase_model', 'Despesas_model', 'Tipodespesa_model', 'Profissional_model', 'Formapag_model', 'Cliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -67,6 +67,7 @@ class Despesas extends CI_Controller {
             'QtdParcelasDespesas',
             'DataVencimentoDespesas',
             'ObsDespesas',
+			'TipoProduto',
         ), TRUE));
 
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
@@ -78,6 +79,7 @@ class Despesas extends CI_Controller {
 
         //Data de hoje como default
         (!$data['despesas']['DataDespesas']) ? $data['despesas']['DataDespesas'] = date('d/m/Y', time()) : FALSE;
+		(!$data['despesas']['TipoProduto']) ? $data['despesas']['TipoProduto'] = 'D' : FALSE;
 
         $j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
@@ -146,8 +148,8 @@ class Despesas extends CI_Controller {
 		$data['select']['QuitadoDespesas'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoPagaveis'] = $this->Basico_model->select_status_sn();
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        $data['select']['Servico'] = $this->Servico_model->select_servico();
-        $data['select']['Produto'] = $this->Produto_model->select_produto();
+        $data['select']['Servico'] = $this->ServicoBase_model->select_servicobase();
+        $data['select']['Produto'] = $this->ProdutoBase_model->select_produtobase();
 
         $data['titulo'] = 'Cadastar Despesas';
         $data['form_open_path'] = 'despesas/cadastrar';
@@ -224,7 +226,7 @@ class Despesas extends CI_Controller {
             $data['despesas']['ValorEntradaDespesas'] = str_replace(',', '.', str_replace('.', '', $data['despesas']['ValorEntradaDespesas']));
             $data['despesas']['DataEntradaDespesas'] = $this->basico->mascara_data($data['despesas']['DataEntradaDespesas'], 'mysql');
             $data['despesas']['ValorRestanteDespesas'] = str_replace(',', '.', str_replace('.', '', $data['despesas']['ValorRestanteDespesas']));
-			
+			$data['despesas']['TipoProduto'] = $data['despesas']['TipoProduto'];
 
             $data['despesas']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['despesas']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
@@ -345,6 +347,7 @@ class Despesas extends CI_Controller {
             'QtdParcelasDespesas',
             'DataVencimentoDespesas',
             'ObsDespesas',
+			'TipoProduto',
         ), TRUE));
 
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
@@ -353,7 +356,8 @@ class Despesas extends CI_Controller {
         (!$this->input->post('SCount')) ? $data['count']['SCount'] = 0 : $data['count']['SCount'] = $this->input->post('SCount');
         (!$this->input->post('PCount')) ? $data['count']['PCount'] = 0 : $data['count']['PCount'] = $this->input->post('PCount');
 
-
+		(!$data['despesas']['TipoProduto']) ? $data['despesas']['TipoProduto'] = 'D' : FALSE;
+		
         $j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
 
@@ -483,8 +487,8 @@ class Despesas extends CI_Controller {
 		$data['select']['QuitadoDespesas'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoPagaveis'] = $this->Basico_model->select_status_sn();
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        $data['select']['Servico'] = $this->Servico_model->select_servico();
-        $data['select']['Produto'] = $this->Produto_model->select_produto();
+        $data['select']['Servico'] = $this->ServicoBase_model->select_servicobase();
+        $data['select']['Produto'] = $this->ProdutoBase_model->select_produtobase();
 
         $data['titulo'] = 'Editar Despesas';
         $data['form_open_path'] = 'despesas/alterar';
@@ -560,7 +564,8 @@ class Despesas extends CI_Controller {
             $data['despesas']['ValorEntradaDespesas'] = str_replace(',', '.', str_replace('.', '', $data['despesas']['ValorEntradaDespesas']));
             $data['despesas']['DataEntradaDespesas'] = $this->basico->mascara_data($data['despesas']['DataEntradaDespesas'], 'mysql');
             $data['despesas']['ValorRestanteDespesas'] = str_replace(',', '.', str_replace('.', '', $data['despesas']['ValorRestanteDespesas']));
-
+			$data['despesas']['TipoProduto'] = $data['despesas']['TipoProduto'];
+			
             $data['despesas']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['despesas']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 

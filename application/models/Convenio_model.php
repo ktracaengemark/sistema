@@ -93,7 +93,7 @@ class Convenio_model extends CI_Model {
         }
     }
 
-    public function select_convenio2($data = FALSE) {
+    public function select_convenio3($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query(
@@ -115,6 +115,44 @@ class Convenio_model extends CI_Model {
             $array = array();
             foreach ($query->result() as $row) {
                 $array[$row->idTab_Convenio] = $row->Convenio;
+            }
+        }
+
+        return $array;
+    }
+	
+	public function select_convenio1($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query(
+                'SELECT                
+				idTab_Convenio,
+				Convenio,
+				Abrev
+            FROM
+                Tab_Convenio
+            WHERE
+                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                ORDER BY Convenio DESC'
+    );
+        } else {
+            $query = $this->db->query(
+                'SELECT                
+				idTab_Convenio,
+				Convenio,
+				Abrev
+            FROM
+                Tab_Convenio
+            WHERE
+                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                ORDER BY Convenio DESC'
+    );
+
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->Convenio] = $row->Convenio;
             }
         }
 
@@ -152,7 +190,7 @@ class Convenio_model extends CI_Model {
 
             $array = array();
             foreach ($query->result() as $row) {
-                $array[$row->Convenio] = $row->Convenio;
+                $array[$row->idTab_Convenio] = $row->Convenio;
             }
         }
 

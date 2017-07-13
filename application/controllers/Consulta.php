@@ -403,6 +403,7 @@ class Consulta extends CI_Controller {
                     'HoraFim',
                     'Evento',
                     'Obs',
+					'idApp_Profissional',
                         ), TRUE));
 
         if ($this->input->get('start') && $this->input->get('end')) {
@@ -416,8 +417,11 @@ class Consulta extends CI_Controller {
         $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
         $this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
         $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
-
-        $data['titulo'] = 'Agendar Evento';
+		$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+		
+		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
+        
+		$data['titulo'] = 'Agendar Evento';
         $data['form_open_path'] = 'consulta/cadastrar_evento';
         $data['panel'] = 'primary';
         $data['metodo'] = 1;
@@ -486,6 +490,7 @@ class Consulta extends CI_Controller {
             'HoraFim',
             'Evento',
             'Obs',
+			'idApp_Profissional',
                 ), TRUE);
 
 
@@ -516,7 +521,10 @@ class Consulta extends CI_Controller {
         $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
         $this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
         $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
-
+		$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+		
+		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
+		
         $data['titulo'] = 'Agendar Evento';
         $data['form_open_path'] = 'consulta/alterar_evento';
         $data['panel'] = 'primary';

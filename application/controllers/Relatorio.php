@@ -285,6 +285,7 @@ class Relatorio extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'TipoDespesa',
+			'TipoProduto',
             'DataInicio',
             'DataFim',
 			'Ordenamento',
@@ -359,6 +360,7 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
+			$data['bd']['TipoProduto'] = $data['query']['TipoProduto'];
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];	
 			$data['bd']['AprovadoDespesas'] = $data['query']['AprovadoDespesas'];	
@@ -395,6 +397,83 @@ class Relatorio extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = quotes_to_entities($this->input->post(array(
+            'TipoDespesa',
+			'TipoProduto',
+            'DataInicio',
+            'DataFim',
+			'Ordenamento',
+            'Campo',     
+        ), TRUE));
+
+        if (!$data['query']['DataInicio'])			
+           $data['query']['DataInicio'] = '01/01/2017';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+        $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');		
+		
+        $data['select']['Campo'] = array(
+            
+			'DS.idApp_Despesas' => 'Id do Consumo',
+            'DS.DataDespesas' => 'Data do Consumo',
+			'DS.TipoDespesa' => 'Tipo de Consumo',
+			'DS.Despesa' => 'Desc. do Consumo',			
+			'PD.QtdCompraProduto' => 'Qtd. do Produto',
+			'PD.idTab_Produto' => 'Produto',
+			
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+						
+		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipoconsumo();
+		
+        $data['titulo'] = 'Relatório de Consumo';
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+            #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
+
+            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
+			$data['bd']['TipoProduto'] = $data['query']['TipoProduto'];
+			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];	
+	
+            $data['report'] = $this->Relatorio_model->list_consumo($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_consumo', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_consumo', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+	
+	public function consumo1() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
 
             'DataInicio',
             'DataFim',
@@ -405,7 +484,7 @@ class Relatorio extends CI_Controller {
         ), TRUE));
 
         if (!$data['query']['DataInicio'])			
-           $data['query']['DataInicio'] = '01/01/2016';
+           $data['query']['DataInicio'] = '01/01/2017';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
@@ -645,6 +724,78 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
 
+
+    }
+	
+	public function orcacom() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+
+            'DataInicio',
+            'DataFim',
+            'Ordenamento',
+            'Campo',
+
+
+        ), TRUE));
+		
+		if (!$data['query']['DataInicio'])			
+           $data['query']['DataInicio'] = '01/01/2017';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+        $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+      
+        $data['select']['Campo'] = array(
+
+
+            'OT.idApp_OrcaTrata' => 'Número do Orçamento',
+            'OT.DataOrca' => 'Data do Orçamento',
+			'OT.ProfissionalOrca' => 'Profissional',
+
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+
+        $data['titulo'] = 'Produtos Consumidos';
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+            #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
+
+            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+
+            $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+
+            $data['report'] = $this->Relatorio_model->list_orcacom($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_orcacom', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_orcacom', $data);
+
+        $this->load->view('basico/footer');
 
     }
 

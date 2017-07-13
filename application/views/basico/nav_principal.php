@@ -34,19 +34,28 @@
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>despesas/cadastrar">Despesas & Saídas</a></li>
 						<li role="separator" class="divider"></li>
-						<!--<li><a href="<?php echo base_url() ?>consumo/cadastrar">Consumo de Produtos</a></li>
-						<li role="separator" class="divider"></li>-->
+						<li><a href="<?php echo base_url() ?>consumo/cadastrar">Produtos Consumidos</a></li>
+						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>funcao/cadastrar/funcao">Função dos Funcionários</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>atividade/cadastrar/atividade">Atividade dos Fornecedores</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>convenio/cadastrar">Convênio</a></li>
+						<li><a href="<?php echo base_url() ?>convenio/cadastrar">Convênios</a></li>
+						<li role="separator" class="divider"></li>						
+						<li><a href="<?php echo base_url() ?>produtobase/cadastrar">Tabela de Produtos</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>servico/cadastrar">Tabela de Preço de Serviços</a></li>
+						<li><a href="<?php echo base_url() ?>produto/cadastrar">Tabela de Preços de Produtos p/ Venda</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>produto/cadastrar">Tabela de Preço de Produtos</a></li>
+						<li><a href="<?php echo base_url() ?>servicobase/cadastrar">Tabela de Serviços</a></li>
 						<li role="separator" class="divider"></li>
-						<!--<li><a href="<?php echo base_url() ?>formapag/cadastrar/formapag">Forma de Pagamento</a></li>
+						<li><a href="<?php echo base_url() ?>servico/cadastrar">Tabela de Preços de Serviços p/ Venda</a></li>
+						<li role="separator" class="divider"></li>						
+						<li><a href="<?php echo base_url() ?>consumo/cadastrar">Produtos Consumidos</a></li>
+						<!--<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>produtoconsumo/cadastrar">Tabela de Produtos p/ Consumo</a></li>
+						<li role="separator" class="divider"></li>												
+						
+						<li><a href="<?php echo base_url() ?>formapag/cadastrar/formapag">Forma de Pagamento</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>tipodespesa/cadastrar/tipodespesa">Tipo de Despesa</a></li>
 						<li role="separator" class="divider"></li>						
@@ -109,7 +118,9 @@
 						<li role="separator" class="divider"></li>						
 						<li><a href="<?php echo base_url() ?>relatorio/despesas">Despesas & Saídas</a></li>
 						<li role="separator" class="divider"></li>
-						<!--<li><a href="<?php echo base_url() ?>relatorio/consumo">Consumo de Produtos</a></li>
+						<li><a href="<?php echo base_url() ?>relatorio/consumo">Produtos Consumidos</a></li>
+						<!--<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>relatorio/orcacom">Produtos Consumidos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/orcamentosv">Clientes & Serviços</a></li>
 						<li role="separator" class="divider"></li>

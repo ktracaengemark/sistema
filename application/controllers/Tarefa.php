@@ -109,8 +109,8 @@ class Tarefa extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 1;
-
-        //if ($data['procedtarefa'][0]['DataProcedtarefa'] || $data['procedtarefa'][0]['Profissional'])
+	
+		//if ($data['procedtarefa'][0]['DataProcedtarefa'] || $data['procedtarefa'][0]['Profissional'])
         if (isset($data['procedtarefa']))
             $data['tratamentosin'] = 'in';
         else

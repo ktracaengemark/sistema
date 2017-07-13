@@ -13,9 +13,9 @@ class Consumo_model extends CI_Model {
         $this->load->model(array('Basico_model'));
     }
 
-    public function set_consumo($data) {
+    public function set_despesas($data) {
 
-        $query = $this->db->insert('App_Consumo', $data);
+        $query = $this->db->insert('App_Despesas', $data);
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -25,7 +25,7 @@ class Consumo_model extends CI_Model {
         }
     }
 
-    public function set_servico_consumo($data) {
+    public function set_servico_compra($data) {
 
         /*
         //echo $this->db->last_query();
@@ -36,7 +36,7 @@ class Consumo_model extends CI_Model {
         //exit ();
         */
 
-        $query = $this->db->insert_batch('App_ServicoConsumo', $data);
+        $query = $this->db->insert_batch('App_ServicoCompra', $data);
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -46,9 +46,9 @@ class Consumo_model extends CI_Model {
         }
     }
 
-    public function set_produto_consumo($data) {
+    public function set_produto_compra($data) {
 
-        $query = $this->db->insert_batch('App_ProdutoConsumo', $data);
+        $query = $this->db->insert_batch('App_ProdutoCompra', $data);
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -82,8 +82,8 @@ class Consumo_model extends CI_Model {
         }
     }
 
-    public function get_consumo($data) {
-        $query = $this->db->query('SELECT * FROM App_Consumo WHERE idApp_Consumo = ' . $data);
+    public function get_despesas($data) {
+        $query = $this->db->query('SELECT * FROM App_Despesas WHERE idApp_Despesas = ' . $data);
         $query = $query->result_array();
 
         /*
@@ -99,48 +99,48 @@ class Consumo_model extends CI_Model {
     }
 
 	public function get_servico($data) {
-		$query = $this->db->query('SELECT * FROM App_ServicoConsumo WHERE idApp_Consumo = ' . $data);
+		$query = $this->db->query('SELECT * FROM App_ServicoCompra WHERE idApp_Despesas = ' . $data);
         $query = $query->result_array();
 
         return $query;
     }
 
     public function get_produto($data) {
-		$query = $this->db->query('SELECT * FROM App_ProdutoConsumo WHERE idApp_Consumo = ' . $data);
+		$query = $this->db->query('SELECT * FROM App_ProdutoCompra WHERE idApp_Despesas = ' . $data);
         $query = $query->result_array();
 
         return $query;
     }
 
     public function get_parcelaspag($data) {
-		$query = $this->db->query('SELECT * FROM App_ParcelasPagaveis WHERE idApp_Consumo = ' . $data);
+		$query = $this->db->query('SELECT * FROM App_ParcelasPagaveis WHERE idApp_Despesas = ' . $data);
         $query = $query->result_array();
 
         return $query;
     }
 
     public function get_procedimento($data) {
-		$query = $this->db->query('SELECT * FROM App_Procedimento WHERE idApp_Consumo = ' . $data);
+		$query = $this->db->query('SELECT * FROM App_Procedimento WHERE idApp_Despesas = ' . $data);
         $query = $query->result_array();
 
         return $query;
     }
 
-    public function list_consumo($id, $aprovado, $completo) {
+    public function list_despesas($id, $aprovado, $completo) {
 
         $query = $this->db->query('SELECT '
-            . 'OT.idApp_Consumo, '
-            . 'OT.DataConsumo, '
+            . 'OT.idApp_Despesas, '
+            . 'OT.DataDespesas, '
 
-            . 'OT.ProfissionalConsumo, '
-            . 'OT.AprovadoConsumo, '
-            . 'OT.ObsConsumo '
+            . 'OT.ProfissionalDespesas, '
+            . 'OT.AprovadoDespesas, '
+            . 'OT.ObsDespesas '
             . 'FROM '
-            . 'App_Consumo AS OT '
+            . 'App_Despesas AS OT '
             . 'WHERE '
             . 'OT.idApp_Cliente = ' . $id . ' AND '
-            . 'OT.AprovadoConsumo = "' . $aprovado . '" '
-            . 'ORDER BY OT.DataConsumo DESC ');
+            . 'OT.AprovadoDespesas = "' . $aprovado . '" '
+            . 'ORDER BY OT.DataDespesas DESC ');
         /*
           echo $this->db->last_query();
           echo "<pre>";
@@ -156,30 +156,30 @@ class Consumo_model extends CI_Model {
             } else {
 
                 foreach ($query->result() as $row) {
-					$row->DataConsumo = $this->basico->mascara_data($row->DataConsumo, 'barras');
+					$row->DataDespesas = $this->basico->mascara_data($row->DataDespesas, 'barras');
 
-                    $row->AprovadoConsumo = $this->basico->mascara_palavra_completa($row->AprovadoConsumo, 'NS');
-                    $row->ProfissionalConsumo = $this->get_profissional($row->ProfissionalConsumo);
+                    $row->AprovadoDespesas = $this->basico->mascara_palavra_completa($row->AprovadoDespesas, 'NS');
+                    $row->ProfissionalDespesas = $this->get_profissional($row->ProfissionalDespesas);
                 }
                 return $query;
             }
         }
     }
 
-    public function list_consumoBKP($x) {
+    public function list_despesasBKP($x) {
 
         $query = $this->db->query('SELECT '
-            . 'OT.idApp_Consumo, '
-            . 'OT.DataConsumo, '
+            . 'OT.idApp_Despesas, '
+            . 'OT.DataDespesas, '
 
-            . 'OT.ProfissionalConsumo, '
-            . 'OT.AprovadoConsumo, '
-            . 'OT.ObsConsumo '
+            . 'OT.ProfissionalDespesas, '
+            . 'OT.AprovadoDespesas, '
+            . 'OT.ObsDespesas '
             . 'FROM '
-            . 'App_Consumo AS OT '
+            . 'App_Despesas AS OT '
             . 'WHERE '
-            . 'OT.idApp_Cliente = ' . $_SESSION['Consumo']['idApp_Cliente'] . ' '
-            . 'ORDER BY OT.DataConsumo DESC ');
+            . 'OT.idApp_Cliente = ' . $_SESSION['Despesas']['idApp_Cliente'] . ' '
+            . 'ORDER BY OT.DataDespesas DESC ');
         /*
           echo $this->db->last_query();
           echo "<pre>";
@@ -195,10 +195,10 @@ class Consumo_model extends CI_Model {
             } else {
 
                 foreach ($query->result() as $row) {
-					$row->DataConsumo = $this->basico->mascara_data($row->DataConsumo, 'barras');
+					$row->DataDespesas = $this->basico->mascara_data($row->DataDespesas, 'barras');
                
-					$row->AprovadoConsumo = $this->basico->mascara_palavra_completa($row->AprovadoConsumo, 'NS');
-                    $row->ProfissionalConsumo = $this->get_profissional($row->ProfissionalConsumo);
+					$row->AprovadoDespesas = $this->basico->mascara_palavra_completa($row->AprovadoDespesas, 'NS');
+                    $row->ProfissionalDespesas = $this->get_profissional($row->ProfissionalDespesas);
                 }
 
                 return $query;
@@ -206,24 +206,24 @@ class Consumo_model extends CI_Model {
         }
     }
 
-    public function update_consumo($data, $id) {
+    public function update_despesas($data, $id) {
 
-        unset($data['idApp_Consumo']);
-        $query = $this->db->update('App_Consumo', $data, array('idApp_Consumo' => $id));
+        unset($data['idApp_Despesas']);
+        $query = $this->db->update('App_Despesas', $data, array('idApp_Despesas' => $id));
         return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
 
     }
 
-    public function update_servico_consumo($data) {
+    public function update_servico_compra($data) {
 
-        $query = $this->db->update_batch('App_ServicoConsumo', $data, 'idApp_ServicoConsumo');
+        $query = $this->db->update_batch('App_ServicoCompra', $data, 'idApp_ServicoCompra');
         return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
 
     }
 
-    public function update_produto_consumo($data) {
+    public function update_produto_compra($data) {
 
-        $query = $this->db->update_batch('App_ProdutoConsumo', $data, 'idApp_ProdutoConsumo');
+        $query = $this->db->update_batch('App_ProdutoCompra', $data, 'idApp_ProdutoCompra');
         return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
 
     }
@@ -242,12 +242,12 @@ class Consumo_model extends CI_Model {
 
     }
 
-    public function delete_servico_consumo($data) {
+    public function delete_servico_compra($data) {
 
-        $this->db->where_in('idApp_ServicoConsumo', $data);
-        $this->db->delete('App_ServicoConsumo');
+        $this->db->where_in('idApp_ServicoCompra', $data);
+        $this->db->delete('App_ServicoCompra');
 
-        //$query = $this->db->delete('App_ServicoConsumo', array('idApp_ServicoConsumo' => $data));
+        //$query = $this->db->delete('App_ServicoCompra', array('idApp_ServicoCompra' => $data));
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -256,10 +256,10 @@ class Consumo_model extends CI_Model {
         }
     }
 
-    public function delete_produto_consumo($data) {
+    public function delete_produto_compra($data) {
 
-        $this->db->where_in('idApp_ProdutoConsumo', $data);
-        $this->db->delete('App_ProdutoConsumo');
+        $this->db->where_in('idApp_ProdutoCompra', $data);
+        $this->db->delete('App_ProdutoCompra');
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -292,18 +292,38 @@ class Consumo_model extends CI_Model {
         }
     }
 
-    public function delete_consumo($id) {
+    public function delete_despesas($id) {
 
         /*
-        $tables = array('App_ServicoConsumo', 'App_ProdutoConsumo', 'App_ParcelasPagaveis', 'App_Procedimento', 'App_Consumo');
-        $this->db->where('idApp_Consumo', $id);
+        $tables = array('App_ServicoCompra', 'App_ProdutoCompra', 'App_ParcelasPagaveis', 'App_Procedimento', 'App_Despesas');
+        $this->db->where('idApp_Despesas', $id);
         $this->db->delete($tables);
         */
 
-        #$query = $this->db->delete('App_ServicoConsumo', array('idApp_Consumo' => $id));
-        $query = $this->db->delete('App_ProdutoConsumo', array('idApp_Consumo' => $id));
-       # $query = $this->db->delete('App_ParcelasPagaveis', array('idApp_Consumo' => $id));
-        $query = $this->db->delete('App_Consumo', array('idApp_Consumo' => $id));
+        $query = $this->db->delete('App_ServicoCompra', array('idApp_Despesas' => $id));
+        $query = $this->db->delete('App_ProdutoCompra', array('idApp_Despesas' => $id));
+        $query = $this->db->delete('App_ParcelasPagaveis', array('idApp_Despesas' => $id));
+        $query = $this->db->delete('App_Despesas', array('idApp_Despesas' => $id));
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+	
+	public function delete_consumo($id) {
+
+        /*
+        $tables = array('App_ServicoCompra', 'App_ProdutoCompra', 'App_ParcelasPagaveis', 'App_Procedimento', 'App_Despesas');
+        $this->db->where('idApp_Despesas', $id);
+        $this->db->delete($tables);
+        */
+
+        $query = $this->db->delete('App_ServicoCompra', array('idApp_Despesas' => $id));
+        $query = $this->db->delete('App_ProdutoCompra', array('idApp_Despesas' => $id));
+        $query = $this->db->delete('App_ParcelasPagaveis', array('idApp_Despesas' => $id));
+        $query = $this->db->delete('App_Despesas', array('idApp_Despesas' => $id));
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;

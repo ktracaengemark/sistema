@@ -55,7 +55,8 @@
 
                 <thead>
                     <tr>
-                        <th class="active">Id Despesa</th>
+                        <th class="active">D/C</th>
+						<th class="active">Id Despesa</th>
 						<th class="active">Despesa</th>
 						<th class="active">Tipo de Desp.</th>
                         <th class="active">Data da Despesa</th>
@@ -80,7 +81,8 @@
 
                         #echo '<tr>';
                         echo '<tr class="clickable-row" data-href="' . base_url() . 'despesas/alterar/' . $row['idApp_Despesas'] . '">';
-                            echo '<td>' . $row['idApp_Despesas'] . '</td>';
+                            echo '<td>' . $row['TipoProduto'] . '</td>';
+							echo '<td>' . $row['idApp_Despesas'] . '</td>';
 							echo '<td>' . $row['Despesa'] . '</td>';
 							echo '<td>' . $row['TipoDespesa'] . '</td>';
                             echo '<td>' . $row['DataDespesas'] . '</td>';

@@ -50,11 +50,34 @@
                                     </span>
                                 </div>
                             </div>
-                        </div>
-
+                        </div>						
                     </div>
                 </div>
-
+				<hr>
+				<div class="form-group">
+                    <div class="row">								
+						<div class="col-md-4">
+							<label for="idApp_Profissional">Profissional: *</label>
+							<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
+								<span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
+							</a>
+							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+									id="idApp_Profissional" name="idApp_Profissional">
+								<option value="">-- Selecione um Profissional --</option>
+								<?php
+								foreach ($select['Profissional'] as $key => $row) {
+									if ($query['idApp_Profissional'] == $key) {
+										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+									} else {
+										echo '<option value="' . $key . '">' . $row . '</option>';
+									}
+								}
+								?>
+							</select>
+						</div>
+					</div>	
+				</div>
+				<hr>
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-12">
@@ -65,7 +88,7 @@
                     </div>
                 </div>
 
-                <br>
+                <hr>
 
                 <div class="form-group">
                     <div class="row">

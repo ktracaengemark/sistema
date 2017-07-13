@@ -23,11 +23,30 @@
 						<div class="panel panel-info">
 							<div class="panel-heading">
 								<div class="row">
+									<div class="col-md-3">
+										<label for="ProfissionalOrca">Profissional:</label>
+										<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
+											<span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
+										</a>
+										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+												id="ProfissionalOrca" autofocus name="ProfissionalOrca">
+											<option value="">-- Selecione uma opção --</option>
+											<?php
+											foreach ($select['Profissional'] as $key => $row) {
+												if ($orcatrata['ProfissionalOrca'] == $key) {
+													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+												} else {
+													echo '<option value="' . $key . '">' . $row . '</option>';
+												}
+											}
+											?>
+										</select>
+									</div>
 									<div class="col-md-2">
 										<label for="DataOrca">Data do Orçamento:</label>
 										<div class="input-group <?php echo $datepicker; ?>">
 											<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-												   autofocus name="DataOrca" value="<?php echo $orcatrata['DataOrca']; ?>">
+												    name="DataOrca" value="<?php echo $orcatrata['DataOrca']; ?>">
 											<span class="input-group-addon" disabled>
 												<span class="glyphicon glyphicon-calendar"></span>
 											</span>
@@ -52,27 +71,7 @@
 												<span class="glyphicon glyphicon-calendar"></span>
 											</span>
 										</div>
-									</div>
-
-									<div class="col-md-3">
-										<label for="ProfissionalOrca">Profissional:</label>
-										<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
-											<span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
-										</a>
-										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-												id="ProfissionalOrca" name="ProfissionalOrca">
-											<option value="">-- Selecione uma opção --</option>
-											<?php
-											foreach ($select['Profissional'] as $key => $row) {
-												if ($orcatrata['ProfissionalOrca'] == $key) {
-													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-												} else {
-													echo '<option value="' . $key . '">' . $row . '</option>';
-												}
-											}
-											?>
-										</select>
-									</div>
+									</div>									
 								</div>
 							</div>
 						</div>
@@ -85,7 +84,7 @@
                             <div class="panel-heading collapsed" role="tab" id="heading1" data-toggle="collapse" data-parent="#accordion1" data-target="#collapse1" aria-expanded="false">								<h4 class="panel-title">
 									<a class="accordion-toggle">
 										<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-										Serviços & Produtos / Orçamento
+										Orçamento / Serviços & Produtos
 									</a>
 								</h4>
 							</div>

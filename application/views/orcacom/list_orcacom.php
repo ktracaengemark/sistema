@@ -5,8 +5,8 @@
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-    			<li role="presentation"><a href="#proxima" aria-controls="proxima" role="tab" data-toggle="tab">Despesass Aprovados</a></li>
-                <li role="presentation" class="active"><a href="#anterior" aria-controls="anterior" role="tab" data-toggle="tab">Despesass Não Aprovados</a></li>
+    			<li role="presentation"><a href="#proxima" aria-controls="proxima" role="tab" data-toggle="tab">Orçamentos Aprovados</a></li>
+                <li role="presentation" class="active"><a href="#anterior" aria-controls="anterior" role="tab" data-toggle="tab">Orçamentos Não Aprovados</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -23,26 +23,26 @@
 
                     <div class="bs-callout bs-callout-success" id=callout-overview-not-both>
 
-                        <a class="btn btn-success" href="<?php echo base_url() . 'despesas/alterar/' . $row['idApp_Despesas'] ?>" role="button">
+                        <a class="btn btn-success" href="<?php echo base_url() . 'orcacom/alterar/' . $row['idApp_OrcaTrata'] ?>" role="button">
                             <span class="glyphicon glyphicon-edit"></span> Editar Dados
                         </a>
 
                         <br><br>
 
                         <h4>
-                            <span class="glyphicon glyphicon-calendar"></span> <b>Data do Despesas:</b> <?php echo $row['DataDespesas']; ?>
+                            <span class="glyphicon glyphicon-calendar"></span> <b>Data do Orçamento:</b> <?php echo $row['DataOrca']; ?>
                         </h4>
 
                         <p>
-                            <?php if ($row['ProfissionalDespesas']) { ?>
-                            <span class="glyphicon glyphicon-user"></span> <b>Profissional:</b> <?php echo $row['ProfissionalDespesas']; ?> -
-                            <?php } if ($row['AprovadoDespesas']) { ?>
-                            <span class="glyphicon glyphicon-thumbs-up"></span> <b>Despesas Aprovado?</b> <?php echo $row['AprovadoDespesas']; ?>
+                            <?php if ($row['ProfissionalOrca']) { ?>
+                            <span class="glyphicon glyphicon-user"></span> <b>Profissional:</b> <?php echo $row['ProfissionalOrca']; ?> -
+                            <?php } if ($row['AprovadoOrca']) { ?>
+                            <span class="glyphicon glyphicon-thumbs-up"></span> <b>Orçamento Aprovado?</b> <?php echo $row['AprovadoOrca']; ?>
                             <?php } ?>
 
                         </p>
                         <p>
-                            <span class="glyphicon glyphicon-pencil"></span> <b>Obs:</b> <?php echo nl2br($row['ObsDespesas']); ?>
+                            <span class="glyphicon glyphicon-pencil"></span> <b>Obs:</b> <?php echo nl2br($row['ObsOrca']); ?>
                         </p>
 
                     </div>
@@ -67,26 +67,26 @@
 
                     <div class="bs-callout bs-callout-danger" id=callout-overview-not-both>
 
-                        <a class="btn btn-danger" href="<?php echo base_url() . 'despesas/alterar/' . $row['idApp_Despesas'] ?>" role="button">
+                        <a class="btn btn-danger" href="<?php echo base_url() . 'orcacom/alterar/' . $row['idApp_OrcaTrata'] ?>" role="button">
                             <span class="glyphicon glyphicon-edit"></span> Editar Dados
                         </a>
 
                         <br><br>
 
                         <h4>
-                            <span class="glyphicon glyphicon-calendar"></span> <b>Data do Despesas:</b> <?php echo $row['DataDespesas']; ?>
+                            <span class="glyphicon glyphicon-calendar"></span> <b>Data do Orçamento:</b> <?php echo $row['DataOrca']; ?>
                         </h4>
 
                         <p>
-                            <?php if ($row['ProfissionalDespesas']) { ?>
-                            <span class="glyphicon glyphicon-user"></span> <b>Profissional:</b> <?php echo $row['ProfissionalDespesas']; ?> -
-                            <?php } if ($row['AprovadoDespesas']) { ?>
-                            <span class="glyphicon glyphicon-thumbs-up"></span> <b>Despesas Aprovado?</b> <?php echo $row['AprovadoDespesas']; ?>
+                            <?php if ($row['ProfissionalOrca']) { ?>
+                            <span class="glyphicon glyphicon-user"></span> <b>Profissional:</b> <?php echo $row['ProfissionalOrca']; ?> -
+                            <?php } if ($row['AprovadoOrca']) { ?>
+                            <span class="glyphicon glyphicon-thumbs-up"></span> <b>Orçamento Aprovado?</b> <?php echo $row['AprovadoOrca']; ?>
                             <?php } ?>
 
                         </p>
                         <p>
-                            <span class="glyphicon glyphicon-pencil"></span> <b>Obs:</b> <?php echo nl2br($row['ObsDespesas']); ?>
+                            <span class="glyphicon glyphicon-pencil"></span> <b>Obs:</b> <?php echo nl2br($row['ObsOrca']); ?>
                         </p>
 
                     </div>

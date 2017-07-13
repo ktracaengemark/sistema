@@ -18,24 +18,26 @@ if ($_GET['q']==1) {
 
     $result = mysql_query(
             'SELECT
-                idTab_Servico,
-				CONCAT(TipoServico, " --- ", Convenio, " --- ", NomeServico, " --- R$ ", ValorCompraServico) As NomeServico,
-				ValorCompraServico
+                idTab_ServicoBase,
+				CONCAT(TipoServicoBase, " --- ", ServicoBase, " --- R$ ", ValorCompraServicoBase) As ServicoBase,
+				ValorCompraServicoBase
                 
             FROM
-                Tab_Servico 
+                Tab_ServicoBase 
+
+				
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY TipoServico DESC, Convenio DESC, NomeServico ASC '
+			ORDER BY TipoServicoBase DESC, ServicoBase ASC '
     );
 
     while ($row = mysql_fetch_assoc($result)) {
 
         $event_array[] = array(
-            'id' => $row['idTab_Servico'],
-            'name' => utf8_encode($row['NomeServico']),
-            'value' => $row['ValorCompraServico'],
+            'id' => $row['idTab_ServicoBase'],
+            'name' => utf8_encode($row['ServicoBase']),
+            'value' => $row['ValorCompraServicoBase'],
         );
     }
 
@@ -44,23 +46,25 @@ elseif ($_GET['q'] == 2) {
 
     $result = mysql_query(
             'SELECT
-                idTab_Produto,
-				CONCAT(TipoProduto, " --- ", Convenio, " --- ", NomeProduto, " --- ", UnidadeProduto, " --- R$ ", ValorCompraProduto) AS NomeProduto,
-				ValorCompraProduto
+                idTab_ProdutoBase,
+				CONCAT(TipoProdutoBase, " --- ", ProdutoBase, " --- ", UnidadeProdutoBase, " --- R$ ", ValorCompraProdutoBase) AS ProdutoBase,
+				ValorCompraProdutoBase
             FROM
-                Tab_Produto
+                Tab_ProdutoBase
+
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . '
-				ORDER BY TipoProduto DESC, Convenio DESC, NomeProduto ASC '
+				
+			ORDER BY TipoProdutoBase DESC, ProdutoBase ASC '
     );
 
     while ($row = mysql_fetch_assoc($result)) {
 
         $event_array[] = array(
-            'id' => $row['idTab_Produto'],
-            'name' => utf8_encode($row['NomeProduto']),
-            'value' => $row['ValorCompraProduto'],
+            'id' => $row['idTab_ProdutoBase'],
+            'name' => utf8_encode($row['ProdutoBase']),
+            'value' => $row['ValorCompraProdutoBase'],
         );
     }
 
@@ -76,7 +80,7 @@ elseif ($_GET['q'] == 3) {
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY Funcao ASC, NomeProfissional ASC'
+			ORDER BY Funcao ASC, NomeProfissional ASC'
     );
 
     while ($row = mysql_fetch_assoc($result)) {

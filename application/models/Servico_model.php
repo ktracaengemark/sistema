@@ -65,24 +65,22 @@ class Servico_model extends CI_Model {
         $query = $this->db->query('
             SELECT
                 D.idTab_Servico,
-                D.NomeServico,
-				D.TipoServico,
-                D.Convenio,
-                D.ValorCompraServico,
+                CO.Convenio,
+				CONCAT(SB.TipoServicoBase, " --- ", SB.ServicoBase, " --- R$ ", SB.ValorCompraServicoBase) AS ServicoBase,
 				D.ValorVendaServico
             
             FROM
                 Tab_Servico AS D
-                    
-
+                LEFT JOIN Tab_ServicoBase AS SB ON SB.idTab_ServicoBase = D.ServicoBase    
+				LEFT JOIN Tab_Convenio AS CO ON CO.idTab_Convenio = D.Convenio
+				
             WHERE
                 D.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
                 D.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
 
             ORDER BY
-                D.TipoServico DESC,
-				D.Convenio DESC,
-				D.NomeServico ASC
+                CO.Convenio DESC,
+				SB.ServicoBase ASC
 				
         ');
 
@@ -105,60 +103,32 @@ class Servico_model extends CI_Model {
                 return $query;
             }
         }
-    }
-
-    public function select_servico3($data = FALSE) {
-
-        if ($data === TRUE) {
-            $array = $this->db->query(
-                'SELECT '
-                    . 'idTab_Servico, '
-                    . 'NomeServico, '
-					. 'TipoServico, '
-					. 'Convenio, '
-					. 'ValorCompraServico '
-                    . 'ValorVendaServico '
-                    . 'FROM '
-                    . 'Tab_Servico '
-                    . 'WHERE '
-                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
-                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] );
-        } else {
-            $query = $this->db->query('SELECT idTab_Servico, NomeServico, TipoServico, ValorCompraServico, ValorVendaServico FROM Tab_Servico WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
-            
-            $array = array();
-            foreach ($query->result() as $row) {
-                $array[$row->idTab_Servico] = $row->NomeServico;
-            }
-        }
-
-        return $array;
-    }
-
-	public function select_servico2($data = FALSE) {
+    }    	
+	
+	public function select_servico($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query(
                 'SELECT                
 				idTab_Servico,
-				CONCAT(TipoServico, " --- ", Convenio, " --- ", NomeServico) AS NomeServico				
+				CONCAT(TipoServico, " --- ", Convenio, " --- ", ServicoBase, " --- ", NomeServico, " --- R$", ValorCompraServico) AS NomeServico				
             FROM
                 Tab_Servico
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
                 ORDER BY TipoServico DESC, Convenio DESC, NomeServico ASC'
     );
         } else {
             $query = $this->db->query(
                 'SELECT                
 				idTab_Servico,
-				CONCAT(TipoServico, " --- ", Convenio, " --- ", NomeServico) AS NomeServico				
+				CONCAT(TipoServico, " --- ", Convenio, " --- ", ServicoBase, " --- ", NomeServico, " --- R$", ValorCompraServico) AS NomeServico				
             FROM
                 Tab_Servico
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
                 ORDER BY TipoServico DESC, Convenio DESC, NomeServico ASC'
     );
 
@@ -171,40 +141,6 @@ class Servico_model extends CI_Model {
         return $array;
     }
 	
-	public function select_servico($data = FALSE) {
-
-        if ($data === TRUE) {
-            $array = $this->db->query(
-                'SELECT                
-				idTab_Servico,
-				CONCAT(TipoServico, " --- ", Convenio, " --- ", NomeServico, " --- R$", ValorCompraServico) AS NomeServico				
-            FROM
-                Tab_Servico
-            WHERE
-                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-                ORDER BY TipoServico DESC, Convenio DESC, NomeServico ASC'
-    );
-        } else {
-            $query = $this->db->query(
-                'SELECT                
-				idTab_Servico,
-				CONCAT(TipoServico, " --- ", Convenio, " --- ", NomeServico, " --- R$", ValorCompraServico) AS NomeServico				
-            FROM
-                Tab_Servico
-            WHERE
-                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-                ORDER BY TipoServico DESC, Convenio DESC, NomeServico ASC'
-    );
-
-            $array = array();
-            foreach ($query->result() as $row) {
-                $array[$row->idTab_Servico] = $row->NomeServico;
-            }
-        }
-
-        return $array;
-    }
+	
     
 }
