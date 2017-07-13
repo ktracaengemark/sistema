@@ -105,6 +105,8 @@ class Despesas extends CI_Controller {
                 $data['produto'][$j]['ValorCompraProduto'] = $this->input->post('ValorCompraProduto' . $i);
                 $data['produto'][$j]['QtdCompraProduto'] = $this->input->post('QtdCompraProduto' . $i);
                 $data['produto'][$j]['SubtotalProduto'] = $this->input->post('SubtotalProduto' . $i);
+				$data['produto'][$j]['ObsProduto'] = $this->input->post('ObsProduto' . $i);
+				$data['produto'][$j]['DataValidadeProduto'] = $this->input->post('DataValidadeProduto' . $i);
                 $j++;
             }
         }
@@ -261,7 +263,7 @@ class Despesas extends CI_Controller {
                     $data['produto'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
                     $data['produto'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
                     $data['produto'][$j]['idApp_Despesas'] = $data['despesas']['idApp_Despesas'];
-
+					$data['produto'][$j]['DataValidadeProduto'] = $this->basico->mascara_data($data['produto'][$j]['DataValidadeProduto'], 'mysql');
                     $data['produto'][$j]['ValorCompraProduto'] = str_replace(',', '.', str_replace('.', '', $data['produto'][$j]['ValorCompraProduto']));
                     unset($data['produto'][$j]['SubtotalProduto']);
                 }
@@ -384,6 +386,8 @@ class Despesas extends CI_Controller {
                 $data['produto'][$j]['ValorCompraProduto'] = $this->input->post('ValorCompraProduto' . $i);
                 $data['produto'][$j]['QtdCompraProduto'] = $this->input->post('QtdCompraProduto' . $i);
                 $data['produto'][$j]['SubtotalProduto'] = $this->input->post('SubtotalProduto' . $i);
+				$data['produto'][$j]['ObsProduto'] = $this->input->post('ObsProduto' . $i);
+				$data['produto'][$j]['DataValidadeProduto'] = $this->input->post('DataValidadeProduto' . $i);
                 $j++;
             }
         }
@@ -445,8 +449,9 @@ class Despesas extends CI_Controller {
 
                 if (isset($data['produto'])) {
 
-                    for($j=1;$j<=$data['count']['PCount'];$j++)
-                        $data['produto'][$j]['SubtotalProduto'] = number_format(($data['produto'][$j]['ValorCompraProduto'] * $data['produto'][$j]['QtdCompraProduto']), 2, ',', '.');
+                    for($j=1;$j<=$data['count']['PCount'];$j++)   
+					$data['produto'][$j]['SubtotalProduto'] = number_format(($data['produto'][$j]['ValorCompraProduto'] * $data['produto'][$j]['QtdCompraProduto']), 2, ',', '.');
+						
                 }
             }
 
@@ -634,14 +639,15 @@ class Despesas extends CI_Controller {
                     $data['update']['produto']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
                     $data['update']['produto']['inserir'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
                     $data['update']['produto']['inserir'][$j]['idApp_Despesas'] = $data['despesas']['idApp_Despesas'];
-
+					#$data['update']['produto']['inserir'][$j]['DataValidadeProduto'] = $this->basico->mascara_data($data['update']['produto']['inserir'][$j]['DataValidadeProduto'], 'mysql');
                     $data['update']['produto']['inserir'][$j]['ValorCompraProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['inserir'][$j]['ValorCompraProduto']));
                     unset($data['update']['produto']['inserir'][$j]['SubtotalProduto']);
                 }
 
                 $max = count($data['update']['produto']['alterar']);
                 for($j=0;$j<$max;$j++) {
-                    $data['update']['produto']['alterar'][$j]['ValorCompraProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['alterar'][$j]['ValorCompraProduto']));
+                    #$data['update']['produto']['alterar'][$j]['DataValidadeProduto'] = $this->basico->mascara_data($data['update']['produto']['alterar'][$j]['DataValidadeProduto'], 'mysql');
+					$data['update']['produto']['alterar'][$j]['ValorCompraProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['alterar'][$j]['ValorCompraProduto']));
                     unset($data['update']['produto']['alterar'][$j]['SubtotalProduto']);
                 }
 

@@ -52,6 +52,7 @@ class Contatoprof extends CI_Controller {
             'idSis_Usuario',
             'NomeContatoProf',
             'StatusVida',
+			'Ativo',
             'DataNascimento',
             'Sexo',
 			'RelaPes',
@@ -71,7 +72,9 @@ class Contatoprof extends CI_Controller {
 		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contatoprof_model->select_status_vida();
 		$data['select']['RelaPes'] = $this->Relapes_model->select_relapes();
-        $data['titulo'] = 'Cadastrar Contatoprof';
+        $data['select']['Ativo'] = $this->Basico_model->select_status_sn();
+		
+		$data['titulo'] = 'Cadastrar Contatoprof';
         $data['form_open_path'] = 'contatoprof/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -134,6 +137,7 @@ class Contatoprof extends CI_Controller {
             'TelefoneContatoProf',
             'Obs',
             'idApp_Profissional',
+			'Ativo',
                 ), TRUE);
 
         if ($id) {
@@ -151,7 +155,9 @@ class Contatoprof extends CI_Controller {
 		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contatoprof_model->select_status_vida();
         $data['select']['RelaPes'] = $this->Relapes_model->select_relapes();
-        $data['titulo'] = 'Editar Dados';
+        $data['select']['Ativo'] = $this->Basico_model->select_status_sn();
+		
+		$data['titulo'] = 'Editar Dados';
         $data['form_open_path'] = 'contatoprof/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';

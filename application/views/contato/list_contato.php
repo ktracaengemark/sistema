@@ -80,6 +80,11 @@ foreach ($query->result_array() as $row) {
 				<span class="glyphicon glyphicon-phone-alt"></span> <b>Telefone:</b> <?php echo $row['TelefoneContato']; ?>
 				<?php } ?>
             </p>
+			<p>	
+				<?php if ($row['Ativo']) { ?>
+				<span class="glyphicon glyphicon-alert"></span> <b>Ativo:</b> <?php echo $row['Ativo']; ?>
+				<?php } ?>
+            </p>
 
             <p>
                 <span class="glyphicon glyphicon-pencil"></span> <b>Obs:</b> <?php echo nl2br($row['Obs']); ?>

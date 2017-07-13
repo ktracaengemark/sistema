@@ -52,6 +52,7 @@ class Contato extends CI_Controller {
             'idSis_Usuario',
             'NomeContato',
             'StatusVida',
+			'Ativo',
             'DataNascimento',
             'Sexo',
 			'RelaCom',
@@ -71,7 +72,9 @@ class Contato extends CI_Controller {
 		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contato_model->select_status_vida();
 		$data['select']['RelaCom'] = $this->Relacom_model->select_relacom();
-        $data['titulo'] = 'Cadastrar Contato';
+        $data['select']['Ativo'] = $this->Basico_model->select_status_sn();
+		
+		$data['titulo'] = 'Cadastrar Contato';
         $data['form_open_path'] = 'contato/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -131,6 +134,7 @@ class Contato extends CI_Controller {
             'DataNascimento',
             'Sexo',
 			'RelaCom',
+			'Ativo',
             'TelefoneContato',
             'Obs',
             'idApp_Empresa',
@@ -151,7 +155,9 @@ class Contato extends CI_Controller {
 		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contato_model->select_status_vida();
         $data['select']['RelaCom'] = $this->Relacom_model->select_relacom();       
-        $data['titulo'] = 'Editar Dados';
+        $data['select']['Ativo'] = $this->Basico_model->select_status_sn();
+		
+		$data['titulo'] = 'Editar Dados';
         $data['form_open_path'] = 'contato/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';

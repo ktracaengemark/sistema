@@ -50,7 +50,7 @@
 						</div>
 					</div>
 				</div>
-
+				
 				<!--
 				<div class="col-md-2">
 					<label for="Associado">Associado?</label><br>
@@ -156,14 +156,41 @@
 
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-10">
                                 <label for="Obs">OBS:</label>
                                 <textarea class="form-control" id="Obs" <?php echo $readonly; ?>
                                           name="Obs"><?php echo $query['Obs']; ?></textarea>
                             </div>
-                        </div>
-                    </div>
+							<div class="col-md-2">
+								<label for="Ativo">Ativo?</label><br>
+								<div class="form-group">
+									<div class="btn-group" data-toggle="buttons">
+										<?php
+										foreach ($select['Ativo'] as $key => $row) {
+											(!$query['Ativo']) ? $query['Ativo'] = 'S' : FALSE;
 
+											if ($query['Ativo'] == $key) {
+												echo ''
+												. '<label class="btn btn-warning active" name="radiobutton_Ativo" id="radiobutton_Ativo' . $key . '">'
+												. '<input type="radio" name="Ativo" id="radiobutton" '
+												. 'autocomplete="off" value="' . $key . '" checked>' . $row
+												. '</label>'
+												;
+											} else {
+												echo ''
+												. '<label class="btn btn-default" name="radiobutton_Ativo" id="radiobutton_Ativo' . $key . '">'
+												. '<input type="radio" name="Ativo" id="radiobutton" '
+												. 'autocomplete="off" value="' . $key . '" >' . $row
+												. '</label>'
+												;
+											}
+										}
+										?>
+									</div>
+								</div>
+							</div>													
+                        </div>
+                    </div>										
                 </div>
 
                 <br>

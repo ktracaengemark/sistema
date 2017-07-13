@@ -55,7 +55,7 @@ class Empresa extends CI_Controller {
             'Telefone1',
             'Telefone2',
             'Telefone3',
-            
+            'Ativo',
             'Sexo',
             'Endereco',
             'Bairro',
@@ -80,6 +80,7 @@ class Empresa extends CI_Controller {
         $data['select']['Municipio'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Atividade'] = $this->Atividade_model->select_atividade();
+		$data['select']['Ativo'] = $this->Basico_model->select_status_sn();
 		
         $data['titulo'] = 'Cadastrar Fornecedor';
         $data['form_open_path'] = 'empresa/cadastrar';
@@ -151,7 +152,7 @@ class Empresa extends CI_Controller {
             'Telefone1',
             'Telefone2',
             'Telefone3',
-            
+            'Ativo',
             'Sexo',
             'Endereco',
             'Bairro',
@@ -180,6 +181,7 @@ class Empresa extends CI_Controller {
         $data['select']['Municipio'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Atividade'] = $this->Atividade_model->select_atividade();
+		$data['select']['Ativo'] = $this->Basico_model->select_status_sn();
 		
         $data['titulo'] = 'Editar Dados';
         $data['form_open_path'] = 'empresa/alterar';

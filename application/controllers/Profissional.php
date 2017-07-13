@@ -55,7 +55,7 @@ class Profissional extends CI_Controller {
             'Telefone1',
             'Telefone2',
             'Telefone3',
-
+			'Ativo',
             'Sexo',
             'Endereco',
             'Bairro',
@@ -80,7 +80,8 @@ class Profissional extends CI_Controller {
         $data['select']['Municipio'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
-
+		$data['select']['Ativo'] = $this->Basico_model->select_status_sn();
+		
         $data['titulo'] = 'Cadastrar Funcionários';
         $data['form_open_path'] = 'profissional/cadastrar';
         $data['readonly'] = '';
@@ -152,7 +153,7 @@ class Profissional extends CI_Controller {
             'Telefone1',
             'Telefone2',
             'Telefone3',
-
+			'Ativo',
             'Sexo',
             'Endereco',
             'Bairro',
@@ -181,7 +182,8 @@ class Profissional extends CI_Controller {
         $data['select']['Municipio'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
-
+		$data['select']['Ativo'] = $this->Basico_model->select_status_sn();
+		
         $data['titulo'] = 'Editar Dados';
         $data['form_open_path'] = 'profissional/alterar';
         $data['readonly'] = '';

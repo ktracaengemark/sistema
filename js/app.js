@@ -1269,15 +1269,9 @@ function adicionaServicoCompra() {
                                        name="SubtotalServico'+ps+'" value="">\
                             </div>\
                         </div>\
-                        <div class="col-md-1">\
-                            <label><br></label><br>\
-                            <a href="#" id="'+ps+'" class="remove_field5 btn btn-danger">\
-                                <span class="glyphicon glyphicon-trash"></span>\
-                            </a>\
-                        </div>\
                     </div>\
                     <div class="row">\
-                        <div class="col-md-10">\
+                        <div class="col-md-8">\
                             <label for="ObsServico'+ps+'">Obs:</label><br>\
                             <input type="text" class="form-control" id="ObsServico'+ps+'" maxlength="250"\
                                    name="ObsServico'+ps+'" value="">\
@@ -1296,6 +1290,12 @@ function adicionaServicoCompra() {
                                     </label>\
                                 </div>\
                             </div>\
+                        </div>\
+						<div class="col-md-1">\
+                            <label><br></label><br>\
+                            <a href="#" id="'+ps+'" class="remove_field5 btn btn-danger">\
+                                <span class="glyphicon glyphicon-trash"></span>\
+                            </a>\
                         </div>\
                     </div>\
                 </div>\
@@ -1662,13 +1662,30 @@ $(document).ready(function () {
                                            name="SubtotalProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
-                            <div class="col-md-1">\
+                        </div>\
+						<div class="row">\
+							<div class="col-md-8">\
+								<label for="ObsProduto'+pc+'">Obs:</label><br>\
+								<input type="text" class="form-control" id="ObsProduto'+pc+'" maxlength="250"\
+									   name="ObsProduto'+pc+'" value="">\
+							</div>\
+							<div class="col-md-2">\
+								<label for="DataValidadeProduto'+pc+'">Data Val. do Produto:</label>\
+								<div class="input-group DatePicker">\
+									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
+										   name="DataValidadeProduto'+pc+'" value="">\
+									<span class="input-group-addon" disabled>\
+										<span class="glyphicon glyphicon-calendar"></span>\
+									</span>\
+								</div>\
+							</div>\
+							<div class="col-md-1">\
                                 <label><br></label><br>\
                                 <a href="#" id="'+pc+'" class="remove_field6 btn btn-danger">\
                                     <span class="glyphicon glyphicon-trash"></span>\
                                 </a>\
                             </div>\
-                        </div>\
+						</div>\
                     </div>\
                 </div>\
             </div>'

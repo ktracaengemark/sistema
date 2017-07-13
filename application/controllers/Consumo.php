@@ -105,6 +105,8 @@ class Consumo extends CI_Controller {
                 $data['produto'][$j]['ValorCompraProduto'] = $this->input->post('ValorCompraProduto' . $i);
                 $data['produto'][$j]['QtdCompraProduto'] = $this->input->post('QtdCompraProduto' . $i);
                 $data['produto'][$j]['SubtotalProduto'] = $this->input->post('SubtotalProduto' . $i);
+				$data['produto'][$j]['ObsProduto'] = $this->input->post('ObsProduto' . $i);
+				$data['produto'][$j]['DataValidadeProduto'] = $this->input->post('DataValidadeProduto' . $i);
                 $j++;
             }
         }
@@ -384,6 +386,8 @@ class Consumo extends CI_Controller {
                 $data['produto'][$j]['ValorCompraProduto'] = $this->input->post('ValorCompraProduto' . $i);
                 $data['produto'][$j]['QtdCompraProduto'] = $this->input->post('QtdCompraProduto' . $i);
                 $data['produto'][$j]['SubtotalProduto'] = $this->input->post('SubtotalProduto' . $i);
+				$data['produto'][$j]['ObsProduto'] = $this->input->post('ObsProduto' . $i);
+				$data['produto'][$j]['DataValidadeProduto'] = $this->input->post('DataValidadeProduto' . $i);
                 $j++;
             }
         }
@@ -446,7 +450,7 @@ class Consumo extends CI_Controller {
                 if (isset($data['produto'])) {
 
                     for($j=1;$j<=$data['count']['PCount'];$j++)
-                        $data['produto'][$j]['SubtotalProduto'] = number_format(($data['produto'][$j]['ValorCompraProduto'] * $data['produto'][$j]['QtdCompraProduto']), 2, ',', '.');
+						$data['produto'][$j]['SubtotalProduto'] = number_format(($data['produto'][$j]['ValorCompraProduto'] * $data['produto'][$j]['QtdCompraProduto']), 2, ',', '.');
                 }
             }
 

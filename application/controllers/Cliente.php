@@ -57,7 +57,7 @@ class Cliente extends CI_Controller {
             'Telefone1',
             'Telefone2',
             'Telefone3',
-
+			'Ativo',
             'Sexo',
             'Endereco',
             'Bairro',
@@ -81,7 +81,8 @@ class Cliente extends CI_Controller {
         $data['select']['Municipio'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Associado'] = $this->Basico_model->select_status_sn();
-
+		$data['select']['Ativo'] = $this->Basico_model->select_status_sn();
+		
         $data['titulo'] = 'Cadastrar Cliente';
         $data['form_open_path'] = 'cliente/cadastrar';
         $data['readonly'] = '';
@@ -152,7 +153,7 @@ class Cliente extends CI_Controller {
             'Telefone1',
             'Telefone2',
             'Telefone3',
-
+			'Ativo',
             'Sexo',
             'Endereco',
             'Bairro',
@@ -181,7 +182,8 @@ class Cliente extends CI_Controller {
         $data['select']['Municipio'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Associado'] = $this->Basico_model->select_status_sn();
-
+		$data['select']['Ativo'] = $this->Basico_model->select_status_sn();
+		
         $data['titulo'] = 'Editar Dados';
         $data['form_open_path'] = 'cliente/alterar';
         $data['readonly'] = '';
