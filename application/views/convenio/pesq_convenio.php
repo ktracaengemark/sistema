@@ -23,7 +23,7 @@
 						<div class="col-md-3">
                             <label for="Abrev">Abrev.:</label><br>
                             <input type="text" class="form-control" maxlength="5"
-                                   autofocus name="Abrev" value="<?php echo $query['Abrev'] ?>">
+                                    name="Abrev" value="<?php echo $query['Abrev'] ?>">
                         </div>
 						
                       

@@ -154,16 +154,10 @@
 															<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalServico<?php echo $i ?>"
 																   name="SubtotalServico<?php echo $i ?>" value="<?php echo $servico[$i]['SubtotalServico'] ?>">
 														</div>
-													</div>
-													<div class="col-md-1">
-														<label><br></label><br>
-														<button type="button" id="<?php echo $i ?>" class="remove_field btn btn-danger">
-															<span class="glyphicon glyphicon-trash"></span>
-														</button>
-													</div>
+													</div>												
 												</div>
 												<div class="row">
-													<div class="col-md-10">
+													<div class="col-md-8">
 														<label for="ObsServico<?php echo $i ?>">Obs:</label><br>
 														<input type="text" class="form-control" id="ObsServico<?php echo $i ?>" maxlength="250"
 															   name="ObsServico<?php echo $i ?>" value="<?php echo $servico[$i]['ObsServico'] ?>">
@@ -195,6 +189,12 @@
 																?>
 															</div>
 														</div>
+													</div>
+													<div class="col-md-1">
+														<label><br></label><br>
+														<button type="button" id="<?php echo $i ?>" class="remove_field btn btn-danger">
+															<span class="glyphicon glyphicon-trash"></span>
+														</button>
 													</div>
 												</div>
 											</div>
@@ -278,6 +278,23 @@
 															<span class="input-group-addon" id="basic-addon1">R$</span>
 															<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalProduto<?php echo $i ?>"
 																   name="SubtotalProduto<?php echo $i ?>" value="<?php echo $produto[$i]['SubtotalProduto'] ?>">
+														</div>
+													</div>													
+												</div>
+												<div class="row">
+													<div class="col-md-8">
+														<label for="ObsProduto<?php echo $i ?>">Obs:</label><br>
+														<input type="text" class="form-control" id="ObsProduto<?php echo $i ?>" maxlength="250"
+															   name="ObsProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ObsProduto'] ?>">
+													</div>
+													<div class="col-md-2">
+														<label for="DataValidadeProduto<?php echo $i ?>">Data Val. do Produto:</label>
+														<div class="input-group <?php echo $datepicker; ?>">
+															<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+																   name="DataValidadeProduto<?php echo $i ?>" value="<?php echo $produto[$i]['DataValidadeProduto']; ?>">
+															<span class="input-group-addon" disabled>
+																<span class="glyphicon glyphicon-calendar"></span>
+															</span>
 														</div>
 													</div>
 													<div class="col-md-1">
