@@ -2245,7 +2245,7 @@ $('#calendar').fullCalendar({
             if (event.Paciente == 'D')
                 var title = "<b>" + event.title + "</b><br><b>Responsável:</b> " + event.subtitle + "<br><b>Tel.1:</b> " + event.Telefone1 + "<br>\n\<b>Profissional:</b> " + event.Profissional + "<br>\n\<b>Obs:</b> " + event.Obs + "<br>\n\<b>Tipo de Consulta:</b> " + event.TipoConsulta;
             else
-                var title = "<b>" + event.subtitle + "<b> " + "<br><b>Tel.1:</b> " + event.Telefone1 + "<br>\n\<b>Profissional:</b> " + event.Profissional + "<br>\n\<b>Obs:</b> " + event.Obs + "<br>\n\<b>Tipo de Consulta:</b> " + event.TipoConsulta;
+                var title = "<b>" + event.title + "<b> " + "<br><b>Tel.1:</b> " + event.Telefone1 + "<br>\n\<b>Profissional:</b> " + event.Profissional + "<br>\n\<b>Obs:</b> " + event.Obs + "<br>\n\<b>Tipo de Consulta:</b> " + event.TipoConsulta;
         }
 
 

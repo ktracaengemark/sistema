@@ -96,7 +96,7 @@ class Produto extends CI_Controller {
             $this->load->view('produto/pesq_produto', $data);
         } else {
 
-            $data['query']['NomeProduto'] = trim(mb_strtoupper($data['query']['NomeProduto'], 'ISO-8859-1'));
+           # $data['query']['NomeProduto'] = trim(mb_strtoupper($data['query']['NomeProduto'], 'ISO-8859-1'));
             #$data['query']['Quantidade'] = str_replace(',','.',str_replace('.','',$data['query']['Quantidade']));
             $data['query']['ValorVendaProduto'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVendaProduto']));
 			#$data['query']['ValorCompraProduto'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraProduto']));
@@ -167,7 +167,7 @@ class Produto extends CI_Controller {
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio();
 		$data['select']['ProdutoBase'] = $this->ProdutoBase_model->select_produtobase2(); 
 		
-        $data['titulo'] = 'Editar Produto';
+        $data['titulo'] = 'Editar Produto para Venda';
         $data['form_open_path'] = 'produto/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -191,7 +191,7 @@ class Produto extends CI_Controller {
             $this->load->view('produto/pesq_produto', $data);
         } else {
 
-            #$data['query']['NomeProduto'] = trim(mb_strtoupper($data['query']['NomeProduto'], 'ISO-8859-1'));
+           # $data['query']['NomeProduto'] = trim(mb_strtoupper($data['query']['NomeProduto'], 'ISO-8859-1'));
             #$data['query']['Quantidade'] = str_replace(',','.',str_replace('.','',$data['query']['Quantidade']));
             #$data['query']['ValorCompra'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompra']));
             $data['query']['ValorVendaProduto'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVendaProduto']));

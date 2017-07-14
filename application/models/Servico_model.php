@@ -67,7 +67,7 @@ class Servico_model extends CI_Model {
                 D.idTab_Servico,
                 CO.Convenio,
 				CONCAT(SB.TipoServicoBase, " --- ", SB.ServicoBase, " --- R$ ", SB.ValorCompraServicoBase) AS ServicoBase,
-				D.ValorVendaServico
+				D.ValorVendaServico				
             
             FROM
                 Tab_Servico AS D

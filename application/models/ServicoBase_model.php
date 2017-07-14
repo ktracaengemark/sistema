@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class ServicoBase_model extends CI_Model {
+class Servicobase_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
@@ -127,6 +127,44 @@ class ServicoBase_model extends CI_Model {
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+			ORDER BY TipoServicoBase DESC, ServicoBase ASC'
+    );
+
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->idTab_ServicoBase] = $row->ServicoBase;
+            }
+        }
+
+        return $array;
+    }
+	
+	public function select_servicobase2($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query(
+                'SELECT                
+				idTab_ServicoBase,
+				CONCAT(TipoServicoBase, " --- ", ServicoBase, " --- R$", ValorCompraServicoBase) AS ServicoBase				
+            FROM
+                Tab_ServicoBase
+            WHERE
+                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['id'] . '
+				
+			ORDER BY TipoServicoBase DESC, ServicoBase ASC'
+    );
+        } else {
+            $query = $this->db->query(
+                'SELECT                
+				idTab_ServicoBase,
+				CONCAT(TipoServicoBase, " --- ", ServicoBase, " --- R$", ValorCompraServicoBase) AS ServicoBase				
+            FROM
+                Tab_ServicoBase
+            WHERE
+                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['id'] . '
+				
 			ORDER BY TipoServicoBase DESC, ServicoBase ASC'
     );
 

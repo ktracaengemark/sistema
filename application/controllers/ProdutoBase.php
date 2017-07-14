@@ -13,7 +13,7 @@ class ProdutoBase extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Convenio_model', 'ProdutoBase_model', 'Contatocliente_model'));
+        $this->load->model(array('Basico_model', 'Convenio_model', 'Produtobase_model', 'Contatocliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -81,7 +81,7 @@ class ProdutoBase extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->ProdutoBase_model->lista_produtobase(TRUE);
+        $data['q'] = $this->Produtobase_model->lista_produtobase(TRUE);
         $data['list'] = $this->load->view('produtobase/list_produtobase', $data, TRUE);
 
         #run form validation
@@ -98,7 +98,7 @@ class ProdutoBase extends CI_Controller {
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
 
-            $data['idTab_ProdutoBase'] = $this->ProdutoBase_model->set_produtobase($data['query']);
+            $data['idTab_ProdutoBase'] = $this->Produtobase_model->set_produtobase($data['query']);
 
             if ($data['idTab_ProdutoBase'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
@@ -137,7 +137,7 @@ class ProdutoBase extends CI_Controller {
                 ), TRUE));
 
         if ($id)
-            $data['query'] = $this->ProdutoBase_model->get_produtobase($id);
+            $data['query'] = $this->Produtobase_model->get_produtobase($id);
 
 		#(!$data['query']['TipoProdutoBase']) ? $data['query']['TipoProdutoBase'] = 'V' : FALSE;
 		
@@ -164,7 +164,7 @@ class ProdutoBase extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->ProdutoBase_model->lista_produtobase(TRUE);
+        $data['q'] = $this->Produtobase_model->lista_produtobase(TRUE);
         $data['list'] = $this->load->view('produtobase/list_produtobase', $data, TRUE);
 
         #run form validation
@@ -177,12 +177,12 @@ class ProdutoBase extends CI_Controller {
 			$data['query']['TipoProdutoBase'] = $data['query']['TipoProdutoBase'];
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
-            $data['anterior'] = $this->ProdutoBase_model->get_produtobase($data['query']['idTab_ProdutoBase']);
+            $data['anterior'] = $this->Produtobase_model->get_produtobase($data['query']['idTab_ProdutoBase']);
             $data['campos'] = array_keys($data['query']);
 
             $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_ProdutoBase'], TRUE);
 
-            if ($data['auditoriaitem'] && $this->ProdutoBase_model->update_produtobase($data['query'], $data['query']['idTab_ProdutoBase']) === FALSE) {
+            if ($data['auditoriaitem'] && $this->Produtobase_model->update_produtobase($data['query'], $data['query']['idTab_ProdutoBase']) === FALSE) {
                 $data['msg'] = '?m=2';
                 redirect(base_url() . 'produtobase/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
                 exit();
@@ -218,7 +218,7 @@ class ProdutoBase extends CI_Controller {
                 ), TRUE);
 
         if ($id)
-            $data['query'] = $this->ProdutoBase_model->get_produtobase($id);
+            $data['query'] = $this->Produtobase_model->get_produtobase($id);
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
@@ -240,7 +240,7 @@ class ProdutoBase extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->ProdutoBase_model->lista_produtobase(TRUE);
+        $data['q'] = $this->Produtobase_model->lista_produtobase(TRUE);
         $data['list'] = $this->load->view('produtobase/list_produtobase', $data, TRUE);
 
         #run form validation
@@ -251,12 +251,12 @@ class ProdutoBase extends CI_Controller {
             $data['query']['ProdutoBase'] = trim(mb_strtoupper($data['query']['ProdutoBase'], 'ISO-8859-1'));
             $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
-            $data['anterior'] = $this->ProdutoBase_model->get_produtobase($data['query']['idTab_ProdutoBase']);
+            $data['anterior'] = $this->Produtobase_model->get_produtobase($data['query']['idTab_ProdutoBase']);
             $data['campos'] = array_keys($data['query']);
 
             $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_ProdutoBase'], TRUE);
 
-            if ($data['auditoriaitem'] && $this->ProdutoBase_model->update_produtobase($data['query'], $data['query']['idTab_ProdutoBase']) === FALSE) {
+            if ($data['auditoriaitem'] && $this->Produtobase_model->update_produtobase($data['query'], $data['query']['idTab_ProdutoBase']) === FALSE) {
                 $data['msg'] = '?m=2';
                 redirect(base_url() . 'produtobase/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
                 exit();
@@ -286,7 +286,7 @@ class ProdutoBase extends CI_Controller {
         else
             $data['msg'] = '';
 
-                $this->ProdutoBase_model->delete_produtobase($id);
+                $this->Produtobase_model->delete_produtobase($id);
 
                 $data['msg'] = '?m=1';
 

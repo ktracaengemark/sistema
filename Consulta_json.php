@@ -51,8 +51,8 @@ while ($row = mysql_fetch_assoc($result)) {
     if ($row['Evento']) {
         $c = '_evento';
         //(strlen(utf8_encode($row['Obs'])) > 20) ? $title = substr(utf8_encode($row['Obs']), 0, 20).'...' : $title = utf8_encode($row['Obs']);
-        #$title = utf8_encode($row['Obs']);
-		$title = utf8_encode($row['NomeProfissional']);
+        $title = utf8_encode($row['Obs']);
+		#$title = utf8_encode($row['NomeProfissional']);
 		$subtitle = utf8_encode($row['NomeProfissional']);
 		$profissional = utf8_encode($row['NomeProfissional']);
     } else {
@@ -65,9 +65,9 @@ while ($row = mysql_fetch_assoc($result)) {
 			$telefone1 = utf8_encode($row['Telefone1']);
         }
         else {
-            #$title = utf8_encode($row['NomeCliente']);
-			$title = utf8_encode($row['NomeProfissional']);
-			$subtitle = utf8_encode($row['NomeCliente']);
+            $title = utf8_encode($row['NomeCliente']);
+			#$title = utf8_encode($row['NomeProfissional']);
+			$subtitle = utf8_encode($row['NomeProfissional']);
             $profissional = utf8_encode($row['NomeProfissional']);
 			$telefone1 = utf8_encode($row['Telefone1']);
 			

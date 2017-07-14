@@ -122,8 +122,7 @@ class Produto_model extends CI_Model {
 
             ORDER BY
 				D.Convenio DESC,
-				PB.ProdutoBase ASC
-				
+				PB.ProdutoBase ASC				
 				
         ');
 

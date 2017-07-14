@@ -13,7 +13,7 @@ class ServicoBase extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Convenio_model', 'ServicoBase_model', 'Contatocliente_model'));
+        $this->load->model(array('Basico_model', 'Convenio_model', 'Servicobase_model', 'Contatocliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -79,7 +79,7 @@ class ServicoBase extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->ServicoBase_model->lista_servicobase(TRUE);
+        $data['q'] = $this->Servicobase_model->lista_servicobase(TRUE);
         $data['list'] = $this->load->view('servicobase/list_servicobase', $data, TRUE);
 
         #run form validation
@@ -96,7 +96,7 @@ class ServicoBase extends CI_Controller {
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
 
-            $data['idTab_ServicoBase'] = $this->ServicoBase_model->set_servicobase($data['query']);
+            $data['idTab_ServicoBase'] = $this->Servicobase_model->set_servicobase($data['query']);
 
 			
             if ($data['idTab_ServicoBase'] === FALSE) {
@@ -138,7 +138,7 @@ class ServicoBase extends CI_Controller {
 		#(!$data['query']['TipoServicoBase']) ? $data['query']['TipoServicoBase'] = 'V' : FALSE;
 		
         if ($id)
-            $data['query'] = $this->ServicoBase_model->get_servicobase($id);
+            $data['query'] = $this->Servicobase_model->get_servicobase($id);
 
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -163,7 +163,7 @@ class ServicoBase extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->ServicoBase_model->lista_servicobase(TRUE);
+        $data['q'] = $this->Servicobase_model->lista_servicobase(TRUE);
         $data['list'] = $this->load->view('servicobase/list_servicobase', $data, TRUE);
 
         #run form validation
@@ -176,12 +176,12 @@ class ServicoBase extends CI_Controller {
 			$data['query']['TipoServicoBase'] = $data['query']['TipoServicoBase'];
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
-            $data['anterior'] = $this->ServicoBase_model->get_servicobase($data['query']['idTab_ServicoBase']);
+            $data['anterior'] = $this->Servicobase_model->get_servicobase($data['query']['idTab_ServicoBase']);
             $data['campos'] = array_keys($data['query']);
 
             $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_ServicoBase'], TRUE);
 
-            if ($data['auditoriaitem'] && $this->ServicoBase_model->update_servicobase($data['query'], $data['query']['idTab_ServicoBase']) === FALSE) {
+            if ($data['auditoriaitem'] && $this->Servicobase_model->update_servicobase($data['query'], $data['query']['idTab_ServicoBase']) === FALSE) {
                 $data['msg'] = '?m=2';
                 redirect(base_url() . 'servicobase/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
                 exit();
@@ -211,7 +211,7 @@ class ServicoBase extends CI_Controller {
         else
             $data['msg'] = '';
 
-                $this->ServicoBase_model->delete_servicobase($id);
+                $this->Servicobase_model->delete_servicobase($id);
 
                 $data['msg'] = '?m=1';
 

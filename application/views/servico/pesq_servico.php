@@ -52,9 +52,9 @@
                             <input type="text" class="form-control" maxlength="200"
                                    autofocus name="NomeServico" value="<?php echo $query['NomeServico'] ?>">
                         </div>
-						-->
+
 						
-						<!--
+						
 						<div class="col-md-3">
 							<label for="TipoServico">Tipo Servico</label>								
 							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>

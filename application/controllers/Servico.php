@@ -50,7 +50,7 @@ class Servico extends CI_Controller {
         $data['query'] = quotes_to_entities($this->input->post(array(
             'idSis_Usuario',
 			'idTab_Servico',
-            #'NomeServico',
+           # 'NomeServico',
             'ValorVendaServico',
 			#'ValorCompraServico',
 			#'TipoServico',
@@ -69,7 +69,7 @@ class Servico extends CI_Controller {
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio(); 
 		$data['select']['ServicoBase'] = $this->ServicoBase_model->select_servicobase(); 
 		
-        $data['titulo'] = 'Cadastrar Serviço';
+        $data['titulo'] = 'Cadastrar Serviço para Venda';
         $data['form_open_path'] = 'servico/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -93,7 +93,7 @@ class Servico extends CI_Controller {
             $this->load->view('servico/pesq_servico', $data);
         } else {
 
-            #$data['query']['NomeServico'] = trim(mb_strtoupper($data['query']['NomeServico'], 'ISO-8859-1'));
+           # $data['query']['NomeServico'] = trim(mb_strtoupper($data['query']['NomeServico'], 'ISO-8859-1'));
             $data['query']['ValorVendaServico'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVendaServico']));
            # $data['query']['ValorCompraServico'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraServico']));
 			#$data['query']['TipoServico'] = $data['query']['TipoServico'];
@@ -162,7 +162,7 @@ class Servico extends CI_Controller {
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio();
 		$data['select']['ServicoBase'] = $this->ServicoBase_model->select_servicobase(); 
 		
-        $data['titulo'] = 'Editar Serviço';
+        $data['titulo'] = 'Editar Serviço para Venda';
         $data['form_open_path'] = 'servico/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -186,7 +186,7 @@ class Servico extends CI_Controller {
             $this->load->view('servico/pesq_servico', $data);
         } else {
 
-            #$data['query']['NomeServico'] = trim(mb_strtoupper($data['query']['NomeServico'], 'ISO-8859-1'));
+           # $data['query']['NomeServico'] = trim(mb_strtoupper($data['query']['NomeServico'], 'ISO-8859-1'));
             $data['query']['ValorVendaServico'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVendaServico']));
             #$data['query']['ValorCompraServico'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraServico']));
 			#$data['query']['TipoServico'] = $data['query']['TipoServico'];
