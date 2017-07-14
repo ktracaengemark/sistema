@@ -3,8 +3,8 @@
     <div class="row">
         <div class="col-md-9">
 
-            <ul class="nav navbar-nav navbar-left"> 			
-				<li>												
+            <ul class="nav navbar-nav navbar-left">
+				<li>
 					<?php echo form_open(base_url() . 'cliente/pesquisar', 'class="navbar-form navbar-left"'); ?>
 					<form>
 					<div class="input-group">
@@ -12,10 +12,10 @@
 						<span class="input-group-btn">
 							<button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-search"></span></button>
 						</span>
-					</div>						
+					</div>
 					</form>
 					<li><a class="navbar-brand" href="<?php echo base_url(); ?>agenda">AGENDA</a></li>
-				</li>				
+				</li>
 				
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cadastros<span class="caret"></span></a>
@@ -41,7 +41,7 @@
 						<li><a href="<?php echo base_url() ?>atividade/cadastrar/atividade">Atividade dos Fornecedores</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>convenio/cadastrar">Convênios</a></li>
-						<li role="separator" class="divider"></li>						
+						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>produtobase/cadastrar">Tabela de Produtos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>produto/cadastrar">Tabela de Preços de Produtos p/ Venda</a></li>
@@ -49,23 +49,23 @@
 						<li><a href="<?php echo base_url() ?>servicobase/cadastrar">Tabela de Serviços</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>servico/cadastrar">Tabela de Preços de Serviços p/ Venda</a></li>
-						<li role="separator" class="divider"></li>						
+						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>consumo/cadastrar">Produtos Consumidos</a></li>
 						<!--<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>produtoconsumo/cadastrar">Tabela de Produtos p/ Consumo</a></li>
-						<li role="separator" class="divider"></li>												
-						
+						<li role="separator" class="divider"></li>
+
 						<li><a href="<?php echo base_url() ?>formapag/cadastrar/formapag">Forma de Pagamento</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>tipodespesa/cadastrar/tipodespesa">Tipo de Despesa</a></li>
-						<li role="separator" class="divider"></li>						
+						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relapes/cadastrar">Relação Pessoal</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relacom/cadastrar">Relação Comercial</a></li>
-						<li role="separator" class="divider"></li>-->						
+						<li role="separator" class="divider"></li>-->
 					</ul>
 				</li>
-				
+
 				<!--<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Anotações<span class="caret"></span></a>
 					<ul class="dropdown-menu">
@@ -81,14 +81,14 @@
 						<li role="separator" class="divider"></li>
 					</ul>
 				</li>
-				
+
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Financeiro<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo base_url() ?>relatorio/financeiro">Orçamentos & Pagamentos</a></li>
-						<li role="separator" class="divider"></li>				
-						<li><a href="<?php echo base_url() ?>relatorio/despesa">Despesas & Saídas - Antigas</a></li>						
-						<li role="separator" class="divider"></li>	
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>relatorio/despesa">Despesas & Saídas - Antigas</a></li>
+						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/receitas">Receitas & Entradas</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/despesas">Despesas & Saídas</a></li>
@@ -98,11 +98,11 @@
 
 					</ul>
 				</li>-->
-	
+
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relatórios<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="<?php echo base_url() ?>relatorio/clientes">Clientes & Contatos</a></li>											
+						<li><a href="<?php echo base_url() ?>relatorio/clientes">Clientes & Contatos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/profissionais">Funcionários & Contatos.</a></li>
 						<li role="separator" class="divider"></li>
@@ -113,9 +113,9 @@
 						<li><a href="<?php echo base_url() ?>relatorio/orcamento">Clientes & Orçamentos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/receitas">Clientes & Pagamentos</a></li>
-						<li role="separator" class="divider"></li>						
+						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/tarefa">Tarefas dos Funcionários</a></li>
-						<li role="separator" class="divider"></li>						
+						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/despesas">Despesas & Saídas</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/consumo">Produtos Consumidos</a></li>
@@ -125,18 +125,18 @@
 						<li><a href="<?php echo base_url() ?>relatorio/orcamentosv">Clientes & Serviços</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/clienteprod">Clientes & Produtos</a></li>
-						<li role="separator" class="divider"></li>					
+						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/financeiro">Orçamentos & Pagamentos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/despesa">Despesas & Saídas - Antigas</a></li>
-						<li role="separator" class="divider"></li>-->						
+						<li role="separator" class="divider"></li>-->
 						<!--<li><a href="<?php echo base_url() ?>relatorio/balanco">Balanço</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/estoque">Estoque</a></li>
 						<li role="separator" class="divider"></li>-->
 					</ul>
-				</li>																													
-			</ul>	
+				</li>
+			</ul>
         </div>
         <div class="col-md-3">
             <div class="btn-toolbar navbar-form navbar-right" role="toolbar" aria-label="...">

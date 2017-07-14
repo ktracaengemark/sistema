@@ -15,6 +15,9 @@ if (!$db) {
 
 #echo 'Conexão bem sucedida';
 
+$query = ($_SESSION['log']['NomeProfissional'] && isset($_SESSION['log']['NomeProfissional'])) ?
+    'P.idApp_Profissional = ' . $_SESSION['log']['NomeProfissional'] . ' AND ' : FALSE;
+
 $result = mysql_query(
         'SELECT
             C.idApp_Consulta,
@@ -41,7 +44,7 @@ $result = mysql_query(
         WHERE
             C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
             A.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-
+            ' . $query . '
             A.idApp_Agenda = C.idApp_Agenda
         ORDER BY C.DataInicio ASC'
 );
@@ -70,7 +73,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			$subtitle = utf8_encode($row['NomeProfissional']);
             $profissional = utf8_encode($row['NomeProfissional']);
 			$telefone1 = utf8_encode($row['Telefone1']);
-			
+
         }
 
     }
