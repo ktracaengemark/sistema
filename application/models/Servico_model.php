@@ -66,7 +66,8 @@ class Servico_model extends CI_Model {
             SELECT
                 D.idTab_Servico,
                 CO.Convenio,
-				CONCAT(SB.TipoServicoBase, " --- ", SB.ServicoBase, " --- R$ ", SB.ValorCompraServicoBase) AS ServicoBase,
+				SB.ServicoBase,
+				SB.ValorCompraServicoBase,
 				D.ValorVendaServico				
             
             FROM
@@ -111,7 +112,7 @@ class Servico_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				idTab_Servico,
-				CONCAT(TipoServico, " --- ", Convenio, " --- ", ServicoBase, " --- ", NomeServico, " --- R$", ValorCompraServico) AS NomeServico				
+				CONCAT(ServicoBase) AS NomeServico				
             FROM
                 Tab_Servico
             WHERE

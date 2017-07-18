@@ -108,7 +108,9 @@ class Produto_model extends CI_Model {
             SELECT
                 D.idTab_Produto,
                 CO.Convenio,
-				CONCAT(PB.TipoProdutoBase, " --- ", PB.ProdutoBase, " --- ", PB.UnidadeProdutoBase, " --- R$ ", PB.ValorCompraProdutoBase) AS ProdutoBase,
+				PB.ProdutoBase,
+				PB.UnidadeProdutoBase,
+				PB.ValorCompraProdutoBase,
 				D.ValorVendaProduto
             
             FROM
@@ -121,7 +123,7 @@ class Produto_model extends CI_Model {
                 D.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
 
             ORDER BY
-				D.Convenio DESC,
+				CO.Convenio DESC,
 				PB.ProdutoBase ASC				
 				
         ');
@@ -153,7 +155,7 @@ class Produto_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				idTab_Produto,				
-				CONCAT(TipoProduto, " --- ", NomeProduto, " --- ", ProdutoBase, " --- ", UnidadeProduto, " --- R$", ValorCompraProduto) AS NomeProduto				
+				CONCAT(ProdutoBase, " --- ", UnidadeProduto) AS NomeProduto				
             FROM
                 Tab_Produto
             WHERE
@@ -165,7 +167,7 @@ class Produto_model extends CI_Model {
             $query = $this->db->query(
                 'SELECT                
 				idTab_Produto,
-				CONCAT(TipoProduto, " --- ", NomeProduto, " --- ", ProdutoBase, " --- ", UnidadeProduto, " --- R$", ValorCompraProduto) AS NomeProduto				
+				CONCAT(ProdutoBase, " --- ", UnidadeProduto) AS NomeProduto				
             FROM
                 Tab_Produto
             WHERE

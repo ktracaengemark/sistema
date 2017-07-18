@@ -8,6 +8,7 @@
 
 	<?php echo form_open('agenda', 'role="form"'); ?>
 	<div class="col-md-12">
+		<label for="Ordenamento">Agenda por Profissional:</label>
 		<div class="form-group">
 			<div class="row">
 				<div class="col-md-12">

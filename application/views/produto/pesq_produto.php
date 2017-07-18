@@ -15,10 +15,10 @@
                 <?php echo form_open($form_open_path, 'role="form"'); ?>
                     <div class="row">                      
 						<div class="col-md-3">
-							<label for="Convenio">Convenio</label>								
+							<label for="Convenio">Plano</label>								
 							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 									id="Convenio" autofocus name="Convenio">
-								<option value="">--Selecione o Convenio --</option>
+								<option value="">--Selecione o Plano --</option>
 								<?php
 								foreach ($select['Convenio'] as $key => $row) {
 									if ($query['Convenio'] == $key) {

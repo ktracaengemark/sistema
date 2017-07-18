@@ -109,7 +109,7 @@ class Servicobase_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				idTab_ServicoBase,
-				CONCAT(TipoServicoBase, " --- ", ServicoBase, " --- R$", ValorCompraServicoBase) AS ServicoBase				
+				ServicoBase				
             FROM
                 Tab_ServicoBase
             WHERE
@@ -121,7 +121,7 @@ class Servicobase_model extends CI_Model {
             $query = $this->db->query(
                 'SELECT                
 				idTab_ServicoBase,
-				CONCAT(TipoServicoBase, " --- ", ServicoBase, " --- R$", ValorCompraServicoBase) AS ServicoBase				
+				ServicoBase				
             FROM
                 Tab_ServicoBase
             WHERE
@@ -145,7 +145,7 @@ class Servicobase_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				idTab_ServicoBase,
-				CONCAT(TipoServicoBase, " --- ", ServicoBase, " --- R$", ValorCompraServicoBase) AS ServicoBase				
+				CONCAT(ServicoBase, " --- R$", ValorCompraServicoBase) AS ServicoBase				
             FROM
                 Tab_ServicoBase
             WHERE
@@ -158,7 +158,7 @@ class Servicobase_model extends CI_Model {
             $query = $this->db->query(
                 'SELECT                
 				idTab_ServicoBase,
-				CONCAT(TipoServicoBase, " --- ", ServicoBase, " --- R$", ValorCompraServicoBase) AS ServicoBase				
+				CONCAT(ServicoBase, " --- R$", ValorCompraServicoBase) AS ServicoBase				
             FROM
                 Tab_ServicoBase
             WHERE

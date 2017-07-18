@@ -13,7 +13,7 @@ class Orcatrata extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Orcatrata_model', 'Profissional_model', 'Formapag_model', 'Cliente_model'));
+        $this->load->model(array('Basico_model', 'Orcatrata_model', 'Profissional_model', 'Relatorio_model', 'Formapag_model', 'Cliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -31,7 +31,7 @@ class Orcatrata extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-
+								
         $this->load->view('orcatrata/tela_index', $data);
 
         #load footer view
@@ -47,7 +47,17 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        $data['orcatrata'] = quotes_to_entities($this->input->post(array(
+/*		
+		$data['select']['Convenio'] = $this->Relatorio_model->select_convenio();
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'Convenio',
+        ), TRUE));
+
+        $_SESSION['log']['Convenio'] = ($data['query']['Convenio']) ?
+            $data['query']['Convenio'] : FALSE;        
+*/		
+		$data['orcatrata'] = quotes_to_entities($this->input->post(array(
             #### App_OrcaTrata ####
             'idApp_OrcaTrata',
             'idApp_Cliente',

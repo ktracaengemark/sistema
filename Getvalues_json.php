@@ -15,7 +15,10 @@ if (!$db) {
 #echo 'Conexão bem sucedida';
 
 if ($_GET['q']==1) {
-
+/*
+$query = ($_SESSION['log']['Convenio'] && isset($_SESSION['log']['Convenio'])) ?
+    'P.idTab_Convenio = ' . $_SESSION['log']['Convenio'] . ' AND ' : FALSE;
+*/
     $result = mysql_query(
             'SELECT
                 S.idTab_Servico,
@@ -43,7 +46,10 @@ if ($_GET['q']==1) {
 }
 
 elseif ($_GET['q'] == 2) {
-
+/*
+$query = ($_SESSION['log']['Convenio'] && isset($_SESSION['log']['Convenio'])) ?
+    'P.idTab_Convenio = ' . $_SESSION['log']['Convenio'] . ' AND ' : FALSE;
+*/
     $result = mysql_query(
             'SELECT
                 P.idTab_Produto,
@@ -56,8 +62,8 @@ elseif ($_GET['q'] == 2) {
 				
             WHERE
                 P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
-				ORDER BY CO.Convenio DESC, PB.ProdutoBase ASC '
+                P.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+			ORDER BY CO.Convenio DESC, PB.ProdutoBase ASC '
     );
 
     while ($row = mysql_fetch_assoc($result)) {
@@ -81,7 +87,7 @@ elseif ($_GET['q'] == 3) {
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY Funcao ASC, NomeProfissional ASC'
+			ORDER BY Funcao ASC, NomeProfissional ASC'
     );
 
     while ($row = mysql_fetch_assoc($result)) {

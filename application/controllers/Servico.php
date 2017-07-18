@@ -67,9 +67,9 @@ class Servico extends CI_Controller {
 		
 		#$data['select']['TipoServico'] = $this->Basico_model->select_tiposervico(); 
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio(); 
-		$data['select']['ServicoBase'] = $this->ServicoBase_model->select_servicobase(); 
+		$data['select']['ServicoBase'] = $this->ServicoBase_model->select_servicobase2(); 
 		
-        $data['titulo'] = 'Cadastrar Serviço para Venda';
+        $data['titulo'] = 'Cadastrar Preços dos Serviços para Venda';
         $data['form_open_path'] = 'servico/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -160,7 +160,7 @@ class Servico extends CI_Controller {
 
 		#$data['select']['TipoServico'] = $this->Basico_model->select_tiposervico(); 
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio();
-		$data['select']['ServicoBase'] = $this->ServicoBase_model->select_servicobase(); 
+		$data['select']['ServicoBase'] = $this->ServicoBase_model->select_servicobase2(); 
 		
         $data['titulo'] = 'Editar Serviço para Venda';
         $data['form_open_path'] = 'servico/alterar';

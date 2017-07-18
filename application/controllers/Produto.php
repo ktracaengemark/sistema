@@ -72,7 +72,7 @@ class Produto extends CI_Controller {
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio(); 
 		$data['select']['ProdutoBase'] = $this->ProdutoBase_model->select_produtobase2(); 
 		
-        $data['titulo'] = 'Cadastrar Produtos para Venda';
+        $data['titulo'] = 'Cadastrar Preços dos Produtos para Venda';
         $data['form_open_path'] = 'produto/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';

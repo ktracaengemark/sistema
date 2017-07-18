@@ -22,7 +22,34 @@
 					<div class="form-group">
 						<div class="panel panel-info">
 							<div class="panel-heading">
-								<div class="row">
+								<!--
+								<div class="col-md-2">
+										<?php echo form_open('orcatrata', 'role="form"'); ?>
+										<div class="col-md-12">
+											<label for="Ordenamento">Selecione o Plano:</label>
+											<div class="form-group">
+												<div class="row">
+													<div class="col-md-12">
+														<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()"
+																id="Convenio" name="Convenio">
+															<?php
+															foreach ($select['Convenio'] as $key => $row) {
+																if ($query['Convenio'] == $key) {
+																	echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+																} else {
+																	echo '<option value="' . $key . '">' . $row . '</option>';
+																}
+															}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+								-->
+								<div class="row">																		
 									<div class="col-md-3">
 										<label for="ProfissionalOrca">Profissional:</label>
 										<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">

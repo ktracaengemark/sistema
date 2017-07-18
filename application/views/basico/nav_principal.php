@@ -40,13 +40,13 @@
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>atividade/cadastrar/atividade">Atividade dos Fornecedores</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>convenio/cadastrar">Convênios</a></li>
+						<li><a href="<?php echo base_url() ?>convenio/cadastrar">Cadastrar Planos</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>produtobase/cadastrar">Tabela de Produtos</a></li>
+						<li><a href="<?php echo base_url() ?>produtobase/cadastrar">Cadastrar Produtos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>produto/cadastrar">Tabela de Preços de Produtos p/ Venda</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>servicobase/cadastrar">Tabela de Serviços</a></li>
+						<li><a href="<?php echo base_url() ?>servicobase/cadastrar">Cadastrar Serviços</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>servico/cadastrar">Tabela de Preços de Serviços p/ Venda</a></li>
 						<li role="separator" class="divider"></li>
@@ -118,7 +118,13 @@
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/despesas">Despesas & Saídas</a></li>
 						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>relatorio/produtoscomp">Produtos Comprados</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>relatorio/produtosvend">Produtos Vendidos</a></li>
+						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/consumo">Produtos Consumidos</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>">Estoque = Pcp - (Pvd + Pcs)</a></li>
 						<!--<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/orcacom">Produtos Consumidos</a></li>
 						<li role="separator" class="divider"></li>

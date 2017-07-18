@@ -149,7 +149,7 @@ class Produtobase_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				idTab_ProdutoBase,				
-				CONCAT(TipoProdutoBase, " --- ", ProdutoBase, " --- ", UnidadeProdutoBase, " --- R$", ValorCompraProdutoBase) AS ProdutoBase				
+				CONCAT(ProdutoBase, " --- ", UnidadeProdutoBase) AS ProdutoBase				
             FROM
                 Tab_ProdutoBase
             WHERE
@@ -161,7 +161,7 @@ class Produtobase_model extends CI_Model {
             $query = $this->db->query(
                 'SELECT                
 				idTab_ProdutoBase,
-				CONCAT(TipoProdutoBase, " --- ", ProdutoBase, " --- ", UnidadeProdutoBase, " --- R$", ValorCompraProdutoBase) AS ProdutoBase				
+				CONCAT(ProdutoBase, " --- ", UnidadeProdutoBase) AS ProdutoBase				
             FROM
                 Tab_ProdutoBase
             WHERE
@@ -185,7 +185,7 @@ class Produtobase_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				idTab_ProdutoBase,				
-				CONCAT(TipoProdutoBase, " --- ", ProdutoBase, " --- ", UnidadeProdutoBase, " --- R$", ValorCompraProdutoBase) AS ProdutoBase				
+				CONCAT(ProdutoBase, " --- ", UnidadeProdutoBase, " --- R$", ValorCompraProdutoBase) AS ProdutoBase				
             FROM
                 Tab_ProdutoBase
             WHERE
@@ -198,7 +198,7 @@ class Produtobase_model extends CI_Model {
             $query = $this->db->query(
                 'SELECT                
 				idTab_ProdutoBase,
-				CONCAT(TipoProdutoBase, " --- ", ProdutoBase, " --- ", UnidadeProdutoBase, " --- R$", ValorCompraProdutoBase) AS ProdutoBase				
+				CONCAT(ProdutoBase, " --- ", UnidadeProdutoBase, " --- R$", ValorCompraProdutoBase) AS ProdutoBase				
             FROM
                 Tab_ProdutoBase
             WHERE

@@ -409,6 +409,67 @@ class Relatorio_model extends CI_Model {
 
     }
 	
+	public function list_produtosvend($data, $completo) {
+       
+        if ($data['DataFim']) {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
+        }
+		
+        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+		
+		$query = $this->db->query('
+            SELECT
+                C.NomeCliente,
+				OT.idApp_OrcaTrata,
+                OT.DataOrca,
+				PV.QtdVendaProduto,
+				PV.idApp_ProdutoVenda,
+				PD.idTab_Produto,
+				TPB.ProdutoBase
+            FROM
+                App_Cliente AS C,
+				App_OrcaTrata AS OT
+					LEFT JOIN App_ProdutoVenda AS PV ON OT.idApp_OrcaTrata = PV.idApp_OrcaTrata
+					LEFT JOIN Tab_Produto AS PD ON PV.idTab_Produto = PD.idTab_Produto
+									
+					LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase = PD.ProdutoBase
+
+																								
+            WHERE
+                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND               
+				(' . $consulta . ') AND
+				PV.idApp_ProdutoVenda != "0" AND
+				C.idApp_Cliente = OT.idApp_Cliente
+                ' . $data['NomeCliente'] . '				
+            ORDER BY
+				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+
+        /*
+		LEFT JOIN Tab_ProdutoBase AS TPD ON TPD.idTab_ProdutoBase = PD.idTab_Produto
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+          */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');              
+            }
+            return $query;
+        }
+    }
+	
 	public function list_consumo($data, $completo) {
        
         if ($data['DataFim']) {
@@ -444,7 +505,7 @@ class Relatorio_model extends CI_Model {
                 DS.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND			
 				(' . $consulta . ') 
 				' . $data['TipoDespesa'] . ' AND
-				DS.TipoProduto = "C"
+				DS.TipoProduto = "C" 
 
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -471,8 +532,8 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
-	public function list_consumoBKP($data, $completo) {
+		
+	public function list_produtoscomp($data, $completo) {
        
         if ($data['DataFim']) {
             $consulta =
@@ -483,31 +544,32 @@ class Relatorio_model extends CI_Model {
                 '(DS.DataDespesas >= "' . $data['DataInicio'] . '")';
         }
 		
-		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TD.idTab_TipoConsumo = ' . $data['TipoDespesa'] : FALSE;
+		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TD.idTab_TipoDespesa = ' . $data['TipoDespesa'] : FALSE;
 		
         $query = $this->db->query('
             SELECT
 
                 DS.idApp_Despesas,
 				DS.Despesa,
-				TD.TipoConsumo,
+				TD.TipoDespesa,
 				DS.TipoProduto,
                 DS.DataDespesas,
 				PD.QtdCompraProduto,
-				TPD.NomeProduto
+				TPD.ProdutoBase
 
             FROM
 
                 App_Despesas AS DS							
-                    LEFT JOIN Tab_TipoConsumo AS TD ON TD.idTab_TipoConsumo = DS.TipoDespesa
+                    LEFT JOIN Tab_TipoDespesa AS TD ON TD.idTab_TipoDespesa = DS.TipoDespesa
 					LEFT JOIN App_ProdutoCompra AS PD ON DS.idApp_Despesas = PD.idApp_Despesas
-					LEFT JOIN Tab_Produto AS TPD ON TPD.idTab_Produto = PD.idTab_Produto
+					LEFT JOIN Tab_ProdutoBase AS TPD ON TPD.idTab_ProdutoBase = PD.idTab_Produto
 
             WHERE
                 DS.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND			
 				(' . $consulta . ') 
 				' . $data['TipoDespesa'] . ' AND
-				DS.TipoProduto = "C"
+				DS.TipoProduto = "D" AND
+				idTab_ProdutoBase != "0"
 
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -534,150 +596,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
-	
-	public function list_balanco($data, $completo) {
-       
-        if ($data['DataFim']) {
-            $consulta =
-                '(PP.DataVencimentoPagaveis >= "' . $data['DataInicio'] . '" AND PP.DataVencimentoPagaveis <= "' . $data['DataFim'] . '") OR
-                (PP.DataPagoPagaveis >= "' . $data['DataInicio'] . '" AND PP.DataPagoPagaveis <= "' . $data['DataFim'] . '") OR
-				(PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '" AND PR.DataVencimentoRecebiveis <= "' . $data['DataFim'] . '") OR
-                (PR.DataPagoRecebiveis >= "' . $data['DataInicio'] . '" AND PR.DataPagoRecebiveis <= "' . $data['DataFim'] . '")';
-        }
-        else {
-            $consulta =
-                '(PP.DataVencimentoPagaveis >= "' . $data['DataInicio'] . '") OR
-                (PP.DataPagoPagaveis >= "' . $data['DataInicio'] . '") OR
-				(PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '") OR
-                (PR.DataPagoRecebiveis >= "' . $data['DataInicio'] . '")';
-        }
-		
-		
-        $query = $this->db->query('
-            SELECT
-
-                DS.idApp_Despesas,
-                DS.DataDespesas,
-                DS.DataEntradaDespesas,
-                DS.ValorEntradaDespesas,
-                PP.ParcelaPagaveis,
-                PP.DataVencimentoPagaveis,
-                PP.ValorParcelaPagaveis,
-                PP.DataPagoPagaveis,
-				PP.ValorPagoPagaveis,
-                PP.QuitadoPagaveis,
-				
-				OT.idApp_OrcaTrata,
-                OT.DataOrca,
-                OT.DataEntradaOrca,
-                OT.ValorEntradaOrca,
-                PR.ParcelaRecebiveis,
-                PR.DataVencimentoRecebiveis,
-                PR.ValorParcelaRecebiveis,
-                PR.DataPagoRecebiveis,
-                PR.ValorPagoRecebiveis,
-                PR.QuitadoRecebiveis
-
-            FROM
-
-                App_Despesas AS DS
-                    LEFT JOIN App_ParcelasPagaveis AS PP ON DS.idApp_Despesas = PP.idApp_Despesas,
-				App_OrcaTrata AS OT
-                    LEFT JOIN App_ParcelasRecebiveis AS PR ON OT.idApp_OrcaTrata = PR.idApp_OrcaTrata
 					
-
-            WHERE
-                DS.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-				OT.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-                (' . $consulta . ')
-
-            ORDER BY
-                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
-        ');
-
-        /*
-          echo $this->db->last_query();
-          echo "<pre>";
-          print_r($query);
-          echo "</pre>";
-          exit();
-          */
-
-        if ($completo === FALSE) {
-            return TRUE;
-        } else {
-
-            $somapago=$somapagar=$somaentrada=$somaentrada2=$somareceber=$somarecebido=$somareal=$balanco=$somareal2=$balanco2=$ant=0;
-            foreach ($query->result() as $row) {
-				$row->DataDespesas = $this->basico->mascara_data($row->DataDespesas, 'barras');
-                $row->DataEntradaDespesas = $this->basico->mascara_data($row->DataEntradaDespesas, 'barras');
-                $row->DataVencimentoPagaveis = $this->basico->mascara_data($row->DataVencimentoPagaveis, 'barras');
-                $row->DataPagoPagaveis = $this->basico->mascara_data($row->DataPagoPagaveis, 'barras');
-				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
-                $row->DataEntradaOrca = $this->basico->mascara_data($row->DataEntradaOrca, 'barras');
-                $row->DataVencimentoRecebiveis = $this->basico->mascara_data($row->DataVencimentoRecebiveis, 'barras');
-                $row->DataPagoRecebiveis = $this->basico->mascara_data($row->DataPagoRecebiveis, 'barras');
-
-                $row->QuitadoPagaveis = $this->basico->mascara_palavra_completa($row->QuitadoPagaveis, 'NS');
-				$row->QuitadoRecebiveis = $this->basico->mascara_palavra_completa($row->QuitadoRecebiveis, 'NS');
-                #esse trecho pode ser melhorado, serve para somar apenas uma vez
-                #o valor da entrada que pode aparecer mais de uma vez
-                if ($ant != $row->idApp_Despesas) {
-                    $ant = $row->idApp_Despesas;
-                    $somaentrada += $row->ValorEntradaDespesas;
-                }
-                else {
-                    $row->ValorEntradaDespesas = FALSE;
-                    $row->DataEntradaDespesas = FALSE;
-                }
-				
-				if ($ant != $row->idApp_OrcaTrata) {
-                    $ant = $row->idApp_OrcaTrata;
-                    $somaentrada2 += $row->ValorEntradaOrca;
-                }
-                else {
-                    $row->ValorEntradaOrca = FALSE;
-                    $row->DataEntradaOrca = FALSE;
-                }
-
-                $somarecebido += $row->ValorPagoRecebiveis;
-                $somareceber += $row->ValorParcelaRecebiveis;
-				$somapago += $row->ValorPagoPagaveis;
-				$somapagar += $row->ValorParcelaPagaveis;
-
-                $row->ValorEntradaDespesas = number_format($row->ValorEntradaDespesas, 2, ',', '.');
-                $row->ValorParcelaPagaveis = number_format($row->ValorParcelaPagaveis, 2, ',', '.');
-                $row->ValorPagoPagaveis = number_format($row->ValorPagoPagaveis, 2, ',', '.');
-				$row->ValorEntradaOrca = number_format($row->ValorEntradaOrca, 2, ',', '.');
-                $row->ValorParcelaRecebiveis = number_format($row->ValorParcelaRecebiveis, 2, ',', '.');
-                $row->ValorPagoRecebiveis = number_format($row->ValorPagoRecebiveis, 2, ',', '.');
-				
-            }
-            $somareceber -= $somarecebido;
-            $somareal = $somarecebido;
-            $balanco = $somarecebido + $somareceber;
-			
-			$somapagar -= $somapago;
-			$somareal2 = $somapago;
-			$balanco2 = $somapago + $somapagar;
-
-            $query->soma = new stdClass();
-            $query->soma->somareceber = number_format($somareceber, 2, ',', '.');
-            $query->soma->somarecebido = number_format($somarecebido, 2, ',', '.');
-            $query->soma->somareal = number_format($somareal, 2, ',', '.');
-            $query->soma->somaentrada2 = number_format($somaentrada2, 2, ',', '.');
-            $query->soma->balanco = number_format($balanco, 2, ',', '.');
-			$query->soma->somapagar = number_format($somapagar, 2, ',', '.');
-            $query->soma->somapago = number_format($somapago, 2, ',', '.');
-            $query->soma->somareal2 = number_format($somareal2, 2, ',', '.');
-            $query->soma->balanco2 = number_format($balanco2, 2, ',', '.');
-
-            return $query;
-        }
-
-    }
-
     public function list_orcamento($data, $completo) {
 
         if ($data['DataFim']) {
@@ -783,58 +702,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
-	public function list_orcacom($data, $completo) {
-
-        if ($data['DataFim']) {
-            $consulta =
-                '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
-        }
-        else {
-            $consulta =
-                '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
-        }
-		
-        $query = $this->db->query('
-            SELECT
-                OT.idApp_OrcaTrata,
-                OT.DataOrca,
-				PR.NomeProfissional
-
-            FROM
-                App_OrcaTrata AS OT
-				LEFT JOIN App_Profissional AS PR ON PR.idApp_Profissional = OT.ProfissionalOrca
-
-            WHERE
-                OT.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
 				
-            ORDER BY
-				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
-				
-        ');
-
-        /*
-          echo $this->db->last_query();
-          echo "<pre>";
-          print_r($query);
-          echo "</pre>";
-          exit();
-          */
-
-        if ($completo === FALSE) {
-            return TRUE;
-        } else {
-
-            foreach ($query->result() as $row) {
-				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
-
-            }
-
-            return $query;
-        }
-
-    }
-
 	public function list_despesa($data, $completo) {
 
         if ($data['DataFim']) {
@@ -1506,80 +1374,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
-	public function list_estoque($data, $completo) {
-
-        if ($data['DataFim']) {
-            $consulta =
-                '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
-        }
-        else {
-            $consulta =
-                '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
-        }
-
-        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
-
-        $filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
-
-        $query = $this->db->query('
-            SELECT
-                C.NomeCliente,
-                OT.idApp_OrcaTrata,
-                OT.AprovadoOrca,
-                OT.DataOrca,
-				OT.ValorOrca,
-				PD.QtdVendaProduto,
-				TPD.NomeProduto,
-				PD.ValorVendaProduto
-
-			FROM
-                App_Cliente AS C,
-                App_OrcaTrata AS OT					
-					LEFT JOIN App_ProdutoVenda AS PD ON OT.idApp_OrcaTrata = PD.idApp_OrcaTrata
-					LEFT JOIN Tab_Produto AS TPD ON TPD.idTab_Produto = PD.idTab_Produto
-
-			WHERE
-                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-                (' . $consulta . ') AND
-                ' . $filtro1 . '
-                C.idApp_Cliente = OT.idApp_Cliente
-                ' . $data['NomeCliente'] . '
-
-            ORDER BY
-                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
-        ');
-
-        /*
-          echo $this->db->last_query();
-          echo "<pre>";
-          print_r($query);
-          echo "</pre>";
-          exit();
-          */
-
-        if ($completo === FALSE) {
-            return TRUE;
-        } else {
-
-            $somaorcamento=$somavalorvenda=$subtotalvenda=$subtotalcompra=0;
-            foreach ($query->result() as $row) {
-				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
-                $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
-
-				$somaorcamento += $row->ValorOrca;
-
-                $row->ValorOrca = number_format($row->ValorOrca, 2, ',', '.');
-
-            }
-            $query->soma = new stdClass();
-            $query->soma->somaorcamento = number_format($somaorcamento, 2, ',', '.');
-
-            return $query;
-        }
-
-    }
-
+		
     public function select_cliente() {
 
         $query = $this->db->query('
@@ -1621,6 +1416,29 @@ class Relatorio_model extends CI_Model {
         $array[0] = ':: Todos ::';
         foreach ($query->result() as $row) {
             $array[$row->idApp_Profissional] = $row->NomeProfissional;
+        }
+
+        return $array;
+    }
+	
+	public function select_convenio() {
+
+        $query = $this->db->query('
+            SELECT
+                P.idTab_Convenio,
+                P.Convenio
+            FROM
+                Tab_Convenio AS P
+            WHERE
+                P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+            ORDER BY
+                Convenio ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idTab_Convenio] = $row->Convenio;
         }
 
         return $array;
