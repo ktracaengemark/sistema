@@ -49,9 +49,9 @@
 						<li><a href="<?php echo base_url() ?>servicobase/cadastrar">Cadastrar Serviços</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>servico/cadastrar">Tabela de Preços de Serviços p/ Venda</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>consumo/cadastrar">Produtos Consumidos</a></li>
 						<!--<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>consumo/cadastrar">Produtos Consumidos</a></li>
+						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>produtoconsumo/cadastrar">Tabela de Produtos p/ Consumo</a></li>
 						<li role="separator" class="divider"></li>
 
@@ -123,9 +123,9 @@
 						<li><a href="<?php echo base_url() ?>relatorio/produtosvend">Produtos Vendidos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/consumo">Produtos Consumidos</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>">Estoque = Pcp - (Pvd + Pcs)</a></li>
 						<!--<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>">Estoque = Pcp - (Pvd + Pcs)</a></li>
+						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/orcacom">Produtos Consumidos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/orcamentosv">Clientes & Serviços</a></li>

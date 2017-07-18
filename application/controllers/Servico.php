@@ -13,7 +13,7 @@ class Servico extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Convenio_model', 'Servico_model', 'ServicoBase_model', 'Contatocliente_model'));
+        $this->load->model(array('Basico_model', 'Convenio_model', 'Servico_model', 'Servicobase_model', 'Contatocliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -67,7 +67,7 @@ class Servico extends CI_Controller {
 		
 		#$data['select']['TipoServico'] = $this->Basico_model->select_tiposervico(); 
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio(); 
-		$data['select']['ServicoBase'] = $this->ServicoBase_model->select_servicobase2(); 
+		$data['select']['ServicoBase'] = $this->Servicobase_model->select_servicobase2(); 
 		
         $data['titulo'] = 'Cadastrar Preços dos Serviços para Venda';
         $data['form_open_path'] = 'servico/cadastrar';
@@ -160,7 +160,7 @@ class Servico extends CI_Controller {
 
 		#$data['select']['TipoServico'] = $this->Basico_model->select_tiposervico(); 
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio();
-		$data['select']['ServicoBase'] = $this->ServicoBase_model->select_servicobase2(); 
+		$data['select']['ServicoBase'] = $this->Servicobase_model->select_servicobase2(); 
 		
         $data['titulo'] = 'Editar Serviço para Venda';
         $data['form_open_path'] = 'servico/alterar';

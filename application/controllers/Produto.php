@@ -13,7 +13,7 @@ class Produto extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Convenio_model', 'Produto_model', 'ProdutoBase_model', 'Contatocliente_model'));
+        $this->load->model(array('Basico_model', 'Convenio_model', 'Produto_model', 'Produtobase_model', 'Contatocliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -70,7 +70,7 @@ class Produto extends CI_Controller {
 		
 		#$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();      
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio(); 
-		$data['select']['ProdutoBase'] = $this->ProdutoBase_model->select_produtobase2(); 
+		$data['select']['ProdutoBase'] = $this->Produtobase_model->select_produtobase2(); 
 		
         $data['titulo'] = 'Cadastrar Preços dos Produtos para Venda';
         $data['form_open_path'] = 'produto/cadastrar';
@@ -165,7 +165,7 @@ class Produto extends CI_Controller {
 		
 		#$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio();
-		$data['select']['ProdutoBase'] = $this->ProdutoBase_model->select_produtobase2(); 
+		$data['select']['ProdutoBase'] = $this->Produtobase_model->select_produtobase2(); 
 		
         $data['titulo'] = 'Editar Produto para Venda';
         $data['form_open_path'] = 'produto/alterar';
