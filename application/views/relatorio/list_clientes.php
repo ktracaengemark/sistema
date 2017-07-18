@@ -15,11 +15,11 @@
                         <th class="active">#</th>
                         <th class="active">Cliente</th>
                         <!--<th class="active">Sexo</th>-->
-						<th class="active">Nascimento</th>
+						
                         <th class="active">Telefone</th>
 						<th class="active">Telefone2</th>
 						<th class="active">Telefone3</th>
-                       
+						<th class="active">Nascimento</th>
                         <!--<th class="active">Endereço</th>
                         <th class="active">Bairro</th>
                         <th class="active">Município</th>
@@ -41,11 +41,11 @@
 
                             echo '<td>' . $row['NomeCliente'] . '</td>';
                             #echo '<td>' . $row['Sexo'] . '</td>';
-							echo '<td>' . $row['DataNascimento'] . '</td>';
+							
                             echo '<td>' . $row['Telefone1'] . '</td>';
 							echo '<td>' . $row['Telefone2'] . '</td>';
 							echo '<td>' . $row['Telefone3'] . '</td>';
-							
+							echo '<td>' . $row['DataNascimento'] . '</td>';
                            # echo '<td>' . $row['Endereco'] . '</td>';
                            # echo '<td>' . $row['Bairro'] . '</td>';
                            # echo '<td>' . $row['Municipio'] . '</td>';

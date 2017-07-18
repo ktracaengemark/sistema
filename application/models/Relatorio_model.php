@@ -470,6 +470,70 @@ class Relatorio_model extends CI_Model {
         }
     }
 	
+	public function list_servicosprest($data, $completo) {
+       
+        if ($data['DataFim']) {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
+        }
+		
+        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+		$data['NomeProfissional'] = ($data['NomeProfissional']) ? ' AND P.idApp_Profissional = ' . $data['NomeProfissional'] : FALSE;
+		
+		$query = $this->db->query('
+            SELECT
+                C.NomeCliente,
+				P.NomeProfissional,
+				OT.idApp_OrcaTrata,
+                OT.DataOrca,
+				PV.QtdVendaServico,
+				PV.idApp_ServicoVenda,
+				PD.idTab_Servico,
+				TPB.ServicoBase
+            FROM
+                App_Cliente AS C,
+				App_OrcaTrata AS OT
+					LEFT JOIN App_ServicoVenda AS PV ON OT.idApp_OrcaTrata = PV.idApp_OrcaTrata
+					LEFT JOIN Tab_Servico AS PD ON PV.idTab_Servico = PD.idTab_Servico									
+					LEFT JOIN Tab_ServicoBase AS TPB ON TPB.idTab_ServicoBase = PD.ServicoBase
+					LEFT JOIN App_Profissional AS P ON P.idApp_Profissional = OT.ProfissionalOrca
+
+																								
+            WHERE
+                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND               
+				(' . $consulta . ') AND
+				PV.idApp_ServicoVenda != "0" AND
+				C.idApp_Cliente = OT.idApp_Cliente
+                ' . $data['NomeCliente'] . '
+				' . $data['NomeProfissional'] . ' 
+            ORDER BY
+				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+
+        /*
+		LEFT JOIN Tab_ProdutoBase AS TPD ON TPD.idTab_ProdutoBase = PD.idTab_Produto
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+          */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');              
+            }
+            return $query;
+        }
+    }
+	
 	public function list_consumo($data, $completo) {
        
         if ($data['DataFim']) {

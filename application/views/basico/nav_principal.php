@@ -123,6 +123,8 @@
 						<li><a href="<?php echo base_url() ?>relatorio/produtosvend">Produtos Vendidos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/consumo">Produtos Consumidos</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>relatorio/servicosprest">Serviços Prestados</a></li>
 						<!--<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>">Estoque = Pcp - (Pvd + Pcs)</a></li>
 						<li role="separator" class="divider"></li>
