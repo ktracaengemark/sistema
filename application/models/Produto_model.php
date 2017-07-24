@@ -106,29 +106,33 @@ class Produto_model extends CI_Model {
 
         $query = $this->db->query('
             SELECT
-                D.idTab_Produto,
-                CO.Convenio,
-				PB.ProdutoBase,
-				PB.UnidadeProdutoBase,
-				PB.ValorCompraProdutoBase,
-				D.ValorVendaProduto
-            
-            FROM
-                Tab_Produto AS D
-				LEFT JOIN Tab_ProdutoBase AS PB ON PB.idTab_ProdutoBase = D.ProdutoBase
-				LEFT JOIN Tab_Convenio AS CO ON CO.idTab_Convenio = D.Convenio
-				
-            WHERE
-                D.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-                D.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+                TPV.idTab_Produto,
 
+				TPB.ProdutoBase,
+				TPB.UnidadeProdutoBase,
+				TC.Convenio,
+				TE.NomeEmpresa,
+				TPC.ValorCompraProduto,
+				TPV.ValorVendaProduto           
+            FROM
+                Tab_Produto AS TPV				
+				LEFT JOIN Tab_Convenio AS TC ON TC.idTab_Convenio = TPV.Convenio				
+				LEFT JOIN Tab_ProdutoCompra AS TPC ON TPC.idTab_ProdutoCompra = TPV.ProdutoBase				
+				LEFT JOIN App_Empresa AS TE ON TE.idApp_Empresa = TPC.Empresa				
+				LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase= TPC.ProdutoBase				
+            WHERE
+                TPV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
             ORDER BY
-				CO.Convenio DESC,
-				PB.ProdutoBase ASC				
-				
+				TE.NomeEmpresa ASC
+											
         ');
 
         /*
+		
+		LEFT JOIN Tab_ProdutoBase AS PB ON PB.idTab_ProdutoBase = TPC.ProdutoBase
+		
+		
           echo $this->db->last_query();
           $query = $query->result_array();
           echo "<pre>";

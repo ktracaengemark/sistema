@@ -60,29 +60,27 @@ class Servico_model extends CI_Model {
         }
     }
 	
-	public function lista_servico($x) {
+	public function lista_servico1($x) {
 
         $query = $this->db->query('
             SELECT
                 D.idTab_Servico,
                 CO.Convenio,
 				SB.ServicoBase,
-				SB.ValorCompraServicoBase,
-				D.ValorVendaServico				
-            
+				E.NomeEmpresa,
+				D.ValorCompraServico,
+				D.ValorVendaServico				            
             FROM
                 Tab_Servico AS D
                 LEFT JOIN Tab_ServicoBase AS SB ON SB.idTab_ServicoBase = D.ServicoBase    
 				LEFT JOIN Tab_Convenio AS CO ON CO.idTab_Convenio = D.Convenio
-				
-            WHERE
+				LEFT JOIN App_Empresa AS E ON E.idApp_Empresa = D.Empresa            
+			WHERE
                 D.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
                 D.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
-
             ORDER BY
-                CO.Convenio DESC,
-				SB.ServicoBase ASC
-				
+                SB.ServicoBase ASC,
+				CO.Convenio DESC								
         ');
 
         /*
@@ -104,7 +102,101 @@ class Servico_model extends CI_Model {
                 return $query;
             }
         }
-    }    	
+    }
+
+	public function lista_servico($x) {
+
+        $query = $this->db->query('
+            SELECT
+                TSV.idTab_Servico,
+				TPB.ServicoBase,
+				TCO.Convenio,
+				TEM.NomeEmpresa,
+				TSC.ValorCompraServico,
+				TSV.ValorVendaServico           
+            FROM
+                Tab_Servico AS TSV				
+				LEFT JOIN Tab_Convenio AS TCO ON TCO.idTab_Convenio = TSV.Convenio				
+				LEFT JOIN Tab_ServicoCompra AS TSC ON TSC.idTab_ServicoCompra = TSV.ServicoBase				
+				LEFT JOIN App_Empresa AS TEM ON TEM.idApp_Empresa = TSC.Empresa				
+				LEFT JOIN Tab_ServicoBase AS TPB ON TPB.idTab_ServicoBase= TSC.ServicoBase				
+            WHERE
+                TSV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+            ORDER BY
+				TCO.Convenio ASC,
+				TPB.ServicoBase,
+				TEM.NomeEmpresa								
+        ');
+
+        /*	
+          echo $this->db->last_query();
+          $query = $query->result_array();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+          */
+
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+            if ($x === FALSE) {
+                return TRUE;
+            } else {               
+                $query = $query->result_array();
+                return $query;
+            }
+        }
+    }
+
+	public function lista_servico2($x) {
+
+        $query = $this->db->query('
+            SELECT
+                D.idTab_Servico,
+				TPB.ServicoBase,
+				TC.Convenio,
+				TE.NomeEmpresa,
+				TPC.ValorCompraServico,
+				D.ValorVendaServico           
+            FROM
+                Tab_Servico AS D				
+				LEFT JOIN Tab_Convenio AS TC ON TC.idTab_Convenio = D.Convenio				
+				LEFT JOIN Tab_ServicoCompra AS TPC ON TPC.idTab_ServicoCompra = D.ServicoBase				
+				LEFT JOIN App_Empresa AS TE ON TE.idApp_Empresa = TPC.Empresa				
+				LEFT JOIN Tab_ServicoBase AS TPB ON TPB.idTab_ServicoBase= TPC.ServicoBase				
+            WHERE
+                D.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                D.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+            ORDER BY
+				TE.NomeEmpresa ASC											
+        ');
+
+        /*
+		
+		LEFT JOIN Tab_ServicoBase AS PB ON PB.idTab_ServicoBase = TPC.ServicoBase
+		
+		
+          echo $this->db->last_query();
+          $query = $query->result_array();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+          */
+
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+            if ($x === FALSE) {
+                return TRUE;
+            } else {               
+                $query = $query->result_array();
+                return $query;
+            }
+        }
+    }	
 	
 	public function select_servico($data = FALSE) {
 

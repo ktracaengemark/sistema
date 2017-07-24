@@ -66,11 +66,12 @@ class Servicobase_model extends CI_Model {
             SELECT
                 D.idTab_ServicoBase,
                 D.ServicoBase,
-				D.TipoServicoBase,
+				TTP.TipoProduto,
                 D.ValorCompraServicoBase
             
             FROM
-                Tab_ServicoBase AS D                    
+                Tab_ServicoBase AS D
+				LEFT JOIN Tab_TipoProduto AS TTP ON TTP.Abrev = D.TipoServicoBase
 
             WHERE
                 D.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
@@ -145,7 +146,7 @@ class Servicobase_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				idTab_ServicoBase,
-				CONCAT(ServicoBase, " --- R$", ValorCompraServicoBase) AS ServicoBase				
+				CONCAT(ServicoBase) AS ServicoBase				
             FROM
                 Tab_ServicoBase
             WHERE
@@ -158,7 +159,7 @@ class Servicobase_model extends CI_Model {
             $query = $this->db->query(
                 'SELECT                
 				idTab_ServicoBase,
-				CONCAT(ServicoBase, " --- R$", ValorCompraServicoBase) AS ServicoBase				
+				CONCAT(ServicoBase) AS ServicoBase				
             FROM
                 Tab_ServicoBase
             WHERE

@@ -4,17 +4,17 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Funcao_model extends CI_Model {
+class Tipoconsumo_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
         $this->load->database();
         $this->load->library('basico');
     }
-   
-    public function set_funcao($data) {
 
-        $query = $this->db->insert('Tab_Funcao', $data);
+    public function set_tipoconsumo($data) {
+
+        $query = $this->db->insert('Tab_TipoConsumo', $data);
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -24,17 +24,17 @@ class Funcao_model extends CI_Model {
         }
     }
 
-    public function get_funcao($data) {
-        $query = $this->db->query('SELECT * FROM Tab_Funcao WHERE idTab_Funcao = ' . $data);
+    public function get_tipoconsumo($data) {
+        $query = $this->db->query('SELECT * FROM Tab_TipoConsumo WHERE idTab_TipoConsumo = ' . $data);
         $query = $query->result_array();
 
         return $query[0];
     }
 
-    public function update_funcao($data, $id) {
+    public function update_tipoconsumo($data, $id) {
 
         unset($data['Id']);
-        $query = $this->db->update('Tab_Funcao', $data, array('idTab_Funcao' => $id));
+        $query = $this->db->update('Tab_TipoConsumo', $data, array('idTab_TipoConsumo' => $id));
         /*
           echo $this->db->last_query();
           echo '<br>';
@@ -49,16 +49,26 @@ class Funcao_model extends CI_Model {
             return TRUE;
         }
     }
+		
+	public function delete_tipoconsumo($data) {        
+		$query = $this->db->delete('Tab_TipoConsumo', array('idTab_TipoConsumo' => $data));
 
-    public function lista_funcao($x) {
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
+    public function lista_tipoconsumo($x) {
 
         $query = $this->db->query('SELECT * '
-                . 'FROM Tab_Funcao '
+                . 'FROM Tab_TipoConsumo '
                 . 'WHERE '
                 . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                 . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
-                . 'ORDER BY Funcao ASC ');
-        
+                . 'ORDER BY TipoConsumo ASC ');
+
         /*
           echo $this->db->last_query();
           $query = $query->result_array();
@@ -74,8 +84,8 @@ class Funcao_model extends CI_Model {
                 return TRUE;
             } else {
                 #foreach ($query->result_array() as $row) {
-                #    $row->idTab_Funcao = $row->idTab_Funcao;
-                #    $row->Funcao = $row->Funcao;
+                #    $row->idApp_Profissional = $row->idApp_Profissional;
+                #    $row->NomeProfissional = $row->NomeProfissional;
                 #}
                 $query = $query->result_array();
                 return $query;
@@ -83,41 +93,31 @@ class Funcao_model extends CI_Model {
         }
     }
 	
-	public function select_funcao($data = FALSE) {
+	public function select_tipoconsumo($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query(
                 'SELECT '
-                    . 'idTab_Funcao, '
-                    . 'Funcao '
+                    . 'idTab_TipoConsumo, '
+                    . 'TipoConsumo, '
+                    #. 'ValorVenda '
                     . 'FROM '
-                    . 'Tab_Funcao '					
-					. 'WHERE '
-                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
-                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
-					. 'ORDER BY Funcao ASC ');		
-					
+                    . 'Tab_TipoConsumo '
+                    . 'ORDER BY TipoConsumo ASC ');
+					#. 'WHERE '
+                    #. 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                   # . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] );
         } else {
-            $query = $this->db->query(
-				'SELECT '
-                    . 'idTab_Funcao, '
-                    . 'Funcao '
-                    . 'FROM '
-                    . 'Tab_Funcao '					
-					. 'WHERE '
-                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
-                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
-					. 'ORDER BY Funcao ASC ');
-            
+            #$query = $this->db->query('SELECT idTab_TipoConsumo, TipoConsumo FROM Tab_TipoConsumo WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
+			$query = $this->db->query('SELECT idTab_TipoConsumo, TipoConsumo FROM Tab_TipoConsumo ORDER BY TipoConsumo ASC ');
+
             $array = array();
             foreach ($query->result() as $row) {
-                $array[$row->idTab_Funcao] = $row->Funcao;
-				#$array[$row->Funcao] = $row->Funcao;
+                $array[$row->idTab_TipoConsumo] = $row->TipoConsumo;
             }
         }
 
         return $array;
     }
-	
-    
+
 }

@@ -11,8 +11,7 @@ class Profissional_model extends CI_Model {
         $this->load->database();
         $this->load->library('basico');
     }
-   
-    
+      
     public function set_profissional($data) {
 
         $query = $this->db->insert('App_Profissional', $data);
@@ -72,7 +71,7 @@ class Profissional_model extends CI_Model {
         }
     }
 
-    public function lista_profissional($data, $x) {
+    public function lista_profissionalORIG($data, $x) {
 
         $query = $this->db->query('SELECT * '
                 . 'FROM App_Profissional WHERE '
@@ -107,32 +106,86 @@ class Profissional_model extends CI_Model {
         }
     }
 	
+	public function lista_profissional($data, $x) {
+
+        $query = $this->db->query('
+            SELECT
+                E.idApp_Profissional,
+                E.NomeProfissional,
+				TA.Funcao,
+                E.DataNascimento,
+                E.Telefone1,
+                E.Telefone2,
+                E.Telefone3,
+                E.Sexo,
+                E.Endereco,
+                E.Bairro,
+                CONCAT(M.NomeMunicipio, "/", M.Uf) AS Municipio,
+                E.Email,
+				CE.NomeContatoProf,
+				CE.RelaPes,
+				CE.Sexo
+            FROM
+                App_Profissional AS E
+                    LEFT JOIN Tab_Municipio AS M ON M.idTab_Municipio = E.Municipio
+					LEFT JOIN App_ContatoProf AS CE ON CE.idApp_Profissional = E.idApp_Profissional
+					LEFT JOIN Tab_Funcao AS TA ON TA.idTab_Funcao = E.Funcao
+
+            WHERE
+                E.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+			ORDER BY
+                E.NomeProfissional ASC
+        ');
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+            if ($x === FALSE) {
+                return TRUE;
+            } else {
+                foreach ($query->result() as $row) {
+                    $row->DataNascimento = $this->basico->mascara_data($row->DataNascimento, 'barras');
+                }
+
+                return $query;
+            }
+        }
+    }
+	
 	public function select_profissional($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query(					
 				'SELECT                
-				idApp_Profissional,
-				CONCAT(NomeProfissional, " --- ", Funcao) AS NomeProfissional				
+				P.idApp_Profissional,
+				CONCAT(F.Abrev, " --- ", P.NomeProfissional) AS NomeProfissional				
             FROM
-                App_Profissional
+                App_Profissional AS P
+					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
             WHERE
-                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY Funcao ASC, NomeProfissional ASC'
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                ORDER BY F.Abrev ASC, P.NomeProfissional ASC'
     );
 					
         } else {
             $query = $this->db->query(
                 'SELECT                
-				idApp_Profissional,
-				CONCAT(NomeProfissional, " --- ", Funcao) AS NomeProfissional				
+				P.idApp_Profissional,
+				CONCAT(F.Abrev, " --- ", P.NomeProfissional) AS NomeProfissional				
             FROM
-                App_Profissional
+                App_Profissional AS P
+					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
             WHERE
-                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY Funcao ASC, NomeProfissional ASC'
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                ORDER BY F.Abrev ASC, P.NomeProfissional ASC'
     );
             
             $array = array();

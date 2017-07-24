@@ -102,8 +102,8 @@ class Relacom_model extends CI_Model {
             $query = $this->db->query('SELECT  idTab_RelaCom, RelaCom FROM Tab_RelaCom  ORDER BY RelaCom ASC ');
             $array = array();
             foreach ($query->result() as $row) {
-                #$array[$row->idTab_RelaCom] = $row->RelaCom;
-				$array[$row->RelaCom] = $row->RelaCom;
+                $array[$row->idTab_RelaCom] = $row->RelaCom;
+				#$array[$row->RelaCom] = $row->RelaCom;
             }
         }
 

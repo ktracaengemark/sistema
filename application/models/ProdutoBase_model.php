@@ -105,12 +105,12 @@ class Produtobase_model extends CI_Model {
             SELECT
                 D.idTab_ProdutoBase,
                 D.ProdutoBase,
-				D.TipoProdutoBase,
+				TTP.TipoProduto,
 				D.UnidadeProdutoBase, 
-                D.ValorCompraProdutoBase
-           
+                D.ValorCompraProdutoBase          
             FROM
                 Tab_ProdutoBase AS D
+				LEFT JOIN Tab_TipoProduto AS TTP ON TTP.Abrev = D.TipoProdutoBase
 
             WHERE
                 D.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
@@ -185,26 +185,24 @@ class Produtobase_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				idTab_ProdutoBase,				
-				CONCAT(ProdutoBase, " --- ", UnidadeProdutoBase, " --- R$", ValorCompraProdutoBase) AS ProdutoBase				
+				CONCAT(ProdutoBase, " --- ", UnidadeProdutoBase) AS ProdutoBase				
             FROM
                 Tab_ProdutoBase
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-				TipoProdutoBase = "V"
+                idSis_Usuario = ' . $_SESSION['log']['id'] . '
 			ORDER BY TipoProdutoBase DESC, ProdutoBase ASC'
     );
         } else {
             $query = $this->db->query(
                 'SELECT                
 				idTab_ProdutoBase,
-				CONCAT(ProdutoBase, " --- ", UnidadeProdutoBase, " --- R$", ValorCompraProdutoBase) AS ProdutoBase				
+				CONCAT(ProdutoBase, " --- ", UnidadeProdutoBase) AS ProdutoBase				
             FROM
                 Tab_ProdutoBase
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-				TipoProdutoBase = "V"
+                idSis_Usuario = ' . $_SESSION['log']['id'] . '
 			ORDER BY TipoProdutoBase DESC, ProdutoBase ASC'
     );
 

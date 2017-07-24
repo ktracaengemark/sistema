@@ -49,14 +49,34 @@ class Tipodespesa_model extends CI_Model {
             return TRUE;
         }
     }
+	
+	public function delete_tipodespesa($data) {        
+		$query = $this->db->delete('Tab_TipoDespesa', array('idTab_TipoDespesa' => $data));
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+	
+	public function delete_tipoconsumo($data) {        
+		$query = $this->db->delete('Tab_TipoConsumo', array('idTab_TipoConsumo' => $data));
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
 
     public function lista_tipodespesa($x) {
 
         $query = $this->db->query('SELECT * '
                 . 'FROM Tab_TipoDespesa '
-                #. 'WHERE '
-                #. 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
-                #. 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
+                . 'WHERE '
+                . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
                 . 'ORDER BY TipoDespesa ASC ');
 
         /*
@@ -93,13 +113,15 @@ class Tipodespesa_model extends CI_Model {
                     #. 'ValorVenda '
                     . 'FROM '
                     . 'Tab_TipoDespesa '
-                    . 'ORDER BY TipoDespesa ASC ');
-					#. 'WHERE '
-                    #. 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
-                   # . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] );
+
+					. 'WHERE '
+                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] );
+				   
+				   
         } else {
-            #$query = $this->db->query('SELECT idTab_TipoDespesa, TipoDespesa FROM Tab_TipoDespesa WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
-			$query = $this->db->query('SELECT idTab_TipoDespesa, TipoDespesa FROM Tab_TipoDespesa ORDER BY TipoDespesa ASC ');
+            $query = $this->db->query('SELECT idTab_TipoDespesa, TipoDespesa FROM Tab_TipoDespesa WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
+			#$query = $this->db->query('SELECT idTab_TipoDespesa, TipoDespesa FROM Tab_TipoDespesa ORDER BY TipoDespesa ASC ');
 
             $array = array();
             foreach ($query->result() as $row) {

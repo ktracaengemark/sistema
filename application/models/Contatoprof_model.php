@@ -85,6 +85,7 @@ class Contatoprof_model extends CI_Model {
                     $row->Idade = $this->basico->calcula_idade($row->DataNascimento);
                     $row->DataNascimento = $this->basico->mascara_data($row->DataNascimento, 'barras');
                     $row->Sexo = $this->Basico_model->get_sexo($row->Sexo);
+					$row->RelaPes = $this->Basico_model->get_relapes($row->RelaPes);
                 }
 
                 return $query;

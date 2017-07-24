@@ -111,14 +111,14 @@ class Atividade_model extends CI_Model {
             
             $array = array();
             foreach ($query->result() as $row) {
-                #$array[$row->idApp_Atividade] = $row->Atividade;
-				$array[$row->Atividade] = $row->Atividade;
+                $array[$row->idApp_Atividade] = $row->Atividade;
+				#$array[$row->Atividade] = $row->Atividade;
             }
         }
 
         return $array;
     }
-	
+		
 	/*public function select_atividade($data = FALSE) {
 
         if ($data === TRUE) {

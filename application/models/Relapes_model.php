@@ -103,8 +103,8 @@ class Relapes_model extends CI_Model {
 
             $array = array();
             foreach ($query->result() as $row) {
-                #$array[$row->idTab_RelaPes] = $row->RelaPes;
-				$array[$row->RelaPes] = $row->RelaPes;
+                $array[$row->idTab_RelaPes] = $row->RelaPes;
+				#$array[$row->RelaPes] = $row->RelaPes;
             }
         }
 
