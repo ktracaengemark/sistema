@@ -66,6 +66,17 @@
                         
                         }
 						
+						if ($query['TipoFornec']) {
+                            
+                        echo '                                                 
+                        <tr>
+                            <td><span class="glyphicon glyphicon-heart"></span> TipoFornec:</td>
+                            <td>' . $query['TipoFornec'] . '</td>
+                        </tr>
+                        ';
+                        
+                        }
+						
 						if ($query['Atividade']) {
                             
                         echo '                                                 
@@ -110,6 +121,17 @@
                         
                         }
 						
+						if ($query['VendaFornec']) {
+                            
+                        echo '                                                 
+                        <tr>
+                            <td><span class="glyphicon glyphicon-alert"></span> Fornec. P/Venda:</td>
+                            <td>' . $query['VendaFornec'] . '</td>
+                        </tr>
+                        ';
+                        
+                        }
+						
 						if ($query['Ativo']) {
                             
                         echo '                                                 
@@ -119,7 +141,7 @@
                         </tr>
                         ';
                         
-                        }
+                        }												
                         ?>
                         
                     </tbody>

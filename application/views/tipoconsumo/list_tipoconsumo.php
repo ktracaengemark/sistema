@@ -3,8 +3,8 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>Funcao</th>
-			<th>Abrev</th>
+            <th>Serviço</th>
+            
             <th></th>
         </tr>
     </thead>
@@ -16,12 +16,12 @@
             foreach ($q as $row)
             {
 
-                $url = base_url() . 'funcao/alterar/' . $row['idTab_Funcao'];
+                $url = base_url() . 'tipoconsumo/alterar/' . $row['idTab_TipoConsumo'];
                 #$url = '';
 
                 echo '<tr class="clickable-row" data-href="' . $url . '">';
-                    echo '<td>' . $row['Funcao'] . '</td>';
-					echo '<td>' . $row['Abrev'] . '</td>';
+                    echo '<td>' . $row['TipoConsumo'] . '</td>';
+                    #echo '<td>' . str_replace('.',',',$row['ValorVenda']) . '</td>';
                     echo '<td></td>';
                 echo '</tr>';            
 

@@ -1,20 +1,12 @@
 <?php if (isset($msg)) echo $msg; ?>
-
 <div class="row">
-
 	<div class="<?php echo $sidebar; ?>"><?php if (isset($nav_secundario)) echo $nav_secundario; ?></div>
-
 	<div class="<?php echo $main; ?>">
-
 		<?php echo validation_errors(); ?>
-
 		<div class="panel panel-<?php echo $panel; ?>">
-
 			<div class="panel-heading"><strong><?php echo $titulo; ?></strong></div>
 			<div class="panel-body">
-
 				<?php echo form_open_multipart($form_open_path); ?>
-
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-4">
@@ -82,12 +74,9 @@
 						</div>                
 					</div>
 				</div>                 
-
 				<div <?php echo $collapse; ?> id="DadosComplementares">
-
 				<div class="form-group">
-					<div class="row">
-						
+					<div class="row">						
 						<div class="col-md-4">
 							<label for="Telefone2">Telefone ou Celular:</label>
 							<input type="text" class="form-control Celular CelularVariavel" id="Telefone2" maxlength="14" <?php echo $readonly; ?>
@@ -119,7 +108,6 @@
 							</div>
 						</div>
 					</div> 
-
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-6">
@@ -145,7 +133,6 @@
 							</div>                        
 						</div>
 					</div> 
-
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-10">
@@ -183,11 +170,8 @@
 							</div>
 						</div>
 					</div>                 
-
 				</div>                                    
-
-				<br>
-				
+				<br>				
 				<div class="form-group">
                     <div class="row">
                         <input type="hidden" name="idApp_Profissional" value="<?php echo $query['idApp_Profissional']; ?>">
@@ -230,7 +214,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         <?php } else { ?>
                             <div class="col-md-6">
                                 <button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
@@ -239,15 +222,9 @@
                             </div>
                         <?php } ?>
                     </div>
-                </div>
-					
-
+                </div>					
 				</form>
-
 			</div>
-
 		</div>
-
 	</div>
-
 </div>

@@ -14,7 +14,7 @@
 
                 <?php echo form_open($form_open_path, 'role="form"'); ?>
                     <div class="row">
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<label for="TipoServicoBase">Tipo de Servico</label>								
 							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 									id="TipoServicoBase" autofocus name="TipoServicoBase">
@@ -31,19 +31,11 @@
 								?>
 							</select>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-5">
                             <label for="ServicoBase">Nome do Serviço:*</label><br>
                             <input type="text" class="form-control" maxlength="200"
                                     name="ServicoBase" value="<?php echo $query['ServicoBase'] ?>">
-                        </div>
-						<div class="col-md-3">
-                            <label for="ValorCompraServicoBase">Valor de Compra:</label><br>
-                            <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon1">R$</span>
-                                <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
-                                        name="ValorCompraServicoBase" value="<?php echo $query['ValorCompraServicoBase'] ?>">
-                            </div>
-                        </div>																	
+                        </div>																
                     </div>
                     <br>                
                     <div class="form-group">
@@ -56,7 +48,12 @@
 										<span class="glyphicon glyphicon-save"></span> Salvar
 									</button>
 								</div>
-								<div class="col-md-6 text-right">
+								<div class="col-md-3 text-right">											
+									<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>servicocompra/cadastrar" role="button" type="submit"> 
+										<span class="glyphicon glyphicon-list"></span> Fornec & <span class="glyphicon glyphicon-usd"></span>Preco Compra
+									</a>
+								</div>
+								<div class="col-md-3 text-right">
 									<button  type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 										<span class="glyphicon glyphicon-trash"></span> Excluir
 									</button>
@@ -95,6 +92,11 @@
 										<span class="glyphicon glyphicon-save"></span> Salvar
 									</button>
 								</div>
+								<div class="col-md-3 text-right">											
+									<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>servicocompra/cadastrar" role="button" type="submit"> 
+										<span class="glyphicon glyphicon-list"></span> Fornec & <span class="glyphicon glyphicon-usd"></span>Preco Compra
+									</a>
+								</div>								
 							<?php } ?>
 						</div>
 					</div>                

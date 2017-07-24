@@ -13,28 +13,12 @@
             <div class="panel-body">
 
                 <?php echo form_open($form_open_path, 'role="form"'); ?>
-                    <div class="row">                      
-						<div class="col-md-3">
-							<label for="Convenio">Plano</label>								
-							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-									id="Convenio" autofocus name="Convenio">
-								<option value="">--Selecione o Plano --</option>
-								<?php
-								foreach ($select['Convenio'] as $key => $row) {
-									if ($query['Convenio'] == $key) {
-										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-									} else {
-										echo '<option value="' . $key . '">' . $row . '</option>';
-									}
-								}
-								?>
-							</select>
-						</div>
-						<div class="col-md-6">
+                    <div class="row">                      						
+						<div class="col-md-4">
 							<label for="ProdutoBase">Produto</label>								
 							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-									id="ProdutoBase" name="ProdutoBase">
-								<option value="">--Selecione o Produto --</option>
+									id="ProdutoBase" autofocus name="ProdutoBase">
+								<option value="">--Sel. Produto --</option>
 								<?php
 								foreach ($select['ProdutoBase'] as $key => $row) {
 									if ($query['ProdutoBase'] == $key) {
@@ -47,6 +31,24 @@
 							</select>
 						</div>
 						<!--
+						<div class="col-md-2">
+							<label for="Empresa">Fornecedor</label>								
+							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+									id="Empresa"  name="Empresa">
+								<option value="">-- Sel. Fornec. --</option>
+								<?php
+								foreach ($select['Empresa'] as $key => $row) {
+									(!$query['Empresa']) ? $query['Empresa'] = 'V' : FALSE;
+									if ($query['Empresa'] == $key) {
+										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+									} else {
+										echo '<option value="' . $key . '">' . $row . '</option>';
+									}
+								}
+								?>
+							</select>
+						</div>						
+						
 						<div class="col-md-4">
                             <label for="NomeProduto">Nome do Produto para Venda: *</label><br>
                             <input type="text" class="form-control" maxlength="200"
@@ -80,7 +82,7 @@
 							</select>
 						</div>
 						
-						<div class="col-md-3">
+						<div class="col-md-2">
                             <label for="ValorCompraProduto">Valor de Compra: *</label><br>
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon1">R$</span>
@@ -89,7 +91,23 @@
                             </div>
                         </div>
 						-->
-						<div class="col-md-3">
+						<div class="col-md-2">
+							<label for="Convenio">Plano</label>								
+							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+									id="Convenio" autofocus name="Convenio">
+								<option value="">--Sel. Plano --</option>
+								<?php
+								foreach ($select['Convenio'] as $key => $row) {
+									if ($query['Convenio'] == $key) {
+										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+									} else {
+										echo '<option value="' . $key . '">' . $row . '</option>';
+									}
+								}
+								?>
+							</select>
+						</div>
+						<div class="col-md-2">
                             <label for="ValorVendaProduto">Valor de Venda: *</label><br>
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon1">R$</span>
@@ -108,12 +126,22 @@
 							<input type="hidden" name="idTab_Produto" value="<?php echo $query['idTab_Produto']; ?>">
 							<?php if ($metodo == 2) { ?>
 
-								<div class="col-md-6">
+								<div class="col-md-3">
 									<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
 										<span class="glyphicon glyphicon-save"></span> Salvar
 									</button>
 								</div>
-								<div class="col-md-6 text-right">
+								<div class="col-md-3 text-left">											
+									<a class="btn btn-lg btn-success" href="<?php echo base_url() ?>produtobase/cadastrar" role="button"> 
+										<span class="glyphicon glyphicon-plus"></span> Novo Servico
+									</a>
+								</div>
+								<div class="col-md-3 text-right">											
+									<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>produtocompra/cadastrar" role="button"> 
+										<span class="glyphicon glyphicon-list"></span> Fornec & <span class="glyphicon glyphicon-usd"></span> Preco Compra
+									</a>
+								</div>
+								<div class="col-md-3 text-right">
 									<button  type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 										<span class="glyphicon glyphicon-trash"></span> Excluir
 									</button>
@@ -147,29 +175,29 @@
 								</div>
 
 							<?php } else { ?>
-								<div class="col-md-6">
+								<div class="col-md-3">
 									<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
 										<span class="glyphicon glyphicon-save"></span> Salvar
 									</button>
 								</div>
+								<div class="col-md-3 text-left">											
+									<a class="btn btn-lg btn-success" href="<?php echo base_url() ?>produtobase/cadastrar" role="button"> 
+										<span class="glyphicon glyphicon-plus"></span> Novo Servico
+									</a>
+								</div>
+								<div class="col-md-3 text-right">											
+									<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>produtocompra/cadastrar" role="button"> 
+										<span class="glyphicon glyphicon-list"></span> Fornec & <span class="glyphicon glyphicon-usd"></span> Preco Compra
+									</a>
+								</div>
 							<?php } ?>
 						</div>
-					</div>
-
-
-
-					
+					</div>					
                 </form>
-
-                <br>                
-                
+                <br>                               
                 <?php if (isset($list)) echo $list; ?>
-
             </div>
-
         </div>
-
     </div>
     <div class="col-md-2"></div>
-
 </div>

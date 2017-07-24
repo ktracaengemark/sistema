@@ -16,88 +16,77 @@
 					</form>
 					<li><a class="navbar-brand" href="<?php echo base_url(); ?>agenda">AGENDA</a></li>
 				</li>
-				
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cadastros<span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clientes<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Clientes & Contatos</a></li>
 						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Consultas & Sessões</a></li>					
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>cliente/pesquisar"> Pedidos & Orçamentos</a></li>						
+						<!--<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>despesas/cadastrar">Despesas</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>consumo/cadastrar">Produtos Consumidos Inter.</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>relatorio/tarefa">Tarefas dos Funcionários</a></li>-->
+					</ul>
+				</li>								
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mov.Diária<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<!--<li><a href="<?php echo base_url() ?>cliente/pesquisar">Clientes & Contatos</a></li>
+						<li role="separator" class="divider"></li>-->
+						<li><a href="<?php echo base_url() ?>despesas/cadastrar">Despesas</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>consumo/cadastrar">Produtos Consumidos Inter.</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>tarefa/cadastrar">Tarefas dos Funcionários</a></li>						
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin.<span class="caret"></span></a>
+					<ul class="dropdown-menu">
 						<li><a href="<?php echo base_url() ?>profissional/pesquisar">Funcionários & Contatos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>empresa/pesquisar">Fornecedores & Contatos</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Orçamentos & Entradas</a></li>
+						<!--<li><a href="<?php echo base_url() ?>cliente/pesquisar">Pedidos & Orçamentos</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Consultas & Reuniões</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>tarefa/cadastrar">Tarefas dos Funcionários</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>despesas/cadastrar">Despesas & Saídas</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>consumo/cadastrar">Produtos Consumidos</a></li>
-						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Consultas & Sessões</a></li>
+						<li role="separator" class="divider"></li>-->												
 						<li><a href="<?php echo base_url() ?>funcao/cadastrar/funcao">Função dos Funcionários</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>atividade/cadastrar/atividade">Atividade dos Fornecedores</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>convenio/cadastrar">Cadastrar Planos</a></li>
+						<li><a href="<?php echo base_url() ?>convenio/cadastrar">Planos & Convênios</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>produtobase/cadastrar">Cadastrar Produtos</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>produto/cadastrar">Tabela de Preços de Produtos p/ Venda</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>servicobase/cadastrar">Cadastrar Serviços</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>servico/cadastrar">Tabela de Preços de Serviços p/ Venda</a></li>
+						<li><a href="<?php echo base_url() ?>produtobase/cadastrar">Produtos</a></li>
 						<!--<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>consumo/cadastrar">Produtos Consumidos</a></li>
+						<li><a href="<?php echo base_url() ?>produtocompra/cadastrar">Tabela de Preços de Produtos p/ Compra</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>produtoconsumo/cadastrar">Tabela de Produtos p/ Consumo</a></li>
+						<li><a href="<?php echo base_url() ?>produto/cadastrar">Tabela de Preços de Produtos p/ Venda</a></li>-->
 						<li role="separator" class="divider"></li>
-
+						<li><a href="<?php echo base_url() ?>servicobase/cadastrar">Serviços</a></li>
+						<!--<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>servicocompra/cadastrar">Tabela de Preços de Serviços p/ Compra</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>servico/cadastrar">Tabela de Preços de Serviços p/ Venda</a></li>-->
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>tipodespesa/cadastrar">Tipo de Despesa</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>tipoconsumo/cadastrar">Tipo de Consumo</a></li>
+						<!--<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>formapag/cadastrar/formapag">Forma de Pagamento</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>tipodespesa/cadastrar/tipodespesa">Tipo de Despesa</a></li>
-						<li role="separator" class="divider"></li>
+						<li role="separator" class="divider"></li>						
 						<li><a href="<?php echo base_url() ?>relapes/cadastrar">Relação Pessoal</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relacom/cadastrar">Relação Comercial</a></li>
 						<li role="separator" class="divider"></li>-->
+
 					</ul>
 				</li>
-
-				<!--<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Anotações<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Orçamentos & Entradas</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>despesa/cadastrar/despesa">Despesas & Saídas - Antigas</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>despesas/cadastrar">Despesas & Saídas</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>cliente/pesquisar">Consultas & Reuniões</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/tarefa">Tarefas & A Fazer</a></li>
-						<li role="separator" class="divider"></li>
-					</ul>
-				</li>
-
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Financeiro<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="<?php echo base_url() ?>relatorio/financeiro">Orçamentos & Pagamentos</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/despesa">Despesas & Saídas - Antigas</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/receitas">Receitas & Entradas</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/despesas">Despesas & Saídas</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/balanco">Balanço</a></li>
-						<li role="separator" class="divider"></li>
-
-					</ul>
-				</li>-->
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relatórios<span class="caret"></span></a>
@@ -116,19 +105,17 @@
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/tarefa">Tarefas dos Funcionários</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/despesas">Despesas & Saídas</a></li>
+						<li><a href="<?php echo base_url() ?>relatorio/despesas">Despesas</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/produtoscomp">Produtos Comprados</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/produtosvend">Produtos Vendidos</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/consumo">Produtos Consumidos</a></li>
+						<li><a href="<?php echo base_url() ?>relatorio/consumo">Produtos Consumidos Inter.</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/servicosprest">Serviços Prestados</a></li>
 						<!--<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>">Estoque = Pcp - (Pvd + Pcs)</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/orcacom">Produtos Consumidos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/orcamentosv">Clientes & Serviços</a></li>
 						<li role="separator" class="divider"></li>
@@ -136,8 +123,6 @@
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/financeiro">Orçamentos & Pagamentos</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/despesa">Despesas & Saídas - Antigas</a></li>
-						<li role="separator" class="divider"></li>-->
 						<!--<li><a href="<?php echo base_url() ?>relatorio/balanco">Balanço</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/estoque">Estoque</a></li>

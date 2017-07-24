@@ -15,11 +15,11 @@
                     <tr>
                         <th class="active">N. Forn.</th>
                         <th class="active">Fornecedor</th>
-						<th class="active">Atividade</th>
-                        <!--<th class="active">Nascimento</th>-->
-                        <th class="active">Telefone</th>
-                        <!--<th class="active">Sexo</th>
-                        <th class="active">Endereço</th>
+						<th class="active">Serv./Prod.</th>
+                        <th class="active">For.P/Venda</th>
+                        <th class="active">Atividade</th>
+						<th class="active">Telefone</th>						                      
+                        <!--<th class="active">Endereço</th>
                         <th class="active">Bairro</th>
                         <th class="active">Município</th>
                         <th class="active">E-mail</th>-->
@@ -39,10 +39,10 @@
                             echo '<td>' . $row['idApp_Empresa'] . '</td>';
 
                             echo '<td>' . $row['NomeEmpresa'] . '</td>';
-							echo '<td>' . $row['Atividade'] . '</td>';
-                            //echo '<td>' . $row['DataNascimento'] . '</td>';
-                            echo '<td>' . $row['Telefone'] . '</td>';
-                           //echo '<td>' . $row['Sexo'] . '</td>';
+							echo '<td>' . $row['TipoFornec'] . '</td>';
+							echo '<td>' . $row['StatusSN'] . '</td>';
+							echo '<td>' . $row['Atividade'] . '</td>';                           
+                            echo '<td>' . $row['Telefone'] . '</td>';							
                             #echo '<td>' . $row['Endereco'] . '</td>';
                             #echo '<td>' . $row['Bairro'] . '</td>';
                             #echo '<td>' . $row['Municipio'] . '</td>';

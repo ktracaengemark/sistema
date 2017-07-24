@@ -8,7 +8,7 @@
 
 	<?php echo form_open('agenda', 'role="form"'); ?>
 	<div class="col-md-12">
-		<label for="Ordenamento">Agenda por Profissional:</label>
+		<label class="col-md-12 text-center">Agenda por Profissional:</label>
 		<div class="form-group">
 			<div class="row">
 				<div class="col-md-12">
@@ -29,7 +29,7 @@
 		</div>
 	</div>
 	</form>
-
+<div class="col-md-12">
 	<div class="form-group col-md-6">
 		<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>tarefa/cadastrar" role="button">
 			<span class="glyphicon glyphicon-plus"></span> Nova Tarefa
@@ -40,7 +40,7 @@
 			<span class="glyphicon glyphicon-list"></span> Lista Tarefa
 		</a>
 	</div>
-
+</div>
 	<div id="datepickerinline"></div>
 
     <table class="table table-condensed table-bordered">

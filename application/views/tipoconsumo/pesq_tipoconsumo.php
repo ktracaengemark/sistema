@@ -14,22 +14,16 @@
 
                 <?php echo form_open($form_open_path, 'role="form"'); ?>
                     <div class="row">
-                        <div class="col-md-4">
-                            <label for="Convenio">Convenio ou Plano:</label><br>
-                            <input type="text" class="form-control" maxlength="30"
-                                   autofocus name="Convenio" value="<?php echo $query['Convenio'] ?>">
-                        </div>
-						
-						<div class="col-md-3">
-                            <label for="Abrev">Abrev.:</label><br>
-                            <input type="text" class="form-control" maxlength="4"
-                                    name="Abrev" value="<?php echo $query['Abrev'] ?>">
-                        </div>
+                        <div class="col-md-8">
+                            <label for="TipoConsumo">Tipo de Consumo:</label><br>
+                            <input type="text" class="form-control" maxlength="200"
+                                   autofocus name="TipoConsumo" value="<?php echo $query['TipoConsumo'] ?>">
+                        </div>                                             
                     </div>
-                    <br>
-					<div class="form-group">
+                    <br>               
+                    <div class="form-group">
 						<div class="row">
-							<input type="hidden" name="idTab_Convenio" value="<?php echo $query['idTab_Convenio']; ?>">
+							<input type="hidden" name="idTab_TipoConsumo" value="<?php echo $query['idTab_TipoConsumo']; ?>">
 							<?php if ($metodo == 2) { ?>
 
 								<div class="col-md-6">
@@ -61,7 +55,7 @@
 													</button>
 												</div>
 												<div class="col-md-6 text-right">
-													<a class="btn btn-danger" href="<?php echo base_url() . 'convenio/excluir/' . $query['idTab_Convenio'] ?>" role="button">
+													<a class="btn btn-danger" href="<?php echo base_url() . 'tipoconsumo/excluir/' . $query['idTab_TipoConsumo'] ?>" role="button">
 														<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
 													</a>
 												</div>
@@ -78,8 +72,7 @@
 								</div>
 							<?php } ?>
 						</div>
-					</div>
-					
+					</div>                
                 </form>
 
                 <br>                
