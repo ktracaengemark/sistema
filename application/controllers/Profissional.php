@@ -177,7 +177,7 @@ class Profissional extends CI_Controller {
         $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
         $this->form_validation->set_rules('Telefone1', 'Telefone1', 'required|trim');
         $this->form_validation->set_rules('Email', 'E-mail', 'trim|valid_email');
-        $this->form_validation->set_rules('Funcao', 'Funcao', 'required|trim');
+        #$this->form_validation->set_rules('Funcao', 'Funcao', 'required|trim');
 
         $data['select']['Municipio'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
@@ -403,7 +403,9 @@ class Profissional extends CI_Controller {
 		*/
 		$data['query']['profile'] = ($data['query']['Sexo']) ? strtolower($data['query']['Sexo']) : 'o';
         $data['query']['Sexo'] = $this->Basico_model->get_sexo($data['query']['Sexo']);
-
+		$data['query']['Funcao'] = $this->Basico_model->get_funcao($data['query']['Funcao']);
+		$data['query']['Ativo'] = $this->Basico_model->get_ativo($data['query']['Ativo']);
+		
         $data['query']['Telefone'] = $data['query']['Telefone1'];
         ($data['query']['Telefone2']) ? $data['query']['Telefone'] = $data['query']['Telefone'] . ' - ' . $data['query']['Telefone2'] : FALSE;
         ($data['query']['Telefone3']) ? $data['query']['Telefone'] = $data['query']['Telefone'] . ' - ' . $data['query']['Telefone3'] : FALSE;

@@ -66,8 +66,12 @@ class Empresa extends CI_Controller {
             'idSis_Usuario',
             
             'Cnpj',
+			'TipoFornec',
+			'VendaFornec',
         ), TRUE));
 
+		(!$data['query']['TipoFornec']) ? $data['query']['TipoFornec'] = 'P' : FALSE;
+		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #$this->form_validation->set_rules('NomeEmpresa', 'Nome do Responsável', 'required|trim|is_unique_duplo[App_Empresa.NomeEmpresa.DataNascimento.' . $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql') . ']');
@@ -81,6 +85,9 @@ class Empresa extends CI_Controller {
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Atividade'] = $this->Atividade_model->select_atividade();
 		$data['select']['Ativo'] = $this->Basico_model->select_status_sn();
+		$data['select']['VendaFornec'] = $this->Basico_model->select_status_sn();
+		$data['select']['TipoFornec'] = $this->Basico_model->select_tipofornec();
+		
 		
         $data['titulo'] = 'Cadastrar Fornecedor';
         $data['form_open_path'] = 'empresa/cadastrar';
@@ -108,7 +115,8 @@ class Empresa extends CI_Controller {
             $data['query']['NomeEmpresa'] = trim(mb_strtoupper($data['query']['NomeEmpresa'], 'ISO-8859-1'));
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
             $data['query']['Obs'] = nl2br($data['query']['Obs']);
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['TipoFornec'] = $data['query']['TipoFornec'];
+			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
             $data['campos'] = array_keys($data['query']);
@@ -162,6 +170,8 @@ class Empresa extends CI_Controller {
             'idSis_Usuario',
             'Email',
             'Cnpj',
+			'TipoFornec',
+			'VendaFornec',
         ), TRUE);
 
         if ($id) {
@@ -169,7 +179,9 @@ class Empresa extends CI_Controller {
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'barras');
         }
 
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #(!$data['query']['TipoFornec']) ? $data['query']['TipoFornec'] = 'P' : FALSE;
+		
+		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #$this->form_validation->set_rules('NomeEmpresa', 'Nome do Responsável', 'required|trim|is_unique_duplo[App_Empresa.NomeEmpresa.DataNascimento.' . $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql') . ']');
         $this->form_validation->set_rules('NomeEmpresa', 'Nome do Responsável', 'required|trim');
@@ -182,6 +194,8 @@ class Empresa extends CI_Controller {
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Atividade'] = $this->Atividade_model->select_atividade();
 		$data['select']['Ativo'] = $this->Basico_model->select_status_sn();
+		$data['select']['VendaFornec'] = $this->Basico_model->select_status_sn();
+		$data['select']['TipoFornec'] = $this->Basico_model->select_tipofornec();
 		
         $data['titulo'] = 'Editar Dados';
         $data['form_open_path'] = 'empresa/alterar';
@@ -209,7 +223,8 @@ class Empresa extends CI_Controller {
             $data['query']['NomeEmpresa'] = trim(mb_strtoupper($data['query']['NomeEmpresa'], 'ISO-8859-1'));
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
             $data['query']['Obs'] = nl2br($data['query']['Obs']);
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];          
+            $data['query']['TipoFornec'] = $data['query']['TipoFornec'];
+			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];          
 
             $data['anterior'] = $this->Empresa_model->get_empresa($data['query']['idApp_Empresa']);
             $data['campos'] = array_keys($data['query']);
@@ -399,7 +414,12 @@ class Empresa extends CI_Controller {
             $data['query']['profile'] = 'o';
         
         $data['query']['Sexo'] = $this->Basico_model->get_sexo($data['query']['Sexo']);
-
+		
+		$data['query']['Atividade'] = $this->Basico_model->get_atividade($data['query']['Atividade']);
+		$data['query']['TipoFornec'] = $this->Basico_model->get_tipofornec($data['query']['TipoFornec']);
+		$data['query']['VendaFornec'] = $this->Basico_model->get_vendafornec($data['query']['VendaFornec']);
+		$data['query']['Ativo'] = $this->Basico_model->get_ativo($data['query']['Ativo']);
+		
         $data['query']['Telefone'] = $data['query']['Telefone1'];
         ($data['query']['Telefone2']) ? $data['query']['Telefone'] = $data['query']['Telefone'] . ' - ' . $data['query']['Telefone2'] : FALSE;
         ($data['query']['Telefone3']) ? $data['query']['Telefone'] = $data['query']['Telefone'] . ' - ' . $data['query']['Telefone3'] : FALSE;

@@ -13,7 +13,7 @@ class Produto extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Convenio_model', 'Produto_model', 'Produtobase_model', 'Contatocliente_model'));
+        $this->load->model(array('Basico_model', 'Convenio_model', 'Produto_model', 'Produtobase_model', 'Produtocompra_model', 'Empresa_model', 'Contatocliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -53,10 +53,11 @@ class Produto extends CI_Controller {
             #'Quantidade',
             #'UnidadeProduto',          
             'ValorVendaProduto',
-			#'ValorCompraProduto',
+			'ValorCompraProduto',
 			#'TipoProduto',
 			'Convenio',
 			'ProdutoBase',
+			'Empresa',
 			
                 ), TRUE));
 
@@ -70,9 +71,11 @@ class Produto extends CI_Controller {
 		
 		#$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();      
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio(); 
-		$data['select']['ProdutoBase'] = $this->Produtobase_model->select_produtobase2(); 
+		#$data['select']['ProdutoBase'] = $this->Produtobase_model->select_produtobase2();
+		$data['select']['ProdutoBase'] = $this->Produtocompra_model->select_produtocompra();
+		$data['select']['Empresa'] = $this->Empresa_model->select_empresa1(); 
 		
-        $data['titulo'] = 'Cadastrar Preços dos Produtos para Venda';
+        $data['titulo'] = 'Cadastrar Plano & Preço de Venda dos Produtos';
         $data['form_open_path'] = 'produto/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -96,13 +99,15 @@ class Produto extends CI_Controller {
             $this->load->view('produto/pesq_produto', $data);
         } else {
 
-           # $data['query']['NomeProduto'] = trim(mb_strtoupper($data['query']['NomeProduto'], 'ISO-8859-1'));
+            
+			#$data['query']['NomeProduto'] = trim(mb_strtoupper($data['query']['NomeProduto'], 'ISO-8859-1'));
             #$data['query']['Quantidade'] = str_replace(',','.',str_replace('.','',$data['query']['Quantidade']));
             $data['query']['ValorVendaProduto'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVendaProduto']));
-			#$data['query']['ValorCompraProduto'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraProduto']));
+			$data['query']['ValorCompraProduto'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraProduto']));
             #$data['query']['TipoProduto'] = $data['query']['TipoProduto'];
 			$data['query']['Convenio'] = $data['query']['Convenio'];
 			$data['query']['ProdutoBase'] = $data['query']['ProdutoBase'];
+			$data['query']['Empresa'] = $data['query']['Empresa'];
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
@@ -145,11 +150,11 @@ class Produto extends CI_Controller {
             #'Quantidade',
             #'UnidadeProduto',
             'ValorVendaProduto',
-			#'ValorCompraProduto',
+			'ValorCompraProduto',
 			'TipoProduto',
 			'Convenio',
 			'ProdutoBase',
-			
+			'Empresa',
                 ), TRUE));
 
         if ($id)
@@ -165,9 +170,11 @@ class Produto extends CI_Controller {
 		
 		#$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio();
-		$data['select']['ProdutoBase'] = $this->Produtobase_model->select_produtobase2(); 
+		#$data['select']['ProdutoBase'] = $this->Produtobase_model->select_produtobase2();
+		$data['select']['ProdutoBase'] = $this->Produtocompra_model->select_produtocompra();
+		$data['select']['Empresa'] = $this->Empresa_model->select_empresa1();
 		
-        $data['titulo'] = 'Editar Produto para Venda';
+        $data['titulo'] = 'Editar Plano & Preço de Venda dos Produtos';
         $data['form_open_path'] = 'produto/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -195,10 +202,11 @@ class Produto extends CI_Controller {
             #$data['query']['Quantidade'] = str_replace(',','.',str_replace('.','',$data['query']['Quantidade']));
             #$data['query']['ValorCompra'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompra']));
             $data['query']['ValorVendaProduto'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVendaProduto']));
-            #$data['query']['ValorCompraProduto'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraProduto']));
+            $data['query']['ValorCompraProduto'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraProduto']));
 			#$data['query']['TipoProduto'] = $data['query']['TipoProduto'];
 			$data['query']['Convenio'] = $data['query']['Convenio'];
 			$data['query']['ProdutoBase'] = $data['query']['ProdutoBase'];			
+			$data['query']['Empresa'] = $data['query']['Empresa'];
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
             $data['anterior'] = $this->Produto_model->get_produto($data['query']['idTab_Produto']);

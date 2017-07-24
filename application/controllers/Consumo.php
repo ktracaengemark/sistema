@@ -13,7 +13,7 @@ class Consumo extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Servico_model', 'Produto_model', 'ServicoBase_model', 'ProdutoBase_model', 'Consumo_model', 'Tipodespesa_model', 'Profissional_model', 'Formapag_model', 'Cliente_model'));
+        $this->load->model(array('Basico_model', 'Servico_model', 'Produto_model', 'ServicoBase_model', 'ProdutoBase_model', 'Produtocompra_model', 'Servicocompra_model', 'Consumo_model', 'Tipodespesa_model', 'Profissional_model', 'Formapag_model', 'Cliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -135,8 +135,8 @@ class Consumo extends CI_Controller {
 
         #### App_Despesas ####
         $this->form_validation->set_rules('DataDespesas', 'Data da Despesa', 'required|trim|valid_date');
-        $this->form_validation->set_rules('Despesa', 'Despesa', 'required|trim');
-        $this->form_validation->set_rules('TipoDespesa', 'Tipo de Consumo', 'required|trim');
+        #$this->form_validation->set_rules('Despesa', 'Despesa', 'required|trim');
+        #$this->form_validation->set_rules('TipoDespesa', 'Tipo de Consumo', 'required|trim');
         $this->form_validation->set_rules('ProfissionalDespesas', 'Profissional', 'required|trim');
 		#$this->form_validation->set_rules('FormaPagamentoDespesas', 'Forma de Pagamento', 'required|trim');
 		#$this->form_validation->set_rules('QtdParcelasDespesas', 'Qtd de Parcelas', 'required|trim');
@@ -150,8 +150,10 @@ class Consumo extends CI_Controller {
 		$data['select']['QuitadoDespesas'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoPagaveis'] = $this->Basico_model->select_status_sn();
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        $data['select']['Servico'] = $this->ServicoBase_model->select_servicobase();
-        $data['select']['Produto'] = $this->ProdutoBase_model->select_produtobase();
+        #$data['select']['Servico'] = $this->ServicoBase_model->select_servicobase();
+        #$data['select']['Produto'] = $this->ProdutoBase_model->select_produtobase();
+		$data['select']['Servico'] = $this->Servicocompra_model->select_servicocompra2();
+        $data['select']['Produto'] = $this->Produtocompra_model->select_produtocompra2();
 
         $data['titulo'] = 'Cadastar Consumo';
         $data['form_open_path'] = 'consumo/cadastrar';
@@ -475,8 +477,8 @@ class Consumo extends CI_Controller {
 
         #### App_Despesas ####
         $this->form_validation->set_rules('DataDespesas', 'Data da Despesa', 'required|trim|valid_date');
-        $this->form_validation->set_rules('Despesa', 'Despesa', 'required|trim');
-        $this->form_validation->set_rules('TipoDespesa', 'Tipo de Consumo', 'required|trim');
+        #$this->form_validation->set_rules('Despesa', 'Despesa', 'required|trim');
+        #$this->form_validation->set_rules('TipoDespesa', 'Tipo de Consumo', 'required|trim');
         $this->form_validation->set_rules('ProfissionalDespesas', 'Profissional', 'required|trim');
 		#$this->form_validation->set_rules('FormaPagamentoDespesas', 'Forma de Pagamento', 'required|trim');
 		#$this->form_validation->set_rules('QtdParcelasDespesas', 'Qtd de Parcelas', 'required|trim');
@@ -491,8 +493,10 @@ class Consumo extends CI_Controller {
 		$data['select']['QuitadoDespesas'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoPagaveis'] = $this->Basico_model->select_status_sn();
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        $data['select']['Servico'] = $this->ServicoBase_model->select_servicobase();
-        $data['select']['Produto'] = $this->ProdutoBase_model->select_produtobase();
+        #$data['select']['Servico'] = $this->ServicoBase_model->select_servicobase();
+        #$data['select']['Produto'] = $this->ProdutoBase_model->select_produtobase();
+		$data['select']['Servico'] = $this->Servicocompra_model->select_servicocompra2();
+        $data['select']['Produto'] = $this->Produtocompra_model->select_produtocompra2();
 
         $data['titulo'] = 'Editar Consumo';
         $data['form_open_path'] = 'consumo/alterar';

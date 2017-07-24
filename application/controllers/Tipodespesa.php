@@ -201,67 +201,14 @@ class Tipodespesa extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $data['query'] = $this->input->post(array(
-            'idTab_TipoDespesa',
-            'TipoDespesa',
-                ), TRUE);
+                $this->Tipodespesa_model->delete_tipodespesa($id);
 
-        if ($id)
-            $data['query'] = $this->Tipodespesa_model->get_tipodespesa($id);
+                $data['msg'] = '?m=1';
 
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-        $this->form_validation->set_rules('TipoDespesa', 'Nome do TipoDespesa', 'required|trim');
-
-        $data['titulo'] = 'Editar TipoDespesa';
-        $data['form_open_path'] = 'tipodespesa/alterar';
-        $data['readonly'] = '';
-        $data['disabled'] = '';
-        $data['panel'] = 'primary';
-        $data['metodo'] = 2;
-        $data['button'] =
-                '
-                <button class="btn btn-sm btn-warning" name="pesquisar" value="0" type="submit">
-                    <span class="glyphicon glyphicon-edit"></span> Salvar Alteração
-                </button>
-        ';
-
-        $data['sidebar'] = 'col-sm-3 col-md-2';
-        $data['main'] = 'col-sm-7 col-md-8';
-
-        $data['q'] = $this->Tipodespesa_model->lista_tipodespesa(TRUE);
-        $data['list'] = $this->load->view('tipodespesa/list_tipodespesa', $data, TRUE);
-
-        #run form validation
-        if ($this->form_validation->run() === FALSE) {
-            $this->load->view('tipodespesa/pesq_tipodespesa', $data);
-        } else {
-
-            $data['query']['TipoDespesa'] = trim(mb_strtoupper($data['query']['TipoDespesa'], 'ISO-8859-1'));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
-
-            $data['anterior'] = $this->Tipodespesa_model->get_tipodespesa($data['query']['idTab_TipoDespesa']);
-            $data['campos'] = array_keys($data['query']);
-
-            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_TipoDespesa'], TRUE);
-
-            if ($data['auditoriaitem'] && $this->Tipodespesa_model->update_tipodespesa($data['query'], $data['query']['idTab_TipoDespesa']) === FALSE) {
-                $data['msg'] = '?m=2';
-                redirect(base_url() . 'tipodespesa/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
-                exit();
-            } else {
-
-                if ($data['auditoriaitem'] === FALSE) {
-                    $data['msg'] = '';
-                } else {
-                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_TipoDespesa', 'UPDATE', $data['auditoriaitem']);
-                    $data['msg'] = '?m=1';
-                }
-
-                redirect(base_url() . 'tipodespesa/cadastrar/tipodespesa/' . $data['msg']);
-                exit();
-            }
-        }
+				redirect(base_url() . 'tipodespesa/cadastrar/' . $data['msg']);
+				exit();
+            //}
+        //}
 
         $this->load->view('basico/footer');
     }

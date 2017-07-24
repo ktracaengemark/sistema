@@ -429,7 +429,7 @@ class Relatorio extends CI_Controller {
 						
 		$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
 		
-        $data['titulo'] = 'Relatório de Vendas de Produtos';
+        $data['titulo'] = 'Relatório de Produtos Vendidos';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -565,12 +565,12 @@ class Relatorio extends CI_Controller {
 		
         $data['select']['Campo'] = array(
             
-			'DS.idApp_Despesas' => 'Id do Consumo',
-            'DS.DataDespesas' => 'Data do Consumo',
-			'DS.TipoDespesa' => 'Tipo de Consumo',
-			'DS.Despesa' => 'Desc. do Consumo',			
-			'PD.QtdCompraProduto' => 'Qtd. do Produto',
-			'PD.idTab_Produto' => 'Produto',
+			'TCO.idApp_Despesas' => 'Id do Consumo',
+            'TCO.DataDespesas' => 'Data do Consumo',
+			'TCO.TipoDespesa' => 'Tipo de Consumo',
+			'TCO.Despesa' => 'Desc. do Consumo',			
+			'APC.QtdCompraProduto' => 'Qtd. do Produto',
+			'TPB.ProdutoBase' => 'Produto',
 			
         );
 
@@ -581,7 +581,7 @@ class Relatorio extends CI_Controller {
 						
 		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipoconsumo();
 		
-        $data['titulo'] = 'Produtos Consumidos';
+        $data['titulo'] = 'Relatório de Produtos Cons. Inter.';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -642,12 +642,12 @@ class Relatorio extends CI_Controller {
 		
         $data['select']['Campo'] = array(
             
-			'DS.idApp_Despesas' => 'Id da Despesa',
-            'DS.DataDespesas' => 'Data da Despesa',
-			'DS.TipoDespesa' => 'Tipo de Despesa',
-			'DS.Despesa' => 'Desc. da Despesa',			
-			'PD.QtdCompraProduto' => 'Qtd. do Produto',
-			'PD.idTab_Produto' => 'Produto',
+			'TCO.idApp_Despesas' => 'Id do Consumo',
+            'TCO.DataDespesas' => 'Data do Consumo',
+			'TCO.TipoDespesa' => 'Tipo de Consumo',
+			'TCO.Despesa' => 'Desc. do Consumo',			
+			'APC.QtdCompraProduto' => 'Qtd. do Produto',
+			'TPB.ProdutoBase' => 'Produto',
 			
         );
 
@@ -658,7 +658,7 @@ class Relatorio extends CI_Controller {
 						
 		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipodespesa();
 		
-        $data['titulo'] = 'Produtos Comprados';
+        $data['titulo'] = 'Relatório de Produtos Comprados';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -814,6 +814,7 @@ class Relatorio extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'NomeCliente',
+			'Ativo',
             'Ordenamento',
             'Campo',
         ), TRUE));
@@ -821,17 +822,24 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
 
-
-        $data['select']['Campo'] = array(
+        $data['select']['Ativo'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+		
+		$data['select']['Campo'] = array(
             'C.idApp_Cliente' => 'nº Cliente',
 			'C.NomeCliente' => 'Nome do Cliente',
+			'C.Ativo' => 'Ativo',
             'C.DataNascimento' => 'Data de Nascimento',
             'C.Sexo' => 'Sexo',
             'C.Bairro' => 'Bairro',
             'C.Municipio' => 'Município',
             'C.Email' => 'E-mail',
 			'CC.NomeContatoCliente' => 'Contato do Cliente',
-			'CC.RelaCom' => 'Relação',
+			'TCC.RelaPes' => 'Rel. Pes.',
+			'TCC.RelaCom' => 'Rel. Com.',
 			'CC.Sexo' => 'Sexo',
 
         );
@@ -849,7 +857,8 @@ class Relatorio extends CI_Controller {
         if ($this->form_validation->run() !== TRUE) {
 
             $data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
-            $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+			$data['bd']['Ativo'] = $data['query']['Ativo'];
+			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
 
             $data['report'] = $this->Relatorio_model->list_clientes($data['bd'],TRUE);
@@ -901,7 +910,7 @@ class Relatorio extends CI_Controller {
             'P.Municipio' => 'Município',
             'P.Email' => 'E-mail',
 			'CP.NomeContatoProf' => 'Contato do Profissional',
-			'CP.RelaPes' => 'Relação',
+			'TCP.RelaPes' => 'Relação',
 			'CP.Sexo' => 'Sexo',
 
         );
@@ -953,7 +962,8 @@ class Relatorio extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = quotes_to_entities($this->input->post(array(
-            'Ordenamento',
+            'NomeEmpresa',
+			'Ordenamento',
             'Campo',
         ), TRUE));
 
@@ -962,7 +972,8 @@ class Relatorio extends CI_Controller {
 
 
         $data['select']['Campo'] = array(
-            'E.NomeEmpresa' => 'Nome do Fornecedor',
+            'E.idApp_Empresa' => 'nº Empresa',			
+			'E.NomeEmpresa' => 'Nome do Fornecedor',
 			'E.Atividade' => 'Atividade',
             #'E.DataNascimento' => 'Data de Nascimento',
             #'E.Sexo' => 'Sexo',
@@ -970,7 +981,7 @@ class Relatorio extends CI_Controller {
             'E.Municipio' => 'Município',
             'E.Email' => 'E-mail',
 			'CE.NomeContato' => 'Contato da Empresa',
-			'CE.RelaCom' => 'Relação',
+			'TCE.RelaCom' => 'Relação',
 			'CE.Sexo' => 'Sexo',
 
         );
@@ -980,11 +991,13 @@ class Relatorio extends CI_Controller {
             'DESC' => 'Decrescente',
         );
 
+        $data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresas();
+		
         $data['titulo'] = 'Relatório de Fornecedores';
 
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
-
+			$data['bd']['NomeEmpresa'] = $data['query']['NomeEmpresa'];
             $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
 
@@ -1262,7 +1275,7 @@ class Relatorio extends CI_Controller {
 
 
     }
-
+		
 	public function clienteprod() {
 
         if ($this->input->get('m') == 1)

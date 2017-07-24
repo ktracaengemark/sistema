@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class ServicoBase extends CI_Controller {
+class Servicocompra extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -13,7 +13,7 @@ class ServicoBase extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Convenio_model', 'Servicobase_model', 'Contatocliente_model'));
+        $this->load->model(array('Basico_model', 'Convenio_model', 'Servicocompra_model', 'Servicobase_model', 'Empresa_model', 'Contatocliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -49,22 +49,22 @@ class ServicoBase extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'idSis_Usuario',
-			'idTab_ServicoBase',
-            'ServicoBase',
-			#'ValorCompraServicoBase',
-			'TipoServicoBase',
+			'idTab_ServicoCompra',
+			'ValorCompraServico',
+			'ServicoBase',
+			'Empresa',
+			'CodFornec',
                 ), TRUE));
-				
-		#(!$data['query']['TipoServicoBase']) ? $data['query']['TipoServicoBase'] = 'V' : FALSE;
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-        $this->form_validation->set_rules('ServicoBase', 'Nome do Serviço', 'required|trim');
 		
-		$data['select']['TipoServicoBase'] = $this->Basico_model->select_tipoproduto(); 
+		$this->form_validation->set_rules('ServicoBase', 'Serviço', 'required|trim');
 		
-        $data['titulo'] = 'Cadastrar Serviço';
-        $data['form_open_path'] = 'servicobase/cadastrar';
+		$data['select']['ServicoBase'] = $this->Servicobase_model->select_servicobase2(); 
+		$data['select']['Empresa'] = $this->Empresa_model->select_empresa2(); 
+		
+        $data['titulo'] = 'Cadastrar Fornec. e Preço de Compra dos Serviços';
+        $data['form_open_path'] = 'servicocompra/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
         $data['panel'] = 'primary';
@@ -79,38 +79,39 @@ class ServicoBase extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->Servicobase_model->lista_servicobase(TRUE);
-        $data['list'] = $this->load->view('servicobase/list_servicobase', $data, TRUE);
+        $data['q'] = $this->Servicocompra_model->lista_servicocompra(TRUE);
+        $data['list'] = $this->load->view('servicocompra/list_servicocompra', $data, TRUE);
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
-            $this->load->view('servicobase/pesq_servicobase', $data);
+            $this->load->view('servicocompra/pesq_servicocompra', $data);
         } else {
 
-            $data['query']['ServicoBase'] = trim(mb_strtoupper($data['query']['ServicoBase'], 'ISO-8859-1'));
-            #$data['query']['ValorCompraServicoBase'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraServicoBase']));
-			$data['query']['TipoServicoBase'] = $data['query']['TipoServicoBase'];
+			$data['query']['CodFornec'] = trim(mb_strtoupper($data['query']['CodFornec'], 'ISO-8859-1'));
+            $data['query']['ValorCompraServico'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraServico']));
+			$data['query']['ServicoBase'] = $data['query']['ServicoBase'];
+			$data['query']['Empresa'] = $data['query']['Empresa'];
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
 
-            $data['idTab_ServicoBase'] = $this->Servicobase_model->set_servicobase($data['query']);
+            $data['idTab_ServicoCompra'] = $this->Servicocompra_model->set_servicocompra($data['query']);
 
 			
-            if ($data['idTab_ServicoBase'] === FALSE) {
+            if ($data['idTab_ServicoCompra'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
                 $this->basico->erro($msg);
-                $this->load->view('servicobase/cadastrar', $data);
+                $this->load->view('servicocompra/cadastrar', $data);
             } else {
 
-                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_ServicoBase'], FALSE);
-                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_ServicoBase', 'CREATE', $data['auditoriaitem']);
+                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_ServicoCompra'], FALSE);
+                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_ServicoCompra', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'servicobase/cadastrar' . $data['msg']);
+                redirect(base_url() . 'servicocompra/cadastrar' . $data['msg']);
                 exit();
             }
         }
@@ -129,26 +130,26 @@ class ServicoBase extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'idSis_Usuario',
-			'idTab_ServicoBase',
-            'ServicoBase',
-			#'ValorCompraServicoBase',
-			'TipoServicoBase',
+			'idTab_ServicoCompra',
+			'ValorCompraServico',
+			'ServicoBase',
+			'Empresa',
+			'CodFornec',
                 ), TRUE));
 
-		#(!$data['query']['TipoServicoBase']) ? $data['query']['TipoServicoBase'] = 'V' : FALSE;
-		
         if ($id)
-            $data['query'] = $this->Servicobase_model->get_servicobase($id);
+            $data['query'] = $this->Servicocompra_model->get_servicocompra($id);
 
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $this->form_validation->set_rules('ServicoBase', 'Nome do Serviço', 'required|trim');
-
-		$data['select']['TipoServicoBase'] = $this->Basico_model->select_tipoproduto(); 
+		$this->form_validation->set_rules('ServicoBase', 'Serviço', 'required|trim');
 		
-        $data['titulo'] = 'Editar Serviço';
-        $data['form_open_path'] = 'servicobase/alterar';
+		$data['select']['ServicoBase'] = $this->Servicobase_model->select_servicobase2(); 
+		$data['select']['Empresa'] = $this->Empresa_model->select_empresa2();
+		
+        $data['titulo'] = 'Editar Fornec. e Preço de Compra dos Serviços';
+        $data['form_open_path'] = 'servicocompra/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';
         $data['panel'] = 'primary';
@@ -163,38 +164,39 @@ class ServicoBase extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['q'] = $this->Servicobase_model->lista_servicobase(TRUE);
-        $data['list'] = $this->load->view('servicobase/list_servicobase', $data, TRUE);
+        $data['q'] = $this->Servicocompra_model->lista_servicocompra(TRUE);
+        $data['list'] = $this->load->view('servicocompra/list_servicocompra', $data, TRUE);
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
-            $this->load->view('servicobase/pesq_servicobase', $data);
+            $this->load->view('servicocompra/pesq_servicocompra', $data);
         } else {
-
-            $data['query']['ServicoBase'] = trim(mb_strtoupper($data['query']['ServicoBase'], 'ISO-8859-1'));
-            #$data['query']['ValorCompraServicoBase'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraServicoBase']));
-			$data['query']['TipoServicoBase'] = $data['query']['TipoServicoBase'];
+			
+			$data['query']['CodFornec'] = trim(mb_strtoupper($data['query']['CodFornec'], 'ISO-8859-1'));
+            $data['query']['ValorCompraServico'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraServico']));
+			$data['query']['ServicoBase'] = $data['query']['ServicoBase'];
+			$data['query']['Empresa'] = $data['query']['Empresa'];
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
-            $data['anterior'] = $this->Servicobase_model->get_servicobase($data['query']['idTab_ServicoBase']);
+            $data['anterior'] = $this->Servicocompra_model->get_servicocompra($data['query']['idTab_ServicoCompra']);
             $data['campos'] = array_keys($data['query']);
 
-            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_ServicoBase'], TRUE);
+            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_ServicoCompra'], TRUE);
 
-            if ($data['auditoriaitem'] && $this->Servicobase_model->update_servicobase($data['query'], $data['query']['idTab_ServicoBase']) === FALSE) {
+            if ($data['auditoriaitem'] && $this->Servicocompra_model->update_servicocompra($data['query'], $data['query']['idTab_ServicoCompra']) === FALSE) {
                 $data['msg'] = '?m=2';
-                redirect(base_url() . 'servicobase/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
+                redirect(base_url() . 'servicocompra/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
                 exit();
             } else {
 
                 if ($data['auditoriaitem'] === FALSE) {
                     $data['msg'] = '';
                 } else {
-                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_ServicoBase', 'UPDATE', $data['auditoriaitem']);
+                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_ServicoCompra', 'UPDATE', $data['auditoriaitem']);
                     $data['msg'] = '?m=1';
                 }
 
-                redirect(base_url() . 'servicobase/cadastrar/' . $data['msg']);
+                redirect(base_url() . 'servicocompra/cadastrar/' . $data['msg']);
                 exit();
             }
         }
@@ -211,11 +213,11 @@ class ServicoBase extends CI_Controller {
         else
             $data['msg'] = '';
 
-                $this->Servicobase_model->delete_servicobase($id);
+                $this->Servicocompra_model->delete_servicocompra($id);
 
                 $data['msg'] = '?m=1';
 
-				redirect(base_url() . 'servicobase/cadastrar/' . $data['msg']);
+				redirect(base_url() . 'servicocompra/cadastrar/' . $data['msg']);
 				exit();
             //}
         //}

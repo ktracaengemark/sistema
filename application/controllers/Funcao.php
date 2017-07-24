@@ -50,12 +50,14 @@ class Funcao extends CI_Controller {
         $data['query'] = quotes_to_entities($this->input->post(array(
             'idTab_Funcao',
             'Funcao',
+			'Abrev',
                 ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         $this->form_validation->set_rules('Funcao', 'Nome do Funcao', 'required|trim');
-
+		$this->form_validation->set_rules('Abrev', 'Abreviação', 'required|trim');
+		
         $data['titulo'] = 'Cadastrar Funcao';
         $data['form_open_path'] = 'funcao/cadastrar/funcao';
         $data['readonly'] = '';
@@ -81,7 +83,8 @@ class Funcao extends CI_Controller {
         } else {
 
             $data['query']['Funcao'] = trim(mb_strtoupper($data['query']['Funcao'], 'ISO-8859-1'));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+			$data['query']['Abrev'] = trim(mb_strtoupper($data['query']['Abrev'], 'ISO-8859-1'));
+			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
             $data['campos'] = array_keys($data['query']);
@@ -120,6 +123,7 @@ class Funcao extends CI_Controller {
         $data['query'] = $this->input->post(array(
             'idTab_Funcao',
             'Funcao',
+			'Abrev',
                 ), TRUE);
 
         if ($id)
@@ -128,7 +132,8 @@ class Funcao extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         $this->form_validation->set_rules('Funcao', 'Nome do Funcao', 'required|trim');
-
+		$this->form_validation->set_rules('Abrev', 'Abreviação', 'required|trim');
+		
         $data['titulo'] = 'Editar Funcao';
         $data['form_open_path'] = 'funcao/alterar';
         $data['readonly'] = '';
@@ -154,7 +159,8 @@ class Funcao extends CI_Controller {
         } else {
 
             $data['query']['Funcao'] = trim(mb_strtoupper($data['query']['Funcao'], 'ISO-8859-1'));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['Abrev'] = trim(mb_strtoupper($data['query']['Abrev'], 'ISO-8859-1'));
+			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
             $data['anterior'] = $this->Funcao_model->get_funcao($data['query']['idTab_Funcao']);
             $data['campos'] = array_keys($data['query']);

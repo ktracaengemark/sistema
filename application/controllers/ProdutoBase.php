@@ -13,7 +13,7 @@ class ProdutoBase extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Convenio_model', 'Produtobase_model', 'Contatocliente_model'));
+        $this->load->model(array('Basico_model', 'Convenio_model', 'Produtobase_model', 'Empresa_model', 'Contatocliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -51,8 +51,9 @@ class ProdutoBase extends CI_Controller {
             'idTab_ProdutoBase',
             'ProdutoBase',
             'UnidadeProdutoBase',          
-			'ValorCompraProdutoBase',
+			#'ValorCompraProdutoBase',
 			'TipoProdutoBase',
+			#'FornecProdutoBase',
                 ), TRUE));
 
 		(!$data['query']['TipoProdutoBase']) ? $data['query']['TipoProdutoBase'] = 'V' : FALSE;
@@ -63,7 +64,7 @@ class ProdutoBase extends CI_Controller {
 		#$this->form_validation->set_rules('ValorCompraProdutoBase', 'Valor de Compra', 'required|trim');
 		
 		$data['select']['TipoProdutoBase'] = $this->Basico_model->select_tipoproduto();      
-
+		#$data['select']['FornecProdutoBase'] = $this->Empresa_model->select_empresa(); 
 		
         $data['titulo'] = 'Cadastrar Produto';
         $data['form_open_path'] = 'produtobase/cadastrar';
@@ -90,8 +91,9 @@ class ProdutoBase extends CI_Controller {
         } else {
 
             $data['query']['ProdutoBase'] = trim(mb_strtoupper($data['query']['ProdutoBase'], 'ISO-8859-1'));
-			$data['query']['ValorCompraProdutoBase'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraProdutoBase']));
+			#$data['query']['ValorCompraProdutoBase'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraProdutoBase']));
             $data['query']['TipoProdutoBase'] = $data['query']['TipoProdutoBase'];
+			#$data['query']['FornecProdutoBase'] = $data['query']['FornecProdutoBase'];
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
@@ -132,8 +134,9 @@ class ProdutoBase extends CI_Controller {
             'idTab_ProdutoBase',
             'ProdutoBase',
             'UnidadeProdutoBase',
-			'ValorCompraProdutoBase',
-			'TipoProdutoBase',		
+			#'ValorCompraProdutoBase',
+			'TipoProdutoBase',
+			#'FornecProdutoBase',
                 ), TRUE));
 
         if ($id)
@@ -147,6 +150,7 @@ class ProdutoBase extends CI_Controller {
 		#$this->form_validation->set_rules('ValorCompraProdutoBase', 'Valor de Compra', 'required|trim');
 		
 		$data['select']['TipoProdutoBase'] = $this->Basico_model->select_tipoproduto();
+		#$data['select']['FornecProdutoBase'] = $this->Empresa_model->select_empresa();
 		
         $data['titulo'] = 'Editar Produto';
         $data['form_open_path'] = 'produtobase/alterar';
@@ -173,8 +177,9 @@ class ProdutoBase extends CI_Controller {
         } else {
 
             $data['query']['ProdutoBase'] = trim(mb_strtoupper($data['query']['ProdutoBase'], 'ISO-8859-1'));
-            $data['query']['ValorCompraProdutoBase'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraProdutoBase']));
+            #$data['query']['ValorCompraProdutoBase'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraProdutoBase']));
 			$data['query']['TipoProdutoBase'] = $data['query']['TipoProdutoBase'];
+			#$data['query']['FornecProdutoBase'] = $data['query']['FornecProdutoBase'];
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
             $data['anterior'] = $this->Produtobase_model->get_produtobase($data['query']['idTab_ProdutoBase']);

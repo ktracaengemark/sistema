@@ -401,7 +401,8 @@ class Cliente extends CI_Controller {
         $data['query']['profile'] = ($data['query']['Sexo']) ? strtolower($data['query']['Sexo']) : 'o';
 
         $data['query']['Sexo'] = $this->Basico_model->get_sexo($data['query']['Sexo']);
-
+		$data['query']['Ativo'] = $this->Basico_model->get_ativo($data['query']['Ativo']);
+		
         $data['query']['Telefone'] = $data['query']['Telefone1'];
         ($data['query']['Telefone2']) ? $data['query']['Telefone'] = $data['query']['Telefone'] . ' - ' . $data['query']['Telefone2'] : FALSE;
         ($data['query']['Telefone3']) ? $data['query']['Telefone'] = $data['query']['Telefone'] . ' - ' . $data['query']['Telefone3'] : FALSE;
