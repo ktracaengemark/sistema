@@ -15,24 +15,26 @@ if (!$db) {
 #echo 'Conexão bem sucedida';
 
 if ($_GET['q']==1) {
-/*
-$query = ($_SESSION['log']['Convenio'] && isset($_SESSION['log']['Convenio'])) ?
-    'P.idTab_Convenio = ' . $_SESSION['log']['Convenio'] . ' AND ' : FALSE;
-*/
+
     $result = mysql_query(
             'SELECT
-                S.idTab_Servico,
-                CONCAT(CO.Convenio, " --- ", SB.ServicoBase, " --- R$ ", S.ValorVendaServico) AS ServicoBase,
-                S.ValorVendaServico
+                TSV.idTab_Servico,
+                CONCAT(TCO.Abrev, " --- ", TEM.NomeEmpresa, " --- ", TSB.ServicoBase, " --- R$ ", TSV.ValorVendaServico) AS ServicoBase,
+                TSV.ValorVendaServico
             FROM
-                Tab_Servico AS S
-				LEFT JOIN Tab_ServicoBase AS SB ON SB.idTab_ServicoBase = S.ServicoBase
-				LEFT JOIN Tab_Convenio AS CO ON CO.idTab_Convenio = S.Convenio
+                Tab_Servico AS TSV
+				LEFT JOIN Tab_Convenio AS TCO ON TCO.idTab_Convenio = TSV.Convenio				
+				LEFT JOIN Tab_ServicoCompra AS TSC ON TSC.idTab_ServicoCompra = TSV.ServicoBase												
+				LEFT JOIN App_Empresa AS TEM ON TEM.idApp_Empresa = TSC.Empresa				
+				LEFT JOIN Tab_ServicoBase AS TSB ON TSB.idTab_ServicoBase = TSC.ServicoBase								
             WHERE
-                S.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                S.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-			ORDER BY CO.Convenio DESC, SB.ServicoBase ASC'
-    );
+                TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                TSV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+			ORDER BY 
+				TCO.Convenio DESC, 
+				TEM.NomeEmpresa ASC,
+				TSB.ServicoBase 				
+    ');
 
     while ($row = mysql_fetch_assoc($result)) {
 
@@ -46,25 +48,26 @@ $query = ($_SESSION['log']['Convenio'] && isset($_SESSION['log']['Convenio'])) ?
 }
 
 elseif ($_GET['q'] == 2) {
-/*
-$query = ($_SESSION['log']['Convenio'] && isset($_SESSION['log']['Convenio'])) ?
-    'P.idTab_Convenio = ' . $_SESSION['log']['Convenio'] . ' AND ' : FALSE;
-*/
+
     $result = mysql_query(
             'SELECT
-                P.idTab_Produto,
-				CONCAT(CO.Convenio, " --- ", PB.ProdutoBase, " --- ", PB.UnidadeProdutoBase, " --- R$ ", P.ValorVendaProduto) AS ProdutoBase,
-				P.ValorVendaProduto
+                TPV.idTab_Produto,
+				CONCAT(TCO.Abrev, " --- ", TEM.NomeEmpresa, " --- ", TPB.ProdutoBase, " --- ", TPB.UnidadeProdutoBase, " --- R$ ", TPV.ValorVendaProduto) AS ProdutoBase,
+				TPV.ValorVendaProduto
             FROM
-                Tab_Produto AS P
-				LEFT JOIN Tab_ProdutoBase AS PB ON PB.idTab_ProdutoBase = P.ProdutoBase
-				LEFT JOIN Tab_Convenio AS CO ON CO.idTab_Convenio = P.Convenio
-				
+                Tab_Produto AS TPV				
+				LEFT JOIN Tab_Convenio AS TCO ON TCO.idTab_Convenio = TPV.Convenio				
+				LEFT JOIN Tab_ProdutoCompra AS TPC ON TPC.idTab_ProdutoCompra = TPV.ProdutoBase				
+				LEFT JOIN App_Empresa AS TEM ON TEM.idApp_Empresa = TPC.Empresa				
+				LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase = TPC.ProdutoBase								
             WHERE
-                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                P.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-			ORDER BY CO.Convenio DESC, PB.ProdutoBase ASC '
-    );
+                TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                TPV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+			ORDER BY 
+				TCO.Convenio DESC, 
+				TEM.NomeEmpresa ASC,
+				TPB.ProdutoBase 				
+    ');
 
     while ($row = mysql_fetch_assoc($result)) {
 
@@ -80,14 +83,15 @@ elseif ($_GET['q'] == 3) {
 
     $result = mysql_query(
             'SELECT                
-				idApp_Profissional,
-				CONCAT(NomeProfissional, " --- ", Funcao) AS NomeProfissional				
+				P.idApp_Profissional,
+				CONCAT(F.Abrev, " --- ", P.NomeProfissional) AS NomeProfissional				
             FROM
-                App_Profissional
+                App_Profissional AS P
+					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
             WHERE
-                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . '
-			ORDER BY Funcao ASC, NomeProfissional ASC'
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                ORDER BY F.Abrev ASC, P.NomeProfissional ASC'
     );
 
     while ($row = mysql_fetch_assoc($result)) {

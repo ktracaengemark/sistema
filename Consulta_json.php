@@ -42,9 +42,9 @@ $result = mysql_query(
                 LEFT JOIN app.App_Profissional AS P ON C.idApp_Profissional = P.idApp_Profissional
                 LEFT JOIN app.Tab_TipoConsulta AS TC ON C.idTab_TipoConsulta = TC.idTab_TipoConsulta
         WHERE
-            C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-            A.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-            ' . $query . '
+			C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+            A.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND           			
+			' . $query . ' 			
             A.idApp_Agenda = C.idApp_Agenda
         ORDER BY C.DataInicio ASC'
 );
