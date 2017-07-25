@@ -25,14 +25,8 @@
                             <input type="text" class="form-control" maxlength="3"
                                     name="Abrev" value="<?php echo $query['Abrev'] ?>">
                         </div>
-						
-                      
-                        <input type="hidden" name="idTab_Funcao" value="<?php echo $query['idTab_Funcao']; ?>">
-
                     </div>
-
                     <br>
-
 					<div class="form-group">
 						<div class="row">
 							<input type="hidden" name="idTab_Funcao" value="<?php echo $query['idTab_Funcao']; ?>">

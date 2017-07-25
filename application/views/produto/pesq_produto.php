@@ -29,68 +29,7 @@
 								}
 								?>
 							</select>
-						</div>
-						<!--
-						<div class="col-md-2">
-							<label for="Empresa">Fornecedor</label>								
-							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-									id="Empresa"  name="Empresa">
-								<option value="">-- Sel. Fornec. --</option>
-								<?php
-								foreach ($select['Empresa'] as $key => $row) {
-									(!$query['Empresa']) ? $query['Empresa'] = 'V' : FALSE;
-									if ($query['Empresa'] == $key) {
-										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-									} else {
-										echo '<option value="' . $key . '">' . $row . '</option>';
-									}
-								}
-								?>
-							</select>
 						</div>						
-						
-						<div class="col-md-4">
-                            <label for="NomeProduto">Nome do Produto para Venda: *</label><br>
-                            <input type="text" class="form-control" maxlength="200"
-                                   autofocus name="NomeProduto" value="<?php echo $query['NomeProduto'] ?>">
-                        </div>
-						
-						<div class="col-md-2">
-                            <label for="UnidadeProduto">Unid. de Medida:</label><br>
-                            <input type="text" class="form-control" maxlength="20"
-                                    name="UnidadeProduto" value="<?php echo $query['UnidadeProduto'] ?>">
-                        </div>
-						-->
-						
-						
-						<!--
-						<div class="col-md-3">
-							<label for="TipoProduto">Tipo de Produto</label>								
-							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-									id="TipoProduto" autofocus name="TipoProduto">
-								<option value="">-- Sel. Tipo de Produto --</option>
-								<?php
-								foreach ($select['TipoProduto'] as $key => $row) {
-									(!$query['TipoProduto']) ? $query['TipoProduto'] = 'V' : FALSE;
-									if ($query['TipoProduto'] == $key) {
-										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-									} else {
-										echo '<option value="' . $key . '">' . $row . '</option>';
-									}
-								}
-								?>
-							</select>
-						</div>
-						
-						<div class="col-md-2">
-                            <label for="ValorCompraProduto">Valor de Compra: *</label><br>
-                            <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon1">R$</span>
-                                <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
-                                        name="ValorCompraProduto" value="<?php echo $query['ValorCompraProduto'] ?>">
-                            </div>
-                        </div>
-						-->
 						<div class="col-md-2">
 							<label for="Convenio">Plano</label>								
 							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
@@ -114,13 +53,9 @@
                                 <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
                                         name="ValorVendaProduto" value="<?php echo $query['ValorVendaProduto'] ?>">
                             </div>
-                        </div>
-						
-						
+                        </div>												
                     </div>
-
-                    <br>
- 				
+                    <br>				
 					<div class="form-group">
 						<div class="row">
 							<input type="hidden" name="idTab_Produto" value="<?php echo $query['idTab_Produto']; ?>">

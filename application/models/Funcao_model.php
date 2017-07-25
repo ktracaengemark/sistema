@@ -83,7 +83,7 @@ class Funcao_model extends CI_Model {
         }
     }
 	
-	public function select_funcao($data = FALSE) {
+	public function select_funcao1($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query(
@@ -108,6 +108,46 @@ class Funcao_model extends CI_Model {
                     . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                     . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
 					. 'ORDER BY Funcao ASC ');
+            
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->idTab_Funcao] = $row->Funcao;
+				#$array[$row->Funcao] = $row->Funcao;
+            }
+        }
+
+        return $array;
+    }
+	
+	public function select_funcao($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query('
+                SELECT 
+                    idTab_Funcao, 
+                    CONCAT(Abrev, " --- ", Funcao) AS Funcao,
+					Abrev
+				FROM 
+                    Tab_Funcao 					
+				WHERE 
+                    idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND 
+                    idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+				ORDER BY Funcao ASC 
+			');		
+					
+        } else {
+            $query = $this->db->query('
+				SELECT 
+                    idTab_Funcao, 
+                    CONCAT(Abrev, " --- ", Funcao) AS Funcao,
+					Abrev 
+				FROM 
+                    Tab_Funcao 					
+				WHERE 
+                    idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND 
+                    idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+				ORDER BY Funcao ASC 
+			');
             
             $array = array();
             foreach ($query->result() as $row) {

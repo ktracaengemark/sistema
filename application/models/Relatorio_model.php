@@ -1523,6 +1523,30 @@ class Relatorio_model extends CI_Model {
         return $array;
     }
 	
+	public function select_profissional3() {
+
+        $query = $this->db->query('
+            SELECT                
+				P.idApp_Profissional,
+				CONCAT(F.Abrev, " --- ", P.NomeProfissional) AS NomeProfissional				
+            FROM
+                App_Profissional AS P
+					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
+            WHERE
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                ORDER BY P.NomeProfissional ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idApp_Profissional] = $row->NomeProfissional;
+        }
+
+        return $array;
+    }
+	
 	public function select_convenio() {
 
         $query = $this->db->query('
