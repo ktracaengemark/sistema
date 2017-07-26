@@ -107,7 +107,8 @@ class Produto_model extends CI_Model {
         $query = $this->db->query('
             SELECT
                 TPV.idTab_Produto,
-
+				TTP.TipoProduto,
+				TPB.TipoProdutoBase,
 				TPB.ProdutoBase,
 				TPB.UnidadeProdutoBase,
 				TC.Convenio,
@@ -119,12 +120,15 @@ class Produto_model extends CI_Model {
 				LEFT JOIN Tab_Convenio AS TC ON TC.idTab_Convenio = TPV.Convenio				
 				LEFT JOIN Tab_ProdutoCompra AS TPC ON TPC.idTab_ProdutoCompra = TPV.ProdutoBase				
 				LEFT JOIN App_Empresa AS TE ON TE.idApp_Empresa = TPC.Empresa				
-				LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase= TPC.ProdutoBase				
+				LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase= TPC.ProdutoBase
+				LEFT JOIN Tab_TipoProduto AS TTP ON TTP.Abrev = TPB.TipoProdutoBase
             WHERE
                 TPV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
                 TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
             ORDER BY
-				TE.NomeEmpresa ASC
+				TPB.TipoProdutoBase DESC,
+				TE.NomeEmpresa ASC,
+				TPB.ProdutoBase
 											
         ');
 

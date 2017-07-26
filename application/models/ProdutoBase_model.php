@@ -149,25 +149,29 @@ class Produtobase_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				idTab_ProdutoBase,				
-				CONCAT(ProdutoBase, " --- ", UnidadeProdutoBase) AS ProdutoBase				
+				CONCAT(TipoProdutoBase, " -- ", ProdutoBase, " --- ", UnidadeProdutoBase) AS ProdutoBase				
             FROM
                 Tab_ProdutoBase
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-			ORDER BY TipoProdutoBase DESC, ProdutoBase ASC'
+			ORDER BY 
+				TipoProdutoBase DESC, 
+				ProdutoBase ASC'
     );
         } else {
             $query = $this->db->query(
                 'SELECT                
 				idTab_ProdutoBase,
-				CONCAT(ProdutoBase, " --- ", UnidadeProdutoBase) AS ProdutoBase				
+				CONCAT(TipoProdutoBase, " -- ", ProdutoBase, " --- ", UnidadeProdutoBase) AS ProdutoBase				
             FROM
                 Tab_ProdutoBase
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-			ORDER BY TipoProdutoBase DESC, ProdutoBase ASC'
+			ORDER BY 
+				TipoProdutoBase DESC, 
+				ProdutoBase ASC'
     );
 
             $array = array();
@@ -184,26 +188,32 @@ class Produtobase_model extends CI_Model {
         if ($data === TRUE) {
             $array = $this->db->query(
                 'SELECT                
-				idTab_ProdutoBase,				
-				CONCAT(ProdutoBase, " --- ", UnidadeProdutoBase) AS ProdutoBase				
+				idTab_ProdutoBase DESC,				
+				CONCAT(TipoProdutoBase, " -- ", ProdutoBase, " --- ", UnidadeProdutoBase) AS ProdutoBase				
             FROM
                 Tab_ProdutoBase
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . '
-			ORDER BY TipoProdutoBase DESC, ProdutoBase ASC'
+			ORDER BY 
+				idTab_ProdutoBase,
+				TipoProdutoBase DESC, 
+				ProdutoBase ASC'
     );
         } else {
             $query = $this->db->query(
                 'SELECT                
 				idTab_ProdutoBase,
-				CONCAT(ProdutoBase, " --- ", UnidadeProdutoBase) AS ProdutoBase				
+				CONCAT(TipoProdutoBase, " -- ", ProdutoBase, " --- ", UnidadeProdutoBase) AS ProdutoBase				
             FROM
                 Tab_ProdutoBase
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . '
-			ORDER BY TipoProdutoBase DESC, ProdutoBase ASC'
+			ORDER BY 
+				idTab_ProdutoBase DESC,
+				TipoProdutoBase DESC, 
+				ProdutoBase ASC'
     );
 
             $array = array();

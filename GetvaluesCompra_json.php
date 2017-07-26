@@ -19,7 +19,7 @@ if ($_GET['q']==1) {
     $result = mysql_query(
             'SELECT
                 TSC.idTab_ServicoCompra,
-				CONCAT(TEM.NomeEmpresa, " --- ", TSB.ServicoBase) AS ServicoBase,
+				CONCAT(TSB.TipoServicoBase, " -- ", TEM.NomeEmpresa, " --- ", TSB.ServicoBase) AS ServicoBase,
 				TSC.ValorCompraServico               
             FROM
                 Tab_ServicoCompra AS TSC
@@ -30,6 +30,7 @@ if ($_GET['q']==1) {
                 TSC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 TSC.idSis_Usuario = ' . $_SESSION['log']['id'] . '
 			ORDER BY 
+					TSB.TipoServicoBase DESC,
 					TEM.NomeEmpresa ASC,
 					TSB.ServicoBase ASC 
     ');
@@ -49,7 +50,7 @@ elseif ($_GET['q'] == 2) {
     $result = mysql_query(
             'SELECT
                 TPC.idTab_ProdutoCompra,
-				CONCAT(TEM.NomeEmpresa, "---", TPB.ProdutoBase, "---", TPB.UnidadeProdutoBase) AS ProdutoBase,
+				CONCAT(TPB.TipoProdutoBase, " -- ", TEM.NomeEmpresa, " --- ", TPB.ProdutoBase, " --- ", TPB.UnidadeProdutoBase) AS ProdutoBase,
 				TPC.ValorCompraProduto
             FROM
                 Tab_ProdutoCompra AS TPC
@@ -59,6 +60,7 @@ elseif ($_GET['q'] == 2) {
                 TPC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 TPC.idSis_Usuario = ' . $_SESSION['log']['id'] . '				
 			ORDER BY 
+				TPB.TipoProdutoBase DESC,
 				TEM.NomeEmpresa,
 				TPB.ProdutoBase ASC 
     ');

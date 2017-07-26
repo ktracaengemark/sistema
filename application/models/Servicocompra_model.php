@@ -66,18 +66,23 @@ class Servicocompra_model extends CI_Model {
             SELECT
                 D.idTab_ServicoCompra,
 				SB.ServicoBase,
+				TTP.TipoProduto,
 				E.NomeEmpresa,
 				D.CodFornec,
 				D.ValorCompraServico			            
             FROM
                 Tab_ServicoCompra AS D
                 LEFT JOIN Tab_ServicoBase AS SB ON SB.idTab_ServicoBase = D.ServicoBase    
-				LEFT JOIN App_Empresa AS E ON E.idApp_Empresa = D.Empresa            
+				LEFT JOIN App_Empresa AS E ON E.idApp_Empresa = D.Empresa
+				LEFT JOIN Tab_TipoProduto AS TTP ON TTP.Abrev = SB.TipoServicoBase
 			WHERE
                 D.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
                 D.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
             ORDER BY
-                SB.ServicoBase ASC							
+				SB.TipoServicoBase DESC,
+				E.NomeEmpresa,
+				SB.ServicoBase ASC
+				
         ');
 
         /*
@@ -143,32 +148,46 @@ class Servicocompra_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				TSC.idTab_ServicoCompra,				
-				CONCAT(TSB.ServicoBase, " --- ", TE.NomeEmpresa, " --- R$ ", TSC.ValorCompraServico) AS ServicoBase
+				CONCAT(TSB.TipoServicoBase, " --- ", TSB.ServicoBase, " --- ", TE.NomeEmpresa, " --- R$ ", TSC.ValorCompraServico) AS ServicoBase
             FROM
                 Tab_ServicoCompra AS TSC
 					LEFT JOIN Tab_ServicoBase AS TSB ON TSB.idTab_ServicoBase = TSC.ServicoBase
-					LEFT JOIN App_Empresa AS TE ON TE.idApp_Empresa = TSC.Empresa
-					
+					LEFT JOIN App_Empresa AS TE ON TE.idApp_Empresa = TSC.Empresa					
             WHERE
                 TSC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                TSC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+                TSC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TSB.TipoServicoBase = "V"
+				OR
+				TSC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                TSC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TSB.TipoServicoBase = "C&V"
 			ORDER BY 
+				TSC.idTab_ServicoCompra DESC,
+				TSB.TipoServicoBase DESC,
+				TE.NomeEmpresa ASC,
 				TSB.ServicoBase ASC'
     );
         } else {
             $query = $this->db->query(
                 'SELECT                
 				TSC.idTab_ServicoCompra,				
-				CONCAT(TSB.ServicoBase, " --- ", TE.NomeEmpresa, " --- R$ ", TSC.ValorCompraServico) AS ServicoBase
+				CONCAT(TSB.TipoServicoBase, " --- ", TSB.ServicoBase, " --- ", TE.NomeEmpresa, " --- R$ ", TSC.ValorCompraServico) AS ServicoBase
             FROM
                 Tab_ServicoCompra AS TSC
 					LEFT JOIN Tab_ServicoBase AS TSB ON TSB.idTab_ServicoBase = TSC.ServicoBase
-					LEFT JOIN App_Empresa AS TE ON TE.idApp_Empresa = TSC.Empresa
-					
+					LEFT JOIN App_Empresa AS TE ON TE.idApp_Empresa = TSC.Empresa					
             WHERE
                 TSC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                TSC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+                TSC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TSB.TipoServicoBase = "V"
+				OR
+				TSC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                TSC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TSB.TipoServicoBase = "C&V"
 			ORDER BY 
+				TSC.idTab_ServicoCompra DESC,
+				TSB.TipoServicoBase DESC,
+				TE.NomeEmpresa ASC,
 				TSB.ServicoBase ASC'
     );
 
@@ -187,7 +206,7 @@ class Servicocompra_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				TSC.idTab_ServicoCompra,				
-				CONCAT(TE.NomeEmpresa, " --- ", TSB.ServicoBase) AS ServicoBase
+				CONCAT(TSB.TipoServicoBase, " -- ", TE.NomeEmpresa, " --- ", TSB.ServicoBase) AS ServicoBase
             FROM
                 Tab_ServicoCompra AS TSC
 					LEFT JOIN Tab_ServicoBase AS TSB ON TSB.idTab_ServicoBase = TSC.ServicoBase
@@ -197,6 +216,7 @@ class Servicocompra_model extends CI_Model {
                 TSC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 TSC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
 			ORDER BY 
+				TSB.TipoServicoBase DESC,
 				TE.NomeEmpresa,
 				TSB.ServicoBase ASC'
     );
@@ -204,7 +224,7 @@ class Servicocompra_model extends CI_Model {
             $query = $this->db->query(
                 'SELECT                
 				TSC.idTab_ServicoCompra,				
-				CONCAT(TE.NomeEmpresa, " --- ", TSB.ServicoBase) AS ServicoBase
+				CONCAT(TSB.TipoServicoBase, " -- ", TE.NomeEmpresa, " --- ", TSB.ServicoBase) AS ServicoBase
             FROM
                 Tab_ServicoCompra AS TSC
 					LEFT JOIN Tab_ServicoBase AS TSB ON TSB.idTab_ServicoBase = TSC.ServicoBase
@@ -214,6 +234,7 @@ class Servicocompra_model extends CI_Model {
                 TSC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 TSC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
 			ORDER BY 
+				TSB.TipoServicoBase DESC,
 				TE.NomeEmpresa,
 				TSB.ServicoBase ASC'
     );

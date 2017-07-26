@@ -109,7 +109,8 @@ class Servico_model extends CI_Model {
         $query = $this->db->query('
             SELECT
                 TSV.idTab_Servico,
-				TPB.ServicoBase,
+				TTP.TipoProduto,
+				TSB.ServicoBase,
 				TCO.Convenio,
 				TEM.NomeEmpresa,
 				TSC.ValorCompraServico,
@@ -119,13 +120,14 @@ class Servico_model extends CI_Model {
 				LEFT JOIN Tab_Convenio AS TCO ON TCO.idTab_Convenio = TSV.Convenio				
 				LEFT JOIN Tab_ServicoCompra AS TSC ON TSC.idTab_ServicoCompra = TSV.ServicoBase				
 				LEFT JOIN App_Empresa AS TEM ON TEM.idApp_Empresa = TSC.Empresa				
-				LEFT JOIN Tab_ServicoBase AS TPB ON TPB.idTab_ServicoBase= TSC.ServicoBase				
+				LEFT JOIN Tab_ServicoBase AS TSB ON TSB.idTab_ServicoBase= TSC.ServicoBase
+				LEFT JOIN Tab_TipoProduto AS TTP ON TTP.Abrev = TSB.TipoServicoBase
             WHERE
                 TSV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
                 TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
             ORDER BY
 				TCO.Convenio ASC,
-				TPB.ServicoBase,
+				TSB.ServicoBase,
 				TEM.NomeEmpresa								
         ');
 

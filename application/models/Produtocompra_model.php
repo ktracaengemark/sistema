@@ -102,6 +102,8 @@ class Produtocompra_model extends CI_Model {
         $query = $this->db->query('
             SELECT
                 D.idTab_ProdutoCompra,
+				PB.TipoProdutoBase,
+				TTP.TipoProduto,
 				PB.ProdutoBase,
 				PB.UnidadeProdutoBase,
 				E.NomeEmpresa,
@@ -110,11 +112,13 @@ class Produtocompra_model extends CI_Model {
             FROM
                 Tab_ProdutoCompra AS D
 				LEFT JOIN Tab_ProdutoBase AS PB ON PB.idTab_ProdutoBase = D.ProdutoBase
-				LEFT JOIN App_Empresa AS E ON E.idApp_Empresa = D.Empresa				
+				LEFT JOIN App_Empresa AS E ON E.idApp_Empresa = D.Empresa
+				LEFT JOIN Tab_TipoProduto AS TTP ON TTP.Abrev = PB.TipoProdutoBase
             WHERE
                 D.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
                 D.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
             ORDER BY
+				PB.TipoProdutoBase DESC,
 				PB.ProdutoBase ASC,
 				E.NomeEmpresa ASC												
         ');
@@ -146,32 +150,46 @@ class Produtocompra_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				TPC.idTab_ProdutoCompra,				
-				CONCAT(TPB.ProdutoBase, " --- ", TPB.UnidadeProdutoBase, " --- ", TE.NomeEmpresa, " --- R$ ", TPC.ValorCompraProduto) AS ProdutoBase
+				CONCAT(TPB.TipoProdutoBase, " --- ", TE.NomeEmpresa, " --- ", TPB.ProdutoBase, " --- ", TPB.UnidadeProdutoBase, " --- ", TPC.ValorCompraProduto) AS ProdutoBase
             FROM
                 Tab_ProdutoCompra AS TPC
 					LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase = TPC.ProdutoBase
-					LEFT JOIN App_Empresa AS TE ON TE.idApp_Empresa = TPC.Empresa
-					
+					LEFT JOIN App_Empresa AS TE ON TE.idApp_Empresa = TPC.Empresa					
             WHERE
                 TPC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                TPC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+                TPC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TPB.TipoProdutoBase = "V"
+				OR
+				TPC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                TPC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TPB.TipoProdutoBase = "C&V"
 			ORDER BY 
+				TPC.idTab_ProdutoCompra DESC,
+				TPB.TipoProdutoBase DESC,
+				TE.NomeEmpresa,
 				TPB.ProdutoBase ASC'
     );
         } else {
             $query = $this->db->query(
                 'SELECT                
 				TPC.idTab_ProdutoCompra,				
-				CONCAT(TPB.ProdutoBase, " --- ", TPB.UnidadeProdutoBase, " --- ", TE.NomeEmpresa, " --- R$ ", TPC.ValorCompraProduto) AS ProdutoBase
+				CONCAT(TPB.TipoProdutoBase, " --- ", TE.NomeEmpresa, " --- ", TPB.ProdutoBase, " --- ", TPB.UnidadeProdutoBase, " --- ", TPC.ValorCompraProduto) AS ProdutoBase
             FROM
                 Tab_ProdutoCompra AS TPC
 					LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase = TPC.ProdutoBase
-					LEFT JOIN App_Empresa AS TE ON TE.idApp_Empresa = TPC.Empresa
-					
+					LEFT JOIN App_Empresa AS TE ON TE.idApp_Empresa = TPC.Empresa					
             WHERE
                 TPC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                TPC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+                TPC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TPB.TipoProdutoBase = "V"
+				OR
+				TPC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                TPC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TPB.TipoProdutoBase = "C&V"
 			ORDER BY 
+				TPC.idTab_ProdutoCompra DESC,
+				TPB.TipoProdutoBase DESC,
+				TE.NomeEmpresa,
 				TPB.ProdutoBase ASC'
     );
 
@@ -190,7 +208,7 @@ class Produtocompra_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				TPC.idTab_ProdutoCompra,				
-				CONCAT(TE.NomeEmpresa, "---", TPB.ProdutoBase, " --- ", TPB.UnidadeProdutoBase) AS ProdutoBase
+				CONCAT(TPB.TipoProdutoBase, " -- ", TE.NomeEmpresa, " --- ", TPB.ProdutoBase, " --- ", TPB.UnidadeProdutoBase) AS ProdutoBase
             FROM
                 Tab_ProdutoCompra AS TPC
 					LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase = TPC.ProdutoBase
@@ -200,6 +218,7 @@ class Produtocompra_model extends CI_Model {
                 TPC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 TPC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
 			ORDER BY 
+				TPB.TipoProdutoBase DESC,
 				TE.NomeEmpresa,
 				TPB.ProdutoBase ASC'
     );
@@ -207,7 +226,7 @@ class Produtocompra_model extends CI_Model {
             $query = $this->db->query(
                 'SELECT                
 				TPC.idTab_ProdutoCompra,				
-				CONCAT(TE.NomeEmpresa, "---", TPB.ProdutoBase, " --- ", TPB.UnidadeProdutoBase) AS ProdutoBase
+				CONCAT(TPB.TipoProdutoBase, " -- ", TE.NomeEmpresa, " --- ", TPB.ProdutoBase, " --- ", TPB.UnidadeProdutoBase) AS ProdutoBase
             FROM
                 Tab_ProdutoCompra AS TPC
 					LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase = TPC.ProdutoBase
@@ -217,6 +236,7 @@ class Produtocompra_model extends CI_Model {
                 TPC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 TPC.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
 			ORDER BY 
+				TPB.TipoProdutoBase DESC,
 				TE.NomeEmpresa,
 				TPB.ProdutoBase ASC'
     );

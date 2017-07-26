@@ -3,6 +3,7 @@
 <table class="table table-hover">
     <thead>
         <tr>
+			<th>Tipo</th>
 			<th>Produto</th>
             <th>Unidade</th>
 			<th>Fornecedor</th>
@@ -24,6 +25,7 @@
 
                 echo '<tr class="clickable-row" data-href="' . $url . '">';                   
 					#echo '<td>' . str_replace('.',',',$row['idTab_ProdutoCompra']) . '</td>';					
+					echo '<td>' . str_replace('.',',',$row['TipoProduto']) . '</td>';
 					echo '<td>' . str_replace('.',',',$row['ProdutoBase']) . '</td>';
 					echo '<td>' . str_replace('.',',',$row['UnidadeProdutoBase']) . '</td>';
 					echo '<td>' . str_replace('.',',',$row['NomeEmpresa']) . '</td>';

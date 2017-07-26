@@ -18,7 +18,7 @@
 							<label for="ServicoBase">Servico</label>								
 							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 									id="ServicoBase" name="ServicoBase">
-								<option value="">--Sel. Servico --</option>
+								<option value="">-- Sel. Servico Base --</option>
 								<?php
 								foreach ($select['ServicoBase'] as $key => $row) {
 									if ($query['ServicoBase'] == $key) {

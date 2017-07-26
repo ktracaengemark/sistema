@@ -62,13 +62,13 @@
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>convenio/cadastrar">Planos & Convênios</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>produtobase/cadastrar">Produtos</a></li>
+						<li><a href="<?php echo base_url() ?>produtobase/cadastrar">Produtos (Consumo & Venda)</a></li>
 						<!--<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>produtocompra/cadastrar">Tabela de Preços de Produtos p/ Compra</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>produto/cadastrar">Tabela de Preços de Produtos p/ Venda</a></li>-->
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>servicobase/cadastrar">Serviços</a></li>
+						<li><a href="<?php echo base_url() ?>servicobase/cadastrar">Serviços (Consumo & Venda)</a></li>
 						<!--<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>servicocompra/cadastrar">Tabela de Preços de Serviços p/ Compra</a></li>
 						<li role="separator" class="divider"></li>

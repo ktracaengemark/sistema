@@ -4,6 +4,7 @@
     
 	<thead>
         <tr>           			
+			<th>Tipo</th>
 			<th>Serviço</th>
 			<th>Fornecedor</th>
             <th>Cod. Fornec.</th>
@@ -23,6 +24,7 @@
                 #$url = '';
 
                 echo '<tr class="clickable-row" data-href="' . $url . '">';					
+					echo '<td>' . str_replace('.',',',$row['TipoProduto']) . '</td>';
 					echo '<td>' . str_replace('.',',',$row['ServicoBase']) . '</td>';
 					echo '<td>' . str_replace('.',',',$row['NomeEmpresa']) . '</td>';
 					echo '<td>' . str_replace('.',',',$row['CodFornec']) . '</td>';
