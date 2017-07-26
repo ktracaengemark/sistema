@@ -1535,7 +1535,7 @@ class Relatorio_model extends CI_Model {
             WHERE
                 P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY P.NomeProfissional ASC
+                ORDER BY F.Abrev ASC
         ');
 
         $array = array();

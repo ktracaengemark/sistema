@@ -1228,7 +1228,7 @@ class Relatorio extends CI_Controller {
             
         );
 
-        $data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional();
+        $data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional3();
 		$data['select']['Profissional'] = $this->Relatorio_model->select_profissional2();
 		$data['select']['ObsTarefa'] = $this->Relatorio_model->select_obstarefa();
 		$data['select']['Procedtarefa'] = $this->Relatorio_model->select_procedtarefa();

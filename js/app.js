@@ -2226,7 +2226,8 @@ $('#calendar').fullCalendar({
     //handleWindowResize: false,
     //aspectRatio: 2,
 
-    minTime: '07:00',
+    firstDay: '1',
+	minTime: '07:00',
     maxTime: '21:00',
     //minTime: '00:00',
     //maxTime: '24:00',
