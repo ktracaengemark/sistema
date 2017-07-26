@@ -110,25 +110,29 @@ class Servicobase_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				idTab_ServicoBase,
-				ServicoBase				
+				CONCAT(TipoServicoBase, " -- ", ServicoBase) AS ServicoBase				
             FROM
                 Tab_ServicoBase
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-			ORDER BY TipoServicoBase DESC, ServicoBase ASC'
+			ORDER BY 
+				TipoServicoBase DESC, 
+				ServicoBase ASC'
     );
         } else {
             $query = $this->db->query(
                 'SELECT                
 				idTab_ServicoBase,
-				ServicoBase				
+				CONCAT(TipoServicoBase, " -- ", ServicoBase) AS ServicoBase				
             FROM
                 Tab_ServicoBase
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-			ORDER BY TipoServicoBase DESC, ServicoBase ASC'
+			ORDER BY 
+				TipoServicoBase DESC, 
+				ServicoBase ASC'
     );
 
             $array = array();
@@ -146,27 +150,31 @@ class Servicobase_model extends CI_Model {
             $array = $this->db->query(
                 'SELECT                
 				idTab_ServicoBase,
-				CONCAT(ServicoBase) AS ServicoBase				
+				CONCAT(TipoServicoBase, " -- ", ServicoBase) AS ServicoBase				
             FROM
                 Tab_ServicoBase
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . '
-				
-			ORDER BY TipoServicoBase DESC, ServicoBase ASC'
+                idSis_Usuario = ' . $_SESSION['log']['id'] . '				
+			ORDER BY 
+				idTab_ServicoBase DESC,
+				TipoServicoBase DESC, 
+				ServicoBase ASC'
     );
         } else {
             $query = $this->db->query(
                 'SELECT                
 				idTab_ServicoBase,
-				CONCAT(ServicoBase) AS ServicoBase				
+				CONCAT(TipoServicoBase, " -- ", ServicoBase) AS ServicoBase				
             FROM
                 Tab_ServicoBase
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . '
-				
-			ORDER BY TipoServicoBase DESC, ServicoBase ASC'
+                idSis_Usuario = ' . $_SESSION['log']['id'] . '				
+			ORDER BY 
+				idTab_ServicoBase DESC,
+				TipoServicoBase DESC, 
+				ServicoBase ASC'
     );
 
             $array = array();

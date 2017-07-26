@@ -18,7 +18,7 @@
 							<label for="ProdutoBase">Produto</label>								
 							<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 									id="ProdutoBase" autofocus name="ProdutoBase">
-								<option value="">--Sel. Produto --</option>
+								<option value="">--Sel. Produto Base --</option>
 								<?php
 								foreach ($select['ProdutoBase'] as $key => $row) {
 									if ($query['ProdutoBase'] == $key) {
@@ -137,10 +137,16 @@
 						</div>
 					</div>					
                 </form>
-                <br>                               
+				
+                <br>
+				
                 <?php if (isset($list)) echo $list; ?>
+				
             </div>
+			
         </div>
+		
     </div>
     <div class="col-md-2"></div>
+	
 </div>
