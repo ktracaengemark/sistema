@@ -1,79 +1,102 @@
 <?php if (isset($msg)) echo $msg; ?>
+<?php if ( !isset($evento) && isset($_SESSION['Cliente'])) { ?>
 
-<div class="row">
+<div class="container-fluid">
+	<div class="col-sm-7 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<div class="form-group">
+			<div class="row">		
+				<div class="col-md-3 text-left">
+					<label for="">Cliente & Contatos:</label>
+					<div class="form-group">
+						<div class="row">	
+							<a <?php if (preg_match("/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
+								<a class="btn btn-lg btn-success" href="<?php echo base_url() . 'cliente/prontuario/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+									<span class="glyphicon glyphicon-file"> </span> Ver <span class="sr-only">(current)</span>
+								</a>
+							</a>				
+							<a <?php if (preg_match("/cliente\/alterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+								<a class="btn btn-lg btn-warning" href="<?php echo base_url() . 'cliente/alterar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+									<span class="glyphicon glyphicon-edit"></span> Edit.
+								</a>
+							</a>
+						</div>
+					</div>	
+				</div>
 
-    <div class="col-sm-3 col-md-2 sidebar">
-        <?php echo $nav_secundario; ?>
-    </div>
+				<div class="col-md-3 text-center">
+					<label for="">Consultas:</label>
+					<div class="form-group">
+						<div class="row">
+							<a <?php if (preg_match("/consulta\/listar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
+								<a class="btn btn-lg btn-success" href="<?php echo base_url() . 'consulta/listar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+									<span class="glyphicon glyphicon-list-alt"></span> List.
+								</a>
+							</a>
+							<a <?php if (preg_match("/consulta\/(cadastrar|alterar)\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
+								<a class="btn btn-lg btn-warning" href="<?php echo base_url() . 'consulta/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+									<span class="glyphicon glyphicon-plus"></span> Cad.
+								</a>
+							</a>
+						</div>	
+					</div>	
+				</div>
 
-    <div class="col-sm-7 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				<div class="col-md-3 text-right">
+					<label for="">Orçamentos:</label>
+					<div class="form-group">
+						<div class="row">
+							<a <?php if (preg_match("/orcatrata\/listar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
+								<a class="btn btn-lg btn-success" href="<?php echo base_url() . 'orcatrata/listar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+									<span class="glyphicon glyphicon-list-alt"></span> List.
+								</a>
+							</a>
+							<a <?php if (preg_match("/orcatrata\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
+								<a class="btn btn-lg btn-warning" href="<?php echo base_url() . 'orcatrata/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+									<span class="glyphicon glyphicon-plus"></span> Cad.
+								</a>
+							</a>
+						</div>		
+					</div>	
+				</div>
+			</div>	
+		</div>		
+		<div class="form-group">		
+			<div class="row">
+				<div class="text-center t">
+					<h3><?php echo '<strong>' . $_SESSION['Cliente']['NomeCliente'] . '</strong> - <small>Id.: ' . $_SESSION['Cliente']['idApp_Cliente'] . '</small>' ?></h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	
+<?php } ?>
 
-        <?php echo validation_errors(); ?>
+<div class="container-fluid">
+	<div class="col-sm-7 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-        <div class="panel panel-<?php echo $panel; ?>">
+		<?php echo validation_errors(); ?>
 
-            <div class="panel-heading"><strong><?php echo $titulo; ?></strong></div>
-            <div class="panel-body">
+		<div class="panel panel-<?php echo $panel; ?>">
 
-                <?php echo form_open_multipart($form_open_path); ?>
+			<div class="panel-heading"><strong><?php echo $titulo; ?></strong></div>
+			<div class="panel-body">
 
-                <!--App_OrcaTrata-->
+				<?php echo form_open_multipart($form_open_path); ?>
+
+						<div class="text-left t">
+							<h4><?php echo '<strong>Prof.: ' . $_SESSION['log']['Nome'] . '</strong>' ?></h4>
+						</div>				
+				<!--App_OrcaTrata-->
 
 					<div class="form-group">
 						<div class="panel panel-info">
 							<div class="panel-heading">
-								<!--
-								<div class="col-md-2">
-										<?php echo form_open('orcatrata', 'role="form"'); ?>
-										<div class="col-md-12">
-											<label for="Ordenamento">Selecione o Plano:</label>
-											<div class="form-group">
-												<div class="row">
-													<div class="col-md-12">
-														<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()"
-																id="Convenio" name="Convenio">
-															<?php
-															foreach ($select['Convenio'] as $key => $row) {
-																if ($query['Convenio'] == $key) {
-																	echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-																} else {
-																	echo '<option value="' . $key . '">' . $row . '</option>';
-																}
-															}
-															?>
-														</select>
-													</div>
-												</div>
-											</div>
-										</div>
-									</form>
-								</div>
-								-->
 								<div class="row">																		
-									<div class="col-md-3">
-										<label for="ProfissionalOrca">Profissional:</label>
-										<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
-											<span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
-										</a>
-										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-												id="ProfissionalOrca" autofocus name="ProfissionalOrca">
-											<option value="">-- Selecione uma opção --</option>
-											<?php
-											foreach ($select['Profissional'] as $key => $row) {
-												if ($orcatrata['ProfissionalOrca'] == $key) {
-													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-												} else {
-													echo '<option value="' . $key . '">' . $row . '</option>';
-												}
-											}
-											?>
-										</select>
-									</div>
 									<div class="col-md-2">
 										<label for="DataOrca">Data do Orçamento:</label>
 										<div class="input-group <?php echo $datepicker; ?>">
 											<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-												    name="DataOrca" value="<?php echo $orcatrata['DataOrca']; ?>">
+													name="DataOrca" value="<?php echo $orcatrata['DataOrca']; ?>">
 											<span class="input-group-addon" disabled>
 												<span class="glyphicon glyphicon-calendar"></span>
 											</span>
@@ -108,10 +131,10 @@
 
 					<div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
 						<div class="panel panel-primary">
-                            <div class="panel-heading collapsed" role="tab" id="heading1" data-toggle="collapse" data-parent="#accordion1" data-target="#collapse1" aria-expanded="false">								<h4 class="panel-title">
+							<div class="panel-heading collapsed" role="tab" id="heading1" data-toggle="collapse" data-parent="#accordion1" data-target="#collapse1" aria-expanded="false">								<h4 class="panel-title">
 									<a class="accordion-toggle">
 										<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-										Orçamento / Serviços & Produtos
+										Orçamento & Produtos
 									</a>
 								</h4>
 							</div>
@@ -243,7 +266,7 @@
 											</div>
 										</div>
 									</div>
-
+									
 									<hr>
 
 									<input type="hidden" name="PCount" id="PCount" value="<?php echo $count['PCount']; ?>"/>
@@ -392,26 +415,6 @@
 						</div>
 					</div>
 		<!--#######################################-->
-					<!--
-					<div class="panel-group" id="accordion4" role="tablist" aria-multiselectable="true">
-						<div class="panel panel-info">
-                            <div class="panel-heading collapsed" role="tab" id="heading4" data-toggle="collapse" data-parent="#accordion4" data-target="#collapse4" aria-expanded="false">								<h4 class="panel-title">
-									<a class="accordion-toggle">
-										<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-										Orçamento & Forma de Pagam.
-									</a>
-								</h4>
-							</div>
-
-							<div id="collapse4" class="panel-collapse collapsed collapse" role="tabpanel" aria-labelledby="heading4" aria-expanded="false" style="height: 0px;">
-								<div class="panel-body">
-
-
-								</div>
-							</div>
-						</div>
-					</div>
-					-->
 					<hr>
 					<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
 						<div class="panel panel-primary">
@@ -545,7 +548,7 @@
 																			echo ''
 																			. '<label class="btn btn-warning active" name="radiobutton_QuitadoRecebiveis' . $i . '" id="radiobutton_QuitadoRecebiveis' . $i .  $key . '">'
 																			. '<input type="radio" name="QuitadoRecebiveis' . $i . '" id="radiobuttondinamico" '
-                                                                            . 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
+																			. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
 																			. 'autocomplete="off" value="' . $key . '" checked>' . $row
 																			. '</label>'
 																			;
@@ -553,7 +556,7 @@
 																			echo ''
 																			. '<label class="btn btn-default" name="radiobutton_QuitadoRecebiveis' . $i . '" id="radiobutton_QuitadoRecebiveis' . $i .  $key . '">'
 																			. '<input type="radio" name="QuitadoRecebiveis' . $i . '" id="radiobuttondinamico" '
-                                                                            . 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
+																			. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
 																			. 'autocomplete="off" value="' . $key . '" >' . $row
 																			. '</label>'
 																			;
@@ -653,7 +656,7 @@
 									</div>
 
 									<div class="col-md-2 form-inline">
-										<label for="ServicoConcluido">Serviço Concluído?</label><br>
+										<label for="ServicoConcluido">Produto Entregue?</label><br>
 										<div class="form-group">
 											<div class="btn-group" data-toggle="buttons">
 												<?php
@@ -682,7 +685,7 @@
 									</div>
 
 									<div class="col-md-2">
-										<label for="DataConclusao">Data da Conclusão:</label>
+										<label for="DataConclusao">Data da Entrega:</label>
 										<div class="input-group <?php echo $datepicker; ?>">
 											<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
 												   name="DataConclusao" value="<?php echo $orcatrata['DataConclusao']; ?>">
@@ -701,11 +704,11 @@
 											</span>
 										</div>
 									</div>
-									<br>
-									<br>
-									<br>
-									<br>
 
+									<br>
+									<br>
+									<br>
+									<br>
 									<div class="container-fluid">
 										<hr>
 										<div class="panel-group" id="accordion3" role="tablist" aria-multiselectable="true">
@@ -741,9 +744,6 @@
 																		<div class="col-md-3">
 																			<label for="Profissional<?php echo $i ?>">Profissional:</label>
 																			<?php if ($i == 1) { ?>
-																			<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
-																				<span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
-																			</a>-->
 																			<?php } ?>
 																			<select data-placeholder="Selecione uma opção..." class="form-control"
 																					 id="listadinamicac<?php echo $i ?>" name="Profissional<?php echo $i ?>">
@@ -834,6 +834,7 @@
 											</div>
 										</div>
 									</div>
+									
 								</div>
 							</div>
 						</div>
@@ -884,7 +885,7 @@
 											</div>
 											<div class="modal-body">
 												<p>Ao confirmar esta operação todos os dados serão excluídos permanentemente do sistema.
-                                                    Esta operação é irreversível.</p>
+													Esta operação é irreversível.</p>
 											</div>
 											<div class="modal-footer">
 												<div class="col-md-6 text-left">
@@ -913,11 +914,9 @@
 
 					</form>
 
-            </div>
+			</div>
 
 
-        </div>
-
-    </div>
-
+		</div>
+	</div>
 </div>

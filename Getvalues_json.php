@@ -19,21 +19,18 @@ if ($_GET['q']==1) {
     $result = mysql_query(
             'SELECT
                 TSV.idTab_Servico,
-                CONCAT(TCO.Abrev, " --- ", TEM.NomeEmpresa, " --- ", TSB.ServicoBase, " --- R$ ", TSV.ValorVendaServico) AS ServicoBase,
+                CONCAT(TCO.Abrev, " --- ", TSB.ServicoBase, " --- R$ ", TSV.ValorVendaServico) AS ServicoBase,
                 TSV.ValorVendaServico
             FROM
                 Tab_Servico AS TSV
-				LEFT JOIN Tab_Convenio AS TCO ON TCO.idTab_Convenio = TSV.Convenio				
-				LEFT JOIN Tab_ServicoCompra AS TSC ON TSC.idTab_ServicoCompra = TSV.ServicoBase												
-				LEFT JOIN App_Empresa AS TEM ON TEM.idApp_Empresa = TSC.Empresa				
-				LEFT JOIN Tab_ServicoBase AS TSB ON TSB.idTab_ServicoBase = TSC.ServicoBase								
+				LEFT JOIN Tab_Convenio AS TCO ON TCO.idTab_Convenio = TSV.Convenio															
+				LEFT JOIN Tab_ServicoBase AS TSB ON TSB.idTab_ServicoBase = TSV.ServicoBase								
             WHERE
                 TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 TSV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
 			ORDER BY 
 				TCO.Convenio DESC, 
-				TEM.NomeEmpresa ASC,
-				TSB.ServicoBase 				
+				TSB.ServicoBase ASC 				
     ');
 
     while ($row = mysql_fetch_assoc($result)) {
@@ -52,28 +49,22 @@ elseif ($_GET['q'] == 2) {
     $result = mysql_query(
             'SELECT
                 TPV.idTab_Produto,
-				CONCAT(TCO.Abrev, " --- ", TEM.NomeEmpresa, " --- ", TPB.ProdutoBase, " --- ", TPB.UnidadeProdutoBase, " --- R$ ", TPV.ValorVendaProduto) AS ProdutoBase,
+				CONCAT(TPV.NomeProduto, " --- ", TPV.UnidadeProduto, " --- R$ ", TPV.ValorVendaProduto) AS NomeProduto,
 				TPV.ValorVendaProduto
             FROM
-                Tab_Produto AS TPV				
-				LEFT JOIN Tab_Convenio AS TCO ON TCO.idTab_Convenio = TPV.Convenio				
-				LEFT JOIN Tab_ProdutoCompra AS TPC ON TPC.idTab_ProdutoCompra = TPV.ProdutoBase				
-				LEFT JOIN App_Empresa AS TEM ON TEM.idApp_Empresa = TPC.Empresa				
-				LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase = TPC.ProdutoBase								
+                Tab_Produto AS TPV																	
             WHERE
                 TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 TPV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-			ORDER BY 
-				TCO.Convenio DESC, 
-				TEM.NomeEmpresa ASC,
-				TPB.ProdutoBase 				
+			ORDER BY  
+				TPV.NomeProduto ASC				
     ');
 
     while ($row = mysql_fetch_assoc($result)) {
 
         $event_array[] = array(
             'id' => $row['idTab_Produto'],
-            'name' => utf8_encode($row['ProdutoBase']),
+            'name' => utf8_encode($row['NomeProduto']),
             'value' => $row['ValorVendaProduto'],
         );
     }

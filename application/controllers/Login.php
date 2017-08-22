@@ -51,10 +51,12 @@ class Login extends CI_Controller {
 
         #Get GET or POST data
         $usuario = $this->input->get_post('Usuario');
+		#$nomeempresa = $this->input->get_post('NomeEmpresa');
         $senha = md5($this->input->get_post('Senha'));
 
         #set validation rules
         $this->form_validation->set_rules('Usuario', 'Usuário', 'required|trim|callback_valid_usuario');
+		#$this->form_validation->set_rules('NomeEmpresa', 'Nome da Empresa', 'required|trim|callback_valid_nomeempresa[' . $usuario . ']');
         $this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5|callback_valid_senha[' . $usuario . ']');
 
         if ($this->input->get('m') == 1)
@@ -97,6 +99,7 @@ class Login extends CI_Controller {
                 #$msg = "<strong>Senha</strong> incorreta ou <strong>usuário</strong> inexistente.";
                 #$this->basico->erro($msg);
                 $data['msg'] = $this->basico->msg('<strong>Senha</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
+				#$data['msg'] = $this->basico->msg('<strong>NomeEmpresa</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
                 $this->load->view('form_login', $data);
 
             } else {
@@ -106,8 +109,14 @@ class Login extends CI_Controller {
                 #$_SESSION['log']['Usuario'] = $query['Usuario'];
                 //se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
                 $_SESSION['log']['Usuario'] = (strlen($query['Usuario']) > 10) ? substr($query['Usuario'], 0, 10) : $query['Usuario'];
-                $_SESSION['log']['id'] = $query['idSis_Usuario'];
-
+                #$_SESSION['log']['Nome'] = (strlen($query['Nome']) > 10) ? substr($query['Nome'], 0, 10) : $query['Nome'];
+				$_SESSION['log']['Nome'] = $query['Nome'];
+				$_SESSION['log']['id'] = $query['idSis_Usuario'];
+				$_SESSION['log']['Empresa'] = $query['Empresa'];
+				$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];
+				$_SESSION['log']['idSis_EmpresaFilial'] = $query['idSis_EmpresaFilial'];
+				$_SESSION['log']['Permissao'] = $query['Permissao'];
+				
                 $this->load->database();
                 $_SESSION['db']['hostname'] = $this->db->hostname;
                 $_SESSION['db']['username'] = $this->db->username;
@@ -120,7 +129,9 @@ class Login extends CI_Controller {
                     $this->basico->erro($msg);
                     $this->load->view('form_login');
                 } else {
-                    redirect('cliente');
+					redirect('acesso');
+					#redirect('agenda');
+					#redirect('cliente');
                 }
             }
         }
@@ -132,7 +143,7 @@ class Login extends CI_Controller {
 
     public function registrar() {
 
-        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'odonto';
+        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'ktraca';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
         if ($this->input->get('m') == 1)
@@ -145,22 +156,27 @@ class Login extends CI_Controller {
         $data['query'] = $this->input->post(array(
             'Email',
             'Usuario',
+			'NomeEmpresa',
             'Nome',
             'Senha',
             'Confirma',
             'DataNascimento',
             'Celular',
             'Sexo',
+			
+
                 ), TRUE);
 
         $this->form_validation->set_error_delimiters('<h5 style="color: red;">', '</h5>');
-
-        $this->form_validation->set_rules('Email', 'E-mail', 'required|trim|valid_email|is_unique[Sis_Usuario.Email]');
+	
+		$this->form_validation->set_rules('NomeEmpresa', 'Nome da empresa', 'required|trim|is_unique[Sis_Usuario.NomeEmpresa]');
+        $this->form_validation->set_rules('Email', 'E-mail', 'required|trim|valid_email|is_unique[Sis_Usuario.Email]');		
         $this->form_validation->set_rules('Usuario', 'Usuário', 'required|trim|is_unique[Sis_Usuario.Usuario]');
-        $this->form_validation->set_rules('Nome', 'Nome e Sobrenome', 'required|trim');
+		$this->form_validation->set_rules('Nome', 'Nome do Usuário', 'required|trim');      	
         $this->form_validation->set_rules('Senha', 'Senha', 'required|trim');
         $this->form_validation->set_rules('Confirma', 'Confirmar Senha', 'required|trim|matches[Senha]');
-        #$this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'required|trim|valid_date');
+        $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
+		$this->form_validation->set_rules('Celular', 'Celular', 'required|trim');
 
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 
@@ -169,9 +185,13 @@ class Login extends CI_Controller {
             #load login view
             $this->load->view('login/form_registrar', $data);
         } else {
-
+			
+			$data['query']['Empresa'] = 0;
+			$data['query']['Associado'] = 33;
+			$data['query']['Permissao'] = 1;
+			$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['query']['Senha'] = md5($data['query']['Senha']);
-            $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
+			$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
             $data['query']['Codigo'] = md5(uniqid(time() . rand()));
             #$data['query']['Inativo'] = 1;
             //ACESSO LIBERADO PRA QUEM REALIZAR O CADASTRO
@@ -261,8 +281,9 @@ class Login extends CI_Controller {
 
     public function confirmar($codigo) {
 
-        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'odonto';
+        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'ktraca';
         $_SESSION['log']['idTab_Modulo'] = 1;
+
 
         $data['anterior'] = array(
             'Inativo' => '1',
@@ -292,7 +313,7 @@ class Login extends CI_Controller {
 
     public function recuperar() {
 
-        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'odonto';
+        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'ktraca';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
         if ($this->input->get('m') == 1)
@@ -372,7 +393,7 @@ class Login extends CI_Controller {
 
     public function trocar_senha($codigo = NULL) {
 
-        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'odonto';
+        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'ktraca';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
         if ($this->input->get('m') == 1)
@@ -486,21 +507,24 @@ class Login extends CI_Controller {
             $this->form_validation->set_message('valid_usuario', '<strong>%s</strong> não existe.');
             return FALSE;
         } else if ($this->Login_model->check_usuario($data) == 2) {
-            $this->form_validation->set_message('valid_usuario', '<strong>%s</strong> inativo.');
+            $this->form_validation->set_message('valid_usuario', '<strong>%s</strong> inativo! Fale com o Administrador da sua Empresa!');
             return FALSE;
         } else {
             return TRUE;
         }
     }
+	
+
 
     function valid_senha($senha, $usuario) {
 
         if ($this->Login_model->check_dados_usuario($senha, $usuario) == FALSE) {
-            $this->form_validation->set_message('valid_senha', '<strong>%s</strong> incorreta.');
+            $this->form_validation->set_message('valid_senha', '<strong>%s</strong> incorreta! Ou este não é o Módulo do seu Sistema.');
             return FALSE;
         } else {
             return TRUE;
         }
     }
+	
 
 }

@@ -14,41 +14,28 @@
         </a>
     </p>
     -->
-    <h2 class="form-signin-heading text-center">Criar nova conta</h2>
+	<p class="text-center">
+        <a href="<?php echo base_url(); ?>login">
+            <img src="<?php echo base_url() . 'arquivos/imagens/' . $modulo . '.png'; ?>" />
+        </a>
+    </p>
+    <h2 class="form-signin-heading text-center">Cadastrar Nova Empresa</h2>
 
-    <label for="Nome">Nome e Sobrenome:</label>
+	<label for="NomeEmpresa">Nome da Empresa:</label>
+	<input type="text" class="form-control" id="NomeEmpresa" maxlength="45" 
+		   name="NomeEmpresa" value="<?php echo $query['NomeEmpresa']; ?>">
+	<?php echo form_error('NomeEmpresa'); ?>
+	<br>
+	
+	<label for="Nome">Nome do Usuário/ Administrador:</label>
     <input type="text" class="form-control" id="Nome" maxlength="255"
-           name="Nome" autofocus value="<?php echo $query['Nome']; ?>">
+           name="Nome" value="<?php echo $query['Nome']; ?>">
     <?php echo form_error('Nome'); ?>
     <br>
-
-    <label class="text-">E-mail:</label>
-    <input type="text" class="form-control" id="Email" maxlength="100"
-           name="Email" value="<?php echo $query['Email']; ?>">
-    <?php echo form_error('Email'); ?>
-    <br>
-
-    <label for="Usuario">Usuário:</label>
-    <input type="text" class="form-control" id="Usuario" maxlength="45"
-           name="Usuario" value="<?php echo $query['Usuario']; ?>">
-    <?php echo form_error('Usuario'); ?>
-    <br>
-
-    <label for="Senha">Senha:</label>
-    <input type="password" class="form-control" id="Senha" maxlength="45"
-           name="Senha" value="<?php echo $query['Senha']; ?>">
-    <?php echo form_error('Senha'); ?>
-    <br>
-
-    <label for="Senha">Confirmar Senha:</label>
-    <input type="password" class="form-control" id="Confirma" maxlength="45"
-           name="Confirma" value="<?php echo $query['Confirma']; ?>">
-    <?php echo form_error('Confirma'); ?>
-    <br>
-
+	
     <label for="Celular">Celular:</label>
-    <input type="text" class="form-control Celular CelularVariavel" id="Celular" maxlength="45"
-           name="Celular" placeholder="99999999999" value="<?php echo $query['Celular']; ?>">
+    <input type="text" class="form-control Celular Celular" id="Celular" maxlength="11"
+           name="Celular" placeholder="(XX)999999999" value="<?php echo $query['Celular']; ?>">
     <?php echo form_error('Celular'); ?>
     <br>
 
@@ -72,7 +59,31 @@
         ?>
     </select>
     <?php echo form_error('Sexo'); ?>
+    <br>	
+
+    <label class="text-">E-mail do Usuário:</label>
+    <input type="text" class="form-control" id="Email" maxlength="100"
+           name="Email" value="<?php echo $query['Email']; ?>">
+    <?php echo form_error('Email'); ?>
     <br>
+	
+    <label for="Usuario">Usuário:</label>
+    <input type="text" class="form-control" id="Usuario" maxlength="45"
+           name="Usuario" value="<?php echo $query['Usuario']; ?>">
+    <?php echo form_error('Usuario'); ?>
+    <br>
+
+    <label for="Senha">Senha:</label>
+    <input type="password" class="form-control" id="Senha" maxlength="45"
+           name="Senha" value="<?php echo $query['Senha']; ?>">
+    <?php echo form_error('Senha'); ?>
+    <br>
+
+    <label for="Senha">Confirmar Senha:</label>
+    <input type="password" class="form-control" id="Confirma" maxlength="45"
+           name="Confirma" value="<?php echo $query['Confirma']; ?>">
+    <?php echo form_error('Confirma'); ?>
+    <br>	
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">REGISTRAR</button>
 </form>

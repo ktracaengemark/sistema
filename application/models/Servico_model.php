@@ -109,26 +109,21 @@ class Servico_model extends CI_Model {
         $query = $this->db->query('
             SELECT
                 TSV.idTab_Servico,
-				TTP.TipoProduto,
-				TSB.ServicoBase,
-				TCO.Convenio,
-				TEM.NomeEmpresa,
-				TSC.ValorCompraServico,
+				TSU.NomeEmpresa,
+				TSV.CodServ,				
+				TSV.NomeServico,				
 				TSV.ValorVendaServico           
             FROM
-                Tab_Servico AS TSV				
-				LEFT JOIN Tab_Convenio AS TCO ON TCO.idTab_Convenio = TSV.Convenio				
-				LEFT JOIN Tab_ServicoCompra AS TSC ON TSC.idTab_ServicoCompra = TSV.ServicoBase				
-				LEFT JOIN App_Empresa AS TEM ON TEM.idApp_Empresa = TSC.Empresa				
-				LEFT JOIN Tab_ServicoBase AS TSB ON TSB.idTab_ServicoBase= TSC.ServicoBase
-				LEFT JOIN Tab_TipoProduto AS TTP ON TTP.Abrev = TSB.TipoServicoBase
+                Tab_Servico AS TSV
+					LEFT JOIN Sis_Usuario AS TSU ON TSU.idSis_Usuario = TSV.idSis_Usuario
             WHERE
-                TSV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-                TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+                (TSV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ')
+				OR
+				(TSV.idSis_Usuario = ' . $_SESSION['log']['Empresa'] . ' AND
+                TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ')				
             ORDER BY
-				TCO.Convenio ASC,
-				TSB.ServicoBase,
-				TEM.NomeEmpresa								
+				TSV.NomeServico						
         ');
 
         /*	
@@ -235,7 +230,5 @@ class Servico_model extends CI_Model {
 
         return $array;
     }
-	
-	
-    
+	  
 }

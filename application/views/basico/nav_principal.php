@@ -1,10 +1,19 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
-
-    <div class="row">
-        <div class="col-md-9">
-
-            <ul class="nav navbar-nav navbar-left">
-				<li>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="banner"> 
+	<div class="container"> 
+		<div class="navbar-header"> 
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> 
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> 
+			</button> 
+			<!--
+			<a class="navbar-brand">
+				<img class="img-responsive" src="arquivos/imagens/ktraca.png" alt="logo">
+			</a>
+			-->			
+		</div> 
+		<div class="collapse navbar-collapse"> 											
+			<ul class="nav navbar-nav navbar-left"> 						
+				<li>																	
+					<li><a class="navbar-brand" href="<?php echo base_url(); ?>agenda">AGENDA</a></li>
 					<?php echo form_open(base_url() . 'cliente/pesquisar', 'class="navbar-form navbar-left"'); ?>
 					<form>
 					<div class="input-group">
@@ -12,10 +21,10 @@
 						<span class="input-group-btn">
 							<button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-search"></span></button>
 						</span>
-					</div>
-					</form>
-					<li><a class="navbar-brand" href="<?php echo base_url(); ?>agenda">AGENDA</a></li>
-				</li>
+					</div>					
+					</form>											
+				</li>				
+				
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clientes<span class="caret"></span></a>
 					<ul class="dropdown-menu">
@@ -46,11 +55,13 @@
 				</li>
 				
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administraçao<span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administração<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="<?php echo base_url() ?>profissional/pesquisar">Funcionários & Contatos</a></li>
+						<li><a href="<?php echo base_url() ?>relatorio/clientes">Clientes & Contatos</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>empresa/pesquisar">Fornecedores & Contatos</a></li>
+						<li><a href="<?php echo base_url() ?>relatorio/profissionais">Funcionários & Contatos.</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>relatorio/fornecedor">Fornecedores & Contatos.</a></li>
 						<li role="separator" class="divider"></li>
 						<!--<li><a href="<?php echo base_url() ?>cliente/pesquisar">Pedidos & Orçamentos</a></li>
 						<li role="separator" class="divider"></li>
@@ -62,13 +73,13 @@
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>convenio/cadastrar">Planos & Convênios</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>produtobase/cadastrar">Produtos (Consumo & Venda)</a></li>
+						<li><a href="<?php echo base_url() ?>produto/cadastrar">Produtos (Consumo & Venda)</a></li>
 						<!--<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>produtocompra/cadastrar">Tabela de Preços de Produtos p/ Compra</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>produto/cadastrar">Tabela de Preços de Produtos p/ Venda</a></li>-->
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>servicobase/cadastrar">Serviços (Consumo & Venda)</a></li>
+						<li><a href="<?php echo base_url() ?>servico/cadastrar">Serviços (Venda)</a></li>
 						<!--<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>servicocompra/cadastrar">Tabela de Preços de Serviços p/ Compra</a></li>
 						<li role="separator" class="divider"></li>
@@ -90,12 +101,12 @@
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relatórios<span class="caret"></span></a>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu">						
 						<li><a href="<?php echo base_url() ?>relatorio/clientes">Clientes & Contatos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/profissionais">Funcionários & Contatos.</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/empresas">Fornecedores & Contatos.</a></li>
+						<li><a href="<?php echo base_url() ?>relatorio/fornecedor">Fornecedores & Contatos.</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/orcamentopc">Clientes & Procedimentos</a></li>
 						<li role="separator" class="divider"></li>
@@ -128,35 +139,30 @@
 						<li><a href="<?php echo base_url() ?>relatorio/estoque">Estoque</a></li>
 						<li role="separator" class="divider"></li>-->
 					</ul>
-				</li>
-			</ul>
-        </div>
-        <div class="col-md-3">
-            <div class="btn-toolbar navbar-form navbar-right" role="toolbar" aria-label="...">
-                <div class="btn-group" role="group" aria-label="...">
-                    <button type="button" class="btn active" id="countdowndiv">
-                        <span class="glyphicon glyphicon-hourglass" id="clock"></span>
-                    </button>
-                </div>
-                <div class="btn-group" role="group" aria-label="...">
-                    <button type="button" class="btn btn-info active">
-                        <span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['Usuario']; ?>
-                    </button>
-                </div>
-                <div class="btn-group" role="group" aria-label="...">
-                    <a href="<?php echo base_url(); ?>login/sair">
-                        <button type="button" class="btn btn-danger">
-                            <span class="glyphicon glyphicon-log-out"></span> Sair
-                        </button>
-                    </a>
-                </div>
-                <div class="btn-group" role="group" aria-label="..."> </div>
-            </div>
-        </div>
-
-
-    </div>
-
+				</li>				
+				<div class="btn-toolbar navbar-form navbar-right" role="toolbar" aria-label="...">					
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn active" id="countdowndiv">
+							<span class="glyphicon glyphicon-hourglass" id="clock"></span>
+						</button>
+					</div>
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-info active">
+							<span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['Usuario']; ?>
+						</button>
+					</div>
+					<div class="btn-group" role="group" aria-label="...">
+						<a href="<?php echo base_url(); ?>login/sair">
+							<button type="button" class="btn btn-danger">
+								<span class="glyphicon glyphicon-log-out"></span> Sair
+							</button>
+						</a>
+					</div>										
+					<div class="btn-group" role="group" aria-label="..."> </div>
+				</div>					
+			</ul>						
+		</div> 
+	</div> 
 </nav>
 
 <br>

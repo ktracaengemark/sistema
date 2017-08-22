@@ -23,7 +23,7 @@ class Agenda_model extends CI_Model {
             WHERE 
                 YEAR(DataInicio) = ' . date('Y', time()) . ' AND MONTH(DataInicio) = ' . date('m', time()) . ' AND
                 C.Evento IS NULL AND 
-                C.idTab_Modulo = 1 AND 
+                C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND 
                 A.idSis_Usuario = ' . $data . ' AND 
                 A.idApp_Agenda = C.idApp_Agenda 
             GROUP BY C.idTab_Status

@@ -10,8 +10,9 @@
 						<th class="active">Tipo de Consumo.</th>
                         <th class="active">Data do Consumo</th>
 						<th class="active">Quant.</th>
-						<th class="active">Produto.</th>
-						<th class="active">Fornec.</th>
+						<th class="active">Produto</th>
+						<th class="active">Obs.</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -27,9 +28,8 @@
 							echo '<td>' . $row['TipoConsumo'] . '</td>';
                             echo '<td>' . $row['DataDespesas'] . '</td>';
 							echo '<td>' . $row['QtdCompraProduto'] . '</td>';
-							#echo '<td>' . $row['idTab_Produto'] . '</td>';
 							echo '<td>' . $row['ProdutoBase'] . '</td>';
-							echo '<td>' . $row['NomeEmpresa'] . '</td>';
+							echo '<td>' . $row['ObsProduto'] . '</td>';
                         echo '</tr>';
                     }
                     ?>

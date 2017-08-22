@@ -33,14 +33,14 @@ class Agenda extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional3();
+        $data['select']['Nome'] = $this->Relatorio_model->select_usuario();
 
         $data['query'] = quotes_to_entities($this->input->post(array(
-            'NomeProfissional',
+            'Nome',
         ), TRUE));
 
-        $_SESSION['log']['NomeProfissional'] = ($data['query']['NomeProfissional']) ?
-            $data['query']['NomeProfissional'] : FALSE;
+        $_SESSION['log']['Nome'] = ($data['query']['Nome']) ?
+            $data['query']['Nome'] : FALSE;
 
         $data['query']['estatisticas'] = $this->Agenda_model->resumo_estatisticas($_SESSION['log']['id']);
         $data['query']['cliente_aniversariantes'] = $this->Agenda_model->cliente_aniversariantes($_SESSION['log']['id']);

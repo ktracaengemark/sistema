@@ -51,17 +51,18 @@ class ProdutoBase extends CI_Controller {
             'idTab_ProdutoBase',
             'ProdutoBase',
             'UnidadeProdutoBase',          
-			#'ValorCompraProdutoBase',
+			'ValorCompraProdutoBase',
 			'TipoProdutoBase',
 			#'FornecProdutoBase',
+			'CodProd',
                 ), TRUE));
 
-		(!$data['query']['TipoProdutoBase']) ? $data['query']['TipoProdutoBase'] = 'V' : FALSE;
+		#(!$data['query']['TipoProdutoBase']) ? $data['query']['TipoProdutoBase'] = 'V' : FALSE;
 				
         #$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         $this->form_validation->set_rules('ProdutoBase', 'Nome do Produto', 'required|trim');
-		#$this->form_validation->set_rules('ValorCompraProdutoBase', 'Valor de Compra', 'required|trim');
+		$this->form_validation->set_rules('ValorCompraProdutoBase', 'Valor de Compra', 'required|trim');
 		
 		$data['select']['TipoProdutoBase'] = $this->Basico_model->select_tipoproduto();      
 		#$data['select']['FornecProdutoBase'] = $this->Empresa_model->select_empresa(); 
@@ -90,8 +91,9 @@ class ProdutoBase extends CI_Controller {
             $this->load->view('produtobase/pesq_produtobase', $data);
         } else {
 
+			$data['query']['CodProd'] = trim(mb_strtoupper($data['query']['CodProd'], 'ISO-8859-1'));
             $data['query']['ProdutoBase'] = trim(mb_strtoupper($data['query']['ProdutoBase'], 'ISO-8859-1'));
-			#$data['query']['ValorCompraProdutoBase'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraProdutoBase']));
+			$data['query']['ValorCompraProdutoBase'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraProdutoBase']));
             $data['query']['TipoProdutoBase'] = $data['query']['TipoProdutoBase'];
 			#$data['query']['FornecProdutoBase'] = $data['query']['FornecProdutoBase'];
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
@@ -134,9 +136,10 @@ class ProdutoBase extends CI_Controller {
             'idTab_ProdutoBase',
             'ProdutoBase',
             'UnidadeProdutoBase',
-			#'ValorCompraProdutoBase',
+			'ValorCompraProdutoBase',
 			'TipoProdutoBase',
 			#'FornecProdutoBase',
+			'CodProd',
                 ), TRUE));
 
         if ($id)
@@ -147,7 +150,7 @@ class ProdutoBase extends CI_Controller {
 		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         $this->form_validation->set_rules('ProdutoBase', 'Nome do ProdutoBase', 'required|trim');
-		#$this->form_validation->set_rules('ValorCompraProdutoBase', 'Valor de Compra', 'required|trim');
+		$this->form_validation->set_rules('ValorCompraProdutoBase', 'Valor de Compra', 'required|trim');
 		
 		$data['select']['TipoProdutoBase'] = $this->Basico_model->select_tipoproduto();
 		#$data['select']['FornecProdutoBase'] = $this->Empresa_model->select_empresa();
@@ -176,8 +179,9 @@ class ProdutoBase extends CI_Controller {
             $this->load->view('produtobase/pesq_produtobase', $data);
         } else {
 
+			$data['query']['CodProd'] = trim(mb_strtoupper($data['query']['CodProd'], 'ISO-8859-1'));
             $data['query']['ProdutoBase'] = trim(mb_strtoupper($data['query']['ProdutoBase'], 'ISO-8859-1'));
-            #$data['query']['ValorCompraProdutoBase'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraProdutoBase']));
+            $data['query']['ValorCompraProdutoBase'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraProdutoBase']));
 			$data['query']['TipoProdutoBase'] = $data['query']['TipoProdutoBase'];
 			#$data['query']['FornecProdutoBase'] = $data['query']['FornecProdutoBase'];
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
@@ -201,80 +205,6 @@ class ProdutoBase extends CI_Controller {
                 }
 
                 redirect(base_url() . 'produtobase/cadastrar/' . $data['msg']);
-                exit();
-            }
-        }
-
-        $this->load->view('basico/footer');
-    }
-
-    public function excluir2($id = FALSE) {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-
-        $data['query'] = $this->input->post(array(
-            'idTab_ProdutoBase',
-            'ProdutoBase',
-                ), TRUE);
-
-        if ($id)
-            $data['query'] = $this->Produtobase_model->get_produtobase($id);
-
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-        $this->form_validation->set_rules('ProdutoBase', 'Nome do ProdutoBase', 'required|trim');
-
-        $data['titulo'] = 'Editar ProdutoBase';
-        $data['form_open_path'] = 'produtobase/alterar';
-        $data['readonly'] = '';
-        $data['disabled'] = '';
-        $data['panel'] = 'primary';
-        $data['metodo'] = 2;
-        $data['button'] =
-                '
-                <button class="btn btn-sm btn-warning" name="pesquisar" value="0" type="submit">
-                    <span class="glyphicon glyphicon-edit"></span> Salvar Alteração
-                </button>
-        ';
-
-        $data['sidebar'] = 'col-sm-3 col-md-2';
-        $data['main'] = 'col-sm-7 col-md-8';
-
-        $data['q'] = $this->Produtobase_model->lista_produtobase(TRUE);
-        $data['list'] = $this->load->view('produtobase/list_produtobase', $data, TRUE);
-
-        #run form validation
-        if ($this->form_validation->run() === FALSE) {
-            $this->load->view('produtobase/pesq_produtobase', $data);
-        } else {
-
-            $data['query']['ProdutoBase'] = trim(mb_strtoupper($data['query']['ProdutoBase'], 'ISO-8859-1'));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
-
-            $data['anterior'] = $this->Produtobase_model->get_produtobase($data['query']['idTab_ProdutoBase']);
-            $data['campos'] = array_keys($data['query']);
-
-            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_ProdutoBase'], TRUE);
-
-            if ($data['auditoriaitem'] && $this->Produtobase_model->update_produtobase($data['query'], $data['query']['idTab_ProdutoBase']) === FALSE) {
-                $data['msg'] = '?m=2';
-                redirect(base_url() . 'produtobase/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
-                exit();
-            } else {
-
-                if ($data['auditoriaitem'] === FALSE) {
-                    $data['msg'] = '';
-                } else {
-                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_ProdutoBase', 'UPDATE', $data['auditoriaitem']);
-                    $data['msg'] = '?m=1';
-                }
-
-                redirect(base_url() . 'produtobase/cadastrar/produtobase/' . $data['msg']);
                 exit();
             }
         }

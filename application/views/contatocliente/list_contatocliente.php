@@ -3,13 +3,13 @@
 	<div class="row">
 		<div class="btn-group" role="group">
 			<a class="btn btn-lg btn-primary active"> 
-				<span class="glyphicon glyphicon-sort-by-attributes"></span> <?php echo '<b>Total de Contatos:</b> ' . $query->num_rows() ?>
+				<span class="glyphicon glyphicon-sort-by-attributes"></span> <?php echo '<b>Total:</b> ' . $query->num_rows() ?>
 			</a>        
 		</div>
 
 		<div class="btn-group" role="group">
 			<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>contatocliente/cadastrar" role="button"> 
-				<span class="glyphicon glyphicon-plus"></span> Cadastrar Novo Contato
+				<span class="glyphicon glyphicon-plus"></span> Novo Contato
 			</a>
 		</div>
 	</div>        

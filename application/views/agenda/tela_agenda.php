@@ -4,6 +4,26 @@
 <div id="datepickerinline" class="col-md-2"></div>
 <div id="calendar" class="col-md-8"></div>-->
 
+<div id="calendar" class="col-md-9"></div>
+
+<div id="fluxo" class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="fluxo" aria-hidden="true">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog modal-sm vertical-align-center">
+            <div class="modal-content">
+
+                <div class="modal-body text-center">
+                    <button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary">Consulta/Sessão</button> ou
+					<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info">Outro Evento</button>
+
+                    <input type="hidden" id="start" />
+                    <input type="hidden" id="end" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="col-md-3">
 
 	<?php echo form_open('agenda', 'role="form"'); ?>
@@ -13,10 +33,10 @@
 			<div class="row">
 				<div class="col-md-12">
 					<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()"
-							id="NomeProfissional" name="NomeProfissional">
+							id="Nome" name="Nome">
 						<?php
-						foreach ($select['NomeProfissional'] as $key => $row) {
-							if ($query['NomeProfissional'] == $key) {
+						foreach ($select['Nome'] as $key => $row) {
+							if ($query['Nome'] == $key) {
 								echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 							} else {
 								echo '<option value="' . $key . '">' . $row . '</option>';
@@ -30,15 +50,16 @@
 	</div>
 	</form>
 
-	<div class="form-group col-md-6">
-		<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>tarefa/cadastrar" role="button">
-			<span class="glyphicon glyphicon-plus"></span> Nova Tarefa
-		</a>
-	</div>
-	<div class="form-group col-md-6">
-		<a class="btn btn-lg btn-success" href="<?php echo base_url() ?>relatorio/tarefa" role="button">
-			<span class="glyphicon glyphicon-list"></span> Lista Tarefa
-		</a>
+	<div class="col-md-12 text-center t">
+		<label for="">Tarefas:</label>
+		<div class="row">	
+			<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>tarefa/cadastrar" role="button">
+				<span class="glyphicon glyphicon-plus"></span> Nova
+			</a>
+			<a class="btn btn-lg btn-success" href="<?php echo base_url() ?>relatorio/tarefa" role="button">
+				<span class="glyphicon glyphicon-list"></span> Lista
+			</a>
+		</div>	
 	</div>
 
 	<div id="datepickerinline"></div>
@@ -144,23 +165,4 @@
         ?>
     </table>
 
-</div>
-<div id="calendar" class="col-md-9"></div>
-
-<div id="fluxo" class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="fluxo" aria-hidden="true">
-    <div class="vertical-alignment-helper">
-        <div class="modal-dialog modal-sm vertical-align-center">
-            <div class="modal-content">
-
-                <div class="modal-body text-center">
-                    <button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary">Consulta/Sessão</button> ou
-					<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info">Outro Evento</button>
-
-                    <input type="hidden" id="start" />
-                    <input type="hidden" id="end" />
-                </div>
-
-            </div>
-        </div>
-    </div>
 </div>

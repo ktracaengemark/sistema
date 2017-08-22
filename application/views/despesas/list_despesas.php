@@ -1,8 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-
         <div>
-
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
     			<li role="presentation"><a href="#proxima" aria-controls="proxima" role="tab" data-toggle="tab">Despesass Aprovados</a></li>

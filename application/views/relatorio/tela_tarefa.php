@@ -15,7 +15,8 @@
                     <?php echo form_open('relatorio/tarefa', 'role="form"'); ?>
 
                     <div class="form-group">
-                        <div class="row">							
+                        <div class="row">
+							<!--
                             <div class="col-md-2">
                                 <label for="Ordenamento">Responsável da Tarefa:</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -31,7 +32,7 @@
                                     ?>
                                 </select>
                             </div>
-							
+							-->
 							<div class="col-md-2">
                                 <label for="Ordenamento">Tarefa / Missão</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -48,13 +49,13 @@
                                 </select>
                             </div>
 							
-							<div class="col-md-1">
-                                <label for="AprovadoTarefa">Trf. Concl.?</label>
+							<div class="col-md-2">
+                                <label for="TarefaConcluida">Trf. Concl.?</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-                                        id="AprovadoTarefa" name="AprovadoTarefa">
+                                        id="TarefaConcluida" name="TarefaConcluida">
                                     <?php
-                                    foreach ($select['AprovadoTarefa'] as $key => $row) {
-                                        if ($query['AprovadoTarefa'] == $key) {
+                                    foreach ($select['TarefaConcluida'] as $key => $row) {
+                                        if ($query['TarefaConcluida'] == $key) {
                                             echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
                                         } else {
                                             echo '<option value="' . $key . '">' . $row . '</option>';
@@ -63,6 +64,7 @@
                                     ?>
                                 </select>
                             </div>
+							<!--
 							<div class="col-md-2">
                                 <label for="Ordenamento">Profissional:</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -78,6 +80,7 @@
                                     ?>
                                 </select>
                             </div>
+							-->
 							<div class="col-md-2">
                                 <label for="Ordenamento">Ação</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -94,7 +97,7 @@
                                 </select>
                             </div>
 							
-							<div class="col-md-1">
+							<div class="col-md-2">
                                 <label for="ConcluidoProcedtarefa">Ação Concl.?</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
                                         id="ConcluidoProcedtarefa" name="ConcluidoProcedtarefa">
@@ -110,13 +113,13 @@
                                 </select>
                             </div>
 																					                           						                            							
-							<div class="col-md-1">
-                                <label for="ServicoConcluido">Rotina</label>
+							<div class="col-md-2">
+                                <label for="Rotina">Rotina</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-                                        id="ServicoConcluido" name="ServicoConcluido">
+                                        id="Rotina" name="Rotina">
                                     <?php
-                                    foreach ($select['ServicoConcluido'] as $key => $row) {
-                                        if ($query['ServicoConcluido'] == $key) {
+                                    foreach ($select['Rotina'] as $key => $row) {
+                                        if ($query['Rotina'] == $key) {
                                             echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
                                         } else {
                                             echo '<option value="' . $key . '">' . $row . '</option>';
@@ -126,13 +129,13 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-1">
-                                <label for="QuitadoTarefa">Prioridade</label>
+                            <div class="col-md-2">
+                                <label for="Prioridade">Prioridade</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-                                        id="QuitadoTarefa" name="QuitadoTarefa">
+                                        id="Prioridade" name="Prioridade">
                                     <?php
-                                    foreach ($select['QuitadoTarefa'] as $key => $row) {
-                                        if ($query['QuitadoTarefa'] == $key) {
+                                    foreach ($select['Prioridade'] as $key => $row) {
+                                        if ($query['Prioridade'] == $key) {
                                             echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
                                         } else {
                                             echo '<option value="' . $key . '">' . $row . '</option>';
@@ -180,8 +183,12 @@
                                 </div>
                             </div>
 							-->
+						</div>	
+					</div>
+					<div class="form-group">
+                        <div class="row">		
 							<div class="col-md-2">
-                                <label for="DataInicio">Data da Tarefa.- Início: *</label>
+                                <label for="DataInicio">Data - Início: *</label>
                                 <div class="input-group DatePicker">
                                     <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
                                            autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
@@ -191,7 +198,7 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <label for="DataFim">Data da Tarefa.- Fim: (opcional)</label>
+                                <label for="DataFim">Data - Fim: (opcional)</label>
                                 <div class="input-group DatePicker">
                                     <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
                                            autofocus name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
@@ -231,12 +238,12 @@
                                     <span class="glyphicon glyphicon-search"></span> Pesquisar
                                 </button>
                             </div>
-							<div class="col-md-2 text-left">											
+							<div class="col-md-2 text-center">											
 									<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>tarefa/cadastrar" role="button"> 
 										<span class="glyphicon glyphicon-plus"></span> Nova Tarefa
 									</a>
 							</div>		
-							<div class="col-md-2 text-left">											
+							<div class="col-md-2 text-right">											
 									<a class="btn btn-lg btn-info" href="<?php echo base_url() ?>agenda" role="button"> 
 										<span class="glyphicon glyphicon-calendar"></span> Agenda
 									</a>															

@@ -49,14 +49,13 @@ class Tarefa extends CI_Controller {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $data['tarefa'] = quotes_to_entities($this->input->post(array(
             #### App_Tarefa ####
-            'idApp_Tarefa',
-            
+            'idApp_Tarefa',           
             'DataTarefa',
 			'DataPrazoTarefa',
             'ProfissionalTarefa',
-            'AprovadoTarefa',
-            'ServicoConcluido',
-            'QuitadoTarefa',
+            'TarefaConcluida',
+            'Rotina',
+            'Prioridade',
             'DataConclusao',
             'DataRetorno',           
             'ObsTarefa',
@@ -95,12 +94,12 @@ class Tarefa extends CI_Controller {
         #### App_Tarefa ####
         $this->form_validation->set_rules('DataTarefa', 'Tarefa Criada em', 'required|trim|valid_date');
         $this->form_validation->set_rules('DataPrazoTarefa', 'Prazo para Conclusão', 'required|trim');
-        $this->form_validation->set_rules('ProfissionalTarefa', 'Profissional', 'required|trim');
+        #$this->form_validation->set_rules('ProfissionalTarefa', 'Profissional', 'required|trim');
 
-        $data['select']['AprovadoTarefa'] = $this->Basico_model->select_status_sn();
-        $data['select']['ServicoConcluido'] = $this->Basico_model->select_status_sn();
+        $data['select']['TarefaConcluida'] = $this->Basico_model->select_status_sn();
+        $data['select']['Rotina'] = $this->Basico_model->select_status_sn();
         $data['select']['ConcluidoProcedtarefa'] = $this->Basico_model->select_status_sn();
-		$data['select']['QuitadoTarefa'] = $this->Basico_model->select_status_sn();
+		$data['select']['Prioridade'] = $this->Basico_model->select_status_sn();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
 
         $data['titulo'] = 'Cadastar Tarefa';
@@ -118,14 +117,14 @@ class Tarefa extends CI_Controller {
 
 
         #Ver uma solução melhor para este campo
-        (!$data['tarefa']['AprovadoTarefa']) ? $data['tarefa']['AprovadoTarefa'] = 'N' : FALSE;
+        (!$data['tarefa']['TarefaConcluida']) ? $data['tarefa']['TarefaConcluida'] = 'N' : FALSE;
 
         $data['radio'] = array(
-            'AprovadoTarefa' => $this->basico->radio_checked($data['tarefa']['AprovadoTarefa'], 'Tarefa Aprovado', 'NS'),
+            'TarefaConcluida' => $this->basico->radio_checked($data['tarefa']['TarefaConcluida'], 'Tarefa Aprovado', 'NS'),
         );
 
-        ($data['tarefa']['AprovadoTarefa'] == 'S') ?
-            $data['div']['AprovadoTarefa'] = '' : $data['div']['AprovadoTarefa'] = 'style="display: none;"';
+        ($data['tarefa']['TarefaConcluida'] == 'S') ?
+            $data['div']['TarefaConcluida'] = '' : $data['div']['TarefaConcluida'] = 'style="display: none;"';
 
 
         $data['sidebar'] = 'col-sm-3 col-md-2';
@@ -155,7 +154,7 @@ class Tarefa extends CI_Controller {
             $data['tarefa']['DataPrazoTarefa'] = $this->basico->mascara_data($data['tarefa']['DataPrazoTarefa'], 'mysql');
 			$data['tarefa']['DataConclusao'] = $this->basico->mascara_data($data['tarefa']['DataConclusao'], 'mysql');
             $data['tarefa']['DataRetorno'] = $this->basico->mascara_data($data['tarefa']['DataRetorno'], 'mysql');
-            
+			$data['tarefa']['Empresa'] = $_SESSION['log']['Empresa'];            
             $data['tarefa']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['tarefa']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['tarefa']['idApp_Tarefa'] = $this->Tarefa_model->set_tarefa($data['tarefa']);
@@ -224,15 +223,13 @@ class Tarefa extends CI_Controller {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $data['tarefa'] = quotes_to_entities($this->input->post(array(
             #### App_Tarefa ####
-            'idApp_Tarefa',
-
-			
+            'idApp_Tarefa',			
             'DataTarefa',
 			'DataPrazoTarefa',
             'ProfissionalTarefa',
-            'AprovadoTarefa',
-            'ServicoConcluido',
-            'QuitadoTarefa',
+            'TarefaConcluida',
+            'Rotina',
+            'Prioridade',
             'DataConclusao',
             'DataRetorno',            
             'ObsTarefa',
@@ -298,12 +295,12 @@ class Tarefa extends CI_Controller {
         #### App_Tarefa ####
         $this->form_validation->set_rules('DataTarefa', 'Tarefa Criada em', 'required|trim|valid_date');        
 		$this->form_validation->set_rules('DataPrazoTarefa', 'Prazo para Conclusão', 'required|trim');      
-        $this->form_validation->set_rules('ProfissionalTarefa', 'Profissional', 'required|trim');
+        #$this->form_validation->set_rules('ProfissionalTarefa', 'Profissional', 'required|trim');
 
-        $data['select']['AprovadoTarefa'] = $this->Basico_model->select_status_sn();        
-        $data['select']['ServicoConcluido'] = $this->Basico_model->select_status_sn();        
+        $data['select']['TarefaConcluida'] = $this->Basico_model->select_status_sn();        
+        $data['select']['Rotina'] = $this->Basico_model->select_status_sn();        
         $data['select']['ConcluidoProcedtarefa'] = $this->Basico_model->select_status_sn();
-		$data['select']['QuitadoTarefa'] = $this->Basico_model->select_status_sn();       
+		$data['select']['Prioridade'] = $this->Basico_model->select_status_sn();       
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
         
 
@@ -322,14 +319,14 @@ class Tarefa extends CI_Controller {
 
 
         #Ver uma solução melhor para este campo
-        (!$data['tarefa']['AprovadoTarefa']) ? $data['tarefa']['AprovadoTarefa'] = 'N' : FALSE;
+        (!$data['tarefa']['TarefaConcluida']) ? $data['tarefa']['TarefaConcluida'] = 'N' : FALSE;
 
         $data['radio'] = array(
-            'AprovadoTarefa' => $this->basico->radio_checked($data['tarefa']['AprovadoTarefa'], 'Tarefa Aprovado', 'NS'),
+            'TarefaConcluida' => $this->basico->radio_checked($data['tarefa']['TarefaConcluida'], 'Tarefa Aprovado', 'NS'),
         );
 
-        ($data['tarefa']['AprovadoTarefa'] == 'S') ?
-            $data['div']['AprovadoTarefa'] = '' : $data['div']['AprovadoTarefa'] = 'style="display: none;"';
+        ($data['tarefa']['TarefaConcluida'] == 'S') ?
+            $data['div']['TarefaConcluida'] = '' : $data['div']['TarefaConcluida'] = 'style="display: none;"';
 
 
         $data['sidebar'] = 'col-sm-3 col-md-2';
@@ -358,7 +355,7 @@ class Tarefa extends CI_Controller {
             $data['tarefa']['DataPrazoTarefa'] = $this->basico->mascara_data($data['tarefa']['DataPrazoTarefa'], 'mysql');
 			$data['tarefa']['DataConclusao'] = $this->basico->mascara_data($data['tarefa']['DataConclusao'], 'mysql');
             $data['tarefa']['DataRetorno'] = $this->basico->mascara_data($data['tarefa']['DataRetorno'], 'mysql');
-            
+			$data['tarefa']['Empresa'] = $_SESSION['log']['Empresa'];             
 
             $data['tarefa']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['tarefa']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];

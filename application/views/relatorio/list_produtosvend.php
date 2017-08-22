@@ -9,8 +9,6 @@
                         <th class="active">Data do Orçam.</th>
 						<th class="active">Qtd.</th>
 						<th class="active">Produto</th>
-						<th class="active">Fornec.</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -25,8 +23,6 @@
                             echo '<td>' . $row['DataOrca'] . '</td>';
 							echo '<td>' . $row['QtdVendaProduto'] . '</td>';
 							echo '<td>' . $row['ProdutoBase'] . '</td>';
-							#echo '<td>' . $row['idTab_ProdutoBase'] . '</td>';
-							echo '<td>' . $row['NomeEmpresa'] . '</td>';
                         echo '</tr>';
                     }
                     ?>

@@ -637,13 +637,6 @@ function adicionaProcedtarefa() {
 				<div class="panel-heading">\
 					<div class="row">\
 						<div class="col-md-3">\
-							<label for="Profissional'+pt+'">Profissional:</label>\
-							<select data-placeholder="Selecione uma opção..." class="form-control"\
-									 id="listadinamicad'+pt+'" name="Profissional'+pt+'">\
-								<option value="">-- Selecione uma opção --</option>\
-							</select>\
-						</div>\
-						<div class="col-md-3">\
 							<label for="Procedtarefa'+pt+'">Ação:</label>\
 							<textarea class="form-control" id="Procedtarefa'+pt+'"\
 									  name="Procedtarefa'+pt+'"></textarea>\

@@ -1,5 +1,3 @@
-<!--"ODONTO"-->
-
 <?php
 
 #modelo que verifica usuário e senha e loga o usuário no sistema, criando as sessões necessárias
@@ -69,7 +67,7 @@ class Consulta_model extends CI_Model {
                 . 'S.idTab_Status, '
                 . 'S.Status, '
                 . 'D.NomeContatoCliente, '
-                . 'V.NomeProfissional, '
+                . 'V.Nome, '
                 . 'C.Procedimento, '
                 . 'C.Paciente, '
                 . 'C.Obs '
@@ -77,14 +75,14 @@ class Consulta_model extends CI_Model {
                 . 'App_Consulta AS C '
                     . 'LEFT JOIN app.App_ContatoCliente AS D ON C.idApp_ContatoCliente = D.idApp_ContatoCliente, '
                 . 'Tab_Status AS S, '                
-                . 'App_Profissional AS V '
+                . 'Sis_Usuario AS V '
             . 'WHERE '
                 . 'C.idApp_Cliente = ' . $data . ' AND '
                 . '(C.DataInicio >= "' . date('Y-m-d H:i:s', time()) . '" OR ('
                 . 'C.DataInicio < "' . date('Y-m-d H:i:s', time()) . '" AND '
                 . 'C.DataFim >= "' . date('Y-m-d H:i:s', time()) . '") ) AND '
                 . 'C.idTab_Status = S.idTab_Status AND '
-                . 'C.idApp_Profissional = V.idApp_Profissional '
+                . 'V.idSis_Usuario = C.idSis_Usuario '
             . 'ORDER BY C.DataInicio ASC ');
         
         if ($query->num_rows() === 0)
@@ -104,7 +102,7 @@ class Consulta_model extends CI_Model {
                 . 'S.idTab_Status, '
                 . 'S.Status, '
                 . 'D.NomeContatoCliente, '
-                . 'V.NomeProfissional, '
+                . 'V.Nome, '
                 . 'C.Procedimento, '
                 . 'C.Paciente, '
                 . 'C.Obs '
@@ -112,12 +110,12 @@ class Consulta_model extends CI_Model {
                 . 'App_Consulta AS C '
                     . 'LEFT JOIN app.App_ContatoCliente AS D ON C.idApp_ContatoCliente = D.idApp_ContatoCliente, '
                 . 'Tab_Status AS S, '
-                . 'App_Profissional AS V '
+                . 'Sis_Usuario AS V '
             . 'WHERE '
                 . 'C.idApp_Cliente = ' . $data . ' AND '
                 . 'C.DataFim < "' . date('Y-m-d H:i:s', time()) . '" AND '
                 . 'C.idTab_Status = S.idTab_Status AND '
-                . 'C.idApp_Profissional = V.idApp_Profissional '
+                . 'V.idSis_Usuario = C.idSis_Usuario '
             . 'ORDER BY C.DataInicio ASC ');
         /*
           echo $this->db->last_query();

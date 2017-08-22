@@ -15,8 +15,8 @@ if (!$db) {
 
 #echo 'Conexão bem sucedida';
 
-$query = ($_SESSION['log']['NomeProfissional'] && isset($_SESSION['log']['NomeProfissional'])) ?
-    'P.idApp_Profissional = ' . $_SESSION['log']['NomeProfissional'] . ' AND ' : FALSE;
+$query = ($_SESSION['log']['Nome'] && isset($_SESSION['log']['Nome'])) ?
+    'P.idSis_Usuario = ' . $_SESSION['log']['Nome'] . ' AND ' : FALSE;
 
 $result = mysql_query(
         'SELECT
@@ -25,7 +25,7 @@ $result = mysql_query(
             R.NomeCliente,
 			R.Telefone1,
             D.NomeContatoCliente,
-            P.NomeProfissional,
+            P.Nome,
             C.DataInicio,
             C.DataFim,
             C.Procedimento,
@@ -39,13 +39,19 @@ $result = mysql_query(
             app.App_Consulta AS C
                 LEFT JOIN app.App_Cliente AS R ON C.idApp_Cliente = R.idApp_Cliente
                 LEFT JOIN app.App_ContatoCliente AS D ON C.idApp_ContatoCliente = D.idApp_ContatoCliente
-                LEFT JOIN app.App_Profissional AS P ON C.idApp_Profissional = P.idApp_Profissional
+                LEFT JOIN app.Sis_Usuario AS P ON P.idSis_Usuario = C.idSis_Usuario
                 LEFT JOIN app.Tab_TipoConsulta AS TC ON C.idTab_TipoConsulta = TC.idTab_TipoConsulta
         WHERE
-			C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+			(C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+			P.Empresa = ' . $_SESSION['log']['id'] . ' AND           			
+			' . $query . ' 			
+            A.idApp_Agenda = C.idApp_Agenda)
+			OR
+			(C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
             A.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND           			
 			' . $query . ' 			
-            A.idApp_Agenda = C.idApp_Agenda
+            A.idApp_Agenda = C.idApp_Agenda)
+			
         ORDER BY C.DataInicio ASC'
 );
 
@@ -55,23 +61,23 @@ while ($row = mysql_fetch_assoc($result)) {
         $c = '_evento';
         //(strlen(utf8_encode($row['Obs'])) > 20) ? $title = substr(utf8_encode($row['Obs']), 0, 20).'...' : $title = utf8_encode($row['Obs']);
         $title = utf8_encode($row['Obs']);
-		#$title = utf8_encode($row['NomeProfissional']);
-		$subtitle = utf8_encode($row['NomeProfissional']);
-		$profissional = utf8_encode($row['NomeProfissional']);
+		#$title = utf8_encode($row['Nome']);
+		$subtitle = utf8_encode($row['Nome']);
+		$profissional = utf8_encode($row['Nome']);
     } else {
         $c = '/' . $row['idApp_Cliente'];
 
         if ($row['Paciente'] == 'D') {
             $title = utf8_encode($row['NomeContatoCliente']);
             $subtitle = utf8_encode($row['NomeCliente']);
-            $profissional = utf8_encode($row['NomeProfissional']);
+            $profissional = utf8_encode($row['Nome']);
 			$telefone1 = utf8_encode($row['Telefone1']);
         }
         else {
             $title = utf8_encode($row['NomeCliente']);
-			#$title = utf8_encode($row['NomeProfissional']);
-			$subtitle = utf8_encode($row['NomeProfissional']);
-            $profissional = utf8_encode($row['NomeProfissional']);
+			#$title = utf8_encode($row['Nome']);
+			$subtitle = utf8_encode($row['Nome']);
+            $profissional = utf8_encode($row['Nome']);
 			$telefone1 = utf8_encode($row['Telefone1']);
 
         }

@@ -45,31 +45,28 @@ if ($_GET['q']==1) {
     }
 
 }
+
 elseif ($_GET['q'] == 2) {
 
     $result = mysql_query(
             'SELECT
-                TPC.idTab_ProdutoCompra,
-				CONCAT(TPB.TipoProdutoBase, " -- ", TEM.NomeEmpresa, " --- ", TPB.ProdutoBase, " --- ", TPB.UnidadeProdutoBase) AS ProdutoBase,
-				TPC.ValorCompraProduto
+                TPV.idTab_Produto,
+				CONCAT(TPV.NomeProduto, " --- ", TPV.UnidadeProduto, " --- R$ ", TPV.ValorCompraProduto) AS NomeProduto,
+				TPV.ValorCompraProduto
             FROM
-                Tab_ProdutoCompra AS TPC
-					LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase = TPC.ProdutoBase
-					LEFT JOIN App_Empresa AS TEM ON TEM.idApp_Empresa = TPC.Empresa
+                Tab_Produto AS TPV																	
             WHERE
-                TPC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                TPC.idSis_Usuario = ' . $_SESSION['log']['id'] . '				
-			ORDER BY 
-				TPB.TipoProdutoBase DESC,
-				TEM.NomeEmpresa,
-				TPB.ProdutoBase ASC 
+                TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                TPV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+			ORDER BY  
+				TPV.NomeProduto ASC 
     ');
 
     while ($row = mysql_fetch_assoc($result)) {
 
         $event_array[] = array(
-            'id' => $row['idTab_ProdutoCompra'],
-            'name' => utf8_encode($row['ProdutoBase']),
+            'id' => $row['idTab_Produto'],
+            'name' => utf8_encode($row['NomeProduto']),
             'value' => $row['ValorCompraProduto'],
         );
     }

@@ -76,10 +76,10 @@ class Empresa extends CI_Controller {
 
         #$this->form_validation->set_rules('NomeEmpresa', 'Nome do Responsável', 'required|trim|is_unique_duplo[App_Empresa.NomeEmpresa.DataNascimento.' . $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql') . ']');
         $this->form_validation->set_rules('NomeEmpresa', 'Nome do Responsável', 'required|trim');
-        $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
+        #$this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
         $this->form_validation->set_rules('Telefone1', 'Telefone1', 'required|trim');
-        $this->form_validation->set_rules('Email', 'E-mail', 'trim|valid_email');
-		$this->form_validation->set_rules('Atividade', 'Atividade', 'required|trim');
+        #$this->form_validation->set_rules('Email', 'E-mail', 'trim|valid_email');
+		#$this->form_validation->set_rules('Atividade', 'Atividade', 'required|trim');
 		
         $data['select']['Municipio'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
@@ -185,10 +185,10 @@ class Empresa extends CI_Controller {
 
         #$this->form_validation->set_rules('NomeEmpresa', 'Nome do Responsável', 'required|trim|is_unique_duplo[App_Empresa.NomeEmpresa.DataNascimento.' . $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql') . ']');
         $this->form_validation->set_rules('NomeEmpresa', 'Nome do Responsável', 'required|trim');
-        $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
+        #$this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
         $this->form_validation->set_rules('Telefone1', 'Telefone1', 'required|trim');
-        $this->form_validation->set_rules('Email', 'E-mail', 'trim|valid_email');
-        $this->form_validation->set_rules('Atividade', 'Atividade', 'required|trim'); 
+        #$this->form_validation->set_rules('Email', 'E-mail', 'trim|valid_email');
+        #$this->form_validation->set_rules('Atividade', 'Atividade', 'required|trim'); 
 		
         $data['select']['Municipio'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();

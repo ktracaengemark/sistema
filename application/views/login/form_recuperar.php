@@ -14,6 +14,11 @@
         </a>
     </p>
     -->
+	<p class="text-center">
+        <a href="<?php echo base_url(); ?>login">
+            <img src="<?php echo base_url() . 'arquivos/imagens/' . $modulo . '.png'; ?>" />
+        </a>
+    </p>
     <h2 class="form-signin-heading text-center">Recuperar Senha</h2>
     <br>
 

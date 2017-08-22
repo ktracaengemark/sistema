@@ -13,7 +13,7 @@ class Consumo extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Servico_model', 'Produto_model', 'ServicoBase_model', 'ProdutoBase_model', 'Produtocompra_model', 'Servicocompra_model', 'Consumo_model', 'Tipodespesa_model', 'Profissional_model', 'Formapag_model', 'Cliente_model'));
+        $this->load->model(array('Basico_model', 'Servico_model', 'Produto_model', 'ServicoBase_model', 'ProdutoBase_model', 'Produtocompra_model', 'Servicocompra_model', 'Consumo_model', 'Tipoconsumo_model', 'Tipodespesa_model', 'Profissional_model', 'Formapag_model', 'Cliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -141,7 +141,7 @@ class Consumo extends CI_Controller {
 		#$this->form_validation->set_rules('FormaPagamentoDespesas', 'Forma de Pagamento', 'required|trim');
 		#$this->form_validation->set_rules('QtdParcelasDespesas', 'Qtd de Parcelas', 'required|trim');
 		#$this->form_validation->set_rules('DataVencimentoDespesas', 'Data do 1ºVenc.', 'required|trim|valid_date');
-		$data['select']['TipoDespesa'] = $this->Tipodespesa_model->select_tipoconsumo();
+		$data['select']['TipoDespesa'] = $this->Tipoconsumo_model->select_tipoconsumo();
         $data['select']['AprovadoDespesas'] = $this->Basico_model->select_status_sn();
         $data['select']['FormaPagamentoDespesas'] = $this->Formapag_model->select_formapag();
 		$data['select']['ServicoConcluidoDespesas'] = $this->Basico_model->select_status_sn();
@@ -150,10 +150,12 @@ class Consumo extends CI_Controller {
 		$data['select']['QuitadoDespesas'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoPagaveis'] = $this->Basico_model->select_status_sn();
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        #$data['select']['Servico'] = $this->ServicoBase_model->select_servicobase();
+		$data['select']['Servico'] = $this->Servico_model->select_servico();
+        $data['select']['Produto'] = $this->Produto_model->select_produto();		
+		#$data['select']['Servico'] = $this->ServicoBase_model->select_servicobase();
         #$data['select']['Produto'] = $this->ProdutoBase_model->select_produtobase();
-		$data['select']['Servico'] = $this->Servicocompra_model->select_servicocompra2();
-        $data['select']['Produto'] = $this->Produtocompra_model->select_produtocompra2();
+		#$data['select']['Servico'] = $this->Servicocompra_model->select_servicocompra2();
+        #$data['select']['Produto'] = $this->Produtocompra_model->select_produtocompra2();
 
         $data['titulo'] = 'Cadastar Consumo';
         $data['form_open_path'] = 'consumo/cadastrar';
@@ -231,7 +233,7 @@ class Consumo extends CI_Controller {
             $data['despesas']['DataEntradaDespesas'] = $this->basico->mascara_data($data['despesas']['DataEntradaDespesas'], 'mysql');
             $data['despesas']['ValorRestanteDespesas'] = str_replace(',', '.', str_replace('.', '', $data['despesas']['ValorRestanteDespesas']));
 			$data['despesas']['TipoProduto'] = $data['despesas']['TipoProduto'];
-
+			$data['despesas']['Empresa'] = $_SESSION['log']['Empresa'];
             $data['despesas']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['despesas']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['despesas']['idApp_Despesas'] = $this->Consumo_model->set_despesas($data['despesas']);
@@ -484,7 +486,7 @@ class Consumo extends CI_Controller {
 		#$this->form_validation->set_rules('QtdParcelasDespesas', 'Qtd de Parcelas', 'required|trim');
 		#$this->form_validation->set_rules('DataVencimentoDespesas', 'Data do 1ºVenc.', 'required|trim|valid_date');
 		
-		$data['select']['TipoDespesa'] = $this->Tipodespesa_model->select_tipoconsumo();
+		$data['select']['TipoDespesa'] = $this->Tipoconsumo_model->select_tipoconsumo();
         $data['select']['AprovadoDespesas'] = $this->Basico_model->select_status_sn();
         $data['select']['FormaPagamentoDespesas'] = $this->Formapag_model->select_formapag();
         $data['select']['ServicoConcluidoDespesas'] = $this->Basico_model->select_status_sn();
@@ -493,10 +495,12 @@ class Consumo extends CI_Controller {
 		$data['select']['QuitadoDespesas'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoPagaveis'] = $this->Basico_model->select_status_sn();
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        #$data['select']['Servico'] = $this->ServicoBase_model->select_servicobase();
+		$data['select']['Servico'] = $this->Servico_model->select_servico();
+        $data['select']['Produto'] = $this->Produto_model->select_produto();		
+		#$data['select']['Servico'] = $this->ServicoBase_model->select_servicobase();
         #$data['select']['Produto'] = $this->ProdutoBase_model->select_produtobase();
-		$data['select']['Servico'] = $this->Servicocompra_model->select_servicocompra2();
-        $data['select']['Produto'] = $this->Produtocompra_model->select_produtocompra2();
+		#$data['select']['Servico'] = $this->Servicocompra_model->select_servicocompra2();
+        #$data['select']['Produto'] = $this->Produtocompra_model->select_produtocompra2();
 
         $data['titulo'] = 'Editar Consumo';
         $data['form_open_path'] = 'consumo/alterar';
@@ -573,7 +577,7 @@ class Consumo extends CI_Controller {
             $data['despesas']['DataEntradaDespesas'] = $this->basico->mascara_data($data['despesas']['DataEntradaDespesas'], 'mysql');
             $data['despesas']['ValorRestanteDespesas'] = str_replace(',', '.', str_replace('.', '', $data['despesas']['ValorRestanteDespesas']));
 			$data['despesas']['TipoProduto'] = $data['despesas']['TipoProduto'];
-			
+			$data['despesas']['Empresa'] = $_SESSION['log']['Empresa'];			
             $data['despesas']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['despesas']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 

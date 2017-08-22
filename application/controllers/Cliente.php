@@ -106,10 +106,12 @@ class Cliente extends CI_Controller {
             $this->load->view('cliente/form_cliente', $data);
         } else {
 
+			
             $data['query']['NomeCliente'] = trim(mb_strtoupper($data['query']['NomeCliente'], 'ISO-8859-1'));
-            $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
-            $data['query']['Obs'] = nl2br($data['query']['Obs']);
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');            
+			$data['query']['Obs'] = nl2br($data['query']['Obs']);
+			$data['query']['Empresa'] = $_SESSION['log']['Empresa'];
+			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
             $data['campos'] = array_keys($data['query']);
@@ -160,7 +162,7 @@ class Cliente extends CI_Controller {
             'Municipio',
 
             'Obs',
-            'idSis_Usuario',
+            #'idSis_Usuario',
             'Email',
             'RegistroFicha',
 			'Associado',
@@ -210,8 +212,9 @@ class Cliente extends CI_Controller {
             $data['query']['NomeCliente'] = trim(mb_strtoupper($data['query']['NomeCliente'], 'ISO-8859-1'));
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
             $data['query']['Obs'] = nl2br($data['query']['Obs']);
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
-
+			$data['query']['Empresa'] = $_SESSION['log']['Empresa'];
+			#$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+						
             $data['anterior'] = $this->Cliente_model->get_cliente($data['query']['idApp_Cliente']);
             $data['campos'] = array_keys($data['query']);
 
@@ -402,6 +405,7 @@ class Cliente extends CI_Controller {
 
         $data['query']['Sexo'] = $this->Basico_model->get_sexo($data['query']['Sexo']);
 		$data['query']['Ativo'] = $this->Basico_model->get_ativo($data['query']['Ativo']);
+		$data['query']['Empresa'] = $this->Basico_model->get_empresa($data['query']['Empresa']);
 		
         $data['query']['Telefone'] = $data['query']['Telefone1'];
         ($data['query']['Telefone2']) ? $data['query']['Telefone'] = $data['query']['Telefone'] . ' - ' . $data['query']['Telefone2'] : FALSE;

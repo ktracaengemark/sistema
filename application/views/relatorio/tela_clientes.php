@@ -9,7 +9,6 @@
                     <?php echo form_open('relatorio/clientes', 'role="form"'); ?>
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-md-1"></div>
                             <div class="col-md-4">
                                 <label for="Ordenamento">Nome do Cliente:</label>
                                 <div class="form-group">
@@ -31,7 +30,7 @@
                                     </div>
                                 </div>
                             </div>
-							<div class="col-md-1">
+							<div class="col-md-2">
                                 <label for="Ativo">Ativo?</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
                                         id="Ativo" name="Ativo">
@@ -81,15 +80,13 @@
                                     </div>
                                 </div>
                             </div>
-							
-                            <div class="col-md-1"></div>
                         </div>
                     </div>
 					
 					<div class="col-md-12" >
 						<div class="form-group">
 							<div class="row">
-								<div class="col-md-5 text-right">
+								<div class="col-md-5 text-left">
 									<button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
 										<span class="glyphicon glyphicon-search"></span> Pesquisar
 									</button>

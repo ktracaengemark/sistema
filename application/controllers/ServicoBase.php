@@ -48,14 +48,14 @@ class ServicoBase extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = quotes_to_entities($this->input->post(array(
-            'idSis_Usuario',
 			'idTab_ServicoBase',
             'ServicoBase',
 			#'ValorCompraServicoBase',
 			'TipoServicoBase',
+			'CodServ',
                 ), TRUE));
 				
-		#(!$data['query']['TipoServicoBase']) ? $data['query']['TipoServicoBase'] = 'V' : FALSE;
+		(!$data['query']['TipoServicoBase']) ? $data['query']['TipoServicoBase'] = 'V' : FALSE;
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
@@ -87,7 +87,8 @@ class ServicoBase extends CI_Controller {
             $this->load->view('servicobase/pesq_servicobase', $data);
         } else {
 
-            $data['query']['ServicoBase'] = trim(mb_strtoupper($data['query']['ServicoBase'], 'ISO-8859-1'));
+            #$data['query']['CodServ'] = trim(mb_strtoupper($data['query']['CodServ'], 'ISO-8859-1'));
+			$data['query']['ServicoBase'] = trim(mb_strtoupper($data['query']['ServicoBase'], 'ISO-8859-1'));
             #$data['query']['ValorCompraServicoBase'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraServicoBase']));
 			$data['query']['TipoServicoBase'] = $data['query']['TipoServicoBase'];
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
@@ -128,14 +129,14 @@ class ServicoBase extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = quotes_to_entities($this->input->post(array(
-            'idSis_Usuario',
 			'idTab_ServicoBase',
             'ServicoBase',
 			#'ValorCompraServicoBase',
 			'TipoServicoBase',
+			'CodServ',
                 ), TRUE));
 
-		#(!$data['query']['TipoServicoBase']) ? $data['query']['TipoServicoBase'] = 'V' : FALSE;
+		(!$data['query']['TipoServicoBase']) ? $data['query']['TipoServicoBase'] = 'V' : FALSE;
 		
         if ($id)
             $data['query'] = $this->Servicobase_model->get_servicobase($id);
@@ -171,8 +172,9 @@ class ServicoBase extends CI_Controller {
             $this->load->view('servicobase/pesq_servicobase', $data);
         } else {
 
-            $data['query']['ServicoBase'] = trim(mb_strtoupper($data['query']['ServicoBase'], 'ISO-8859-1'));
-            #$data['query']['ValorCompraServicoBase'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraServicoBase']));
+            #$data['query']['CodServ'] = trim(mb_strtoupper($data['query']['CodServ'], 'ISO-8859-1'));
+			$data['query']['ServicoBase'] = trim(mb_strtoupper($data['query']['ServicoBase'], 'ISO-8859-1'));
+           #$data['query']['ValorCompraServicoBase'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompraServicoBase']));
 			$data['query']['TipoServicoBase'] = $data['query']['TipoServicoBase'];
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 

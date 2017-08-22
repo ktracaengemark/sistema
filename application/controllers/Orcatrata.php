@@ -159,7 +159,7 @@ class Orcatrata extends CI_Controller {
         $this->form_validation->set_rules('DataOrca', 'Data do Orçamento', 'required|trim|valid_date');
         #$this->form_validation->set_rules('DataProcedimento', 'DataProcedimento', 'required|trim');
         #$this->form_validation->set_rules('ParcelaRecebiveis', 'ParcelaRecebiveis', 'required|trim');
-        $this->form_validation->set_rules('ProfissionalOrca', 'Profissional', 'required|trim');
+        #$this->form_validation->set_rules('ProfissionalOrca', 'Profissional', 'required|trim');
 		$this->form_validation->set_rules('FormaPagamento', 'Forma de Pagamento', 'required|trim');
 		$this->form_validation->set_rules('QtdParcelasOrca', 'Qtd de Parcelas', 'required|trim');
 		$this->form_validation->set_rules('DataVencimentoOrca', 'Data do 1ºVenc.', 'required|trim|valid_date');
@@ -243,7 +243,7 @@ class Orcatrata extends CI_Controller {
             $data['orcatrata']['ValorEntradaOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorEntradaOrca']));
             $data['orcatrata']['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntradaOrca'], 'mysql');
             $data['orcatrata']['ValorRestanteOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorRestanteOrca']));
-
+			$data['orcatrata']['Empresa'] = $_SESSION['log']['Empresa']; 
             $data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['orcatrata']['idApp_OrcaTrata'] = $this->Orcatrata_model->set_orcatrata($data['orcatrata']);
@@ -531,7 +531,7 @@ class Orcatrata extends CI_Controller {
         $this->form_validation->set_rules('DataOrca', 'Data do Orçamento', 'required|trim|valid_date');        
 		#$this->form_validation->set_rules('DataProcedimento', 'DataProcedimento', 'required|trim');
         #$this->form_validation->set_rules('ParcelaRecebiveis', 'ParcelaRecebiveis', 'required|trim');
-        $this->form_validation->set_rules('ProfissionalOrca', 'Profissional', 'required|trim');
+        #$this->form_validation->set_rules('ProfissionalOrca', 'Profissional', 'required|trim');
 		$this->form_validation->set_rules('FormaPagamento', 'Forma de Pagamento', 'required|trim');
 		$this->form_validation->set_rules('QtdParcelasOrca', 'Qtd de Parcelas', 'required|trim');
 		$this->form_validation->set_rules('DataVencimentoOrca', 'Data do 1ºVenc.', 'required|trim|valid_date');
@@ -615,7 +615,7 @@ class Orcatrata extends CI_Controller {
             $data['orcatrata']['ValorEntradaOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorEntradaOrca']));
             $data['orcatrata']['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntradaOrca'], 'mysql');
             $data['orcatrata']['ValorRestanteOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorRestanteOrca']));
-
+			$data['orcatrata']['Empresa'] = $_SESSION['log']['Empresa'];
             $data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 

@@ -11,7 +11,6 @@
                         <th class="active">Data da Despesa</th>
 						<th class="active">Quant.</th>
 						<th class="active">Produto</th>
-						<th class="active">Fornec.</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,7 +27,6 @@
                             echo '<td>' . $row['DataDespesas'] . '</td>';
 							echo '<td>' . $row['QtdCompraProduto'] . '</td>';
 							echo '<td>' . $row['ProdutoBase'] . '</td>';
-							echo '<td>' . $row['NomeEmpresa'] . '</td>';
                         echo '</tr>';
                     }
                     ?>

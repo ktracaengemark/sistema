@@ -56,10 +56,10 @@ class Tipoconsumo extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $this->form_validation->set_rules('TipoConsumo', 'Nome do Serviço', 'required|trim');
+        $this->form_validation->set_rules('TipoConsumo', 'Tipo de Consumo', 'required|trim');
         #$this->form_validation->set_rules('ValorVenda', 'Valor do Serviço', 'required|trim');
 
-        $data['titulo'] = 'Cadastrar Serviço';
+        $data['titulo'] = 'Cadastrar Tipo de Consumo';
         $data['form_open_path'] = 'tipoconsumo/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -135,10 +135,10 @@ class Tipoconsumo extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $this->form_validation->set_rules('TipoConsumo', 'Nome do Serviço', 'required|trim');
+        $this->form_validation->set_rules('TipoConsumo', 'Tipo de Consumo', 'required|trim');
        # $this->form_validation->set_rules('ValorVenda', 'Valor do Serviço', 'required|trim');
 
-        $data['titulo'] = 'Editar Serviço';
+        $data['titulo'] = 'Editar Tipo de Consumo';
         $data['form_open_path'] = 'tipoconsumo/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';

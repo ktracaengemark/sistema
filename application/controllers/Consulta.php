@@ -95,7 +95,7 @@ class Consulta extends CI_Controller {
         $this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
         $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
         #$this->form_validation->set_rules('idTab_TipoConsulta', 'Tipo de Consulta', 'required|trim');
-        $this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+        #$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
         if ($data['query']['Paciente'] == 'D')
             $this->form_validation->set_rules('idApp_ContatoCliente', 'ContatoCliente', 'required|trim');
 
@@ -244,7 +244,7 @@ class Consulta extends CI_Controller {
         $this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
         $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
         #$this->form_validation->set_rules('idTab_TipoConsulta', 'Tipo de Consulta', 'required|trim');
-        $this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+        #$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
         if ($data['query']['Paciente'] == 'D')
             $this->form_validation->set_rules('idApp_ContatoCliente', 'ContatoCliente', 'required|trim');
 
@@ -417,7 +417,7 @@ class Consulta extends CI_Controller {
         $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
         $this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
         $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
-		$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
 		
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
         
@@ -521,7 +521,7 @@ class Consulta extends CI_Controller {
         $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
         $this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
         $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
-		$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
 		
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
 		

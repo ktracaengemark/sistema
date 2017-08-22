@@ -150,10 +150,12 @@ class Despesas extends CI_Controller {
 		$data['select']['QuitadoDespesas'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoPagaveis'] = $this->Basico_model->select_status_sn();
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        #$data['select']['Servico'] = $this->ServicoBase_model->select_servicobase();
+		$data['select']['Servico'] = $this->Servico_model->select_servico();
+        $data['select']['Produto'] = $this->Produto_model->select_produto();		
+		#$data['select']['Servico'] = $this->ServicoBase_model->select_servicobase();
         #$data['select']['Produto'] = $this->ProdutoBase_model->select_produtobase();
-		$data['select']['Servico'] = $this->Servicocompra_model->select_servicocompra2();
-        $data['select']['Produto'] = $this->Produtocompra_model->select_produtocompra2();
+		#$data['select']['Servico'] = $this->Servicocompra_model->select_servicocompra2();
+        #$data['select']['Produto'] = $this->Produtocompra_model->select_produtocompra2();
 
         $data['titulo'] = 'Cadastar Despesas';
         $data['form_open_path'] = 'despesas/cadastrar';
@@ -231,7 +233,7 @@ class Despesas extends CI_Controller {
             $data['despesas']['DataEntradaDespesas'] = $this->basico->mascara_data($data['despesas']['DataEntradaDespesas'], 'mysql');
             $data['despesas']['ValorRestanteDespesas'] = str_replace(',', '.', str_replace('.', '', $data['despesas']['ValorRestanteDespesas']));
 			$data['despesas']['TipoProduto'] = $data['despesas']['TipoProduto'];
-
+			$data['despesas']['Empresa'] = $_SESSION['log']['Empresa'];
             $data['despesas']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['despesas']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['despesas']['idApp_Despesas'] = $this->Despesas_model->set_despesas($data['despesas']);
@@ -494,10 +496,12 @@ class Despesas extends CI_Controller {
 		$data['select']['QuitadoDespesas'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoPagaveis'] = $this->Basico_model->select_status_sn();
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        #$data['select']['Servico'] = $this->ServicoBase_model->select_servicobase();
+		$data['select']['Servico'] = $this->Servico_model->select_servico();
+        $data['select']['Produto'] = $this->Produto_model->select_produto();		
+		#$data['select']['Servico'] = $this->ServicoBase_model->select_servicobase();
         #$data['select']['Produto'] = $this->ProdutoBase_model->select_produtobase();
-		$data['select']['Servico'] = $this->Servicocompra_model->select_servicocompra2();
-        $data['select']['Produto'] = $this->Produtocompra_model->select_produtocompra2();
+		#$data['select']['Servico'] = $this->Servicocompra_model->select_servicocompra2();
+        #$data['select']['Produto'] = $this->Produtocompra_model->select_produtocompra2();
 
         $data['titulo'] = 'Editar Despesas';
         $data['form_open_path'] = 'despesas/alterar';
@@ -574,7 +578,7 @@ class Despesas extends CI_Controller {
             $data['despesas']['DataEntradaDespesas'] = $this->basico->mascara_data($data['despesas']['DataEntradaDespesas'], 'mysql');
             $data['despesas']['ValorRestanteDespesas'] = str_replace(',', '.', str_replace('.', '', $data['despesas']['ValorRestanteDespesas']));
 			$data['despesas']['TipoProduto'] = $data['despesas']['TipoProduto'];
-			
+			$data['despesas']['Empresa'] = $_SESSION['log']['Empresa'];			
             $data['despesas']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['despesas']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
