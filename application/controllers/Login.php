@@ -163,11 +163,16 @@ class Login extends CI_Controller {
             'DataNascimento',
             'Celular',
             'Sexo',
+			'Funcao',
+			'DataCriacao',
+			'NumUsuarios',
 			
 
                 ), TRUE);
 
-        $this->form_validation->set_error_delimiters('<h5 style="color: red;">', '</h5>');
+        (!$data['query']['DataCriacao']) ? $data['query']['DataCriacao'] = date('d/m/Y', time()) : FALSE;
+		
+		$this->form_validation->set_error_delimiters('<h5 style="color: red;">', '</h5>');
 	
 		$this->form_validation->set_rules('NomeEmpresa', 'Nome da empresa', 'required|trim|is_unique[Sis_Usuario.NomeEmpresa]');
         $this->form_validation->set_rules('Email', 'E-mail', 'required|trim|valid_email|is_unique[Sis_Usuario.Email]');		
@@ -177,7 +182,8 @@ class Login extends CI_Controller {
         $this->form_validation->set_rules('Confirma', 'Confirmar Senha', 'required|trim|matches[Senha]');
         $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
 		$this->form_validation->set_rules('Celular', 'Celular', 'required|trim');
-
+		$this->form_validation->set_rules('NumUsuarios', 'Nº de Usuários', 'required|trim');
+		
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 
         #run form validation
@@ -185,13 +191,17 @@ class Login extends CI_Controller {
             #load login view
             $this->load->view('login/form_registrar', $data);
         } else {
-			
+						
 			$data['query']['Empresa'] = 0;
+			$data['query']['Funcao'] = 100;
+			$data['query']['UsuarioEmpresa'] = 1;
+			$data['query']['idSis_EmpresaFilial'] = 33;
 			$data['query']['Associado'] = 33;
 			$data['query']['Permissao'] = 1;
 			$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['query']['Senha'] = md5($data['query']['Senha']);
 			$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
+			$data['query']['DataCriacao'] = $this->basico->mascara_data($data['query']['DataCriacao'], 'mysql');
             $data['query']['Codigo'] = md5(uniqid(time() . rand()));
             #$data['query']['Inativo'] = 1;
             //ACESSO LIBERADO PRA QUEM REALIZAR O CADASTRO

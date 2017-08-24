@@ -129,9 +129,8 @@ class Funcao_model extends CI_Model {
 					Abrev
 				FROM 
                     Tab_Funcao 					
-				WHERE 
-                    idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND 
-                    idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+				WHERE  
+                    idTab_Modulo = "10" 
 				ORDER BY Funcao ASC 
 			');		
 					
@@ -144,8 +143,7 @@ class Funcao_model extends CI_Model {
 				FROM 
                     Tab_Funcao 					
 				WHERE 
-                    idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND 
-                    idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+                    idTab_Modulo = "10" 
 				ORDER BY Funcao ASC 
 			');
             

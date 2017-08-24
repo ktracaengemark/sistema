@@ -19,7 +19,7 @@
 					</div>
 
 					<div class="col-md-12 text-center t">
-						<h1><?php echo '<small>selecione o </small><strong> Menu </strong><small> acima <br>e boas Vendas. </small>'  ?></h1>
+						<h1><?php echo '<small>selecione o </small><strong> Menu </strong><small> acima <br>e bom trabalho. </small>'  ?></h1>
 					</div>
 				</div>	
 			</div>		

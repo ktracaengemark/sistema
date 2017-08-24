@@ -27,25 +27,31 @@
 	<?php echo form_error('NomeEmpresa'); ?>
 	<br>
 	
-	<label for="Nome">Nome do Usuário/ Administrador:</label>
+	<label for="NumUsuarios">Nº de Usuários:</label>
+	<input type="text" class="form-control" id="NumUsuarios" maxlength="45" 
+		   name="NumUsuarios" value="<?php echo $query['NumUsuarios']; ?>">
+	<?php echo form_error('NumUsuarios'); ?>
+	<br>
+	
+	<label for="Nome">Nome do Usuário Administrador:</label>
     <input type="text" class="form-control" id="Nome" maxlength="255"
            name="Nome" value="<?php echo $query['Nome']; ?>">
     <?php echo form_error('Nome'); ?>
     <br>
 	
-    <label for="Celular">Celular:</label>
+    <label for="Celular">Celular do Usuário Administrador:</label>
     <input type="text" class="form-control Celular Celular" id="Celular" maxlength="11"
            name="Celular" placeholder="(XX)999999999" value="<?php echo $query['Celular']; ?>">
     <?php echo form_error('Celular'); ?>
     <br>
 
-    <label for="DataNascimento">Data de Nascimento:</label>
+    <label for="DataNascimento">Data de Nascimento do Usuário Administrador:</label>
     <input type="text" class="form-control Date" id="inputDate0" maxlength="10"
            name="DataNascimento" placeholder="DD/MM/AAAA" value="<?php echo $query['DataNascimento']; ?>">
     <?php echo form_error('DataNascimento'); ?>
     <br>
 
-    <label for="Sexo">Sexo:</label>
+    <label for="Sexo">Sexo do Usuário Administrador:</label>
     <select data-placeholder="Selecione um TROCA..." class="form-control" id="Sexo" name="Sexo">
         <option value=""></option>
         <?php
@@ -61,25 +67,25 @@
     <?php echo form_error('Sexo'); ?>
     <br>	
 
-    <label class="text-">E-mail do Usuário:</label>
+    <label class="text-">E-mail do do Usuário Administrador:</label>
     <input type="text" class="form-control" id="Email" maxlength="100"
            name="Email" value="<?php echo $query['Email']; ?>">
     <?php echo form_error('Email'); ?>
     <br>
 	
-    <label for="Usuario">Usuário:</label>
+    <label for="Usuario">Usuário Administrador:</label>
     <input type="text" class="form-control" id="Usuario" maxlength="45"
            name="Usuario" value="<?php echo $query['Usuario']; ?>">
     <?php echo form_error('Usuario'); ?>
     <br>
 
-    <label for="Senha">Senha:</label>
+    <label for="Senha">Senha do Usuário Administrador:</label>
     <input type="password" class="form-control" id="Senha" maxlength="45"
            name="Senha" value="<?php echo $query['Senha']; ?>">
     <?php echo form_error('Senha'); ?>
     <br>
 
-    <label for="Senha">Confirmar Senha:</label>
+    <label for="Senha">Confirmar Senha do Usuário Administrador:</label>
     <input type="password" class="form-control" id="Confirma" maxlength="45"
            name="Confirma" value="<?php echo $query['Confirma']; ?>">
     <?php echo form_error('Confirma'); ?>

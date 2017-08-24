@@ -152,8 +152,14 @@ class Loginassociado extends CI_Controller {
             'DataNascimento',
             'Celular',
             'Sexo',
+			'Funcao',
+			'DataCriacao',
+			'NumUsuarios',
+			
                 ), TRUE);
         
+		(!$data['query']['DataCriacao']) ? $data['query']['DataCriacao'] = date('d/m/Y', time()) : FALSE;
+		
 		$this->form_validation->set_error_delimiters('<h5 style="color: red;">', '</h5>');
 
         $this->form_validation->set_rules('Email', 'E-mail', 'required|trim|valid_email|is_unique[Sis_Usuario.Email]');
@@ -171,14 +177,17 @@ class Loginassociado extends CI_Controller {
             $this->load->view('loginassociado/form_registrar', $data);
         } else {
 
-			
+			$data['query']['Funcao'] = 100;
 			$data['query']['Permissao'] = 1;
 			$data['query']['Empresa'] = 0;
+			$data['query']['UsuarioEmpresa'] = 2;
+			$data['query']['idSis_EmpresaFilial'] = 33;
 			$data['query']['Associado'] = $_SESSION['log']['id'];
 			$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['query']['Senha'] = md5($data['query']['Senha']);
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
-            $data['query']['Codigo'] = md5(uniqid(time() . rand()));
+            $data['query']['DataCriacao'] = $this->basico->mascara_data($data['query']['DataCriacao'], 'mysql');
+			$data['query']['Codigo'] = md5(uniqid(time() . rand()));
             #$data['query']['Inativo'] = 1;
             //ACESSO LIBERADO PRA QUEM REALIZAR O CADASTRO
             $data['query']['Inativo'] = 0;

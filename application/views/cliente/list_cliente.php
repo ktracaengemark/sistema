@@ -3,8 +3,8 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>Paciente</th>
-            <th>Nascimento</th>
+            <th>Cliente</th>
+            <!--<th>Nascimento</th>-->
             <th>Telefone</th>
         </tr>
     </thead>
@@ -20,7 +20,7 @@
                     
             echo '<tr class="clickable-row" data-href="' . $url . '">';
                 echo '<td>' . $row['NomeCliente'] . '</td>';
-                echo '<td>' . $row['DataNascimento'] . '</td>';
+                #echo '<td>' . $row['DataNascimento'] . '</td>';
                 echo '<td>' . $row['Telefone1'] . '</td>';
             echo '</tr>';            
         }

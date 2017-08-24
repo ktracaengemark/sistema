@@ -23,6 +23,8 @@
     <p><a href="<?php echo base_url(); ?>login/recuperar/?usuario=<?php echo set_value('Usuario'); ?>">Esqueci usuário/senha!</a></p>
     <br>
     <a class="btn btn btn-primary btn-warning" href="<?php echo base_url(); ?>login/registrar" role="button">Cadastrar Nova Empresa</a>
+	<!--<br>
+    <a class="btn btn btn-primary btn-warning" href="<?php echo base_url(); ?>loginempresafilial/registrar" role="button">Acessar Empresa</a>-->
 </form>
 
 </div>

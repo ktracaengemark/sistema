@@ -58,8 +58,10 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administração<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo base_url() ?>relatorio/clientes">Clientes & Contatos</a></li>
-						<li role="separator" class="divider"></li>
+						<!--<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/profissionais">Funcionários & Contatos.</a></li>
+						<li role="separator" class="divider"></li>-->
+						<li><a href="<?php echo base_url() ?>relatorio/funcionario">Funcionário & Contatos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/fornecedor">Fornecedores & Contatos.</a></li>
 						<li role="separator" class="divider"></li>
@@ -88,6 +90,8 @@
 						<li><a href="<?php echo base_url() ?>tipodespesa/cadastrar">Tipo de Despesa</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>tipoconsumo/cadastrar">Tipo de Consumo</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>loginassociado/registrar">Cadastrar Associado ou Nova Empresa/ Usuário</a></li>
 						<!--<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>formapag/cadastrar/formapag">Forma de Pagamento</a></li>
 						<li role="separator" class="divider"></li>						
@@ -104,7 +108,9 @@
 					<ul class="dropdown-menu">						
 						<li><a href="<?php echo base_url() ?>relatorio/clientes">Clientes & Contatos</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/profissionais">Funcionários & Contatos.</a></li>
+						<!--<li><a href="<?php echo base_url() ?>relatorio/profissionais">Funcionários & Contatos.</a></li>
+						<li role="separator" class="divider"></li>-->
+						<li><a href="<?php echo base_url() ?>relatorio/funcionario">Funcionários & Contatos</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/fornecedor">Fornecedores & Contatos.</a></li>
 						<li role="separator" class="divider"></li>
@@ -125,6 +131,8 @@
 						<li><a href="<?php echo base_url() ?>relatorio/consumo">Produtos Consumidos Inter.</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/servicosprest">Serviços Prestados</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>relatorio/associado">Associados ou Empresas Associadas</a></li>
 						<!--<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>">Estoque = Pcp - (Pvd + Pcs)</a></li>
 						<li role="separator" class="divider"></li>

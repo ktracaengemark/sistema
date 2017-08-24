@@ -888,7 +888,7 @@ class Orcatrata extends CI_Controller {
         $data['list'] = $this->load->view('orcatrata/list_orcatrata', $data, TRUE);
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
-        $this->load->view('orcatrata/tela_orcatrata', $data);
+        $this->load->view('orcatrata/list_orcatrata', $data);
 
         $this->load->view('basico/footer');
     }

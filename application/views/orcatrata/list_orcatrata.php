@@ -1,106 +1,203 @@
+<?php if (isset($msg)) echo $msg; ?>
+<?php if ( !isset($evento) && isset($_SESSION['Cliente'])) { ?>
+
 <div class="container-fluid">
+	<div class="row">
+	
+		<div class="col-md-2"></div>
+		<div class="col-md-8 ">
+		
+			<div class="panel panel-primary">
+				
+				<div class="panel-heading"><strong><?php echo '<strong>' . $_SESSION['Cliente']['NomeCliente'] . '</strong> - <small>Id.: ' . $_SESSION['Cliente']['idApp_Cliente'] . '</small>' ?></strong></div>
+				<div class="panel-body">
+			
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-12 col-lg-12">
+								<div class="col-md-4 text-left">
+									<label for="">Cliente & Contatos:</label>
+									<div class="form-group">
+										<div class="row">	
+											<a <?php if (preg_match("/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
+												<a class="btn btn-lg btn-success" href="<?php echo base_url() . 'cliente/prontuario/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+													<span class="glyphicon glyphicon-file"> </span> Ver <span class="sr-only">(current)</span>
+												</a>
+											</a>				
+											<a <?php if (preg_match("/cliente\/alterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+												<a class="btn btn-lg btn-warning" href="<?php echo base_url() . 'cliente/alterar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+													<span class="glyphicon glyphicon-edit"></span> Edit.
+												</a>
+											</a>
+										</div>
+									</div>	
+								</div>
 
-	<div>
+								<div class="col-md-4 text-center">
+									<label for="">Consultas:</label>
+									<div class="form-group">
+										<div class="row">
+											<a <?php if (preg_match("/consulta\/listar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
+												<a class="btn btn-lg btn-success" href="<?php echo base_url() . 'consulta/listar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+													<span class="glyphicon glyphicon-list-alt"></span> List.
+												</a>
+											</a>
+											<a <?php if (preg_match("/consulta\/(cadastrar|alterar)\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
+												<a class="btn btn-lg btn-warning" href="<?php echo base_url() . 'consulta/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+													<span class="glyphicon glyphicon-plus"></span> Cad.
+												</a>
+											</a>
+										</div>	
+									</div>	
+								</div>
 
-		<!-- Nav tabs -->
-		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation"><a href="#proxima" aria-controls="proxima" role="tab" data-toggle="tab">Aprovados</a></li>
-			<li role="presentation" class="active"><a href="#anterior" aria-controls="anterior" role="tab" data-toggle="tab">Não Aprovados</a></li>
-		</ul>
+								<div class="col-md-4 text-right">
+									<label for="">Orçamentos:</label>
+									<div class="form-group ">
+										<div class="row">
+											<a <?php if (preg_match("/orcatrata\/listar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
+												<a class="btn btn-lg btn-success" href="<?php echo base_url() . 'orcatrata/listar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+													<span class="glyphicon glyphicon-list-alt"></span> List.
+												</a>
+											</a>
+											<a <?php if (preg_match("/orcatrata\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
+												<a class="btn btn-lg btn-warning" href="<?php echo base_url() . 'orcatrata/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+													<span class="glyphicon glyphicon-plus"></span> Cad.
+												</a>
+											</a>
+										</div>		
+									</div>	
+								</div>
+							</div>	
+						</div>	
+					</div>		
+					<!--
+					<div class="form-group">		
+						<div class="row">
+							<div class="text-center t">
+								<h3><?php echo '<strong>' . $_SESSION['Cliente']['NomeCliente'] . '</strong> - <small>Id.: ' . $_SESSION['Cliente']['idApp_Cliente'] . '</small>' ?></h3>
+							</div>
+						</div>
+					</div>
+					-->
+					<div class="row">
+						<div class="col-md-12 col-lg-12">
+							<div class="panel panel-primary">
+								<div class="panel-heading"><strong></strong></div>
+								<div class="panel-body">
 
-		<!-- Tab panes -->
-		<div class="tab-content">
+									<div>
 
-			<!-- Próximas Consultas -->
-			<div role="tabpanel" class="tab-pane" id="proxima">
+										<!-- Nav tabs -->
+										<ul class="nav nav-tabs" role="tablist">
+											<li role="presentation"><a href="#proxima" aria-controls="proxima" role="tab" data-toggle="tab">Aprovados</a></li>
+											<li role="presentation" class="active"><a href="#anterior" aria-controls="anterior" role="tab" data-toggle="tab">Não Aprovados</a></li>
+										</ul>
 
-				<?php
-				if ($aprovado) {
+										<!-- Tab panes -->
+										<div class="tab-content">
 
-					foreach ($aprovado->result_array() as $row) {
-				?>
+											<!-- Próximas Consultas -->
+											<div role="tabpanel" class="tab-pane" id="proxima">
 
-				<div class="bs-callout bs-callout-success" id=callout-overview-not-both>
+												<?php
+												if ($aprovado) {
 
-					<a class="btn btn-success" href="<?php echo base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] ?>" role="button">
-						<span class="glyphicon glyphicon-edit"></span> Editar Dados
-					</a>
+													foreach ($aprovado->result_array() as $row) {
+												?>
 
-					<br><br>
+												<div class="bs-callout bs-callout-success" id=callout-overview-not-both>
 
-					<h4>
-						<span class="glyphicon glyphicon-calendar"></span> <b>Data do Orçamento:</b> <?php echo $row['DataOrca']; ?>
-					</h4>
+													<a class="btn btn-success" href="<?php echo base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] ?>" role="button">
+														<span class="glyphicon glyphicon-edit"></span> Editar Dados
+													</a>
 
-					<p>
-						<?php if ($row['ProfissionalOrca']) { ?>
-						<span class="glyphicon glyphicon-user"></span> <b>Profissional:</b> <?php echo $row['ProfissionalOrca']; ?> -
-						<?php } if ($row['AprovadoOrca']) { ?>
-						<span class="glyphicon glyphicon-thumbs-up"></span> <b>Orçamento Aprovado?</b> <?php echo $row['AprovadoOrca']; ?>
-						<?php } ?>
+													<br><br>
 
-					</p>
-					<p>
-						<span class="glyphicon glyphicon-pencil"></span> <b>Obs:</b> <?php echo nl2br($row['ObsOrca']); ?>
-					</p>
+													<h4>
+														<span class="glyphicon glyphicon-calendar"></span> <b>Data do Orçamento:</b> <?php echo $row['DataOrca']; ?>
+													</h4>
 
-				</div>
+													<p>
+														<?php if ($row['ProfissionalOrca']) { ?>
+														<span class="glyphicon glyphicon-user"></span> <b>Profissional:</b> <?php echo $row['ProfissionalOrca']; ?> -
+														<?php } if ($row['AprovadoOrca']) { ?>
+														<span class="glyphicon glyphicon-thumbs-up"></span> <b>Orçamento Aprovado?</b> <?php echo $row['AprovadoOrca']; ?>
+														<?php } ?>
 
-				<?php
-					}
-				} else {
-					echo '<br><div class="alert alert-info text-center" role="alert"><b>Nenhum registro</b></div>';
-				}
-				?>
+													</p>
+													<p>
+														<span class="glyphicon glyphicon-pencil"></span> <b>Obs:</b> <?php echo nl2br($row['ObsOrca']); ?>
+													</p>
 
-			</div>
+												</div>
 
-			<!-- Histórico de Consultas -->
-			<div role="tabpanel" class="tab-pane active" id="anterior">
+												<?php
+													}
+												} else {
+													echo '<br><div class="alert alert-info text-center" role="alert"><b>Nenhum registro</b></div>';
+												}
+												?>
 
-				<?php
-				if ($naoaprovado) {
+											</div>
 
-					foreach ($naoaprovado->result_array() as $row) {
-				?>
+											<!-- Histórico de Consultas -->
+											<div role="tabpanel" class="tab-pane active" id="anterior">
 
-				<div class="bs-callout bs-callout-danger" id=callout-overview-not-both>
+												<?php
+												if ($naoaprovado) {
 
-					<a class="btn btn-danger" href="<?php echo base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] ?>" role="button">
-						<span class="glyphicon glyphicon-edit"></span> Editar Dados
-					</a>
+													foreach ($naoaprovado->result_array() as $row) {
+												?>
 
-					<br><br>
+												<div class="bs-callout bs-callout-danger" id=callout-overview-not-both>
 
-					<h4>
-						<span class="glyphicon glyphicon-calendar"></span> <b>Data do Orçamento:</b> <?php echo $row['DataOrca']; ?>
-					</h4>
+													<a class="btn btn-danger" href="<?php echo base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] ?>" role="button">
+														<span class="glyphicon glyphicon-edit"></span> Editar Dados
+													</a>
 
-					<p>
-						<?php if ($row['ProfissionalOrca']) { ?>
-						<span class="glyphicon glyphicon-user"></span> <b>Profissional:</b> <?php echo $row['ProfissionalOrca']; ?> -
-						<?php } if ($row['AprovadoOrca']) { ?>
-						<span class="glyphicon glyphicon-thumbs-up"></span> <b>Orçamento Aprovado?</b> <?php echo $row['AprovadoOrca']; ?>
-						<?php } ?>
+													<br><br>
 
-					</p>
-					<p>
-						<span class="glyphicon glyphicon-pencil"></span> <b>Obs:</b> <?php echo nl2br($row['ObsOrca']); ?>
-					</p>
+													<h4>
+														<span class="glyphicon glyphicon-calendar"></span> <b>Data do Orçamento:</b> <?php echo $row['DataOrca']; ?>
+													</h4>
 
-				</div>
+													<p>
+														<?php if ($row['ProfissionalOrca']) { ?>
+														<span class="glyphicon glyphicon-user"></span> <b>Profissional:</b> <?php echo $row['ProfissionalOrca']; ?> -
+														<?php } if ($row['AprovadoOrca']) { ?>
+														<span class="glyphicon glyphicon-thumbs-up"></span> <b>Orçamento Aprovado?</b> <?php echo $row['AprovadoOrca']; ?>
+														<?php } ?>
 
-				<?php
-					}
-				} else {
-					echo '<br><div class="alert alert-info text-center" role="alert"><b>Nenhum registro</b></div>';
-				}
-				?>
+													</p>
+													<p>
+														<span class="glyphicon glyphicon-pencil"></span> <b>Obs:</b> <?php echo nl2br($row['ObsOrca']); ?>
+													</p>
 
+												</div>
+
+												<?php
+													}
+												} else {
+													echo '<br><div class="alert alert-info text-center" role="alert"><b>Nenhum registro</b></div>';
+												}
+												?>
+
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>	
 			</div>
 
 		</div>
-
-	</div>
-
+		<div class="col-md-2"></div>
+	</div>	
 </div>
+
+	<?php } ?>
