@@ -1,7 +1,10 @@
 <?php if (isset($msg)) echo $msg; ?>
+
 <div class="container-fluid">	
 	<div class="row">	   
-		<div class="col-sm-7 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		
+		<div class="col-md-1"></div>
+		<div class="col-md-10 ">
 
 			<?php echo validation_errors(); ?>
 
@@ -27,7 +30,7 @@
 													<span class="glyphicon glyphicon-calendar"></span>
 												</span>
 											</div>
-										</div>-->
+										</div>
 										<div class="col-md-3">
 											<label for="ProfissionalDespesas">Profissional:</label>
 											<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
@@ -47,6 +50,7 @@
 												?>
 											</select>
 										</div>
+										-->
 										<div class="col-md-3">
 											<label for="Despesa">Consumo: *</label><br>
 											<input type="text" class="form-control" maxlength="200"
@@ -788,6 +792,6 @@
 			</div>
 
 		</div>
-
+		<div class="col-md-1"></div>
 	</div>
 </div>

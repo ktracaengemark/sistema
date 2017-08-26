@@ -162,7 +162,7 @@
                                 </button>
                             </div>
 							
-							<div class="col-md-2 text-left">											
+							<div class="col-md-2 text-right">											
 									<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>despesas/cadastrar" role="button"> 
 										<span class="glyphicon glyphicon-plus"></span> Nova Despesa
 									</a>

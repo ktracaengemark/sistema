@@ -102,7 +102,7 @@ class Tarefa extends CI_Controller {
 		$data['select']['Prioridade'] = $this->Basico_model->select_status_sn();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
 
-        $data['titulo'] = 'Cadastar Tarefa';
+        $data['titulo'] = 'Cadastar';
         $data['form_open_path'] = 'tarefa/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -304,7 +304,7 @@ class Tarefa extends CI_Controller {
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
         
 
-        $data['titulo'] = 'Editar Tarefa';
+        $data['titulo'] = 'Editar';
         $data['form_open_path'] = 'tarefa/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';

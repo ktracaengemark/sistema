@@ -19,25 +19,23 @@ if ($_GET['q']==1) {
     $result = mysql_query(
             'SELECT
                 TSV.idTab_Servico,
-                CONCAT(TCO.Abrev, " --- ", TSB.ServicoBase, " --- R$ ", TSV.ValorVendaServico) AS ServicoBase,
+                CONCAT(TSV.NomeServico, " --- R$ ", TSV.ValorVendaServico) AS NomeServico,
                 TSV.ValorVendaServico
             FROM
-                Tab_Servico AS TSV
-				LEFT JOIN Tab_Convenio AS TCO ON TCO.idTab_Convenio = TSV.Convenio															
-				LEFT JOIN Tab_ServicoBase AS TSB ON TSB.idTab_ServicoBase = TSV.ServicoBase								
+                Tab_Servico AS TSV																				
             WHERE
                 TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                TSV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+                (TSV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 TSV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
 			ORDER BY 
-				TCO.Convenio DESC, 
-				TSB.ServicoBase ASC 				
+				TSV.NomeServico ASC 				
     ');
 
     while ($row = mysql_fetch_assoc($result)) {
 
         $event_array[] = array(
             'id' => $row['idTab_Servico'],
-            'name' => utf8_encode($row['ServicoBase']),
+            'name' => utf8_encode($row['NomeServico']),
             'value' => $row['ValorVendaServico'],
         );
     }
@@ -55,7 +53,8 @@ elseif ($_GET['q'] == 2) {
                 Tab_Produto AS TPV																	
             WHERE
                 TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                TPV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+                (TPV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 TPV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
 			ORDER BY  
 				TPV.NomeProduto ASC				
     ');

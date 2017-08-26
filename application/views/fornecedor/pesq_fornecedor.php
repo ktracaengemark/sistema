@@ -38,7 +38,7 @@
 					<div class="row">
 						<div class="col-md-6">                        
 							<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>fornecedor/cadastrar" role="button"> 
-								<span class="glyphicon glyphicon-plus"></span> Novo Cadastro
+								<span class="glyphicon glyphicon-plus"></span> Novo Fornecedor
 							</a>
 						</div>
 					</div>

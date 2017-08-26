@@ -548,7 +548,8 @@ class Basico_model extends CI_Model {
                 Tab_Produto AS TPV																	
             WHERE
                 TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                TPV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+                (TPV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 TPV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
 			ORDER BY  
 				TPV.NomeProduto ASC 
     ');
@@ -562,7 +563,8 @@ class Basico_model extends CI_Model {
                 Tab_Produto AS TPV																	
             WHERE
                 TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                TPV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+                (TPV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 TPV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
 			ORDER BY  
 				TPV.NomeProduto ASC 
     ');
@@ -576,7 +578,7 @@ class Basico_model extends CI_Model {
         return $array;
     }
 	
-	public function select_servico($data = FALSE) {
+	public function select_servico4($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query('
@@ -622,42 +624,42 @@ class Basico_model extends CI_Model {
         return $array;
     }
 	
-	public function select_servico1($data = FALSE) {
+	public function select_servico($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query(
                 'SELECT                
-				S.idTab_Servico,
-				CONCAT(CO.Abrev, " --- ", SB.ServicoBase, " --- ", EM.NomeEmpresa, " --- R$ ", S.ValorVendaServico) AS ServicoBase				
+                TSV.idTab_Servico,
+                CONCAT(TSV.NomeServico, " --- R$ ", TSV.ValorVendaServico) AS NomeServico,
+                TSV.ValorVendaServico
             FROM
-                Tab_Servico AS S
-                LEFT JOIN Tab_ServicoBase AS SB ON SB.idTab_ServicoBase = S.ServicoBase    
-				LEFT JOIN Tab_Convenio AS CO ON CO.idTab_Convenio = S.Convenio
-				LEFT JOIN App_Empresa AS EM ON EM.idApp_Empresa = S.Empresa
+                Tab_Servico AS TSV																				
             WHERE
-                S.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                S.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-			ORDER BY CO.Convenio DESC, SB.ServicoBase ASC'
-    );
+                TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                (TSV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 TSV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
+			ORDER BY 
+				TSV.NomeServico ASC
+    ');
         } else {
             $query = $this->db->query(
                 'SELECT                
-				S.idTab_Servico,
-				CONCAT(CO.Abrev, " --- ", SB.ServicoBase, " --- ", EM.NomeEmpresa, " --- R$ ", S.ValorVendaServico) AS ServicoBase				
+                TSV.idTab_Servico,
+                CONCAT(TSV.NomeServico, " --- R$ ", TSV.ValorVendaServico) AS NomeServico,
+                TSV.ValorVendaServico
             FROM
-                Tab_Servico AS S
-                LEFT JOIN Tab_ServicoBase AS SB ON SB.idTab_ServicoBase = S.ServicoBase    
-				LEFT JOIN Tab_Convenio AS CO ON CO.idTab_Convenio = S.Convenio
-				LEFT JOIN App_Empresa AS EM ON EM.idApp_Empresa = S.Empresa
+                Tab_Servico AS TSV																				
             WHERE
-                S.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                S.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-			ORDER BY CO.Convenio DESC, SB.ServicoBase ASC'
-    );
+                TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                (TSV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 TSV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
+			ORDER BY 
+				TSV.NomeServico ASC
+    ');
 
             $array = array();
             foreach ($query->result() as $row) {
-                $array[$row->idTab_Servico] = $row->ServicoBase;
+                $array[$row->idTab_Servico] = $row->NomeServico;
             }
         }
 

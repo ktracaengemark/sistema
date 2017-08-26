@@ -2,14 +2,6 @@
     <div class="panel-body">
 
         <div class="col-md-1"></div>
-
-        <!--<div class="col-md-2">
-            <label for="DataFim">Total de Desconto:</label>
-            <div class="input-group">
-                <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total Entrada" value="<?php echo $report->soma->somaentrada ?>">
-            </div>
-        </div>-->
 		<div class="col-md-2">
             <label for="DataFim">Total Recebido:</label>
             <div class="input-group">
@@ -24,15 +16,6 @@
                 <input type="text" class="form-control" disabled aria-label="Total a receber" value="<?php echo $report->soma->somareceber ?>">
             </div>
         </div>
-       
-        <!--<div class="col-md-2">
-            <label for="DataFim">Total Real/Caixa:</label>
-            <div class="input-group">
-                <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total Real" value="<?php echo $report->soma->somareal ?>">
-            </div>
-        </div>-->
-
         <div class="col-md-2">
             <label for="DataFim">Total do Período:</label>
             <div class="input-group">
@@ -40,20 +23,21 @@
                 <input type="text" class="form-control" disabled aria-label="Total Entrada" value="<?php echo $report->soma->balanco ?>">
             </div>
         </div>
-
         <div class="col-md-1"></div>
-
-    </div>	
-	
+    </div>		
 </div>
 
 <div class="container-fluid">
     <div class="row">
-
         <div>
-
-            <table class="table table-bordered table-condensed table-striped">
-
+			<table class="table table-bordered table-condensed table-striped">	
+				<tfoot>
+                    <tr>
+                        <th colspan="3" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
+                    </tr>
+                </tfoot>
+			</table>            
+			<table class="table table-bordered table-condensed table-striped">
                 <thead>
                     <tr>
                         <th class="active">#</th>
@@ -72,12 +56,9 @@
                         <th class="active">Parc. Quit.?</th>
                     </tr>
                 </thead>
-
                 <tbody>
-
                     <?php
                     foreach ($report->result_array() as $row) {
-
                         #echo '<tr>';
                         echo '<tr class="clickable-row" data-href="' . base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] . '">';
                             echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
@@ -97,18 +78,8 @@
                         echo '</tr>';
                     }
                     ?>
-
                 </tbody>
-
-                <tfoot>
-                    <tr>
-                        <th colspan="3" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
-                    </tr>
-                </tfoot>
             </table>
-
         </div>
-
     </div>
-
 </div>

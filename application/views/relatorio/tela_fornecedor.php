@@ -69,22 +69,24 @@
                             <div class="col-md-1"></div>
                         </div>
                     </div>
-					<div class="col-md-12">
+					<div class="col-md-2"></div>
+					<div class="col-md-8">
 						<div class="form-group">
 							<div class="row">
-								<div class="col-md-5 text-right">
+								<div class="col-md-6 text-left">
 									<button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
 										<span class="glyphicon glyphicon-search"></span> Pesquisar
 									</button>
 								</div>
 								<div class="col-md-6 text-right">											
 									<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>fornecedor/cadastrar" role="button"> 
-										<span class="glyphicon glyphicon-plus"></span> Novo Fornecedor
+										<span class="glyphicon glyphicon-plus"></span> Novo Fornec.
 									</a>
 								</div>
 							</div>
 						</div>
 					</div>
+					<div class="col-md-2"></div>
                     </form>
                     <br>
                     <?php echo (isset($list)) ? $list : FALSE ?>

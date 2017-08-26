@@ -14,7 +14,7 @@
 				<div class="panel-body">
 
 					<?php echo form_open($form_open_path, 'role="form"'); ?>
-						<div class="form control">    
+						<div class="form-group">   
 							<div class="row">                      								
 								<div class="col-md-3">
 									<label for="TipoProduto">Tipo de Produto</label>								
@@ -46,7 +46,7 @@
 							</div>
 						</div>
 						<br>
-						<div class="form control"> 					
+						<div class="form-group"> 					
 							<div class="row"> 	
 								<div class="col-md-2">
 									<label for="UnidadeProduto">Unidade:</label><br>
@@ -131,7 +131,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-2"></div>
-		
+		<div class="col-md-2"></div>		
 	</div>
 </div>

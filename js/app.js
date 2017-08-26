@@ -289,12 +289,12 @@ function calculaParcelas() {
 				<div class="panel panel-info">\
 					<div class="panel-heading">\
 						<div class="row">\
-							<div class="col-md-1">\
+							<div class="col-md-2">\
 								<label for="ParcelaRecebiveis">Parcela:</label><br>\
 								<input type="text" class="form-control" maxlength="6" readonly=""\
 									   name="ParcelaRecebiveis'+i+'" value="'+i+'/'+parcelas+'">\
 							</div>\
-							<div class="col-md-2">\
+							<div class="col-md-3">\
 								<label for="ValorParcelaRecebiveis">Valor Parcela:</label><br>\
 								<div class="input-group" id="txtHint">\
 									<span class="input-group-addon" id="basic-addon1">R$</span>\
@@ -302,7 +302,7 @@ function calculaParcelas() {
 										    id="ValorParcelaRecebiveis'+i+'" name="ValorParcelaRecebiveis'+i+'" value="'+parcorca+'">\
 								</div>\
 							</div>\
-							<div class="col-md-2">\
+							<div class="col-md-3">\
 								<label for="DataVencimentoRecebiveis">Data Venc. Parc.</label>\
 								<div class="input-group DatePicker">\
 									<input type="text" class="form-control Date" id="DataVencimentoRecebiveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
@@ -312,7 +312,10 @@ function calculaParcelas() {
 									</span>\
 								</div>\
 							</div>\
-							<div class="col-md-2">\
+						</div>\
+						<div class="row">\
+							<div class="col-md-2"></div>\
+							<div class="col-md-3">\
 								<label for="ValorPagoRecebiveis">Valor Pago:</label><br>\
 								<div class="input-group" id="txtHint">\
 									<span class="input-group-addon" id="basic-addon1">R$</span>\
@@ -320,7 +323,7 @@ function calculaParcelas() {
 										    id="ValorPagoRecebiveis'+i+'" name="ValorPagoRecebiveis'+i+'" value="">\
 								</div>\
 							</div>\
-							<div class="col-md-2">\
+							<div class="col-md-3">\
 								<label for="DataPagoRecebiveis">Data Pag.</label>\
 								<div class="input-group DatePicker">\
 									<input type="text" class="form-control Date" id="DataPagoRecebiveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
@@ -526,20 +529,13 @@ function adicionaProcedimento() {
 			<div class="panel panel-info">\
 				<div class="panel-heading">\
 					<div class="row">\
-						<div class="col-md-3">\
-							<label for="Profissional'+pc+'">Profissional:</label>\
-							<select data-placeholder="Selecione uma opção..." class="form-control"\
-									 id="listadinamicac'+pc+'" name="Profissional'+pc+'">\
-								<option value="">-- Selecione uma opção --</option>\
-							</select>\
-						</div>\
-						<div class="col-md-3">\
+						<div class="col-md-4">\
 							<label for="Procedimento'+pc+'">Procedimento:</label>\
 							<textarea class="form-control" id="Procedimento'+pc+'"\
 									  name="Procedimento'+pc+'"></textarea>\
 						</div>\
-						<div class="col-md-2">\
-							<label for="DataProcedimento'+pc+'">Data do Procedimento:</label>\
+						<div class="col-md-3">\
+							<label for="DataProcedimento'+pc+'">Data do Proced.:</label>\
 							<div class="input-group DatePicker">\
 								<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
 									   name="DataProcedimento'+pc+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
@@ -548,7 +544,7 @@ function adicionaProcedimento() {
 								</span>\
 							</div>\
 						</div>\
-						<div class="col-md-2">\
+						<div class="col-md-3">\
 							<label for="ConcluidoProcedimento">Proc. Concl.? </label><br>\
 							<div class="form-group">\
 								<div class="btn-group" data-toggle="buttons">\
@@ -563,7 +559,7 @@ function adicionaProcedimento() {
 								</div>\
 							</div>\
 						</div>\
-						<div class="col-md-1">\
+						<div class="col-md-2">\
 							<label><br></label><br>\
 							<button type="button" id="'+pc+'" class="remove_field3 btn btn-danger">\
 								<span class="glyphicon glyphicon-trash"></span>\
@@ -636,12 +632,12 @@ function adicionaProcedtarefa() {
 			<div class="panel panel-info">\
 				<div class="panel-heading">\
 					<div class="row">\
-						<div class="col-md-3">\
+						<div class="col-md-4">\
 							<label for="Procedtarefa'+pt+'">Ação:</label>\
 							<textarea class="form-control" id="Procedtarefa'+pt+'"\
 									  name="Procedtarefa'+pt+'"></textarea>\
 						</div>\
-						<div class="col-md-2">\
+						<div class="col-md-3">\
 							<label for="DataProcedtarefa'+pt+'">Data da Ação:</label>\
 							<div class="input-group DatePicker">\
 								<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
@@ -651,7 +647,7 @@ function adicionaProcedtarefa() {
 								</span>\
 							</div>\
 						</div>\
-						<div class="col-md-2">\
+						<div class="col-md-3">\
 							<label for="ConcluidoProcedtarefa">Ação Concl.? </label><br>\
 							<div class="form-group">\
 								<div class="btn-group" data-toggle="buttons">\
@@ -666,7 +662,7 @@ function adicionaProcedtarefa() {
 								</div>\
 							</div>\
 						</div>\
-						<div class="col-md-1">\
+						<div class="col-md-2">\
 							<label><br></label><br>\
 							<button type="button" id="'+pt+'" class="remove_field3 btn btn-danger">\
 								<span class="glyphicon glyphicon-trash"></span>\
@@ -1111,7 +1107,7 @@ function adicionaServico() {
             <div class="panel panel-info">\
                 <div class="panel-heading">\
                     <div class="row">\
-						<div class="col-md-1">\
+						<div class="col-md-2">\
                             <label for="QtdVendaServico">Qtd:</label><br>\
                             <div class="input-group">\
                                 <input type="text" class="form-control Numero" maxlength="3" id="QtdVendaServico'+ps+'" placeholder="0"\
@@ -1144,12 +1140,12 @@ function adicionaServico() {
                         </div>\
                     </div>\
                     <div class="row">\
-                        <div class="col-md-8">\
+                        <div class="col-md-6">\
                             <label for="ObsServico'+ps+'">Obs:</label><br>\
                             <input type="text" class="form-control" id="ObsServico'+ps+'" maxlength="250"\
                                    name="ObsServico'+ps+'" value="">\
                         </div>\
-                        <div class="col-md-2">\
+                        <div class="col-md-3">\
                             <label for="ConcluidoServico">Concluído? </label><br>\
                             <div class="form-group">\
                                 <div class="btn-group" data-toggle="buttons">\
@@ -1164,7 +1160,7 @@ function adicionaServico() {
                                 </div>\
                             </div>\
                         </div>\
-						<div class="col-md-1">\
+						<div class="col-md-2">\
                             <label><br></label><br>\
                             <a href="#" id="'+ps+'" class="remove_field btn btn-danger">\
                                 <span class="glyphicon glyphicon-trash"></span>\
@@ -1231,7 +1227,7 @@ function adicionaServicoCompra() {
             <div class="panel panel-info">\
                 <div class="panel-heading">\
                     <div class="row">\
-						<div class="col-md-1">\
+						<div class="col-md-2">\
                             <label for="QtdCompraServico">Qtd:</label><br>\
                             <div class="input-group">\
                                 <input type="text" class="form-control Numero" maxlength="3" id="QtdCompraServico'+ps+'" placeholder="0"\
@@ -1456,7 +1452,7 @@ $(document).ready(function () {
                 <div class="panel panel-info">\
                     <div class="panel-heading">\
                         <div class="row">\
-                            <div class="col-md-1">\
+                            <div class="col-md-2">\
                                 <label for="QtdVendaProduto">Qtd:</label><br>\
                                 <div class="input-group">\
                                     <input type="text" class="form-control Numero" maxlength="3" id="QtdVendaProduto'+pc+'" placeholder="0"\
@@ -1489,13 +1485,13 @@ $(document).ready(function () {
                             </div>\
                         </div>\
 						<div class="row">\
-							<div class="col-md-8">\
+							<div class="col-md-6">\
 								<label for="ObsProduto'+pc+'">Obs:</label><br>\
 								<input type="text" class="form-control" id="ObsProduto'+pc+'" maxlength="250"\
 									   name="ObsProduto'+pc+'" value="">\
 							</div>\
-							<div class="col-md-2">\
-								<label for="DataValidadeProduto'+pc+'">Data Val. do Produto:</label>\
+							<div class="col-md-3">\
+								<label for="DataValidadeProduto'+pc+'">Val. do Produto:</label>\
 								<div class="input-group DatePicker">\
 									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
 										   name="DataValidadeProduto'+pc+'" value="">\
@@ -1504,7 +1500,7 @@ $(document).ready(function () {
 									</span>\
 								</div>\
 							</div>\
-							<div class="col-md-1">\
+							<div class="col-md-2">\
                                 <label><br></label><br>\
                                 <a href="#" id="'+pc+'" class="remove_field2 btn btn-danger">\
                                     <span class="glyphicon glyphicon-trash"></span>\
@@ -1557,7 +1553,7 @@ $(document).ready(function () {
                 <div class="panel panel-info">\
                     <div class="panel-heading">\
                         <div class="row">\
-                            <div class="col-md-1">\
+                            <div class="col-md-2">\
                                 <label for="QtdCompraProduto">Qtd:</label><br>\
                                 <div class="input-group">\
                                     <input type="text" class="form-control Numero" maxlength="3" id="QtdCompraProduto'+pc+'" placeholder="0"\
@@ -1588,7 +1584,7 @@ $(document).ready(function () {
                                            name="SubtotalProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
-                            <div class="col-md-1">\
+                            <div class="col-md-2">\
                                 <label><br></label><br>\
                                 <a href="#" id="'+pc+'" class="remove_field4 btn btn-danger">\
                                     <span class="glyphicon glyphicon-trash"></span>\
@@ -1641,7 +1637,7 @@ $(document).ready(function () {
                 <div class="panel panel-info">\
                     <div class="panel-heading">\
                         <div class="row">\
-                            <div class="col-md-1">\
+                            <div class="col-md-2">\
                                 <label for="QtdCompraProduto">Qtd:</label><br>\
                                 <div class="input-group">\
                                     <input type="text" class="form-control Numero" maxlength="3" id="QtdCompraProduto'+pc+'" placeholder="0"\
@@ -1674,13 +1670,13 @@ $(document).ready(function () {
                             </div>\
                         </div>\
 						<div class="row">\
-							<div class="col-md-8">\
+							<div class="col-md-6">\
 								<label for="ObsProduto'+pc+'">Obs:</label><br>\
 								<input type="text" class="form-control" id="ObsProduto'+pc+'" maxlength="250"\
 									   name="ObsProduto'+pc+'" value="">\
 							</div>\
-							<div class="col-md-2">\
-								<label for="DataValidadeProduto'+pc+'">Data Val. do Produto:</label>\
+							<div class="col-md-3">\
+								<label for="DataValidadeProduto'+pc+'">Val. do Produto:</label>\
 								<div class="input-group DatePicker">\
 									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
 										   name="DataValidadeProduto'+pc+'" value="">\
@@ -1689,7 +1685,7 @@ $(document).ready(function () {
 									</span>\
 								</div>\
 							</div>\
-							<div class="col-md-1">\
+							<div class="col-md-2">\
                                 <label><br></label><br>\
                                 <a href="#" id="'+pc+'" class="remove_field6 btn btn-danger">\
                                     <span class="glyphicon glyphicon-trash"></span>\
@@ -1742,7 +1738,7 @@ $(document).ready(function () {
                 <div class="panel panel-info">\
                     <div class="panel-heading">\
                         <div class="row">\
-                            <div class="col-md-1">\
+                            <div class="col-md-2">\
                                 <label for="QtdConsumoProduto">Qtd:</label><br>\
                                 <div class="input-group">\
                                     <input type="text" class="form-control Numero" maxlength="3" id="QtdConsumoProduto'+pc+'" placeholder="0"\
@@ -1773,7 +1769,7 @@ $(document).ready(function () {
                                            name="SubtotalProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
-                            <div class="col-md-1">\
+                            <div class="col-md-2">\
                                 <label><br></label><br>\
                                 <a href="#" id="'+pc+'" class="remove_field7 btn btn-danger">\
                                     <span class="glyphicon glyphicon-trash"></span>\

@@ -116,7 +116,7 @@
                                 </select>
                             </div>
 							-->
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label for="Ordenamento">Ordenamento:</label>
                                 <div class="form-group">
                                     <div class="row">
@@ -135,7 +135,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
                                                     id="Ordenamento" name="Ordenamento">
                                                 <?php

@@ -51,7 +51,7 @@
                                     ?>
                                 </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label for="Ordenamento">Ordenamento:</label>
                                 <div class="form-group">
                                     <div class="row">
@@ -70,7 +70,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
                                                     id="Ordenamento" name="Ordenamento">
                                                 <?php
@@ -99,7 +99,7 @@
                                 </button>
                             </div>
 							
-							<div class="col-md-2 text-left">											
+							<div class="col-md-2 text-right">											
 									<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>consumo/cadastrar" role="button"> 
 										<span class="glyphicon glyphicon-plus"></span> Novo Consumo
 									</a>

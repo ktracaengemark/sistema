@@ -2,13 +2,19 @@
     <div class="row">
 
         <div>
-
+			<table class="table table-bordered table-condensed table-striped">	
+				<tfoot>
+                    <tr>
+                        <th colspan="3" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
+                    </tr>
+                </tfoot>
+			</table>
             <table class="table table-bordered table-condensed table-hover">
 
                 <thead>
                     <tr>
-                        <th class="active">Cliente</th>
-						<th class="active">Orçam.</th>                       
+                        <th class="active">Orçam.</th>
+						<th class="active">Cliente</th>						                       
                         <th class="active">Data do Orçam.</th>
 						<th class="active">Aprovado?</th>
                         <th class="active">Data Prazo.</th>
@@ -19,8 +25,8 @@
 						<!--<th class="active">Data Retorno</th>
 						<th class="active">Produto.</th>-->
 						<th class="active">Profis.</th>
-						<th class="active">Data Proced.</th>						
 						<th class="active">Procedimento</th>
+						<th class="active">Data Proced.</th>												
 						<th class="active">Proced. Conl.?</th>
 						
                     </tr>
@@ -33,8 +39,8 @@
 
                         #echo '<tr>';
                         echo '<tr class="clickable-row" data-href="' . base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] . '">';
-							echo '<td>' . $row['NomeCliente'] . '</td>'; 
-							echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';                            
+							echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
+							echo '<td>' . $row['NomeCliente'] . '</td>'; 							                            
                             echo '<td>' . $row['DataOrca'] . '</td>';
 							echo '<td>' . $row['AprovadoOrca'] . '</td>';
                             echo '<td>' . $row['DataPrazo'] . '</td>';
@@ -45,8 +51,8 @@
 							#echo '<td>' . $row['DataRetorno'] . '</td>';
 							#echo '<td>' . $row['NomeProduto'] . '</td>';
 							echo '<td>' . $row['NomeProfissional'] . '</td>';
-							echo '<td>' . $row['DataProcedimento'] . '</td>';							
 							echo '<td>' . $row['Procedimento'] . '</td>';
+							echo '<td>' . $row['DataProcedimento'] . '</td>';														
 							echo '<td>' . $row['ConcluidoProcedimento'] . '</td>';
 							
                         echo '</tr>';
@@ -54,12 +60,6 @@
                     ?>
 
                 </tbody>
-
-                <tfoot>
-                    <tr>
-                        <th colspan="9" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
-                    </tr>
-                </tfoot>
             </table>
 
         </div>

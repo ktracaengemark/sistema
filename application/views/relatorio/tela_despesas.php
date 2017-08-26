@@ -31,30 +31,8 @@
                                     }
                                     ?>
                                 </select>
-                            </div>
-
-                            <div class="col-md-2">
-                                <label for="DataInicio">Data Início: *</label>
-                                <div class="input-group DatePicker">
-                                    <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-                                           autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
-                                    <span class="input-group-addon" disabled>
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="DataFim">Data Fim: (opcional)</label>
-                                <div class="input-group DatePicker">
-                                    <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-                                           autofocus name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
-                                    <span class="input-group-addon" disabled>
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
-							
-							<div class="col-md-1">
+                            </div>						
+							<div class="col-md-2">
                                 <label for="AprovadoDespesas">Desp.Aprov.?</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
                                         id="AprovadoDespesas" name="AprovadoDespesas">
@@ -69,7 +47,7 @@
                                     ?>
                                 </select>
                             </div>
-							<div class="col-md-1">
+							<div class="col-md-2">
                                 <label for="ServicoConcluidoDespesas">Desp. Concl.?</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
                                         id="ServicoConcluidoDespesas" name="ServicoConcluidoDespesas">
@@ -84,7 +62,8 @@
                                     ?>
                                 </select>
                             </div>
-                            <div class="col-md-1">
+							
+                            <div class="col-md-2">
                                 <label for="QuitadoDespesas">Desp.Quit.?</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
                                         id="QuitadoDespesas" name="QuitadoDespesas">
@@ -99,8 +78,8 @@
                                     ?>
                                 </select>
                             </div>
-
-							<div class="col-md-1">
+						
+							<div class="col-md-2">
                                 <label for="QuitadoPagaveis">Parc. Quit.?</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
                                         id="QuitadoPagaveis" name="QuitadoPagaveis">
@@ -155,21 +134,41 @@
 							-->
                         </div>
                     </div>
-
-                    <div class="form-group">
+					<div class="form-group">
                         <div class="row">
-                            <div class="col-md-2 text-left">
+                            <div class="col-md-2">
+                                <label for="DataInicio">Data Início: *</label>
+                                <div class="input-group DatePicker">
+                                    <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+                                           autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
+                                    <span class="input-group-addon" disabled>
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="DataFim">Data Fim: (opcional)</label>
+                                <div class="input-group DatePicker">
+                                    <input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+                                           autofocus name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
+                                    <span class="input-group-addon" disabled>
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+							<br>
+							<div class="col-md-2 text-left">
                                 <button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
                                     <span class="glyphicon glyphicon-search"></span> Pesquisar
                                 </button>
                             </div>
 							
-							<div class="col-md-2 text-left">											
-									<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>despesas/cadastrar" role="button"> 
+							<div class="col-md-2 text-right">											
+									<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>despesas/cadastrar" role="button"> 
 										<span class="glyphicon glyphicon-plus"></span> Nova Despesa
 									</a>
 							</div>
-                        </div>
+						</div>
                     </div>
 
                     </form>

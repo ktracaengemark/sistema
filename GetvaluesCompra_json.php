@@ -18,28 +18,24 @@ if ($_GET['q']==1) {
 
     $result = mysql_query(
             'SELECT
-                TSC.idTab_ServicoCompra,
-				CONCAT(TSB.TipoServicoBase, " -- ", TEM.NomeEmpresa, " --- ", TSB.ServicoBase) AS ServicoBase,
-				TSC.ValorCompraServico               
+                TSV.idTab_Servico,
+                CONCAT(TSV.NomeServico, " --- R$ ", TSV.ValorCompraServico) AS NomeServico,
+                TSV.ValorCompraServico              
             FROM
-                Tab_ServicoCompra AS TSC
-					LEFT JOIN Tab_ServicoBase AS TSB ON TSB.idTab_ServicoBase = TSC.ServicoBase
-					LEFT JOIN App_Empresa AS TEM ON TEM.idApp_Empresa = TSC.Empresa
-				
+                Tab_Servico AS TSV					
             WHERE
-                TSC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                TSC.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                (TSV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 TSV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
 			ORDER BY 
-					TSB.TipoServicoBase DESC,
-					TEM.NomeEmpresa ASC,
-					TSB.ServicoBase ASC 
+				TSV.NomeServico ASC 
     ');
 
     while ($row = mysql_fetch_assoc($result)) {
 
         $event_array[] = array(
-            'id' => $row['idTab_ServicoCompra'],
-            'name' => utf8_encode($row['ServicoBase']),
+            'id' => $row['idTab_Servico'],
+            'name' => utf8_encode($row['NomeServico']),
             'value' => $row['ValorCompraServico'],
         );
     }
@@ -57,7 +53,8 @@ elseif ($_GET['q'] == 2) {
                 Tab_Produto AS TPV																	
             WHERE
                 TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                TPV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+                (TPV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 TPV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
 			ORDER BY  
 				TPV.NomeProduto ASC 
     ');

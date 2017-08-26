@@ -1,8 +1,10 @@
 <?php if (isset($msg)) echo $msg; ?>
 
 <div class="container-fluid">	
-	<div class="row">	   
-		<div class="col-sm-7 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	<div class="row">
+	
+		<div class="col-md-1"></div>
+		<div class="col-md-10 ">
 
 			<?php echo validation_errors(); ?>
 
@@ -28,7 +30,7 @@
 													<span class="glyphicon glyphicon-calendar"></span>
 												</span>
 											</div>
-										</div>-->
+										</div>
 										<div class="col-md-3">
 											<label for="ProfissionalDespesas">Profissional:</label>
 											<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
@@ -48,6 +50,7 @@
 												?>
 											</select>
 										</div>
+										-->
 										<div class="col-md-3">
 											<label for="Despesa">Despesa: *</label><br>
 											<input type="text" class="form-control" maxlength="200"
@@ -73,7 +76,7 @@
 												?>
 											</select>
 										</div>									
-										<div class="col-md-2">
+										<div class="col-md-3">
 											<label for="DataDespesas">Data da Despesa:</label>
 											<div class="input-group <?php echo $datepicker; ?>">
 												<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
@@ -301,7 +304,7 @@
 																   name="ObsProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ObsProduto'] ?>">
 														</div>
 														<div class="col-md-2">
-															<label for="DataValidadeProduto<?php echo $i ?>">Data Val. do Produto:</label>
+															<label for="DataValidadeProduto<?php echo $i ?>">Val. do Produto:</label>
 															<div class="input-group <?php echo $datepicker; ?>">
 																<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
 																	   name="DataValidadeProduto<?php echo $i ?>" value="<?php echo $produto[$i]['DataValidadeProduto']; ?>">
@@ -784,6 +787,6 @@
 			</div>
 
 		</div>
-
+		<div class="col-md-1"></div>
 	</div>
 </div>

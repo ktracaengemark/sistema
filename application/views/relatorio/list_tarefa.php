@@ -2,7 +2,13 @@
     <div class="row">
 
         <div>
-
+			<table class="table table-bordered table-condensed table-striped">	
+				<tfoot>
+                    <tr>
+                        <th colspan="3" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
+                    </tr>
+                </tfoot>
+			</table>
             <table class="table table-bordered table-condensed table-striped">
 
                 <thead>
@@ -54,11 +60,6 @@
 
                 </tbody>
 
-                <tfoot>
-                    <tr>
-                        <th colspan="9" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
-                    </tr>
-                </tfoot>
             </table>
 
         </div>
@@ -66,18 +67,4 @@
     </div>
 
 </div>
-<!--
-<div class="panel panel-default">
-    <div class="panel-body">
 
-        <div class="col-md-2">
-            <label for="DataFim">Total dos Orçamentos:</label>
-            <div class="input-group">
-                <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total Tarefamentos" value="<?php echo $report->soma->somatarefa ?>">
-            </div>
-        </div>
-
-    </div>
-</div>
--->

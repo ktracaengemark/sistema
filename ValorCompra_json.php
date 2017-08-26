@@ -21,7 +21,8 @@ $result = mysql_query(
             app.Tab_' . $_GET['tabela'] . ' AS T
         WHERE
             T.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-            T.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+            (T.Empresa = ' . $_SESSION['log']['id'] . ' OR
+			 T.Empresa = ' . $_SESSION['log']['Empresa'] . ') 
         ORDER BY T.Nome' . $_GET['tabela'] . ' ASC'
 );
 

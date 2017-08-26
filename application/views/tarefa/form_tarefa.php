@@ -1,6 +1,7 @@
 <?php if (isset($msg)) echo $msg; ?>
 <div class="container-fluid">
 	<div class="row">			
+		<!--
 		<div class="col-sm-7 col-sm-offset-3 col-md-10 col-md-offset-2 main">												
 			<div class="col-md-12 text-center t">
 				<label for="">Tarefa:</label>
@@ -14,12 +15,24 @@
 				</div>	
 			</div>	
 		</div>
-		<div class="col-sm-7 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		-->
+		<div class="col-md-2"></div>
+		<div class="col-md-8 ">
 			<?php echo validation_errors(); ?>
 
 			<div class="panel panel-<?php echo $panel; ?>">
 
-				<div class="panel-heading"><strong><?php echo $titulo; ?></strong></div>
+				<div class="panel-heading"><strong></strong>
+						<div class="text-left ">											
+							<span class="glyphicon glyphicon-pencil"></span> Tarefa 
+							<a class="btn btn-md btn-success" href="<?php echo base_url() ?>relatorio/tarefa" role="button"> 
+								<span class="glyphicon glyphicon-list"></span> Listar
+							</a>
+							<a class="btn btn-md btn-warning" href="<?php echo base_url() ?>agenda" role="button"> 
+								<span class="glyphicon glyphicon-calendar"></span> Agenda
+							</a>
+						</div>					
+				</div>
 				<div class="panel-body">
 
 					<?php echo form_open_multipart($form_open_path); ?>
@@ -30,8 +43,8 @@
 						<div class="panel panel-info">
 							<div class="panel-heading">	
 								<div class="row">
-									<div class="col-md-3">
-										<label for="ObsTarefa">Tarefa / Missão:</label>
+									<div class="col-md-4">
+										<label for="ObsTarefa">Nova Tarefa/ Missão:</label>
 										<textarea class="form-control" id="ObsTarefa" <?php echo $readonly; ?>
 											autofocus name="ObsTarefa"><?php echo $tarefa['ObsTarefa']; ?></textarea>
 									</div>								
@@ -53,7 +66,7 @@
 										</select>
 									</div>
 									-->
-									<div class="col-md-6" >
+									<div class="col-md-8" >
 										<div class="form-group">
 											<div class="row">
 												<div class="col-md-4 text-left">
@@ -137,12 +150,12 @@
 														</select>
 													</div>
 													-->
-													<div class="col-md-3">
+													<div class="col-md-4">
 														<label for="Procedtarefa<?php echo $i ?>">Ação:</label>
 														<textarea class="form-control" id="Procedtarefa<?php echo $i ?>" <?php echo $readonly; ?>
 																  name="Procedtarefa<?php echo $i ?>"><?php echo $procedtarefa[$i]['Procedtarefa']; ?></textarea>
 													</div>
-													<div class="col-md-2">
+													<div class="col-md-3">
 														<label for="DataProcedtarefa<?php echo $i ?>">Data da Ação:</label>
 														<div class="input-group <?php echo $datepicker; ?>">
 															<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
@@ -152,7 +165,7 @@
 															</span>
 														</div>
 													</div>
-													<div class="col-md-2">
+													<div class="col-md-3">
 														<label for="ConcluidoProcedtarefa">Ação. Concl.? </label><br>
 														<div class="form-group">
 															<div class="btn-group" data-toggle="buttons">
@@ -180,7 +193,7 @@
 															</div>
 														</div>
 													</div>
-													<div class="col-md-1">
+													<div class="col-md-2">
 														<label><br></label><br>
 														<button type="button" id="<?php echo $i ?>" class="remove_field3 btn btn-danger">
 															<span class="glyphicon glyphicon-trash"></span>
@@ -273,7 +286,7 @@
 								</div>
 							</div>
 							<div class="col-md-2 form-inline">
-								<label for="TarefaConcluida">Tarefa Concluída?</label><br>
+								<label for="TarefaConcluida">Tarefa Concl.?</label><br>
 								<div class="form-group">
 									<div class="btn-group" data-toggle="buttons">
 										<?php
@@ -307,7 +320,7 @@
 
 							<div class="form-group">
 								<div id="TarefaConcluida" <?php echo $div['TarefaConcluida']; ?>>																								
-									<div class="col-md-2">
+									<div class="col-md-3">
 										<label for="DataConclusao">Data da Conclusão:</label>
 										<div class="input-group <?php echo $datepicker; ?>">
 											<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
@@ -317,7 +330,7 @@
 											</span>
 										</div>
 									</div>
-									<div class="col-md-2">
+									<div class="col-md-3">
 										<label for="DataRetorno">Data do Retorno:</label>
 										<div class="input-group <?php echo $datepicker; ?>">
 											<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
@@ -405,13 +418,11 @@
 
 					</form>
 
-					
-
-
 				</div>
 
 			</div>
 
 		</div>
+		<div class="col-md-2"></div>
 	</div>
 </div>	

@@ -82,11 +82,11 @@
                             </div>
                         </div>
                     </div>
-					
-					<div class="col-md-12" >
+					<div class="col-md-2"></div>
+					<div class="col-md-8" >
 						<div class="form-group">
 							<div class="row">
-								<div class="col-md-5 text-left">
+								<div class="col-md-6 text-left">
 									<button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
 										<span class="glyphicon glyphicon-search"></span> Pesquisar
 									</button>
@@ -99,6 +99,7 @@
 							</div>
 						</div>
 					</div>
+					<div class="col-md-2"></div>
                     </form>
                     <br>
                     <?php echo (isset($list)) ? $list : FALSE ?>

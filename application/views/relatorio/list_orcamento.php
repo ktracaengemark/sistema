@@ -1,6 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-body">
 
+		<div class="col-md-1"></div>
         <div class="col-md-2">
             <label for="DataFim">Total dos Orçamentos:</label>
             <div class="input-group">
@@ -22,49 +23,47 @@
                 <input type="text" class="form-control" disabled aria-label="Total Restante" value="<?php echo $report->soma->somarestante ?>">
             </div>
         </div>
-
+		<div class="col-md-1"></div>
     </div>
 </div>
 
 <div class="container-fluid">
     <div class="row">
-
         <div>
-
+			<table class="table table-bordered table-condensed table-striped">	
+				<tfoot>
+                    <tr>
+                        <th colspan="3" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
+                    </tr>
+                </tfoot>
+			</table>		
             <table class="table table-bordered table-condensed table-striped">
-
                 <thead>
                     <tr>
-                        <th class="active">Orçam.</th>
-
-                        <th class="active">Cliente</th>
-                        
-                        <th class="active">Data do Orçamento</th>
-						<th class="active">Valid. do Orçamento</th>
-						<th class="active">Prazo de Entrega</th>
-						
-                        <th class="active">Valor do Orçamento</th>
+                        <th class="active">Profissional</th>
+						<th class="active">Orçam.</th>
+                        <th class="active">Cliente</th>                       
+                        <th class="active">Data do Orçam.</th>
+						<th class="active">Valid. do Orçam.</th>
+						<th class="active">Prazo de Entrega</th>						
+                        <th class="active">Valor do Orçamen.</th>
 						<th class="active">Valor do Desconto</th>
 						<th class="active">Valor A Receber</th>
-						<th class="active">Orç. Aprovado?</th>
-						<th class="active">Orç. Quitado?</th>
-                        <th class="active">Serv. Concl.?</th>
-
-                        <th class="active">Data Conclusão</th>
+						<th class="active">Orç. Apv.?</th>
+						<th class="active">Orç. Quit.?</th>
+                        <th class="active">Srv/Prd Entreg.?</th>
+                        <th class="active">Data Entrega</th>
                         <th class="active">Data Retorno</th>
-						<th class="active">Profissional</th>
-
+						
                     </tr>
                 </thead>
-
-                <tbody>
-
+				<tbody>
                     <?php
                     foreach ($report->result_array() as $row) {
-
                         #echo '<tr>';
                         echo '<tr class="clickable-row" data-href="' . base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] . '">';
-                            echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
+                            echo '<td>' . $row['NomeProfissional'] . '</td>';
+							echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
                             echo '<td>' . $row['NomeCliente'] . '</td>';                            
                             echo '<td>' . $row['DataOrca'] . '</td>';
 							echo '<td>' . $row['DataEntradaOrca'] . '</td>';
@@ -77,24 +76,13 @@
                             echo '<td>' . $row['ServicoConcluido'] . '</td>';
                             echo '<td>' . $row['DataConclusao'] . '</td>';
                             echo '<td>' . $row['DataRetorno'] . '</td>';
-							echo '<td>' . $row['NomeProfissional'] . '</td>';
-
-							
+														
                         echo '</tr>';
                     }
                     ?>
-
                 </tbody>
-
-                <tfoot>
-                    <tr>
-                        <th colspan="3" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
-                    </tr>
-                </tfoot>
+                
             </table>
-
         </div>
-
     </div>
-
 </div>

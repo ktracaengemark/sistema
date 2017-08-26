@@ -12,13 +12,26 @@
             <div class="modal-content">
 
                 <div class="modal-body text-center">
-                    <button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary">Consulta/Sessão</button> ou
-					<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info">Outro Evento</button>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-12 col-lg-12">								
+								<label for="">Agendamento:</label>
+								<div class="form-group">
+									<div class="row">											
+										<button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary">P/Cliente
+										</button> 
+										ou
+										<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info">Pessoal
+										</button>
 
-                    <input type="hidden" id="start" />
-                    <input type="hidden" id="end" />
-                </div>
-
+										<input type="hidden" id="start" />
+										<input type="hidden" id="end" />
+									</div>	
+								</div>								
+							</div>	
+						</div>
+					</div>
+				</div>
             </div>
         </div>
     </div>
@@ -53,11 +66,11 @@
 	<div class="col-md-12 text-center t">
 		<label for="">Tarefas:</label>
 		<div class="row">	
-			<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>tarefa/cadastrar" role="button">
+			<a class="btn btn-md btn-danger" href="<?php echo base_url() ?>tarefa/cadastrar" role="button">
 				<span class="glyphicon glyphicon-plus"></span> Nova
 			</a>
-			<a class="btn btn-lg btn-success" href="<?php echo base_url() ?>relatorio/tarefa" role="button">
-				<span class="glyphicon glyphicon-list"></span> Lista
+			<a class="btn btn-md btn-success" href="<?php echo base_url() ?>relatorio/tarefa" role="button">
+				<span class="glyphicon glyphicon-list"></span> Listar
 			</a>
 		</div>	
 	</div>
