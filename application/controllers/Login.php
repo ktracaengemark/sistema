@@ -164,6 +164,7 @@ class Login extends CI_Controller {
             'Celular',
             'Sexo',
 			'Funcao',
+			'TipoProfissional',
 			'DataCriacao',
 			'NumUsuarios',
 			
@@ -184,6 +185,7 @@ class Login extends CI_Controller {
 		$this->form_validation->set_rules('Celular', 'Celular', 'required|trim');
 		$this->form_validation->set_rules('NumUsuarios', 'Nº de Usuários', 'required|trim');
 		
+		$data['select']['TipoProfissional'] = $this->Basico_model->select_tipoprofissional();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 
         #run form validation

@@ -18,7 +18,7 @@
 								<label for="">Agendamento:</label>
 								<div class="form-group">
 									<div class="row">											
-										<button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary">P/Cliente
+										<button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary">P/ Cliente
 										</button> 
 										ou
 										<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info">Pessoal

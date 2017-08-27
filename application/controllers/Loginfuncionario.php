@@ -158,6 +158,7 @@ class Loginfuncionario extends CI_Controller {
             'Sexo',
 			'Permissao',
 			'Funcao',
+			'TipoProfissional',
 			'DataCriacao',
 			
                 ), TRUE);
@@ -177,6 +178,7 @@ class Loginfuncionario extends CI_Controller {
 		$this->form_validation->set_rules('Funcao', 'Funcao', 'required|trim');
 		
 		$data['select']['Permissao'] = $this->Basico_model->select_permissao();
+		$data['select']['TipoProfissional'] = $this->Basico_model->select_tipoprofissional();
 		$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 

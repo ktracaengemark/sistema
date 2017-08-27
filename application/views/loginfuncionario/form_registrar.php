@@ -76,6 +76,22 @@
 	</select> 
     <?php echo form_error('Sexo'); ?>
     <br>
+	
+	<label for="TipoProfissional">Profissão:*</label>
+	<select data-placeholder="Selecione uma opção..." class="form-control" id="TipoProfissional" name="TipoProfissional">		
+		<option value="">-- Selecione um Profissional --</option>
+		<?php
+		foreach ($select['TipoProfissional'] as $key => $row) {
+			if ($query['TipoProfissional'] == $key) {
+				echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+			} else {
+				echo '<option value="' . $key . '">' . $row . '</option>';
+			}
+		}
+		?>   
+	</select> 
+    <?php echo form_error('Sexo'); ?>
+    <br>	
 
 	<label for="Permissao">Nível de Permissão:*</label>
 	<select data-placeholder="Selecione uma opção..." class="form-control" id="Permissao" name="Permissao">			

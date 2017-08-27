@@ -774,5 +774,42 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
+	
+	public function select_tipoprofissional($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query('
+                SELECT 
+                    idTab_TipoProfissional, 
+                    TipoProfissional,
+					idTab_Modulo
+				FROM 
+                    Tab_TipoProfissional
+				WHERE
+					idTab_Modulo = "1"
+				ORDER BY TipoProfissional ASC 
+			');		
+					
+        } else {
+            $query = $this->db->query('
+				SELECT 
+                    idTab_TipoProfissional, 
+                    TipoProfissional,
+					idTab_Modulo
+				FROM 
+                    Tab_TipoProfissional
+				WHERE
+					idTab_Modulo = "1"
+				ORDER BY TipoProfissional ASC  
+			');
+            
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->idTab_TipoProfissional] = $row->TipoProfissional;
+            }
+        }
+
+        return $array;
+    }	
 
 }
