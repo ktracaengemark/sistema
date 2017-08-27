@@ -193,7 +193,7 @@ class Login extends CI_Controller {
         } else {
 						
 			$data['query']['Empresa'] = 0;
-			$data['query']['Funcao'] = 100;
+			$data['query']['Funcao'] = 95;
 			$data['query']['UsuarioEmpresa'] = 1;
 			$data['query']['idSis_EmpresaFilial'] = 33;
 			$data['query']['Associado'] = 33;

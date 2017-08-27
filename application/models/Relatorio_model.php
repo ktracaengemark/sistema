@@ -333,7 +333,7 @@ class Relatorio_model extends CI_Model {
                 DS.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				DS.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				' . $filtro1 . '
-				' . $filtro3 . '
+
 				' . $filtro2 . '				
 				' . $filtro4 . '
 				(' . $consulta . ') 
@@ -469,7 +469,7 @@ class Relatorio_model extends CI_Model {
         }
     }
 	
-	public function list_servicosprest($data, $completo) {
+	public function list_servicosprest1($data, $completo) {
        
         if ($data['DataFim']) {
             $consulta =
@@ -509,6 +509,70 @@ class Relatorio_model extends CI_Model {
 				C.idApp_Cliente = OT.idApp_Cliente
                 ' . $data['NomeCliente'] . '
 				' . $data['NomeProfissional'] . ' 
+            ORDER BY
+				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+
+        /*
+		LEFT JOIN Tab_ProdutoBase AS TPD ON TPD.idTab_ProdutoBase = PD.idTab_Produto
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+          */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');              
+            }
+            return $query;
+        }
+    }
+	
+	public function list_servicosprest($data, $completo) {
+       
+        if ($data['DataFim']) {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
+        }
+		
+        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+		$data['NomeProfissional'] = ($data['NomeProfissional']) ? ' AND P.idApp_Profissional = ' . $data['NomeProfissional'] : FALSE;
+		
+		$query = $this->db->query('
+            SELECT
+                C.NomeCliente,
+				TSU.Nome,
+				P.NomeProfissional,
+				OT.idApp_OrcaTrata,
+                OT.DataOrca,
+				PV.QtdVendaServico,
+				PV.idApp_ServicoVenda,
+				PD.idTab_Servico,
+				PD.NomeServico
+            FROM
+                App_Cliente AS C,
+				App_OrcaTrata AS OT
+					LEFT JOIN App_ServicoVenda AS PV ON PV.idApp_OrcaTrata = OT.idApp_OrcaTrata					
+					LEFT JOIN Tab_Servico AS PD ON PD.idTab_Servico = PV.idTab_Servico
+					LEFT JOIN Sis_Usuario AS TSU ON TSU.idSis_Usuario = PV.idSis_Usuario
+					LEFT JOIN App_Profissional AS P ON P.idApp_Profissional = OT.ProfissionalOrca																								
+            WHERE
+                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				(' . $consulta . ') AND
+				PV.idApp_ServicoVenda != "0" AND
+				C.idApp_Cliente = OT.idApp_Cliente
+                ' . $data['NomeCliente'] . '
+
             ORDER BY
 				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
@@ -692,7 +756,10 @@ class Relatorio_model extends CI_Model {
                 App_OrcaTrata AS OT
 				LEFT JOIN App_Profissional AS PR ON PR.idApp_Profissional = OT.ProfissionalOrca
             WHERE
-                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                (C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' OR
+				C.idSis_Usuario = ' . $_SESSION['log']['Empresa'] . ' OR
+				C.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				C.Empresa = ' . $_SESSION['log']['Empresa'] . ') AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 (' . $consulta . ') AND
                 ' . $filtro1 . '

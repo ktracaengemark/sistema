@@ -118,8 +118,11 @@
 													<br><br>
 
 													<h4>
-														<span class="glyphicon glyphicon-calendar"></span> <b>Data do Orçamento:</b> <?php echo $row['DataOrca']; ?>
+														<span class="glyphicon glyphicon-tags"></span> <b>Nº Orç.:</b> <?php echo $row['idApp_OrcaTrata']; ?>
 													</h4>
+													<h5>
+														<span class="glyphicon glyphicon-calendar"></span> <b>Data do Orçamento:</b> <?php echo $row['DataOrca']; ?>
+													</h5>
 
 													<p>
 														<?php if ($row['ProfissionalOrca']) { ?>
@@ -162,8 +165,11 @@
 													<br><br>
 
 													<h4>
-														<span class="glyphicon glyphicon-calendar"></span> <b>Data do Orçamento:</b> <?php echo $row['DataOrca']; ?>
+														<span class="glyphicon glyphicon-tags"></span> <b>Nº Orç.:</b> <?php echo $row['idApp_OrcaTrata']; ?>
 													</h4>
+													<h5>
+														<span class="glyphicon glyphicon-calendar"></span> <b>Data do Orçamento:</b> <?php echo $row['DataOrca']; ?>
+													</h5>
 
 													<p>
 														<?php if ($row['ProfissionalOrca']) { ?>

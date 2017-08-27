@@ -131,7 +131,7 @@ class Funcao_model extends CI_Model {
                     Tab_Funcao 					
 				WHERE  
                     idTab_Modulo = "10" 
-				ORDER BY Funcao ASC 
+				ORDER BY idTab_Funcao ASC 
 			');		
 					
         } else {
@@ -144,7 +144,7 @@ class Funcao_model extends CI_Model {
                     Tab_Funcao 					
 				WHERE 
                     idTab_Modulo = "10" 
-				ORDER BY Funcao ASC 
+				ORDER BY idTab_Funcao ASC 
 			');
             
             $array = array();

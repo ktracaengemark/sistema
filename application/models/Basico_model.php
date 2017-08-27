@@ -547,9 +547,9 @@ class Basico_model extends CI_Model {
             FROM
                 Tab_Produto AS TPV																	
             WHERE
-                TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                (TPV.Empresa = ' . $_SESSION['log']['id'] . ' OR
-				 TPV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
+				TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				(TPV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 TPV.Empresa = ' . $_SESSION['log']['Empresa'] . ') 
 			ORDER BY  
 				TPV.NomeProduto ASC 
     ');
@@ -562,8 +562,8 @@ class Basico_model extends CI_Model {
             FROM
                 Tab_Produto AS TPV																	
             WHERE
-                TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                (TPV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				(TPV.Empresa = ' . $_SESSION['log']['id'] . ' OR
 				 TPV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
 			ORDER BY  
 				TPV.NomeProduto ASC 
@@ -635,9 +635,9 @@ class Basico_model extends CI_Model {
             FROM
                 Tab_Servico AS TSV																				
             WHERE
-                TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                (TSV.Empresa = ' . $_SESSION['log']['id'] . ' OR
-				 TSV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
+				TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				(TSV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 TSV.Empresa = ' . $_SESSION['log']['Empresa'] . ') 
 			ORDER BY 
 				TSV.NomeServico ASC
     ');
@@ -650,9 +650,9 @@ class Basico_model extends CI_Model {
             FROM
                 Tab_Servico AS TSV																				
             WHERE
-                TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                (TSV.Empresa = ' . $_SESSION['log']['id'] . ' OR
-				 TSV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
+				TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				(TSV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 TSV.Empresa = ' . $_SESSION['log']['Empresa'] . ') 
 			ORDER BY 
 				TSV.NomeServico ASC
     ');

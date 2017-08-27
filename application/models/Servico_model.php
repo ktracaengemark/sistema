@@ -117,11 +117,9 @@ class Servico_model extends CI_Model {
                 Tab_Servico AS TSV
 					LEFT JOIN Sis_Usuario AS TSU ON TSU.idSis_Usuario = TSV.idSis_Usuario
             WHERE
-                (TSV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-                TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ')
-				OR
-				(TSV.idSis_Usuario = ' . $_SESSION['log']['Empresa'] . ' AND
-                TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ')				
+				TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				(TSV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 TSV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
             ORDER BY
 				TSV.NomeServico						
         ');

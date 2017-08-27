@@ -269,10 +269,11 @@
 														?>
 
 														</div>
-
-														<div class="form-group">
+														
+														<div class="form-group">														
 															<div class="row">
-																<div class="col-md-3 text-right">
+																<div class="col-md-3"></div>
+																<div class="col-md-3 text-left">
 																	<a class="btn btn-md btn-danger" onclick="adicionaServico()">
 																		<span class="glyphicon glyphicon-plus"></span> Serviços
 																	</a>
@@ -379,6 +380,7 @@
 
 														<div class="form-group">
 															<div class="row">
+																<div class="col-md-6"></div>
 																<div class="col-md-3 text-right">
 																	<a class="add_field_button2 btn btn-md btn-danger">
 																		<span class="glyphicon glyphicon-plus"></span> Produtos
@@ -723,6 +725,7 @@
 											</div>
 										</div>
 										<hr>
+										<!--
 										<div class="form-group">
 											<div class="row">		
 												<div class="col-md-3">
@@ -745,6 +748,8 @@
 														</span>
 													</div>
 												</div>
+												
+												
 												<div class="col-md-3">
 													<label for="DataEntradaOrca">Validade do Orç.:</label>
 													<div class="input-group <?php echo $datepicker; ?>">
@@ -765,12 +770,25 @@
 														</span>
 													</div>
 												</div>
+												
 											</div>
-										</div>										
+										</div>
+										
 										<hr>
+										-->
 										<div class="form-group text-center">
 											<div class="row">
-												<div class="col-md-3 form-inline">
+												<div class="col-md-3">
+													<label for="DataOrca">Data do Orçamento:</label>
+													<div class="input-group <?php echo $datepicker; ?>">
+														<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+																name="DataOrca" value="<?php echo $orcatrata['DataOrca']; ?>">
+														<span class="input-group-addon" disabled>
+															<span class="glyphicon glyphicon-calendar"></span>
+														</span>
+													</div>
+												</div>																									
+												<div class="col-md-2 form-inline">
 													<label for="AprovadoOrca">Orçam. Aprovado?</label><br>
 													<div class="form-group">
 														<div class="btn-group" data-toggle="buttons">
@@ -802,6 +820,73 @@
 														</div>
 													</div>
 												</div>
+												<div class="col-md-2 form-inline">
+													<label for="QuitadoOrca">Orçam. Quitado?</label><br>
+													<div class="form-group">
+														<div class="btn-group" data-toggle="buttons">
+															<?php
+															foreach ($select['QuitadoOrca'] as $key => $row) {
+																(!$orcatrata['QuitadoOrca']) ? $orcatrata['QuitadoOrca'] = 'N' : FALSE;
+
+																if ($orcatrata['QuitadoOrca'] == $key) {
+																	echo ''
+																	. '<label class="btn btn-warning active" name="radiobutton_QuitadoOrca" id="radiobutton_QuitadoOrca' . $key . '">'
+																	. '<input type="radio" name="QuitadoOrca" id="radiobutton" '
+																	. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																	. '</label>'
+																	;
+																} else {
+																	echo ''
+																	. '<label class="btn btn-default" name="radiobutton_QuitadoOrca" id="radiobutton_QuitadoOrca' . $key . '">'
+																	. '<input type="radio" name="QuitadoOrca" id="radiobutton" '
+																	. 'autocomplete="off" value="' . $key . '" >' . $row
+																	. '</label>'
+																	;
+																}
+															}
+															?>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2 form-inline">
+													<label for="ServicoConcluido">Srv/Prd Entregue?</label><br>
+													<div class="form-group">
+														<div class="btn-group" data-toggle="buttons">
+															<?php
+															foreach ($select['ServicoConcluido'] as $key => $row) {
+																(!$orcatrata['ServicoConcluido']) ? $orcatrata['ServicoConcluido'] = 'N' : FALSE;
+
+																if ($orcatrata['ServicoConcluido'] == $key) {
+																	echo ''
+																	. '<label class="btn btn-warning active" name="radiobutton_ServicoConcluido" id="radiobutton_ServicoConcluido' . $key . '">'
+																	. '<input type="radio" name="ServicoConcluido" id="radiobutton" '
+																	. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																	. '</label>'
+																	;
+																} else {
+																	echo ''
+																	. '<label class="btn btn-default" name="radiobutton_ServicoConcluido" id="radiobutton_ServicoConcluido' . $key . '">'
+																	. '<input type="radio" name="ServicoConcluido" id="radiobutton" '
+																	. 'autocomplete="off" value="' . $key . '" >' . $row
+																	. '</label>'
+																	;
+																}
+															}
+															?>
+														</div>
+													</div>
+												</div>												
+												<div class="col-md-3">
+													<label for="DataRetorno">Data do Retorno:</label>
+													<div class="input-group <?php echo $datepicker; ?>">
+														<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+															 autofocus  name="DataRetorno" value="<?php echo $orcatrata['DataRetorno']; ?>">
+														<span class="input-group-addon" disabled>
+															<span class="glyphicon glyphicon-calendar"></span>
+														</span>
+													</div>
+												</div>												
+												<!--
 												<div class="form-group text-center">
 													<div id="AprovadoOrca" <?php echo $div['AprovadoOrca']; ?>>
 														<div class="col-md-3 form-inline">
@@ -832,7 +917,7 @@
 																</div>
 															</div>
 														</div>
-
+														
 														<div class="col-md-3 form-inline">
 															<label for="ServicoConcluido">Srv/Prd Entregue?</label><br>
 															<div class="form-group">
@@ -872,8 +957,10 @@
 																</span>
 															</div>
 														</div>
+														
 													</div>																											
 												</div>
+												-->
 											</div>
 										</div>
 

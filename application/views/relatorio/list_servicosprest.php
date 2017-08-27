@@ -30,8 +30,8 @@
 							#echo '<td>' . $row['idApp_ProdutoVenda'] . '</td>';
 							#echo '<td>' . $row['idTab_Produto'] . '</td>';
 							#echo '<td>' . $row['idTab_ProdutoBase'] . '</td>';
-							echo '<td>' . $row['ServicoBase'] . '</td>';
-							echo '<td>' . $row['NomeProfissional'] . '</td>';
+							echo '<td>' . $row['NomeServico'] . '</td>';
+							echo '<td>' . $row['Nome'] . '</td>';
 
                         echo '</tr>';
                     }

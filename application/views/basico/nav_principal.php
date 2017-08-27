@@ -64,7 +64,7 @@
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>convenio/cadastrar">Planos & Convênios</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>produto/cadastrar">Produtos P/Consumo & P/Venda</a></li>
+							<li><a href="<?php echo base_url() ?>produto/cadastrar">Produtos  P/Venda & P/Consumo</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>servico/cadastrar">Serviços P/Venda</a></li>
 						</ul>

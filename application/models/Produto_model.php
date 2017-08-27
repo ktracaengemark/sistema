@@ -173,8 +173,8 @@ class Produto_model extends CI_Model {
 				LEFT JOIN Sis_Usuario AS TSU ON TSU.idSis_Usuario = TPV.idSis_Usuario
             WHERE				
 				TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-					(TPV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' OR
-					TPV.idSis_Usuario = ' . $_SESSION['log']['Empresa'] . ' )
+				(TPV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 TPV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
             ORDER BY
 				TPV.TipoProduto DESC,
 				TPV.NomeProduto											
@@ -212,8 +212,9 @@ class Produto_model extends CI_Model {
             FROM
                 Tab_Produto AS TPV																	
             WHERE
-                TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                TPV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+				TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				(TPV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 TPV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
 			ORDER BY  
 				TPV.NomeProduto ASC'
     );
@@ -226,8 +227,9 @@ class Produto_model extends CI_Model {
             FROM
                 Tab_Produto AS TPV																	
             WHERE
-                TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                TPV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+				TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				(TPV.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 TPV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
 			ORDER BY  
 				TPV.NomeProduto ASC'
     );
