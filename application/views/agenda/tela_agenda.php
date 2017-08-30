@@ -18,10 +18,17 @@
 								<label for="">Agendamento:</label>
 								<div class="form-group">
 									<div class="row">											
-										<button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary">P/ Cliente
-										</button> 
-										ou
-										<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info">Pessoal
+										<button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary">da Empresa (C/ Cliente)
+										</button>
+									</div>	
+									<br>
+									<div class="row">	
+										<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info">da Empresa (Pessoal)
+										</button>
+									</div>	
+									<br>	
+									<div class="row">	
+										<button type="button" id="AgendarEvento" onclick="redirecionar2(3)" class="btn btn-danger">Evento Particular
 										</button>
 
 										<input type="hidden" id="start" />

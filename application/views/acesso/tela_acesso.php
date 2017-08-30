@@ -1,8 +1,4 @@
 <br>
-<br>
-<br>
-<br>
-<br>
 <?php if (isset($msg)) echo $msg; ?>
 <?php if ( !isset($evento) && isset($_SESSION['log'])) { ?>
 

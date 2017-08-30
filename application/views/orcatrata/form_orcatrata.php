@@ -399,7 +399,7 @@
 																			<div class="input-group" id="txtHint">
 																				<span class="input-group-addon" id="basic-addon1">R$</span>
 																				<input type="text" class="form-control Valor" id="ValorOrca" maxlength="10" placeholder="0,00"
-																					   name="ValorOrca" value="<?php echo $orcatrata['ValorOrca'] ?>">
+																					 autofocus  name="ValorOrca" value="<?php echo $orcatrata['ValorOrca'] ?>">
 																			</div>
 																		</div>
 
@@ -880,7 +880,7 @@
 													<label for="DataRetorno">Data do Retorno:</label>
 													<div class="input-group <?php echo $datepicker; ?>">
 														<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-															 autofocus  name="DataRetorno" value="<?php echo $orcatrata['DataRetorno']; ?>">
+															   name="DataRetorno" value="<?php echo $orcatrata['DataRetorno']; ?>">
 														<span class="input-group-addon" disabled>
 															<span class="glyphicon glyphicon-calendar"></span>
 														</span>

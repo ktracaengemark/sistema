@@ -2285,6 +2285,15 @@ function redirecionar(x) {
     window.location = re.exec(window.location.href) + url + '?start=' + start + '&end=' + end
 }
 
+function redirecionar2(x) {
+
+    var re = new RegExp(/^.*\//);
+    var start = moment($("#start").val());
+    var end = moment($("#end").val());
+    (x == 3) ? url = 'consulta/cadastrar_particular' : url = 'cliente/pesquisar';
+    window.location = re.exec(window.location.href) + url + '?start=' + start + '&end=' + end
+}
+
 /*
  * Função para capturar a url com o objetivo de obter a data, após criar/alterar
  * uma consulta, e assim usar a função gotoDate do Fullcalendar para mostrar a
