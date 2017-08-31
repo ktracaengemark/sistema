@@ -337,7 +337,7 @@ class Relatorio extends CI_Controller {
 			'DS.idApp_Despesas' => 'Número da Despesa',
             'DS.DataDespesas' => 'Data da Despesa',
             'DS.ValorDespesas' => 'Valor da Despesa',
-			'DS.Despesa' => 'Desc. da Despesa',
+			'DS.Despesa' => 'Despesa',
 			'DS.TipoDespesa' => 'Tipo de Despesa',           
             'DS.QuitadoDespesas' => 'Despesa Quitada?',			
             
@@ -645,7 +645,7 @@ class Relatorio extends CI_Controller {
 			'TCO.idApp_Despesas' => 'Id do Consumo',
             'TCO.DataDespesas' => 'Data do Consumo',
 			'TCO.TipoDespesa' => 'Tipo de Consumo',
-			'TCO.Despesa' => 'Desc. do Consumo',			
+			'TCO.Despesa' => 'Consumo',			
 			'APC.QtdCompraProduto' => 'Qtd. do Produto',
 			'TPB.ProdutoBase' => 'Produto',
 			

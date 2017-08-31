@@ -173,11 +173,16 @@
 									</div>
 								</div>
 								<br>
-								<div class="col-md-3 text-left">
+								<div class="col-md-2 text-left">
 									<button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
 										<span class="glyphicon glyphicon-search"></span> Pesquisar
 									</button>
 								</div>
+								<div class="col-md-2 text-right">											
+										<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>relatorio/clientes" role="button"> 
+											<span class="glyphicon glyphicon-plus"></span> Novo Orçamento
+										</a>
+								</div>								
 							</div>
 						</div>							
 						</form>

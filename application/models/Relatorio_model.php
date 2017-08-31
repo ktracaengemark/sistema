@@ -332,16 +332,12 @@ class Relatorio_model extends CI_Model {
             WHERE
                 DS.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				DS.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-				' . $filtro1 . '
-
 				' . $filtro2 . '				
 				' . $filtro4 . '
 				(' . $consulta . ') 
 				' . $data['TipoDespesa'] . ' AND
 				DS.TipoProduto = "D"
-
             ORDER BY
-                DS.AprovadoDespesas DESC,
 				PP.DataVencimentoPagaveis
         ');
 
@@ -750,11 +746,11 @@ class Relatorio_model extends CI_Model {
                 OT.QuitadoOrca,
                 OT.DataConclusao,
                 OT.DataRetorno,
-				PR.NomeProfissional
+				TSU.Nome
             FROM
                 App_Cliente AS C,
                 App_OrcaTrata AS OT
-				LEFT JOIN App_Profissional AS PR ON PR.idApp_Profissional = OT.ProfissionalOrca
+				LEFT JOIN Sis_Usuario AS TSU ON TSU.idSis_Usuario = OT.idSis_Usuario
             WHERE
                 (C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' OR
 				C.idSis_Usuario = ' . $_SESSION['log']['Empresa'] . ' OR

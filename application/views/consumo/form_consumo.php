@@ -3,8 +3,8 @@
 <div class="container-fluid">	
 	<div class="row">	   
 		
-		<div class="col-md-1"></div>
-		<div class="col-md-10 ">
+		<div class="col-md-2"></div>
+		<div class="col-md-8 ">
 
 			<?php echo validation_errors(); ?>
 
@@ -51,13 +51,13 @@
 											</select>
 										</div>
 										-->
-										<div class="col-md-3">
+										<div class="col-md-6">
 											<label for="Despesa">Consumo: *</label><br>
 											<input type="text" class="form-control" maxlength="200"
 													name="Despesa" value="<?php echo $despesas['Despesa'] ?>">
 										</div>
 										
-										<div class="col-md-3">
+										<div class="col-md-6">
 											<label for="TipoDespesa">Tipo de Consumo</label>
 											<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>tipodespesa/cadastrar/tipodespesa" role="button">
 												<span class="glyphicon glyphicon-plus"></span> <b>Forma Pag</b>
@@ -75,17 +75,7 @@
 												}
 												?>
 											</select>
-										</div>									
-										<div class="col-md-2">
-											<label for="DataDespesas">Data do Consumo:</label>
-											<div class="input-group <?php echo $datepicker; ?>">
-												<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-													   name="DataDespesas" value="<?php echo $despesas['DataDespesas']; ?>">
-												<span class="input-group-addon" disabled>
-													<span class="glyphicon glyphicon-calendar"></span>
-												</span>
-											</div>
-										</div>																		
+										</div>																										
 									</div>
 								</div>
 							</div>
@@ -123,7 +113,7 @@
 											<div class="panel panel-info">
 												<div class="panel-heading">
 													<div class="row">
-														<div class="col-md-1">
+														<div class="col-md-2">
 															<label for="QtdCompraServico">Qtd:</label>
 															<input type="text" class="form-control Numero" maxlength="3" id="QtdCompraServico<?php echo $i ?>" placeholder="0"
 																	onkeyup="calculaSubtotalCompra(this.value,this.name,'<?php echo $i ?>','QTD','Servico')"
@@ -248,7 +238,7 @@
 											<div class="panel panel-info">
 												<div class="panel-heading">
 													<div class="row">
-														<div class="col-md-1">
+														<div class="col-md-2">
 															<label for="QtdCompraProduto">Qtd:</label>
 															<input type="text" class="form-control Numero" maxlength="3" id="QtdCompraProduto<?php echo $i ?>" placeholder="0"
 																	onkeyup="calculaSubtotalCompra(this.value,this.name,'<?php echo $i ?>','QTD','Produto')"
@@ -295,12 +285,12 @@
 														</div>
 													</div>
 													<div class="row">
-														<div class="col-md-8">
+														<div class="col-md-6">
 															<label for="ObsProduto<?php echo $i ?>">Obs:</label><br>
 															<input type="text" class="form-control" id="ObsProduto<?php echo $i ?>" maxlength="250"
 																   name="ObsProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ObsProduto'] ?>">
 														</div>
-														<div class="col-md-2">
+														<div class="col-md-3">
 															<label for="DataValidadeProduto<?php echo $i ?>">Data Val. do Produto:</label>
 															<div class="input-group <?php echo $datepicker; ?>">
 																<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
@@ -310,7 +300,7 @@
 																</span>
 															</div>
 														</div>
-														<div class="col-md-1">
+														<div class="col-md-2">
 															<label><br></label><br>
 															<button type="button" id="<?php echo $i ?>" class="remove_field6 btn btn-danger">
 																<span class="glyphicon glyphicon-trash"></span>
@@ -330,7 +320,7 @@
 										<div class="form-group">
 											<div class="row">
 												<div class="col-md-4">
-													<a class="add_field_button6 btn btn-xs btn-warning">
+													<a class="add_field_button6 btn btn-xs btn-danger">
 														<span class="glyphicon glyphicon-plus"></span> Adicionar Produto
 													</a>
 												</div>
@@ -578,6 +568,16 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-md-3">
+									<label for="DataDespesas">Data do Consumo:</label>
+									<div class="input-group <?php echo $datepicker; ?>">
+										<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+											   name="DataDespesas" value="<?php echo $despesas['DataDespesas']; ?>">
+										<span class="input-group-addon" disabled>
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>									
+								<div class="col-md-6">
 									<label for="ObsDespesas">Obs:</label>
 									<textarea class="form-control" id="ObsDespesas" <?php echo $readonly; ?>
 											  name="ObsDespesas"><?php echo $despesas['ObsDespesas']; ?></textarea>
@@ -792,6 +792,6 @@
 			</div>
 
 		</div>
-		<div class="col-md-1"></div>
+		<div class="col-md-2"></div>
 	</div>
 </div>

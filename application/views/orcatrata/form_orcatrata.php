@@ -399,7 +399,7 @@
 																			<div class="input-group" id="txtHint">
 																				<span class="input-group-addon" id="basic-addon1">R$</span>
 																				<input type="text" class="form-control Valor" id="ValorOrca" maxlength="10" placeholder="0,00"
-																					 autofocus  name="ValorOrca" value="<?php echo $orcatrata['ValorOrca'] ?>">
+																					   name="ValorOrca" value="<?php echo $orcatrata['ValorOrca'] ?>">
 																			</div>
 																		</div>
 

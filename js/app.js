@@ -418,12 +418,12 @@ function calculaParcelasPagaveis() {
 				<div class="panel panel-info">\
 					<div class="panel-heading">\
 						<div class="row">\
-							<div class="col-md-1">\
+							<div class="col-md-2">\
 								<label for="ParcelaPagaveis">Parcela:</label><br>\
 								<input type="text" class="form-control" maxlength="6" readonly=""\
 									   name="ParcelaPagaveis'+i+'" value="'+i+'/'+parcelas+'">\
 							</div>\
-							<div class="col-md-2">\
+							<div class="col-md-3">\
 								<label for="ValorParcelaPagaveis">Valor Parcela:</label><br>\
 								<div class="input-group" id="txtHint">\
 									<span class="input-group-addon" id="basic-addon1">R$</span>\
@@ -431,7 +431,7 @@ function calculaParcelasPagaveis() {
 										    id="ValorParcelaPagaveis'+i+'" name="ValorParcelaPagaveis'+i+'" value="'+parcdesp+'">\
 								</div>\
 							</div>\
-							<div class="col-md-2">\
+							<div class="col-md-3">\
 								<label for="DataVencimentoPagaveis">Data Venc. Parc.</label>\
 								<div class="input-group DatePicker">\
 									<input type="text" class="form-control Date" id="DataVencimentoPagaveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
@@ -441,7 +441,10 @@ function calculaParcelasPagaveis() {
 									</span>\
 								</div>\
 							</div>\
-							<div class="col-md-2">\
+						</div>\
+						<div class="col-md-2"></div>\
+						<div class="row">\
+							<div class="col-md-3">\
 								<label for="ValorPagoPagaveis">Valor Pago:</label><br>\
 								<div class="input-group" id="txtHint">\
 									<span class="input-group-addon" id="basic-addon1">R$</span>\
@@ -449,7 +452,7 @@ function calculaParcelasPagaveis() {
 										    id="ValorPagoPagaveis'+i+'" name="ValorPagoPagaveis'+i+'" value="">\
 								</div>\
 							</div>\
-							<div class="col-md-2">\
+							<div class="col-md-3">\
 								<label for="DataPagoPagaveis">Data Pag.</label>\
 								<div class="input-group DatePicker">\
 									<input type="text" class="form-control Date" id="DataPagoPagaveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\

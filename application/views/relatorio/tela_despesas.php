@@ -34,6 +34,7 @@
 										?>
 									</select>
 								</div>						
+								<!--
 								<div class="col-md-3">
 									<label for="AprovadoDespesas">Desp.Aprov.?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -49,7 +50,7 @@
 										?>
 									</select>
 								</div>
-								<!--
+								
 								<div class="col-md-2">
 									<label for="ServicoConcluidoDespesas">Desp. Concl.?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -66,7 +67,7 @@
 									</select>
 								</div>
 								-->
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<label for="QuitadoDespesas">Desp.Quit.?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="QuitadoDespesas" name="QuitadoDespesas">
@@ -82,7 +83,7 @@
 									</select>
 								</div>
 							
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<label for="QuitadoPagaveis">Parc. Quit.?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="QuitadoPagaveis" name="QuitadoPagaveis">
@@ -96,13 +97,12 @@
 										}
 										?>
 									</select>
-								</div>
-								<!--
-								<div class="col-md-3">
+								</div>								
+								<div class="col-md-5">
 									<label for="Ordenamento">Ordenamento:</label>
 									<div class="form-group">
 										<div class="row">
-											<div class="col-md-6">
+											<div class="col-md-8">
 												<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 														id="Campo" name="Campo">
 													<?php
@@ -134,7 +134,6 @@
 										</div>
 									</div>
 								</div>
-								-->
 							</div>
 						</div>
 						<div class="form-group">
@@ -160,13 +159,13 @@
 									</div>
 								</div>
 								<br>
-								<div class="col-md-3 text-left">
+								<div class="col-md-2 text-left">
 									<button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
 										<span class="glyphicon glyphicon-search"></span> Pesquisar
 									</button>
 								</div>
 								
-								<div class="col-md-3 text-right">											
+								<div class="col-md-2 text-right">											
 										<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>despesas/cadastrar" role="button"> 
 											<span class="glyphicon glyphicon-plus"></span> Nova Despesa
 										</a>
