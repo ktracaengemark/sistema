@@ -1,7 +1,6 @@
 <?php if ($msg) echo $msg; ?>
 
-<div class="container-fluid">
-    
+   
 	<div class="col-md-1"></div>
 	<div class="col-md-10">
 		<div class="row">
@@ -125,4 +124,4 @@
 		</div>
 	</div>
 	<div class="col-md-1"></div>	
-</div>
+

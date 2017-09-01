@@ -74,7 +74,7 @@ class Servico extends CI_Controller {
 		#$data['select']['ServicoBase'] = $this->Servicocompra_model->select_servicocompra();
  
 		
-        $data['titulo'] = 'Cadastrar Plano & Preço de Venda dos Serviços';
+        $data['titulo'] = 'Cadastrar Serviços';
         $data['form_open_path'] = 'servico/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -174,7 +174,7 @@ class Servico extends CI_Controller {
 		#$data['select']['ServicoBase'] = $this->Servicocompra_model->select_servicocompra();
 
 		
-        $data['titulo'] = 'Editar Plano & Preço de Venda dos Serviços';
+        $data['titulo'] = 'Editar Serviços';
         $data['form_open_path'] = 'servico/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';
