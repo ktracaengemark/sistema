@@ -4,7 +4,8 @@
 <div id="datepickerinline" class="col-md-2"></div>
 <div id="calendar" class="col-md-8"></div>-->
 
-<div id="calendar" class="col-md-9"></div>
+<div class="col-md-1"></div>
+<div id="calendar" class="col-md-7"></div>
 
 <div id="fluxo" class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="fluxo" aria-hidden="true">
     <div class="vertical-alignment-helper">
@@ -18,12 +19,12 @@
 								<label for="">Agendamento:</label>
 								<div class="form-group">
 									<div class="row">											
-										<button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary">da Empresa (C/ Cliente)
+										<button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary">Empresa (C/ Cliente)
 										</button>
 									</div>	
 									<br>
 									<div class="row">	
-										<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info">da Empresa (Pessoal)
+										<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info">Empresa (Pessoal)
 										</button>
 									</div>	
 									<br>	
@@ -48,7 +49,7 @@
 
 	<?php echo form_open('agenda', 'role="form"'); ?>
 	<div class="col-md-12">
-		<label for="Ordenamento">Agenda por Profissional:</label>
+		<label for="Ordenamento">Agenda por Prof.:</label>
 		<div class="form-group">
 			<div class="row">
 				<div class="col-md-12">
@@ -114,7 +115,7 @@
         </tr>
     </table>
 
-    <table class="table table-condensed table-bordered table-striped"">
+    <table class="table table-condensed table-bordered table-striped">
         <tr class="active text-active">
             <th colspan="3" class="col-md-12 text-center"><b>Aniversariantes - <?php echo date('m/Y', time()) ?></b></th>
         </tr>
@@ -186,3 +187,4 @@
     </table>
 
 </div>
+<div class="col-md-1"></div>
