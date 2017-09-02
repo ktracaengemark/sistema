@@ -46,6 +46,7 @@
     <br>
 
     <input type="hidden" id="idSis_Usuario" name="idSis_Usuario" value="<?php echo $query['idSis_Usuario']; ?>">
+    <input type="hidden" id="Codigo" name="Codigo" value="<?php echo $query['Codigo']; ?>">
     <button class="btn btn-lg btn-primary btn-block" type="submit">TROCAR SENHA</button>
 </form>
 

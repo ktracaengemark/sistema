@@ -43,7 +43,7 @@ class Login_model extends CI_Model {
         }
 
     }
-	
+
 	public function check_dados_usuario($senha, $usuario, $retorna = FALSE) {
 
         $query = $this->db->query('SELECT * FROM Sis_Usuario WHERE '
@@ -54,7 +54,7 @@ class Login_model extends CI_Model {
                 . '(Email = "' . $usuario . '" AND '
                 . 'Senha = "' . $senha . '" AND '
 
-				. 'idTab_Modulo = "' . $_SESSION['log']['idTab_Modulo'] . '") '	
+				. 'idTab_Modulo = "' . $_SESSION['log']['idTab_Modulo'] . '") '
         );
         #$query = $this->db->get_where('Sis_Usuario', $data);
         /*
@@ -104,7 +104,7 @@ class Login_model extends CI_Model {
          */
 
     }
-	
+
 	public function check_nomeempresa($data) {
 
         $query = $this->db->query('SELECT * FROM Sis_Usuario WHERE NomeEmpresa = "' . $data . '"');
@@ -225,12 +225,28 @@ class Login_model extends CI_Model {
 
     }
 
+    /*
     public function get_data_by_codigo($data) {
 
         $query = $this->db->query('SELECT idSis_Usuario, Usuario, Email FROM Sis_Usuario WHERE Codigo = "' . $data . '"');
         $query = $query->result_array();
         #return $query[0]['idSis_Usuario'];
         return $query[0];
+
+    }
+    */
+
+    public function get_data_by_codigo($data) {
+
+        $query = $this->db->query('SELECT idSis_Usuario, Usuario, Email FROM Sis_Usuario WHERE Codigo = "' . $data . '"');
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        }
+        else {
+
+            $query = $query->result_array();
+            return $query[0];
+        }
 
     }
 
