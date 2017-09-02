@@ -1,5 +1,7 @@
 <?php if ($msg) echo $msg; ?>
-<div class="container-fluid">
+
+<div class="col-md-2"></div>
+<div class="col-md-8">
     <div class="row">
         <div class="main">
             <?php echo validation_errors(); ?>
@@ -70,23 +72,24 @@
                             <div class="col-md-1"></div>
                         </div>
                     </div>
-					
-					<div class="col-md-12" >
+					<div class="col-md-1"></div>
+					<div class="col-md-10" >
 						<div class="form-group">
 							<div class="row">
-								<div class="col-md-6 text-right">
+								<div class="col-md-6 text-left">
 									<button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
 										<span class="glyphicon glyphicon-search"></span> Pesquisar
 									</button>
 								</div>
-								<div class="col-md-6 text-center">											
+								<div class="col-md-6 text-right">											
 									<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>loginassociado/registrar" role="button"> 
-										<span class="glyphicon glyphicon-plus"></span> Nova Empresa Associada
+										<span class="glyphicon glyphicon-plus"></span> Novo Associado
 									</a>
 								</div>
 							</div>
 						</div>
 					</div>
+					<div class="col-md-1"></div>
                     </form>
                     <br>
                     <?php echo (isset($list)) ? $list : FALSE ?>
@@ -95,3 +98,4 @@
         </div>
     </div>
 </div>
+<div class="col-md-2"></div>

@@ -52,14 +52,14 @@
 											<label for="">Dia a Dia:</label>
 											<div class="form-group">
 												<div class="row">													
+													<a class="btn btn-sm btn-info" href="<?php echo base_url() ?>relatorio/clientes" role="button"> 
+														<span class="glyphicon glyphicon-usd"></span> Orçam.
+													</a>													
 													<a class="btn btn-sm btn-info" href="<?php echo base_url() ?>despesas/cadastrar" role="button"> 
 														<span class="glyphicon glyphicon-usd"></span> Despesa
 													</a>
 													<a class="btn btn-sm btn-info" href="<?php echo base_url() ?>consumo/cadastrar" role="button"> 
 														<span class="glyphicon glyphicon-usd"></span> Consumo
-													</a>
-													<a class="btn btn-sm btn-info" href="<?php echo base_url() ?>relatorio/clientes" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Orçam.
 													</a>											
 												</div>	
 											</div>		
@@ -82,13 +82,13 @@
 											<label for="">Financeiro:</label>									
 											<div class="form-group">
 												<div class="row">										
-													<a  class="btn btn-sm btn-success" href="<?php echo base_url() ?>relatorio/receitas" role="button"> 
+													<a  class="btn btn-sm btn-info" href="<?php echo base_url() ?>relatorio/receitas" role="button"> 
 														<span class="glyphicon glyphicon-usd"></span> Receitas
 													</a>											
-													<a  class="btn btn-sm btn-success" href="<?php echo base_url() ?>relatorio/despesas" role="button"> 
+													<a  class="btn btn-sm btn-info" href="<?php echo base_url() ?>relatorio/despesas" role="button"> 
 														<span class="glyphicon glyphicon-usd"></span> Despesas
 													</a>
-													<a  class="btn btn-sm btn-success" href="<?php echo base_url() ?>relatorio/orcamento" role="button"> 
+													<a  class="btn btn-sm btn-info" href="<?php echo base_url() ?>relatorio/orcamento" role="button"> 
 														<span class="glyphicon glyphicon-usd"></span> Balanço
 													</a>											
 												</div>	
@@ -120,8 +120,8 @@
 													<a type="button" class="btn btn-sm btn-warning" href="<?php echo base_url() ?>relatorio/orcamentopc" role="button"> 
 														<span class="glyphicon glyphicon-list-alt"></span> Proced.
 													</a>											
-													<a type="button" class="btn btn-sm btn-warning" href="<?php echo base_url() ?>relatorio/tarefa" role="button"> 
-														<span class="glyphicon glyphicon-pencil"></span> Tarefas
+													<a type="button" class="btn btn-sm btn-warning" href="<?php echo base_url() ?>relatorio/associado" role="button"> 
+														<span class="glyphicon glyphicon-user"></span> Associados
 													</a>
 												</div>	
 											</div>																								

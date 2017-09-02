@@ -423,7 +423,8 @@ class Relatorio extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $data['titulo'] = 'Sistema';
+        $data['titulo1'] = 'Manuteção';
+		$data['titulo2'] = 'Comissão';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {

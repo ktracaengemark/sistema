@@ -1,191 +1,102 @@
 <?php if ($msg) echo $msg; ?>
 
-<div class="container-fluid">
-	<div class="col-md-1"></div>
-	<div class="col-md-10">
-		<div class="row">
 
-			<div class="main">
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+		<div class="row">
+			<div class="col-md-12">
 
 				<?php echo validation_errors(); ?>
+				<?php echo form_open('relatorio/admin', 'role="form"'); ?>
 
-				<div class="panel panel-primary">
+				<div class="col-md-6">
 
-					<div class="panel-heading"><strong><?php echo $titulo; ?></strong></div>
-					<div class="panel-body">
-
-						<?php echo form_open('relatorio/despesas', 'role="form"'); ?>
-
-						<div class="form-group">
-							<div class="row">
-
-								<div class="col-md-3">
-									<label for="Ordenamento">Tipo de Despesa:</label>
-									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-											id="TipoDespesa" name="TipoDespesa">
-										<?php
-										foreach ($select['TipoDespesa'] as $key => $row) {
-											if ($query['TipoDespesa'] == $key) {
-												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-											} else {
-												echo '<option value="' . $key . '">' . $row . '</option>';
-											}
-										}
-										?>
-									</select>
-								</div>						
-								<!--
-								<div class="col-md-3">
-									<label for="AprovadoDespesas">Desp.Aprov.?</label>
-									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-											id="AprovadoDespesas" name="AprovadoDespesas">
-										<?php
-										foreach ($select['AprovadoDespesas'] as $key => $row) {
-											if ($query['AprovadoDespesas'] == $key) {
-												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-											} else {
-												echo '<option value="' . $key . '">' . $row . '</option>';
-											}
-										}
-										?>
-									</select>
-								</div>
-								
-								<div class="col-md-2">
-									<label for="ServicoConcluidoDespesas">Desp. Concl.?</label>
-									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-											id="ServicoConcluidoDespesas" name="ServicoConcluidoDespesas">
-										<?php
-										foreach ($select['ServicoConcluidoDespesas'] as $key => $row) {
-											if ($query['ServicoConcluidoDespesas'] == $key) {
-												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-											} else {
-												echo '<option value="' . $key . '">' . $row . '</option>';
-											}
-										}
-										?>
-									</select>
-								</div>
-								-->
-								<div class="col-md-2">
-									<label for="QuitadoDespesas">Desp.Quit.?</label>
-									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-											id="QuitadoDespesas" name="QuitadoDespesas">
-										<?php
-										foreach ($select['QuitadoDespesas'] as $key => $row) {
-											if ($query['QuitadoDespesas'] == $key) {
-												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-											} else {
-												echo '<option value="' . $key . '">' . $row . '</option>';
-											}
-										}
-										?>
-									</select>
-								</div>
-							
-								<div class="col-md-2">
-									<label for="QuitadoPagaveis">Parc. Quit.?</label>
-									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-											id="QuitadoPagaveis" name="QuitadoPagaveis">
-										<?php
-										foreach ($select['QuitadoPagaveis'] as $key => $row) {
-											if ($query['QuitadoPagaveis'] == $key) {
-												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-											} else {
-												echo '<option value="' . $key . '">' . $row . '</option>';
-											}
-										}
-										?>
-									</select>
-								</div>								
-								<div class="col-md-5">
-									<label for="Ordenamento">Ordenamento:</label>
-									<div class="form-group">
-										<div class="row">
-											<div class="col-md-8">
-												<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-														id="Campo" name="Campo">
-													<?php
-													foreach ($select['Campo'] as $key => $row) {
-														if ($query['Campo'] == $key) {
-															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-														} else {
-															echo '<option value="' . $key . '">' . $row . '</option>';
-														}
-													}
-													?>
-												</select>
+						<div class="panel panel-primary">
+							<div class="panel-heading"><strong><?php echo $titulo1; ?></strong><strong> - Como Pagar?</strong></div>
+							<div class="panel-body">
+								<div class="form-group">
+									<div class="row">														
+										<div class="col-md-1"></div>
+										<div class="col-md-10 text-center">
+											<div class="form-group">
+												<div class="text-center t">
+													<h3><?php echo '<small></small><strong> PagSeguro </strong><small></small>'  ?></h3>
+												</div>												
+												<div class="row">																																		
+													<a class="btn btn-sm btn-info" href="<?php echo base_url() ?>relatorio/clientes" role="button"> 
+														<strong>R$ 50,00</strong> (1 Usuário/ loja)
+													</a>
+												</div>
+												<br>
+												<div class="row">	
+													<a class="btn btn-sm btn-info" href="<?php echo base_url() ?>relatorio/funcionario" role="button"> 
+														<strong>R$ 100,00</strong> (5 Usuários/ loja)
+													</a>
+												</div>
+												<br>
+												<div class="row">	
+													<a class="btn btn-sm btn-info" href="<?php echo base_url() ?>relatorio/fornecedor" role="button"> 
+														<strong>R$ 150,00</strong> (10 Usuários/ loja)
+													</a>
+												</div>	
 											</div>
-
-											<div class="col-md-4">
-												<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-														id="Ordenamento" name="Ordenamento">
-													<?php
-													foreach ($select['Ordenamento'] as $key => $row) {
-														if ($query['Ordenamento'] == $key) {
-															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-														} else {
-															echo '<option value="' . $key . '">' . $row . '</option>';
-														}
-													}
-													?>
-												</select>
-											</div>
+											<div class="form-group">
+												<div class="row">																				
+													<div class="text-center t">
+														<h3><?php echo '<small></small><strong> Tranf. ou Depósito </strong><small></small>'  ?></h3>
+													</div>													
+													<a class="btn btn-lg btn-info active" > 
+														<strong>Banco do Brasil</strong><br><strong>Ag.XXXX</strong><br><strong>Cc.:XXXX</strong>
+														<br><strong>Fav.:Marcio R. Dias</strong><br><strong>Cpf.:015146927-08</strong>
+													</a>
+												</div>	
+											</div>											
 										</div>
+										<div class="col-md-1"></div>
 									</div>
 								</div>
+								</form>
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="row">
-								<div class="col-md-3">
-									<label for="DataInicio">Data Início: *</label>
-									<div class="input-group DatePicker">
-										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											   autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
-										<span class="input-group-addon" disabled>
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
+	
+				</div>	
+				<div class="col-md-6">	
+
+						<div class="panel panel-danger">
+							<div class="panel-heading"><strong><?php echo $titulo2; ?></strong><strong> - Como Receber?</strong></div>
+							<div class="panel-body">
+								<div class="form-group">
+									<div class="row">								
+										<div class="col-md-1"></div>
+										<div class="col-md-10 text-center">																			
+											<div class="form-group">
+												<div class="text-center t">
+													<h3><?php echo '<small></small><strong> Nos Indicando </strong><small></small>'  ?></h3>
+												</div>													
+												<div class="row">										
+													<a  class="btn btn-sm btn-danger" href="<?php echo base_url() ?>tipobanco/cadastrar" role="button"> 
+														<span class="glyphicon glyphicon-usd"></span> Cadastrar Conta Corrente
+													</a>
+												</div>
+												<br>
+												<div class="row">	
+													<a  class="btn btn-sm btn-danger" href="<?php echo base_url() ?>loginassociado/registrar" role="button"> 
+														<span class="glyphicon glyphicon-user"></span> Cadastrar Associado
+													</a>
+												</div>
+												<br>	
+											</div>		
+										</div>
+										<div class="col-md-1"></div>
 									</div>
 								</div>
-								<div class="col-md-3">
-									<label for="DataFim">Data Fim: (opcional)</label>
-									<div class="input-group DatePicker">
-										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											   autofocus name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
-										<span class="input-group-addon" disabled>
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-									</div>
-								</div>
-								<br>
-								<div class="col-md-2 text-left">
-									<button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
-										<span class="glyphicon glyphicon-search"></span> Pesquisar
-									</button>
-								</div>
-								
-								<div class="col-md-2 text-right">											
-										<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>despesas/cadastrar" role="button"> 
-											<span class="glyphicon glyphicon-plus"></span> Nova Despesa
-										</a>
-								</div>
+								</form>
 							</div>
 						</div>
 
-						</form>
-
-						<br>
-
-						<?php echo (isset($list)) ? $list : FALSE ?>
-
-					</div>
-
-				</div>
-
+				</div>	
 			</div>
-
 		</div>
 	</div>
-	<div class="col-md-1"></div>
-</div>
+	<div class="col-md-3"></div>
+

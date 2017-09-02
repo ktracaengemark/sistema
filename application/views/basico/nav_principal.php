@@ -17,17 +17,12 @@
 						<span class="input-group-btn">
 							<button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-search"></span></button>
 						</span>
-						<input type="text" placeholder="Pesquisar Cliente" class="form-control" name="Pesquisa" value="">						
+						<input type="text" placeholder="Pesquisar Cliente" class=" form-control " name="Pesquisa" value="">						
 					</div>					
 					</form>					
 				</li>
 
-				<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">										
-					<div class="btn-group" role="group" aria-label="...">
-						<button type="button" class="btn btn-md btn-primary  active">
-							<span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['Usuario']; ?>
-						</button>
-					</div>					
+				<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">															
 					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>agenda">
 							<button type="button" class="btn btn-md btn-warning ">
@@ -41,26 +36,31 @@
 								<span class="glyphicon glyphicon-user"></span> Clientes
 							</button>
 						</a>
-					</div>					
-					<div class="btn-group" role="group" aria-label="..."> </div>
-				</li>			
-				<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">										
+					</div>
 					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>relatorio/orcamento">
 							<button type="button" class="btn btn-md btn-info ">
 								<span class="glyphicon glyphicon-usd"></span> Vendas
 							</button>
 						</a>
-					</div>
-
+					</div>					
+					<div class="btn-group" role="group" aria-label="..."> </div>
+				</li>			
+				<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">										
 					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>relatorio/admin">
 							<button type="button" class="btn btn-md btn-primary ">
 								<span class="glyphicon glyphicon-pencil"></span> Admin.
 							</button>
 						</a>
-					</div>
-
+					</div>					
+					<div class="btn-group" role="group" aria-label="...">
+						<a href="<?php echo base_url(); ?>relatorio/sistema">
+							<button type="button" class="btn btn-md btn-primary ">
+								<span class="glyphicon glyphicon-cog"></span> Sistema
+							</button>
+						</a>
+					</div>					
 					<!--
 					<div class="btn-group">
 						<button type="button" class="btn btn-md btn-primary  dropdown-toggle" data-toggle="dropdown">
@@ -116,7 +116,8 @@
 							<li><a href="<?php echo base_url() ?>relatorio/servicosprest">Serviços Prestados</a></li>
 						</ul>
 					</div>
-					-->	
+					-->
+					<!--
 					<div class="btn-group">
 						<button type="button" class="btn btn-md btn-primary  dropdown-toggle" data-toggle="dropdown">
 							<span class="glyphicon glyphicon-tags"></span> Assoc. <span class="caret"></span>
@@ -127,9 +128,15 @@
 							<li><a href="<?php echo base_url() ?>relatorio/associado">Relatório de Associados</a></li>
 						</ul>
 					</div>
+					-->
 					<div class="btn-group" role="group" aria-label="..."> </div>
 				</li>
 				<li class="btn-toolbar navbar-form navbar-right" role="toolbar" aria-label="...">											
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-md btn-primary  active">
+							<span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['Usuario']; ?>
+						</button>
+					</div>					
 					<div class="btn-group" role="group" aria-label="...">
 						<button type="button" class="btn btn-md active " id="countdowndiv">
 							<span class="glyphicon glyphicon-hourglass" id="clock"></span>
