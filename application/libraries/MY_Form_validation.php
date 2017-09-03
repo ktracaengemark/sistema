@@ -80,7 +80,7 @@ class MY_Form_validation extends CI_Form_validation {
      * valid_date
      *
      * valida data no pradrao brasileiro
-     * 
+     *
      * @access	public
      * @param	string
      * @return	bool
@@ -91,7 +91,7 @@ class MY_Form_validation extends CI_Form_validation {
 
         #$padrao = explode('/', $data);
         $CI->load->library('basico');
-        
+
         return $CI->basico->check_date($data);
     }
 
@@ -99,7 +99,7 @@ class MY_Form_validation extends CI_Form_validation {
      * valid_hour
      *
      * valida a hora
-     * 
+     *
      * @access	public
      * @param	string
      * @return	bool
@@ -110,7 +110,7 @@ class MY_Form_validation extends CI_Form_validation {
 
         #$padrao = explode('/', $data);
         $CI->load->library('basico');
-        
+
         return $CI->basico->check_hour($data);
     }
 
@@ -118,7 +118,7 @@ class MY_Form_validation extends CI_Form_validation {
      * valid_period
      *
      * valida o período, considerando uma data início e fim e a data fim deve ser maior (posterior) que a data início
-     * 
+     *
      * @access	public
      * @param	string
      * @return	bool
@@ -129,16 +129,16 @@ class MY_Form_validation extends CI_Form_validation {
         $CI->form_validation->set_message('valid_periodo_hora', '<b>%s</b> inválida. A data final deve ser maior que a inicial.');
 
         $CI->load->library('basico');
-        
+
         return $CI->basico->check_periodo_hora($horafim, $horainicio);
     }
-    
-    
+
+
     /**
      * valid_cep
      *
      * Verifica se CEP é válido
-     * 
+     *
      * @access	public
      * @param	string
      * @return	bool
@@ -153,7 +153,7 @@ class MY_Form_validation extends CI_Form_validation {
           return TRUE;
           else
           return FALSE;
-         * 
+         *
          */
     }
 
@@ -176,8 +176,8 @@ class MY_Form_validation extends CI_Form_validation {
         #exit();
 
         sscanf($field, '%[^.].%[^.]', $table, $field);
-        #return isset($this->CI->db) 
-        #    ? ($this->CI->db->limit(1)->get_where($table, array($field => $str))->num_rows() === 0) 
+        #return isset($this->CI->db)
+        #    ? ($this->CI->db->limit(1)->get_where($table, array($field => $str))->num_rows() === 0)
         #    : FALSE;
 
         $this->CI->db->limit(1)->get_where($table, array($field => $str));
@@ -196,7 +196,7 @@ class MY_Form_validation extends CI_Form_validation {
             $str = ltrim(preg_replace("/[^0-9]/", "", $str), '0');
 
         return isset($this->CI->db)
-                #? ($this->CI->db->limit(1)->get_where($table, array($field => $str))->num_rows() === 0) 
+                #? ($this->CI->db->limit(1)->get_where($table, array($field => $str))->num_rows() === 0)
                 ? ($this->CI->db->limit(1)->query('SELECT ' . $field . ' FROM ' . $table . ' WHERE '
                         . 'id' . $table . ' != "' . $id . '" AND ' . $field . ' = "' . $str . '"')->num_rows() === 0) : FALSE;
     }

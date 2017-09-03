@@ -155,6 +155,7 @@ class Login extends CI_Controller {
 
         $data['query'] = $this->input->post(array(
             'Email',
+            'ConfirmarEmail',
             'Usuario',
 			'NomeEmpresa',
             'Nome',
@@ -177,6 +178,7 @@ class Login extends CI_Controller {
 
 		$this->form_validation->set_rules('NomeEmpresa', 'Nome da empresa', 'required|trim|is_unique[Sis_Usuario.NomeEmpresa]');
         $this->form_validation->set_rules('Email', 'E-mail', 'required|trim|valid_email|is_unique[Sis_Usuario.Email]');
+        $this->form_validation->set_rules('ConfirmarEmail', 'Confirmar E-mail', 'required|trim|valid_email|matches[Email]');
         $this->form_validation->set_rules('Usuario', 'Usuário', 'required|trim|is_unique[Sis_Usuario.Usuario]');
 		$this->form_validation->set_rules('Nome', 'Nome do Usuário', 'required|trim');
         $this->form_validation->set_rules('Senha', 'Senha', 'required|trim');
@@ -208,7 +210,7 @@ class Login extends CI_Controller {
             $data['query']['Inativo'] = 1;
             //ACESSO LIBERADO PRA QUEM REALIZAR O CADASTRO
             //$data['query']['Inativo'] = 0;
-            unset($data['query']['Confirma']);
+            unset($data['query']['Confirma'], $data['query']['ConfirmarEmail']);
 
             $data['anterior'] = array();
             $data['campos'] = array_keys($data['query']);
@@ -267,16 +269,24 @@ class Login extends CI_Controller {
                     . base_url() . 'login/confirmar/' . $data['query']['Codigo']);
 
                 $this->email->send();
+                #echo ($this->email->send(FALSE)) ? "sim" : "não";
+                #echo $this->email->print_debugger(array('headers'));
 
                 $data['aviso'] = ''
-                . '
-                <div class="alert alert-success" role="alert">
-                <h4>
-                <p><b>Usuário cadastrado com sucesso!</b></p>
-                <p>O link para ativação foi enviado para seu e-mail cadastrado.</p>
-                <p>Caso o e-mail com o link não esteja na sua caixa de entrada <b>verifique também sua caixa de SPAM</b>.</p>
-                </h4>
-                </div> '
+                    . '
+                    <div class="alert alert-success" role="alert">
+                    <h4>
+
+                        <p><b>Usuário cadastrado com sucesso!</b></p>
+                        <p>Entretanto, ele ainda encontra-se inativo no sistema. Um link de ativação foi gerado e enviado para
+                            o e-mail <b>' . $data['query']['Email'] . '</b></p>
+                        <p>Entre em sua caixa de e-mail e clique no link de ativação para habilitar seu acesso ao sistema.</p>
+                        <p>Caso o e-mail com o link não esteja na sua caixa de entrada <b>verifique também sua caixa de SPAM</b>.</p>
+
+                    </h4>
+                    <br>
+                    <a class="btn btn-primary" href="' . base_url() . '" role="button">Acessar o aplicativo</a>
+                    </div> '
                 . '';
 
                 /*
@@ -285,18 +295,6 @@ class Login extends CI_Controller {
 
                 $this->email->send();
                 */
-
-                $data['aviso'] = ''
-                        . '
-                  <div class="alert alert-success" role="alert">
-                  <h4>
-                  <p><b>Usuário cadastrado com sucesso!</b></p>
-                  <p>Clique no botão abaixo e retorne para a tela de login para entrar no sistema.</p>
-                  </h4>
-                  <br>
-                  <a class="btn btn-primary" href="' . base_url() . '" role="button">Acessar o aplicativo</a>
-                  </div> '
-                        . '';
 
                 $this->load->view('login/tela_msg', $data);
                 #redirect(base_url() . 'login' . $data['msg']);
@@ -496,7 +494,7 @@ class Login extends CI_Controller {
             } else {
 
                 ##### AUDITORIA DESABILITADA! TENHO QUE VER ISSO! ##########
-                
+
                 #$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idSis_Usuario'], TRUE);
                 #$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_Usuario', 'UPDATE', $data['auditoriaitem'], $data['query']['idSis_Usuario']);
                 /*
