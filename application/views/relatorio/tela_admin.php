@@ -39,7 +39,7 @@
 													<a class="btn btn-sm btn-primary" href="<?php echo base_url() ?>convenio/cadastrar" role="button"> 
 														<span class="glyphicon glyphicon-qrcode"></span> Planos
 													</a>
-													<a class="btn btn-sm btn-primary" href="<?php echo base_url() ?>produto/cadastrar" role="button"> 
+													<a class="btn btn-sm btn-primary" href="<?php echo base_url() ?>produtos/cadastrar" role="button"> 
 														<span class="glyphicon glyphicon-qrcode"></span> Produtos
 													</a>
 													<a class="btn btn-sm btn-primary" href="<?php echo base_url() ?>servico/cadastrar" role="button"> 
@@ -120,8 +120,8 @@
 													<a type="button" class="btn btn-sm btn-warning" href="<?php echo base_url() ?>relatorio/orcamentopc" role="button"> 
 														<span class="glyphicon glyphicon-list-alt"></span> Proced.
 													</a>											
-													<a type="button" class="btn btn-sm btn-warning" href="<?php echo base_url() ?>relatorio/associado" role="button"> 
-														<span class="glyphicon glyphicon-user"></span> Associados
+													<a type="button" class="btn btn-sm btn-primary" href="<?php echo base_url() ?>relatorio/produtos" role="button"> 
+														<span class="glyphicon glyphicon-barcode"></span> Produtos
 													</a>
 												</div>	
 											</div>																								

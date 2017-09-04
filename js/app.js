@@ -710,6 +710,83 @@ function adicionaProcedtarefa() {
 
 }
 
+function adicionaValor() {
+
+    var pt = $("#PTCount").val(); //initlal text box count
+
+    //alert( $("#SCount").val() );
+    pt++; //text box increment
+    $("#PTCount").val(pt);
+    //console.log(pt);
+
+    if (pt >= 2) {
+        //console.log( $("#listadinamicad"+(pt-1)).val() );
+        var chosen;
+        chosen = $("#listadinamicad"+(pt-1)).val();
+        //console.log( chosen + ' :: ' + pt );
+    }
+
+    //Captura a data do dia e carrega no campo correspondente
+    var currentDate = moment();
+
+    $(".input_fields_wrap3").append('\
+        <div class="form-group" id="3div'+pt+'">\
+            <div class="row">\
+                <div class="col-md-2">\
+                    <label for="Convenio'+pt+'">Convenio:</label>\
+                    <select data-placeholder="Selecione uma opção..." class="form-control"\
+                             id="listadinamicad'+pt+'" name="Convenio'+pt+'">\
+                        <option value="">-- Selecione uma opção --</option>\
+                    </select>\
+                </div>\
+                <div class="col-md-3">\
+                    <label for="ValorVendaProduto'+pt+'">Ação:</label>\
+                    <textarea class="form-control" id="ValorVendaProduto'+pt+'"\
+                              name="ValorVendaProduto'+pt+'"></textarea>\
+                </div>\
+                <div class="col-md-1">\
+                    <label><br></label><br>\
+                    <button type="button" id="'+pt+'" class="remove_field3 btn btn-danger">\
+                        <span class="glyphicon glyphicon-trash"></span>\
+                    </button>\
+                </div>\
+            </div>\
+        </div>'
+    ); //add input box
+    //habilita o botão de calendário após a geração dos campos dinâmicos
+    $('.DatePicker').datetimepicker(dateTimePickerOptions);
+
+    //get a reference to the select element
+    $select = $('#listadinamicad'+pt);
+
+    //request the JSON data and parse into the select element
+    $.ajax({
+        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=3',
+        dataType: 'JSON',
+        type: "GET",
+        success: function (data) {
+            //clear the current content of the select
+            $select.html('');
+            //iterate over the data and append a select option
+            $select.append('<option value="">-- Selecione uma opção --</option>');
+            $.each(data, function (key, val) {
+                //alert(val.id);
+                if (val.id == chosen)
+                    $select.append('<option value="' + val.id + '" selected="selected">' + val.name + '</option>');
+                else
+                    $select.append('<option value="' + val.id + '">' + val.name + '</option>');
+            })
+        },
+        error: function () {
+            //alert('erro listadinamicaB');
+            //if there is an error append a 'none available' option
+            $select.html('<option id="-1">ERRO</option>');
+        }
+
+    });
+
+}
+
  /*
   * Função criada para funcionar junto com o recurso de hide/show do jquery nos
   * casos de radio button, que exigem um tratamento especial para funcionar

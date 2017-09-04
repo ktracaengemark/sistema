@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Tarefa_model extends CI_Model {
+class Produtos_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
@@ -13,30 +13,9 @@ class Tarefa_model extends CI_Model {
         $this->load->model(array('Basico_model'));
     }
 
-    public function set_tarefa($data) {
+    public function set_produtos($data) {
 
-        $query = $this->db->insert('App_Tarefa', $data);
-
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            #return TRUE;
-            return $this->db->insert_id();
-        }
-    }
-
-    public function set_servico_venda($data) {
-
-        /*
-        //echo $this->db->last_query();
-        echo '<br>';
-        echo "<pre>";
-        print_r($data);
-        echo "</pre>";
-        //exit ();
-        */
-
-        $query = $this->db->insert_batch('App_ServicoVenda', $data);
+        $query = $this->db->insert('App_Produtos', $data);
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -46,21 +25,9 @@ class Tarefa_model extends CI_Model {
         }
     }
 
-    public function set_produto_venda($data) {
+    public function set_valor($data) {
 
-        $query = $this->db->insert_batch('App_ProdutoVenda', $data);
-
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            #return TRUE;
-            return $this->db->insert_id();
-        }
-    }
-
-    public function set_parcelasrec($data) {
-
-        $query = $this->db->insert_batch('App_ParcelasRecebiveis', $data);
+        $query = $this->db->insert_batch('App_Valor', $data);
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -70,20 +37,8 @@ class Tarefa_model extends CI_Model {
         }
     }
 
-    public function set_procedtarefa($data) {
-
-        $query = $this->db->insert_batch('App_Procedtarefa', $data);
-
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            #return TRUE;
-            return $this->db->insert_id();
-        }
-    }
-
-    public function get_tarefa($data) {
-        $query = $this->db->query('SELECT * FROM App_Tarefa WHERE idApp_Tarefa = ' . $data);
+    public function get_produtos($data) {
+        $query = $this->db->query('SELECT * FROM App_Produtos WHERE idApp_Produtos = ' . $data);
         $query = $query->result_array();
 
         /*
@@ -98,56 +53,26 @@ class Tarefa_model extends CI_Model {
         return $query[0];
     }
 
-	public function get_servico($data) {
-		$query = $this->db->query('SELECT * FROM App_ServicoVenda WHERE idApp_Tarefa = ' . $data);
+    public function get_valor($data) {
+		$query = $this->db->query('SELECT * FROM App_Valor WHERE idApp_Produtos = ' . $data);
         $query = $query->result_array();
 
         return $query;
     }
 
-    public function get_produto($data) {
-		$query = $this->db->query('SELECT * FROM App_ProdutoVenda WHERE idApp_Tarefa = ' . $data);
-        $query = $query->result_array();
-
-        return $query;
-    }
-
-    public function get_parcelasrec($data) {
-		$query = $this->db->query('SELECT * FROM App_ParcelasRecebiveis WHERE idApp_Tarefa = ' . $data);
-        $query = $query->result_array();
-
-        return $query;
-    }
-
-    public function get_procedtarefa($data) {
-		$query = $this->db->query('SELECT * FROM App_Procedtarefa WHERE idApp_Tarefa = ' . $data);
-        $query = $query->result_array();
-
-        return $query;
-    }
-
-    public function list_tarefa($id, $aprovado, $completo) {
+    public function list_produtos($id, $aprovado, $completo) {
 
         $query = $this->db->query('
             SELECT
-                TF.idApp_Tarefa,
-                TF.DataTarefa,
-    			TF.DataPrazoTarefa,
-				TF.Prioridade,
-				TF.Rotina,
-                TF.ProfissionalTarefa,
-                TF.TarefaConcluida,
-                TF.ObsTarefa
+                TF.idApp_Produtos,
+                TF.TipoProduto,
+                TF.Produtos
             FROM
-                App_Tarefa AS TF
+                App_Produtos AS TF
             WHERE
-                TF.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-                TF.TarefaConcluida = "' . $aprovado . '"
+                TF.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
             ORDER BY
-                TF.ProfissionalTarefa ASC,
-				TF.Rotina DESC,				
-				TF.Prioridade DESC,
-				TF.DataPrazoTarefa ASC
+                TF.TipoProduto ASC
 				
         ');
         /*
@@ -165,100 +90,33 @@ class Tarefa_model extends CI_Model {
             } else {
 
                 foreach ($query->result() as $row) {
-					$row->DataTarefa = $this->basico->mascara_data($row->DataTarefa, 'barras');
-					$row->DataPrazoTarefa = $this->basico->mascara_data($row->DataPrazoTarefa, 'barras');
-                    $row->TarefaConcluida = $this->basico->mascara_palavra_completa($row->TarefaConcluida, 'NS');
-					$row->Rotina = $this->basico->mascara_palavra_completa($row->Rotina, 'NS');
-					$row->Prioridade = $this->basico->mascara_palavra_completa($row->Prioridade, 'NS');
-                    $row->ProfissionalTarefa = $this->get_profissional($row->ProfissionalTarefa);
+
+                    $row->TipoProduto = $this->get_tipoproduto($row->TipoProduto);
                 }
                 return $query;
             }
         }
     }
 
-    public function list_tarefaBKP($x) {
+    public function update_produtos($data, $id) {
 
-        $query = $this->db->query('SELECT '
-            . 'TF.idApp_Tarefa, '
-            . 'TF.DataTarefa, '
-			. 'TF.DataPrazoTarefa, '
-            . 'TF.ProfissionalTarefa, '
-            . 'TF.TarefaConcluida, '
-            . 'TF.ObsTarefa '
-            . 'FROM '
-            . 'App_Tarefa AS TF '
-            . 'WHERE '
-            #. 'TF.idApp_Cliente = ' . $_SESSION['Tarefa']['idApp_Cliente'] . ' '
-            . 'ORDER BY TF.DataTarefa ASC ');
-        /*
-          echo $this->db->last_query();
-          echo "<pre>";
-          print_r($query);
-          echo "</pre>";
-          exit();
-          */
-        if ($query->num_rows() === 0) {
-            return FALSE;
-        } else {
-            if ($x === FALSE) {
-                return TRUE;
-            } else {
-
-                foreach ($query->result() as $row) {
-					$row->DataTarefa = $this->basico->mascara_data($row->DataTarefa, 'barras');
-					$row->DataPrazoTarefa = $this->basico->mascara_data($row->DataPrazoTarefa, 'barras');
-                    $row->TarefaConcluida = $this->basico->mascara_palavra_completa($row->TarefaConcluida, 'NS');
-                    $row->ProfissionalTarefa = $this->get_profissional($row->ProfissionalTarefa);
-                }
-
-                return $query;
-            }
-        }
-    }
-
-    public function update_tarefa($data, $id) {
-
-        unset($data['idApp_Tarefa']);
-        $query = $this->db->update('App_Tarefa', $data, array('idApp_Tarefa' => $id));
+        unset($data['idApp_Produtos']);
+        $query = $this->db->update('App_Produtos', $data, array('idApp_Produtos' => $id));
         return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
 
     }
 
-    public function update_servico_venda($data) {
+    public function update_valor($data) {
 
-        $query = $this->db->update_batch('App_ServicoVenda', $data, 'idApp_ServicoVenda');
+        $query = $this->db->update_batch('App_Valor', $data, 'idApp_Valor');
         return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
 
     }
 
-    public function update_produto_venda($data) {
+    public function delete_valor($data) {
 
-        $query = $this->db->update_batch('App_ProdutoVenda', $data, 'idApp_ProdutoVenda');
-        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
-
-    }
-
-    public function update_parcelasrec($data) {
-
-        $query = $this->db->update_batch('App_ParcelasRecebiveis', $data, 'idApp_ParcelasRecebiveis');
-        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
-
-    }
-
-    public function update_procedtarefa($data) {
-
-        $query = $this->db->update_batch('App_Procedtarefa', $data, 'idApp_Procedtarefa');
-        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
-
-    }
-
-    public function delete_servico_venda($data) {
-
-        $this->db->where_in('idApp_ServicoVenda', $data);
-        $this->db->delete('App_ServicoVenda');
-
-        //$query = $this->db->delete('App_ServicoVenda', array('idApp_ServicoVenda' => $data));
+        $this->db->where_in('idApp_Valor', $data);
+        $this->db->delete('App_Valor');
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -267,22 +125,11 @@ class Tarefa_model extends CI_Model {
         }
     }
 
-    public function delete_produto_venda($data) {
+    public function delete_produtos($id) {
 
-        $this->db->where_in('idApp_ProdutoVenda', $data);
-        $this->db->delete('App_ProdutoVenda');
 
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
-    public function delete_parcelasrec($data) {
-
-        $this->db->where_in('idApp_ParcelasRecebiveis', $data);
-        $this->db->delete('App_ParcelasRecebiveis');
+        $query = $this->db->delete('App_Valor', array('idApp_Produtos' => $id));
+        $query = $this->db->delete('App_Produtos', array('idApp_Produtos' => $id));
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -291,44 +138,11 @@ class Tarefa_model extends CI_Model {
         }
     }
 
-    public function delete_procedtarefa($data) {
-
-        $this->db->where_in('idApp_Procedtarefa', $data);
-        $this->db->delete('App_Procedtarefa');
-
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
-    public function delete_tarefa($id) {
-
-        /*
-        $tables = array('App_ServicoVenda', 'App_ProdutoVenda', 'App_ParcelasRecebiveis', 'App_Procedtarefa', 'App_Tarefa');
-        $this->db->where('idApp_Tarefa', $id);
-        $this->db->delete($tables);
-        */
-
-        #$query = $this->db->delete('App_ServicoVenda', array('idApp_Tarefa' => $id));
-        #$query = $this->db->delete('App_ProdutoVenda', array('idApp_Tarefa' => $id));
-        #$query = $this->db->delete('App_ParcelasRecebiveis', array('idApp_Tarefa' => $id));
-        $query = $this->db->delete('App_Procedtarefa', array('idApp_Tarefa' => $id));
-        $query = $this->db->delete('App_Tarefa', array('idApp_Tarefa' => $id));
-
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
-    public function get_profissional($data) {
-		$query = $this->db->query('SELECT NomeProfissional FROM App_Profissional WHERE idApp_Profissional = ' . $data);
+    public function get_tipoproduto($data) {
+		$query = $this->db->query('SELECT TipoProduto FROM Tab_TipoProduto WHERE idTab_TipoProduto = ' . $data);
         $query = $query->result_array();
 
-        return (isset($query[0]['NomeProfissional'])) ? $query[0]['NomeProfissional'] : FALSE;
+        return (isset($query[0]['TipoProduto'])) ? $query[0]['TipoProduto'] : FALSE;
     }
 
 }

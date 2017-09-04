@@ -1392,6 +1392,53 @@ class Relatorio_model extends CI_Model {
         }
 
     }
+	
+	public function list_produtos($data, $completo) {
+
+		$data['Produtos'] = ($data['Produtos']) ? ' AND TP.idApp_Produtos = ' . $data['Produtos'] : FALSE;
+        $data['Campo'] = (!$data['Campo']) ? 'TP.Produtos' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+
+        $query = $this->db->query('
+            SELECT
+                TP.idApp_Produtos,
+                TP.Produtos,
+				TV.ValorVendaProduto
+            FROM
+                App_Produtos AS TP
+					LEFT JOIN App_Valor AS TV ON TV.idApp_Produtos = TP.idApp_Produtos
+
+            WHERE
+                TP.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+				' . $data['Produtos'] . ' 
+			ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+
+        /*
+        #AND
+        #P.idApp_Profissional = OT.idApp_Cliente
+
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+
+            }
+
+            return $query;
+        }
+
+    }
 
 	public function list_orcamentopc($data, $completo) {
 
@@ -1592,7 +1639,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-
+	
 	public function list_clienteprod($data, $completo) {
 
         $data['Campo'] = (!$data['Campo']) ? 'C.NomeCliente' : $data['Campo'];
@@ -2045,6 +2092,30 @@ class Relatorio_model extends CI_Model {
 
         return $array;
     }
+	
+	public function select_produtos() {
+
+        $query = $this->db->query('
+            SELECT
+                OB.idApp_Produtos,
+                OB.Produtos
+            FROM
+                App_Produtos AS OB
+            WHERE
+                OB.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				OB.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+            ORDER BY
+                Produtos ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idApp_Produtos] = $row->Produtos;
+        }
+
+        return $array;
+    }	
 	
 	public function select_procedtarefa() {
 
