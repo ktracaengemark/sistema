@@ -734,17 +734,20 @@ function adicionaValor() {
 			<div class="panel panel-info">\
 				<div class="panel-heading">\
 					<div class="row">\
-						<div class="col-md-3">\
+						<div class="col-md-4">\
 							<label for="Convenio'+pt+'">Convenio:</label>\
 							<select data-placeholder="Selecione uma opção..." class="form-control"\
 									 id="listadinamicad'+pt+'" name="Convenio'+pt+'">\
 								<option value="">-- Selecione uma opção --</option>\
 							</select>\
 						</div>\
-						<div class="col-md-2">\
-							<label for="ValorVendaProduto'+pt+'">Valor Venda:</label>\
-							<textarea class="form-control" id="ValorVendaProduto'+pt+'"\
-									  name="ValorVendaProduto'+pt+'"></textarea>\
+						<div class="col-md-3">\
+							<label for="ValorVendaProduto'+pt+'">Valor Venda:</label><br>\
+							<div class="input-group id="ValorVendaProduto'+pt+'">\
+								<span class="input-group-addon" id="basic-addon1">R$</span>\
+								<input type="text" class="form-control Valor" id="ValorVendaProduto'+pt+'" maxlength="10" placeholder="0,00" \
+									name="ValorVendaProduto'+pt+'" value="">\
+							</div>\
 						</div>\
 						<div class="col-md-1">\
 							<label><br></label><br>\

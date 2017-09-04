@@ -13,7 +13,7 @@ class Produtos extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
       
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Produtos_model', 'Convenio_model', 'Formapag_model'));
+        $this->load->model(array('Basico_model', 'Produtos_model', 'Convenio_model', 'Fornecedor_model', 'Formapag_model'));
         $this->load->driver('session');
 
         
@@ -50,7 +50,11 @@ class Produtos extends CI_Controller {
         $data['produtos'] = quotes_to_entities($this->input->post(array(
             #### App_Produtos ####
             'idApp_Produtos',           
-            'TipoProduto',         
+            'TipoProduto',
+			'UnidadeProduto',
+			'CodProd',
+			'Fornecedor',
+			'ValorCompraProduto',
             'Produtos',
         ), TRUE));
 
@@ -83,10 +87,11 @@ class Produtos extends CI_Controller {
 
         $this->form_validation->set_rules('TipoProduto', 'TipoProduto', 'required|trim');
 
+		$data['select']['Fornecedor'] = $this->Fornecedor_model->select_fornecedor();
 		$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();
         $data['select']['Convenio'] = $this->Convenio_model->select_convenio();
 
-        $data['titulo'] = 'Cadastar';
+        $data['titulo'] = 'Cadastar Produto';
         $data['form_open_path'] = 'produtos/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -193,7 +198,11 @@ class Produtos extends CI_Controller {
         $data['produtos'] = quotes_to_entities($this->input->post(array(
             #### App_Produtos ####
             'idApp_Produtos',			
-            'TipoProduto',            
+            'TipoProduto',
+			'UnidadeProduto',
+			'CodProd',
+			'Fornecedor',
+			'ValorCompraProduto',            
             'Produtos',
         ), TRUE));
 
@@ -250,11 +259,12 @@ class Produtos extends CI_Controller {
      
         $this->form_validation->set_rules('TipoProduto', 'TipoProduto', 'required|trim');
      
+		$data['select']['Fornecedor'] = $this->Fornecedor_model->select_fornecedor();		
 		$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio();
         
 
-        $data['titulo'] = 'Editar';
+        $data['titulo'] = 'Editar Produto';
         $data['form_open_path'] = 'produtos/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';

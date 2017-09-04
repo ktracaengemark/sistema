@@ -6,6 +6,7 @@
 			<?php echo validation_errors(); ?>
 
 			<div class="panel panel-<?php echo $panel; ?>">
+				<div class="panel-heading"><strong><?php echo $titulo; ?></strong></div>			
 				<div class="panel-body">
 
 					<?php echo form_open_multipart($form_open_path); ?>
@@ -16,12 +17,6 @@
 						<div class="panel panel-info">
 							<div class="panel-heading">	
 								<div class="row">
-									<div class="col-md-4">
-										<label for="Produtos">Produto:</label>
-										<textarea type="text" class="form-control" id="Produtos" <?php echo $readonly; ?>
-											autofocus name="Produtos"><?php echo $produtos['Produtos']; ?></textarea>
-									</div>								
-
 									<div class="col-md-3">
 										<label for="TipoProduto">Tipo de Produto:</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
@@ -37,7 +32,48 @@
 											}
 											?>
 										</select>
-									</div>	
+									</div>									
+									<div class="col-md-4">
+										<label for="Fornecedor">Fornecedor</label>
+										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+												id="Fornecedor" name="Fornecedor">
+											<option value="">-- Selecione uma opção --</option>
+											<?php
+											foreach ($select['Fornecedor'] as $key => $row) {
+												if ($produtos['Fornecedor'] == $key) {
+													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+												} else {
+													echo '<option value="' . $key . '">' . $row . '</option>';
+												}
+											}
+											?>
+										</select>
+									</div>
+								</div>	
+								<div class="row">	
+									<div class="col-md-3">
+										<label for="CodProd">Cód. Prod.: *</label><br>
+										<input type="text" class="form-control" maxlength="25"
+												name="CodProd" value="<?php echo $produtos['CodProd'] ?>">
+									</div>
+									<div class="col-md-4">
+										<label for="Produtos">Produto: *</label><br>
+										<input type="text" class="form-control" maxlength="200"
+												name="Produtos" value="<?php echo $produtos['Produtos'] ?>">
+									</div>										
+									<div class="col-md-2">
+										<label for="UnidadeProduto">Unid. Prod.:*</label><br>
+										<input type="text" class="form-control" maxlength="20"
+												name="UnidadeProduto" value="<?php echo $produtos['UnidadeProduto'] ?>">
+									</div>
+									<div class="col-md-3">
+										<label for="ValorCompraProduto">Custo:</label><br>
+										<div class="input-group">
+											<span class="input-group-addon" id="basic-addon1">R$</span>
+											<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
+													name="ValorCompraProduto" value="<?php echo $produtos['ValorCompraProduto'] ?>">
+										</div>
+									</div>									
 								</div>
 							</div>	
 						</div>		
@@ -51,7 +87,7 @@
 								<h4 class="panel-title">
 									<a class="accordion-toggle">
 										<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-										Valor
+										Valor de Venda
 									</a>
 								</h4>
 							</div>
@@ -76,7 +112,7 @@
 											<div class="panel-heading">			
 												<div class="row">																					
 
-													<div class="col-md-3">
+													<div class="col-md-4">
 														<label for="Convenio<?php echo $i ?>">Convenio:</label>
 														<?php if ($i == 1) { ?>
 														<?php } ?>
@@ -94,11 +130,22 @@
 															?>
 														</select>
 													</div>
+													<!--
 													<div class="col-md-2">
 														<label for="ValorVendaProduto<?php echo $i ?>">Valor Venda:</label>
 														<textarea class="form-control" id="ValorVendaProduto<?php echo $i ?>" <?php echo $readonly; ?>
 																  name="ValorVendaProduto<?php echo $i ?>"><?php echo $valor[$i]['ValorVendaProduto']; ?></textarea>
 													</div>
+													-->
+													<div class="col-md-3">
+														<label for="ValorVendaProduto">Valor Venda:</label>
+														<div class="input-group">
+															<span class="input-group-addon" id="basic-addon1">R$</span>
+															<input type="text" class="form-control Valor" id="ValorVendaProduto<?php echo $i ?>" maxlength="10" placeholder="0,00"
+																name="ValorVendaProduto<?php echo $i ?>" value="<?php echo $valor[$i]['ValorVendaProduto'] ?>">
+														</div>
+													</div>													
+													
 													<div class="col-md-1">
 														<label><br></label><br>
 														<button type="button" id="<?php echo $i ?>" class="remove_field3 btn btn-danger">
@@ -120,7 +167,7 @@
 										<div class="row">
 											<div class="col-md-4">
 												<a class="add_field_button3 btn btn-xs btn-warning" onclick="adicionaValor()">
-													<span class="glyphicon glyphicon-plus"></span> Adicionar Ação
+													<span class="glyphicon glyphicon-plus"></span> Adicionar Plano
 												</a>
 											</div>
 										</div>
