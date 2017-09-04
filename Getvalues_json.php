@@ -94,6 +94,31 @@ elseif ($_GET['q'] == 3) {
 
 }
 
+elseif ($_GET['q'] == 4) {
+
+    $result = mysql_query(
+            'SELECT                              
+				idTab_Convenio,
+				Convenio,
+				Abrev
+            FROM
+                Tab_Convenio
+            WHERE
+                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                ORDER BY Convenio DESC'
+    );
+
+    while ($row = mysql_fetch_assoc($result)) {
+
+        $event_array[] = array(
+            'id' => $row['idTab_Convenio'],
+            'name' => utf8_encode($row['Convenio']),
+        );
+    }
+
+}
+
 echo json_encode($event_array);
 mysql_close($link);
 ?>

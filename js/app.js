@@ -731,26 +731,30 @@ function adicionaValor() {
 
     $(".input_fields_wrap3").append('\
         <div class="form-group" id="3div'+pt+'">\
-            <div class="row">\
-                <div class="col-md-2">\
-                    <label for="Convenio'+pt+'">Convenio:</label>\
-                    <select data-placeholder="Selecione uma opção..." class="form-control"\
-                             id="listadinamicad'+pt+'" name="Convenio'+pt+'">\
-                        <option value="">-- Selecione uma opção --</option>\
-                    </select>\
-                </div>\
-                <div class="col-md-3">\
-                    <label for="ValorVendaProduto'+pt+'">Ação:</label>\
-                    <textarea class="form-control" id="ValorVendaProduto'+pt+'"\
-                              name="ValorVendaProduto'+pt+'"></textarea>\
-                </div>\
-                <div class="col-md-1">\
-                    <label><br></label><br>\
-                    <button type="button" id="'+pt+'" class="remove_field3 btn btn-danger">\
-                        <span class="glyphicon glyphicon-trash"></span>\
-                    </button>\
-                </div>\
-            </div>\
+			<div class="panel panel-info">\
+				<div class="panel-heading">\
+					<div class="row">\
+						<div class="col-md-3">\
+							<label for="Convenio'+pt+'">Convenio:</label>\
+							<select data-placeholder="Selecione uma opção..." class="form-control"\
+									 id="listadinamicad'+pt+'" name="Convenio'+pt+'">\
+								<option value="">-- Selecione uma opção --</option>\
+							</select>\
+						</div>\
+						<div class="col-md-2">\
+							<label for="ValorVendaProduto'+pt+'">Valor Venda:</label>\
+							<textarea class="form-control" id="ValorVendaProduto'+pt+'"\
+									  name="ValorVendaProduto'+pt+'"></textarea>\
+						</div>\
+						<div class="col-md-1">\
+							<label><br></label><br>\
+							<button type="button" id="'+pt+'" class="remove_field3 btn btn-danger">\
+								<span class="glyphicon glyphicon-trash"></span>\
+							</button>\
+						</div>\
+					</div>\
+				</div>\
+			</div>\
         </div>'
     ); //add input box
     //habilita o botão de calendário após a geração dos campos dinâmicos
@@ -761,7 +765,7 @@ function adicionaValor() {
 
     //request the JSON data and parse into the select element
     $.ajax({
-        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=3',
+        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=4',
         dataType: 'JSON',
         type: "GET",
         success: function (data) {

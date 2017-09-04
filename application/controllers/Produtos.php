@@ -57,7 +57,10 @@ class Produtos extends CI_Controller {
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
         //comentado fim) mas por enquanto, se está funcionando, vou deixar assim.
       
-        (!$this->input->post('PTCount')) ? $data['count']['PTCount'] = 0 : $data['count']['PTCount'] = $this->input->post('PTCount');			
+        (!$this->input->post('PTCount')) ? $data['count']['PTCount'] = 0 : $data['count']['PTCount'] = $this->input->post('PTCount');
+
+		(!$data['produtos']['TipoProduto']) ? $data['produtos']['TipoProduto'] = 'V' : FALSE;
+		
         $j = 1;
         for ($i = 1; $i <= $data['count']['PTCount']; $i++) {
 
@@ -78,8 +81,9 @@ class Produtos extends CI_Controller {
 
         #### App_Produtos ####
 
-        $this->form_validation->set_rules('TipoProduto', 'Convenio', 'required|trim');
+        $this->form_validation->set_rules('TipoProduto', 'TipoProduto', 'required|trim');
 
+		$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();
         $data['select']['Convenio'] = $this->Convenio_model->select_convenio();
 
         $data['titulo'] = 'Cadastar';
@@ -121,6 +125,7 @@ class Produtos extends CI_Controller {
 
             ////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
             #### App_Produtos ####
+
 			$data['produtos']['Empresa'] = $_SESSION['log']['Empresa'];            
             $data['produtos']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['produtos']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
@@ -243,9 +248,10 @@ class Produtos extends CI_Controller {
 
         #### App_Produtos ####
      
-        $this->form_validation->set_rules('TipoProduto', 'Convenio', 'required|trim');
+        $this->form_validation->set_rules('TipoProduto', 'TipoProduto', 'required|trim');
      
-        $data['select']['Convenio'] = $this->Convenio_model->select_convenio();
+		$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();
+		$data['select']['Convenio'] = $this->Convenio_model->select_convenio();
         
 
         $data['titulo'] = 'Editar';
@@ -288,7 +294,6 @@ class Produtos extends CI_Controller {
             #### App_Produtos ####
 
 			$data['produtos']['Empresa'] = $_SESSION['log']['Empresa'];             
-
             $data['produtos']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['produtos']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 

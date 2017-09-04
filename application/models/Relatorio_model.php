@@ -1403,11 +1403,12 @@ class Relatorio_model extends CI_Model {
             SELECT
                 TP.idApp_Produtos,
                 TP.Produtos,
-				TV.ValorVendaProduto
+				TV.ValorVendaProduto,
+				TC.Convenio				
             FROM
                 App_Produtos AS TP
 					LEFT JOIN App_Valor AS TV ON TV.idApp_Produtos = TP.idApp_Produtos
-
+					LEFT JOIN Tab_Convenio AS TC ON TC.idTab_Convenio = TV.Convenio
             WHERE
                 TP.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 

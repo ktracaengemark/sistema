@@ -18,7 +18,7 @@
 								<div class="row">
 									<div class="col-md-4">
 										<label for="Produtos">Produto:</label>
-										<textarea class="form-control" id="Produtos" <?php echo $readonly; ?>
+										<textarea type="text" class="form-control" id="Produtos" <?php echo $readonly; ?>
 											autofocus name="Produtos"><?php echo $produtos['Produtos']; ?></textarea>
 									</div>								
 
@@ -28,7 +28,7 @@
 												id="TipoProduto" name="TipoProduto">
 											<option value="">-- Selecione uma opção --</option>
 											<?php
-											foreach ($select['Convenio'] as $key => $row) {
+											foreach ($select['TipoProduto'] as $key => $row) {
 												if ($produtos['TipoProduto'] == $key) {
 													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 												} else {
@@ -94,12 +94,12 @@
 															?>
 														</select>
 													</div>
-													<div class="col-md-4">
+													<div class="col-md-2">
 														<label for="ValorVendaProduto<?php echo $i ?>">Valor Venda:</label>
 														<textarea class="form-control" id="ValorVendaProduto<?php echo $i ?>" <?php echo $readonly; ?>
 																  name="ValorVendaProduto<?php echo $i ?>"><?php echo $valor[$i]['ValorVendaProduto']; ?></textarea>
 													</div>
-													<div class="col-md-2">
+													<div class="col-md-1">
 														<label><br></label><br>
 														<button type="button" id="<?php echo $i ?>" class="remove_field3 btn btn-danger">
 															<span class="glyphicon glyphicon-trash"></span>

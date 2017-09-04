@@ -15,7 +15,9 @@
                     <tr>                       											
 						<th class="active">id Produto</th>						
 						<th class="active">Produto</th>
+						<th class="active">Forma de Venda</th>
 						<th class="active">Valor de Venda</th>
+						
 																																							
                     </tr>
                 </thead>
@@ -29,7 +31,9 @@
                         echo '<tr class="clickable-row" data-href="' . base_url() . 'produtos/alterar/' . $row['idApp_Produtos'] . '">';
  							echo '<td>' . $row['idApp_Produtos'] . '</td>';                          
 							echo '<td>' . $row['Produtos'] . '</td>';
-							echo '<td>' . $row['ValorVendaProduto'] . '</td>';			
+							echo '<td>' . $row['Convenio'] . '</td>';
+							echo '<td>' . $row['ValorVendaProduto'] . '</td>';	
+								
                         echo '</tr>';
                     }
                     ?>
