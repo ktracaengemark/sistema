@@ -1,13 +1,11 @@
 <?php if ($msg) echo $msg; ?>
 
-
 	<div class="col-md-3"></div>
 	<div class="col-md-6">
 		<div class="row">
 			<div class="col-md-12">
 
 				<?php echo validation_errors(); ?>
-				<?php echo form_open('relatorio/admin', 'role="form"'); ?>
 
 				<div class="col-md-6">
 
@@ -21,24 +19,36 @@
 											<div class="form-group">
 												<div class="text-center t">
 													<h3><?php echo '<small></small><strong> PagSeguro </strong><small></small>'  ?></h3>
-												</div>												
-												<div class="row">																																		
-													<a class="btn btn-sm btn-info" href="<?php echo base_url() ?>relatorio/clientes" role="button"> 
-														<strong>R$ 50,00</strong> (1 Usuário/ loja)
-													</a>
-												</div>
+												</div>		
+												<strong>R$ 50,00</strong> (1 Usuário/ loja)
+												<!-- 50 reais -->
+												<form action="https://pagseguro.uol.com.br/checkout/v2/cart.html?action=add" method="post" onsubmit="PagSeguroLightbox(this); return false;">
+												<input type="hidden" name="itemCode" value="9DA3EE4B5F5F2B300463BFA057CEA720" />
+												<input type="hidden" name="iot" value="button" />
+												<input type="image" src="https://stc.pagseguro.uol.com.br/public/img/botoes/pagamentos/84x35-comprar.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
+												</form>
+												<script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
+												<!-- -->
 												<br>
-												<div class="row">	
-													<a class="btn btn-sm btn-info" href="<?php echo base_url() ?>relatorio/funcionario" role="button"> 
-														<strong>R$ 100,00</strong> (5 Usuários/ loja)
-													</a>
-												</div>
+												<strong>R$ 100,00</strong> (5 Usuários/ loja)
+												<!-- 100 reais -->
+												<form action="https://pagseguro.uol.com.br/checkout/v2/cart.html?action=add" method="post" onsubmit="PagSeguroLightbox(this); return false;">										
+												<input type="hidden" name="itemCode" value="17612F32222247A5545A8F88DA96AC72" />
+												<input type="hidden" name="iot" value="button" />
+												<input type="image" src="https://stc.pagseguro.uol.com.br/public/img/botoes/pagamentos/84x35-comprar.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
+												</form>
+												<script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
+												<!---->
 												<br>
-												<div class="row">	
-													<a class="btn btn-sm btn-info" href="<?php echo base_url() ?>relatorio/fornecedor" role="button"> 
-														<strong>R$ 150,00</strong> (10 Usuários/ loja)
-													</a>
-												</div>	
+												<strong>R$ 150,00</strong> (10 Usuários/ loja)
+												<!-- 150 reais -->
+												<form action="https://pagseguro.uol.com.br/checkout/v2/cart.html?action=add" method="post" onsubmit="PagSeguroLightbox(this); return false;">
+												<input type="hidden" name="itemCode" value="577CBF6DBEBE7B4994641FB83D324D41" />
+												<input type="hidden" name="iot" value="button" />
+												<input type="image" src="https://stc.pagseguro.uol.com.br/public/img/botoes/pagamentos/84x35-comprar.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
+												</form>
+												<script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
+												<!--  -->	
 											</div>
 											<div class="form-group">
 												<div class="row">																				
@@ -81,10 +91,15 @@
 												<br>
 												<div class="row">	
 													<a  class="btn btn-sm btn-danger" href="<?php echo base_url() ?>loginassociado/registrar" role="button"> 
-														<span class="glyphicon glyphicon-user"></span> Cadastrar Associado
+														<span class="glyphicon glyphicon-user"></span> Cadastrar Associados
 													</a>
 												</div>
-												<br>	
+												<br>
+												<div class="row">	
+													<a  class="btn btn-sm btn-danger" href="<?php echo base_url() ?>relatorio/associado" role="button"> 
+														<span class="glyphicon glyphicon-list"></span> Relatório de Associados
+													</a>
+												</div>												
 											</div>		
 										</div>
 										<div class="col-md-1"></div>

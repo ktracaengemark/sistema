@@ -36,7 +36,10 @@
 								<span class="glyphicon glyphicon-user"></span> Clientes
 							</button>
 						</a>
-					</div>
+					</div>					
+					<div class="btn-group" role="group" aria-label="..."> </div>
+				</li>			
+				<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">										
 					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>relatorio/orcamento">
 							<button type="button" class="btn btn-md btn-info ">
@@ -44,23 +47,13 @@
 							</button>
 						</a>
 					</div>					
-					<div class="btn-group" role="group" aria-label="..."> </div>
-				</li>			
-				<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">										
 					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>relatorio/admin">
 							<button type="button" class="btn btn-md btn-primary ">
 								<span class="glyphicon glyphicon-pencil"></span> Admin.
 							</button>
 						</a>
-					</div>					
-					<div class="btn-group" role="group" aria-label="...">
-						<a href="<?php echo base_url(); ?>relatorio/sistema">
-							<button type="button" class="btn btn-md btn-primary ">
-								<span class="glyphicon glyphicon-cog"></span> Sistema
-							</button>
-						</a>
-					</div>					
+					</div>										
 					<!--
 					<div class="btn-group">
 						<button type="button" class="btn btn-md btn-primary  dropdown-toggle" data-toggle="dropdown">
@@ -131,12 +124,21 @@
 					-->
 					<div class="btn-group" role="group" aria-label="..."> </div>
 				</li>
-				<li class="btn-toolbar navbar-form navbar-right" role="toolbar" aria-label="...">											
+				<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">											
 					<div class="btn-group" role="group" aria-label="...">
 						<button type="button" class="btn btn-md btn-primary  active">
 							<span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['Usuario']; ?>
 						</button>
 					</div>					
+					<div class="btn-group" role="group" aria-label="...">
+						<a href="<?php echo base_url(); ?>relatorio/sistema">
+							<button type="button" class="btn btn-md btn-primary ">
+								<span class="glyphicon glyphicon-cog"></span> Sistema
+							</button>
+						</a>
+					</div>					
+				</li>
+				<li class="btn-toolbar navbar-form navbar-right" role="toolbar" aria-label="...">						
 					<div class="btn-group" role="group" aria-label="...">
 						<button type="button" class="btn btn-md active " id="countdowndiv">
 							<span class="glyphicon glyphicon-hourglass" id="clock"></span>
