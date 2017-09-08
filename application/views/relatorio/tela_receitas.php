@@ -1,12 +1,12 @@
 <?php if ($msg) echo $msg; ?>
 
-<div class="container-fluid">
+
 	<div class="col-md-1"></div>
 	<div class="col-md-10 ">		
 		
 		<div class="row">
 
-			
+			<div class="main">
 
 				<?php echo validation_errors(); ?>
 
@@ -20,7 +20,7 @@
 						<div class="form-group">
 							<div class="row">
 
-								<div class="col-md-2">
+								<div class="col-md-4">
 									<label for="Ordenamento">Nome do Cliente:</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="NomeCliente" name="NomeCliente">
@@ -141,7 +141,7 @@
 						</div>
 						<div class="form-group">
 							<div class="row">
-								<div class="col-md-2">
+								<div class="col-md-3">
 									<label for="DataInicio">Data Início: *</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
@@ -151,7 +151,7 @@
 										</span>
 									</div>
 								</div>
-								<div class="col-md-2">
+								<div class="col-md-3">
 									<label for="DataFim">Data Fim: (opc.)</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
@@ -173,9 +173,10 @@
 						<br>
 						<?php echo (isset($list)) ? $list : FALSE ?>
 					</div>
-				</div>
-			
+				</div>				
+			</div>
 		</div>
+		
 	</div>
 	<div class="col-md-1"></div>	
-</div>
+

@@ -776,19 +776,10 @@
 										
 										<hr>
 										-->
+										<div class="col-md-1"></div>
 										<div class="form-group text-center">
-											<div class="row">
-												<div class="col-md-3">
-													<label for="DataOrca">Data do Orçamento:</label>
-													<div class="input-group <?php echo $datepicker; ?>">
-														<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-																name="DataOrca" value="<?php echo $orcatrata['DataOrca']; ?>">
-														<span class="input-group-addon" disabled>
-															<span class="glyphicon glyphicon-calendar"></span>
-														</span>
-													</div>
-												</div>																									
-												<div class="col-md-2 form-inline">
+											<div class="row">																									
+												<div class="col-md-3 form-inline">
 													<label for="AprovadoOrca">Orçam. Aprovado?</label><br>
 													<div class="form-group">
 														<div class="btn-group" data-toggle="buttons">
@@ -820,7 +811,7 @@
 														</div>
 													</div>
 												</div>
-												<div class="col-md-2 form-inline">
+												<div class="col-md-3 form-inline">
 													<label for="QuitadoOrca">Orçam. Quitado?</label><br>
 													<div class="form-group">
 														<div class="btn-group" data-toggle="buttons">
@@ -848,7 +839,7 @@
 														</div>
 													</div>
 												</div>
-												<div class="col-md-2 form-inline">
+												<div class="col-md-3 form-inline">
 													<label for="ServicoConcluido">Srv/Prd Entregue?</label><br>
 													<div class="form-group">
 														<div class="btn-group" data-toggle="buttons">
@@ -874,6 +865,31 @@
 															}
 															?>
 														</div>
+													</div>
+												</div>
+											</div>
+										</div>												
+										<div class="col-md-1"></div>
+										<div class="form-group text-center">
+											<div class="row">		
+												<div class="col-md-3">
+													<label for="DataOrca">Data do Orçamento:</label>
+													<div class="input-group <?php echo $datepicker; ?>">
+														<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+																name="DataOrca" value="<?php echo $orcatrata['DataOrca']; ?>">
+														<span class="input-group-addon" disabled>
+															<span class="glyphicon glyphicon-calendar"></span>
+														</span>
+													</div>
+												</div>												
+												<div class="col-md-3">
+													<label for="DataConclusao">Data da Entrega:</label>
+													<div class="input-group <?php echo $datepicker; ?>">
+														<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+															   name="DataConclusao" value="<?php echo $orcatrata['DataConclusao']; ?>">
+														<span class="input-group-addon" disabled>
+															<span class="glyphicon glyphicon-calendar"></span>
+														</span>
 													</div>
 												</div>												
 												<div class="col-md-3">
@@ -962,6 +978,16 @@
 												</div>
 												-->
 											</div>
+										</div>												
+										<div class="col-md-1"></div>
+										<div class="form-group text-center">
+											<div class="row">												
+												<div class="col-md-9">
+													<label for="ObsOrca">OBS:</label>
+													<textarea class="form-control" id="ObsOrca" <?php echo $readonly; ?>
+															  name="ObsOrca"><?php echo $orcatrata['ObsOrca']; ?></textarea>
+												</div>												
+											</div>
 										</div>
 
 										<hr>
@@ -989,17 +1015,12 @@
 														<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
 													</button>                        -->
 
-													<div class="col-md-3">
+													<div class="col-md-6">
 														<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
 															<span class="glyphicon glyphicon-save"></span> Salvar
 														</button>
 													</div>
-													<div class="col-md-6">
-														<!--<label for="ObsOrca">OBS:</label>-->
-														<textarea class="form-control" id="ObsOrca" <?php echo $readonly; ?>
-																  name="ObsOrca"><?php echo $orcatrata['ObsOrca']; ?></textarea>
-													</div>
-													<div class="col-md-3 text-right">
+													<div class="col-md-6 text-right">
 														<button  type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 															<span class="glyphicon glyphicon-trash"></span> Excluir
 														</button>
@@ -1032,16 +1053,12 @@
 														</div>
 													</div>
 												<?php } else { ?>
-													<div class="col-md-3">
+													<div class="col-md-6">
 														<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
 															<span class="glyphicon glyphicon-save"></span> Salvar
 														</button>
 													</div>
-													<div class="col-md-6">
-														<!--<label for="ObsOrca">OBS:</label>-->
-														<textarea class="form-control" id="ObsOrca" <?php echo $readonly; ?>
-																  name="ObsOrca"><?php echo $orcatrata['ObsOrca']; ?></textarea>
-													</div>
+
 												<?php } ?>
 											</div>
 										</div>

@@ -2,21 +2,21 @@
     <div class="panel-body">
 
         <div class="col-md-1"></div>
-		<div class="col-md-2">
+		<div class="col-md-3">
             <label for="DataFim">Total Recebido:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
                 <input type="text" class="form-control" disabled aria-label="Total Pago" value="<?php echo $report->soma->somarecebido ?>">
             </div>
         </div>
-		<div class="col-md-2">
+		<div class="col-md-3">
             <label for="DataFim">Total a Receber:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
                 <input type="text" class="form-control" disabled aria-label="Total a receber" value="<?php echo $report->soma->somareceber ?>">
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <label for="DataFim">Total do Período:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
@@ -40,7 +40,7 @@
 			<table class="table table-bordered table-condensed table-striped">
                 <thead>
                     <tr>
-                        <th class="active">#</th>
+                        <th class="active">Orç.</th>
                         <th class="active">Cliente</th>                      
                         <th class="active">Data do Orç.</th>
                         <!--<th class="active">Data Entrada</th>

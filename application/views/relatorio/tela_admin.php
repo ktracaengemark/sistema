@@ -115,26 +115,26 @@
 											<label for="">Financeiro:</label>
 											
 											<div class="form-group col-md-10 text-left">
-												<div class="row">										
-													<a  type="button" class="btn btn-md btn-info" href="<?php echo base_url() ?>relatorio/receitas" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Receitas
-													</a>
+												<div class="row">		
+													<a  type="button" class="btn btn-md btn-info" href="<?php echo base_url() ?>relatorio/orcamento" role="button"> 
+														<span class="glyphicon glyphicon-usd"></span> Orçamentos
+													</a>											
 												</div>	
-											</div>	
+											</div>											
 											<div class="form-group col-md-10 text-left">
 												<div class="row">		
 													<a  type="button" class="btn btn-md btn-info" href="<?php echo base_url() ?>relatorio/despesas" role="button"> 
 														<span class="glyphicon glyphicon-usd"></span> Despesas
 													</a>
 												</div>	
-											</div>														
+											</div>											
 											<div class="form-group col-md-10 text-left">
-												<div class="row">		
-													<a  type="button" class="btn btn-md btn-info" href="<?php echo base_url() ?>relatorio/orcamento" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Balanço
-													</a>											
+												<div class="row">										
+													<a  type="button" class="btn btn-md btn-info" href="<?php echo base_url() ?>relatorio/receitas" role="button"> 
+														<span class="glyphicon glyphicon-usd"></span> Recebimentos
+													</a>
 												</div>	
-											</div>		
+											</div>																	
 										</div>
 										<div class="col-md-10">											
 											<label for="">Produtos:</label>
