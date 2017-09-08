@@ -12,7 +12,7 @@
             <table class="table table-bordered table-condensed table-striped">								
                 <thead>
                     <tr>
-                        <th class="active">#</th>
+                        <th class="active">id</th>
                         <th class="active">Cliente</th>
                         <!--<th class="active">Sexo</th>-->
 						
