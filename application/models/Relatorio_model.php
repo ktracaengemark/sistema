@@ -1020,8 +1020,8 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN Tab_RelaPes AS TCP ON TCP.idTab_RelaPes = CC.RelaPes
             WHERE               
                 C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-					(C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' OR
-					C.Empresa = ' . $_SESSION['log']['id'] . ') 						
+				(C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' OR
+				 C.Empresa = ' . $_SESSION['log']['Empresa'] . ') 						
 				' . $data['NomeCliente'] . '				
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '

@@ -246,9 +246,9 @@ class Login extends CI_Controller {
 
                 //DADOS PARA ENVIO DE E-MAIL DE CONFIRMAÇÃO DE INSCRIÇÃO
                 $config['protocol'] = 'smtp';
-                $config['smtp_host'] = 'smtp.zoho.com';
-                $config['smtp_user'] = 'contato@ktracaengemark.com.br';
-                $config['smtp_pass'] = '20KtracaEngeMark17!';
+                $config['smtp_host'] = 'smtplw.com.br';
+                $config['smtp_user'] = 'trial';
+                $config['smtp_pass'] = 'XzGyjtXI2256';
                 $config['charset'] = 'iso-8859-1';
                 $config['mailtype'] = 'html';
                 $config['wrapchars'] = '50';

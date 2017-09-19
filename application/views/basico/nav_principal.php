@@ -17,7 +17,7 @@
 						<span class="input-group-btn">
 							<button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-search"></span></button>
 						</span>
-						<input type="text" placeholder="Pesquisar Cliente" class=" form-control " name="Pesquisa" value="">						
+						<input type="text" placeholder="   Pesquisar Cliente" class="" name="Pesquisa" value="">						
 					</div>					
 					</form>					
 				</li>
