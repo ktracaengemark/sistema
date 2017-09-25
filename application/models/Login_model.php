@@ -207,6 +207,12 @@ class Login_model extends CI_Model {
         }
         else {
             $query = $this->db->update('Sis_Usuario', $data, array('Codigo' => $id));
+			
+			echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
 
             if ($this->db->affected_rows() === 0)
                 return FALSE;

@@ -144,7 +144,7 @@ class Loginempresafilial_model extends CI_Model {
             'SessionId' => session_id(),
         );
 
-        $query = $this->db->insert('Sis_AuditoriaAcesso', $data);
+        $query = $this->db->insert('Sis_AuditoriaAcessoEmpresa', $data);
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -244,7 +244,7 @@ class Loginempresafilial_model extends CI_Model {
             return FALSE;
 
     }
-
+/*
     public function get_agenda_padrao($data) {
 
         $query = $this->db->query('SELECT idApp_Agenda FROM App_Agenda WHERE idSis_EmpresaFilial = ' . $data . ' ORDER BY idApp_Agenda ASC LIMIT 1');
@@ -253,5 +253,5 @@ class Loginempresafilial_model extends CI_Model {
         return $query[0]['idApp_Agenda'];
 
     }
-
+*/
 }

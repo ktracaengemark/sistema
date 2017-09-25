@@ -189,7 +189,7 @@ class Loginfuncionario extends CI_Controller {
         } else {
 			
 			$data['query']['idSis_EmpresaFilial'] = $_SESSION['log']['idSis_EmpresaFilial'];
-			$data['query']['Empresa'] = $_SESSION['log']['id'];
+			$data['query']['Empresa'] = $_SESSION['log']['idSis_EmpresaFilial'];
 			$data['query']['NomeEmpresa'] = $_SESSION['log']['NomeEmpresa'];
 			$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['query']['Senha'] = md5($data['query']['Senha']);

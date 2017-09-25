@@ -196,7 +196,7 @@ class Login extends CI_Controller {
             $this->load->view('login/form_registrar', $data);
         } else {
 
-			$data['query']['Empresa'] = 0;
+			#$data['query']['Empresa'] = 0;
 			$data['query']['Funcao'] = 95;
 			$data['query']['UsuarioEmpresa'] = 1;
 			$data['query']['idSis_EmpresaFilial'] = 33;
@@ -314,12 +314,14 @@ class Login extends CI_Controller {
 
         $data['anterior'] = array(
             'Inativo' => '1',
-            'Codigo' => $codigo
+            'Codigo' => $codigo,
+			'Empresa' => $id
         );
 
         $data['confirmar'] = array(
             'Inativo' => '0',
-            'Codigo' => 'NULL'
+            'Codigo' => 'NULL',
+			'Empresa' => $id
         );
 
         $data['campos'] = array_keys($data['confirmar']);

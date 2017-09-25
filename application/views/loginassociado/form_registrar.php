@@ -1,4 +1,4 @@
-<div class="container" id="loginassociado">
+<div class="container" id="login">
 
     <?php #echo validation_errors(); ?>
 

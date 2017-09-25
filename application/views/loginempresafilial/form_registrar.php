@@ -1,4 +1,4 @@
-<div class="container" id="loginempresafilial">
+<div class="container" id="login">
 
     <?php #echo validation_errors(); ?>
 
@@ -33,7 +33,7 @@
 	<?php echo form_error('NumUsuarios'); ?>
 	<br>	
 	
-	<label for="Nome">Nome do Usuário/ Administrador:</label>
+	<label for="Nome">Nome do Administrador:</label>
     <input type="text" class="form-control" id="Nome" maxlength="255"
            name="Nome" value="<?php echo $query['Nome']; ?>">
     <?php echo form_error('Nome'); ?>
@@ -45,13 +45,13 @@
     <?php echo form_error('Celular'); ?>
     <br>
 	
-    <label class="text-">E-mail do Usuário:</label>
+    <label class="text-">E-mail do Administrador:</label>
     <input type="text" class="form-control" id="Email" maxlength="100"
            name="Email" value="<?php echo $query['Email']; ?>">
     <?php echo form_error('Email'); ?>
     <br>
 	
-    <label for="UsuarioEmpresaFilial">Usuário:</label>
+    <label for="UsuarioEmpresaFilial">Usuário do Administrador:</label>
     <input type="text" class="form-control" id="UsuarioEmpresaFilial" maxlength="45"
            name="UsuarioEmpresaFilial" value="<?php echo $query['UsuarioEmpresaFilial']; ?>">
     <?php echo form_error('UsuarioEmpresaFilial'); ?>
@@ -70,6 +70,9 @@
     <br>	
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">REGISTRAR</button>
+	<br>
+	<a class="btn btn btn-primary btn-info btn-block" href="<?php echo base_url(); ?>login/index" role="button">Acesso do Usuário da Empresa</a>
+	<a class="btn btn btn-primary btn-warning btn-block" href="<?php echo base_url(); ?>loginempresafilial/index" role="button">Acesso do Admin. da Empresa</a>		
 </form>
 
 </div>

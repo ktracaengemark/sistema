@@ -90,7 +90,7 @@ class Loginempresafilial extends CI_Controller {
               exit();
              */
             $query = $this->Loginempresafilial_model->check_dados_usuario($senha, $usuario, TRUE);
-            $_SESSION['log']['Agenda'] = $this->Loginempresafilial_model->get_agenda_padrao($query['idSis_EmpresaFilial']);
+            #$_SESSION['log']['Agenda'] = $this->Loginempresafilial_model->get_agenda_padrao($query['idSis_EmpresaFilial']);
 
             #echo "<pre>".print_r($query)."</pre>";
             #exit();
@@ -115,7 +115,7 @@ class Loginempresafilial extends CI_Controller {
 				$_SESSION['log']['Empresa'] = $query['Empresa'];
 				$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];
 				$_SESSION['log']['idSis_EmpresaFilial'] = $query['idSis_EmpresaFilial'];
-				$_SESSION['log']['Permissao'] = $query['Permissao'];
+				#$_SESSION['log']['Permissao'] = $query['Permissao'];
 				
                 $this->load->database();
                 $_SESSION['db']['hostname'] = $this->db->hostname;
@@ -129,7 +129,7 @@ class Loginempresafilial extends CI_Controller {
                     $this->basico->erro($msg);
                     $this->load->view('form_loginempresafilial');
                 } else {
-					redirect('acesso');
+					redirect('acessoempresa');
 					#redirect('agenda');
 					#redirect('cliente');
                 }

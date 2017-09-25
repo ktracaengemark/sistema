@@ -412,6 +412,31 @@ class Relatorio extends CI_Controller {
 
     }
 	
+	public function adminempresa() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+        $data['titulo1'] = 'Cadastrar';
+		$data['titulo2'] = 'Relatórios';
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+        }
+
+        $this->load->view('relatorio/tela_adminempresa', $data);
+
+        $this->load->view('basico/footer');
+
+    }	
+	
 	public function sistema() {
 
         if ($this->input->get('m') == 1)
