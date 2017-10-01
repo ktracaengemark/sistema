@@ -4,7 +4,7 @@
 
     <?php if (isset($msg)) echo $msg; ?>
 
-    <?php echo form_open('loginempresafilial/registrar', 'role="form"'); ?>
+    <?php echo form_open('loginassociadoempresafilial/registrar', 'role="form"'); ?>
 
     <!--
     <p class="text-center">
@@ -15,7 +15,7 @@
     </p>
     -->
 	<p class="text-center">
-        <a href="<?php echo base_url(); ?>loginempresafilial">
+        <a href="<?php echo base_url(); ?>loginassociadoempresafilial">
             <img src="<?php echo base_url() . 'arquivos/imagens/' . $modulo . '.png'; ?>" />
         </a>
     </p>
@@ -71,8 +71,8 @@
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">REGISTRAR</button>
 	<br>
-	<a class="btn btn btn-primary btn-info btn-block" href="<?php echo base_url(); ?>login/index" role="button">Acesso dos Usuários da Empresa</a>
-	<a class="btn btn btn-primary btn-warning btn-block" href="<?php echo base_url(); ?>loginempresafilial/index" role="button">Acesso do Admin. da Empresa</a>		
+	<a class="btn btn btn-primary btn-info btn-block" href="<?php echo base_url(); ?>login/index" role="button">Acesso do Usuário da Empresa</a>
+	<a class="btn btn btn-primary btn-warning btn-block" href="<?php echo base_url(); ?>loginassociadoempresafilial/index" role="button">Acesso do Admin. da Empresa</a>		
 </form>
 
 </div>

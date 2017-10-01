@@ -16,6 +16,7 @@
 					<div class="form-group">
 						<div class="panel panel-info">
 							<div class="panel-heading">	
+
 								<div class="row">
 									<div class="col-md-3">
 										<label for="TipoProduto">Tipo de Produto:</label>
@@ -32,7 +33,8 @@
 											}
 											?>
 										</select>
-									</div>									
+									</div>	
+									
 									<div class="col-md-4">
 										<label for="Fornecedor">Fornecedor</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
@@ -49,8 +51,10 @@
 											?>
 										</select>
 									</div>
-								</div>	
-								<div class="row">	
+									
+								</div>
+
+								<div class="row">									
 									<div class="col-md-3">
 										<label for="CodProd">Cód. Prod.: *</label><br>
 										<input type="text" class="form-control" maxlength="25"
@@ -66,6 +70,7 @@
 										<input type="text" class="form-control" maxlength="20"
 												name="UnidadeProduto" value="<?php echo $produtos['UnidadeProduto'] ?>">
 									</div>
+									<!--
 									<div class="col-md-3">
 										<label for="ValorCompraProduto">Custo:</label><br>
 										<div class="input-group">
@@ -73,7 +78,8 @@
 											<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
 													name="ValorCompraProduto" value="<?php echo $produtos['ValorCompraProduto'] ?>">
 										</div>
-									</div>									
+									</div>
+									-->
 								</div>
 							</div>	
 						</div>		
@@ -87,7 +93,7 @@
 								<h4 class="panel-title">
 									<a class="accordion-toggle">
 										<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-										Valor de Venda
+										Plano & Valor de Venda
 									</a>
 								</h4>
 							</div>
@@ -113,7 +119,7 @@
 												<div class="row">																					
 
 													<div class="col-md-4">
-														<label for="Convenio<?php echo $i ?>">Convenio:</label>
+														<label for="Convenio<?php echo $i ?>">Plano:</label>
 														<?php if ($i == 1) { ?>
 														<?php } ?>
 														<select data-placeholder="Selecione uma opção..." class="form-control"

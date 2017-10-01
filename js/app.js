@@ -735,7 +735,7 @@ function adicionaValor() {
 				<div class="panel-heading">\
 					<div class="row">\
 						<div class="col-md-4">\
-							<label for="Convenio'+pt+'">Convenio:</label>\
+							<label for="Convenio'+pt+'">Plano:</label>\
 							<select data-placeholder="Selecione uma opção..." class="form-control"\
 									 id="listadinamicad'+pt+'" name="Convenio'+pt+'">\
 								<option value="">-- Selecione uma opção --</option>\

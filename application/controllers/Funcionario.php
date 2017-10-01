@@ -18,8 +18,8 @@ class Funcionario extends CI_Controller {
         $this->load->driver('session');
 
         #load header view
-        $this->load->view('basico/header');
-        $this->load->view('basico/nav_principal');
+        $this->load->view('basico/headerempresa');
+        $this->load->view('basico/nav_principalempresa');
 
         #$this->load->view('funcionario/nav_secundario');
     }
@@ -81,7 +81,7 @@ class Funcionario extends CI_Controller {
 		$data['select']['Permissao'] = $this->Basico_model->select_permissao();
 		$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
 		
-        $data['titulo'] = 'Cadastrar Funcionario / Novo Usuário';
+        $data['titulo'] = 'Cadastrar Usuário';
         $data['form_open_path'] = 'funcionario/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -188,7 +188,7 @@ class Funcionario extends CI_Controller {
 		$data['select']['Permissao'] = $this->Basico_model->select_permissao();
 		$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
 		
-        $data['titulo'] = 'Editar Dados';
+        $data['titulo'] = 'Editar Usuário';
         $data['form_open_path'] = 'funcionario/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';

@@ -1211,10 +1211,8 @@ class Relatorio_model extends CI_Model {
                 Sis_Usuario AS F
 					LEFT JOIN Tab_Funcao AS FU ON FU.idTab_Funcao = F.Funcao
 					LEFT JOIN Sis_Permissao AS PE ON PE.idSis_Permissao = F.Permissao
-            WHERE
-                (F.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-				OR				
-				F.Empresa = ' . $_SESSION['log']['id'] . ') AND
+            WHERE				
+				F.idSis_EmpresaFilial = ' . $_SESSION['log']['id'] . ' AND
 				F.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
                 ' . $data['Nome'] . '
             ORDER BY

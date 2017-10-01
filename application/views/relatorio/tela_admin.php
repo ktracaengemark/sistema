@@ -21,21 +21,23 @@
 
 										<div class="col-md-10">
 											<label for="">Pessoas & Empresas:</label>
-											
+
+											<div class="form-group col-md-10 text-left">	
+												<div class="row">		
+													<a class="btn btn-md btn-success" href="<?php echo base_url() ?>loginempresafilial/index" role="button"> 
+														<span class="glyphicon glyphicon-user"></span> Usuários
+													</a>
+												</div>
+											</div>
+										
 											<div class="form-group col-md-10 text-left">
 												<div class="row">																				
 													<a class="btn btn-md btn-success" href="<?php echo base_url() ?>relatorio/clientes" role="button"> 
 														<span class="glyphicon glyphicon-user"></span> Clientes
 													</a>
 												</div>
-											</div>	
-											<div class="form-group col-md-10 text-left">	
-												<div class="row">		
-													<a class="btn btn-md btn-success" href="<?php echo base_url() ?>relatorio/funcionario" role="button"> 
-														<span class="glyphicon glyphicon-user"></span> Funcionários
-													</a>
-												</div>
-											</div>	
+											</div>
+
 											<div class="form-group col-md-10 text-left">	
 												<div class="row">		
 													<a class="btn btn-md btn-success" href="<?php echo base_url() ?>relatorio/fornecedor" role="button"> 

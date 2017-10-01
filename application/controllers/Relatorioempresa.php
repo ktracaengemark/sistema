@@ -108,7 +108,7 @@ class Relatorioempresa extends CI_Controller {
 
 
         $data['select']['Campo'] = array(
-            'F.Nome' => 'Nome do Funcionário',
+            'F.Nome' => 'Nome do Usuário',
         );
 
         $data['select']['Ordenamento'] = array(
@@ -118,7 +118,7 @@ class Relatorioempresa extends CI_Controller {
 
         $data['select']['Nome'] = $this->Relatorio_model->select_funcionario();
 
-        $data['titulo'] = 'Relatório de Funcionários';
+        $data['titulo'] = 'Relatório de Usuários';
 
         #run form validation
         if ($this->form_validation->run() !== TRUE) {

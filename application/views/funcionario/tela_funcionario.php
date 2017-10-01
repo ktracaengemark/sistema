@@ -16,7 +16,7 @@
 						<div class="row">
 							<div class="col-md-12 col-lg-12">
 								<div class="col-md-4 text-left">
-									<label for="">Funcionario & Contatos:</label>
+									<label for="">Usuário & Contatos:</label>
 									<div class="form-group">
 										<div class="row">							
 											<a <?php if (preg_match("/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
@@ -52,7 +52,7 @@
 
 							<div class="panel panel-<?php echo $panel; ?>">
 
-								<div class="panel-heading"><strong>Funcionário</strong></div>
+								<div class="panel-heading"><strong>Usuário</strong></div>
 								<div class="panel-body"> 
 									<table class="table table-user-information">
 										<tbody>
@@ -163,7 +163,7 @@
 
 											<div class="panel panel-primary">
 
-												<div class="panel-heading"><strong>Contato</strong></div>
+												<div class="panel-heading"><strong>Contatos</strong></div>
 												<div class="panel-body">
 										
 													<?php

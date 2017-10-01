@@ -13,7 +13,7 @@
 							<div class="row">
 								<div class="col-md-1"></div>
 								<div class="col-md-4">
-									<label for="Ordenamento">Nome do Funcionario:</label>
+									<label for="Ordenamento">Nome do usuário:</label>
 									<div class="form-group">
 										<div class="row">
 											<div class="col-md-12">
@@ -82,7 +82,7 @@
 									</div>
 									<div class="col-md-6 text-right">											
 										<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>loginfuncionario/registrar" role="button"> 
-											<span class="glyphicon glyphicon-plus"></span> Novo Func.
+											<span class="glyphicon glyphicon-plus"></span> Novo Usuário
 										</a>
 									</div>
 								</div>
