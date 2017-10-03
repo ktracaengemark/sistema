@@ -1420,6 +1420,65 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
+	
+	public function servicos() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contatofornec com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'Servicos',
+			'Ordenamento',
+            'Campo',
+        ), TRUE));
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+
+
+        $data['select']['Campo'] = array(
+			'TP.idApp_Servicos' => 'id do Serviço',
+			'TP.Servicos' => 'Serviço',			
+
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+
+        $data['select']['Servicos'] = $this->Relatorio_model->select_servicos();
+		
+        $data['titulo'] = 'Servicos e Valores';
+
+        #run form validation
+        if ($this->form_validation->run() !== TRUE) {
+			$data['bd']['Servicos'] = $data['query']['Servicos'];
+            $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+
+            $data['report'] = $this->Relatorio_model->list_servicos($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_servicos', $data, TRUE);
+
+        }
+
+        $this->load->view('relatorio/tela_servicos', $data);
+
+        $this->load->view('basico/footer');
+
+    }
 
 	public function orcamentopc() {
 

@@ -66,7 +66,7 @@
 											</div>													
 											<div class="form-group col-md-10 text-left">
 												<div class="row">		
-													<a class="btn btn-md btn-primary" href="<?php echo base_url() ?>servico/cadastrar" role="button"> 
+													<a class="btn btn-md btn-primary" href="<?php echo base_url() ?>servicos/cadastrar" role="button"> 
 														<span class="glyphicon glyphicon-qrcode"></span> Serviços
 													</a>											
 												</div>	

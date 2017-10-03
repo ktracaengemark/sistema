@@ -1445,6 +1445,61 @@ class Relatorio_model extends CI_Model {
         }
 
     }
+	
+	public function list_servicos($data, $completo) {
+
+		$data['Servicos'] = ($data['Servicos']) ? ' AND TP.idApp_Servicos = ' . $data['Servicos'] : FALSE;
+        $data['Campo'] = (!$data['Campo']) ? 'TP.Servicos' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+
+        $query = $this->db->query('
+            SELECT
+                TP.idApp_Servicos,
+				TP.CodServ,
+				TP.Servicos,
+				TP.UnidadeProduto,
+				TP.ValorCompraServico,				
+				TP.Fornecedor,
+				TF.NomeFornecedor,
+				
+				TV.ValorVendaServico,
+				TC.Convenio				
+            FROM
+                App_Servicos AS TP
+					LEFT JOIN App_ValorServ AS TV ON TV.idApp_Servicos = TP.idApp_Servicos
+					LEFT JOIN Tab_Convenio AS TC ON TC.idTab_Convenio = TV.Convenio
+					LEFT JOIN App_Fornecedor AS TF ON TF.idApp_Fornecedor = TP.Fornecedor
+            WHERE
+                TP.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+				' . $data['Servicos'] . ' 
+			ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+
+        /*
+        #AND
+        #P.idApp_Profissional = OT.idApp_Cliente
+
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+
+            }
+
+            return $query;
+        }
+
+    }
 
 	public function list_orcamentopc($data, $completo) {
 
@@ -2118,6 +2173,30 @@ class Relatorio_model extends CI_Model {
         $array[0] = ':: Todos ::';
         foreach ($query->result() as $row) {
             $array[$row->idApp_Produtos] = $row->Produtos;
+        }
+
+        return $array;
+    }
+
+	public function select_servicos() {
+
+        $query = $this->db->query('
+            SELECT
+                OB.idApp_Servicos,
+                OB.Servicos
+            FROM
+                App_Servicos AS OB
+            WHERE
+                OB.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				OB.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+            ORDER BY
+                Servicos ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idApp_Servicos] = $row->Servicos;
         }
 
         return $array;
