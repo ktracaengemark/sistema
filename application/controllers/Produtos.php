@@ -53,7 +53,7 @@ class Produtos extends CI_Controller {
             'TipoProduto',
 			'UnidadeProduto',
 			'CodProd',
-			#'Fornecedor',
+			'Fornecedor',
 			#'ValorCompraProduto',
             'Produtos',
         ), TRUE));
@@ -201,7 +201,7 @@ class Produtos extends CI_Controller {
             'TipoProduto',
 			'UnidadeProduto',
 			'CodProd',
-			#'Fornecedor',
+			'Fornecedor',
 			#'ValorCompraProduto',            
             'Produtos',
         ), TRUE));

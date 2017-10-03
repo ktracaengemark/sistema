@@ -265,10 +265,10 @@ class Loginfuncionario extends CI_Controller {
                   <div class="alert alert-success" role="alert">
                   <h4>
                   <p><b>Usuário cadastrado com sucesso!</b></p>
-                  <p>Clique no botão abaixo e retorne para a tela de loginfuncionario para entrar no sistema.</p>
+                  <p>Clique no botão abaixo e retorne para a tela de<strong> "Acesso dos Usuários da Empresa"</strong> ,para entrar no sistema.</p>
                   </h4>
                   <br>
-                  <a class="btn btn-primary" href="' . base_url() . '" role="button">Acessar o aplicativo</a>
+                  <a class="btn btn-primary" href="' . base_url() . '" role="button">Acessar o Sistema</a>
                   </div> '
                         . '';
 

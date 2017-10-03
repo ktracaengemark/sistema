@@ -29,7 +29,7 @@
 	-->
 	<label for="Nome">Nome do Usuário:</label>
     <input type="text" class="form-control" id="Nome" maxlength="255"
-           name="Nome" value="<?php echo $query['Nome']; ?>">
+           autofocus name="Nome" value="<?php echo $query['Nome']; ?>">
     <?php echo form_error('Nome'); ?>
     <br>
 	
@@ -134,7 +134,7 @@
     <br>			
 	
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">REGISTRAR</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Registrar Usuário</button>
 	<br>
 	<a class="btn btn btn-primary btn-info btn-block" href="<?php echo base_url(); ?>login/index" role="button">Acesso dos Usuários da Empresa</a>
 	<a class="btn btn btn-primary btn-warning btn-block" href="<?php echo base_url(); ?>loginempresafilial/index" role="button">Acesso do Admin. da Empresa</a>		

@@ -59,7 +59,7 @@
 						<div class="btn-group" role="group" aria-label="...">
 							<a href="<?php echo base_url(); ?>login/index">
 								<button type="button" class="btn btn-md btn-info ">
-									<span class="glyphicon glyphicon-log-in"></span> Acesso ao Sistema
+									<span class="glyphicon glyphicon-log-in"></span> Acesso dos Usuários
 								</button>
 							</a>
 						</div>															
