@@ -1373,6 +1373,7 @@ class Relatorio extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'Produtos',
+			'Categoria',
 			'Ordenamento',
             'Campo',
         ), TRUE));
@@ -1382,8 +1383,9 @@ class Relatorio extends CI_Controller {
 
 
         $data['select']['Campo'] = array(
-			'TP.idApp_Produtos' => 'id do Produto',
-			'TP.Produtos' => 'Produto',			
+			'TP.idApp_Produtos' => 'Id',
+			'TP.Produtos' => 'Descrição',	
+			'TP.Categoria' => 'Categoria',
 
         );
 
@@ -1394,11 +1396,12 @@ class Relatorio extends CI_Controller {
 
         $data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
 		
-        $data['titulo'] = 'Produtos e Valores';
+        $data['titulo'] = 'Produtos, Serviços e Valores';
 
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Categoria'] = $data['query']['Categoria'];
             $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
 

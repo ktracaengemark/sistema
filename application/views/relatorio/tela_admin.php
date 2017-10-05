@@ -143,7 +143,7 @@
 											<div class="form-group col-md-10 text-left">
 												<div class="row">		
 													<a type="button" class="btn btn-md btn-primary" href="<?php echo base_url() ?>relatorio/produtos" role="button"> 
-														<span class="glyphicon glyphicon-barcode"></span> Tabela de Preços
+														<span class="glyphicon glyphicon-barcode"></span> Tabela de Preços de Produtos
 													</a>
 												</div>	
 											</div>											
@@ -171,7 +171,13 @@
 										</div>
 										<div class="col-md-10">
 											<label for="">Serviços & Procedimentos:</label>
-											
+											<div class="form-group col-md-10 text-left">
+												<div class="row">		
+													<a type="button" class="btn btn-md btn-warning" href="<?php echo base_url() ?>relatorio/servicos" role="button"> 
+														<span class="glyphicon glyphicon-barcode"></span> Tabela de Preços de Serviços
+													</a>
+												</div>	
+											</div>											
 											<div class="form-group col-md-10 text-left">
 												<div class="row">
 													<a type="button" class="btn btn-md btn-warning" href="<?php echo base_url() ?>relatorio/servicosprest" role="button"> 

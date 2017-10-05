@@ -51,6 +51,7 @@ class Produtos extends CI_Controller {
             #### App_Produtos ####
             'idApp_Produtos',           
             'TipoProduto',
+			'Categoria',
 			'UnidadeProduto',
 			'CodProd',
 			'Fornecedor',
@@ -64,6 +65,7 @@ class Produtos extends CI_Controller {
         (!$this->input->post('PTCount')) ? $data['count']['PTCount'] = 0 : $data['count']['PTCount'] = $this->input->post('PTCount');
 
 		(!$data['produtos']['TipoProduto']) ? $data['produtos']['TipoProduto'] = 'V' : FALSE;
+		(!$data['produtos']['Categoria']) ? $data['produtos']['Categoria'] = 'P' : FALSE;
 		
         $j = 1;
         for ($i = 1; $i <= $data['count']['PTCount']; $i++) {
@@ -89,6 +91,7 @@ class Produtos extends CI_Controller {
 
 		$data['select']['Fornecedor'] = $this->Fornecedor_model->select_fornecedor();
 		$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();
+		$data['select']['Categoria'] = $this->Basico_model->select_categoria();		
         $data['select']['Convenio'] = $this->Convenio_model->select_convenio();
 
         $data['titulo'] = 'Cadastar Produto';
@@ -200,6 +203,7 @@ class Produtos extends CI_Controller {
             #### App_Produtos ####
             'idApp_Produtos',			
             'TipoProduto',
+			'Categoria',
 			'UnidadeProduto',
 			'CodProd',
 			'Fornecedor',
@@ -262,6 +266,7 @@ class Produtos extends CI_Controller {
      
 		$data['select']['Fornecedor'] = $this->Fornecedor_model->select_fornecedor();		
 		$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();
+		$data['select']['Categoria'] = $this->Basico_model->select_categoria();
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio();
         
 

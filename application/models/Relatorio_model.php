@@ -1406,7 +1406,8 @@ class Relatorio_model extends CI_Model {
 				TP.ValorCompraProduto,				
 				TP.Fornecedor,
 				TF.NomeFornecedor,
-				
+				TCA.Categoria,
+				TCA.Abrev,
 				TV.ValorVendaProduto,
 				TC.Convenio				
             FROM
@@ -1414,6 +1415,7 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_Valor AS TV ON TV.idApp_Produtos = TP.idApp_Produtos
 					LEFT JOIN Tab_Convenio AS TC ON TC.idTab_Convenio = TV.Convenio
 					LEFT JOIN App_Fornecedor AS TF ON TF.idApp_Fornecedor = TP.Fornecedor
+					LEFT JOIN Tab_Categoria AS TCA ON TCA.Abrev = TP.Categoria					
             WHERE
                 TP.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
