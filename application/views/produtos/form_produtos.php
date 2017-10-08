@@ -49,7 +49,7 @@
 											?>
 										</select>
 									</div>
-									<div class="col-md-3">
+									<div class="col-md-2">
 										<label for="TipoProduto">Tipo:</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 												id="TipoProduto" name="TipoProduto">
@@ -69,21 +69,21 @@
 
 								<div class="row">									
 									<div class="col-md-3">
-										<label for="CodProd">Cód. Prod.: *</label><br>
+										<label for="CodProd">Código:</label><br>
 										<input type="text" class="form-control" maxlength="25"
 												name="CodProd" value="<?php echo $produtos['CodProd'] ?>">
 									</div>
 									<div class="col-md-4">
-										<label for="Produtos">Produto: *</label><br>
+										<label for="Produtos">Descrição:*</label><br>
 										<input type="text" class="form-control" maxlength="200"
 												name="Produtos" value="<?php echo $produtos['Produtos'] ?>">
 									</div>										
-									<div class="col-md-3">
-										<label for="UnidadeProduto">Unid. Prod.:*</label><br>
+									<div class="col-md-2">
+										<label for="UnidadeProduto">Unidade:</label><br>
 										<input type="text" class="form-control" maxlength="20"
 												name="UnidadeProduto" value="<?php echo $produtos['UnidadeProduto'] ?>">
 									</div>
-									<!--
+
 									<div class="col-md-3">
 										<label for="ValorCompraProduto">Custo:</label><br>
 										<div class="input-group">
@@ -92,7 +92,7 @@
 													name="ValorCompraProduto" value="<?php echo $produtos['ValorCompraProduto'] ?>">
 										</div>
 									</div>
-									-->
+
 								</div>
 							</div>	
 						</div>		
@@ -106,7 +106,7 @@
 								<h4 class="panel-title">
 									<a class="accordion-toggle">
 										<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-										Plano & Valor de Venda
+										Tabelas & Planos - Valor de Venda
 									</a>
 								</h4>
 							</div>
@@ -132,7 +132,7 @@
 												<div class="row">																					
 
 													<div class="col-md-4">
-														<label for="Convenio<?php echo $i ?>">Plano:</label>
+														<label for="Convenio<?php echo $i ?>">Tabelas & Planos:</label>
 														<?php if ($i == 1) { ?>
 														<?php } ?>
 														<select data-placeholder="Selecione uma opção..." class="form-control"
@@ -149,6 +149,11 @@
 															?>
 														</select>
 													</div>
+													<div class="col-md-4">
+														<label for="Convdesc<?php echo $i ?>">Descrição:</label>
+														<input type="text" class="form-control"  id="Convdesc<?php echo $i ?>" <?php echo $readonly; ?>
+																  name="Convdesc<?php echo $i ?>" value="<?php echo $valor[$i]['Convdesc']; ?>">
+													</div>													
 													<!--
 													<div class="col-md-2">
 														<label for="ValorVendaProduto<?php echo $i ?>">Valor Venda:</label>
@@ -185,8 +190,8 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-md-4">
-												<a class="add_field_button3 btn btn-xs btn-warning" onclick="adicionaValor()">
-													<span class="glyphicon glyphicon-plus"></span> Adicionar Plano
+												<a class="add_field_button3 btn btn-xs btn-danger" onclick="adicionaValor()">
+													<span class="glyphicon glyphicon-plus"></span> Adicionar Tabelas & Planos
 												</a>
 											</div>
 										</div>

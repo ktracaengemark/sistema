@@ -19,7 +19,7 @@
 							<div class="row">
 								
 								<div class="col-md-6">
-									<label for="Ordenamento">Produtos</label>
+									<label for="Ordenamento">Desccrição</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="Produtos" name="Produtos">
 										<?php
@@ -118,7 +118,7 @@
 									</div>
 									<div class="col-md-6 text-right">											
 											<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>produtos/cadastrar" role="button"> 
-												<span class="glyphicon glyphicon-plus"></span> Novo Produto
+												<span class="glyphicon glyphicon-plus"></span> Novo Produto ou Serviço
 											</a>
 									</div>
 								</div>

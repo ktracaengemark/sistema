@@ -67,7 +67,7 @@ class Convenio_model extends CI_Model {
                 . 'WHERE '
                 . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
                 . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
-                . 'ORDER BY Convenio DESC ');
+                . 'ORDER BY Convenio ASC ');
 
         /*
           echo $this->db->last_query();
@@ -134,7 +134,7 @@ class Convenio_model extends CI_Model {
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY Convenio DESC'
+                ORDER BY Convenio ASC'
     );
         } else {
             $query = $this->db->query(
@@ -147,7 +147,7 @@ class Convenio_model extends CI_Model {
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY Convenio DESC'
+                ORDER BY Convenio ASC'
     );
 
             $array = array();
@@ -172,7 +172,7 @@ class Convenio_model extends CI_Model {
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY Convenio DESC'
+                ORDER BY Convenio ASC'
     );
         } else {
             $query = $this->db->query(
@@ -185,7 +185,7 @@ class Convenio_model extends CI_Model {
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY Convenio DESC'
+                ORDER BY Convenio ASC'
     );
 
             $array = array();

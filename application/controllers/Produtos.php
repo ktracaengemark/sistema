@@ -55,7 +55,7 @@ class Produtos extends CI_Controller {
 			'UnidadeProduto',
 			'CodProd',
 			'Fornecedor',
-			#'ValorCompraProduto',
+			'ValorCompraProduto',
             'Produtos',
         ), TRUE));
 
@@ -70,9 +70,10 @@ class Produtos extends CI_Controller {
         $j = 1;
         for ($i = 1; $i <= $data['count']['PTCount']; $i++) {
 
-            if ($this->input->post('Convenio' . $i) || $this->input->post('ValorVendaProduto' . $i)) {
+            if ($this->input->post('Convenio' . $i) || $this->input->post('Convdesc' . $i) || $this->input->post('ValorVendaProduto' . $i)) {
 
                 $data['valor'][$j]['Convenio'] = $this->input->post('Convenio' . $i);
+				$data['valor'][$j]['Convdesc'] = $this->input->post('Convdesc' . $i);
                 $data['valor'][$j]['ValorVendaProduto'] = $this->input->post('ValorVendaProduto' . $i);
 
                 $j++;
@@ -88,13 +89,14 @@ class Produtos extends CI_Controller {
         #### App_Produtos ####
 
         $this->form_validation->set_rules('TipoProduto', 'TipoProduto', 'required|trim');
+		$this->form_validation->set_rules('CodProd', 'Código', 'is_unique[App_Produtos.CodProd]');
 
 		$data['select']['Fornecedor'] = $this->Fornecedor_model->select_fornecedor();
 		$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();
 		$data['select']['Categoria'] = $this->Basico_model->select_categoria();		
         $data['select']['Convenio'] = $this->Convenio_model->select_convenio();
 
-        $data['titulo'] = 'Cadastar Produto';
+        $data['titulo'] = 'Cadastar Produtos & Serviços';
         $data['form_open_path'] = 'produtos/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -207,7 +209,7 @@ class Produtos extends CI_Controller {
 			'UnidadeProduto',
 			'CodProd',
 			'Fornecedor',
-			#'ValorCompraProduto',            
+			'ValorCompraProduto',            
             'Produtos',
         ), TRUE));
 
@@ -220,9 +222,10 @@ class Produtos extends CI_Controller {
         $j = 1;
         for ($i = 1; $i <= $data['count']['PTCount']; $i++) {
 
-            if ($this->input->post('Convenio' . $i) || $this->input->post('ValorVendaProduto' . $i)) {
+            if ($this->input->post('Convenio' . $i) || $this->input->post('Convdesc' . $i) || $this->input->post('ValorVendaProduto' . $i)) {
                 $data['valor'][$j]['idApp_Valor'] = $this->input->post('idApp_Valor' . $i);
                 $data['valor'][$j]['Convenio'] = $this->input->post('Convenio' . $i);
+				$data['valor'][$j]['Convdesc'] = $this->input->post('Convdesc' . $i);
                 $data['valor'][$j]['ValorVendaProduto'] = $this->input->post('ValorVendaProduto' . $i);
 
                 $j++;
@@ -263,6 +266,7 @@ class Produtos extends CI_Controller {
         #### App_Produtos ####
      
         $this->form_validation->set_rules('TipoProduto', 'TipoProduto', 'required|trim');
+		#$this->form_validation->set_rules('CodProd', 'Código', 'is_unique[App_Produtos.CodProd]');
      
 		$data['select']['Fornecedor'] = $this->Fornecedor_model->select_fornecedor();		
 		$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();
@@ -270,7 +274,7 @@ class Produtos extends CI_Controller {
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio();
         
 
-        $data['titulo'] = 'Editar Produto';
+        $data['titulo'] = 'Editar Produtos & Serviços';
         $data['form_open_path'] = 'produtos/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';

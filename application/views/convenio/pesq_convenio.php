@@ -15,7 +15,7 @@
 					<?php echo form_open($form_open_path, 'role="form"'); ?>
 						<div class="row">
 							<div class="col-md-4">
-								<label for="Convenio">Convenio ou Plano:</label><br>
+								<label for="Convenio">Tabelas & Planos:</label><br>
 								<input type="text" class="form-control" maxlength="30"
 									   autofocus name="Convenio" value="<?php echo $query['Convenio'] ?>">
 							</div>

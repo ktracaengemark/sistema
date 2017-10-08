@@ -106,7 +106,7 @@ elseif ($_GET['q'] == 4) {
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 idSis_Usuario = ' . $_SESSION['log']['id'] . '
-                ORDER BY Convenio DESC'
+                ORDER BY Convenio ASC'
     );
 
     while ($row = mysql_fetch_assoc($result)) {

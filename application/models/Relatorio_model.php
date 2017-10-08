@@ -1408,6 +1408,7 @@ class Relatorio_model extends CI_Model {
 				TF.NomeFornecedor,
 				TCA.Categoria,
 				TCA.Abrev,
+				TV.Convdesc,
 				TV.ValorVendaProduto,
 				TC.Convenio				
             FROM
@@ -1421,7 +1422,9 @@ class Relatorio_model extends CI_Model {
 				TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
 				' . $data['Produtos'] . ' 
 			ORDER BY
-                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+                TCA.Categoria,
+				TP.Produtos,
+				TC.Convenio DESC
         ');
 
         /*

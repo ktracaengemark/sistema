@@ -59,7 +59,7 @@ class Convenio extends CI_Controller {
         $this->form_validation->set_rules('Convenio', 'Nome do Convênio', 'required|trim');
 		$this->form_validation->set_rules('Abrev', 'Abreviação', 'required|trim');
 
-        $data['titulo'] = 'Cadastrar Convênio';
+        $data['titulo'] = 'Cadastrar Tabelas & Planos';
         $data['form_open_path'] = 'convenio/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -140,7 +140,7 @@ class Convenio extends CI_Controller {
 		$this->form_validation->set_rules('Abrev', 'Abreviação', 'required|trim');
        # $this->form_validation->set_rules('ValorVenda', 'Valor do Convênio', 'required|trim');
 
-        $data['titulo'] = 'Editar Convênio';
+        $data['titulo'] = 'Editar Tabelas & Planos';
         $data['form_open_path'] = 'convenio/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';

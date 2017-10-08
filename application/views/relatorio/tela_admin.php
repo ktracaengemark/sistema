@@ -53,24 +53,26 @@
 											<div class="form-group col-md-10 text-left">
 												<div class="row">													
 													<a class="btn btn-md btn-primary" href="<?php echo base_url() ?>convenio/cadastrar" role="button"> 
-														<span class="glyphicon glyphicon-qrcode"></span> Planos de Venda
+														<span class="glyphicon glyphicon-qrcode"></span> Tabelas & Planos
 													</a>
 												</div>	
 											</div>													
 											<div class="form-group col-md-10 text-left">
 												<div class="row">		
 													<a class="btn btn-md btn-primary" href="<?php echo base_url() ?>produtos/cadastrar" role="button"> 
-														<span class="glyphicon glyphicon-qrcode"></span> Produtos
+														<span class="glyphicon glyphicon-qrcode"></span> Produtos & Serviços
 													</a>
 												</div>	
-											</div>													
+											</div>	
+											<!--
 											<div class="form-group col-md-10 text-left">
 												<div class="row">		
 													<a class="btn btn-md btn-primary" href="<?php echo base_url() ?>servicos/cadastrar" role="button"> 
 														<span class="glyphicon glyphicon-qrcode"></span> Serviços
 													</a>											
 												</div>	
-											</div>													
+											</div>
+											-->
 										</div>
 
 										<div class="col-md-10">											
@@ -139,11 +141,11 @@
 											</div>																	
 										</div>
 										<div class="col-md-10">											
-											<label for="">Produtos:</label>
+											<label for="">Produtos & Serviços:</label>
 											<div class="form-group col-md-10 text-left">
 												<div class="row">		
 													<a type="button" class="btn btn-md btn-primary" href="<?php echo base_url() ?>relatorio/produtos" role="button"> 
-														<span class="glyphicon glyphicon-barcode"></span> Tabela de Preços de Produtos
+														<span class="glyphicon glyphicon-barcode"></span> Tabela de Preços
 													</a>
 												</div>	
 											</div>											
@@ -167,24 +169,26 @@
 														<span class="glyphicon glyphicon-barcode"></span> Produtos Consumidos
 													</a>
 												</div>	
-											</div>		
+											</div>
+											<div class="form-group col-md-10 text-left">
+												<div class="row">
+													<a type="button" class="btn btn-md btn-primary" href="<?php echo base_url() ?>relatorio/servicosprest" role="button"> 
+														<span class="glyphicon glyphicon-barcode"></span> Serviços Prestados
+													</a>
+												</div>	
+											</div>												
 										</div>
 										<div class="col-md-10">
-											<label for="">Serviços & Procedimentos:</label>
+											<label for="">Procedimentos:</label>
+											<!--
 											<div class="form-group col-md-10 text-left">
 												<div class="row">		
 													<a type="button" class="btn btn-md btn-warning" href="<?php echo base_url() ?>relatorio/servicos" role="button"> 
 														<span class="glyphicon glyphicon-barcode"></span> Tabela de Preços de Serviços
 													</a>
 												</div>	
-											</div>											
-											<div class="form-group col-md-10 text-left">
-												<div class="row">
-													<a type="button" class="btn btn-md btn-warning" href="<?php echo base_url() ?>relatorio/servicosprest" role="button"> 
-														<span class="glyphicon glyphicon-plus"></span> Serviços Prestados
-													</a>
-												</div>	
-											</div>	
+											</div>
+											-->
 											<div class="form-group col-md-10 text-left">
 												<div class="row">		
 													<a type="button" class="btn btn-md btn-warning" href="<?php echo base_url() ?>relatorio/orcamentopc" role="button"> 

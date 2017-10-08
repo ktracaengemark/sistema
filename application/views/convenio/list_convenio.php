@@ -3,7 +3,7 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>Convênio</th>
+            <th>Tabelas & Planos</th>
 			<th>Abrev</th>
             
             <th></th>
