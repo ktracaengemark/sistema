@@ -1424,7 +1424,7 @@ class Relatorio_model extends CI_Model {
 			ORDER BY
                 TCA.Categoria,
 				TP.Produtos,
-				TC.Convenio DESC
+				TV.ValorVendaProduto DESC
         ');
 
         /*

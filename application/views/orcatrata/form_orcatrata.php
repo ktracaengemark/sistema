@@ -269,7 +269,7 @@
 														?>
 
 														</div>
-														
+														<!--
 														<div class="form-group">														
 															<div class="row">
 																<div class="col-md-3"></div>
@@ -282,7 +282,7 @@
 														</div>
 														
 														<hr>
-
+														-->
 														<input type="hidden" name="PCount" id="PCount" value="<?php echo $count['PCount']; ?>"/>
 
 														<div class="input_fields_wrap2">
@@ -380,10 +380,10 @@
 
 														<div class="form-group">
 															<div class="row">
-																<div class="col-md-6"></div>
+																<div class="col-md-1"></div>
 																<div class="col-md-3 text-right">
 																	<a class="add_field_button2 btn btn-md btn-danger">
-																		<span class="glyphicon glyphicon-plus"></span> Produtos
+																		<span class="glyphicon glyphicon-plus"></span> Produtos & Serviços
 																	</a>
 																</div>
 															</div>
