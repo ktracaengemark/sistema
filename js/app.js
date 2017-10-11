@@ -59,7 +59,7 @@ var dateTimePickerOptions = {
  * @param {int} num
  * @returns {decimal}
  */
- 
+
  /*Carrega a Data do Dia do lançamento*/
 function carregaQuitado(value, name, i, cadastrar = 0) {
 
@@ -93,7 +93,7 @@ function carregaQuitado2(value, name, i, cadastrar = 0) {
 
         if (!$("#ValorPagoRecebiveis"+i).val() || $("#ValorPagoRecebiveis"+i).val() == "0,00")
             $("#ValorPagoRecebiveis"+i).val($("#ValorParcelaRecebiveis"+i).val())
-		
+
 		if (!$("#DataPagoRecebiveis"+i).val()) {
             if (cadastrar == 1)
                 $("#DataPagoRecebiveis"+i).val($("#DataVencimentoRecebiveis"+i).val())
@@ -120,7 +120,7 @@ function carregaQuitado2(value, name, i, cadastrar = 0) {
  * @param {int} num
  * @returns {decimal}
  */
- 
+
  /*Carrega a Data do Dia do lançamento*/
 function carregaQuitadoDespesas(value, name, i, cadastrar = 0) {
 
@@ -153,7 +153,7 @@ function carregaQuitadoDespesas2(value, name, i, cadastrar = 0) {
 
         if (!$("#ValorPagoPagaveis"+i).val() || $("#ValorPagoPagaveis"+i).val() == "0,00")
             $("#ValorPagoPagaveis"+i).val($("#ValorParcelaPagaveis"+i).val())
-		
+
 		if (!$("#DataPagoPagaveis"+i).val()) {
             if (cadastrar == 1)
                 $("#DataPagoPagaveis"+i).val($("#DataVencimentoPagaveis"+i).val())
@@ -919,7 +919,7 @@ function adicionaValorServ() {
  * @param {string} tabela
  * @returns {decimal}
  */
-function buscaValor(id, campo, tabela, num) {
+function buscaValor(id, campo, tabela, num, campo2) {
 
     $.ajax({
         // url para o arquivo json.php
@@ -956,6 +956,45 @@ function buscaValor(id, campo, tabela, num) {
 
 
 }
+
+function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
+
+    $.ajax({
+        // url para o arquivo json.php
+        url: window.location.origin + "/" + app + "/Valor_json.php?tabela=" + tabela + "&campo2=" + campo2,
+        // dataType json
+        dataType: "json",
+        // função para de sucesso
+        success: function (data) {
+
+            // executo este laço para acessar os itens do objeto javaScript
+            for (i = 0; i < data.length; i++) {
+
+                if (data[i].id == id) {
+
+                    //carrega o valor no campo de acordo com a opção selecionada
+                    $('#'+campo).val(data[i].valor);
+
+                    //if (tabela == area && $("#QtdVenda"+tabela+num).val()) {
+                    if ($("#QtdVenda"+tabela+num).val()) {
+                        calculaSubtotal($("#idTab_"+tabela+num).val(),$("#QtdVenda"+tabela+num).val(),num,'OUTRO',tabela);
+                        break;
+                    }
+
+                    //para cada valor carregado o orçamento é calculado/atualizado
+                    //através da chamada de sua função
+                    calculaOrcamento();
+                    break;
+                }
+
+            }//fim do laço
+
+        }
+    });//termina o ajax
+
+
+}
+
 
 function buscaValorCompra(id, campo, tabela, num) {
 
@@ -1638,7 +1677,7 @@ $(document).ready(function () {
                             </div>\
                             <div class="col-md-4">\
                                 <label for="idTab_Produto">Produto:</label><br>\
-                                <select class="form-control" id="listadinamicab'+pc+'" onchange="buscaValor(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
+                                <select class="form-control" id="listadinamicab'+pc+'" onchange="buscaValor2Tabelas(this.value,this.name,\'Valor\','+pc+',\'Produto\')" name="idTab_Produto'+pc+'">\
                                     <option value="">-- Selecione uma opção --</option>\
                                 </select>\
                             </div>\

@@ -22,13 +22,13 @@ if ($_GET['q']==1) {
                 CONCAT(TSV.NomeServico, " --- R$ ", TSV.ValorVendaServico) AS NomeServico,
                 TSV.ValorVendaServico
             FROM
-                Tab_Servico AS TSV																				
+                Tab_Servico AS TSV
             WHERE
 				TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				(TSV.Empresa = ' . $_SESSION['log']['id'] . ' OR
 				 TSV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
-			ORDER BY 
-				TSV.NomeServico ASC 				
+			ORDER BY
+				TSV.NomeServico ASC
     ');
 
     while ($row = mysql_fetch_assoc($result)) {
@@ -46,24 +46,28 @@ elseif ($_GET['q'] == 2) {
 
     $result = mysql_query(
             'SELECT
-                TPV.idTab_Produto,
-				CONCAT(TPV.NomeProduto, " --- ", TPV.UnidadeProduto, " --- R$ ", TPV.ValorVendaProduto) AS NomeProduto,
-				TPV.ValorVendaProduto
+                V.idTab_Valor,
+                CONCAT(IFNULL(P.Produtos,""), " -- ", IFNULL(P.UnidadeProduto,""), " -- ", IFNULL(V.Convdesc,""), " --- ", V.ValorVendaProduto) AS NomeProduto,
+                V.ValorVendaProduto
             FROM
-                Tab_Produto AS TPV																	
+                Tab_Produtos AS P,
+                Tab_Valor AS V
             WHERE
-				TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-				(TPV.Empresa = ' . $_SESSION['log']['id'] . ' OR
-				 TPV.Empresa = ' . $_SESSION['log']['Empresa'] . ') 
-			ORDER BY  
-				TPV.NomeProduto ASC				
-    ');
+				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				(P.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 P.Empresa = ' . $_SESSION['log']['Empresa'] . ') AND
+                P.idTab_Produtos = V.idTab_Produtos
+			ORDER BY
+				P.Produtos ASC'
+        );
 
     while ($row = mysql_fetch_assoc($result)) {
 
         $event_array[] = array(
-            'id' => $row['idTab_Produto'],
-            'name' => utf8_encode($row['NomeProduto']),
+            'id' => $row['idTab_Valor'],
+            #'name' => utf8_encode($row['NomeProduto']),
+            #'name' => $row['NomeProduto'],
+            'name' => mb_convert_encoding($row['NomeProduto'], "UTF-8", "ISO-8859-1"),
             'value' => $row['ValorVendaProduto'],
         );
     }
@@ -72,9 +76,9 @@ elseif ($_GET['q'] == 2) {
 elseif ($_GET['q'] == 3) {
 
     $result = mysql_query(
-            'SELECT                
+            'SELECT
 				P.idApp_Profissional,
-				CONCAT(F.Abrev, " --- ", P.NomeProfissional) AS NomeProfissional				
+				CONCAT(F.Abrev, " --- ", P.NomeProfissional) AS NomeProfissional
             FROM
                 App_Profissional AS P
 					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
@@ -97,7 +101,7 @@ elseif ($_GET['q'] == 3) {
 elseif ($_GET['q'] == 4) {
 
     $result = mysql_query(
-            'SELECT                              
+            'SELECT
 				idTab_Convenio,
 				Convenio,
 				Abrev

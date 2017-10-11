@@ -13,25 +13,38 @@ if (!$db) {
 }
 
 #echo 'Conexão bem sucedida';
-
 $result = mysql_query(
         'SELECT
             *
         FROM
             app.Tab_' . $_GET['tabela'] . ' AS T
         WHERE
-			T.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-			(T.Empresa = ' . $_SESSION['log']['id'] . ' OR
-			 T.Empresa = ' . $_SESSION['log']['Empresa'] . ')			
-        ORDER BY T.Nome' . $_GET['tabela'] . ' ASC'
+			T.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo']
 );
+#(T.Empresa = ' . $_SESSION['log']['id'] . ' OR
+#T.Empresa = ' . $_SESSION['log']['Empresa'] . ')'
+#ORDER BY T.Nome' . $_GET['tabela'] . ' ASC
+if ($_GET['tabela']) {
 
-while ($row = mysql_fetch_assoc($result)) {
+    while ($row = mysql_fetch_assoc($result)) {
 
-    $event_array[] = array(
-        'id' => $row['idTab_' . $_GET['tabela']],
-        'valor' => str_replace(".", ",", $row['ValorVenda' . $_GET['tabela']]),
-    );
+        $event_array[] = array(
+            'id' => $row['idTab_' . $_GET['tabela']],
+            'valor' => str_replace(".", ",", $row['ValorVenda' . $_GET['campo2']]),
+        );
+    }
+
+}
+else {
+
+    while ($row = mysql_fetch_assoc($result)) {
+
+        $event_array[] = array(
+            'id' => $row['idTab_' . $_GET['tabela']],
+            'valor' => str_replace(".", ",", $row['ValorVenda' . $_GET['tabela']]),
+        );
+    }
+
 }
 
 echo json_encode($event_array);
