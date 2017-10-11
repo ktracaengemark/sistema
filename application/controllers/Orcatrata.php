@@ -172,8 +172,10 @@ class Orcatrata extends CI_Controller {
 		$data['select']['QuitadoOrca'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoRecebiveis'] = $this->Basico_model->select_status_sn();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        $data['select']['Servico'] = $this->Basico_model->select_servico();
-        $data['select']['Produto'] = $this->Basico_model->select_produto();
+        #$data['select']['Servico'] = $this->Basico_model->select_servico();
+        #$data['select']['Produto'] = $this->Basico_model->select_produto();
+        #$data['select']['Servico'] = $this->Basico_model->select_servicos();
+        $data['select']['Produto'] = $this->Basico_model->select_produtos();		
 
         $data['titulo'] = 'Cadastar Orçamento';
         $data['form_open_path'] = 'orcatrata/cadastrar';
@@ -546,8 +548,10 @@ class Orcatrata extends CI_Controller {
 		$data['select']['QuitadoOrca'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoRecebiveis'] = $this->Basico_model->select_status_sn();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        $data['select']['Servico'] = $this->Basico_model->select_servico();
-        $data['select']['Produto'] = $this->Basico_model->select_produto();
+        #$data['select']['Servico'] = $this->Basico_model->select_servico();
+        #$data['select']['Produto'] = $this->Basico_model->select_produto();
+        #$data['select']['Servico'] = $this->Basico_model->select_servicos();
+        $data['select']['Produto'] = $this->Basico_model->select_produtos();		
 
         $data['titulo'] = 'Editar Orçamento';
         $data['form_open_path'] = 'orcatrata/alterar';

@@ -578,6 +578,54 @@ class Basico_model extends CI_Model {
         return $array;
     }
 	
+	public function select_produtos($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query(
+            'SELECT
+                V.idTab_Valor,
+                CONCAT(IFNULL(P.Produtos,""), " -- ", IFNULL(P.UnidadeProduto,""), " -- ", IFNULL(TCO.Convenio,""), " -- ", IFNULL(V.Convdesc,""), " --- ", V.ValorVendaProduto) AS NomeProduto,
+                V.ValorVendaProduto
+            FROM
+                Tab_Produtos AS P,
+                Tab_Valor AS V
+					LEFT JOIN Tab_Convenio AS TCO ON idTab_Convenio = V.Convenio
+            WHERE
+				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				(P.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 P.Empresa = ' . $_SESSION['log']['Empresa'] . ') AND
+                P.idTab_Produtos = V.idTab_Produtos
+			ORDER BY
+				P.Produtos ASC'
+    );
+        } else {
+            $query = $this->db->query(
+            'SELECT
+                V.idTab_Valor,
+                CONCAT(IFNULL(P.Produtos,""), " -- ", IFNULL(P.UnidadeProduto,""), " -- ", IFNULL(TCO.Convenio,""), " -- ", IFNULL(V.Convdesc,""), " --- ", V.ValorVendaProduto) AS NomeProduto,
+                V.ValorVendaProduto
+            FROM
+                Tab_Produtos AS P,
+                Tab_Valor AS V
+					LEFT JOIN Tab_Convenio AS TCO ON idTab_Convenio = V.Convenio
+            WHERE
+				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				(P.Empresa = ' . $_SESSION['log']['id'] . ' OR
+				 P.Empresa = ' . $_SESSION['log']['Empresa'] . ') AND
+                P.idTab_Produtos = V.idTab_Produtos
+			ORDER BY
+				P.Produtos ASC'
+    );
+
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->idTab_Valor] = $row->NomeProduto;
+            }
+        }
+
+        return $array;
+    }	
+	
 	public function select_servico4($data = FALSE) {
 
         if ($data === TRUE) {

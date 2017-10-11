@@ -47,11 +47,12 @@ elseif ($_GET['q'] == 2) {
     $result = mysql_query(
             'SELECT
                 V.idTab_Valor,
-                CONCAT(IFNULL(P.Produtos,""), " -- ", IFNULL(P.UnidadeProduto,""), " -- ", IFNULL(V.Convdesc,""), " --- ", V.ValorVendaProduto) AS NomeProduto,
+                CONCAT(IFNULL(P.Produtos,""), " -- ", IFNULL(P.UnidadeProduto,""), " -- ", IFNULL(TCO.Convenio,""), " -- ", IFNULL(V.Convdesc,""), " --- ", V.ValorVendaProduto) AS NomeProduto,
                 V.ValorVendaProduto
             FROM
                 Tab_Produtos AS P,
                 Tab_Valor AS V
+					LEFT JOIN Tab_Convenio AS TCO ON idTab_Convenio = V.Convenio
             WHERE
 				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				(P.Empresa = ' . $_SESSION['log']['id'] . ' OR
