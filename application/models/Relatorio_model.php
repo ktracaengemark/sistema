@@ -1393,13 +1393,13 @@ class Relatorio_model extends CI_Model {
 	
 	public function list_produtos($data, $completo) {
 
-		$data['Produtos'] = ($data['Produtos']) ? ' AND TP.idApp_Produtos = ' . $data['Produtos'] : FALSE;
+		$data['Produtos'] = ($data['Produtos']) ? ' AND TP.idTab_Produtos = ' . $data['Produtos'] : FALSE;
         $data['Campo'] = (!$data['Campo']) ? 'TP.Produtos' : $data['Campo'];
         $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 
         $query = $this->db->query('
             SELECT
-                TP.idApp_Produtos,
+                TP.idTab_Produtos,
 				TP.CodProd,
 				TP.Produtos,
 				TP.UnidadeProduto,
@@ -1412,8 +1412,8 @@ class Relatorio_model extends CI_Model {
 				TV.ValorVendaProduto,
 				TC.Convenio				
             FROM
-                App_Produtos AS TP
-					LEFT JOIN App_Valor AS TV ON TV.idApp_Produtos = TP.idApp_Produtos
+                Tab_Produtos AS TP
+					LEFT JOIN Tab_Valor AS TV ON TV.idTab_Produtos = TP.idTab_Produtos
 					LEFT JOIN Tab_Convenio AS TC ON TC.idTab_Convenio = TV.Convenio
 					LEFT JOIN App_Fornecedor AS TF ON TF.idApp_Fornecedor = TP.Fornecedor
 					LEFT JOIN Tab_Categoria AS TCA ON TCA.Abrev = TP.Categoria					
@@ -1471,7 +1471,7 @@ class Relatorio_model extends CI_Model {
 				TC.Convenio				
             FROM
                 App_Servicos AS TP
-					LEFT JOIN App_ValorServ AS TV ON TV.idApp_Servicos = TP.idApp_Servicos
+					LEFT JOIN Tab_ValorServ AS TV ON TV.idApp_Servicos = TP.idApp_Servicos
 					LEFT JOIN Tab_Convenio AS TC ON TC.idTab_Convenio = TV.Convenio
 					LEFT JOIN App_Fornecedor AS TF ON TF.idApp_Fornecedor = TP.Fornecedor
             WHERE
@@ -2163,10 +2163,10 @@ class Relatorio_model extends CI_Model {
 
         $query = $this->db->query('
             SELECT
-                OB.idApp_Produtos,
+                OB.idTab_Produtos,
                 OB.Produtos
             FROM
-                App_Produtos AS OB
+                Tab_Produtos AS OB
             WHERE
                 OB.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				OB.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
@@ -2177,7 +2177,7 @@ class Relatorio_model extends CI_Model {
         $array = array();
         $array[0] = ':: Todos ::';
         foreach ($query->result() as $row) {
-            $array[$row->idApp_Produtos] = $row->Produtos;
+            $array[$row->idTab_Produtos] = $row->Produtos;
         }
 
         return $array;

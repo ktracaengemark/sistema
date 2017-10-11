@@ -35,8 +35,8 @@
                     foreach ($report->result_array() as $row) {
 
                         #echo '<tr>';
-                        echo '<tr class="clickable-row" data-href="' . base_url() . 'produtos/alterar/' . $row['idTab_Produtos'] . '">';
- 							#echo '<td>' . $row['idTab_Produtos'] . '</td>';
+                        echo '<tr class="clickable-row" data-href="' . base_url() . 'produtos/alterar/' . $row['idApp_Produtos'] . '">';
+ 							#echo '<td>' . $row['idApp_Produtos'] . '</td>';
 							echo '<td>' . $row['NomeFornecedor'] . '</td>';							
  							echo '<td>' . $row['Categoria'] . '</td>'; 							
 							echo '<td>' . $row['CodProd'] . '</td>';

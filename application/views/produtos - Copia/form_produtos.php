@@ -11,7 +11,7 @@
 
 					<?php echo form_open_multipart($form_open_path); ?>
 
-					<!--Tab_Produtos-->
+					<!--App_Produtos-->
 
 					<div class="form-group">
 						<div class="panel panel-info">
@@ -123,7 +123,7 @@
 									?>
 
 									<?php if ($metodo > 1) { ?>
-									<input type="hidden" name="idTab_Valor<?php echo $i ?>" value="<?php echo $valor[$i]['idTab_Valor']; ?>"/>
+									<input type="hidden" name="idApp_Valor<?php echo $i ?>" value="<?php echo $valor[$i]['idApp_Valor']; ?>"/>
 									<?php } ?>
 
 									<div class="form-group" id="3div<?php echo $i ?>">
@@ -207,9 +207,9 @@
 					<div class="form-group">
 						<div class="row">
 							<!--<input type="hidden" name="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>">-->
-							<input type="hidden" name="idTab_Produtos" value="<?php echo $produtos['idTab_Produtos']; ?>">
+							<input type="hidden" name="idApp_Produtos" value="<?php echo $produtos['idApp_Produtos']; ?>">
 							<?php if ($metodo > 1) { ?>
-							<!--<input type="hidden" name="idTab_Valor" value="<?php echo $valor['idTab_Valor']; ?>">
+							<!--<input type="hidden" name="idApp_Valor" value="<?php echo $valor['idApp_Valor']; ?>">
 							<input type="hidden" name="idApp_ParcelasRec" value="<?php echo $parcelasrec['idApp_ParcelasRec']; ?>">-->
 							<?php } ?>
 							<?php if ($metodo == 2) { ?>
@@ -242,7 +242,7 @@
 													</button>
 												</div>
 												<div class="col-md-6 text-right">
-													<a class="btn btn-danger" href="<?php echo base_url() . 'produtos/excluir/' . $produtos['idTab_Produtos'] ?>" role="button">
+													<a class="btn btn-danger" href="<?php echo base_url() . 'produtos/excluir/' . $produtos['idApp_Produtos'] ?>" role="button">
 														<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
 													</a>
 												</div>

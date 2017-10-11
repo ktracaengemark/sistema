@@ -34,7 +34,7 @@
 
                     <div class="bs-callout bs-callout-success" id=callout-overview-not-both>
 
-                        <a class="btn btn-success" href="<?php echo base_url() . 'produtos/alterar/' . $row['idTab_Produtos'] ?>" role="button">
+                        <a class="btn btn-success" href="<?php echo base_url() . 'produtos/alterar/' . $row['idApp_Produtos'] ?>" role="button">
                             <span class="glyphicon glyphicon-edit"></span> Editar Dados
                         </a>
 
@@ -45,7 +45,7 @@
                         
                         <h4>
 							<p>
-								<span class=""></span> <b>Produtos:</b> <?php echo $row['idTab_Produtos']; ?>
+								<span class=""></span> <b>Produtos:</b> <?php echo $row['idApp_Produtos']; ?>
                             </p>
 							<p>
 								<span class="glyphicon glyphicon-pencil"></span> <b></b> <?php echo nl2br($row['Produtos']); ?>	
@@ -100,7 +100,7 @@
 
                     <div class="bs-callout bs-callout-danger" id=callout-overview-not-both>
 
-                        <a class="btn btn-danger" href="<?php echo base_url() . 'produtos/alterar/' . $row['idTab_Produtos'] ?>" role="button">
+                        <a class="btn btn-danger" href="<?php echo base_url() . 'produtos/alterar/' . $row['idApp_Produtos'] ?>" role="button">
                             <span class="glyphicon glyphicon-edit"></span> Editar Dados
                         </a>
 
@@ -108,7 +108,7 @@
 						
                         <h4>						
                             <p>
-								<span class=""></span> <b>Produtos:</b> <?php echo $row['idTab_Produtos']; ?>
+								<span class=""></span> <b>Produtos:</b> <?php echo $row['idApp_Produtos']; ?>
                             </p>
 							<p>
 								<span class="glyphicon glyphicon-pencil"></span> <b></b> <?php echo nl2br($row['Produtos']); ?>	

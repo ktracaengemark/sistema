@@ -48,8 +48,8 @@ class Produtos extends CI_Controller {
             $data['msg'] = '';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $data['produtos'] = quotes_to_entities($this->input->post(array(
-            #### Tab_Produtos ####
-            'idTab_Produtos',           
+            #### App_Produtos ####
+            'idApp_Produtos',           
             'TipoProduto',
 			'Categoria',
 			'UnidadeProduto',
@@ -86,10 +86,10 @@ class Produtos extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        #### Tab_Produtos ####
+        #### App_Produtos ####
 
         $this->form_validation->set_rules('TipoProduto', 'TipoProduto', 'required|trim');
-		$this->form_validation->set_rules('CodProd', 'Código', 'is_unique[Tab_Produtos.CodProd]');
+		$this->form_validation->set_rules('CodProd', 'Código', 'is_unique[App_Produtos.CodProd]');
 
 		$data['select']['Fornecedor'] = $this->Fornecedor_model->select_fornecedor();
 		$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();
@@ -134,12 +134,12 @@ class Produtos extends CI_Controller {
         } else {
 
             ////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
-            #### Tab_Produtos ####
+            #### App_Produtos ####
 
 			$data['produtos']['Empresa'] = $_SESSION['log']['Empresa'];            
             $data['produtos']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['produtos']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-            $data['produtos']['idTab_Produtos'] = $this->Produtos_model->set_produtos($data['produtos']);
+            $data['produtos']['idApp_Produtos'] = $this->Produtos_model->set_produtos($data['produtos']);
             /*
             echo count($data['servico']);
             echo '<br>';
@@ -149,17 +149,17 @@ class Produtos extends CI_Controller {
             exit ();
             */
 
-            #### Tab_Valor ####
+            #### App_Valor ####
             if (isset($data['valor'])) {
                 $max = count($data['valor']);
                 for($j=1;$j<=$max;$j++) {
                     $data['valor'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
                     $data['valor'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 					$data['valor'][$j]['Empresa'] = $_SESSION['log']['Empresa'];
-                    $data['valor'][$j]['idTab_Produtos'] = $data['produtos']['idTab_Produtos'];					
+                    $data['valor'][$j]['idApp_Produtos'] = $data['produtos']['idApp_Produtos'];					
 
                 }
-                $data['valor']['idTab_Valor'] = $this->Produtos_model->set_valor($data['valor']);
+                $data['valor']['idApp_Valor'] = $this->Produtos_model->set_valor($data['valor']);
             }
 
 /*
@@ -171,15 +171,15 @@ class Produtos extends CI_Controller {
 //////////////////////////////////////////////////Dados Basicos/////////////////////////////////////////////////////////////////////////
 */
 
-            if ($data['idTab_Produtos'] === FALSE) {
+            if ($data['idApp_Produtos'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
                 $this->basico->erro($msg);
                 $this->load->view('produtos/form_produtos', $data);
             } else {
 
-                //$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Produtos'], FALSE);
-                //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
+                //$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idApp_Produtos'], FALSE);
+                //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Produtos', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
                 #redirect(base_url() . 'produtos/listar/' . $data['msg']);
@@ -202,8 +202,8 @@ class Produtos extends CI_Controller {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $data['produtos'] = quotes_to_entities($this->input->post(array(
-            #### Tab_Produtos ####
-            'idTab_Produtos',			
+            #### App_Produtos ####
+            'idApp_Produtos',			
             'TipoProduto',
 			'Categoria',
 			'UnidadeProduto',
@@ -223,7 +223,7 @@ class Produtos extends CI_Controller {
         for ($i = 1; $i <= $data['count']['PTCount']; $i++) {
 
             if ($this->input->post('Convenio' . $i) || $this->input->post('Convdesc' . $i) || $this->input->post('ValorVendaProduto' . $i)) {
-                $data['valor'][$j]['idTab_Valor'] = $this->input->post('idTab_Valor' . $i);
+                $data['valor'][$j]['idApp_Valor'] = $this->input->post('idApp_Valor' . $i);
                 $data['valor'][$j]['Convenio'] = $this->input->post('Convenio' . $i);
 				$data['valor'][$j]['Convdesc'] = $this->input->post('Convdesc' . $i);
                 $data['valor'][$j]['ValorVendaProduto'] = $this->input->post('ValorVendaProduto' . $i);
@@ -237,7 +237,7 @@ class Produtos extends CI_Controller {
         //Fim do trecho de código que dá pra melhorar
 
         if ($id) {
-            #### Tab_Produtos ####
+            #### App_Produtos ####
             $data['produtos'] = $this->Produtos_model->get_produtos($id);
            
             #### Carrega os dados do cliente nas variáves de sessão ####
@@ -245,7 +245,7 @@ class Produtos extends CI_Controller {
             #$_SESSION['Cliente'] = $this->Cliente_model->get_cliente($data['produtos']['idApp_Cliente'], TRUE);
             #$_SESSION['log']['idApp_Cliente'] = $_SESSION['Cliente']['idApp_Cliente'];
 
-            #### Tab_Valor ####
+            #### App_Valor ####
             $data['valor'] = $this->Produtos_model->get_valor($id);
             if (count($data['valor']) > 0) {
                 $data['valor'] = array_combine(range(1, count($data['valor'])), array_values($data['valor']));
@@ -263,10 +263,10 @@ class Produtos extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        #### Tab_Produtos ####
+        #### App_Produtos ####
      
         $this->form_validation->set_rules('TipoProduto', 'TipoProduto', 'required|trim');
-		#$this->form_validation->set_rules('CodProd', 'Código', 'is_unique[Tab_Produtos.CodProd]');
+		#$this->form_validation->set_rules('CodProd', 'Código', 'is_unique[App_Produtos.CodProd]');
      
 		$data['select']['Fornecedor'] = $this->Fornecedor_model->select_fornecedor();		
 		$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();
@@ -311,23 +311,23 @@ class Produtos extends CI_Controller {
         } else {
 
             ////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
-            #### Tab_Produtos ####
+            #### App_Produtos ####
 
 			$data['produtos']['Empresa'] = $_SESSION['log']['Empresa'];             
             $data['produtos']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['produtos']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
-            $data['update']['produtos']['anterior'] = $this->Produtos_model->get_produtos($data['produtos']['idTab_Produtos']);
+            $data['update']['produtos']['anterior'] = $this->Produtos_model->get_produtos($data['produtos']['idApp_Produtos']);
             $data['update']['produtos']['campos'] = array_keys($data['produtos']);
             $data['update']['produtos']['auditoriaitem'] = $this->basico->set_log(
                 $data['update']['produtos']['anterior'],
                 $data['produtos'],
                 $data['update']['produtos']['campos'],
-                $data['produtos']['idTab_Produtos'], TRUE);
-            $data['update']['produtos']['bd'] = $this->Produtos_model->update_produtos($data['produtos'], $data['produtos']['idTab_Produtos']);
+                $data['produtos']['idApp_Produtos'], TRUE);
+            $data['update']['produtos']['bd'] = $this->Produtos_model->update_produtos($data['produtos'], $data['produtos']['idApp_Produtos']);
 
-            #### Tab_Valor ####
-            $data['update']['valor']['anterior'] = $this->Produtos_model->get_valor($data['produtos']['idTab_Produtos']);
+            #### App_Valor ####
+            $data['update']['valor']['anterior'] = $this->Produtos_model->get_valor($data['produtos']['idApp_Produtos']);
             if (isset($data['valor']) || (!isset($data['valor']) && isset($data['update']['valor']['anterior']) ) ) {
 
                 if (isset($data['valor']))
@@ -336,14 +336,14 @@ class Produtos extends CI_Controller {
                     $data['valor'] = array();
 
                 //faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
-                $data['update']['valor'] = $this->basico->tratamento_array_multidimensional($data['valor'], $data['update']['valor']['anterior'], 'idTab_Valor');
+                $data['update']['valor'] = $this->basico->tratamento_array_multidimensional($data['valor'], $data['update']['valor']['anterior'], 'idApp_Valor');
 
                 $max = count($data['update']['valor']['inserir']);
                 for($j=0;$j<$max;$j++) {
                     $data['update']['valor']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
                     $data['update']['valor']['inserir'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 					$data['update']['valor']['inserir'][$j]['Empresa'] = $_SESSION['log']['Empresa'];
-                    $data['update']['valor']['inserir'][$j]['idTab_Produtos'] = $data['produtos']['idTab_Produtos'];
+                    $data['update']['valor']['inserir'][$j]['idApp_Produtos'] = $data['produtos']['idApp_Produtos'];
 
 					
                 }
@@ -373,7 +373,7 @@ class Produtos extends CI_Controller {
 //////////////////////////////////////////////////Dados Basicos/////////////////////////////////////////////////////////////////////////
 */
 
-            //if ($data['idTab_Produtos'] === FALSE) {
+            //if ($data['idApp_Produtos'] === FALSE) {
             //if ($data['auditoriaitem'] && $this->Cliente_model->update_cliente($data['query'], $data['query']['idApp_Cliente']) === FALSE) {
             if ($data['auditoriaitem'] && !$data['update']['produtos']['bd']) {
                 $data['msg'] = '?m=2';
@@ -383,8 +383,8 @@ class Produtos extends CI_Controller {
                 $this->load->view('produtos/form_produtos', $data);
             } else {
 
-                //$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Produtos'], FALSE);
-                //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
+                //$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idApp_Produtos'], FALSE);
+                //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Produtos', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
                 #redirect(base_url() . 'produtos/listar/' . $data['msg']);
