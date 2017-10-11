@@ -976,8 +976,8 @@ function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
                     $('#'+campo).val(data[i].valor);
 
                     //if (tabela == area && $("#QtdVenda"+tabela+num).val()) {
-                    if ($("#QtdVenda"+tabela+num).val()) {
-                        calculaSubtotal($("#idTab_"+tabela+num).val(),$("#QtdVenda"+tabela+num).val(),num,'OUTRO',tabela);
+                    if ($("#QtdVenda"+campo2+num).val()) {
+                        calculaSubtotal($("#idTab_"+campo2+num).val(),$("#QtdVenda"+campo2+num).val(),num,'OUTRO',campo2);
                         break;
                     }
 
