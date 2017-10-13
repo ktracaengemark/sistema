@@ -53,14 +53,14 @@
 											<div class="form-group col-md-10 text-left">
 												<div class="row">													
 													<a class="btn btn-md btn-primary" href="<?php echo base_url() ?>convenio/cadastrar" role="button"> 
-														<span class="glyphicon glyphicon-qrcode"></span> Tabelas & Planos
+														<span class="glyphicon glyphicon-qrcode"></span> Planos & Convênios
 													</a>
 												</div>	
 											</div>													
 											<div class="form-group col-md-10 text-left">
 												<div class="row">		
-													<a class="btn btn-md btn-primary" href="<?php echo base_url() ?>produtos/cadastrar" role="button"> 
-														<span class="glyphicon glyphicon-qrcode"></span> Produtos & Serviços
+													<a class="btn btn-md btn-primary" href="<?php echo base_url() ?>relatorio/produtos" role="button"> 
+														<span class="glyphicon glyphicon-qrcode"></span> Produtos & Preços
 													</a>
 												</div>	
 											</div>	
@@ -142,13 +142,15 @@
 										</div>
 										<div class="col-md-10">											
 											<label for="">Produtos & Serviços:</label>
+											<!--
 											<div class="form-group col-md-10 text-left">
 												<div class="row">		
 													<a type="button" class="btn btn-md btn-primary" href="<?php echo base_url() ?>relatorio/produtos" role="button"> 
 														<span class="glyphicon glyphicon-barcode"></span> Tabela de Preços
 													</a>
 												</div>	
-											</div>											
+											</div>
+											-->
 											<div class="form-group col-md-10 text-left">
 												<div class="row">
 													<a type="button" class="btn btn-md btn-primary" href="<?php echo base_url() ?>relatorio/produtoscomp" role="button"> 

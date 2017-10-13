@@ -493,7 +493,7 @@ class Relatorio extends CI_Controller {
             'C.NomeCliente' => 'Nome do Cliente',
 			'OT.idApp_OrcaTrata' => 'Id Orçam.',
             'OT.DataOrca' => 'Data do Orçam.',
-			'TPB.ProdutoBase' => 'Produto',
+			'TPV.Produtos' => 'Produto',
 
         );
 

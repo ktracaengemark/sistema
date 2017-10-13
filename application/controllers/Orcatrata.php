@@ -621,9 +621,9 @@ class Orcatrata extends CI_Controller {
             $data['orcatrata']['ValorEntradaOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorEntradaOrca']));
             $data['orcatrata']['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntradaOrca'], 'mysql');
             $data['orcatrata']['ValorRestanteOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorRestanteOrca']));
-			$data['orcatrata']['Empresa'] = $_SESSION['log']['Empresa'];
-            $data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['id'];
-            $data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+			#$data['orcatrata']['Empresa'] = $_SESSION['log']['Empresa'];
+            #$data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['id'];
+            #$data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
             $data['update']['orcatrata']['anterior'] = $this->Orcatrata_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata']);
             $data['update']['orcatrata']['campos'] = array_keys($data['orcatrata']);

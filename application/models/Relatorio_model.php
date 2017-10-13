@@ -427,15 +427,17 @@ class Relatorio_model extends CI_Model {
 				OT.idApp_OrcaTrata,
                 OT.DataOrca,
 				APV.QtdVendaProduto,
-				TPB.ProdutoBase
+				TPV.Produtos,
+				TVV.idTab_Valor
+
             FROM
                 App_Cliente AS C,
 				App_OrcaTrata AS OT
 					LEFT JOIN App_ProdutoVenda AS APV ON APV.idApp_OrcaTrata = OT.idApp_OrcaTrata
-					LEFT JOIN Tab_Produto AS TPV ON TPV.idTab_Produto = APV.idTab_Produto
-					LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase = TPV.ProdutoBase
+					LEFT JOIN Tab_Valor AS TVV ON TVV.idTab_Valor = APV.idTab_Produto
+					LEFT JOIN Tab_Produtos AS TPV ON TPV.idTab_Produtos = TVV.idTab_Produtos
 		   WHERE
-                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				(' . $consulta . ') AND
 				APV.idApp_ProdutoVenda != "0" AND
@@ -1418,7 +1420,7 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_Fornecedor AS TF ON TF.idApp_Fornecedor = TP.Fornecedor
 					LEFT JOIN Tab_Categoria AS TCA ON TCA.Abrev = TP.Categoria					
             WHERE
-                TP.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                TP.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
 				' . $data['Produtos'] . ' 
 			ORDER BY
@@ -1874,10 +1876,7 @@ class Relatorio_model extends CI_Model {
             FROM
                 App_Cliente 
             WHERE
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-				idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
-				OR
-				Empresa = ' . $_SESSION['log']['id'] . ' AND
+                Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
             ORDER BY
                 NomeCliente ASC

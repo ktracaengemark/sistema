@@ -22,7 +22,7 @@
 							echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
                             echo '<td>' . $row['DataOrca'] . '</td>';
 							echo '<td>' . $row['QtdVendaProduto'] . '</td>';
-							echo '<td>' . $row['ProdutoBase'] . '</td>';
+							echo '<td>' . $row['Produtos'] . '</td>';
                         echo '</tr>';
                     }
                     ?>

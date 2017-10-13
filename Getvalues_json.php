@@ -25,8 +25,7 @@ if ($_GET['q']==1) {
                 Tab_Servico AS TSV
             WHERE
 				TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-				(TSV.Empresa = ' . $_SESSION['log']['id'] . ' OR
-				 TSV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
+				TSV.Empresa = ' . $_SESSION['log']['Empresa'] . '
 			ORDER BY
 				TSV.NomeServico ASC
     ');
@@ -55,8 +54,7 @@ elseif ($_GET['q'] == 2) {
 					LEFT JOIN Tab_Convenio AS TCO ON idTab_Convenio = V.Convenio
             WHERE
 				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-				(P.Empresa = ' . $_SESSION['log']['id'] . ' OR
-				 P.Empresa = ' . $_SESSION['log']['Empresa'] . ') AND
+				P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
                 P.idTab_Produtos = V.idTab_Produtos
 			ORDER BY
 				P.Produtos ASC'
@@ -110,7 +108,7 @@ elseif ($_GET['q'] == 4) {
                 Tab_Convenio
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                Empresa = ' . $_SESSION['log']['Empresa'] . '
                 ORDER BY Convenio ASC'
     );
 

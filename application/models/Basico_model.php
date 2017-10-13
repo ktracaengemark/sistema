@@ -439,9 +439,9 @@ class Basico_model extends CI_Model {
 			$query = $this->db->query('
 				SELECT * 
 					FROM 
-						Sis_Usuario 
+						Sis_EmpresaFilial 
 					WHERE 
-						idSis_Usuario = "' . $data . '"
+						idSis_EmpresaFilial = "' . $data . '"
 				');
 
             if ($query->num_rows() === 0) {

@@ -49,7 +49,7 @@ class Contatofunc extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'idApp_ContatoFunc',
-            'idSis_Usuario',
+            'idSis_EmpresaFilial',			
             'NomeContatoFunc',
             'StatusVida',
 			'Ativo',
@@ -58,7 +58,7 @@ class Contatofunc extends CI_Controller {
 			'RelaPes',
 			'TelefoneContatoFunc',
             'Obs',
-            #'idSis_Usuario',
+            'idSis_Usuario',
                         ), TRUE));
 
         //echo '<br><br><br><br><br>==========================================='.$data['query']['StatusVida']='V';
@@ -91,7 +91,7 @@ class Contatofunc extends CI_Controller {
             $data['query']['NomeContatoFunc'] = trim(mb_strtoupper($data['query']['NomeContatoFunc'], 'ISO-8859-1'));
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
             $data['query']['Obs'] = nl2br($data['query']['Obs']);
-			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+			$data['query']['idSis_EmpresaFilial'] = $_SESSION['log']['id'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
@@ -128,7 +128,7 @@ class Contatofunc extends CI_Controller {
 
         $data['query'] = $this->input->post(array(
             'idApp_ContatoFunc',
-            'idSis_Usuario',
+            'idSis_EmpresaFilial',
             'NomeContatoFunc',
             'StatusVida',
             'DataNascimento',
@@ -136,7 +136,7 @@ class Contatofunc extends CI_Controller {
 			'RelaPes',
             'TelefoneContatoFunc',
             'Obs',
-            #'idSis_Usuario',
+            'idSis_Usuario',
 			'Ativo',
                 ), TRUE);
 
@@ -174,7 +174,7 @@ class Contatofunc extends CI_Controller {
             $data['query']['NomeContatoFunc'] = trim(mb_strtoupper($data['query']['NomeContatoFunc'], 'ISO-8859-1'));
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
             $data['query']['Obs'] = nl2br($data['query']['Obs']);
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id']; 
+            $data['query']['idSis_EmpresaFilial'] = $_SESSION['log']['id']; 
 			$data['query']['idApp_ContatoFunc'] = $_SESSION['log']['idApp_ContatoFunc'];
 
             $data['anterior'] = $this->Contatofunc_model->get_contatofunc($data['query']['idApp_ContatoFunc']);

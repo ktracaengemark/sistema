@@ -52,6 +52,7 @@ class Convenio extends CI_Controller {
 			'idTab_Convenio',
             'Convenio',
 			'Abrev',
+			'Empresa',
                 ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -88,6 +89,7 @@ class Convenio extends CI_Controller {
            # $data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
             $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+			$data['query']['Empresa'] = $_SESSION['log']['Empresa'];
 
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
@@ -127,6 +129,7 @@ class Convenio extends CI_Controller {
 			'idTab_Convenio',
             'Convenio',
             'Abrev',
+			'Empresa',
                 ), TRUE));
 
 
@@ -168,6 +171,7 @@ class Convenio extends CI_Controller {
 			$data['query']['Abrev'] = trim(mb_strtoupper($data['query']['Abrev'], 'ISO-8859-1'));
            # $data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
             $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+			$data['query']['Empresa'] = $_SESSION['log']['Empresa'];
 
             $data['anterior'] = $this->Convenio_model->get_convenio($data['query']['idTab_Convenio']);
             $data['campos'] = array_keys($data['query']);

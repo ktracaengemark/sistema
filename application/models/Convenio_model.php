@@ -65,7 +65,7 @@ class Convenio_model extends CI_Model {
         $query = $this->db->query('SELECT * '
                 . 'FROM Tab_Convenio '
                 . 'WHERE '
-                . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                . 'Empresa = ' . $_SESSION['log']['Empresa'] . ' AND '
                 . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
                 . 'ORDER BY Convenio ASC ');
 
@@ -171,7 +171,7 @@ class Convenio_model extends CI_Model {
                 Tab_Convenio
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                Empresa = ' . $_SESSION['log']['Empresa'] . '
                 ORDER BY Convenio ASC'
     );
         } else {
@@ -184,7 +184,7 @@ class Convenio_model extends CI_Model {
                 Tab_Convenio
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                Empresa = ' . $_SESSION['log']['Empresa'] . '
                 ORDER BY Convenio ASC'
     );
 
