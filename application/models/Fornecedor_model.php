@@ -134,9 +134,9 @@ class Fornecedor_model extends CI_Model {
 					LEFT JOIN Tab_TipoFornec AS TF ON TF.Abrev = E.TipoFornec
 					LEFT JOIN Tab_StatusSN AS TS ON TS.Abrev = E.VendaFornec
 					LEFT JOIN App_Atividade AS TA ON TA.idApp_Atividade = E.Atividade
-
             WHERE
-                E.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                E.Empresa = ' . $_SESSION['log']['Empresa'] . '
+				E.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
 			ORDER BY
                 E.NomeFornecedor ASC
         ');
@@ -241,7 +241,7 @@ class Fornecedor_model extends CI_Model {
                 App_Fornecedor
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+                Empresa = ' . $_SESSION['log']['Empresa'] . ' 
 			ORDER BY NomeFornecedor ASC'
     );
             

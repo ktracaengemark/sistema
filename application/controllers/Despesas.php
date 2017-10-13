@@ -578,9 +578,9 @@ class Despesas extends CI_Controller {
             $data['despesas']['DataEntradaDespesas'] = $this->basico->mascara_data($data['despesas']['DataEntradaDespesas'], 'mysql');
             $data['despesas']['ValorRestanteDespesas'] = str_replace(',', '.', str_replace('.', '', $data['despesas']['ValorRestanteDespesas']));
 			$data['despesas']['TipoProduto'] = $data['despesas']['TipoProduto'];
-			$data['despesas']['Empresa'] = $_SESSION['log']['Empresa'];			
+			#$data['despesas']['Empresa'] = $_SESSION['log']['Empresa'];			
             $data['despesas']['idSis_Usuario'] = $_SESSION['log']['id'];
-            $data['despesas']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+            #$data['despesas']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
             $data['update']['despesas']['anterior'] = $this->Despesas_model->get_despesas($data['despesas']['idApp_Despesas']);
             $data['update']['despesas']['campos'] = array_keys($data['despesas']);

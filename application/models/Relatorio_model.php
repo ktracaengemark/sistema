@@ -66,7 +66,7 @@ class Relatorio_model extends CI_Model {
                     LEFT JOIN App_ParcelasRecebiveis AS PR ON OT.idApp_OrcaTrata = PR.idApp_OrcaTrata
 
             WHERE
-                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 (' . $consulta . ') AND
                 ' . $filtro1 . '
@@ -172,7 +172,6 @@ class Relatorio_model extends CI_Model {
         $query = $this->db->query('
             SELECT
                 C.NomeCliente,
-
                 OT.idApp_OrcaTrata,
                 OT.AprovadoOrca,
                 OT.DataOrca,
@@ -188,14 +187,12 @@ class Relatorio_model extends CI_Model {
                 PR.ValorPagoRecebiveis,
 				PR.ValorPagoPagaveis,
                 PR.QuitadoRecebiveis
-
             FROM
                 App_Cliente AS C,
                 App_OrcaTrata AS OT
                     LEFT JOIN App_ParcelasRecebiveis AS PR ON OT.idApp_OrcaTrata = PR.idApp_OrcaTrata
-
             WHERE
-                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 (' . $consulta . ') AND				
                 ' . $filtro1 . '
@@ -305,7 +302,6 @@ class Relatorio_model extends CI_Model {
 		
         $query = $this->db->query('
             SELECT
-
                 DS.idApp_Despesas,
 				DS.Despesa,
 				TD.TipoDespesa,
@@ -322,15 +318,12 @@ class Relatorio_model extends CI_Model {
                 PP.DataPagoPagaveis,
 				PP.ValorPagoPagaveis,
                 PP.QuitadoPagaveis
-
             FROM
-
                 App_Despesas AS DS
                     LEFT JOIN App_ParcelasPagaveis AS PP ON DS.idApp_Despesas = PP.idApp_Despesas							
                     LEFT JOIN Tab_TipoDespesa AS TD ON TD.idTab_TipoDespesa = DS.TipoDespesa
-
             WHERE
-                DS.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                DS.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				DS.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				' . $filtro2 . '				
 				' . $filtro4 . '
@@ -564,7 +557,7 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN Sis_Usuario AS TSU ON TSU.idSis_Usuario = PV.idSis_Usuario
 					LEFT JOIN App_Profissional AS P ON P.idApp_Profissional = OT.ProfissionalOrca																								
             WHERE
-                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				(' . $consulta . ') AND
 				PV.idApp_ServicoVenda != "0" AND
@@ -625,7 +618,7 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_ProdutoCompra AS APC ON APC.idApp_Despesas = TCO.idApp_Despesas					
 					LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase = APC.idTab_Produto					
             WHERE
-                TCO.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                TCO.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND				
 				(' . $consulta . ') 
 				' . $data['TipoDespesa'] . ' AND
@@ -684,7 +677,7 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_ProdutoCompra AS APC ON APC.idApp_Despesas = TCO.idApp_Despesas					
 					LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase = APC.idTab_Produto					
             WHERE
-                TCO.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                TCO.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				(' . $consulta . ') 
 				' . $data['TipoDespesa'] . ' AND
@@ -754,10 +747,7 @@ class Relatorio_model extends CI_Model {
                 App_OrcaTrata AS OT
 				LEFT JOIN Sis_Usuario AS TSU ON TSU.idSis_Usuario = OT.idSis_Usuario
             WHERE
-                (C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' OR
-				C.idSis_Usuario = ' . $_SESSION['log']['Empresa'] . ' OR
-				C.Empresa = ' . $_SESSION['log']['id'] . ' OR
-				C.Empresa = ' . $_SESSION['log']['Empresa'] . ') AND
+				C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 (' . $consulta . ') AND
                 ' . $filtro1 . '
@@ -1022,8 +1012,7 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN Tab_RelaPes AS TCP ON TCP.idTab_RelaPes = CC.RelaPes
             WHERE               
                 C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-				(C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' OR
-				 C.Empresa = ' . $_SESSION['log']['Empresa'] . ') 						
+				C.Empresa = ' . $_SESSION['log']['Empresa'] . ' 						
 				' . $data['NomeCliente'] . '				
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -1354,7 +1343,7 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN Tab_StatusSN AS TS ON TS.Abrev = E.VendaFornec
 					LEFT JOIN App_Atividade AS TA ON TA.idApp_Atividade = E.Atividade
             WHERE
-                E.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                E.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				E.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
 				' . $data['NomeFornecedor'] . ' 
 			ORDER BY
@@ -1477,7 +1466,7 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN Tab_Convenio AS TC ON TC.idTab_Convenio = TV.Convenio
 					LEFT JOIN App_Fornecedor AS TF ON TF.idApp_Fornecedor = TP.Fornecedor
             WHERE
-                TP.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                TP.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
 				' . $data['Servicos'] . ' 
 			ORDER BY
@@ -1550,7 +1539,7 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_Procedimento AS PC ON OT.idApp_OrcaTrata = PC.idApp_OrcaTrata
 					LEFT JOIN App_Profissional AS PR ON PR.idApp_Profissional = PC.Profissional										
 			WHERE
-                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 (' . $consulta . ') AND
                 ' . $filtro1 . '
@@ -1731,7 +1720,7 @@ class Relatorio_model extends CI_Model {
 				LEFT JOIN Tab_Produto AS TPD ON TPD.idTab_Produto = PD.idTab_Produto
 				LEFT JOIN App_Procedimento AS PC ON OT.idApp_OrcaTrata = PC.idApp_OrcaTrata
             WHERE
-                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idApp_Cliente = OT.idApp_Cliente
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -1814,7 +1803,8 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_Profissional AS PR ON PR.idApp_Profissional = PC.Profissional
 
 			WHERE
-                C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 (' . $consulta . ') AND
                 ' . $filtro1 . '
 
@@ -1902,9 +1892,6 @@ class Relatorio_model extends CI_Model {
             WHERE
                 Associado = ' . $_SESSION['log']['id'] . ' AND
 				idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
-				OR
-				Empresa = ' . $_SESSION['log']['id'] . ' AND
-				idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
             ORDER BY
                 Nome ASC
         ');
@@ -1951,7 +1938,7 @@ class Relatorio_model extends CI_Model {
             FROM
                 App_Fornecedor 
             WHERE
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
             ORDER BY
                 NomeFornecedor ASC
@@ -2071,7 +2058,7 @@ class Relatorio_model extends CI_Model {
             FROM
                 Tab_Convenio AS P
             WHERE
-                P.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
             ORDER BY
                 Convenio ASC
@@ -2095,7 +2082,7 @@ class Relatorio_model extends CI_Model {
             FROM
                 Tab_TipoDespesa AS TD
             WHERE
-				TD.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TD.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TD.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
             ORDER BY
                 TipoDespesa ASC
@@ -2119,7 +2106,7 @@ class Relatorio_model extends CI_Model {
             FROM
                 Tab_TipoConsumo AS TD
 			WHERE
-				TD.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+				TD.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TD.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '           
             ORDER BY
                 TipoConsumo ASC
@@ -2167,7 +2154,7 @@ class Relatorio_model extends CI_Model {
             FROM
                 Tab_Produtos AS OB
             WHERE
-                OB.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                OB.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				OB.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
             ORDER BY
                 Produtos ASC
@@ -2191,7 +2178,7 @@ class Relatorio_model extends CI_Model {
             FROM
                 App_Servicos AS OB
             WHERE
-                OB.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                OB.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				OB.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
             ORDER BY
                 Servicos ASC
@@ -2241,9 +2228,6 @@ class Relatorio_model extends CI_Model {
             WHERE
                 P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 P.Empresa = ' . $_SESSION['log']['id'] . ' 
-				OR
-				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-				P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
 			ORDER BY P.Nome ASC
         ');
 
