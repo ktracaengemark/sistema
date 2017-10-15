@@ -48,8 +48,8 @@
 										</div>
 
 										<div class="col-md-10">										
-											<label for="">Produtos & Serviços:</label>
-											
+											<label for="">Produtos & Valores:</label>
+										
 											<div class="form-group col-md-10 text-left">
 												<div class="row">													
 													<a class="btn btn-md btn-primary" href="<?php echo base_url() ?>convenio/cadastrar" role="button"> 
@@ -63,7 +63,14 @@
 														<span class="glyphicon glyphicon-qrcode"></span> Produtos & Preços
 													</a>
 												</div>	
-											</div>	
+											</div>
+											<div class="form-group col-md-10 text-left">
+												<div class="row">													
+													<a class="btn btn-md btn-primary" href="<?php echo base_url() ?>formapag/cadastrar" role="button"> 
+														<span class="glyphicon glyphicon-qrcode"></span> Forma de Pagamento
+													</a>
+												</div>	
+											</div>												
 											<!--
 											<div class="form-group col-md-10 text-left">
 												<div class="row">		

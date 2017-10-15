@@ -772,6 +772,22 @@ class Basico_model extends CI_Model {
         return $array;
     }
 	
+	public function select_unidadeproduto($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query('SELECT * FROM Tab_UnidadeProduto');
+        } else {
+            $query = $this->db->query('SELECT * FROM Tab_UnidadeProduto');
+
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->Abrev] = $row->UnidadeProduto;
+            }
+        }
+
+        return $array;
+    }	
+	
 	public function select_categoria($data = FALSE) {
 
         if ($data === TRUE) {

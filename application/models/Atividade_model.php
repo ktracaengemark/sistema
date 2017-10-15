@@ -55,7 +55,7 @@ class Atividade_model extends CI_Model {
         $query = $this->db->query('SELECT * '
                 . 'FROM App_Atividade '
                 . 'WHERE '
-                . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                . 'Empresa = ' . $_SESSION['log']['Empresa'] . ' AND '
                 . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
                 . 'ORDER BY Atividade ASC ');
         
@@ -93,7 +93,7 @@ class Atividade_model extends CI_Model {
                     . 'FROM '
                     . 'App_Atividade '					
 					. 'WHERE '
-                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                    . 'Empresa = ' . $_SESSION['log']['Empresa'] . ' AND '
                     . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo']. ' '
 					. 'ORDER BY Atividade ASC ');		
 					
@@ -105,7 +105,7 @@ class Atividade_model extends CI_Model {
                     . 'FROM '
                     . 'App_Atividade '					
 					. 'WHERE '
-                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                    . 'Empresa = ' . $_SESSION['log']['Empresa'] . ' AND '
                     . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo']. ' '
 					. 'ORDER BY Atividade ASC ');
             

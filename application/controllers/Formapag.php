@@ -87,6 +87,7 @@ class Formapag extends CI_Controller {
            # $data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
             $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+            $data['query']['Empresa'] = $_SESSION['log']['Empresa'];			
 
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();

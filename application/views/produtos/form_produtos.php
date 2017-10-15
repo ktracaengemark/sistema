@@ -17,6 +17,22 @@
 						<div class="panel panel-info">
 							<div class="panel-heading">	
 								<div class="row">
+									<div class="col-md-2">
+										<label for="TipoProduto">Tipo:</label>
+										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+												id="TipoProduto" name="TipoProduto">
+											<option value="">-- Selecione uma opção --</option>
+											<?php
+											foreach ($select['TipoProduto'] as $key => $row) {
+												if ($produtos['TipoProduto'] == $key) {
+													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+												} else {
+													echo '<option value="' . $key . '">' . $row . '</option>';
+												}
+											}
+											?>
+										</select>
+									</div>									
 									<div class="col-md-3">
 										<label for="Categoria">Categoria:</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
@@ -48,15 +64,17 @@
 											}
 											?>
 										</select>
-									</div>
+									</div>																			
+								</div>
+								<div class="row">									
 									<div class="col-md-2">
-										<label for="TipoProduto">Tipo:</label>
+										<label for="UnidadeProduto">Unidade:</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-												id="TipoProduto" name="TipoProduto">
+												id="UnidadeProduto" name="UnidadeProduto">
 											<option value="">-- Selecione uma opção --</option>
 											<?php
-											foreach ($select['TipoProduto'] as $key => $row) {
-												if ($produtos['TipoProduto'] == $key) {
+											foreach ($select['UnidadeProduto'] as $key => $row) {
+												if ($produtos['UnidadeProduto'] == $key) {
 													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 												} else {
 													echo '<option value="' . $key . '">' . $row . '</option>';
@@ -64,26 +82,17 @@
 											}
 											?>
 										</select>
-									</div>																			
-								</div>
-
-								<div class="row">									
+									</div>									
 									<div class="col-md-3">
 										<label for="CodProd">Código:</label><br>
 										<input type="text" class="form-control" maxlength="25"
 												name="CodProd" value="<?php echo $produtos['CodProd'] ?>">
 									</div>
 									<div class="col-md-4">
-										<label for="Produtos">Descrição:*</label><br>
+										<label for="Produtos">Produto ou Serviço:*</label><br>
 										<input type="text" class="form-control" maxlength="200"
 												name="Produtos" value="<?php echo $produtos['Produtos'] ?>">
-									</div>										
-									<div class="col-md-2">
-										<label for="UnidadeProduto">Unidade:</label><br>
-										<input type="text" class="form-control" maxlength="20"
-												name="UnidadeProduto" value="<?php echo $produtos['UnidadeProduto'] ?>">
-									</div>
-
+									</div>																				
 									<div class="col-md-3">
 										<label for="ValorCompraProduto">Custo:</label><br>
 										<div class="input-group">

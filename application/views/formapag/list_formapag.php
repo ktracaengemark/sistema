@@ -3,8 +3,8 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>Serviço</th>
-            <th>Valor</th>
+            <th>Forma de Pagamento</th>
+            <!--<th>Valor</th>-->
             <th></th>
         </tr>
     </thead>

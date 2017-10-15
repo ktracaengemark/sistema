@@ -66,6 +66,7 @@ class Produtos extends CI_Controller {
 
 		(!$data['produtos']['TipoProduto']) ? $data['produtos']['TipoProduto'] = 'V' : FALSE;
 		(!$data['produtos']['Categoria']) ? $data['produtos']['Categoria'] = 'P' : FALSE;
+		(!$data['produtos']['UnidadeProduto']) ? $data['produtos']['UnidadeProduto'] = 'UNID' : FALSE;
 		
         $j = 1;
         for ($i = 1; $i <= $data['count']['PTCount']; $i++) {
@@ -88,13 +89,15 @@ class Produtos extends CI_Controller {
 
         #### Tab_Produtos ####
 
-        $this->form_validation->set_rules('TipoProduto', 'TipoProduto', 'required|trim');
+		$this->form_validation->set_rules('Produtos', 'Produto ou Serviço', 'required|trim');        
+		$this->form_validation->set_rules('TipoProduto', 'TipoProduto', 'required|trim');
 		$this->form_validation->set_rules('CodProd', 'Código', 'is_unique[Tab_Produtos.CodProd]');
 
 		$data['select']['Fornecedor'] = $this->Fornecedor_model->select_fornecedor();
 		$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();
 		$data['select']['Categoria'] = $this->Basico_model->select_categoria();		
         $data['select']['Convenio'] = $this->Convenio_model->select_convenio();
+		$data['select']['UnidadeProduto'] = $this->Basico_model->select_unidadeproduto();
 
         $data['titulo'] = 'Cadastar Produtos & Serviços';
         $data['form_open_path'] = 'produtos/cadastrar';
@@ -264,7 +267,8 @@ class Produtos extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #### Tab_Produtos ####
-     
+
+		$this->form_validation->set_rules('Produtos', 'Produto ou Serviço', 'required|trim'); 		
         $this->form_validation->set_rules('TipoProduto', 'TipoProduto', 'required|trim');
 		#$this->form_validation->set_rules('CodProd', 'Código', 'is_unique[Tab_Produtos.CodProd]');
      
@@ -272,7 +276,7 @@ class Produtos extends CI_Controller {
 		$data['select']['TipoProduto'] = $this->Basico_model->select_tipoproduto();
 		$data['select']['Categoria'] = $this->Basico_model->select_categoria();
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio();
-        
+        $data['select']['UnidadeProduto'] = $this->Basico_model->select_unidadeproduto();
 
         $data['titulo'] = 'Editar Produtos & Serviços';
         $data['form_open_path'] = 'produtos/alterar';

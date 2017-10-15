@@ -19,8 +19,8 @@
 						<th class="active">Categoria</th>						
 						<th class="active">Cod.</th>
 						<th class="active">Produto ou Serviço</th>
-						<!--<th class="active">Unid.</th>
-						<th class="active">Custo</th>-->						
+						<th class="active">Unid.</th>
+						<!--<th class="active">Custo</th>-->						
 						<th class="active">Tabelas & Planos</th>
 						<th class="active">Descrição</th>						
 						<th class="active">Valor de Venda</th>
@@ -41,7 +41,7 @@
  							echo '<td>' . $row['Categoria'] . '</td>'; 							
 							echo '<td>' . $row['CodProd'] . '</td>';
 							echo '<td>' . $row['Produtos'] . '</td>';
-							#echo '<td>' . $row['UnidadeProduto'] . '</td>';	
+							echo '<td>' . $row['UnidadeProduto'] . '</td>';	
 							#echo '<td>' . $row['ValorCompraProduto'] . '</td>';								
 							echo '<td>' . $row['Convenio'] . '</td>';
 							echo '<td>' . $row['Convdesc'] . '</td>';
