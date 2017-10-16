@@ -144,5 +144,45 @@ class Produtos_model extends CI_Model {
 
         return (isset($query[0]['TipoProduto'])) ? $query[0]['TipoProduto'] : FALSE;
     }
+	
+	public function select_produtos($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query(
+            'SELECT
+                TPV.idTab_Produtos,
+				CONCAT(TPV.Produtos, " --- ", TPV.UnidadeProduto) AS NomeProduto,
+				TPV.ValorCompraProduto
+            FROM
+                Tab_Produtos AS TPV																	
+            WHERE
+                TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				TPV.Empresa = ' . $_SESSION['log']['Empresa'] . '
+			ORDER BY  
+				TPV.Produtos ASC 
+    ');
+        } else {
+            $query = $this->db->query(
+            'SELECT
+                TPV.idTab_Produtos,
+				CONCAT(TPV.Produtos, " --- ", TPV.UnidadeProduto) AS NomeProduto,
+				TPV.ValorCompraProduto
+            FROM
+                Tab_Produtos AS TPV																	
+            WHERE
+                TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				TPV.Empresa = ' . $_SESSION['log']['Empresa'] . '
+			ORDER BY  
+				TPV.Produtos ASC 
+    ');
+
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->idTab_Produtos] = $row->NomeProduto;
+            }
+        }
+
+        return $array;
+    }	
 
 }

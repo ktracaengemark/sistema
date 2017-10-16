@@ -65,7 +65,7 @@ class Tipoconsumo_model extends CI_Model {
         $query = $this->db->query('SELECT * '
                 . 'FROM Tab_TipoConsumo '
                 . 'WHERE '
-                . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                . 'Empresa = ' . $_SESSION['log']['Empresa'] . ' AND '
                 . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
                 . 'ORDER BY TipoConsumo ASC ');
 
@@ -93,23 +93,29 @@ class Tipoconsumo_model extends CI_Model {
         }
     }
 	
-	public function select_tipoconsumo($data = FALSE) {
+	public function select_tipoconsumo2($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query(
                 'SELECT '
                     . 'idTab_TipoConsumo, '
-                    . 'TipoConsumo, '
-                    #. 'ValorVenda '
+                    . 'TipoConsumo '
                     . 'FROM '
                     . 'Tab_TipoConsumo '                   
 					. 'WHERE '
-                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                    . 'Empresa = ' . $_SESSION['log']['Empresa'] . ' AND ' 
                     . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] );
-					#. 'ORDER BY TipoConsumo ASC ');
+
         } else {
-            $query = $this->db->query('SELECT idTab_TipoConsumo, TipoConsumo FROM Tab_TipoConsumo WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
-			#$query = $this->db->query('SELECT idTab_TipoConsumo, TipoConsumo FROM Tab_TipoConsumo ORDER BY TipoConsumo ASC ');
+            $query = $this->db->query(
+                'SELECT '
+                    . 'idTab_TipoConsumo, '
+                    . 'TipoConsumo '
+                    . 'FROM '
+                    . 'Tab_TipoConsumo '                   
+					. 'WHERE '
+                    . 'Empresa = ' . $_SESSION['log']['Empresa'] . ' AND ' 
+                    . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] ); 
 
             $array = array();
             foreach ($query->result() as $row) {
@@ -119,5 +125,44 @@ class Tipoconsumo_model extends CI_Model {
 
         return $array;
     }
+	
+	public function select_tipoconsumo($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query('
+                SELECT 
+                    idTab_TipoConsumo,
+                    TipoConsumo 
+				FROM 
+                    Tab_TipoConsumo                    
+				WHERE 
+                    Empresa = ' . $_SESSION['log']['Empresa'] . ' AND  
+                    idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+				ORDER BY
+					TipoConsumo ASC
+				');
+
+        } else {
+            $query = $this->db->query('
+                SELECT 
+                    idTab_TipoConsumo,
+                    TipoConsumo 
+				FROM 
+                    Tab_TipoConsumo                    
+				WHERE 
+                    Empresa = ' . $_SESSION['log']['Empresa'] . ' AND  
+                    idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+				ORDER BY
+					TipoConsumo ASC
+				'); 
+
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->idTab_TipoConsumo] = $row->TipoConsumo;
+            }
+        }
+
+        return $array;
+    }	
 
 }

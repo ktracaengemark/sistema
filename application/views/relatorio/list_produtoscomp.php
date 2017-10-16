@@ -26,7 +26,7 @@
 							echo '<td>' . $row['TipoDespesa'] . '</td>';
                             echo '<td>' . $row['DataDespesas'] . '</td>';
 							echo '<td>' . $row['QtdCompraProduto'] . '</td>';
-							echo '<td>' . $row['ProdutoBase'] . '</td>';
+							echo '<td>' . $row['Produtos'] . '</td>';
                         echo '</tr>';
                     }
                     ?>

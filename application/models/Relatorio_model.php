@@ -610,13 +610,13 @@ class Relatorio_model extends CI_Model {
                 TCO.DataDespesas,
 				APC.QtdCompraProduto,
 				APC.idTab_Produto,
-				TPB.ProdutoBase,
+				TPB.Produtos,
 				APC.ObsProduto
             FROM
                 App_Despesas AS TCO							
                     LEFT JOIN Tab_TipoConsumo AS TTC ON TTC.idTab_TipoConsumo = TCO.TipoDespesa					
 					LEFT JOIN App_ProdutoCompra AS APC ON APC.idApp_Despesas = TCO.idApp_Despesas					
-					LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase = APC.idTab_Produto					
+					LEFT JOIN Tab_Produtos AS TPB ON TPB.idTab_Produtos = APC.idTab_Produto					
             WHERE
                 TCO.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND				
@@ -670,19 +670,19 @@ class Relatorio_model extends CI_Model {
                 TCO.DataDespesas,
 				APC.QtdCompraProduto,
 				APC.idTab_Produto,
-				TPB.ProdutoBase
+				TPB.Produtos
             FROM
                 App_Despesas AS TCO							
                     LEFT JOIN Tab_TipoDespesa AS TTC ON TTC.idTab_TipoDespesa = TCO.TipoDespesa					
 					LEFT JOIN App_ProdutoCompra AS APC ON APC.idApp_Despesas = TCO.idApp_Despesas					
-					LEFT JOIN Tab_ProdutoBase AS TPB ON TPB.idTab_ProdutoBase = APC.idTab_Produto					
+					LEFT JOIN Tab_Produtos AS TPB ON TPB.idTab_Produtos = APC.idTab_Produto					
             WHERE
                 TCO.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				(' . $consulta . ') 
 				' . $data['TipoDespesa'] . ' AND
 				TCO.TipoProduto = "D" AND
-				TPB.idTab_ProdutoBase != "0"
+				TPB.idTab_Produtos != "0"
 												
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -2082,7 +2082,7 @@ class Relatorio_model extends CI_Model {
             FROM
                 Tab_TipoDespesa AS TD
             WHERE
-				TD.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+
 				TD.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
             ORDER BY
                 TipoDespesa ASC

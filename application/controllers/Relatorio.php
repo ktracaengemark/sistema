@@ -398,8 +398,9 @@ class Relatorio extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $data['titulo1'] = 'Cadastrar';
-		$data['titulo2'] = 'Relatórios';
+        $data['titulo1'] = 'Relatório 1';
+		$data['titulo2'] = 'Relatório 2';
+		$data['titulo3'] = 'Relatório 3';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -722,7 +723,7 @@ class Relatorio extends CI_Controller {
 			'TCO.TipoDespesa' => 'Tipo de Consumo',
 			'TCO.Despesa' => 'Consumo',			
 			'APC.QtdCompraProduto' => 'Qtd. do Produto',
-			'TPB.ProdutoBase' => 'Produto',
+			'TPB.Produtos' => 'Produto',
 			
         );
 
@@ -799,7 +800,7 @@ class Relatorio extends CI_Controller {
 			'TCO.TipoDespesa' => 'Tipo de Consumo',
 			'TCO.Despesa' => 'Desc. do Consumo',			
 			'APC.QtdCompraProduto' => 'Qtd. do Produto',
-			'TPB.ProdutoBase' => 'Produto',
+			'TPB.Produtos' => 'Produto',
 			
         );
 

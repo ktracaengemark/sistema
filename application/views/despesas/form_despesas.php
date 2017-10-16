@@ -219,10 +219,9 @@
 												</div>
 											</div>
 										</div>
-										-->
-
+										
 										<hr>
-
+										-->
 										<input type="hidden" name="PCount" id="PCount" value="<?php echo $count['PCount']; ?>"/>
 
 										<div class="input_fields_wrap6">

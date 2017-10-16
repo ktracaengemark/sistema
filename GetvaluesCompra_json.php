@@ -46,23 +46,22 @@ elseif ($_GET['q'] == 2) {
 
     $result = mysql_query(
             'SELECT
-                TPV.idTab_Produto,
-				CONCAT(TPV.NomeProduto, " --- ", TPV.UnidadeProduto, " --- R$ ", TPV.ValorCompraProduto) AS NomeProduto,
+                TPV.idTab_Produtos,
+				CONCAT(TPV.Produtos, " --- ", TPV.UnidadeProduto) AS NomeProduto,
 				TPV.ValorCompraProduto
             FROM
-                Tab_Produto AS TPV																	
+                Tab_Produtos AS TPV																	
             WHERE
                 TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                (TPV.Empresa = ' . $_SESSION['log']['id'] . ' OR
-				 TPV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
+				TPV.Empresa = ' . $_SESSION['log']['Empresa'] . '
 			ORDER BY  
-				TPV.NomeProduto ASC 
+				TPV.Produtos ASC 
     ');
 
     while ($row = mysql_fetch_assoc($result)) {
 
         $event_array[] = array(
-            'id' => $row['idTab_Produto'],
+            'id' => $row['idTab_Produtos'],
             'name' => utf8_encode($row['NomeProduto']),
             'value' => $row['ValorCompraProduto'],
         );
