@@ -6,6 +6,8 @@
 			<div class="col-md-12">
 
 				<?php echo validation_errors(); ?>
+				
+				
 
 				<div class="col-md-6">
 
@@ -71,43 +73,44 @@
 	
 				</div>	
 				<div class="col-md-6">	
+					
 					<div class="panel panel-danger">
 						<div class="panel-heading"><strong><?php echo $titulo2; ?></strong><strong> - Como Receber?</strong></div>
 						<div class="panel-body">
+							
 							<div class="form-group">
 								<div class="row">								
-									<div class="col-md-1"></div>
-									<div class="col-md-10 text-center">																			
-										<div class="form-group">
-											<div class="text-center t">
-												<h3><?php echo '<small></small><strong> Nos Indicando </strong><small></small>'  ?></h3>
-											</div>													
-											<div class="col-md-12">		
-												<div class="row">										
-													<a  class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>tipobanco/cadastrar" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Cadastrar Conta Corrente
-													</a>
-												</div>
+									
+									<div class="col-md-12">																			
+										<div class="text-center t">
+											<h3><?php echo '<small></small><strong> Nos Indicando </strong><small></small>'  ?></h3>
+										</div>
+										
+										<div class="form-group col-md-12 text-left">	
+											<div class="row">										
+												<a  class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>tipobanco/cadastrar" role="button"> 
+													<span class="glyphicon glyphicon-usd"></span> Cadastrar Conta Corrente
+												</a>
 											</div>
-											<br><br>
-											<div class="col-md-12">													
-												<div class="row">	
-													<a  class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>loginassociadoempresafilial/registrar" role="button"> 
-														<span class="glyphicon glyphicon-user"></span> Cadastrar Empresa Indicada
-													</a>
-												</div>
+										</div>
+										<!--
+										<div class="form-group col-md-12 text-left">													
+											<div class="row">	
+												<a  class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>loginassociadoempresafilial/registrar" role="button"> 
+													<span class="glyphicon glyphicon-user"></span> Cadastrar Empresa Indicada
+												</a>
 											</div>
-											<br><br>
-											<div class="col-md-12">														
-												<div class="row">	
-													<a  class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>relatorio/associado" role="button"> 
-														<span class="glyphicon glyphicon-list"></span> Relatório de Indicações
-													</a>
-												</div>
-											</div>	
-										</div>		
+										</div>
+										-->
+										<div class="form-group col-md-12 text-left">														
+											<div class="row">	
+												<a  class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>relatorio/empresaassociado" role="button"> 
+													<span class="glyphicon glyphicon-list"></span> Relatório de Indicações
+												</a>
+											</div>
+										</div>	
+	
 									</div>
-									<div class="col-md-1"></div>
 								</div>
 							</div>
 							</form>

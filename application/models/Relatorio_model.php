@@ -1080,10 +1080,6 @@ class Relatorio_model extends CI_Model {
                 C.Associado = ' . $_SESSION['log']['id'] . ' AND				
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
 				' . $data['Nome'] . '
-				OR
-                C.Empresa = ' . $_SESSION['log']['id'] . ' AND				
-				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
-				' . $data['Nome'] . ' 
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
@@ -1115,7 +1111,62 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-		
+	
+	public function list_empresaassociado($data, $completo) {
+
+        $data['NomeEmpresa'] = ($data['NomeEmpresa']) ? ' AND C.idSis_EmpresaFilial = ' . $data['NomeEmpresa'] : FALSE;
+        $data['Campo'] = (!$data['Campo']) ? 'C.NomeEmpresa' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+
+
+
+        $query = $this->db->query('
+            SELECT
+				C.idSis_EmpresaFilial,
+				C.Associado,
+                C.NomeEmpresa,
+				C.Nome,
+                C.Celular,
+                C.Email,
+				C.UsuarioEmpresaFilial,
+				SN.StatusSN,
+				C.Inativo
+            FROM
+                Sis_EmpresaFilial AS C
+					LEFT JOIN Tab_StatusSN AS SN ON SN.Inativo = C.Inativo
+            WHERE
+                C.Associado = ' . $_SESSION['log']['id'] . ' AND				
+				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+				' . $data['NomeEmpresa'] . '
+            ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+        /*
+
+        #AND
+        #C.idApp_Cliente = OT.idApp_Cliente
+
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+
+                $row->Celular = ($row->Celular) ? $row->Celular : FALSE;
+            }
+
+            return $query;
+        }
+
+    }
+	
 	public function list_profissionais($data, $completo) {
 
         $data['NomeProfissional'] = ($data['NomeProfissional']) ? ' AND P.idApp_Profissional = ' . $data['NomeProfissional'] : FALSE;
@@ -1862,7 +1913,7 @@ class Relatorio_model extends CI_Model {
         $query = $this->db->query('
             SELECT
                 idApp_Cliente,
-                CONCAT(NomeCliente, " ", " --- ", Telefone1) As NomeCliente
+                CONCAT(IFNULL(NomeCliente, ""), " --- ", IFNULL(Telefone1, ""), " --- ", IFNULL(Telefone2, ""), " --- ", IFNULL(Telefone3, "")) As NomeCliente
             FROM
                 App_Cliente 
             WHERE
@@ -1904,6 +1955,30 @@ class Relatorio_model extends CI_Model {
 
         return $array;
     }
+	
+	public function select_empresaassociado() {
+
+        $query = $this->db->query('
+            SELECT
+                idSis_EmpresaFilial,
+                NomeEmpresa
+            FROM
+                Sis_EmpresaFilial
+            WHERE
+                Associado = ' . $_SESSION['log']['id'] . ' AND
+				idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+            ORDER BY
+                NomeEmpresa ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+			$array[$row->idSis_EmpresaFilial] = $row->NomeEmpresa;
+        }
+
+        return $array;
+    }	
 	
 	public function select_empresas() {
 

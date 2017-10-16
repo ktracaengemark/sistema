@@ -48,7 +48,7 @@
 					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>relatorio/orcamento">
 							<button type="button" class="btn btn-md btn-info ">
-								<span class="glyphicon glyphicon-usd"></span> Vendas
+								<span class="glyphicon glyphicon-usd"></span> Orçam.
 							</button>
 						</a>
 					</div>															
@@ -126,7 +126,7 @@
 					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>relatorio/admin">
 							<button type="button" class="btn btn-md btn-primary ">
-								<span class="glyphicon glyphicon-pencil"></span> Admin.
+								<span class="glyphicon glyphicon-pencil"></span> Relat.
 							</button>
 						</a>
 					</div>					
