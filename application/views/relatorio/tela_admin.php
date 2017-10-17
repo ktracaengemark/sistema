@@ -124,36 +124,36 @@
 												</div>	
 											</div>											
 											<div class="form-group col-md-12 text-left">
+												<div class="row">										
+													<a  type="button" class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?>relatorio/receitas" role="button"> 
+														<span class="glyphicon glyphicon-usd"></span> Pagamentos
+													</a>
+												</div>	
+											</div>
+											<div class="form-group col-md-12 text-left">
 												<div class="row">		
 													<a  type="button" class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?>relatorio/despesas" role="button"> 
 														<span class="glyphicon glyphicon-usd"></span> Despesas
 													</a>
 												</div>	
-											</div>											
-											<div class="form-group col-md-12 text-left">
-												<div class="row">										
-													<a  type="button" class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?>relatorio/receitas" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Recebimentos
-													</a>
-												</div>	
-											</div>																	
+											</div>																																							
 										</div>
 										<div class="col-md-12">											
 											<label for="">Produtos:</label>
-											<div class="form-group col-md-12 text-left">
-												<div class="row">
-													<a type="button" class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>relatorio/produtoscomp" role="button"> 
-														<span class="glyphicon glyphicon-barcode"></span> Produtos Comprados
-													</a>
-												</div>	
-											</div>	
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
 													<a type="button" class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>relatorio/produtosvend" role="button"> 
 														<span class="glyphicon glyphicon-barcode"></span> Produtos Vendidos
 													</a>
 												</div>	
-											</div>	
+											</div>
+											<div class="form-group col-md-12 text-left">
+												<div class="row">
+													<a type="button" class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>relatorio/produtoscomp" role="button"> 
+														<span class="glyphicon glyphicon-barcode"></span> Produtos Comprados
+													</a>
+												</div>	
+											</div>													
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
 													<a type="button" class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>relatorio/consumo" role="button"> 

@@ -419,9 +419,16 @@ class Relatorio_model extends CI_Model {
                 C.NomeCliente,
 				OT.idApp_OrcaTrata,
                 OT.DataOrca,
+				OT.ValorOrca,
+				OT.FormaPagamento,
+				TFP.FormaPag,
 				APV.QtdVendaProduto,
+				APV.ObsProduto,
 				TPV.Produtos,
+				TPV.Fornecedor,
+				TFO.NomeFornecedor,
 				TVV.idTab_Valor
+				
 
             FROM
                 App_Cliente AS C,
@@ -429,6 +436,8 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_ProdutoVenda AS APV ON APV.idApp_OrcaTrata = OT.idApp_OrcaTrata
 					LEFT JOIN Tab_Valor AS TVV ON TVV.idTab_Valor = APV.idTab_Produto
 					LEFT JOIN Tab_Produtos AS TPV ON TPV.idTab_Produtos = TVV.idTab_Produtos
+					LEFT JOIN App_Fornecedor AS TFO ON TFO.idApp_Fornecedor = TPV.Fornecedor
+					LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
 		   WHERE
                 C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
@@ -741,11 +750,15 @@ class Relatorio_model extends CI_Model {
                 OT.QuitadoOrca,
                 OT.DataConclusao,
                 OT.DataRetorno,
+				OT.FormaPagamento,
+				TFP.FormaPag,
 				TSU.Nome
             FROM
                 App_Cliente AS C,
                 App_OrcaTrata AS OT
 				LEFT JOIN Sis_Usuario AS TSU ON TSU.idSis_Usuario = OT.idSis_Usuario
+				LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
+				LEFT JOIN App_ProdutoVenda AS APV ON APV.idApp_OrcaTrata = OT.idApp_OrcaTrata
             WHERE
 				C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND

@@ -22,7 +22,7 @@
 												<div class="text-center t">
 													<h3><?php echo '<small></small><strong> PagSeguro </strong><small></small>'  ?></h3>
 												</div>		
-												<strong>R$ 50,00</strong><br>(1 Usuário/ loja)
+												<strong>R$ 50,00</strong><br>(2 Usuários/ loja)
 												<!-- 50 reais -->
 												<form action="https://pagseguro.uol.com.br/checkout/v2/cart.html?action=add" method="post" onsubmit="PagSeguroLightbox(this); return false;">
 												<input type="hidden" name="itemCode" value="9DA3EE4B5F5F2B300463BFA057CEA720" />
@@ -32,7 +32,7 @@
 												<script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
 												<!-- -->
 												<br>
-												<strong>R$ 100,00</strong><br>(de 2 a 5 Usuários/ loja)
+												<strong>R$ 100,00</strong><br>(5 Usuários/ loja)
 												<!-- 100 reais -->
 												<form action="https://pagseguro.uol.com.br/checkout/v2/cart.html?action=add" method="post" onsubmit="PagSeguroLightbox(this); return false;">										
 												<input type="hidden" name="itemCode" value="17612F32222247A5545A8F88DA96AC72" />
@@ -42,7 +42,7 @@
 												<script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
 												<!---->
 												<br>
-												<strong>R$ 150,00</strong><br>(de 6 a 10 Usuários/ loja)
+												<strong>R$ 150,00</strong><br>(10 Usuários/ loja)
 												<!-- 150 reais -->
 												<form action="https://pagseguro.uol.com.br/checkout/v2/cart.html?action=add" method="post" onsubmit="PagSeguroLightbox(this); return false;">
 												<input type="hidden" name="itemCode" value="577CBF6DBEBE7B4994641FB83D324D41" />
