@@ -2050,7 +2050,7 @@ class Relatorio_model extends CI_Model {
             FROM
                 Sis_Usuario AS F
             WHERE
-                F.Empresa = ' . $_SESSION['log']['id'] . ' AND
+                F.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				F.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '				
             ORDER BY
                 F.Nome ASC
@@ -2170,7 +2170,7 @@ class Relatorio_model extends CI_Model {
             FROM
                 Tab_TipoDespesa AS TD
             WHERE
-
+				TD.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TD.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
             ORDER BY
                 TipoDespesa ASC
@@ -2315,7 +2315,7 @@ class Relatorio_model extends CI_Model {
                 Sis_Usuario AS P
             WHERE
                 P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                P.Empresa = ' . $_SESSION['log']['id'] . ' 
+                P.Empresa = ' . $_SESSION['log']['Empresa'] . ' 
 			ORDER BY P.Nome ASC
         ');
 

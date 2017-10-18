@@ -89,8 +89,8 @@ class Loginfuncionario extends CI_Controller {
               echo "</pre>";
               exit();
              */
-            $query = $this->Loginfuncionario_model->check_dados_usuario($senha, $usuario, TRUE);
-            $_SESSION['log']['Agenda'] = $this->Loginfuncionario_model->get_agenda_padrao($query['idSis_Usuario']);
+            $query = $this->Login_model->check_dados_usuario($senha, $usuario, TRUE);
+            $_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
 
             #echo "<pre>".print_r($query)."</pre>";
             #exit();
@@ -118,7 +118,7 @@ class Loginfuncionario extends CI_Controller {
                 $_SESSION['db']['password'] = $this->db->password;
                 $_SESSION['db']['database'] = $this->db->database;
 
-                if ($this->Loginfuncionario_model->set_acesso($_SESSION['log']['id'], 'LOGIN') === FALSE) {
+                if ($this->Login_model->set_acesso($_SESSION['log']['id'], 'LOGIN') === FALSE) {
                     $msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
 
                     $this->basico->erro($msg);
@@ -204,7 +204,7 @@ class Loginfuncionario extends CI_Controller {
             $data['anterior'] = array();
             $data['campos'] = array_keys($data['query']);
 
-            $data['idSis_Usuario'] = $this->Loginfuncionario_model->set_usuario($data['query']);
+            $data['idSis_Usuario'] = $this->Login_model->set_usuario($data['query']);
             $_SESSION['log']['id'] = 1;
 
             if ($data['idSis_Usuario'] === FALSE) {
@@ -228,7 +228,7 @@ class Loginfuncionario extends CI_Controller {
                 );
                 $data['campos'] = array_keys($data['agenda']);
 
-                $data['idApp_Agenda'] = $this->Loginfuncionario_model->set_agenda($data['agenda']);
+                $data['idApp_Agenda'] = $this->Login_model->set_agenda($data['agenda']);
                 $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['agenda'], $data['campos'], $data['idSis_Usuario']);
                 $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Agenda', 'CREATE', $data['auditoriaitem'], $data['idSis_Usuario']);
 
@@ -300,9 +300,9 @@ class Loginfuncionario extends CI_Controller {
         );
 
         $data['campos'] = array_keys($data['confirmar']);
-        $id = $this->Loginfuncionario_model->get_data_by_codigo($codigo);
+        $id = $this->Login_model->get_data_by_codigo($codigo);
 
-        if ($this->Loginfuncionario_model->ativa_usuario($codigo, $data['confirmar']) === TRUE) {
+        if ($this->Login_model->ativa_usuario($codigo, $data['confirmar']) === TRUE) {
 
             $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['confirmar'], $data['campos'], $id['idSis_Usuario'], TRUE);
             $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_Usuario', 'UPDATE', $data['auditoriaitem'], $id['idSis_Usuario']);
@@ -346,9 +346,9 @@ class Loginfuncionario extends CI_Controller {
 
             $data['query']['Codigo'] = md5(uniqid(time() . rand()));
 
-            $id = $this->Loginfuncionario_model->get_data_by_usuario($data['query']['Usuario']);
+            $id = $this->Login_model->get_data_by_usuario($data['query']['Usuario']);
 
-            if ($this->Loginfuncionario_model->troca_senha($id['idSis_Usuario'], array('Codigo' => $data['query']['Codigo'])) === FALSE) {
+            if ($this->Login_model->troca_senha($id['idSis_Usuario'], array('Codigo' => $data['query']['Codigo'])) === FALSE) {
 
                 $data['anterior'] = array(
                     'Codigo' => 'NULL'
@@ -415,7 +415,7 @@ class Loginfuncionario extends CI_Controller {
                 ), TRUE);
 
         if ($codigo) {
-            $data['query'] = $this->Loginfuncionario_model->get_data_by_codigo($codigo);
+            $data['query'] = $this->Login_model->get_data_by_codigo($codigo);
             $data['query']['Codigo'] = $codigo;
         } else {
             $data['query']['Codigo'] = $this->input->post('Codigo', TRUE);
@@ -445,7 +445,7 @@ class Loginfuncionario extends CI_Controller {
             $data['anterior'] = array();
             $data['campos'] = array_keys($data['query']);
 
-            if ($this->Loginfuncionario_model->troca_senha($data['query']['idSis_Usuario'], $data['query']) === TRUE) {
+            if ($this->Login_model->troca_senha($data['query']['idSis_Usuario'], $data['query']) === TRUE) {
                 $data['msg'] = '?m=2';
                 $this->load->view('loginfuncionario/form_troca_senha', $data);
             } else {
@@ -475,12 +475,12 @@ class Loginfuncionario extends CI_Controller {
 
         #set logout in database
         if ($_SESSION['log'] && $m === TRUE) {
-            $this->Loginfuncionario_model->set_acesso($_SESSION['log']['id'], 'LOGOUT');
+            $this->Login_model->set_acesso($_SESSION['log']['id'], 'LOGOUT');
         } else {
             if (!isset($_SESSION['log']['id'])) {
                 $_SESSION['log']['id'] = 1;
             }
-            $this->Loginfuncionario_model->set_acesso($_SESSION['log']['id'], 'TIMEOUT');
+            $this->Login_model->set_acesso($_SESSION['log']['id'], 'TIMEOUT');
             $data['msg'] = '?m=2';
         }
 
@@ -507,10 +507,10 @@ class Loginfuncionario extends CI_Controller {
 
     function valid_usuario($data) {
 
-        if ($this->Loginfuncionario_model->check_usuario($data) == 1) {
+        if ($this->Login_model->check_usuario($data) == 1) {
             $this->form_validation->set_message('valid_usuario', '<strong>%s</strong> não existe.');
             return FALSE;
-        } else if ($this->Loginfuncionario_model->check_usuario($data) == 2) {
+        } else if ($this->Login_model->check_usuario($data) == 2) {
             $this->form_validation->set_message('valid_usuario', '<strong>%s</strong> inativo! Fale com o Administrador da sua Empresa!');
             return FALSE;
         } else {
@@ -522,7 +522,7 @@ class Loginfuncionario extends CI_Controller {
 
     function valid_senha($senha, $usuario) {
 
-        if ($this->Loginfuncionario_model->check_dados_usuario($senha, $usuario) == FALSE) {
+        if ($this->Login_model->check_dados_usuario($senha, $usuario) == FALSE) {
             $this->form_validation->set_message('valid_senha', '<strong>%s</strong> incorreta! Ou este não é o Módulo do seu Sistema.');
             return FALSE;
         } else {
