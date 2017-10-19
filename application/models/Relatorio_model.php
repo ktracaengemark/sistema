@@ -2050,7 +2050,7 @@ class Relatorio_model extends CI_Model {
             FROM
                 Sis_Usuario AS F
             WHERE
-                F.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                F.Empresa = ' . $_SESSION['log']['id'] . ' AND
 				F.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '				
             ORDER BY
                 F.Nome ASC

@@ -7,7 +7,7 @@
 			<div class="col-md-12">
 
 				<?php echo validation_errors(); ?>
-				<?php echo form_open('relatorio/admin', 'role="form"'); ?>
+				<?php echo form_open('relatorioempresa/adminempresa', 'role="form"'); ?>
 
 				<div class="col-md-1"></div>
 				<div class="col-md-5">

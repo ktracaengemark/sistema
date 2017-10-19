@@ -32,7 +32,7 @@ class Relatorioempresa extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $this->load->view('relatorio/tela_index', $data);
+        $this->load->view('relatorioempresa/tela_index', $data);
 
         #load footer view
         $this->load->view('basico/footer');
@@ -49,8 +49,9 @@ class Relatorioempresa extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $data['titulo1'] = 'Cadastrar';
-		$data['titulo2'] = 'Relatórios';
+        $data['titulo1'] = 'Relatório 1';
+		$data['titulo2'] = 'Relatório 2';
+		$data['titulo2'] = 'Relatório 3';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -136,11 +137,11 @@ class Relatorioempresa extends CI_Controller {
               exit();
               */
 
-            $data['list'] = $this->load->view('relatorio/list_funcionario', $data, TRUE);
+            $data['list'] = $this->load->view('relatorioempresa/list_funcionario', $data, TRUE);
             //$data['nav_secundario'] = $this->load->view('profissional/nav_secundario', $data, TRUE);
         }
 
-        $this->load->view('relatorio/tela_funcionario', $data);
+        $this->load->view('relatorioempresa/tela_funcionario', $data);
 
         $this->load->view('basico/footer');
 
