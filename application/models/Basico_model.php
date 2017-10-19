@@ -584,12 +584,13 @@ class Basico_model extends CI_Model {
             $array = $this->db->query(
             'SELECT
                 V.idTab_Valor,
-                CONCAT(IFNULL(P.Produtos,""), " -- ", IFNULL(TCO.Convenio,""), " -- ", IFNULL(V.Convdesc,""), " --- ", V.ValorVendaProduto, " -- ", IFNULL(P.UnidadeProduto,"")) AS NomeProduto,
+                CONCAT(IFNULL(P.Produtos,""), " -- ", IFNULL(TFO.NomeFornecedor,""), " -- ", IFNULL(P.CodProd,""), " -- ", IFNULL(TCO.Convenio,""), " -- ", IFNULL(V.Convdesc,""), " --- ", V.ValorVendaProduto, " -- ", IFNULL(P.UnidadeProduto,"")) AS NomeProduto,
                 V.ValorVendaProduto
             FROM
-                Tab_Produtos AS P,
                 Tab_Valor AS V
 					LEFT JOIN Tab_Convenio AS TCO ON idTab_Convenio = V.Convenio
+					LEFT JOIN Tab_Produtos AS P ON P.idTab_Produtos = V.idTab_Produtos
+					LEFT JOIN App_Fornecedor AS TFO ON TFO.idApp_Fornecedor = P.Fornecedor
             WHERE
 				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
@@ -601,12 +602,13 @@ class Basico_model extends CI_Model {
             $query = $this->db->query(
             'SELECT
                 V.idTab_Valor,
-                CONCAT(IFNULL(P.Produtos,""), " -- ", IFNULL(TCO.Convenio,""), " -- ", IFNULL(V.Convdesc,""), " --- ", V.ValorVendaProduto, " -- ", IFNULL(P.UnidadeProduto,"")) AS NomeProduto,
+                CONCAT(IFNULL(P.Produtos,""), " -- ", IFNULL(TFO.NomeFornecedor,""), " -- ", IFNULL(P.CodProd,""), " -- ", IFNULL(TCO.Convenio,""), " -- ", IFNULL(V.Convdesc,""), " --- ", V.ValorVendaProduto, " -- ", IFNULL(P.UnidadeProduto,"")) AS NomeProduto,
                 V.ValorVendaProduto
             FROM
-                Tab_Produtos AS P,
                 Tab_Valor AS V
 					LEFT JOIN Tab_Convenio AS TCO ON idTab_Convenio = V.Convenio
+					LEFT JOIN Tab_Produtos AS P ON P.idTab_Produtos = V.idTab_Produtos
+					LEFT JOIN App_Fornecedor AS TFO ON TFO.idApp_Fornecedor = P.Fornecedor
             WHERE
 				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				 P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND

@@ -44,9 +44,16 @@
 					
 					<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">															
 						<div class="btn-group" role="group" aria-label="...">
-							<a href="<?php echo base_url(); ?>relatorioempresa/funcionario">
+							<a href="<?php echo base_url(); ?>funcao/cadastrar">
 								<button type="button" class="btn btn-md btn-success ">
-									<span class="glyphicon glyphicon-user"></span> Cadastrar Usuário
+									<span class="glyphicon glyphicon-user"></span> Cad. Funções
+								</button>
+							</a>
+						</div>
+						<div class="btn-group" role="group" aria-label="...">
+							<a href="<?php echo base_url(); ?>relatorioempresa/funcionario">
+								<button type="button" class="btn btn-md btn-danger ">
+									<span class="glyphicon glyphicon-user"></span> Cad. Usuário
 								</button>
 							</a>
 						</div>

@@ -49,13 +49,23 @@ class Funcao_model extends CI_Model {
             return TRUE;
         }
     }
+	
+	public function delete_funcao($data) {        
+		$query = $this->db->delete('Tab_Funcao', array('idTab_Funcao' => $data));
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }	
 
     public function lista_funcao($x) {
 
         $query = $this->db->query('SELECT * '
                 . 'FROM Tab_Funcao '
                 . 'WHERE '
-                . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                . 'idSis_EmpresaFilial = ' . $_SESSION['log']['id'] . ' AND '
                 . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
                 . 'ORDER BY Funcao ASC ');
         
@@ -83,7 +93,7 @@ class Funcao_model extends CI_Model {
         }
     }
 	
-	public function select_funcao1($data = FALSE) {
+	public function select_funcao($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query(
@@ -93,7 +103,7 @@ class Funcao_model extends CI_Model {
                     . 'FROM '
                     . 'Tab_Funcao '					
 					. 'WHERE '
-                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                    . 'idSis_EmpresaFilial = ' . $_SESSION['log']['id'] . ' AND '
                     . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
 					. 'ORDER BY Funcao ASC ');		
 					
@@ -105,7 +115,7 @@ class Funcao_model extends CI_Model {
                     . 'FROM '
                     . 'Tab_Funcao '					
 					. 'WHERE '
-                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                    . 'idSis_EmpresaFilial = ' . $_SESSION['log']['id'] . ' AND '
                     . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
 					. 'ORDER BY Funcao ASC ');
             
@@ -119,7 +129,7 @@ class Funcao_model extends CI_Model {
         return $array;
     }
 	
-	public function select_funcao($data = FALSE) {
+	public function select_funcao2($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query('

@@ -151,7 +151,7 @@ class Produtos_model extends CI_Model {
             $array = $this->db->query(
             'SELECT
                 TPV.idTab_Produtos,
-				CONCAT(TPV.Produtos, " --- ", TPV.UnidadeProduto) AS NomeProduto,
+				CONCAT(TPV.Produtos, " --- ", TPV.Fornecedor, " --- ", TPV.CodProd, " --- ", TPV.UnidadeProduto) AS NomeProduto,
 				TPV.ValorCompraProduto
             FROM
                 Tab_Produtos AS TPV																	
@@ -165,10 +165,11 @@ class Produtos_model extends CI_Model {
             $query = $this->db->query(
             'SELECT
                 TPV.idTab_Produtos,
-				CONCAT(TPV.Produtos, " --- ", TPV.UnidadeProduto) AS NomeProduto,
+				CONCAT(TPV.Produtos, " --- ", TFO.NomeFornecedor, " --- ", TPV.CodProd, " --- ", TPV.UnidadeProduto) AS NomeProduto,
 				TPV.ValorCompraProduto
             FROM
-                Tab_Produtos AS TPV																	
+                Tab_Produtos AS TPV
+					LEFT JOIN App_Fornecedor AS TFO ON TFO.idApp_Fornecedor = TPV.Fornecedor																	
             WHERE
                 TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				TPV.Empresa = ' . $_SESSION['log']['Empresa'] . '
