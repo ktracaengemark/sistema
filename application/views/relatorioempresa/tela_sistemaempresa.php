@@ -6,7 +6,8 @@
 			<div class="col-md-12">
 
 				<?php echo validation_errors(); ?>
-
+				
+				<div class="col-md-3"></div>
 				<div class="col-md-6">
 
 						<div class="panel panel-primary">
@@ -69,7 +70,9 @@
 							</div>
 						</div>
 	
-				</div>	
+				</div>
+				<div class="col-md-3"></div>
+				<!--
 				<div class="col-md-6">	
 
 						<div class="panel panel-danger">
@@ -109,7 +112,8 @@
 							</div>
 						</div>
 
-				</div>	
+				</div>
+				-->
 			</div>
 		</div>
 	</div>

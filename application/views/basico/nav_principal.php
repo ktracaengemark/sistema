@@ -133,7 +133,7 @@
 					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>relatorio/sistema">
 							<button type="button" class="btn btn-md btn-primary ">
-								<span class="glyphicon glyphicon-cog"></span> Sistema
+								<span class="glyphicon glyphicon-cog"></span> Indicar
 							</button>
 						</a>
 					</div>					

@@ -74,9 +74,9 @@
 		}
 		?>   
 	</select> 
-    <?php echo form_error('Sexo'); ?>
+    <?php echo form_error('Funcao'); ?>
     <br>
-	
+<!--	
 	<label for="TipoProfissional">Profissão:*</label>
 	<select data-placeholder="Selecione uma opção..." class="form-control" id="TipoProfissional" name="TipoProfissional">		
 		<option value="">-- Selecione um Profissional --</option>
@@ -90,9 +90,9 @@
 		}
 		?>   
 	</select> 
-    <?php echo form_error('Sexo'); ?>
+    <?php echo form_error('TipoProfissional'); ?>
     <br>	
-
+-->
 	<label for="Permissao">Nível de Permissão:*</label>
 	<select data-placeholder="Selecione uma opção..." class="form-control" id="Permissao" name="Permissao">			
 		<option value="">-- Selecione uma Permissao --</option>
@@ -106,7 +106,7 @@
 		}
 		?>   
 	</select> 
-    <?php echo form_error('Sexo'); ?>
+    <?php echo form_error('Permissao'); ?>
     <br>	
 	
     <label class="text-">E-mail do Usuário:</label>

@@ -162,6 +162,13 @@
 					-->
 					<li class="btn-toolbar navbar-form navbar-right" role="toolbar" aria-label="...">											
 						<div class="btn-group" role="group" aria-label="...">
+							<a href="<?php echo base_url(); ?>relatorioempresa/sistemaempresa">
+								<button type="button" class="btn btn-md btn-primary ">
+									<span class="glyphicon glyphicon-cog"></span> Manutenção
+								</button>
+							</a>
+						</div>
+						<div class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-md active " id="countdowndiv">
 								<span class="glyphicon glyphicon-hourglass" id="clock"></span>
 							</button>
