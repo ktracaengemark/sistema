@@ -142,6 +142,7 @@ class Produtos extends CI_Controller {
 			$data['produtos']['Empresa'] = $_SESSION['log']['Empresa'];            
             $data['produtos']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['produtos']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+			$data['produtos']['ValorCompraProduto'] = str_replace(',', '.', str_replace('.', '', $data['produtos']['ValorCompraProduto']));
             $data['produtos']['idTab_Produtos'] = $this->Produtos_model->set_produtos($data['produtos']);
             /*
             echo count($data['servico']);
@@ -159,6 +160,7 @@ class Produtos extends CI_Controller {
                     $data['valor'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
                     $data['valor'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 					$data['valor'][$j]['Empresa'] = $_SESSION['log']['Empresa'];
+					$data['valor'][$j]['ValorVendaProduto'] = str_replace(',', '.', str_replace('.', '', $data['valor'][$j]['ValorVendaProduto']));
                     $data['valor'][$j]['idTab_Produtos'] = $data['produtos']['idTab_Produtos'];					
 
                 }
@@ -320,6 +322,7 @@ class Produtos extends CI_Controller {
 			$data['produtos']['Empresa'] = $_SESSION['log']['Empresa'];             
             $data['produtos']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['produtos']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+			$data['produtos']['ValorCompraProduto'] = str_replace(',', '.', str_replace('.', '', $data['produtos']['ValorCompraProduto']));
 
             $data['update']['produtos']['anterior'] = $this->Produtos_model->get_produtos($data['produtos']['idTab_Produtos']);
             $data['update']['produtos']['campos'] = array_keys($data['produtos']);
@@ -348,13 +351,13 @@ class Produtos extends CI_Controller {
                     $data['update']['valor']['inserir'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 					$data['update']['valor']['inserir'][$j]['Empresa'] = $_SESSION['log']['Empresa'];
                     $data['update']['valor']['inserir'][$j]['idTab_Produtos'] = $data['produtos']['idTab_Produtos'];
-
+					$data['update']['valor']['inserir'][$j]['ValorVendaProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ValorVendaProduto']));
 					
                 }
 
                 $max = count($data['update']['valor']['alterar']);
                 for($j=0;$j<$max;$j++) {
-
+					$data['update']['valor']['alterar'][$j]['ValorVendaProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ValorVendaProduto']));
                 }
 
                 if (count($data['update']['valor']['inserir']))
