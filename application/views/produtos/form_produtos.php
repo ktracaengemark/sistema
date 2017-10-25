@@ -93,6 +93,7 @@
 										<input type="text" class="form-control" maxlength="200"
 												name="Produtos" value="<?php echo $produtos['Produtos'] ?>">
 									</div>																				
+									<!--
 									<div class="col-md-3">
 										<label for="ValorCompraProduto">Custo:</label><br>
 										<div class="input-group">
@@ -101,7 +102,7 @@
 													name="ValorCompraProduto" value="<?php echo $produtos['ValorCompraProduto'] ?>">
 										</div>
 									</div>
-
+									-->
 								</div>
 							</div>	
 						</div>		

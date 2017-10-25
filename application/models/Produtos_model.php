@@ -151,22 +151,25 @@ class Produtos_model extends CI_Model {
             $array = $this->db->query(
             'SELECT
                 TPV.idTab_Produtos,
-				CONCAT(TPV.Produtos, " --- ", TPV.Fornecedor, " --- ", TPV.CodProd, " --- ", TPV.UnidadeProduto) AS NomeProduto,
-				TPV.ValorCompraProduto
+				CONCAT(IFNULL(TPV.Produtos,""), " --- ", IFNULL(TFO.NomeFornecedor,""), " --- ", IFNULL(TPV.CodProd,""), " --- ", IFNULL(TPV.UnidadeProduto,"")) AS NomeProduto,
+				TPV.ValorCompraProduto,
+				TPV.Categoria
             FROM
                 Tab_Produtos AS TPV																	
             WHERE
                 TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				TPV.Empresa = ' . $_SESSION['log']['Empresa'] . '
 			ORDER BY  
+				TPV.Categoria ASC,
 				TPV.Produtos ASC 
     ');
         } else {
             $query = $this->db->query(
             'SELECT
                 TPV.idTab_Produtos,
-				CONCAT(TPV.Produtos, " --- ", TFO.NomeFornecedor, " --- ", TPV.CodProd, " --- ", TPV.UnidadeProduto) AS NomeProduto,
-				TPV.ValorCompraProduto
+				CONCAT(IFNULL(TPV.Produtos,""), " --- ", IFNULL(TFO.NomeFornecedor,""), " --- ", IFNULL(TPV.CodProd,""), " --- ", IFNULL(TPV.UnidadeProduto,"")) AS NomeProduto,
+				TPV.ValorCompraProduto,
+				TPV.Categoria
             FROM
                 Tab_Produtos AS TPV
 					LEFT JOIN App_Fornecedor AS TFO ON TFO.idApp_Fornecedor = TPV.Fornecedor																	
@@ -174,7 +177,8 @@ class Produtos_model extends CI_Model {
                 TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				TPV.Empresa = ' . $_SESSION['log']['Empresa'] . '
 			ORDER BY  
-				TPV.Produtos ASC 
+				TPV.Categoria ASC,
+				TPV.Produtos ASC
     ');
 
             $array = array();
