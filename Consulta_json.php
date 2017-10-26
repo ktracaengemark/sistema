@@ -43,7 +43,7 @@ $result = mysql_query(
                 LEFT JOIN app.Tab_TipoConsulta AS TC ON C.idTab_TipoConsulta = TC.idTab_TipoConsulta
         WHERE
 			C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-           			
+           	C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND		
 			' . $query . ' 			
             A.idApp_Agenda = C.idApp_Agenda
 
