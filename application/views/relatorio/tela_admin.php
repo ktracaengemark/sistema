@@ -48,7 +48,13 @@
 
 									<div class="col-md-12">										
 										<label for="">Produtos & Valores:</label>
-									
+										<div class="form-group col-md-12 text-left">
+											<div class="row">		
+												<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>relatorio/produtos" role="button"> 
+													<span class="glyphicon glyphicon-qrcode"></span> Produtos & Preços
+												</a>
+											</div>	
+										</div>									
 										<div class="form-group col-md-12 text-left">
 											<div class="row">													
 												<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>convenio/cadastrar" role="button"> 
@@ -56,13 +62,6 @@
 												</a>
 											</div>	
 										</div>													
-										<div class="form-group col-md-12 text-left">
-											<div class="row">		
-												<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>relatorio/produtos" role="button"> 
-													<span class="glyphicon glyphicon-qrcode"></span> Produtos & Preços
-												</a>
-											</div>	
-										</div>
 										<div class="form-group col-md-12 text-left">
 											<div class="row">													
 												<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>formapag/cadastrar" role="button"> 
@@ -136,7 +135,14 @@
 														<span class="glyphicon glyphicon-usd"></span> Despesas & Saídas
 													</a>
 												</div>	
-											</div>																																							
+											</div>
+											<div class="form-group col-md-12 text-left">
+												<div class="row">		
+													<a  type="button" class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?>relatorio/balanco" role="button"> 
+														<span class="glyphicon glyphicon-usd"></span> Balanço
+													</a>
+												</div>	
+											</div>											
 										</div>
 										<div class="col-md-12">											
 											<label for="">Produtos:</label>
@@ -160,7 +166,14 @@
 														<span class="glyphicon glyphicon-barcode"></span> Produtos Consumidos
 													</a>
 												</div>	
-											</div>												
+											</div>
+											<div class="form-group col-md-12 text-left">
+												<div class="row">		
+													<a type="button" class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>relatorio/estoque" role="button"> 
+														<span class="glyphicon glyphicon-barcode"></span> Estoque
+													</a>
+												</div>	
+											</div>											
 										</div>																										
 									</div>
 								</div>
