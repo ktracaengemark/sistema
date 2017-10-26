@@ -26,9 +26,11 @@
 					-->
 					<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">															
 						<div class="btn-group" role="group" aria-label="...">
-							<button type="button" class="btn btn-md btn-primary  active">
-								<span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['UsuarioEmpresaFilial']; ?>
-							</button>
+							<a href="<?php echo base_url(); ?>acessoempresa/index">
+								<button type="button" class="btn btn-md btn-primary">
+									<span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['UsuarioEmpresaFilial']; ?>
+								</button>
+							</a>	
 						</div>	
 						<!--						
 						<div class="btn-group" role="group" aria-label="...">
