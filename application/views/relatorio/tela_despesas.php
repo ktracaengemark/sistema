@@ -97,7 +97,8 @@
 										}
 										?>
 									</select>
-								</div>								
+								</div>
+								<!--
 								<div class="col-md-5">
 									<label for="Ordenamento">Ordenamento:</label>
 									<div class="form-group">
@@ -134,12 +135,13 @@
 										</div>
 									</div>
 								</div>
+								-->
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="row">
 								<div class="col-md-3">
-									<label for="DataInicio">Data Início: *</label>
+									<label for="DataInicio">Data Início Venc.: *</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											   autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
@@ -149,7 +151,7 @@
 									</div>
 								</div>
 								<div class="col-md-3">
-									<label for="DataFim">Data Fim: (opcional)</label>
+									<label for="DataFim">Data Fim Venc.:</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											   autofocus name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
@@ -158,7 +160,32 @@
 										</span>
 									</div>
 								</div>
+								<div class="col-md-3">
+									<label for="DataInicio2">Data Início Pagam.: *</label>
+									<div class="input-group DatePicker">
+										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											   autofocus name="DataInicio2" value="<?php echo set_value('DataInicio2', $query['DataInicio2']); ?>">
+										<span class="input-group-addon" disabled>
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<label for="DataFim2">Data Fim Pagam.:</label>
+									<div class="input-group DatePicker">
+										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											   autofocus name="DataFim2" value="<?php echo set_value('DataFim2', $query['DataFim2']); ?>">
+										<span class="input-group-addon" disabled>
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
 								<br>
+								<div class="col-md-4"></div>
 								<div class="col-md-2 text-left">
 									<button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
 										<span class="glyphicon glyphicon-search"></span> Pesquisar
@@ -170,6 +197,7 @@
 											<span class="glyphicon glyphicon-plus"></span> Nova Despesa
 										</a>
 								</div>
+								<div class="col-md-4"></div>
 							</div>
 						</div>
 

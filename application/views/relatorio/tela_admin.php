@@ -126,7 +126,7 @@
 											<div class="form-group col-md-12 text-left">
 												<div class="row">										
 													<a  type="button" class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?>relatorio/receitas" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Pagamentos
+														<span class="glyphicon glyphicon-usd"></span> Receitas
 													</a>
 												</div>	
 											</div>

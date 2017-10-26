@@ -585,7 +585,8 @@ class Basico_model extends CI_Model {
             'SELECT
                 V.idTab_Valor,
                 CONCAT(IFNULL(P.Produtos,""), " -- ", IFNULL(TFO.NomeFornecedor,""), " -- ", IFNULL(P.CodProd,""), " -- ", IFNULL(TCO.Convenio,""), " -- ", IFNULL(V.Convdesc,""), " --- ", V.ValorVendaProduto, " -- ", IFNULL(P.UnidadeProduto,"")) AS NomeProduto,
-                V.ValorVendaProduto
+                V.ValorVendaProduto,
+				P.Categoria
             FROM
                 Tab_Valor AS V
 					LEFT JOIN Tab_Convenio AS TCO ON idTab_Convenio = V.Convenio
@@ -596,6 +597,8 @@ class Basico_model extends CI_Model {
 				P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
                 P.idTab_Produtos = V.idTab_Produtos
 			ORDER BY
+				P.Categoria ASC,
+				TFO.NomeFornecedor ASC,
 				P.Produtos ASC'
     );
         } else {
@@ -603,7 +606,8 @@ class Basico_model extends CI_Model {
             'SELECT
                 V.idTab_Valor,
                 CONCAT(IFNULL(P.Produtos,""), " -- ", IFNULL(TFO.NomeFornecedor,""), " -- ", IFNULL(P.CodProd,""), " -- ", IFNULL(TCO.Convenio,""), " -- ", IFNULL(V.Convdesc,""), " --- ", V.ValorVendaProduto, " -- ", IFNULL(P.UnidadeProduto,"")) AS NomeProduto,
-                V.ValorVendaProduto
+                V.ValorVendaProduto,
+				P.Categoria
             FROM
                 Tab_Valor AS V
 					LEFT JOIN Tab_Convenio AS TCO ON idTab_Convenio = V.Convenio
@@ -614,6 +618,8 @@ class Basico_model extends CI_Model {
 				 P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
                 P.idTab_Produtos = V.idTab_Produtos
 			ORDER BY
+				P.Categoria ASC,
+				TFO.NomeFornecedor ASC,
 				P.Produtos ASC'
     );
 

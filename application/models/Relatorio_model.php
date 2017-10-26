@@ -154,14 +154,21 @@ class Relatorio_model extends CI_Model {
         
         if ($data['DataFim']) {
             $consulta =
-                '(PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '" AND PR.DataVencimentoRecebiveis <= "' . $data['DataFim'] . '") OR
-                (PR.DataPagoRecebiveis >= "' . $data['DataInicio'] . '" AND PR.DataPagoRecebiveis <= "' . $data['DataFim'] . '")';
+                '(PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '" AND PR.DataVencimentoRecebiveis <= "' . $data['DataFim'] . '")';
         }
         else {
             $consulta =
-                '(PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '") OR
-                (PR.DataPagoRecebiveis >= "' . $data['DataInicio'] . '")';
+                '(PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '")';
         }
+		
+        if ($data['DataFim2']) {
+            $consulta2 =
+                '(PR.DataPagoRecebiveis >= "' . $data['DataInicio2'] . '" AND PR.DataPagoRecebiveis <= "' . $data['DataFim2'] . '")';
+        }
+        else {
+            $consulta2 =
+                '(PR.DataPagoRecebiveis >= "' . $data['DataInicio2'] . '")';
+        }		
 		
 		$data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 		$filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
@@ -194,7 +201,8 @@ class Relatorio_model extends CI_Model {
             WHERE
                 C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                (' . $consulta . ') AND				
+                (' . $consulta . ') AND
+				(' . $consulta2 . ') AND
                 ' . $filtro1 . '
                 ' . $filtro2 . '
                 ' . $filtro3 . '
@@ -282,18 +290,26 @@ class Relatorio_model extends CI_Model {
     }
 	
 	public function list_despesas($data, $completo) {
-       
+
         if ($data['DataFim']) {
             $consulta =
-                '(PP.DataVencimentoPagaveis >= "' . $data['DataInicio'] . '" AND PP.DataVencimentoPagaveis <= "' . $data['DataFim'] . '") OR
-                (PP.DataPagoPagaveis >= "' . $data['DataInicio'] . '" AND PP.DataPagoPagaveis <= "' . $data['DataFim'] . '")';
+                '(PP.DataVencimentoPagaveis >= "' . $data['DataInicio'] . '" AND PP.DataVencimentoPagaveis <= "' . $data['DataFim'] . '")';
         }
         else {
             $consulta =
-                '(PP.DataVencimentoPagaveis >= "' . $data['DataInicio'] . '") OR
-                (PP.DataPagoPagaveis >= "' . $data['DataInicio'] . '")';
+                '(PP.DataVencimentoPagaveis >= "' . $data['DataInicio'] . '")';
         }
-		
+
+		if ($data['DataFim2']) {
+            $consulta2 =
+                '(PP.DataPagoPagaveis >= "' . $data['DataInicio2'] . '" AND PP.DataPagoPagaveis <= "' . $data['DataFim2'] . '")';
+        }
+        else {
+            $consulta2 =
+                '(PP.DataPagoPagaveis >= "' . $data['DataInicio2'] . '")';
+        }
+	
+	
 		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TD.idTab_TipoDespesa = ' . $data['TipoDespesa'] : FALSE;
 		$filtro1 = ($data['AprovadoDespesas'] != '#') ? 'DS.AprovadoDespesas = "' . $data['AprovadoDespesas'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ServicoConcluidoDespesas'] != '#') ? 'DS.ServicoConcluidoDespesas = "' . $data['ServicoConcluidoDespesas'] . '" AND ' : FALSE;
@@ -327,7 +343,8 @@ class Relatorio_model extends CI_Model {
 				DS.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				' . $filtro2 . '				
 				' . $filtro4 . '
-				(' . $consulta . ') 
+				(' . $consulta . ') AND
+				(' . $consulta2 . ')
 				' . $data['TipoDespesa'] . ' AND
 				DS.TipoProduto = "D"
             ORDER BY
@@ -1478,6 +1495,7 @@ class Relatorio_model extends CI_Model {
 				' . $data['Produtos'] . ' 
 			ORDER BY
                 TCA.Categoria,
+				TF.NomeFornecedor,
 				TP.Produtos,
 				TV.ValorVendaProduto DESC
         ');
