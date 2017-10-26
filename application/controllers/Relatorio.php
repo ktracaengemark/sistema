@@ -167,6 +167,8 @@ class Relatorio extends CI_Controller {
             'DataFim',
 			'DataInicio2',
             'DataFim2',
+			'DataInicio3',
+            'DataFim3',
 			'Ordenamento',
             'Campo',
             'AprovadoOrca',
@@ -185,10 +187,12 @@ class Relatorio extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
-        $this->form_validation->set_rules('DataInicio', 'Data Início', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
-		$this->form_validation->set_rules('DataInicio2', 'Data Início', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim2', 'Data Fim', 'trim|valid_date');
+        $this->form_validation->set_rules('DataInicio', 'Data Início do Vencimento', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim do Vencimento', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio2', 'Data Início do Pagamento', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim2', 'Data Fim do Pagamento', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio3', 'Data Início do Orçamento', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim3', 'Data Fim do Orçamento', 'trim|valid_date');
 
         $data['select']['AprovadoOrca'] = array(
             'S' => 'Sim',
@@ -247,7 +251,7 @@ class Relatorio extends CI_Controller {
         */
 
 		
-        $data['titulo'] = 'Orçamentos & Pagamentos';
+        $data['titulo'] = 'Relatório de Receitas & Entradas';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -258,6 +262,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
             $data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');			
+			$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+            $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');	
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
@@ -300,6 +306,8 @@ class Relatorio extends CI_Controller {
             'DataFim',
 			'DataInicio2',
             'DataFim2',
+			'DataInicio3',
+            'DataFim3',
 			'Ordenamento',
             'Campo',
 			'AprovadoDespesas',
@@ -321,6 +329,8 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio2', 'Data Início', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim2', 'Data Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio3', 'Data Início do Orçamento', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim3', 'Data Fim do Orçamento', 'trim|valid_date');
 		
 		$data['select']['AprovadoDespesas'] = array(
             '#' => 'TODOS',
@@ -378,6 +388,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
             $data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+			$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+            $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');	
 			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
 			$data['bd']['TipoProduto'] = $data['query']['TipoProduto'];
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
@@ -876,6 +888,11 @@ class Relatorio extends CI_Controller {
             'NomeCliente',
             'DataInicio',
             'DataFim',
+			'DataInicio',
+            'DataFim2',
+			'DataInicio2',
+            'DataFim3',
+			'DataInicio3',
             'Ordenamento',
             'Campo',
             'AprovadoOrca',
@@ -883,14 +900,18 @@ class Relatorio extends CI_Controller {
 			'ServicoConcluido',
 
         ), TRUE));
-		
+		/*
 		if (!$data['query']['DataInicio'])			
            $data['query']['DataInicio'] = '01/01/2017';
-
+		*/
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
-        $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+        $this->form_validation->set_rules('DataInicio', 'Data Início do Orçamento', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim do Orçamento', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio2', 'Data Início da Entrega', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim2', 'Data Fim da Entrega', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio3', 'Data Início do Retorno', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim3', 'Data Fim do Retorno', 'trim|valid_date');
 
 
         $data['select']['AprovadoOrca'] = array(
@@ -947,6 +968,10 @@ class Relatorio extends CI_Controller {
             $data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+            $data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+			$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+            $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
 
             $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];

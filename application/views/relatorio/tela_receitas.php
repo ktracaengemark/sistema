@@ -141,8 +141,28 @@
 						</div>
 						<div class="form-group">
 							<div class="row">
-								<div class="col-md-3">
-									<label for="DataInicio">Data Início Venc.: *</label>
+								<div class="col-md-2">
+									<label for="DataInicio3">Orç.- Data Inc.</label>
+									<div class="input-group DatePicker">
+										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											   autofocus name="DataInicio3" value="<?php echo set_value('DataInicio3', $query['DataInicio3']); ?>">
+										<span class="input-group-addon" disabled>
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<label for="DataFim3">Orç.- Data Fim</label>
+									<div class="input-group DatePicker">
+										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											   autofocus name="DataFim3" value="<?php echo set_value('DataFim3', $query['DataFim3']); ?>">
+										<span class="input-group-addon" disabled>
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>								
+								<div class="col-md-2">
+									<label for="DataInicio">Venc.- Data Inc.</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											   autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
@@ -151,8 +171,8 @@
 										</span>
 									</div>
 								</div>
-								<div class="col-md-3">
-									<label for="DataFim">Data Fim Venc.:</label>
+								<div class="col-md-2">
+									<label for="DataFim">Venc.- Data Fim</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											   autofocus name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
@@ -161,8 +181,8 @@
 										</span>
 									</div>
 								</div>
-								<div class="col-md-3">
-									<label for="DataInicio2">Data Início Pagam.: *</label>
+								<div class="col-md-2">
+									<label for="DataInicio2">Pagam.- Data Inc.</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											   autofocus name="DataInicio2" value="<?php echo set_value('DataInicio2', $query['DataInicio2']); ?>">
@@ -171,8 +191,8 @@
 										</span>
 									</div>
 								</div>
-								<div class="col-md-3">
-									<label for="DataFim2">Data Fim Pagam.:</label>
+								<div class="col-md-2">
+									<label for="DataFim2">Pagam.- Data Fim</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											   autofocus name="DataFim2" value="<?php echo set_value('DataFim2', $query['DataFim2']); ?>">

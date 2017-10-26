@@ -168,6 +168,15 @@ class Relatorio_model extends CI_Model {
         else {
             $consulta2 =
                 '(PR.DataPagoRecebiveis >= "' . $data['DataInicio2'] . '")';
+        }
+
+        if ($data['DataFim3']) {
+            $consulta3 =
+                '(OT.DataOrca >= "' . $data['DataInicio3'] . '" AND OT.DataOrca <= "' . $data['DataFim3'] . '")';
+        }
+        else {
+            $consulta3 =
+                '(OT.DataOrca >= "' . $data['DataInicio3'] . '")';
         }		
 		
 		$data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
@@ -203,6 +212,7 @@ class Relatorio_model extends CI_Model {
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 (' . $consulta . ') AND
 				(' . $consulta2 . ') AND
+				(' . $consulta3 . ') AND
                 ' . $filtro1 . '
                 ' . $filtro2 . '
                 ' . $filtro3 . '
@@ -308,6 +318,15 @@ class Relatorio_model extends CI_Model {
             $consulta2 =
                 '(PP.DataPagoPagaveis >= "' . $data['DataInicio2'] . '")';
         }
+		
+        if ($data['DataFim3']) {
+            $consulta3 =
+                '(DS.DataDespesas >= "' . $data['DataInicio3'] . '" AND DS.DataDespesas <= "' . $data['DataFim3'] . '")';
+        }
+        else {
+            $consulta3 =
+                '(DS.DataDespesas >= "' . $data['DataInicio3'] . '")';
+        }		
 	
 	
 		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TD.idTab_TipoDespesa = ' . $data['TipoDespesa'] : FALSE;
@@ -344,7 +363,8 @@ class Relatorio_model extends CI_Model {
 				' . $filtro2 . '				
 				' . $filtro4 . '
 				(' . $consulta . ') AND
-				(' . $consulta2 . ')
+				(' . $consulta2 . ') AND
+				(' . $consulta3 . ')
 				' . $data['TipoDespesa'] . ' AND
 				DS.TipoProduto = "D"
             ORDER BY
@@ -745,6 +765,24 @@ class Relatorio_model extends CI_Model {
             $consulta =
                 '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
         }
+		
+        if ($data['DataFim2']) {
+            $consulta2 =
+                '(OT.DataConclusao >= "' . $data['DataInicio2'] . '" AND OT.DataConclusao <= "' . $data['DataFim2'] . '")';
+        }
+        else {
+            $consulta2 =
+                '(OT.DataConclusao >= "' . $data['DataInicio2'] . '")';
+        }
+
+        if ($data['DataFim3']) {
+            $consulta3 =
+                '(OT.DataRetorno >= "' . $data['DataInicio3'] . '" AND OT.DataRetorno <= "' . $data['DataFim3'] . '")';
+        }
+        else {
+            $consulta3 =
+                '(OT.DataRetorno >= "' . $data['DataInicio3'] . '")';
+        }		
 
         $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 
@@ -780,6 +818,8 @@ class Relatorio_model extends CI_Model {
 				C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 (' . $consulta . ') AND
+				(' . $consulta2 . ') AND
+				(' . $consulta3 . ') AND
                 ' . $filtro1 . '
                 ' . $filtro2 . '
 				' . $filtro3 . '

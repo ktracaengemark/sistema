@@ -126,14 +126,14 @@
 											<div class="form-group col-md-12 text-left">
 												<div class="row">										
 													<a  type="button" class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?>relatorio/receitas" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Receitas
+														<span class="glyphicon glyphicon-usd"></span> Receitas & Entradas
 													</a>
 												</div>	
 											</div>
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
 													<a  type="button" class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?>relatorio/despesas" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Despesas
+														<span class="glyphicon glyphicon-usd"></span> Despesas & Saídas
 													</a>
 												</div>	
 											</div>																																							
