@@ -42,15 +42,11 @@ $result = mysql_query(
                 LEFT JOIN app.Sis_Usuario AS P ON P.idSis_Usuario = C.idSis_Usuario
                 LEFT JOIN app.Tab_TipoConsulta AS TC ON C.idTab_TipoConsulta = TC.idTab_TipoConsulta
         WHERE
-			(C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-			P.Empresa = ' . $_SESSION['log']['id'] . ' AND           			
+			C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+           			
 			' . $query . ' 			
-            A.idApp_Agenda = C.idApp_Agenda)
-			OR
-			(C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-            A.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND           			
-			' . $query . ' 			
-            A.idApp_Agenda = C.idApp_Agenda)
+            A.idApp_Agenda = C.idApp_Agenda
+
 			
         ORDER BY C.DataInicio ASC'
 );

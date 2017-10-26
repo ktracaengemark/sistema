@@ -15,8 +15,8 @@ if (!$db) {
 
 #echo 'Conexão bem sucedida';
 
-$query = ($_SESSION['log']['Nome'] && isset($_SESSION['log']['Nome'])) ?
-    'P.idSis_Usuario = ' . $_SESSION['log']['Nome'] . ' AND ' : FALSE;
+$query = ($_SESSION['log']['NomeUsuario'] && isset($_SESSION['log']['NomeUsuario'])) ?
+    'P.idSis_Usuario = ' . $_SESSION['log']['NomeUsuario'] . ' AND ' : FALSE;
 
 $result = mysql_query(
         'SELECT
@@ -25,7 +25,7 @@ $result = mysql_query(
             R.NomeCliente,
 			R.Telefone1,
             D.NomeContatoCliente,
-            P.Nome,
+            P.Nome AS NomeUsuario,
             C.DataInicio,
             C.DataFim,
             C.Procedimento,
@@ -57,23 +57,23 @@ while ($row = mysql_fetch_assoc($result)) {
         $c = '_evento';
         //(strlen(utf8_encode($row['Obs'])) > 20) ? $title = substr(utf8_encode($row['Obs']), 0, 20).'...' : $title = utf8_encode($row['Obs']);
         $title = utf8_encode($row['Obs']);
-		#$title = utf8_encode($row['Nome']);
-		$subtitle = utf8_encode($row['Nome']);
-		$profissional = utf8_encode($row['Nome']);
+		#$title = utf8_encode($row['NomeUsuario']);
+		$subtitle = utf8_encode($row['NomeUsuario']);
+		$profissional = utf8_encode($row['NomeUsuario']);
     } else {
         $c = '/' . $row['idApp_Cliente'];
 
         if ($row['Paciente'] == 'D') {
             $title = utf8_encode($row['NomeContatoCliente']);
             $subtitle = utf8_encode($row['NomeCliente']);
-            $profissional = utf8_encode($row['Nome']);
+            $profissional = utf8_encode($row['NomeUsuario']);
 			$telefone1 = utf8_encode($row['Telefone1']);
         }
         else {
             $title = utf8_encode($row['NomeCliente']);
-			#$title = utf8_encode($row['Nome']);
-			$subtitle = utf8_encode($row['Nome']);
-            $profissional = utf8_encode($row['Nome']);
+			#$title = utf8_encode($row['NomeUsuario']);
+			$subtitle = utf8_encode($row['NomeUsuario']);
+            $profissional = utf8_encode($row['NomeUsuario']);
 			$telefone1 = utf8_encode($row['Telefone1']);
 
         }

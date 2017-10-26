@@ -72,10 +72,10 @@
 										<div class="row">
 											<div class="col-md-12">
 												<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()"
-														id="Nome" name="Nome">
+														id="NomeUsuario" name="NomeUsuario">
 													<?php
-													foreach ($select['Nome'] as $key => $row) {
-														if ($query['Nome'] == $key) {
+													foreach ($select['NomeUsuario'] as $key => $row) {
+														if ($query['NomeUsuario'] == $key) {
 															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 														} else {
 															echo '<option value="' . $key . '">' . $row . '</option>';

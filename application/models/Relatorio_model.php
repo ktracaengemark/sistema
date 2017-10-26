@@ -2368,19 +2368,19 @@ class Relatorio_model extends CI_Model {
         $query = $this->db->query('
             SELECT                
 				P.idSis_Usuario,
-				P.Nome				
+				P.Nome AS NomeUsuario				
             FROM
                 Sis_Usuario AS P
             WHERE
                 P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 P.Empresa = ' . $_SESSION['log']['Empresa'] . ' 
-			ORDER BY P.Nome ASC
+			ORDER BY NomeUsuario ASC
         ');
 
         $array = array();
         $array[0] = ':: Todos ::';
         foreach ($query->result() as $row) {
-            $array[$row->idSis_Usuario] = $row->Nome;
+            $array[$row->idSis_Usuario] = $row->NomeUsuario;
         }
 
         return $array;
