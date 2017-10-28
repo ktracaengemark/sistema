@@ -99,6 +99,22 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-md-3">
+												<label for="idApp_Agenda">Agenda do Profis.*</label>
+												<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+														id="idApp_Agenda" autofocus name="idApp_Agenda">
+													<option value="">-- Sel. um Prof. --</option>
+													<?php
+													foreach ($select['idApp_Agenda'] as $key => $row) {
+														if ($query['idApp_Agenda'] == $key) {
+															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+														} else {
+															echo '<option value="' . $key . '">' . $row . '</option>';
+														}
+													}
+													?>
+												</select>
+											</div>
+											<div class="col-md-3 form-inline text-left">
 												<label for="Data">Data: *</label>
 												<div class="input-group <?php echo $datepicker; ?>">
 													<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
@@ -108,7 +124,7 @@
 													</span>
 												</div>
 											</div>
-											<div class="col-md-7 form-inline">
+											<div class="col-md-6 form-inline text-left">
 												<div class="form-group">
 													<label for="Hora">Hora: *</label><br>
 													De
@@ -140,7 +156,7 @@
 
 									<div class="form-group">
 										<div class="row">					
-											<div class="col-md-10 form-inline">
+											<div class="col-md-9 form-inline">
 												<label for="idTab_Status">Status:</label><br>
 												<div class="form-group">
 													<div class="btn-group" data-toggle="buttons">
@@ -169,41 +185,7 @@
 													</div>
 												</div>
 											</div>
-										</div>
-									</div>		
-									<!--
-									<div class="form-group">
-										<div class="row">								
-											<div class="col-md-4">
-												<label for="idApp_Profissional">Profissional: *</label>
-												<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
-													<span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
-												</a>
-												<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-														id="idApp_Profissional" name="idApp_Profissional">
-													<option value="">-- Selecione um Profissional --</option>
-													<?php
-													foreach ($select['Profissional'] as $key => $row) {
-														if ($query['idApp_Profissional'] == $key) {
-															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-														} else {
-															echo '<option value="' . $key . '">' . $row . '</option>';
-														}
-													}
-													?>
-												</select>
-											</div>
-										</div>	
-									</div>
-										
-									
-									<hr>				
-									-->
-									<hr>
-
-									<div class="form-group">
-										<div class="row">
-											<div class="col-md-3">
+											<div class="col-md-3 form-inline text-left">
 												<label for="idTab_TipoConsulta">Tipo de Consulta:</label><br>
 												<div class="form-group">
 													<div class="btn-group" data-toggle="buttons">
@@ -231,7 +213,43 @@
 													</div>
 												</div>
 											</div>
+										</div>
+									</div>		
+									<hr>
+									<!--
+									<div class="form-group">
+										<div class="row">								
+											
+											
 											<div class="col-md-4">
+												<label for="idApp_Profissional">Profissional: *</label>
+												<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
+													<span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
+												</a>
+												<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+														id="idApp_Profissional" name="idApp_Profissional">
+													<option value="">-- Selecione um Profissional --</option>
+													<?php
+													foreach ($select['Profissional'] as $key => $row) {
+														if ($query['idApp_Profissional'] == $key) {
+															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+														} else {
+															echo '<option value="' . $key . '">' . $row . '</option>';
+														}
+													}
+													?>
+												</select>
+											</div>
+										   	
+										</div>	
+									</div>
+																														
+									<hr>
+									-->
+									<div class="form-group">
+										<div class="row">
+											
+											<div class="col-md-12">
 												<label for="Obs">Obs:</label>
 												<textarea class="form-control" id="Obs"
 														  name="Obs"><?php echo $query['Obs']; ?></textarea>
@@ -246,7 +264,7 @@
 									<div class="form-group">
 										<div class="row">
 											<input type="hidden" name="idApp_Consulta" value="<?php echo $query['idApp_Consulta']; ?>">
-											<input type="hidden" name="idApp_Agenda" value="<?php echo $_SESSION['log']['Agenda']; ?>">
+											<!--<input type="hidden" name="idApp_Agenda" value="<?php echo $_SESSION['log']['Agenda']; ?>">-->
 											<input type="hidden" name="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>">
 											<?php if ($metodo == 2) { ?>
 

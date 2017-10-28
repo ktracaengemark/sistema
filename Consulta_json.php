@@ -16,16 +16,20 @@ if (!$db) {
 #echo 'Conexão bem sucedida';
 
 $query = ($_SESSION['log']['NomeUsuario'] && isset($_SESSION['log']['NomeUsuario'])) ?
-    'P.idSis_Usuario = ' . $_SESSION['log']['NomeUsuario'] . ' AND ' : FALSE;
+    #'P.idSis_Usuario = ' . $_SESSION['log']['NomeUsuario'] . ' AND ' : FALSE;
+	'A.idSis_Usuario = ' . $_SESSION['log']['NomeUsuario'] . ' AND ' : FALSE;
 
 $result = mysql_query(
         'SELECT
-            C.idApp_Consulta,
+            A.idApp_Agenda,
+			A.idSis_Usuario,
+			C.idApp_Consulta,
             C.idApp_Cliente,
             R.NomeCliente,
 			R.Telefone1,
             D.NomeContatoCliente,
             P.Nome AS NomeUsuario,
+			P.Permissao,
             C.DataInicio,
             C.DataFim,
             C.Procedimento,
@@ -37,16 +41,18 @@ $result = mysql_query(
         FROM
             app.App_Agenda AS A,
             app.App_Consulta AS C
-                LEFT JOIN app.App_Cliente AS R ON C.idApp_Cliente = R.idApp_Cliente
-                LEFT JOIN app.App_ContatoCliente AS D ON C.idApp_ContatoCliente = D.idApp_ContatoCliente
+                LEFT JOIN app.App_Cliente AS R ON R.idApp_Cliente = C.idApp_Cliente
+                LEFT JOIN app.App_ContatoCliente AS D ON D.idApp_ContatoCliente = C.idApp_ContatoCliente
                 LEFT JOIN app.Sis_Usuario AS P ON P.idSis_Usuario = C.idSis_Usuario
-                LEFT JOIN app.Tab_TipoConsulta AS TC ON C.idTab_TipoConsulta = TC.idTab_TipoConsulta
+                LEFT JOIN app.Tab_TipoConsulta AS TC ON TC.idTab_TipoConsulta = C.idTab_TipoConsulta
+							
         WHERE
-			C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+			(C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
            	C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND		
 			' . $query . ' 			
-            A.idApp_Agenda = C.idApp_Agenda
-
+            A.idApp_Agenda = C.idApp_Agenda AND
+			' . $_SESSION['log']['Permissao'] . ' = "1") 
+			
 			
         ORDER BY C.DataInicio ASC'
 );
@@ -58,22 +64,36 @@ while ($row = mysql_fetch_assoc($result)) {
         //(strlen(utf8_encode($row['Obs'])) > 20) ? $title = substr(utf8_encode($row['Obs']), 0, 20).'...' : $title = utf8_encode($row['Obs']);
         $title = utf8_encode($row['Obs']);
 		#$title = utf8_encode($row['NomeUsuario']);
+		#$title = utf8_encode($row['idSis_Usuario']);
 		$subtitle = utf8_encode($row['NomeUsuario']);
-		$profissional = utf8_encode($row['NomeUsuario']);
-    } else {
+		
+		#$profissional = utf8_encode($row['NomeUsuario']);
+		#$profissional = utf8_encode($row['idApp_Agenda']);
+		$profissional = utf8_encode($row['idSis_Usuario']);
+		
+		} 
+		else {
         $c = '/' . $row['idApp_Cliente'];
 
         if ($row['Paciente'] == 'D') {
             $title = utf8_encode($row['NomeContatoCliente']);
             $subtitle = utf8_encode($row['NomeCliente']);
-            $profissional = utf8_encode($row['NomeUsuario']);
+            
+			#$profissional = utf8_encode($row['NomeUsuario']);
+			#$profissional = utf8_encode($row['idApp_Agenda']);
+			$profissional = utf8_encode($row['idSis_Usuario']);
+			
 			$telefone1 = utf8_encode($row['Telefone1']);
         }
         else {
             $title = utf8_encode($row['NomeCliente']);
 			#$title = utf8_encode($row['NomeUsuario']);
 			$subtitle = utf8_encode($row['NomeUsuario']);
-            $profissional = utf8_encode($row['NomeUsuario']);
+            
+			#$profissional = utf8_encode($row['NomeUsuario']);
+			#$profissional = utf8_encode($row['idApp_Agenda']);
+			$profissional = utf8_encode($row['idSis_Usuario']);
+			
 			$telefone1 = utf8_encode($row['Telefone1']);
 
         }

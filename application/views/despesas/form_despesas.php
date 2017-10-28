@@ -247,7 +247,7 @@
 														<div class="col-md-4">
 															<label for="idTab_Produto">Produto:</label>
 															<?php if ($i == 1) { ?>
-															<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produto/cadastrar/produto" role="button">
+															<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produtos/cadastrar" role="button">
 																<span class="glyphicon glyphicon-plus"></span> <b>Novo Produto</b>
 															</a>
 															<?php } ?>

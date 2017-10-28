@@ -96,11 +96,15 @@ class Consulta extends CI_Controller {
         $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
         #$this->form_validation->set_rules('idTab_TipoConsulta', 'Tipo de Consulta', 'required|trim');
         #$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
+		
+        
         if ($data['query']['Paciente'] == 'D')
             $this->form_validation->set_rules('idApp_ContatoCliente', 'ContatoCliente', 'required|trim');
 
         $data['resumo'] = $this->Cliente_model->get_cliente($data['query']['idApp_Cliente']);
-
+		
+		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
 		$data['select']['Status'] = $this->Basico_model->select_status();
         $data['select']['TipoConsulta'] = $this->Basico_model->select_tipo_consulta();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
@@ -247,9 +251,13 @@ class Consulta extends CI_Controller {
         $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
         #$this->form_validation->set_rules('idTab_TipoConsulta', 'Tipo de Consulta', 'required|trim');
         #$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
+		 
+		
         if ($data['query']['Paciente'] == 'D')
             $this->form_validation->set_rules('idApp_ContatoCliente', 'ContatoCliente', 'required|trim');
 
+		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
         $data['select']['Status'] = $this->Basico_model->select_status();
         $data['select']['TipoConsulta'] = $this->Basico_model->select_tipo_consulta();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
@@ -420,9 +428,10 @@ class Consulta extends CI_Controller {
         $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
         $this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
         $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
-		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
-		
+		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');		
+		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
+        $data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
         
 		$data['titulo'] = 'Agenda Empresa Pessoal';
         $data['form_open_path'] = 'consulta/cadastrar_evento';
@@ -527,8 +536,9 @@ class Consulta extends CI_Controller {
         $this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
         $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
 		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
-		
+		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
+        $data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
 		
         $data['titulo'] = 'Agenda Empresa Pessoal';
         $data['form_open_path'] = 'consulta/alterar_evento';
@@ -612,14 +622,14 @@ class Consulta extends CI_Controller {
         $this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
         $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
 		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
-		
+		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        
+        $data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
 		$data['titulo'] = 'Agenda Particular';
         $data['form_open_path'] = 'consulta/cadastrar_particular';
         $data['panel'] = 'primary';
         $data['metodo'] = 1;
-        $data['evento'] = 1;
+        $data['evento'] = 3;
 
         $data['readonly'] = '';
         $data['datepicker'] = 'DatePicker';
@@ -668,7 +678,7 @@ class Consulta extends CI_Controller {
         $this->load->view('basico/footer');
     }
 
-    public function alterar_particular($idApp_Consulta = FALSE) {
+    public function alterar_particular($idApp_Consulta = FALSE, $idApp_Agenda = NULL) {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -718,9 +728,9 @@ class Consulta extends CI_Controller {
         $this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
         $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
 		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
-		
+		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-		
+		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
         $data['titulo'] = 'Agenda Particular';
         $data['form_open_path'] = 'consulta/alterar_particular';
         $data['panel'] = 'primary';

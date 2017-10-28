@@ -106,7 +106,7 @@ class Cliente_model extends CI_Model {
 
         $query = $this->db->query('SELECT * '
                 . 'FROM App_Cliente WHERE '
-                . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                . 'Empresa = ' . $_SESSION['log']['Empresa'] . ' AND '
                 . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND '
                 . '(NomeCliente like "%' . $data . '%" OR '
                 #. 'DataNascimento = "' . $this->basico->mascara_data($data, 'mysql') . '" OR '
