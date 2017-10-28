@@ -863,7 +863,24 @@ class Basico_model extends CI_Model {
 	
 	public function select_agenda($data = FALSE) {
 
-       
+        if ($data === TRUE) {
+            $array = $this->db->query('
+                SELECT 
+                    A.idApp_Agenda,					
+                    A.idSis_Usuario,
+					U.Nome
+					
+				FROM 
+                    App_Agenda AS A
+						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = A.idSis_Usuario
+				WHERE
+					A.Empresa = ' . $_SESSION['log']['Empresa'] . ' 
+ 
+				ORDER BY 
+					U.Nome ASC 
+			');		
+					
+        } else {       
             $query = $this->db->query('
 				SELECT 
                     A.idApp_Agenda,					
@@ -885,7 +902,7 @@ class Basico_model extends CI_Model {
             foreach ($query->result() as $row) {
                 $array[$row->idApp_Agenda] = $row->Nome;
             }
-        
+        }
 
         return $array;
     }	
