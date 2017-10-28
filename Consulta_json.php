@@ -47,11 +47,10 @@ $result = mysql_query(
                 LEFT JOIN app.Tab_TipoConsulta AS TC ON TC.idTab_TipoConsulta = C.idTab_TipoConsulta
 							
         WHERE
-			(C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+			C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
            	C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND		
 			' . $query . ' 			
-            A.idApp_Agenda = C.idApp_Agenda AND
-			' . $_SESSION['log']['Permissao'] . ' = "1") 
+            A.idApp_Agenda = C.idApp_Agenda  
 			
 			
         ORDER BY C.DataInicio ASC'
