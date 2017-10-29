@@ -547,7 +547,8 @@ class Relatorio_model extends CI_Model {
         }
 
         $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
-
+		$data['Produtos'] = ($data['Produtos']) ? ' AND TPV.idTab_Produtos = ' . $data['Produtos'] : FALSE;
+		
 		$query = $this->db->query('
             SELECT
                 C.NomeCliente,
@@ -579,6 +580,7 @@ class Relatorio_model extends CI_Model {
 				APV.idApp_ProdutoVenda != "0" AND
 				C.idApp_Cliente = OT.idApp_Cliente
                 ' . $data['NomeCliente'] . '
+				' . $data['Produtos'] . '
             ORDER BY
 				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
@@ -743,7 +745,8 @@ class Relatorio_model extends CI_Model {
         }
 
 		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TTC.idTab_TipoConsumo = ' . $data['TipoDespesa'] : FALSE;
-
+		$data['Produtos'] = ($data['Produtos']) ? ' AND TPB.idTab_Produtos = ' . $data['Produtos'] : FALSE;
+		
         $query = $this->db->query('
             SELECT
                 TCO.idApp_Despesas,
@@ -764,7 +767,8 @@ class Relatorio_model extends CI_Model {
                 TCO.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				(' . $consulta . ')
-				' . $data['TipoDespesa'] . ' AND
+				' . $data['TipoDespesa'] . ' 
+				' . $data['Produtos'] . ' AND
 				TCO.TipoProduto = "C"
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -803,7 +807,8 @@ class Relatorio_model extends CI_Model {
         }
 
 		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TTC.idTab_TipoConsumo = ' . $data['TipoDespesa'] : FALSE;
-
+		$data['Produtos'] = ($data['Produtos']) ? ' AND TPB.idTab_Produtos = ' . $data['Produtos'] : FALSE;
+		
         $query = $this->db->query('
             SELECT
                 TCO.idApp_Despesas,
@@ -823,7 +828,8 @@ class Relatorio_model extends CI_Model {
                 TCO.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				(' . $consulta . ')
-				' . $data['TipoDespesa'] . ' AND
+				' . $data['TipoDespesa'] . ' 
+				' . $data['Produtos'] . ' AND
 				TCO.TipoProduto = "D" AND
 				TPB.idTab_Produtos != "0"
 

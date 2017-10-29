@@ -547,6 +547,7 @@ class Relatorio extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'NomeCliente',
+			'Produtos',
 			'DataInicio',
             'DataFim',
 			'Ordenamento',
@@ -577,6 +578,7 @@ class Relatorio extends CI_Controller {
         );
 
 		$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
+		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
 
         $data['titulo'] = 'Relatório de Produtos Vendidos';
 
@@ -585,6 +587,7 @@ class Relatorio extends CI_Controller {
 
             #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
 			$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
+			$data['bd']['Produtos'] = $data['query']['Produtos'];
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
@@ -775,6 +778,7 @@ class Relatorio extends CI_Controller {
         $data['query'] = quotes_to_entities($this->input->post(array(
             'TipoDespesa',
 			'TipoProduto',
+			'Produtos',
             'DataInicio',
             'DataFim',
 			'Ordenamento',
@@ -806,7 +810,8 @@ class Relatorio extends CI_Controller {
         );
 
 		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipoconsumo();
-
+		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
+		
         $data['titulo'] = 'Relatório de Produtos Cons. Inter.';
 
         #run form validation
@@ -816,6 +821,7 @@ class Relatorio extends CI_Controller {
 
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['Produtos'] = $data['query']['Produtos'];
 			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
 			$data['bd']['TipoProduto'] = $data['query']['TipoProduto'];
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
@@ -852,6 +858,7 @@ class Relatorio extends CI_Controller {
         $data['query'] = quotes_to_entities($this->input->post(array(
             'TipoDespesa',
 			'TipoProduto',
+			'Produtos',
             'DataInicio',
             'DataFim',
 			'Ordenamento',
@@ -883,6 +890,7 @@ class Relatorio extends CI_Controller {
         );
 
 		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipodespesa();
+		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
 
         $data['titulo'] = 'Relatório de Produtos Comprados';
 
@@ -893,6 +901,7 @@ class Relatorio extends CI_Controller {
 
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['Produtos'] = $data['query']['Produtos'];
 			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
 			$data['bd']['TipoProduto'] = $data['query']['TipoProduto'];
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];

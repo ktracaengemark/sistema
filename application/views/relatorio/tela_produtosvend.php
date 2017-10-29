@@ -33,6 +33,21 @@
 										?>
 									</select>
 								</div>
+								<div class="col-md-3">
+									<label for="Ordenamento">Produtos</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+											id="Produtos" name="Produtos">
+										<?php
+										foreach ($select['Produtos'] as $key => $row) {
+											if ($query['Produtos'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
 								
 								<!--
 								<div class="col-md-1">
