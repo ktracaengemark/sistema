@@ -58,7 +58,7 @@ class Relatorio extends CI_Controller {
 			'ServicoConcluido',
         ), TRUE));
 
-        if (!$data['query']['DataInicio'])			
+        if (!$data['query']['DataInicio'])
            $data['query']['DataInicio'] = '01/01/2017';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -77,7 +77,7 @@ class Relatorio extends CI_Controller {
             'N' => 'Não',
             'S' => 'Sim',
         );
-		
+
 		$data['select']['ServicoConcluido'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
@@ -106,9 +106,9 @@ class Relatorio extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
-		
+
 		$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
-		
+
 		/*
         $data['select']['Pesquisa'] = array(
             'DataEntradaOrca' => 'Data de Entrada',
@@ -116,7 +116,7 @@ class Relatorio extends CI_Controller {
         );
         */
 
-		
+
         $data['titulo'] = 'Orçamentos & Pagamentos';
 
         #run form validation
@@ -126,7 +126,7 @@ class Relatorio extends CI_Controller {
             $data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-			
+
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
@@ -151,7 +151,7 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-	
+
 	public function receitas() {
 
         if ($this->input->get('m') == 1)
@@ -178,10 +178,10 @@ class Relatorio extends CI_Controller {
         ), TRUE));
 
 		/*
-        if (!$data['query']['DataInicio'])			
+        if (!$data['query']['DataInicio'])
            $data['query']['DataInicio'] = '01/01/2017';
-		
-		if (!$data['query']['DataInicio2'])			
+
+		if (!$data['query']['DataInicio2'])
            $data['query']['DataInicio2'] = '01/01/2017';
 		*/
 
@@ -197,7 +197,7 @@ class Relatorio extends CI_Controller {
         $data['select']['AprovadoOrca'] = array(
             'S' => 'Sim',
 			'N' => 'Não',
-			'#' => 'TODOS',   
+			'#' => 'TODOS',
         );
 
         $data['select']['QuitadoOrca'] = array(
@@ -205,13 +205,13 @@ class Relatorio extends CI_Controller {
             'N' => 'Não',
             'S' => 'Sim',
         );
-		
+
 		$data['select']['ServicoConcluido'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
             'S' => 'Sim',
         );
-		
+
 		$data['select']['QuitadoRecebiveis'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
@@ -232,7 +232,7 @@ class Relatorio extends CI_Controller {
             'OT.DataConclusao' => 'Data de Conclusão',
             'OT.DataRetorno' => 'Data de Retorno',
 			'OT.ProfissionalOrca' => 'Profissional',
-			
+
 
         );
 
@@ -240,9 +240,9 @@ class Relatorio extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
-		
+
 		$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
-		
+
 		/*
         $data['select']['Pesquisa'] = array(
             'DataEntradaOrca' => 'Data de Entrada',
@@ -250,7 +250,7 @@ class Relatorio extends CI_Controller {
         );
         */
 
-		
+
         $data['titulo'] = 'Relatório de Receitas & Entradas';
 
         #run form validation
@@ -261,9 +261,9 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
-            $data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');			
+            $data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
 			$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
-            $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');	
+            $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
@@ -289,7 +289,7 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-	
+
 	public function despesas() {
 
         if ($this->input->get('m') == 1)
@@ -312,15 +312,15 @@ class Relatorio extends CI_Controller {
             'Campo',
 			'AprovadoDespesas',
 			'ServicoConcluidoDespesas',
-            'QuitadoDespesas',			
+            'QuitadoDespesas',
 			'QuitadoPagaveis',
-          
+
         ), TRUE));
 		/*
-        if (!$data['query']['DataInicio'])			
+        if (!$data['query']['DataInicio'])
            $data['query']['DataInicio'] = '01/01/2017';
-		
-		if (!$data['query']['DataInicio2'])			
+
+		if (!$data['query']['DataInicio2'])
            $data['query']['DataInicio2'] = '01/01/2017';
 		*/
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -331,25 +331,25 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataFim2', 'Data Fim', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio3', 'Data Início do Orçamento', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim3', 'Data Fim do Orçamento', 'trim|valid_date');
-		
+
 		$data['select']['AprovadoDespesas'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
             'S' => 'Sim',
         );
-		
+
 		$data['select']['ServicoConcluidoDespesas'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
             'S' => 'Sim',
         );
-		
+
 		$data['select']['QuitadoDespesas'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
             'S' => 'Sim',
         );
-						
+
 		$data['select']['QuitadoPagaveis'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
@@ -357,7 +357,7 @@ class Relatorio extends CI_Controller {
         );
 
         $data['select']['Campo'] = array(
-            
+
             'PP.DataVencimentoPagaveis' => 'Data do Venc.',
 			'PP.DataPagoPagaveis' => 'Data do Pagam.',
 			'PP.QuitadoPagaveis' => 'Quit.Parc.',
@@ -365,18 +365,18 @@ class Relatorio extends CI_Controller {
             'DS.DataDespesas' => 'Data da Despesa',
             'DS.ValorDespesas' => 'Valor da Despesa',
 			'DS.Despesa' => 'Despesa',
-			'DS.TipoDespesa' => 'Tipo de Despesa',           
-            'DS.QuitadoDespesas' => 'Despesa Quitada?',			
-            
+			'DS.TipoDespesa' => 'Tipo de Despesa',
+            'DS.QuitadoDespesas' => 'Despesa Quitada?',
+
         );
 
         $data['select']['Ordenamento'] = array(
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
-						
+
 		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipodespesa();
-		
+
         $data['titulo'] = 'Relatório de Despesas & Saídas';
 
         #run form validation
@@ -389,14 +389,14 @@ class Relatorio extends CI_Controller {
 			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
             $data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
 			$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
-            $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');	
+            $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
 			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
 			$data['bd']['TipoProduto'] = $data['query']['TipoProduto'];
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];	
-			$data['bd']['AprovadoDespesas'] = $data['query']['AprovadoDespesas'];	
-			$data['bd']['ServicoConcluidoDespesas'] = $data['query']['ServicoConcluidoDespesas'];	
-            $data['bd']['QuitadoDespesas'] = $data['query']['QuitadoDespesas'];		
+            $data['bd']['Campo'] = $data['query']['Campo'];
+			$data['bd']['AprovadoDespesas'] = $data['query']['AprovadoDespesas'];
+			$data['bd']['ServicoConcluidoDespesas'] = $data['query']['ServicoConcluidoDespesas'];
+            $data['bd']['QuitadoDespesas'] = $data['query']['QuitadoDespesas'];
 			$data['bd']['QuitadoPagaveis'] = $data['query']['QuitadoPagaveis'];
 
             $data['report'] = $this->Relatorio_model->list_despesas($data['bd'],TRUE);
@@ -417,7 +417,49 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-	
+
+    public function balanco() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'Ano',
+        ), TRUE));
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+        $this->form_validation->set_rules('Ano', 'Ano', 'required|trim|integer|greater_than[1900]');
+
+        $data['titulo'] = 'Relatório de Balanço';
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+            $data['report'] = $this->Relatorio_model->list_balanco($data['query']);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_balanco', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_balanco', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+
 	public function admin() {
 
         if ($this->input->get('m') == 1)
@@ -443,7 +485,7 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-	
+
 	public function adminempresa() {
 
         if ($this->input->get('m') == 1)
@@ -467,8 +509,8 @@ class Relatorio extends CI_Controller {
 
         $this->load->view('basico/footer');
 
-    }	
-	
+    }
+
 	public function sistema() {
 
         if ($this->input->get('m') == 1)
@@ -492,8 +534,8 @@ class Relatorio extends CI_Controller {
 
         $this->load->view('basico/footer');
 
-    }	
-	
+    }
+
 	public function produtosvend() {
 
         if ($this->input->get('m') == 1)
@@ -509,17 +551,17 @@ class Relatorio extends CI_Controller {
             'DataFim',
 			'Ordenamento',
             'Campo',
-          
+
         ), TRUE));
 
-        if (!$data['query']['DataInicio'])			
+        if (!$data['query']['DataInicio'])
            $data['query']['DataInicio'] = '01/01/2017';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');		
-		
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+
 
         $data['select']['Campo'] = array(
             'C.NomeCliente' => 'Nome do Cliente',
@@ -533,9 +575,9 @@ class Relatorio extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
-						
+
 		$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
-		
+
         $data['titulo'] = 'Relatório de Produtos Vendidos';
 
         #run form validation
@@ -546,7 +588,7 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];	
+            $data['bd']['Campo'] = $data['query']['Campo'];
 
             $data['report'] = $this->Relatorio_model->list_produtosvend($data['bd'],TRUE);
 
@@ -566,7 +608,7 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-	
+
 	public function servicosprest1() {
 
         if ($this->input->get('m') == 1)
@@ -583,17 +625,17 @@ class Relatorio extends CI_Controller {
             'DataFim',
 			'Ordenamento',
             'Campo',
-          
+
         ), TRUE));
 
-        if (!$data['query']['DataInicio'])			
+        if (!$data['query']['DataInicio'])
            $data['query']['DataInicio'] = '01/01/2017';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');		
-		
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+
 
         $data['select']['Campo'] = array(
             'C.NomeCliente' => 'Nome do Cliente',
@@ -608,10 +650,10 @@ class Relatorio extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
-						
+
 		$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
 		$data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional();
-		
+
         $data['titulo'] = 'Relatório de Serviços Prestados';
 
         #run form validation
@@ -623,7 +665,7 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];	
+            $data['bd']['Campo'] = $data['query']['Campo'];
 
             $data['report'] = $this->Relatorio_model->list_servicosprest($data['bd'],TRUE);
 
@@ -643,7 +685,7 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-	
+
 	public function servicosprest() {
 
         if ($this->input->get('m') == 1)
@@ -660,17 +702,17 @@ class Relatorio extends CI_Controller {
             'DataFim',
 			'Ordenamento',
             'Campo',
-          
+
         ), TRUE));
 
-        if (!$data['query']['DataInicio'])			
+        if (!$data['query']['DataInicio'])
            $data['query']['DataInicio'] = '01/01/2017';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');		
-		
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+
 
         $data['select']['Campo'] = array(
             'C.NomeCliente' => 'Nome do Cliente',
@@ -685,10 +727,10 @@ class Relatorio extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
-						
+
 		$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
 		$data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional();
-		
+
         $data['titulo'] = 'Relatório de Serviços Prestados';
 
         #run form validation
@@ -700,7 +742,7 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];	
+            $data['bd']['Campo'] = $data['query']['Campo'];
 
             $data['report'] = $this->Relatorio_model->list_servicosprest($data['bd'],TRUE);
 
@@ -720,7 +762,7 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-	
+
 	public function consumo() {
 
         if ($this->input->get('m') == 1)
@@ -736,35 +778,35 @@ class Relatorio extends CI_Controller {
             'DataInicio',
             'DataFim',
 			'Ordenamento',
-            'Campo',     
+            'Campo',
         ), TRUE));
 
-        if (!$data['query']['DataInicio'])			
+        if (!$data['query']['DataInicio'])
            $data['query']['DataInicio'] = '01/01/2017';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');		
-		
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+
         $data['select']['Campo'] = array(
-            
+
 			'TCO.idApp_Despesas' => 'Id do Consumo',
             'TCO.DataDespesas' => 'Data do Consumo',
 			'TCO.TipoDespesa' => 'Tipo de Consumo',
-			'TCO.Despesa' => 'Consumo',			
+			'TCO.Despesa' => 'Consumo',
 			'APC.QtdCompraProduto' => 'Qtd. do Produto',
 			'TPB.Produtos' => 'Produto',
-			
+
         );
 
         $data['select']['Ordenamento'] = array(
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
-						
+
 		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipoconsumo();
-		
+
         $data['titulo'] = 'Relatório de Produtos Cons. Inter.';
 
         #run form validation
@@ -777,8 +819,8 @@ class Relatorio extends CI_Controller {
 			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
 			$data['bd']['TipoProduto'] = $data['query']['TipoProduto'];
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];	
-	
+            $data['bd']['Campo'] = $data['query']['Campo'];
+
             $data['report'] = $this->Relatorio_model->list_consumo($data['bd'],TRUE);
 
             /*
@@ -796,8 +838,8 @@ class Relatorio extends CI_Controller {
 
         $this->load->view('basico/footer');
 
-    }		
-	
+    }
+
 	public function produtoscomp() {
 
         if ($this->input->get('m') == 1)
@@ -813,35 +855,35 @@ class Relatorio extends CI_Controller {
             'DataInicio',
             'DataFim',
 			'Ordenamento',
-            'Campo',     
+            'Campo',
         ), TRUE));
 
-        if (!$data['query']['DataInicio'])			
+        if (!$data['query']['DataInicio'])
            $data['query']['DataInicio'] = '01/01/2017';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');		
-		
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+
         $data['select']['Campo'] = array(
-            
+
 			'TCO.idApp_Despesas' => 'Id do Consumo',
             'TCO.DataDespesas' => 'Data do Consumo',
 			'TCO.TipoDespesa' => 'Tipo de Consumo',
-			'TCO.Despesa' => 'Desc. do Consumo',			
+			'TCO.Despesa' => 'Desc. do Consumo',
 			'APC.QtdCompraProduto' => 'Qtd. do Produto',
 			'TPB.Produtos' => 'Produto',
-			
+
         );
 
         $data['select']['Ordenamento'] = array(
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
-						
+
 		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipodespesa();
-		
+
         $data['titulo'] = 'Relatório de Produtos Comprados';
 
         #run form validation
@@ -854,8 +896,8 @@ class Relatorio extends CI_Controller {
 			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
 			$data['bd']['TipoProduto'] = $data['query']['TipoProduto'];
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];	
-	
+            $data['bd']['Campo'] = $data['query']['Campo'];
+
             $data['report'] = $this->Relatorio_model->list_produtoscomp($data['bd'],TRUE);
 
             /*
@@ -874,7 +916,7 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-				
+
     public function orcamento() {
 
         if ($this->input->get('m') == 1)
@@ -901,7 +943,7 @@ class Relatorio extends CI_Controller {
 
         ), TRUE));
 		/*
-		if (!$data['query']['DataInicio'])			
+		if (!$data['query']['DataInicio'])
            $data['query']['DataInicio'] = '01/01/2017';
 		*/
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -925,7 +967,7 @@ class Relatorio extends CI_Controller {
             'N' => 'Não',
             'S' => 'Sim',
         );
-		
+
 		$data['select']['ServicoConcluido'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
@@ -999,7 +1041,7 @@ class Relatorio extends CI_Controller {
 
 
     }
-					
+
     public function clientes() {
 
         if ($this->input->get('m') == 1)
@@ -1024,7 +1066,7 @@ class Relatorio extends CI_Controller {
             'N' => 'Não',
             'S' => 'Sim',
         );
-		
+
 		$data['select']['Campo'] = array(
             'C.idApp_Cliente' => 'nº Cliente',
 			'C.NomeCliente' => 'Nome do Cliente',
@@ -1078,7 +1120,7 @@ class Relatorio extends CI_Controller {
 
 
     }
-	
+
 	public function associado() {
 
         if ($this->input->get('m') == 1)
@@ -1099,9 +1141,9 @@ class Relatorio extends CI_Controller {
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
 
 
-		
+
 		$data['select']['Campo'] = array(
-            'C.Nome' => 'Nome do Associado',		
+            'C.Nome' => 'Nome do Associado',
             'C.DataNascimento' => 'Data de Nascimento',
             'C.Sexo' => 'Sexo',
             'C.Email' => 'E-mail',
@@ -1140,7 +1182,7 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-	
+
 	public function empresaassociado() {
 
         if ($this->input->get('m') == 1)
@@ -1160,9 +1202,9 @@ class Relatorio extends CI_Controller {
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
 
 
-		
+
 		$data['select']['Campo'] = array(
-            'C.NomeEmpresa' => 'Empresa',		
+            'C.NomeEmpresa' => 'Empresa',
             'C.Email' => 'E-mail',
         );
 
@@ -1199,7 +1241,7 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-		
+
 	public function profissionais() {
 
         if ($this->input->get('m') == 1)
@@ -1269,7 +1311,7 @@ class Relatorio extends CI_Controller {
 
 
     }
-	
+
 	public function funcionario() {
 
         if ($this->input->get('m') == 1)
@@ -1350,7 +1392,7 @@ class Relatorio extends CI_Controller {
 
 
         $data['select']['Campo'] = array(
-            'E.idApp_Empresa' => 'nº Empresa',			
+            'E.idApp_Empresa' => 'nº Empresa',
 			'E.NomeEmpresa' => 'Nome do Fornecedor',
 			'E.Atividade' => 'Atividade',
             #'E.DataNascimento' => 'Data de Nascimento',
@@ -1370,7 +1412,7 @@ class Relatorio extends CI_Controller {
         );
 
         $data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresas();
-		
+
         $data['titulo'] = 'Relatório de Fornecedores';
 
         #run form validation
@@ -1397,7 +1439,7 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-	
+
 	public function fornecedor() {
 
         if ($this->input->get('m') == 1)
@@ -1418,7 +1460,7 @@ class Relatorio extends CI_Controller {
 
 
         $data['select']['Campo'] = array(
-            'E.idApp_Fornecedor' => 'nº Fornecedor',			
+            'E.idApp_Fornecedor' => 'nº Fornecedor',
 			'E.NomeFornecedor' => 'Nome do Fornecedor',
 			'E.Atividade' => 'Atividade',
             #'E.DataNascimento' => 'Data de Nascimento',
@@ -1438,7 +1480,7 @@ class Relatorio extends CI_Controller {
         );
 
         $data['select']['NomeFornecedor'] = $this->Relatorio_model->select_fornecedor();
-		
+
         $data['titulo'] = 'Relatório de Fornecedores';
 
         #run form validation
@@ -1465,7 +1507,7 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-	
+
 	public function produtos() {
 
         if ($this->input->get('m') == 1)
@@ -1488,7 +1530,7 @@ class Relatorio extends CI_Controller {
 
         $data['select']['Campo'] = array(
 			'TP.idTab_Produtos' => 'Id',
-			'TP.Produtos' => 'Descrição',	
+			'TP.Produtos' => 'Descrição',
 			'TP.Categoria' => 'Categoria',
 
         );
@@ -1499,7 +1541,7 @@ class Relatorio extends CI_Controller {
         );
 
         $data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
-		
+
         $data['titulo'] = 'Produtos, Serviços e Valores';
 
         #run form validation
@@ -1527,7 +1569,7 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-	
+
 	public function servicos() {
 
         if ($this->input->get('m') == 1)
@@ -1549,7 +1591,7 @@ class Relatorio extends CI_Controller {
 
         $data['select']['Campo'] = array(
 			'TP.idApp_Servicos' => 'id do Serviço',
-			'TP.Servicos' => 'Serviço',			
+			'TP.Servicos' => 'Serviço',
 
         );
 
@@ -1559,7 +1601,7 @@ class Relatorio extends CI_Controller {
         );
 
         $data['select']['Servicos'] = $this->Relatorio_model->select_servicos();
-		
+
         $data['titulo'] = 'Servicos e Valores';
 
         #run form validation
@@ -1609,8 +1651,8 @@ class Relatorio extends CI_Controller {
 			'ConcluidoProcedimento',
 
         ), TRUE));
-		
-		if (!$data['query']['DataInicio'])			
+
+		if (!$data['query']['DataInicio'])
            $data['query']['DataInicio'] = '01/01/2017';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -1669,7 +1711,7 @@ class Relatorio extends CI_Controller {
 
         $data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
 		$data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional();
-        
+
 		$data['titulo'] = 'Clientes X Procedimentos';
 
         #run form validation
@@ -1721,7 +1763,7 @@ class Relatorio extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $data['query'] = quotes_to_entities($this->input->post(array(           
+        $data['query'] = quotes_to_entities($this->input->post(array(
             'DataInicio',
             'DataFim',
 			'DataInicio2',
@@ -1736,10 +1778,10 @@ class Relatorio extends CI_Controller {
 			'ConcluidoProcedtarefa',
 			'ObsTarefa',
 			'Procedtarefa',
-			
+
         ), TRUE));
 
-	if (!$data['query']['DataInicio'])			
+	if (!$data['query']['DataInicio'])
            $data['query']['DataInicio'] = '01/01/2017';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -1758,13 +1800,13 @@ class Relatorio extends CI_Controller {
             'N' => 'Não',
             'S' => 'Sim',
         );
-		
+
 		$data['select']['Rotina'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
             'S' => 'Sim',
         );
-		
+
 		$data['select']['ConcluidoProcedtarefa'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
@@ -1778,7 +1820,7 @@ class Relatorio extends CI_Controller {
 			'PT.Profissional' => 'Profissional',
 			'TF.idApp_Tarefa' => 'Número do Tarefas',
 			'TF.ObsTarefa' => 'Tarefa',
-            'TF.DataTarefa' => 'Data do Tarefa',           
+            'TF.DataTarefa' => 'Data do Tarefa',
 			'TF.Prioridade' => 'É Prioridade?',
 			'TF.DataPrazoTarefa' => 'Prazo da Tarefa',
 			'TF.TarefaConcluida' => 'Tarefa Concl.?',
@@ -1786,20 +1828,20 @@ class Relatorio extends CI_Controller {
 			'PT.Procedtarefa' => 'Procedimento',
 			'PT.DataProcedtarefa' => 'Data do Proced.',
 			'PT.ConcluidoProcedtarefa' => 'Proced. Concl.?',
-			
+
         );
 
         $data['select']['Ordenamento'] = array(
             'DESC' => 'Decrescente',
 			'ASC' => 'Crescente',
-            
+
         );
 
         $data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional3();
 		$data['select']['Profissional'] = $this->Relatorio_model->select_profissional2();
 		$data['select']['ObsTarefa'] = $this->Relatorio_model->select_obstarefa();
 		$data['select']['Procedtarefa'] = $this->Relatorio_model->select_procedtarefa();
-		
+
         $data['titulo'] = 'Funcionários & Tarefas';
 
         #run form validation
@@ -1820,7 +1862,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['ConcluidoProcedtarefa'] = $data['query']['ConcluidoProcedtarefa'];
 			$data['bd']['ObsTarefa'] = $data['query']['ObsTarefa'];
 			$data['bd']['Procedtarefa'] = $data['query']['Procedtarefa'];
-			
+
 
             $data['report'] = $this->Relatorio_model->list_tarefa($data['bd'],TRUE);
 
@@ -1842,7 +1884,7 @@ class Relatorio extends CI_Controller {
 
 
     }
-	
+
 	public function clienteprod() {
 
         if ($this->input->get('m') == 1)
@@ -2033,5 +2075,5 @@ class Relatorio extends CI_Controller {
 
 
     }
-		
+
 }

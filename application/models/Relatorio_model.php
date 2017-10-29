@@ -23,7 +23,7 @@ class Relatorio_model extends CI_Model {
         #C.NomeCliente ASC
         */
 
-        
+
         if ($data['DataFim']) {
             $consulta =
                 '(PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '" AND PR.DataVencimentoRecebiveis <= "' . $data['DataFim'] . '") OR
@@ -34,7 +34,7 @@ class Relatorio_model extends CI_Model {
                 '(PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '") OR
                 (PR.DataPagoRecebiveis >= "' . $data['DataInicio'] . '")';
         }
-		
+
 		$data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 		$filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
@@ -128,7 +128,7 @@ class Relatorio_model extends CI_Model {
             $somareceber -= $somarecebido;
             $somareal = $somarecebido;
             $balanco = $somarecebido + $somareceber;
-			
+
 			$somapagar -= $somapago;
 			$somareal2 = $somapago;
 			$balanco2 = $somapago + $somapagar;
@@ -148,10 +148,10 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_receitas($data, $completo) {
 
-        
+
         if ($data['DataFim']) {
             $consulta =
                 '(PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '" AND PR.DataVencimentoRecebiveis <= "' . $data['DataFim'] . '")';
@@ -160,7 +160,7 @@ class Relatorio_model extends CI_Model {
             $consulta =
                 '(PR.DataVencimentoRecebiveis >= "' . $data['DataInicio'] . '")';
         }
-		
+
         if ($data['DataFim2']) {
             $consulta2 =
                 '(PR.DataPagoRecebiveis >= "' . $data['DataInicio2'] . '" AND PR.DataPagoRecebiveis <= "' . $data['DataFim2'] . '")';
@@ -177,16 +177,16 @@ class Relatorio_model extends CI_Model {
         else {
             $consulta3 =
                 '(OT.DataOrca >= "' . $data['DataInicio3'] . '")';
-        }		
-		
+        }
+
 		$data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 		$filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ServicoConcluido'] != '#') ? 'OT.ServicoConcluido = "' . $data['ServicoConcluido'] . '" AND ' : FALSE;
 		$filtro4 = ($data['QuitadoRecebiveis'] != '#') ? 'PR.QuitadoRecebiveis = "' . $data['QuitadoRecebiveis'] . '" AND ' : FALSE;
 
-        $query = $this->db->query('
-            SELECT
+        $query = $this->db->query(
+            'SELECT
                 C.NomeCliente,
                 OT.idApp_OrcaTrata,
                 OT.AprovadoOrca,
@@ -223,11 +223,8 @@ class Relatorio_model extends CI_Model {
             ORDER BY
                 C.NomeCliente,
 				OT.AprovadoOrca DESC,
-				PR.DataVencimentoRecebiveis
-				
-				
-				
-        ');
+				PR.DataVencimentoRecebiveis'
+            );
 
         /*
           echo $this->db->last_query();
@@ -278,7 +275,7 @@ class Relatorio_model extends CI_Model {
             $somareceber -= $somarecebido;
             $somareal = $somarecebido;
             $balanco = $somarecebido + $somareceber;
-			
+
 			$somapagar -= $somapago;
 			$somareal2 = $somapago;
 			$balanco2 = $somapago + $somapagar;
@@ -298,7 +295,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_despesas($data, $completo) {
 
         if ($data['DataFim']) {
@@ -318,7 +315,7 @@ class Relatorio_model extends CI_Model {
             $consulta2 =
                 '(PP.DataPagoPagaveis >= "' . $data['DataInicio2'] . '")';
         }
-		
+
         if ($data['DataFim3']) {
             $consulta3 =
                 '(DS.DataDespesas >= "' . $data['DataInicio3'] . '" AND DS.DataDespesas <= "' . $data['DataFim3'] . '")';
@@ -326,15 +323,15 @@ class Relatorio_model extends CI_Model {
         else {
             $consulta3 =
                 '(DS.DataDespesas >= "' . $data['DataInicio3'] . '")';
-        }		
-	
-	
+        }
+
+
 		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TD.idTab_TipoDespesa = ' . $data['TipoDespesa'] : FALSE;
 		$filtro1 = ($data['AprovadoDespesas'] != '#') ? 'DS.AprovadoDespesas = "' . $data['AprovadoDespesas'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ServicoConcluidoDespesas'] != '#') ? 'DS.ServicoConcluidoDespesas = "' . $data['ServicoConcluidoDespesas'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoDespesas'] != '#') ? 'DS.QuitadoDespesas = "' . $data['QuitadoDespesas'] . '" AND ' : FALSE;
 		$filtro4 = ($data['QuitadoPagaveis'] != '#') ? 'PP.QuitadoPagaveis = "' . $data['QuitadoPagaveis'] . '" AND ' : FALSE;
-		
+
         $query = $this->db->query('
             SELECT
                 DS.idApp_Despesas,
@@ -355,12 +352,12 @@ class Relatorio_model extends CI_Model {
                 PP.QuitadoPagaveis
             FROM
                 App_Despesas AS DS
-                    LEFT JOIN App_ParcelasPagaveis AS PP ON DS.idApp_Despesas = PP.idApp_Despesas							
+                    LEFT JOIN App_ParcelasPagaveis AS PP ON DS.idApp_Despesas = PP.idApp_Despesas
                     LEFT JOIN Tab_TipoDespesa AS TD ON TD.idTab_TipoDespesa = DS.TipoDespesa
             WHERE
                 DS.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				DS.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-				' . $filtro2 . '				
+				' . $filtro2 . '
 				' . $filtro4 . '
 				(' . $consulta . ') AND
 				(' . $consulta2 . ') AND
@@ -388,10 +385,10 @@ class Relatorio_model extends CI_Model {
 				$row->DataDespesas = $this->basico->mascara_data($row->DataDespesas, 'barras');
                 $row->DataEntradaDespesas = $this->basico->mascara_data($row->DataEntradaDespesas, 'barras');
                 $row->DataVencimentoPagaveis = $this->basico->mascara_data($row->DataVencimentoPagaveis, 'barras');
-                $row->DataPagoPagaveis = $this->basico->mascara_data($row->DataPagoPagaveis, 'barras');	
+                $row->DataPagoPagaveis = $this->basico->mascara_data($row->DataPagoPagaveis, 'barras');
 				$row->AprovadoDespesas = $this->basico->mascara_palavra_completa($row->AprovadoDespesas, 'NS');
 				$row->ServicoConcluidoDespesas = $this->basico->mascara_palavra_completa($row->ServicoConcluidoDespesas, 'NS');
-				$row->QuitadoDespesas = $this->basico->mascara_palavra_completa($row->QuitadoDespesas, 'NS');				
+				$row->QuitadoDespesas = $this->basico->mascara_palavra_completa($row->QuitadoDespesas, 'NS');
                 $row->QuitadoPagaveis = $this->basico->mascara_palavra_completa($row->QuitadoPagaveis, 'NS');
 
                 #esse trecho pode ser melhorado, serve para somar apenas uma vez
@@ -417,7 +414,7 @@ class Relatorio_model extends CI_Model {
             $somareceber -= $somarecebido;
             $somareal = $somarecebido;
             $balanco = $somarecebido + $somareceber;
-			
+
 			$somapagar -= $somapago;
 			$somareal2 = $somapago;
 			$balanco2 = $somapago + $somapagar;
@@ -437,9 +434,109 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
+    public function list_balanco($data) {
+
+        ####################################################################
+        #SOMATÓRIO DAS RECEITAS DO ANO
+        $somareceitas='';
+        for ($i=1;$i<=12;$i++){
+            $somareceitas .= 'SUM(IF(PR.DataPagoRecebiveis BETWEEN "' . $data['Ano'] . '-' . $i . '-1" AND
+                LAST_DAY("' . $data['Ano'] . '-' . $i . '-1"), PR.ValorPagoRecebiveis, 0)) AS M' . $i . ', ';
+        }
+        $somareceitas = substr($somareceitas, 0 ,-2);
+
+        $query['Receitas'] = $this->db->query(
+        #$receitas = $this->db->query(
+            'SELECT
+                ' . $somareceitas . '
+            FROM
+                App_Cliente AS C,
+                App_OrcaTrata AS OT
+                    LEFT JOIN App_ParcelasRecebiveis AS PR ON OT.idApp_OrcaTrata = PR.idApp_OrcaTrata
+            WHERE
+                C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                C.idApp_Cliente = OT.idApp_Cliente AND
+            	YEAR(PR.DataPagoRecebiveis) = ' . $data['Ano']
+        );
+
+        #$query['Receitas'] = $query['Receitas']->result_array();
+        $query['Receitas'] = $query['Receitas']->result();
+        $query['Receitas'][0]->Balanco = 'Receitas';
+
+
+        ####################################################################
+        #SOMATÓRIO DAS DESPESAS DO ANO
+        $somadespesas='';
+        for ($i=1;$i<=12;$i++){
+            $somadespesas .= 'SUM(IF(PP.DataPagoPagaveis BETWEEN "' . $data['Ano'] . '-' . $i . '-1" AND
+                LAST_DAY("' . $data['Ano'] . '-' . $i . '-1"), PP.ValorPagoPagaveis, 0)) AS M' . $i . ', ';
+        }
+        $somadespesas = substr($somadespesas, 0 ,-2);
+
+        $query['Despesas'] = $this->db->query(
+        #$despesas = $this->db->query(
+            'SELECT
+                ' . $somadespesas . '
+            FROM
+                App_Despesas AS DS
+                    LEFT JOIN App_ParcelasPagaveis AS PP ON DS.idApp_Despesas = PP.idApp_Despesas
+                    LEFT JOIN Tab_TipoDespesa AS TD ON TD.idTab_TipoDespesa = DS.TipoDespesa
+            WHERE
+                DS.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                DS.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                DS.TipoProduto = "D" AND
+            	YEAR(PP.DataPagoPagaveis) = ' . $data['Ano']
+        );
+
+        #$query['Despesas'] = $query['Despesas']->result_array();
+        $query['Despesas'] = $query['Despesas']->result();
+        $query['Despesas'][0]->Balanco = 'Despesas';
+
+        /*
+        echo $this->db->last_query();
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit();
+        */
+
+        $query['Total'] = new stdClass();
+        $query['TotalGeral'] = new stdClass();
+
+        $query['Total']->Balanco = 'Total';
+        $query['TotalGeral']->Receitas = $query['TotalGeral']->Despesas = $query['TotalGeral']->BalancoGeral = 0;
+
+        for ($i=1;$i<=12;$i++) {
+            $query['Total']->{'M'.$i} = $query['Receitas'][0]->{'M'.$i} - $query['Despesas'][0]->{'M'.$i};
+
+            $query['TotalGeral']->Receitas += $query['Receitas'][0]->{'M'.$i};
+            $query['TotalGeral']->Despesas += $query['Despesas'][0]->{'M'.$i};
+
+            $query['Receitas'][0]->{'M'.$i} = number_format($query['Receitas'][0]->{'M'.$i}, 2, ',', '.');
+            $query['Despesas'][0]->{'M'.$i} = number_format($query['Despesas'][0]->{'M'.$i}, 2, ',', '.');
+            $query['Total']->{'M'.$i} = number_format($query['Total']->{'M'.$i}, 2, ',', '.');
+        }
+        $query['TotalGeral']->BalancoGeral = $query['TotalGeral']->Receitas - $query['TotalGeral']->Despesas;
+
+        $query['TotalGeral']->Receitas = number_format($query['TotalGeral']->Receitas, 2, ',', '.');
+        $query['TotalGeral']->Despesas = number_format($query['TotalGeral']->Despesas, 2, ',', '.');
+        $query['TotalGeral']->BalancoGeral = number_format($query['TotalGeral']->BalancoGeral, 2, ',', '.');
+
+        /*
+        echo $this->db->last_query();
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit();
+        */
+        return $query;
+
+    }
+
 	public function list_produtosvend($data, $completo) {
-       
+
         if ($data['DataFim']) {
             $consulta =
                 '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
@@ -448,9 +545,9 @@ class Relatorio_model extends CI_Model {
             $consulta =
                 '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
         }
-		
+
         $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
-		
+
 		$query = $this->db->query('
             SELECT
                 C.NomeCliente,
@@ -465,7 +562,7 @@ class Relatorio_model extends CI_Model {
 				TPV.Fornecedor,
 				TFO.NomeFornecedor,
 				TVV.idTab_Valor
-				
+
 
             FROM
                 App_Cliente AS C,
@@ -481,7 +578,7 @@ class Relatorio_model extends CI_Model {
 				(' . $consulta . ') AND
 				APV.idApp_ProdutoVenda != "0" AND
 				C.idApp_Cliente = OT.idApp_Cliente
-                ' . $data['NomeCliente'] . '				
+                ' . $data['NomeCliente'] . '
             ORDER BY
 				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
@@ -500,14 +597,14 @@ class Relatorio_model extends CI_Model {
         } else {
 
             foreach ($query->result() as $row) {
-				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');              
+				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
             }
             return $query;
         }
     }
-	
+
 	public function list_servicosprest1($data, $completo) {
-       
+
         if ($data['DataFim']) {
             $consulta =
                 '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
@@ -516,10 +613,10 @@ class Relatorio_model extends CI_Model {
             $consulta =
                 '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
         }
-		
+
         $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 		$data['NomeProfissional'] = ($data['NomeProfissional']) ? ' AND P.idApp_Profissional = ' . $data['NomeProfissional'] : FALSE;
-		
+
 		$query = $this->db->query('
             SELECT
                 C.NomeCliente,
@@ -533,11 +630,11 @@ class Relatorio_model extends CI_Model {
             FROM
                 App_Cliente AS C,
 				App_OrcaTrata AS OT
-					LEFT JOIN App_ServicoVenda AS PV ON PV.idApp_OrcaTrata = OT.idApp_OrcaTrata					
-					LEFT JOIN Tab_Servico AS PD ON PD.idTab_Servico = PV.idTab_Servico					
+					LEFT JOIN App_ServicoVenda AS PV ON PV.idApp_OrcaTrata = OT.idApp_OrcaTrata
+					LEFT JOIN Tab_Servico AS PD ON PD.idTab_Servico = PV.idTab_Servico
 					LEFT JOIN Tab_ServicoCompra AS TSC ON TSC.idTab_ServicoCompra = PD.ServicoBase
 					LEFT JOIN Tab_ServicoBase AS TPB ON TPB.idTab_ServicoBase = TSC.ServicoBase
-					LEFT JOIN App_Profissional AS P ON P.idApp_Profissional = OT.ProfissionalOrca																								
+					LEFT JOIN App_Profissional AS P ON P.idApp_Profissional = OT.ProfissionalOrca
             WHERE
                 C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
@@ -545,7 +642,7 @@ class Relatorio_model extends CI_Model {
 				PV.idApp_ServicoVenda != "0" AND
 				C.idApp_Cliente = OT.idApp_Cliente
                 ' . $data['NomeCliente'] . '
-				' . $data['NomeProfissional'] . ' 
+				' . $data['NomeProfissional'] . '
             ORDER BY
 				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
@@ -564,14 +661,14 @@ class Relatorio_model extends CI_Model {
         } else {
 
             foreach ($query->result() as $row) {
-				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');              
+				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
             }
             return $query;
         }
     }
-	
+
 	public function list_servicosprest($data, $completo) {
-       
+
         if ($data['DataFim']) {
             $consulta =
                 '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
@@ -580,10 +677,10 @@ class Relatorio_model extends CI_Model {
             $consulta =
                 '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
         }
-		
+
         $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 		$data['NomeProfissional'] = ($data['NomeProfissional']) ? ' AND P.idApp_Profissional = ' . $data['NomeProfissional'] : FALSE;
-		
+
 		$query = $this->db->query('
             SELECT
                 C.NomeCliente,
@@ -598,10 +695,10 @@ class Relatorio_model extends CI_Model {
             FROM
                 App_Cliente AS C,
 				App_OrcaTrata AS OT
-					LEFT JOIN App_ServicoVenda AS PV ON PV.idApp_OrcaTrata = OT.idApp_OrcaTrata					
+					LEFT JOIN App_ServicoVenda AS PV ON PV.idApp_OrcaTrata = OT.idApp_OrcaTrata
 					LEFT JOIN Tab_Servico AS PD ON PD.idTab_Servico = PV.idTab_Servico
 					LEFT JOIN Sis_Usuario AS TSU ON TSU.idSis_Usuario = PV.idSis_Usuario
-					LEFT JOIN App_Profissional AS P ON P.idApp_Profissional = OT.ProfissionalOrca																								
+					LEFT JOIN App_Profissional AS P ON P.idApp_Profissional = OT.ProfissionalOrca
             WHERE
                 C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
@@ -628,14 +725,14 @@ class Relatorio_model extends CI_Model {
         } else {
 
             foreach ($query->result() as $row) {
-				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');              
+				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
             }
             return $query;
         }
     }
-		
+
 	public function list_consumo($data, $completo) {
-       
+
         if ($data['DataFim']) {
             $consulta =
                 '(TCO.DataDespesas >= "' . $data['DataInicio'] . '" AND TCO.DataDespesas <= "' . $data['DataFim'] . '")';
@@ -644,9 +741,9 @@ class Relatorio_model extends CI_Model {
             $consulta =
                 '(TCO.DataDespesas >= "' . $data['DataInicio'] . '")';
         }
-		
+
 		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TTC.idTab_TipoConsumo = ' . $data['TipoDespesa'] : FALSE;
-		
+
         $query = $this->db->query('
             SELECT
                 TCO.idApp_Despesas,
@@ -659,16 +756,16 @@ class Relatorio_model extends CI_Model {
 				TPB.Produtos,
 				APC.ObsProduto
             FROM
-                App_Despesas AS TCO							
-                    LEFT JOIN Tab_TipoConsumo AS TTC ON TTC.idTab_TipoConsumo = TCO.TipoDespesa					
-					LEFT JOIN App_ProdutoCompra AS APC ON APC.idApp_Despesas = TCO.idApp_Despesas					
-					LEFT JOIN Tab_Produtos AS TPB ON TPB.idTab_Produtos = APC.idTab_Produto					
+                App_Despesas AS TCO
+                    LEFT JOIN Tab_TipoConsumo AS TTC ON TTC.idTab_TipoConsumo = TCO.TipoDespesa
+					LEFT JOIN App_ProdutoCompra AS APC ON APC.idApp_Despesas = TCO.idApp_Despesas
+					LEFT JOIN Tab_Produtos AS TPB ON TPB.idTab_Produtos = APC.idTab_Produto
             WHERE
                 TCO.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
-				TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND				
-				(' . $consulta . ') 
+				TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				(' . $consulta . ')
 				' . $data['TipoDespesa'] . ' AND
-				TCO.TipoProduto = "C" 
+				TCO.TipoProduto = "C"
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
@@ -688,14 +785,14 @@ class Relatorio_model extends CI_Model {
             $somapago=$somapagar=$somaentrada=$somareceber=$somarecebido=$somareal=$balanco=$ant=0;
             foreach ($query->result() as $row) {
 				$row->DataDespesas = $this->basico->mascara_data($row->DataDespesas, 'barras');
-				                
+
             }
             return $query;
         }
     }
-		
+
 	public function list_produtoscomp($data, $completo) {
-       
+
         if ($data['DataFim']) {
             $consulta =
                 '(TCO.DataDespesas >= "' . $data['DataInicio'] . '" AND TCO.DataDespesas <= "' . $data['DataFim'] . '")';
@@ -704,9 +801,9 @@ class Relatorio_model extends CI_Model {
             $consulta =
                 '(TCO.DataDespesas >= "' . $data['DataInicio'] . '")';
         }
-		
+
 		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TTC.idTab_TipoConsumo = ' . $data['TipoDespesa'] : FALSE;
-		
+
         $query = $this->db->query('
             SELECT
                 TCO.idApp_Despesas,
@@ -718,18 +815,18 @@ class Relatorio_model extends CI_Model {
 				APC.idTab_Produto,
 				TPB.Produtos
             FROM
-                App_Despesas AS TCO							
-                    LEFT JOIN Tab_TipoDespesa AS TTC ON TTC.idTab_TipoDespesa = TCO.TipoDespesa					
-					LEFT JOIN App_ProdutoCompra AS APC ON APC.idApp_Despesas = TCO.idApp_Despesas					
-					LEFT JOIN Tab_Produtos AS TPB ON TPB.idTab_Produtos = APC.idTab_Produto					
+                App_Despesas AS TCO
+                    LEFT JOIN Tab_TipoDespesa AS TTC ON TTC.idTab_TipoDespesa = TCO.TipoDespesa
+					LEFT JOIN App_ProdutoCompra AS APC ON APC.idApp_Despesas = TCO.idApp_Despesas
+					LEFT JOIN Tab_Produtos AS TPB ON TPB.idTab_Produtos = APC.idTab_Produto
             WHERE
                 TCO.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-				(' . $consulta . ') 
+				(' . $consulta . ')
 				' . $data['TipoDespesa'] . ' AND
 				TCO.TipoProduto = "D" AND
 				TPB.idTab_Produtos != "0"
-												
+
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
@@ -749,12 +846,12 @@ class Relatorio_model extends CI_Model {
             $somapago=$somapagar=$somaentrada=$somareceber=$somarecebido=$somareal=$balanco=$ant=0;
             foreach ($query->result() as $row) {
 				$row->DataDespesas = $this->basico->mascara_data($row->DataDespesas, 'barras');
-				                
+
             }
             return $query;
         }
     }
-					
+
     public function list_orcamento($data, $completo) {
 
         if ($data['DataFim']) {
@@ -765,7 +862,7 @@ class Relatorio_model extends CI_Model {
             $consulta =
                 '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
         }
-		
+
         if ($data['DataFim2']) {
             $consulta2 =
                 '(OT.DataConclusao >= "' . $data['DataInicio2'] . '" AND OT.DataConclusao <= "' . $data['DataFim2'] . '")';
@@ -782,14 +879,14 @@ class Relatorio_model extends CI_Model {
         else {
             $consulta3 =
                 '(OT.DataRetorno >= "' . $data['DataInicio3'] . '")';
-        }		
+        }
 
         $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 
         $filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ServicoConcluido'] != '#') ? 'OT.ServicoConcluido = "' . $data['ServicoConcluido'] . '" AND ' : FALSE;
-		
+
         $query = $this->db->query('
             SELECT
                 C.NomeCliente,
@@ -829,7 +926,7 @@ class Relatorio_model extends CI_Model {
                 C.NomeCliente,
 				OT.AprovadoOrca ASC,
 				OT.DataOrca
-				
+
         ');
 
         /*
@@ -860,14 +957,14 @@ class Relatorio_model extends CI_Model {
 
                 $somaorcamento += $row->ValorOrca;
                 $row->ValorOrca = number_format($row->ValorOrca, 2, ',', '.');
-				
+
 				$somadesconto += $row->ValorEntradaOrca;
                 $row->ValorEntradaOrca = number_format($row->ValorEntradaOrca, 2, ',', '.');
-				
+
 				$somarestante += $row->ValorRestanteOrca;
                 $row->ValorRestanteOrca = number_format($row->ValorRestanteOrca, 2, ',', '.');
-				
-				
+
+
 
             }
             $query->soma = new stdClass();
@@ -879,7 +976,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-				
+
 	public function list_despesa($data, $completo) {
 
         if ($data['DataFim']) {
@@ -890,7 +987,7 @@ class Relatorio_model extends CI_Model {
             $consulta =
                 '(D.DataDesp >= "' . $data['DataInicio'] . '")';
         }
-		
+
 		if ($data['DataFim']) {
             $consulta =
                 '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
@@ -919,17 +1016,17 @@ class Relatorio_model extends CI_Model {
 
             FROM
                 App_OrcaTrata AS OT,
-				App_Despesa AS D				
+				App_Despesa AS D
                     LEFT JOIN Tab_TipoDespesa AS TD ON TD.idTab_TipoDespesa = D.TipoDespesa
                     LEFT JOIN Tab_FormaPag    AS FP ON FP.idTab_FormaPag    = D.FormaPag
                     LEFT JOIN App_Empresa     AS E  ON E.idApp_Empresa      = D.Empresa
 
             WHERE
-                
+
 				D.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				OT.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				(' . $consulta . ')
-				' . $data['TipoDespesa'] . ' 
+				' . $data['TipoDespesa'] . '
 
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -1002,14 +1099,14 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_ContatoCliente AS CC ON C.idApp_Cliente = CC.idApp_Cliente
 					LEFT JOIN Tab_RelaCom AS TCC ON TCC.idTab_RelaCom = CC.RelaCom
 					LEFT JOIN Tab_RelaPes AS TCP ON TCP.idTab_RelaPes = CC.RelaPes
-            WHERE               
+            WHERE
 				C.Empresa = ' . $_SESSION['log']['id'] . ' AND
-				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
-				' . $data['NomeCliente'] . '				
+				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+				' . $data['NomeCliente'] . '
 				OR
 				C.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
-				' . $data['NomeCliente'] . ' 
+				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+				' . $data['NomeCliente'] . '
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
@@ -1048,7 +1145,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_clientes($data, $completo) {
 
         $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
@@ -1075,15 +1172,15 @@ class Relatorio_model extends CI_Model {
 				CC.Sexo
 
             FROM
-				App_Cliente AS C				
+				App_Cliente AS C
                     LEFT JOIN Tab_Municipio AS M ON C.Municipio = M.idTab_Municipio
 					LEFT JOIN App_ContatoCliente AS CC ON C.idApp_Cliente = CC.idApp_Cliente
 					LEFT JOIN Tab_RelaCom AS TCC ON TCC.idTab_RelaCom = CC.RelaCom
 					LEFT JOIN Tab_RelaPes AS TCP ON TCP.idTab_RelaPes = CC.RelaPes
-            WHERE               
+            WHERE
                 C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-				C.Empresa = ' . $_SESSION['log']['Empresa'] . ' 						
-				' . $data['NomeCliente'] . '				
+				C.Empresa = ' . $_SESSION['log']['Empresa'] . '
+				' . $data['NomeCliente'] . '
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
@@ -1122,7 +1219,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_associado($data, $completo) {
 
         $data['Nome'] = ($data['Nome']) ? ' AND C.idSis_Usuario = ' . $data['Nome'] : FALSE;
@@ -1147,8 +1244,8 @@ class Relatorio_model extends CI_Model {
                 Sis_Usuario AS C
 					LEFT JOIN Tab_StatusSN AS SN ON SN.Inativo = C.Inativo
             WHERE
-                C.Associado = ' . $_SESSION['log']['id'] . ' AND				
-				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+                C.Associado = ' . $_SESSION['log']['id'] . ' AND
+				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
 				' . $data['Nome'] . '
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -1181,7 +1278,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_empresaassociado($data, $completo) {
 
         $data['NomeEmpresa'] = ($data['NomeEmpresa']) ? ' AND C.idSis_EmpresaFilial = ' . $data['NomeEmpresa'] : FALSE;
@@ -1205,8 +1302,8 @@ class Relatorio_model extends CI_Model {
                 Sis_EmpresaFilial AS C
 					LEFT JOIN Tab_StatusSN AS SN ON SN.Inativo = C.Inativo
             WHERE
-                C.Associado = ' . $_SESSION['log']['id'] . ' AND				
-				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+                C.Associado = ' . $_SESSION['log']['id'] . ' AND
+				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
 				' . $data['NomeEmpresa'] . '
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -1236,7 +1333,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_profissionais($data, $completo) {
 
         $data['NomeProfissional'] = ($data['NomeProfissional']) ? ' AND P.idApp_Profissional = ' . $data['NomeProfissional'] : FALSE;
@@ -1265,10 +1362,10 @@ class Relatorio_model extends CI_Model {
                     LEFT JOIN Tab_Municipio AS M ON P.Municipio = M.idTab_Municipio
 					LEFT JOIN App_ContatoProf AS CP ON P.idApp_Profissional = CP.idApp_Profissional
 					LEFT JOIN Tab_RelaPes AS TRP ON TRP.idTab_RelaPes = CP.RelaPes
-					LEFT JOIN Tab_Funcao AS TF ON TF.idTab_Funcao= P.Funcao															
+					LEFT JOIN Tab_Funcao AS TF ON TF.idTab_Funcao= P.Funcao
             WHERE
                 P.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
                 ' . $data['NomeProfissional'] . '
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -1305,7 +1402,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_funcionario($data, $completo) {
 
         $data['Nome'] = ($data['Nome']) ? ' AND F.idSis_Usuario = ' . $data['Nome'] : FALSE;
@@ -1323,9 +1420,9 @@ class Relatorio_model extends CI_Model {
                 Sis_Usuario AS F
 					LEFT JOIN Tab_Funcao AS FU ON FU.idTab_Funcao = F.Funcao
 					LEFT JOIN Sis_Permissao AS PE ON PE.idSis_Permissao = F.Permissao
-            WHERE				
+            WHERE
 				F.idSis_EmpresaFilial = ' . $_SESSION['log']['id'] . ' AND
-				F.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+				F.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
                 ' . $data['Nome'] . '
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -1391,8 +1488,8 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_Atividade AS TA ON TA.idApp_Atividade = E.Atividade
             WHERE
                 E.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-				E.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
-				' . $data['NomeEmpresa'] . ' 
+				E.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+				' . $data['NomeEmpresa'] . '
 			ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
@@ -1428,7 +1525,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_fornecedor($data, $completo) {
 
 		$data['NomeFornecedor'] = ($data['NomeFornecedor']) ? ' AND E.idApp_Fornecedor = ' . $data['NomeFornecedor'] : FALSE;
@@ -1465,8 +1562,8 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_Atividade AS TA ON TA.idApp_Atividade = E.Atividade
             WHERE
                 E.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
-				E.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
-				' . $data['NomeFornecedor'] . ' 
+				E.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+				' . $data['NomeFornecedor'] . '
 			ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
@@ -1502,7 +1599,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_produtos($data, $completo) {
 
 		$data['Produtos'] = ($data['Produtos']) ? ' AND TP.idTab_Produtos = ' . $data['Produtos'] : FALSE;
@@ -1515,24 +1612,24 @@ class Relatorio_model extends CI_Model {
 				TP.CodProd,
 				TP.Produtos,
 				TP.UnidadeProduto,
-				TP.ValorCompraProduto,				
+				TP.ValorCompraProduto,
 				TP.Fornecedor,
 				TF.NomeFornecedor,
 				TCA.Categoria,
 				TCA.Abrev,
 				TV.Convdesc,
 				TV.ValorVendaProduto,
-				TC.Convenio				
+				TC.Convenio
             FROM
                 Tab_Produtos AS TP
 					LEFT JOIN Tab_Valor AS TV ON TV.idTab_Produtos = TP.idTab_Produtos
 					LEFT JOIN Tab_Convenio AS TC ON TC.idTab_Convenio = TV.Convenio
 					LEFT JOIN App_Fornecedor AS TF ON TF.idApp_Fornecedor = TP.Fornecedor
-					LEFT JOIN Tab_Categoria AS TCA ON TCA.Abrev = TP.Categoria					
+					LEFT JOIN Tab_Categoria AS TCA ON TCA.Abrev = TP.Categoria
             WHERE
                 TP.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
-				TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
-				' . $data['Produtos'] . ' 
+				TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+				' . $data['Produtos'] . '
 			ORDER BY
                 TCA.Categoria,
 				TF.NomeFornecedor,
@@ -1563,7 +1660,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_servicos($data, $completo) {
 
 		$data['Servicos'] = ($data['Servicos']) ? ' AND TP.idApp_Servicos = ' . $data['Servicos'] : FALSE;
@@ -1576,12 +1673,12 @@ class Relatorio_model extends CI_Model {
 				TP.CodServ,
 				TP.Servicos,
 				TP.UnidadeProduto,
-				TP.ValorCompraServico,				
+				TP.ValorCompraServico,
 				TP.Fornecedor,
 				TF.NomeFornecedor,
-				
+
 				TV.ValorVendaServico,
-				TC.Convenio				
+				TC.Convenio
             FROM
                 App_Servicos AS TP
 					LEFT JOIN Tab_ValorServ AS TV ON TV.idApp_Servicos = TP.idApp_Servicos
@@ -1589,8 +1686,8 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_Fornecedor AS TF ON TF.idApp_Fornecedor = TP.Fornecedor
             WHERE
                 TP.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
-				TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
-				' . $data['Servicos'] . ' 
+				TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+				' . $data['Servicos'] . '
 			ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
@@ -1659,7 +1756,7 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_ProdutoVenda AS PD ON OT.idApp_OrcaTrata = PD.idApp_OrcaTrata
 					LEFT JOIN Tab_Produto AS TPD ON TPD.idTab_Produto = PD.idTab_Produto
 					LEFT JOIN App_Procedimento AS PC ON OT.idApp_OrcaTrata = PC.idApp_OrcaTrata
-					LEFT JOIN App_Profissional AS PR ON PR.idApp_Profissional = PC.Profissional										
+					LEFT JOIN App_Profissional AS PR ON PR.idApp_Profissional = PC.Profissional
 			WHERE
                 C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
@@ -1669,13 +1766,13 @@ class Relatorio_model extends CI_Model {
 				' . $filtro4 . '
                 C.idApp_Cliente = OT.idApp_Cliente
                 ' . $data['NomeCliente'] . '
-				' . $data['NomeProfissional'] . ' 				
+				' . $data['NomeProfissional'] . '
             ORDER BY
                 C.NomeCliente ASC,
 				OT.AprovadoOrca DESC,
 				OT.ServicoConcluido,
 				PC.DataProcedimento,
-				PC.ConcluidoProcedimento				
+				PC.ConcluidoProcedimento
         ');
 
         /*
@@ -1731,22 +1828,22 @@ class Relatorio_model extends CI_Model {
 
         $data['NomeProfissional'] = ($data['NomeProfissional']) ? ' AND P.idApp_Profissional = ' . $data['NomeProfissional'] : FALSE;
 		$data['Profissional'] = ($data['Profissional']) ? ' AND P2.idApp_Profissional = ' . $data['Profissional'] : FALSE;
-		
+
 		$data['ObsTarefa'] = ($data['ObsTarefa']) ? ' AND TF.idApp_Tarefa = ' . $data['ObsTarefa'] : FALSE;
-        
+
 		$data['Procedtarefa'] = ($data['Procedtarefa']) ? ' AND PT.idApp_Procedtarefa = ' . $data['Procedtarefa'] : FALSE;
-		
+
 		$filtro5 = ($data['TarefaConcluida'] != '#') ? 'TF.TarefaConcluida = "' . $data['TarefaConcluida'] . '" AND ' : FALSE;
-		
+
         $filtro6 = ($data['Prioridade'] != '#') ? 'TF.Prioridade = "' . $data['Prioridade'] . '" AND ' : FALSE;
 		$filtro7 = ($data['Rotina'] != '#') ? 'TF.Rotina = "' . $data['Rotina'] . '" AND ' : FALSE;
 		$filtro8 = ($data['ConcluidoProcedtarefa'] != '#') ? 'PT.ConcluidoProcedtarefa = "' . $data['ConcluidoProcedtarefa'] . '" AND ' : FALSE;
-		
+
         $query = $this->db->query('
             SELECT
 
 				P.NomeProfissional,
-                TF.idApp_Tarefa,				
+                TF.idApp_Tarefa,
 				TF.ObsTarefa,
                 TF.TarefaConcluida,
                 TF.DataTarefa,
@@ -1760,30 +1857,30 @@ class Relatorio_model extends CI_Model {
 				PT.DataProcedtarefa,
 				PT.ConcluidoProcedtarefa
             FROM
-                App_Tarefa AS TF					
+                App_Tarefa AS TF
 					LEFT JOIN App_Procedtarefa AS PT ON TF.idApp_Tarefa = PT.idApp_Tarefa
 					LEFT JOIN App_Profissional AS P ON P.idApp_Profissional = TF.ProfissionalTarefa
 					LEFT JOIN App_Profissional AS P2 ON P2.idApp_Profissional = PT.Profissional
             WHERE
                 TF.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-				TF.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND			
+				TF.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 					'.$filtro5.'
 					'.$filtro6.'
 					'.$filtro7.'
 					'.$filtro8.'
 				(' . $consulta . ')
 				' . $data['ObsTarefa'] . '
-				' . $data['Procedtarefa'] . '				                 
+				' . $data['Procedtarefa'] . '
             ORDER BY
 
 				TF.TarefaConcluida ASC,
 				TF.Rotina DESC,
-				TF.DataPrazoTarefa DESC,				
-				TF.Prioridade DESC,				
+				TF.DataPrazoTarefa DESC,
+				TF.Prioridade DESC,
 				PT.ConcluidoProcedtarefa ASC,
-				PT.DataProcedtarefa DESC														
-				
-				
+				PT.DataProcedtarefa DESC
+
+
         ');
 
         /*
@@ -1818,7 +1915,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-	
+
 	public function list_clienteprod($data, $completo) {
 
         $data['Campo'] = (!$data['Campo']) ? 'C.NomeCliente' : $data['Campo'];
@@ -1978,7 +2075,7 @@ class Relatorio_model extends CI_Model {
         }
 
     }
-		
+
     public function select_cliente() {
 
         $query = $this->db->query('
@@ -1986,10 +2083,10 @@ class Relatorio_model extends CI_Model {
                 idApp_Cliente,
                 CONCAT(IFNULL(NomeCliente, ""), " --- ", IFNULL(Telefone1, ""), " --- ", IFNULL(Telefone2, ""), " --- ", IFNULL(Telefone3, "")) As NomeCliente
             FROM
-                App_Cliente 
+                App_Cliente
             WHERE
                 Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
-				idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+				idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
             ORDER BY
                 NomeCliente ASC
         ');
@@ -2002,7 +2099,7 @@ class Relatorio_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_associado() {
 
         $query = $this->db->query('
@@ -2026,7 +2123,7 @@ class Relatorio_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_empresaassociado() {
 
         $query = $this->db->query('
@@ -2049,8 +2146,8 @@ class Relatorio_model extends CI_Model {
         }
 
         return $array;
-    }	
-	
+    }
+
 	public function select_empresas() {
 
         $query = $this->db->query('
@@ -2058,7 +2155,7 @@ class Relatorio_model extends CI_Model {
                 idApp_Empresa,
 				CONCAT(NomeEmpresa, " ", " --- ", Telefone1, " --- ", Telefone2) As NomeEmpresa
             FROM
-                App_Empresa 
+                App_Empresa
             WHERE
                 idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
@@ -2074,7 +2171,7 @@ class Relatorio_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_fornecedor() {
 
         $query = $this->db->query('
@@ -2082,7 +2179,7 @@ class Relatorio_model extends CI_Model {
                 idApp_Fornecedor,
 				CONCAT(NomeFornecedor, " ", " --- ", Telefone1, " --- ", Telefone2) As NomeFornecedor
             FROM
-                App_Fornecedor 
+                App_Fornecedor
             WHERE
                 Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
@@ -2109,7 +2206,7 @@ class Relatorio_model extends CI_Model {
                 Sis_Usuario AS F
             WHERE
                 F.Empresa = ' . $_SESSION['log']['id'] . ' AND
-				F.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '				
+				F.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
             ORDER BY
                 F.Nome ASC
         ');
@@ -2122,7 +2219,7 @@ class Relatorio_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_profissional() {
 
         $query = $this->db->query('
@@ -2133,7 +2230,7 @@ class Relatorio_model extends CI_Model {
                 App_Profissional AS P
             WHERE
                 P.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '				
+				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
             ORDER BY
                 NomeProfissional ASC
         ');
@@ -2146,7 +2243,7 @@ class Relatorio_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_profissional2() {
 
         $query = $this->db->query('
@@ -2170,13 +2267,13 @@ class Relatorio_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_profissional3() {
 
         $query = $this->db->query('
-            SELECT                
+            SELECT
 				P.idApp_Profissional,
-				CONCAT(F.Abrev, " --- ", P.NomeProfissional) AS NomeProfissional				
+				CONCAT(F.Abrev, " --- ", P.NomeProfissional) AS NomeProfissional
             FROM
                 App_Profissional AS P
 					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
@@ -2194,7 +2291,7 @@ class Relatorio_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_convenio() {
 
         $query = $this->db->query('
@@ -2218,7 +2315,7 @@ class Relatorio_model extends CI_Model {
 
         return $array;
     }
-			
+
 	public function select_tipodespesa() {
 
         $query = $this->db->query('
@@ -2242,7 +2339,7 @@ class Relatorio_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_tipoconsumo() {
 
         $query = $this->db->query('
@@ -2253,7 +2350,7 @@ class Relatorio_model extends CI_Model {
                 Tab_TipoConsumo AS TD
 			WHERE
 				TD.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
-				TD.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '           
+				TD.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
             ORDER BY
                 TipoConsumo ASC
         ');
@@ -2266,7 +2363,7 @@ class Relatorio_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_obstarefa() {
 
         $query = $this->db->query('
@@ -2290,7 +2387,7 @@ class Relatorio_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_produtos() {
 
         $query = $this->db->query('
@@ -2337,8 +2434,8 @@ class Relatorio_model extends CI_Model {
         }
 
         return $array;
-    }	
-	
+    }
+
 	public function select_procedtarefa() {
 
         $query = $this->db->query('
@@ -2362,19 +2459,19 @@ class Relatorio_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_usuario() {
 
         $query = $this->db->query('
-            SELECT                
+            SELECT
 				P.idSis_Usuario,
-				CONCAT(IFNULL(F.Abrev,""), " --- ", IFNULL(P.Nome,"")) AS NomeUsuario				
+				CONCAT(IFNULL(F.Abrev,""), " --- ", IFNULL(P.Nome,"")) AS NomeUsuario
             FROM
                 Sis_Usuario AS P
 					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
             WHERE
                 P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                P.Empresa = ' . $_SESSION['log']['Empresa'] . ' 
+                P.Empresa = ' . $_SESSION['log']['Empresa'] . '
 			ORDER BY F.Abrev ASC
         ');
 
