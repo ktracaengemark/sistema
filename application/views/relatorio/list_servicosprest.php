@@ -8,9 +8,9 @@
 						<th class="active">Id do Orçam.</th>
                         <th class="active">Data do Orçam.</th>
 						<th class="active">Qtd.</th>
-						<!--<th class="active">idApp_ProdutoVenda.</th>
-						<th class="active">idTab_Produto.</th>
-						<th class="active">idTab_ProdutoBase.</th>-->
+						<!--<th class="active">idApp_ProdutoVenda.</th>-->
+						<th class="active">idTab_Servico</th>
+						<!--<th class="active">idTab_ProdutoBase.</th>-->
 						<th class="active">Serviço.</th>
 						<th class="active">Profissional</th>
 
@@ -28,7 +28,7 @@
                             echo '<td>' . $row['DataOrca'] . '</td>';
 							echo '<td>' . $row['QtdVendaServico'] . '</td>';
 							#echo '<td>' . $row['idApp_ProdutoVenda'] . '</td>';
-							#echo '<td>' . $row['idTab_Produto'] . '</td>';
+							echo '<td>' . $row['idTab_Servico'] . '</td>';
 							#echo '<td>' . $row['idTab_ProdutoBase'] . '</td>';
 							echo '<td>' . $row['NomeServico'] . '</td>';
 							echo '<td>' . $row['Nome'] . '</td>';

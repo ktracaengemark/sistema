@@ -48,6 +48,22 @@
 
 									<div class="col-md-12">										
 										<label for="">Produtos & Valores:</label>
+										<!--
+										<div class="form-group col-md-12 text-left">
+											<div class="row">		
+												<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>servico/cadastrar" role="button"> 
+													<span class="glyphicon glyphicon-qrcode"></span> Serviços-Tabela Antiga 
+												</a>
+											</div>	
+										</div>
+										<div class="form-group col-md-12 text-left">
+											<div class="row">		
+												<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>produto/cadastrar" role="button"> 
+													<span class="glyphicon glyphicon-qrcode"></span> Produtos-Tabela Antiga
+												</a>
+											</div>	
+										</div>
+										-->
 										<div class="form-group col-md-12 text-left">
 											<div class="row">		
 												<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>relatorio/produtos" role="button"> 
