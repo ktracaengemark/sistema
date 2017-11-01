@@ -16,7 +16,7 @@
 						<div class="row">
 							<div class="col-md-12 col-lg-12">
 								<div class="col-md-4 text-left">
-									<label for="">Funcionario & Contatos:</label>
+									<label for="">Usuário & Contatos:</label>
 									<div class="form-group">
 										<div class="row">							
 											<a <?php if (preg_match("/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
@@ -100,6 +100,34 @@
 												<label for="Email">E-mail:</label>
 												<input type="text" class="form-control" id="Bairro" maxlength="100" <?php echo $readonly; ?>
 													   name="Email" value="<?php echo $query['Email']; ?>">
+											</div>
+											<div class="col-md-2">
+												<label for="Inativo">Ativo?</label><br>
+												<div class="form-group">
+													<div class="btn-group" data-toggle="buttons">
+														<?php
+														foreach ($select['Inativo'] as $key => $row) {
+															(!$query['Inativo']) ? $query['Inativo'] = 'S' : FALSE;
+
+															if ($query['Inativo'] == $key) {
+																echo ''
+																. '<label class="btn btn-warning active" name="radiobutton_Inativo" id="radiobutton_Inativo' . $key . '">'
+																. '<input type="radio" name="Inativo" id="radiobutton" '
+																. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																. '</label>'
+																;
+															} else {
+																echo ''
+																. '<label class="btn btn-default" name="radiobutton_Inativo" id="radiobutton_Inativo' . $key . '">'
+																. '<input type="radio" name="Inativo" id="radiobutton" '
+																. 'autocomplete="off" value="' . $key . '" >' . $row
+																. '</label>'
+																;
+															}
+														}
+														?>
+													</div>
+												</div>
 											</div>
 											<!--
 											<div class="col-md-3">

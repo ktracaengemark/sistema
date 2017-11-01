@@ -16,7 +16,7 @@
 						<div class="row">
 							<div class="col-md-12 col-lg-12">
 								<div class="col-md-4 text-left">
-									<label for="">Funcionario & Contatos:</label>
+									<label for="">Usuário & Contatos:</label>
 									<div class="form-group">
 										<div class="row">							
 											<a <?php if (preg_match("/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>

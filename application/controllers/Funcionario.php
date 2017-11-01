@@ -60,6 +60,7 @@ class Funcionario extends CI_Controller {
             'Sexo',
 			'Permissao',
 			'Funcao',
+			'Inativo',
 			
         ), TRUE));
 
@@ -77,7 +78,7 @@ class Funcionario extends CI_Controller {
 
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		#$data['select']['Funcionario'] = $this->Basico_model->select_status_sn();
-		#$data['select']['Inativo'] = $this->Basico_model->select_status_sn();
+		$data['select']['Inativo'] = $this->Basico_model->select_inativo();
 		$data['select']['Permissao'] = $this->Basico_model->select_permissao();
 		$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
 		
@@ -143,26 +144,17 @@ class Funcionario extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = $this->input->post(array(
-			'Funcionario',          
+			          
 			'idSis_Usuario',
+			#'Usuario',
             'Nome',
             'DataNascimento',
-
             'Celular',
-            'Telefone2',
-            'Telefone3',
-
-            'Sexo',
-            'Endereco',
-            'Bairro',
-            'Municipio',
-
-            'Obs',
-
             'Email',
-            'RegistroFicha',
+			'Sexo',
 			'Permissao',
 			'Funcao',
+			'Inativo',
 
         ), TRUE);
 
@@ -184,7 +176,7 @@ class Funcionario extends CI_Controller {
         $data['select']['Municipio'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		#$data['select']['Funcionario'] = $this->Basico_model->select_status_sn();
-		#$data['select']['Inativo'] = $this->Basico_model->select_status_sn();
+		$data['select']['Inativo'] = $this->Basico_model->select_inativo();
 		$data['select']['Permissao'] = $this->Basico_model->select_permissao();
 		$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
 		
@@ -209,7 +201,7 @@ class Funcionario extends CI_Controller {
 
             $data['query']['Nome'] = trim(mb_strtoupper($data['query']['Nome'], 'ISO-8859-1'));
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
-            $data['query']['Obs'] = nl2br($data['query']['Obs']);
+            #$data['query']['Obs'] = nl2br($data['query']['Obs']);
             #$data['query']['Funcionario'] = $_SESSION['log']['id'];
 
             $data['anterior'] = $this->Funcionario_model->get_funcionario($data['query']['idSis_Usuario']);
