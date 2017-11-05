@@ -75,7 +75,7 @@ while ($row = mysql_fetch_assoc($result)) {
 
 		#$profissional = utf8_encode($row['NomeUsuario']);
 		#$profissional = utf8_encode($row['idApp_Agenda']);
-		$profissional = mb_convert_encoding($row['idSis_Usuario'], "UTF-8", "ISO-8859-1");
+		$profissional = mb_convert_encoding($row['NomeProfissional'], "UTF-8", "ISO-8859-1");
 
 	}
 	else {
