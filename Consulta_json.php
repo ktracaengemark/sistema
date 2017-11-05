@@ -17,9 +17,9 @@ if (!$db) {
 #echo 'Conexão bem sucedida';
 
 //Acho que as próximas linhas são redundantes, verificar
-#$query = ($_SESSION['log']['NomeUsuario'] && isset($_SESSION['log']['NomeUsuario'])) ?
+$query = ($_SESSION['log']['NomeUsuario'] && isset($_SESSION['log']['NomeUsuario'])) ?
     #'P.idSis_Usuario = ' . $_SESSION['log']['NomeUsuario'] . ' AND ' : FALSE;
-	#'A.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+	'A.idSis_Usuario = ' . $_SESSION['log']['NomeUsuario'] . ' AND ' : FALSE;
 
 $permissao = ($_SESSION['log']['Permissao'] > 2) ?
 	'A.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND ' : FALSE;
