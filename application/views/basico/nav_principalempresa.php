@@ -1,38 +1,38 @@
-<nav class="navbar navbar-inverse navbar-fixed-top " role="banner"> 
+<nav class="navbar navbar-inverse navbar-fixed-top " role="banner">
 
 		<div class="col-md-2"></div>
 		<div class="col-md-8">
-			<div class="navbar-header "> 
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> 
-					<span class="sr-only">MENU</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> 
-				</button> 			
-				<!--<a class="navbar-brand" href="http://www.ktracaengemark.com.br"> Melhor loja</a>-->										
-			</div> 
-			<div class="collapse navbar-collapse"> 											
+			<div class="navbar-header ">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">MENU</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<!--<a class="navbar-brand" href="http://www.ktracaengemark.com.br"> Melhor loja</a>-->
+			</div>
+			<div class="collapse navbar-collapse">
 
-				<ul class="nav navbar-nav navbar-center"> 						
+				<ul class="nav navbar-nav navbar-center">
 					<!--
-					<li>																						
+					<li>
 						<?php echo form_open(base_url() . 'cliente/pesquisar', 'class="navbar-form navbar-left"'); ?>
 						<form>
 						<div class="input-group">
 							<span class="input-group-btn">
 								<button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-search"></span></button>
 							</span>
-							<input type="text" placeholder="   Pesquisar Cliente" class="" name="Pesquisa" value="">						
-						</div>					
-						</form>					
+							<input type="text" placeholder="   Pesquisar Cliente" class="form-control" name="Pesquisa" value="">						
+						</div>
+						</form>
 					</li>
 					-->
-					<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">															
+					<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">
 						<div class="btn-group" role="group" aria-label="...">
 							<a href="<?php echo base_url(); ?>acessoempresa/index">
 								<button type="button" class="btn btn-md btn-primary">
 									<span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['UsuarioEmpresaFilial']; ?>
 								</button>
-							</a>	
-						</div>	
-						<!--						
+							</a>
+						</div>
+						<!--
 						<div class="btn-group" role="group" aria-label="...">
 							<a href="<?php echo base_url(); ?>agenda">
 								<button type="button" class="btn btn-md btn-warning ">
@@ -40,11 +40,11 @@
 								</button>
 							</a>
 						</div>
-						-->						
+						-->
 						<div class="btn-group" role="group" aria-label="..."> </div>
 					</li>
-					
-					<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">															
+
+					<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">
 						<div class="btn-group" role="group" aria-label="...">
 							<a href="<?php echo base_url(); ?>funcao/cadastrar">
 								<button type="button" class="btn btn-md btn-success ">
@@ -59,19 +59,19 @@
 								</button>
 							</a>
 						</div>
-					
+
 						<div class="btn-group" role="group" aria-label="..."> </div>
 					</li>
 
-					<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">										
-					
+					<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">
+
 						<div class="btn-group" role="group" aria-label="...">
 							<a href="<?php echo base_url(); ?>login/index">
 								<button type="button" class="btn btn-md btn-info ">
 									<span class="glyphicon glyphicon-log-in"></span> Acesso dos Usuários
 								</button>
 							</a>
-						</div>															
+						</div>
 						<!--
 						<div class="btn-group">
 							<button type="button" class="btn btn-md btn-primary  dropdown-toggle" data-toggle="dropdown">
@@ -107,7 +107,7 @@
 								<li><a href="<?php echo base_url() ?>relatorio/funcionario">Funcionários & Contatos</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>relatorio/fornecedor">Fornecedores & Contatos.</a></li>
-								<li role="separator" class="divider"></li>							
+								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>relatorio/orcamento">Clientes & Orçamentos</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>relatorio/receitas">Clientes & Pagamentos</a></li>
@@ -143,7 +143,7 @@
 						<div class="btn-group" role="group" aria-label="..."> </div>
 					</li>
 					<!--
-					<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">											
+					<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">
 						<div class="btn-group" role="group" aria-label="...">
 							<a href="<?php echo base_url(); ?>relatorioempresa/adminempresa">
 								<button type="button" class="btn btn-md btn-primary ">
@@ -151,7 +151,7 @@
 								</button>
 							</a>
 						</div>
-						
+
 						<div class="btn-group" role="group" aria-label="...">
 							<a href="<?php echo base_url(); ?>relatorioempresa/sistemaempresa">
 								<button type="button" class="btn btn-md btn-primary ">
@@ -159,10 +159,10 @@
 								</button>
 							</a>
 						</div>
-						
+
 					</li>
 					-->
-					<li class="btn-toolbar navbar-form navbar-right" role="toolbar" aria-label="...">											
+					<li class="btn-toolbar navbar-form navbar-right" role="toolbar" aria-label="...">
 						<div class="btn-group" role="group" aria-label="...">
 							<a href="<?php echo base_url(); ?>relatorioempresa/sistemaempresa">
 								<button type="button" class="btn btn-md btn-primary ">
@@ -174,7 +174,7 @@
 							<button type="button" class="btn btn-md active " id="countdowndiv">
 								<span class="glyphicon glyphicon-hourglass" id="clock"></span>
 							</button>
-						</div>					
+						</div>
 						<div class="btn-group" role="group" aria-label="...">
 							<a href="<?php echo base_url(); ?>login/sair">
 								<button type="button" class="btn btn-md btn-danger ">
@@ -183,13 +183,12 @@
 							</a>
 						</div>
 						<div class="btn-group" role="group" aria-label="..."> </div>
-					</li>			
-				</ul>						
+					</li>
+				</ul>
 
-			</div> 
+			</div>
 		</div>
 		<div class="col-md-2"></div>
 
 </nav>
 <br>
-
