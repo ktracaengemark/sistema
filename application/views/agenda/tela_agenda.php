@@ -5,18 +5,18 @@
 <div id="calendar" class="col-md-8"></div>-->
 
 <div class="col-md-2"></div>
-<div class="col-md-7">	
+<div class="col-md-7">
 	<div class="panel panel-primary">
 		<div class="panel-heading"><strong></strong></div>
 		<div class="panel-body">
 			<div class="form-group">
-				<div class="row">														
+				<div class="row">
 					<div id="calendar" class="col-md-12"></div>
 				</div>
-			</div>	
-		</div>				
-	</div>	
-</div>	
+			</div>
+		</div>
+	</div>
+</div>
 <div id="fluxo" class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="fluxo" aria-hidden="true">
     <div class="vertical-alignment-helper">
         <div class="modal-dialog modal-sm vertical-align-center">
@@ -25,28 +25,28 @@
                 <div class="modal-body text-center">
 					<div class="form-group">
 						<div class="row">
-							<div class="col-md-12 col-lg-12">								
+							<div class="col-md-12 col-lg-12">
 								<label for="">Agendamento:</label>
 								<div class="form-group">
-									<div class="row">											
+									<div class="row">
 										<button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary">Empresa (C/ Cliente)
 										</button>
-									</div>	
+									</div>
 									<br>
-									<div class="row">	
+									<div class="row">
 										<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info">Empresa (Pessoal)
 										</button>
-									</div>	
-									<br>	
-									<div class="row">	
+									</div>
+									<br>
+									<div class="row">
 										<button type="button" id="AgendarEvento" onclick="redirecionar2(3)" class="btn btn-danger">Evento Particular
 										</button>
 
 										<input type="hidden" id="start" />
 										<input type="hidden" id="end" />
-									</div>	
-								</div>								
-							</div>	
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -55,59 +55,59 @@
     </div>
 </div>
 
-<div class="col-md-3">	
+<div class="col-md-3">
 	<div class="panel panel-primary">
 		<div class="panel-heading"><strong></strong></div>
 		<div class="panel-body">
 			<div class="form-group">
-				<div class="row">																														
+				<div class="row">
 					<div class="col-md-12">
 
+						<?php if ($_SESSION['log']['Permissao'] == 1 || $_SESSION['log']['Permissao'] == 2) { ?>
 						<?php echo form_open('agenda', 'role="form"'); ?>
-							
-								
-								<div class="col-md-12">
-									<label for="Ordenamento">Agenda por Prof.:</label>
-									<div class="form-group">
-										<div class="row">
-											<div class="col-md-12">
-												<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()"
-														id="NomeUsuario" name="NomeUsuario">
-													<?php
-													foreach ($select['NomeUsuario'] as $key => $row) {
-														if ($query['NomeUsuario'] == $key) {
-															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-														} else {
-															echo '<option value="' . $key . '">' . $row . '</option>';
-														}
+							<div class="col-md-12">
+								<label for="Ordenamento">Agenda por Prof.:</label>
+								<div class="form-group">
+									<div class="row">
+										<div class="col-md-12">
+											<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()"
+													id="NomeUsuario" name="NomeUsuario">
+												<?php
+												foreach ($select['NomeUsuario'] as $key => $row) {
+													if ($query['NomeUsuario'] == $key) {
+														echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+													} else {
+														echo '<option value="' . $key . '">' . $row . '</option>';
 													}
-													?>
-												</select>
-											</div>
+												}
+												?>
+											</select>
 										</div>
 									</div>
 								</div>
-								</form>
-						
+							</div>
+						</form>
+						<?php } ?>
+
 						<div class="panel panel-primary">
-							<div class="panel-body">	
+							<div class="panel-body">
 								<div class="col-md-12 text-center t">
 									<label for="">Tarefas:</label>
-									<div class="row">	
+									<div class="row">
 										<a class="btn btn-md btn-danger" href="<?php echo base_url() ?>tarefa/cadastrar" role="button">
 											<span class="glyphicon glyphicon-plus"></span> Nova
 										</a>
 										<a class="btn btn-md btn-success" href="<?php echo base_url() ?>relatorio/tarefa" role="button">
 											<span class="glyphicon glyphicon-list"></span> Listar
 										</a>
-									</div>	
+									</div>
 								</div>
-							</div>	
+							</div>
 						</div>
 
 								<div id="datepickerinline" class="col-md-12"></div>
-								
-								
+
+
 
 						<table class="table table-condensed table-bordered">
 							<tr class="active text-active">
@@ -211,8 +211,8 @@
 						</table>
 
 					</div>
-				</div>	
-			</div>		
-		</div>			
-	</div>				
-</div>					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

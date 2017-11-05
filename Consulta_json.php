@@ -16,9 +16,13 @@ if (!$db) {
 
 #echo 'Conexão bem sucedida';
 
-$query = ($_SESSION['log']['NomeUsuario'] && isset($_SESSION['log']['NomeUsuario'])) ?
+//Acho que as próximas linhas são redundantes, verificar
+#$query = ($_SESSION['log']['NomeUsuario'] && isset($_SESSION['log']['NomeUsuario'])) ?
     #'P.idSis_Usuario = ' . $_SESSION['log']['NomeUsuario'] . ' AND ' : FALSE;
-	'A.idSis_Usuario = ' . $_SESSION['log']['NomeUsuario'] . ' AND ' : FALSE;
+	#'A.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+
+$permissao = ($_SESSION['log']['Permissao'] > 2) ?
+	'A.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND ' : FALSE;
 
 $result = mysql_query(
         'SELECT
@@ -53,9 +57,8 @@ $result = mysql_query(
 			C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
            	C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 			' . $query . '
+            ' . $permissao . '
             A.idApp_Agenda = C.idApp_Agenda
-
-
         ORDER BY C.DataInicio ASC'
 );
 
