@@ -19,7 +19,7 @@
 								<label for="idApp_Agenda">Agenda do Profis.*</label>
 								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 										id="idApp_Agenda" autofocus name="idApp_Agenda">
-									<?php echo $data['select']['option']; ?>
+									<?php echo $select['option']; ?>
 									<?php
 									foreach ($select['idApp_Agenda'] as $key => $row) {
 										if ($query['idApp_Agenda'] == $key) {
