@@ -185,7 +185,7 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_municipio($data = FALSE) {
 
         if ($data === TRUE) {
@@ -193,8 +193,8 @@ class Basico_model extends CI_Model {
 				'SELECT
 					idTab_Municipio,
 					CONCAT(Uf, " - ", NomeMunicipio) AS NomeMunicipio
-				FROM 
-					Tab_Municipio 
+				FROM
+					Tab_Municipio
 				ORDER BY NomeMunicipio ASC, Uf ASC'
 				);
         } else {
@@ -202,8 +202,8 @@ class Basico_model extends CI_Model {
 				'SELECT
 					idTab_Municipio,
 					CONCAT(Uf, " - ", NomeMunicipio) AS NomeMunicipio
-				FROM 
-					Tab_Municipio 
+				FROM
+					Tab_Municipio
 				ORDER BY Uf ASC, NomeMunicipio ASC'
 				);
 
@@ -278,7 +278,7 @@ class Basico_model extends CI_Model {
             return '';
         }
     }
-	
+
 	public function get_relacom($data) {
 
         if (isset($data) && $data) {
@@ -295,7 +295,7 @@ class Basico_model extends CI_Model {
             return '';
         }
     }
-	
+
 	public function get_relapes($data) {
 
         if (isset($data) && $data) {
@@ -312,7 +312,7 @@ class Basico_model extends CI_Model {
             return '';
         }
     }
-	
+
 	public function get_funcao($data) {
 
         if (isset($data) && $data) {
@@ -329,7 +329,7 @@ class Basico_model extends CI_Model {
             return '';
         }
     }
-	
+
 	public function get_permissao($data) {
 
         if (isset($data) && $data) {
@@ -346,7 +346,7 @@ class Basico_model extends CI_Model {
             return '';
         }
     }
-	
+
 	public function get_atividade($data) {
 
         if (isset($data) && $data) {
@@ -363,7 +363,7 @@ class Basico_model extends CI_Model {
             return '';
         }
     }
-	
+
 	public function get_tipofornec($data) {
 
         if (isset($data) && $data) {
@@ -380,7 +380,7 @@ class Basico_model extends CI_Model {
             return '';
         }
     }
-	
+
 	public function get_vendafornec($data) {
 
         if (isset($data) && $data) {
@@ -397,7 +397,7 @@ class Basico_model extends CI_Model {
             return '';
         }
     }
-	
+
 	public function get_ativo($data) {
 
         if (isset($data) && $data) {
@@ -414,7 +414,7 @@ class Basico_model extends CI_Model {
             return '';
         }
     }
-	
+
 	public function get_inativo($data) {
 
         if (isset($data) && $data) {
@@ -431,16 +431,16 @@ class Basico_model extends CI_Model {
             return '';
         }
     }
-	
+
 	public function get_empresa($data) {
 
         if (isset($data) && $data) {
 
 			$query = $this->db->query('
-				SELECT * 
-					FROM 
-						Sis_EmpresaFilial 
-					WHERE 
+				SELECT *
+					FROM
+						Sis_EmpresaFilial
+					WHERE
 						idSis_EmpresaFilial = "' . $data . '"
 				');
 
@@ -454,14 +454,14 @@ class Basico_model extends CI_Model {
             return '';
         }
     }
-		
+
 	public function select_profissional($data = FALSE) {
 
         if ($data === TRUE) {
-            $array = $this->db->query(					
-				'SELECT                
+            $array = $this->db->query(
+				'SELECT
 				P.idApp_Profissional,
-				CONCAT(F.Abrev, " --- ", P.NomeProfissional) AS NomeProfissional				
+				CONCAT(F.Abrev, " --- ", P.NomeProfissional) AS NomeProfissional
             FROM
                 App_Profissional AS P
 					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
@@ -470,12 +470,12 @@ class Basico_model extends CI_Model {
                 P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
                 ORDER BY F.Abrev ASC, P.NomeProfissional ASC'
     );
-					
+
         } else {
             $query = $this->db->query(
-                'SELECT                
+                'SELECT
 				P.idApp_Profissional,
-				CONCAT(F.Abrev, " --- ", P.NomeProfissional) AS NomeProfissional				
+				CONCAT(F.Abrev, " --- ", P.NomeProfissional) AS NomeProfissional
             FROM
                 App_Profissional AS P
 					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
@@ -484,7 +484,7 @@ class Basico_model extends CI_Model {
                 P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
                 ORDER BY F.Abrev ASC, P.NomeProfissional ASC'
     );
-            
+
             $array = array();
             foreach ($query->result() as $row) {
                 $array[$row->idApp_Profissional] = $row->NomeProfissional;
@@ -498,32 +498,32 @@ class Basico_model extends CI_Model {
 
         if ($data === TRUE) {
             $array = $this->db->query(
-                'SELECT                
-				P.idTab_Produto,				
-				CONCAT(CO.Abrev, " --- ", PB.ProdutoBase, " --- ", PB.UnidadeProdutoBase, " --- ", EM.NomeEmpresa, " ---R$", P.ValorVendaProduto) AS ProdutoBase				
+                'SELECT
+				P.idTab_Produto,
+				CONCAT(CO.Abrev, " --- ", PB.ProdutoBase, " --- ", PB.UnidadeProdutoBase, " --- ", EM.NomeEmpresa, " ---R$", P.ValorVendaProduto) AS ProdutoBase
             FROM
                 Tab_Produto AS P
-				LEFT JOIN Tab_ProdutoBase AS PB ON PB.idTab_ProdutoBase = P.ProdutoBase    
+				LEFT JOIN Tab_ProdutoBase AS PB ON PB.idTab_ProdutoBase = P.ProdutoBase
 				LEFT JOIN Tab_Convenio AS CO ON CO.idTab_Convenio = P.Convenio
 				LEFT JOIN App_Empresa AS EM ON EM.idApp_Empresa = P.Empresa
             WHERE
                 P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                P.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+                P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
 			ORDER BY CO.Convenio DESC, PB.ProdutoBase ASC'
     );
         } else {
             $query = $this->db->query(
-                'SELECT                
-				P.idTab_Produto,				
-				CONCAT(CO.Abrev, " --- ", PB.ProdutoBase, " --- ", PB.UnidadeProdutoBase, " --- ", EM.NomeEmpresa, " ---R$", P.ValorVendaProduto) AS ProdutoBase				
+                'SELECT
+				P.idTab_Produto,
+				CONCAT(CO.Abrev, " --- ", PB.ProdutoBase, " --- ", PB.UnidadeProdutoBase, " --- ", EM.NomeEmpresa, " ---R$", P.ValorVendaProduto) AS ProdutoBase
             FROM
                 Tab_Produto AS P
-				LEFT JOIN Tab_ProdutoBase AS PB ON PB.idTab_ProdutoBase = P.ProdutoBase    
+				LEFT JOIN Tab_ProdutoBase AS PB ON PB.idTab_ProdutoBase = P.ProdutoBase
 				LEFT JOIN Tab_Convenio AS CO ON CO.idTab_Convenio = P.Convenio
 				LEFT JOIN App_Empresa AS EM ON EM.idApp_Empresa = P.Empresa
             WHERE
                 P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                P.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+                P.idSis_Usuario = ' . $_SESSION['log']['id'] . '
 			ORDER BY CO.Convenio DESC, PB.ProdutoBase ASC'
     );
 
@@ -535,7 +535,7 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_produto($data = FALSE) {
 
         if ($data === TRUE) {
@@ -545,13 +545,13 @@ class Basico_model extends CI_Model {
 				CONCAT(TPV.NomeProduto, " --- ", TPV.UnidadeProduto, " --- R$ ", TPV.ValorVendaProduto) AS NomeProduto,
 				TPV.ValorVendaProduto
             FROM
-                Tab_Produto AS TPV																	
+                Tab_Produto AS TPV
             WHERE
 				TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				(TPV.Empresa = ' . $_SESSION['log']['id'] . ' OR
-				 TPV.Empresa = ' . $_SESSION['log']['Empresa'] . ') 
-			ORDER BY  
-				TPV.NomeProduto ASC 
+				 TPV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
+			ORDER BY
+				TPV.NomeProduto ASC
     ');
         } else {
             $query = $this->db->query(
@@ -560,13 +560,13 @@ class Basico_model extends CI_Model {
 				CONCAT(TPV.NomeProduto, " --- ", TPV.UnidadeProduto, " --- R$ ", TPV.ValorVendaProduto) AS NomeProduto,
 				TPV.ValorVendaProduto
             FROM
-                Tab_Produto AS TPV																	
+                Tab_Produto AS TPV
             WHERE
 				TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				(TPV.Empresa = ' . $_SESSION['log']['id'] . ' OR
 				 TPV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
-			ORDER BY  
-				TPV.NomeProduto ASC 
+			ORDER BY
+				TPV.NomeProduto ASC
     ');
 
             $array = array();
@@ -577,7 +577,7 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_produtos($data = FALSE) {
 
         if ($data === TRUE) {
@@ -630,8 +630,8 @@ class Basico_model extends CI_Model {
         }
 
         return $array;
-    }	
-	
+    }
+
 	public function select_servico4($data = FALSE) {
 
         if ($data === TRUE) {
@@ -642,14 +642,14 @@ class Basico_model extends CI_Model {
                 TSV.ValorVendaServico
             FROM
                 Tab_Servico AS TSV
-				LEFT JOIN Tab_Convenio AS TCO ON TCO.idTab_Convenio = TSV.Convenio						
-				LEFT JOIN Tab_ServicoBase AS TSB ON TSB.idTab_ServicoBase = TSV.ServicoBase								
+				LEFT JOIN Tab_Convenio AS TCO ON TCO.idTab_Convenio = TSV.Convenio
+				LEFT JOIN Tab_ServicoBase AS TSB ON TSB.idTab_ServicoBase = TSV.ServicoBase
             WHERE
                 TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                TSV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-			ORDER BY 
-				TCO.Convenio DESC, 
-				TSB.ServicoBase ASC				
+                TSV.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+			ORDER BY
+				TCO.Convenio DESC,
+				TSB.ServicoBase ASC
     ');
         } else {
             $query = $this->db->query('
@@ -659,14 +659,14 @@ class Basico_model extends CI_Model {
                 TSV.ValorVendaServico
             FROM
                 Tab_Servico AS TSV
-				LEFT JOIN Tab_Convenio AS TCO ON TCO.idTab_Convenio = TSV.Convenio			
-				LEFT JOIN Tab_ServicoBase AS TSB ON TSB.idTab_ServicoBase = TSV.ServicoBase								
+				LEFT JOIN Tab_Convenio AS TCO ON TCO.idTab_Convenio = TSV.Convenio
+				LEFT JOIN Tab_ServicoBase AS TSB ON TSB.idTab_ServicoBase = TSV.ServicoBase
             WHERE
                 TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                TSV.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
-			ORDER BY 
+                TSV.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+			ORDER BY
 				TCO.Convenio DESC,
-				TSB.ServicoBase ASC				
+				TSB.ServicoBase ASC
     ');
 
             $array = array();
@@ -677,37 +677,37 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_servico($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query(
-                'SELECT                
+                'SELECT
                 TSV.idTab_Servico,
                 CONCAT(TSV.NomeServico, " --- R$ ", TSV.ValorVendaServico) AS NomeServico,
                 TSV.ValorVendaServico
             FROM
-                Tab_Servico AS TSV																				
+                Tab_Servico AS TSV
             WHERE
 				TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				(TSV.Empresa = ' . $_SESSION['log']['id'] . ' OR
-				 TSV.Empresa = ' . $_SESSION['log']['Empresa'] . ') 
-			ORDER BY 
+				 TSV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
+			ORDER BY
 				TSV.NomeServico ASC
     ');
         } else {
             $query = $this->db->query(
-                'SELECT                
+                'SELECT
                 TSV.idTab_Servico,
                 CONCAT(TSV.NomeServico, " --- R$ ", TSV.ValorVendaServico) AS NomeServico,
                 TSV.ValorVendaServico
             FROM
-                Tab_Servico AS TSV																				
+                Tab_Servico AS TSV
             WHERE
 				TSV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				(TSV.Empresa = ' . $_SESSION['log']['id'] . ' OR
-				 TSV.Empresa = ' . $_SESSION['log']['Empresa'] . ') 
-			ORDER BY 
+				 TSV.Empresa = ' . $_SESSION['log']['Empresa'] . ')
+			ORDER BY
 				TSV.NomeServico ASC
     ');
 
@@ -761,7 +761,7 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_inativo($data = FALSE) {
 
         if ($data === TRUE) {
@@ -777,7 +777,7 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_tipoproduto($data = FALSE) {
 
         if ($data === TRUE) {
@@ -793,7 +793,7 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_unidadeproduto($data = FALSE) {
 
         if ($data === TRUE) {
@@ -808,8 +808,8 @@ class Basico_model extends CI_Model {
         }
 
         return $array;
-    }	
-	
+    }
+
 	public function select_categoria($data = FALSE) {
 
         if ($data === TRUE) {
@@ -824,8 +824,8 @@ class Basico_model extends CI_Model {
         }
 
         return $array;
-    }	
-	
+    }
+
 	public function select_tipofornec($data = FALSE) {
 
         if ($data === TRUE) {
@@ -841,33 +841,33 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_permissao($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query('
-                SELECT 
-                    idSis_Permissao, 
+                SELECT
+                    idSis_Permissao,
                     Permissao,
 					CONCAT(Nivel, " -- ", Permissao) AS Nivel
-				FROM 
-                    Sis_Permissao 					
- 
-				ORDER BY idSis_Permissao ASC 
-			');		
-					
+				FROM
+                    Sis_Permissao
+
+				ORDER BY idSis_Permissao ASC
+			');
+
         } else {
             $query = $this->db->query('
-				SELECT 
-                    idSis_Permissao, 
+				SELECT
+                    idSis_Permissao,
                     Permissao,
 					CONCAT(Nivel, " -- ", Permissao) AS Nivel
-				FROM 
-                    Sis_Permissao 					
+				FROM
+                    Sis_Permissao
 
-				ORDER BY idSis_Permissao ASC 
+				ORDER BY idSis_Permissao ASC
 			');
-            
+
             $array = array();
             foreach ($query->result() as $row) {
                 $array[$row->idSis_Permissao] = $row->Nivel;
@@ -876,44 +876,46 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
-	
+
 	public function select_agenda($data = FALSE) {
+
+        $q = ($_SESSION['log']['Permissao'] > 2) ?
+            ' U.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND ' : FALSE;
 
         if ($data === TRUE) {
             $array = $this->db->query('
-                SELECT 
-                    A.idApp_Agenda,					
+                SELECT
+                    A.idApp_Agenda,
                     A.idSis_Usuario,
 					U.Nome
-					
-				FROM 
+				FROM
                     App_Agenda AS A
 						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = A.idSis_Usuario
 				WHERE
-					A.Empresa = ' . $_SESSION['log']['Empresa'] . ' 
- 
-				ORDER BY 
-					U.Nome ASC 
-			');		
-					
-        } else {       
+                    ' . $q . '
+					A.Empresa = ' . $_SESSION['log']['Empresa'] . '
+				ORDER BY
+					U.Nome ASC
+			');
+
+        } else {
             $query = $this->db->query('
-				SELECT 
-                    A.idApp_Agenda,					
+				SELECT
+                    A.idApp_Agenda,
                     A.idSis_Usuario,
 					CONCAT(IFNULL(F.Abrev,""), " --- ", IFNULL(U.Nome,"")) AS Nome
-					
-				FROM 
+
+				FROM
                     App_Agenda AS A
 						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = A.idSis_Usuario
 						LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = U.Funcao
 				WHERE
-					A.Empresa = ' . $_SESSION['log']['Empresa'] . ' 
- 
-				ORDER BY 
-					F.Abrev ASC 
+                    ' . $q . '
+					A.Empresa = ' . $_SESSION['log']['Empresa'] . '
+				ORDER BY
+					F.Abrev ASC
 			');
-            
+
             $array = array();
             foreach ($query->result() as $row) {
                 $array[$row->idApp_Agenda] = $row->Nome;
@@ -921,36 +923,36 @@ class Basico_model extends CI_Model {
         }
 
         return $array;
-    }	
-	
+    }
+
 	public function select_tipoprofissional($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query('
-                SELECT 
-                    idTab_TipoProfissional, 
+                SELECT
+                    idTab_TipoProfissional,
                     TipoProfissional,
 					idTab_Modulo
-				FROM 
+				FROM
                     Tab_TipoProfissional
 				WHERE
 					idTab_Modulo = "1"
-				ORDER BY TipoProfissional ASC 
-			');		
-					
+				ORDER BY TipoProfissional ASC
+			');
+
         } else {
             $query = $this->db->query('
-				SELECT 
-                    idTab_TipoProfissional, 
+				SELECT
+                    idTab_TipoProfissional,
                     TipoProfissional,
 					idTab_Modulo
-				FROM 
+				FROM
                     Tab_TipoProfissional
 				WHERE
 					idTab_Modulo = "1"
-				ORDER BY TipoProfissional ASC  
+				ORDER BY TipoProfissional ASC
 			');
-            
+
             $array = array();
             foreach ($query->result() as $row) {
                 $array[$row->idTab_TipoProfissional] = $row->TipoProfissional;
@@ -958,6 +960,6 @@ class Basico_model extends CI_Model {
         }
 
         return $array;
-    }	
+    }
 
 }

@@ -19,7 +19,7 @@
 								<label for="idApp_Agenda">Agenda do Profis.*</label>
 								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 										id="idApp_Agenda" autofocus name="idApp_Agenda">
-									<option value="">-- Sel. um Profis. --</option>
+									<?php echo $data['select']['option']; ?>
 									<?php
 									foreach ($select['idApp_Agenda'] as $key => $row) {
 										if ($query['idApp_Agenda'] == $key) {
@@ -30,7 +30,7 @@
 									}
 									?>
 								</select>
-							</div>							
+							</div>
 							<div class="col-md-3">
 								<label for="Data">Data:</label>
 								<div class="input-group <?php echo $datepicker; ?>">
@@ -62,7 +62,7 @@
 										</span>
 									</div>
 								</div>
-							</div>						
+							</div>
 						</div>
 					</div>
 					<hr>

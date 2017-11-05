@@ -3,15 +3,15 @@
 
 <div class="container-fluid">
 	<div class="row">
-	
+
 		<div class="col-md-2"></div>
 		<div class="col-md-8 ">
-		
+
 			<div class="panel panel-primary">
-				
+
 				<div class="panel-heading"><strong><?php echo '<strong>' . $_SESSION['Cliente']['NomeCliente'] . '</strong> - <small>Id.: ' . $_SESSION['Cliente']['idApp_Cliente'] . '</small>' ?></strong></div>
 				<div class="panel-body">
-			
+
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-2 "></div>
@@ -19,19 +19,19 @@
 								<div class="col-md-4 text-left">
 									<label for="">Cliente & Contatos:</label>
 									<div class="form-group">
-										<div class="row">	
+										<div class="row">
 											<a <?php if (preg_match("/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
 												<a class="btn btn-md btn-success" href="<?php echo base_url() . 'cliente/prontuario/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
 													<span class="glyphicon glyphicon-file"> </span> Ver <span class="sr-only">(current)</span>
 												</a>
-											</a>				
+											</a>
 											<a <?php if (preg_match("/cliente\/alterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
 												<a class="btn btn-md btn-warning" href="<?php echo base_url() . 'cliente/alterar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
 													<span class="glyphicon glyphicon-edit"></span> Edit.
 												</a>
 											</a>
 										</div>
-									</div>	
+									</div>
 								</div>
 
 								<div class="col-md-4 text-center">
@@ -48,8 +48,8 @@
 													<span class="glyphicon glyphicon-plus"></span> Cad.
 												</a>
 											</a>
-										</div>	
-									</div>	
+										</div>
+									</div>
 								</div>
 
 								<div class="col-md-4 text-right">
@@ -66,15 +66,15 @@
 													<span class="glyphicon glyphicon-plus"></span> Cad.
 												</a>
 											</a>
-										</div>		
-									</div>	
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-2 "></div>
-						</div>	
+						</div>
 					</div>
-					<!--		
-					<div class="form-group">		
+					<!--
+					<div class="form-group">
 						<div class="row">
 							<div class="text-center t">
 								<h3><?php echo '<strong>' . $_SESSION['Cliente']['NomeCliente'] . '</strong> - <small>Id.: ' . $_SESSION['Cliente']['idApp_Cliente'] . '</small>' ?></h3>
@@ -83,9 +83,9 @@
 					</div>
 					-->
 						<?php } ?>
-						
+
 					<div class="row">
-						
+
 						<div class="col-md-12 col-lg-12">
 							<?php echo validation_errors(); ?>
 
@@ -102,7 +102,7 @@
 												<label for="idApp_Agenda">Agenda do Profis.*</label>
 												<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 														id="idApp_Agenda" autofocus name="idApp_Agenda">
-													<option value="">-- Sel. um Prof. --</option>
+													<?php echo $data['select']['option']; ?>
 													<?php
 													foreach ($select['idApp_Agenda'] as $key => $row) {
 														if ($query['idApp_Agenda'] == $key) {
@@ -155,7 +155,7 @@
 									<hr>
 
 									<div class="form-group">
-										<div class="row">					
+										<div class="row">
 											<div class="col-md-9 form-inline">
 												<label for="idTab_Status">Status:</label><br>
 												<div class="form-group">
@@ -214,13 +214,13 @@
 												</div>
 											</div>
 										</div>
-									</div>		
+									</div>
 									<hr>
 									<!--
 									<div class="form-group">
-										<div class="row">								
-											
-											
+										<div class="row">
+
+
 											<div class="col-md-4">
 												<label for="idApp_Profissional">Profissional: *</label>
 												<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
@@ -240,15 +240,15 @@
 													?>
 												</select>
 											</div>
-										   	
-										</div>	
+
+										</div>
 									</div>
-																														
+
 									<hr>
 									-->
 									<div class="form-group">
 										<div class="row">
-											
+
 											<div class="col-md-12">
 												<label for="Obs">Obs:</label>
 												<textarea class="form-control" id="Obs"
@@ -320,13 +320,11 @@
 								</div>
 							</div>
 						</div>
-						
+
 					</div>
-				</div>	
-			</div>		
+				</div>
+			</div>
 		</div>
 		<div class="col-md-2"></div>
-	</div>	
+	</div>
 </div>
-
-
