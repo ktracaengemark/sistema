@@ -535,6 +535,175 @@ class Relatorio_model extends CI_Model {
 
     }
 
+    public function list_estoque($data) {
+
+		$data['Produtos'] = ($data['Produtos']) ? ' AND TP.idTab_Produtos = ' . $data['Produtos'] : FALSE;
+
+        ####################################################################
+        #LISTA DE PRODUTOS
+        $query['Produtos'] = $this->db->query(
+            'SELECT
+            	TP.idTab_Produtos,
+            	TP.Produtos
+            FROM
+            	Tab_Produtos AS TP
+            WHERE
+            	TP.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+            	TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+                ' . $data['Produtos'] . '
+            ORDER BY
+            	TP.Produtos ASC'
+        );
+        $query['Produtos'] = $query['Produtos']->result();
+
+        ####################################################################
+        #COMPRADOS
+        if ($data['DataFim']) {
+            $consulta =
+                '(TCO.DataDespesas >= "' . $data['DataInicio'] . '" AND TCO.DataDespesas <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(TCO.DataDespesas >= "' . $data['DataInicio'] . '")';
+        }
+
+        $query['Comprados'] = $this->db->query(
+            'SELECT
+            	SUM(APC.QtdCompraProduto) AS QtdCompra,
+            	TP.idTab_Produtos
+            FROM
+            	App_Despesas AS TCO
+            		LEFT JOIN App_ProdutoCompra AS APC ON APC.idApp_Despesas = TCO.idApp_Despesas
+            		LEFT JOIN Tab_Produtos AS TP ON TP.idTab_Produtos = APC.idTab_Produto
+            WHERE
+                TCO.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                (' . $consulta . ')
+                ' . $data['Produtos'] . ' AND
+                TCO.TipoProduto = "D" AND
+                TP.idTab_Produtos != "0"
+                ' . $data['Produtos'] . '
+            GROUP BY
+            	TP.idTab_Produtos
+            ORDER BY
+            	TP.Produtos ASC'
+        );
+        $query['Comprados'] = $query['Comprados']->result();
+
+        ####################################################################
+        #VENDIDOS
+        if ($data['DataFim']) {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
+        }
+
+        $query['Vendidos'] = $this->db->query(
+            'SELECT
+            	SUM(APV.QtdVendaProduto) AS QtdVenda,
+                TP.idTab_Produtos
+            FROM
+            	App_Cliente AS C,
+            	App_OrcaTrata AS OT
+            		LEFT JOIN App_ProdutoVenda AS APV ON APV.idApp_OrcaTrata = OT.idApp_OrcaTrata
+            		LEFT JOIN Tab_Valor AS TVV ON TVV.idTab_Valor = APV.idTab_Produto
+            		LEFT JOIN Tab_Produtos AS TP ON TP.idTab_Produtos = TVV.idTab_Produtos
+            WHERE
+                C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                (' . $consulta . ') AND
+            	APV.idApp_ProdutoVenda != "0" AND
+            	C.idApp_Cliente = OT.idApp_Cliente
+                ' . $data['Produtos'] . '
+            GROUP BY
+            	TP.idTab_Produtos
+            ORDER BY
+            	TP.Produtos ASC'
+        );
+        $query['Vendidos'] = $query['Vendidos']->result();
+
+        ####################################################################
+        #CONSUMIDOS
+        if ($data['DataFim']) {
+            $consulta =
+                '(TCO.DataDespesas >= "' . $data['DataInicio'] . '" AND TCO.DataDespesas <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(TCO.DataDespesas >= "' . $data['DataInicio'] . '")';
+        }
+
+        $query['Consumidos'] = $this->db->query(
+            'SELECT
+            	SUM(APC.QtdCompraProduto) AS QtdConsumo,
+            	TP.idTab_Produtos
+            FROM
+            	App_Despesas AS TCO
+            		LEFT JOIN App_ProdutoCompra AS APC ON APC.idApp_Despesas = TCO.idApp_Despesas
+            		LEFT JOIN Tab_Produtos AS TP ON TP.idTab_Produtos = APC.idTab_Produto
+            WHERE
+                TCO.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                (' . $consulta . ') AND
+                TCO.TipoProduto = "C"
+                ' . $data['Produtos'] . '
+            GROUP BY
+            	TP.idTab_Produtos
+            ORDER BY
+            	TP.Produtos ASC'
+        );
+        $query['Consumidos'] = $query['Consumidos']->result();
+
+        $estoque = new stdClass();
+        #$estoque = array();
+        foreach ($query['Produtos'] as $row) {
+            #echo $row->idTab_Produtos . ' # ' . $row->Produtos . '<br />';
+            #$estoque[$row->idTab_Produtos] = $row->Produtos;
+            $estoque->{$row->idTab_Produtos} = new stdClass();
+            $estoque->{$row->idTab_Produtos}->Produtos = $row->Produtos;
+
+
+        }
+
+        foreach ($query['Comprados'] as $row) {
+            $estoque->{$row->idTab_Produtos}->QtdCompra = $row->QtdCompra;
+        }
+
+        foreach ($query['Vendidos'] as $row) {
+            $estoque->{$row->idTab_Produtos}->QtdVenda = $row->QtdVenda;
+        }
+
+        foreach ($query['Consumidos'] as $row) {
+            $estoque->{$row->idTab_Produtos}->QtdConsumo = $row->QtdConsumo;
+        }
+
+        foreach ($estoque as $row) {
+            $row->QtdCompra = (!isset($row->QtdCompra)) ? 0 : $row->QtdCompra;
+            $row->QtdVenda = (!isset($row->QtdVenda)) ? 0 : $row->QtdVenda;
+            $row->QtdConsumo = (!isset($row->QtdConsumo)) ? 0 : $row->QtdConsumo;
+
+            $row->QtdEstoque = $row->QtdCompra - $row->QtdVenda - $row->QtdConsumo;
+        }
+
+        /*
+        echo $this->db->last_query();
+        echo "<pre>";
+        print_r($estoque);
+        echo "</pre>";
+        #echo "<pre>";
+        #print_r($query);
+        #echo "</pre>";
+        exit();
+        */
+
+        return $estoque;
+
+    }
+
+
 	public function list_produtosvend($data, $completo) {
 
         if ($data['DataFim']) {
@@ -548,7 +717,7 @@ class Relatorio_model extends CI_Model {
 
         $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 		$data['Produtos'] = ($data['Produtos']) ? ' AND TPV.idTab_Produtos = ' . $data['Produtos'] : FALSE;
-		
+
 		$query = $this->db->query('
             SELECT
                 C.NomeCliente,
@@ -586,12 +755,12 @@ class Relatorio_model extends CI_Model {
         ');
 
         /*
-		LEFT JOIN Tab_ProdutoBase AS TPD ON TPD.idTab_ProdutoBase = PD.idTab_Produto
+		#LEFT JOIN Tab_ProdutoBase AS TPD ON TPD.idTab_ProdutoBase = PD.idTab_Produto
           echo $this->db->last_query();
           echo "<pre>";
           print_r($query);
           echo "</pre>";
-          exit();
+          #exit();
           */
 
         if ($completo === FALSE) {
@@ -746,7 +915,7 @@ class Relatorio_model extends CI_Model {
 
 		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TTC.idTab_TipoConsumo = ' . $data['TipoDespesa'] : FALSE;
 		$data['Produtos'] = ($data['Produtos']) ? ' AND TPB.idTab_Produtos = ' . $data['Produtos'] : FALSE;
-		
+
         $query = $this->db->query('
             SELECT
                 TCO.idApp_Despesas,
@@ -767,7 +936,7 @@ class Relatorio_model extends CI_Model {
                 TCO.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				(' . $consulta . ')
-				' . $data['TipoDespesa'] . ' 
+				' . $data['TipoDespesa'] . '
 				' . $data['Produtos'] . ' AND
 				TCO.TipoProduto = "C"
             ORDER BY
@@ -779,7 +948,7 @@ class Relatorio_model extends CI_Model {
           echo "<pre>";
           print_r($query);
           echo "</pre>";
-          exit();
+          #exit();
           */
 
         if ($completo === FALSE) {
@@ -808,7 +977,7 @@ class Relatorio_model extends CI_Model {
 
 		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TTC.idTab_TipoConsumo = ' . $data['TipoDespesa'] : FALSE;
 		$data['Produtos'] = ($data['Produtos']) ? ' AND TPB.idTab_Produtos = ' . $data['Produtos'] : FALSE;
-		
+
         $query = $this->db->query('
             SELECT
                 TCO.idApp_Despesas,
@@ -828,7 +997,7 @@ class Relatorio_model extends CI_Model {
                 TCO.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				(' . $consulta . ')
-				' . $data['TipoDespesa'] . ' 
+				' . $data['TipoDespesa'] . '
 				' . $data['Produtos'] . ' AND
 				TCO.TipoProduto = "D" AND
 				TPB.idTab_Produtos != "0"
@@ -842,7 +1011,7 @@ class Relatorio_model extends CI_Model {
           echo "<pre>";
           print_r($query);
           echo "</pre>";
-          exit();
+          #exit();
           */
 
         if ($completo === FALSE) {

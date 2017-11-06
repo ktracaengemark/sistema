@@ -459,6 +459,55 @@ class Relatorio extends CI_Controller {
 
     }
 
+    public function estoque() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'Produtos',
+            'DataInicio',
+            'DataFim',
+        ), TRUE));
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+        $this->form_validation->set_rules('DataInicio', 'Data Inicio', 'required|trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+
+        $data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
+
+        $data['titulo'] = 'Relatório de Estoque';
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['Produtos'] = $data['query']['Produtos'];
+
+            $data['report'] = $this->Relatorio_model->list_estoque($data['bd']);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_estoque', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_estoque', $data);
+
+        $this->load->view('basico/footer');
+
+    }
 
 	public function admin() {
 
@@ -811,7 +860,7 @@ class Relatorio extends CI_Controller {
 
 		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipoconsumo();
 		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
-		
+
         $data['titulo'] = 'Relatório de Produtos Cons. Inter.';
 
         #run form validation
