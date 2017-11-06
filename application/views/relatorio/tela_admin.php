@@ -112,8 +112,17 @@
 												</a>
 											</div>	
 										</div>											
-									</div>																								
-
+									</div>
+									<div class="col-md-12">
+										<label for="">Procedimentos:</label>
+										<div class="form-group col-md-12 text-left">
+											<div class="row">		
+												<a type="button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>relatorio/orcamentopc" role="button"> 
+													<span class="glyphicon glyphicon-list-alt"></span> Procedimentos
+												</a>
+											</div>	
+										</div>																									
+									</div>
 								</div>
 							</div>
 							</form>
@@ -163,19 +172,19 @@
 										<div class="col-md-12">											
 											<label for="">Produtos:</label>
 											<div class="form-group col-md-12 text-left">
-												<div class="row">		
-													<a type="button" class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>relatorio/produtosvend" role="button"> 
-														<span class="glyphicon glyphicon-barcode"></span> Produtos Vendidos
-													</a>
-												</div>	
-											</div>
-											<div class="form-group col-md-12 text-left">
 												<div class="row">
 													<a type="button" class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>relatorio/produtoscomp" role="button"> 
 														<span class="glyphicon glyphicon-barcode"></span> Produtos Comprados
 													</a>
 												</div>	
-											</div>													
+											</div>
+											<div class="form-group col-md-12 text-left">
+												<div class="row">		
+													<a type="button" class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>relatorio/produtosvend" role="button"> 
+														<span class="glyphicon glyphicon-barcode"></span> Produtos Vendidos
+													</a>
+												</div>	
+											</div>																								
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
 													<a type="button" class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>relatorio/consumo" role="button"> 
@@ -199,6 +208,53 @@
 
 				</div>
 				<div class="col-md-4">	
+					
+					<div class="panel panel-danger">
+						<div class="panel-heading"><strong><?php echo $titulo4; ?></strong><strong> - Como Receber?</strong></div>
+						<div class="panel-body">
+							
+							<div class="form-group">
+								<div class="row">								
+									
+									<div class="col-md-12">																			
+										<div class="text-center t">
+											<h3><?php echo '<small></small><strong> Nos Indicando </strong><small></small>'  ?></h3>
+										</div>
+										
+										<div class="form-group col-md-12 text-left">	
+											<div class="row">										
+												<a  class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>tipobanco/cadastrar" role="button"> 
+													<span class="glyphicon glyphicon-usd"></span> Cadastrar Conta Corrente
+												</a>
+											</div>
+										</div>
+										<!--
+										<div class="form-group col-md-12 text-left">													
+											<div class="row">	
+												<a  class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>loginassociadoempresafilial/registrar" role="button"> 
+													<span class="glyphicon glyphicon-user"></span> Cadastrar Empresa Indicada
+												</a>
+											</div>
+										</div>
+										-->
+										<div class="form-group col-md-12 text-left">														
+											<div class="row">	
+												<a  class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>relatorio/empresaassociado" role="button"> 
+													<span class="glyphicon glyphicon-list"></span> Relatório de Indicações
+												</a>
+											</div>
+										</div>	
+	
+									</div>
+								</div>
+							</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				
+				<!--
+				<div class="col-md-4">	
 
 						<div class="panel panel-primary">
 							<div class="panel-heading"><strong><?php echo $titulo3; ?></strong></div>
@@ -215,17 +271,7 @@
 													</a>
 												</div>	
 											</div>												
-										</div>
-										<div class="col-md-12">
-											<label for="">Procedimentos:</label>
-											<div class="form-group col-md-12 text-left">
-												<div class="row">		
-													<a type="button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>relatorio/orcamentopc" role="button"> 
-														<span class="glyphicon glyphicon-list-alt"></span> Procedimentos
-													</a>
-												</div>	
-											</div>																									
-										</div>																
+										</div>																								
 									</div>
 								</div>
 								</form>
@@ -233,7 +279,7 @@
 						</div>
 
 				</div>				
-								
+				-->				
 			</div>
 		</div>
 	</div>
