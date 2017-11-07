@@ -1098,7 +1098,8 @@ class Relatorio_model extends CI_Model {
                 C.idApp_Cliente = OT.idApp_Cliente
                 ' . $data['NomeCliente'] . '
             ORDER BY
-                C.NomeCliente,
+                OT.idApp_OrcaTrata DESC,
+				C.NomeCliente,
 				OT.AprovadoOrca ASC,
 				OT.DataOrca
 

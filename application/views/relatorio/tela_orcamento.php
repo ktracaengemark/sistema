@@ -196,8 +196,8 @@
 									</button>
 								</div>
 								<div class="col-md-2 text-right">											
-									<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>relatorio/clientes" role="button"> 
-										<span class="glyphicon glyphicon-plus"></span> Nova Venda
+									<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>orcatrata2/cadastrar" role="button"> 
+										<span class="glyphicon glyphicon-plus"></span> Novo Orçamento
 									</a>
 								</div>
 								<div class="col-md-4"></div>

@@ -49,9 +49,9 @@
 						</a>
 					</div>
 					<div class="btn-group" role="group" aria-label="...">
-						<a href="<?php echo base_url(); ?>relatorio/orcamento">
+						<a href="<?php echo base_url(); ?>orcatrata2/cadastrar">
 							<button type="button" class="btn btn-md btn-info ">
-								<span class="glyphicon glyphicon-usd"></span>Vendas
+								<span class="glyphicon glyphicon-usd"></span>Orçam.
 							</button>
 						</a>
 					</div>					
@@ -159,14 +159,14 @@
 					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>relatorio/admin">
 							<button type="button" class="btn btn-md btn-primary ">
-								<span class="glyphicon glyphicon-pencil"></span>Admin
+								<span class="glyphicon glyphicon-list"></span> Relat.
 							</button>
 						</a>
 					</div>
 					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>login/sair">
 							<button type="button" class="btn btn-md btn-danger ">
-								<span class="glyphicon glyphicon-log-out"></span>Sair
+								<span class="glyphicon glyphicon-log-out"></span> Sair
 							</button>
 						</a>
 					</div>

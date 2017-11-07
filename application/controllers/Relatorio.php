@@ -476,7 +476,7 @@ class Relatorio extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
-        $this->form_validation->set_rules('DataInicio', 'Data Inicio', 'required|trim|valid_date');
+        $this->form_validation->set_rules('DataInicio', 'Data Inicio', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
 
         $data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
