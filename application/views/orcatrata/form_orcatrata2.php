@@ -27,7 +27,7 @@
 									<div class="row">
 										<div class="col-md-6">
 											<label for="idApp_Cliente">Cliente *</label>
-											<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+											<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
 													id="idApp_Cliente" name="idApp_Cliente">
 												<option value="">-- Sel. um Cliente --</option>
 												<?php

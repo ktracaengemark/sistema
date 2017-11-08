@@ -56,7 +56,7 @@
 											<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>tipodespesa/cadastrar/tipodespesa" role="button">
 												<span class="glyphicon glyphicon-plus"></span> <b>Forma Pag</b>
 											</a>-->
-											<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+											<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
 													id="TipoDespesa" name="TipoDespesa">
 												<option value="">-- Sel. Tipo Despesa --</option>
 												<?php
@@ -250,7 +250,7 @@
 																<span class="glyphicon glyphicon-plus"></span> <b>Novo Produto</b>
 															</a>-->
 															<?php } ?>
-															<select data-placeholder="Selecione uma opção..." class="form-control" onchange="buscaValorCompra(this.value,this.name,'Produto',<?php echo $i ?>)" <?php echo $readonly; ?>
+															<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="buscaValorCompra(this.value,this.name,'Produto',<?php echo $i ?>)" <?php echo $readonly; ?>
 																	 id="listadinamicab<?php echo $i ?>" name="idTab_Produto<?php echo $i ?>">
 																<option value="">-- Selecione uma opção --</option>
 																<?php

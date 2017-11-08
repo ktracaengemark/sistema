@@ -1835,6 +1835,13 @@ $(document).ready(function () {
                     //alert(val.id);
                     $select.append('<option value="' + val.id + '">' + val.name + '</option>');
                 })
+                $('.Chosen').chosen({
+                    disable_search_threshold: 10,
+                    multiple_text: "Selecione uma ou mais opções",
+                    single_text: "Selecione uma opção",
+                    no_results_text: "Nenhum resultado para",
+                    width: "100%"
+                }); 				
             },
             error: function () {
                 //alert('erro listadinamicaB');
@@ -1936,6 +1943,13 @@ $(document).ready(function () {
                     //alert(val.id);
                     $select.append('<option value="' + val.id + '">' + val.name + '</option>');
                 })
+                $('.Chosen').chosen({
+                    disable_search_threshold: 10,
+                    multiple_text: "Selecione uma ou mais opções",
+                    single_text: "Selecione uma opção",
+                    no_results_text: "Nenhum resultado para",
+                    width: "100%"
+                }); 				
             },
             error: function () {
                 //alert('erro listadinamicaB');
@@ -2020,6 +2034,13 @@ $(document).ready(function () {
                     //alert(val.id);
                     $select.append('<option value="' + val.id + '">' + val.name + '</option>');
                 })
+                $('.Chosen').chosen({
+                    disable_search_threshold: 10,
+                    multiple_text: "Selecione uma ou mais opções",
+                    single_text: "Selecione uma opção",
+                    no_results_text: "Nenhum resultado para",
+                    width: "100%"
+                }); 				
             },
             error: function () {
                 //alert('erro listadinamicaB');
