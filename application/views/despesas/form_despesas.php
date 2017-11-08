@@ -18,7 +18,7 @@
 					<!--App_Despesas-->
 
 						<div class="form-group">
-							<div class="panel panel-info">
+							<div class="panel panel-danger">
 								<div class="panel-heading">
 									<div class="row">														
 										<!--<div class="col-md-2">
@@ -50,13 +50,7 @@
 												?>
 											</select>
 										</div>
-										-->
-										<div class="col-md-6">
-											<label for="Despesa">Despesa: *</label><br>
-											<input type="text" class="form-control" maxlength="200"
-													name="Despesa" value="<?php echo $despesas['Despesa'] ?>">
-										</div>
-										
+										-->									
 										<div class="col-md-6">
 											<label for="TipoDespesa">Tipo de Despesa</label>
 											<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>tipodespesa/cadastrar/tipodespesa" role="button">
@@ -75,7 +69,12 @@
 												}
 												?>
 											</select>
-										</div>																											
+										</div>
+										<div class="col-md-6">
+											<label for="Despesa">Obs.</label><br>
+											<input type="text" class="form-control" maxlength="200"
+													name="Despesa" value="<?php echo $despesas['Despesa'] ?>">
+										</div>										
 									</div>
 								</div>
 							</div>
@@ -235,7 +234,7 @@
 										<?php } ?>
 
 										<div class="form-group" id="6div<?php echo $i ?>">
-											<div class="panel panel-info">
+											<div class="panel panel-danger">
 												<div class="panel-heading">
 													<div class="row">
 														<div class="col-md-2">
@@ -247,9 +246,9 @@
 														<div class="col-md-4">
 															<label for="idTab_Produto">Produto:</label>
 															<?php if ($i == 1) { ?>
-															<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produtos/cadastrar" role="button">
+															<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produtos/cadastrar" role="button">
 																<span class="glyphicon glyphicon-plus"></span> <b>Novo Produto</b>
-															</a>
+															</a>-->
 															<?php } ?>
 															<select data-placeholder="Selecione uma opção..." class="form-control" onchange="buscaValorCompra(this.value,this.name,'Produto',<?php echo $i ?>)" <?php echo $readonly; ?>
 																	 id="listadinamicab<?php echo $i ?>" name="idTab_Produto<?php echo $i ?>">
@@ -321,7 +320,7 @@
 											<div class="row">
 												<div class="col-md-4">
 													<a class="add_field_button6 btn btn-xs btn-danger">
-														<span class="glyphicon glyphicon-plus"></span> Adicionar Produto
+														<span class="glyphicon glyphicon-plus"></span> Adic. Produtos
 													</a>
 												</div>
 											</div>
@@ -330,7 +329,7 @@
 									</div>
 									<div class="panel-body">
 										<div class="form-group">
-											<div class="panel panel-info">
+											<div class="panel panel-danger">
 												<div class="panel-heading">
 													<div class="row">
 														<div class="col-md-3">
@@ -406,7 +405,7 @@
 									<div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2" aria-expanded="false" style="height: 0px;">									
 										<div class="panel-body">	
 											<div class="form-group">
-												<div class="panel panel-info">
+												<div class="panel panel-danger">
 													<div class="panel-heading">
 														<div class="row">
 															<div class="col-md-2">
@@ -467,7 +466,7 @@
 												<input type="hidden" name="idApp_ParcelasPagaveis<?php echo $i ?>" value="<?php echo $parcelaspag[$i]['idApp_ParcelasPagaveis']; ?>"/>
 												<?php } ?>
 												<div class="form-group">
-													<div class="panel panel-info">
+													<div class="panel panel-danger">
 														<div class="panel-heading">
 															<div class="row">
 																<div class="col-md-2">
@@ -604,12 +603,13 @@
 										</div>
 									</div>
 								</div>
+								<!--
 								<div class="col-md-6">
 									<label for="ObsDespesas">Obs:</label>
 									<textarea class="form-control" id="ObsDespesas" <?php echo $readonly; ?>
 											  name="ObsDespesas"><?php echo $despesas['ObsDespesas']; ?></textarea>
 								</div>		
-							    <!--	
+							    	
 								<div class="col-md-2 form-inline">
 									<label for="AprovadoDespesas">Despesa Aprovada?</label><br>
 									<div class="form-group">

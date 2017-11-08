@@ -128,14 +128,14 @@
 				<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">
 					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>despesas/cadastrar">
-							<button type="button" class="btn btn-md btn-primary ">
+							<button type="button" class="btn btn-md panel-danger ">
 								<span class="glyphicon glyphicon-usd"></span>Despesa
 							</button>
 						</a>
 					</div>
 					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>consumo/cadastrar">
-							<button type="button" class="btn btn-md btn-primary ">
+							<button type="button" class="btn btn-md panel-danger ">
 								<span class="glyphicon glyphicon-pencil"></span>Consumo
 							</button>
 						</a>

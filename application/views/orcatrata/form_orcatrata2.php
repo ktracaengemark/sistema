@@ -21,6 +21,36 @@
 							</div>
 							-->
 					<!--App_OrcaTrata-->
+						<div class="form-group">
+							<div class="panel panel-info">
+								<div class="panel-heading">
+									<div class="row">														
+										<div class="col-md-6">
+											<label for="idApp_Cliente">Cliente *</label>
+											<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+													id="idApp_Cliente" name="idApp_Cliente">
+												<option value="">-- Sel. um Cliente --</option>
+												<?php
+												foreach ($select['idApp_Cliente'] as $key => $row) {
+													if ($orcatrata['idApp_Cliente'] == $key) {
+														echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+													} else {
+														echo '<option value="' . $key . '">' . $row . '</option>';
+													}
+												}
+												?>
+											</select>
+										</div>																																																	
+										<div class="col-md-6">
+											<label for="ObsOrca">Obs.</label><br>
+											<input type="text" class="form-control" maxlength="200"
+													name="ObsOrca" value="<?php echo $orcatrata['ObsOrca'] ?>">
+										</div>										
+									</div>
+								</div>
+							</div>
+						</div>	
+						<hr>					
 						<div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
 							<div class="panel panel-primary">
 								<div class="panel-heading collapsed" role="tab" id="heading1" data-toggle="collapse" data-parent="#accordion1" data-target="#collapse1" aria-expanded="false">								<h4 class="panel-title">
@@ -258,11 +288,10 @@
 										</div>
 
 										<div class="form-group">
-											<div class="row">
-												
-												<div class="col-md-3 text-right">
-													<a class="add_field_button2 btn btn-md btn-danger">
-														<span class="glyphicon glyphicon-plus"></span> Adicionar Produtos Ou Serviços
+											<div class="row">												
+												<div class="col-md-3">
+													<a class="add_field_button2 btn btn-xs btn-danger">
+														<span class="glyphicon glyphicon-plus"></span> Adic. Produtos Ou Serviços
 													</a>
 												</div>
 											</div>
@@ -858,6 +887,7 @@
 								-->
 							</div>
 						</div>
+						<!--
 						<div class="col-md-1"></div>
 						<div class="form-group text-center">
 							<div class="col-md-4">
@@ -884,6 +914,7 @@
 								</div>
 							</div>
 						</div>
+						-->
 
 						<hr>
 

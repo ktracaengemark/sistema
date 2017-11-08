@@ -380,10 +380,9 @@
 
 														<div class="form-group">
 															<div class="row">
-																<div class="col-md-1"></div>
-																<div class="col-md-3 text-right">
-																	<a class="add_field_button2 btn btn-md btn-danger">
-																		<span class="glyphicon glyphicon-plus"></span> Produtos & Serviços
+																<div class="col-md-3">
+																	<a class="add_field_button2 btn btn-xs btn-danger">
+																		<span class="glyphicon glyphicon-plus"></span> Adic. Produtos ou Serviços
 																	</a>
 																</div>
 															</div>

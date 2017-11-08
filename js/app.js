@@ -415,7 +415,7 @@ function calculaParcelasPagaveis() {
 
         $(".input_fields_parcelas").append('\
 			<div class="form-group">\
-				<div class="panel panel-info">\
+				<div class="panel panel-danger">\
 					<div class="panel-heading">\
 						<div class="row">\
 							<div class="col-md-2">\
@@ -1849,7 +1849,7 @@ $(document).ready(function () {
 
 		$(".input_fields_wrap6").append('\
             <div class="form-group" id="6div'+pc+'">\
-                <div class="panel panel-info">\
+                <div class="panel panel-danger">\
                     <div class="panel-heading">\
                         <div class="row">\
                             <div class="col-md-2">\
