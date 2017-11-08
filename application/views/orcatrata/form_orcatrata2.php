@@ -6,7 +6,7 @@
 
 		<div class="col-md-2"></div>
 		<div class="col-md-8 ">
-													
+
 			<?php echo validation_errors(); ?>
 
 			<div class="panel panel-<?php echo $panel; ?>">
@@ -24,7 +24,7 @@
 						<div class="form-group">
 							<div class="panel panel-info">
 								<div class="panel-heading">
-									<div class="row">														
+									<div class="row">
 										<div class="col-md-6">
 											<label for="idApp_Cliente">Cliente *</label>
 											<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
@@ -40,20 +40,21 @@
 												}
 												?>
 											</select>
-										</div>																																																	
+										</div>
 										<div class="col-md-6">
 											<label for="ObsOrca">Obs.</label><br>
 											<input type="text" class="form-control" maxlength="200"
 													name="ObsOrca" value="<?php echo $orcatrata['ObsOrca'] ?>">
-										</div>										
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>	
-						<hr>					
+						</div>
+						<hr>
 						<div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
 							<div class="panel panel-primary">
-								<div class="panel-heading collapsed" role="tab" id="heading1" data-toggle="collapse" data-parent="#accordion1" data-target="#collapse1" aria-expanded="false">								<h4 class="panel-title">
+								<div class="panel-heading collapsed" role="tab" id="heading1" data-toggle="collapse" data-parent="#accordion1" data-target="#collapse1" aria-expanded="false">
+									<h4 class="panel-title">
 										<a class="accordion-toggle">
 											<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
 											Orçamento, Produtos & Serviços
@@ -221,7 +222,7 @@
 																<span class="glyphicon glyphicon-plus"></span> <b>Novo Produto</b>
 															</a>-->
 															<?php } ?>
-															<select data-placeholder="Selecione uma opção..." class="form-control" onchange="buscaValor2Tabelas(this.value,this.name,'Valor',<?php echo $i ?>,'Produto')" <?php echo $readonly; ?>
+															<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="buscaValor2Tabelas(this.value,this.name,'Valor',<?php echo $i ?>,'Produto')" <?php echo $readonly; ?>
 																	 id="listadinamicab<?php echo $i ?>" name="idTab_Produto<?php echo $i ?>">
 																<option value="">-- Selecione uma opção --</option>
 																<?php
@@ -288,7 +289,7 @@
 										</div>
 
 										<div class="form-group">
-											<div class="row">												
+											<div class="row">
 												<div class="col-md-3">
 													<a class="add_field_button2 btn btn-xs btn-danger">
 														<span class="glyphicon glyphicon-plus"></span> Adic. Produtos Ou Serviços
@@ -992,7 +993,7 @@
 						</form>
 
 				</div>
-			</div>																		
+			</div>
 		</div>
 		<div class="col-md-2"></div>
 	</div>

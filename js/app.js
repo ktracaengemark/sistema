@@ -1677,7 +1677,7 @@ $(document).ready(function () {
                             </div>\
                             <div class="col-md-4">\
                                 <label for="idTab_Produto">Produto:</label><br>\
-                                <select class="form-control" id="listadinamicab'+pc+'" onchange="buscaValor2Tabelas(this.value,this.name,\'Valor\','+pc+',\'Produto\')" name="idTab_Produto'+pc+'">\
+                                <select class="form-control Chosen" id="listadinamicab'+pc+'" onchange="buscaValor2Tabelas(this.value,this.name,\'Valor\','+pc+',\'Produto\')" name="idTab_Produto'+pc+'">\
                                     <option value="">-- Selecione uma opção --</option>\
                                 </select>\
                             </div>\
@@ -1744,6 +1744,13 @@ $(document).ready(function () {
                     //alert(val.id);
                     $select.append('<option value="' + val.id + '">' + val.name + '</option>');
                 })
+                $('.Chosen').chosen({
+                    disable_search_threshold: 10,
+                    multiple_text: "Selecione uma ou mais opções",
+                    single_text: "Selecione uma opção",
+                    no_results_text: "Nenhum resultado para",
+                    width: "100%"
+                });                
             },
             error: function () {
                 //alert('erro listadinamicaB');
@@ -1778,7 +1785,7 @@ $(document).ready(function () {
                             </div>\
                             <div class="col-md-4">\
                                 <label for="idTab_Produto">Produto:</label><br>\
-                                <select class="form-control" id="listadinamicab'+pc+'" onchange="buscaValorCompra(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
+                                <select class="form-control Chosen" id="listadinamicab'+pc+'" onchange="buscaValorCompra(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
                                     <option value="">-- Selecione uma opção --</option>\
                                 </select>\
                             </div>\
@@ -1862,7 +1869,7 @@ $(document).ready(function () {
                             </div>\
                             <div class="col-md-4">\
                                 <label for="idTab_Produto">Produto:</label><br>\
-                                <select class="form-control" id="listadinamicab'+pc+'" onchange="buscaValorCompra(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
+                                <select class="form-control Chosen" id="listadinamicab'+pc+'" onchange="buscaValorCompra(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
                                     <option value="">-- Selecione uma opção --</option>\
                                 </select>\
                             </div>\
@@ -1963,7 +1970,7 @@ $(document).ready(function () {
                             </div>\
                             <div class="col-md-4">\
                                 <label for="idTab_Produto">Produto:</label><br>\
-                                <select class="form-control" id="listadinamicab'+pc+'" onchange="buscaValorConsumo(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
+                                <select class="form-control Chosen" id="listadinamicab'+pc+'" onchange="buscaValorConsumo(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
                                     <option value="">-- Selecione uma opção --</option>\
                                 </select>\
                             </div>\
@@ -2135,6 +2142,7 @@ $(document).ready(function () {
         no_results_text: "Nenhum resultado para",
         width: "100%"
     });
+
     $("button.fc-today-button").click(function () {
         $('#datepickerinline').datetimepicker({
             today: '2011-01-01',
