@@ -240,7 +240,7 @@
 										<div class="form-group col-md-12 text-left">														
 											<div class="row">	
 												<a  class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>relatorio/empresaassociado" role="button"> 
-													<span class="glyphicon glyphicon-list"></span> Relatório de Indicações
+													<span class="glyphicon glyphicon-list"></span> Cadastrar Indicações
 												</a>
 											</div>
 										</div>	
