@@ -176,8 +176,11 @@ class Loginempresafilial extends CI_Controller {
         $this->form_validation->set_rules('Senha', 'Senha', 'required|trim');
         $this->form_validation->set_rules('Confirma', 'Confirmar Senha', 'required|trim|matches[Senha]');
 		$this->form_validation->set_rules('Celular', 'Celular', 'required|trim');
-
-        #run form validation
+		$this->form_validation->set_rules('NumUsuarios', 'Número de Usuários', 'required|trim');
+		
+		$data['select']['NumUsuarios'] = $this->Basico_model->select_numusuarios();
+        
+		#run form validation
         if ($this->form_validation->run() === FALSE) {
             #load loginempresafilial view
             $this->load->view('loginempresafilial/form_registrar', $data);

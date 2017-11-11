@@ -9,7 +9,7 @@
 
 		<div class="btn-group" role="group">
 			<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>contatofunc/cadastrar" role="button"> 
-				<span class="glyphicon glyphicon-plus"></span> Cadastrar Novo Contatofunc
+				<span class="glyphicon glyphicon-plus"></span> Novo Contato
 			</a>
 		</div>
 	</div>        

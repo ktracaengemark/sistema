@@ -915,6 +915,41 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
+	
+	public function select_numusuarios($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query('
+                SELECT
+                    idTab_NumUsuarios,
+					DescNumUsuarios,
+					CONCAT(NumUsuarios, " -- ", DescNumUsuarios) AS NumUsuarios
+				FROM
+                    Tab_NumUsuarios
+				ORDER BY 
+					idTab_NumUsuarios ASC
+			');
+
+        } else {
+            $query = $this->db->query('
+                SELECT
+                    idTab_NumUsuarios,
+					DescNumUsuarios,
+					CONCAT(NumUsuarios, " -- ", DescNumUsuarios) AS NumUsuarios
+				FROM
+                    Tab_NumUsuarios
+				ORDER BY 
+					idTab_NumUsuarios ASC
+			');
+
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->NumUsuarios] = $row->NumUsuarios;
+            }
+        }
+
+        return $array;
+    }	
 
 	public function select_agenda($data = FALSE) {
 

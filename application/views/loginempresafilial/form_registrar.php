@@ -26,12 +26,28 @@
 		   name="NomeEmpresa" value="<?php echo $query['NomeEmpresa']; ?>">
 	<?php echo form_error('NomeEmpresa'); ?>
 	<br>
-	
-	<label for="NumUsuarios">Nº de Usuários:</label>
+<!--	
+	<label for="NumUsuarios">Nº de Usuários da Empresa:</label>
 	<input type="text" class="form-control" id="NumUsuarios" maxlength="45" 
 		   name="NumUsuarios" value="<?php echo $query['NumUsuarios']; ?>">
 	<?php echo form_error('NumUsuarios'); ?>
 	<br>	
+-->
+	<label for="NumUsuarios">Nº de Usuários da Empresa:*</label>
+	<select data-placeholder="Selecione uma opção..." class="form-control" id="NumUsuarios" name="NumUsuarios">			
+		<option value="">-- Selecione uma NumUsuarios --</option>
+		<?php
+		foreach ($select['NumUsuarios'] as $key => $row) {
+			if ($query['NumUsuarios'] == $key) {
+				echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+			} else {
+				echo '<option value="' . $key . '">' . $row . '</option>';
+			}
+		}
+		?>   
+	</select> 
+    <?php echo form_error('NumUsuarios'); ?>
+    <br>
 	
 	<label for="Nome">Nome do Administrador:</label>
     <input type="text" class="form-control" id="Nome" maxlength="255"
@@ -39,7 +55,7 @@
     <?php echo form_error('Nome'); ?>
     <br>
 	
-    <label for="Celular">Celular:</label>
+    <label for="Celular">Celular do Administrador:</label>
     <input type="text" class="form-control Celular Celular" id="Celular" maxlength="11"
            name="Celular" placeholder="(XX)999999999" value="<?php echo $query['Celular']; ?>">
     <?php echo form_error('Celular'); ?>
@@ -57,7 +73,7 @@
     <?php echo form_error('UsuarioEmpresaFilial'); ?>
     <br>
 
-    <label for="Senha">Senha:</label>
+    <label for="Senha">Senha do Administrador:</label>
     <input type="password" class="form-control" id="Senha" maxlength="45"
            name="Senha" value="<?php echo $query['Senha']; ?>">
     <?php echo form_error('Senha'); ?>
