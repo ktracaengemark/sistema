@@ -1971,47 +1971,37 @@ $(document).ready(function () {
 
 		$(".input_fields_wrap7").append('\
             <div class="form-group" id="7div'+pc+'">\
-                <div class="panel panel-info">\
+                <div class="panel panel-danger">\
                     <div class="panel-heading">\
                         <div class="row">\
                             <div class="col-md-2">\
-                                <label for="QtdConsumoProduto">Qtd:</label><br>\
+                                <label for="QtdCompraProduto">Qtd:</label><br>\
                                 <div class="input-group">\
-                                    <input type="text" class="form-control Numero" maxlength="3" id="QtdConsumoProduto'+pc+'" placeholder="0"\
-                                        onkeyup="calculaSubtotalConsumo(this.value,this.name,'+pc+',\'QTD\',\'Produto\')"\
-                                        name="QtdConsumoProduto'+pc+'" value="">\
+                                    <input type="text" class="form-control Numero" maxlength="3" id="QtdCompraProduto'+pc+'" placeholder="0"\
+                                        onkeyup="calculaSubtotalCompra(this.value,this.name,'+pc+',\'QTD\',\'Produto\')"\
+                                        name="QtdCompraProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
                             <div class="col-md-4">\
                                 <label for="idTab_Produto">Produto:</label><br>\
-                                <select class="form-control Chosen" id="listadinamicab'+pc+'" onchange="buscaValorConsumo(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
+                                <select class="form-control Chosen" id="listadinamicab'+pc+'" onchange="buscaValorCompra(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
                                     <option value="">-- Selecione uma opção --</option>\
                                 </select>\
                             </div>\
-							<div class="col-md-3">\
-                                <label for="ValorConsumoProduto">Valor do Produto:</label><br>\
-                                <div class="input-group id="txtHint">\
-                                    <span class="input-group-addon" id="basic-addon1">R$</span>\
-                                    <input type="text" class="form-control Valor" id="idTab_Produto'+pc+'" maxlength="10" placeholder="0,00" \
-                                        onkeyup="calculaSubtotalConsumo(this.value,this.name,'+pc+',\'VP\',\'Produto\')"\
-                                        name="ValorCompraProduto'+pc+'" value="">\
-                                </div>\
-                            </div>\
-                            <div class="col-md-3">\
-                                <label for="SubtotalProduto">Subtotal:</label><br>\
-                                <div class="input-group id="txtHint">\
-                                    <span class="input-group-addon" id="basic-addon1">R$</span>\
-                                    <input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalProduto'+pc+'"\
-                                           name="SubtotalProduto'+pc+'" value="">\
-                                </div>\
-                            </div>\
-                            <div class="col-md-2">\
+                        </div>\
+						<div class="row">\
+							<div class="col-md-6">\
+								<label for="ObsProduto'+pc+'">Obs:</label><br>\
+								<input type="text" class="form-control" id="ObsProduto'+pc+'" maxlength="250"\
+									   name="ObsProduto'+pc+'" value="">\
+							</div>\
+							<div class="col-md-2">\
                                 <label><br></label><br>\
                                 <a href="#" id="'+pc+'" class="remove_field7 btn btn-danger">\
                                     <span class="glyphicon glyphicon-trash"></span>\
                                 </a>\
                             </div>\
-                        </div>\
+						</div>\
                     </div>\
                 </div>\
             </div>'
@@ -2022,7 +2012,7 @@ $(document).ready(function () {
 
         //request the JSON data and parse into the select element
         $.ajax({
-            url: window.location.origin+ '/' + app + '/GetvaluesConsumo_json.php?q=2',
+            url: window.location.origin+ '/' + app + '/GetvaluesCompra_json.php?q=2',
             dataType: 'JSON',
             type: "GET",
             success: function (data) {
@@ -2091,7 +2081,7 @@ $(document).ready(function () {
     $(".input_fields_wrap7").on("click",".remove_field7", function(e){ //user click on remove text
         $("#7div"+$(this).attr("id")).remove();
 		//após remover o campo refaz o cálculo do orçamento e total restante
-        calculaConsumo();
+        //calculaCompra();
     })
 
     //Remove os campos adicionados dinamicamente

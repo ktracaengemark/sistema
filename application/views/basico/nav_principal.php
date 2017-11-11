@@ -29,17 +29,17 @@
 							<button type="button" class="btn btn-md btn-primary">
 								<span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['Usuario']; ?>
 							</button>
-						</a>
-						<a href="<?php echo base_url(); ?>agenda">
-							<button type="button" class="btn btn-md btn-warning ">
-								<span class="glyphicon glyphicon-calendar"></span>Agenda
-							</button>
-						</a>
+						</a>						
 					</div>
 					<div class="btn-group" role="group" aria-label="..."> </div>
 				</li>
 				<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
 					<div class="btn-group" role="group" aria-label="...">						
+						<a href="<?php echo base_url(); ?>agenda">
+							<button type="button" class="btn btn-md btn-warning ">
+								<span class="glyphicon glyphicon-calendar"></span>Agenda
+							</button>
+						</a>
 						<a href="<?php echo base_url(); ?>relatorio/clientes">
 							<button type="button" class="btn btn-md btn-success ">
 								<span class="glyphicon glyphicon-user"></span>Clientes

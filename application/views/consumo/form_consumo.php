@@ -223,7 +223,7 @@
 										-->
 										<input type="hidden" name="PCount" id="PCount" value="<?php echo $count['PCount']; ?>"/>
 
-										<div class="input_fields_wrap6">
+										<div class="input_fields_wrap7">
 
 										<?php
 										for ($i=1; $i <= $count['PCount']; $i++) {
@@ -233,7 +233,7 @@
 										<input type="hidden" name="idApp_ProdutoCompra<?php echo $i ?>" value="<?php echo $produto[$i]['idApp_ProdutoCompra']; ?>"/>
 										<?php } ?>
 
-										<div class="form-group" id="6div<?php echo $i ?>">
+										<div class="form-group" id="7div<?php echo $i ?>">
 											<div class="panel panel-danger">
 												<div class="panel-heading">
 													<div class="row">
@@ -264,24 +264,6 @@
 																?>
 															</select>
 														</div>
-
-														<div class="col-md-3">
-															<label for="ValorCompraProduto">Valor do Produto:</label>
-															<div class="input-group">
-																<span class="input-group-addon" id="basic-addon1">R$</span>
-																<input type="text" class="form-control Valor" id="idTab_Produto<?php echo $i ?>" maxlength="10" placeholder="0,00"
-																	onkeyup="calculaSubtotalCompra(this.value,this.name,'<?php echo $i ?>','VP','Produto')"
-																	name="ValorCompraProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ValorCompraProduto'] ?>">
-															</div>
-														</div>													
-														<div class="col-md-3">
-															<label for="SubtotalProduto">Subtotal:</label>
-															<div class="input-group">
-																<span class="input-group-addon" id="basic-addon1">R$</span>
-																<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalProduto<?php echo $i ?>"
-																	   name="SubtotalProduto<?php echo $i ?>" value="<?php echo $produto[$i]['SubtotalProduto'] ?>">
-															</div>
-														</div>
 													</div>
 													<div class="row">
 														<div class="col-md-6">
@@ -289,19 +271,9 @@
 															<input type="text" class="form-control" id="ObsProduto<?php echo $i ?>" maxlength="250"
 																   name="ObsProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ObsProduto'] ?>">
 														</div>
-														<div class="col-md-3">
-															<label for="DataValidadeProduto<?php echo $i ?>">Data Val. do Produto:</label>
-															<div class="input-group <?php echo $datepicker; ?>">
-																<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-																	   name="DataValidadeProduto<?php echo $i ?>" value="<?php echo $produto[$i]['DataValidadeProduto']; ?>">
-																<span class="input-group-addon" disabled>
-																	<span class="glyphicon glyphicon-calendar"></span>
-																</span>
-															</div>
-														</div>
 														<div class="col-md-2">
 															<label><br></label><br>
-															<button type="button" id="<?php echo $i ?>" class="remove_field6 btn btn-danger">
+															<button type="button" id="<?php echo $i ?>" class="remove_field7 btn btn-danger">
 																<span class="glyphicon glyphicon-trash"></span>
 															</button>
 														</div>
@@ -319,7 +291,7 @@
 										<div class="form-group">
 											<div class="row">
 												<div class="col-md-4">
-													<a class="add_field_button6 btn btn-xs btn-danger">
+													<a class="add_field_button7 btn btn-xs btn-danger">
 														<span class="glyphicon glyphicon-plus"></span> Adic. Produtos
 													</a>
 												</div>
@@ -327,6 +299,7 @@
 										</div>
 										<hr>
 									</div>
+									<!--
 									<div class="panel-body">
 										<div class="form-group">
 											<div class="panel panel-danger">
@@ -364,6 +337,7 @@
 											</div>	
 										</div>		
 									</div>
+									-->
 								</div>
 							</div>
 						</div>
