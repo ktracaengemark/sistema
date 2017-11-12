@@ -102,7 +102,7 @@
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/estoque"><span class="glyphicon glyphicon-list"></span> Estoque</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>produtos/cadastrar"><span class="glyphicon glyphicon-pencil"></span> Produtos</a></li>
+							<li><a href="<?php echo base_url() ?>relatorio/produtos"><span class="glyphicon glyphicon-pencil"></span> Produtos</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-pencil"></span> Anotações</a></li>
 							<li role="separator" class="divider"></li>
