@@ -61,11 +61,11 @@ class Funcionario extends CI_Controller {
 			'Permissao',
 			'Funcao',
 			'Inativo',
-			
+
         ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-  
+
 		$this->form_validation->set_rules('Email', 'E-mail', 'required|trim|valid_email|is_unique[Sis_Usuario.Email]');
         $this->form_validation->set_rules('Usuario', 'Nome do Func./ Usuário', 'required|trim|is_unique[Sis_Usuario.Usuario]');
 		$this->form_validation->set_rules('Nome', 'Nome do Usuário', 'required|trim');
@@ -81,7 +81,7 @@ class Funcionario extends CI_Controller {
 		$data['select']['Inativo'] = $this->Basico_model->select_inativo();
 		$data['select']['Permissao'] = $this->Basico_model->select_permissao();
 		$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
-		
+
         $data['titulo'] = 'Cadastrar Usuário';
         $data['form_open_path'] = 'funcionario/cadastrar';
         $data['readonly'] = '';
@@ -107,7 +107,7 @@ class Funcionario extends CI_Controller {
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 			$data['query']['Inativo'] = 0;
             unset($data['query']['Confirma']);
-			
+
 
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
@@ -144,7 +144,7 @@ class Funcionario extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = $this->input->post(array(
-			          
+
 			'idSis_Usuario',
 			#'Usuario',
             'Nome',
@@ -179,7 +179,7 @@ class Funcionario extends CI_Controller {
 		$data['select']['Inativo'] = $this->Basico_model->select_inativo();
 		$data['select']['Permissao'] = $this->Basico_model->select_permissao();
 		$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
-		
+
         $data['titulo'] = 'Editar Usuário';
         $data['form_open_path'] = 'funcionario/alterar';
         $data['readonly'] = '';
@@ -248,7 +248,7 @@ class Funcionario extends CI_Controller {
 
         $this->load->view('basico/footer');
     }
-   
+
     public function pesquisar() {
 
         if ($this->input->get('m') == 1)
@@ -338,21 +338,21 @@ class Funcionario extends CI_Controller {
 		$data['query']['Permissao'] = $this->Basico_model->get_permissao($data['query']['Permissao']);
 		$data['query']['Empresa'] = $this->Basico_model->get_empresa($data['query']['Empresa']);
 		#$data['query']['Funcionario'] = $data['query']['Funcionario'];
-		
+
         $data['query']['Telefone'] = $data['query']['Celular'];
 
-        
+        $data['contatofuncionario'] = $this->Funcionario_model->lista_contatofuncionario($id, TRUE);
         /*
           echo "<pre>";
           print_r($data['contatofuncionario']);
           echo "</pre>";
           exit();
-       
+          */
         if (!$data['contatofuncionario'])
             $data['list'] = FALSE;
         else
-            $data['list'] = $this->load->view('contatofuncionario/list_contatofuncionario', $data, TRUE);
-        */
+            $data['list'] = $this->load->view('funcionario/list_contatofuncionario', $data, TRUE);
+
         $data['nav_secundario'] = $this->load->view('funcionario/nav_secundario', $data, TRUE);
         $this->load->view('funcionario/tela_funcionario', $data);
 
