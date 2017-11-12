@@ -108,7 +108,7 @@ class Loginempresafilial extends CI_Controller {
 
                 #$_SESSION['log']['UsuarioEmpresaFilial'] = $query['UsuarioEmpresaFilial'];
                 //se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
-                $_SESSION['log']['UsuarioEmpresaFilial'] = (strlen($query['UsuarioEmpresaFilial']) > 10) ? substr($query['UsuarioEmpresaFilial'], 0, 10) : $query['UsuarioEmpresaFilial'];
+                $_SESSION['log']['UsuarioEmpresaFilial'] = (strlen($query['UsuarioEmpresaFilial']) > 15) ? substr($query['UsuarioEmpresaFilial'], 0, 15) : $query['UsuarioEmpresaFilial'];
                 #$_SESSION['log']['Nome'] = (strlen($query['Nome']) > 10) ? substr($query['Nome'], 0, 10) : $query['Nome'];
 				$_SESSION['log']['Nome'] = $query['Nome'];
 				$_SESSION['log']['id'] = $query['idSis_EmpresaFilial'];
