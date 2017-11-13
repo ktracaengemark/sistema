@@ -1810,6 +1810,8 @@ class Relatorio_model extends CI_Model {
                 TCA.Categoria,
 				TF.NomeFornecedor,
 				TP.Produtos,
+				TC.Convenio,
+				TV.Convdesc,
 				TV.ValorVendaProduto DESC
         ');
 
