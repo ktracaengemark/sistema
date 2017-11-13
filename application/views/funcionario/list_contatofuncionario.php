@@ -46,7 +46,7 @@ foreach ($query->result_array() as $row) {
 
         <div class="bs-callout bs-callout-<?php echo $row['class']; ?>" id=callout-overview-not-both>
 
-            <a class="btn btn-<?php echo $row['class']; ?>" href="<?php echo base_url() . 'ContatoFunc/alterar/' . $row['idApp_ContatoFunc'] ?>" role="button">
+            <a class="btn btn-<?php echo $row['class']; ?>" href="<?php echo base_url() . 'Contatofunc/alterar/' . $row['idApp_ContatoFunc'] ?>" role="button">
                 <span class="glyphicon glyphicon-edit"></span> Editar Dados
             </a>
 
