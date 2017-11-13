@@ -81,7 +81,7 @@
 							
 							<li><a href="<?php echo base_url() ?>orcatrata2/cadastrar"><span class="glyphicon glyphicon-usd"></span> Cad - Orçam / Vendas</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>relatorio/receitas"><span class="glyphicon glyphicon-list"></span> Ver - Orçam / Vendas</a></li>
+							<li><a href="<?php echo base_url() ?>relatorio/orcamento"><span class="glyphicon glyphicon-list"></span> Ver - Orçam / Vendas</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>despesas/cadastrar"><span class="glyphicon glyphicon-usd"></span> Cad - Despesas</a></li>
 							<li role="separator" class="divider"></li>
