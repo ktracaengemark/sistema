@@ -58,16 +58,17 @@ class Agenda_model extends CI_Model {
                 idApp_Cliente, 
                 NomeCliente,
                 DataNascimento,
-				Telefone1
-				
+				Empresa,
+				Telefone1				
             FROM 
                 app.App_Cliente
             WHERE 
-                idSis_Usuario = ' . $data . ' AND 
+                Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
                 (MONTH(DataNascimento) = ' . date('m', time()) . ')
-            ORDER BY DAY(DataNascimento) ASC');
+            ORDER BY NomeCliente ASC');
 
         /*
+		
           echo $this->db->last_query();
           echo '<br>';
           echo "<pre>";
@@ -99,11 +100,11 @@ class Agenda_model extends CI_Model {
             FROM 
                 app.App_ContatoCliente AS D,
                 app.App_Cliente AS R
-            WHERE 
-                R.idSis_Usuario = ' . $data . ' AND 
+            WHERE               
+				R.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
                 (MONTH(D.DataNascimento) = ' . date('m', time()) . ') AND
                 R.idApp_Cliente = D.idApp_Cliente            
-            ORDER BY DAY(D.DataNascimento) ASC');
+            ORDER BY NomeContatoCliente ASC');
 
         /*
           echo $this->db->last_query();
@@ -124,7 +125,7 @@ class Agenda_model extends CI_Model {
             return $query;
         }
     }
-	
+/*	
 	public function profissional_aniversariantes($data) {
 
         $query = $this->db->query('
@@ -140,14 +141,14 @@ class Agenda_model extends CI_Model {
                 (MONTH(DataNascimento) = ' . date('m', time()) . ')
             ORDER BY DAY(DataNascimento) ASC');
 
-        /*
+        
           echo $this->db->last_query();
           echo '<br>';
           echo "<pre>";
           print_r($query);
           echo "</pre>";
           exit ();
-         */
+         
 
         if ($query->num_rows() === 0)
             return FALSE;
@@ -160,7 +161,8 @@ class Agenda_model extends CI_Model {
         }
         
     }
-	
+*/	
+/*	
 	public function contatoprof_aniversariantes($data) {
 
         $query = $this->db->query('
@@ -179,14 +181,14 @@ class Agenda_model extends CI_Model {
                 R.idApp_Profissional = D.idApp_Profissional            
             ORDER BY DAY(D.DataNascimento) ASC');
 
-        /*
+        
           echo $this->db->last_query();
           echo '<br>';
           echo "<pre>";
           print_r($query);
           echo "</pre>";
           exit ();
-         */
+         
 
         if ($query->num_rows() === 0)
             return FALSE;
@@ -198,5 +200,5 @@ class Agenda_model extends CI_Model {
             return $query;
         }
     }
-
+*/
 }

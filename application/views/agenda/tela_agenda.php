@@ -175,7 +175,7 @@
 								}
 
 							}
-
+							/*
 							if ($query['profissional_aniversariantes'] != FALSE) {
 
 								foreach ($query['profissional_aniversariantes']->result_array() as $row) {
@@ -206,7 +206,7 @@
 								}
 
 							}
-
+							*/
 							?>
 						</table>
 

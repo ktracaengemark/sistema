@@ -75,29 +75,28 @@
 					-->
 					<div class="btn-group">
 						<button type="button" class="btn btn-md btn-primary dropdown-toggle" data-toggle="dropdown">
-							<span class="glyphicon glyphicon-usd"></span> Movimento <span class="caret"></span>
+							<span class="glyphicon glyphicon-usd"></span> Cadastrar <span class="caret"></span>
 						</button>
-						<ul class="dropdown-menu" role="menu">
-							
-							<li><a href="<?php echo base_url() ?>orcatrata2/cadastrar"><span class="glyphicon glyphicon-usd"></span> Cad - Orçam / Vendas</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>relatorio/orcamento"><span class="glyphicon glyphicon-list"></span> Ver - Orçam / Vendas</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>despesas/cadastrar"><span class="glyphicon glyphicon-usd"></span> Cad - Despesas</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>relatorio/despesas"><span class="glyphicon glyphicon-list"></span> Ver - Despesas</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>consumo/cadastrar"><span class="glyphicon glyphicon-pencil"></span> Cad - Consumos</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>relatorio/consumo"><span class="glyphicon glyphicon-list"></span> Ver - Consumos</a></li>
-							<li role="separator" class="divider"></li>
+						<ul class="dropdown-menu" role="menu">							
+							<li><a href="<?php echo base_url() ?>orcatrata2/cadastrar"><span class="glyphicon glyphicon-usd"></span> Orçam. & Entradas</a></li>
+							<li role="separator" class="divider"></li>							
+							<li><a href="<?php echo base_url() ?>despesas/cadastrar"><span class="glyphicon glyphicon-usd"></span> Despesas & Saídas</a></li>
+							<li role="separator" class="divider"></li>							
+							<li><a href="<?php echo base_url() ?>consumo/cadastrar"><span class="glyphicon glyphicon-pencil"></span> Consumos & Perdas</a></li>
+							<li role="separator" class="divider"></li>							
 						</ul>
 					</div>
 					<div class="btn-group">
 						<button type="button" class="btn btn-md btn-primary  dropdown-toggle" data-toggle="dropdown">
 							<span class="glyphicon glyphicon-list"></span> Relatórios <span class="caret"></span>
 						</button>
-						<ul class="dropdown-menu" role="menu">							
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="<?php echo base_url() ?>relatorio/orcamento"><span class="glyphicon glyphicon-list"></span> Orçam. & Entradas</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="<?php echo base_url() ?>relatorio/despesas"><span class="glyphicon glyphicon-list"></span> Despesas & Saídas</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="<?php echo base_url() ?>relatorio/consumo"><span class="glyphicon glyphicon-list"></span> Consumos & Perdas</a></li>
+							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/balanco"><span class="glyphicon glyphicon-usd"></span> Balanço</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/estoque"><span class="glyphicon glyphicon-list"></span> Estoque</a></li>
