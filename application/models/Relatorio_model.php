@@ -2571,7 +2571,8 @@ class Relatorio_model extends CI_Model {
         $query = $this->db->query('
             SELECT
                 OB.idTab_Produtos,
-                OB.Produtos
+                OB.CodProd,
+				CONCAT(IFNULL(OB.CodProd,""), " --- ", IFNULL(OB.Produtos,"")) AS Produtos				
             FROM
                 Tab_Produtos AS OB
             WHERE
