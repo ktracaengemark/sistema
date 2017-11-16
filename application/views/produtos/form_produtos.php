@@ -1,8 +1,8 @@
 <?php if (isset($msg)) echo $msg; ?>
 <div class="container-fluid">
 	<div class="row">			
-		<div class="col-md-2"></div>
-		<div class="col-md-8 ">
+		<div class="col-md-1"></div>
+		<div class="col-md-10 ">
 			<?php echo validation_errors(); ?>
 
 			<div class="panel panel-<?php echo $panel; ?>">
@@ -18,7 +18,7 @@
 							<div class="panel-heading">	
 								<div class="row">
 									<div class="col-md-2">
-										<label for="TipoProduto">Tipo:</label>
+										<label for="TipoProduto">Venda/Cons:</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 												id="TipoProduto" name="TipoProduto">
 											<option value="">-- Selecione uma opção --</option>
@@ -33,8 +33,8 @@
 											?>
 										</select>
 									</div>									
-									<div class="col-md-3">
-										<label for="Categoria">Categoria:</label>
+									<div class="col-md-2">
+										<label for="Categoria">Prod/Serv:</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 												id="Categoria" autofocus name="Categoria">
 											<option value="">-- Selecione uma opção --</option>
@@ -64,9 +64,7 @@
 											}
 											?>
 										</select>
-									</div>																			
-								</div>
-								<div class="row">									
+									</div>
 									<div class="col-md-2">
 										<label for="UnidadeProduto">Unidade:</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
@@ -82,17 +80,69 @@
 											}
 											?>
 										</select>
-									</div>									
-									<div class="col-md-3">
+									</div>
+									
+								</div>
+								<div class="row">									
+																		
+									<div class="col-md-2">
 										<label for="CodProd">Código:</label><br>
 										<input type="text" class="form-control" maxlength="25"
 												name="CodProd" value="<?php echo $produtos['CodProd'] ?>">
 									</div>
+									<div class="col-md-2">
+										<label for="Prodaux3">Categoria:</label>
+										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+												id="Prodaux3" name="Prodaux3">
+											<option value="">-- Selecione uma opção --</option>
+											<?php
+											foreach ($select['Prodaux3'] as $key => $row) {
+												if ($produtos['Prodaux3'] == $key) {
+													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+												} else {
+													echo '<option value="' . $key . '">' . $row . '</option>';
+												}
+											}
+											?>
+										</select>
+									</div>
 									<div class="col-md-4">
-										<label for="Produtos">Produto ou Serviço:*</label><br>
+										<label for="Produtos">Desc. Produto/Serviço:*</label><br>
 										<input type="text" class="form-control" maxlength="200"
 												name="Produtos" value="<?php echo $produtos['Produtos'] ?>">
-									</div>																				
+									</div>
+									<div class="col-md-2">
+										<label for="Prodaux1">Aux1:</label>
+										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+												id="Prodaux1" name="Prodaux1">
+											<option value="">-- Selecione uma opção --</option>
+											<?php
+											foreach ($select['Prodaux1'] as $key => $row) {
+												if ($produtos['Prodaux1'] == $key) {
+													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+												} else {
+													echo '<option value="' . $key . '">' . $row . '</option>';
+												}
+											}
+											?>
+										</select>
+									</div>
+									<div class="col-md-2">
+										<label for="Prodaux2">Aux2:</label>
+										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+												id="Prodaux2" name="Prodaux2">
+											<option value="">-- Selecione uma opção --</option>
+											<?php
+											foreach ($select['Prodaux2'] as $key => $row) {
+												if ($produtos['Prodaux2'] == $key) {
+													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+												} else {
+													echo '<option value="' . $key . '">' . $row . '</option>';
+												}
+											}
+											?>
+										</select>
+									</div>
 									<!--
 									<div class="col-md-3">
 										<label for="ValorCompraProduto">Custo:</label><br>
@@ -277,6 +327,6 @@
 			</div>
 
 		</div>
-		<div class="col-md-2"></div>
+		<div class="col-md-1"></div>
 	</div>
 </div>	

@@ -4,8 +4,8 @@
 <div class="container-fluid">
 	<div class="row">
 
-		<div class="col-md-2"></div>
-		<div class="col-md-8 ">
+		<div class="col-md-1"></div>
+		<div class="col-md-10 ">
 
 			<div class="panel panel-primary">
 
@@ -173,13 +173,13 @@
 															<div class="panel panel-info">
 																<div class="panel-heading">
 																	<div class="row">
-																		<div class="col-md-2">
+																		<div class="col-md-1">
 																			<label for="QtdVendaServico">Qtd:</label>
 																			<input type="text" class="form-control Numero" maxlength="3" id="QtdVendaServico<?php echo $i ?>" placeholder="0"
 																					onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','QTD','Servico')"
 																					autofocus name="QtdVendaServico<?php echo $i ?>" value="<?php echo $servico[$i]['QtdVendaServico'] ?>">
 																		</div>
-																		<div class="col-md-4">
+																		<div class="col-md-6">
 																			<label for="idTab_Servico">Serviço:</label>
 																			<?php if ($i == 1) { ?>
 																			<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>servico/cadastrar/servico" role="button">
@@ -200,7 +200,7 @@
 																				?>
 																			</select>
 																		</div>
-																		<div class="col-md-3">
+																		<div class="col-md-2">
 																			<label for="ValorVendaServico">Valor do Serviço:</label>
 																			<div class="input-group" id="txtHint">
 																				<span class="input-group-addon" id="basic-addon1">R$</span>
@@ -210,7 +210,7 @@
 																			</div>
 
 																		</div>
-																		<div class="col-md-3">
+																		<div class="col-md-2">
 																			<label for="SubtotalServico">Subtotal:</label>
 																			<div class="input-group">
 																				<span class="input-group-addon" id="basic-addon1">R$</span>
@@ -299,13 +299,13 @@
 															<div class="panel panel-info">
 																<div class="panel-heading">
 																	<div class="row">
-																		<div class="col-md-2">
+																		<div class="col-md-1">
 																			<label for="QtdVendaProduto">Qtd<?php echo $i ?>:</label>
 																			<input type="text" class="form-control Numero" maxlength="3" id="QtdVendaProduto<?php echo $i ?>" placeholder="0"
 																					onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','QTD','Produto')"
 																					autofocus name="QtdVendaProduto<?php echo $i ?>" value="<?php echo $produto[$i]['QtdVendaProduto'] ?>">
 																		</div>
-																		<div class="col-md-4">
+																		<div class="col-md-7">
 																			<label for="idTab_Produto">Produto:</label>
 																			<?php if ($i == 1) { ?>
 																			<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produto/cadastrar/produto" role="button">
@@ -327,7 +327,7 @@
 																			</select>
 																		</div>
 
-																		<div class="col-md-3">
+																		<div class="col-md-2">
 																			<label for="ValorVendaProduto">Valor do Produto:</label>
 																			<div class="input-group">
 																				<span class="input-group-addon" id="basic-addon1">R$</span>
@@ -336,7 +336,7 @@
 																					name="ValorVendaProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ValorVendaProduto'] ?>">
 																			</div>
 																		</div>
-																		<div class="col-md-3">
+																		<div class="col-md-2">
 																			<label for="SubtotalProduto">Subtotal:</label>
 																			<div class="input-group">
 																				<span class="input-group-addon" id="basic-addon1">R$</span>
@@ -346,13 +346,14 @@
 																		</div>
 																	</div>
 																	<div class="row">
-																		<div class="col-md-6">
+																		<div class="col-md-1"></div>
+																		<div class="col-md-7">
 																			<label for="ObsProduto<?php echo $i ?>">Obs:</label><br>
 																			<input type="text" class="form-control" id="ObsProduto<?php echo $i ?>" maxlength="250"
 																				   name="ObsProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ObsProduto'] ?>">
 																		</div>
-																		<div class="col-md-3">
-																			<label for="DataValidadeProduto<?php echo $i ?>">Data Val. do Produto:</label>
+																		<div class="col-md-2">
+																			<label for="DataValidadeProduto<?php echo $i ?>">Val. do Produto:</label>
 																			<div class="input-group <?php echo $datepicker; ?>">
 																				<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
 																					   name="DataValidadeProduto<?php echo $i ?>" value="<?php echo $produto[$i]['DataValidadeProduto']; ?>">
@@ -361,7 +362,7 @@
 																				</span>
 																			</div>
 																		</div>
-																		<div class="col-md-2">
+																		<div class="col-md-1">
 																			<label><br></label><br>
 																			<button type="button" id="<?php echo $i ?>" class="remove_field2 btn btn-danger">
 																				<span class="glyphicon glyphicon-trash"></span>
@@ -1072,6 +1073,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-2"></div>
+		<div class="col-md-1"></div>
 	</div>
 </div>

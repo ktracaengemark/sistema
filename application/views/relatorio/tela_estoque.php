@@ -18,7 +18,7 @@
 
 						<div class="form-group">
 							<div class="row">
-								<div class="col-md-3">
+								<div class="col-md-5">
 									<label for="Ordenamento">Produtos</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="Produtos" name="Produtos">
@@ -33,7 +33,7 @@
 										?>
 									</select>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<label for="DataInicio">Data Início: *</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
@@ -43,8 +43,8 @@
 										</span>
 									</div>
 								</div>
-								<div class="col-md-3">
-									<label for="DataFim">Data Fim: (opcional)</label>
+								<div class="col-md-2">
+									<label for="DataFim">Data Fim: (opc.)</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											   autofocus name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">

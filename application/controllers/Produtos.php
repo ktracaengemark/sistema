@@ -13,7 +13,7 @@ class Produtos extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
       
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Produtos_model', 'Convenio_model', 'Fornecedor_model', 'Formapag_model'));
+        $this->load->model(array('Basico_model', 'Produtos_model', 'Prodaux1_model', 'Prodaux2_model', 'Prodaux3_model', 'Convenio_model', 'Fornecedor_model', 'Formapag_model'));
         $this->load->driver('session');
 
         
@@ -57,6 +57,9 @@ class Produtos extends CI_Controller {
 			'Fornecedor',
 			#'ValorCompraProduto',
             'Produtos',
+			'Prodaux1',
+			'Prodaux2',
+			'Prodaux3',
         ), TRUE));
 
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
@@ -98,7 +101,10 @@ class Produtos extends CI_Controller {
 		$data['select']['Categoria'] = $this->Basico_model->select_categoria();		
         $data['select']['Convenio'] = $this->Convenio_model->select_convenio();
 		$data['select']['UnidadeProduto'] = $this->Basico_model->select_unidadeproduto();
-
+		$data['select']['Prodaux1'] = $this->Prodaux1_model->select_prodaux1();
+		$data['select']['Prodaux2'] = $this->Prodaux2_model->select_prodaux2();
+		$data['select']['Prodaux3'] = $this->Prodaux3_model->select_prodaux3();
+		
         $data['titulo'] = 'Cadastar Produtos & Serviços';
         $data['form_open_path'] = 'produtos/cadastrar';
         $data['readonly'] = '';
@@ -216,6 +222,9 @@ class Produtos extends CI_Controller {
 			'Fornecedor',
 			#'ValorCompraProduto',            
             'Produtos',
+			'Prodaux1',
+			'Prodaux2',
+			'Prodaux3',
         ), TRUE));
 
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
@@ -279,6 +288,9 @@ class Produtos extends CI_Controller {
 		$data['select']['Categoria'] = $this->Basico_model->select_categoria();
 		$data['select']['Convenio'] = $this->Convenio_model->select_convenio();
         $data['select']['UnidadeProduto'] = $this->Basico_model->select_unidadeproduto();
+		$data['select']['Prodaux1'] = $this->Prodaux1_model->select_prodaux1();
+		$data['select']['Prodaux2'] = $this->Prodaux2_model->select_prodaux2();
+		$data['select']['Prodaux3'] = $this->Prodaux3_model->select_prodaux3();
 
         $data['titulo'] = 'Editar Produtos & Serviços';
         $data['form_open_path'] = 'produtos/alterar';

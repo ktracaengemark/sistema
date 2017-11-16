@@ -151,34 +151,45 @@ class Produtos_model extends CI_Model {
             $array = $this->db->query(
             'SELECT
                 TPV.idTab_Produtos,
-				CONCAT(IFNULL(TPV.Produtos,""), " --- ", IFNULL(TFO.NomeFornecedor,""), " --- ", IFNULL(TPV.CodProd,""), " --- ", IFNULL(TPV.UnidadeProduto,"")) AS NomeProduto,
+				CONCAT(IFNULL(TP3.Prodaux3,""), " -- ", IFNULL(TPV.Produtos,""), " -- ", IFNULL(TP1.Prodaux1,""), " -- ", IFNULL(TP2.Prodaux2,""), " -- ", IFNULL(TPV.UnidadeProduto,""), " -- ", IFNULL(TPV.CodProd,"")) AS NomeProduto,
 				TPV.ValorCompraProduto,
 				TPV.Categoria
             FROM
-                Tab_Produtos AS TPV																	
+                Tab_Produtos AS TPV	
+					LEFT JOIN Tab_Prodaux3 AS TP3 ON TP3.idTab_Prodaux3 = TPV.Prodaux3
+					LEFT JOIN Tab_Prodaux2 AS TP2 ON TP2.idTab_Prodaux2 = TPV.Prodaux2
+					LEFT JOIN Tab_Prodaux1 AS TP1 ON TP1.idTab_Prodaux1 = TPV.Prodaux1
             WHERE
                 TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				TPV.Empresa = ' . $_SESSION['log']['Empresa'] . '
 			ORDER BY  
 				TPV.Categoria ASC,
-				TPV.Produtos ASC 
+				TP3.Prodaux3,				
+				TPV.Produtos ASC,
+				TP1.Prodaux1,
+				TP2.Prodaux2 
     ');
         } else {
             $query = $this->db->query(
             'SELECT
                 TPV.idTab_Produtos,
-				CONCAT(IFNULL(TPV.Produtos,""), " --- ", IFNULL(TFO.NomeFornecedor,""), " --- ", IFNULL(TPV.CodProd,""), " --- ", IFNULL(TPV.UnidadeProduto,"")) AS NomeProduto,
+				CONCAT(IFNULL(TP3.Prodaux3,""), " -- ", IFNULL(TPV.Produtos,""), " -- ", IFNULL(TP1.Prodaux1,""), " -- ", IFNULL(TP2.Prodaux2,""), " -- ", IFNULL(TPV.UnidadeProduto,""), " -- ", IFNULL(TPV.CodProd,"")) AS NomeProduto,
 				TPV.ValorCompraProduto,
 				TPV.Categoria
             FROM
-                Tab_Produtos AS TPV
-					LEFT JOIN App_Fornecedor AS TFO ON TFO.idApp_Fornecedor = TPV.Fornecedor																	
+                Tab_Produtos AS TPV	
+					LEFT JOIN Tab_Prodaux3 AS TP3 ON TP3.idTab_Prodaux3 = TPV.Prodaux3
+					LEFT JOIN Tab_Prodaux2 AS TP2 ON TP2.idTab_Prodaux2 = TPV.Prodaux2
+					LEFT JOIN Tab_Prodaux1 AS TP1 ON TP1.idTab_Prodaux1 = TPV.Prodaux1
             WHERE
                 TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				TPV.Empresa = ' . $_SESSION['log']['Empresa'] . '
 			ORDER BY  
 				TPV.Categoria ASC,
-				TPV.Produtos ASC
+				TP3.Prodaux3,				
+				TPV.Produtos ASC,
+				TP1.Prodaux1,
+				TP2.Prodaux2 
     ');
 
             $array = array();

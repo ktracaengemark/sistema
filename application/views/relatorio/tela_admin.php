@@ -70,6 +70,27 @@
 													<span class="glyphicon glyphicon-qrcode"></span> Produtos & Preços
 												</a>
 											</div>	
+										</div>
+										<div class="form-group col-md-12 text-left">
+											<div class="row">													
+												<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>prodaux3/cadastrar" role="button"> 
+													<span class="glyphicon glyphicon-qrcode"></span> Categoria
+												</a>
+											</div>	
+										</div>
+										<div class="form-group col-md-12 text-left">
+											<div class="row">													
+												<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>prodaux1/cadastrar" role="button"> 
+													<span class="glyphicon glyphicon-qrcode"></span> Aux1
+												</a>
+											</div>	
+										</div>
+										<div class="form-group col-md-12 text-left">
+											<div class="row">													
+												<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>prodaux2/cadastrar" role="button"> 
+													<span class="glyphicon glyphicon-qrcode"></span> Aux2
+												</a>
+											</div>	
 										</div>									
 										<div class="form-group col-md-12 text-left">
 											<div class="row">													

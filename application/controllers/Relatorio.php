@@ -1578,6 +1578,8 @@ class Relatorio extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'Produtos',
+			'Prodaux1',
+			'Prodaux2',
 			'Categoria',
 			'Ordenamento',
             'Campo',
@@ -1591,6 +1593,8 @@ class Relatorio extends CI_Controller {
 			'TP.idTab_Produtos' => 'Id',
 			'TP.Produtos' => 'Descrição',
 			'TP.Categoria' => 'Categoria',
+			'TP.Prodaux1' => 'Prodaux1',
+			'TP.Prodaux2' => 'Prodaux2',
 
         );
 
@@ -1607,6 +1611,8 @@ class Relatorio extends CI_Controller {
         if ($this->form_validation->run() !== TRUE) {
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
 			$data['bd']['Categoria'] = $data['query']['Categoria'];
+			$data['bd']['Prodaux1'] = $data['query']['Prodaux1'];
+			$data['bd']['Prodaux2'] = $data['query']['Prodaux2'];
             $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
 

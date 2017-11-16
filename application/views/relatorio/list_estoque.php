@@ -7,6 +7,7 @@
                 <thead>
                     <tr>
 						<th class="active text-center">PRODUTO</th>
+						
                         <th class="active text-center">QTD COMPRA</th>
                         <th class="active text-center">QTD VENDA</th>
                         <th class="active text-center">QTD CONSUMO</th>
@@ -21,6 +22,7 @@
 
                         echo '<tr>';
 							echo '<td>' . $row->Produtos . '</td>';
+
 							echo '<td>' . $row->QtdCompra . '</td>';
 							echo '<td>' . $row->QtdVenda . '</td>';
                             echo '<td>' . $row->QtdConsumo . '</td>';

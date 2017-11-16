@@ -544,15 +544,22 @@ class Relatorio_model extends CI_Model {
         $query['Produtos'] = $this->db->query(
             'SELECT
             	TP.idTab_Produtos,
-            	TP.Produtos
+            	CONCAT(IFNULL(TP3.Prodaux3,""), " - ", IFNULL(TP.Produtos,""), " - ", IFNULL(TP1.Prodaux1,""), " - ", IFNULL(TP2.Prodaux2,"")) AS Produtos,
+				TP1.Prodaux1,
+				TP2.Prodaux2,
+				TP3.Prodaux3
             FROM
             	Tab_Produtos AS TP
+					LEFT JOIN Tab_Prodaux1 AS TP1 ON TP1.idTab_Prodaux1 = TP.Prodaux1
+					LEFT JOIN Tab_Prodaux2 AS TP2 ON TP2.idTab_Prodaux2 = TP.Prodaux2
+					LEFT JOIN Tab_Prodaux3 AS TP3 ON TP3.idTab_Prodaux3 = TP.Prodaux3
             WHERE
             	TP.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
             	TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
                 ' . $data['Produtos'] . '
             ORDER BY
-            	TP.Produtos ASC'
+            	TP3.Prodaux3,
+				TP.Produtos ASC'
         );
         $query['Produtos'] = $query['Produtos']->result();
 
@@ -731,8 +738,10 @@ class Relatorio_model extends CI_Model {
 				TPV.Produtos,
 				TPV.Fornecedor,
 				TFO.NomeFornecedor,
-				TVV.idTab_Valor
-
+				TVV.idTab_Valor,
+				TP3.Prodaux3,
+				TP2.Prodaux2,
+				TP1.Prodaux1
 
             FROM
                 App_Cliente AS C,
@@ -742,6 +751,9 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN Tab_Produtos AS TPV ON TPV.idTab_Produtos = TVV.idTab_Produtos
 					LEFT JOIN App_Fornecedor AS TFO ON TFO.idApp_Fornecedor = TPV.Fornecedor
 					LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
+					LEFT JOIN Tab_Prodaux3 AS TP3 ON TP3.idTab_Prodaux3 = TPV.Prodaux3
+					LEFT JOIN Tab_Prodaux2 AS TP2 ON TP2.idTab_Prodaux2 = TPV.Prodaux2
+					LEFT JOIN Tab_Prodaux1 AS TP1 ON TP1.idTab_Prodaux1 = TPV.Prodaux1
 		   WHERE
                 C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
@@ -926,12 +938,18 @@ class Relatorio_model extends CI_Model {
 				APC.QtdCompraProduto,
 				APC.idTab_Produto,
 				TPB.Produtos,
-				APC.ObsProduto
+				APC.ObsProduto,
+				TP3.Prodaux3,
+				TP2.Prodaux2,
+				TP1.Prodaux1
             FROM
                 App_Despesas AS TCO
                     LEFT JOIN Tab_TipoConsumo AS TTC ON TTC.idTab_TipoConsumo = TCO.TipoDespesa
 					LEFT JOIN App_ProdutoCompra AS APC ON APC.idApp_Despesas = TCO.idApp_Despesas
 					LEFT JOIN Tab_Produtos AS TPB ON TPB.idTab_Produtos = APC.idTab_Produto
+					LEFT JOIN Tab_Prodaux3 AS TP3 ON TP3.idTab_Prodaux3 = TPB.Prodaux3
+					LEFT JOIN Tab_Prodaux2 AS TP2 ON TP2.idTab_Prodaux2 = TPB.Prodaux2
+					LEFT JOIN Tab_Prodaux1 AS TP1 ON TP1.idTab_Prodaux1 = TPB.Prodaux1
             WHERE
                 TCO.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
@@ -987,12 +1005,18 @@ class Relatorio_model extends CI_Model {
                 TCO.DataDespesas,
 				APC.QtdCompraProduto,
 				APC.idTab_Produto,
-				TPB.Produtos
+				TPB.Produtos,
+				TP3.Prodaux3,
+				TP2.Prodaux2,
+				TP1.Prodaux1
             FROM
                 App_Despesas AS TCO
                     LEFT JOIN Tab_TipoDespesa AS TTC ON TTC.idTab_TipoDespesa = TCO.TipoDespesa
 					LEFT JOIN App_ProdutoCompra AS APC ON APC.idApp_Despesas = TCO.idApp_Despesas
 					LEFT JOIN Tab_Produtos AS TPB ON TPB.idTab_Produtos = APC.idTab_Produto
+					LEFT JOIN Tab_Prodaux3 AS TP3 ON TP3.idTab_Prodaux3 = TPB.Prodaux3
+					LEFT JOIN Tab_Prodaux2 AS TP2 ON TP2.idTab_Prodaux2 = TPB.Prodaux2
+					LEFT JOIN Tab_Prodaux1 AS TP1 ON TP1.idTab_Prodaux1 = TPB.Prodaux1
             WHERE
                 TCO.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
@@ -1785,8 +1809,15 @@ class Relatorio_model extends CI_Model {
         $query = $this->db->query('
             SELECT
                 TP.idTab_Produtos,
+				TP.TipoProduto,
 				TP.CodProd,
 				TP.Produtos,
+				TP1.Prodaux1,
+				TP2.Prodaux2,
+				TP3.Prodaux3,
+				TP1.Abrev1,
+				TP2.Abrev2,
+				TP3.Abrev3,
 				TP.UnidadeProduto,
 				TP.ValorCompraProduto,
 				TP.Fornecedor,
@@ -1802,6 +1833,9 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN Tab_Convenio AS TC ON TC.idTab_Convenio = TV.Convenio
 					LEFT JOIN App_Fornecedor AS TF ON TF.idApp_Fornecedor = TP.Fornecedor
 					LEFT JOIN Tab_Categoria AS TCA ON TCA.Abrev = TP.Categoria
+					LEFT JOIN Tab_Prodaux1 AS TP1 ON TP1.idTab_Prodaux1 = TP.Prodaux1
+					LEFT JOIN Tab_Prodaux2 AS TP2 ON TP2.idTab_Prodaux2 = TP.Prodaux2
+					LEFT JOIN Tab_Prodaux3 AS TP3 ON TP3.idTab_Prodaux3 = TP.Prodaux3
             WHERE
                 TP.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
@@ -1809,7 +1843,10 @@ class Relatorio_model extends CI_Model {
 			ORDER BY
                 TCA.Categoria,
 				TF.NomeFornecedor,
+				TP3.Abrev3,
 				TP.Produtos,
+				TP1.Abrev1,
+				TP2.Abrev2,
 				TC.Convenio,
 				TV.Convdesc,
 				TV.ValorVendaProduto DESC
@@ -2571,14 +2608,25 @@ class Relatorio_model extends CI_Model {
         $query = $this->db->query('
             SELECT
                 OB.idTab_Produtos,
-                OB.Produtos
+				CONCAT(IFNULL(TP3.Prodaux3,""), " - ", IFNULL(OB.Produtos,""), " - ", IFNULL(TP1.Prodaux1,""), " - ", IFNULL(TP2.Prodaux2,"")) AS Produtos,
+				TP1.Prodaux1,
+				TP2.Prodaux2,
+				TP3.Prodaux3,
+				TP1.Abrev1,
+				TP2.Abrev2
             FROM
                 Tab_Produtos AS OB
+					LEFT JOIN Tab_Prodaux1 AS TP1 ON TP1.idTab_Prodaux1 = OB.Prodaux1
+					LEFT JOIN Tab_Prodaux2 AS TP2 ON TP2.idTab_Prodaux2 = OB.Prodaux2
+					LEFT JOIN Tab_Prodaux3 AS TP3 ON TP3.idTab_Prodaux3 = OB.Prodaux3
             WHERE
                 OB.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				OB.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
             ORDER BY
-                Produtos ASC
+                TP3.Prodaux3,
+				Produtos ASC,
+				TP1.Abrev1,
+				TP2.Abrev2
         ');
 
         $array = array();

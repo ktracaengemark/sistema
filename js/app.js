@@ -1667,7 +1667,7 @@ $(document).ready(function () {
                 <div class="panel panel-info">\
                     <div class="panel-heading">\
                         <div class="row">\
-                            <div class="col-md-2">\
+                            <div class="col-md-1">\
                                 <label for="QtdVendaProduto">Qtd:</label><br>\
                                 <div class="input-group">\
                                     <input type="text" class="form-control Numero" maxlength="3" id="QtdVendaProduto'+pc+'" placeholder="0"\
@@ -1675,13 +1675,13 @@ $(document).ready(function () {
                                         name="QtdVendaProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
-                            <div class="col-md-4">\
+                            <div class="col-md-7">\
                                 <label for="idTab_Produto">Produto:</label><br>\
                                 <select class="form-control Chosen" id="listadinamicab'+pc+'" onchange="buscaValor2Tabelas(this.value,this.name,\'Valor\','+pc+',\'Produto\')" name="idTab_Produto'+pc+'">\
                                     <option value="">-- Selecione uma opção --</option>\
                                 </select>\
                             </div>\
-                            <div class="col-md-3">\
+                            <div class="col-md-2">\
                                 <label for="ValorVendaProduto">Valor do Produto:</label><br>\
                                 <div class="input-group id="txtHint">\
                                     <span class="input-group-addon" id="basic-addon1">R$</span>\
@@ -1690,7 +1690,7 @@ $(document).ready(function () {
                                         name="ValorVendaProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
-                            <div class="col-md-3">\
+                            <div class="col-md-2">\
                                 <label for="SubtotalProduto">Subtotal:</label><br>\
                                 <div class="input-group id="txtHint">\
                                     <span class="input-group-addon" id="basic-addon1">R$</span>\
@@ -1700,12 +1700,13 @@ $(document).ready(function () {
                             </div>\
                         </div>\
 						<div class="row">\
-							<div class="col-md-6">\
+						<div class="col-md-1"></div>\
+						<div class="col-md-7">\
 								<label for="ObsProduto'+pc+'">Obs:</label><br>\
 								<input type="text" class="form-control" id="ObsProduto'+pc+'" maxlength="250"\
 									   name="ObsProduto'+pc+'" value="">\
 							</div>\
-							<div class="col-md-3">\
+							<div class="col-md-2">\
 								<label for="DataValidadeProduto'+pc+'">Val. do Produto:</label>\
 								<div class="input-group DatePicker">\
 									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
@@ -1715,7 +1716,7 @@ $(document).ready(function () {
 									</span>\
 								</div>\
 							</div>\
-							<div class="col-md-2">\
+							<div class="col-md-1">\
                                 <label><br></label><br>\
                                 <a href="#" id="'+pc+'" class="remove_field2 btn btn-danger">\
                                     <span class="glyphicon glyphicon-trash"></span>\
@@ -1775,7 +1776,7 @@ $(document).ready(function () {
                 <div class="panel panel-info">\
                     <div class="panel-heading">\
                         <div class="row">\
-                            <div class="col-md-2">\
+                            <div class="col-md-1">\
                                 <label for="QtdCompraProduto">Qtd:</label><br>\
                                 <div class="input-group">\
                                     <input type="text" class="form-control Numero" maxlength="3" id="QtdCompraProduto'+pc+'" placeholder="0"\
@@ -1783,13 +1784,13 @@ $(document).ready(function () {
                                         name="QtdCompraProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
-                            <div class="col-md-4">\
+                            <div class="col-md-7">\
                                 <label for="idTab_Produto">Produto:</label><br>\
                                 <select class="form-control Chosen" id="listadinamicab'+pc+'" onchange="buscaValorCompra(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
                                     <option value="">-- Selecione uma opção --</option>\
                                 </select>\
                             </div>\
-                            <div class="col-md-3">\
+                            <div class="col-md-2">\
                                 <label for="ValorCompraProduto">Valor do Produto:</label><br>\
                                 <div class="input-group id="txtHint">\
                                     <span class="input-group-addon" id="basic-addon1">R$</span>\
@@ -1798,7 +1799,7 @@ $(document).ready(function () {
                                         name="ValorCompraProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
-                            <div class="col-md-3">\
+                            <div class="col-md-2">\
                                 <label for="SubtotalProduto">Subtotal:</label><br>\
                                 <div class="input-group id="txtHint">\
                                     <span class="input-group-addon" id="basic-addon1">R$</span>\
@@ -1806,7 +1807,7 @@ $(document).ready(function () {
                                            name="SubtotalProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
-                            <div class="col-md-2">\
+                            <div class="col-md-1">\
                                 <label><br></label><br>\
                                 <a href="#" id="'+pc+'" class="remove_field4 btn btn-danger">\
                                     <span class="glyphicon glyphicon-trash"></span>\
@@ -1866,7 +1867,7 @@ $(document).ready(function () {
                 <div class="panel panel-danger">\
                     <div class="panel-heading">\
                         <div class="row">\
-                            <div class="col-md-2">\
+                            <div class="col-md-1">\
                                 <label for="QtdCompraProduto">Qtd:</label><br>\
                                 <div class="input-group">\
                                     <input type="text" class="form-control Numero" maxlength="3" id="QtdCompraProduto'+pc+'" placeholder="0"\
@@ -1874,13 +1875,13 @@ $(document).ready(function () {
                                         name="QtdCompraProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
-                            <div class="col-md-4">\
+                            <div class="col-md-7">\
                                 <label for="idTab_Produto">Produto:</label><br>\
                                 <select class="form-control Chosen" id="listadinamicab'+pc+'" onchange="buscaValorCompra(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
                                     <option value="">-- Selecione uma opção --</option>\
                                 </select>\
                             </div>\
-                            <div class="col-md-3">\
+                            <div class="col-md-2">\
                                 <label for="ValorCompraProduto">Valor do Produto:</label><br>\
                                 <div class="input-group id="txtHint">\
                                     <span class="input-group-addon" id="basic-addon1">R$</span>\
@@ -1889,7 +1890,7 @@ $(document).ready(function () {
                                         name="ValorCompraProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
-                            <div class="col-md-3">\
+                            <div class="col-md-2">\
                                 <label for="SubtotalProduto">Subtotal:</label><br>\
                                 <div class="input-group id="txtHint">\
                                     <span class="input-group-addon" id="basic-addon1">R$</span>\
@@ -1899,12 +1900,13 @@ $(document).ready(function () {
                             </div>\
                         </div>\
 						<div class="row">\
-							<div class="col-md-6">\
+							<div class="col-md-1"></div>\
+							<div class="col-md-7">\
 								<label for="ObsProduto'+pc+'">Obs:</label><br>\
 								<input type="text" class="form-control" id="ObsProduto'+pc+'" maxlength="250"\
 									   name="ObsProduto'+pc+'" value="">\
 							</div>\
-							<div class="col-md-3">\
+							<div class="col-md-2">\
 								<label for="DataValidadeProduto'+pc+'">Val. do Produto:</label>\
 								<div class="input-group DatePicker">\
 									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
@@ -1914,7 +1916,7 @@ $(document).ready(function () {
 									</span>\
 								</div>\
 							</div>\
-							<div class="col-md-2">\
+							<div class="col-md-1">\
                                 <label><br></label><br>\
                                 <a href="#" id="'+pc+'" class="remove_field6 btn btn-danger">\
                                     <span class="glyphicon glyphicon-trash"></span>\
@@ -1974,7 +1976,7 @@ $(document).ready(function () {
                 <div class="panel panel-danger">\
                     <div class="panel-heading">\
                         <div class="row">\
-                            <div class="col-md-2">\
+                            <div class="col-md-1">\
                                 <label for="QtdCompraProduto">Qtd:</label><br>\
                                 <div class="input-group">\
                                     <input type="text" class="form-control Numero" maxlength="3" id="QtdCompraProduto'+pc+'" placeholder="0"\
@@ -1982,7 +1984,7 @@ $(document).ready(function () {
                                         name="QtdCompraProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
-                            <div class="col-md-4">\
+                            <div class="col-md-7">\
                                 <label for="idTab_Produto">Produto:</label><br>\
                                 <select class="form-control Chosen" id="listadinamicab'+pc+'" onchange="buscaValorCompra(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
                                     <option value="">-- Selecione uma opção --</option>\
@@ -1990,12 +1992,13 @@ $(document).ready(function () {
                             </div>\
                         </div>\
 						<div class="row">\
-							<div class="col-md-6">\
+							<div class="col-md-1"></div>\
+							<div class="col-md-7">\
 								<label for="ObsProduto'+pc+'">Obs:</label><br>\
 								<input type="text" class="form-control" id="ObsProduto'+pc+'" maxlength="250"\
 									   name="ObsProduto'+pc+'" value="">\
 							</div>\
-							<div class="col-md-2">\
+							<div class="col-md-1">\
                                 <label><br></label><br>\
                                 <a href="#" id="'+pc+'" class="remove_field7 btn btn-danger">\
                                     <span class="glyphicon glyphicon-trash"></span>\
