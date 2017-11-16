@@ -2613,7 +2613,8 @@ class Relatorio_model extends CI_Model {
 				TP2.Prodaux2,
 				TP3.Prodaux3,
 				TP1.Abrev1,
-				TP2.Abrev2
+				TP2.Abrev2,
+                OB.CodProd				
             FROM
                 Tab_Produtos AS OB
 					LEFT JOIN Tab_Prodaux1 AS TP1 ON TP1.idTab_Prodaux1 = OB.Prodaux1
