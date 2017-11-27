@@ -2608,7 +2608,7 @@ class Relatorio_model extends CI_Model {
         $query = $this->db->query('
             SELECT
                 OB.idTab_Produtos,
-				CONCAT(IFNULL(TP3.Prodaux3,""), " - ", IFNULL(OB.Produtos,""), " - ", IFNULL(TP1.Prodaux1,""), " - ", IFNULL(TP2.Prodaux2,"")) AS Produtos,
+				CONCAT(IFNULL(TP3.Prodaux3,""), " - ", IFNULL(OB.Produtos,""), " - ", IFNULL(TP1.Prodaux1,""), " - ", IFNULL(TP2.Prodaux2,""), " - ", IFNULL(OB.CodProd,"")) AS Produtos,
 				TP1.Prodaux1,
 				TP2.Prodaux2,
 				TP3.Prodaux3,
@@ -2626,8 +2626,8 @@ class Relatorio_model extends CI_Model {
             ORDER BY
                 TP3.Prodaux3,
 				Produtos ASC,
-				TP1.Abrev1,
-				TP2.Abrev2
+				TP1.Abrev1 DESC,
+				TP2.Abrev2 DESC
         ');
 
         $array = array();
