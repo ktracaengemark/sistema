@@ -305,7 +305,7 @@
 																					onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','QTD','Produto')"
 																					autofocus name="QtdVendaProduto<?php echo $i ?>" value="<?php echo $produto[$i]['QtdVendaProduto'] ?>">
 																		</div>
-																		<div class="col-md-7">
+																		<div class="col-md-6">
 																			<label for="idTab_Produto">Produto:</label>
 																			<?php if ($i == 1) { ?>
 																			<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produto/cadastrar/produto" role="button">
@@ -344,30 +344,12 @@
 																					   name="SubtotalProduto<?php echo $i ?>" value="<?php echo $produto[$i]['SubtotalProduto'] ?>">
 																			</div>
 																		</div>
-																	</div>
-																	<div class="row">
-																		<div class="col-md-1"></div>
-																		<div class="col-md-7">
-																			<label for="ObsProduto<?php echo $i ?>">Obs:</label><br>
-																			<input type="text" class="form-control" id="ObsProduto<?php echo $i ?>" maxlength="250"
-																				   name="ObsProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ObsProduto'] ?>">
-																		</div>
-																		<div class="col-md-2">
-																			<label for="DataValidadeProduto<?php echo $i ?>">Val. do Produto:</label>
-																			<div class="input-group <?php echo $datepicker; ?>">
-																				<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-																					   name="DataValidadeProduto<?php echo $i ?>" value="<?php echo $produto[$i]['DataValidadeProduto']; ?>">
-																				<span class="input-group-addon" disabled>
-																					<span class="glyphicon glyphicon-calendar"></span>
-																				</span>
-																			</div>
-																		</div>
 																		<div class="col-md-1">
 																			<label><br></label><br>
 																			<button type="button" id="<?php echo $i ?>" class="remove_field2 btn btn-danger">
 																				<span class="glyphicon glyphicon-trash"></span>
 																			</button>
-																		</div>
+																		</div>																		
 																	</div>
 																</div>
 															</div>
@@ -597,7 +579,7 @@
 												</div>
 											</div>
 										</div>
-
+										<!--
 										<hr>
 
 										<div class="panel-group" id="accordion3" role="tablist" aria-multiselectable="true">
@@ -650,6 +632,7 @@
 																			</select>
 																		</div>
 																		-->
+																		<!--
 																		<div class="col-md-4">
 																			<label for="Procedimento<?php echo $i ?>">Procedimento:</label>
 																			<textarea class="form-control" id="Procedimento<?php echo $i ?>" <?php echo $readonly; ?>
@@ -724,6 +707,7 @@
 												</div>
 											</div>
 										</div>
+										-->
 										<hr>
 										<!--
 										<div class="form-group">
@@ -812,34 +796,6 @@
 													</div>
 												</div>
 												<div class="col-md-3 form-inline">
-													<label for="QuitadoOrca">Orçam. Quitado?</label><br>
-													<div class="form-group">
-														<div class="btn-group" data-toggle="buttons">
-															<?php
-															foreach ($select['QuitadoOrca'] as $key => $row) {
-																(!$orcatrata['QuitadoOrca']) ? $orcatrata['QuitadoOrca'] = 'N' : FALSE;
-
-																if ($orcatrata['QuitadoOrca'] == $key) {
-																	echo ''
-																	. '<label class="btn btn-warning active" name="radiobutton_QuitadoOrca" id="radiobutton_QuitadoOrca' . $key . '">'
-																	. '<input type="radio" name="QuitadoOrca" id="radiobutton" '
-																	. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																	. '</label>'
-																	;
-																} else {
-																	echo ''
-																	. '<label class="btn btn-default" name="radiobutton_QuitadoOrca" id="radiobutton_QuitadoOrca' . $key . '">'
-																	. '<input type="radio" name="QuitadoOrca" id="radiobutton" '
-																	. 'autocomplete="off" value="' . $key . '" >' . $row
-																	. '</label>'
-																	;
-																}
-															}
-															?>
-														</div>
-													</div>
-												</div>
-												<div class="col-md-3 form-inline">
 													<label for="ServicoConcluido">Srv/Prd Entregue?</label><br>
 													<div class="form-group">
 														<div class="btn-group" data-toggle="buttons">
@@ -858,6 +814,34 @@
 																	echo ''
 																	. '<label class="btn btn-default" name="radiobutton_ServicoConcluido" id="radiobutton_ServicoConcluido' . $key . '">'
 																	. '<input type="radio" name="ServicoConcluido" id="radiobutton" '
+																	. 'autocomplete="off" value="' . $key . '" >' . $row
+																	. '</label>'
+																	;
+																}
+															}
+															?>
+														</div>
+													</div>
+												</div>												
+												<div class="col-md-3 form-inline">
+													<label for="QuitadoOrca">Orçam. Quitado?</label><br>
+													<div class="form-group">
+														<div class="btn-group" data-toggle="buttons">
+															<?php
+															foreach ($select['QuitadoOrca'] as $key => $row) {
+																(!$orcatrata['QuitadoOrca']) ? $orcatrata['QuitadoOrca'] = 'N' : FALSE;
+
+																if ($orcatrata['QuitadoOrca'] == $key) {
+																	echo ''
+																	. '<label class="btn btn-warning active" name="radiobutton_QuitadoOrca" id="radiobutton_QuitadoOrca' . $key . '">'
+																	. '<input type="radio" name="QuitadoOrca" id="radiobutton" '
+																	. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																	. '</label>'
+																	;
+																} else {
+																	echo ''
+																	. '<label class="btn btn-default" name="radiobutton_QuitadoOrca" id="radiobutton_QuitadoOrca' . $key . '">'
+																	. '<input type="radio" name="QuitadoOrca" id="radiobutton" '
 																	. 'autocomplete="off" value="' . $key . '" >' . $row
 																	. '</label>'
 																	;
