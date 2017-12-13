@@ -30,22 +30,22 @@
 <div class="container-fluid">
     <div class="row">
         <div>
-			<table class="table table-bordered table-condensed table-striped">	
+			<table class="table table-bordered table-condensed table-striped">
 				<tfoot>
                     <tr>
                         <th colspan="3" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
                     </tr>
                 </tfoot>
-			</table>		
+			</table>
             <table class="table table-bordered table-condensed table-striped">
                 <thead>
                     <tr>
-						
+
 						<th class="active">Cliente</th>
-						<th class="active">Orç.</th>						                                               
+						<th class="active">Orç.</th>
                         <th class="active">Data do Orç.</th>
 						<!--<th class="active">Valid. do Orçam.</th>
-						<th class="active">Prazo de Entrega</th>-->						
+						<th class="active">Prazo de Entrega</th>-->
                         <th class="active">Valor do Orçamen.</th>
 						<th class="active">Valor do Desconto</th>
 						<th class="active">Valor A Receber</th>
@@ -55,7 +55,8 @@
                         <th class="active">Srv/Prd Entreg.?</th>
                         <th class="active">Data Entrega</th>
                         <th class="active">Data Retorno</th>
-                        <th class="active">Profissional</th>						
+                        <th class="active">Profissional</th>
+                        <th class="active"></th>
                     </tr>
                 </thead>
 				<tbody>
@@ -63,9 +64,10 @@
                     foreach ($report->result_array() as $row) {
                         #echo '<tr>';
                         echo '<tr class="clickable-row" data-href="' . base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] . '">';
-                            
-							echo '<td>' . $row['NomeCliente'] . '</td>'; 
-							echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';                                                     
+
+                            #echo '<div class="clickable-row" data-href="' . base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] . '">';
+							echo '<td>' . $row['NomeCliente'] . '</td>';
+							echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
                             echo '<td>' . $row['DataOrca'] . '</td>';
 							#echo '<td>' . $row['DataEntradaOrca'] . '</td>';
 							#echo '<td>' . $row['DataPrazo'] . '</td>';
@@ -78,12 +80,18 @@
                             echo '<td>' . $row['ServicoConcluido'] . '</td>';
                             echo '<td>' . $row['DataConclusao'] . '</td>';
                             echo '<td>' . $row['DataRetorno'] . '</td>';
-							echo '<td>' . $row['Nome'] . '</td>';							
+							echo '<td>' . $row['Nome'] . '</td>';
+                            #echo '</div>';
+                            echo '<td class="notclickable">
+                                    <a class="btn btn-md btn-info notclickable" target="_blank" href="' . base_url() . 'OrcatrataPrint/imprimir/' . $row['idApp_OrcaTrata'] . '">
+                                        <span class="glyphicon glyphicon-print notclickable"></span>
+                                    </a>
+                                </td>';
                         echo '</tr>';
                     }
                     ?>
                 </tbody>
-                
+
             </table>
         </div>
     </div>

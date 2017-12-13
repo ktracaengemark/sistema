@@ -1733,7 +1733,7 @@ $(document).ready(function () {
                     single_text: "Selecione uma opção",
                     no_results_text: "Nenhum resultado para",
                     width: "100%"
-                });                
+                });
             },
             error: function () {
                 //alert('erro listadinamicaB');
@@ -1824,7 +1824,7 @@ $(document).ready(function () {
                     single_text: "Selecione uma opção",
                     no_results_text: "Nenhum resultado para",
                     width: "100%"
-                }); 				
+                });
             },
             error: function () {
                 //alert('erro listadinamicaB');
@@ -1933,7 +1933,7 @@ $(document).ready(function () {
                     single_text: "Selecione uma opção",
                     no_results_text: "Nenhum resultado para",
                     width: "100%"
-                }); 				
+                });
             },
             error: function () {
                 //alert('erro listadinamicaB');
@@ -2015,7 +2015,7 @@ $(document).ready(function () {
                     single_text: "Selecione uma opção",
                     no_results_text: "Nenhum resultado para",
                     width: "100%"
-                }); 				
+                });
             },
             error: function () {
                 //alert('erro listadinamicaB');
@@ -2286,8 +2286,12 @@ $('#submit').on('click', function () {
 
 jQuery(document).ready(function ($) {
     $(".clickable-row").click(function () {
-        window.document.location = $(this).data("href");
+        if(!$(event.target).hasClass('notclickable'))
+           window.location = $(this).data("href");
+        else
+            event.stopPropagation();
     });
+
 });
 setTimeout(function () {
     $('#hidediv').fadeOut('slow');

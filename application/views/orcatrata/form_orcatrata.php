@@ -18,7 +18,7 @@
 							<div class="col-md-12 col-lg-12">
 								<div class="col-md-3 text-left">
 									<label for=""></label><br />
-									<a class="btn btn-md btn-info" href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $orcatrata['idApp_OrcaTrata']; ?>">
+									<a class="btn btn-md btn-info" target="_blank" href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $orcatrata['idApp_OrcaTrata']; ?>">
 										<span class="glyphicon glyphicon-print"></span> Versão para Impressão
 									</a>
 								</div>
