@@ -66,7 +66,7 @@ class Orcatrataprint_model extends CI_Model {
 		$query = $this->db->query(
             'SELECT
             	PV.QtdVendaProduto,
-            	CONCAT(IFNULL(TP3.Prodaux3,""), " -- ", IFNULL(P.Produtos,""), " -- ", IFNULL(TP1.Prodaux1,""), " -- ", IFNULL(TP2.Prodaux2,""), " -- ", IFNULL(TCO.Convenio,""), " -- ", IFNULL(V.Convdesc,""), " --- ", V.ValorVendaProduto, " -- ", IFNULL(P.UnidadeProduto,""), " -- ", IFNULL(TFO.NomeFornecedor,""), " -- ", IFNULL(P.CodProd,"")) AS NomeProduto,
+            	CONCAT(IFNULL(P.CodProd,""), " -- ", IFNULL(TP3.Prodaux3,""), " -- ", IFNULL(P.Produtos,""), " -- ", IFNULL(TP1.Prodaux1,""), " -- ", IFNULL(TP2.Prodaux2,""), " -- ", IFNULL(TCO.Convenio,""), " -- ", IFNULL(V.Convdesc,""), " --- ", V.ValorVendaProduto, " -- ", IFNULL(P.UnidadeProduto,""), " -- ", IFNULL(TFO.NomeFornecedor,"")) AS NomeProduto,
             	PV.ValorVendaProduto
             FROM
             	App_ProdutoVenda AS PV,
@@ -82,7 +82,8 @@ class Orcatrataprint_model extends CI_Model {
                 PV.idTab_Produto = V.idTab_Valor AND
             	P.idTab_Produtos = V.idTab_Produtos
             ORDER BY
-            	P.Categoria ASC,
+            	P.CodProd ASC,
+				P.Categoria ASC,
             	TP3.Prodaux3,
             	P.Produtos ASC,
             	TP1.Prodaux1,

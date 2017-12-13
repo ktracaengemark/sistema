@@ -734,8 +734,10 @@ class Relatorio_model extends CI_Model {
 				OT.FormaPagamento,
 				TFP.FormaPag,
 				APV.QtdVendaProduto,
+				APV.ValorVendaProduto,
 				APV.ObsProduto,
 				TPV.Produtos,
+				TPV.CodProd,
 				TPV.Fornecedor,
 				TFO.NomeFornecedor,
 				TVV.idTab_Valor,
@@ -2608,7 +2610,7 @@ class Relatorio_model extends CI_Model {
         $query = $this->db->query('
             SELECT
                 OB.idTab_Produtos,
-				CONCAT(IFNULL(TP3.Prodaux3,""), " - ", IFNULL(OB.Produtos,""), " - ", IFNULL(TP1.Prodaux1,""), " - ", IFNULL(TP2.Prodaux2,""), " - ", IFNULL(OB.CodProd,"")) AS Produtos,
+				CONCAT(IFNULL(OB.CodProd,""), " - ", IFNULL(TP3.Prodaux3,""), " - ", IFNULL(OB.Produtos,""), " - ", IFNULL(TP1.Prodaux1,""), " - ", IFNULL(TP2.Prodaux2,"")) AS Produtos,
 				TP1.Prodaux1,
 				TP2.Prodaux2,
 				TP3.Prodaux3,

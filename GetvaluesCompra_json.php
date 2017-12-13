@@ -47,7 +47,7 @@ elseif ($_GET['q'] == 2) {
     $result = mysql_query(
             'SELECT
                 TPV.idTab_Produtos,
-				CONCAT(IFNULL(TP3.Prodaux3,""), " -- ", IFNULL(TPV.Produtos,""), " -- ", IFNULL(TP1.Prodaux1,""), " -- ", IFNULL(TP2.Prodaux2,""), " -- ", IFNULL(TPV.UnidadeProduto,""), " -- ", IFNULL(TFO.NomeFornecedor,""), " -- ", IFNULL(TPV.CodProd,"")) AS NomeProduto,
+				CONCAT(IFNULL(TPV.CodProd,""), " -- ", IFNULL(TP3.Prodaux3,""), " -- ", IFNULL(TPV.Produtos,""), " -- ", IFNULL(TP1.Prodaux1,""), " -- ", IFNULL(TP2.Prodaux2,""), " -- ", IFNULL(TPV.UnidadeProduto,""), " -- ", IFNULL(TFO.NomeFornecedor,"")) AS NomeProduto,
 				TPV.ValorCompraProduto,
 				TPV.Categoria
             FROM
@@ -60,6 +60,7 @@ elseif ($_GET['q'] == 2) {
                 TPV.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				TPV.Empresa = ' . $_SESSION['log']['Empresa'] . '
 			ORDER BY  
+				TPV.CodProd ASC,
 				TPV.Categoria ASC,
 				TP3.Prodaux3,				
 				TPV.Produtos ASC,

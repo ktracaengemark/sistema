@@ -7,13 +7,15 @@
 						<th class="active">Cliente</th>
 						<th class="active">Id do Orçam.</th>
                         <th class="active">Data do Orçam.</th>
-						<th class="active">Fornecedor</th>
+						<th class="active">Fornec</th>
+						<th class="active">Código</th>
 						<th class="active">Qtd.</th>
 						<th class="active">Categoria</th>
-						<th class="active">Produto</th>
+						<th class="active">Produto</th>						
 						<th class="active">Aux1</th>
 						<th class="active">Aux2</th>
-						<th class="active">Valor do Orç.</th>
+						<th class="active">Valor</th>
+						<!--<th class="active">Valor do Orç.</th>-->
 						<th class="active">Obs</th>
 						<th class="active">Forma de Pag.</th>
                     </tr>
@@ -29,12 +31,14 @@
 							echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
                             echo '<td>' . $row['DataOrca'] . '</td>';
 							echo '<td>' . $row['NomeFornecedor'] . '</td>';
+							echo '<td>' . $row['CodProd'] . '</td>';
 							echo '<td>' . $row['QtdVendaProduto'] . '</td>';
 							echo '<td>' . $row['Prodaux3'] . '</td>';
-							echo '<td>' . $row['Produtos'] . '</td>';
+							echo '<td>' . $row['Produtos'] . '</td>';							
 							echo '<td>' . $row['Prodaux1'] . '</td>';
 							echo '<td>' . $row['Prodaux2'] . '</td>';
-							echo '<td>' . $row['ValorOrca'] . '</td>';
+							echo '<td>' . $row['ValorVendaProduto'] . '</td>';
+							#echo '<td>' . $row['ValorOrca'] . '</td>';
 							echo '<td>' . $row['ObsProduto'] . '</td>';
 							echo '<td>' . $row['FormaPag'] . '</td>';
                         echo '</tr>';

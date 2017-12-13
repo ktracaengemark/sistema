@@ -597,7 +597,9 @@ class Relatorio extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'NomeCliente',
+			'CodProd',
 			'Produtos',
+			'Prodaux3',
 			'DataInicio',
             'DataFim',
 			'Ordenamento',
@@ -618,7 +620,9 @@ class Relatorio extends CI_Controller {
             'C.NomeCliente' => 'Nome do Cliente',
 			'OT.idApp_OrcaTrata' => 'Id Orçam.',
             'OT.DataOrca' => 'Data do Orçam.',
+			'TPV.CodProd' => 'Código',
 			'TPV.Produtos' => 'Produto',
+			'TPV.Prodaux3' => 'Categoria',
 
         );
 
