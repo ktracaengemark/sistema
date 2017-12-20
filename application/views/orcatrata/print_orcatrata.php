@@ -22,8 +22,15 @@
 					<thead>
 						<tr>
 							<th scope="col">Qtd</th>
-							<th scope="col">Produto</th>
-							<th scope="col">Valor do Produto:</th>
+							<th scope="col">Unidade</th>
+							<th scope="col">CodProd.</th>
+							<th scope="col">CategProd.</th>
+							<th scope="col">DescProd.</th>							
+							<!--<th scope="col">Aux1</th>
+							<th scope="col">Aux2</th>-->
+							<!--<th scope="col">Tipo Venda</th>
+							<th scope="col">Desc Venda</th>-->
+							<th scope="col">Valor</th>
 							<th scope="col">Subtotal</th>
 						</tr>
 					</thead>
@@ -37,7 +44,14 @@
 
 						<tr>
 							<td><?php echo $produto[$i]['QtdVendaProduto'] ?></td>
+							<td><?php echo $produto[$i]['UnidadeProduto'] ?></td>
+							<td><?php echo $produto[$i]['CodProd'] ?></td>
+							<td><?php echo $produto[$i]['Prodaux3'] ?></td>
 							<td><?php echo $produto[$i]['NomeProduto'] ?></td>
+							<!--<td><?php echo $produto[$i]['Prodaux1'] ?></td>
+							<td><?php echo $produto[$i]['Prodaux2'] ?></td>-->
+							<!--<td><?php echo $produto[$i]['Convenio'] ?></td>
+							<td><?php echo $produto[$i]['Convdesc'] ?></td>-->
 							<td><?php echo number_format($produto[$i]['ValorVendaProduto'], 2, ',', '.') ?></td>
 							<td><?php echo $produto[$i]['SubtotalProduto'] ?></td>
 						</tr>

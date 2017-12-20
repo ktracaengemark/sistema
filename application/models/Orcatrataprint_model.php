@@ -66,7 +66,15 @@ class Orcatrataprint_model extends CI_Model {
 		$query = $this->db->query(
             'SELECT
             	PV.QtdVendaProduto,
-            	CONCAT(IFNULL(P.CodProd,""), " -- ", IFNULL(TP3.Prodaux3,""), " -- ", IFNULL(P.Produtos,""), " -- ", IFNULL(TP1.Prodaux1,""), " -- ", IFNULL(TP2.Prodaux2,""), " -- ", IFNULL(TCO.Convenio,""), " -- ", IFNULL(V.Convdesc,""), " --- ", V.ValorVendaProduto, " -- ", IFNULL(P.UnidadeProduto,""), " -- ", IFNULL(TFO.NomeFornecedor,"")) AS NomeProduto,
+				P.UnidadeProduto,
+				P.CodProd,
+				TP3.Prodaux3,
+				TP1.Prodaux1,
+            	TP2.Prodaux2,
+				TCO.Convenio,
+				V.Convdesc,
+				TFO.NomeFornecedor,
+            	CONCAT(IFNULL(P.Produtos,""), " -- ", IFNULL(TP1.Prodaux1,""), " -- ", IFNULL(TP2.Prodaux2,"")) AS NomeProduto,
             	PV.ValorVendaProduto
             FROM
             	App_ProdutoVenda AS PV,
