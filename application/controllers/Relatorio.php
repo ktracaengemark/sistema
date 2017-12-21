@@ -1190,7 +1190,7 @@ class Relatorio extends CI_Controller {
 
         $data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
 
-        $data['titulo'] = 'Clientes & Orçamentos';
+        $data['titulo'] = 'Clientes & Devoluções';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
