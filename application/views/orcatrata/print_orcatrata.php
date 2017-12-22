@@ -6,7 +6,7 @@
 		<div class="col-md-12">
 
 			<div class="panel-heading text-center">
-				<h2 class="text-center">ORÇAMENTO</h2>
+				<h2 class="text-center">ORÇAMENTO / VENDA</h2>
 			</div>
 
 			<div class="panel-body">
@@ -15,12 +15,14 @@
 				<?php echo '<h4>' . $_SESSION['Cliente']['NomeCliente'] . ' - Id: ' . $_SESSION['Cliente']['idApp_Cliente'] . '</h4>' ?>
 				<hr />
 
-				<h3 class="text-center">Orçamento, Serviços & Produtos</h3>
+				<h3 class="text-center">Orçamento, Produtos & Serviços  </h3>
 				<hr />
 
 				<table class="table table-bordered">
 					<thead>
 						<tr>
+							<th scope="col">Nº</th>
+							<th scope="col">id</th>
 							<th scope="col">Qtd</th>
 							<th scope="col">Unidade</th>
 							<th scope="col">CodProd.</th>
@@ -43,6 +45,8 @@
 						?>
 
 						<tr>
+							<td><?php echo $produto[$i]['idApp_OrcaTrata'] ?></td>
+							<td><?php echo $produto[$i]['idApp_ProdutoVenda'] ?></td>
 							<td><?php echo $produto[$i]['QtdVendaProduto'] ?></td>
 							<td><?php echo $produto[$i]['UnidadeProduto'] ?></td>
 							<td><?php echo $produto[$i]['CodProd'] ?></td>

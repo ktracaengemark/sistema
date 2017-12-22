@@ -21,6 +21,8 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
+							<th scope="col">Nº</th>
+							<th scope="col">id</th>
 							<th scope="col">Qtd</th>
 							<th scope="col">Unidade</th>
 							<th scope="col">CodProd.</th>
@@ -43,6 +45,8 @@
 						?>
 
 						<tr>
+							<td><?php echo $produto[$i]['idApp_OrcaTrata'] ?></td>
+							<td><?php echo $produto[$i]['idApp_ProdutoVenda'] ?></td>
 							<td><?php echo $produto[$i]['QtdVendaProduto'] ?></td>
 							<td><?php echo $produto[$i]['UnidadeProduto'] ?></td>
 							<td><?php echo $produto[$i]['CodProd'] ?></td>

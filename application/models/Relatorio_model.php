@@ -1103,6 +1103,7 @@ class Relatorio_model extends CI_Model {
                 OT.QuitadoOrca,
                 OT.DataConclusao,
                 OT.DataRetorno,
+				OT.TipoRD,
 				OT.FormaPagamento,
 				TFP.FormaPag,
 				TSU.Nome
@@ -1122,7 +1123,8 @@ class Relatorio_model extends CI_Model {
                 ' . $filtro2 . '
 				' . $filtro3 . '
                 C.idApp_Cliente = OT.idApp_Cliente
-                ' . $data['NomeCliente'] . '
+                ' . $data['NomeCliente'] . ' AND
+				OT.TipoRD = "R"
             ORDER BY
                 OT.idApp_OrcaTrata DESC,
 				C.NomeCliente,

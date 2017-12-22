@@ -66,6 +66,8 @@ class Orcatrataprint_model extends CI_Model {
 		$query = $this->db->query(
             'SELECT
             	PV.QtdVendaProduto,
+				PV.idApp_ProdutoVenda,
+				PV.idApp_OrcaTrata,
 				P.UnidadeProduto,
 				P.CodProd,
 				TP3.Prodaux3,
@@ -90,13 +92,7 @@ class Orcatrataprint_model extends CI_Model {
                 PV.idTab_Produto = V.idTab_Valor AND
             	P.idTab_Produtos = V.idTab_Produtos
             ORDER BY
-            	P.CodProd ASC,
-				P.Categoria ASC,
-            	TP3.Prodaux3,
-            	P.Produtos ASC,
-            	TP1.Prodaux1,
-            	TP2.Prodaux2,
-            	TFO.NomeFornecedor ASC'
+            	PV.idApp_ProdutoVenda'
         );
         $query = $query->result_array();
 
