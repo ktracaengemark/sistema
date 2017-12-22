@@ -34,6 +34,7 @@
 							<th scope="col">Desc Venda</th>-->
 							<th scope="col">Valor</th>
 							<th scope="col">Subtotal</th>
+							<th scope="col">Data</th>
 						</tr>
 					</thead>
 
@@ -58,6 +59,7 @@
 							<td><?php echo $produto[$i]['Convdesc'] ?></td>-->
 							<td><?php echo number_format($produto[$i]['ValorVendaProduto'], 2, ',', '.') ?></td>
 							<td><?php echo $produto[$i]['SubtotalProduto'] ?></td>
+							<td><?php echo $produto[$i]['DataValidadeProduto'] ?></td>
 						</tr>
 
 						<?php

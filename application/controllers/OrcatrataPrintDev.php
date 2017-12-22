@@ -85,10 +85,10 @@ class OrcatrataPrintDev extends CI_Controller {
 
                 if (isset($data['produto'])) {
 
-                    for($j=1;$j<=$data['count']['PCount'];$j++)
+                    for($j=1;$j<=$data['count']['PCount'];$j++) {
 						$data['produto'][$j]['SubtotalProduto'] = number_format(($data['produto'][$j]['ValorVendaProduto'] * $data['produto'][$j]['QtdVendaProduto']), 2, ',', '.');
-						#$data['produto'][$j]['DataValidadeProduto'] = $this->basico->mascara_data($data['produto'][$j]['DataValidadeProduto'], 'barras');
-
+						$data['produto'][$j]['DataValidadeProduto'] = $this->basico->mascara_data($data['produto'][$j]['DataValidadeProduto'], 'barras');
+					}
 
                 }
             }

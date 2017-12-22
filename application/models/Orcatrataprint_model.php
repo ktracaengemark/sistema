@@ -66,6 +66,7 @@ class Orcatrataprint_model extends CI_Model {
 		$query = $this->db->query(
             'SELECT
             	PV.QtdVendaProduto,
+				PV.DataValidadeProduto,
 				PV.idApp_ProdutoVenda,
 				PV.idApp_OrcaTrata,
 				P.UnidadeProduto,

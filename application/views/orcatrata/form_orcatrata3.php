@@ -62,7 +62,7 @@
 									</h4>
 								</div>
 
-								<div id="collapse1" class="panel-collapse collapsed collapse" role="tabpanel" aria-labelledby="heading1" aria-expanded="false" style="height: 0px;">
+								<div id="collapse1" class="panel-collapse" role="tabpanel" aria-labelledby="heading1" aria-expanded="false">
 									<div class="panel-body">
 
 										<!--#######################################-->
@@ -215,7 +215,7 @@
 																	onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','QTD','Produto')"
 																	autofocus name="QtdVendaProduto<?php echo $i ?>" value="<?php echo $produto[$i]['QtdVendaProduto'] ?>">
 														</div>
-														<div class="col-md-6">
+														<div class="col-md-7">
 															<label for="idTab_Produto">Produto:</label>
 															<?php if ($i == 1) { ?>
 															<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produto/cadastrar/produto" role="button">
@@ -254,12 +254,30 @@
 																	   name="SubtotalProduto<?php echo $i ?>" value="<?php echo $produto[$i]['SubtotalProduto'] ?>">
 															</div>
 														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-1"></div>
+														<div class="col-md-7">
+															<label for="ObsProduto<?php echo $i ?>">Obs:</label><br>
+															<input type="text" class="form-control" id="ObsProduto<?php echo $i ?>" maxlength="250"
+																   name="ObsProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ObsProduto'] ?>">
+														</div>
 														<div class="col-md-2">
+															<label for="DataValidadeProduto<?php echo $i ?>">Val. do Produto:</label>
+															<div class="input-group <?php echo $datepicker; ?>">
+																<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+																	   name="DataValidadeProduto<?php echo $i ?>" value="<?php echo $produto[$i]['DataValidadeProduto']; ?>">
+																<span class="input-group-addon" disabled>
+																	<span class="glyphicon glyphicon-calendar"></span>
+																</span>
+															</div>
+														</div>
+														<div class="col-md-1">
 															<label><br></label><br>
 															<button type="button" id="<?php echo $i ?>" class="remove_field2 btn btn-danger">
 																<span class="glyphicon glyphicon-trash"></span>
 															</button>
-														</div>														
+														</div>
 													</div>
 												</div>
 											</div>
@@ -333,7 +351,7 @@
 										</a>
 									</h4>
 								</div>
-								<div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2" aria-expanded="false" style="height: 0px;">
+								<div id="collapse2" class="panel-collapse" role="tabpanel" aria-labelledby="heading2" aria-expanded="false">
 									<div class="panel-body">
 										<div class="form-group">
 											<div class="panel panel-danger">

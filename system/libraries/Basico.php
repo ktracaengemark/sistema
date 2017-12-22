@@ -213,7 +213,7 @@ class Basico {
     function mascara_data($data, $opcao) {
 
         if (preg_match("/[0-9]{2,4}(\/|-)[0-9]{2,4}(\/|-)[0-9]{2,4}/", $data)) {
-
+			
             if ($opcao == 'barras') {
                 if ($data && $data != '0000-00-00') {
                     $data = nice_date($data, 'd/m/Y');
@@ -229,7 +229,7 @@ class Basico {
                 }
             }
         }
-
+		#exit($data);
         return $data;
     }
 
