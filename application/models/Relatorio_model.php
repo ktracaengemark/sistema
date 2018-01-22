@@ -732,6 +732,8 @@ class Relatorio_model extends CI_Model {
                 OT.DataOrca,
 				OT.ValorOrca,
 				OT.FormaPagamento,
+				OT.TipoRD,
+				OT.AprovadoOrca,
 				TFP.FormaPag,
 				APV.QtdVendaProduto,
 				APV.ValorVendaProduto,
@@ -763,7 +765,90 @@ class Relatorio_model extends CI_Model {
 				APV.idApp_ProdutoVenda != "0" AND
 				C.idApp_Cliente = OT.idApp_Cliente
                 ' . $data['NomeCliente'] . '
-				' . $data['Produtos'] . '
+				' . $data['Produtos'] . ' AND
+				OT.TipoRD = "R" AND
+				OT.AprovadoOrca = "S"
+            ORDER BY
+				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+
+        /*
+		#LEFT JOIN Tab_ProdutoBase AS TPD ON TPD.idTab_ProdutoBase = PD.idTab_Produto
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          #exit();
+          */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
+            }
+            return $query;
+        }
+    }
+	
+	public function list_produtosdevol($data, $completo) {
+
+        if ($data['DataFim']) {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
+        }
+
+        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+		$data['Produtos'] = ($data['Produtos']) ? ' AND TPV.idTab_Produtos = ' . $data['Produtos'] : FALSE;
+
+		$query = $this->db->query('
+            SELECT
+                C.NomeCliente,
+				OT.idApp_OrcaTrata,
+                OT.DataOrca,
+				OT.ValorOrca,
+				OT.FormaPagamento,
+				OT.TipoRD,
+				OT.AprovadoOrca,
+				TFP.FormaPag,
+				APV.QtdVendaProduto,
+				APV.ValorVendaProduto,
+				APV.ObsProduto,
+				TPV.Produtos,
+				TPV.CodProd,
+				TPV.Fornecedor,
+				TFO.NomeFornecedor,
+				TVV.idTab_Valor,
+				TP3.Prodaux3,
+				TP2.Prodaux2,
+				TP1.Prodaux1
+
+            FROM
+                App_Cliente AS C,
+				App_OrcaTrata AS OT
+					LEFT JOIN App_ProdutoVenda AS APV ON APV.idApp_OrcaTrata = OT.idApp_OrcaTrata
+					LEFT JOIN Tab_Valor AS TVV ON TVV.idTab_Valor = APV.idTab_Produto
+					LEFT JOIN Tab_Produtos AS TPV ON TPV.idTab_Produtos = TVV.idTab_Produtos
+					LEFT JOIN App_Fornecedor AS TFO ON TFO.idApp_Fornecedor = TPV.Fornecedor
+					LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
+					LEFT JOIN Tab_Prodaux3 AS TP3 ON TP3.idTab_Prodaux3 = TPV.Prodaux3
+					LEFT JOIN Tab_Prodaux2 AS TP2 ON TP2.idTab_Prodaux2 = TPV.Prodaux2
+					LEFT JOIN Tab_Prodaux1 AS TP1 ON TP1.idTab_Prodaux1 = TPV.Prodaux1
+		   WHERE
+                C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				(' . $consulta . ') AND
+				APV.idApp_ProdutoVenda != "0" AND
+				C.idApp_Cliente = OT.idApp_Cliente
+                ' . $data['NomeCliente'] . '
+				' . $data['Produtos'] . ' AND
+				OT.TipoRD = "D" AND
+				OT.AprovadoOrca = "S"
             ORDER BY
 				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');

@@ -205,7 +205,14 @@
 														<span class="glyphicon glyphicon-barcode"></span> Produtos Vendidos
 													</a>
 												</div>	
-											</div>																								
+											</div>
+											<div class="form-group col-md-12 text-left">
+												<div class="row">		
+													<a type="button" class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>relatorio/produtosdevol" role="button"> 
+														<span class="glyphicon glyphicon-barcode"></span> Produtos Devolvidos
+													</a>
+												</div>	
+											</div>
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
 													<a type="button" class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>relatorio/consumo" role="button"> 
