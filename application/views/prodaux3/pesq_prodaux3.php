@@ -22,7 +22,7 @@
 							
 							<div class="col-md-3">
 								<label for="Abrev3">Abrev.:</label><br>
-								<input type="text" class="form-control" maxlength="5"
+								<input type="text" class="form-control" maxlength="9"
 										name="Abrev3" value="<?php echo $query['Abrev3'] ?>">
 							</div>
 						</div>

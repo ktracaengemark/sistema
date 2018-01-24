@@ -2020,7 +2020,10 @@ class Relatorio_model extends CI_Model {
 	public function list_produtos($data, $completo) {
 
 		$data['Produtos'] = ($data['Produtos']) ? ' AND TP.idTab_Produtos = ' . $data['Produtos'] : FALSE;
-        $data['Campo'] = (!$data['Campo']) ? 'TP.Produtos' : $data['Campo'];
+		$data['Prodaux1'] = ($data['Prodaux1']) ? ' AND TP1.idTab_Prodaux1 = ' . $data['Prodaux1'] : FALSE;
+		$data['Prodaux2'] = ($data['Prodaux2']) ? ' AND TP2.idTab_Prodaux2 = ' . $data['Prodaux2'] : FALSE;
+        $data['Prodaux3'] = ($data['Prodaux3']) ? ' AND TP3.idTab_Prodaux3 = ' . $data['Prodaux3'] : FALSE;
+		$data['Campo'] = (!$data['Campo']) ? 'TP.Produtos' : $data['Campo'];
         $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 
         $query = $this->db->query('
@@ -2057,16 +2060,11 @@ class Relatorio_model extends CI_Model {
                 TP.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
 				' . $data['Produtos'] . '
+				' . $data['Prodaux1'] . '
+				' . $data['Prodaux2'] . '
+				' . $data['Prodaux3'] . '
 			ORDER BY
-                TCA.Categoria,
-				TF.NomeFornecedor,
-				TP3.Abrev3,
-				TP.Produtos,
-				TP1.Abrev1,
-				TP2.Abrev2,
-				TC.Convenio,
-				TV.Convdesc,
-				TV.ValorVendaProduto DESC
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
 
         /*
@@ -2851,6 +2849,78 @@ class Relatorio_model extends CI_Model {
         $array[0] = ':: Todos ::';
         foreach ($query->result() as $row) {
             $array[$row->idTab_Produtos] = $row->Produtos;
+        }
+
+        return $array;
+    }
+	
+	public function select_prodaux1() {
+
+        $query = $this->db->query('
+            SELECT
+                P.idTab_Prodaux1,
+                P.Prodaux1
+            FROM
+                Tab_Prodaux1 AS P
+            WHERE
+                P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+            ORDER BY
+                Prodaux1 ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idTab_Prodaux1] = $row->Prodaux1;
+        }
+
+        return $array;
+    }
+	
+	public function select_prodaux2() {
+
+        $query = $this->db->query('
+            SELECT
+                P.idTab_Prodaux2,
+                P.Prodaux2
+            FROM
+                Tab_Prodaux2 AS P
+            WHERE
+                P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+            ORDER BY
+                Prodaux2 ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idTab_Prodaux2] = $row->Prodaux2;
+        }
+
+        return $array;
+    }
+	
+	public function select_prodaux3() {
+
+        $query = $this->db->query('
+            SELECT
+                P.idTab_Prodaux3,
+                P.Prodaux3
+            FROM
+                Tab_Prodaux3 AS P
+            WHERE
+                P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+            ORDER BY
+                Prodaux3 ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idTab_Prodaux3] = $row->Prodaux3;
         }
 
         return $array;

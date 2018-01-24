@@ -1789,8 +1789,10 @@ class Relatorio extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'Produtos',
+			'CodProd',
 			'Prodaux1',
 			'Prodaux2',
+			'Prodaux3',
 			'Categoria',
 			'Ordenamento',
             'Campo',
@@ -1801,11 +1803,13 @@ class Relatorio extends CI_Controller {
 
 
         $data['select']['Campo'] = array(
+			'TP.CodProd' => 'Código',
 			'TP.idTab_Produtos' => 'Id',
 			'TP.Produtos' => 'Descrição',
-			'TP.Categoria' => 'Categoria',
-			'TP.Prodaux1' => 'Prodaux1',
-			'TP.Prodaux2' => 'Prodaux2',
+			'TP.Categoria' => 'Prod/Serv',
+			'TP.Prodaux1' => 'Aux1',
+			'TP.Prodaux2' => 'Aux2',
+			'TP.Prodaux3' => 'Categoria',
 
         );
 
@@ -1815,15 +1819,20 @@ class Relatorio extends CI_Controller {
         );
 
         $data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
+		$data['select']['Prodaux1'] = $this->Relatorio_model->select_prodaux1();
+		$data['select']['Prodaux2'] = $this->Relatorio_model->select_prodaux2();
+		$data['select']['Prodaux3'] = $this->Relatorio_model->select_prodaux3();
 
         $data['titulo'] = 'Produtos, Serviços e Valores';
 
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['CodProd'] = $data['query']['CodProd'];
 			$data['bd']['Categoria'] = $data['query']['Categoria'];
 			$data['bd']['Prodaux1'] = $data['query']['Prodaux1'];
 			$data['bd']['Prodaux2'] = $data['query']['Prodaux2'];
+			$data['bd']['Prodaux3'] = $data['query']['Prodaux3'];
             $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
 
