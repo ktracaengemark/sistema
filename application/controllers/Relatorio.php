@@ -1083,6 +1083,7 @@ class Relatorio extends CI_Controller {
             'AprovadoOrca',
             'QuitadoOrca',
 			'ServicoConcluido',
+			'FormaPag',
 
         ), TRUE));
 		/*
@@ -1128,7 +1129,7 @@ class Relatorio extends CI_Controller {
             'OT.ValorOrca' => 'Valor do Orçamento',
 			'OT.ValorEntradaOrca' => 'Valor do Desconto',
 			'OT.ValorRestanteOrca' => 'Valor a Receber',
-
+			'OT.FormaPag' => 'Forma de Pag.?',
             'OT.ServicoConcluido' => 'Serviço Concluído?',
             'OT.QuitadoOrca' => 'Orçamento Quitado?',
             'OT.DataConclusao' => 'Data de Conclusão',
@@ -1143,6 +1144,7 @@ class Relatorio extends CI_Controller {
         );
 
         $data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
+		$data['select']['FormaPag'] = $this->Relatorio_model->select_formapag();
 
         $data['titulo'] = 'Clientes & Orçamentos';
 
@@ -1151,6 +1153,7 @@ class Relatorio extends CI_Controller {
 
             #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
             $data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
+			$data['bd']['FormaPag'] = $data['query']['FormaPag'];
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');

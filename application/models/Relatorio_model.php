@@ -189,6 +189,7 @@ class Relatorio_model extends CI_Model {
             'SELECT
                 C.NomeCliente,
                 OT.idApp_OrcaTrata,
+				OT.TipoRD,
                 OT.AprovadoOrca,
                 OT.DataOrca,
                 OT.DataEntradaOrca,
@@ -218,7 +219,8 @@ class Relatorio_model extends CI_Model {
                 ' . $filtro3 . '
 				' . $filtro4 . '
                 C.idApp_Cliente = OT.idApp_Cliente
-                ' . $data['NomeCliente'] . '
+                ' . $data['NomeCliente'] . ' AND
+				OT.TipoRD = "R"
 
             ORDER BY
                 C.NomeCliente,
@@ -1168,7 +1170,7 @@ class Relatorio_model extends CI_Model {
         }
 
         $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
-
+		$data['FormaPag'] = ($data['FormaPag']) ? ' AND TFP.idTab_FormaPag = ' . $data['FormaPag'] : FALSE;
         $filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ServicoConcluido'] != '#') ? 'OT.ServicoConcluido = "' . $data['ServicoConcluido'] . '" AND ' : FALSE;
@@ -1208,7 +1210,8 @@ class Relatorio_model extends CI_Model {
                 ' . $filtro2 . '
 				' . $filtro3 . '
                 C.idApp_Cliente = OT.idApp_Cliente
-                ' . $data['NomeCliente'] . ' AND
+                ' . $data['NomeCliente'] . ' 
+				' . $data['FormaPag'] . ' AND
 				OT.TipoRD = "R"
             ORDER BY
                 OT.idApp_OrcaTrata DESC,
@@ -2741,6 +2744,30 @@ class Relatorio_model extends CI_Model {
         $array[0] = ':: Todos ::';
         foreach ($query->result() as $row) {
             $array[$row->idTab_Convenio] = $row->Convenio;
+        }
+
+        return $array;
+    }
+	
+	public function select_formapag() {
+
+        $query = $this->db->query('
+            SELECT
+                P.idTab_FormaPag,
+                P.FormaPag
+            FROM
+                Tab_FormaPag AS P
+            WHERE
+                P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+				P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+            ORDER BY
+                FormaPag ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idTab_FormaPag] = $row->FormaPag;
         }
 
         return $array;

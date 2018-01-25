@@ -48,11 +48,11 @@
 						<th class="active">Prazo de Entrega</th>-->
                         <th class="active">Valor do Orçamen.</th>
 						<th class="active">Valor do Desconto</th>
-						<th class="active">Valor A Receber</th>
-						<th class="active">Forma de Pag.</th>
+						<th class="active">Valor A Receber</th>					
 						<th class="active">Orç. Apv.?</th>
+						<th class="active">Srv/Prd Entreg.?</th>
 						<th class="active">Orç. Quit.?</th>
-                        <th class="active">Srv/Prd Entreg.?</th>
+						<th class="active">Forma de Pag.</th>
                         <th class="active">Data Entrega</th>
                         <th class="active">Data Retorno</th>
                         <th class="active">Profissional</th>
@@ -74,10 +74,11 @@
                             echo '<td class="text-left">R$ ' . $row['ValorOrca'] . '</td>';
 							echo '<td class="text-left">R$ ' . $row['ValorEntradaOrca'] . '</td>';
 							echo '<td class="text-left">R$ ' . $row['ValorRestanteOrca'] . '</td>';
-							echo '<td>' . $row['FormaPag'] . '</td>';
+							
 							echo '<td>' . $row['AprovadoOrca'] . '</td>';
+							echo '<td>' . $row['ServicoConcluido'] . '</td>';
 							echo '<td>' . $row['QuitadoOrca'] . '</td>';
-                            echo '<td>' . $row['ServicoConcluido'] . '</td>';
+                            echo '<td>' . $row['FormaPag'] . '</td>';
                             echo '<td>' . $row['DataConclusao'] . '</td>';
                             echo '<td>' . $row['DataRetorno'] . '</td>';
 							echo '<td>' . $row['Nome'] . '</td>';

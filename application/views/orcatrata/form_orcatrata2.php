@@ -692,7 +692,7 @@
 						<div class="form-group text-center">
 							<div class="row">
 								<div class="col-md-3 form-inline">
-									<label for="AprovadoOrca">Orçam. Aprovado?</label><br>
+									<label for="AprovadoOrca">Orç. Aprov./Fechado?</label><br>
 									<div class="form-group">
 										<div class="btn-group" data-toggle="buttons">
 											<?php
