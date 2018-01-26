@@ -23,8 +23,7 @@
 						<tr>
 							<th scope="col">Nº</th>
 							<th scope="col">id</th>
-							<th scope="col">CodProd.</th>
-							<th scope="col">Data</th>						
+							<th scope="col">CodProd.</th>													
 						</tr>	
 						<tr>
 							<th scope="col">Qtd</th>
@@ -37,6 +36,7 @@
 							<th scope="col">Desc Venda</th>-->
 							<th scope="col">Valor</th>
 							<th scope="col">Subtotal</th>
+							<th scope="col">Data</th>
 						</tr>
 					</thead>
 
@@ -50,8 +50,7 @@
 						<tr>
 							<td><?php echo $produto[$i]['idApp_OrcaTrata'] ?></td>
 							<td><?php echo $produto[$i]['idApp_ProdutoVenda'] ?></td>
-							<td><?php echo $produto[$i]['CodProd'] ?></td>
-							<td><?php echo $produto[$i]['DataValidadeProduto'] ?></td>							
+							<td><?php echo $produto[$i]['CodProd'] ?></td>							
 						</tr>						
 						<tr>
 							<td><?php echo $produto[$i]['QtdVendaProduto'] ?></td>
@@ -64,6 +63,7 @@
 							<td><?php echo $produto[$i]['Convdesc'] ?></td>-->
 							<td><?php echo number_format($produto[$i]['ValorVendaProduto'], 2, ',', '.') ?></td>
 							<td><?php echo $produto[$i]['SubtotalProduto'] ?></td>
+							<td><?php echo $produto[$i]['DataValidadeProduto'] ?></td>
 						</tr>
 
 						<?php
