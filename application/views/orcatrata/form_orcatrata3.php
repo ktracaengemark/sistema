@@ -215,7 +215,7 @@
 																	onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','QTD','Produto')"
 																	autofocus name="QtdVendaProduto<?php echo $i ?>" value="<?php echo $produto[$i]['QtdVendaProduto'] ?>">
 														</div>
-														<div class="col-md-7">
+														<div class="col-md-4">
 															<label for="idTab_Produto">Produto:</label>
 															<?php if ($i == 1) { ?>
 															<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produto/cadastrar/produto" role="button">
@@ -254,14 +254,6 @@
 																	   name="SubtotalProduto<?php echo $i ?>" value="<?php echo $produto[$i]['SubtotalProduto'] ?>">
 															</div>
 														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-1"></div>
-														<div class="col-md-7">
-															<label for="ObsProduto<?php echo $i ?>">Obs:</label><br>
-															<input type="text" class="form-control" id="ObsProduto<?php echo $i ?>" maxlength="250"
-																   name="ObsProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ObsProduto'] ?>">
-														</div>
 														<div class="col-md-2">
 															<label for="DataValidadeProduto<?php echo $i ?>">Val. do Produto:</label>
 															<div class="input-group <?php echo $datepicker; ?>">
@@ -277,7 +269,7 @@
 															<button type="button" id="<?php echo $i ?>" class="remove_field2 btn btn-danger">
 																<span class="glyphicon glyphicon-trash"></span>
 															</button>
-														</div>
+														</div>														
 													</div>
 												</div>
 											</div>
@@ -424,7 +416,7 @@
 																<input type="text" class="form-control" maxlength="6" readonly=""
 																	   name="ParcelaRecebiveis<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['ParcelaRecebiveis'] ?>">
 															</div>
-															<div class="col-md-3">
+															<div class="col-md-2">
 																<label for="ValorParcelaRecebiveis">Valor Parcela:</label><br>
 																<div class="input-group" id="txtHint">
 																	<span class="input-group-addon" id="basic-addon1">R$</span>
@@ -432,7 +424,7 @@
 																		   name="ValorParcelaRecebiveis<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['ValorParcelaRecebiveis'] ?>">
 																</div>
 															</div>
-															<div class="col-md-3">
+															<div class="col-md-2">
 																<label for="DataVencimentoRecebiveis">Data Venc. Parc.</label>
 																<div class="input-group DatePicker">
 																	<input type="text" class="form-control Date" id="DataVencimentoRecebiveis<?php echo $i ?>" maxlength="10" placeholder="DD/MM/AAAA"
@@ -442,10 +434,7 @@
 																	</span>
 																</div>
 															</div>
-														</div>
-														<div class="col-md-2"></div>
-														<div class="row">
-															<div class="col-md-3">
+															<div class="col-md-2">
 																<label for="ValorPagoRecebiveis">Valor Pago:</label><br>
 																<div class="input-group" id="txtHint">
 																	<span class="input-group-addon" id="basic-addon1">R$</span>
@@ -453,7 +442,7 @@
 																		   name="ValorPagoRecebiveis<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['ValorPagoRecebiveis'] ?>">
 																</div>
 															</div>
-															<div class="col-md-3">
+															<div class="col-md-2">
 																<label for="DataPagoRecebiveis">Data Pag.</label>
 																<div class="input-group DatePicker">
 																	<input type="text" class="form-control Date" id="DataPagoRecebiveis<?php echo $i ?>" maxlength="10" placeholder="DD/MM/AAAA"
@@ -463,7 +452,7 @@
 																	</span>
 																</div>
 															</div>
-															<div class="col-md-3">
+															<div class="col-md-2">
 																<label for="QuitadoRecebiveis">Quitado????</label><br>
 																<div class="form-group">
 																	<div class="btn-group" data-toggle="buttons">
@@ -492,7 +481,7 @@
 																		?>
 																	</div>
 																</div>
-															</div>
+															</div>															
 														</div>
 													</div>
 												</div>
