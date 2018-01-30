@@ -546,7 +546,8 @@ class Relatorio_model extends CI_Model {
         $query['Produtos'] = $this->db->query(
             'SELECT
             	TP.idTab_Produtos,
-            	CONCAT(IFNULL(TP3.Prodaux3,""), " - ", IFNULL(TP.Produtos,""), " - ", IFNULL(TP1.Prodaux1,""), " - ", IFNULL(TP2.Prodaux2,"")) AS Produtos,
+				TP.CodProd,
+            	CONCAT(IFNULL(TP.CodProd,""), " - ", IFNULL(TP3.Prodaux3,""), " - ", IFNULL(TP.Produtos,""), " - ", IFNULL(TP1.Prodaux1,""), " - ", IFNULL(TP2.Prodaux2,"")) AS Produtos,
 				TP1.Prodaux1,
 				TP2.Prodaux2,
 				TP3.Prodaux3
@@ -560,7 +561,8 @@ class Relatorio_model extends CI_Model {
             	TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
                 ' . $data['Produtos'] . '
             ORDER BY
-            	TP3.Prodaux3,
+            	TP.CodProd,
+				TP3.Prodaux3,
 				TP.Produtos ASC'
         );
         $query['Produtos'] = $query['Produtos']->result();
@@ -613,7 +615,8 @@ class Relatorio_model extends CI_Model {
         $query['Vendidos'] = $this->db->query(
             'SELECT
             	SUM(APV.QtdVendaProduto) AS QtdVenda,
-                TP.idTab_Produtos
+                TP.idTab_Produtos,
+				OT.TipoRD
             FROM
             	App_Cliente AS C,
             	App_OrcaTrata AS OT
@@ -626,13 +629,52 @@ class Relatorio_model extends CI_Model {
                 (' . $consulta . ') AND
             	APV.idApp_ProdutoVenda != "0" AND
             	C.idApp_Cliente = OT.idApp_Cliente
-                ' . $data['Produtos'] . '
+                ' . $data['Produtos'] . ' AND
+				OT.TipoRD = "R"
             GROUP BY
             	TP.idTab_Produtos
             ORDER BY
             	TP.Produtos ASC'
         );
         $query['Vendidos'] = $query['Vendidos']->result();
+
+	
+		####################################################################
+        #DEVOLVIDOS
+        if ($data['DataFim']) {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
+        }
+
+        $query['Devolvidos'] = $this->db->query(
+            'SELECT
+            	SUM(APV.QtdVendaProduto) AS QtdDevolve,
+                TP.idTab_Produtos,
+				OT.TipoRD
+            FROM
+            	App_Cliente AS C,
+            	App_OrcaTrata AS OT
+            		LEFT JOIN App_ProdutoVenda AS APV ON APV.idApp_OrcaTrata = OT.idApp_OrcaTrata
+            		LEFT JOIN Tab_Valor AS TVV ON TVV.idTab_Valor = APV.idTab_Produto
+            		LEFT JOIN Tab_Produtos AS TP ON TP.idTab_Produtos = TVV.idTab_Produtos
+            WHERE
+                C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                (' . $consulta . ') AND
+            	APV.idApp_ProdutoVenda != "0" AND
+            	C.idApp_Cliente = OT.idApp_Cliente
+                ' . $data['Produtos'] . ' AND
+				OT.TipoRD = "D"
+            GROUP BY
+            	TP.idTab_Produtos
+            ORDER BY
+            	TP.Produtos ASC'
+        );
+        $query['Devolvidos'] = $query['Devolvidos']->result();
 
         ####################################################################
         #CONSUMIDOS
@@ -680,9 +722,13 @@ class Relatorio_model extends CI_Model {
         foreach ($query['Comprados'] as $row) {
             $estoque->{$row->idTab_Produtos}->QtdCompra = $row->QtdCompra;
         }
-
+		
         foreach ($query['Vendidos'] as $row) {
             $estoque->{$row->idTab_Produtos}->QtdVenda = $row->QtdVenda;
+        }
+	
+		foreach ($query['Devolvidos'] as $row) {
+            $estoque->{$row->idTab_Produtos}->QtdDevolve = $row->QtdDevolve;
         }
 
         foreach ($query['Consumidos'] as $row) {
@@ -692,9 +738,11 @@ class Relatorio_model extends CI_Model {
         foreach ($estoque as $row) {
             $row->QtdCompra = (!isset($row->QtdCompra)) ? 0 : $row->QtdCompra;
             $row->QtdVenda = (!isset($row->QtdVenda)) ? 0 : $row->QtdVenda;
+			$row->QtdDevolve = (!isset($row->QtdDevolve)) ? 0 : $row->QtdDevolve;
             $row->QtdConsumo = (!isset($row->QtdConsumo)) ? 0 : $row->QtdConsumo;
 
-            $row->QtdEstoque = $row->QtdCompra - $row->QtdVenda - $row->QtdConsumo;
+            $row->QtdEstoque = $row->QtdCompra - $row->QtdVenda + $row->QtdDevolve - $row->QtdConsumo;
+			$row->QtdVendida = $row->QtdVenda - $row->QtdDevolve;
         }
 
         /*
@@ -724,8 +772,9 @@ class Relatorio_model extends CI_Model {
                 '(OT.DataOrca >= "' . $data['DataInicio'] . '")';
         }
 
-        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;		
 		$data['Produtos'] = ($data['Produtos']) ? ' AND TPV.idTab_Produtos = ' . $data['Produtos'] : FALSE;
+		$filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
 
 		$query = $this->db->query('
             SELECT
@@ -764,12 +813,12 @@ class Relatorio_model extends CI_Model {
                 C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				(' . $consulta . ') AND
+				' . $filtro1 . '
 				APV.idApp_ProdutoVenda != "0" AND
 				C.idApp_Cliente = OT.idApp_Cliente
-                ' . $data['NomeCliente'] . '
+                ' . $data['NomeCliente'] . ' 			
 				' . $data['Produtos'] . ' AND
-				OT.TipoRD = "R" AND
-				OT.AprovadoOrca = "S"
+				OT.TipoRD = "R" 
             ORDER BY
 				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
@@ -789,6 +838,7 @@ class Relatorio_model extends CI_Model {
 
             foreach ($query->result() as $row) {
 				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
+				$row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
             }
             return $query;
         }
@@ -849,8 +899,7 @@ class Relatorio_model extends CI_Model {
 				C.idApp_Cliente = OT.idApp_Cliente
                 ' . $data['NomeCliente'] . '
 				' . $data['Produtos'] . ' AND
-				OT.TipoRD = "D" AND
-				OT.AprovadoOrca = "S"
+				OT.TipoRD = "D"
             ORDER BY
 				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
@@ -2866,7 +2915,8 @@ class Relatorio_model extends CI_Model {
                 OB.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				OB.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
             ORDER BY
-                TP3.Prodaux3,
+                OB.CodProd,
+				TP3.Prodaux3,
 				Produtos ASC,
 				TP1.Abrev1 DESC,
 				TP2.Abrev2 DESC

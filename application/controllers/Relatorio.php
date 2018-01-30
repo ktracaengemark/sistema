@@ -600,6 +600,7 @@ class Relatorio extends CI_Controller {
 			'CodProd',
 			'Produtos',
 			'Prodaux3',
+			'AprovadoOrca',
 			'DataInicio',
             'DataFim',
 			'Ordenamento',
@@ -615,10 +616,16 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
 
+		$data['select']['AprovadoOrca'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
 
         $data['select']['Campo'] = array(
             'C.NomeCliente' => 'Nome do Cliente',
 			'OT.idApp_OrcaTrata' => 'Id Orçam.',
+			'OT.AprovadoOrca' => 'Orç. Aprov./Fechado?',
             'OT.DataOrca' => 'Data do Orçam.',
 			'TPV.CodProd' => 'Código',
 			'TPV.Produtos' => 'Produto',
@@ -646,7 +653,7 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
-
+			$data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
             $data['report'] = $this->Relatorio_model->list_produtosvend($data['bd'],TRUE);
 
             /*

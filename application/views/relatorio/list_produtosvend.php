@@ -7,6 +7,7 @@
 						<th class="active">Cliente</th>
 						<th class="active">Id do Orçam.</th>
                         <th class="active">Data do Orçam.</th>
+						<th class="active">Orç. Apv.?</th>
 						<th class="active">Fornec</th>
 						<th class="active">Código</th>
 						<th class="active">Qtd.</th>
@@ -30,6 +31,7 @@
 							echo '<td>' . $row['NomeCliente'] . '</td>';
 							echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
                             echo '<td>' . $row['DataOrca'] . '</td>';
+							echo '<td>' . $row['AprovadoOrca'] . '</td>';
 							echo '<td>' . $row['NomeFornecedor'] . '</td>';
 							echo '<td>' . $row['CodProd'] . '</td>';
 							echo '<td>' . $row['QtdVendaProduto'] . '</td>';
