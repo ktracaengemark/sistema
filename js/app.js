@@ -420,7 +420,7 @@ function calculaParcelasPagaveis() {
 								<input type="text" class="form-control" maxlength="6" readonly=""\
 									   name="ParcelaPagaveis'+i+'" value="'+i+'/'+parcelas+'">\
 							</div>\
-							<div class="col-md-3">\
+							<div class="col-md-2">\
 								<label for="ValorParcelaPagaveis">Valor Parcela:</label><br>\
 								<div class="input-group" id="txtHint">\
 									<span class="input-group-addon" id="basic-addon1">R$</span>\
@@ -428,7 +428,7 @@ function calculaParcelasPagaveis() {
 										    id="ValorParcelaPagaveis'+i+'" name="ValorParcelaPagaveis'+i+'" value="'+parcdesp+'">\
 								</div>\
 							</div>\
-							<div class="col-md-3">\
+							<div class="col-md-2">\
 								<label for="DataVencimentoPagaveis">Data Venc. Parc.</label>\
 								<div class="input-group DatePicker">\
 									<input type="text" class="form-control Date" id="DataVencimentoPagaveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
@@ -438,10 +438,7 @@ function calculaParcelasPagaveis() {
 									</span>\
 								</div>\
 							</div>\
-						</div>\
-						<div class="col-md-2"></div>\
-						<div class="row">\
-							<div class="col-md-3">\
+							<div class="col-md-2">\
 								<label for="ValorPagoPagaveis">Valor Pago:</label><br>\
 								<div class="input-group" id="txtHint">\
 									<span class="input-group-addon" id="basic-addon1">R$</span>\
@@ -449,7 +446,7 @@ function calculaParcelasPagaveis() {
 										    id="ValorPagoPagaveis'+i+'" name="ValorPagoPagaveis'+i+'" value="">\
 								</div>\
 							</div>\
-							<div class="col-md-3">\
+							<div class="col-md-2">\
 								<label for="DataPagoPagaveis">Data Pag.</label>\
 								<div class="input-group DatePicker">\
 									<input type="text" class="form-control Date" id="DataPagoPagaveis'+i+'" maxlength="10" placeholder="DD/MM/AAAA"\
@@ -459,7 +456,7 @@ function calculaParcelasPagaveis() {
 									</span>\
 								</div>\
 							</div>\
-							<div class="col-md-3">\
+							<div class="col-md-2">\
 								<label for="QuitadoPagaveis">Quitado?</label><br>\
 								<div class="form-group">\
 									<div class="btn-group" data-toggle="buttons">\
@@ -1864,7 +1861,7 @@ $(document).ready(function () {
                                         name="QtdCompraProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
-                            <div class="col-md-7">\
+                            <div class="col-md-4">\
                                 <label for="idTab_Produto">Produto:</label><br>\
                                 <select class="form-control Chosen" id="listadinamicab'+pc+'" onchange="buscaValorCompra(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
                                     <option value="">-- Selecione uma opção --</option>\
@@ -1887,14 +1884,6 @@ $(document).ready(function () {
                                            name="SubtotalProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
-                        </div>\
-						<div class="row">\
-							<div class="col-md-1"></div>\
-							<div class="col-md-7">\
-								<label for="ObsProduto'+pc+'">Obs:</label><br>\
-								<input type="text" class="form-control" id="ObsProduto'+pc+'" maxlength="250"\
-									   name="ObsProduto'+pc+'" value="">\
-							</div>\
 							<div class="col-md-2">\
 								<label for="DataValidadeProduto'+pc+'">Val. do Produto:</label>\
 								<div class="input-group DatePicker">\
@@ -1911,7 +1900,7 @@ $(document).ready(function () {
                                     <span class="glyphicon glyphicon-trash"></span>\
                                 </a>\
                             </div>\
-						</div>\
+                        </div>\
                     </div>\
                 </div>\
             </div>'
@@ -1973,16 +1962,13 @@ $(document).ready(function () {
                                         name="QtdCompraProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
-                            <div class="col-md-7">\
+                            <div class="col-md-5">\
                                 <label for="idTab_Produto">Produto:</label><br>\
                                 <select class="form-control Chosen" id="listadinamicab'+pc+'" onchange="buscaValorCompra(this.value,this.name,\'Produto\','+pc+')" name="idTab_Produto'+pc+'">\
                                     <option value="">-- Selecione uma opção --</option>\
                                 </select>\
                             </div>\
-                        </div>\
-						<div class="row">\
-							<div class="col-md-1"></div>\
-							<div class="col-md-7">\
+							<div class="col-md-5">\
 								<label for="ObsProduto'+pc+'">Obs:</label><br>\
 								<input type="text" class="form-control" id="ObsProduto'+pc+'" maxlength="250"\
 									   name="ObsProduto'+pc+'" value="">\
@@ -1993,7 +1979,7 @@ $(document).ready(function () {
                                     <span class="glyphicon glyphicon-trash"></span>\
                                 </a>\
                             </div>\
-						</div>\
+                        </div>\
                     </div>\
                 </div>\
             </div>'

@@ -80,9 +80,9 @@
 						<ul class="dropdown-menu" role="menu">							
 							<li><a href="<?php echo base_url() ?>orcatrata2/cadastrar"><span class="glyphicon glyphicon-usd"></span> Orçam. & Entradas</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>orcatrata3/cadastrar"><span class="glyphicon glyphicon-pencil"></span> Devol. & Extorno</a></li>
+							<li><a href="<?php echo base_url() ?>devolucao/cadastrar"><span class="glyphicon glyphicon-pencil"></span> Devol. & Extorno</a></li>
 							<li role="separator" class="divider"></li>							
-							<li><a href="<?php echo base_url() ?>despesas/cadastrar"><span class="glyphicon glyphicon-usd"></span> Despesas & Saídas</a></li>
+							<li><a href="<?php echo base_url() ?>despesas/cadastrar"><span class="glyphicon glyphicon-usd"></span> Despesas & Compras</a></li>
 							<li role="separator" class="divider"></li>							
 							<li><a href="<?php echo base_url() ?>consumo/cadastrar"><span class="glyphicon glyphicon-pencil"></span> Consumos & Perdas</a></li>
 							<li role="separator" class="divider"></li>							
@@ -95,9 +95,9 @@
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="<?php echo base_url() ?>relatorio/orcamento"><span class="glyphicon glyphicon-list"></span> Orçam. & Entradas</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>relatorio/devolucao"><span class="glyphicon glyphicon-list"></span> Devol. & Extorno</a></li>
+							<li><a href="<?php echo base_url() ?>relatorio/produtosdevol"><span class="glyphicon glyphicon-list"></span> Devol. de Produtos</a></li>
 							<li role="separator" class="divider"></li>							
-							<li><a href="<?php echo base_url() ?>relatorio/despesas"><span class="glyphicon glyphicon-list"></span> Despesas & Saídas</a></li>
+							<li><a href="<?php echo base_url() ?>relatorio/despesas"><span class="glyphicon glyphicon-list"></span> Despesas & Extornos</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/consumo"><span class="glyphicon glyphicon-list"></span> Consumos & Perdas</a></li>
 							<li role="separator" class="divider"></li>

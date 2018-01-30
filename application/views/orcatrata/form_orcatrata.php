@@ -154,7 +154,7 @@
 												<div class="panel-heading collapsed" role="tab" id="heading1" data-toggle="collapse" data-parent="#accordion1" data-target="#collapse1" aria-expanded="false">								<h4 class="panel-title">
 														<a class="accordion-toggle">
 															<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-															Orçamento, Serviços & Produtos
+															Produtos & Serviços
 														</a>
 													</h4>
 												</div>
@@ -381,13 +381,28 @@
 														<div class="form-group">
 															<div class="row">
 																<div class="col-md-3">
-																	<a class="add_field_button2 btn btn-xs btn-danger">
+																	<a class="add_field_button2 btn btn-danger">
 																		<span class="glyphicon glyphicon-plus"></span> Adic. Produtos ou Serviços
 																	</a>
 																</div>
 															</div>
 														</div>
-													</div>
+													</div>													
+												</div>
+											</div>
+										</div>
+								<!--#######################################-->
+										<div class="panel-group" id="accordion4" role="tablist" aria-multiselectable="true">
+											<div class="panel panel-primary">
+												<div class="panel-heading collapsed" role="tab" id="heading4" data-toggle="collapse" data-parent="#accordion4" data-target="#collapse4" aria-expanded="false">								<h4 class="panel-title">
+														<a class="accordion-toggle">
+															<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+															Orçamento & Forma de Pagam.
+														</a>
+													</h4>
+												</div>
+
+												<div id="collapse4" class="panel-collapse" role="tabpanel" aria-labelledby="heading4" aria-expanded="false">
 													<div class="panel-body">
 														<div class="form-group">
 															<div class="panel panel-info">
@@ -425,28 +440,12 @@
 															</div>
 														</div>
 													</div>
-												</div>
-											</div>
-										</div>
-								<!--#######################################-->
-										<hr>
-										<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
-											<div class="panel panel-primary">
-												<div class="panel-heading" role="tab" id="heading2" data-toggle="collapse" data-parent="#accordion2" data-target="#collapse2">
-													<h4 class="panel-title">
-														<a class="accordion-toggle">
-															<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-															Forma de Pagamento & Parcelas
-														</a>
-													</h4>
-												</div>
-												<div id="collapse2" class="panel-collapse" role="tabpanel" aria-labelledby="heading2" aria-expanded="false">
 													<div class="panel-body">
 														<div class="form-group">
 															<div class="panel panel-info">
 																<div class="panel-heading">
 																	<div class="row">
-																		<div class="col-md-2">
+																		<div class="col-md-3">
 																			<label for="QtdParcelasOrca">Qtd. Parc.:</label><br>
 																			<input type="text" class="form-control Numero" id="QtdParcelasOrca" maxlength="3" placeholder="0"
 																				   name="QtdParcelasOrca" value="<?php echo $orcatrata['QtdParcelasOrca'] ?>">
@@ -491,6 +490,21 @@
 															</div>
 														</div>
 													</div>
+												</div>
+											</div>
+										</div>
+										
+										<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+											<div class="panel panel-primary">
+												<div class="panel-heading" role="tab" id="heading2" data-toggle="collapse" data-parent="#accordion2" data-target="#collapse2">
+													<h4 class="panel-title">
+														<a class="accordion-toggle">
+															<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+															Parcelas
+														</a>
+													</h4>
+												</div>
+												<div id="collapse2" class="panel-collapse" role="tabpanel" aria-labelledby="heading2" aria-expanded="false">													
 													<div class="panel-body">
 														<!--App_parcelasRec-->
 														<div class="input_fields_parcelas">
@@ -724,7 +738,6 @@
 											</div>
 										</div>
 										-->
-										<hr>
 										<!--
 										<div class="form-group">
 											<div class="row">

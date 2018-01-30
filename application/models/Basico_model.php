@@ -492,7 +492,50 @@ class Basico_model extends CI_Model {
         }
 
         return $array;
-    }	
+    }
+
+	public function select_orcatrata($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query(					
+				'SELECT
+					P.idApp_OrcaTrata,
+					C.NomeCliente,
+					C.idApp_Cliente
+				FROM
+					App_OrcaTrata AS P
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = P.idApp_Cliente
+				WHERE
+					P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+					P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+				ORDER BY
+					idApp_OrcaTrata ASC'
+    );
+					
+        } else {
+            $query = $this->db->query(
+                'SELECT
+					P.idApp_OrcaTrata,
+					C.NomeCliente,
+					C.idApp_Cliente
+				FROM
+					App_OrcaTrata AS P
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = P.idApp_Cliente
+				WHERE
+					P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+					P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+				ORDER BY
+					idApp_OrcaTrata ASC'
+    );
+            
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->idApp_OrcaTrata] = $row->idApp_OrcaTrata;
+            }
+        }
+
+        return $array;
+    }
 
 	public function select_profissional($data = FALSE) {
 

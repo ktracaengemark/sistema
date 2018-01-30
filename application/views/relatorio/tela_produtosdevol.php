@@ -17,14 +17,14 @@
 						<?php echo form_open('relatorio/produtosdevol', 'role="form"'); ?>
 
 						<div class="form-group">
-							<div class="row">                           								
-								<div class="col-md-4">
-									<label for="Ordenamento">Nome do Cliente:</label>
+							<div class="row">                           
+								<div class="col-md-3">
+									<label for="Ordenamento">Tipo Despesa:</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-											id="NomeCliente" name="NomeCliente">
+											id="TipoDespesa" name="TipoDespesa">
 										<?php
-										foreach ($select['NomeCliente'] as $key => $row) {
-											if ($query['NomeCliente'] == $key) {
+										foreach ($select['TipoDespesa'] as $key => $row) {
+											if ($query['TipoDespesa'] == $key) {
 												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 											} else {
 												echo '<option value="' . $key . '">' . $row . '</option>';
@@ -48,7 +48,6 @@
 										?>
 									</select>
 								</div>
-								
 								<!--
 								<div class="col-md-1">
 									<label for="AprovadoDespesas">Desp.Aprov.?</label>
@@ -112,7 +111,7 @@
 									</select>
 								</div>
 								-->
-								<div class="col-md-4">
+								<div class="col-md-5">
 									<label for="Ordenamento">Ordenamento:</label>
 									<div class="form-group">
 										<div class="row">
@@ -180,11 +179,12 @@
 										<span class="glyphicon glyphicon-search"></span> Pesquisar
 									</button>
 								</div>
+								
 								<div class="col-md-2 text-right">											
-										<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>relatorio/clientes" role="button"> 
-											<span class="glyphicon glyphicon-plus"></span> Nova Devoloção
+										<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>devolucao/cadastrar" role="button"> 
+											<span class="glyphicon glyphicon-plus"></span> Nova Devol/ Extorno
 										</a>
-								</div>								
+								</div>
 							</div>
 						</div>
 

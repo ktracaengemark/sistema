@@ -2,7 +2,7 @@
 
 
 	<div class="col-md-1"></div>
-	<div class="col-md-10">
+	<div class="col-md-10">		
 		<div class="row">
 
 			<div class="main">
@@ -14,18 +14,17 @@
 					<div class="panel-heading"><strong><?php echo $titulo; ?></strong></div>
 					<div class="panel-body">
 
-						<?php echo form_open('relatorio/devolucao', 'role="form"'); ?>
+						<?php echo form_open('relatorio/produtosdevol', 'role="form"'); ?>
 
 						<div class="form-group">
-							<div class="row">
-
-								<div class="col-md-3">
-									<label for="Ordenamento">Tipo de Despesa:</label>
+							<div class="row">                           								
+								<div class="col-md-4">
+									<label for="Ordenamento">Nome do Cliente:</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-											id="TipoDespesa" name="TipoDespesa">
+											id="NomeCliente" name="NomeCliente">
 										<?php
-										foreach ($select['TipoDespesa'] as $key => $row) {
-											if ($query['TipoDespesa'] == $key) {
+										foreach ($select['NomeCliente'] as $key => $row) {
+											if ($query['NomeCliente'] == $key) {
 												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 											} else {
 												echo '<option value="' . $key . '">' . $row . '</option>';
@@ -33,9 +32,25 @@
 										}
 										?>
 									</select>
-								</div>						
+								</div>
+								<div class="col-md-4">
+									<label for="Ordenamento">Produtos</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+											id="Produtos" name="Produtos">
+										<?php
+										foreach ($select['Produtos'] as $key => $row) {
+											if ($query['Produtos'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
+								
 								<!--
-								<div class="col-md-3">
+								<div class="col-md-1">
 									<label for="AprovadoDespesas">Desp.Aprov.?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="AprovadoDespesas" name="AprovadoDespesas">
@@ -50,8 +65,7 @@
 										?>
 									</select>
 								</div>
-								
-								<div class="col-md-2">
+								<div class="col-md-1">
 									<label for="ServicoConcluidoDespesas">Desp. Concl.?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="ServicoConcluidoDespesas" name="ServicoConcluidoDespesas">
@@ -66,8 +80,7 @@
 										?>
 									</select>
 								</div>
-								-->
-								<div class="col-md-2">
+								<div class="col-md-1">
 									<label for="QuitadoDespesas">Desp.Quit.?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="QuitadoDespesas" name="QuitadoDespesas">
@@ -82,8 +95,8 @@
 										?>
 									</select>
 								</div>
-							
-								<div class="col-md-2">
+
+								<div class="col-md-1">
 									<label for="QuitadoPagaveis">Parc. Quit.?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="QuitadoPagaveis" name="QuitadoPagaveis">
@@ -98,12 +111,12 @@
 										?>
 									</select>
 								</div>
-								<!--
-								<div class="col-md-5">
+								-->
+								<div class="col-md-4">
 									<label for="Ordenamento">Ordenamento:</label>
 									<div class="form-group">
 										<div class="row">
-											<div class="col-md-8">
+											<div class="col-md-6">
 												<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 														id="Campo" name="Campo">
 													<?php
@@ -135,33 +148,14 @@
 										</div>
 									</div>
 								</div>
-								-->
+								
 							</div>
 						</div>
+
 						<div class="form-group">
 							<div class="row">
-								<div class="col-md-2">
-									<label for="DataInicio3">Orç.- Data Inc.</label>
-									<div class="input-group DatePicker">
-										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											   autofocus name="DataInicio3" value="<?php echo set_value('DataInicio3', $query['DataInicio3']); ?>">
-										<span class="input-group-addon" disabled>
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<label for="DataFim3">Orç.- Data Fim</label>
-									<div class="input-group DatePicker">
-										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											   autofocus name="DataFim3" value="<?php echo set_value('DataFim3', $query['DataFim3']); ?>">
-										<span class="input-group-addon" disabled>
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-									</div>
-								</div>								
-								<div class="col-md-2">
-									<label for="DataInicio">Venc.- Data Inc.</label>
+								<div class="col-md-3">
+									<label for="DataInicio">Data Início: *</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											   autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
@@ -170,8 +164,8 @@
 										</span>
 									</div>
 								</div>
-								<div class="col-md-2">
-									<label for="DataFim">Venc.- Data Fim</label>
+								<div class="col-md-3">
+									<label for="DataFim">Data Fim: (opcional)</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											   autofocus name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
@@ -180,44 +174,17 @@
 										</span>
 									</div>
 								</div>
-								<div class="col-md-2">
-									<label for="DataInicio2">Pagam.- Data Inc.</label>
-									<div class="input-group DatePicker">
-										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											   autofocus name="DataInicio2" value="<?php echo set_value('DataInicio2', $query['DataInicio2']); ?>">
-										<span class="input-group-addon" disabled>
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<label for="DataFim2">Pagam.- Data Fim</label>
-									<div class="input-group DatePicker">
-										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											   autofocus name="DataFim2" value="<?php echo set_value('DataFim2', $query['DataFim2']); ?>">
-										<span class="input-group-addon" disabled>
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="row">
 								<br>
-								<div class="col-md-4"></div>
 								<div class="col-md-2 text-left">
 									<button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
 										<span class="glyphicon glyphicon-search"></span> Pesquisar
 									</button>
 								</div>
-								
 								<div class="col-md-2 text-right">											
-										<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>devolucao/cadastrar" role="button"> 
-											<span class="glyphicon glyphicon-plus"></span> Nova Devol/ Estorno
+										<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>relatorio/clientes" role="button"> 
+											<span class="glyphicon glyphicon-plus"></span> Nova Devoloção
 										</a>
-								</div>
-								<div class="col-md-4"></div>
+								</div>								
 							</div>
 						</div>
 
@@ -235,5 +202,5 @@
 
 		</div>
 	</div>
-	<div class="col-md-1"></div>
+	<div class="col-md-1"></div>	
 
