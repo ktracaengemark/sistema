@@ -3,14 +3,14 @@
 <div class="container-fluid">
 
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
 
 			<div class="panel-heading text-center">
-				<h2><?php echo '<strong>DEVOLUÇÃO</strong> - <strong>Nº: ' . $_SESSION['Despesas']['idApp_Despesas'] . '</strong> - <strong>Orçam.</strong> - <strong>Nº: ' . $_SESSION['Despesas']['idApp_OrcaTrata'] . '</strong>' ?></h2>
+				<h2><?php echo '<strong>DEVOLUÇÃO / EXTORNO</strong> - <strong>Nº: ' . $_SESSION['Despesas']['idApp_Despesas'] . '</strong> - <strong>Orçam.</strong> - <strong>Nº: ' . $_SESSION['Despesas']['idApp_OrcaTrata'] . '</strong>' ?></h2>
 			</div>
 
 			<div class="panel-body">
-
 				<hr />
 				<h3 class="text-center">Produtos </h3>
 				<hr />

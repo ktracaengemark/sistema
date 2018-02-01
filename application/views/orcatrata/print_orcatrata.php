@@ -3,19 +3,20 @@
 <div class="container-fluid">
 
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
 
 			<div class="panel-heading text-center">
-				<h2 class="text-center">ORÇAMENTO / VENDA</h2>
+				<h2><?php echo '<strong>ORÇAMENTO / VENDA</strong> - <strong>Nº: ' . $_SESSION['Orcatrata']['idApp_OrcaTrata'] . '</strong>' ?></h2>
 			</div>
 
 			<div class="panel-body">
 
 				<hr />
-				<?php echo '<h4>' . $_SESSION['Cliente']['NomeCliente'] . ' - Id: ' . $_SESSION['Cliente']['idApp_Cliente'] . ' - Orç. Nº: ' . $_SESSION['Orcatrata']['idApp_OrcaTrata'] . '</h4>' ?>
+				<?php echo '<h4>' . $_SESSION['Cliente']['NomeCliente'] . ' - Id: ' . $_SESSION['Cliente']['idApp_Cliente'] . '</h4>' ?>
 				<hr />
 
-				<h3 class="text-center">Orçamento, Produtos & Serviços  </h3>
+				<h3 class="text-center">Produtos & Serviços  </h3>
 				<hr />
 
 				<table class="table table-bordered">
