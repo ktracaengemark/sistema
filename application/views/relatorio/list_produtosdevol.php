@@ -14,6 +14,7 @@
 						<th class="active">Produto</th>
 						<th class="active">Aux1</th>
 						<th class="active">Aux2</th>
+						<th class="active"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,6 +34,11 @@
 							echo '<td>' . $row['Produtos'] . '</td>';
 							echo '<td>' . $row['Prodaux1'] . '</td>';
 							echo '<td>' . $row['Prodaux2'] . '</td>';
+														echo '<td class="notclickable">
+                                    <a class="btn btn-md btn-info notclickable" target="_blank" href="' . base_url() . 'DespesasPrint/imprimir/' . $row['idApp_Despesas'] . '">
+                                        <span class="glyphicon glyphicon-print notclickable"></span>
+                                    </a>
+                                </td>';
                         echo '</tr>';
                     }
                     ?>

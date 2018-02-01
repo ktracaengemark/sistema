@@ -77,6 +77,7 @@
                         <th class="active">Data do Pagam.</th>
                         <th class="active">Valor Pago</th>
                         <th class="active">Parc. Quit.?</th>
+						<th class="active"></th>
                     </tr>
                 </thead>
 
@@ -103,6 +104,11 @@
                             echo '<td>' . $row['DataPagoPagaveis'] . '</td>';
                             echo '<td class="text-left">R$ ' . $row['ValorPagoPagaveis'] . '</td>';
                             echo '<td>' . $row['QuitadoPagaveis'] . '</td>';
+							echo '<td class="notclickable">
+                                    <a class="btn btn-md btn-info notclickable" target="_blank" href="' . base_url() . 'DespesasPrint/imprimir/' . $row['idApp_Despesas'] . '">
+                                        <span class="glyphicon glyphicon-print notclickable"></span>
+                                    </a>
+                                </td>';
                         echo '</tr>';
                     }
                     ?>

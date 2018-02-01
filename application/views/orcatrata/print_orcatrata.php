@@ -12,7 +12,7 @@
 			<div class="panel-body">
 
 				<hr />
-				<?php echo '<h4>' . $_SESSION['Cliente']['NomeCliente'] . ' - Id: ' . $_SESSION['Cliente']['idApp_Cliente'] . '</h4>' ?>
+				<?php echo '<h4>' . $_SESSION['Cliente']['NomeCliente'] . ' - Id: ' . $_SESSION['Cliente']['idApp_Cliente'] . ' - Orç. Nº: ' . $_SESSION['Orcatrata']['idApp_OrcaTrata'] . '</h4>' ?>
 				<hr />
 
 				<h3 class="text-center">Orçamento, Produtos & Serviços  </h3>
@@ -21,7 +21,7 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th scope="col">Nº</th>
+							<!--<th scope="col">Nº</th>-->
 							<th scope="col">id</th>														
 							<th scope="col">CodProd.</th>							
 						</tr>	
@@ -48,7 +48,7 @@
 						?>
 
 						<tr>
-							<td><?php echo $produto[$i]['idApp_OrcaTrata'] ?></td>
+							<!--<td><?php echo $produto[$i]['idApp_OrcaTrata'] ?></td>-->
 							<td><?php echo $produto[$i]['idApp_ProdutoVenda'] ?></td>							
 							<td><?php echo $produto[$i]['CodProd'] ?></td>							
 						</tr>						

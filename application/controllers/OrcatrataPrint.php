@@ -13,7 +13,7 @@ class OrcatrataPrint extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'OrcatrataPrint_model', 'Profissional_model', 'Relatorio_model', 'Formapag_model', 'Cliente_model'));
+        $this->load->model(array('Basico_model', 'Orcatrata_model', 'OrcatrataPrint_model', 'Profissional_model', 'Relatorio_model', 'Formapag_model', 'Cliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -60,6 +60,7 @@ class OrcatrataPrint extends CI_Controller {
             #### Carrega os dados do cliente nas variáves de sessão ####
             $this->load->model('Cliente_model');
             $_SESSION['Cliente'] = $this->Cliente_model->get_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+			$_SESSION['Orcatrata'] = $this->Orcatrata_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata'], TRUE);
             #$_SESSION['log']['idApp_Cliente'] = $_SESSION['Cliente']['idApp_Cliente'];
 
             /*

@@ -102,7 +102,9 @@ class Devolucao extends CI_Controller {
         $j = 1;
         for ($i = 1; $i <= $data['count']['PCount']; $i++) {
 
-            if ($this->input->post('idTab_Produto' . $i)) {
+            if ($this->input->post('idTab_Produto' . $i) || $this->input->post('ValorCompraProduto' . $i) ||
+					$this->input->post('QtdCompraProduto' . $i) || $this->input->post('SubtotalProduto' . $i) ||
+					$this->input->post('ObsProduto' . $i) || $this->input->post('DataValidadeProduto' . $i)) {
                 $data['produto'][$j]['idTab_Produto'] = $this->input->post('idTab_Produto' . $i);
                 $data['produto'][$j]['ValorCompraProduto'] = $this->input->post('ValorCompraProduto' . $i);
                 $data['produto'][$j]['QtdCompraProduto'] = $this->input->post('QtdCompraProduto' . $i);
@@ -318,7 +320,7 @@ class Devolucao extends CI_Controller {
                 //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Despesas', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'relatorio/devolucao/'  . $data['msg']);
+                redirect(base_url() . 'relatorio/produtosdevol/'  . $data['msg']);
 				
                 exit();
             }
@@ -390,7 +392,9 @@ class Devolucao extends CI_Controller {
         $j = 1;
         for ($i = 1; $i <= $data['count']['PCount']; $i++) {
 
-            if ($this->input->post('idTab_Produto' . $i)) {
+            if ($this->input->post('idTab_Produto' . $i) || $this->input->post('ValorCompraProduto' . $i) ||
+					$this->input->post('QtdCompraProduto' . $i) || $this->input->post('SubtotalProduto' . $i) ||
+					$this->input->post('ObsProduto' . $i) || $this->input->post('DataValidadeProduto' . $i)) {
                 $data['produto'][$j]['idApp_ProdutoCompra'] = $this->input->post('idApp_ProdutoCompra' . $i);
                 $data['produto'][$j]['idTab_Produto'] = $this->input->post('idTab_Produto' . $i);
                 $data['produto'][$j]['ValorCompraProduto'] = $this->input->post('ValorCompraProduto' . $i);
@@ -461,9 +465,10 @@ class Devolucao extends CI_Controller {
 
                 if (isset($data['produto'])) {
 
-                    for($j=1;$j<=$data['count']['PCount'];$j++)   
+                    for($j=1;$j<=$data['count']['PCount'];$j++) {  
 					$data['produto'][$j]['SubtotalProduto'] = number_format(($data['produto'][$j]['ValorCompraProduto'] * $data['produto'][$j]['QtdCompraProduto']), 2, ',', '.');
-						
+					$data['produto'][$j]['DataValidadeProduto'] = $this->basico->mascara_data($data['produto'][$j]['DataValidadeProduto'], 'barras');
+					}	
                 }
             }
 
@@ -659,14 +664,14 @@ class Devolucao extends CI_Controller {
                     $data['update']['produto']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
                     $data['update']['produto']['inserir'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
                     $data['update']['produto']['inserir'][$j]['idApp_Despesas'] = $data['despesas']['idApp_Despesas'];
-					#$data['update']['produto']['inserir'][$j]['DataValidadeProduto'] = $this->basico->mascara_data($data['update']['produto']['inserir'][$j]['DataValidadeProduto'], 'mysql');
+					$data['update']['produto']['inserir'][$j]['DataValidadeProduto'] = $this->basico->mascara_data($data['update']['produto']['inserir'][$j]['DataValidadeProduto'], 'mysql');
                     $data['update']['produto']['inserir'][$j]['ValorCompraProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['inserir'][$j]['ValorCompraProduto']));
                     unset($data['update']['produto']['inserir'][$j]['SubtotalProduto']);
                 }
 
                 $max = count($data['update']['produto']['alterar']);
                 for($j=0;$j<$max;$j++) {
-                    #$data['update']['produto']['alterar'][$j]['DataValidadeProduto'] = $this->basico->mascara_data($data['update']['produto']['alterar'][$j]['DataValidadeProduto'], 'mysql');
+                    $data['update']['produto']['alterar'][$j]['DataValidadeProduto'] = $this->basico->mascara_data($data['update']['produto']['alterar'][$j]['DataValidadeProduto'], 'mysql');
 					$data['update']['produto']['alterar'][$j]['ValorCompraProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['alterar'][$j]['ValorCompraProduto']));
                     unset($data['update']['produto']['alterar'][$j]['SubtotalProduto']);
                 }
@@ -742,14 +747,14 @@ class Devolucao extends CI_Controller {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
                 $this->basico->erro($msg);
-                $this->load->view('despesas/form_despesas', $data);
+                $this->load->view('despesas/form_devolucao', $data);
             } else {
 
                 //$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idApp_Despesas'], FALSE);
                 //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Despesas', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'relatorio/devolucao/' . $data['msg']);
+                redirect(base_url() . 'relatorio/produtosdevol/' . $data['msg']);
                 exit();
             }
         }
@@ -771,7 +776,7 @@ class Devolucao extends CI_Controller {
 
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'relatorio/despesas/' . $data['msg']);
+                redirect(base_url() . 'relatorio/produtosdevol/' . $data['msg']);
                 exit();
             //}
         //}
