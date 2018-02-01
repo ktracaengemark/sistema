@@ -727,6 +727,8 @@ class Relatorio extends CI_Controller {
             'NomeCliente',
 			'CodProd',
 			'Produtos',
+			'Prodaux1',
+			'Prodaux2',
 			'Prodaux3',
 			'AprovadoOrca',
 			'DataInicio',
@@ -757,6 +759,8 @@ class Relatorio extends CI_Controller {
             'OT.DataOrca' => 'Data do Orçam.',
 			'TPV.CodProd' => 'Código',
 			'TPV.Produtos' => 'Produto',
+			'TPV.Prodaux1' => 'Aux1',
+			'TPV.Prodaux2' => 'Aux2',
 			'TPV.Prodaux3' => 'Categoria',
 
         );
@@ -768,6 +772,9 @@ class Relatorio extends CI_Controller {
 
 		$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
 		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
+		$data['select']['Prodaux1'] = $this->Relatorio_model->select_prodaux1();
+		$data['select']['Prodaux2'] = $this->Relatorio_model->select_prodaux2();
+		$data['select']['Prodaux3'] = $this->Relatorio_model->select_prodaux3();
 
         $data['titulo'] = 'Relatório de Produtos Vendidos';
 
@@ -777,7 +784,10 @@ class Relatorio extends CI_Controller {
             #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
 			$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
-            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+			$data['bd']['Prodaux1'] = $data['query']['Prodaux1'];
+			$data['bd']['Prodaux2'] = $data['query']['Prodaux2'];
+			$data['bd']['Prodaux3'] = $data['query']['Prodaux3'];            
+			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
