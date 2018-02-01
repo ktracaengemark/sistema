@@ -30,10 +30,10 @@
 							<th scope="col">Data</th>
 						</tr>	
 						<tr>
+							<th scope="col"></th>
 							<th scope="col">Qtd</th>
-							<th scope="col">Unidade</th>							
-														
-							<!--<th scope="col">Aux1</th>
+							<!--<th scope="col">Unidade</th>																				
+							<th scope="col">Aux1</th>
 							<th scope="col">Aux2</th>-->
 							<!--<th scope="col">Tipo Venda</th>
 							<th scope="col">Desc Venda</th>-->
@@ -59,10 +59,10 @@
 							<td><?php echo $produto[$i]['DataValidadeProduto'] ?></td>
 						</tr>						
 						<tr>
+							<td></td>
 							<td><?php echo $produto[$i]['QtdVendaProduto'] ?></td>
-							<td><?php echo $produto[$i]['UnidadeProduto'] ?></td>							
-							
-							<!--<td><?php echo $produto[$i]['Prodaux1'] ?></td>
+							<!--<td><?php echo $produto[$i]['UnidadeProduto'] ?></td>														
+							<td><?php echo $produto[$i]['Prodaux1'] ?></td>
 							<td><?php echo $produto[$i]['Prodaux2'] ?></td>-->
 							<!--<td><?php echo $produto[$i]['Convenio'] ?></td>
 							<td><?php echo $produto[$i]['Convdesc'] ?></td>-->

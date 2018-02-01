@@ -21,18 +21,21 @@
 
 				<table class="table table-bordered">
 					<thead>
-						<tr>
+						<tr>							
 							<!--<th scope="col">Nº</th>-->
 							<th scope="col">id</th>
-							<!--<th scope="col">CodProd.</th>
+							<!--<th scope="col">idTab_Produto</th>
+							<th scope="col">idTab_Produtos</th>
+							<th scope="col">CodProd.</th>
 							<th scope="col">CategProd.</th>-->
 							<th scope="col">DescProd.</th>
 							<th scope="col">Data</th>
 						</tr>	
 						<tr>
+							<th scope="col"></th>
 							<th scope="col">Qtd</th>
-							<th scope="col">Unidade</th>																				
-							<!--<th scope="col">Aux1</th>
+							<!--<th scope="col">Unidade</th>																				
+							<th scope="col">Aux1</th>
 							<th scope="col">Aux2</th>-->
 							<!--<th scope="col">Tipo Venda</th>
 							<th scope="col">Desc Venda</th>-->
@@ -49,18 +52,21 @@
 							#echo $produto[$i]['QtdCompraProduto'];
 						?>
 
-						<tr>
+						<tr>								
 							<!--<td><?php echo $produto[$i]['idApp_Despesas'] ?></td>-->
 							<td><?php echo $produto[$i]['idApp_ProdutoCompra'] ?></td>
 							<!--<td><?php echo $produto[$i]['CodProd'] ?></td>
-							<td><?php echo $produto[$i]['Prodaux3'] ?></td>-->
-							<td><?php echo $produto[$i]['NomeProduto'] ?></td>
+							<td><?php echo $produto[$i]['Prodaux3'] ?></td>
+							<td><?php echo $produto[$i]['idTab_Produto'] ?></td>
+							<td><?php echo $produto[$i]['idTab_Produtos'] ?></td>-->
+							<td><?php echo $produto[$i]['NomeProduto'] ?></td>							
 							<td><?php echo $produto[$i]['DataValidadeProduto'] ?></td>
 						</tr>						
 						<tr>
+							<td></td>
 							<td><?php echo $produto[$i]['QtdCompraProduto'] ?></td>
-							<td><?php echo $produto[$i]['UnidadeProduto'] ?></td>													
-							<!--<td><?php echo $produto[$i]['Prodaux1'] ?></td>
+							<!--<td><?php echo $produto[$i]['UnidadeProduto'] ?></td>													
+							<td><?php echo $produto[$i]['Prodaux1'] ?></td>
 							<td><?php echo $produto[$i]['Prodaux2'] ?></td>-->
 							<!--<td><?php echo $produto[$i]['Convenio'] ?></td>
 							<td><?php echo $produto[$i]['Convdesc'] ?></td>-->
