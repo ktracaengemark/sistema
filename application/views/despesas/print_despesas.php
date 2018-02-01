@@ -3,8 +3,8 @@
 <div class="container-fluid">
 
 	<div class="row">
-		<div class="col-md-1"></div>
-		<div class="col-md-10">
+		
+		<div class="col-md-12">
 
 			<div class="panel-heading text-center">
 				<h2><?php echo '<strong>' . $_SESSION['Despesas']['NomeEmpresa'] . '</strong> - <strong>DEVOLUÇÃO</strong> - <strong>Nº: ' . $_SESSION['Despesas']['idApp_Despesas'] . '</strong>' ?></h2>
@@ -24,20 +24,21 @@
 						<tr>
 							<!--<th scope="col">Nº</th>-->
 							<th scope="col">id</th>
-							<th scope="col">CodProd.</th>													
+							<!--<th scope="col">CodProd.</th>
+							<th scope="col">CategProd.</th>-->
+							<th scope="col">DescProd.</th>
+							<th scope="col">Data</th>
 						</tr>	
 						<tr>
 							<th scope="col">Qtd</th>
-							<th scope="col">Unidade</th>						
-							<th scope="col">CategProd.</th>
-							<th scope="col">DescProd.</th>							
+							<th scope="col">Unidade</th>																				
 							<!--<th scope="col">Aux1</th>
 							<th scope="col">Aux2</th>-->
 							<!--<th scope="col">Tipo Venda</th>
 							<th scope="col">Desc Venda</th>-->
 							<th scope="col">Valor</th>
 							<th scope="col">Subtotal</th>
-							<th scope="col">Data</th>
+							
 						</tr>
 					</thead>
 
@@ -51,20 +52,20 @@
 						<tr>
 							<!--<td><?php echo $produto[$i]['idApp_Despesas'] ?></td>-->
 							<td><?php echo $produto[$i]['idApp_ProdutoCompra'] ?></td>
-							<td><?php echo $produto[$i]['CodProd'] ?></td>							
+							<!--<td><?php echo $produto[$i]['CodProd'] ?></td>
+							<td><?php echo $produto[$i]['Prodaux3'] ?></td>-->
+							<td><?php echo $produto[$i]['NomeProduto'] ?></td>
+							<td><?php echo $produto[$i]['DataValidadeProduto'] ?></td>
 						</tr>						
 						<tr>
 							<td><?php echo $produto[$i]['QtdCompraProduto'] ?></td>
-							<td><?php echo $produto[$i]['UnidadeProduto'] ?></td>						
-							<td><?php echo $produto[$i]['Prodaux3'] ?></td>
-							<td><?php echo $produto[$i]['NomeProduto'] ?></td>
+							<td><?php echo $produto[$i]['UnidadeProduto'] ?></td>													
 							<!--<td><?php echo $produto[$i]['Prodaux1'] ?></td>
 							<td><?php echo $produto[$i]['Prodaux2'] ?></td>-->
 							<!--<td><?php echo $produto[$i]['Convenio'] ?></td>
 							<td><?php echo $produto[$i]['Convdesc'] ?></td>-->
 							<td><?php echo number_format($produto[$i]['ValorCompraProduto'], 2, ',', '.') ?></td>
-							<td><?php echo $produto[$i]['SubtotalProduto'] ?></td>
-							<td><?php echo $produto[$i]['DataValidadeProduto'] ?></td>
+							<td><?php echo $produto[$i]['SubtotalProduto'] ?></td>							
 						</tr>
 
 						<?php
@@ -151,7 +152,7 @@
 					<thead>
 						<tr>
 							<th class="col-md-4" scope="col">Devol. Aprovado?</th>
-							<th class="col-md-4" scope="col">Srv/Prd Entregue?</th>
+							<th class="col-md-4" scope="col">Prd Entregue?</th>
 							<th class="col-md-4" scope="col">Devol. Quitado?</th>
 						</tr>
 					</thead>
@@ -168,7 +169,7 @@
 					<thead>
 						<tr>
 							<th class="col-md-4" scope="col">Data da Devolução</th>
-							<th class="col-md-4" scope="col">Data da Entrega</th>
+							<th class="col-md-4" scope="col">Data da Conclusão</th>
 							<th class="col-md-4" scope="col">Data do Retorno</th>
 						</tr>
 					</thead>

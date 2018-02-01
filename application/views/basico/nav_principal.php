@@ -95,6 +95,8 @@
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="<?php echo base_url() ?>relatorio/orcamento"><span class="glyphicon glyphicon-list"></span> Orçam. & Entradas</a></li>
 							<li role="separator" class="divider"></li>
+							<li><a href="<?php echo base_url() ?>relatorio/devolucao"><span class="glyphicon glyphicon-list"></span> Devol. de Produtos1</a></li>
+							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/produtosdevol"><span class="glyphicon glyphicon-list"></span> Devol. de Produtos</a></li>
 							<li role="separator" class="divider"></li>							
 							<li><a href="<?php echo base_url() ?>relatorio/despesas"><span class="glyphicon glyphicon-list"></span> Despesas & Extornos</a></li>

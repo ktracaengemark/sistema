@@ -418,7 +418,7 @@ class Relatorio extends CI_Controller {
 
     }
 	
-	public function devolucao() {
+	public function devolucao1DESPESAS() {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -1530,7 +1530,7 @@ class Relatorio extends CI_Controller {
 
     }
 	
-	public function devolucao2() {
+	public function devolucao() {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -1540,9 +1540,9 @@ class Relatorio extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = quotes_to_entities($this->input->post(array(
-            'NomeCliente',
-			'TipoRD',
-            'DataInicio',
+			'idApp_Despesas',
+			'idApp_OrcaTrata',
+			'NomeCliente',
             'DataFim',
 			'DataInicio',
             'DataFim2',
@@ -1551,9 +1551,9 @@ class Relatorio extends CI_Controller {
 			'DataInicio3',
             'Ordenamento',
             'Campo',
-            'AprovadoOrca',
-            'QuitadoOrca',
-			'ServicoConcluido',
+            'AprovadoDespesas',
+            'QuitadoDespesas',
+			'ServicoConcluidoDespesas',
 
         ), TRUE));
 		/*
@@ -1570,41 +1570,41 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataFim3', 'Data Fim do Retorno', 'trim|valid_date');
 
 
-        $data['select']['AprovadoOrca'] = array(
+        $data['select']['AprovadoDespesas'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
             'S' => 'Sim',
         );
 
-        $data['select']['QuitadoOrca'] = array(
+        $data['select']['QuitadoDespesas'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
             'S' => 'Sim',
         );
 
-		$data['select']['ServicoConcluido'] = array(
+		$data['select']['ServicoConcluidoDespesas'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
             'S' => 'Sim',
         );
 
         $data['select']['Campo'] = array(
-            'C.NomeCliente' => 'Nome do Cliente',
 
-            'OT.idApp_OrcaTrata' => 'Número do Orçamento',
-            'OT.AprovadoOrca' => 'Orçamento Aprovado?',
-            'OT.DataOrca' => 'Data do Orçamento',
-			'OT.DataEntradaOrca' => 'Validade do Orçamento',
-			'OT.DataPrazo' => 'Data da Entrega',
-            'OT.ValorOrca' => 'Valor do Orçamento',
-			'OT.ValorEntradaOrca' => 'Valor do Desconto',
-			'OT.ValorRestanteOrca' => 'Valor a Receber',
+			'C.NomeCliente' => 'Cliente',
+            'OT.idApp_Despesas' => 'Número da Devolução',
+			'OT.idApp_OrcaTrata' => 'Número do Orçamento',
+            'OT.AprovadoDespesas' => 'Orçamento Aprovado?',
+            'OT.DataDespesas' => 'Data do Orçamento',
+			'OT.DataEntradaDespesas' => 'Validade do Orçamento',
+            'OT.ValorDespesas' => 'Valor do Orçamento',
+			'OT.ValorEntradaDespesas' => 'Valor do Desconto',
+			'OT.ValorRestanteDespesas' => 'Valor a Receber',
 
-            'OT.ServicoConcluido' => 'Serviço Concluído?',
-            'OT.QuitadoOrca' => 'Orçamento Quitado?',
-            'OT.DataConclusao' => 'Data de Conclusão',
-            'OT.DataRetorno' => 'Data de Retorno',
-			'OT.ProfissionalOrca' => 'Profissional',
+            'OT.ServicoConcluidoDespesas' => 'Serviço Concluído?',
+            'OT.QuitadoDespesas' => 'Orçamento Quitado?',
+            'OT.DataConclusaoDespesas' => 'Data de Conclusão',
+            'OT.DataRetornoDespesas' => 'Data de Retorno',
+			'OT.ProfissionalDespesas' => 'Profissional',
 
         );
 
@@ -1622,7 +1622,7 @@ class Relatorio extends CI_Controller {
 
             #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
             $data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
-			$data['bd']['TipoRD'] = $data['query']['TipoRD'];
+			
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
@@ -1632,9 +1632,9 @@ class Relatorio extends CI_Controller {
 
             $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
-            $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
-            $data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
-			$data['bd']['ServicoConcluido'] = $data['query']['ServicoConcluido'];
+            $data['bd']['AprovadoDespesas'] = $data['query']['AprovadoDespesas'];
+            $data['bd']['QuitadoDespesas'] = $data['query']['QuitadoDespesas'];
+			$data['bd']['ServicoConcluidoDespesas'] = $data['query']['ServicoConcluidoDespesas'];
 
             $data['report'] = $this->Relatorio_model->list_devolucao($data['bd'],TRUE);
 

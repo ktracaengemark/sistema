@@ -320,7 +320,7 @@ class Devolucao extends CI_Controller {
                 //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Despesas', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'relatorio/produtosdevol/'  . $data['msg']);
+                redirect(base_url() . 'relatorio/devolucao/'  . $data['msg']);
 				
                 exit();
             }
@@ -754,7 +754,7 @@ class Devolucao extends CI_Controller {
                 //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Despesas', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'relatorio/produtosdevol/' . $data['msg']);
+                redirect(base_url() . 'relatorio/devolucao/' . $data['msg']);
                 exit();
             }
         }
@@ -776,7 +776,7 @@ class Devolucao extends CI_Controller {
 
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'relatorio/produtosdevol/' . $data['msg']);
+                redirect(base_url() . 'relatorio/devolucao/' . $data['msg']);
                 exit();
             //}
         //}

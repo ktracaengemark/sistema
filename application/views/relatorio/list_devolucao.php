@@ -1,110 +1,90 @@
 <div class="panel panel-default">
     <div class="panel-body">
 
-        <div class="col-md-1"></div>
-
-        <!--<div class="col-md-2">
-            <label for="DataFim">Total de Desconto:</label>
-            <div class="input-group">
-                <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total Entrada" value="<?php echo $report->soma->somaentrada ?>">
-            </div>
-        </div>-->
-		<div class="col-md-3">
-            <label for="DataFim">Total Pago:</label>
-            <div class="input-group">
-                <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total Pago" value="<?php echo $report->soma->somarecebido ?>">
-            </div>
-        </div>
-		<div class="col-md-3">
-            <label for="DataFim">Total a Pagar:</label>
-            <div class="input-group">
-                <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total a receber" value="<?php echo $report->soma->somareceber ?>">
-            </div>
-        </div>      
-        <!--<div class="col-md-2">
-            <label for="DataFim">Total Real/Caixa:</label>
-            <div class="input-group">
-                <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total Real" value="<?php echo $report->soma->somareal ?>">
-            </div>
-        </div>-->
-
+		<div class="col-md-1"></div>
         <div class="col-md-3">
-            <label for="DataFim">Total do Período:</label>
+            <label for="DataFim">Total dos Orçamentos:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" disabled aria-label="Total Entrada" value="<?php echo $report->soma->balanco ?>">
+                <input type="text" class="form-control" disabled aria-label="Total Despesasmentos" value="<?php echo $report->soma->somaorcamento ?>">
             </div>
         </div>
-
-        <div class="col-md-1"></div>
-
-    </div>	
-	
+		<div class="col-md-3">
+            <label for="DataFim">Total dos Descontos:</label>
+            <div class="input-group">
+                <span class="input-group-addon">R$</span>
+                <input type="text" class="form-control" disabled aria-label="Total Descontos" value="<?php echo $report->soma->somadesconto ?>">
+            </div>
+        </div>
+		<div class="col-md-3">
+            <label for="DataFim">Total A Receber:</label>
+            <div class="input-group">
+                <span class="input-group-addon">R$</span>
+                <input type="text" class="form-control" disabled aria-label="Total Restante" value="<?php echo $report->soma->somarestante ?>">
+            </div>
+        </div>
+		<div class="col-md-1"></div>
+    </div>
 </div>
 
 <div class="container-fluid">
     <div class="row">
-
         <div>
 			<table class="table table-bordered table-condensed table-striped">
-                <tfoot>
+				<tfoot>
                     <tr>
                         <th colspan="3" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
                     </tr>
                 </tfoot>
-			</table>	
+			</table>
             <table class="table table-bordered table-condensed table-striped">
-
                 <thead>
                     <tr>
-                        <!--<th class="active">D/C</th>-->
-						<th class="active">Id Despesa</th>
-						<th class="active">Despesa</th>
-						<th class="active">Tipo de Desp.</th>
-                        <th class="active">Data da Despesa</th>
-                        <!--<th class="active">Data Entrada</th>
-                        <th class="active">Valor Entrada</th>
-						<th class="active">Desp. Aprov.?</th>
-						<th class="active">Desp. Concl.?</th>-->
-						<th class="active">Desp. Quit.?</th>						
-                        <th class="active">Parcela</th>
-                        <th class="active">Data do Venc.</th>
-                        <th class="active">Valor À Pagar</th>
-                        <th class="active">Data do Pagam.</th>
-                        <th class="active">Valor Pago</th>
-                        <th class="active">Parc. Quit.?</th>
-						<th class="active"></th>
+
+						<!--<th class="active">Cliente</th>-->
+						<th class="active">Devol.</th>
+						<th class="active">Orçam.</th>
+						<th class="active">Cliente</th>
+                        <th class="active">Data da Devol.</th>
+						<!--<th class="active">Valid. do Orçam.</th>-->
+                        <th class="active">Valor da Devol.</th>
+						<th class="active">Valor do Desconto</th>
+						<th class="active">Valor A Receber</th>
+						<th class="active">Forma de Pag.</th>
+						<th class="active">Devol. Apv.?</th>
+						<th class="active">Prd Entreg.?</th>
+						<th class="active">Devol. Quit.?</th>                       
+                        <th class="active">Data Conclusão</th>
+                        <th class="active">Data Retorno</th>
+                        <th class="active">Prof.</th>
+                        <th class="active"></th>
                     </tr>
                 </thead>
-
-                <tbody>
-
+				<tbody>
                     <?php
                     foreach ($report->result_array() as $row) {
-
                         #echo '<tr>';
                         echo '<tr class="clickable-row" data-href="' . base_url() . 'devolucao/alterar/' . $row['idApp_Despesas'] . '">';
-                            #echo '<td>' . $row['TipoProduto'] . '</td>';
+
+                            #echo '<div class="clickable-row" data-href="' . base_url() . 'orcatrata/alterar/' . $row['idApp_Despesas'] . '">';
+							#echo '<td>' . $row['NomeCliente'] . '</td>';
 							echo '<td>' . $row['idApp_Despesas'] . '</td>';
-							echo '<td>' . $row['Despesa'] . '</td>';
-							echo '<td>' . $row['TipoDespesa'] . '</td>';
+							echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
+							echo '<td>' . $row['NomeCliente'] . '</td>';
                             echo '<td>' . $row['DataDespesas'] . '</td>';
-                            #echo '<td>' . $row['DataEntradaOrca'] . '</td>';
-                            #echo '<td class="text-right">R$ ' . $row['ValorEntradaOrca'] . '</td>';
-							#echo '<td>' . $row['AprovadoDespesas'] . '</td>';
-							#echo '<td>' . $row['ServicoConcluidoDespesas'] . '</td>';
-							echo '<td>' . $row['QuitadoDespesas'] . '</td>';							
-                            echo '<td>' . $row['ParcelaPagaveis'] . '</td>';
-                            echo '<td>' . $row['DataVencimentoPagaveis'] . '</td>';
-                            echo '<td class="text-left">R$ ' . $row['ValorParcelaPagaveis'] . '</td>';
-                            echo '<td>' . $row['DataPagoPagaveis'] . '</td>';
-                            echo '<td class="text-left">R$ ' . $row['ValorPagoPagaveis'] . '</td>';
-                            echo '<td>' . $row['QuitadoPagaveis'] . '</td>';
-							echo '<td class="notclickable">
+							#echo '<td>' . $row['DataEntradaDespesas'] . '</td>';
+                            echo '<td class="text-left">R$ ' . $row['ValorDespesas'] . '</td>';
+							echo '<td class="text-left">R$ ' . $row['ValorEntradaDespesas'] . '</td>';
+							echo '<td class="text-left">R$ ' . $row['ValorRestanteDespesas'] . '</td>';
+							echo '<td>' . $row['FormaPag'] . '</td>';
+							echo '<td>' . $row['AprovadoDespesas'] . '</td>';
+							echo '<td>' . $row['ServicoConcluidoDespesas'] . '</td>';
+							echo '<td>' . $row['QuitadoDespesas'] . '</td>';                           
+                            echo '<td>' . $row['DataConclusaoDespesas'] . '</td>';
+                            echo '<td>' . $row['DataRetornoDespesas'] . '</td>';
+							echo '<td>' . $row['Nome'] . '</td>';
+                            #echo '</div>';
+                            echo '<td class="notclickable">
                                     <a class="btn btn-md btn-info notclickable" target="_blank" href="' . base_url() . 'DespesasPrint/imprimir/' . $row['idApp_Despesas'] . '">
                                         <span class="glyphicon glyphicon-print notclickable"></span>
                                     </a>
@@ -112,13 +92,9 @@
                         echo '</tr>';
                     }
                     ?>
-
                 </tbody>
-				
+
             </table>
-
         </div>
-
     </div>
-
 </div>
