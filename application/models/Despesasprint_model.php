@@ -35,11 +35,14 @@ class Despesasprint_model extends CI_Model {
             'SELECT
                 *
             FROM
-            	App_Despesas AS OT,
-                Tab_FormaPag AS FP
+            	Tab_FormaPag AS FP,
+				App_Despesas AS DP
+				LEFT JOIN Sis_EmpresaFilial AS EF ON EF.idSis_EmpresaFilial = DP.Empresa
+				LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = DP.idApp_OrcaTrata				
+				LEFT JOIN App_Cliente AS CL ON CL.idApp_Cliente = OT.idApp_Cliente
             WHERE
-            	OT.idApp_Despesas = ' . $data . ' AND
-                OT.FormaPagamentoDespesas = FP.idTab_FormaPag'
+            	DP.idApp_Despesas = ' . $data . ' AND
+                DP.FormaPagamentoDespesas = FP.idTab_FormaPag'
         );
         $query = $query->result_array();
 

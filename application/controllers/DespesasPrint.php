@@ -60,7 +60,7 @@ class DespesasPrint extends CI_Controller {
             #### Carrega os dados do cliente nas variáves de sessão ####
             $this->load->model('Cliente_model');
             #$_SESSION['Cliente'] = $this->Cliente_model->get_cliente($data['despesas']['idApp_Cliente'], TRUE);
-			$_SESSION['Despesas'] = $this->Despesas_model->get_despesas($data['despesas']['idApp_Despesas'], TRUE);
+			$_SESSION['Despesas'] = $this->DespesasPrint_model->get_despesas($data['despesas']['idApp_Despesas'], TRUE);
             #$_SESSION['log']['idApp_Cliente'] = $_SESSION['Cliente']['idApp_Cliente'];
 
             /*

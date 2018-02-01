@@ -7,11 +7,15 @@
 		<div class="col-md-10">
 
 			<div class="panel-heading text-center">
-				<h2><?php echo '<strong>DEVOLUÇÃO / EXTORNO</strong> - <strong>Nº: ' . $_SESSION['Despesas']['idApp_Despesas'] . '</strong> - <strong>Orçam.</strong> - <strong>Nº: ' . $_SESSION['Despesas']['idApp_OrcaTrata'] . '</strong>' ?></h2>
+				<h2><?php echo '<strong>' . $_SESSION['Despesas']['NomeEmpresa'] . '</strong> - <strong>DEVOLUÇÃO</strong> - <strong>Nº: ' . $_SESSION['Despesas']['idApp_Despesas'] . '</strong>' ?></h2>
 			</div>
 
-			<div class="panel-body">
+			<div class="panel-body">				
+				
 				<hr />
+				<?php echo '<h3>Orçam. Nº: ' . $_SESSION['Despesas']['idApp_OrcaTrata'] . ' - ' . $_SESSION['Despesas']['NomeCliente'] . '</h3>' ?>
+				<hr />
+				
 				<h3 class="text-center">Produtos </h3>
 				<hr />
 

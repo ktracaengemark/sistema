@@ -34,9 +34,10 @@ class Orcatrataprint_model extends CI_Model {
         $query = $this->db->query(
             'SELECT
                 *
-            FROM
-            	App_OrcaTrata AS OT,
-                Tab_FormaPag AS FP
+            FROM           	
+                Tab_FormaPag AS FP,
+				App_OrcaTrata AS OT
+				LEFT JOIN Sis_EmpresaFilial AS EF ON EF.idSis_EmpresaFilial = OT.Empresa
             WHERE
             	OT.idApp_OrcaTrata = ' . $data . ' AND
                 OT.FormaPagamento = FP.idTab_FormaPag'
