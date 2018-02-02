@@ -1381,34 +1381,54 @@ class Relatorio_model extends CI_Model {
 
 		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TTC.idTab_TipoConsumo = ' . $data['TipoDespesa'] : FALSE;
 		$data['Produtos'] = ($data['Produtos']) ? ' AND TPB.idTab_Produtos = ' . $data['Produtos'] : FALSE;
-
+        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;		
+		$data['Prodaux1'] = ($data['Prodaux1']) ? ' AND TP1.idTab_Prodaux1 = ' . $data['Prodaux1'] : FALSE;
+		$data['Prodaux2'] = ($data['Prodaux2']) ? ' AND TP2.idTab_Prodaux2 = ' . $data['Prodaux2'] : FALSE;
+        $data['Prodaux3'] = ($data['Prodaux3']) ? ' AND TP3.idTab_Prodaux3 = ' . $data['Prodaux3'] : FALSE;
+		$filtro1 = ($data['AprovadoDespesas'] != '#') ? 'TCO.AprovadoDespesas = "' . $data['AprovadoDespesas'] . '" AND ' : FALSE;
         $query = $this->db->query('
             SELECT
-                TCO.idApp_Despesas,
+                C.NomeCliente,
+				TCO.idApp_Despesas,
+				TCO.idApp_OrcaTrata,
 				TCO.Despesa,
 				TTC.TipoDespesa,
 				TCO.TipoProduto,
                 TCO.DataDespesas,
+				TCO.ValorDespesas,
 				APC.QtdCompraProduto,
+				APC.ValorCompraProduto,
 				APC.idTab_Produto,
+				TCO.AprovadoDespesas,
+				TFP.FormaPag,
+				TCO.FormaPagamentoDespesas,
 				TPB.Produtos,
+				TPB.CodProd,
 				TP3.Prodaux3,
 				TP2.Prodaux2,
 				TP1.Prodaux1
+																																														
             FROM
                 App_Despesas AS TCO
                     LEFT JOIN Tab_TipoDespesa AS TTC ON TTC.idTab_TipoDespesa = TCO.TipoDespesa
 					LEFT JOIN App_ProdutoCompra AS APC ON APC.idApp_Despesas = TCO.idApp_Despesas
 					LEFT JOIN Tab_Produtos AS TPB ON TPB.idTab_Produtos = APC.idTab_Produto
+					LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = TCO.FormaPagamentoDespesas
 					LEFT JOIN Tab_Prodaux3 AS TP3 ON TP3.idTab_Prodaux3 = TPB.Prodaux3
 					LEFT JOIN Tab_Prodaux2 AS TP2 ON TP2.idTab_Prodaux2 = TPB.Prodaux2
 					LEFT JOIN Tab_Prodaux1 AS TP1 ON TP1.idTab_Prodaux1 = TPB.Prodaux1
+					LEFT JOIN App_OrcaTrata AS TR ON TR.idApp_OrcaTrata = TCO.idApp_OrcaTrata
+					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = TR.idApp_Cliente
             WHERE
                 TCO.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
-				TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				TCO.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
+				' . $data['NomeCliente'] . ' AND
 				(' . $consulta . ')
 				' . $data['TipoDespesa'] . '
-				' . $data['Produtos'] . ' AND
+				' . $data['Produtos'] . ' 
+				' . $data['Prodaux1'] . ' 
+				' . $data['Prodaux2'] . '
+				' . $data['Prodaux3'] . ' AND
 				TCO.TipoProduto = "E" AND
 				TPB.idTab_Produtos != "0"
 
@@ -1765,8 +1785,6 @@ class Relatorio_model extends CI_Model {
 				' . $consulta2 . ' AND
 				' . $consulta3 . ' AND
 				OT.TipoProduto = "E"
-
-
 
             ORDER BY
                 OT.idApp_Despesas DESC,

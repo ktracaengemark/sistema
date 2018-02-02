@@ -1215,9 +1215,15 @@ class Relatorio extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = quotes_to_entities($this->input->post(array(
-            'TipoDespesa',
+            'NomeCliente',
+			'CodProd',
+			'TipoDespesa',
 			'TipoProduto',
 			'Produtos',
+			'Prodaux1',
+			'Prodaux2',
+			'Prodaux3',
+			'AprovadoDespesas',
             'DataInicio',
             'DataFim',
 			'Ordenamento',
@@ -1231,15 +1237,27 @@ class Relatorio extends CI_Controller {
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
-
-        $data['select']['Campo'] = array(
-
-			'TCO.idApp_Despesas' => 'Id da Devol.',
+/*
+        $data['select']['AprovadoDespesas'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+*/		
+		
+		$data['select']['Campo'] = array(
+			'C.NomeCliente' => 'Cliente',
+			'TCO.idApp_Despesas' => 'Nº da Devol.',
+			'TCO.idApp_OrcaTrata' => 'Nº do Orçam.',
             'TCO.DataDespesas' => 'Data da Devol.',
+			'TCO.AprovadoDespesas' => 'Devol. Aprov./Fechado?',
+			'TCO.CodProd' => 'Código',
 			'TCO.TipoDespesa' => 'Tipo de Devol.',
 			'TCO.Despesa' => 'Descr. da Devol.',
 			'APC.QtdCompraProduto' => 'Qtd. do Produto',
 			'TPB.Produtos' => 'Produto',
+			'TPB.Prodaux1' => 'Aux1',
+			'TPB.Prodaux2' => 'Aux2',
+			'TPB.Prodaux3' => 'Categoria',
 
         );
 
@@ -1249,18 +1267,28 @@ class Relatorio extends CI_Controller {
         );
 
 		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipodespesa();
+		$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
 		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
-
+		$data['select']['Prodaux1'] = $this->Relatorio_model->select_prodaux1();
+		$data['select']['Prodaux2'] = $this->Relatorio_model->select_prodaux2();
+		$data['select']['Prodaux3'] = $this->Relatorio_model->select_prodaux3();
+		
+		
+		
         $data['titulo'] = 'Relatório de Produtos Devolvidos';
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
 
             #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
-
-            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Prodaux1'] = $data['query']['Prodaux1'];
+			$data['bd']['Prodaux2'] = $data['query']['Prodaux2'];
+			$data['bd']['Prodaux3'] = $data['query']['Prodaux3'];            
+			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['AprovadoDespesas'] = $data['query']['AprovadoDespesas'];
 			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
 			$data['bd']['TipoProduto'] = $data['query']['TipoProduto'];
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
