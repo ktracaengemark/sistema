@@ -51,7 +51,7 @@
 											</select>
 										</div>
 										-->
-										<div class="col-md-6">
+										<div class="col-md-4">
 											<label for="TipoDespesa">Tipo de Devolução</label>
 											<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>tipodespesa/cadastrar/tipodespesa" role="button">
 												<span class="glyphicon glyphicon-plus"></span> <b>Forma Pag</b>
@@ -88,7 +88,12 @@
 											</select>
 										</div>
 										-->
-										<div class="col-md-2">
+										<div class="col-md-4">
+											<label for="Despesa">Descrição</label><br>
+											<input type="text" class="form-control" maxlength="200"
+													name="Despesa" value="<?php echo $despesas['Despesa'] ?>">
+										</div>
+										<div class="col-md-4">
 											<label for="idApp_OrcaTrata">Orçam</label>
 											<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
 													id="idApp_OrcaTrata" name="idApp_OrcaTrata">
@@ -104,13 +109,6 @@
 												?>
 											</select>
 										</div>
-										<!--
-										<div class="col-md-6">
-											<label for="Despesa">Obs.</label><br>
-											<input type="text" class="form-control" maxlength="200"
-													name="Despesa" value="<?php echo $despesas['Despesa'] ?>">
-										</div>
-										-->
 									</div>
 								</div>
 							</div>

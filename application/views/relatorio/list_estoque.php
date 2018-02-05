@@ -24,7 +24,7 @@
 
                         echo '<tr>';
 							echo '<td>' . $row->Produtos . '</td>';
-
+							#echo '<td>' . $row['TipoProduto'] . '</td>';
 							echo '<td>' . $row->QtdCompra . '</td>';
 							echo '<td>' . $row->QtdVenda . '</td>';
 							echo '<td>' . $row->QtdDevolve . '</td>';

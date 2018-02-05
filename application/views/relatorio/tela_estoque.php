@@ -18,7 +18,7 @@
 
 						<div class="form-group">
 							<div class="row">
-								<div class="col-md-5">
+								<div class="col-md-4">
 									<label for="Ordenamento">Produtos</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="Produtos" name="Produtos">
@@ -32,6 +32,43 @@
 										}
 										?>
 									</select>
+								</div>
+								<div class="col-md-4">
+									<label for="Ordenamento">Ordenamento:</label>
+
+									<div class="form-group">
+										<div class="row">
+											<div class="col-md-7">
+												<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+														id="Campo" name="Campo">
+													<?php
+													foreach ($select['Campo'] as $key => $row) {
+														if ($query['Campo'] == $key) {
+															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+														} else {
+															echo '<option value="' . $key . '">' . $row . '</option>';
+														}
+													}
+													?>
+												</select>
+											</div>
+
+											<div class="col-md-5">
+												<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+														id="Ordenamento" name="Ordenamento">
+													<?php
+													foreach ($select['Ordenamento'] as $key => $row) {
+														if ($query['Ordenamento'] == $key) {
+															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+														} else {
+															echo '<option value="' . $key . '">' . $row . '</option>';
+														}
+													}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
 								</div>
 								<div class="col-md-2">
 									<label for="DataInicio">Data Início: *</label>
@@ -59,6 +96,55 @@
 									</button>
 								</div>
 							</div>
+							<!--
+							<div class="row">
+								<div class="col-md-4">
+									<label for="Ordenamento">Categoria</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+											id="Prodaux3" name="Prodaux3">
+										<?php
+										foreach ($select['Prodaux3'] as $key => $row) {
+											if ($query['Prodaux3'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
+								<div class="col-md-4">
+									<label for="Ordenamento">Aux1</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+											id="Prodaux1" name="Prodaux1">
+										<?php
+										foreach ($select['Prodaux1'] as $key => $row) {
+											if ($query['Prodaux1'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
+								<div class="col-md-4">
+									<label for="Ordenamento">Aux2</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+											id="Prodaux2" name="Prodaux2">
+										<?php
+										foreach ($select['Prodaux2'] as $key => $row) {
+											if ($query['Prodaux2'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
+							</div>
+							-->
 						</div>
 
 						</form>

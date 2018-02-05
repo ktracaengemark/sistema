@@ -290,7 +290,7 @@ class Relatorio extends CI_Controller {
 
     }
 
-	public function despesas() {
+	public function despesas1() {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -413,6 +413,262 @@ class Relatorio extends CI_Controller {
         }
 
         $this->load->view('relatorio/tela_despesas', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+	
+	public function despesasprod() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'TipoDespesa',
+			'TipoProduto',
+            'DataInicio',
+            'DataFim',
+			'DataInicio2',
+            'DataFim2',
+			'DataInicio3',
+            'DataFim3',
+			'Ordenamento',
+            'Campo',
+			'AprovadoDespesas',
+			'ServicoConcluidoDespesas',
+            'QuitadoDespesas',
+			'QuitadoPagaveis',
+
+        ), TRUE));
+		/*
+        if (!$data['query']['DataInicio'])
+           $data['query']['DataInicio'] = '01/01/2017';
+
+		if (!$data['query']['DataInicio2'])
+           $data['query']['DataInicio2'] = '01/01/2017';
+		*/
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+        $this->form_validation->set_rules('DataInicio', 'Data Início', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio2', 'Data Início', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim2', 'Data Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio3', 'Data Início do Orçamento', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim3', 'Data Fim do Orçamento', 'trim|valid_date');
+
+		$data['select']['AprovadoDespesas'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+		$data['select']['ServicoConcluidoDespesas'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+		$data['select']['QuitadoDespesas'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+		$data['select']['QuitadoPagaveis'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+        $data['select']['Campo'] = array(
+
+            'PP.DataVencimentoPagaveis' => 'Data do Venc.',
+			'PP.DataPagoPagaveis' => 'Data do Pagam.',
+			'PP.QuitadoPagaveis' => 'Quit.Parc.',
+			'DS.idApp_Despesas' => 'Número da Despesa',
+            'DS.DataDespesas' => 'Data da Despesa',
+            'DS.ValorDespesas' => 'Valor da Despesa',
+			'DS.Despesa' => 'Despesa',
+			'DS.TipoDespesa' => 'Tipo de Despesa',
+            'DS.QuitadoDespesas' => 'Despesa Quitada?',
+
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+
+		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipodespesa();
+
+        $data['titulo'] = 'Relatório de Despesas & Saídas';
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+            #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
+
+            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+            $data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+			$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+            $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
+			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
+			$data['bd']['TipoProduto'] = $data['query']['TipoProduto'];
+			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+			$data['bd']['AprovadoDespesas'] = $data['query']['AprovadoDespesas'];
+			$data['bd']['ServicoConcluidoDespesas'] = $data['query']['ServicoConcluidoDespesas'];
+            $data['bd']['QuitadoDespesas'] = $data['query']['QuitadoDespesas'];
+			$data['bd']['QuitadoPagaveis'] = $data['query']['QuitadoPagaveis'];
+
+            $data['report'] = $this->Relatorio_model->list_despesas($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_despesas', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_despesas', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+	
+	public function despesaspag() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'TipoDespesa',
+			'TipoProduto',
+            'DataInicio',
+            'DataFim',
+			'DataInicio2',
+            'DataFim2',
+			'DataInicio3',
+            'DataFim3',
+			'Ordenamento',
+            'Campo',
+			'AprovadoDespesas',
+			'ServicoConcluidoDespesas',
+            'QuitadoDespesas',
+			'QuitadoPagaveis',
+
+        ), TRUE));
+		/*
+        if (!$data['query']['DataInicio'])
+           $data['query']['DataInicio'] = '01/01/2017';
+
+		if (!$data['query']['DataInicio2'])
+           $data['query']['DataInicio2'] = '01/01/2017';
+		*/
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+        $this->form_validation->set_rules('DataInicio', 'Data Início', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio2', 'Data Início', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim2', 'Data Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio3', 'Data Início do Orçamento', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim3', 'Data Fim do Orçamento', 'trim|valid_date');
+
+		$data['select']['AprovadoDespesas'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+		$data['select']['ServicoConcluidoDespesas'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+		$data['select']['QuitadoDespesas'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+		$data['select']['QuitadoPagaveis'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+        $data['select']['Campo'] = array(
+
+            'PP.DataVencimentoPagaveis' => 'Data do Venc.',
+			'PP.DataPagoPagaveis' => 'Data do Pagam.',
+			'PP.QuitadoPagaveis' => 'Quit.Parc.',
+			'DS.idApp_Despesas' => 'Número da Despesa',
+            'DS.DataDespesas' => 'Data da Despesa',
+            'DS.ValorDespesas' => 'Valor da Despesa',
+			'DS.Despesa' => 'Despesa',
+			'DS.TipoDespesa' => 'Tipo de Despesa',
+            'DS.QuitadoDespesas' => 'Despesa Quitada?',
+
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+
+		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipodespesa();
+
+        $data['titulo'] = 'Relatório de Despesas & Saídas';
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+            #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
+
+            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+            $data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+			$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+            $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
+			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
+			$data['bd']['TipoProduto'] = $data['query']['TipoProduto'];
+			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+			$data['bd']['AprovadoDespesas'] = $data['query']['AprovadoDespesas'];
+			$data['bd']['ServicoConcluidoDespesas'] = $data['query']['ServicoConcluidoDespesas'];
+            $data['bd']['QuitadoDespesas'] = $data['query']['QuitadoDespesas'];
+			$data['bd']['QuitadoPagaveis'] = $data['query']['QuitadoPagaveis'];
+
+            $data['report'] = $this->Relatorio_model->list_despesaspag($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_despesaspag', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_despesaspag', $data);
 
         $this->load->view('basico/footer');
 
@@ -600,6 +856,11 @@ class Relatorio extends CI_Controller {
             'Produtos',
             'DataInicio',
             'DataFim',
+			'Prodaux1',
+			'Prodaux2',
+			'Prodaux3',
+			'Ordenamento',
+            'Campo',			
         ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -607,8 +868,30 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataInicio', 'Data Inicio', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
 
-        $data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
+        $data['select']['Campo'] = array(
+			'TP.CodProd' => 'Código',
+			'TP.idTab_Produtos' => 'Id',
+			'TP.Produtos' => 'Produto',
+			'TP.Categoria' => 'Prod/Serv',
+			'TP.Prodaux1' => 'Aux1',
+			'TP.Prodaux2' => 'Aux2',
+			'TP.Prodaux3' => 'Categoria',
 
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+
+
+
+        $data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
+		$data['select']['Prodaux1'] = $this->Relatorio_model->select_prodaux1();
+		$data['select']['Prodaux2'] = $this->Relatorio_model->select_prodaux2();
+		$data['select']['Prodaux3'] = $this->Relatorio_model->select_prodaux3();
+				
+		
         $data['titulo'] = 'Relatório de Estoque';
 
         #run form validation
@@ -617,7 +900,12 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
-
+			$data['bd']['Prodaux1'] = $data['query']['Prodaux1'];
+			$data['bd']['Prodaux2'] = $data['query']['Prodaux2'];
+			$data['bd']['Prodaux3'] = $data['query']['Prodaux3'];
+            $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+			
             $data['report'] = $this->Relatorio_model->list_estoque($data['bd']);
 
             /*
@@ -786,7 +1074,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
 			$data['bd']['Prodaux1'] = $data['query']['Prodaux1'];
 			$data['bd']['Prodaux2'] = $data['query']['Prodaux2'];
-			$data['bd']['Prodaux3'] = $data['query']['Prodaux3'];            
+			$data['bd']['Prodaux3'] = $data['query']['Prodaux3'];
 			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
@@ -1688,6 +1976,136 @@ class Relatorio extends CI_Controller {
         }
 
         $this->load->view('relatorio/tela_devolucao', $data);
+
+        $this->load->view('basico/footer');
+
+
+
+    }
+	
+	public function despesas() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+			'idApp_Despesas',
+			'idApp_OrcaTrata',
+			'TipoDespesa',
+			'NomeCliente',
+            'DataFim',
+			'DataInicio',
+            'DataFim2',
+			'DataInicio2',
+            'DataFim3',
+			'DataInicio3',
+            'Ordenamento',
+            'Campo',
+            'AprovadoDespesas',
+            'QuitadoDespesas',
+			'ServicoConcluidoDespesas',
+
+        ), TRUE));
+		/*
+		if (!$data['query']['DataInicio'])
+           $data['query']['DataInicio'] = '01/01/2017';
+		*/
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+        $this->form_validation->set_rules('DataInicio', 'Data Início do Orçamento', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim do Orçamento', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio2', 'Data Início da Entrega', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim2', 'Data Fim da Entrega', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio3', 'Data Início do Retorno', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim3', 'Data Fim do Retorno', 'trim|valid_date');
+
+
+        $data['select']['AprovadoDespesas'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+        $data['select']['QuitadoDespesas'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+		$data['select']['ServicoConcluidoDespesas'] = array(
+            '#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+        $data['select']['Campo'] = array(
+
+			'C.NomeCliente' => 'Cliente',
+            'OT.idApp_Despesas' => 'Número da Devolução',
+			'OT.idApp_OrcaTrata' => 'Número do Orçamento',
+            'OT.AprovadoDespesas' => 'Orçamento Aprovado?',
+            'OT.TipoDespesa' => 'Tipo de Despesa',
+			'OT.DataDespesas' => 'Data do Orçamento',
+			'OT.DataEntradaDespesas' => 'Validade do Orçamento',
+            'OT.ValorDespesas' => 'Valor do Orçamento',
+			'OT.ValorEntradaDespesas' => 'Valor do Desconto',
+			'OT.ValorRestanteDespesas' => 'Valor a Receber',
+
+            'OT.ServicoConcluidoDespesas' => 'Serviço Concluído?',
+            'OT.QuitadoDespesas' => 'Orçamento Quitado?',
+            'OT.DataConclusaoDespesas' => 'Data de Conclusão',
+            'OT.DataRetornoDespesas' => 'Data de Retorno',
+			'OT.ProfissionalDespesas' => 'Profissional',
+
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+
+        $data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
+		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipodespesa();
+		
+        $data['titulo'] = 'Despesas';
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+            #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
+            $data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
+			
+            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+            $data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+			$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+            $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
+			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
+            $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+            $data['bd']['AprovadoDespesas'] = $data['query']['AprovadoDespesas'];
+            $data['bd']['QuitadoDespesas'] = $data['query']['QuitadoDespesas'];
+			$data['bd']['ServicoConcluidoDespesas'] = $data['query']['ServicoConcluidoDespesas'];
+
+            $data['report'] = $this->Relatorio_model->list_despesas($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_despesas', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_despesas', $data);
 
         $this->load->view('basico/footer');
 

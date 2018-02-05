@@ -2,9 +2,9 @@
 
 
 	<div class="col-md-1"></div>
-    <div class="col-md-10">
+	<div class="col-md-10">
 		<div class="row">
-				
+
 			<div class="main">
 
 				<?php echo validation_errors(); ?>
@@ -14,27 +14,11 @@
 					<div class="panel-heading"><strong><?php echo $titulo; ?></strong></div>
 					<div class="panel-body">
 
-						<?php echo form_open('relatorio/despesas', 'role="form"'); ?>
+						<?php echo form_open('relatorio/despesaspag', 'role="form"'); ?>
 
 						<div class="form-group">
 							<div class="row">
-								<!--
-								<div class="col-md-4">
-									<label for="Ordenamento">Nome do Cliente:</label>
-									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-											id="NomeCliente" name="NomeCliente">
-										<?php
-										foreach ($select['NomeCliente'] as $key => $row) {
-											if ($query['NomeCliente'] == $key) {
-												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-											} else {
-												echo '<option value="' . $key . '">' . $row . '</option>';
-											}
-										}
-										?>
-									</select>
-								</div>
-								-->
+
 								<div class="col-md-3">
 									<label for="Ordenamento">Tipo de Despesa:</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -49,9 +33,10 @@
 										}
 										?>
 									</select>
-								</div>
-								<div class="col-md-2">
-									<label for="AprovadoDespesas">Desp. Aprov./Fech.?</label>
+								</div>						
+								<!--
+								<div class="col-md-3">
+									<label for="AprovadoDespesas">Desp.Aprov.?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="AprovadoDespesas" name="AprovadoDespesas">
 										<?php
@@ -65,6 +50,7 @@
 										?>
 									</select>
 								</div>
+								
 								<div class="col-md-2">
 									<label for="ServicoConcluidoDespesas">Desp. Concl.?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -80,8 +66,9 @@
 										?>
 									</select>
 								</div>
+								-->
 								<div class="col-md-2">
-									<label for="QuitadoDespesas">Desp. Quitada?</label>
+									<label for="QuitadoDespesas">Desp.Quit.?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="QuitadoDespesas" name="QuitadoDespesas">
 										<?php
@@ -95,15 +82,28 @@
 										?>
 									</select>
 								</div>
-								
-
+							
+								<div class="col-md-2">
+									<label for="QuitadoPagaveis">Parc. Quit.?</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+											id="QuitadoPagaveis" name="QuitadoPagaveis">
+										<?php
+										foreach ($select['QuitadoPagaveis'] as $key => $row) {
+											if ($query['QuitadoPagaveis'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
 								<!--
-								<div class="col-md-3">
+								<div class="col-md-5">
 									<label for="Ordenamento">Ordenamento:</label>
-
 									<div class="form-group">
 										<div class="row">
-											<div class="col-md-6">
+											<div class="col-md-8">
 												<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 														id="Campo" name="Campo">
 													<?php
@@ -141,47 +141,7 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-md-2">
-									<label for="DataInicio">Devolução - Inc.</label>
-									<div class="input-group DatePicker">
-										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											   autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
-										<span class="input-group-addon" disabled>
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<label for="DataFim">Devolução - Fim</label>
-									<div class="input-group DatePicker">
-										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											   autofocus name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
-										<span class="input-group-addon" disabled>
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<label for="DataInicio2">Conclusão - Inc.</label>
-									<div class="input-group DatePicker">
-										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											   autofocus name="DataInicio2" value="<?php echo set_value('DataInicio2', $query['DataInicio2']); ?>">
-										<span class="input-group-addon" disabled>
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<label for="DataFim2">Conclusão - Fim</label>
-									<div class="input-group DatePicker">
-										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											   autofocus name="DataFim2" value="<?php echo set_value('DataFim2', $query['DataFim2']); ?>">
-										<span class="input-group-addon" disabled>
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<label for="DataInicio3">Retorno - Inc.</label>
+									<label for="DataInicio3">Orç.- Data Inc.</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											   autofocus name="DataInicio3" value="<?php echo set_value('DataInicio3', $query['DataInicio3']); ?>">
@@ -191,7 +151,7 @@
 									</div>
 								</div>
 								<div class="col-md-2">
-									<label for="DataFim3">Retorno - Fim</label>
+									<label for="DataFim3">Orç.- Data Fim</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											   autofocus name="DataFim3" value="<?php echo set_value('DataFim3', $query['DataFim3']); ?>">
@@ -200,6 +160,46 @@
 										</span>
 									</div>
 								</div>								
+								<div class="col-md-2">
+									<label for="DataInicio">Venc.- Data Inc.</label>
+									<div class="input-group DatePicker">
+										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											   autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
+										<span class="input-group-addon" disabled>
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<label for="DataFim">Venc.- Data Fim</label>
+									<div class="input-group DatePicker">
+										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											   autofocus name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
+										<span class="input-group-addon" disabled>
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<label for="DataInicio2">Pagam.- Data Inc.</label>
+									<div class="input-group DatePicker">
+										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											   autofocus name="DataInicio2" value="<?php echo set_value('DataInicio2', $query['DataInicio2']); ?>">
+										<span class="input-group-addon" disabled>
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<label for="DataFim2">Pagam.- Data Fim</label>
+									<div class="input-group DatePicker">
+										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											   autofocus name="DataFim2" value="<?php echo set_value('DataFim2', $query['DataFim2']); ?>">
+										<span class="input-group-addon" disabled>
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="form-group">
@@ -211,22 +211,29 @@
 										<span class="glyphicon glyphicon-search"></span> Pesquisar
 									</button>
 								</div>
+								
 								<div class="col-md-2 text-right">											
-									<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>despesas/cadastrar" role="button"> 
-										<span class="glyphicon glyphicon-plus"></span> Nova Despesa
-									</a>
+										<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>despesas/cadastrar" role="button"> 
+											<span class="glyphicon glyphicon-plus"></span> Nova Despesa
+										</a>
 								</div>
 								<div class="col-md-4"></div>
 							</div>
 						</div>
+
 						</form>
+
 						<br>
+
 						<?php echo (isset($list)) ? $list : FALSE ?>
+
 					</div>
-				</div>			
+
+				</div>
+
 			</div>
-				
+
 		</div>
-	</div>	
-	<div class="col-md-1"></div>	
+	</div>
+	<div class="col-md-1"></div>
 

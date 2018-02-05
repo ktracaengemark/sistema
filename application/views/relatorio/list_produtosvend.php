@@ -16,8 +16,9 @@
 						<th class="active">Aux1</th>
 						<th class="active">Aux2</th>
 						<th class="active">Valor</th>
-						<!--<th class="active">Valor do Orç.</th>-->
-						<th class="active">Obs</th>
+						<!--<th class="active">Valor do Orç.</th>
+						<th class="active">Obs</th>-->
+						<th class="active">Entrega</th>
 						<th class="active">Forma de Pag.</th>
                     </tr>
                 </thead>
@@ -41,7 +42,8 @@
 							echo '<td>' . $row['Prodaux2'] . '</td>';
 							echo '<td>' . $row['ValorVendaProduto'] . '</td>';
 							#echo '<td>' . $row['ValorOrca'] . '</td>';
-							echo '<td>' . $row['ObsProduto'] . '</td>';
+							#echo '<td>' . $row['ObsProduto'] . '</td>';
+							echo '<td>' . $row['DataValidadeProduto'] . '</td>';							
 							echo '<td>' . $row['FormaPag'] . '</td>';
                         echo '</tr>';
                     }

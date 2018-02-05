@@ -83,6 +83,7 @@ class Agenda_model extends CI_Model {
 
             foreach ($query->result() as $row) {
 				$row->Idade = $this->basico->calcula_idade($row->DataNascimento);
+				$row->DataNascimento = $this->basico->mascara_data($row->DataNascimento, 'barras');
             }            
             return $query;
         }
@@ -121,6 +122,7 @@ class Agenda_model extends CI_Model {
 
             foreach ($query->result() as $row) {
                 $row->Idade = $this->basico->calcula_idade($row->DataNascimento);
+				$row->DataNascimento = $this->basico->mascara_data($row->DataNascimento, 'barras');
             }
             return $query;
         }
