@@ -1171,10 +1171,7 @@ class Relatorio_model extends CI_Model {
             #echo $row->idTab_Produtos . ' # ' . $row->Produtos . '<br />';
             #$estoque[$row->idTab_Produtos] = $row->Produtos;
             $estoque->{$row->idTab_Produtos} = new stdClass();
-			#$estoque[$row->idTab_Produtos] = $row->Produtos;
             $estoque->{$row->idTab_Produtos}->Produtos = $row->Produtos;
-
-
         }
 
         foreach ($query['Comprados'] as $row) {
@@ -2445,18 +2442,12 @@ class Relatorio_model extends CI_Model {
                 C.Endereco,
                 C.Bairro,
                 CONCAT(M.NomeMunicipio, "/", M.Uf) AS Municipio,
-                C.Email,
-				CC.NomeContatoCliente,
-				TCC.RelaCom,
-				TCP.RelaPes,
-				CC.Sexo
+                C.Email
 
             FROM
 				App_Cliente AS C
                     LEFT JOIN Tab_Municipio AS M ON C.Municipio = M.idTab_Municipio
-					LEFT JOIN App_ContatoCliente AS CC ON C.idApp_Cliente = CC.idApp_Cliente
-					LEFT JOIN Tab_RelaCom AS TCC ON TCC.idTab_RelaCom = CC.RelaCom
-					LEFT JOIN Tab_RelaPes AS TCP ON TCP.idTab_RelaPes = CC.RelaPes
+
             WHERE
                 C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				C.Empresa = ' . $_SESSION['log']['Empresa'] . '

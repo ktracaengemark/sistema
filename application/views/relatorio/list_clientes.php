@@ -20,15 +20,15 @@
 						<th class="active">Telefone2</th>
 						<th class="active">Telefone3</th>
 						<th class="active">Nascimento</th>
-                        <!--<th class="active">Endereço</th>
+                        <th class="active">Endereço</th>
                         <th class="active">Bairro</th>
                         <th class="active">Município</th>
-                        <th class="active">E-mail</th>-->
+                        <th class="active">E-mail</th>
 						<th class="active">Ativo?</th>
-						<th class="active">Contato</th>
-						<!--<th class="active">Sexo</th>-->
+						<!--<th class="active">Contato</th>
+						<th class="active">Sexo</th>
 						<th class="active">Rel. Com.</th>
-						<th class="active">Rel. Pes.</th>
+						<th class="active">Rel. Pes.</th>-->
 
                     </tr>
                 </thead>
@@ -48,16 +48,16 @@
                             echo '<td>' . $row['Telefone1'] . '</td>';
 							echo '<td>' . $row['Telefone2'] . '</td>';
 							echo '<td>' . $row['Telefone3'] . '</td>';
-							echo '<td>' . $row['DataNascimento'] . '</td>';
+							echo '<td>' . $row['DataNascimento'] . '</td>';							
+                            echo '<td>' . $row['Endereco'] . '</td>';
+                            echo '<td>' . $row['Bairro'] . '</td>';
+                            echo '<td>' . $row['Municipio'] . '</td>';
+                            echo '<td>' . $row['Email'] . '</td>';
 							echo '<td>' . $row['Ativo'] . '</td>';
-                           # echo '<td>' . $row['Endereco'] . '</td>';
-                           # echo '<td>' . $row['Bairro'] . '</td>';
-                           # echo '<td>' . $row['Municipio'] . '</td>';
-                           # echo '<td>' . $row['Email'] . '</td>';
-							echo '<td>' . $row['NomeContatoCliente'] . '</td>';
+							#echo '<td>' . $row['NomeContatoCliente'] . '</td>';
 							#echo '<td>' . $row['Sexo'] . '</td>';
-							echo '<td>' . $row['RelaCom'] . '</td>';
-							echo '<td>' . $row['RelaPes'] . '</td>';
+							#echo '<td>' . $row['RelaCom'] . '</td>';
+							#echo '<td>' . $row['RelaPes'] . '</td>';
                         echo '</tr>';
                     }
                     ?>
