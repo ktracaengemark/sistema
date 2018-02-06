@@ -96,7 +96,7 @@
 									</button>
 								</div>
 							</div>
-							<!--
+							
 							<div class="row">
 								<div class="col-md-4">
 									<label for="Ordenamento">Categoria</label>
@@ -144,7 +144,7 @@
 									</select>
 								</div>
 							</div>
-							-->
+							
 						</div>
 
 						</form>
