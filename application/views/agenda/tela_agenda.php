@@ -88,7 +88,7 @@
 							</div>
 						</form>
 						<?php } ?>
-
+						<!--
 						<div class="panel panel-primary">
 							<div class="panel-body">
 								<div class="col-md-12 text-center t">
@@ -104,11 +104,11 @@
 								</div>
 							</div>
 						</div>
+						-->
+						<div id="datepickerinline" class="col-md-12"></div>
 
-								<div id="datepickerinline" class="col-md-12"></div>
 
-
-
+						<!--
 						<table class="table table-condensed table-bordered">
 							<tr class="active text-active">
 								<th colspan="2" class="col-md-12 text-center"><b>Estatísticas - <?php echo date('m/Y', time()) ?></b></th>
@@ -209,7 +209,7 @@
 							*/
 							?>
 						</table>
-
+						-->
 					</div>
 				</div>
 			</div>
