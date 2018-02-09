@@ -1771,7 +1771,9 @@ class Relatorio_model extends CI_Model {
 
         $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 		$data['FormaPag'] = ($data['FormaPag']) ? ' AND TFP.idTab_FormaPag = ' . $data['FormaPag'] : FALSE;
-        $filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
+        $data['Campo'] = (!$data['Campo']) ? 'C.NomeCliente' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+		$filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ServicoConcluido'] != '#') ? 'OT.ServicoConcluido = "' . $data['ServicoConcluido'] . '" AND ' : FALSE;
 
@@ -1814,10 +1816,7 @@ class Relatorio_model extends CI_Model {
 				' . $data['FormaPag'] . ' AND
 				OT.TipoRD = "R"
             ORDER BY
-                OT.idApp_OrcaTrata DESC,
-				C.NomeCliente,
-				OT.AprovadoOrca ASC,
-				OT.DataOrca
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
 
         ');
 
@@ -2067,6 +2066,7 @@ class Relatorio_model extends CI_Model {
 				' . $consulta . ' AND
 				' . $consulta2 . ' AND
 				' . $consulta3 . ' AND
+
 				OT.TipoProduto = "E"
 
             ORDER BY
@@ -3100,7 +3100,7 @@ class Relatorio_model extends CI_Model {
     }
 
 	public function list_tarefa($data, $completo) {
-
+		
         if ($data['DataFim']) {
             $consulta =
                 '(TF.DataTarefa >= "' . $data['DataInicio'] . '" AND TF.DataTarefa <= "' . $data['DataFim'] . '")';
@@ -3110,22 +3110,18 @@ class Relatorio_model extends CI_Model {
                 '(TF.DataTarefa >= "' . $data['DataInicio'] . '")';
         }
 
-        $data['NomeProfissional'] = ($data['NomeProfissional']) ? ' AND P.idApp_Profissional = ' . $data['NomeProfissional'] : FALSE;
+		#$data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+        $data['Campo'] = (!$data['Campo']) ? 'TF.DataPrazoTarefa' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];       
+		$data['NomeProfissional'] = ($data['NomeProfissional']) ? ' AND P.idApp_Profissional = ' . $data['NomeProfissional'] : FALSE;
 		$data['Profissional'] = ($data['Profissional']) ? ' AND P2.idApp_Profissional = ' . $data['Profissional'] : FALSE;
-
 		$data['ObsTarefa'] = ($data['ObsTarefa']) ? ' AND TF.idApp_Tarefa = ' . $data['ObsTarefa'] : FALSE;
-
-		$data['Procedtarefa'] = ($data['Procedtarefa']) ? ' AND PT.idApp_Procedtarefa = ' . $data['Procedtarefa'] : FALSE;
-
 		$filtro5 = ($data['TarefaConcluida'] != '#') ? 'TF.TarefaConcluida = "' . $data['TarefaConcluida'] . '" AND ' : FALSE;
-
         $filtro6 = ($data['Prioridade'] != '#') ? 'TF.Prioridade = "' . $data['Prioridade'] . '" AND ' : FALSE;
 		$filtro7 = ($data['Rotina'] != '#') ? 'TF.Rotina = "' . $data['Rotina'] . '" AND ' : FALSE;
-		$filtro8 = ($data['ConcluidoProcedtarefa'] != '#') ? 'PT.ConcluidoProcedtarefa = "' . $data['ConcluidoProcedtarefa'] . '" AND ' : FALSE;
 
         $query = $this->db->query('
             SELECT
-
 				P.NomeProfissional,
                 TF.idApp_Tarefa,
 				TF.ObsTarefa,
@@ -3134,37 +3130,18 @@ class Relatorio_model extends CI_Model {
 				TF.Prioridade,
 				TF.Rotina,
 				TF.DataPrazoTarefa,
-				TF.DataConclusao,
-				P2.NomeProfissional AS Profissional,
-				PT.idApp_Procedtarefa,
-				PT.Procedtarefa,
-				PT.DataProcedtarefa,
-				PT.ConcluidoProcedtarefa
+				TF.DataConclusao
             FROM
                 App_Tarefa AS TF
-					LEFT JOIN App_Procedtarefa AS PT ON TF.idApp_Tarefa = PT.idApp_Tarefa
 					LEFT JOIN App_Profissional AS P ON P.idApp_Profissional = TF.ProfissionalTarefa
-					LEFT JOIN App_Profissional AS P2 ON P2.idApp_Profissional = PT.Profissional
             WHERE
-                TF.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                TF.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+				TF.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
 				TF.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-					'.$filtro5.'
-					'.$filtro6.'
-					'.$filtro7.'
-					'.$filtro8.'
+				' . $filtro5 . '
 				(' . $consulta . ')
-				' . $data['ObsTarefa'] . '
-				' . $data['Procedtarefa'] . '
             ORDER BY
-
-				TF.TarefaConcluida ASC,
-				TF.Rotina DESC,
-				TF.DataPrazoTarefa DESC,
-				TF.Prioridade DESC,
-				PT.ConcluidoProcedtarefa ASC,
-				PT.DataProcedtarefa DESC
-
-
+				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
 
         /*
@@ -3183,14 +3160,10 @@ class Relatorio_model extends CI_Model {
             foreach ($query->result() as $row) {
 				$row->DataTarefa = $this->basico->mascara_data($row->DataTarefa, 'barras');
 				$row->DataPrazoTarefa = $this->basico->mascara_data($row->DataPrazoTarefa, 'barras');
-				$row->DataProcedtarefa = $this->basico->mascara_data($row->DataProcedtarefa, 'barras');
 				$row->DataConclusao = $this->basico->mascara_data($row->DataConclusao, 'barras');
-
 				$row->TarefaConcluida = $this->basico->mascara_palavra_completa($row->TarefaConcluida, 'NS');
                 $row->Prioridade = $this->basico->mascara_palavra_completa($row->Prioridade, 'NS');
 				$row->Rotina = $this->basico->mascara_palavra_completa($row->Rotina, 'NS');
-				$row->ConcluidoProcedtarefa = $this->basico->mascara_palavra_completa($row->ConcluidoProcedtarefa, 'NS');
-
             }
             $query->soma = new stdClass();
             $query->soma->somatarefa = number_format($somatarefa, 2, ',', '.');

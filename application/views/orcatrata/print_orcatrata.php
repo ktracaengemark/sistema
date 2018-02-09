@@ -77,6 +77,10 @@
 
 					</tbody>
 				</table>
+				
+				<hr />
+				<h3 class="text-center">Orçamento & Forma de Pagam.</h3>
+				<hr />
 
 				<table class="table table-bordered">
 					<thead>
@@ -94,11 +98,7 @@
 						</tr>
 					</tbody>
 				</table>
-
-				<hr />
-				<h3 class="text-center">Forma de Pagamento & Parcelas</h3>
-				<hr />
-
+				
 				<table class="table table-bordered">
 					<thead>
 						<tr>
@@ -115,6 +115,10 @@
 						</tr>
 					</tbody>
 				</table>
+				
+				<hr />
+				<h3 class="text-center">Parcelas</h3>
+				<hr />
 
 				<table class="table table-bordered">
 					<thead>
@@ -151,6 +155,10 @@
 					</tbody>
 				</table>
 
+				<hr />
+				<h3 class="text-center">Status do Orçamento</h3>
+				<hr />
+				
 				<table class="table table-bordered">
 					<thead>
 						<tr>

@@ -2852,8 +2852,6 @@ class Relatorio extends CI_Controller {
         $data['query'] = quotes_to_entities($this->input->post(array(
             'DataInicio',
             'DataFim',
-			'DataInicio2',
-            'DataFim2',
             'NomeProfissional',
 			'Profissional',
 			'Ordenamento',
@@ -2866,21 +2864,21 @@ class Relatorio extends CI_Controller {
 			'Procedtarefa',
 
         ), TRUE));
-
-	if (!$data['query']['DataInicio'])
+		/*
+		if (!$data['query']['DataInicio'])
            $data['query']['DataInicio'] = '01/01/2017';
-
+		*/
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
-        $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
+        $this->form_validation->set_rules('DataInicio', 'Data Início', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
 
         $data['select']['TarefaConcluida'] = array(
-            '#' => 'TODOS',
             'N' => 'Não',
+			'#' => 'TODOS',         
             'S' => 'Sim',
         );
-
+/*
         $data['select']['Prioridade'] = array(
             '#' => 'TODOS',
             'N' => 'Não',
@@ -2898,29 +2896,23 @@ class Relatorio extends CI_Controller {
             'N' => 'Não',
             'S' => 'Sim',
         );
-
+*/
         $data['select']['Campo'] = array(
            # 'C.NomeCliente' => 'Nome do Cliente',
-			'TF.Rotina' => 'É Rotina?',
-			'TF.ProfissionalTarefa' => 'Responsável',
-			'PT.Profissional' => 'Profissional',
+			'TF.DataPrazoTarefa' => 'Prazo da Tarefa',						
+			'TF.DataTarefa' => 'Data do Tarefa',
+			#'TF.ProfissionalTarefa' => 'Responsável',
 			'TF.idApp_Tarefa' => 'Número do Tarefas',
-			'TF.ObsTarefa' => 'Tarefa',
-            'TF.DataTarefa' => 'Data do Tarefa',
-			'TF.Prioridade' => 'É Prioridade?',
-			'TF.DataPrazoTarefa' => 'Prazo da Tarefa',
+			'TF.ObsTarefa' => 'Tarefa',           
+			'TF.Rotina' => 'Rotina',
+			'TF.Prioridade' => 'Prioridade',
 			'TF.TarefaConcluida' => 'Tarefa Concl.?',
 			'TF.DataConclusao' => 'Data da Concl.',
-			'PT.Procedtarefa' => 'Procedimento',
-			'PT.DataProcedtarefa' => 'Data do Proced.',
-			'PT.ConcluidoProcedtarefa' => 'Proced. Concl.?',
-
         );
 
         $data['select']['Ordenamento'] = array(
             'DESC' => 'Decrescente',
-			'ASC' => 'Crescente',
-
+			'ASC' => 'Crescente',			
         );
 
         $data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional3();
@@ -2938,8 +2930,6 @@ class Relatorio extends CI_Controller {
 			$data['bd']['Profissional'] = $data['query']['Profissional'];
             $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
-            $data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
             $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['TarefaConcluida'] = $data['query']['TarefaConcluida'];

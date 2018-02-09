@@ -17,15 +17,15 @@
 						<th class="active">Tarefa / Missão</th>																	                       
 						<th class="active">Data da Tarefa:</th>
 						<th class="active">Prazo de Conclusão</th>
-						<th class="active">Rotina?:</th>
-						<th class="active">Prioridade?</th>
 						<th class="active">Tarefa Concluída?</th>
 						<th class="active">Data da Conclusão da Tarefa</th>
+						<th class="active">Rotina?:</th>
+						<th class="active">Prioridade?</th>						
 						<!--<th class="active">Responsável da Ação</th>-->						
-						<th class="active">Ação</th>
+						<!--<th class="active">Ação</th>
 						<th class="active">Data da Ação</th>
 						<th class="active">Ação Concluída?</th>																	
-						<!--<th class="active">N.Tarefa</th>-->
+						<th class="active">N.Tarefa</th>-->
 																		
 						
                     </tr>
@@ -43,14 +43,14 @@
 							echo '<td>' . $row['ObsTarefa'] . '</td>'; //  = Tarefa
 							echo '<td>' . $row['DataTarefa'] . '</td>';
 							echo '<td>' . $row['DataPrazoTarefa'] . '</td>';
-							echo '<td>' . $row['Rotina'] . '</td>'; // = Rotina
-							echo '<td>' . $row['Prioridade'] . '</td>'; // = Prioridade	
 							echo '<td>' . $row['TarefaConcluida'] . '</td>'; // = Tarefa Concluída?
 							echo '<td>' . $row['DataConclusao'] . '</td>';
+							echo '<td>' . $row['Rotina'] . '</td>'; // = Rotina
+							echo '<td>' . $row['Prioridade'] . '</td>'; // = Prioridade								
 							#echo '<td>' . $row['Profissional'] . '</td>';							
-							echo '<td>' . $row['Procedtarefa'] . '</td>';
-							echo '<td>' . $row['DataProcedtarefa'] . '</td>';
-							echo '<td>' . $row['ConcluidoProcedtarefa'] . '</td>';																																															
+							#echo '<td>' . $row['Procedtarefa'] . '</td>';
+							#echo '<td>' . $row['DataProcedtarefa'] . '</td>';
+							#echo '<td>' . $row['ConcluidoProcedtarefa'] . '</td>';																																															
 							#echo '<td>' . $row['idApp_Tarefa'] . '</td>';
 																					
 							

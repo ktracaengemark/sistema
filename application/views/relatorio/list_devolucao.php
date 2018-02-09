@@ -51,7 +51,7 @@
 						<th class="active">Valor do Desconto</th>
 						<th class="active">Valor A Receber</th>
 						<th class="active">Forma de Pag.</th>
-						<th class="active">Devol. Apv.?</th>
+						<th class="active">Devol. Apv/Fech?</th>
 						<th class="active">Prd Entreg.?</th>
 						<th class="active">Devol. Quit.?</th>                       
                         <th class="active">Data Conclusão</th>

@@ -93,9 +93,12 @@
 										}
 										?>
 									</select>
-								</div>
-								<!--
-								<div class="col-md-3">
+								</div>																
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">							
+								<div class="col-md-4">
 									<label for="Ordenamento">Ordenamento:</label>
 
 									<div class="form-group">
@@ -131,8 +134,7 @@
 											</div>
 										</div>
 									</div>
-								</div>
-								-->
+								</div>							
 							</div>
 						</div>
 						<div class="form-group">

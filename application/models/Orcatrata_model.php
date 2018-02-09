@@ -139,6 +139,7 @@ class Orcatrata_model extends CI_Model {
             . 'App_OrcaTrata AS OT '
             . 'WHERE '
             . 'OT.idApp_Cliente = ' . $id . ' AND '
+			. 'OT.TipoRD = "R" AND '
             . 'OT.AprovadoOrca = "' . $aprovado . '" '
             . 'ORDER BY OT.DataOrca DESC ');
         /*

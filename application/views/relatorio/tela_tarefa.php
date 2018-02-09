@@ -3,7 +3,8 @@
 <div class="container-fluid">
     <div class="row">
 
-        <div class="main">
+        <div class="col-md-2"></div>
+		<div class="col-md-8 ">
 
             <?php echo validation_errors(); ?>
 
@@ -32,7 +33,7 @@
                                     ?>
                                 </select>
                             </div>
-							-->
+							
 							<div class="col-md-2">
                                 <label for="Ordenamento">Tarefa / Missão</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -48,7 +49,7 @@
                                     ?>
                                 </select>
                             </div>
-							
+							-->
 							<div class="col-md-2">
                                 <label for="TarefaConcluida">Trf. Concl.?</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -80,7 +81,7 @@
                                     ?>
                                 </select>
                             </div>
-							-->
+							
 							<div class="col-md-2">
                                 <label for="Ordenamento">Ação</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -128,7 +129,7 @@
                                     ?>
                                 </select>
                             </div>
-
+							
                             <div class="col-md-2">
                                 <label for="Prioridade">Prioridade</label>
                                 <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -143,14 +144,15 @@
                                     }
                                     ?>
                                 </select>
-                            </div>							
-							<!--
-                            <div class="col-md-4">
+                            </div>
+							-->
+							
+                            <div class="col-md-6">
                                 <label for="Ordenamento">Ordenamento:</label>
 
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
                                                     id="Campo" name="Campo">
                                                 <?php
@@ -165,7 +167,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <select data-placeholder="Selecione uma opção..." class="form-control Chosen"
                                                     id="Ordenamento" name="Ordenamento">
                                                 <?php
@@ -181,12 +183,13 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-							-->
+                            </div>						
 						</div>	
 					</div>
+					
 					<div class="form-group">
                         <div class="row">		
+							<!--
 							<div class="col-md-2">
                                 <label for="DataInicio">Data - Início: *</label>
                                 <div class="input-group DatePicker">
@@ -207,18 +210,19 @@
                                     </span>
                                 </div>
                             </div>
+							-->
 							<br>
-							<div class="col-md-2 text-left">
+							<div class="col-md-4 text-left">
                                 <button class="btn btn-lg btn-primary " name="pesquisar" value="0" type="submit">
                                     <span class="glyphicon glyphicon-search"></span> Pesquisar
                                 </button>
                             </div>
-							<div class="col-md-2 text-center">											
+							<div class="col-md-4 text-center">											
 									<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>tarefa/cadastrar" role="button"> 
 										<span class="glyphicon glyphicon-plus"></span> Nova Tarefa
 									</a>
 							</div>		
-							<div class="col-md-2 text-right">											
+							<div class="col-md-4 text-right">											
 									<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>agenda" role="button"> 
 										<span class="glyphicon glyphicon-calendar"></span> Agenda
 									</a>															
@@ -231,5 +235,6 @@
                 </div>
             </div>
         </div>
+		<div class="col-md-2"></div>
     </div>
 </div>
