@@ -22,14 +22,14 @@
 					</div>
 					</form>
 				</li>
-				
+
 				<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
-					
+
 					<div class="btn-group">
 						<button type="button" class="btn btn-md btn-primary  dropdown-toggle" data-toggle="dropdown">
 							<span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['Usuario']; ?> <span class="caret"></span>
 						</button>
-						<ul class="dropdown-menu" role="menu">							
+						<ul class="dropdown-menu" role="menu">
 							<li><a href="<?php echo base_url() ?>acesso/index"><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['Usuario']; ?></a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url(); ?>agenda"><span class="glyphicon glyphicon-calendar"></span>Agenda</a></li>
@@ -42,40 +42,40 @@
 							<li role="separator" class="divider"></li>
 						</ul>
 					</div>
-					
+
 					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>acesso/index">
 							<button type="button" class="btn btn-md btn-primary">
 								<span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['Usuario']; ?>
 							</button>
-						</a>						
+						</a>
 					</div>
-					
+
 					<div class="btn-group" role="group" aria-label="..."> </div>
 				</li>
 				-->
-				<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">	
+				<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
 					<!--
-					<div class="btn-group" role="group" aria-label="...">												
+					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>agenda">
 							<button type="button" class="btn btn-md btn-warning ">
 								<span class="glyphicon glyphicon-calendar"></span>Agenda
 							</button>
 						</a>
-						
+
 						<a href="<?php echo base_url(); ?>relatorio/clientes">
 							<button type="button" class="btn btn-md btn-success ">
 								<span class="glyphicon glyphicon-user"></span>Clientes
 							</button>
 						</a>
-						
+
 					</div>
 					-->
 					<div class="btn-group">
 						<button type="button" class="btn btn-md btn-primary  dropdown-toggle" data-toggle="dropdown">
 							<span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['Usuario']; ?> <span class="caret"></span>
 						</button>
-						<ul class="dropdown-menu" role="menu">							
+						<ul class="dropdown-menu" role="menu">
 							<li><a href="<?php echo base_url() ?>acesso/index"><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['Usuario']; ?></a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>tipobanco/cadastrar"><span class="glyphicon glyphicon-pencil"></span> Cad - Conta Corrente</a></li>
@@ -90,38 +90,38 @@
 						<button type="button" class="btn btn-md btn-warning dropdown-toggle" data-toggle="dropdown">
 							<span class="glyphicon glyphicon-calendar"></span> Agendas <span class="caret"></span>
 						</button>
-						<ul class="dropdown-menu" role="menu">							
+						<ul class="dropdown-menu" role="menu">
 							<li><a href="<?php echo base_url(); ?>agenda"><span class="glyphicon glyphicon-calendar"></span> Agendas</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/tarefa"><span class="glyphicon glyphicon-pencil"></span> Tarefas</a></li>
 						</ul>
-					</div>					
+					</div>
 					<div class="btn-group" role="group" aria-label="..."> </div>
 				</li>
-				
-				<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">	
-					<div class="btn-group" role="group" aria-label="...">																	
+
+				<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
+					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>relatorio/clientes">
 							<button type="button" class="btn btn-md btn-success ">
 								<span class="glyphicon glyphicon-user"></span>Clientes
 							</button>
-						</a>	
-					</div>					
+						</a>
+					</div>
 					<div class="btn-group" role="group" aria-label="..."> </div>
-				</li>				
-				
-				<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">										
+				</li>
+
+				<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
 					<div class="btn-group">
 						<button type="button" class="btn btn-md btn-primary dropdown-toggle" data-toggle="dropdown">
 							<span class="glyphicon glyphicon-pencil"></span> Cadastros <span class="caret"></span>
 						</button>
-						<ul class="dropdown-menu" role="menu">							
+						<ul class="dropdown-menu" role="menu">
 							<li><a href="<?php echo base_url() ?>orcatrata2/cadastrar"><span class="glyphicon glyphicon-usd"></span> Orçamentos</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>despesas/cadastrar"><span class="glyphicon glyphicon-usd"></span> Despesas</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>devolucao/cadastrar"><span class="glyphicon glyphicon-pencil"></span> Devoluções</a></li>
-							<li role="separator" class="divider"></li>																					
+							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>consumo/cadastrar"><span class="glyphicon glyphicon-pencil"></span> Consumos & Perdas</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/produtos"><span class="glyphicon glyphicon-pencil"></span> Produtos</a></li>
@@ -146,17 +146,19 @@
 							<li><a href="<?php echo base_url() ?>relatorio/produtoscomp"><span class="glyphicon glyphicon-list"></span> Despesas X Prd.</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/despesaspag"><span class="glyphicon glyphicon-list"></span> Despesas X Pag.</a></li>
-							<li role="separator" class="divider"></li>							
+							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/devolucao"><span class="glyphicon glyphicon-list"></span> Devoluções</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/produtosdevol"><span class="glyphicon glyphicon-list"></span> Devol. X Cl. X Prd.</a></li>
-							<li role="separator" class="divider"></li>							
+							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/consumo"><span class="glyphicon glyphicon-list"></span> Consumos</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/balanco"><span class="glyphicon glyphicon-usd"></span> Balanço</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/estoque"><span class="glyphicon glyphicon-list"></span> Estoque</a></li>
-							<li role="separator" class="divider"></li>						
+							<li role="separator" class="divider"></li>
+							<li><a href="<?php echo base_url() ?>relatorio/estoque2"><span class="glyphicon glyphicon-list"></span> Estoque2</a></li>
+							<li role="separator" class="divider"></li>
 						</ul>
 					</div>
 					<!--
@@ -172,7 +174,7 @@
 				</li>
 				<!--
 				<li class="btn-toolbar navbar-form navbar-right" role="toolbar" aria-label="...">
-					
+
 					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url() ?>loginempresafilial/index">
 							<button type="button" class="btn btn-md active " id="countdowndiv">
@@ -180,7 +182,7 @@
 							</button>
 						</a>
 					</div>
-					
+
 					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>relatorio/sistema">
 							<button type="button" class="btn btn-md btn-primary ">
@@ -188,15 +190,15 @@
 							</button>
 						</a>
 					</div>
-					
-					<div class="btn-group" role="group" aria-label="...">					
+
+					<div class="btn-group" role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>login/sair">
 							<button type="button" class="btn btn-md btn-danger ">
 								<span class="glyphicon glyphicon-log-out"></span> Sair
 							</button>
 						</a>
 					</div>
-					
+
 					<div class="btn-group" role="group" aria-label="..."> </div>
 				</li>
 				-->
