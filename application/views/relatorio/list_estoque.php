@@ -6,8 +6,10 @@
 
                 <thead>
                     <tr>
+						<th class="active text-center">CATEGORIA</th>
 						<th class="active text-center">PRODUTO</th>
-
+						<th class="active text-center">AUX1</th>
+						<th class="active text-center">AUX2</th>
                         <th class="active text-center">QTD COMPRA</th>
                         <th class="active text-center">QTD ENTREGUE</th>
 						<th class="active text-center">QTD DEVOLVE</th>
@@ -23,8 +25,10 @@
                     foreach ($report as $row) {
 
                         echo '<tr>';
+							echo '<td>' . $row->Prodaux3 . '</td>';
 							echo '<td>' . $row->Produtos . '</td>';
-
+							echo '<td>' . $row->Prodaux1 . '</td>';
+							echo '<td>' . $row->Prodaux2 . '</td>';
 							echo '<td>' . $row->QtdCompra . '</td>';
 							echo '<td>' . $row->QtdVenda . '</td>';
 							echo '<td>' . $row->QtdDevolve . '</td>';

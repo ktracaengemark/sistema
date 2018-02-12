@@ -969,7 +969,7 @@ class Relatorio_model extends CI_Model {
             'SELECT
                 TP.idTab_Produtos,
                 TP.CodProd,
-                CONCAT(IFNULL(TP.CodProd,""), " - ", IFNULL(TP3.Prodaux3,""), " - ", IFNULL(TP.Produtos,""), " - ", IFNULL(TP1.Prodaux1,""), " - ", IFNULL(TP2.Prodaux2,"")) AS Produtos,
+                CONCAT(IFNULL(TP.CodProd,""), " - ", IFNULL(TP.Produtos,"")) AS Produtos,
                 TP1.Prodaux1,
                 TP2.Prodaux2,
                 TP3.Prodaux3
@@ -989,7 +989,67 @@ class Relatorio_model extends CI_Model {
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . ''
         );
         $query['Produtos'] = $query['Produtos']->result();
+		
+        ####################################################################
+        #LISTA DE PRODAUX1
+        $query['Prodaux1'] = $this->db->query(
+            'SELECT
+                TP.idTab_Produtos,
+                TP.CodProd,
+                CONCAT(IFNULL(TP1.Prodaux1,"")) AS Prodaux1,
+                TP1.Prodaux1
+            FROM
+                Tab_Produtos AS TP
+                    LEFT JOIN Tab_Prodaux1 AS TP1 ON TP1.idTab_Prodaux1 = TP.Prodaux1
+            WHERE
+                TP.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+                ' . $data['Prodaux1'] . '
+            ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . ''
+        );
+        $query['Prodaux1'] = $query['Prodaux1']->result();		
 
+        ####################################################################
+        #LISTA DE PRODAUX2
+        $query['Prodaux2'] = $this->db->query(
+            'SELECT
+                TP.idTab_Produtos,
+                TP.CodProd,
+                CONCAT(IFNULL(TP2.Prodaux2,"")) AS Prodaux2,
+                TP2.Prodaux2
+            FROM
+                Tab_Produtos AS TP
+                    LEFT JOIN Tab_Prodaux2 AS TP2 ON TP2.idTab_Prodaux2 = TP.Prodaux2
+            WHERE
+                TP.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+                ' . $data['Prodaux2'] . '
+            ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . ''
+        );
+        $query['Prodaux2'] = $query['Prodaux2']->result();		
+
+        ####################################################################
+        #LISTA DE PRODAUX3
+        $query['Prodaux3'] = $this->db->query(
+            'SELECT
+                TP.idTab_Produtos,
+                TP.CodProd,
+                CONCAT(IFNULL(TP3.Prodaux3,"")) AS Prodaux3,
+                TP3.Prodaux3
+            FROM
+                Tab_Produtos AS TP
+                    LEFT JOIN Tab_Prodaux3 AS TP3 ON TP3.idTab_Prodaux3 = TP.Prodaux3
+            WHERE
+                TP.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                TP.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+                ' . $data['Prodaux3'] . '
+            ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . ''
+        );
+        $query['Prodaux3'] = $query['Prodaux3']->result();
+		
         ####################################################################
         #COMPRADOS
         if ($data['DataFim']) {
@@ -1184,7 +1244,33 @@ class Relatorio_model extends CI_Model {
             #$estoque[$row->idTab_Produtos] = $row->Produtos;
             $estoque->{$row->idTab_Produtos} = new stdClass();
             $estoque->{$row->idTab_Produtos}->Produtos = $row->Produtos;
-        }/*
+        }
+
+        foreach ($query['Prodaux1'] as $row) {
+            #echo $row->idTab_Produtos . ' # ' . $row->Produtos . '<br />';
+            #$estoque[$row->idTab_Produtos] = $row->Produtos;
+            #$estoque->{$row->idTab_Produtos} = new stdClass();
+            if (isset($estoque->{$row->idTab_Produtos}))
+			$estoque->{$row->idTab_Produtos}->Prodaux1 = $row->Prodaux1;
+        }
+
+        foreach ($query['Prodaux2'] as $row) {
+            #echo $row->idTab_Produtos . ' # ' . $row->Produtos . '<br />';
+            #$estoque[$row->idTab_Produtos] = $row->Produtos;
+            #$estoque->{$row->idTab_Produtos} = new stdClass();
+            if (isset($estoque->{$row->idTab_Produtos}))
+			$estoque->{$row->idTab_Produtos}->Prodaux2 = $row->Prodaux2;
+        }
+
+        foreach ($query['Prodaux3'] as $row) {
+            #echo $row->idTab_Produtos . ' # ' . $row->Produtos . '<br />';
+            #$estoque[$row->idTab_Produtos] = $row->Produtos;
+            #$estoque->{$row->idTab_Produtos} = new stdClass();
+            if (isset($estoque->{$row->idTab_Produtos}))
+			$estoque->{$row->idTab_Produtos}->Prodaux3 = $row->Prodaux3;
+        }		
+		
+		/*
 echo "<pre>";
 print_r($query['Comprados']);
 echo "</pre>";
@@ -1234,7 +1320,7 @@ exit();*/
 
     }
 
-    public function list_estoque2($data) {
+    public function list_estoque21($data) {
 
 		$data['Produtos'] = ($data['Produtos']) ? ' AND TP.idTab_Produtos = ' . $data['Produtos'] : FALSE;
 		$data['Prodaux1'] = ($data['Prodaux1']) ? ' AND TP1.idTab_Prodaux1 = ' . $data['Prodaux1'] : FALSE;

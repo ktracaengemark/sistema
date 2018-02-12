@@ -89,12 +89,7 @@
 											<span class="glyphicon glyphicon-calendar"></span>
 										</span>
 									</div>
-								</div>
-								<div class="col-md-2 text-left"><br />
-									<button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
-										<span class="glyphicon glyphicon-search"></span> Pesquisar
-									</button>
-								</div>
+								</div>								
 							</div>
 							
 							<div class="row">
@@ -144,7 +139,13 @@
 									</select>
 								</div>
 							</div>
-							
+							<div class="row">	
+								<div class="col-md-2 text-left"><br />
+									<button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
+										<span class="glyphicon glyphicon-search"></span> Pesquisar
+									</button>
+								</div>
+							</div>
 						</div>
 
 						</form>
