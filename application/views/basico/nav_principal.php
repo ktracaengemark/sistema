@@ -157,8 +157,8 @@
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/estoque"><span class="glyphicon glyphicon-list"></span> Estoque</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>relatorio/estoque2"><span class="glyphicon glyphicon-list"></span> Estoque2</a></li>
-							<li role="separator" class="divider"></li>
+							<!--<li><a href="<?php echo base_url() ?>relatorio/estoque2"><span class="glyphicon glyphicon-list"></span> Estoque2</a></li>
+							<li role="separator" class="divider"></li>-->
 						</ul>
 					</div>
 					<!--
