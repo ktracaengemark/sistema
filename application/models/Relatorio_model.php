@@ -2523,6 +2523,7 @@ exit();*/
 
         $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 		$data['TipoDespesa'] = ($data['TipoDespesa']) ? ' AND TD.idTab_TipoDespesa = ' . $data['TipoDespesa'] : FALSE;
+		$data['Categoriadesp'] = ($data['Categoriadesp']) ? ' AND CD.idTab_Categoriadesp = ' . $data['Categoriadesp'] : FALSE;
         $filtro1 = ($data['AprovadoDespesas'] != '#') ? 'OT.AprovadoDespesas = "' . $data['AprovadoDespesas'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoDespesas'] != '#') ? 'OT.QuitadoDespesas = "' . $data['QuitadoDespesas'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ServicoConcluidoDespesas'] != '#') ? 'OT.ServicoConcluidoDespesas = "' . $data['ServicoConcluidoDespesas'] . '" AND ' : FALSE;
@@ -2535,6 +2536,7 @@ exit();*/
                 OT.AprovadoDespesas,
                 OT.DataDespesas,
 				TD.TipoDespesa,
+				CD.Categoriadesp,
 				OT.Despesa,
 				OT.DataEntradaDespesas,
                 OT.ValorDespesas,
@@ -2558,6 +2560,7 @@ exit();*/
 				LEFT JOIN App_OrcaTrata AS TR ON TR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 				LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = TR.idApp_Cliente
 				LEFT JOIN Tab_TipoDespesa AS TD ON TD.idTab_TipoDespesa = OT.TipoDespesa
+				LEFT JOIN Tab_Categoriadesp AS CD ON CD.idTab_Categoriadesp = TD.Categoriadesp
 
             WHERE
 				OT.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
@@ -2567,6 +2570,7 @@ exit();*/
 				' . $consulta2 . ' AND
 				' . $consulta3 . '
 				' . $data['TipoDespesa'] . ' AND
+
 				OT.QtdParcelasDespesas != "0"
 
             ORDER BY
@@ -4035,6 +4039,27 @@ exit();*/
         $array[0] = ':: Todos ::';
         foreach ($query->result() as $row) {
             $array[$row->idTab_TipoConsumo] = $row->TipoConsumo;
+        }
+
+        return $array;
+    }
+	
+	public function select_tipodevolucao() {
+
+        $query = $this->db->query('
+            SELECT
+                idTab_TipoDevolucao,
+                TipoDevolucao
+            FROM
+                Tab_TipoDevolucao 
+            ORDER BY
+                TipoDevolucao DESC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idTab_TipoDevolucao] = $row->TipoDevolucao;
         }
 
         return $array;

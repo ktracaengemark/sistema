@@ -190,6 +190,40 @@ class Tipodespesa_model extends CI_Model {
         }
 
         return $array;
+    }
+
+    public function select_tipodevolucao($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query('
+				SELECT
+                idTab_TipoDevolucao,
+                TipoDevolucao
+            FROM
+                Tab_TipoDevolucao 
+            ORDER BY
+                TipoDevolucao DESC
+				');
+				   
+        } 
+		else {
+            $query = $this->db->query('
+				SELECT
+                idTab_TipoDevolucao,
+                TipoDevolucao
+            FROM
+                Tab_TipoDevolucao 
+            ORDER BY
+                TipoDevolucao DESC
+				');
+
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->idTab_TipoDevolucao] = $row->TipoDevolucao;
+            }
+        }
+
+        return $array;
     }	
 	
 	public function select_tipoconsumo($data = FALSE) {

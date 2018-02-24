@@ -41,18 +41,18 @@
                 <thead>
                     <tr>
 
-						<!--<th class="active">Cliente</th>-->
-						<th class="active">Tipo</th>
-						<th class="active">Des/Dev</th>
+						<!--<th class="active">Cliente</th>
+						<th class="active">Tipo</th>-->
+						<th class="active">Desp</th>
 						<th class="active">Tipo de Desp.</th>
-						<th class="active">Despesa</th>
+						<th class="active">Descr.</th>
 						<!--<th class="active">Orçam.</th>
 						<th class="active">Cliente</th>-->
                         <th class="active">Data da Desp.</th>
 						<!--<th class="active">Valid. do Orçam.</th>-->
                         <th class="active">Valor da Desp.</th>
 						<th class="active">Valor do Desconto</th>
-						<th class="active">Valor A Receber</th>
+						<th class="active">Valor A Pagar</th>
 						<th class="active">Forma de Pag.</th>
 						<th class="active">Desp. Apv.?</th>
 						<th class="active">Prd Entreg.?</th>
@@ -71,7 +71,7 @@
 
                             #echo '<div class="clickable-row" data-href="' . base_url() . 'orcatrata/alterar/' . $row['idApp_Despesas'] . '">';
 							#echo '<td>' . $row['NomeCliente'] . '</td>';
-							echo '<td>' . $row['TipoProduto'] . '</td>';
+							#echo '<td>' . $row['TipoProduto'] . '</td>';
 							echo '<td>' . $row['idApp_Despesas'] . '</td>';
 							echo '<td>' . $row['TipoDespesa'] . '</td>';
 							echo '<td>' . $row['Despesa'] . '</td>';							
