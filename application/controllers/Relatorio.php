@@ -2074,7 +2074,8 @@ class Relatorio extends CI_Controller {
         $data['query'] = quotes_to_entities($this->input->post(array(
 			'idApp_Despesas',
 			'idApp_OrcaTrata',
-			'TipoDespesa',
+			'Categoriadesp',
+			'TipoDespesa',			
 			'NomeCliente',
             'DataFim',
 			'DataInicio',
@@ -2127,6 +2128,7 @@ class Relatorio extends CI_Controller {
             'OT.idApp_Despesas' => 'Número da Devolução',
 			'OT.idApp_OrcaTrata' => 'Número do Orçamento',
             'OT.AprovadoDespesas' => 'Orçamento Aprovado?',
+			
             'OT.TipoDespesa' => 'Tipo de Despesa',
 			'OT.DataDespesas' => 'Data do Orçamento',
 			'OT.DataEntradaDespesas' => 'Validade do Orçamento',
@@ -2149,6 +2151,7 @@ class Relatorio extends CI_Controller {
 
         $data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
 		$data['select']['TipoDespesa'] = $this->Relatorio_model->select_tipodespesa();
+		$data['select']['Categoriadesp'] = $this->Relatorio_model->select_categoriadesp();
 
         $data['titulo'] = 'Despesas';
 
@@ -2165,6 +2168,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
             $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
 			$data['bd']['TipoDespesa'] = $data['query']['TipoDespesa'];
+			$data['bd']['Categoriadesp'] = $data['query']['Categoriadesp'];
             $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoDespesas'] = $data['query']['AprovadoDespesas'];

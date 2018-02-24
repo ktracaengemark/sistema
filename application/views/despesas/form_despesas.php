@@ -92,6 +92,7 @@
 											<input type="text" class="form-control" maxlength="200"
 													name="Despesa" value="<?php echo $despesas['Despesa'] ?>">
 										</div>										
+										<!--
 										<div class="col-md-4">
 											<label for="idApp_OrcaTrata">Orçam</label>
 											<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
@@ -108,7 +109,7 @@
 												?>
 											</select>
 										</div>										
-										<!--
+										
 										<div class="col-md-6">
 											<label for="Despesa">Obs.</label><br>
 											<input type="text" class="form-control" maxlength="200"

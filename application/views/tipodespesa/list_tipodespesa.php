@@ -3,8 +3,8 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>Serviço</th>
-            
+            <th>Categoria</th>
+			<th>Tipo de Despesa</th>           
             <th></th>
         </tr>
     </thead>
@@ -20,8 +20,8 @@
                 #$url = '';
 
                 echo '<tr class="clickable-row" data-href="' . $url . '">';
-                    echo '<td>' . $row['TipoDespesa'] . '</td>';
-                    #echo '<td>' . str_replace('.',',',$row['ValorVenda']) . '</td>';
+                    echo '<td>' . $row['Categoriadesp'] . '</td>';
+					echo '<td>' . $row['TipoDespesa'] . '</td>';                 
                     echo '<td></td>';
                 echo '</tr>';            
 

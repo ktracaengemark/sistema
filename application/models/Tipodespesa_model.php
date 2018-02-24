@@ -72,12 +72,21 @@ class Tipodespesa_model extends CI_Model {
 
     public function lista_tipodespesa($x) {
 
-        $query = $this->db->query('SELECT * '
-                . 'FROM Tab_TipoDespesa '
-                . 'WHERE '
-                . 'Empresa = ' . $_SESSION['log']['Empresa'] . ' AND '
-                . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
-                . 'ORDER BY TipoDespesa ASC ');
+        $query = $this->db->query('
+				SELECT 
+                    TD.idTab_TipoDespesa, 
+                    TD.TipoDespesa,
+					CD.Categoriadesp
+				FROM 
+                    Tab_TipoDespesa AS TD
+						LEFT JOIN Tab_Categoriadesp AS CD ON CD.idTab_Categoriadesp = TD.Categoriadesp
+				WHERE 
+                    TD.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND 
+                    TD.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+				ORDER BY
+					CD.Categoriadesp,
+					TD.TipoDespesa 
+			');
 
         /*
           echo $this->db->last_query();
@@ -139,31 +148,39 @@ class Tipodespesa_model extends CI_Model {
 
         if ($data === TRUE) {
             $array = $this->db->query('
-                SELECT 
-                    idTab_TipoDespesa, 
-                    TipoDespesa 
+				SELECT 
+					TD.idTab_TipoDespesa, 
+					CONCAT(CD.Abrevcategoriadesp, " " , "--" , " " , TD.TipoDespesa) AS TipoDespesa,
+					CD.Categoriadesp,
+					CD.Abrevcategoriadesp
 				FROM 
-                    Tab_TipoDespesa
+					Tab_TipoDespesa AS TD
+						LEFT JOIN Tab_Categoriadesp AS CD ON CD.idTab_Categoriadesp = TD.Categoriadesp
 				WHERE 
-                    Empresa = ' . $_SESSION['log']['Empresa'] . ' AND 
-                    idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+					TD.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND 
+					TD.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
 				ORDER BY
-					TipoDespesa
+					CD.Abrevcategoriadesp,
+					TD.TipoDespesa
 				');
 				   
         } 
 		else {
             $query = $this->db->query('
-                SELECT 
-                    idTab_TipoDespesa, 
-                    TipoDespesa 
+				SELECT 
+					TD.idTab_TipoDespesa, 
+					CONCAT(CD.Abrevcategoriadesp, " " , "--" , " " , TD.TipoDespesa) AS TipoDespesa,
+					CD.Categoriadesp,
+					CD.Abrevcategoriadesp
 				FROM 
-                    Tab_TipoDespesa
+					Tab_TipoDespesa AS TD
+						LEFT JOIN Tab_Categoriadesp AS CD ON CD.idTab_Categoriadesp = TD.Categoriadesp
 				WHERE 
-                    Empresa = ' . $_SESSION['log']['Empresa'] . ' AND 
-                    idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+					TD.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND 
+					TD.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
 				ORDER BY
-					TipoDespesa
+					CD.Abrevcategoriadesp,
+					TD.TipoDespesa
 				');
 
             $array = array();

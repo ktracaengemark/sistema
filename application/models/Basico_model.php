@@ -921,6 +921,22 @@ class Basico_model extends CI_Model {
 
         return $array;
     }
+	
+	public function select_categoriadesp($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query('SELECT * FROM Tab_Categoriadesp');
+        } else {
+            $query = $this->db->query('SELECT * FROM Tab_Categoriadesp');
+
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->idTab_Categoriadesp] = $row->Categoriadesp;
+            }
+        }
+
+        return $array;
+    }
 
 	public function select_tipofornec($data = FALSE) {
 

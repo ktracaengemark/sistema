@@ -51,7 +51,8 @@ class Tipodespesa extends CI_Controller {
             'idSis_Usuario',
 			'idTab_TipoDespesa',
             'TipoDespesa',
-            #'ValorVenda',
+			'Categoriadesp',
+
                 ), TRUE));
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -59,6 +60,8 @@ class Tipodespesa extends CI_Controller {
         $this->form_validation->set_rules('TipoDespesa', 'Tipo de Despesa', 'required|trim');
         #$this->form_validation->set_rules('ValorVenda', 'Valor do Serviço', 'required|trim');
 
+		$data['select']['Categoriadesp'] = $this->Basico_model->select_categoriadesp();
+		
         $data['titulo'] = 'Cadastrar Tipo de Despesa';
         $data['form_open_path'] = 'tipodespesa/cadastrar';
         $data['readonly'] = '';
@@ -123,10 +126,10 @@ class Tipodespesa extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = quotes_to_entities($this->input->post(array(
-            'idSis_Usuario',
+            #'idSis_Usuario',
 			'idTab_TipoDespesa',
             'TipoDespesa',
-           # 'ValorVenda',
+			'Categoriadesp',
                 ), TRUE));
 
 
@@ -137,7 +140,8 @@ class Tipodespesa extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         $this->form_validation->set_rules('TipoDespesa', 'Tipo de Despesa', 'required|trim');
-       # $this->form_validation->set_rules('ValorVenda', 'Valor do Serviço', 'required|trim');
+		
+		$data['select']['Categoriadesp'] = $this->Basico_model->select_categoriadesp();
 
         $data['titulo'] = 'Editar Tipo de Despesa';
         $data['form_open_path'] = 'tipodespesa/alterar';
@@ -164,8 +168,8 @@ class Tipodespesa extends CI_Controller {
         } else {
 
             $data['query']['TipoDespesa'] = trim(mb_strtoupper($data['query']['TipoDespesa'], 'ISO-8859-1'));
-         #   $data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            #$data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
+            #$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 
             $data['anterior'] = $this->Tipodespesa_model->get_tipodespesa($data['query']['idTab_TipoDespesa']);
             $data['campos'] = array_keys($data['query']);

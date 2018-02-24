@@ -3970,22 +3970,47 @@ exit();*/
 	public function select_tipodespesa() {
 
         $query = $this->db->query('
-            SELECT
-                TD.idTab_TipoDespesa,
-                TD.TipoDespesa
-            FROM
-                Tab_TipoDespesa AS TD
-            WHERE
-				TD.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+            SELECT 
+				TD.idTab_TipoDespesa, 
+				CONCAT(CD.Abrevcategoriadesp, " " , "--" , " " , TD.TipoDespesa) AS TipoDespesa,
+				CD.Categoriadesp,
+				CD.Abrevcategoriadesp
+			FROM 
+				Tab_TipoDespesa AS TD
+					LEFT JOIN Tab_Categoriadesp AS CD ON CD.idTab_Categoriadesp = TD.Categoriadesp
+			WHERE 
+				TD.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND 
 				TD.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
-            ORDER BY
-                TipoDespesa ASC
+			ORDER BY
+				CD.Abrevcategoriadesp,
+				TD.TipoDespesa
         ');
 
         $array = array();
         $array[0] = ':: Todos ::';
         foreach ($query->result() as $row) {
             $array[$row->idTab_TipoDespesa] = $row->TipoDespesa;
+        }
+
+        return $array;
+    }
+	
+	public function select_categoriadesp() {
+
+        $query = $this->db->query('
+            SELECT 				
+				Categoriadesp
+			FROM 
+				Tab_Categoriadesp 
+
+			ORDER BY
+				Categoriadesp
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->Categoriadesp] = $row->Categoriadesp;
         }
 
         return $array;

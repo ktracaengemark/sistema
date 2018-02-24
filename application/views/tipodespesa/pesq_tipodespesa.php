@@ -15,7 +15,23 @@
 
 					<?php echo form_open($form_open_path, 'role="form"'); ?>
 						<div class="row">
-							<div class="col-md-8">
+							<div class="col-md-3">
+								<label for="Categoriadesp">Categoria</label>
+								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+										id="Categoriadesp" autofocus name="Categoriadesp">
+									<option value="">-- Selecione uma Categoria --</option>
+									<?php
+									foreach ($select['Categoriadesp'] as $key => $row) {
+										if ($produtos['Categoriadesp'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>
+								</select>
+							</div>
+							<div class="col-md-6">
 								<label for="TipoDespesa">Tipo de Despesa:</label><br>
 								<input type="text" class="form-control" maxlength="200"
 									   autofocus name="TipoDespesa" value="<?php echo $query['TipoDespesa'] ?>">

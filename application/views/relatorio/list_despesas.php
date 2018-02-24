@@ -60,7 +60,7 @@
                         <th class="active">Data Conclusão</th>
                         <th class="active">Data Retorno</th>
                         <th class="active">Prof.</th>
-                        <th class="active"></th>
+
                     </tr>
                 </thead>
 				<tbody>
