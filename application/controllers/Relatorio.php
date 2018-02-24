@@ -1914,7 +1914,7 @@ class Relatorio extends CI_Controller {
             $data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
 			$data['bd']['ServicoConcluido'] = $data['query']['ServicoConcluido'];
 
-            $data['report'] = $this->Relatorio_model->list_devolucao($data['bd'],TRUE);
+            $data['report'] = $this->Relatorio_model->list_devolucao1($data['bd'],TRUE);
 
             /*
               echo "<pre>";
@@ -1923,11 +1923,11 @@ class Relatorio extends CI_Controller {
               exit();
               */
 
-            $data['list'] = $this->load->view('relatorio/list_devolucao', $data, TRUE);
+            $data['list'] = $this->load->view('relatorio/list_devolucao1', $data, TRUE);
             //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
         }
 
-        $this->load->view('relatorio/tela_devolucao', $data);
+        $this->load->view('relatorio/tela_devolucao1', $data);
 
         $this->load->view('basico/footer');
 

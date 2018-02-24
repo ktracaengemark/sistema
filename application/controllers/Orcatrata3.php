@@ -13,7 +13,7 @@ class Orcatrata3 extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Orcatrata3_model', 'Profissional_model', 'Relatorio_model', 'Formapag_model', 'Cliente_model'));
+        $this->load->model(array('Basico_model', 'Orcatrata3_model', 'Tipodespesa_model', 'Profissional_model', 'Relatorio_model', 'Formapag_model', 'Cliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -78,6 +78,8 @@ class Orcatrata3 extends CI_Controller {
             'DataVencimentoOrca',
             'ObsOrca',
 			'TipoRD',
+			'Orcamento',
+			'TipoDevolucao',
         ), TRUE));
 
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
@@ -91,6 +93,7 @@ class Orcatrata3 extends CI_Controller {
         (!$data['orcatrata']['DataOrca']) ? $data['orcatrata']['DataOrca'] = date('d/m/Y', time()) : FALSE;
 		#(!$data['orcatrata']['DataPrazo']) ? $data['orcatrata']['DataPrazo'] = date('d/m/Y', time()) : FALSE;
         (!$data['orcatrata']['TipoRD']) ? $data['orcatrata']['TipoRD'] = 'D' : FALSE;
+		(!$data['orcatrata']['QtdParcelasOrca']) ? $data['orcatrata']['QtdParcelasOrca'] = '0' : FALSE;
 		
 		$j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
@@ -179,7 +182,9 @@ class Orcatrata3 extends CI_Controller {
         $data['select']['QuitadoRecebiveis'] = $this->Basico_model->select_status_sn();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
 		$data['select']['idApp_Cliente'] = $this->Cliente_model->select_cliente();
-        #$data['select']['Servico'] = $this->Basico_model->select_servico();
+        $data['select']['Orcamento'] = $this->Basico_model->select_orcatrata();
+		$data['select']['TipoDevolucao'] = $this->Tipodespesa_model->select_tipodevolucao();
+		#$data['select']['Servico'] = $this->Basico_model->select_servico();
         #$data['select']['Produto'] = $this->Basico_model->select_produto();
         #$data['select']['Servico'] = $this->Basico_model->select_servicos();
         $data['select']['Produto'] = $this->Basico_model->select_produtos();		
@@ -257,7 +262,9 @@ class Orcatrata3 extends CI_Controller {
             $data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['orcatrata']['idApp_OrcaTrata'] = $this->Orcatrata3_model->set_orcatrata($data['orcatrata']);
-            /*
+            $data['orcatrata']['Orcamento'] = $data['orcatrata']['Orcamento'];
+			$data['orcatrata']['TipoDevolucao'] = $data['orcatrata']['TipoDevolucao'];
+			/*
             echo count($data['servico']);
             echo '<br>';
             echo "<pre>";
@@ -347,7 +354,7 @@ class Orcatrata3 extends CI_Controller {
                 $data['msg'] = '?m=1';
 
                 #redirect(base_url() . 'orcatrata3/listar/' . $data['msg']);
-				redirect(base_url() . 'relatorio/devolucao/' . $data['msg']);
+				redirect(base_url() . 'relatorio/devolucao1/' . $data['msg']);
                 exit();
             }
         }
@@ -387,6 +394,8 @@ class Orcatrata3 extends CI_Controller {
             'DataVencimentoOrca',
             'ObsOrca',
 			#'TipoRD',
+			'Orcamento',
+			'TipoDevolucao',
         ), TRUE));
 
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
@@ -477,7 +486,9 @@ class Orcatrata3 extends CI_Controller {
             $data['orcatrata']['DataRetorno'] = $this->basico->mascara_data($data['orcatrata']['DataRetorno'], 'barras');
             $data['orcatrata']['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntradaOrca'], 'barras');
             $data['orcatrata']['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata']['DataVencimentoOrca'], 'barras');
-
+			$data['orcatrata']['Orcamento'] = $data['orcatrata']['Orcamento'];
+			$data['orcatrata']['TipoDevolucao'] = $data['orcatrata']['TipoDevolucao'];
+			
             #### Carrega os dados do cliente nas variáves de sessão ####
             $this->load->model('Cliente_model');
             $_SESSION['Cliente'] = $this->Cliente_model->get_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
@@ -567,7 +578,8 @@ class Orcatrata3 extends CI_Controller {
         #$data['select']['Produto'] = $this->Basico_model->select_produto();
         #$data['select']['Servico'] = $this->Basico_model->select_servicos();
         $data['select']['Produto'] = $this->Basico_model->select_produtos();		
-
+		$data['select']['Orcamento'] = $this->Basico_model->select_orcatrata();
+		$data['select']['TipoDevolucao'] = $this->Tipodespesa_model->select_tipodevolucao();
         $data['titulo'] = 'Editar Devolução';
         $data['form_open_path'] = 'orcatrata3/alterar';
         $data['readonly'] = '';
@@ -636,6 +648,8 @@ class Orcatrata3 extends CI_Controller {
             $data['orcatrata']['ValorEntradaOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorEntradaOrca']));
             $data['orcatrata']['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntradaOrca'], 'mysql');
             $data['orcatrata']['ValorRestanteOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorRestanteOrca']));
+			$data['orcatrata']['Orcamento'] = $data['orcatrata']['Orcamento'];
+			$data['orcatrata']['TipoDevolucao'] = $data['orcatrata']['TipoDevolucao'];
 			#$data['orcatrata']['TipoRD'] = $data['orcatrata']['TipoRD'];
 			#$data['orcatrata']['Empresa'] = $_SESSION['log']['Empresa'];
             #$data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['id'];
@@ -836,7 +850,7 @@ class Orcatrata3 extends CI_Controller {
                 $data['msg'] = '?m=1';
 
                 #redirect(base_url() . 'orcatrata/listar/' . $_SESSION['Cliente']['idApp_Cliente'] . $data['msg']);
-				redirect(base_url() . 'relatorio/devolucao/' . $data['msg']);
+				redirect(base_url() . 'relatorio/devolucao1/' . $data['msg']);
                 
 				exit();
             }

@@ -25,7 +25,23 @@
 							<div class="panel panel-danger">
 								<div class="panel-heading">
 									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-4">
+											<label for="TipoDevolucao">Tipo de Devolução</label>
+											<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
+													id="TipoDevolucao" name="TipoDevolucao">
+												<option value="">-- Sel. Tipo de Devolução --</option>
+												<?php
+												foreach ($select['TipoDevolucao'] as $key => $row) {
+													if ($orcatrata['TipoDevolucao'] == $key) {
+														echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+													} else {
+														echo '<option value="' . $key . '">' . $row . '</option>';
+													}
+												}
+												?>
+											</select>
+										</div>
+										<div class="col-md-4">
 											<label for="idApp_Cliente">Cliente *</label>
 											<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
 													id="idApp_Cliente" name="idApp_Cliente">
@@ -41,11 +57,29 @@
 												?>
 											</select>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-4">
+											<label for="Orcamento">Orçamento</label>
+											<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
+													id="Orcamento" name="Orcamento">
+												<option value="">-- Sel. um Orçam. --</option>
+												<?php
+												foreach ($select['Orcamento'] as $key => $row) {
+													if ($orcatrata['Orcamento'] == $key) {
+														echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+													} else {
+														echo '<option value="' . $key . '">' . $row . '</option>';
+													}
+												}
+												?>
+											</select>
+										</div>
+										<!--
+										<div class="col-md-4">
 											<label for="ObsOrca">Obs.</label><br>
 											<input type="text" class="form-control" maxlength="200"
 													name="ObsOrca" value="<?php echo $orcatrata['ObsOrca'] ?>">
 										</div>
+										-->
 									</div>
 								</div>
 							</div>
@@ -878,6 +912,16 @@
 									</div>
 								</div>
 								-->
+							</div>
+						</div>
+						<div class="col-md-1"></div>
+						<div class="form-group text-center">
+							<div class="row">
+								<div class="col-md-9">
+								<label for="ObsOrca">OBS:</label>
+									<textarea class="form-control" id="ObsOrca" <?php echo $readonly; ?>
+											  name="ObsOrca"><?php echo $orcatrata['ObsOrca']; ?></textarea>
+								</div>
 							</div>
 						</div>
 						<!--

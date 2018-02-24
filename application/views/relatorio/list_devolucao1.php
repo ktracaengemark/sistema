@@ -43,6 +43,7 @@
 
 						<th class="active">Cliente</th>
 						<th class="active">Devol.</th>
+						<th class="active">Orçam.</th>
                         <th class="active">Data da Devol.</th>
 						<!--<th class="active">Valid. do Orçam.</th>
 						<th class="active">Prazo de Entrega</th>-->
@@ -68,6 +69,7 @@
                             #echo '<div class="clickable-row" data-href="' . base_url() . 'orcatrata/alterar/' . $row['idApp_OrcaTrata'] . '">';
 							echo '<td>' . $row['NomeCliente'] . '</td>';
 							echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
+							echo '<td>' . $row['Orcamento'] . '</td>';
                             echo '<td>' . $row['DataOrca'] . '</td>';
 							#echo '<td>' . $row['DataEntradaOrca'] . '</td>';
 							#echo '<td>' . $row['DataPrazo'] . '</td>';

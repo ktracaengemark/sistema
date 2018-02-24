@@ -499,8 +499,8 @@ class Basico_model extends CI_Model {
         if ($data === TRUE) {
             $array = $this->db->query(					
 				'SELECT
-					P.idApp_OrcaTrata,
-					C.NomeCliente,
+					P.idApp_OrcaTrata,					
+					CONCAT(P.idApp_OrcaTrata, " --- ", C.NomeCliente) AS NomeCliente,
 					C.idApp_Cliente
 				FROM
 					App_OrcaTrata AS P
@@ -516,7 +516,7 @@ class Basico_model extends CI_Model {
             $query = $this->db->query(
                 'SELECT
 					P.idApp_OrcaTrata,
-					C.NomeCliente,
+					CONCAT(P.idApp_OrcaTrata, " --- ", C.NomeCliente) AS NomeCliente,
 					C.idApp_Cliente
 				FROM
 					App_OrcaTrata AS P
@@ -530,7 +530,7 @@ class Basico_model extends CI_Model {
             
             $array = array();
             foreach ($query->result() as $row) {
-                $array[$row->idApp_OrcaTrata] = $row->idApp_OrcaTrata;
+                $array[$row->idApp_OrcaTrata] = $row->NomeCliente;
             }
         }
 
