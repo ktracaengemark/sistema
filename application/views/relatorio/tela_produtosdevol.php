@@ -49,7 +49,7 @@
 									</select>
 								</div>
 								<div class="col-md-2">
-									<label for="Ordenamento">Tipo Despesa:</label>
+									<label for="Ordenamento">Tipo Devol:</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="TipoDespesa" name="TipoDespesa">
 										<?php
@@ -151,7 +151,7 @@
 								
 							</div>
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<label for="Ordenamento">Produtos</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="Produtos" name="Produtos">

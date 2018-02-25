@@ -35,7 +35,7 @@
 									</select>
 								</div>
 								<div class="col-md-2">
-									<label for="AprovadoOrca">Aprovado?</label>
+									<label for="AprovadoOrca">Apr./Fech.?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="AprovadoOrca" name="AprovadoOrca">
 										<?php
@@ -80,7 +80,7 @@
 										}
 										?>
 									</select>
-								</div>
+								</div>								
 								<!--
 								<div class="col-md-3">
 									<label for="Ordenamento">Ordenamento:</label>
@@ -187,9 +187,45 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="row">
+							<div class="row">								
+								<div class="col-md-4">
+									<label for="Ordenamento">Ordenamento:</label>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-md-6">
+												<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+														id="Campo" name="Campo">
+													<?php
+													foreach ($select['Campo'] as $key => $row) {
+														if ($query['Campo'] == $key) {
+															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+														} else {
+															echo '<option value="' . $key . '">' . $row . '</option>';
+														}
+													}
+													?>
+												</select>
+											</div>
+
+											<div class="col-md-6">
+												<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+														id="Ordenamento" name="Ordenamento">
+													<?php
+													foreach ($select['Ordenamento'] as $key => $row) {
+														if ($query['Ordenamento'] == $key) {
+															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+														} else {
+															echo '<option value="' . $key . '">' . $row . '</option>';
+														}
+													}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2"></div>
 								<br>
-								<div class="col-md-4"></div>
 								<div class="col-md-2 text-left">
 									<button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
 										<span class="glyphicon glyphicon-search"></span> Pesquisar
@@ -199,8 +235,7 @@
 									<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>orcatrata3/cadastrar" role="button"> 
 										<span class="glyphicon glyphicon-plus"></span> Nova Devolução
 									</a>
-								</div>
-								<div class="col-md-4"></div>
+								</div>								
 							</div>
 						</div>
 						</form>

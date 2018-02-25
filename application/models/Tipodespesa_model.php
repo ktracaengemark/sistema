@@ -198,7 +198,8 @@ class Tipodespesa_model extends CI_Model {
             $array = $this->db->query('
 				SELECT
                 idTab_TipoDevolucao,
-                TipoDevolucao
+                CONCAT(TipoDevolucao, " " , " - " , ObsTipoDevolucao)TipoDevolucao,
+				ObsTipoDevolucao
             FROM
                 Tab_TipoDevolucao 
             ORDER BY
@@ -210,7 +211,8 @@ class Tipodespesa_model extends CI_Model {
             $query = $this->db->query('
 				SELECT
                 idTab_TipoDevolucao,
-                TipoDevolucao
+                CONCAT(TipoDevolucao, " " , " - " , ObsTipoDevolucao)TipoDevolucao,
+				ObsTipoDevolucao
             FROM
                 Tab_TipoDevolucao 
             ORDER BY

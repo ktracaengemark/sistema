@@ -45,14 +45,15 @@
 						<th class="active">Devol.</th>
 						<th class="active">Orçam.</th>
                         <th class="active">Data da Devol.</th>
+						<th class="active">Tipo Devol.</th>
 						<!--<th class="active">Valid. do Orçam.</th>
 						<th class="active">Prazo de Entrega</th>-->
                         <th class="active">Valor da Devol.</th>
 						<th class="active">Valor do Desconto</th>
 						<th class="active">Valor A Receber</th>
 						<th class="active">Forma de Pag.</th>
-						<th class="active">Devol. Apv.?</th>
-						<th class="active">Devol. Quit.?</th>
+						<th class="active">Apv./Fech.?</th>
+						<th class="active">Quit.?</th>
                         <th class="active">Srv/Prd Entreg.?</th>
                         <th class="active">Data Entrega</th>
                         <th class="active">Data Retorno</th>
@@ -71,6 +72,7 @@
 							echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
 							echo '<td>' . $row['Orcamento'] . '</td>';
                             echo '<td>' . $row['DataOrca'] . '</td>';
+							echo '<td>' . $row['TipoDevolucao'] . '</td>';
 							#echo '<td>' . $row['DataEntradaOrca'] . '</td>';
 							#echo '<td>' . $row['DataPrazo'] . '</td>';
                             echo '<td class="text-left">R$ ' . $row['ValorOrca'] . '</td>';

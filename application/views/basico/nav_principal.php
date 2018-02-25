@@ -153,7 +153,9 @@
 							<li role="separator" class="divider"></li>
 							<!--<li><a href="<?php echo base_url() ?>relatorio/devolucao"><span class="glyphicon glyphicon-list"></span> Devol(Desp)</a></li>
 							<li role="separator" class="divider"></li>-->							
-							<li><a href="<?php echo base_url() ?>relatorio/produtosdevol"><span class="glyphicon glyphicon-list"></span> Devol. X Cl. X Prd.</a></li>
+							<li><a href="<?php echo base_url() ?>relatorio/produtosdevol1"><span class="glyphicon glyphicon-list"></span> Devol. X Cl. X Prd.(Orça)</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="<?php echo base_url() ?>relatorio/produtosdevol"><span class="glyphicon glyphicon-list"></span> Devol. X Cl. X Prd.(Desp)</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>relatorio/consumo"><span class="glyphicon glyphicon-list"></span> Consumos</a></li>
 							<li role="separator" class="divider"></li>

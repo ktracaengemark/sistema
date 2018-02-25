@@ -1726,7 +1726,11 @@ exit();*/
 
         $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 		$data['Produtos'] = ($data['Produtos']) ? ' AND TPV.idTab_Produtos = ' . $data['Produtos'] : FALSE;
-
+		$data['Prodaux1'] = ($data['Prodaux1']) ? ' AND TP1.idTab_Prodaux1 = ' . $data['Prodaux1'] : FALSE;
+		$data['Prodaux2'] = ($data['Prodaux2']) ? ' AND TP2.idTab_Prodaux2 = ' . $data['Prodaux2'] : FALSE;
+        $data['Prodaux3'] = ($data['Prodaux3']) ? ' AND TP3.idTab_Prodaux3 = ' . $data['Prodaux3'] : FALSE;
+		$data['Campo'] = (!$data['Campo']) ? 'C.NomeCliente' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 		$query = $this->db->query('
             SELECT
                 C.NomeCliente,
@@ -1735,6 +1739,8 @@ exit();*/
 				OT.ValorOrca,
 				OT.FormaPagamento,
 				OT.TipoRD,
+				TD.TipoDevolucao,
+				OT.Orcamento,
 				OT.AprovadoOrca,
 				TFP.FormaPag,
 				APV.QtdVendaProduto,
@@ -1760,6 +1766,7 @@ exit();*/
 					LEFT JOIN Tab_Prodaux3 AS TP3 ON TP3.idTab_Prodaux3 = TPV.Prodaux3
 					LEFT JOIN Tab_Prodaux2 AS TP2 ON TP2.idTab_Prodaux2 = TPV.Prodaux2
 					LEFT JOIN Tab_Prodaux1 AS TP1 ON TP1.idTab_Prodaux1 = TPV.Prodaux1
+					LEFT JOIN Tab_TipoDevolucao AS TD ON TD.idTab_TipoDevolucao = OT.TipoDevolucao
 		   WHERE
                 C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
@@ -1767,7 +1774,10 @@ exit();*/
 				APV.idApp_ProdutoVenda != "0" AND
 				C.idApp_Cliente = OT.idApp_Cliente
                 ' . $data['NomeCliente'] . '
-				' . $data['Produtos'] . ' AND
+				' . $data['Produtos'] . '
+				' . $data['Prodaux1'] . '
+				' . $data['Prodaux2'] . '
+				' . $data['Prodaux3'] . ' AND
 				OT.TipoRD = "D"
             ORDER BY
 				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -2309,7 +2319,8 @@ exit();*/
         $filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ServicoConcluido'] != '#') ? 'OT.ServicoConcluido = "' . $data['ServicoConcluido'] . '" AND ' : FALSE;
-
+		$data['Campo'] = (!$data['Campo']) ? 'C.NomeCliente' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
         $query = $this->db->query('
             SELECT
                 C.NomeCliente,
@@ -2328,6 +2339,7 @@ exit();*/
                 OT.DataRetorno,
 				OT.FormaPagamento,
 				OT.TipoRD,
+				TD.TipoDevolucao,
 				TFP.FormaPag,
 				TSU.Nome
             FROM
@@ -2335,7 +2347,7 @@ exit();*/
                 App_OrcaTrata AS OT
 				LEFT JOIN Sis_Usuario AS TSU ON TSU.idSis_Usuario = OT.idSis_Usuario
 				LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
-
+				LEFT JOIN Tab_TipoDevolucao AS TD ON TD.idTab_TipoDevolucao = OT.TipoDevolucao
             WHERE
 				C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
@@ -2349,10 +2361,7 @@ exit();*/
                 ' . $data['NomeCliente'] . ' AND
 				OT.TipoRD = "D"
             ORDER BY
-                OT.idApp_OrcaTrata DESC,
-				C.NomeCliente,
-				OT.AprovadoOrca ASC,
-				OT.DataOrca
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
 
         ');
 
