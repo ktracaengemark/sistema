@@ -25,7 +25,7 @@
 							<div class="panel panel-info">
 								<div class="panel-heading">
 									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-4">
 											<label for="idApp_Cliente">Cliente *</label>
 											<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
 													id="idApp_Cliente" name="idApp_Cliente">

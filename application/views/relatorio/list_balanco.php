@@ -34,12 +34,22 @@
                         echo '<td class="text-right">R$ ' . $report['TotalGeral']->Receitas . '</td>';
                         ?>
                     </tr>
+					
+					<tr>
+                        <?php
+                        echo '<td><b>' . $report['Devolucoes'][0]->Balanco . '</b></td>';
+                        for($i=1;$i<=12;$i++) {
+                            echo '<td class="text-right">R$ ' . $report['Devolucoes'][0]->{'M'.$i} . '</td>';
+                        }
+                        echo '<td class="text-right">R$ ' . $report['TotalGeral']->Devolucoes . '</td>';
+                        ?>
+                    </tr>
 
                     <tr>
                         <?php
                         echo '<td><b>' . $report['Despesas'][0]->Balanco . '</b></td>';
                         for($i=1;$i<=12;$i++) {
-                            echo '<td class="text-right">R$ ' . $report['Despesas'][0]->{'M'.$i} . '</td>';
+							echo '<td class="text-right">R$ ' . $report['Despesas'][0]->{'M'.$i} . '</td>';
                         }
                         echo '<td class="text-right">R$ ' . $report['TotalGeral']->Despesas . '</td>';
                         ?>

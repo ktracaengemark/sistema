@@ -886,6 +886,36 @@ class Relatorio_model extends CI_Model {
         $query['Receitas'][0]->Balanco = 'Receitas';
 
 
+		####################################################################
+        #SOMATÓRIO DAS DEVOLUÇÕES DO ANO
+        $somadevolucoes='';
+        for ($i=1;$i<=12;$i++){
+            $somadevolucoes .= 'SUM(IF(PR.DataPagoRecebiveis BETWEEN "' . $data['Ano'] . '-' . $i . '-1" AND
+                LAST_DAY("' . $data['Ano'] . '-' . $i . '-1"), PR.ValorPagoRecebiveis, 0)) AS M' . $i . ', ';
+        }
+        $somadevolucoes = substr($somadevolucoes, 0 ,-2);
+
+        $query['Devolucoes'] = $this->db->query(
+        #$devolucoes = $this->db->query(
+            'SELECT
+                ' . $somadevolucoes . '
+            FROM
+                App_Cliente AS C,
+                App_OrcaTrata AS OT
+                    LEFT JOIN App_ParcelasRecebiveis AS PR ON OT.idApp_OrcaTrata = PR.idApp_OrcaTrata
+            WHERE
+                C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                C.idApp_Cliente = OT.idApp_Cliente AND
+				OT.TipoRD = "D" AND
+            	YEAR(PR.DataPagoRecebiveis) = ' . $data['Ano']
+        );
+
+        #$query['Devolucoes'] = $query['Devolucoes']->result_array();
+        $query['Devolucoes'] = $query['Devolucoes']->result();
+        $query['Devolucoes'][0]->Balanco = 'Devolucoes';
+		
+		
         ####################################################################
         #SOMATÓRIO DAS DESPESAS DO ANO
         $somadespesas='';
@@ -906,7 +936,7 @@ class Relatorio_model extends CI_Model {
             WHERE
                 DS.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
                 DS.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                (DS.TipoProduto = "D" OR DS.TipoProduto = "E") AND
+                (DS.TipoProduto = "D") AND
             	YEAR(PP.DataPagoPagaveis) = ' . $data['Ano']
         );
 
@@ -926,22 +956,25 @@ class Relatorio_model extends CI_Model {
         $query['TotalGeral'] = new stdClass();
 
         $query['Total']->Balanco = 'Total';
-        $query['TotalGeral']->Receitas = $query['TotalGeral']->Despesas = $query['TotalGeral']->BalancoGeral = 0;
+        $query['TotalGeral']->Receitas = $query['TotalGeral']->Devolucoes = $query['TotalGeral']->Despesas = $query['TotalGeral']->BalancoGeral = 0;
 
         for ($i=1;$i<=12;$i++) {
-            $query['Total']->{'M'.$i} = $query['Receitas'][0]->{'M'.$i} - $query['Despesas'][0]->{'M'.$i};
+            $query['Total']->{'M'.$i} = $query['Receitas'][0]->{'M'.$i} - $query['Devolucoes'][0]->{'M'.$i} - $query['Despesas'][0]->{'M'.$i};
 
             $query['TotalGeral']->Receitas += $query['Receitas'][0]->{'M'.$i};
+			$query['TotalGeral']->Devolucoes += $query['Devolucoes'][0]->{'M'.$i};
             $query['TotalGeral']->Despesas += $query['Despesas'][0]->{'M'.$i};
 
             $query['Receitas'][0]->{'M'.$i} = number_format($query['Receitas'][0]->{'M'.$i}, 2, ',', '.');
-            $query['Despesas'][0]->{'M'.$i} = number_format($query['Despesas'][0]->{'M'.$i}, 2, ',', '.');
+            $query['Devolucoes'][0]->{'M'.$i} = number_format($query['Devolucoes'][0]->{'M'.$i}, 2, ',', '.');
+			$query['Despesas'][0]->{'M'.$i} = number_format($query['Despesas'][0]->{'M'.$i}, 2, ',', '.');
             $query['Total']->{'M'.$i} = number_format($query['Total']->{'M'.$i}, 2, ',', '.');
         }
-        $query['TotalGeral']->BalancoGeral = $query['TotalGeral']->Receitas - $query['TotalGeral']->Despesas;
+        $query['TotalGeral']->BalancoGeral = $query['TotalGeral']->Receitas - $query['TotalGeral']->Devolucoes - $query['TotalGeral']->Despesas;
 
         $query['TotalGeral']->Receitas = number_format($query['TotalGeral']->Receitas, 2, ',', '.');
-        $query['TotalGeral']->Despesas = number_format($query['TotalGeral']->Despesas, 2, ',', '.');
+        $query['TotalGeral']->Devolucoes = number_format($query['TotalGeral']->Devolucoes, 2, ',', '.');
+		$query['TotalGeral']->Despesas = number_format($query['TotalGeral']->Despesas, 2, ',', '.');
         $query['TotalGeral']->BalancoGeral = number_format($query['TotalGeral']->BalancoGeral, 2, ',', '.');
 
         /*
@@ -1127,9 +1160,9 @@ class Relatorio_model extends CI_Model {
         );
         $query['Vendidos'] = $query['Vendidos']->result();
 
-    /*
+  
         ####################################################################
-        #DEVOLVIDOS1
+        #DEVOLVIDOS(ORCATRATA)
         if ($data['DataFim']) {
             $consulta =
                 '(OT.DataOrca >= "' . $data['DataInicio'] . '" AND OT.DataOrca <= "' . $data['DataFim'] . '")';
@@ -1150,6 +1183,9 @@ class Relatorio_model extends CI_Model {
                     LEFT JOIN App_ProdutoVenda AS APV ON APV.idApp_OrcaTrata = OT.idApp_OrcaTrata
                     LEFT JOIN Tab_Valor AS TVV ON TVV.idTab_Valor = APV.idTab_Produto
                     LEFT JOIN Tab_Produtos AS TP ON TP.idTab_Produtos = TVV.idTab_Produtos
+					LEFT JOIN Tab_Prodaux1 AS TP1 ON TP1.idTab_Prodaux1 = TP.Prodaux1
+                    LEFT JOIN Tab_Prodaux2 AS TP2 ON TP2.idTab_Prodaux2 = TP.Prodaux2
+                    LEFT JOIN Tab_Prodaux3 AS TP3 ON TP3.idTab_Prodaux3 = TP.Prodaux3
             WHERE
                 C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
                 C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
@@ -1164,10 +1200,10 @@ class Relatorio_model extends CI_Model {
                 TP.Produtos ASC'
         );
         $query['Devolvidos'] = $query['Devolvidos']->result();
-    */
-
+    
+/*
         ####################################################################
-        #Devolvidos
+        #DEVOLVIDOS (DESPESAS)
         if ($data['DataFim']) {
             $consulta =
                 '(TCO.DataDespesas >= "' . $data['DataInicio'] . '" AND TCO.DataDespesas <= "' . $data['DataFim'] . '")';
@@ -1202,6 +1238,8 @@ class Relatorio_model extends CI_Model {
                 TP.Produtos ASC'
         );
         $query['Devolvidos'] = $query['Devolvidos']->result();
+
+*/
         ####################################################################
         #CONSUMIDOS
         if ($data['DataFim']) {
@@ -2436,8 +2474,8 @@ exit();*/
 				' . $consulta . ' AND
 				' . $consulta2 . ' AND
 				' . $consulta3 . ' AND
-
-				OT.TipoProduto = "E"
+				
+				OT.TipoProduto = "E" 
 
             ORDER BY
                 OT.idApp_Despesas DESC,
