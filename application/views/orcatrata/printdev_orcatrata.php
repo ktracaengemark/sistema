@@ -20,16 +20,17 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
+							<th scope="col">Qtd</th>
 							
-							<th scope="col">id</th>
 							<th scope="col">DescProd.</th>
 							<!--<th scope="col">CodProd.</th>-->													
-							<th scope="col">Data</th>
+							<th scope="col">Valor</th>
+							<th scope="col">Subtotal</th>
 						
 						</tr>	
 						<tr>
 							<th scope="col"></th>
-							<th scope="col">Qtd</th>
+							<th scope="col">id</th>
 							<!--<th scope="col">Unidade</th>						
 							<th scope="col">CategProd.</th>
 														
@@ -37,8 +38,8 @@
 							<th scope="col">Aux2</th>-->
 							<!--<th scope="col">Tipo Venda</th>
 							<th scope="col">Desc Venda</th>-->
-							<th scope="col">Valor</th>
-							<th scope="col">Subtotal</th>
+							<th scope="col">Data</th>
+							
 							
 						</tr>
 					</thead>
@@ -51,16 +52,17 @@
 						?>
 
 						<tr>
+							<td><?php echo $produto[$i]['QtdVendaProduto'] ?></td>
 							
-							<td><?php echo $produto[$i]['idApp_ProdutoVenda'] ?></td>
 							<td><?php echo $produto[$i]['NomeProduto'] ?></td>
 							<!--<td><?php echo $produto[$i]['CodProd'] ?></td>-->							
-							<td><?php echo $produto[$i]['DataValidadeProduto'] ?></td>
+							<td><?php echo number_format($produto[$i]['ValorVendaProduto'], 2, ',', '.') ?></td>
+							<td><?php echo $produto[$i]['SubtotalProduto'] ?></td>
 						
 						</tr>						
 						<tr>
 							<td></td>
-							<td><?php echo $produto[$i]['QtdVendaProduto'] ?></td>
+							<td><?php echo $produto[$i]['idApp_ProdutoVenda'] ?></td>
 							<!--<td><?php echo $produto[$i]['UnidadeProduto'] ?></td>						
 							<td><?php echo $produto[$i]['Prodaux3'] ?></td>
 							
@@ -68,8 +70,8 @@
 							<td><?php echo $produto[$i]['Prodaux2'] ?></td>-->
 							<!--<td><?php echo $produto[$i]['Convenio'] ?></td>
 							<td><?php echo $produto[$i]['Convdesc'] ?></td>-->
-							<td><?php echo number_format($produto[$i]['ValorVendaProduto'], 2, ',', '.') ?></td>
-							<td><?php echo $produto[$i]['SubtotalProduto'] ?></td>
+							<td><?php echo $produto[$i]['DataValidadeProduto'] ?></td>
+							
 							
 						</tr>
 
@@ -81,7 +83,7 @@
 				</table>
 
 				<hr />
-				<h3 class="text-center">Orçamento & Forma de Pagam.</h3>
+				<h3 class="text-center">Devolução & Forma de Pagam.</h3>
 				<hr />
 				
 				<table class="table table-bordered">
@@ -158,7 +160,7 @@
 				</table>
 				
 				<hr />
-				<h3 class="text-center">Status do Orçamento</h3>
+				<h3 class="text-center">Status da Devolução</h3>
 				<hr />
 
 				<table class="table table-bordered">
