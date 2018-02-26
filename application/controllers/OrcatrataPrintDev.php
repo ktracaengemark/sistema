@@ -60,7 +60,8 @@ class OrcatrataPrintDev extends CI_Controller {
             #### Carrega os dados do cliente nas variáves de sessão ####
             $this->load->model('Cliente_model');
             $_SESSION['Cliente'] = $this->Cliente_model->get_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
-            #$_SESSION['log']['idApp_Cliente'] = $_SESSION['Cliente']['idApp_Cliente'];
+            $_SESSION['Orcatrata'] = $this->OrcatrataPrintDev_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata'], TRUE);
+			#$_SESSION['log']['idApp_Cliente'] = $_SESSION['Cliente']['idApp_Cliente'];
 
             /*
             #### App_ServicoVenda ####

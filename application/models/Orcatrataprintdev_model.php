@@ -35,8 +35,9 @@ class Orcatrataprintdev_model extends CI_Model {
             'SELECT
                 *
             FROM
-            	App_OrcaTrata AS OT,
-                Tab_FormaPag AS FP
+            	Tab_FormaPag AS FP,
+				App_OrcaTrata AS OT
+				LEFT JOIN Sis_EmpresaFilial AS EF ON EF.idSis_EmpresaFilial = OT.Empresa
             WHERE
             	OT.idApp_OrcaTrata = ' . $data . ' AND
                 OT.FormaPagamento = FP.idTab_FormaPag'
@@ -77,7 +78,8 @@ class Orcatrataprintdev_model extends CI_Model {
 				TCO.Convenio,
 				V.Convdesc,
 				TFO.NomeFornecedor,
-            	CONCAT(IFNULL(P.Produtos,""), " -- ", IFNULL(TP1.Prodaux1,""), " -- ", IFNULL(TP2.Prodaux2,"")) AS NomeProduto,
+				CONCAT(IFNULL(PV.QtdVendaProduto,""), " - " , IFNULL(P.UnidadeProduto,"")) AS QtdVendaProduto,
+				CONCAT(IFNULL(P.CodProd,""), " -- ", IFNULL(TP3.Prodaux3,""), " -- ", IFNULL(P.Produtos,""), " -- ", IFNULL(TP1.Prodaux1,""), " -- ", IFNULL(TP2.Prodaux2,"")) AS NomeProduto,
             	PV.ValorVendaProduto
             FROM
             	App_ProdutoVenda AS PV,
