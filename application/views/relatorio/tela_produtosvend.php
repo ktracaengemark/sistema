@@ -18,7 +18,7 @@
 
 						<div class="form-group">
 							<div class="row">                           								
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<label for="Ordenamento">Nome do Cliente:</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="NomeCliente" name="NomeCliente">
@@ -150,7 +150,7 @@
 								
 							</div>
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<label for="Ordenamento">Produtos</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="Produtos" name="Produtos">

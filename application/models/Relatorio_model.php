@@ -1275,8 +1275,11 @@ class Relatorio_model extends CI_Model {
         );
         $query['Consumidos'] = $query['Consumidos']->result();
 
-        $estoque = new stdClass();
-        #$estoque = array();
+        
+		$estoque = new stdClass();
+		
+        
+		#$estoque = array();
         foreach ($query['Produtos'] as $row) {
             #echo $row->idTab_Produtos . ' # ' . $row->Produtos . '<br />';
             #$estoque[$row->idTab_Produtos] = $row->Produtos;
@@ -1313,10 +1316,11 @@ echo "<pre>";
 print_r($query['Comprados']);
 echo "</pre>";
 exit();*/
+		
         foreach ($query['Comprados'] as $row) {
             if (isset($estoque->{$row->idTab_Produtos}))
                 $estoque->{$row->idTab_Produtos}->QtdCompra = $row->QtdCompra;
-        }
+		}
 
         foreach ($query['Vendidos'] as $row) {
             if (isset($estoque->{$row->idTab_Produtos}))
@@ -1332,16 +1336,48 @@ exit();*/
             if (isset($estoque->{$row->idTab_Produtos}))
                 $estoque->{$row->idTab_Produtos}->QtdConsumo = $row->QtdConsumo;
         }
-
-        foreach ($estoque as $row) {
-            $row->QtdCompra = (!isset($row->QtdCompra)) ? 0 : $row->QtdCompra;
+		
+		$estoque->soma = new stdClass();
+		$somaqtdcompra= $somaqtdvenda= $somaqtddevolve= $somaqtdconsumo= $somaqtdvendida= $somaqtdestoque= 0;
+        
+		foreach ($estoque as $row) {
+            
+			$row->QtdCompra = (!isset($row->QtdCompra)) ? 0 : $row->QtdCompra;
             $row->QtdVenda = (!isset($row->QtdVenda)) ? 0 : $row->QtdVenda;
             $row->QtdDevolve = (!isset($row->QtdDevolve)) ? 0 : $row->QtdDevolve;
             $row->QtdConsumo = (!isset($row->QtdConsumo)) ? 0 : $row->QtdConsumo;
 
             $row->QtdEstoque = $row->QtdCompra - $row->QtdVenda + $row->QtdDevolve - $row->QtdConsumo;
             $row->QtdVendida = $row->QtdVenda - $row->QtdDevolve;
+			
+			$somaqtdcompra += $row->QtdCompra;
+			$row->QtdCompra = ($row->QtdCompra);
+			
+			$somaqtdvenda += $row->QtdVenda;
+			$row->QtdVenda = ($row->QtdVenda);
+			
+			$somaqtddevolve += $row->QtdDevolve;
+			$row->QtdDevolve = ($row->QtdDevolve);
+			
+			$somaqtdconsumo += $row->QtdConsumo;
+			$row->QtdConsumo = ($row->QtdConsumo);
+			
+			$somaqtdvendida += $row->QtdVendida;
+			$row->QtdVendida = ($row->QtdVendida);
+			
+			$somaqtdestoque += $row->QtdEstoque;
+			$row->QtdEstoque = ($row->QtdEstoque);
+			
+
         }
+		
+		
+		$estoque->soma->somaqtdcompra = ($somaqtdcompra);
+		$estoque->soma->somaqtdvenda = ($somaqtdvenda);
+		$estoque->soma->somaqtddevolve = ($somaqtddevolve);
+		$estoque->soma->somaqtdconsumo = ($somaqtdconsumo);
+		$estoque->soma->somaqtdvendida = ($somaqtdvendida);
+		$estoque->soma->somaqtdestoque = ($somaqtdestoque);
 
         /*
         echo $this->db->last_query();
@@ -1703,12 +1739,19 @@ exit();*/
         if ($completo === FALSE) {
             return TRUE;
         } else {
-
+			
+			$quantidade=0;
             foreach ($query->result() as $row) {
 				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
 				$row->DataValidadeProduto = $this->basico->mascara_data($row->DataValidadeProduto, 'barras');
 				$row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
+				
+				$quantidade += $row->QtdVendaProduto;
+                $row->QtdVendaProduto = number_format($row->QtdVendaProduto);
             }
+			
+			$query->soma = new stdClass();
+            $query->soma->quantidade = number_format($quantidade);
             return $query;
         }
     }
@@ -1795,10 +1838,17 @@ exit();*/
         if ($completo === FALSE) {
             return TRUE;
         } else {
-
+			
+			$quantidade=0;
             foreach ($query->result() as $row) {
 				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
+				
+				$quantidade += $row->QtdVendaProduto;
+                $row->QtdVendaProduto = number_format($row->QtdVendaProduto);
             }
+			
+			$query->soma = new stdClass();
+            $query->soma->quantidade = number_format($quantidade);
             return $query;
         }
     }

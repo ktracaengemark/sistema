@@ -1,8 +1,16 @@
+
 <div class="container-fluid">
     <div class="row">
         <div>
-            <table class="table table-bordered table-condensed table-striped">
+	
+			<table class="table table-bordered table-condensed table-striped">
                 <thead>
+					<tr>
+						<th colspan="6" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
+						<th colspan="2" class="active"> <?php echo $report->soma->quantidade ?> Produtos</th>
+					</tr>
+				</thead>
+				<thead>
                     <tr>
 						<th class="active">Cliente</th>
 						<th class="active">Nº Dev.</th>
@@ -53,8 +61,9 @@
 
                 <tfoot>
                     <tr>
-                        <th colspan="3" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
-                    </tr>
+						<th colspan="6" class="active">Total encontrado: <?php echo $report->num_rows(); ?> resultado(s)</th>
+						<th colspan="2" class="active"> <?php echo $report->soma->quantidade ?> Produtos</th>
+					</tr>
                 </tfoot>
             </table>
         </div>

@@ -3,7 +3,18 @@
 
         <div>
             <table class="table table-bordered table-condensed table-striped">
-
+				<thead>
+                    <tr>                        
+						<th colspan="2" class="active"></th>
+						<th colspan="2" class="active">Total de Produtos:</th>
+						<th colspan="1" class="active"><?php echo $report->soma->somaqtdcompra ?></th>
+						<th colspan="1" class="active"><?php echo $report->soma->somaqtdvenda ?></th>
+						<th colspan="1" class="active"><?php echo $report->soma->somaqtddevolve ?></th>
+						<th colspan="1" class="active"><?php echo $report->soma->somaqtdconsumo ?></th>
+						<th colspan="1" class="active"><?php echo $report->soma->somaqtdvendida ?></th>
+						<th colspan="1" class="active"><?php echo $report->soma->somaqtdestoque ?></th>
+                    </tr>
+                </thead>
                 <thead>
                     <tr>
 						<th class="active text-center">CATEGORIA</th>
@@ -40,6 +51,18 @@
                     ?>
 
                 </tbody>
+				<tfoot>
+                    <tr>                        
+						<th colspan="2" class="active"></th>
+						<th colspan="2" class="active">Total de Produtos:</th>
+						<th colspan="1" class="active"><?php echo $report->soma->somaqtdcompra ?></th>
+						<th colspan="1" class="active"><?php echo $report->soma->somaqtdvenda ?></th>
+						<th colspan="1" class="active"><?php echo $report->soma->somaqtddevolve ?></th>
+						<th colspan="1" class="active"><?php echo $report->soma->somaqtdconsumo ?></th>
+						<th colspan="1" class="active"><?php echo $report->soma->somaqtdvendida ?></th>
+						<th colspan="1" class="active"><?php echo $report->soma->somaqtdestoque ?></th>
+                    </tr>
+                </tfoot>
 
             </table>
 
