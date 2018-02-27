@@ -2285,6 +2285,7 @@ exit();*/
                 (' . $consulta . ') AND
 				(' . $consulta2 . ') AND
 				(' . $consulta3 . ') AND
+				(' . $consulta4 . ') AND
                 ' . $filtro1 . '
                 ' . $filtro2 . '
 				' . $filtro3 . '

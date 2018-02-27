@@ -139,10 +139,34 @@
 									</div>
 								</div>
 								<div class="col-md-2">
+									<label for="DataInicio4">Quit. - Data Inc.</label>
+									<div class="input-group DatePicker">
+										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											   autofocus name="DataInicio4" value="<?php echo set_value('DataInicio4', $query['DataInicio4']); ?>">
+										<span class="input-group-addon" disabled>
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<label for="DataFim4">Quit. - Data Fim</label>
+									<div class="input-group DatePicker">
+										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											    name="DataFim4" value="<?php echo set_value('DataFim4', $query['DataFim4']); ?>">
+										<span class="input-group-addon" disabled>
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>								
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-2">
 									<label for="DataInicio3">Retorno - Data Inc.</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											   autofocus name="DataInicio3" value="<?php echo set_value('DataInicio3', $query['DataInicio3']); ?>">
+											    name="DataInicio3" value="<?php echo set_value('DataInicio3', $query['DataInicio3']); ?>">
 										<span class="input-group-addon" disabled>
 											<span class="glyphicon glyphicon-calendar"></span>
 										</span>
@@ -157,11 +181,7 @@
 											<span class="glyphicon glyphicon-calendar"></span>
 										</span>
 									</div>
-								</div>								
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="row">
+								</div>
 								<div class="col-md-4">
 									<label for="Ordenamento">Ordenamento:</label>
 									<div class="form-group">
@@ -181,7 +201,7 @@
 												</select>
 											</div>
 
-											<div class="col-md-4">
+											<div class="col-md-5">
 												<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 														id="Ordenamento" name="Ordenamento">
 													<?php
@@ -198,7 +218,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-2"></div>
+
 								<br>
 								<div class="col-md-2 text-left">
 									<button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
@@ -207,10 +227,10 @@
 								</div>
 								<div class="col-md-2 text-right">											
 									<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>orcatrata2/cadastrar" role="button"> 
-										<span class="glyphicon glyphicon-plus"></span> Novo Orçamento
+										<span class="glyphicon glyphicon-plus"></span> Novo Orç.
 									</a>
 								</div>
-								<div class="col-md-4"></div>
+
 							</div>
 						</div>
 						</form>
