@@ -3,7 +3,7 @@
 
 		<div class="col-md-1"></div>
         <div class="col-md-3">
-            <label for="DataFim">Total dos Orçamentos:</label>
+            <label for="DataFim">Total das Devoluções:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
                 <input type="text" class="form-control" disabled aria-label="Total Orcamentos" value="<?php echo $report->soma->somaorcamento ?>">
@@ -17,7 +17,7 @@
             </div>
         </div>
 		<div class="col-md-3">
-            <label for="DataFim">Total A Receber:</label>
+            <label for="DataFim">Total A Pagar:</label>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
                 <input type="text" class="form-control" disabled aria-label="Total Restante" value="<?php echo $report->soma->somarestante ?>">
@@ -44,19 +44,20 @@
 						<th class="active">Cliente</th>
 						<th class="active">Devol.</th>
 						<th class="active">Orçam.</th>
-                        <th class="active">Data da Devol.</th>
+                        
 						<th class="active">Tipo Devol.</th>
 						<!--<th class="active">Valid. do Orçam.</th>
 						<th class="active">Prazo de Entrega</th>-->
                         <th class="active">Valor da Devol.</th>
-						<th class="active">Valor do Desconto</th>
-						<th class="active">Valor A Receber</th>
+						<th class="active">Valor do Desc.</th>
+						<th class="active">Valor A Pagar</th>
 						<th class="active">Forma de Pag.</th>
-						<th class="active">Apv./Fech.?</th>
-						<th class="active">Quit.?</th>
-                        <th class="active">Srv/Prd Entreg.?</th>
-                        <th class="active">Data Entrega</th>
-                        <th class="active">Data Retorno</th>
+						<th class="active">Apv.?</th>
+						<th class="active">Concl.?</th>
+						<th class="active">Quit.?</th>                       
+						<th class="active">Dt. Devol.</th>
+                        <th class="active">Dt. Concl.</th>
+                        <th class="active">Dt. Retorno</th>
                         <th class="active">Prof.</th>
                         <th class="active"></th>
                     </tr>
@@ -71,7 +72,7 @@
 							echo '<td>' . $row['NomeCliente'] . '</td>';
 							echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
 							echo '<td>' . $row['Orcamento'] . '</td>';
-                            echo '<td>' . $row['DataOrca'] . '</td>';
+                            
 							echo '<td>' . $row['TipoDevolucao'] . '</td>';
 							#echo '<td>' . $row['DataEntradaOrca'] . '</td>';
 							#echo '<td>' . $row['DataPrazo'] . '</td>';
@@ -80,9 +81,10 @@
 							echo '<td class="text-left">R$ ' . $row['ValorRestanteOrca'] . '</td>';
 							echo '<td>' . $row['FormaPag'] . '</td>';
 							echo '<td>' . $row['AprovadoOrca'] . '</td>';
-							echo '<td>' . $row['QuitadoOrca'] . '</td>';
-                            echo '<td>' . $row['ServicoConcluido'] . '</td>';
-                            echo '<td>' . $row['DataConclusao'] . '</td>';
+							echo '<td>' . $row['ServicoConcluido'] . '</td>';
+							echo '<td>' . $row['QuitadoOrca'] . '</td>';                           
+                            echo '<td>' . $row['DataOrca'] . '</td>';
+							echo '<td>' . $row['DataConclusao'] . '</td>';
                             echo '<td>' . $row['DataRetorno'] . '</td>';
 							echo '<td>' . $row['Nome'] . '</td>';
                             #echo '</div>';

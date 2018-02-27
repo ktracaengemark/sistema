@@ -35,7 +35,7 @@
 									</select>
 								</div>
 								<div class="col-md-2">
-									<label for="AprovadoOrca">Apr./Fech.?</label>
+									<label for="AprovadoOrca">Aprovado?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="AprovadoOrca" name="AprovadoOrca">
 										<?php
@@ -49,7 +49,21 @@
 										?>
 									</select>
 								</div>
-
+								<div class="col-md-2">
+									<label for="ServicoConcluido">Concluído?</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+											id="ServicoConcluido" name="ServicoConcluido">
+										<?php
+										foreach ($select['ServicoConcluido'] as $key => $row) {
+											if ($query['ServicoConcluido'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
 								<div class="col-md-2">
 									<label for="QuitadoOrca">Quitado?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -64,23 +78,7 @@
 										}
 										?>
 									</select>
-								</div>
-								
-								<div class="col-md-2">
-									<label for="ServicoConcluido">Srv/Prd Entregue?</label>
-									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-											id="ServicoConcluido" name="ServicoConcluido">
-										<?php
-										foreach ($select['ServicoConcluido'] as $key => $row) {
-											if ($query['ServicoConcluido'] == $key) {
-												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-											} else {
-												echo '<option value="' . $key . '">' . $row . '</option>';
-											}
-										}
-										?>
-									</select>
-								</div>								
+								</div>																								
 								<!--
 								<div class="col-md-3">
 									<label for="Ordenamento">Ordenamento:</label>
@@ -125,7 +123,7 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-md-2">
-									<label for="DataInicio">Devolução - Inc.</label>
+									<label for="DataInicio">Devol. - Inc.</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											   autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
@@ -135,7 +133,7 @@
 									</div>
 								</div>
 								<div class="col-md-2">
-									<label for="DataFim">Devolução - Fim</label>
+									<label for="DataFim">Devol. - Fim</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											   autofocus name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
@@ -145,7 +143,7 @@
 									</div>
 								</div>
 								<div class="col-md-2">
-									<label for="DataInicio2">Entrega - Inc.</label>
+									<label for="DataInicio2">Concl. - Inc.</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											   autofocus name="DataInicio2" value="<?php echo set_value('DataInicio2', $query['DataInicio2']); ?>">
@@ -155,7 +153,7 @@
 									</div>
 								</div>
 								<div class="col-md-2">
-									<label for="DataFim2">Entrega - Fim</label>
+									<label for="DataFim2">Concl. - Fim</label>
 									<div class="input-group DatePicker">
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											   autofocus name="DataFim2" value="<?php echo set_value('DataFim2', $query['DataFim2']); ?>">

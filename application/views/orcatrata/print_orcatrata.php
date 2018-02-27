@@ -160,9 +160,9 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th class="col-md-4" scope="col">Orçam. Aprovado?</th>
-							<th class="col-md-4" scope="col">Srv/Prd Entregue?</th>
-							<th class="col-md-4" scope="col">Orçam. Quitado?</th>
+							<th class="col-md-4" scope="col">Aprovado?</th>
+							<th class="col-md-4" scope="col">Concluído?</th>
+							<th class="col-md-4" scope="col">Quitado?</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -178,15 +178,15 @@
 					<thead>
 						<tr>
 							<th class="col-md-4" scope="col">Data do Orçamento</th>
-							<th class="col-md-4" scope="col">Data da Entrega</th>
-							<th class="col-md-4" scope="col">Data do Retorno</th>
+							<th class="col-md-4" scope="col">Data da Conclusão</th>
+							<th class="col-md-4" scope="col">Data do Quitação</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td><?php echo $orcatrata['DataOrca'] ?></td>
 							<td><?php echo $orcatrata['DataConclusao'] ?></td>
-							<td><?php echo $orcatrata['DataRetorno'] ?></td>
+							<td><?php echo $orcatrata['DataQuitado'] ?></td>
 						</tr>
 					</tbody>
 				</table>
@@ -194,13 +194,15 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th class="col-md-12" scope="col">Observações</th>
+							<th class="col-md-8" scope="col">Observações</th>
+							<th class="col-md-4" scope="col">Data do Retorno</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 
 							<td><?php echo $orcatrata['ObsOrca'] ?></td>
+							<td><?php echo $orcatrata['DataRetorno'] ?></td>
 						</tr>
 					</tbody>
 				</table>

@@ -2235,6 +2235,15 @@ exit();*/
             $consulta3 =
                 '(OT.DataRetorno >= "' . $data['DataInicio3'] . '")';
         }
+		
+		if ($data['DataFim4']) {
+            $consulta4 =
+                '(OT.DataQuitado >= "' . $data['DataInicio4'] . '" AND OT.DataQuitado <= "' . $data['DataFim4'] . '")';
+        }
+        else {
+            $consulta4 =
+                '(OT.DataQuitado >= "' . $data['DataInicio4'] . '")';
+        }
 
         $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 		$data['FormaPag'] = ($data['FormaPag']) ? ' AND TFP.idTab_FormaPag = ' . $data['FormaPag'] : FALSE;
@@ -2258,7 +2267,8 @@ exit();*/
                 OT.ServicoConcluido,
                 OT.QuitadoOrca,
                 OT.DataConclusao,
-                OT.DataRetorno,
+                OT.DataQuitado,
+				OT.DataRetorno,
 				OT.TipoRD,
 				OT.FormaPagamento,
 				TFP.FormaPag,
@@ -2307,7 +2317,8 @@ exit();*/
 				$row->DataEntradaOrca = $this->basico->mascara_data($row->DataEntradaOrca, 'barras');
 				$row->DataPrazo = $this->basico->mascara_data($row->DataPrazo, 'barras');
                 $row->DataConclusao = $this->basico->mascara_data($row->DataConclusao, 'barras');
-                $row->DataRetorno = $this->basico->mascara_data($row->DataRetorno, 'barras');
+                $row->DataQuitado = $this->basico->mascara_data($row->DataQuitado, 'barras');
+				$row->DataRetorno = $this->basico->mascara_data($row->DataRetorno, 'barras');
 
                 $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
                 $row->ServicoConcluido = $this->basico->mascara_palavra_completa($row->ServicoConcluido, 'NS');

@@ -95,7 +95,8 @@ class Relatorio extends CI_Controller {
             'OT.ServicoConcluido' => 'Serviço Concluído?',
             'OT.QuitadoOrca' => 'Orçamento Quitado?',
             'OT.DataConclusao' => 'Data de Conclusão',
-            'OT.DataRetorno' => 'Data de Retorno',
+            'OT.DataQuitado' => 'Data de Quitado',
+			'OT.DataRetorno' => 'Data de Retorno',
 			'OT.ProfissionalOrca' => 'Profissional',
 			'PR.DataVencimentoRecebiveis' => 'Data do Venc.',
 			'PR.DataPagoRecebiveis' => 'Data do Pagam.',
@@ -230,6 +231,7 @@ class Relatorio extends CI_Controller {
             'OT.ServicoConcluido' => 'Serviço Concluído?',
             'OT.QuitadoOrca' => 'Orçamento Quitado?',
             'OT.DataConclusao' => 'Data de Conclusão',
+			'OT.DataQuitado' => 'Data de Quitado',
             'OT.DataRetorno' => 'Data de Retorno',
 			'OT.ProfissionalOrca' => 'Profissional',
 
@@ -1723,6 +1725,8 @@ class Relatorio extends CI_Controller {
 			'DataInicio2',
             'DataFim3',
 			'DataInicio3',
+			'DataFim4',
+			'DataInicio4',
             'Ordenamento',
             'Campo',
             'AprovadoOrca',
@@ -1743,6 +1747,8 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataFim2', 'Data Fim da Entrega', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio3', 'Data Início do Retorno', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim3', 'Data Fim do Retorno', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio4', 'Data Início do Quitado', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim4', 'Data Fim do Quitado', 'trim|valid_date');
 
 
         $data['select']['AprovadoOrca'] = array(
@@ -1778,6 +1784,7 @@ class Relatorio extends CI_Controller {
             'OT.ServicoConcluido' => 'Serviço Concluído?',
             'OT.QuitadoOrca' => 'Orçamento Quitado?',
             'OT.DataConclusao' => 'Data de Conclusão',
+			'OT.DataQuitado' => 'Data de Quitado',
             'OT.DataRetorno' => 'Data de Retorno',
 			'OT.ProfissionalOrca' => 'Profissional',
 
@@ -1805,6 +1812,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
 			$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
             $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
+			$data['bd']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
+            $data['bd']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
 
             $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
@@ -1908,6 +1917,7 @@ class Relatorio extends CI_Controller {
             'OT.ServicoConcluido' => 'Serviço Concluído?',
             'OT.QuitadoOrca' => 'Orçamento Quitado?',
             'OT.DataConclusao' => 'Data de Conclusão',
+			'OT.DataQuitado' => 'Data de Quitado',
             'OT.DataRetorno' => 'Data de Retorno',
 			'OT.ProfissionalOrca' => 'Profissional',
 
@@ -2036,6 +2046,7 @@ class Relatorio extends CI_Controller {
             'OT.ServicoConcluidoDespesas' => 'Serviço Concluído?',
             'OT.QuitadoDespesas' => 'Orçamento Quitado?',
             'OT.DataConclusaoDespesas' => 'Data de Conclusão',
+			
             'OT.DataRetornoDespesas' => 'Data de Retorno',
 			'OT.ProfissionalDespesas' => 'Profissional',
 
@@ -2167,6 +2178,7 @@ class Relatorio extends CI_Controller {
             'OT.ServicoConcluidoDespesas' => 'Serviço Concluído?',
             'OT.QuitadoDespesas' => 'Orçamento Quitado?',
             'OT.DataConclusaoDespesas' => 'Data de Conclusão',
+			
             'OT.DataRetornoDespesas' => 'Data de Retorno',
 			'OT.ProfissionalDespesas' => 'Profissional',
 
