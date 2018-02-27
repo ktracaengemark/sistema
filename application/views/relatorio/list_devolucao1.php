@@ -57,7 +57,8 @@
 						<th class="active">Quit.?</th>                       
 						<th class="active">Dt. Devol.</th>
                         <th class="active">Dt. Concl.</th>
-                        <th class="active">Dt. Retorno</th>
+                        <th class="active">Dt. Quit.</th>
+						<th class="active">Dt. Ret.</th>
                         <th class="active">Prof.</th>
                         <th class="active"></th>
                     </tr>
@@ -85,7 +86,8 @@
 							echo '<td>' . $row['QuitadoOrca'] . '</td>';                           
                             echo '<td>' . $row['DataOrca'] . '</td>';
 							echo '<td>' . $row['DataConclusao'] . '</td>';
-                            echo '<td>' . $row['DataRetorno'] . '</td>';
+                            echo '<td>' . $row['DataQuitado'] . '</td>';
+							echo '<td>' . $row['DataRetorno'] . '</td>';
 							echo '<td>' . $row['Nome'] . '</td>';
                             #echo '</div>';
                             echo '<td class="notclickable">

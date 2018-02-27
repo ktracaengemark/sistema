@@ -2376,7 +2376,16 @@ exit();*/
                 '(OT.DataRetorno >= "' . $data['DataInicio3'] . '")';
         }
 
-        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+		if ($data['DataFim4']) {
+            $consulta4 =
+                '(OT.DataQuitado >= "' . $data['DataInicio4'] . '" AND OT.DataQuitado <= "' . $data['DataFim4'] . '")';
+        }
+        else {
+            $consulta4 =
+                '(OT.DataQuitado >= "' . $data['DataInicio4'] . '")';
+        }
+        
+		$data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 
         $filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
@@ -2397,7 +2406,8 @@ exit();*/
 				OT.ValorRestanteOrca,
                 OT.ServicoConcluido,
                 OT.QuitadoOrca,
-                OT.DataConclusao,
+                OT.DataQuitado,
+				OT.DataConclusao,
                 OT.DataRetorno,
 				OT.FormaPagamento,
 				OT.TipoRD,
@@ -2416,6 +2426,7 @@ exit();*/
                 (' . $consulta . ') AND
 				(' . $consulta2 . ') AND
 				(' . $consulta3 . ') AND
+				(' . $consulta4 . ') AND
                 ' . $filtro1 . '
                 ' . $filtro2 . '
 				' . $filtro3 . '
@@ -2447,7 +2458,8 @@ exit();*/
 				$row->DataEntradaOrca = $this->basico->mascara_data($row->DataEntradaOrca, 'barras');
 				$row->DataPrazo = $this->basico->mascara_data($row->DataPrazo, 'barras');
                 $row->DataConclusao = $this->basico->mascara_data($row->DataConclusao, 'barras');
-                $row->DataRetorno = $this->basico->mascara_data($row->DataRetorno, 'barras');
+                $row->DataQuitado = $this->basico->mascara_data($row->DataQuitado, 'barras');
+				$row->DataRetorno = $this->basico->mascara_data($row->DataRetorno, 'barras');
 
                 $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
                 $row->ServicoConcluido = $this->basico->mascara_palavra_completa($row->ServicoConcluido, 'NS');
