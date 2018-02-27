@@ -134,9 +134,19 @@
 														<?php if ($row['ProfissionalOrca']) { ?>
 														<span class="glyphicon glyphicon-user"></span> <b>Profissional:</b> <?php echo $row['ProfissionalOrca']; ?> -
 														<?php } if ($row['AprovadoOrca']) { ?>
-														<span class="glyphicon glyphicon-thumbs-up"></span> <b>Orçamento Aprovado?</b> <?php echo $row['AprovadoOrca']; ?>
+														<span class="glyphicon glyphicon-thumbs-up"></span> <b>Orç. Aprovado?</b> <?php echo $row['AprovadoOrca']; ?>
 														<?php } ?>
 
+													</p>
+													<p>
+														<?php if ($row['ServicoConcluido']) { ?>
+														<span class="glyphicon glyphicon-ok"></span> <b>Orç. Concluído?</b> <?php echo $row['ServicoConcluido']; ?>
+														<?php } ?>
+													</p>
+													<p>
+														<?php if ($row['QuitadoOrca']) { ?>
+														<span class="glyphicon glyphicon-usd"></span> <b>Orç. Quitado?</b> <?php echo $row['QuitadoOrca']; ?>
+														<?php } ?>
 													</p>
 													<p>
 														<span class="glyphicon glyphicon-pencil"></span> <b>Obs:</b> <?php echo nl2br($row['ObsOrca']); ?>
@@ -185,9 +195,18 @@
 														<?php if ($row['ProfissionalOrca']) { ?>
 														<span class="glyphicon glyphicon-user"></span> <b>Profissional:</b> <?php echo $row['ProfissionalOrca']; ?> -
 														<?php } if ($row['AprovadoOrca']) { ?>
-														<span class="glyphicon glyphicon-thumbs-up"></span> <b>Orçamento Aprovado?</b> <?php echo $row['AprovadoOrca']; ?>
+														<span class="glyphicon glyphicon-thumbs-up"></span> <b>Orç. Aprovado?</b> <?php echo $row['AprovadoOrca']; ?>
 														<?php } ?>
-
+													</p>
+													<p>
+														<?php if ($row['ServicoConcluido']) { ?>
+														<span class="glyphicon glyphicon-ok"></span> <b>Orç. Concluído?</b> <?php echo $row['ServicoConcluido']; ?>
+														<?php } ?>
+													</p>
+													<p>
+														<?php if ($row['QuitadoOrca']) { ?>
+														<span class="glyphicon glyphicon-usd"></span> <b>Orç. Quitado?</b> <?php echo $row['QuitadoOrca']; ?>
+														<?php } ?>
 													</p>
 													<p>
 														<span class="glyphicon glyphicon-pencil"></span> <b>Obs:</b> <?php echo nl2br($row['ObsOrca']); ?>
