@@ -914,8 +914,8 @@ class Relatorio_model extends CI_Model {
         #$query['Devolucoes'] = $query['Devolucoes']->result_array();
         $query['Devolucoes'] = $query['Devolucoes']->result();
         $query['Devolucoes'][0]->Balanco = 'Devolucoes';
-		
-		
+
+
         ####################################################################
         #SOMATÓRIO DAS DESPESAS DO ANO
         $somadespesas='';
@@ -1022,7 +1022,7 @@ class Relatorio_model extends CI_Model {
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . ''
         );
         $query['Produtos'] = $query['Produtos']->result();
-		
+
         ####################################################################
         #LISTA DE PRODAUX1
         $query['Prodaux1'] = $this->db->query(
@@ -1041,7 +1041,7 @@ class Relatorio_model extends CI_Model {
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . ''
         );
-        $query['Prodaux1'] = $query['Prodaux1']->result();		
+        $query['Prodaux1'] = $query['Prodaux1']->result();
 
         ####################################################################
         #LISTA DE PRODAUX2
@@ -1061,7 +1061,7 @@ class Relatorio_model extends CI_Model {
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . ''
         );
-        $query['Prodaux2'] = $query['Prodaux2']->result();		
+        $query['Prodaux2'] = $query['Prodaux2']->result();
 
         ####################################################################
         #LISTA DE PRODAUX3
@@ -1082,7 +1082,7 @@ class Relatorio_model extends CI_Model {
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . ''
         );
         $query['Prodaux3'] = $query['Prodaux3']->result();
-		
+
         ####################################################################
         #COMPRADOS
         if ($data['DataFim']) {
@@ -1160,7 +1160,7 @@ class Relatorio_model extends CI_Model {
         );
         $query['Vendidos'] = $query['Vendidos']->result();
 
-  
+
         ####################################################################
         #DEVOLVIDOS(ORCATRATA)
         if ($data['DataFim']) {
@@ -1200,7 +1200,7 @@ class Relatorio_model extends CI_Model {
                 TP.Produtos ASC'
         );
         $query['Devolvidos'] = $query['Devolvidos']->result();
-    
+
 /*
         ####################################################################
         #DEVOLVIDOS (DESPESAS)
@@ -1275,10 +1275,10 @@ class Relatorio_model extends CI_Model {
         );
         $query['Consumidos'] = $query['Consumidos']->result();
 
-        
+
 		$estoque = new stdClass();
-		
-        
+
+
 		#$estoque = array();
         foreach ($query['Produtos'] as $row) {
             #echo $row->idTab_Produtos . ' # ' . $row->Produtos . '<br />';
@@ -1292,7 +1292,7 @@ class Relatorio_model extends CI_Model {
             #$estoque[$row->idTab_Produtos] = $row->Produtos;
             #$estoque->{$row->idTab_Produtos} = new stdClass();
             if (isset($estoque->{$row->idTab_Produtos}))
-			$estoque->{$row->idTab_Produtos}->Prodaux1 = $row->Prodaux1;
+                $estoque->{$row->idTab_Produtos}->Prodaux1 = $row->Prodaux1;
         }
 
         foreach ($query['Prodaux2'] as $row) {
@@ -1300,7 +1300,7 @@ class Relatorio_model extends CI_Model {
             #$estoque[$row->idTab_Produtos] = $row->Produtos;
             #$estoque->{$row->idTab_Produtos} = new stdClass();
             if (isset($estoque->{$row->idTab_Produtos}))
-			$estoque->{$row->idTab_Produtos}->Prodaux2 = $row->Prodaux2;
+                $estoque->{$row->idTab_Produtos}->Prodaux2 = $row->Prodaux2;
         }
 
         foreach ($query['Prodaux3'] as $row) {
@@ -1308,15 +1308,15 @@ class Relatorio_model extends CI_Model {
             #$estoque[$row->idTab_Produtos] = $row->Produtos;
             #$estoque->{$row->idTab_Produtos} = new stdClass();
             if (isset($estoque->{$row->idTab_Produtos}))
-			$estoque->{$row->idTab_Produtos}->Prodaux3 = $row->Prodaux3;
-        }		
-		
+                $estoque->{$row->idTab_Produtos}->Prodaux3 = $row->Prodaux3;
+        }
+
 		/*
 echo "<pre>";
 print_r($query['Comprados']);
 echo "</pre>";
 exit();*/
-		
+
         foreach ($query['Comprados'] as $row) {
             if (isset($estoque->{$row->idTab_Produtos}))
                 $estoque->{$row->idTab_Produtos}->QtdCompra = $row->QtdCompra;
@@ -1336,12 +1336,12 @@ exit();*/
             if (isset($estoque->{$row->idTab_Produtos}))
                 $estoque->{$row->idTab_Produtos}->QtdConsumo = $row->QtdConsumo;
         }
-		
+
 		$estoque->soma = new stdClass();
 		$somaqtdcompra= $somaqtdvenda= $somaqtddevolve= $somaqtdconsumo= $somaqtdvendida= $somaqtdestoque= 0;
-        
+
 		foreach ($estoque as $row) {
-            
+
 			$row->QtdCompra = (!isset($row->QtdCompra)) ? 0 : $row->QtdCompra;
             $row->QtdVenda = (!isset($row->QtdVenda)) ? 0 : $row->QtdVenda;
             $row->QtdDevolve = (!isset($row->QtdDevolve)) ? 0 : $row->QtdDevolve;
@@ -1349,29 +1349,29 @@ exit();*/
 
             $row->QtdEstoque = $row->QtdCompra - $row->QtdVenda + $row->QtdDevolve - $row->QtdConsumo;
             $row->QtdVendida = $row->QtdVenda - $row->QtdDevolve;
-			
+
 			$somaqtdcompra += $row->QtdCompra;
 			$row->QtdCompra = ($row->QtdCompra);
-			
+
 			$somaqtdvenda += $row->QtdVenda;
 			$row->QtdVenda = ($row->QtdVenda);
-			
+
 			$somaqtddevolve += $row->QtdDevolve;
 			$row->QtdDevolve = ($row->QtdDevolve);
-			
+
 			$somaqtdconsumo += $row->QtdConsumo;
 			$row->QtdConsumo = ($row->QtdConsumo);
-			
+
 			$somaqtdvendida += $row->QtdVendida;
 			$row->QtdVendida = ($row->QtdVendida);
-			
+
 			$somaqtdestoque += $row->QtdEstoque;
 			$row->QtdEstoque = ($row->QtdEstoque);
-			
+
 
         }
-		
-		
+
+
 		$estoque->soma->somaqtdcompra = ($somaqtdcompra);
 		$estoque->soma->somaqtdvenda = ($somaqtdvenda);
 		$estoque->soma->somaqtddevolve = ($somaqtddevolve);
@@ -1739,17 +1739,17 @@ exit();*/
         if ($completo === FALSE) {
             return TRUE;
         } else {
-			
+
 			$quantidade=0;
             foreach ($query->result() as $row) {
 				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
 				$row->DataValidadeProduto = $this->basico->mascara_data($row->DataValidadeProduto, 'barras');
 				$row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
-				
+
 				$quantidade += $row->QtdVendaProduto;
                 $row->QtdVendaProduto = number_format($row->QtdVendaProduto);
             }
-			
+
 			$query->soma = new stdClass();
             $query->soma->quantidade = number_format($quantidade);
             return $query;
@@ -1838,15 +1838,15 @@ exit();*/
         if ($completo === FALSE) {
             return TRUE;
         } else {
-			
+
 			$quantidade=0;
             foreach ($query->result() as $row) {
 				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
-				
+
 				$quantidade += $row->QtdVendaProduto;
                 $row->QtdVendaProduto = number_format($row->QtdVendaProduto);
             }
-			
+
 			$query->soma = new stdClass();
             $query->soma->quantidade = number_format($quantidade);
             return $query;
@@ -2235,7 +2235,7 @@ exit();*/
             $consulta3 =
                 '(OT.DataRetorno >= "' . $data['DataInicio3'] . '")';
         }
-		
+
 		if ($data['DataFim4']) {
             $consulta4 =
                 '(OT.DataQuitado >= "' . $data['DataInicio4'] . '" AND OT.DataQuitado <= "' . $data['DataFim4'] . '")';
@@ -2384,7 +2384,7 @@ exit();*/
             $consulta4 =
                 '(OT.DataQuitado >= "' . $data['DataInicio4'] . '")';
         }
-        
+
 		$data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 
         $filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
@@ -2557,8 +2557,8 @@ exit();*/
 				' . $consulta . ' AND
 				' . $consulta2 . ' AND
 				' . $consulta3 . ' AND
-				
-				OT.TipoProduto = "E" 
+
+				OT.TipoProduto = "E"
 
             ORDER BY
                 OT.idApp_Despesas DESC,
@@ -4096,16 +4096,16 @@ exit();*/
 	public function select_tipodespesa() {
 
         $query = $this->db->query('
-            SELECT 
-				TD.idTab_TipoDespesa, 
+            SELECT
+				TD.idTab_TipoDespesa,
 				CONCAT(CD.Abrevcategoriadesp, " " , "--" , " " , TD.TipoDespesa) AS TipoDespesa,
 				CD.Categoriadesp,
 				CD.Abrevcategoriadesp
-			FROM 
+			FROM
 				Tab_TipoDespesa AS TD
 					LEFT JOIN Tab_Categoriadesp AS CD ON CD.idTab_Categoriadesp = TD.Categoriadesp
-			WHERE 
-				TD.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND 
+			WHERE
+				TD.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				TD.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
 			ORDER BY
 				CD.Abrevcategoriadesp,
@@ -4120,14 +4120,14 @@ exit();*/
 
         return $array;
     }
-	
+
 	public function select_categoriadesp() {
 
         $query = $this->db->query('
-            SELECT 				
+            SELECT
 				Categoriadesp
-			FROM 
-				Tab_Categoriadesp 
+			FROM
+				Tab_Categoriadesp
 
 			ORDER BY
 				Categoriadesp
@@ -4165,7 +4165,7 @@ exit();*/
 
         return $array;
     }
-	
+
 	public function select_tipodevolucao() {
 
         $query = $this->db->query('
@@ -4173,7 +4173,7 @@ exit();*/
                 idTab_TipoDevolucao,
                 TipoDevolucao
             FROM
-                Tab_TipoDevolucao 
+                Tab_TipoDevolucao
             ORDER BY
                 TipoDevolucao DESC
         ');

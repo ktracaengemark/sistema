@@ -914,8 +914,8 @@ class Relatorio extends CI_Controller {
               echo "<pre>";
               print_r($data['report']);
               echo "</pre>";
-              exit();
-              */
+              #exit();
+              #*/
 
             $data['list'] = $this->load->view('relatorio/list_estoque', $data, TRUE);
             //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
@@ -1220,13 +1220,13 @@ class Relatorio extends CI_Controller {
 			'OT.idApp_OrcaTrata' => 'Nº Dev.',
 			'OT.Orcamento' => 'Nº Orç.',
             'OT.DataOrca' => 'Dt. Dev.',
-			'OT.AprovadoDespesas' => 'Apr./Fech.',		
-			'OT.CodProd' => 'Cd. Prod.',			
+			'OT.AprovadoDespesas' => 'Apr./Fech.',
+			'OT.CodProd' => 'Cd. Prod.',
 			'OT.TipoDevolucao' => 'Tipo de Devol.',
 			'TPV.QtdVendaProduto' => 'Qtd. do Produto',
 			'TPV.Produtos' => 'Produto',
 			'TPV.Prodaux1' => 'Aux1',
-			'TPV.Prodaux2' => 'Aux2',			
+			'TPV.Prodaux2' => 'Aux2',
 			'TPV.Prodaux3' => 'Categoria',
 
         );
@@ -1238,11 +1238,11 @@ class Relatorio extends CI_Controller {
 
 		$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
 		$data['select']['TipoDevolucao'] = $this->Relatorio_model->select_tipodevolucao();
-		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();		
+		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
 		$data['select']['Prodaux1'] = $this->Relatorio_model->select_prodaux1();
 		$data['select']['Prodaux2'] = $this->Relatorio_model->select_prodaux2();
-		$data['select']['Prodaux3'] = $this->Relatorio_model->select_prodaux3();		
-        
+		$data['select']['Prodaux3'] = $this->Relatorio_model->select_prodaux3();
+
 		$data['titulo'] = 'Relatório de Produtos Devolvidos';
 
         #run form validation
@@ -1260,10 +1260,10 @@ class Relatorio extends CI_Controller {
 			$data['bd']['TipoDevolucao'] = $data['query']['TipoDevolucao'];
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
-			
+
 			$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
-			
+
 
 
             $data['report'] = $this->Relatorio_model->list_produtosdevol1($data['bd'],TRUE);
@@ -2051,7 +2051,7 @@ class Relatorio extends CI_Controller {
             'OT.ServicoConcluidoDespesas' => 'Serviço Concluído?',
             'OT.QuitadoDespesas' => 'Orçamento Quitado?',
             'OT.DataConclusaoDespesas' => 'Data de Conclusão',
-			
+
             'OT.DataRetornoDespesas' => 'Data de Retorno',
 			'OT.ProfissionalDespesas' => 'Profissional',
 
@@ -2119,7 +2119,7 @@ class Relatorio extends CI_Controller {
 			'idApp_Despesas',
 			'idApp_OrcaTrata',
 			'Categoriadesp',
-			'TipoDespesa',			
+			'TipoDespesa',
 			'NomeCliente',
             'DataFim',
 			'DataInicio',
@@ -2172,7 +2172,7 @@ class Relatorio extends CI_Controller {
             'OT.idApp_Despesas' => 'Número da Devolução',
 			'OT.idApp_OrcaTrata' => 'Número do Orçamento',
             'OT.AprovadoDespesas' => 'Orçamento Aprovado?',
-			
+
             'OT.TipoDespesa' => 'Tipo de Despesa',
 			'OT.DataDespesas' => 'Data do Orçamento',
 			'OT.DataEntradaDespesas' => 'Validade do Orçamento',
@@ -2183,7 +2183,7 @@ class Relatorio extends CI_Controller {
             'OT.ServicoConcluidoDespesas' => 'Serviço Concluído?',
             'OT.QuitadoDespesas' => 'Orçamento Quitado?',
             'OT.DataConclusaoDespesas' => 'Data de Conclusão',
-			
+
             'OT.DataRetornoDespesas' => 'Data de Retorno',
 			'OT.ProfissionalDespesas' => 'Profissional',
 

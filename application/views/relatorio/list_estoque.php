@@ -4,7 +4,7 @@
         <div>
             <table class="table table-bordered table-condensed table-striped">
 				<thead>
-                    <tr>                        
+                    <tr>
 						<th colspan="2" class="active"></th>
 						<th colspan="2" class="active">Total de Produtos:</th>
 						<th colspan="1" class="active"><?php echo $report->soma->somaqtdcompra ?></th>
@@ -33,8 +33,11 @@
                 <tbody>
 
                     <?php
-                    foreach ($report as $row) {
 
+                    foreach ($report as $row) {
+                    #for($i=0;$i<count($report);$i++) {
+
+                        if(isset($row->Produtos)) {
                         echo '<tr>';
 							echo '<td>' . $row->Prodaux3 . '</td>';
 							echo '<td>' . $row->Produtos . '</td>';
@@ -47,12 +50,13 @@
 							echo '<td>' . $row->QtdVendida . '</td>';
 							echo '<td>' . $row->QtdEstoque . '</td>';
                         echo '</tr>';
+                        }
                     }
                     ?>
 
                 </tbody>
 				<tfoot>
-                    <tr>                        
+                    <tr>
 						<th colspan="2" class="active"></th>
 						<th colspan="2" class="active">Total de Produtos:</th>
 						<th colspan="1" class="active"><?php echo $report->soma->somaqtdcompra ?></th>
