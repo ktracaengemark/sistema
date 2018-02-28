@@ -927,6 +927,78 @@ class Relatorio extends CI_Controller {
 
     }
 
+	public function rankingvendas() {
+
+	if ($this->input->get('m') == 1)
+		$data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+	elseif ($this->input->get('m') == 2)
+		$data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+	else
+		$data['msg'] = '';
+
+	$data['query'] = quotes_to_entities($this->input->post(array(
+		'ValorOrca',
+		'NomeCliente',
+		'DataInicio',
+		'DataFim',
+		'Ordenamento',
+		'Campo',
+	), TRUE));
+
+	$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+	#$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+	$this->form_validation->set_rules('DataInicio', 'Data Inicio', 'trim|valid_date');
+	$this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+
+	$data['select']['Campo'] = array(
+
+		'TC.NomeCliente' => 'Cliente',
+		'TC.idApp_Cliente' => 'Id',
+
+	);
+
+	$data['select']['Ordenamento'] = array(
+		'ASC' => 'Crescente',
+		'DESC' => 'Decrescente',
+	);
+
+
+
+	$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
+
+
+
+	$data['titulo'] = 'Relatório de Estoque';
+
+	#run form validation
+	if ($this->form_validation->run() !== FALSE) {
+
+		$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+		$data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+		$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
+		$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+		$data['bd']['Campo'] = $data['query']['Campo'];
+
+		$data['report'] = $this->Relatorio_model->list_rankingvendas($data['bd']);
+
+		/*
+		  echo "<pre>";
+		  print_r($data['report']);
+		  echo "</pre>";
+		  #exit();
+		  #*/
+
+		$data['list'] = $this->load->view('relatorio/list_rankingvendas', $data, TRUE);
+		//$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+	}
+
+	$this->load->view('relatorio/tela_rankingvendas', $data);
+
+	$this->load->view('basico/footer');
+
+}
+
+	
     public function estoque2() {
 
         if ($this->input->get('m') == 1)
