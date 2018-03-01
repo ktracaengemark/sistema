@@ -939,6 +939,7 @@ class Relatorio extends CI_Controller {
 	$data['query'] = quotes_to_entities($this->input->post(array(
 		'ValorOrca',
 		'NomeCliente',
+		'idApp_Cliente',
 		'DataInicio',
 		'DataFim',
 		'Ordenamento',
@@ -965,7 +966,7 @@ class Relatorio extends CI_Controller {
 
 
 	$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
-
+	$data['select']['idApp_Cliente'] = $this->Relatorio_model->select_cliente();
 
 
 	$data['titulo'] = 'Relatório de Estoque';
@@ -976,6 +977,7 @@ class Relatorio extends CI_Controller {
 		$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
 		$data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 		$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
+		$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
 		$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
 		$data['bd']['Campo'] = $data['query']['Campo'];
 
