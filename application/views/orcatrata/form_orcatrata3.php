@@ -89,7 +89,7 @@
 									</h4>
 								</div>
 
-								<div id="collapse1" class="panel-collapse" role="tabpanel" aria-labelledby="heading1" aria-expanded="false">
+								<div id="collapse1" class="panel-collapse collapse " role="tabpanel" aria-labelledby="heading1" aria-expanded="false">
 									<div class="panel-body">
 
 										<!--#######################################-->
@@ -551,7 +551,7 @@
 									</h4>
 								</div>
 
-								<div id="collapse3" class="panel-collapse" role="tabpanel" aria-labelledby="heading3" aria-expanded="false">
+								<div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading3" aria-expanded="false">
 									<div class="panel-body">
 
 										<input type="hidden" name="PMCount" id="PMCount" value="<?php echo $count['PMCount']; ?>"/>

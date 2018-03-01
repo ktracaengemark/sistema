@@ -81,6 +81,7 @@ class Despesas extends CI_Controller {
 
         //Data de hoje como default
         (!$data['despesas']['DataDespesas']) ? $data['despesas']['DataDespesas'] = date('d/m/Y', time()) : FALSE;
+		(!$data['despesas']['DataVencimentoDespesas']) ? $data['despesas']['DataVencimentoDespesas'] = date('d/m/Y', time()) : FALSE;
 		(!$data['despesas']['TipoProduto']) ? $data['despesas']['TipoProduto'] = 'D' : FALSE;
 		(!$data['despesas']['QtdParcelasDespesas']) ? $data['despesas']['QtdParcelasDespesas'] = '1' : FALSE;
 
