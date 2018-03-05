@@ -82,6 +82,7 @@ class Despesas extends CI_Controller {
 
         //Data de hoje como default
         (!$data['despesas']['DataDespesas']) ? $data['despesas']['DataDespesas'] = date('d/m/Y', time()) : FALSE;
+		(!$data['despesas']['DataConclusaoDespesas']) ? $data['despesas']['DataConclusaoDespesas'] = date('d/m/Y', time()) : FALSE;
 		(!$data['despesas']['DataVencimentoDespesas']) ? $data['despesas']['DataVencimentoDespesas'] = date('d/m/Y', time()) : FALSE;
 		(!$data['despesas']['TipoProduto']) ? $data['despesas']['TipoProduto'] = 'D' : FALSE;
 		(!$data['despesas']['QtdParcelasDespesas']) ? $data['despesas']['QtdParcelasDespesas'] = '1' : FALSE;
@@ -187,7 +188,7 @@ class Despesas extends CI_Controller {
 
 
         #Ver uma solução melhor para este campo
-        (!$data['despesas']['AprovadoDespesas']) ? $data['despesas']['AprovadoDespesas'] = 'N' : FALSE;
+        (!$data['despesas']['AprovadoDespesas']) ? $data['despesas']['AprovadoDespesas'] = 'S' : FALSE;
 
         $data['radio'] = array(
             'AprovadoDespesas' => $this->basico->radio_checked($data['despesas']['AprovadoDespesas'], 'Despesa Quitada', 'NS'),
@@ -543,7 +544,7 @@ class Despesas extends CI_Controller {
 
 
         #Ver uma solução melhor para este campo
-        (!$data['despesas']['AprovadoDespesas']) ? $data['despesas']['AprovadoDespesas'] = 'N' : FALSE;
+        (!$data['despesas']['AprovadoDespesas']) ? $data['despesas']['AprovadoDespesas'] = 'S' : FALSE;
 
         $data['radio'] = array(
             'AprovadoDespesas' => $this->basico->radio_checked($data['despesas']['AprovadoDespesas'], 'Despesa Quitada', 'NS'),

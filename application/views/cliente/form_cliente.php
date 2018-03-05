@@ -177,6 +177,11 @@
 										<div class="form-group">
 											<div class="row">
 												<div class="col-md-3">
+													<label for="Cpf">CPF:</label>
+													<input type="text" class="form-control" maxlength="11" <?php echo $readonly; ?>
+														   name="Cpf" value="<?php echo $query['Cpf']; ?>">
+												</div>
+												<div class="col-md-3">
 													<label for="Telefone2">Tel.2 - Fixo ou Celular:</label>
 													<input type="text" class="form-control Celular CelularVariavel" id="Telefone2" maxlength="11" <?php echo $readonly; ?>
 														   name="Telefone2" placeholder="(XX)999999999" value="<?php echo $query['Telefone2']; ?>">
@@ -186,32 +191,52 @@
 													<input type="text" class="form-control Celular CelularVariavel" id="Telefone3" maxlength="11" <?php echo $readonly; ?>
 														   name="Telefone3" placeholder="(XX)999999999" value="<?php echo $query['Telefone3']; ?>">
 												</div>							
-												<div class="col-md-5">
+												<div class="col-md-3">
 													<label for="Email">E-mail:</label>
-													<input type="text" class="form-control" id="Bairro" maxlength="100" <?php echo $readonly; ?>
+													<input type="text" class="form-control" maxlength="100" <?php echo $readonly; ?>
 														   name="Email" value="<?php echo $query['Email']; ?>">
+												</div>												
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="row">
+												
+												<div class="col-md-3">
+													<label for="Rg">RG:</label>
+													<input type="text" class="form-control" maxlength="9" <?php echo $readonly; ?>
+														   name="Rg" value="<?php echo $query['Rg']; ?>">
 												</div>
+												<div class="col-md-3">
+													<label for="OrgaoExp">Orgão Exp.:</label>
+													<input type="text" class="form-control" maxlength="45" <?php echo $readonly; ?>
+														   name="OrgaoExp" value="<?php echo $query['OrgaoExp']; ?>">
+												</div>
+												<div class="col-md-3">
+													<label for="Estado">Estado Emissor:</label>
+													<input type="text" class="form-control" maxlength="2" <?php echo $readonly; ?>
+														   name="Estado" value="<?php echo $query['Estado']; ?>">
+												</div>
+												<div class="col-md-3">
+												<label for="DataEmissao">Data de Emissão:</label>
+												<input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
+													   name="DataEmissao" placeholder="DD/MM/AAAA" value="<?php echo $query['DataEmissao']; ?>">
+											</div>
 											</div>
 										</div>
 
 										<div class="form-group">
 											<div class="row">
-												<div class="col-md-6">
+												<div class="col-md-3">
 													<label for="Endereco">Endreço:</label>
 													<input type="text" class="form-control" id="Endereco" maxlength="100" <?php echo $readonly; ?>
 														   name="Endereco" value="<?php echo $query['Endereco']; ?>">
 												</div>
-												<div class="col-md-6">
+												<div class="col-md-3">
 													<label for="Bairro">Bairro:</label>
 													<input type="text" class="form-control" id="Bairro" maxlength="100" <?php echo $readonly; ?>
 														   name="Bairro" value="<?php echo $query['Bairro']; ?>">
 												</div>
-											</div>
-										</div>
-
-										<div class="form-group">
-											<div class="row">
-												<div class="col-md-6">
+												<div class="col-md-3">
 													<label for="Municipio">Município:</label><br>
 													<select data-placeholder="Selecione um Município..." class="form-control" <?php echo $disabled; ?>
 															id="Municipio" name="Municipio">
@@ -228,21 +253,25 @@
 													</select>
 												</div>
 												<div class="col-md-3">
+													<label for="Cep">Cep:</label>
+													<input type="text" class="form-control" maxlength="8" <?php echo $readonly; ?>
+														   name="Cep" value="<?php echo $query['Cep']; ?>">
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="row">
+												<div class="col-md-3">
 													<label for="RegistroFicha">Ficha Nº:</label>
 													<input type="text" class="form-control" maxlength="45" <?php echo $readonly; ?>
 														   name="RegistroFicha" value="<?php echo $query['RegistroFicha']; ?>">
 												</div>
-											</div>
-										</div>
-
-										<div class="form-group">
-											<div class="row">
-												<div class="col-md-10">
+												<div class="col-md-6">
 													<label for="Obs">OBS:</label>
 													<textarea class="form-control" id="Obs" <?php echo $readonly; ?>
 															  name="Obs"><?php echo $query['Obs']; ?></textarea>
 												</div>
-												<div class="col-md-2">
+												<div class="col-md-3">
 													<label for="Ativo">Ativo?</label><br>
 													<div class="form-group">
 														<div class="btn-group" data-toggle="buttons">

@@ -161,7 +161,40 @@
 											echo '                                                 
 											<tr>
 												<td><span class="glyphicon glyphicon-home"></span> Endereço:</td>
-												<td>' . $query['Endereco'] . ' ' . $query['Bairro'] . ' ' . $query['Municipio'] . '</td>
+												<td>' . $query['Endereco'] . ' - ' . $query['Bairro'] . ' - ' . $query['Municipio'] . '</td>
+											</tr>
+											';
+											
+											}
+											
+											if ($query['Cep']) {
+												
+											echo '                                                 
+											<tr>
+												<td><span class="glyphicon glyphicon-envelope"></span> Cep:</td>
+												<td>' . $query['Cep'] . '</td>
+											</tr>
+											';
+											
+											}
+											
+											if ($query['Cpf']) {
+												
+											echo '                                                 
+											<tr>
+												<td><span class="glyphicon glyphicon-pencil"></span> Cpf:</td>
+												<td>' . $query['Cpf'] . '</td>
+											</tr>
+											';
+											
+											}
+											
+											if ($query['Rg'] || $query['OrgaoExp'] || $query['Estado'] || $query['DataEmissao']) {
+												
+											echo '                                                 
+											<tr>
+												<td><span class="glyphicon glyphicon-pencil"></span> Rg:</td>
+												<td>' . $query['Rg'] . ' - ' . $query['OrgaoExp'] . ' - ' . $query['Estado'] . ' - ' . $query['DataEmissao'] . '</td>
 											</tr>
 											';
 											

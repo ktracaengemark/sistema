@@ -597,17 +597,18 @@
 													<div class="col-md-1"></div>
 													<div class="form-group text-center">
 														<div class="row">									
+															
 															<div class="col-md-3 form-inline">
-																<label for="AprovadoDespesas">Apr.(Fech)?</label><br>
+																<label for="AprovadoDespesas">Aprovada?</label><br>
 																<div class="form-group">
 																	<div class="btn-group" data-toggle="buttons">
-																		<?php
+																		<?php																		
 																		foreach ($select['AprovadoDespesas'] as $key => $row) {
 																			if (!$despesas['AprovadoDespesas'])
-																				$despesas['AprovadoDespesas'] = 'N';
+																				$despesas['AprovadoDespesas'] = 'S';
 
 																			($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-
+																			
 																			if ($despesas['AprovadoDespesas'] == $key) {
 																				echo ''
 																				. '<label class="btn btn-warning active" name="AprovadoDespesas_' . $hideshow . '">'
@@ -629,13 +630,14 @@
 																	</div>
 																</div>
 															</div>
+															
 															<div class="col-md-3 form-inline">
 																<label for="ServicoConcluidoDespesas">Concluída?</label><br>
 																<div class="form-group">
 																	<div class="btn-group" data-toggle="buttons">
 																		<?php
 																		foreach ($select['ServicoConcluidoDespesas'] as $key => $row) {
-																			(!$despesas['ServicoConcluidoDespesas']) ? $despesas['ServicoConcluidoDespesas'] = 'N' : FALSE;
+																			(!$despesas['ServicoConcluidoDespesas']) ? $despesas['ServicoConcluidoDespesas'] = 'S' : FALSE;
 
 																			if ($despesas['ServicoConcluidoDespesas'] == $key) {
 																				echo ''

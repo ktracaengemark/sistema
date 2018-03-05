@@ -53,7 +53,12 @@ class Cliente extends CI_Controller {
 			'idApp_Cliente',
             'NomeCliente',
             'DataNascimento',
-
+			'Cpf',
+			'Rg',
+			'OrgaoExp',
+			'Estado',
+			'DataEmissao',
+			'Cep',
             'Telefone1',
             'Telefone2',
             'Telefone3',
@@ -62,7 +67,7 @@ class Cliente extends CI_Controller {
             'Endereco',
             'Bairro',
             'Municipio',
-
+			
             'Obs',
 			'Email',
 
@@ -91,7 +96,9 @@ class Cliente extends CI_Controller {
         $data['metodo'] = 1;
 
         if ($data['query']['Sexo'] || $data['query']['Endereco'] || $data['query']['Bairro'] ||
-                $data['query']['Municipio'] || $data['query']['Obs'] || $data['query']['Email'] || $data['query']['RegistroFicha'])
+			$data['query']['Municipio'] || $data['query']['Obs'] || $data['query']['Email'] || 
+			$data['query']['RegistroFicha'] || $data['query']['Cep'] || $data['query']['Cpf'] || 
+			$data['query']['Rg']  || $data['query']['OrgaoExp'] || $data['query']['Estado']  || $data['query']['DataEmissao'])
             $data['collapse'] = '';
         else
             $data['collapse'] = 'class="collapse"';
@@ -151,7 +158,12 @@ class Cliente extends CI_Controller {
             'idApp_Cliente',
             'NomeCliente',
             'DataNascimento',
-
+			'Cpf',
+			'Rg',
+			'OrgaoExp',
+			'Estado',
+			'DataEmissao',
+			'Cep',
             'Telefone1',
             'Telefone2',
             'Telefone3',
@@ -194,7 +206,9 @@ class Cliente extends CI_Controller {
         $data['metodo'] = 2;
 
         if ($data['query']['Sexo'] || $data['query']['Endereco'] || $data['query']['Bairro'] ||
-                $data['query']['Municipio'] || $data['query']['Obs'] || $data['query']['Email'] || $data['query']['RegistroFicha'])
+			$data['query']['Municipio'] || $data['query']['Obs'] || $data['query']['Email'] || 
+			$data['query']['RegistroFicha'] || $data['query']['Cep'] || $data['query']['Cpf'] || 
+			$data['query']['Rg']  || $data['query']['OrgaoExp'] || $data['query']['Estado']  || $data['query']['DataEmissao'])
             $data['collapse'] = '';
         else
             $data['collapse'] = 'class="collapse"';
