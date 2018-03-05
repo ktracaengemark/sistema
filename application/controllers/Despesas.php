@@ -61,6 +61,7 @@ class Despesas extends CI_Controller {
             'QuitadoDespesas',
             'DataConclusaoDespesas',
             'DataRetornoDespesas',
+			'DataQuitadoDespesas',
             'ValorDespesas',
             'ValorEntradaDespesas',
             'DataEntradaDespesas',
@@ -236,7 +237,8 @@ class Despesas extends CI_Controller {
 			$data['despesas']['idApp_OrcaTrata'] = $data['despesas']['idApp_OrcaTrata'];
 			$data['despesas']['DataConclusaoDespesas'] = $this->basico->mascara_data($data['despesas']['DataConclusaoDespesas'], 'mysql');
             $data['despesas']['DataRetornoDespesas'] = $this->basico->mascara_data($data['despesas']['DataRetornoDespesas'], 'mysql');
-            $data['despesas']['DataVencimentoDespesas'] = $this->basico->mascara_data($data['despesas']['DataVencimentoDespesas'], 'mysql');
+            $data['despesas']['DataQuitadoDespesas'] = $this->basico->mascara_data($data['despesas']['DataQuitadoDespesas'], 'mysql');
+			$data['despesas']['DataVencimentoDespesas'] = $this->basico->mascara_data($data['despesas']['DataVencimentoDespesas'], 'mysql');
             $data['despesas']['ValorDespesas'] = str_replace(',', '.', str_replace('.', '', $data['despesas']['ValorDespesas']));
             $data['despesas']['ValorEntradaDespesas'] = str_replace(',', '.', str_replace('.', '', $data['despesas']['ValorEntradaDespesas']));
             $data['despesas']['DataEntradaDespesas'] = $this->basico->mascara_data($data['despesas']['DataEntradaDespesas'], 'mysql');
@@ -354,6 +356,7 @@ class Despesas extends CI_Controller {
             'QuitadoDespesas',
             'DataConclusaoDespesas',
             'DataRetornoDespesas',
+			'DataQuitadoDespesas',
             'ValorDespesas',
             'ValorEntradaDespesas',
             'DataEntradaDespesas',
@@ -436,7 +439,8 @@ class Despesas extends CI_Controller {
 			$data['despesas']['idApp_OrcaTrata'] = $data['despesas']['idApp_OrcaTrata'];
 			$data['despesas']['DataConclusaoDespesas'] = $this->basico->mascara_data($data['despesas']['DataConclusaoDespesas'], 'barras');
             $data['despesas']['DataRetornoDespesas'] = $this->basico->mascara_data($data['despesas']['DataRetornoDespesas'], 'barras');
-            $data['despesas']['DataEntradaDespesas'] = $this->basico->mascara_data($data['despesas']['DataEntradaDespesas'], 'barras');
+            $data['despesas']['DataQuitadoDespesas'] = $this->basico->mascara_data($data['despesas']['DataQuitadoDespesas'], 'barras');
+			$data['despesas']['DataEntradaDespesas'] = $this->basico->mascara_data($data['despesas']['DataEntradaDespesas'], 'barras');
             $data['despesas']['DataVencimentoDespesas'] = $this->basico->mascara_data($data['despesas']['DataVencimentoDespesas'], 'barras');
 
             #### Carrega os dados do cliente nas variáves de sessão ####
@@ -588,7 +592,8 @@ class Despesas extends CI_Controller {
 			$data['despesas']['idApp_OrcaTrata'] = $data['despesas']['idApp_OrcaTrata'];
 			$data['despesas']['DataConclusaoDespesas'] = $this->basico->mascara_data($data['despesas']['DataConclusaoDespesas'], 'mysql');
             $data['despesas']['DataRetornoDespesas'] = $this->basico->mascara_data($data['despesas']['DataRetornoDespesas'], 'mysql');
-            $data['despesas']['DataVencimentoDespesas'] = $this->basico->mascara_data($data['despesas']['DataVencimentoDespesas'], 'mysql');
+            $data['despesas']['DataQuitadoDespesas'] = $this->basico->mascara_data($data['despesas']['DataQuitadoDespesas'], 'mysql');
+			$data['despesas']['DataVencimentoDespesas'] = $this->basico->mascara_data($data['despesas']['DataVencimentoDespesas'], 'mysql');
             $data['despesas']['ValorDespesas'] = str_replace(',', '.', str_replace('.', '', $data['despesas']['ValorDespesas']));
             $data['despesas']['ValorEntradaDespesas'] = str_replace(',', '.', str_replace('.', '', $data['despesas']['ValorEntradaDespesas']));
             $data['despesas']['DataEntradaDespesas'] = $this->basico->mascara_data($data['despesas']['DataEntradaDespesas'], 'mysql');

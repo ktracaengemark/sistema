@@ -132,7 +132,7 @@
 									</h4>
 								</div>
 
-								<div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1" aria-expanded="false">
+								<div id="collapse1" class="panel-collapse" role="tabpanel" aria-labelledby="heading1" aria-expanded="false">
 									<div class="panel-body">
 
 										<!--#######################################-->
@@ -729,8 +729,7 @@
 																	</div>	
 																	<div id="QuitadoDespesas" <?php echo $div['QuitadoDespesas']; ?>>	
 																		
-																	</div>
-																	<!--																					
+																	</div>																																					
 																	<br>
 																	<br>								
 																</div>
@@ -763,6 +762,17 @@
 																</div>
 															</div>
 															<div class="col-md-3">
+																<label for="DataQuitadoDespesas">Quitada em:</label>
+																<div class="input-group <?php echo $datepicker; ?>">
+																	<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+																		   name="DataQuitadoDespesas" value="<?php echo $despesas['DataQuitadoDespesas']; ?>">
+																	<span class="input-group-addon" disabled>
+																		<span class="glyphicon glyphicon-calendar"></span>
+																	</span>
+																</div>
+															</div>
+															<!--
+															<div class="col-md-3">
 																<label for="DataRetornoDespesas">Data do Retorno:</label>
 																<div class="input-group <?php echo $datepicker; ?>">
 																	<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
@@ -772,6 +782,7 @@
 																	</span>
 																</div>
 															</div>
+															-->
 														</div>
 													</div>						
 													<div class="col-md-1"></div>

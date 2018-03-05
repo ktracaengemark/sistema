@@ -2919,6 +2919,7 @@ exit();*/
                 OT.ServicoConcluidoDespesas,
                 OT.QuitadoDespesas,
                 OT.DataConclusaoDespesas,
+				OT.DataQuitadoDespesas,
                 OT.DataRetornoDespesas,
 				OT.FormaPagamentoDespesas,
 				C.NomeCliente,
@@ -2973,7 +2974,7 @@ exit();*/
 				$row->DataEntradaDespesas = $this->basico->mascara_data($row->DataEntradaDespesas, 'barras');
                 $row->DataConclusaoDespesas = $this->basico->mascara_data($row->DataConclusaoDespesas, 'barras');
                 $row->DataRetornoDespesas = $this->basico->mascara_data($row->DataRetornoDespesas, 'barras');
-
+				$row->DataQuitadoDespesas = $this->basico->mascara_data($row->DataQuitadoDespesas, 'barras');
                 $row->AprovadoDespesas = $this->basico->mascara_palavra_completa($row->AprovadoDespesas, 'NS');
                 $row->ServicoConcluidoDespesas = $this->basico->mascara_palavra_completa($row->ServicoConcluidoDespesas, 'NS');
                 $row->QuitadoDespesas = $this->basico->mascara_palavra_completa($row->QuitadoDespesas, 'NS');

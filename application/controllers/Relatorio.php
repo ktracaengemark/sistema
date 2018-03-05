@@ -2243,22 +2243,16 @@ class Relatorio extends CI_Controller {
         $data['select']['Campo'] = array(
 
 			'C.NomeCliente' => 'Cliente',
-            'OT.idApp_Despesas' => 'Número da Devolução',
-			'OT.idApp_OrcaTrata' => 'Número do Orçamento',
+            'OT.idApp_Despesas' => 'Número da Despesa',
             'OT.AprovadoDespesas' => 'Orçamento Aprovado?',
-
             'OT.TipoDespesa' => 'Tipo de Despesa',
 			'OT.DataDespesas' => 'Data do Orçamento',
-			'OT.DataEntradaDespesas' => 'Validade do Orçamento',
             'OT.ValorDespesas' => 'Valor do Orçamento',
 			'OT.ValorEntradaDespesas' => 'Valor do Desconto',
 			'OT.ValorRestanteDespesas' => 'Valor a Receber',
-
             'OT.ServicoConcluidoDespesas' => 'Serviço Concluído?',
             'OT.QuitadoDespesas' => 'Orçamento Quitado?',
             'OT.DataConclusaoDespesas' => 'Data de Conclusão',
-
-            'OT.DataRetornoDespesas' => 'Data de Retorno',
 			'OT.ProfissionalDespesas' => 'Profissional',
 
         );
