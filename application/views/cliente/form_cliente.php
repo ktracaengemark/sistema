@@ -217,10 +217,10 @@
 														   name="Estado" value="<?php echo $query['Estado']; ?>">
 												</div>
 												<div class="col-md-3">
-												<label for="DataEmissao">Data de Emissão:</label>
-												<input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
-													   name="DataEmissao" placeholder="DD/MM/AAAA" value="<?php echo $query['DataEmissao']; ?>">
-											</div>
+													<label for="DataEmissao">Data de Emissão:</label>
+													<input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
+														   name="DataEmissao" placeholder="DD/MM/AAAA" value="<?php echo $query['DataEmissao']; ?>">
+												</div>
 											</div>
 										</div>
 
@@ -260,18 +260,23 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<div class="row">
+											<div class="row">											
+												<div class="col-md-3">
+													<label for="DataCadastroCliente">Cadastrado em:</label>													
+													<input type="text" class="form-control Date"  maxlength="10" <?php echo $readonly; ?>
+														   name="DataCadastroCliente" placeholder="DD/MM/AAAA" value="<?php echo $query['DataCadastroCliente']; ?>">													
+												</div>
 												<div class="col-md-3">
 													<label for="RegistroFicha">Ficha Nº:</label>
 													<input type="text" class="form-control" maxlength="45" <?php echo $readonly; ?>
 														   name="RegistroFicha" value="<?php echo $query['RegistroFicha']; ?>">
 												</div>
-												<div class="col-md-6">
+												<div class="col-md-4">
 													<label for="Obs">OBS:</label>
 													<textarea class="form-control" id="Obs" <?php echo $readonly; ?>
 															  name="Obs"><?php echo $query['Obs']; ?></textarea>
 												</div>
-												<div class="col-md-3">
+												<div class="col-md-2">
 													<label for="Ativo">Ativo?</label><br>
 													<div class="form-group">
 														<div class="btn-group" data-toggle="buttons">

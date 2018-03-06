@@ -53,11 +53,12 @@ class Cliente extends CI_Controller {
 			'idApp_Cliente',
             'NomeCliente',
             'DataNascimento',
+			'DataCadastroCliente',
 			'Cpf',
 			'Rg',
 			'OrgaoExp',
 			'Estado',
-			'DataEmissao',
+			'DataEmissao',			
 			'Cep',
             'Telefone1',
             'Telefone2',
@@ -75,14 +76,18 @@ class Cliente extends CI_Controller {
 			'Associado',
         ), TRUE));
 
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+       
+		(!$data['query']['DataCadastroCliente']) ? $data['query']['DataCadastroCliente'] = date('d/m/Y', time()) : FALSE;
+		
+	   $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #$this->form_validation->set_rules('NomeCliente', 'Nome do Responsável', 'required|trim|is_unique_duplo[App_Cliente.NomeCliente.DataNascimento.' . $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql') . ']');
         $this->form_validation->set_rules('NomeCliente', 'Nome do Responsável', 'required|trim');
         $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
         $this->form_validation->set_rules('Telefone1', 'Telefone1', 'required|trim');
         $this->form_validation->set_rules('Email', 'E-mail', 'trim|valid_email');
-
+		
+		
         $data['select']['Municipio'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Associado'] = $this->Basico_model->select_status_sn();
@@ -116,6 +121,7 @@ class Cliente extends CI_Controller {
 			
             $data['query']['NomeCliente'] = trim(mb_strtoupper($data['query']['NomeCliente'], 'ISO-8859-1'));
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');            
+			$data['query']['DataCadastroCliente'] = $this->basico->mascara_data($data['query']['DataCadastroCliente'], 'mysql');
 			$data['query']['Obs'] = nl2br($data['query']['Obs']);
 			$data['query']['Empresa'] = $_SESSION['log']['Empresa'];
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
@@ -158,6 +164,7 @@ class Cliente extends CI_Controller {
             'idApp_Cliente',
             'NomeCliente',
             'DataNascimento',
+			'DataCadastroCliente',
 			'Cpf',
 			'Rg',
 			'OrgaoExp',
@@ -183,6 +190,7 @@ class Cliente extends CI_Controller {
         if ($id) {
             $data['query'] = $this->Cliente_model->get_cliente($id);
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'barras');
+			$data['query']['DataCadastroCliente'] = $this->basico->mascara_data($data['query']['DataCadastroCliente'], 'barras');
         }
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -225,7 +233,8 @@ class Cliente extends CI_Controller {
 
             $data['query']['NomeCliente'] = trim(mb_strtoupper($data['query']['NomeCliente'], 'ISO-8859-1'));
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
-            $data['query']['Obs'] = nl2br($data['query']['Obs']);
+            $data['query']['DataCadastroCliente'] = $this->basico->mascara_data($data['query']['DataCadastroCliente'], 'mysql');
+			$data['query']['Obs'] = nl2br($data['query']['Obs']);
 			$data['query']['Empresa'] = $_SESSION['log']['Empresa'];
 			#$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
 						
