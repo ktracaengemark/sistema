@@ -18,7 +18,7 @@
 								<span class="glyphicon glyphicon-user"></span> Administrador <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="<?php echo base_url() ?>acesso/index"><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['UsuarioEmpresaFilial']; ?></a></li>
+								<li><a href="<?php echo base_url() ?>acessoempresa/index"><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['UsuarioEmpresaFilial']; ?></a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>funcao/cadastrar"><span class="glyphicon glyphicon-pencil"></span> Cad Funçoes </a></li>
 								<li role="separator" class="divider"></li>
