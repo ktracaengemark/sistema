@@ -24,6 +24,7 @@
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>relatorioempresa/funcionario"><span class="glyphicon glyphicon-user"></span> Cad Usuários </a></li>
 								<li role="separator" class="divider"></li>
+								<li><a href="<?php echo base_url() ?>relatorioempresa/empresafilial"><span class="glyphicon glyphicon-list"></span> Dados da Empresa </a></li>
 							</ul>
 						</div>						
 						<div class="btn-group" role="group" aria-label="..."> </div>

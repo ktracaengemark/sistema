@@ -13,7 +13,7 @@ class Relatorioempresa extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Profissional_model', 'Cliente_model', 'Relatorio_model'));
+        $this->load->model(array('Basico_model', 'Profissional_model', 'Cliente_model', 'Relatorioempresa_model'));
         $this->load->driver('session');
 
         #load header view
@@ -117,7 +117,7 @@ class Relatorioempresa extends CI_Controller {
             'DESC' => 'Decrescente',
         );
 
-        $data['select']['Nome'] = $this->Relatorio_model->select_funcionario();
+        $data['select']['Nome'] = $this->Relatorioempresa_model->select_funcionario();
 
         $data['titulo'] = 'Relatório de Usuários';
 
@@ -128,7 +128,7 @@ class Relatorioempresa extends CI_Controller {
             $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
 
-            $data['report'] = $this->Relatorio_model->list_funcionario($data['bd'],TRUE);
+            $data['report'] = $this->Relatorioempresa_model->list_funcionario($data['bd'],TRUE);
 
             /*
               echo "<pre>";
@@ -147,6 +147,66 @@ class Relatorioempresa extends CI_Controller {
 
 
 
-    }	
+    }
+	
+	public function empresafilial() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'Nome',
+            'Ordenamento',
+            'Campo',
+        ), TRUE));
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+
+
+        $data['select']['Campo'] = array(
+            'F.Nome' => 'Nome do Usuário',
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+
+        $data['select']['Nome'] = $this->Relatorioempresa_model->select_empresafilial();
+
+        $data['titulo'] = 'Relatório Empresa Filial';
+
+        #run form validation
+        if ($this->form_validation->run() !== TRUE) {
+
+            $data['bd']['Nome'] = $data['query']['Nome'];
+            $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+
+            $data['report'] = $this->Relatorioempresa_model->list_empresafilial($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorioempresa/list_empresafilial', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('profissional/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorioempresa/tela_empresafilial', $data);
+
+        $this->load->view('basico/footer');
+
+
+
+    }
 			
 }
