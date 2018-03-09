@@ -1582,6 +1582,7 @@ $("#first-choice").change(function () {
 $(document).ready(function () {
 
     $(".Date").mask("99/99/9999");
+	$(".Cnpj").mask("99.999.999/9999-99");
     $(".Time").mask("99:99");
     $(".Cpf").mask("999.999.999-99");
     $(".Cep").mask("99999-999");

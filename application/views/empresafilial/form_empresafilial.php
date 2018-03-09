@@ -57,7 +57,58 @@
 								<div class="panel-body">
 
 									<?php echo form_open_multipart($form_open_path); ?>
-
+																		
+									<h3 class="text-left">Dados da Empresa  </h3>									
+									<div class="form-group">
+										<div class="row">										
+											<div class="col-md-3">
+												<label for="CnpjFilial">Cnpj:</label>
+												<input type="text" class="form-control Cnpj" maxlength="18" <?php echo $readonly; ?>
+													   name="CnpjFilial" placeholder="99.999.999/9999-98" value="<?php echo $query['CnpjFilial']; ?>">
+											</div>
+											<div class="col-md-3">
+												<label for="InscEstadualFilial">Insc.Estadual:</label>
+												<input type="text" class="form-control" maxlength="11" <?php echo $readonly; ?>
+													   name="InscEstadualFilial" value="<?php echo $query['InscEstadualFilial']; ?>">
+											</div>
+											<div class="col-md-3">
+												<label for="TelefoneFilial">Tel.Empresa:</label>
+												<input type="text" class="form-control Celular CelularVariavel" id="TelefoneFilial" maxlength="11" <?php echo $readonly; ?>
+													   name="TelefoneFilial" placeholder="(XX)999999999" value="<?php echo $query['TelefoneFilial']; ?>">
+											</div>																				
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-md-3">
+												<label for="EnderecoFilial">Endreço:</label>
+												<input type="text" class="form-control" maxlength="200" <?php echo $readonly; ?>
+													   name="EnderecoFilial" value="<?php echo $query['EnderecoFilial']; ?>">
+											</div>
+											<div class="col-md-3">
+												<label for="BairroFilial">Bairro:</label>
+												<input type="text" class="form-control" maxlength="100" <?php echo $readonly; ?>
+													   name="BairroFilial" value="<?php echo $query['BairroFilial']; ?>">
+											</div>
+											<div class="col-md-3">
+												<label for="MunicipioFilial">Municipio:</label>
+												<input type="text" class="form-control" maxlength="100" <?php echo $readonly; ?>
+													   name="MunicipioFilial" value="<?php echo $query['MunicipioFilial']; ?>">
+											</div>												
+											<div class="col-md-1">
+												<label for="EstadoFilial">Estado:</label>
+												<input type="text" class="form-control" maxlength="2" <?php echo $readonly; ?>
+													   name="EstadoFilial" value="<?php echo $query['EstadoFilial']; ?>">
+											</div>
+											<div class="col-md-2">
+												<label for="CepFilial">Cep:</label>
+												<input type="text" class="form-control" maxlength="8" <?php echo $readonly; ?>
+													   name="CepFilial" value="<?php echo $query['CepFilial']; ?>">
+											</div>
+										</div>
+									</div>
+									<br>
+									<h3 class="text-left">Dados do Administrador  </h3>
 									<div class="form-group">
 										<div class="row">
 											<div class="col-md-3">
@@ -66,137 +117,18 @@
 														name="Nome" autofocus value="<?php echo $query['Nome']; ?>">
 											</div>																		
 											<div class="col-md-3">
-												<label for="Celular">Tel.- Fixo ou Celular*</label>
+												<label for="Celular">Tel. Administrador</label>
 												<input type="text" class="form-control Celular CelularVariavel" id="Celular" maxlength="11" <?php echo $readonly; ?>
 													   name="Celular" placeholder="(XX)999999999" value="<?php echo $query['Celular']; ?>">
 											</div>
-											<!--
 											<div class="col-md-3">
-												<label for="DataNascimento">Data de Nascimento:</label>
-												<input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
-													   name="DataNascimento" placeholder="DD/MM/AAAA" value="<?php echo $query['DataNascimento']; ?>">
-											</div>						
-											
-											<div class="col-md-3">
-												<label for="Sexo">Sexo:</label>
-												<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-														id="Sexo" name="Sexo">
-													<option value="">--Selec. o Sexo--</option>
-													<?php
-													foreach ($select['Sexo'] as $key => $row) {
-														if ($query['Sexo'] == $key) {
-															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-														} else {
-															echo '<option value="' . $key . '">' . $row . '</option>';
-														}
-													}
-													?>
-												</select>
-											</div>
-											-->
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="row">
-										
-											<div class="col-md-3">
-												<label for="Email">E-mail:</label>
+												<label for="Email">E-mail Administrador:</label>
 												<input type="text" class="form-control" id="Bairro" maxlength="100" <?php echo $readonly; ?>
 													   name="Email" value="<?php echo $query['Email']; ?>">
 											</div>
-											<!--
-											<div class="col-md-2">
-												<label for="Inativo">Ativo?</label><br>
-												<div class="form-group">
-													<div class="btn-group" data-toggle="buttons">
-														<?php
-														foreach ($select['Inativo'] as $key => $row) {
-															(!$query['Inativo']) ? $query['Inativo'] = 'S' : FALSE;
-
-															if ($query['Inativo'] == $key) {
-																echo ''
-																. '<label class="btn btn-warning active" name="radiobutton_Inativo" id="radiobutton_Inativo' . $key . '">'
-																. '<input type="radio" name="Inativo" id="radiobutton" '
-																. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																. '</label>'
-																;
-															} else {
-																echo ''
-																. '<label class="btn btn-default" name="radiobutton_Inativo" id="radiobutton_Inativo' . $key . '">'
-																. '<input type="radio" name="Inativo" id="radiobutton" '
-																. 'autocomplete="off" value="' . $key . '" >' . $row
-																. '</label>'
-																;
-															}
-														}
-														?>
-													</div>
-												</div>
-											</div>
-											
-											<div class="col-md-3">
-												<label for="Usuario">Usuário:</label>
-												<input type="text" class="form-control" id="Usuario" maxlength="45" 
-													   autofocus name="Usuario" value="<?php echo $query['Usuario']; ?>">
-												<?php echo form_error('Usuario'); ?>
-											</div>						
-											<div class="col-md-3">
-												<label for="Senha">Senha:</label>
-												<input type="password" class="form-control" id="Senha" maxlength="45"
-													   name="Senha" value="<?php echo $query['Senha']; ?>">
-												<?php echo form_error('Senha'); ?>
-											</div>
-											<div class="col-md-3">
-												<label for="Senha">Confirmar Senha:</label>
-												<input type="password" class="form-control" id="Confirma" maxlength="45"
-													   name="Confirma" value="<?php echo $query['Confirma']; ?>">
-												<?php echo form_error('Confirma'); ?>
-											</div>
-											-->
 										</div>
-									</div>
-									<!--
-									<div class="form-group">
-										<div class="row">										
-											<div class="col-md-6">
-												<label for="Permissao">Nível / Permissão:*</label>
-												<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-														id="Permissao" name="Permissao">
-													<option value="">-- Selecione uma Permissao --</option>
-													<?php
-													foreach ($select['Permissao'] as $key => $row) {
-														if ($query['Permissao'] == $key) {
-															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-														} else {
-															echo '<option value="' . $key . '">' . $row . '</option>';
-														}
-													}
-													?>   
-												</select>          
-											</div>
-											
-											<div class="col-md-6">
-												<label for="Funcao">Funcao:*</label>
-												<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>funcao/cadastrar/funcao" role="button"> 
-													<span class="glyphicon glyphicon-plus"></span> <b>Nova Funcao</b>
-												</a>
-												<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-														id="Funcao" name="Funcao">
-													<option value="">-- Selecione uma Funcao --</option>
-													<?php
-													foreach ($select['Funcao'] as $key => $row) {
-														if ($query['Funcao'] == $key) {
-															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-														} else {
-															echo '<option value="' . $key . '">' . $row . '</option>';
-														}
-													}
-													?>   
-												</select>          
-											</div>
-										</div>
-									</div>
-									-->
+									</div>									
+									
 									<br>
 
 									<div class="form-group">

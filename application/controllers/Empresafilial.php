@@ -148,6 +148,15 @@ class Empresafilial extends CI_Controller {
             #'DataNascimento',
             'Celular',
             'Email',
+			'CnpjFilial',
+			'InscEstadualFilial',
+			'EnderecoFilial',
+			'BairroFilial',
+			'MunicipioFilial',
+			'EstadoFilial',
+			'CepFilial',
+			'TelefoneFilial',
+			
 			#'Sexo',
 			#'Inativo',
 
