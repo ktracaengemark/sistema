@@ -351,6 +351,7 @@ class Orcatrata2 extends CI_Controller {
                 $data['msg'] = '?m=1';
 
                 #redirect(base_url() . 'orcatrata2/listar/' . $data['msg']);
+				#redirect(base_url() . 'orcatrata/listar/' . $_SESSION['Cliente']['idApp_Cliente'] . $data['msg']);
 				redirect(base_url() . 'relatorio/orcamento/' . $data['msg']);
                 exit();
             }
@@ -574,7 +575,7 @@ class Orcatrata2 extends CI_Controller {
         $data['select']['Produto'] = $this->Basico_model->select_produtos();		
 
         $data['titulo'] = 'Editar Orçamento';
-        $data['form_open_path'] = 'orcatrata/alterar';
+        $data['form_open_path'] = 'orcatrata2/alterar';
         $data['readonly'] = '';
         $data['disabled'] = '';
         $data['panel'] = 'primary';

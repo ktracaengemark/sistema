@@ -29,19 +29,21 @@
 								<label for="">Agendamento:</label>
 								<div class="form-group">
 									<div class="row">
-										<button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary">Empresa (C/ Cliente)
+										<button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary"> Com Cliente
 										</button>
 									</div>
 									<br>
 									<div class="row">
-										<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info">Empresa (Pessoal)
+										<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info"> Outro Evento
 										</button>
 									</div>
+									<!--
 									<br>
 									<div class="row">
 										<button type="button" id="AgendarEvento" onclick="redirecionar2(3)" class="btn btn-danger">Evento Particular
 										</button>
-
+									</div>
+									-->
 										<input type="hidden" id="start" />
 										<input type="hidden" id="end" />
 									</div>
