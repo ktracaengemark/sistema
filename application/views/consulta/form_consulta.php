@@ -153,6 +153,18 @@
 									</div>
 
 									<hr>
+									<div class="form-group">
+										<div class="row">
+
+											<div class="col-md-12">
+												<label for="Obs">Obs:</label>
+												<textarea class="form-control" id="Obs"
+														  name="Obs"><?php echo $query['Obs']; ?></textarea>
+											</div>
+										</div>
+									</div>
+
+									<hr>									
 
 									<div class="form-group">
 										<div class="row">
@@ -246,19 +258,7 @@
 
 									<hr>
 									-->
-									<div class="form-group">
-										<div class="row">
 
-											<div class="col-md-12">
-												<label for="Obs">Obs:</label>
-												<textarea class="form-control" id="Obs"
-														  name="Obs"><?php echo $query['Obs']; ?></textarea>
-											</div>
-										</div>
-									</div>
-
-
-									<hr>
 									<!--<br>-->
 
 									<div class="form-group">
