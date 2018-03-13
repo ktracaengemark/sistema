@@ -44,7 +44,8 @@
 						<!--<th class="active">Cliente</th>
 						<th class="active">Tipo</th>-->
 						<th class="active">Desp</th>
-						<th class="active">Tipo de Desp.</th>
+						<th class="active">Categ.</th>
+						<th class="active">Tipo</th>
 						<th class="active">Descr.</th>
 						<!--<th class="active">Orçam.</th>
 						<th class="active">Cliente</th>-->
@@ -74,6 +75,7 @@
 							#echo '<td>' . $row['NomeCliente'] . '</td>';
 							#echo '<td>' . $row['TipoProduto'] . '</td>';
 							echo '<td>' . $row['idApp_Despesas'] . '</td>';
+							echo '<td>' . $row['Categoriadesp'] . '</td>';
 							echo '<td>' . $row['TipoDespesa'] . '</td>';
 							echo '<td>' . $row['Despesa'] . '</td>';							
 							#echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
