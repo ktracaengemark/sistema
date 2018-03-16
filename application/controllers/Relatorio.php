@@ -952,22 +952,24 @@ class Relatorio extends CI_Controller {
 	$this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
 
 	$data['select']['Campo'] = array(
-
-		'TC.NomeCliente' => 'Cliente',
-		'TC.idApp_Cliente' => 'Id',
-
+		#'TC.NomeCliente' => 'Cliente',
+		#'TC.idApp_Cliente' => 'Id',
+        '#NomeCliente' => 'Cliente',
+        '#QtdVendida' => 'Vendido',
+        '#QtdParc' => 'Pago',
+        '#QtdOrcam' => 'Orcam.',
+        '#QtdDescon' => 'Descon.',
+        '#QtdDevol' => 'Devol.',
 	);
+    asort($data['select']['Campo']);
 
 	$data['select']['Ordenamento'] = array(
 		'ASC' => 'Crescente',
 		'DESC' => 'Decrescente',
 	);
 
-
-
 	$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
 	$data['select']['idApp_Cliente'] = $this->Relatorio_model->select_cliente();
-
 
 	$data['titulo'] = 'Relatório de Estoque';
 
@@ -979,15 +981,30 @@ class Relatorio extends CI_Controller {
 		$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
 		$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
 		$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-		$data['bd']['Campo'] = $data['query']['Campo'];
+		#$data['bd']['Campo'] = $data['query']['Campo'];
+        #$data['bd']['CampoArray'] = $data['query']['Campo'];
+
+        #$data['bd']['Campo'] = (preg_match('/^#/', $data['query']['Campo'])) ? '' : $data['query']['Campo'];
+        #exit($data['bd']['CampoArray']);
+
+        if(preg_match('/^#/', $data['query']['Campo'])) {
+            $data['bd']['Campo'] = '';
+            $data['bd']['CampoArray'] = $data['query']['Campo'];
+        }
+        else {
+            $data['bd']['Campo'] = $data['query']['Campo'];
+            $data['bd']['CampoArray'] = FALSE;
+        }
 
 		$data['report'] = $this->Relatorio_model->list_rankingvendas($data['bd']);
+        #$data['report'] = (preg_match('/^#/', $data['query']['Campo'])) ? usort($data['report'], array($this, substr($data['query']['Campo'], 1))) : $data['report'];
+        #$data['report'] = usort($data['report'], array($this, "QtdParc"));
 
-		/*
+        /*
 		  echo "<pre>";
 		  print_r($data['report']);
 		  echo "</pre>";
-		  #exit();
+		  exit();
 		  #*/
 
 		$data['list'] = $this->load->view('relatorio/list_rankingvendas', $data, TRUE);
@@ -1000,7 +1017,7 @@ class Relatorio extends CI_Controller {
 
 }
 
-	
+
     public function estoque2() {
 
         if ($this->input->get('m') == 1)

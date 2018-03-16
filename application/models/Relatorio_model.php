@@ -1419,7 +1419,7 @@ exit();*/
         $query['NomeCliente'] = $query['NomeCliente']->result();
 
         ####################################################################
-        #Orçamentos 
+        #Orçamentos
         if ($data['DataFim']) {
             $consulta =
                 '(TOT.DataOrca >= "' . $data['DataInicio'] . '" AND TOT.DataOrca <= "' . $data['DataFim'] . '")';
@@ -1451,9 +1451,9 @@ exit();*/
                 TC.NomeCliente ASC'
         );
         $query['Orcamentos'] = $query['Orcamentos']->result();
-		
+
         ####################################################################
-        #Descontos 
+        #Descontos
         if ($data['DataFim']) {
             $consulta =
                 '(TOT.DataOrca >= "' . $data['DataInicio'] . '" AND TOT.DataOrca <= "' . $data['DataFim'] . '")';
@@ -1484,10 +1484,10 @@ exit();*/
             ORDER BY
                 TC.NomeCliente ASC'
         );
-        $query['Descontos'] = $query['Descontos']->result();		
+        $query['Descontos'] = $query['Descontos']->result();
 
         ####################################################################
-        #Parcelas 
+        #Parcelas
         if ($data['DataFim']) {
             $consulta =
                 '(TPR.DataPagoRecebiveis >= "' . $data['DataInicio'] . '" AND TPR.DataPagoRecebiveis <= "' . $data['DataFim'] . '")';
@@ -1522,7 +1522,7 @@ exit();*/
         $query['Parcelas'] = $query['Parcelas']->result();
 
         ####################################################################
-        #Devoluçoes 
+        #Devoluçoes
         if ($data['DataFim']) {
             $consulta =
                 '(TOT.DataOrca >= "' . $data['DataInicio'] . '" AND TOT.DataOrca <= "' . $data['DataFim'] . '")';
@@ -1553,8 +1553,282 @@ exit();*/
             ORDER BY
                 TC.NomeCliente ASC'
         );
-        $query['Devolucoes'] = $query['Devolucoes']->result();		
-		
+        $query['Devolucoes'] = $query['Devolucoes']->result();
+
+		$rankingvendas = array();
+
+		#$estoque = array();
+        foreach ($query['NomeCliente'] as $row) {
+            #echo $row->idTab_Produtos . ' # ' . $row->Produtos . '<br />';
+            #$estoque[$row->idTab_Produtos] = $row->Produtos;
+            $rankingvendas[$row->idApp_Cliente] = array();
+            $rankingvendas[$row->idApp_Cliente]['NomeCliente'] = $row->NomeCliente;
+        }
+
+
+	    /*
+        echo "<pre>";
+        print_r($rankingvendas);
+        echo "</pre>";
+        exit();
+        #*/
+
+
+
+        foreach ($query['Orcamentos'] as $row) {
+            if (isset($rankingvendas[$row->idApp_Cliente]))
+                $rankingvendas[$row->idApp_Cliente]['QtdOrcam'] = $row->QtdOrcam;
+        }
+
+		foreach ($query['Descontos'] as $row) {
+            if (isset($rankingvendas[$row->idApp_Cliente]))
+                $rankingvendas[$row->idApp_Cliente]['QtdDescon'] = $row->QtdDescon;
+        }
+
+		foreach ($query['Parcelas'] as $row) {
+            if (isset($rankingvendas[$row->idApp_Cliente]))
+                $rankingvendas[$row->idApp_Cliente]['QtdParc'] = $row->QtdParc;
+        }
+
+		foreach ($query['Devolucoes'] as $row) {
+            if (isset($rankingvendas[$row->idApp_Cliente]))
+                $rankingvendas[$row->idApp_Cliente]['QtdDevol'] = $row->QtdDevol;
+        }
+
+        foreach ($rankingvendas as $key => $row) {
+            if(isset($row['QtdOrcam']) && isset($row['QtdDescon']))
+                $rankingvendas[$key]['QtdVendida'] = $row['QtdOrcam'] - $row['QtdDescon'];
+            elseif(isset($row['QtdOrcam']) && !isset($row['QtdDescon']))
+                $rankingvendas[$key]['QtdVendida'] = $row['QtdOrcam'];
+            elseif(!isset($row['QtdOrcam']) && isset($row['QtdDescon']))
+                $rankingvendas[$key]['QtdVendida'] = $row['QtdDescon'];
+            else
+                $rankingvendas[$key]['QtdVendida'] = 0;
+        }
+
+        if(isset($data['CampoArray'])) {
+            foreach ($rankingvendas as $key => $row)
+                $campo[$key] = (isset($row[substr($data['CampoArray'], 1)])) ? $row[substr($data['CampoArray'], 1)] : 0;
+
+            ($data['Ordenamento'] == 'ASC') ? array_multisort($campo, SORT_ASC, $rankingvendas) :  array_multisort($campo, SORT_DESC, $rankingvendas);
+        }
+
+		$rankingvendas['soma'] = array();
+		$somaqtdorcam = $somaqtddescon = $somaqtdvendida = $somaqtdparc = $somaqtddevol = 0;
+
+		foreach ($rankingvendas as $key => $row) {
+
+            $row['QtdOrcam'] = (!isset($row['QtdOrcam'])) ? 0 : $row['QtdOrcam'];
+			$row['QtdDescon'] = (!isset($row['QtdDescon'])) ? 0 : $row['QtdDescon'];
+            $row['QtdParc'] = (!isset($row['QtdParc'])) ? 0 : $row['QtdParc'];
+			$row['QtdDevol'] = (!isset($row['QtdDevol'])) ? 0 : $row['QtdDevol'];
+            $row['QtdVendida'] = (!isset($row['QtdVendida'])) ? 0 : $row['QtdVendida'];
+
+            if ($row['QtdOrcam'] == 0 && $row['QtdDescon'] == 0 && $row['QtdParc'] == 0 && $row['QtdDevol'] == 0 && $row['QtdVendida'] == 0) {
+                unset($rankingvendas[$key]);
+                continue;
+            }
+
+			$somaqtdorcam += $row['QtdOrcam'];
+            $rankingvendas[$key]['QtdOrcam'] = number_format($row['QtdOrcam'], 2, ',', '.');
+
+			$somaqtddescon += $row['QtdDescon'];
+            $rankingvendas[$key]['QtdDescon'] = number_format($row['QtdDescon'], 2, ',', '.');
+
+			$somaqtdvendida += $row['QtdVendida'];
+            $rankingvendas[$key]['QtdVendida'] = number_format($row['QtdVendida'], 2, ',', '.');
+
+			$somaqtdparc += $row['QtdParc'];
+            $rankingvendas[$key]['QtdParc'] = number_format($row['QtdParc'], 2, ',', '.');
+
+			$somaqtddevol += $row['QtdDevol'];
+            $rankingvendas[$key]['QtdDevol'] = number_format($row['QtdDevol'], 2, ',', '.');
+
+        }
+
+        $rankingvendas['soma']['somaqtdorcam'] = number_format($somaqtdorcam, 2, ',', '.');
+		$rankingvendas['soma']['somaqtddescon'] = number_format($somaqtddescon, 2, ',', '.');
+		$rankingvendas['soma']['somaqtdvendida'] = number_format($somaqtdvendida, 2, ',', '.');
+		$rankingvendas['soma']['somaqtdparc'] = number_format($somaqtdparc, 2, ',', '.');
+		$rankingvendas['soma']['somaqtddevol'] = number_format($somaqtddevol, 2, ',', '.');
+
+        /*
+        #echo $this->db->last_query();
+        echo "<pre>";
+        print_r($rankingvendas);
+        echo "</pre>";
+        #echo "<pre>";
+        #print_r($query);
+        #echo "</pre>";
+        exit();
+        #*/
+
+        return $rankingvendas;
+
+    }
+
+/*
+    public function list_rankingvendas($data) {
+
+        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND TC.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+        $data['Campo'] = (!$data['Campo']) ? 'TC.NomeCliente' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+        ####################################################################
+        #LISTA DE CLIENTES
+        $query['NomeCliente'] = $this->db->query(
+            'SELECT
+                TC.idApp_Cliente,
+                CONCAT(IFNULL(TC.NomeCliente,"")) AS NomeCliente,
+				TOT.ValorOrca
+            FROM
+                App_Cliente AS TC
+				LEFT JOIN App_OrcaTrata AS TOT ON TOT.idApp_Cliente = TC.idApp_Cliente
+            WHERE
+                TC.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                TC.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+                ' . $data['NomeCliente'] . '
+            ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . ''
+        );
+        $query['NomeCliente'] = $query['NomeCliente']->result();
+
+        ####################################################################
+        #Orçamentos
+        if ($data['DataFim']) {
+            $consulta =
+                '(TOT.DataOrca >= "' . $data['DataInicio'] . '" AND TOT.DataOrca <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(TOT.DataOrca >= "' . $data['DataInicio'] . '")';
+        }
+
+        $query['Orcamentos'] = $this->db->query(
+            'SELECT
+                SUM(TOT.ValorOrca) AS QtdOrcam,
+                TC.idApp_Cliente
+            FROM
+                App_OrcaTrata AS TOT
+                    LEFT JOIN App_Cliente AS TC ON TC.idApp_Cliente = TOT.idApp_Cliente
+
+            WHERE
+                TOT.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                TOT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                (' . $consulta . ')
+                ' . $data['NomeCliente'] . ' AND
+                TOT.TipoRD = "R" AND
+                TC.idApp_Cliente != "0"
+                ' . $data['NomeCliente'] . '
+            GROUP BY
+                TC.idApp_Cliente
+            ORDER BY
+                TC.NomeCliente ASC'
+        );
+        $query['Orcamentos'] = $query['Orcamentos']->result();
+
+        ####################################################################
+        #Descontos
+        if ($data['DataFim']) {
+            $consulta =
+                '(TOT.DataOrca >= "' . $data['DataInicio'] . '" AND TOT.DataOrca <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(TOT.DataOrca >= "' . $data['DataInicio'] . '")';
+        }
+
+        $query['Descontos'] = $this->db->query(
+            'SELECT
+                SUM(TOT.ValorEntradaOrca) AS QtdDescon,
+                TC.idApp_Cliente
+            FROM
+                App_OrcaTrata AS TOT
+                    LEFT JOIN App_Cliente AS TC ON TC.idApp_Cliente = TOT.idApp_Cliente
+
+            WHERE
+                TOT.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                TOT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                (' . $consulta . ')
+                ' . $data['NomeCliente'] . ' AND
+                TOT.TipoRD = "R" AND
+                TC.idApp_Cliente != "0"
+                ' . $data['NomeCliente'] . '
+            GROUP BY
+                TC.idApp_Cliente
+            ORDER BY
+                TC.NomeCliente ASC'
+        );
+        $query['Descontos'] = $query['Descontos']->result();
+
+        ####################################################################
+        #Parcelas
+        if ($data['DataFim']) {
+            $consulta =
+                '(TPR.DataPagoRecebiveis >= "' . $data['DataInicio'] . '" AND TPR.DataPagoRecebiveis <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(TPR.DataPagoRecebiveis >= "' . $data['DataInicio'] . '")';
+        }
+
+        $query['Parcelas'] = $this->db->query(
+            'SELECT
+                SUM(TPR.ValorPagoRecebiveis) AS QtdParc,
+                TC.idApp_Cliente
+            FROM
+                App_OrcaTrata AS TOT
+                    LEFT JOIN App_Cliente AS TC ON TC.idApp_Cliente = TOT.idApp_Cliente
+					LEFT JOIN App_ParcelasRecebiveis AS TPR ON TPR.idApp_OrcaTrata = TOT.idApp_OrcaTrata
+
+            WHERE
+                TOT.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                TOT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                (' . $consulta . ')
+                ' . $data['NomeCliente'] . ' AND
+                TOT.TipoRD = "R" AND
+                TC.idApp_Cliente != "0"
+                ' . $data['NomeCliente'] . '
+            GROUP BY
+                TC.idApp_Cliente
+            ORDER BY
+                TC.NomeCliente ASC'
+        );
+        $query['Parcelas'] = $query['Parcelas']->result();
+
+        ####################################################################
+        #Devoluçoes
+        if ($data['DataFim']) {
+            $consulta =
+                '(TOT.DataOrca >= "' . $data['DataInicio'] . '" AND TOT.DataOrca <= "' . $data['DataFim'] . '")';
+        }
+        else {
+            $consulta =
+                '(TOT.DataOrca >= "' . $data['DataInicio'] . '")';
+        }
+
+        $query['Devolucoes'] = $this->db->query(
+            'SELECT
+                SUM(TOT.ValorOrca) AS QtdDevol,
+                TC.idApp_Cliente
+            FROM
+                App_OrcaTrata AS TOT
+                    LEFT JOIN App_Cliente AS TC ON TC.idApp_Cliente = TOT.idApp_Cliente
+
+            WHERE
+                TOT.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+                TOT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                (' . $consulta . ')
+                ' . $data['NomeCliente'] . ' AND
+                TOT.TipoRD = "D" AND
+                TC.idApp_Cliente != "0"
+                ' . $data['NomeCliente'] . '
+            GROUP BY
+                TC.idApp_Cliente
+            ORDER BY
+                TC.NomeCliente ASC'
+        );
+        $query['Devolucoes'] = $query['Devolucoes']->result();
+
 		$rankingvendas = new stdClass();
 
 
@@ -1567,29 +1841,21 @@ exit();*/
         }
 
 
-		/*
-echo "<pre>";
-print_r($query['Comprados']);
-echo "</pre>";
-exit();*/
-
-
-
         foreach ($query['Orcamentos'] as $row) {
             if (isset($rankingvendas->{$row->idApp_Cliente}))
                 $rankingvendas->{$row->idApp_Cliente}->QtdOrcam = $row->QtdOrcam;
         }
-		
+
 		foreach ($query['Descontos'] as $row) {
             if (isset($rankingvendas->{$row->idApp_Cliente}))
                 $rankingvendas->{$row->idApp_Cliente}->QtdDescon = $row->QtdDescon;
         }
-		
+
 		foreach ($query['Parcelas'] as $row) {
             if (isset($rankingvendas->{$row->idApp_Cliente}))
                 $rankingvendas->{$row->idApp_Cliente}->QtdParc = $row->QtdParc;
         }
-		
+
 		foreach ($query['Devolucoes'] as $row) {
             if (isset($rankingvendas->{$row->idApp_Cliente}))
                 $rankingvendas->{$row->idApp_Cliente}->QtdDevol = $row->QtdDevol;
@@ -1602,33 +1868,33 @@ exit();*/
 
             $row->QtdOrcam = (!isset($row->QtdOrcam)) ? 0 : $row->QtdOrcam;
 			$row->QtdDescon = (!isset($row->QtdDescon)) ? 0 : $row->QtdDescon;
-			$row->QtdVendida = $row->QtdOrcam - $row->QtdDescon;	
+			$row->QtdVendida = $row->QtdOrcam - $row->QtdDescon;
 			$row->QtdParc = (!isset($row->QtdParc)) ? 0 : $row->QtdParc;
 			$row->QtdDevol = (!isset($row->QtdDevol)) ? 0 : $row->QtdDevol;
-			
+
 			$somaqtdorcam += $row->QtdOrcam;
 			$row->QtdOrcam = number_format($row->QtdOrcam, 2, ',', '.');
-						
+
 			$somaqtddescon += $row->QtdDescon;
 			$row->QtdDescon = number_format($row->QtdDescon, 2, ',', '.');
-			
+
 			$somaqtdvendida += $row->QtdVendida;
 			$row->QtdVendida = number_format($row->QtdVendida, 2, ',', '.');
-			
+
 			$somaqtdparc += $row->QtdParc;
 			$row->QtdParc = number_format($row->QtdParc, 2, ',', '.');
-						
+
 			$somaqtddevol += $row->QtdDevol;
 			$row->QtdDevol = number_format($row->QtdDevol, 2, ',', '.');
-																
+
         }
 
 		$rankingvendas->soma->somaqtdorcam = number_format($somaqtdorcam, 2, ',', '.');
-		$rankingvendas->soma->somaqtddescon = number_format($somaqtddescon, 2, ',', '.');		
+		$rankingvendas->soma->somaqtddescon = number_format($somaqtddescon, 2, ',', '.');
 		$rankingvendas->soma->somaqtdvendida = number_format($somaqtdvendida, 2, ',', '.');
 		$rankingvendas->soma->somaqtdparc = number_format($somaqtdparc, 2, ',', '.');
 		$rankingvendas->soma->somaqtddevol = number_format($somaqtddevol, 2, ',', '.');
-		
+
 
         /*
         echo $this->db->last_query();
@@ -1639,12 +1905,13 @@ exit();*/
         #print_r($query);
         #echo "</pre>";
         exit();
-        #*/
+        #*#/
 
         return $rankingvendas;
 
     }
-	
+    */
+
     public function list_estoque21($data) {
 
 		$data['Produtos'] = ($data['Produtos']) ? ' AND TP.idTab_Produtos = ' . $data['Produtos'] : FALSE;
