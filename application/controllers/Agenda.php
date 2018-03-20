@@ -42,11 +42,11 @@ class Agenda extends CI_Controller {
         $_SESSION['log']['NomeUsuario'] = ($data['query']['NomeUsuario']) ?
             $data['query']['NomeUsuario'] : FALSE;
 
-        $data['query']['estatisticas'] = $this->Agenda_model->resumo_estatisticas($_SESSION['log']['id']);
-        $data['query']['cliente_aniversariantes'] = $this->Agenda_model->cliente_aniversariantes($_SESSION['log']['id']);
-        $data['query']['contatocliente_aniversariantes'] = $this->Agenda_model->contatocliente_aniversariantes($_SESSION['log']['id']);
-        #$data['query']['profissional_aniversariantes'] = $this->Agenda_model->profissional_aniversariantes($_SESSION['log']['id']);
-		#$data['query']['contatoprof_aniversariantes'] = $this->Agenda_model->contatoprof_aniversariantes($_SESSION['log']['id']);
+        $data['query']['estatisticas'] = $this->Agenda_model->resumo_estatisticas($_SESSION['log']['idSis_Usuario']);
+        $data['query']['cliente_aniversariantes'] = $this->Agenda_model->cliente_aniversariantes($_SESSION['log']['idSis_Usuario']);
+        $data['query']['contatocliente_aniversariantes'] = $this->Agenda_model->contatocliente_aniversariantes($_SESSION['log']['idSis_Usuario']);
+        #$data['query']['profissional_aniversariantes'] = $this->Agenda_model->profissional_aniversariantes($_SESSION['log']['idSis_Usuario']);
+		#$data['query']['contatoprof_aniversariantes'] = $this->Agenda_model->contatoprof_aniversariantes($_SESSION['log']['idSis_Usuario']);
 		
 		$this->load->view('agenda/tela_agenda', $data);
 

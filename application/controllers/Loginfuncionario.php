@@ -110,10 +110,12 @@ class Loginfuncionario extends CI_Controller {
                 //se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
                 $_SESSION['log']['Usuario'] = (strlen($query['Usuario']) > 15) ? substr($query['Usuario'], 0, 15) : $query['Usuario'];
                 $_SESSION['log']['Nome'] = $query['Nome'];
-				$_SESSION['log']['id'] = $query['idSis_Usuario'];
+				#$_SESSION['log']['id'] = $query['idSis_Usuario'];
+				$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
 				$_SESSION['log']['Empresa'] = $query['Empresa'];
 				$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];
 				$_SESSION['log']['idSis_EmpresaFilial'] = $query['idSis_EmpresaFilial'];
+				$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
 				$_SESSION['log']['Permissao'] = $query['Permissao'];
 
                 $this->load->database();
@@ -121,8 +123,17 @@ class Loginfuncionario extends CI_Controller {
                 $_SESSION['db']['username'] = $this->db->username;
                 $_SESSION['db']['password'] = $this->db->password;
                 $_SESSION['db']['database'] = $this->db->database;
-
+			/*
                 if ($this->Loginfuncionario_model->set_acesso($_SESSION['log']['id'], 'LOGIN') === FALSE) {
+                    $msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
+
+                    $this->basico->erro($msg);
+                    $this->load->view('form_loginfuncionario');
+                } else {
+                    redirect('cliente');
+                }
+			*/
+				if ($this->Loginfuncionario_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'LOGIN') === FALSE) {
                     $msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
 
                     $this->basico->erro($msg);
@@ -209,7 +220,8 @@ class Loginfuncionario extends CI_Controller {
             $data['campos'] = array_keys($data['query']);
 
             $data['idSis_Usuario'] = $this->Loginfuncionario_model->set_usuario($data['query']);
-            $_SESSION['log']['id'] = 1;
+            #$_SESSION['log']['id'] = 1;
+			$_SESSION['log']['idSis_Usuario'] = 1;
 
             if ($data['idSis_Usuario'] === FALSE) {
                 $data['msg'] = '?m=2';
@@ -227,7 +239,7 @@ class Loginfuncionario extends CI_Controller {
                  */
                 $data['agenda'] = array(
                     'NomeAgenda' => 'Padrão',
-					'Empresa' => $_SESSION['log']['idSis_EmpresaFilial'],
+					'Empresa' => $_SESSION['log']['idSis_EmpresaMatriz'],
                     'idSis_Usuario' => $data['idSis_Usuario']
                 );
                 $data['campos'] = array_keys($data['agenda']);
@@ -478,6 +490,7 @@ class Loginfuncionario extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #set logout in database
+/*
         if ($_SESSION['log'] && $m === TRUE) {
             $this->Loginfuncionario_model->set_acesso($_SESSION['log']['id'], 'LOGOUT');
         } else {
@@ -485,6 +498,16 @@ class Loginfuncionario extends CI_Controller {
                 $_SESSION['log']['id'] = 1;
             }
             $this->Loginfuncionario_model->set_acesso($_SESSION['log']['id'], 'TIMEOUT');
+            $data['msg'] = '?m=2';
+        }
+*/		
+		if ($_SESSION['log'] && $m === TRUE) {
+            $this->Loginfuncionario_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'LOGOUT');
+        } else {
+            if (!isset($_SESSION['log']['idSis_Usuario'])) {
+                $_SESSION['log']['idSis_Usuario'] = 1;
+            }
+            $this->Loginfuncionario_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'TIMEOUT');
             $data['msg'] = '?m=2';
         }
 

@@ -18,8 +18,8 @@ class Funcionario extends CI_Controller {
         $this->load->driver('session');
 
         #load header view
-        $this->load->view('basico/headerempresa');
-        $this->load->view('basico/nav_principalempresa');
+        $this->load->view('basico/headerempresamatriz');
+        $this->load->view('basico/nav_principalempresamatriz');
 
         #$this->load->view('funcionario/nav_secundario');
     }

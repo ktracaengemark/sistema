@@ -64,7 +64,7 @@
 							</a>	
 						</div>
 						<div class="btn-group" role="group" aria-label="...">
-							<a href="<?php echo base_url(); ?>login/sair">
+							<a href="<?php echo base_url(); ?>loginempresamatriz/sair">
 								<button type="button" class="btn btn-md btn-danger ">
 									<span class="glyphicon glyphicon-log-out"></span> Sair
 								</button>
