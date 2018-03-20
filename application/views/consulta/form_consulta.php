@@ -114,6 +114,26 @@
 													?>
 												</select>
 											</div>
+											<div class="col-md-3">
+												<label for="idSis_EmpresaFilial">Unidade: *</label>
+												<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+														id="idSis_EmpresaFilial" name="idSis_EmpresaFilial">
+													<option value="">-- Selecione a Unidade --</option>
+													<?php
+													foreach ($select['idSis_EmpresaFilial'] as $key => $row) {
+														if ($query['idSis_EmpresaFilial'] == $key) {
+															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+														} else {
+															echo '<option value="' . $key . '">' . $row . '</option>';
+														}
+													}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
 											<div class="col-md-3 form-inline text-left">
 												<label for="Data">Data: *</label>
 												<div class="input-group <?php echo $datepicker; ?>">

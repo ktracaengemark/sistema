@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Empresafilial_model extends CI_Model {
+class Empresamatriz_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
@@ -102,7 +102,7 @@ class Empresafilial_model extends CI_Model {
         }
     }
 
-    public function lista_empresafilial($data, $x) {
+    public function lista_empresamatriz($data, $x) {
 
         $query = $this->db->query('SELECT * '
                 . 'FROM Sis_EmpresaFilial WHERE '
@@ -169,37 +169,39 @@ class Empresafilial_model extends CI_Model {
         }
     }
 	
-	public function select_empresafilial($data = FALSE) {
+	public function select_empresamatriz($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query(					
 				'SELECT                
-				idSis_EmpresaFilial,
-				Nome				
+				idApp_Cliente,
+				CONCAT(IFNULL(NomeCliente, ""), " --- ", IFNULL(Telefone1, ""), " --- ", IFNULL(Telefone2, ""), " --- ", IFNULL(Telefone3, "")) As NomeCliente				
             FROM
-                Sis_EmpresaFilial					
+                App_Cliente					
             WHERE
+                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 Empresa = ' . $_SESSION['log']['Empresa'] . '
 			ORDER BY 
-				Nome ASC'
+				NomeCliente ASC'
     );
 					
         } else {
             $query = $this->db->query(
                 'SELECT                
-				idSis_EmpresaFilial,
-				Nome				
+				idApp_Cliente,
+				CONCAT(IFNULL(NomeCliente, ""), " --- ", IFNULL(Telefone1, ""), " --- ", IFNULL(Telefone2, ""), " --- ", IFNULL(Telefone3, "")) As NomeCliente				
             FROM
-                Sis_EmpresaFilial					
+                App_Cliente					
             WHERE
+                idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 Empresa = ' . $_SESSION['log']['Empresa'] . '
 			ORDER BY 
-				Nome ASC'
+				NomeCliente ASC'
     );
             
             $array = array();
             foreach ($query->result() as $row) {
-                $array[$row->idSis_EmpresaFilial] = $row->Nome;
+                $array[$row->idApp_Cliente] = $row->NomeCliente;
             }
         }
 

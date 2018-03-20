@@ -3479,7 +3479,9 @@ exit();*/
         $query = $this->db->query('
             SELECT
                 F.idSis_EmpresaFilial,
-                F.Nome
+                F.Nome,
+				F.Celular
+				
             FROM
                 Sis_EmpresaFilial AS F
 
