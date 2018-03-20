@@ -4,7 +4,7 @@
 
     <?php if (isset($msg)) echo $msg; ?>
 
-    <?php echo form_open('loginempresafilial/registrar', 'role="form"'); ?>
+    <?php echo form_open('loginempresamatriz/registrar', 'role="form"'); ?>
 
     <!--
     <p class="text-center">
@@ -15,7 +15,7 @@
     </p>
     -->
 	<p class="text-center">
-        <a href="<?php echo base_url(); ?>loginempresafilial">
+        <a href="<?php echo base_url(); ?>loginempresamatriz">
             <img src="<?php echo base_url() . 'arquivos/imagens/' . $modulo . '.png'; ?>" />
         </a>
     </p>
@@ -67,10 +67,10 @@
     <?php echo form_error('Email'); ?>
     <br>
 	
-    <label for="UsuarioEmpresaFilial">Usuário do Administrador:</label>
-    <input type="text" class="form-control" id="UsuarioEmpresaFilial" maxlength="45"
-           name="UsuarioEmpresaFilial" value="<?php echo $query['UsuarioEmpresaFilial']; ?>">
-    <?php echo form_error('UsuarioEmpresaFilial'); ?>
+    <label for="UsuarioEmpresaMatriz">Usuário do Administrador:</label>
+    <input type="text" class="form-control" id="UsuarioEmpresaMatriz" maxlength="45"
+           name="UsuarioEmpresaMatriz" value="<?php echo $query['UsuarioEmpresaMatriz']; ?>">
+    <?php echo form_error('UsuarioEmpresaMatriz'); ?>
     <br>
 
     <label for="Senha">Senha do Administrador:</label>
@@ -85,10 +85,11 @@
     <?php echo form_error('Confirma'); ?>
     <br>	
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">REGISTRAR</button>
+    <button class="btn btn-lg btn-warning btn-block" type="submit">REGISTRAR</button>
 	<br>
-	<a class="btn btn btn-primary btn-info btn-block" href="<?php echo base_url(); ?>login/index" role="button">Acesso dos Usuários da Empresa</a>
-	<a class="btn btn btn-primary btn-warning btn-block" href="<?php echo base_url(); ?>loginempresafilial/index" role="button">Acesso do Admin. da Empresa</a>		
+	<a class="btn btn-lg btn-primary  btn-block" href="<?php echo base_url(); ?>login/index" role="button">Acesso dos Usuários da Empresa</a>
+	<br>
+	<a class="btn btn-lg btn-danger btn-block" href="<?php echo base_url(); ?>loginempresamatriz/index" role="button">Acesso do Admin. da Empresa</a>		
 </form>
 
 </div>

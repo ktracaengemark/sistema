@@ -14,7 +14,7 @@
                 <thead>
                     <tr>
                         <th class="active">id</th>
-                        <th class="active">Profissional</th>
+                        <th class="active">Nome da Unidade</th>
                     </tr>
                 </thead>
 

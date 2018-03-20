@@ -4,18 +4,18 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Loginempresafilial extends CI_Controller {
+class Loginempresamatriz extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
 
-        $this->load->model(array('Loginempresafilial_model', 'Basico_model'));
+        $this->load->model(array('Loginempresamatriz_model', 'Basico_model'));
         $this->load->helper(array('form', 'url'));
         $this->load->library(array('basico', 'form_validation', 'user_agent'));
         $this->load->driver('session');
 
         #load header view
-        $this->load->view('basico/headerloginempresafilial');
+        $this->load->view('basico/headerloginempresamatriz');
 
         if ($this->agent->is_browser()) {
 
@@ -50,12 +50,12 @@ class Loginempresafilial extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #Get GET or POST data
-        $usuario = $this->input->get_post('UsuarioEmpresaFilial');
+        $usuario = $this->input->get_post('UsuarioEmpresaMatriz');
 		#$nomeempresa = $this->input->get_post('NomeEmpresa');
         $senha = md5($this->input->get_post('Senha'));
 
         #set validation rules
-        $this->form_validation->set_rules('UsuarioEmpresaFilial', 'Usuário', 'required|trim|callback_valid_usuario');
+        $this->form_validation->set_rules('UsuarioEmpresaMatriz', 'Usuário', 'required|trim|callback_valid_usuario');
 		#$this->form_validation->set_rules('NomeEmpresa', 'Nome da Empresa', 'required|trim|callback_valid_nomeempresa[' . $usuario . ']');
         $this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5|callback_valid_senha[' . $usuario . ']');
 
@@ -64,9 +64,9 @@ class Loginempresafilial extends CI_Controller {
         elseif ($this->input->get('m') == 2)
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 3)
-            $data['msg'] = $this->basico->msg('<strong>Sua sessão expirou. Faça o loginempresafilial novamente.</strong>', 'erro', TRUE, TRUE, TRUE);
+            $data['msg'] = $this->basico->msg('<strong>Sua sessão expirou. Faça o login novamente.</strong>', 'erro', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 4)
-            $data['msg'] = $this->basico->msg('<strong>Usuário ativado com sucesso! Faça o loginempresafilial para acessar o sistema.</strong>', 'sucesso', TRUE, TRUE, TRUE);
+            $data['msg'] = $this->basico->msg('<strong>Usuário ativado com sucesso! Faça o login para acessar o sistema.</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 5)
             $data['msg'] = $this->basico->msg('<strong>Link expirado.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
@@ -74,8 +74,8 @@ class Loginempresafilial extends CI_Controller {
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
-            #load loginempresafilial view
-            $this->load->view('loginempresafilial/form_loginempresafilial', $data);
+
+            $this->load->view('loginempresamatriz/form_loginempresamatriz', $data);
         } else {
 
             session_regenerate_id(true);
@@ -89,7 +89,7 @@ class Loginempresafilial extends CI_Controller {
               echo "</pre>";
               exit();
              */
-            $query = $this->Loginempresafilial_model->check_dados_usuario($senha, $usuario, TRUE);
+            $query = $this->Loginempresamatriz_model->check_dados_usuario($senha, $usuario, TRUE);
             #$_SESSION['log']['Agenda'] = $this->Loginempresafilial_model->get_agenda_padrao($query['idSis_EmpresaFilial']);
 
             #echo "<pre>".print_r($query)."</pre>";
@@ -100,7 +100,7 @@ class Loginempresafilial extends CI_Controller {
                 #$this->basico->erro($msg);
                 $data['msg'] = $this->basico->msg('<strong>Senha</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
 				#$data['msg'] = $this->basico->msg('<strong>NomeEmpresa</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
-                $this->load->view('form_loginempresafilial', $data);
+                $this->load->view('form_loginempresamatriz', $data);
 
             } else {
                 #initialize session
@@ -108,28 +108,28 @@ class Loginempresafilial extends CI_Controller {
 
                 #$_SESSION['log']['UsuarioEmpresaFilial'] = $query['UsuarioEmpresaFilial'];
                 //se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
-                $_SESSION['log']['UsuarioEmpresaFilial'] = (strlen($query['UsuarioEmpresaFilial']) > 15) ? substr($query['UsuarioEmpresaFilial'], 0, 15) : $query['UsuarioEmpresaFilial'];
+                $_SESSION['log']['UsuarioEmpresaMatriz'] = (strlen($query['UsuarioEmpresaMatriz']) > 15) ? substr($query['UsuarioEmpresaMatriz'], 0, 15) : $query['UsuarioEmpresaMatriz'];
                 #$_SESSION['log']['Nome'] = (strlen($query['Nome']) > 10) ? substr($query['Nome'], 0, 10) : $query['Nome'];
+				#$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
+				$_SESSION['log']['id'] = $query['idSis_EmpresaMatriz'];				
+				$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];				
 				$_SESSION['log']['Nome'] = $query['Nome'];
-				$_SESSION['log']['id'] = $query['idSis_EmpresaMatriz'];
-				$_SESSION['log']['Empresa'] = $query['Empresa'];
-				$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];
-				$_SESSION['log']['idSis_EmpresaFilial'] = $query['idSis_EmpresaFilial'];
-				#$_SESSION['log']['Permissao'] = $query['Permissao'];
-				
+
+			
                 $this->load->database();
                 $_SESSION['db']['hostname'] = $this->db->hostname;
                 $_SESSION['db']['username'] = $this->db->username;
                 $_SESSION['db']['password'] = $this->db->password;
                 $_SESSION['db']['database'] = $this->db->database;
 
-                if ($this->Loginempresafilial_model->set_acesso($_SESSION['log']['id'], 'LOGIN') === FALSE) {
+                if ($this->Loginempresamatriz_model->set_acesso($_SESSION['log']['id'], 'LOGIN') === FALSE) {
                     $msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
 
                     $this->basico->erro($msg);
-                    $this->load->view('form_loginempresafilial');
+                    $this->load->view('form_loginempresamatriz');
                 } else {
-					redirect('acessoempresa');
+					
+					redirect('acessoempresamatriz');
 					#redirect('agenda');
 					#redirect('cliente');
                 }
@@ -137,8 +137,8 @@ class Loginempresafilial extends CI_Controller {
         }
 
         #load footer view
-        $this->load->view('basico/footerloginempresafilial');
-        $this->load->view('basico/footer');
+        $this->load->view('basico/footerloginempresamatriz');
+        $this->load->view('basico/footerempresamatriz');
     }
 
     public function registrar() {
@@ -155,7 +155,7 @@ class Loginempresafilial extends CI_Controller {
 
         $data['query'] = $this->input->post(array(
             'Email',
-            'UsuarioEmpresaFilial',
+            'UsuarioEmpresaMatriz',
 			'NomeEmpresa',
             'Nome',
             'Senha',
@@ -169,28 +169,27 @@ class Loginempresafilial extends CI_Controller {
 		
 		$this->form_validation->set_error_delimiters('<h5 style="color: red;">', '</h5>');
 	
-		#$this->form_validation->set_rules('NomeEmpresa', 'Nome da empresa', 'required|trim|is_unique[Sis_EmpresaFilial.NomeEmpresa]');
-        #$this->form_validation->set_rules('Email', 'E-mail', 'required|trim|valid_email|is_unique[Sis_EmpresaFilial.Email]');		
-        $this->form_validation->set_rules('UsuarioEmpresaFilial', 'Usuário', 'required|trim|is_unique[Sis_EmpresaFilial.UsuarioEmpresaFilial]');
+		$this->form_validation->set_rules('NomeEmpresa', 'Nome da empresa', 'required|trim|is_unique[Sis_EmpresaMatriz.NomeEmpresa]');
+        #$this->form_validation->set_rules('Email', 'E-mail', 'required|trim|valid_email|is_unique[Sis_EmpresaMatriz.Email]');		
+        $this->form_validation->set_rules('UsuarioEmpresaMatriz', 'Usuário', 'required|trim|is_unique[Sis_EmpresaMatriz.UsuarioEmpresaMatriz]');
 		$this->form_validation->set_rules('Nome', 'Nome do Usuário', 'required|trim');      	
         $this->form_validation->set_rules('Senha', 'Senha', 'required|trim');
         $this->form_validation->set_rules('Confirma', 'Confirmar Senha', 'required|trim|matches[Senha]');
-		$this->form_validation->set_rules('Celular', 'Telefone', 'required|trim');
+		#$this->form_validation->set_rules('Celular', 'Celular', 'required|trim');
 		#$this->form_validation->set_rules('NumUsuarios', 'Número de Usuários', 'required|trim');
 		
 		$data['select']['NumUsuarios'] = $this->Basico_model->select_numusuarios();
         
 		#run form validation
         if ($this->form_validation->run() === FALSE) {
-            #load loginempresafilial view
-            $this->load->view('loginempresafilial/form_registrarempresafilial', $data);
+
+            $this->load->view('loginempresamatriz/form_registrarempresamatriz', $data);
         } else {
 			
-			$data['query']['Empresa'] = $_SESSION['log']['id'];
-			$data['query']['idSis_EmpresaMatriz'] = $_SESSION['log']['id'];
-			$data['query']['NomeEmpresa'] = $_SESSION['log']['NomeEmpresa'];
-			#$data['query']['Associado'] = 33;
-			$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+			#$data['query']['Empresa'] = 0;
+			#$data['query']['idSis_EmpresaMatriz'] = 1;
+			$data['query']['Associado'] = 1;
+			$data['query']['idTab_Modulo'] = 1;
             $data['query']['DataCriacao'] = $this->basico->mascara_data($data['query']['DataCriacao'], 'mysql');
 			$data['query']['Senha'] = md5($data['query']['Senha']);
             $data['query']['Codigo'] = md5(uniqid(time() . rand()));
@@ -202,12 +201,12 @@ class Loginempresafilial extends CI_Controller {
             $data['anterior'] = array();
             $data['campos'] = array_keys($data['query']);
 
-            $data['idSis_EmpresaFilial'] = $this->Loginempresafilial_model->set_usuario($data['query']);
+            $data['idSis_EmpresaMatriz'] = $this->Loginempresamatriz_model->set_usuario($data['query']);
             $_SESSION['log']['id'] = 1;
 
-            if ($data['idSis_EmpresaFilial'] === FALSE) {
+            if ($data['idSis_EmpresaMatriz'] === FALSE) {
                 $data['msg'] = '?m=2';
-                $this->load->view('loginempresafilial/form_loginempresafilial', $data);
+                $this->load->view('loginempresamatriz/form_loginempresamatriz', $data);
             } else {
 
                           
@@ -216,7 +215,7 @@ class Loginempresafilial extends CI_Controller {
                 $this->email->from('contato@ktracaengemark.com.br', 'KTRACA Engenharia & Marketing');
                 $this->email->to($data['query']['Email']);
 
-                $this->email->subject('[KTRACA] Confirmação de registro - Usuário: ' . $data['query']['UsuarioEmpresaFilial']);
+                $this->email->subject('[KTRACA] Confirmação de registro - Usuário: ' . $data['query']['UsuarioEmpresaMatriz']);
                 /*
                   $this->email->message('Por favor, clique no link a seguir para confirmar seu registro: '
                   . 'http://www.romati.com.br/app/loginempresafilial/confirmar/' . $data['query']['Codigo']);
@@ -244,7 +243,7 @@ class Loginempresafilial extends CI_Controller {
                         . '
                   <div class="alert alert-success" role="alert">
                   <h4>
-                  <p><b>Usuário cadastrado com sucesso!</b></p>
+                  <p><b>Empresa cadastrada com sucesso!</b></p>
                   <p>Clique no botão abaixo e retorne para a tela de login, para entrar no sistema.</p>
                   </h4>
                   <br>
@@ -252,14 +251,14 @@ class Loginempresafilial extends CI_Controller {
                   </div> '
                         . '';
 
-                $this->load->view('loginempresafilial/tela_msg', $data);
+                $this->load->view('loginempresamatriz/tela_msg', $data);
                 #redirect(base_url() . 'loginempresafilial' . $data['msg']);
                 #exit();
             }
         }
 
-        $this->load->view('basico/footerloginempresafilial');
-        $this->load->view('basico/footer');
+        $this->load->view('basico/footerloginempresamatriz');
+        $this->load->view('basico/footerempresamatriz');
     }
 
     public function confirmar($codigo) {
@@ -279,18 +278,18 @@ class Loginempresafilial extends CI_Controller {
         );
 
         $data['campos'] = array_keys($data['confirmar']);
-        $id = $this->Loginempresafilial_model->get_data_by_codigo($codigo);
+        $id = $this->Loginempresamatriz_model->get_data_by_codigo($codigo);
 
-        if ($this->Loginempresafilial_model->ativa_usuario($codigo, $data['confirmar']) === TRUE) {
+        if ($this->Loginempresamatriz_model->ativa_usuario($codigo, $data['confirmar']) === TRUE) {
 
-            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['confirmar'], $data['campos'], $id['idSis_EmpresaFilial'], TRUE);
-            $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_EmpresaFilial', 'UPDATE', $data['auditoriaitem'], $id['idSis_EmpresaFilial']);
+            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['confirmar'], $data['campos'], $id['idSis_EmpresaMatriz'], TRUE);
+            $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_EmpresaMatriz', 'UPDATE', $data['auditoriaitem'], $id['idSis_EmpresaMatriz']);
 
             $data['msg'] = '?m=4';
-            redirect(base_url() . 'loginempresafilial/' . $data['msg']);
+            redirect(base_url() . 'loginempresamatriz/' . $data['msg']);
         } else {
             $data['msg'] = '?m=5';
-            redirect(base_url() . 'loginempresafilial/' . $data['msg']);
+            redirect(base_url() . 'loginempresamatriz/' . $data['msg']);
         }
     }
 
@@ -307,27 +306,27 @@ class Loginempresafilial extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = $this->input->post(array(
-            'UsuarioEmpresaFilial',
+            'UsuarioEmpresaMatriz',
                 ), TRUE);
 
         if (isset($_GET['usuario']))
-            $data['query']['UsuarioEmpresaFilial'] = $_GET['usuario'];
+            $data['query']['UsuarioEmpresaMatriz'] = $_GET['usuario'];
 
         $this->form_validation->set_error_delimiters('<h5 style="color: red;">', '</h5>');
 
-        $this->form_validation->set_rules('UsuarioEmpresaFilial', 'UsuarioEmpresaFilial', 'required|trim|callback_valid_usuario');
+        $this->form_validation->set_rules('UsuarioEmpresaMatriz', 'UsuarioEmpresaMatriz', 'required|trim|callback_valid_usuario');
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
-            #load loginempresafilial view
-            $this->load->view('loginempresafilial/form_recuperar', $data);
+
+            $this->load->view('loginempresamatriz/form_recuperar', $data);
         } else {
 
             $data['query']['Codigo'] = md5(uniqid(time() . rand()));
 
-            $id = $this->Loginempresafilial_model->get_data_by_usuario($data['query']['UsuarioEmpresaFilial']);
+            $id = $this->Loginempresamatriz_model->get_data_by_usuario($data['query']['UsuarioEmpresaMatriz']);
 
-            if ($this->Loginempresafilial_model->troca_senha($id['idSis_EmpresaFilial'], array('Codigo' => $data['query']['Codigo'])) === FALSE) {
+            if ($this->Loginempresamatriz_model->troca_senha($id['idSis_EmpresaMatriz'], array('Codigo' => $data['query']['Codigo'])) === FALSE) {
 
                 $data['anterior'] = array(
                     'Codigo' => 'NULL'
@@ -339,18 +338,18 @@ class Loginempresafilial extends CI_Controller {
 
                 $data['campos'] = array_keys($data['confirmar']);
 
-                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['confirmar'], $data['campos'], $id['idSis_EmpresaFilial'], TRUE);
-                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_EmpresaFilial', 'UPDATE', $data['auditoriaitem'], $id['idSis_EmpresaFilial']);
+                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['confirmar'], $data['campos'], $id['idSis_EmpresaMatriz'], TRUE);
+                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_EmpresaMatriz', 'UPDATE', $data['auditoriaitem'], $id['idSis_EmpresaMatriz']);
 
                 $this->load->library('email');
 
                 $this->email->from('contato@ktracaengemark.com.br', 'KTRACA Engenharia & Marketing');
                 $this->email->to($id['Email']);
 
-                $this->email->subject('[KTRACA] Alteração de Senha - Usuário: ' . $data['query']['UsuarioEmpresaFilial']);
+                $this->email->subject('[KTRACA] Alteração de Senha - Usuário: ' . $data['query']['UsuarioEmpresaMatriz']);
                 $this->email->message('Por favor, clique no link a seguir para alterar sua senha: '
                         //. 'http://www.romati.com.br/app/loginempresafilial/trocar_senha/' . $data['query']['Codigo']);
-                        . base_url() . 'loginempresafilial/trocar_senha/' . $data['query']['Codigo']);
+                        . base_url() . 'loginempresamatriz/trocar_senha/' . $data['query']['Codigo']);
 
                 $this->email->send();
 
@@ -366,10 +365,10 @@ class Loginempresafilial extends CI_Controller {
                         . '';
 
                 #$data['msg'] = '?m=4';
-                $this->load->view('loginempresafilial/tela_msg', $data);
+                $this->load->view('loginempresamatriz/tela_msg', $data);
             } else {
                 $data['msg'] = '?m=5';
-                redirect(base_url() . 'loginempresafilial/' . $data['msg']);
+                redirect(base_url() . 'loginempresamatriz/' . $data['msg']);
             }
         }
     }
@@ -387,14 +386,14 @@ class Loginempresafilial extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = $this->input->post(array(
-            'idSis_EmpresaFilial',
+            'idSis_EmpresaMatriz',
             'Email',
-            'UsuarioEmpresaFilial',
+            'UsuarioEmpresaMatriz',
             'Codigo',
                 ), TRUE);
 
         if ($codigo) {
-            $data['query'] = $this->Loginempresafilial_model->get_data_by_codigo($codigo);
+            $data['query'] = $this->Loginempresamatriz_model->get_data_by_codigo($codigo);
             $data['query']['Codigo'] = $codigo;
         } else {
             $data['query']['Codigo'] = $this->input->post('Codigo', TRUE);
@@ -410,8 +409,8 @@ class Loginempresafilial extends CI_Controller {
         #$this->form_validation->set_rules('Codigo', 'Código', 'required|trim');
         #run form validation
         if ($this->form_validation->run() === FALSE) {
-            #load loginempresafilial view
-            $this->load->view('loginempresafilial/form_troca_senha', $data);
+
+            $this->load->view('loginempresamatriz/form_troca_senha', $data);
         } else {
 
             ###não está registrando a auditoria do trocar senha. tenho que ver isso
@@ -424,13 +423,13 @@ class Loginempresafilial extends CI_Controller {
             $data['anterior'] = array();
             $data['campos'] = array_keys($data['query']);
 
-            if ($this->Loginempresafilial_model->troca_senha($data['query']['idSis_EmpresaFilial'], $data['query']) === TRUE) {
+            if ($this->Loginempresamatriz_model->troca_senha($data['query']['idSis_EmpresaMatriz'], $data['query']) === TRUE) {
                 $data['msg'] = '?m=2';
-                $this->load->view('loginempresafilial/form_troca_senha', $data);
+                $this->load->view('loginempresamatriz/form_troca_senha', $data);
             } else {
 
-                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idSis_EmpresaFilial'], TRUE);
-                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_EmpresaFilial', 'UPDATE', $data['auditoriaitem'], $data['query']['idSis_EmpresaFilial']);
+                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idSis_EmpresaMatriz'], TRUE);
+                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_EmpresaMatriz', 'UPDATE', $data['auditoriaitem'], $data['query']['idSis_EmpresaMatriz']);
                 /*
                   echo $this->db->last_query();
                   echo "<pre>";
@@ -439,12 +438,12 @@ class Loginempresafilial extends CI_Controller {
                   exit();
                  */
                 $data['msg'] = '?m=1';
-                redirect(base_url() . 'loginempresafilial' . $data['msg']);
+                redirect(base_url() . 'loginempresamatriz' . $data['msg']);
                 exit();
             }
         }
 
-        $this->load->view('basico/footerloginempresafilial');
+        $this->load->view('basico/footerloginempresamatriz');
         $this->load->view('basico/footer');
     }
 
@@ -454,12 +453,12 @@ class Loginempresafilial extends CI_Controller {
 
         #set logout in database
         if ($_SESSION['log'] && $m === TRUE) {
-            $this->Loginempresafilial_model->set_acesso($_SESSION['log']['id'], 'LOGOUT');
+            $this->Loginempresamatriz_model->set_acesso($_SESSION['log']['id'], 'LOGOUT');
         } else {
             if (!isset($_SESSION['log']['id'])) {
                 $_SESSION['log']['id'] = 1;
             }
-            $this->Loginempresafilial_model->set_acesso($_SESSION['log']['id'], 'TIMEOUT');
+            $this->Loginempresamatriz_model->set_acesso($_SESSION['log']['id'], 'TIMEOUT');
             $data['msg'] = '?m=2';
         }
 
@@ -480,16 +479,16 @@ class Loginempresafilial extends CI_Controller {
          *
          */
 
-        redirect(base_url() . 'loginempresafilial/' . $data['msg']);
+        redirect(base_url() . 'loginempresamatriz/' . $data['msg']);
         #redirect('loginempresafilial');
     }
 
     function valid_usuario($data) {
 
-        if ($this->Loginempresafilial_model->check_usuario($data) == 1) {
+        if ($this->Loginempresamatriz_model->check_usuario($data) == 1) {
             $this->form_validation->set_message('valid_usuario', '<strong>%s</strong> não existe.');
             return FALSE;
-        } else if ($this->Loginempresafilial_model->check_usuario($data) == 2) {
+        } else if ($this->Loginempresamatriz_model->check_usuario($data) == 2) {
             $this->form_validation->set_message('valid_usuario', '<strong>%s</strong> inativo! Fale com o Administrador da sua Empresa!');
             return FALSE;
         } else {
@@ -501,7 +500,7 @@ class Loginempresafilial extends CI_Controller {
 
     function valid_senha($senha, $usuario) {
 
-        if ($this->Loginempresafilial_model->check_dados_usuario($senha, $usuario) == FALSE) {
+        if ($this->Loginempresamatriz_model->check_dados_usuario($senha, $usuario) == FALSE) {
             $this->form_validation->set_message('valid_senha', '<strong>%s</strong> incorreta! Ou este não é o Módulo do seu Sistema.');
             return FALSE;
         } else {

@@ -9,14 +9,14 @@
 		
 			<div class="panel panel-primary">
 				
-				<div class="panel-heading"><strong><?php echo '<strong>' . $_SESSION['Empresafilial']['Nome'] . '</strong> - <small>Id.: ' . $_SESSION['Empresafilial']['idSis_EmpresaFilial'] . '</small>' ?></strong></div>
+				<div class="panel-heading"><strong><?php echo '<strong>' . $_SESSION['Empresafilial']['NomeEmpresa'] . '</strong> - <small>Id.: ' . $_SESSION['Empresafilial']['idSis_EmpresaMatriz'] . '</small>' ?></strong></div>
 				<div class="panel-body">
 			
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-12 col-lg-12">
 								<div class="col-md-4 text-left">
-									<label for="">Empresa:</label>
+									<label for="">Unidade:</label>
 									<div class="form-group">
 										<div class="row">							
 											<a <?php if (preg_match("/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
@@ -39,7 +39,7 @@
 					<div class="form-group">
 						<div class="row">
 							<div class="text-center t">
-								<h3><?php echo '<strong>' . $_SESSION['Empresafilial']['Nome'] . '</strong> - <small>Id.: ' . $_SESSION['Empresafilial']['idSis_EmpresaFilial'] . '</small>' ?></h3>
+								<h3><?php echo '<strong>' . $_SESSION['Empresafilial']['NomeEmpresa'] . '</strong> - <small>Id.: ' . $_SESSION['Empresafilial']['idSis_EmpresaMatriz'] . '</small>' ?></h3>
 							</div>
 						</div>
 					</div>
@@ -53,12 +53,31 @@
 
 							<div class="panel panel-<?php echo $panel; ?>">
 
-								<div class="panel-heading"><strong>Empresa</strong></div>
+								<div class="panel-heading"><strong>Unidade</strong></div>
 								<div class="panel-body">
 
 									<?php echo form_open_multipart($form_open_path); ?>
 																		
-									<h3 class="text-left">Dados da Empresa  </h3>									
+									<h3 class="text-left">Dados da Unidade  </h3>									
+									<div class="form-group">
+										<div class="row">
+											<div class="col-md-3">
+												<label for="Nome">Nome da Unidade:</label>
+												<input type="text" class="form-control" id="Nome" maxlength="45" 
+														name="Nome" autofocus value="<?php echo $query['Nome']; ?>">
+											</div>																		
+											<div class="col-md-3">
+												<label for="Celular">Telefone:</label>
+												<input type="text" class="form-control Celular CelularVariavel" id="Celular" maxlength="11" <?php echo $readonly; ?>
+													   name="Celular" placeholder="(XX)999999999" value="<?php echo $query['Celular']; ?>">
+											</div>
+											<div class="col-md-3">
+												<label for="Email">E-mail:</label>
+												<input type="text" class="form-control" id="Bairro" maxlength="100" <?php echo $readonly; ?>
+													   name="Email" value="<?php echo $query['Email']; ?>">
+											</div>
+										</div>
+									</div>
 									<div class="form-group">
 										<div class="row">										
 											<div class="col-md-3">
@@ -106,29 +125,7 @@
 													   name="CepFilial" value="<?php echo $query['CepFilial']; ?>">
 											</div>
 										</div>
-									</div>
-									<br>
-									<h3 class="text-left">Dados do Administrador  </h3>
-									<div class="form-group">
-										<div class="row">
-											<div class="col-md-3">
-												<label for="Nome">Nome do Administrador:</label>
-												<input type="text" class="form-control" id="Nome" maxlength="45" 
-														name="Nome" autofocus value="<?php echo $query['Nome']; ?>">
-											</div>																		
-											<div class="col-md-3">
-												<label for="Celular">Tel. Administrador</label>
-												<input type="text" class="form-control Celular CelularVariavel" id="Celular" maxlength="11" <?php echo $readonly; ?>
-													   name="Celular" placeholder="(XX)999999999" value="<?php echo $query['Celular']; ?>">
-											</div>
-											<div class="col-md-3">
-												<label for="Email">E-mail Administrador:</label>
-												<input type="text" class="form-control" id="Bairro" maxlength="100" <?php echo $readonly; ?>
-													   name="Email" value="<?php echo $query['Email']; ?>">
-											</div>
-										</div>
-									</div>									
-									
+									</div>																		
 									<br>
 
 									<div class="form-group">
