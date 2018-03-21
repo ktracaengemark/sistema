@@ -4749,8 +4749,7 @@ exit();*/
             WHERE
                 P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
-				P.Nivel = "2" AND
-				P.Associado = ' . $_SESSION['log']['id'] . ' 
+				P.Nivel = "2"  
 			ORDER BY P.Nome ASC
         ');
 

@@ -89,6 +89,25 @@
 								</select>
 							</div>
 							-->
+							<div class="col-md-4">
+								<label for="idSis_Usuario">Cliente: *</label>
+								<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>profissional/cadastrar/profissional" role="button">
+									<span class="glyphicon glyphicon-plus"></span> <b>Novo Profissional</b>
+								</a>-->
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
+										id="idSis_Usuario" name="idSis_Usuario">
+									<option value="">-- Selecione um Profissional --</option>
+									<?php
+									foreach ($select['idApp_Cliente'] as $key => $row) {
+										if ($query['idSis_Usuario'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>
+								</select>
+							</div>
 							<div class="col-md-12">
 								<label for="Obs">Obs:</label>
 								<textarea class="form-control" id="Obs"

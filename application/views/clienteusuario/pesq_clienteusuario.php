@@ -1,4 +1,5 @@
 <?php if (isset($msg)) echo $msg; ?>
+
 <div class="container-fluid">
 	<div class="row">
 
@@ -12,10 +13,10 @@
 				<div class="panel-heading"><strong><?php echo $titulo; ?></strong></div>
 				<div class="panel-body">
 
-					<p>Informe <b>Nome ou Telefone</b> do Cliente:</p>
+					<p>Informe <b>Nome ou Telefone</b> do Clienteusuario:</p>
 
 					<div class="row">
-						<?php echo form_open('cliente/pesquisar', 'role="form"'); ?>
+						<?php echo form_open('clienteusuario/pesquisar', 'role="form"'); ?>
 						<div class="col-md-6">
 
 							<input type="text" id="inputText" class="form-control"
@@ -37,7 +38,7 @@
 					<?php if ($cadastrar) { ?>
 					<div class="row">
 						<div class="col-md-6">                        
-							<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>cliente/cadastrar" role="button"> 
+							<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>clienteusuario/cadastrar" role="button"> 
 								<span class="glyphicon glyphicon-plus"></span> Novo Cadastro
 							</a>
 						</div>
@@ -52,6 +53,5 @@
 
 		</div>
 		<div class="col-md-2"></div>
-
 	</div>
-</div>	
+</div>

@@ -155,7 +155,7 @@
 										<div class="row">
 											
 											<div class="col-md-6">
-												<label for="Permissao">Nível / Permissão:*</label>
+												<label for="Permissao">Permissão:*</label>
 												<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 														id="Permissao" name="Permissao">
 													<option value="">-- Selecione uma Permissao --</option>

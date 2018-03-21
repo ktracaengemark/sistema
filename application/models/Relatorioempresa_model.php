@@ -3441,7 +3441,8 @@ exit();*/
             WHERE
 				F.Empresa = ' . $_SESSION['log']['id'] . ' AND
 				F.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
-                ' . $data['Nome'] . '
+                ' . $data['Nome'] . ' AND
+				F.Nivel = "3"
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');

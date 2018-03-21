@@ -14,7 +14,7 @@ class Consulta extends CI_Controller {
         #load libraries
         $this->load->helper(array('form', 'url', 'date', 'string'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Profissional_model', 'Empresafilial_model', 'Consulta_model', 'Cliente_model'));
+        $this->load->model(array('Basico_model', 'Profissional_model', 'Empresafilial_model', 'Consulta_model', 'Clienteusuario_model', 'Cliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -429,6 +429,7 @@ class Consulta extends CI_Controller {
                     'idSis_Usuario',
 					'idApp_Consulta',
                     'idApp_Agenda',
+					'idApp_Cliente',
                     'Data',
                     'HoraInicio',
                     'HoraFim',
@@ -451,7 +452,8 @@ class Consulta extends CI_Controller {
 		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
 		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        $data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
+        $data['select']['idApp_Cliente'] = $this->Clienteusuario_model->select_clienteusuario();
+		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
 
         $data['select']['option'] = ($_SESSION['log']['Permissao'] <= 2) ? '<option value="">-- Sel. um Prof. --</option>' : FALSE;
 

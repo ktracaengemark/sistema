@@ -14,7 +14,7 @@
 					<ul class="nav navbar-nav navbar-center">
 						
 						<li>
-							<?php echo form_open(base_url() . 'cliente/pesquisar', 'class="navbar-form navbar-left"'); ?>
+							<?php echo form_open(base_url() . 'clienteusuario/pesquisar', 'class="navbar-form navbar-left"'); ?>
 							<div class="input-group">
 								<span class="input-group-btn">
 									<button class="btn btn-info" type="submit">
