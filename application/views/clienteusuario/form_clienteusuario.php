@@ -53,7 +53,7 @@
 
 							<div class="panel panel-<?php echo $panel; ?>">
 
-								<div class="panel-heading"><strong>Funcionário</strong></div>
+								<div class="panel-heading"><strong>Cliente</strong></div>
 								<div class="panel-body">
 
 									<?php echo form_open_multipart($form_open_path); ?>
@@ -61,7 +61,7 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-md-3">
-												<label for="Nome">Nome do Funcionário:</label>
+												<label for="Nome">Nome do Cliente:</label>
 												<input type="text" class="form-control" id="Nome" maxlength="45" 
 														name="Nome" autofocus value="<?php echo $query['Nome']; ?>">
 											</div>																		

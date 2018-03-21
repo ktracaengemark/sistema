@@ -94,7 +94,7 @@
 										</button>
 									</div>
 									<div class="col-md-6 text-right">											
-										<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>logincliente/registrar" role="button"> 
+										<a class="btn btn-lg btn-danger" href="<?php echo base_url() ?>clienteusuario/cadastrar" role="button"> 
 											<span class="glyphicon glyphicon-plus"></span> Novo Cliente
 										</a>
 									</div>

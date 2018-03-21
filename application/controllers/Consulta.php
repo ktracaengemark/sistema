@@ -429,7 +429,8 @@ class Consulta extends CI_Controller {
                     'idSis_Usuario',
 					'idApp_Consulta',
                     'idApp_Agenda',
-					'idApp_Cliente',
+					#'idApp_Cliente',
+					'Cliente',
                     'Data',
                     'HoraInicio',
                     'HoraFim',
@@ -452,7 +453,7 @@ class Consulta extends CI_Controller {
 		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
 		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        $data['select']['idApp_Cliente'] = $this->Clienteusuario_model->select_clienteusuario();
+        $data['select']['Cliente'] = $this->Clienteusuario_model->select_clienteusuario();
 		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
 
         $data['select']['option'] = ($_SESSION['log']['Permissao'] <= 2) ? '<option value="">-- Sel. um Prof. --</option>' : FALSE;
@@ -562,7 +563,8 @@ class Consulta extends CI_Controller {
 		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
 		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        $data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
+        $data['select']['Cliente'] = $this->Clienteusuario_model->select_clienteusuario();
+		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
 
         $data['titulo'] = 'Agenda Empresa Pessoal';
         $data['form_open_path'] = 'consulta/alterar_evento';
