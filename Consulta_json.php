@@ -45,9 +45,9 @@ $result = mysql_query(
             TC.TipoConsulta,
             C.Evento
         FROM
-            app.App_Agenda AS A
+            App_Agenda AS A
                 LEFT JOIN app.Sis_Usuario AS U ON U.idSis_Usuario = A.idSis_Usuario,
-            app.App_Consulta AS C
+            App_Consulta AS C
                 LEFT JOIN app.App_Cliente AS R ON R.idApp_Cliente = C.idApp_Cliente
                 LEFT JOIN app.App_ContatoCliente AS D ON D.idApp_ContatoCliente = C.idApp_ContatoCliente
                 LEFT JOIN app.Sis_Usuario AS P ON P.idSis_Usuario = C.idSis_Usuario

@@ -1060,23 +1060,7 @@ class Basico_model extends CI_Model {
             $array = $this->db->query('
                 SELECT
                     A.idApp_Agenda,
-                    A.idSis_Usuario,
-					U.Nome
-				FROM
-                    App_Agenda AS A
-						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = A.idSis_Usuario
-				WHERE
-                    ' . $q . '
-					A.Empresa = ' . $_SESSION['log']['Empresa'] . '
-				ORDER BY
-					U.Nome ASC
-			');
-
-        } else {
-            $query = $this->db->query('
-				SELECT
-                    A.idApp_Agenda,
-                    A.idSis_Usuario,
+                    U.idSis_Usuario,
 					CONCAT(IFNULL(F.Abrev,""), " --- ", IFNULL(U.Nome,"")) AS Nome
 
 				FROM
@@ -1085,7 +1069,27 @@ class Basico_model extends CI_Model {
 						LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = U.Funcao
 				WHERE
                     ' . $q . '
-					A.Empresa = ' . $_SESSION['log']['Empresa'] . '
+					U.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+					U.Nivel = "3"
+				ORDER BY
+					F.Abrev ASC
+			');
+
+        } else {
+            $query = $this->db->query('
+				SELECT
+                    A.idApp_Agenda,
+                    U.idSis_Usuario,
+					CONCAT(IFNULL(F.Abrev,""), " --- ", IFNULL(U.Nome,"")) AS Nome
+
+				FROM
+                    App_Agenda AS A
+						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = A.idSis_Usuario
+						LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = U.Funcao
+				WHERE
+                    ' . $q . '
+					U.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+					U.Nivel = "3"
 				ORDER BY
 					F.Abrev ASC
 			');

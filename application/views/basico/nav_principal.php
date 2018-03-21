@@ -109,11 +109,15 @@
 									<span class="glyphicon glyphicon-user"></span> Clientes <span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="<?php echo base_url(); ?>relatorio/clientes"><span class="glyphicon glyphicon-pencil"></span> Cadastrar Clientes</a></li>
+									<li><a href="<?php echo base_url(); ?>logincliente/registrar"><span class="glyphicon glyphicon-pencil"></span> Cad. Clientes/Usuario</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="<?php echo base_url(); ?>relatorio/clientesusuario"><span class="glyphicon glyphicon-pencil"></span> Rel. Clientes/Usuario</a></li>
+									<!--<li><a href="<?php echo base_url(); ?>relatorio/clientes"><span class="glyphicon glyphicon-pencil"></span> Cadastrar Clientes</a></li>
 									<li role="separator" class="divider"></li>
 									<li><a href="<?php echo base_url() ?>relatorio/clientes"><span class="glyphicon glyphicon-list"></span> Clientes & Contatos</a></li>
 									<li role="separator" class="divider"></li>
 									<li><a href="<?php echo base_url(); ?>relatorio/clientes"><span class="glyphicon glyphicon-calendar"></span> Aniversariantes</a></li>							
+									-->
 								</ul>
 							</div>														
 							<div class="btn-group" role="group" aria-label="..."> </div>

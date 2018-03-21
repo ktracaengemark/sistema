@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Relatorio extends CI_Controller {
+class Relatoriocliente extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -13,12 +13,12 @@ class Relatorio extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Profissional_model', 'Cliente_model', 'Relatorio_model'));
+        $this->load->model(array('Basico_model', 'Profissional_model', 'Cliente_model', 'Relatoriocliente_model', 'Relatorio_model'));
         $this->load->driver('session');
 
         #load header view
         $this->load->view('basico/header');
-        $this->load->view('basico/nav_principal');
+        $this->load->view('basico/nav_principalcliente');
 
         #$this->load->view('relatorio/nav_secundario');
     }
@@ -2429,10 +2429,10 @@ class Relatorio extends CI_Controller {
             'DESC' => 'Decrescente',
         );
 
-        $data['select']['Nome'] = $this->Relatorio_model->select_clienteusuario();
+        $data['select']['Nome'] = $this->Relatoriocliente_model->select_clienteusuario();
 		#$data['select']['Inativo'] = $this->Relatorio_model->select_inativo();
 
-        $data['titulo'] = 'Relatório de Clientes';
+        $data['titulo'] = 'Relatório de Contatos';
 
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
@@ -2442,7 +2442,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
 
-            $data['report'] = $this->Relatorio_model->list_clientesusuario($data['bd'],TRUE);
+            $data['report'] = $this->Relatoriocliente_model->list_clientesusuario($data['bd'],TRUE);
 
             /*
               echo "<pre>";
@@ -2451,11 +2451,11 @@ class Relatorio extends CI_Controller {
               exit();
               */
 
-            $data['list'] = $this->load->view('relatorio/list_clientesusuario', $data, TRUE);
+            $data['list'] = $this->load->view('relatoriocliente/list_clientesusuario', $data, TRUE);
             //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
         }
 
-        $this->load->view('relatorio/tela_clientesusuario', $data);
+        $this->load->view('relatoriocliente/tela_clientesusuario', $data);
 
         $this->load->view('basico/footer');
 

@@ -17,7 +17,7 @@ $result = mysql_query(
         'SELECT
             *
         FROM
-            app.Tab_' . $_GET['tabela'] . ' AS T
+            Tab_' . $_GET['tabela'] . ' AS T
         WHERE
 			T.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo']
 );

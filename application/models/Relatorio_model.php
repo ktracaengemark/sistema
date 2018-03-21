@@ -3238,6 +3238,69 @@ exit();*/
 
     }
 
+	public function list_clientesusuario($data, $completo) {
+
+        $data['Nome'] = ($data['Nome']) ? ' AND C.idSis_Usuario = ' . $data['Nome'] : FALSE;
+        $data['Campo'] = (!$data['Campo']) ? 'C.Nome' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+		$filtro1 = ($data['Inativo'] != '#') ? 'C.Inativo = "' . $data['Inativo'] . '" AND ' : FALSE;
+        $query = $this->db->query('
+            SELECT
+				C.idSis_Usuario,
+                C.Nome,
+				C.Inativo,
+                C.DataNascimento,
+                C.Sexo,
+                C.Email
+
+            FROM
+				Sis_Usuario AS C
+					LEFT JOIN Tab_StatusSN AS SN ON SN.Inativo = C.Inativo
+            WHERE
+                C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+				C.Nivel = "2" 
+				' . $data['Nome'] . ' 
+
+            ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+        /*
+
+        #AND
+        #C.idApp_Cliente = OT.idApp_Cliente
+
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+				$row->DataNascimento = $this->basico->mascara_data($row->DataNascimento, 'barras');
+				$row->Inativo = $this->basico->mascara_palavra_completa($row->Inativo, 'NS');
+                #$row->Sexo = $this->basico->get_sexo($row->Sexo);
+                #$row->Sexo = ($row->Sexo == 2) ? 'F' : 'M';
+
+                #$row->Telefone1 = ($row->Telefone1) ? $row->Telefone1 : FALSE;
+				#$row->Telefone2 = ($row->Telefone2) ? $row->Telefone2 : FALSE;
+				#$row->Telefone3 = ($row->Telefone3) ? $row->Telefone3 : FALSE;
+
+                #$row->Telefone .= ($row->Telefone2) ? ' / ' . $row->Telefone2 : FALSE;
+                #$row->Telefone .= ($row->Telefone3) ? ' / ' . $row->Telefone3 : FALSE;
+
+            }
+
+            return $query;
+        }
+
+    }
+	
 	public function list_associado($data, $completo) {
 
         $data['Nome'] = ($data['Nome']) ? ' AND C.idSis_Usuario = ' . $data['Nome'] : FALSE;
@@ -3440,7 +3503,8 @@ exit();*/
 					LEFT JOIN Sis_Permissao AS PE ON PE.idSis_Permissao = F.Permissao
             WHERE
 				F.Empresa = ' . $_SESSION['log']['id'] . ' AND
-				F.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+				F.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				F.Nivel = "2" AND
                 ' . $data['Nome'] . '
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -4211,7 +4275,8 @@ exit();*/
                 Sis_Usuario AS F
             WHERE
                 F.Empresa = ' . $_SESSION['log']['id'] . ' AND
-				F.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+				F.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				F.Nivel = "2" 
             ORDER BY
                 F.Nome ASC
         ');
@@ -4651,13 +4716,15 @@ exit();*/
         $query = $this->db->query('
             SELECT
 				P.idSis_Usuario,
-				CONCAT(IFNULL(F.Abrev,""), " --- ", IFNULL(P.Nome,"")) AS NomeUsuario
+				CONCAT(IFNULL(F.Abrev,""), " --- ", IFNULL(P.Nome,"")) AS NomeUsuario,
+				P.Nivel
             FROM
                 Sis_Usuario AS P
 					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
             WHERE
                 P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                P.Empresa = ' . $_SESSION['log']['Empresa'] . '
+                P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+				P.Nivel = "3"
 			ORDER BY F.Abrev ASC
         ');
 
@@ -4670,4 +4737,30 @@ exit();*/
         return $array;
     }
 
+	public function select_clienteusuario() {
+
+        $query = $this->db->query('
+            SELECT
+				P.idSis_Usuario,
+				CONCAT(IFNULL(P.Nome,"")) AS Nome
+            FROM
+                Sis_Usuario AS P
+					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
+            WHERE
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+				P.Nivel = "2" AND
+				P.Associado = ' . $_SESSION['log']['id'] . ' 
+			ORDER BY P.Nome ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idSis_Usuario] = $row->Nome;
+        }
+
+        return $array;
+    }
+	
 }
