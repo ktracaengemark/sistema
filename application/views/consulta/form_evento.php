@@ -15,6 +15,7 @@
 
 					<div class="form-group">
 						<div class="row">
+							<!--
 							<div class="col-md-4">
 								<label for="Cliente">Cliente:*</label>
 								<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>clienteusuario/cadastrar/clienteusuario" role="button">
@@ -34,6 +35,7 @@
 									?>
 								</select>
 							</div>
+							-->
 							<div class="col-md-4">
 								<label for="idApp_Agenda">Profissional:*</label>
 								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
@@ -50,11 +52,9 @@
 									?>
 								</select>
 							</div>
+							<!--
 							<div class="col-md-4">
 								<label for="Unidade">Unidade:*</label>
-								<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>clienteusuario/cadastrar/clienteusuario" role="button">
-									<span class="glyphicon glyphicon-plus"></span> <b>Novo Unidade</b>
-								</a>-->
 								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
 										id="Unidade" name="Unidade">
 									<?php echo $select['option']; ?>
@@ -68,7 +68,8 @@
 									}
 									?>
 								</select>
-							</div>							
+							</div>
+							-->
 						</div>
 					</div>
 					<hr>

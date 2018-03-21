@@ -98,6 +98,7 @@
 
 									<div class="form-group">
 										<div class="row">
+											<!--
 											<div class="col-md-4">
 												<label for="idApp_Cliente">Cliente:*</label>
 												<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>clienteusuario/cadastrar/clienteusuario" role="button">
@@ -117,7 +118,8 @@
 													?>
 												</select>
 											</div>
-											<div class="col-md-3">
+											-->
+											<div class="col-md-4">
 												<label for="idApp_Agenda">Agenda do Profis.*</label>
 												<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 														id="idApp_Agenda" autofocus name="idApp_Agenda">
@@ -133,7 +135,7 @@
 													?>
 												</select>
 											</div>
-											<div class="col-md-3">
+											<div class="col-md-4">
 												<label for="idSis_EmpresaFilial">Unidade: *</label>
 												<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 														id="idSis_EmpresaFilial" name="idSis_EmpresaFilial">
@@ -151,6 +153,7 @@
 											</div>
 										</div>
 									</div>
+									<hr>
 									<div class="form-group">
 										<div class="row">
 											<div class="col-md-3 form-inline text-left">
