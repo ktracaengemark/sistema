@@ -1861,7 +1861,7 @@ class Relatorio extends CI_Controller {
         );
 
         $data['select']['Campo'] = array(
-            'C.NomeCliente' => 'Nome do Cliente',
+            'C.Nome' => 'Nome do Cliente',
 
             'OT.idApp_OrcaTrata' => 'Número do Orçamento',
             'OT.AprovadoOrca' => 'Orçamento Aprovado?',
@@ -1886,7 +1886,7 @@ class Relatorio extends CI_Controller {
             'DESC' => 'Decrescente',
         );
 
-        $data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
+        $data['select']['NomeCliente'] = $this->Relatorio_model->select_clienteusuario();
 		$data['select']['FormaPag'] = $this->Relatorio_model->select_formapag();
 
         $data['titulo'] = 'Clientes & Orçamentos';

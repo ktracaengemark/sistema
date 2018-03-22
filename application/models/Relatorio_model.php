@@ -2763,7 +2763,7 @@ exit();*/
                 '(OT.DataQuitado >= "' . $data['DataInicio4'] . '")';
         }
 
-        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+        $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idSis_Usuario = ' . $data['NomeCliente'] : FALSE;
 		$data['FormaPag'] = ($data['FormaPag']) ? ' AND TFP.idTab_FormaPag = ' . $data['FormaPag'] : FALSE;
         $data['Campo'] = (!$data['Campo']) ? 'C.NomeCliente' : $data['Campo'];
         $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
@@ -2773,7 +2773,7 @@ exit();*/
 
         $query = $this->db->query('
             SELECT
-                C.NomeCliente,
+                C.Nome AS NomeCliente,
                 OT.idApp_OrcaTrata,
                 OT.AprovadoOrca,
                 OT.DataOrca,
@@ -2792,7 +2792,7 @@ exit();*/
 				TFP.FormaPag,
 				TSU.Nome
             FROM
-                App_Cliente AS C,
+                Sis_Usuario AS C,
                 App_OrcaTrata AS OT
 				LEFT JOIN Sis_Usuario AS TSU ON TSU.idSis_Usuario = OT.idSis_Usuario
 				LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
@@ -2807,7 +2807,7 @@ exit();*/
                 ' . $filtro1 . '
                 ' . $filtro2 . '
 				' . $filtro3 . '
-                C.idApp_Cliente = OT.idApp_Cliente
+                C.idSis_Usuario = OT.idApp_Cliente
                 ' . $data['NomeCliente'] . '
 				' . $data['FormaPag'] . ' AND
 				OT.TipoRD = "R"

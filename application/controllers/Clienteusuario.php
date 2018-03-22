@@ -316,7 +316,7 @@ class Clienteusuario extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $_SESSION['Clienteusuario'] = $data['query'] = $this->Clienteusuario_model->get_clienteusuario($id, TRUE);
+        $_SESSION['Cliente'] = $data['query'] = $this->Clienteusuario_model->get_clienteusuario($id, TRUE);
         #$data['query'] = $this->Paciente_model->get_paciente($prontuario, TRUE);
         $data['titulo'] = 'Prontuário ' . $data['query']['Nome'];
         $data['panel'] = 'primary';

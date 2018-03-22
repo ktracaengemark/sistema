@@ -14,8 +14,8 @@
 
 					<div class="form-group">
 						<div class="row">
-							<div class="col-md-2 "></div>
-							<div class="col-md-8 col-lg-8">
+							<div class="col-md-3 "></div>
+							<div class="col-md-6 col-lg-6">
 								<div class="col-md-4 text-left">
 									<label for="">Cliente & Contatos:</label>
 									<div class="form-group">
@@ -25,7 +25,7 @@
 													<span class="glyphicon glyphicon-file"> </span> Ver <span class="sr-only">(current)</span>
 												</a>
 											</a>
-											<a <?php if (preg_match("/cliente\/alterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+											<a <?php if (preg_match("/clienteusuario\/alterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
 												<a class="btn btn-md btn-warning" href="<?php echo base_url() . 'clienteusuario/alterar/' . $_SESSION['Cliente']['idSis_Usuario']; ?>">
 													<span class="glyphicon glyphicon-edit"></span> Edit.
 												</a>
@@ -70,7 +70,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-2 "></div>
+							<div class="col-md-3 "></div>
 						</div>
 					</div>
 					<!--

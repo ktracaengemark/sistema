@@ -11,7 +11,7 @@
 
 			<div class="panel-body">
 				<hr />
-				<?php echo '<h4>Cliente: ' . $_SESSION['Cliente']['NomeCliente'] . ' - Id: ' . $_SESSION['Cliente']['idApp_Cliente'] . ' - Orçam. Nº: ' . $_SESSION['Orcatrata']['Orcamento'] . '</h4>' ?>
+				<?php echo '<h4>Cliente: ' . $_SESSION['Cliente']['Nome'] . ' - Id: ' . $_SESSION['Cliente']['idSis_Usuario'] . ' - Orçam. Nº: ' . $_SESSION['Orcatrata']['Orcamento'] . '</h4>' ?>
 				<hr />
 
 				<h3 class="text-center">Produtos </h3>
