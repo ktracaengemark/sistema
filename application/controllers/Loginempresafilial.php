@@ -193,7 +193,7 @@ class Loginempresafilial extends CI_Controller {
 			$data['query']['Empresa'] = $_SESSION['log']['id'];
 			$data['query']['idSis_EmpresaMatriz'] = $_SESSION['log']['id'];
 			$data['query']['NomeEmpresa'] = $_SESSION['log']['NomeEmpresa'];
-			#$data['query']['Associado'] = 33;
+			$data['query']['Associado'] = $_SESSION['log']['id'];
 			$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['query']['DataCriacao'] = $this->basico->mascara_data($data['query']['DataCriacao'], 'mysql');
 			$data['query']['Senha'] = md5($data['query']['Senha']);

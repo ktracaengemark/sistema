@@ -6,7 +6,7 @@
 		<div class="col-md-12">
 		
 			<div class="panel-heading text-center">
-				<h3 class="text-center"><?php echo '<strong>' . $_SESSION['Orcatrata']['NomeEmpresa'] . '</strong> - <strong>DEVOLUÇÃO</strong> - <strong>Nº: ' . $_SESSION['Orcatrata']['idApp_OrcaTrata'] . '</strong>' ?></h3>
+				<h3 class="text-center"><?php echo '<strong>' . $_SESSION['Cliente']['NomeEmpresa'] . '</strong> - <strong>DEVOLUÇÃO</strong> - <strong>Nº: ' . $_SESSION['Orcatrata']['idApp_OrcaTrata'] . '</strong>' ?></h3>
 			</div>
 
 			<div class="panel-body">

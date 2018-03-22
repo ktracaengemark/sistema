@@ -449,9 +449,9 @@ class Consulta extends CI_Controller {
                     'idSis_Usuario',
 					'idApp_Consulta',
                     'idApp_Agenda',
-					#'idApp_Cliente',
-					'Cliente',
-					'Unidade',
+					'idApp_Cliente',
+					#'Cliente',
+					#'Unidade',
                     'Data',
                     'HoraInicio',
                     'HoraFim',
@@ -474,8 +474,8 @@ class Consulta extends CI_Controller {
 		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
 		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        $data['select']['Cliente'] = $this->Clienteusuario_model->select_clienteusuario();
-		$data['select']['Unidade'] = $this->Empresafilial_model->select_empresafilial();
+        $data['select']['idApp_Cliente'] = $this->Clienteusuario_model->select_clienteusuario();
+		$data['select']['idSis_EmpresaFilial'] = $this->Empresafilial_model->select_empresafilial();
 		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
 
         $data['select']['option'] = ($_SESSION['log']['Permissao'] <= 2) ? '<option value="">-- Sel. um Prof. --</option>' : FALSE;
@@ -546,7 +546,7 @@ class Consulta extends CI_Controller {
             'idSis_Usuario',
 			'idApp_Consulta',
             'idApp_Agenda',
-			'Unidade',
+			'idSis_EmpresaFilial',
             'Data',
             'HoraInicio',
             'HoraFim',
@@ -586,8 +586,8 @@ class Consulta extends CI_Controller {
 		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
 		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
 		$data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        $data['select']['Cliente'] = $this->Clienteusuario_model->select_clienteusuario();
-		$data['select']['Unidade'] = $this->Empresafilial_model->select_empresafilial();
+        $data['select']['idApp_Cliente'] = $this->Clienteusuario_model->select_clienteusuario();
+		$data['select']['idSis_EmpresaFilial'] = $this->Empresafilial_model->select_empresafilial();
 		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
 
         $data['titulo'] = 'Agenda Empresa Pessoal';
