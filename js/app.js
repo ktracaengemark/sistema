@@ -50,6 +50,33 @@ var dateTimePickerOptions = {
     locale: 'pt-br'
 }
 
+/*Atualiza o somatório do Qtd no Orcatrata*/
+function calculaQtdSoma(campo, soma, somaproduto) {
+
+    /*
+    if(!value) {
+        qtdsoma = parseInt($("#"+campo).text());
+        console.log('>> ' + original);
+    }
+    else {
+        qtdsoma = parseInt($("#"+campo).text()) + parseInt(value);
+        console.log('>> ' + qtdsoma);
+    }
+    */
+
+    qtdsoma = 0;
+    i = 1;
+    while(($("#"+campo+i).val())) {
+        //console.log('>> ' + $("#"+campo+i).val());
+        qtdsoma += parseInt($("#"+campo+i).val());
+        i++;
+    }
+
+    console.log('>> ' + qtdsoma);
+
+
+}
+
 /*
  * Função responsável por carregar valores nos respectivos campos do orcatrata
  * caso o botão Quitado seja alterado para SIM
