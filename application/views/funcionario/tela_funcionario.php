@@ -123,7 +123,7 @@
 
 											echo '
 											<tr>
-												<td><span class="glyphicon glyphicon-alert"></span> Nível:</td>
+												<td><span class="glyphicon glyphicon-alert"></span> Permissão:</td>
 												<td>' . $query['Permissao'] . '</td>
 											</tr>
 											';

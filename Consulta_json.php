@@ -32,7 +32,9 @@ $result = mysql_query(
 			C.idApp_Consulta,
             C.idApp_Cliente,
             R.NomeCliente,
+			US.Nome AS NomeClienteUs,
 			R.Telefone1,
+			US.Celular,
             D.NomeContatoCliente,
             P.Nome AS NomeUsuario,
 			P.Permissao,
@@ -45,13 +47,14 @@ $result = mysql_query(
             TC.TipoConsulta,
             C.Evento
         FROM
-            app.App_Agenda AS A
-                LEFT JOIN app.Sis_Usuario AS U ON U.idSis_Usuario = A.idSis_Usuario,
-            app.App_Consulta AS C
-                LEFT JOIN app.App_Cliente AS R ON R.idApp_Cliente = C.idApp_Cliente
-                LEFT JOIN app.App_ContatoCliente AS D ON D.idApp_ContatoCliente = C.idApp_ContatoCliente
-                LEFT JOIN app.Sis_Usuario AS P ON P.idSis_Usuario = C.idSis_Usuario
-                LEFT JOIN app.Tab_TipoConsulta AS TC ON TC.idTab_TipoConsulta = C.idTab_TipoConsulta
+            App_Agenda AS A
+                LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = A.idSis_Usuario,
+            App_Consulta AS C
+                LEFT JOIN App_Cliente AS R ON R.idApp_Cliente = C.idApp_Cliente
+                LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = C.idApp_Cliente
+				LEFT JOIN App_ContatoCliente AS D ON D.idApp_ContatoCliente = C.idApp_ContatoCliente
+                LEFT JOIN Sis_Usuario AS P ON P.idSis_Usuario = C.idSis_Usuario
+                LEFT JOIN Tab_TipoConsulta AS TC ON TC.idTab_TipoConsulta = C.idTab_TipoConsulta
 
         WHERE
 			C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
@@ -84,18 +87,18 @@ while ($row = mysql_fetch_assoc($result)) {
 
         if ($row['Paciente'] == 'D') {
             $title = mb_convert_encoding($row['NomeContatoCliente'], "UTF-8", "ISO-8859-1");
-            $subtitle = mb_convert_encoding($row['NomeCliente'], "UTF-8", "ISO-8859-1");
+            $subtitle = mb_convert_encoding($row['NomeClienteUs'], "UTF-8", "ISO-8859-1");
 
 			#$profissional = utf8_encode($row['NomeUsuario']);
 			#$profissional = utf8_encode($row['idApp_Agenda']);
 			$profissional = mb_convert_encoding($row['NomeProfissional'], "UTF-8", "ISO-8859-1");
 
-			$telefone1 = mb_convert_encoding($row['Telefone1'], "UTF-8", "ISO-8859-1");
+			$telefone1 = mb_convert_encoding($row['Celular'], "UTF-8", "ISO-8859-1");
         }
         else {
 
             #$title = utf8_encode($row['NomeCliente']);
-            $title = mb_convert_encoding($row['NomeCliente'], "UTF-8", "ISO-8859-1");
+            $title = mb_convert_encoding($row['NomeClienteUs'], "UTF-8", "ISO-8859-1");
             #$title = $row['NomeCliente'];
             #'name' => mb_convert_encoding($row['NomeProduto'], "UTF-8", "ISO-8859-1"),
 
@@ -108,8 +111,8 @@ while ($row = mysql_fetch_assoc($result)) {
 			#$profissional = utf8_encode($row['idSis_Usuario']);
             $profissional = mb_convert_encoding($row['NomeProfissional'], "UTF-8", "ISO-8859-1");
 
-			#$telefone1 = utf8_encode($row['Telefone1']);
-            $telefone1 = mb_convert_encoding($row['Telefone1'], "UTF-8", "ISO-8859-1");
+			#$telefone1 = utf8_encode($row['Celular']);
+            $telefone1 = mb_convert_encoding($row['Celular'], "UTF-8", "ISO-8859-1");
 
         }
 
@@ -166,7 +169,7 @@ while ($row = mysql_fetch_assoc($result)) {
         'textColor' => $textColor,
         'TipoConsulta' => mb_convert_encoding($row['TipoConsulta'], "UTF-8", "ISO-8859-1"),
         'Procedimento' => mb_convert_encoding($row['Procedimento'], "UTF-8", "ISO-8859-1"),
-		'Telefone1' => mb_convert_encoding($row['Telefone1'], "UTF-8", "ISO-8859-1"),
+		'Telefone1' => mb_convert_encoding($row['Celular'], "UTF-8", "ISO-8859-1"),
         'Obs' => mb_convert_encoding($row['Obs'], "UTF-8", "ISO-8859-1"),
         'Evento' => $row['Evento'],
         'Paciente' => $row['Paciente'],

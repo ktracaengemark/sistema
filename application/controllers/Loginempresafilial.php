@@ -111,10 +111,13 @@ class Loginempresafilial extends CI_Controller {
                 $_SESSION['log']['UsuarioEmpresaFilial'] = (strlen($query['UsuarioEmpresaFilial']) > 15) ? substr($query['UsuarioEmpresaFilial'], 0, 15) : $query['UsuarioEmpresaFilial'];
                 #$_SESSION['log']['Nome'] = (strlen($query['Nome']) > 10) ? substr($query['Nome'], 0, 10) : $query['Nome'];
 				$_SESSION['log']['Nome'] = $query['Nome'];
-				$_SESSION['log']['id'] = $query['idSis_EmpresaFilial'];
+				#$_SESSION['log']['id'] = $query['idSis_EmpresaMatriz'];
+				$_SESSION['log']['idSis_EmpresaFilial'] = $query['id'];
+				$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
 				$_SESSION['log']['Empresa'] = $query['Empresa'];
 				$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];
-				$_SESSION['log']['idSis_EmpresaFilial'] = $query['idSis_EmpresaFilial'];
+				#$_SESSION['log']['idSis_EmpresaFilial'] = $query['idSis_EmpresaFilial'];
+				$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
 				#$_SESSION['log']['Permissao'] = $query['Permissao'];
 				
                 $this->load->database();
@@ -133,6 +136,7 @@ class Loginempresafilial extends CI_Controller {
 					#redirect('agenda');
 					#redirect('cliente');
                 }
+
             }
         }
 
@@ -169,26 +173,27 @@ class Loginempresafilial extends CI_Controller {
 		
 		$this->form_validation->set_error_delimiters('<h5 style="color: red;">', '</h5>');
 	
-		$this->form_validation->set_rules('NomeEmpresa', 'Nome da empresa', 'required|trim|is_unique[Sis_EmpresaFilial.NomeEmpresa]');
-        $this->form_validation->set_rules('Email', 'E-mail', 'required|trim|valid_email|is_unique[Sis_EmpresaFilial.Email]');		
+		#$this->form_validation->set_rules('NomeEmpresa', 'Nome da empresa', 'required|trim|is_unique[Sis_EmpresaFilial.NomeEmpresa]');
+        #$this->form_validation->set_rules('Email', 'E-mail', 'required|trim|valid_email|is_unique[Sis_EmpresaFilial.Email]');		
         $this->form_validation->set_rules('UsuarioEmpresaFilial', 'Usuário', 'required|trim|is_unique[Sis_EmpresaFilial.UsuarioEmpresaFilial]');
 		$this->form_validation->set_rules('Nome', 'Nome do Usuário', 'required|trim');      	
         $this->form_validation->set_rules('Senha', 'Senha', 'required|trim');
         $this->form_validation->set_rules('Confirma', 'Confirmar Senha', 'required|trim|matches[Senha]');
-		$this->form_validation->set_rules('Celular', 'Celular', 'required|trim');
-		$this->form_validation->set_rules('NumUsuarios', 'Número de Usuários', 'required|trim');
+		$this->form_validation->set_rules('Celular', 'Telefone', 'required|trim');
+		#$this->form_validation->set_rules('NumUsuarios', 'Número de Usuários', 'required|trim');
 		
 		$data['select']['NumUsuarios'] = $this->Basico_model->select_numusuarios();
         
 		#run form validation
         if ($this->form_validation->run() === FALSE) {
             #load loginempresafilial view
-            $this->load->view('loginempresafilial/form_registrar', $data);
+            $this->load->view('loginempresafilial/form_registrarempresafilial', $data);
         } else {
 			
-			$data['query']['Empresa'] = 0;
-			$data['query']['idSis_EmpresaMatriz'] = 1;
-			$data['query']['Associado'] = 33;
+			$data['query']['Empresa'] = $_SESSION['log']['id'];
+			$data['query']['idSis_EmpresaMatriz'] = $_SESSION['log']['id'];
+			$data['query']['NomeEmpresa'] = $_SESSION['log']['NomeEmpresa'];
+			#$data['query']['Associado'] = 33;
 			$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['query']['DataCriacao'] = $this->basico->mascara_data($data['query']['DataCriacao'], 'mysql');
 			$data['query']['Senha'] = md5($data['query']['Senha']);
@@ -244,7 +249,7 @@ class Loginempresafilial extends CI_Controller {
                   <div class="alert alert-success" role="alert">
                   <h4>
                   <p><b>Usuário cadastrado com sucesso!</b></p>
-                  <p>Clique no botão abaixo e retorne para a tela de loginempresafilial para entrar no sistema.</p>
+                  <p>Clique no botão abaixo e retorne para a tela de login, para entrar no sistema.</p>
                   </h4>
                   <br>
                   <a class="btn btn-primary" href="' . base_url() . '" role="button">Acessar o aplicativo</a>

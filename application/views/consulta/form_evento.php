@@ -15,10 +15,31 @@
 
 					<div class="form-group">
 						<div class="row">
-							<div class="col-md-3">
-								<label for="idApp_Agenda">Agenda do Profis.*</label>
-								<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-										id="idApp_Agenda" autofocus name="idApp_Agenda">
+							<!--
+							<div class="col-md-4">
+								<label for="Cliente">Cliente:*</label>
+								<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>clienteusuario/cadastrar/clienteusuario" role="button">
+									<span class="glyphicon glyphicon-plus"></span> <b>Novo Cliente</b>
+								</a>
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
+										id="Cliente" autofocus name="Cliente">
+									<?php echo $select['option']; ?>
+									<?php
+									foreach ($select['Cliente'] as $key => $row) {
+										if ($query['Cliente'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>
+								</select>
+							</div>
+							-->
+							<div class="col-md-4">
+								<label for="idApp_Agenda">Profissional:*</label>
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
+										id="idApp_Agenda" name="idApp_Agenda">
 									<?php echo $select['option']; ?>
 									<?php
 									foreach ($select['idApp_Agenda'] as $key => $row) {
@@ -31,8 +52,31 @@
 									?>
 								</select>
 							</div>
-							<div class="col-md-3 form-inline text-left">
-								<label for="Data">Data:</label>
+							<!--
+							<div class="col-md-4">
+								<label for="Unidade">Unidade:*</label>
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
+										id="Unidade" name="Unidade">
+									<?php echo $select['option']; ?>
+									<?php
+									foreach ($select['Unidade'] as $key => $row) {
+										if ($query['Unidade'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>
+								</select>
+							</div>
+							-->
+						</div>
+					</div>
+					<hr>
+					<div class="form-group">
+						<div class="row">		
+							<div class="col-md-4 form-inline text-left">
+								<label for="Data"> Data: </label>
 								<div class="input-group <?php echo $datepicker; ?>">
 									<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
 										   name="Data" value="<?php echo $query['Data']; ?>">
@@ -41,9 +85,9 @@
 									</span>
 								</div>
 							</div>
-							<div class="col-md-6 form-inline text-left">
+							<div class="col-md-8 form-inline text-left">
 								<div class="form-group">
-									<label for="Hora">Hora:</label><br>
+									<label for="Hora">Hora:</label>
 									De
 									<div class="col-md-4 input-group <?php echo $timepicker; ?>">
 										<input type="text" class="form-control Time" <?php echo $readonly; ?> maxlength="5"  placeholder="HH:MM"
@@ -89,15 +133,16 @@
 								</select>
 							</div>
 							-->
-							<div class="col-md-12">
-								<label for="Obs">Obs:</label>
-								<textarea class="form-control" id="Obs"
-										  name="Obs"><?php echo $query['Obs']; ?></textarea>
+							
+							<div class="form-group col-md-12 text-left">
+								
+									<label for="Obs">Obs:</label>
+									<textarea class="form-control" id="Obs"
+											  name="Obs"><?php echo $query['Obs']; ?></textarea>
+								
 							</div>
 						</div>
 					</div>
-
-					<hr>
 
 					<div class="form-group">
 						<div class="row">

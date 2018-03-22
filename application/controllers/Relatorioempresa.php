@@ -17,8 +17,8 @@ class Relatorioempresa extends CI_Controller {
         $this->load->driver('session');
 
         #load header view
-        $this->load->view('basico/headerempresa');
-        $this->load->view('basico/nav_principalempresa');
+        $this->load->view('basico/headerempresamatriz');
+        $this->load->view('basico/nav_principalempresamatriz');
 
         #$this->load->view('relatorio/nav_secundario');
     }
@@ -169,7 +169,7 @@ class Relatorioempresa extends CI_Controller {
 
 
         $data['select']['Campo'] = array(
-            'F.Nome' => 'Nome do Usuário',
+            'F.Nome' => 'Nome da Unidade',
         );
 
         $data['select']['Ordenamento'] = array(

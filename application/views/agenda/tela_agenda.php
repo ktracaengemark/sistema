@@ -34,7 +34,7 @@
 									</div>
 									<br>
 									<div class="row">
-										<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info"> Outro Evento
+										<button type="button" id="AgendarEvento" onclick="redirecionar(1)" class="btn btn-info"> Outros Eventos
 										</button>
 									</div>
 									<!--

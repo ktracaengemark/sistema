@@ -65,7 +65,7 @@ class Funcao_model extends CI_Model {
         $query = $this->db->query('SELECT * '
                 . 'FROM Tab_Funcao '
                 . 'WHERE '
-                . 'idSis_EmpresaFilial = ' . $_SESSION['log']['id'] . ' AND '
+                . 'Empresa = ' . $_SESSION['log']['id'] . ' AND '
                 . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
                 . 'ORDER BY Funcao ASC ');
         

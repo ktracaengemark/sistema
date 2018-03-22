@@ -2405,6 +2405,81 @@ class Relatorio extends CI_Controller {
 
     }
 
+    public function clientesusuario() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'Nome',
+			'Inativo',
+            'Ordenamento',
+            'Campo',
+        ), TRUE));
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+
+        $data['select']['Inativo'] = array(
+            '#' => 'TODOS',
+            '1' => 'Não',
+            '0' => 'Sim',
+        );
+
+		$data['select']['Campo'] = array(
+            'C.idSis_Usuario' => 'nº Cliente',
+			'C.Nome' => 'Nome do Cliente',
+			'C.Inativo' => 'Ativo',
+            'C.DataNascimento' => 'Data de Nascimento',
+            'C.Sexo' => 'Sexo',
+            'C.Email' => 'E-mail',
+
+
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+
+        $data['select']['Nome'] = $this->Relatorio_model->select_clienteusuario();
+		#$data['select']['Inativo'] = $this->Relatorio_model->select_inativo();
+
+        $data['titulo'] = 'Relatório de Clientes';
+
+        #run form validation
+        if ($this->form_validation->run() !== TRUE) {
+
+            $data['bd']['Nome'] = $data['query']['Nome'];
+			$data['bd']['Inativo'] = $data['query']['Inativo'];
+			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+
+            $data['report'] = $this->Relatorio_model->list_clientesusuario($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_clientesusuario', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_clientesusuario', $data);
+
+        $this->load->view('basico/footer');
+
+
+
+    }
+	
 	public function associado() {
 
         if ($this->input->get('m') == 1)

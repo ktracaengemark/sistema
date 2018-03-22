@@ -3441,7 +3441,8 @@ exit();*/
             WHERE
 				F.Empresa = ' . $_SESSION['log']['id'] . ' AND
 				F.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
-                ' . $data['Nome'] . '
+                ' . $data['Nome'] . ' AND
+				F.Nivel = "3"
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');
@@ -3472,19 +3473,22 @@ exit();*/
 
 	public function list_empresafilial($data, $completo) {
 
-        $data['Nome'] = ($data['Nome']) ? ' AND F.idSis_Usuario = ' . $data['Nome'] : FALSE;
+        $data['Nome'] = ($data['Nome']) ? ' AND F.idSis_EmpresaFilial = ' . $data['Nome'] : FALSE;
         $data['Campo'] = (!$data['Campo']) ? 'F.Nome' : $data['Campo'];
         $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 
         $query = $this->db->query('
             SELECT
                 F.idSis_EmpresaFilial,
-                F.Nome
+				F.idSis_EmpresaMatriz,
+                F.Nome,
+				F.Celular
+				
             FROM
                 Sis_EmpresaFilial AS F
 
             WHERE
-				F.idSis_EmpresaFilial = ' . $_SESSION['log']['id'] . ' 
+				F.idSis_EmpresaMatriz = ' . $_SESSION['log']['id'] . ' 
                 ' . $data['Nome'] . '
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -4274,11 +4278,12 @@ exit();*/
         $query = $this->db->query('
             SELECT
                 F.idSis_EmpresaFilial,
+				F.idSis_EmpresaMatriz,
                 F.Nome
             FROM
                 Sis_EmpresaFilial AS F
             WHERE
-                F.idSis_EmpresaFilial = ' . $_SESSION['log']['id'] . '
+                F.idSis_EmpresaMatriz = ' . $_SESSION['log']['id'] . '
             ORDER BY
                 F.Nome ASC
         ');

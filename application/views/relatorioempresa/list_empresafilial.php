@@ -14,7 +14,8 @@
                 <thead>
                     <tr>
                         <th class="active">id</th>
-                        <th class="active">Profissional</th>
+                        <th class="active">Nome da Unidade</th>
+						<th class="active">Telefone</th>
                     </tr>
                 </thead>
 
@@ -27,6 +28,7 @@
                         echo '<tr class="clickable-row" data-href="' . base_url() . 'empresafilial/prontuario/' . $row['idSis_EmpresaFilial'] . '">';
                             echo '<td>' . $row['idSis_EmpresaFilial'] . '</td>';
                             echo '<td>' . $row['Nome'] . '</td>';
+							echo '<td>' . $row['Celular'] . '</td>';
                         echo '</tr>';
                     }
                     ?>

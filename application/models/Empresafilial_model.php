@@ -168,5 +168,42 @@ class Empresafilial_model extends CI_Model {
             }
         }
     }
+	
+	public function select_empresafilial($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query(					
+				'SELECT                
+				idSis_EmpresaFilial,
+				Nome				
+            FROM
+                Sis_EmpresaFilial					
+            WHERE
+                Empresa = ' . $_SESSION['log']['Empresa'] . '
+			ORDER BY 
+				Nome ASC'
+    );
+					
+        } else {
+            $query = $this->db->query(
+                'SELECT                
+				idSis_EmpresaFilial,
+				Nome				
+            FROM
+                Sis_EmpresaFilial					
+            WHERE
+                Empresa = ' . $_SESSION['log']['Empresa'] . '
+			ORDER BY 
+				Nome ASC'
+    );
+            
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->idSis_EmpresaFilial] = $row->Nome;
+            }
+        }
+
+        return $array;
+    }	
 
 }

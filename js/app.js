@@ -2506,7 +2506,7 @@ function redirecionar(x) {
     var re = new RegExp(/^.*\//);
     var start = moment($("#start").val());
     var end = moment($("#end").val());
-    (x == 1) ? url = 'consulta/cadastrar_evento' : url = 'cliente/pesquisar';
+    (x == 1) ? url = 'consulta/cadastrar_evento' : url = 'clienteusuario/pesquisar';
     window.location = re.exec(window.location.href) + url + '?start=' + start + '&end=' + end
 }
 
@@ -2515,7 +2515,7 @@ function redirecionar2(x) {
     var re = new RegExp(/^.*\//);
     var start = moment($("#start").val());
     var end = moment($("#end").val());
-    (x == 3) ? url = 'consulta/cadastrar_particular' : url = 'cliente/pesquisar';
+    (x == 3) ? url = 'consulta/cadastrar_particular' : url = 'clienteusuario/pesquisar';
     window.location = re.exec(window.location.href) + url + '?start=' + start + '&end=' + end
 }
 

@@ -17,8 +17,8 @@ class Funcao extends CI_Controller {
         $this->load->driver('session');
 
         #load header view
-        $this->load->view('basico/headerempresa');
-        $this->load->view('basico/nav_principalempresa');
+        $this->load->view('basico/headerempresamatriz');
+        $this->load->view('basico/nav_principalempresamatriz');
 
         #$this->load->view('cliente/nav_secundario');
     }
@@ -84,8 +84,9 @@ class Funcao extends CI_Controller {
 
             $data['query']['Funcao'] = trim(mb_strtoupper($data['query']['Funcao'], 'ISO-8859-1'));
 			$data['query']['Abrev'] = trim(mb_strtoupper($data['query']['Abrev'], 'ISO-8859-1'));
+			$data['query']['Empresa'] = $_SESSION['log']['id'];
 			$data['query']['idSis_EmpresaFilial'] = $_SESSION['log']['id'];
-			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+			#$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
             $data['campos'] = array_keys($data['query']);

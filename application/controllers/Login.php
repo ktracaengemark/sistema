@@ -112,9 +112,11 @@ class Login extends CI_Controller {
                 #$_SESSION['log']['Nome'] = (strlen($query['Nome']) > 10) ? substr($query['Nome'], 0, 10) : $query['Nome'];
 				$_SESSION['log']['Nome'] = $query['Nome'];
 				$_SESSION['log']['id'] = $query['idSis_Usuario'];
+				#$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
 				$_SESSION['log']['Empresa'] = $query['Empresa'];
 				$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];
 				$_SESSION['log']['idSis_EmpresaFilial'] = $query['idSis_EmpresaFilial'];
+				$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
 				$_SESSION['log']['Permissao'] = $query['Permissao'];
 
                 $this->load->database();

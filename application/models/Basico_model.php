@@ -244,6 +244,33 @@ class Basico_model extends CI_Model {
         }
     }
 
+    function set_auditoriaempresa($auditoriaitem, $tabela, $operacao, $data, $id = NULL) {
+
+        if ($id == NULL)
+            $id = $_SESSION['log']['id'];
+
+        $auditoria = array(
+            'Tabela' => $tabela,
+            'idSis_EmpresaMatriz' => $id,
+            'DataAuditoria' => date('Y-m-d H:i:s', time()),
+            'Operacao' => $operacao,
+            'Ip' => $this->input->ip_address(),
+            'So' => $this->agent->platform(),
+            'Navegador' => $this->agent->browser(),
+            'NavegadorVersao' => $this->agent->version(),
+        );
+
+        if ($this->db->insert('Sis_AuditoriaEmpresa', $auditoria)) {
+            $i = 0;
+            while (isset($data['auditoriaitem'][$i])) {
+                $data['auditoriaitem'][$i]['idSis_AuditoriaEmpresa'] = $this->db->insert_id();
+                $i++;
+            }
+
+            $this->db->insert_batch('Sis_AuditoriaItemEmpresa', $data['auditoriaitem']);
+        }
+    }
+	
     public function get_municipio($data) {
 
         if (isset($data) && $data) {
@@ -439,9 +466,9 @@ class Basico_model extends CI_Model {
 			$query = $this->db->query('
 				SELECT *
 					FROM
-						Sis_EmpresaFilial
+						Sis_EmpresaMatriz
 					WHERE
-						idSis_EmpresaFilial = "' . $data . '"
+						idSis_EmpresaMatriz = "' . $data . '"
 				');
 
             if ($query->num_rows() === 0) {
@@ -1033,23 +1060,7 @@ class Basico_model extends CI_Model {
             $array = $this->db->query('
                 SELECT
                     A.idApp_Agenda,
-                    A.idSis_Usuario,
-					U.Nome
-				FROM
-                    App_Agenda AS A
-						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = A.idSis_Usuario
-				WHERE
-                    ' . $q . '
-					A.Empresa = ' . $_SESSION['log']['Empresa'] . '
-				ORDER BY
-					U.Nome ASC
-			');
-
-        } else {
-            $query = $this->db->query('
-				SELECT
-                    A.idApp_Agenda,
-                    A.idSis_Usuario,
+                    U.idSis_Usuario,
 					CONCAT(IFNULL(F.Abrev,""), " --- ", IFNULL(U.Nome,"")) AS Nome
 
 				FROM
@@ -1058,7 +1069,27 @@ class Basico_model extends CI_Model {
 						LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = U.Funcao
 				WHERE
                     ' . $q . '
-					A.Empresa = ' . $_SESSION['log']['Empresa'] . '
+					U.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+					U.Nivel = "3"
+				ORDER BY
+					F.Abrev ASC
+			');
+
+        } else {
+            $query = $this->db->query('
+				SELECT
+                    A.idApp_Agenda,
+                    U.idSis_Usuario,
+					CONCAT(IFNULL(F.Abrev,""), " --- ", IFNULL(U.Nome,"")) AS Nome
+
+				FROM
+                    App_Agenda AS A
+						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = A.idSis_Usuario
+						LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = U.Funcao
+				WHERE
+                    ' . $q . '
+					U.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+					U.Nivel = "3"
 				ORDER BY
 					F.Abrev ASC
 			');
