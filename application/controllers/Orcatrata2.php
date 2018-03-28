@@ -886,8 +886,9 @@ class Orcatrata2 extends CI_Controller {
 
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'orcatrata/listar/' . $_SESSION['Cliente']['idApp_Cliente'] . $data['msg']);
-                exit();
+                #redirect(base_url() . 'orcatrata/listar/' . $_SESSION['Cliente']['idApp_Cliente'] . $data['msg']);
+                redirect(base_url() . 'relatorio/orcamento/' . $data['msg']);
+				exit();
             //}
         //}
 

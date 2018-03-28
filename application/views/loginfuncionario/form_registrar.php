@@ -93,7 +93,7 @@
     <?php echo form_error('TipoProfissional'); ?>
     <br>	
 -->
-	<label for="Permissao">Nível de Permissão:*</label>
+	<label for="Permissao">Permissão às Agendas:*</label>
 	<select data-placeholder="Selecione uma opção..." class="form-control" id="Permissao" name="Permissao">			
 		<option value="">-- Selecione uma Permissao --</option>
 		<?php
@@ -134,10 +134,10 @@
     <br>			
 	
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Registrar Usuário</button>
+    <button class="btn btn-lg btn-info btn-block" type="submit">Registrar Usuário</button>
 	<br>
-	<a class="btn btn btn-primary btn-info btn-block" href="<?php echo base_url(); ?>login/index" role="button">Acesso dos Usuários da Empresa</a>
-	<a class="btn btn btn-primary btn-warning btn-block" href="<?php echo base_url(); ?>loginempresafilial/index" role="button">Acesso do Admin. da Empresa</a>		
+	<a class="btn btn btn-primary  btn-block" href="<?php echo base_url(); ?>login/index" role="button">Acesso dos Usuários da Empresa</a>
+	<a class="btn btn btn-danger btn-block" href="<?php echo base_url(); ?>loginempresamatriz/index" role="button">Acesso do Admin. da Empresa</a>		
 </form>
 
 </div>

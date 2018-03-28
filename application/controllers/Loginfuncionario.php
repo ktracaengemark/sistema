@@ -110,13 +110,14 @@ class Loginfuncionario extends CI_Controller {
                 //se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
                 $_SESSION['log']['Usuario'] = (strlen($query['Usuario']) > 15) ? substr($query['Usuario'], 0, 15) : $query['Usuario'];
                 $_SESSION['log']['Nome'] = $query['Nome'];
-				#$_SESSION['log']['id'] = $query['idSis_Usuario'];
-				$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
+				$_SESSION['log']['id'] = $query['idSis_Usuario'];
+				#$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
 				$_SESSION['log']['Empresa'] = $query['Empresa'];
 				$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];
 				$_SESSION['log']['idSis_EmpresaFilial'] = $query['idSis_EmpresaFilial'];
 				$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
 				$_SESSION['log']['Permissao'] = $query['Permissao'];
+				$_SESSION['log']['Nivel'] = $query['Nivel'];
 
                 $this->load->database();
                 $_SESSION['db']['hostname'] = $this->db->hostname;
@@ -204,8 +205,9 @@ class Loginfuncionario extends CI_Controller {
         } else {
 			
 			$data['query']['Nivel'] = 3;
-			$data['query']['idSis_EmpresaFilial'] = $_SESSION['log']['idSis_EmpresaFilial'];
-			$data['query']['Empresa'] = $_SESSION['log']['idSis_EmpresaMatriz'];
+			$data['query']['Associado'] = $_SESSION['log']['id'];
+			$data['query']['idSis_EmpresaMatriz'] = $_SESSION['log']['id'];
+			$data['query']['Empresa'] = $_SESSION['log']['id'];
 			$data['query']['NomeEmpresa'] = $_SESSION['log']['NomeEmpresa'];
 			$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['query']['Senha'] = md5($data['query']['Senha']);
@@ -240,7 +242,7 @@ class Loginfuncionario extends CI_Controller {
                  */
                 $data['agenda'] = array(
                     'NomeAgenda' => 'Padrão',
-					'Empresa' => $_SESSION['log']['idSis_EmpresaMatriz'],
+					'Empresa' => $_SESSION['log']['id'],
                     'idSis_Usuario' => $data['idSis_Usuario']
                 );
                 $data['campos'] = array_keys($data['agenda']);
