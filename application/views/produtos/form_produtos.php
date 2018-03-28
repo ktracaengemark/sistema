@@ -17,6 +17,7 @@
 						<div class="panel panel-info">
 							<div class="panel-heading">	
 								<div class="row">
+									<div class="col-md-2"></div>
 									<div class="col-md-2">
 										<label for="TipoProduto">Venda/Cons:</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
@@ -106,11 +107,6 @@
 											?>
 										</select>
 									</div>
-									<div class="col-md-4">
-										<label for="Produtos">Desc. Produto/Serviço:*</label><br>
-										<input type="text" class="form-control" maxlength="200"
-												name="Produtos" value="<?php echo $produtos['Produtos'] ?>">
-									</div>
 									<div class="col-md-2">
 										<label for="Prodaux1">Aux1:</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
@@ -127,6 +123,12 @@
 											?>
 										</select>
 									</div>
+									<div class="col-md-4">
+										<label for="Produtos">Desc. Produto/Serviço:*</label><br>
+										<input type="text" class="form-control" maxlength="200"
+												name="Produtos" value="<?php echo $produtos['Produtos'] ?>">
+									</div>
+									
 									<div class="col-md-2">
 										<label for="Prodaux2">Aux2:</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
