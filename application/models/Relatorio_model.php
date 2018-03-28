@@ -3526,8 +3526,8 @@ exit();*/
             WHERE
                 C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
-				C.Nivel = "2" 
-				' . $data['Nome'] . ' 
+				C.Nivel = 2 
+
 
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '

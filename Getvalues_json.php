@@ -84,7 +84,7 @@ elseif ($_GET['q'] == 2) {
     }
 
 }
-elseif ($_GET['q'] == 3) {
+elseif ($_GET['q'] == 6) {
 
     $result = mysql_query(
             'SELECT
@@ -129,6 +129,32 @@ elseif ($_GET['q'] == 4) {
         $event_array[] = array(
             'id' => $row['idTab_Convenio'],
             'name' => utf8_encode($row['Convenio']),
+        );
+    }
+
+}
+
+elseif ($_GET['q'] == 3) {
+
+    $result = mysql_query(
+            'SELECT
+				P.idSis_Usuario,
+				CONCAT(P.Nome) AS Nome
+            FROM
+                Sis_Usuario AS P
+					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
+            WHERE
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				P.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
+				P.idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+                ORDER BY P.Nome ASC'
+    );
+
+    while ($row = mysql_fetch_assoc($result)) {
+
+        $event_array[] = array(
+            'id' => $row['idSis_Usuario'],
+            'name' => utf8_encode($row['Nome']),
         );
     }
 

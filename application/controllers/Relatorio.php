@@ -2416,6 +2416,7 @@ class Relatorio extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'Nome',
+			'Nivel',
 			'Inativo',
             'Ordenamento',
             'Campo',

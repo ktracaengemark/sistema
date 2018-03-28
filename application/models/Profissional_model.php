@@ -158,7 +158,7 @@ class Profissional_model extends CI_Model {
         }
     }
 	
-	public function select_profissional($data = FALSE) {
+	public function select_profissional2($data = FALSE) {
 
         if ($data === TRUE) {
             $array = $this->db->query(					
@@ -196,5 +196,45 @@ class Profissional_model extends CI_Model {
 
         return $array;
     }
-    
+
+	public function select_profissional($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query(					
+				'SELECT
+				P.idSis_Usuario,
+				CONCAT(IFNULL(P.Nome,"")) AS Nome
+            FROM
+                Sis_Usuario AS P
+					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
+            WHERE
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                P.Empresa = ' . $_SESSION['log']['Empresa'] . ' 
+  
+			ORDER BY P.Nome ASC'
+    );
+					
+        } else {
+            $query = $this->db->query(
+                'SELECT
+				P.idSis_Usuario,
+				CONCAT(IFNULL(P.Nome,"")) AS Nome
+            FROM
+                Sis_Usuario AS P
+					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
+            WHERE
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                P.Empresa = ' . $_SESSION['log']['Empresa'] . ' 
+ 
+			ORDER BY P.Nome ASC'
+    );
+            
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->idSis_Usuario] = $row->Nome;
+            }
+        }
+
+        return $array;
+    }
 }
