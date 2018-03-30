@@ -403,7 +403,7 @@
 																</div>
 															</div>
 														</div>
-													</div>													
+													</div>
 												</div>
 											</div>
 										</div>
@@ -449,6 +449,22 @@
 																				<span class="input-group-addon" id="basic-addon1">R$</span>
 																				<input type="text" class="form-control Valor" id="ValorRestanteOrca" maxlength="10" placeholder="0,00" readonly=""
 																					   name="ValorRestanteOrca" value="<?php echo $orcatrata['ValorRestanteOrca'] ?>">
+																			</div>
+																		</div>
+
+																		<div class="col-md-3">
+																			<label for="Modalidade">Modalidade:</label><br>
+																			<div class="input-group" id="txtHint">
+																				<?php
+																				$options = array(
+																			        ''	=> '-- Selecione uma opção --',
+																			        'P'	=> 'PARCELADO',
+																			        'M'	=> 'MENSALIDADE',
+																				);
+																				$cfg = 'data-placeholder="Selecione uma opção..." class="form-control" ' . $readonly . '
+																						id="Modalidade"';
+																				echo form_dropdown('Modalidade', $options, $orcatrata['Modalidade'], $cfg);
+																				?>
 																			</div>
 																		</div>
 																	</div>
@@ -509,7 +525,7 @@
 												</div>
 											</div>
 										</div>
-										
+
 										<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
 											<div class="panel panel-primary">
 												<div class="panel-heading" role="tab" id="heading2" data-toggle="collapse" data-parent="#accordion2" data-target="#collapse2">
@@ -520,7 +536,7 @@
 														</a>
 													</h4>
 												</div>
-												<div id="collapse2" class="panel-collapse" role="tabpanel" aria-labelledby="heading2" aria-expanded="false">													
+												<div id="collapse2" class="panel-collapse" role="tabpanel" aria-labelledby="heading2" aria-expanded="false">
 													<div class="panel-body">
 														<!--App_parcelasRec-->
 														<div class="input_fields_parcelas">
@@ -608,7 +624,7 @@
 																						?>
 																					</div>
 																				</div>
-																			</div>																			
+																			</div>
 																		</div>
 
 
@@ -625,7 +641,7 @@
 												</div>
 											</div>
 										</div>
-										
+
 										<div class="panel-group" id="accordion3" role="tablist" aria-multiselectable="true">
 											<div class="panel panel-primary">
 												 <div class="panel-heading" role="tab" id="heading3" data-toggle="collapse" data-parent="#accordion3" data-target="#collapse3">
@@ -655,7 +671,7 @@
 														<div class="form-group" id="3div<?php echo $i ?>">
 															<div class="panel panel-info">
 																<div class="panel-heading">
-																	<div class="row">																																																																							
+																	<div class="row">
 																		<div class="col-md-4">
 																			<label for="Procedimento<?php echo $i ?>">Procedimento:</label>
 																			<textarea class="form-control" id="Procedimento<?php echo $i ?>" <?php echo $readonly; ?>
@@ -670,8 +686,8 @@
 																					<span class="glyphicon glyphicon-calendar"></span>
 																				</span>
 																			</div>
-																		</div>			
-																		
+																		</div>
+
 																		<div class="col-md-2">
 																			<label for="ConcluidoProcedimento">Proc. Concl.? </label><br>
 																			<div class="form-group">
@@ -705,13 +721,13 @@
 																			<button type="button" id="<?php echo $i ?>" class="remove_field3 btn btn-danger">
 																				<span class="glyphicon glyphicon-trash"></span>
 																			</button>
-																		</div>																																			
+																		</div>
 																		<div class="col-md-3">
 																			<label for="idSis_Usuario<?php echo $i ?>">Profissional:</label>
 																			<?php if ($i == 1) { ?>
 																			<?php } ?>
 																			<select data-placeholder="Selecione uma opção..." class="form-control"
-																					 id="listadinamicac<?php echo $i ?>" name="idSis_Usuario<?php echo $i ?> readonly="" "> 
+																					 id="listadinamicac<?php echo $i ?>" name="idSis_Usuario<?php echo $i ?> readonly="" ">
 																				<option value="">-- Selecione uma opção --</option>
 																				<?php
 																				foreach ($select['idSis_Usuario'] as $key => $row) {
@@ -749,7 +765,7 @@
 												</div>
 											</div>
 										</div>
-										
+
 										<div class="panel-group" id="accordion8" role="tablist" aria-multiselectable="true">
 											<div class="panel panel-primary">
 												<div class="panel-heading collapsed" role="tab" id="heading8" data-toggle="collapse" data-parent="#accordion8" data-target="#collapse8" aria-expanded="false">								<h4 class="panel-title">
@@ -891,7 +907,7 @@
 																					</span>
 																				</div>
 																			</div>
-																			
+
 																			<!--
 																			<div class="form-group text-center">
 																				<div id="AprovadoOrca" <?php echo $div['AprovadoOrca']; ?>>
@@ -954,11 +970,11 @@
 													</div>
 												</div>
 											</div>
-										</div>	
+										</div>
 
 										<!--
 										<div class="form-group">
-											<div class="row">												
+											<div class="row">
 												<div class="col-md-3">
 													<label for="DataEntradaOrca">Validade do Orç.:</label>
 													<div class="input-group <?php echo $datepicker; ?>">
@@ -985,7 +1001,7 @@
 
 										<hr>
 										-->
-										
+
 										<div class="form-group">
 											<div class="row">
 												<input type="hidden" name="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idSis_Usuario']; ?>">

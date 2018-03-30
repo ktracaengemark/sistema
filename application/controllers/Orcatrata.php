@@ -75,6 +75,7 @@ class Orcatrata extends CI_Controller {
             'DataEntradaOrca',
             'ValorRestanteOrca',
             'FormaPagamento',
+            'Modalidade',
             'QtdParcelasOrca',
             'DataVencimentoOrca',
             'ObsOrca',
@@ -94,7 +95,7 @@ class Orcatrata extends CI_Controller {
 		#(!$data['orcatrata']['DataPrazo']) ? $data['orcatrata']['DataPrazo'] = date('d/m/Y', time()) : FALSE;
 		(!$data['orcatrata']['TipoRD']) ? $data['orcatrata']['TipoRD'] = 'R' : FALSE;
 		#(!$data['orcatrata']['QtdParcelasOrca']) ? $data['orcatrata']['QtdParcelasOrca'] = '1' : FALSE;
-		
+
         $j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
 
@@ -260,7 +261,7 @@ class Orcatrata extends CI_Controller {
             $data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['id'];
             $data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['orcatrata']['idApp_OrcaTrata'] = $this->Orcatrata_model->set_orcatrata($data['orcatrata']);
-			
+
             /*
             echo count($data['servico']);
             echo '<br>';
@@ -400,9 +401,9 @@ class Orcatrata extends CI_Controller {
         (!$this->input->post('SCount')) ? $data['count']['SCount'] = 0 : $data['count']['SCount'] = $this->input->post('SCount');
         (!$this->input->post('PCount')) ? $data['count']['PCount'] = 0 : $data['count']['PCount'] = $this->input->post('PCount');
         (!$this->input->post('PMCount')) ? $data['count']['PMCount'] = 0 : $data['count']['PMCount'] = $this->input->post('PMCount');
-		
+
 		#(!$data['orcatrata']['TipoRD']) ? $data['orcatrata']['TipoRD'] = 'R' : FALSE;
-		
+
         $j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
 
@@ -423,8 +424,8 @@ class Orcatrata extends CI_Controller {
         $j = 1;
         for ($i = 1; $i <= $data['count']['PCount']; $i++) {
 
-            if ($this->input->post('idTab_Produto' . $i) || $this->input->post('ValorVendaProduto' . $i) || 
-					$this->input->post('QtdVendaProduto' . $i) || $this->input->post('SubtotalProduto' . $i) || 
+            if ($this->input->post('idTab_Produto' . $i) || $this->input->post('ValorVendaProduto' . $i) ||
+					$this->input->post('QtdVendaProduto' . $i) || $this->input->post('SubtotalProduto' . $i) ||
 					$this->input->post('ObsProduto' . $i) || $this->input->post('DataValidadeProduto' . $i)) {
                 $data['produto'][$j]['idApp_ProdutoVenda'] = $this->input->post('idApp_ProdutoVenda' . $i);
                 $data['produto'][$j]['idTab_Produto'] = $this->input->post('idTab_Produto' . $i);
@@ -504,7 +505,7 @@ class Orcatrata extends CI_Controller {
 
             #### App_ProdutoVenda ####
             $data['produto'] = $this->Orcatrata_model->get_produto($id);
-		
+
             if (count($data['produto']) > 0) {
                 $data['produto'] = array_combine(range(1, count($data['produto'])), array_values($data['produto']));
                 $data['count']['PCount'] = count($data['produto']);
@@ -514,7 +515,7 @@ class Orcatrata extends CI_Controller {
                     for($j=1;$j<=$data['count']['PCount'];$j++) {
 						$data['produto'][$j]['SubtotalProduto'] = number_format(($data['produto'][$j]['ValorVendaProduto'] * $data['produto'][$j]['QtdVendaProduto']), 2, ',', '.');
 						$data['produto'][$j]['DataValidadeProduto'] = $this->basico->mascara_data($data['produto'][$j]['DataValidadeProduto'], 'barras');
-					}					
+					}
 
                 }
             }
@@ -799,7 +800,7 @@ class Orcatrata extends CI_Controller {
                     $data['update']['procedimento']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['id'];
                     $data['update']['procedimento']['inserir'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
                     $data['update']['procedimento']['inserir'][$j]['idApp_OrcaTrata'] = $data['orcatrata']['idApp_OrcaTrata'];
-					
+
                     $data['update']['procedimento']['inserir'][$j]['DataProcedimento'] = $this->basico->mascara_data($data['update']['procedimento']['inserir'][$j]['DataProcedimento'], 'mysql');
 
                 }
@@ -845,7 +846,7 @@ class Orcatrata extends CI_Controller {
                 $data['msg'] = '?m=1';
 
                 redirect(base_url() . 'orcatrata/listar/' . $_SESSION['Cliente']['idSis_Usuario'] . $data['msg']);
-				
+
 				exit();
             }
         }
