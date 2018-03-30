@@ -51,29 +51,42 @@ var dateTimePickerOptions = {
 }
 
 /*Atualiza o somatório do Qtd no Orcatrata*/
-function calculaQtdSoma(campo, soma, somaproduto) {
-
-    /*
-    if(!value) {
-        qtdsoma = parseInt($("#"+campo).text());
-        console.log('>> ' + original);
-    }
-    else {
-        qtdsoma = parseInt($("#"+campo).text()) + parseInt(value);
-        console.log('>> ' + qtdsoma);
-    }
-    */
+function calculaQtdSoma(campo, soma, somaproduto, excluir, produtonum, countmax, adicionar, hidden) {
 
     qtdsoma = 0;
-    i = 1;
-    while(($("#"+campo+i).val())) {
-        //console.log('>> ' + $("#"+campo+i).val());
-        qtdsoma += parseInt($("#"+campo+i).val());
-        i++;
+    i = j = 1;
+
+    if(excluir == 1){
+        for(k=0; k<$("#"+countmax).val(); k++) {
+            /*
+            if(($("#"+hidden+i).val()))
+                console.log('>> existe '+$("#"+campo+i).val()+' <> '+hidden+' <> '+produtonum+' <> '+$("#"+somaproduto).html()+' <<>> '+i+' '+k);
+            else
+                console.log('>> não '+$("#"+campo+i).val()+' <> '+hidden+' <> '+produtonum+' <> '+$("#"+somaproduto).html()+' <<>> '+i+' '+k);
+            */
+            if(i != produtonum && ($("#"+campo+i).val())) {
+                qtdsoma += parseInt($("#"+campo+i).val());
+                j++;
+            }
+            i++;
+        }
+    }
+    else {
+        if(adicionar)
+            $("#"+countmax).val((parseInt($("#"+countmax).val())+1));
+
+        for(k=1; k<=$("#"+countmax).val(); k++) {
+            if($("#"+campo+k).val()) {
+                qtdsoma += parseInt($("#"+campo+k).val());
+                j++;
+            }
+            //j++;
+        }
     }
 
-    console.log('>> ' + qtdsoma);
-
+    $("#"+soma).html(qtdsoma);
+    $("#"+somaproduto).html(j-1);
+    //console.log('>> ' + qtdsoma);
 
 }
 
@@ -1693,7 +1706,7 @@ $(document).ready(function () {
                                 <label for="QtdVendaProduto">Qtd:</label><br>\
                                 <div class="input-group">\
                                     <input type="text" class="form-control Numero" maxlength="3" id="QtdVendaProduto'+pc+'" placeholder="0"\
-                                        onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'QTD\',\'Produto\')"\
+                                        onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'QTD\',\'Produto\'),calculaQtdSoma(\'QtdVendaProduto\',\'QtdSoma\',\'ProdutoSoma\',0,0,\'CountMax\',0,\'ProdutoHidden\')"\
                                         name="QtdVendaProduto'+pc+'" value="">\
                                 </div>\
                             </div>\
@@ -1740,7 +1753,8 @@ $(document).ready(function () {
 							</div>\
 							<div class="col-md-1">\
                                 <label><br></label><br>\
-                                <a href="#" id="'+pc+'" class="remove_field2 btn btn-danger">\
+                                <a href="#" id="'+pc+'" class="remove_field2 btn btn-danger"\
+                                        onclick="calculaQtdSoma(\'QtdVendaProduto\',\'QtdSoma\',\'ProdutoSoma\',1,'+pc+',\'CountMax\',0,\'ProdutoHidden\')">\
                                     <span class="glyphicon glyphicon-trash"></span>\
                                 </a>\
                             </div>\
