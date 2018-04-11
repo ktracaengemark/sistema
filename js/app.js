@@ -2547,7 +2547,7 @@ function redirecionar(x) {
     var re = new RegExp(/^.*\//);
     var start = moment($("#start").val());
     var end = moment($("#end").val());
-    (x == 1) ? url = 'consulta/cadastrar_evento' : url = 'clienteusuario/pesquisar';
+    (x == 1) ? url = 'consulta/cadastrar_evento' : url = 'consulta/cadastrar';
     window.location = re.exec(window.location.href) + url + '?start=' + start + '&end=' + end
 }
 

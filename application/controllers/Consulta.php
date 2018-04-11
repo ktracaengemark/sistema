@@ -51,9 +51,7 @@ class Consulta extends CI_Controller {
 			'idApp_Consulta',
             'idApp_Agenda',
             'idApp_Cliente',
-			#'Cliente',
 			'idSis_EmpresaFilial',
-			#'Unidade',
             'Data',
             'HoraInicio',
             'HoraFim',
@@ -66,12 +64,12 @@ class Consulta extends CI_Controller {
             'Obs',
                 ), TRUE));
 		
-		
+		/*
         if ($idApp_Cliente) {
             $data['query']['idApp_Cliente'] = $idApp_Cliente;
             $_SESSION['Cliente'] = $this->Clienteusuario_model->get_clienteusuario($idApp_Cliente, TRUE);
         }
-		/*
+		
 		if ($idApp_Cliente) {
             $data['query']['idApp_Cliente'] = $idApp_Cliente;
             $_SESSION['Cliente'] = $this->Cliente_model->get_cliente($idApp_Cliente, TRUE);
@@ -81,21 +79,19 @@ class Consulta extends CI_Controller {
             $data['query']['idApp_ContatoCliente'] = $idApp_ContatoCliente;
             $data['query']['Paciente'] = 'D';
         }
-		*/
+		
         if (isset($_SESSION['agenda']) && !$data['query']['HoraInicio'] && !$data['query']['HoraFim']) {
             $data['query']['Data'] = date('d/m/Y', $_SESSION['agenda']['HoraInicio']);
             $data['query']['HoraInicio'] = date('H:i', $_SESSION['agenda']['HoraInicio']);
             $data['query']['HoraFim'] = date('H:i', $_SESSION['agenda']['HoraFim']);
         }
-		
-		/*
+		*/
 		if ($this->input->get('start') && $this->input->get('end')) {
             $data['query']['Data'] = date('d/m/Y', substr($this->input->get('start'), 0, -3));
             $data['query']['HoraInicio'] = date('H:i', substr($this->input->get('start'), 0, -3));
             $data['query']['HoraFim'] = date('H:i', substr($this->input->get('end'), 0, -3));
         }
 		
-
         #Ver uma solução melhor para este campo
         (!$data['query']['Paciente']) ? $data['query']['Paciente'] = 'R' : FALSE;
 
@@ -105,23 +101,23 @@ class Consulta extends CI_Controller {
 
         ($data['query']['Paciente'] == 'D') ?
             $data['div']['Paciente'] = '' : $data['div']['Paciente'] = 'style="display: none;"';
-*/
+
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
         $this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
         $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
         #$this->form_validation->set_rules('idTab_TipoConsulta', 'Tipo de Consulta', 'required|trim');
-        #$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+        $this->form_validation->set_rules('idApp_Cliente', 'Cliente', 'required|trim');
+		$this->form_validation->set_rules('idApp_Agenda', 'Profissional', 'required|trim');
 		$this->form_validation->set_rules('idSis_EmpresaFilial', 'Unidade', 'required|trim');
-		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
-
+		
 /*
         if ($data['query']['Paciente'] == 'D')
             $this->form_validation->set_rules('idApp_ContatoCliente', 'ContatoCliente', 'required|trim');
 */
         #$data['resumo'] = $this->Cliente_model->get_cliente($data['query']['idApp_Cliente']);
-		$data['resumo'] = $this->Clienteusuario_model->get_clienteusuario($data['query']['idApp_Cliente']);
+		#$data['resumo'] = $this->Clienteusuario_model->get_clienteusuario($data['query']['idApp_Cliente']);
 		
 		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
 		$data['select']['Status'] = $this->Basico_model->select_status();
@@ -150,7 +146,7 @@ class Consulta extends CI_Controller {
             'D' => 'ContatoCliente',
         );
 */
-        $data['titulo'] = 'Agenda Empresa C/ Cliente';
+        $data['titulo'] = 'Agendamento C/ Cliente';
         $data['form_open_path'] = 'consulta/cadastrar';
         $data['panel'] = 'primary';
         $data['readonly'] = '';
@@ -167,7 +163,7 @@ class Consulta extends CI_Controller {
             $this->load->view('consulta/form_consulta', $data);
         } else {
 
-			$data['query']['Tipo'] = 2;
+			$data['query']['Tipo'] = 1;
             $data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
             $data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraFim'];
             //$data['query']['idTab_Status'] = 1;
@@ -220,7 +216,6 @@ class Consulta extends CI_Controller {
 			'idApp_Consulta',
             'idApp_Agenda',
             'idApp_Cliente',
-			#'Cliente',
 			'idSis_EmpresaFilial',
             'Data',
             'HoraInicio',
@@ -288,8 +283,10 @@ class Consulta extends CI_Controller {
         $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
         #$this->form_validation->set_rules('idTab_TipoConsulta', 'Tipo de Consulta', 'required|trim');
         #$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
-		$this->form_validation->set_rules('idSis_EmpresaFilial', 'Unidade', 'required|trim');
+		$this->form_validation->set_rules('idApp_Cliente', 'Cliente', 'required|trim');
 		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
+		$this->form_validation->set_rules('idSis_EmpresaFilial', 'Unidade', 'required|trim');
+		
 
 
         if ($data['query']['Paciente'] == 'D')
@@ -450,14 +447,14 @@ class Consulta extends CI_Controller {
 					'idApp_Consulta',
                     'idApp_Agenda',
 					'idApp_Cliente',
-					#'Cliente',
-					#'Unidade',
+					'idSis_EmpresaFilial',
                     'Data',
                     'HoraInicio',
                     'HoraFim',
                     'Evento',
                     'Obs',
 					'idApp_Profissional',
+					'idTab_Status',
                         ), TRUE));
 
         if ($this->input->get('start') && $this->input->get('end')) {
@@ -477,10 +474,11 @@ class Consulta extends CI_Controller {
         $data['select']['idApp_Cliente'] = $this->Clienteusuario_model->select_clienteusuario();
 		$data['select']['idSis_EmpresaFilial'] = $this->Empresafilial_model->select_empresafilial();
 		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
+		$data['select']['Status'] = $this->Basico_model->select_status();
 
         $data['select']['option'] = ($_SESSION['log']['Permissao'] <= 2) ? '<option value="">-- Sel. um Prof. --</option>' : FALSE;
 
-		$data['titulo'] = 'Agenda Empresa Pessoal';
+		$data['titulo'] = 'Outros Eventos';
         $data['form_open_path'] = 'consulta/cadastrar_evento';
         $data['panel'] = 'primary';
         $data['metodo'] = 1;
@@ -553,6 +551,7 @@ class Consulta extends CI_Controller {
             'Evento',
             'Obs',
 			'idApp_Profissional',
+			'idTab_Status',
                 ), TRUE);
 
 
@@ -589,8 +588,9 @@ class Consulta extends CI_Controller {
         $data['select']['idApp_Cliente'] = $this->Clienteusuario_model->select_clienteusuario();
 		$data['select']['idSis_EmpresaFilial'] = $this->Empresafilial_model->select_empresafilial();
 		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
+		$data['select']['Status'] = $this->Basico_model->select_status();
 
-        $data['titulo'] = 'Agenda Empresa Pessoal';
+        $data['titulo'] = 'Outros Eventos';
         $data['form_open_path'] = 'consulta/alterar_evento';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
