@@ -401,16 +401,30 @@
 														</div>
 
 														<div class="panel panel-info">
-															<div class="panel-heading text-center">
-																<b>Total de Produtos: <span id="ProdutoSoma"><?php echo $ProdutoSoma ?></span></b><br />
-																<b>Total de Peças: <span id="QtdSoma"><?php echo $QtdSoma ?></span></b>
+															<div class="panel-heading text-left">
+																<div class="form-group">	
+																	<div class="row">	
+																		<div class="col-md-3">	
+																			<a class="add_field_button2 btn btn-warning"
+																					onclick="calculaQtdSoma('QtdVendaProduto','QtdSoma','ProdutoSoma',0,0,'CountMax',1,0)">
+																				<span class="glyphicon glyphicon-plus"></span> Adic. Produtos ou Serviços
+																			</a>
+																		</div>
+																		<div class="col-md-2">	
+																			<b>Total de Produtos: <span id="ProdutoSoma"><?php echo $ProdutoSoma ?></span></b><br />
+																		</div>
+																		<div class="col-md-2">	
+																			<b>Total de Peças: <span id="QtdSoma"><?php echo $QtdSoma ?></span></b>
+																		</div>
+																	</div>
+																</div>	
 															</div>
 														</div>
 
 														<input type="hidden" name="CountMax" id="CountMax" value="<?php echo $ProdutoSoma ?>">
 
 														<br />
-
+														<!--
 														<div class="form-group">
 															<div class="row">
 																<div class="col-md-3">
@@ -421,6 +435,7 @@
 																</div>
 															</div>
 														</div>
+														-->
 													</div>
 												</div>
 											</div>

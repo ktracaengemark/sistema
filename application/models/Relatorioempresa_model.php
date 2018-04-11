@@ -3481,6 +3481,7 @@ exit();*/
             SELECT
                 F.idSis_EmpresaFilial,
 				F.idSis_EmpresaMatriz,
+				F.Empresa,
                 F.Nome,
 				F.Celular
 				
@@ -3488,7 +3489,7 @@ exit();*/
                 Sis_EmpresaFilial AS F
 
             WHERE
-				F.idSis_EmpresaMatriz = ' . $_SESSION['log']['id'] . ' 
+				F.Empresa = ' . $_SESSION['log']['id'] . ' 
                 ' . $data['Nome'] . '
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '

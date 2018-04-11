@@ -132,7 +132,11 @@
 													
 														
 													<a class="btn btn-md btn-info" target="_blank" href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $row['idApp_OrcaTrata']; ?>" role="button">
-														<span class="glyphicon glyphicon-print"></span> Versão para Impressão
+														<span class="glyphicon glyphicon-print"></span> Imprimir Produtos de Hoje
+													</a>
+													
+													<a class="btn btn-md btn-info" target="_blank" href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $row['idApp_OrcaTrata']; ?>" role="button">
+														<span class="glyphicon glyphicon-print"></span> Imprimir Orç. Inteiro
 													</a>
 													
 
@@ -194,7 +198,11 @@
 													</a>
 													
 													<a class="btn btn-md btn-info" target="_blank" href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $row['idApp_OrcaTrata']; ?>" role="button">
-														<span class="glyphicon glyphicon-print"></span> Versão para Impressão
+														<span class="glyphicon glyphicon-print"></span> Imprimir Produtos de Hoje
+													</a>
+													
+													<a class="btn btn-md btn-info" target="_blank" href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $row['idApp_OrcaTrata']; ?>" role="button">
+														<span class="glyphicon glyphicon-print"></span> Imprimir Orç. Inteiro
 													</a>
 
 													<br><br>
