@@ -141,9 +141,9 @@ class Clienteusuario_model extends CI_Model {
 
         $query = $this->db->query(
             'SELECT * '
-                . 'FROM App_ContatoFunc WHERE '
+                . 'FROM App_ContatoUsuario WHERE '
                 . 'idSis_Usuario = ' . $id . ' '
-            . 'ORDER BY NomeContatoFunc ASC ');
+            . 'ORDER BY NomeContatoUsuario ASC ');
         /*
           echo $this->db->last_query();
           echo "<pre>";

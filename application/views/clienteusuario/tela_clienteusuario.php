@@ -222,7 +222,7 @@
 													<?php
 													if (!$list) {
 													?>
-														<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>contatofunc/cadastrar" role="button">
+														<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>contatocliente/cadastrar" role="button">
 															<span class="glyphicon glyphicon-plus"></span> Cad.
 														</a>
 														<br><br>

@@ -5,64 +5,79 @@
 	<div class="row">
 	
 		<div class="col-md-2"></div>
-		<div class="col-md-8 ">
+		<div class="col-md-8">
 		
 			<div class="panel panel-primary">
 				
-				<div class="panel-heading"><strong><?php echo '<strong>' . $_SESSION['Cliente']['NomeCliente'] . '</strong> - <small>Id.: ' . $_SESSION['Cliente']['idApp_Cliente'] . '</small>' ?></strong></div>
+				<div class="panel-heading"><strong><?php echo '<strong>' . $_SESSION['Cliente']['Nome'] . '</strong> - <small>Id.: ' . $_SESSION['Cliente']['idSis_Usuario'] . '</small>' ?></strong></div>
 				<div class="panel-body">
 			
 					<div class="form-group">
 						<div class="row">
-							<div class="col-md-2 "></div>
-							<div class="col-md-8 col-lg-8">
-								<div class="col-md-4 text-left">
-									<label for="">Cliente & Contatos:</label>
+							<div class="col-md-1 "></div>
+							<div class="col-md-8 col-lg-10">
+								<div class="col-md-3 text-left">
+									<label for="">Cliente & Conts:</label>
 									<div class="form-group">
-										<div class="row">	
+										<div class="row">
 											<a <?php if (preg_match("/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
-												<a class="btn btn-md btn-success" href="<?php echo base_url() . 'cliente/prontuario/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+												<a class="btn btn-md btn-success" href="<?php echo base_url() . 'clienteusuario/prontuario/' . $_SESSION['Cliente']['idSis_Usuario']; ?>">
 													<span class="glyphicon glyphicon-file"> </span> Ver <span class="sr-only">(current)</span>
 												</a>
-											</a>				
-											<a <?php if (preg_match("/cliente\/alterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-												<a class="btn btn-md btn-warning" href="<?php echo base_url() . 'cliente/alterar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+											</a>
+											<a <?php if (preg_match("/clienteusuario\/alterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+												<a class="btn btn-md btn-warning" href="<?php echo base_url() . 'clienteusuario/alterar/' . $_SESSION['Cliente']['idSis_Usuario']; ?>">
 													<span class="glyphicon glyphicon-edit"></span> Edit.
 												</a>
 											</a>
 										</div>
-									</div>	
+									</div>									
 								</div>
-
-								<div class="col-md-4 text-center">
+								<div class="col-md-3 text-left">
 									<label for="">Agendamentos:</label>
 									<div class="form-group">
 										<div class="row">
 											<a <?php if (preg_match("/consulta\/listar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
-												<a class="btn btn-md btn-success" href="<?php echo base_url() . 'consulta/listar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+												<a class="btn btn-md btn-success" href="<?php echo base_url() . 'consulta/listar/' . $_SESSION['Cliente']['idSis_Usuario']; ?>">
 													<span class="glyphicon glyphicon-calendar"></span> List.
 												</a>
 											</a>
-											<a <?php if (preg_match("/consulta\/(cadastrar|alterar)\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
-												<a class="btn btn-md btn-warning" href="<?php echo base_url() . 'consulta/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+											<a <?php if (preg_match("/consulta\/(cadastrar2|alterar)\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
+												<a class="btn btn-md btn-warning" href="<?php echo base_url() . 'consulta/cadastrar2/' . $_SESSION['Cliente']['idSis_Usuario']; ?>">
 													<span class="glyphicon glyphicon-plus"></span> Cad.
 												</a>
 											</a>
 										</div>	
 									</div>	
 								</div>
-
-								<div class="col-md-4 text-right">
+								<div class="col-md-3 text-left">
 									<label for="">Orçamentos:</label>
 									<div class="form-group ">
 										<div class="row">
 											<a <?php if (preg_match("/orcatrata\/listar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
-												<a class="btn btn-md btn-success" href="<?php echo base_url() . 'orcatrata/listar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+												<a class="btn btn-md btn-success" href="<?php echo base_url() . 'orcatrata/listar/' . $_SESSION['Cliente']['idSis_Usuario']; ?>">
 													<span class="glyphicon glyphicon-usd"></span> List.
 												</a>
 											</a>
 											<a <?php if (preg_match("/orcatrata\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
-												<a class="btn btn-md btn-warning" href="<?php echo base_url() . 'orcatrata/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+												<a class="btn btn-md btn-warning" href="<?php echo base_url() . 'orcatrata/cadastrar/' . $_SESSION['Cliente']['idSis_Usuario']; ?>">
+													<span class="glyphicon glyphicon-plus"></span> Cad.
+												</a>
+											</a>
+										</div>		
+									</div>	
+								</div>
+								<div class="col-md-3 text-left">
+									<label for="">Troca/Devol:</label>
+									<div class="form-group ">
+										<div class="row">
+											<a <?php if (preg_match("/orcatrata4\/listar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
+												<a class="btn btn-md btn-success" href="<?php echo base_url() . 'orcatrata4/listar/' . $_SESSION['Cliente']['idSis_Usuario']; ?>">
+													<span class="glyphicon glyphicon-usd"></span> List.
+												</a>
+											</a>
+											<a <?php if (preg_match("/orcatrata4\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ?>>
+												<a class="btn btn-md btn-warning" href="<?php echo base_url() . 'orcatrata4/cadastrar/' . $_SESSION['Cliente']['idSis_Usuario']; ?>">
 													<span class="glyphicon glyphicon-plus"></span> Cad.
 												</a>
 											</a>
@@ -70,19 +85,20 @@
 									</div>	
 								</div>
 							</div>
-							<div class="col-md-2 "></div>
-						</div>	
+							<div class="col-md-1"></div>
+						</div>
 					</div>
 					<!--
-					<div class="form-group">		
+					<div class="form-group">
 						<div class="row">
 							<div class="text-center t">
-								<h3><?php echo '<strong>' . $_SESSION['Cliente']['NomeCliente'] . '</strong> - <small>Id.: ' . $_SESSION['Cliente']['idApp_Cliente'] . '</small>' ?></h3>
+								<h3><?php echo '<strong>' . $_SESSION['Cliente']['Nome'] . '</strong> - <small>Id.: ' . $_SESSION['Cliente']['idSis_Usuario'] . '</small>' ?></h3>
 							</div>
 						</div>
 					</div>
 					-->
 					<?php } ?>
+
 					<div class="row">
 						
 						<div class="col-md-12 col-lg-12">
@@ -98,25 +114,56 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-md-4">
-												<label for="NomeContatoCliente">Nome do Contato: *</label>
-												<input type="text" class="form-control" id="NomeContatoCliente" maxlength="255" <?php echo $readonly; ?>
-													   name="NomeContatoCliente" autofocus value="<?php echo $query['NomeContatoCliente']; ?>">
+												<label for="NomeContatoUsuario">Nome do Contato: *</label>
+												<input type="text" class="form-control" id="NomeContatoUsuario" maxlength="255" <?php echo $readonly; ?>
+													   name="NomeContatoUsuario" autofocus value="<?php echo $query['NomeContatoUsuario']; ?>">
 											</div>
-
 											<div class="col-md-4">
-												<label for="Telefone1">Telefone Principal: *</label>
-												<input type="text" class="form-control Celular" id="Telefone1" maxlength="14" <?php echo $readonly; ?>
-													   name="Telefone1" placeholder="(XX)999999999" value="<?php echo $query['Telefone1']; ?>">
+												<label for="TelefoneContatoUsuario">Telefone Principal: *</label>
+												<input type="text" class="form-control Celular CelularVariavel" id="TelefoneContatoUsuario" maxlength="14" <?php echo $readonly; ?>
+													   name="TelefoneContatoUsuario" placeholder="(XX)999999999" value="<?php echo $query['TelefoneContatoUsuario']; ?>">
 											</div>
 											<div class="col-md-4">
 												<label for="DataNascimento">Data de Nascimento:</label>
 												<input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
 													   name="DataNascimento" placeholder="DD/MM/AAAA" value="<?php echo $query['DataNascimento']; ?>">
-											</div>						
+											</div>                        													 
+											<!--
+											<div class="col-md-2 form-inline">
+												<label for="StatusVida">Status de Vida:</label><br>
+												<div class="form-group">
+													<div class="btn-group" data-toggle="buttons">
+														<?php
+														foreach ($select['StatusVida'] as $key => $row) {
+															if (!$query['StatusVida'])
+																$query['StatusVida'] = 'V';
+
+															if ($query['StatusVida'] == $key) {
+																echo ''
+																. '<label class="btn btn-warning active" name="radio_StatusVida" id="radiogeral' . $key . '">'
+																. '<input type="radio" name="StatusVida" id="radiogeral" '
+																	. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																. '</label>'
+																;
+															} else {
+																echo ''
+																. '<label class="btn btn-default" name="radio_StatusVida" id="radiogeral' . $key . '">'
+																. '<input type="radio" name="StatusVida" id="radiogeral" '
+																	. 'autocomplete="off" value="' . $key . '" >' . $row
+																. '</label>'
+																;
+															}
+														}
+														?>  
+													</div>
+												</div>
+											</div>
+											-->
 										</div>
-									</div>	
+									</div> 
+
 									<div class="form-group">
-										<div class="row"> 
+										<div class="row">
 											<div class="col-md-4">
 												<label for="Sexo">Sexo:</label>
 												<select data-placeholder="Selecione uma Opção..." class="form-control" <?php echo $readonly; ?>
@@ -132,9 +179,9 @@
 													}
 													?>   
 												</select>
-											</div>					
+											</div>						
 											<div class="col-md-4">
-												<label for="RelaPes">Relação Pessoal</label>
+												<label for="RelaPes">Relação*</label>
 												<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>relapes/cadastrar/relapes" role="button"> 
 													<span class="glyphicon glyphicon-plus"></span> <b>Nova Relação</b>
 												</a>-->
@@ -186,43 +233,11 @@
 												</div>
 											</div>
 										</div>
-									</div> 
+									</div>
 									
-											<!--<div class="col-md-3 form-inline">
-												<label for="StatusVida">Status de Vida:</label><br>
-												<div class="form-group">
-													<div class="btn-group" data-toggle="buttons">
-														<?php
-														foreach ($select['StatusVida'] as $key => $row) {
-															if (!$query['StatusVida'])
-																$query['StatusVida'] = 'V';
-
-															if ($query['StatusVida'] == $key) {
-																echo ''
-																. '<label class="btn btn-warning active" name="radio_StatusVida" id="radiogeral' . $key . '">'
-																. '<input type="radio" name="StatusVida" id="radiogeral" '
-																	. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																. '</label>'
-																;
-															} else {
-																echo ''
-																. '<label class="btn btn-default" name="radio_StatusVida" id="radiogeral' . $key . '">'
-																. '<input type="radio" name="StatusVida" id="radiogeral" '
-																	. 'autocomplete="off" value="' . $key . '" >' . $row
-																. '</label>'
-																;
-															}
-														}
-														?>  
-													</div>
-												</div>
-											</div>-->
-
-									<br>
-												
 									<div class="form-group">
 										<div class="row">
-											<input type="hidden" name="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>"> 
+											<input type="hidden" name="idSis_Usuario" value="<?php echo $_SESSION['Cliente']['idSis_Usuario']; ?>"> 
 											<?php if ($metodo == 2) { ?>
 
 												<div class="col-md-6">
@@ -254,7 +269,7 @@
 																	</button>
 																</div>
 																<div class="col-md-6 text-right">
-																	<a class="btn btn-danger" href="<?php echo base_url() . 'contatocliente/excluir/' . $query['idApp_ContatoCliente'] ?>" role="button">
+																	<a class="btn btn-danger" href="<?php echo base_url() . 'contatocliente/excluir/' . $query['idApp_ContatoUsuario'] ?>" role="button">
 																		<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
 																	</a>
 																</div>
@@ -271,7 +286,7 @@
 												</div>
 											<?php } ?>
 										</div>
-									</div>									
+									</div>
 									</form>
 								</div>
 							</div>
@@ -283,5 +298,3 @@
 		<div class="col-md-2"></div>
 	</div>	
 </div>
-	
-
