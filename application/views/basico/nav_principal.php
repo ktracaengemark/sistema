@@ -104,24 +104,33 @@
 									<li><a href="<?php echo base_url(); ?>login/sair"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>							
 								</ul>
 							</div>
+							<div class="btn-group" role="group" aria-label="...">
+								<a href="<?php echo base_url(); ?>relatorio/clientesusuario">
+									<button type="button" class="btn btn-md btn-success ">
+										<span class="glyphicon glyphicon-user"></span> Clientes
+									</button>
+								</a>
+							</div>
+							<!--
 							<div class="btn-group">
 								<button type="button" class="btn btn-md btn-success dropdown-toggle" data-toggle="dropdown">
 									<span class="glyphicon glyphicon-user"></span> Clientes <span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
-									<!--<li><a href="<?php echo base_url(); ?>logincliente/registrar"><span class="glyphicon glyphicon-pencil"></span> Cad. Clientes/Usuario</a></li>
+									<li><a href="<?php echo base_url(); ?>logincliente/registrar"><span class="glyphicon glyphicon-pencil"></span> Cad. Clientes/Usuario</a></li>
 									<li role="separator" class="divider"></li>
 									<li><a href="<?php echo base_url(); ?>clienteusuario/cadastrar"><span class="glyphicon glyphicon-pencil"></span> Cad. Clientes/Usuario</a></li>
-									<li role="separator" class="divider"></li>-->
+									<li role="separator" class="divider"></li>
 									<li><a href="<?php echo base_url(); ?>relatorio/clientesusuario"><span class="glyphicon glyphicon-pencil"></span> Rel. Clientes</a></li>
-									<!--<li><a href="<?php echo base_url(); ?>relatorio/clientes"><span class="glyphicon glyphicon-pencil"></span> Cadastrar Clientes</a></li>
+									<li><a href="<?php echo base_url(); ?>relatorio/clientes"><span class="glyphicon glyphicon-pencil"></span> Cadastrar Clientes</a></li>
 									<li role="separator" class="divider"></li>
 									<li><a href="<?php echo base_url() ?>relatorio/clientes"><span class="glyphicon glyphicon-list"></span> Clientes & Contatos</a></li>
 									<li role="separator" class="divider"></li>
 									<li><a href="<?php echo base_url(); ?>relatorio/clientes"><span class="glyphicon glyphicon-calendar"></span> Aniversariantes</a></li>							
-									-->
+									
 								</ul>
-							</div>														
+							</div>
+							-->
 							<div class="btn-group" role="group" aria-label="..."> </div>
 						</li>
 						<!--

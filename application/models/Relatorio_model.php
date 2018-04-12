@@ -3527,6 +3527,7 @@ exit();*/
                 C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				C.Empresa = ' . $_SESSION['log']['Empresa'] . ' AND
 				C.Nivel = 2 
+				' . $data['Nome'] . '
 
 
             ORDER BY

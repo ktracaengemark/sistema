@@ -16,7 +16,7 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-md-12">
-												<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+												<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()"
 														id="Nome" autofocus name="Nome">
 													<?php
 													foreach ($select['Nome'] as $key => $row) {
