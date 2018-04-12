@@ -70,20 +70,10 @@
 										</div>
 									</div>
 								</div>
-								<hr>
-								<div class="form-group">
-									<div class="row">
-										<div class="form-group col-md-12 text-left">
-											<label for="Obs">Obs:</label>
-											<textarea class="form-control" id="Obs"
-													  name="Obs"><?php echo $query['Obs']; ?></textarea>
-										</div>
-									</div>
-								</div>
 								<hr>								
 								<div class="form-group">
 									<div class="row">		
-										<div class="col-md-6 form-inline text-left">
+										<div class="col-md-4 form-group text-left">
 											<div class="form-group">	
 												<label for="Data">Data: </label>												
 												<div class="input-group <?php echo $datepicker; ?>">
@@ -95,20 +85,23 @@
 												</div>
 											</div>	
 										</div>
-										<div class="col-md-6 form-inline text-left">
+										<div class="col-md-4 form-group text-left">
 											<div class="form-group">
 												<label for="Hora">Hora:</label>
 												De
-												<div class="col-md-4 input-group <?php echo $timepicker; ?>">
+												<div class="input-group <?php echo $timepicker; ?>">
 													<input type="text" class="form-control Time" <?php echo $readonly; ?> maxlength="5"  placeholder="HH:MM"
 														   accept=""name="HoraInicio" value="<?php echo $query['HoraInicio']; ?>">
 													<span class="input-group-addon">
 														<span class="glyphicon glyphicon-time"></span>
 													</span>
 												</div>
-
+											</div>
+										</div>	
+										<div class="col-md-4 form-group text-left">
+											<div class="form-group">		
 												Até
-												<div class="col-md-4 input-group <?php echo $timepicker; ?>">
+												<div class="input-group <?php echo $timepicker; ?>">
 													<input type="text" class="form-control Time" <?php echo $readonly; ?> maxlength="5" placeholder="HH:MM"
 														   accept=""name="HoraFim" value="<?php echo $query['HoraFim']; ?>">
 													<span class="input-group-addon">
@@ -121,40 +114,21 @@
 								</div>
 								<hr>
 								<div class="form-group">
-									<div class="row">
-										<div class="col-md-9 form-inline">
-											<label for="idTab_Status">Status:</label><br>
-											<div class="form-group">
-												<div class="btn-group" data-toggle="buttons">
-													<?php
-													foreach ($select['Status'] as $key => $row) {
-														if (!$query['idTab_Status'])
-															$query['idTab_Status'] = 1;
-
-														if ($query['idTab_Status'] == $key) {
-															echo ''
-															. '<label class="btn btn-' . $this->basico->tipo_status_cor($key) . ' active" name="radio" id="radio' . $key . '">'
-															. '<input type="radio" name="idTab_Status" id="radio" '
-																. 'autocomplete="off" value="' . $key . '" checked>' . $row
-															. '</label>'
-															;
-														} else {
-															echo ''
-															. '<label class="btn btn-default" name="radio" id="radio' . $key . '">'
-															. '<input type="radio" name="idTab_Status" id="radio" class="idTab_Status" '
-																. 'autocomplete="off" value="' . $key . '" >' . $row
-															. '</label>'
-															;
-														}
-													}
-													?>
-												</div>
-											</div>
+									<div class="row">										
+										<div class="col-md-12 form-group text-left">
+											<label for="Obs">Obs:</label>
+											<textarea class="form-control" id="Obs"
+													  name="Obs"><?php echo $query['Obs']; ?></textarea>
 										</div>
+									</div>
+								</div>																
+								<hr>
+								<div class="form-group">
+									<div class="row">
 										<div class="col-md-3 form-inline text-left">
 											<label for="idTab_TipoConsulta">Tipo de Consulta:</label><br>
 											<div class="form-group">
-												<div class="btn-group" data-toggle="buttons">
+												<div class="btn-block" data-toggle="buttons">
 													<?php
 													foreach ($select['TipoConsulta'] as $key => $row) {
 														(!$query['idTab_TipoConsulta']) ? $query['idTab_TipoConsulta'] = '1' : FALSE;
@@ -179,6 +153,35 @@
 												</div>
 											</div>
 										</div>
+										<div class="col-md-9 form-inline text-left">
+											<label for="idTab_Status">Status:</label><br>
+											<div class="form-group">
+												<div class="btn-block" data-toggle="buttons">
+													<?php
+													foreach ($select['Status'] as $key => $row) {
+														if (!$query['idTab_Status'])
+															$query['idTab_Status'] = 1;
+
+														if ($query['idTab_Status'] == $key) {
+															echo ''
+															. '<label class="btn btn-' . $this->basico->tipo_status_cor($key) . ' active" name="radio" id="radio' . $key . '">'
+															. '<input type="radio" name="idTab_Status" id="radio" '
+																. 'autocomplete="off" value="' . $key . '" checked>' . $row
+															. '</label>'
+															;
+														} else {
+															echo ''
+															. '<label class="btn btn-default" name="radio" id="radio' . $key . '">'
+															. '<input type="radio" name="idTab_Status" id="radio" class="idTab_Status" '
+																. 'autocomplete="off" value="' . $key . '" >' . $row
+															. '</label>'
+															;
+														}
+													}
+													?>
+												</div>
+											</div>
+										</div>										
 									</div>
 								</div>
 								<hr>

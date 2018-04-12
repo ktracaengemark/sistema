@@ -163,7 +163,7 @@ class Consulta extends CI_Controller {
             $this->load->view('consulta/form_consulta', $data);
         } else {
 
-			$data['query']['Tipo'] = 1;
+			$data['query']['Tipo'] = 2;
             $data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
             $data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraFim'];
             //$data['query']['idTab_Status'] = 1;
@@ -202,6 +202,171 @@ class Consulta extends CI_Controller {
         $this->load->view('basico/footer');
     }
 
+    public function cadastrar2($idApp_Cliente = NULL) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'idSis_Usuario',
+			'idApp_Consulta',
+            'idApp_Agenda',
+            'idApp_Cliente',
+			'idSis_EmpresaFilial',
+            'Data',
+            'HoraInicio',
+            'HoraFim',
+            'Paciente',
+			'idTab_Status',
+            'idTab_TipoConsulta',
+            'idApp_ContatoCliente',
+            'idApp_Profissional',
+            'Procedimento',
+            'Obs',
+                ), TRUE));
+		
+		
+        if ($idApp_Cliente) {
+            $data['query']['idApp_Cliente'] = $idApp_Cliente;
+            $_SESSION['Cliente'] = $this->Clienteusuario_model->get_clienteusuario($idApp_Cliente, TRUE);
+        }
+		/*
+		if ($idApp_Cliente) {
+            $data['query']['idApp_Cliente'] = $idApp_Cliente;
+            $_SESSION['Cliente'] = $this->Cliente_model->get_cliente($idApp_Cliente, TRUE);
+        }
+		
+        if ($idApp_ContatoCliente) {
+            $data['query']['idApp_ContatoCliente'] = $idApp_ContatoCliente;
+            $data['query']['Paciente'] = 'D';
+        }
+		
+        if (isset($_SESSION['agenda']) && !$data['query']['HoraInicio'] && !$data['query']['HoraFim']) {
+            $data['query']['Data'] = date('d/m/Y', $_SESSION['agenda']['HoraInicio']);
+            $data['query']['HoraInicio'] = date('H:i', $_SESSION['agenda']['HoraInicio']);
+            $data['query']['HoraFim'] = date('H:i', $_SESSION['agenda']['HoraFim']);
+        }
+		*/
+		if ($this->input->get('start') && $this->input->get('end')) {
+            $data['query']['Data'] = date('d/m/Y', substr($this->input->get('start'), 0, -3));
+            $data['query']['HoraInicio'] = date('H:i', substr($this->input->get('start'), 0, -3));
+            $data['query']['HoraFim'] = date('H:i', substr($this->input->get('end'), 0, -3));
+        }
+		
+        #Ver uma solução melhor para este campo
+        (!$data['query']['Paciente']) ? $data['query']['Paciente'] = 'R' : FALSE;
+
+        $data['radio'] = array(
+            'Paciente' => $this->basico->radio_checked($data['query']['Paciente'], 'Paciente', 'RD'),
+        );
+
+        ($data['query']['Paciente'] == 'D') ?
+            $data['div']['Paciente'] = '' : $data['div']['Paciente'] = 'style="display: none;"';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+        $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
+        $this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
+        $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
+        #$this->form_validation->set_rules('idTab_TipoConsulta', 'Tipo de Consulta', 'required|trim');
+        $this->form_validation->set_rules('idApp_Cliente', 'Cliente', 'required|trim');
+		$this->form_validation->set_rules('idApp_Agenda', 'Profissional', 'required|trim');
+		$this->form_validation->set_rules('idSis_EmpresaFilial', 'Unidade', 'required|trim');
+		
+/*
+        if ($data['query']['Paciente'] == 'D')
+            $this->form_validation->set_rules('idApp_ContatoCliente', 'ContatoCliente', 'required|trim');
+*/
+        #$data['resumo'] = $this->Cliente_model->get_cliente($data['query']['idApp_Cliente']);
+		#$data['resumo'] = $this->Clienteusuario_model->get_clienteusuario($data['query']['idApp_Cliente']);
+		
+		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
+		$data['select']['Status'] = $this->Basico_model->select_status();
+        $data['select']['TipoConsulta'] = $this->Basico_model->select_tipo_consulta();
+        $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
+        $data['select']['idApp_Cliente'] = $this->Clienteusuario_model->select_clienteusuario();
+		$data['select']['idSis_EmpresaFilial'] = $this->Empresafilial_model->select_empresafilial();
+		#$data['select']['ContatoCliente'] = $this->Consulta_model->select_contatocliente_cliente($data['query']['idApp_Cliente']);
+
+        #echo $data['query']['idApp_Agenda'] . ' ' . $_SESSION['log']['id'];
+        #$data['query']['idApp_Agenda'] = ($_SESSION['log']['Permissao'] > 2) ? $_SESSION['log']['id'] : FALSE;
+
+        /*
+        echo count($data['select']['idApp_Agenda']);
+        echo '<br>';
+        echo "<pre>";
+        print_r($data['select']['idApp_Agenda']);
+        echo "</pre>";
+        #exit();
+        */
+
+        $data['select']['option'] = ($_SESSION['log']['Permissao'] <= 2) ? '<option value="">-- Sel. um Prof. --</option>' : FALSE;
+/*
+        $data['select']['Paciente'] = array (
+            'R' => 'O Próprio',
+            'D' => 'ContatoCliente',
+        );
+*/
+        $data['titulo'] = 'Agendamento C/ Cliente';
+        $data['form_open_path'] = 'consulta/cadastrar3';
+        $data['panel'] = 'primary';
+        $data['readonly'] = '';
+        $data['disabled'] = '';
+        $data['metodo'] = 1;
+
+        $data['datepicker'] = 'DatePicker';
+        $data['timepicker'] = 'TimePicker';
+
+        #$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+
+        #run form validation
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('consulta/form_consulta2', $data);
+        } else {
+
+			$data['query']['Tipo'] = 2;
+            $data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
+            $data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraFim'];
+            //$data['query']['idTab_Status'] = 1;
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+			$data['query']['Empresa'] = $_SESSION['log']['Empresa'];
+			$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+
+            $data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
+
+            unset($data['query']['Data'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
+
+            $data['campos'] = array_keys($data['query']);
+            $data['anterior'] = array();
+
+            $data['idApp_Consulta'] = $this->Consulta_model->set_consulta($data['query']);
+
+            unset($_SESSION['Agenda']);
+
+            if ($data['idApp_Consulta'] === FALSE) {
+                $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+                $this->basico->erro($msg);
+                $this->load->view('consulta/form_consulta2', $data);
+            } else {
+
+                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idApp_Consulta'], FALSE);
+                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'CREATE', $data['auditoriaitem']);
+                $data['msg'] = '?m=1';
+
+                //redirect(base_url() . 'cliente/prontuario/' . $data['query']['idApp_Cliente'] . $data['msg'] . $data['redirect']);
+                redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+                exit();
+            }
+        }
+
+        $this->load->view('basico/footer');
+    }
+	
     public function alterar($idApp_Cliente = FALSE, $idApp_Consulta = FALSE) {
 
         if ($this->input->get('m') == 1)
@@ -283,8 +448,8 @@ class Consulta extends CI_Controller {
         $this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
         #$this->form_validation->set_rules('idTab_TipoConsulta', 'Tipo de Consulta', 'required|trim');
         #$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
-		$this->form_validation->set_rules('idApp_Cliente', 'Cliente', 'required|trim');
-		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
+		#$this->form_validation->set_rules('idApp_Cliente', 'Cliente', 'required|trim');
+		$this->form_validation->set_rules('idApp_Agenda', 'Profissional', 'required|trim');
 		$this->form_validation->set_rules('idSis_EmpresaFilial', 'Unidade', 'required|trim');
 		
 
@@ -320,7 +485,7 @@ class Consulta extends CI_Controller {
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
-            $this->load->view('consulta/form_consulta', $data);
+            $this->load->view('consulta/form_consulta2', $data);
         } else {
 
             #echo '<br><br><br><br>================================== '.$data['query']['idTab_Status'];

@@ -16,7 +16,7 @@
                         <th class="active">id</th>
                         <th class="active">Profissional</th>
 						<th class="active">Funcao</th>
-						<th class="active">Nivel</th>
+						<th class="active">Acesso Agenda</th>
 						<th class="active">Permissao</th>
                     </tr>
                 </thead>

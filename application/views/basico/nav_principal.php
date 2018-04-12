@@ -12,7 +12,7 @@
 				<div class="collapse navbar-collapse">
 
 					<ul class="nav navbar-nav navbar-center">
-						
+						<!--
 						<li>
 							<?php echo form_open(base_url() . 'clienteusuario/pesquisar', 'class="navbar-form navbar-left"'); ?>
 							<div class="input-group">
@@ -25,7 +25,7 @@
 							</div>
 							</form>
 						</li>
-						<!--
+						
 						<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
 
 							<div class="btn-group">
@@ -110,10 +110,10 @@
 								</button>
 								<ul class="dropdown-menu" role="menu">
 									<!--<li><a href="<?php echo base_url(); ?>logincliente/registrar"><span class="glyphicon glyphicon-pencil"></span> Cad. Clientes/Usuario</a></li>
-									<li role="separator" class="divider"></li>-->
-									<li><a href="<?php echo base_url(); ?>clienteusuario/cadastrar"><span class="glyphicon glyphicon-pencil"></span> Cad. Clientes/Usuario</a></li>
 									<li role="separator" class="divider"></li>
-									<li><a href="<?php echo base_url(); ?>relatorio/clientesusuario"><span class="glyphicon glyphicon-pencil"></span> Rel. Clientes/Usuario</a></li>
+									<li><a href="<?php echo base_url(); ?>clienteusuario/cadastrar"><span class="glyphicon glyphicon-pencil"></span> Cad. Clientes/Usuario</a></li>
+									<li role="separator" class="divider"></li>-->
+									<li><a href="<?php echo base_url(); ?>relatorio/clientesusuario"><span class="glyphicon glyphicon-pencil"></span> Rel. Clientes</a></li>
 									<!--<li><a href="<?php echo base_url(); ?>relatorio/clientes"><span class="glyphicon glyphicon-pencil"></span> Cadastrar Clientes</a></li>
 									<li role="separator" class="divider"></li>
 									<li><a href="<?php echo base_url() ?>relatorio/clientes"><span class="glyphicon glyphicon-list"></span> Clientes & Contatos</a></li>
