@@ -92,11 +92,11 @@ class Clienteusuario extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
-        $data['tela'] = $this->load->view('clienteusuario/form_clienteusuario', $data, TRUE);
+        $data['tela'] = $this->load->view('clienteusuario/form_clienteusuario2', $data, TRUE);
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
-            $this->load->view('clienteusuario/form_clienteusuario', $data);
+            $this->load->view('clienteusuario/form_clienteusuario2', $data);
         } else {
 
 
@@ -124,7 +124,7 @@ class Clienteusuario extends CI_Controller {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
                 $this->basico->erro($msg);
-                $this->load->view('clienteusuario/form_clienteusuario', $data);
+                $this->load->view('clienteusuario/form_clienteusuario2', $data);
             } else {
 
                 $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idSis_Usuario'], FALSE);
