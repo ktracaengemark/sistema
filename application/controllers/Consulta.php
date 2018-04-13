@@ -312,7 +312,7 @@ class Consulta extends CI_Controller {
         );
 */
         $data['titulo'] = 'Agendamento C/ Cliente';
-        $data['form_open_path'] = 'consulta/cadastrar3';
+        $data['form_open_path'] = 'consulta/cadastrar2';
         $data['panel'] = 'primary';
         $data['readonly'] = '';
         $data['disabled'] = '';
