@@ -20,10 +20,10 @@
 									<div class="row">
 										<div class="col-md-4"></div>
 										<div class="col-md-4">
-											<label for="idApp_Agenda">Profissional:*</label>
+											<label for="idApp_Agenda">Agenda do Profis.:*</label>
 											<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
 													id="idApp_Agenda" name="idApp_Agenda">
-												<option value="">-- Selecione um Profissional --</option>
+												<?php echo $select['option']; ?>
 												<?php
 												foreach ($select['idApp_Agenda'] as $key => $row) {
 													if ($query['idApp_Agenda'] == $key) {
