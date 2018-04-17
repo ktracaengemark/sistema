@@ -7,7 +7,7 @@
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 						<span class="sr-only">MENU</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 					</button>
-					<!--<a class="navbar-brand" href="http://www.ktracaengemark.com.br"> Melhor loja</a>-->
+					<a class="navbar-brand"> <?php echo $_SESSION['log']['NomeEmpresa']; ?></a>
 				</div>
 				<div class="collapse navbar-collapse">
 
