@@ -90,6 +90,46 @@ function calculaQtdSoma(campo, soma, somaproduto, excluir, produtonum, countmax,
 
 }
 
+/*Atualiza o somatório do Qtd Devolvido no Orcatrata*/
+function calculaQtdSomaDev(campo, soma, somaproduto, excluir, produtonum, countmax, adicionar, hidden) {
+
+    qtdsoma = 0;
+    i = j = 1;
+
+    if(excluir == 1){
+        for(k=0; k<$("#"+countmax).val(); k++) {
+            /*
+            if(($("#"+hidden+i).val()))
+                console.log('>> existe '+$("#"+campo+i).val()+' <> '+hidden+' <> '+produtonum+' <> '+$("#"+somaproduto).html()+' <<>> '+i+' '+k);
+            else
+                console.log('>> não '+$("#"+campo+i).val()+' <> '+hidden+' <> '+produtonum+' <> '+$("#"+somaproduto).html()+' <<>> '+i+' '+k);
+            */
+            if(i != produtonum && ($("#"+campo+i).val())) {
+                qtdsoma += parseInt($("#"+campo+i).val());
+                j++;
+            }
+            i++;
+        }
+    }
+    else {
+        if(adicionar)
+            $("#"+countmax).val((parseInt($("#"+countmax).val())+1));
+
+        for(k=1; k<=$("#"+countmax).val(); k++) {
+            if($("#"+campo+k).val()) {
+                qtdsoma += parseInt($("#"+campo+k).val());
+                j++;
+            }
+            //j++;
+        }
+    }
+
+    $("#"+soma).html(qtdsoma);
+    $("#"+somaproduto).html(j-1);
+    //console.log('>> ' + qtdsoma);
+
+}
+
 /*
  * Função responsável por carregar valores nos respectivos campos do orcatrata
  * caso o botão Quitado seja alterado para SIM
@@ -245,7 +285,8 @@ function calculaResta(entrada) {
 
     //recebe o valor do orçamento
     var orcamento = $("#ValorOrca").val();
-    var resta = (orcamento.replace(".","").replace(",",".") - entrada.replace(".","").replace(",","."));
+	var devolucao = $("#ValorDev").val();
+    var resta = (orcamento.replace(".","").replace(",",".") - devolucao.replace(".","").replace(",",".") - entrada.replace(".","").replace(",","."));
 
     resta = mascaraValorReal(resta);
 
@@ -1029,6 +1070,43 @@ function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
 
 }
 
+function buscaValorDevTabelas(id, campo, tabela, num, campo2) {
+
+    $.ajax({
+        // url para o arquivo json.php
+        url: window.location.origin + "/" + app + "/Valor_json.php?tabela=" + tabela + "&campo2=" + campo2,
+        // dataType json
+        dataType: "json",
+        // função para de sucesso
+        success: function (data) {
+
+            // executo este laço para acessar os itens do objeto javaScript
+            for (i = 0; i < data.length; i++) {
+
+                if (data[i].id == id) {
+
+                    //carrega o valor no campo de acordo com a opção selecionada
+                    $('#'+campo).val(data[i].valor);
+
+                    //if (tabela == area && $("#QtdVenda"+tabela+num).val()) {
+                    if ($("#QtdVenda"+campo2+num).val()) {
+                        calculaSubtotalDev($("#idTab_"+campo2+num).val(),$("#QtdVenda"+campo2+num).val(),num,'OUTRO',campo2);
+                        break;
+                    }
+
+                    //para cada valor carregado o orçamento é calculado/atualizado
+                    //através da chamada de sua função
+                    calculaDevolucao();
+                    break;
+                }
+
+            }//fim do laço
+
+        }
+    });//termina o ajax
+
+
+}
 
 function buscaValorCompra(id, campo, tabela, num) {
 
@@ -1144,6 +1222,36 @@ function calculaSubtotal(valor, campo, num, tipo, tabela) {
 
 }
 
+function calculaSubtotalDev(valor, campo, num, tipo, tabela) {
+
+    if (tipo == 'VP') {
+        //variável valor recebe o valor do produto selecionado
+        var data = $("#QtdVenda"+tabela+num).val();
+
+        //o subtotal é calculado como o produto da quantidade pelo seu valor
+        var subtotal = (valor.replace(".","").replace(",",".") * data);
+        //alert('>>>'+valor+' :: '+campo+' :: '+num+' :: '+tipo+'<<<');
+    } else if (tipo == 'QTD') {
+        //variável valor recebe o valor do produto selecionado
+        var data = $("#idTab_"+tabela+num).val();
+
+        //o subtotal é calculado como o produto da quantidade pelo seu valor
+        var subtotal = (valor * data.replace(".","").replace(",","."));
+    } else {
+        //o subtotal é calculado como o produto da quantidade pelo seu valor
+        var subtotal = (valor.replace(".","").replace(",",".") * campo.replace(".","").replace(",","."));
+    }
+
+    subtotal = mascaraValorReal(subtotal);
+    //o subtotal é escrito no seu campo no formulário
+    $('#Subtotal'+tabela+num).val(subtotal);
+
+    //para cada vez que o subtotal for calculado o orçamento e o total restante
+    //também serão atualizados
+    calculaDevolucao();
+
+}
+
 function calculaSubtotalCompra(valor, campo, num, tipo, tabela) {
 
     if (tipo == 'VP') {
@@ -1213,8 +1321,51 @@ function calculaOrcamento() {
 
     //captura o número incrementador do formulário, que controla quantos campos
     //foram acrescidos tanto para serviços quanto para produtos
-    var sc = parseFloat($('#SCount').val().replace(".","").replace(",","."));
+    //var sc = parseFloat($('#SCount').val().replace(".","").replace(",","."));
     var pc = parseFloat($('#PCount').val().replace(".","").replace(",","."));
+    //define o subtotal inicial em 0.00
+    var subtotal = 0.00;
+/*
+    //variável incrementadora
+    var i = 0;
+    //percorre todos os campos de serviço, somando seus valores
+    while (i <= sc) {
+
+        //soma os valores apenas dos campos que existirem, o que forem apagados
+        //ou removidos são ignorados
+        if ($('#SubtotalServico'+i).val())
+            //subtotal += parseFloat($('#idTab_Servico'+i).val().replace(".","").replace(",","."));
+            subtotal -= parseFloat($('#SubtotalServico'+i).val().replace(".","").replace(",","."));
+
+        //incrementa a variável i
+        i++;
+    }
+*/
+    //faz o mesmo que o laço anterior mas agora para produtos
+    var i = 0;
+    while (i <= pc) {
+
+        if ($('#SubtotalProduto'+i).val())
+            subtotal += parseFloat($('#SubtotalProduto'+i).val().replace(".","").replace(",","."));
+
+        i++;
+    }
+
+    //calcula o subtotal, configurando para duas casas decimais e trocando o
+    //ponto para o vírgula como separador de casas decimais
+    subtotal = mascaraValorReal(subtotal);
+
+    //escreve o subtotal no campo do formulário
+    $('#ValorOrca').val(subtotal);
+    calculaResta($("#ValorEntradaOrca").val());
+}
+
+function calculaDevolucao() {
+
+    //captura o número incrementador do formulário, que controla quantos campos
+    //foram acrescidos tanto para serviços quanto para produtos
+    var sc = parseFloat($('#SCount').val().replace(".","").replace(",","."));
+    //var pc = parseFloat($('#PCount').val().replace(".","").replace(",","."));
     //define o subtotal inicial em 0.00
     var subtotal = 0.00;
 
@@ -1232,7 +1383,7 @@ function calculaOrcamento() {
         //incrementa a variável i
         i++;
     }
-
+/*
     //faz o mesmo que o laço anterior mas agora para produtos
     var i = 0;
     while (i <= pc) {
@@ -1242,13 +1393,13 @@ function calculaOrcamento() {
 
         i++;
     }
-
+*/
     //calcula o subtotal, configurando para duas casas decimais e trocando o
     //ponto para o vírgula como separador de casas decimais
     subtotal = mascaraValorReal(subtotal);
 
     //escreve o subtotal no campo do formulário
-    $('#ValorOrca').val(subtotal);
+    $('#ValorDev').val(subtotal);
     calculaResta($("#ValorEntradaOrca").val());
 }
 
@@ -1689,6 +1840,116 @@ $(document).ready(function () {
 
     });
 
+	//adiciona campos dinamicamente
+    var ps = $("#SCount").val(); //initlal text box count
+	$(".add_field_button").click(function(e){ //on add input button click
+        e.preventDefault();
+    
+		ps++; //text box increment
+		$("#SCount").val(ps);
+		
+		$(".input_fields_wrap").append('\
+			<div class="form-group" id="1div'+ps+'">\
+				<div class="panel panel-danger">\
+					<div class="panel-heading">\
+						<div class="row">\
+							<div class="col-md-1">\
+								<label for="QtdVendaServico">Qtd:</label><br>\
+								<div class="input-group">\
+									<input type="text" class="form-control Numero" maxlength="3" id="QtdVendaServico'+ps+'" placeholder="0"\
+										onkeyup="calculaSubtotalDev(this.value,this.name,'+ps+',\'QTD\',\'Servico\'),calculaQtdSomaDev(\'QtdVendaServico\',\'QtdSomaDev\',\'ServicoSoma\',0,0,\'CountMax2\',0,\'ServicoHidden\')"\
+										name="QtdVendaServico'+ps+'" value="">\
+								</div>\
+							</div>\
+							<div class="col-md-7">\
+								<label for="idTab_Servico">Produto:</label><br>\
+								<select class="form-control Chosen" id="listadinamica'+ps+'" onchange="buscaValor2Tabelas(this.value,this.name,\'Valor\','+ps+',\'Produto\')" name="idTab_Servico'+ps+'">\
+									<option value="">-- Selecione uma opção --</option>\
+								</select>\
+							</div>\
+							<div class="col-md-2">\
+								<label for="ValorVendaServico">Valor do Produto:</label><br>\
+								<div class="input-group">\
+									<span class="input-group-addon" id="basic-addon1">R$</span>\
+									<input type="text" class="form-control Valor" id="idTab_Servico'+ps+'" maxlength="10" placeholder="0,00" \
+										onkeyup="calculaSubtotalDev(this.value,this.name,'+ps+',\'VP\',\'Servico\')"\
+										name="ValorVendaServico'+ps+'" value="">\
+								</div>\
+							</div>\
+							<div class="col-md-2">\
+								<label for="SubtotalServico">Subtotal:</label><br>\
+								<div class="input-group id="txtHint">\
+									<span class="input-group-addon" id="basic-addon1">R$</span>\
+									<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalServico'+ps+'"\
+										   name="SubtotalServico'+ps+'" value="">\
+								</div>\
+							</div>\
+						</div>\
+						<div class="row">\
+							<div class="col-md-1"></div>\
+							<div class="col-md-7">\
+								<label for="ObsServico'+ps+'">Obs:</label><br>\
+								<input type="text" class="form-control" id="ObsServico'+ps+'" maxlength="250"\
+									   name="ObsServico'+ps+'" value="">\
+							</div>\
+							<div class="col-md-2">\
+								<label for="DataValidadeServico'+ps+'">Valid. do Prod:</label>\
+								<div class="input-group DatePicker">\
+									<span class="input-group-addon" disabled>\
+										<span class="glyphicon glyphicon-calendar"></span>\
+									</span>\
+									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
+										   name="DataValidadeServico'+ps+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
+								</div>\
+							</div>\
+							<div class="col-md-1">\
+								<label><br></label><br>\
+								<a href="#" id="'+ps+'" class="remove_field btn btn-danger"\
+									onclick="calculaQtdSomaDev(\'QtdVendaServico\',\'QtdSomaDev\',\'ServicoSoma\',1,'+ps+',\'CountMax2\',0,\'ServicoHidden\')">\
+									<span class="glyphicon glyphicon-trash"></span>\
+								</a>\
+							</div>\
+						</div>\
+					</div>\
+				</div>\
+			</div>'
+		); //add input box
+
+		//get a reference to the select element
+		$select = $('#listadinamica'+ps);
+
+		//request the JSON data and parse into the select element
+        $.ajax({
+            url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=2',
+            dataType: 'JSON',
+            type: "GET",
+            success: function (data) {
+                //clear the current content of the select
+                $select.html('');
+                //iterate over the data and append a select option
+                $select.append('<option value="">-- Selecione uma opção --</option>');
+                $.each(data, function (key, val) {
+                    //alert(val.id);
+                    $select.append('<option value="' + val.id + '">' + val.name + '</option>');
+                })
+                $('.Chosen').chosen({
+                    disable_search_threshold: 10,
+                    multiple_text: "Selecione uma ou mais opções",
+                    single_text: "Selecione uma opção",
+                    no_results_text: "Nenhum resultado para",
+                    width: "100%"
+                });
+            },
+            error: function () {
+                //alert('erro listadinamicaB');
+                //if there is an error append a 'none available' option
+                $select.html('<option id="-1">ERRO</option>');
+            }
+
+        });
+		
+	});
+	
     //adiciona campos dinamicamente
     var pc = $("#PCount").val(); //initlal text box count
     $(".add_field_button2").click(function(e){ //on add input button click
@@ -2074,7 +2335,7 @@ $(document).ready(function () {
     $(".input_fields_wrap").on("click",".remove_field", function(e){ //user click on remove text
         $("#1div"+$(this).attr("id")).remove();
         //após remover o campo refaz o cálculo do orçamento e total restante
-        calculaOrcamento();
+        calculaDevolucao();
     })
 
     //Remove os campos adicionados dinamicamente

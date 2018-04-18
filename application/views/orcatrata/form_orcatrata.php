@@ -110,44 +110,9 @@
 								<div class="panel-body">
 
 									<?php echo form_open_multipart($form_open_path); ?>
-											<!--
-											<div class="text-left t">
-												<h4><?php echo '<strong>Prof.: ' . $_SESSION['log']['Nome'] . '</strong>' ?></h4>
-											</div>
-											-->
-									<!--App_OrcaTrata-->
-										<!--
-										<div class="form-group">
-											<div class="panel panel-info">
-												<div class="panel-heading">
-													<div class="row">
-														<div class="col-md-3">
-															<label for="DataEntradaOrca">Validade do Orç.:</label>
-															<div class="input-group <?php echo $datepicker; ?>">
-																<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-																	   name="DataEntradaOrca" value="<?php echo $orcatrata['DataEntradaOrca']; ?>">
-																<span class="input-group-addon" disabled>
-																	<span class="glyphicon glyphicon-calendar"></span>
-																</span>
-															</div>
-														</div>
-														<div class="col-md-3">
-															<label for="DataPrazo">Prazo de Entrega:</label>
-															<div class="input-group <?php echo $datepicker; ?>">
-																<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-																	   autofocus name="DataPrazo" value="<?php echo $orcatrata['DataPrazo']; ?>">
-																<span class="input-group-addon" disabled>
-																	<span class="glyphicon glyphicon-calendar"></span>
-																</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
 
-										<hr>
-										-->
+									<!--App_OrcaTrata-->
+
 										<div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
 											<div class="panel panel-primary">
 												<div class="panel-heading collapsed" role="tab" id="heading1" data-toggle="collapse" data-parent="#accordion1" data-target="#collapse1" aria-expanded="false">								<h4 class="panel-title">
@@ -162,272 +127,333 @@
 													<div class="panel-body">
 
 														<!--#######################################-->
+														<div class="panel-group" id="accordion5" role="tablist" aria-multiselectable="true">
+															<div class="panel panel-primary">
+																<div class="panel-heading collapsed" role="tab" id="heading5" data-toggle="collapse" data-parent="#accordion5" data-target="#collapse5" aria-expanded="false">								
+																	<h4 class="panel-title">
+																		<a class="accordion-toggle">
+																			<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+																			Entregues
+																		</a>
+																	</h4>
+																</div>
 
-														<input type="hidden" name="SCount" id="SCount" value="<?php echo $count['SCount']; ?>"/>
+																<div id="collapse5" class="panel-collapse " role="tabpanel" aria-labelledby="heading5" aria-expanded="false">
+																	<div class="panel-body">														
+														
+																		<input type="hidden" name="PCount" id="PCount" value="<?php echo $count['PCount']; ?>"/>
 
-														<div class="input_fields_wrap">
+																		<div class="input_fields_wrap2">
 
-														<?php
-														for ($i=1; $i <= $count['SCount']; $i++) {
-														?>
+																		<?php
+																		$QtdSoma = $ProdutoSoma = 0;
+																		for ($i=1; $i <= $count['PCount']; $i++) {
+																		?>
 
-														<?php if ($metodo > 1) { ?>
-														<input type="hidden" name="idApp_ServicoVenda<?php echo $i ?>" value="<?php echo $servico[$i]['idApp_ServicoVenda']; ?>"/>
-														<?php } ?>
+																		<?php if ($metodo > 1) { ?>
+																		<input type="hidden" name="idApp_ProdutoVenda<?php echo $i ?>" value="<?php echo $produto[$i]['idApp_ProdutoVenda']; ?>"/>
+																		<?php } ?>
 
-														<div class="form-group" id="1div<?php echo $i ?>">
-															<div class="panel panel-info">
-																<div class="panel-heading">
-																	<div class="row">
-																		<div class="col-md-1">
-																			<label for="QtdVendaServico">Qtd:</label>
-																			<input type="text" class="form-control Numero" maxlength="3" id="QtdVendaServico<?php echo $i ?>" placeholder="0"
-																					onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','QTD','Servico')"
-																					autofocus name="QtdVendaServico<?php echo $i ?>" value="<?php echo $servico[$i]['QtdVendaServico'] ?>">
-																		</div>
-																		<div class="col-md-6">
-																			<label for="idTab_Servico">Serviço:</label>
-																			<?php if ($i == 1) { ?>
-																			<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>servico/cadastrar/servico" role="button">
-																				<span class="glyphicon glyphicon-plus"></span> <b>Novo Serviço</b>
-																			</a>-->
-																			<?php } ?>
-																			<select data-placeholder="Selecione uma opção..." class="form-control" onchange="buscaValor(this.value,this.name,'Servico',<?php echo $i ?>)" <?php echo $readonly; ?>
-																					id="lista" name="idTab_Servico<?php echo $i ?>">
-																				<option value="">-- Selecione uma opção --</option>
-																				<?php
-																				foreach ($select['Servico'] as $key => $row) {
-																					if ($servico[$i]['idTab_Servico'] == $key) {
-																						echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-																					} else {
-																						echo '<option value="' . $key . '">' . $row . '</option>';
-																					}
-																				}
-																				?>
-																			</select>
-																		</div>
-																		<div class="col-md-2">
-																			<label for="ValorVendaServico">Valor do Serviço:</label>
-																			<div class="input-group" id="txtHint">
-																				<span class="input-group-addon" id="basic-addon1">R$</span>
-																				<input type="text" class="form-control Valor" id="idTab_Servico<?php echo $i ?>" maxlength="10" placeholder="0,00"
-																					onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','VP','Servico')"
-																					name="ValorVendaServico<?php echo $i ?>" value="<?php echo $servico[$i]['ValorVendaServico'] ?>">
-																			</div>
+																		<input type="hidden" name="ProdutoHidden" id="ProdutoHidden<?php echo $i ?>" value="<?php echo $i ?>">
+																		
+																		<div class="form-group" id="2div<?php echo $i ?>">
+																			<div class="panel panel-info">
+																				<div class="panel-heading">
+																					<div class="row">
+																						<div class="col-md-1">
+																							<label for="QtdVendaProduto">Qtd<?php echo $i ?>:</label>
+																							<input type="text" class="form-control Numero" maxlength="3" id="QtdVendaProduto<?php echo $i ?>" placeholder="0"
+																									onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','QTD','Produto'),calculaQtdSoma('QtdVendaProduto','QtdSoma','ProdutoSoma',0,0,'CountMax',0,'ProdutoHidden')"
+																									autofocus name="QtdVendaProduto<?php echo $i ?>" value="<?php echo $produto[$i]['QtdVendaProduto'] ?>">
+																						</div>
+																						<div class="col-md-7">
+																							<label for="idTab_Produto">Produto:</label>
+																							<?php if ($i == 1) { ?>
+																							<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produto/cadastrar/produto" role="button">
+																								<span class="glyphicon glyphicon-plus"></span> <b>Novo Produto</b>
+																							</a>-->
+																							<?php } ?>
+																							<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="buscaValor2Tabelas(this.value,this.name,'Valor',<?php echo $i ?>,'Produto')" <?php echo $readonly; ?>
+																									 id="listadinamicab<?php echo $i ?>" name="idTab_Produto<?php echo $i ?>">
+																								<option value="">-- Selecione uma opção --</option>
+																								<?php
+																								foreach ($select['Produto'] as $key => $row) {
+																									if ($produto[$i]['idTab_Produto'] == $key) {
+																										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+																									} else {
+																										echo '<option value="' . $key . '">' . $row . '</option>';
+																									}
+																								}
+																								?>
+																							</select>
+																						</div>
 
-																		</div>
-																		<div class="col-md-2">
-																			<label for="SubtotalServico">Subtotal:</label>
-																			<div class="input-group">
-																				<span class="input-group-addon" id="basic-addon1">R$</span>
-																				<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalServico<?php echo $i ?>"
-																					   name="SubtotalServico<?php echo $i ?>" value="<?php echo $servico[$i]['SubtotalServico'] ?>">
-																			</div>
-																		</div>
-																	</div>
-																	<div class="row">
-																		<div class="col-md-6">
-																			<label for="ObsServico<?php echo $i ?>">Obs:</label><br>
-																			<input type="text" class="form-control" id="ObsServico<?php echo $i ?>" maxlength="250"
-																				   name="ObsServico<?php echo $i ?>" value="<?php echo $servico[$i]['ObsServico'] ?>">
-																		</div>
-																		<div class="col-md-3">
-																			<label for="ConcluidoServico">Concluído? </label><br>
-																			<div class="form-group">
-																				<div class="btn-group" data-toggle="buttons">
-																					<?php
-																					foreach ($select['ConcluidoServico'] as $key => $row) {
-																						(!$servico[$i]['ConcluidoServico']) ? $servico[$i]['ConcluidoServico'] = 'N' : FALSE;
-
-																						if ($servico[$i]['ConcluidoServico'] == $key) {
-																							echo ''
-																							. '<label class="btn btn-warning active" name="radiobutton_ConcluidoServico' . $i . '" id="radiobutton_ConcluidoServico' . $i .  $key . '">'
-																							. '<input type="radio" name="ConcluidoServico' . $i . '" id="radiobuttondinamico" '
-																							. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																							. '</label>'
-																							;
-																						} else {
-																							echo ''
-																							. '<label class="btn btn-default" name="radiobutton_ConcluidoServico' . $i . '" id="radiobutton_ConcluidoServico' . $i .  $key . '">'
-																							. '<input type="radio" name="ConcluidoServico' . $i . '" id="radiobuttondinamico" '
-																							. 'autocomplete="off" value="' . $key . '" >' . $row
-																							. '</label>'
-																							;
-																						}
-																					}
-																					?>
+																						<div class="col-md-2">
+																							<label for="ValorVendaProduto">Valor do Produto:</label>
+																							<div class="input-group">
+																								<span class="input-group-addon" id="basic-addon1">R$</span>
+																								<input type="text" class="form-control Valor" id="idTab_Produto<?php echo $i ?>" maxlength="10" placeholder="0,00"
+																									onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','VP','Produto')"
+																									name="ValorVendaProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ValorVendaProduto'] ?>">
+																							</div>
+																						</div>
+																						<div class="col-md-2">
+																							<label for="SubtotalProduto">Subtotal:</label>
+																							<div class="input-group">
+																								<span class="input-group-addon" id="basic-addon1">R$</span>
+																								<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalProduto<?php echo $i ?>"
+																									   name="SubtotalProduto<?php echo $i ?>" value="<?php echo $produto[$i]['SubtotalProduto'] ?>">
+																							</div>
+																						</div>
+																					</div>
+																					<div class="row">
+																						<div class="col-md-1"></div>
+																						<div class="col-md-7">
+																							<label for="ObsProduto<?php echo $i ?>">Obs:</label><br>
+																							<input type="text" class="form-control" id="ObsProduto<?php echo $i ?>" maxlength="250"
+																								   name="ObsProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ObsProduto'] ?>">
+																						</div>
+																						<div class="col-md-2">
+																							<label for="DataValidadeProduto<?php echo $i ?>">Val. do Produto:</label>
+																							<div class="input-group <?php echo $datepicker; ?>">
+																								<span class="input-group-addon" disabled>
+																									<span class="glyphicon glyphicon-calendar"></span>
+																								</span>
+																								<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+																									   name="DataValidadeProduto<?php echo $i ?>" value="<?php echo $produto[$i]['DataValidadeProduto']; ?>">																				
+																							</div>
+																						</div>
+																						<div class="col-md-1">
+																							<label><br></label><br>
+																							<button type="button" id="<?php echo $i ?>" class="remove_field2 btn btn-danger"
+																									onclick="calculaQtdSoma('QtdVendaProduto','QtdSoma','ProdutoSoma',1,<?php echo $i ?>,'CountMax',0,'ProdutoHidden')">
+																								<span class="glyphicon glyphicon-trash"></span>
+																							</button>
+																						</div>
+																					</div>
 																				</div>
 																			</div>
 																		</div>
-																		<div class="col-md-2">
-																			<label><br></label><br>
-																			<button type="button" id="<?php echo $i ?>" class="remove_field btn btn-danger">
-																				<span class="glyphicon glyphicon-trash"></span>
-																			</button>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
 
-														<?php
-														}
-														?>
+																		<?php
+																		$QtdSoma+=$produto[$i]['QtdVendaProduto'];
+																		$ProdutoSoma++;
+																		}
+																		?>
 
-														</div>
-														<!--
-														<div class="form-group">
-															<div class="row">
-																<div class="col-md-3"></div>
-																<div class="col-md-3 text-left">
-																	<a class="btn btn-md btn-danger" onclick="adicionaServico()">
-																		<span class="glyphicon glyphicon-plus"></span> Serviços
-																	</a>
-																</div>
-															</div>
-														</div>
-
-														<hr>
-														-->
-														<input type="hidden" name="PCount" id="PCount" value="<?php echo $count['PCount']; ?>"/>
-
-														<div class="input_fields_wrap2">
-
-														<?php
-														$QtdSoma = $ProdutoSoma = 0;
-														for ($i=1; $i <= $count['PCount']; $i++) {
-														?>
-
-														<?php if ($metodo > 1) { ?>
-														<input type="hidden" name="idApp_ProdutoVenda<?php echo $i ?>" value="<?php echo $produto[$i]['idApp_ProdutoVenda']; ?>"/>
-														<?php } ?>
-
-														<input type="hidden" name="ProdutoHidden" id="ProdutoHidden<?php echo $i ?>" value="<?php echo $i ?>">
-
-														<div class="form-group" id="2div<?php echo $i ?>">
-															<div class="panel panel-info">
-																<div class="panel-heading">
-																	<div class="row">
-																		<div class="col-md-1">
-																			<label for="QtdVendaProduto">Qtd<?php echo $i ?>:</label>
-																			<input type="text" class="form-control Numero" maxlength="3" id="QtdVendaProduto<?php echo $i ?>" placeholder="0"
-																					onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','QTD','Produto'),calculaQtdSoma('QtdVendaProduto','QtdSoma','ProdutoSoma',0,0,'CountMax',0,'ProdutoHidden')"
-																					autofocus name="QtdVendaProduto<?php echo $i ?>" value="<?php echo $produto[$i]['QtdVendaProduto'] ?>">
-																		</div>
-																		<div class="col-md-7">
-																			<label for="idTab_Produto">Produto:</label>
-																			<?php if ($i == 1) { ?>
-																			<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>produto/cadastrar/produto" role="button">
-																				<span class="glyphicon glyphicon-plus"></span> <b>Novo Produto</b>
-																			</a>-->
-																			<?php } ?>
-																			<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="buscaValor2Tabelas(this.value,this.name,'Valor',<?php echo $i ?>,'Produto')" <?php echo $readonly; ?>
-																					 id="listadinamicab<?php echo $i ?>" name="idTab_Produto<?php echo $i ?>">
-																				<option value="">-- Selecione uma opção --</option>
-																				<?php
-																				foreach ($select['Produto'] as $key => $row) {
-																					if ($produto[$i]['idTab_Produto'] == $key) {
-																						echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-																					} else {
-																						echo '<option value="' . $key . '">' . $row . '</option>';
-																					}
-																				}
-																				?>
-																			</select>
 																		</div>
 
-																		<div class="col-md-2">
-																			<label for="ValorVendaProduto">Valor do Produto:</label>
-																			<div class="input-group">
-																				<span class="input-group-addon" id="basic-addon1">R$</span>
-																				<input type="text" class="form-control Valor" id="idTab_Produto<?php echo $i ?>" maxlength="10" placeholder="0,00"
-																					onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','VP','Produto')"
-																					name="ValorVendaProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ValorVendaProduto'] ?>">
+																		<div class="panel panel-info">
+																			<div class="panel-heading text-left">
+																				<div class="form-group">	
+																					<div class="row">	
+																						<br>
+																						<div class="col-md-3">	
+																							<a class="add_field_button2 btn btn-primary"
+																									onclick="calculaQtdSoma('QtdVendaProduto','QtdSoma','ProdutoSoma',0,0,'CountMax',1,0)">
+																								<span class="glyphicon glyphicon-plus"></span> Adic. Prod. Entregues
+																							</a>
+																						</div>
+																						<div class="col-md-2">	
+																							<b>Linhas = <span id="ProdutoSoma"><?php echo $ProdutoSoma ?></span></b><br />
+																						</div>
+																						<div class="col-md-3">	
+																							<b>Prod. Entregues = <span id="QtdSoma"><?php echo $QtdSoma ?></span></b>
+																						</div>
+																						<div class="col-md-3 text-left">																							
+																							<a class="accordion-toggle btn btn-heading  collapsed" role="tab" id="heading5" data-toggle="collapse" data-parent="#accordion5" data-target="#collapse5" aria-expanded="false">
+																								<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+																								Entregues
+																							</a>																							
+																						</div>
+																					</div>
+																				</div>	
 																			</div>
 																		</div>
-																		<div class="col-md-2">
-																			<label for="SubtotalProduto">Subtotal:</label>
-																			<div class="input-group">
-																				<span class="input-group-addon" id="basic-addon1">R$</span>
-																				<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalProduto<?php echo $i ?>"
-																					   name="SubtotalProduto<?php echo $i ?>" value="<?php echo $produto[$i]['SubtotalProduto'] ?>">
-																			</div>
-																		</div>
+																		
+																		<input type="hidden" name="CountMax" id="CountMax" value="<?php echo $ProdutoSoma ?>">
 																	</div>
-																	<div class="row">
-																		<div class="col-md-1"></div>
-																		<div class="col-md-7">
-																			<label for="ObsProduto<?php echo $i ?>">Obs:</label><br>
-																			<input type="text" class="form-control" id="ObsProduto<?php echo $i ?>" maxlength="250"
-																				   name="ObsProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ObsProduto'] ?>">
-																		</div>
-																		<div class="col-md-2">
-																			<label for="DataValidadeProduto<?php echo $i ?>">Val. do Produto:</label>
-																			<div class="input-group <?php echo $datepicker; ?>">
-																				<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-																					   name="DataValidadeProduto<?php echo $i ?>" value="<?php echo $produto[$i]['DataValidadeProduto']; ?>">
-																				<span class="input-group-addon" disabled>
-																					<span class="glyphicon glyphicon-calendar"></span>
-																				</span>
+																</div>
+															</div>
+														</div>	
+														<div class="panel-group" id="accordion6" role="tablist" aria-multiselectable="true">
+															<div class="panel panel-primary">
+																<div class="panel-heading collapsed" role="tab" id="heading6" data-toggle="collapse" data-parent="#accordion6" data-target="#collapse6" aria-expanded="false">
+																	<h4 class="panel-title">
+																		<a class="accordion-toggle">
+																			<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+																			Devolvidos
+																		</a>
+																	</h4>
+																</div>
+
+																<div id="collapse6" class="panel-collapse " role="tabpanel" aria-labelledby="heading6" aria-expanded="false">
+																	<div class="panel-body">
+																																
+																		<input type="hidden" name="SCount" id="SCount" value="<?php echo $count['SCount']; ?>"/>
+
+																		<div class="input_fields_wrap">
+
+																		<?php
+																		$QtdSomaDev = $ServicoSoma = 0;
+																		for ($i=1; $i <= $count['SCount']; $i++) {
+																		?>
+
+																		<?php if ($metodo > 1) { ?>
+																		<input type="hidden" name="idApp_ServicoVenda<?php echo $i ?>" value="<?php echo $servico[$i]['idApp_ServicoVenda']; ?>"/>
+																		<?php } ?>
+
+																		<input type="hidden" name="ServicoHidden" id="ServicoHidden<?php echo $i ?>" value="<?php echo $i ?>">
+																		
+																		<div class="form-group" id="1div<?php echo $i ?>">
+																			<div class="panel panel-danger">
+																				<div class="panel-heading">
+																					<div class="row">
+																						<div class="col-md-1">
+																							<label for="QtdVendaServico">Qtd:</label>
+																							<input type="text" class="form-control Numero" maxlength="3" id="QtdVendaServico<?php echo $i ?>" placeholder="0"
+																									onkeyup="calculaSubtotalDev(this.value,this.name,'<?php echo $i ?>','QTD','Servico'),calculaQtdSomaDev('QtdVendaServico','QtdSomaDev','ServicoSoma',0,0,'CountMax2',0,'ServicoHidden')"
+																									autofocus name="QtdVendaServico<?php echo $i ?>" value="<?php echo $servico[$i]['QtdVendaServico'] ?>">
+																						</div>
+																						<div class="col-md-7">
+																							<label for="idTab_Servico">Produto:</label>
+																							<?php if ($i == 1) { ?>
+																							<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>servico/cadastrar/servico" role="button">
+																								<span class="glyphicon glyphicon-plus"></span> <b>Novo Serviço</b>
+																							</a>-->
+																							<?php } ?>
+																							<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="buscaValorDevTabelas(this.value,this.name,'Valor',<?php echo $i ?>,'Produto')" <?php echo $readonly; ?>
+																									id="listadinamica<?php echo $i ?>" name="idTab_Servico<?php echo $i ?>">																					
+																								<option value="">-- Selecione uma opção --</option>
+																								<?php
+																								foreach ($select['Servico'] as $key => $row) {
+																									if ($servico[$i]['idTab_Servico'] == $key) {
+																										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+																									} else {
+																										echo '<option value="' . $key . '">' . $row . '</option>';
+																									}
+																								}
+																								?>
+																							</select>
+																						</div>
+																						<div class="col-md-2">
+																							<label for="ValorVendaServico">Valor do Produto:</label>
+																							<div class="input-group">
+																								<span class="input-group-addon" id="basic-addon1">R$</span>
+																								<input type="text" class="form-control Valor" id="idTab_Servico<?php echo $i ?>" maxlength="10" placeholder="0,00"
+																									onkeyup="calculaSubtotalDev(this.value,this.name,'<?php echo $i ?>','VP','Servico')"
+																									name="ValorVendaServico<?php echo $i ?>" value="<?php echo $servico[$i]['ValorVendaServico'] ?>">
+																							</div>
+																						</div>
+																						<div class="col-md-2">
+																							<label for="SubtotalServico">Subtotal:</label>
+																							<div class="input-group">
+																								<span class="input-group-addon" id="basic-addon1">R$</span>
+																								<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalServico<?php echo $i ?>"
+																									   name="SubtotalServico<?php echo $i ?>" value="<?php echo $servico[$i]['SubtotalServico'] ?>">
+																							</div>
+																						</div>
+																					</div>
+																					<div class="row">
+																						<div class="col-md-1"></div>
+																						<div class="col-md-7">
+																							<label for="ObsServico<?php echo $i ?>">Obs:</label><br>
+																							<input type="text" class="form-control" id="ObsServico<?php echo $i ?>" maxlength="250"
+																								   name="ObsServico<?php echo $i ?>" value="<?php echo $servico[$i]['ObsServico'] ?>">
+																						</div>
+																						<div class="col-md-2">
+																							<label for="DataValidadeServico<?php echo $i ?>">Valid. do Prod.:</label>
+																							<div class="input-group <?php echo $datepicker; ?>">
+																								<span class="input-group-addon" disabled>
+																									<span class="glyphicon glyphicon-calendar"></span>
+																								</span>
+																								<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+																									   name="DataValidadeServico<?php echo $i ?>" value="<?php echo $servico[$i]['DataValidadeServico']; ?>">																				
+																							</div>
+																						</div>
+																						<!--
+																						<div class="col-md-3">
+																							<label for="ConcluidoServico">Concluído? </label><br>
+																							<div class="form-group">
+																								<div class="btn-group" data-toggle="buttons">
+																									<?php
+																									foreach ($select['ConcluidoServico'] as $key => $row) {
+																										(!$servico[$i]['ConcluidoServico']) ? $servico[$i]['ConcluidoServico'] = 'N' : FALSE;
+
+																										if ($servico[$i]['ConcluidoServico'] == $key) {
+																											echo ''
+																											. '<label class="btn btn-warning active" name="radiobutton_ConcluidoServico' . $i . '" id="radiobutton_ConcluidoServico' . $i .  $key . '">'
+																											. '<input type="radio" name="ConcluidoServico' . $i . '" id="radiobuttondinamico" '
+																											. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																											. '</label>'
+																											;
+																										} else {
+																											echo ''
+																											. '<label class="btn btn-default" name="radiobutton_ConcluidoServico' . $i . '" id="radiobutton_ConcluidoServico' . $i .  $key . '">'
+																											. '<input type="radio" name="ConcluidoServico' . $i . '" id="radiobuttondinamico" '
+																											. 'autocomplete="off" value="' . $key . '" >' . $row
+																											. '</label>'
+																											;
+																										}
+																									}
+																									?>
+																								</div>
+																							</div>
+																						</div>
+																						-->
+																						<div class="col-md-1">
+																							<label><br></label><br>
+																							<button type="button" id="<?php echo $i ?>" class="remove_field btn btn-danger"
+																								onclick="calculaQtdSomaDev('QtdVendaServico','QtdSomaDev','ServicoSoma',1,<?php echo $i ?>,'CountMax2',0,'ServicoHidden')">
+																								<span class="glyphicon glyphicon-trash"></span>
+																							</button>
+																						</div>
+																					</div>
+																				</div>
 																			</div>
 																		</div>
-																		<div class="col-md-1">
-																			<label><br></label><br>
-																			<button type="button" id="<?php echo $i ?>" class="remove_field2 btn btn-danger"
-																					onclick="calculaQtdSoma('QtdVendaProduto','QtdSoma','ProdutoSoma',1,<?php echo $i ?>,'CountMax',0,'ProdutoHidden')">
-																				<span class="glyphicon glyphicon-trash"></span>
-																			</button>
+
+																		<?php
+																		$QtdSomaDev+=$servico[$i]['QtdVendaServico'];
+																		$ServicoSoma++;
+																		}
+																		?>
+
 																		</div>
+																		
+																		<div class="panel panel-danger">
+																			<div class="panel-heading text-left">
+																				<div class="form-group">	
+																					<div class="row">	
+																						<br>																
+																						<div class="col-md-3 text-left">
+																							<a class="add_field_button  btn btn-danger" 
+																									onclick="calculaQtdSomaDev('QtdVendaServico','QtdSomaDev','ServicoSoma',0,0,'CountMax2',1,0)">
+																								<span class="glyphicon glyphicon-minus"></span> Adc. Prod. Devolvidos
+																							</a>
+																						</div>
+																						<div class="col-md-2">	
+																							<b>Linhas = <span id="ServicoSoma"><?php echo $ServicoSoma ?></span></b><br />
+																						</div>
+																						<div class="col-md-3">	
+																							<b>Prod. Devolvidos = <span id="QtdSomaDev"><?php echo $QtdSomaDev ?></span></b>
+																						</div>
+																						<div class="col-md-3 text-left">																							
+																							<a class="accordion-toggle btn btn-heading  collapsed" role="tab" id="heading6" data-toggle="collapse" data-parent="#accordion6" data-target="#collapse6" aria-expanded="false">
+																								<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+																								Devolvidos
+																							</a>																							
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<input type="hidden" name="CountMax2" id="CountMax2" value="<?php echo $ServicoSoma ?>">
 																	</div>
 																</div>
 															</div>
 														</div>
-
-														<?php
-														$QtdSoma+=$produto[$i]['QtdVendaProduto'];
-														$ProdutoSoma++;
-														}
-														?>
-
-														</div>
-
-														<div class="panel panel-info">
-															<div class="panel-heading text-left">
-																<div class="form-group">	
-																	<div class="row">	
-																		<div class="col-md-3">	
-																			<a class="add_field_button2 btn btn-warning"
-																					onclick="calculaQtdSoma('QtdVendaProduto','QtdSoma','ProdutoSoma',0,0,'CountMax',1,0)">
-																				<span class="glyphicon glyphicon-plus"></span> Adic. Produtos ou Serviços
-																			</a>
-																		</div>
-																		<div class="col-md-2">	
-																			<b>Total de Produtos: <span id="ProdutoSoma"><?php echo $ProdutoSoma ?></span></b><br />
-																		</div>
-																		<div class="col-md-2">	
-																			<b>Total de Peças: <span id="QtdSoma"><?php echo $QtdSoma ?></span></b>
-																		</div>
-																	</div>
-																</div>	
-															</div>
-														</div>
-
-														<input type="hidden" name="CountMax" id="CountMax" value="<?php echo $ProdutoSoma ?>">
-
-														<br />
-														<!--
-														<div class="form-group">
-															<div class="row">
-																<div class="col-md-3">
-																	<a class="add_field_button2 btn btn-warning"
-																			onclick="calculaQtdSoma('QtdVendaProduto','QtdSoma','ProdutoSoma',0,0,'CountMax',1,0)">
-																		<span class="glyphicon glyphicon-plus"></span> Adic. Produtos ou Serviços
-																	</a>
-																</div>
-															</div>
-														</div>
-														-->
-													</div>
+													</div>													
 												</div>
 											</div>
 										</div>
@@ -456,6 +482,15 @@
 																					   name="ValorOrca" value="<?php echo $orcatrata['ValorOrca'] ?>">
 																			</div>
 																		</div>
+																		
+																		<div class="col-md-3">
+																			<label for="ValorDev">Devolução:</label><br>
+																			<div class="input-group" id="txtHint">
+																				<span class="input-group-addon" id="basic-addon1">R$</span>
+																				<input type="text" class="form-control Valor" id="ValorDev" maxlength="10" placeholder="0,00"
+																					   name="ValorDev" value="<?php echo $orcatrata['ValorDev'] ?>">
+																			</div>
+																		</div>
 
 																		<div class="col-md-3">
 																			<label for="ValorEntradaOrca">Desconto</label><br>
@@ -474,23 +509,7 @@
 																				<input type="text" class="form-control Valor" id="ValorRestanteOrca" maxlength="10" placeholder="0,00" readonly=""
 																					   name="ValorRestanteOrca" value="<?php echo $orcatrata['ValorRestanteOrca'] ?>">
 																			</div>
-																		</div>
-
-																		<div class="col-md-3">
-																			<label for="Modalidade">Modalidade:</label><br>
-																			<div class="input-group" id="txtHint">
-																				<?php
-																				$options = array(
-																			        ''	=> '-- Selecione uma opção --',
-																			        'P'	=> 'PARCELADO',
-																			        'M'	=> 'MENSALIDADE',
-																				);
-																				$cfg = 'data-placeholder="Selecione uma opção..." class="form-control" ' . $readonly . '
-																						id="Modalidade"';
-																				echo form_dropdown('Modalidade', $options, $orcatrata['Modalidade'], $cfg);
-																				?>
-																			</div>
-																		</div>
+																		</div>																		
 																	</div>
 																</div>
 															</div>
@@ -501,12 +520,7 @@
 															<div class="panel panel-info">
 																<div class="panel-heading">
 																	<div class="row">
-																		<div class="col-md-3">
-																			<label for="QtdParcelasOrca">Qtd. Parc.:</label><br>
-																			<input type="text" class="form-control Numero" id="QtdParcelasOrca" maxlength="3" placeholder="0"
-																				   name="QtdParcelasOrca" value="<?php echo $orcatrata['QtdParcelasOrca'] ?>">
-																		</div>
-																		<div class="col-md-3">
+																		<div class="col-md-2">
 																			<label for="FormaPagamento">Forma de Pagam.:</label>
 																			<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 																					id="FormaPagamento" name="FormaPagamento">
@@ -522,6 +536,27 @@
 																				?>
 																			</select>
 																		</div>
+																		<div class="col-md-2">
+																			<label for="Modalidade">Modalidade:</label><br>
+																			<div class="form-group" id="txtHint">
+																				<?php
+																				$options = array(
+																			        ''	=> '-- Selecione uma opção --',
+																			        'A'	=> 'À VISTA',
+																					'P'	=> 'À PRAZO/ PARC.',
+																			        'M'	=> 'MENSALIDADE',
+																				);
+																				$cfg = 'data-placeholder="Selecione uma opção..." class="form-control" ' . $readonly . '
+																						id="Modalidade"';
+																				echo form_dropdown('Modalidade', $options, $orcatrata['Modalidade'], $cfg);
+																				?>
+																			</div>
+																		</div>																		
+																		<div class="col-md-2">
+																			<label for="QtdParcelasOrca">Qtd. Parc.:</label><br>
+																			<input type="text" class="form-control Numero" id="QtdParcelasOrca" maxlength="3" placeholder="0"
+																				   name="QtdParcelasOrca" value="<?php echo $orcatrata['QtdParcelasOrca'] ?>">
+																		</div>																		
 																		<div class="col-md-3">
 																			<label for="DataVencimentoOrca">1º Venc.</label>
 																			<div class="input-group <?php echo $datepicker; ?>">

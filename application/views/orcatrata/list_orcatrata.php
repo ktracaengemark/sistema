@@ -109,15 +109,15 @@
 
 										<!-- Nav tabs -->
 										<ul class="nav nav-tabs" role="tablist">
-											<li role="presentation"><a href="#proxima" aria-controls="proxima" role="tab" data-toggle="tab">Aprovados</a></li>
-											<li role="presentation" class="active"><a href="#anterior" aria-controls="anterior" role="tab" data-toggle="tab">Não Aprovados</a></li>
+											<li role="presentation" class="active"><a href="#proxima" aria-controls="proxima" role="tab" data-toggle="tab">Aprovados</a></li>
+											<li role="presentation"><a href="#anterior" aria-controls="anterior" role="tab" data-toggle="tab">Não Aprovados</a></li>
 										</ul>
 
 										<!-- Tab panes -->
 										<div class="tab-content">
 
 											<!-- Próximas Consultas -->
-											<div role="tabpanel" class="tab-pane" id="proxima">
+											<div role="tabpanel" class="tab-pane active" id="proxima">
 
 												<?php
 												if ($aprovado) {
@@ -184,7 +184,7 @@
 											</div>
 
 											<!-- Histórico de Consultas -->
-											<div role="tabpanel" class="tab-pane active" id="anterior">
+											<div role="tabpanel" class="tab-pane" id="anterior">
 
 												<?php
 												if ($naoaprovado) {
