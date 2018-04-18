@@ -189,7 +189,7 @@ class Orcatrata extends CI_Controller {
 		$data['select']['idSis_Usuario'] = $this->Profissional_model->select_profissional();
         #$data['select']['Servico'] = $this->Basico_model->select_servico();
         #$data['select']['Produto'] = $this->Basico_model->select_produto();
-        #$data['select']['Servico'] = $this->Basico_model->select_servicos();
+        $data['select']['Servico'] = $this->Basico_model->select_produtos();
         $data['select']['Produto'] = $this->Basico_model->select_produtos();
 
         $data['titulo'] = 'Cadastar Orçamento';
@@ -587,7 +587,7 @@ class Orcatrata extends CI_Controller {
         $data['select']['idSis_Usuario'] = $this->Profissional_model->select_profissional();
 		#$data['select']['Servico'] = $this->Basico_model->select_servico();
         #$data['select']['Produto'] = $this->Basico_model->select_produto();
-        #$data['select']['Servico'] = $this->Basico_model->select_servicos();
+        $data['select']['Servico'] = $this->Basico_model->select_produtos();
         $data['select']['Produto'] = $this->Basico_model->select_produtos();
 
         $data['titulo'] = 'Editar Orçamento';
