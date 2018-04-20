@@ -555,6 +555,8 @@
 																		<div class="col-md-2">
 																			<label for="QtdParcelasOrca">Qtd. Parc.:</label><br>
 																			<input type="text" class="form-control Numero" id="QtdParcelasOrca" maxlength="3" placeholder="0"
+																				   data-toggle="collapse" onkeyup="calculaParcelas()"
+																						data-target="#Parcelas" aria-expanded="false" aria-controls="Parcelas"
 																				   name="QtdParcelasOrca" value="<?php echo $orcatrata['QtdParcelasOrca'] ?>">
 																		</div>																		
 																		<div class="col-md-3">
