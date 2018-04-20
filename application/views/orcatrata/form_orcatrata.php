@@ -479,19 +479,21 @@
 																			<div class="input-group" id="txtHint">
 																				<span class="input-group-addon" id="basic-addon1">R$</span>
 																				<input type="text" class="form-control Valor" id="ValorOrca" maxlength="10" placeholder="0,00"
+																					   onkeyup="calculaResta(this.value)"
 																					   name="ValorOrca" value="<?php echo $orcatrata['ValorOrca'] ?>">
 																			</div>
 																		</div>
 																		
 																		<div class="col-md-3">
-																			<label for="ValorDev">Devolução:</label><br>
+																			<label for="ValorDev">Devolução/ Desconto:</label><br>
 																			<div class="input-group" id="txtHint">
 																				<span class="input-group-addon" id="basic-addon1">R$</span>
 																				<input type="text" class="form-control Valor" id="ValorDev" maxlength="10" placeholder="0,00"
+																					   onkeyup="calculaResta(this.value)"
 																					   name="ValorDev" value="<?php echo $orcatrata['ValorDev'] ?>">
 																			</div>
 																		</div>
-
+																		<!--
 																		<div class="col-md-3">
 																			<label for="ValorEntradaOrca">Desconto</label><br>
 																			<div class="input-group" id="txtHint">
@@ -501,7 +503,7 @@
 																					name="ValorEntradaOrca" value="<?php echo $orcatrata['ValorEntradaOrca'] ?>">
 																			</div>
 																		</div>
-
+																		-->
 																		<div class="col-md-3">
 																			<label for="ValorRestanteOrca">Resta Pagar:</label><br>
 																			<div class="input-group" id="txtHint">
@@ -541,9 +543,7 @@
 																			<div class="form-group" id="txtHint">
 																				<?php
 																				$options = array(
-																			        ''	=> '-- Selecione uma opção --',
-																			        'A'	=> 'À VISTA',
-																					'P'	=> 'À PRAZO/ PARC.',
+																					'P'	=> 'PARCELADO',
 																			        'M'	=> 'MENSALIDADE',
 																				);
 																				$cfg = 'data-placeholder="Selecione uma opção..." class="form-control" ' . $readonly . '
@@ -560,11 +560,11 @@
 																		<div class="col-md-3">
 																			<label for="DataVencimentoOrca">1º Venc.</label>
 																			<div class="input-group <?php echo $datepicker; ?>">
-																				<input type="text" class="form-control Date" id="DataVencimentoOrca" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-																					   name="DataVencimentoOrca" value="<?php echo $orcatrata['DataVencimentoOrca']; ?>">
 																				<span class="input-group-addon" disabled>
 																					<span class="glyphicon glyphicon-calendar"></span>
 																				</span>
+																				<input type="text" class="form-control Date" id="DataVencimentoOrca" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+																					   name="DataVencimentoOrca" value="<?php echo $orcatrata['DataVencimentoOrca']; ?>">																				
 																			</div>
 																		</div>
 																		<br>
@@ -629,11 +629,11 @@
 																			<div class="col-md-2">
 																				<label for="DataVencimentoRecebiveis">Data Venc. Parc.</label>
 																				<div class="input-group DatePicker">
-																					<input type="text" class="form-control Date" id="DataVencimentoRecebiveis<?php echo $i ?>" maxlength="10" placeholder="DD/MM/AAAA"
-																						   name="DataVencimentoRecebiveis<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['DataVencimentoRecebiveis'] ?>">
 																					<span class="input-group-addon" disabled>
 																						<span class="glyphicon glyphicon-calendar"></span>
 																					</span>
+																					<input type="text" class="form-control Date" id="DataVencimentoRecebiveis<?php echo $i ?>" maxlength="10" placeholder="DD/MM/AAAA"
+																						   name="DataVencimentoRecebiveis<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['DataVencimentoRecebiveis'] ?>">																					
 																				</div>
 																			</div>
 																			<div class="col-md-2">
@@ -647,11 +647,11 @@
 																			<div class="col-md-2">
 																				<label for="DataPagoRecebiveis">Data Pag.</label>
 																				<div class="input-group DatePicker">
-																					<input type="text" class="form-control Date" id="DataPagoRecebiveis<?php echo $i ?>" maxlength="10" placeholder="DD/MM/AAAA"
-																						   name="DataPagoRecebiveis<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['DataPagoRecebiveis'] ?>">
 																					<span class="input-group-addon" disabled>
 																						<span class="glyphicon glyphicon-calendar"></span>
 																					</span>
+																					<input type="text" class="form-control Date" id="DataPagoRecebiveis<?php echo $i ?>" maxlength="10" placeholder="DD/MM/AAAA"
+																						   name="DataPagoRecebiveis<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['DataPagoRecebiveis'] ?>">																					
 																				</div>
 																			</div>
 																			<div class="col-md-2">
@@ -685,8 +685,6 @@
 																				</div>
 																			</div>
 																		</div>
-
-
 																	</div>
 																</div>
 															</div>
@@ -739,11 +737,11 @@
 																		<div class="col-md-2">
 																			<label for="DataProcedimento<?php echo $i ?>">Data do Proced.:</label>
 																			<div class="input-group <?php echo $datepicker; ?>">
-																				<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-																					   name="DataProcedimento<?php echo $i ?>" value="<?php echo $procedimento[$i]['DataProcedimento']; ?>">
 																				<span class="input-group-addon" disabled>
 																					<span class="glyphicon glyphicon-calendar"></span>
 																				</span>
+																				<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+																					   name="DataProcedimento<?php echo $i ?>" value="<?php echo $procedimento[$i]['DataProcedimento']; ?>">																				
 																			</div>
 																		</div>
 
@@ -841,10 +839,10 @@
 															<div class="panel panel-info">
 																<div class="panel-heading">
 																	<div class="col-md-1"></div>
-																	<div class="form-group text-center">
+																	<div class="form-group text-left">
 																		<div class="row">
 																			<div class="col-md-3 form-inline">
-																				<label for="AprovadoOrca">Apr.(Fech)?</label><br>
+																				<label for="AprovadoOrca">Aprovado?</label><br>
 																				<div class="form-group">
 																					<div class="btn-group" data-toggle="buttons">
 																						<?php
@@ -934,36 +932,36 @@
 																		</div>
 																	</div>
 																	<div class="col-md-1"></div>
-																	<div class="form-group text-center">
+																	<div class="form-group text-left">
 																		<div class="row">
 																			<div class="col-md-3">
 																				<label for="DataOrca">Orçado em:</label>
 																				<div class="input-group <?php echo $datepicker; ?>">
-																					<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-																							name="DataOrca" value="<?php echo $orcatrata['DataOrca']; ?>">
 																					<span class="input-group-addon" disabled>
 																						<span class="glyphicon glyphicon-calendar"></span>
 																					</span>
+																					<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+																							name="DataOrca" value="<?php echo $orcatrata['DataOrca']; ?>">																					
 																				</div>
 																			</div>
 																			<div class="col-md-3">
 																				<label for="DataConclusao">Concluído em:</label>
 																				<div class="input-group <?php echo $datepicker; ?>">
-																					<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-																						   name="DataConclusao" value="<?php echo $orcatrata['DataConclusao']; ?>">
 																					<span class="input-group-addon" disabled>
 																						<span class="glyphicon glyphicon-calendar"></span>
 																					</span>
+																					<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+																						   name="DataConclusao" value="<?php echo $orcatrata['DataConclusao']; ?>">																					
 																				</div>
 																			</div>
 																			<div class="col-md-3">
 																				<label for="DataQuitado">Quitado em:</label>
 																				<div class="input-group <?php echo $datepicker; ?>">
-																					<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-																						   name="DataQuitado" value="<?php echo $orcatrata['DataQuitado']; ?>">
 																					<span class="input-group-addon" disabled>
 																						<span class="glyphicon glyphicon-calendar"></span>
 																					</span>
+																					<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+																						   name="DataQuitado" value="<?php echo $orcatrata['DataQuitado']; ?>">																					
 																				</div>
 																			</div>
 
@@ -1004,7 +1002,7 @@
 																		</div>
 																	</div>
 																	<div class="col-md-1"></div>
-																	<div class="form-group text-center">
+																	<div class="form-group text-left">
 																		<div class="row">
 																			<div class="col-md-6">
 																				<label for="ObsOrca">OBS:</label>
@@ -1014,11 +1012,11 @@
 																			<div class="col-md-3">
 																				<label for="DataRetorno">Retornar em:</label>
 																				<div class="input-group <?php echo $datepicker; ?>">
-																					<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-																						   name="DataRetorno" value="<?php echo $orcatrata['DataRetorno']; ?>">
 																					<span class="input-group-addon" disabled>
 																						<span class="glyphicon glyphicon-calendar"></span>
 																					</span>
+																					<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+																						   name="DataRetorno" value="<?php echo $orcatrata['DataRetorno']; ?>">																					
 																				</div>
 																			</div>
 																		</div>
