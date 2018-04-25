@@ -13,7 +13,7 @@ class Orcatrata extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Orcatrata_model', 'Profissional_model', 'Relatorio_model', 'Formapag_model', 'Clienteusuario_model'));
+        $this->load->model(array('Basico_model', 'Orcatrata_model', 'Profissional_model', 'Usuario_model', 'Relatorio_model', 'Formapag_model', 'Clienteusuario_model'));
         $this->load->driver('session');
 
         #load header view
@@ -84,6 +84,7 @@ class Orcatrata extends CI_Controller {
 			'TipoRD',
         ), TRUE));
 
+		
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
         //comentado fim) mas por enquanto, se está funcionando, vou deixar assim.
 
@@ -165,7 +166,7 @@ class Orcatrata extends CI_Controller {
             }
 
         }
-
+			
         //Fim do trecho de código que dá pra melhorar
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -187,7 +188,7 @@ class Orcatrata extends CI_Controller {
 		$data['select']['QuitadoOrca'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoRecebiveis'] = $this->Basico_model->select_status_sn();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-		$data['select']['idSis_Usuario'] = $this->Profissional_model->select_profissional();
+		$data['select']['idSis_Usuario'] = $this->Usuario_model->select_profissional();
         #$data['select']['Servico'] = $this->Basico_model->select_servico();
         #$data['select']['Produto'] = $this->Basico_model->select_produto();
         $data['select']['Servico'] = $this->Basico_model->select_produtos();
@@ -271,7 +272,7 @@ class Orcatrata extends CI_Controller {
             $data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['orcatrata']['idApp_OrcaTrata'] = $this->Orcatrata_model->set_orcatrata($data['orcatrata']);
 
-            /*
+			/*
             echo count($data['servico']);
             echo '<br>';
             echo "<pre>";
@@ -587,7 +588,7 @@ class Orcatrata extends CI_Controller {
 		$data['select']['QuitadoOrca'] = $this->Basico_model->select_status_sn();
         $data['select']['QuitadoRecebiveis'] = $this->Basico_model->select_status_sn();
         $data['select']['Profissional'] = $this->Profissional_model->select_profissional();
-        $data['select']['idSis_Usuario'] = $this->Profissional_model->select_profissional();
+        $data['select']['idSis_Usuario'] = $this->Usuario_model->select_profissional();
 		#$data['select']['Servico'] = $this->Basico_model->select_servico();
         #$data['select']['Produto'] = $this->Basico_model->select_produto();
         $data['select']['Servico'] = $this->Basico_model->select_produtos();
