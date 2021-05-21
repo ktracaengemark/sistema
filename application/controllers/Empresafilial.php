@@ -18,8 +18,8 @@ class Empresafilial extends CI_Controller {
         $this->load->driver('session');
 
         #load header view
-        $this->load->view('basico/headerempresamatriz');
-        $this->load->view('basico/nav_principalempresamatriz');
+        $this->load->view('basico/headerempresa');
+        $this->load->view('basico/nav_principalempresa');
 
         #$this->load->view('empresafilial/nav_secundario');
     }
@@ -97,7 +97,7 @@ class Empresafilial extends CI_Controller {
         } else {
 
 
-			$data['query']['Empresa'] = $_SESSION['log']['idSis_EmpresaMatriz'];
+			$data['query']['Empresa'] = $_SESSION['log']['idSis_EmpresaFilial'];
             $data['query']['Senha'] = md5($data['query']['Senha']);
 			#$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
             $data['query']['Codigo'] = md5(uniqid(time() . rand()));
@@ -119,7 +119,7 @@ class Empresafilial extends CI_Controller {
             } else {
 
                 $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idSis_EmpresaFilial'], FALSE);
-                $data['auditoria'] = $this->Basico_model->set_auditoriaempresa($data['auditoriaitem'], 'Sis_EmpresaFilial', 'CREATE', $data['auditoriaitem']);
+                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_EmpresaFilial', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
                 redirect(base_url() . 'empresafilial/prontuario/' . $data['idSis_EmpresaFilial'] . $data['msg']);
@@ -203,7 +203,7 @@ class Empresafilial extends CI_Controller {
             $data['query']['Nome'] = trim(mb_strtoupper($data['query']['Nome'], 'ISO-8859-1'));
             #$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
             #$data['query']['Obs'] = nl2br($data['query']['Obs']);
-            #$data['query']['Empresafilial'] = $_SESSION['log']['id'];
+            #$data['query']['Empresafilial'] = $_SESSION['log']['idSis_EmpresaFilial'];
 
             $data['anterior'] = $this->Empresafilial_model->get_empresafilial($data['query']['idSis_EmpresaFilial']);
             $data['campos'] = array_keys($data['query']);
@@ -219,7 +219,7 @@ class Empresafilial extends CI_Controller {
                 if ($data['auditoriaitem'] === FALSE) {
                     $data['msg'] = '';
                 } else {
-                    $data['auditoria'] = $this->Basico_model->set_auditoriaempresa($data['auditoriaitem'], 'Sis_EmpresaFilial', 'UPDATE', $data['auditoriaitem']);
+                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_EmpresaFilial', 'UPDATE', $data['auditoriaitem']);
                     $data['msg'] = '?m=1';
                 }
 

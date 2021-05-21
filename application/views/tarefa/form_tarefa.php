@@ -4,7 +4,7 @@
 		<!--
 		<div class="col-sm-7 col-sm-offset-3 col-md-10 col-md-offset-2 main">												
 			<div class="col-md-12 text-center t">
-				<label for="">Tarefa:</label>
+				<label for="">Procedimento:</label>
 				<div class="row">	
 					<a class="btn btn-lg btn-success" href="<?php echo base_url() ?>relatorio/tarefa" role="button"> 
 						<span class="glyphicon glyphicon-list"></span> Listar
@@ -16,20 +16,22 @@
 			</div>	
 		</div>
 		-->
-		<div class="col-md-2"></div>
-		<div class="col-md-8 ">
-			<?php echo validation_errors(); ?>
+		<div class="col-md-1"></div>
+		<div class="col-md-10 ">
+			<?php #echo validation_errors(); ?>
 
 			<div class="panel panel-<?php echo $panel; ?>">
 
 				<div class="panel-heading"><strong></strong>
 						<div class="text-left ">											
-							<span class="glyphicon glyphicon-pencil"></span> Tarefa 
+							<span class="glyphicon glyphicon-pencil"></span> <?php echo $titulo; ?> : <?php echo $tarefa['idApp_Procedimento'] ?> 
+							<!--
 							<a class="btn btn-md btn-success" href="<?php echo base_url() ?>relatorio/tarefa" role="button"> 
 								<span class="glyphicon glyphicon-list"></span> Listar
 							</a>
-							<a class="btn btn-md btn-warning" href="<?php echo base_url() ?>agenda" role="button"> 
-								<span class="glyphicon glyphicon-calendar"></span> Agenda
+							-->
+							<a class="btn btn-md btn-warning" href="<?php echo base_url() ?>tarefa" role="button"> 
+								<span class="glyphicon glyphicon-calendar"></span> Tarefas
 							</a>
 						</div>					
 				</div>
@@ -37,68 +39,237 @@
 
 					<?php echo form_open_multipart($form_open_path); ?>
 
-					<!--App_Tarefa-->
-
+					<!--App_Procedimento-->
 					<div class="form-group">
-						<div class="panel panel-info">
+						<div class="panel panel-success">
 							<div class="panel-heading">	
 								<div class="row">
 									<div class="col-md-4">
-										<label for="ObsTarefa">Nova Tarefa/ Missão:</label>
-										<textarea class="form-control" id="ObsTarefa" <?php echo $readonly; ?>
-											autofocus name="ObsTarefa"><?php echo $tarefa['ObsTarefa']; ?></textarea>
-									</div>								
+										<label  for="Procedimento">Tarefa:</label>
+										<textarea class="form-control" id="Procedimento" <?php echo $readonly; ?> maxlength="200"
+												  name="Procedimento"><?php echo $tarefa['Procedimento']; ?></textarea>
+										<?php echo form_error('Procedimento'); ?>
+									</div>
+									<?php if ($metodo == 1) { ?>
+										<div class="col-md-4">
+											<div class="row">
+												<div class="col-md-12 " >
+													<label for="Categoria">Categoria:</label>
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
+															id="Categoria" autofocus name="Categoria">
+														<option value="">- Selec. Categoria -</option>	
+														<?php
+														foreach ($select['Categoria'] as $key => $row) {
+															if ($tarefa['Categoria'] == $key) {
+																echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+															} else {
+																echo '<option value="' . $key . '">' . $row . '</option>';
+															}
+														}
+														?>
+													</select>
+													
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12 text-left">
+													<label class="sr-only" for="Cadastrar">Cadastrar no BD</label>
+													<div class="btn-group" data-toggle="buttons">
+														<?php
+														foreach ($select['Cadastrar'] as $key => $row) {
+															if (!$cadastrar['Cadastrar']) $cadastrar['Cadastrar'] = 'S';
+
+															($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+
+															if ($cadastrar['Cadastrar'] == $key) {
+																echo ''
+																. '<label class="btn btn-warning active" name="Cadastrar_' . $hideshow . '">'
+																. '<input type="radio" name="Cadastrar" id="' . $hideshow . '" '
+																. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																. '</label>'
+																;
+															} else {
+																echo ''
+																. '<label class="btn btn-default" name="Cadastrar_' . $hideshow . '">'
+																. '<input type="radio" name="Cadastrar" id="' . $hideshow . '" '
+																. 'autocomplete="off" value="' . $key . '" >' . $row
+																. '</label>'
+																;
+															}
+														}
+														?>
+
+													</div>
+													<?php echo form_error('Categoria'); ?>
+												</div>
+											</div>	
+											<div id="Cadastrar" <?php echo $div['Cadastrar']; ?>>	
+												<div class="row">
+													<div class="col-md-6 text-left">
+														<!--<label for="Cadastrar">Cadastrar/Editar Motivo</label><br>-->
+														<br>
+														<button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#addCategoriaModal">
+															<span class="glyphicon glyphicon-plus"></span>Cadastrar
+														</button>
+														<!--
+														<a class="btn btn-md btn-info btn-block"   target="_blank" href="<?php echo base_url() ?>categoria2/cadastrar3/" role="button"> 
+															<span class="glyphicon glyphicon-plus"></span>Cat
+														</a>
+														-->
+													</div>
+													<div class="col-md-6 text-left">
+														<br>
+														<button class="btn btn-md btn-primary btn-block"  id="inputDb" data-loading-text="Aguarde..." type="submit">
+																<span class="glyphicon glyphicon-refresh"></span>Recarregar
+														</button>
+													</div>											
+												</div>
+												<?php echo form_error('Cadastrar'); ?>
+											</div>	
+										</div>
+									<?php } elseif ($metodo == 2) { ?>
+										<div class="col-md-4">
+											<input type="hidden" name="Categoria" id="Categoria" value="<?php echo $tarefa['Categoria']; ?>"/>
+											<input type="hidden" name="Cadastrar" id="Cadastrar" value="S">
+											<label for="Categoria">Categoria</label>
+											<input type="text" class="form-control" readonly="" value="<?php echo $_SESSION['Tarefa']['NomeCategoria']; ?>"/>
+										</div>
+									<?php } ?>
+									<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>
+										<?php if ($metodo == 1) { ?>
+											<div class="col-md-4">
+												<label for="Compartilhar">Quem Fazer?</label>		
+												<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
+														id="Compartilhar" name="Compartilhar">
+														
+													<?php
+													foreach ($select['Compartilhar'] as $key => $row) {
+														if ($tarefa['Compartilhar'] == $key) {
+															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+														} else {
+															echo '<option value="' . $key . '">' . $row . '</option>';
+														}
+													}
+													?>
+												</select>
+											</div>
+										<?php } elseif ($metodo == 2){ ?>
+													
+											<div class="col-md-4">
+												<input type="hidden" name="Compartilhar" id="Compartilhar" value="<?php echo $tarefa['Compartilhar']; ?>"/>
+												<label for="Compartilhar">Quem Fazer</label>
+												<input type="text" class="form-control" readonly="" value="<?php echo $_SESSION['Tarefa']['NomeCompartilhar']; ?>"/>
+											</div>
+										<?php } ?>	
+									<?php } ?>
+										
 									<!--
-									<div class="col-md-3">
-										<label for="ProfissionalTarefa">Responsável da Tarefa:</label>
+									<div class="col-md-4">
+										<label for="Prioridade">Prioridade:</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-												id="ProfissionalTarefa" name="ProfissionalTarefa">
+												id="Prioridade" name="Prioridade">
 											<option value="">-- Selecione uma opção --</option>
 											<?php
-											foreach ($select['Profissional'] as $key => $row) {
-												if ($tarefa['ProfissionalTarefa'] == $key) {
+											/*
+											foreach ($select['Prioridade'] as $key => $row) {
+												if ($tarefa['Prioridade'] == $key) {
 													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 												} else {
 													echo '<option value="' . $key . '">' . $row . '</option>';
 												}
 											}
+											*/
+											?>
+										</select>
+										<?php echo form_error('Prioridade'); ?>
+									</div>
+									-->
+								</div>	
+								<div class="row">
+									<div class="col-md-8" >
+										<div class="row">
+											<div class="col-md-6 text-left">
+												<label for="DataProcedimento">Iniciar em:</label>
+												<div class="input-group <?php echo $datepicker; ?>">
+													<span class="input-group-addon" disabled>
+														<span class="glyphicon glyphicon-calendar"></span>
+													</span>
+													<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+														   name="DataProcedimento" value="<?php echo $tarefa['DataProcedimento']; ?>">
+													
+												</div>
+												<?php echo form_error('DataProcedimento'); ?>
+											</div>
+											<div class="col-md-6 text-left">
+												<label for="DataProcedimentoLimite">Concluir em:</label>
+												<div class="input-group <?php echo $datepicker; ?>">
+													<span class="input-group-addon" disabled>
+														<span class="glyphicon glyphicon-calendar"></span>
+													</span>
+													<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+														   name="DataProcedimentoLimite" value="<?php echo $tarefa['DataProcedimentoLimite']; ?>">
+													
+												</div>
+												<?php echo form_error('DataProcedimentoLimite'); ?>
+											</div>
+										</div>
+									</div>
+									<!--
+									<div class="col-md-4 ">
+										<label for="Statustarefa">StatusTRF:</label>
+										<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
+												id="Statustarefa" name="Statustarefa">
+											<option value="">-- Selecione uma opção --</option>
+											<?php
+											/*
+											foreach ($select['Statustarefa'] as $key => $row) {
+												if ($tarefa['Statustarefa'] == $key) {
+													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+												} else {
+													echo '<option value="' . $key . '">' . $row . '</option>';
+												}
+											}
+											*/
 											?>
 										</select>
 									</div>
 									-->
-									<div class="col-md-8" >
+									<div class="col-md-2 form-inline" style="<?php echo $display; ?>">
+										<label for="ConcluidoProcedimento">Tarefa Concl.?</label><br>
 										<div class="form-group">
-											<div class="row">
-												<div class="col-md-4 text-left">
-													<label for="DataTarefa">Criada em:</label>
-													<div class="input-group <?php echo $datepicker; ?>">
-														<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-															   autofocus name="DataTarefa" value="<?php echo $tarefa['DataTarefa']; ?>">
-														<span class="input-group-addon" disabled>
-															<span class="glyphicon glyphicon-calendar"></span>
-														</span>
-													</div>
-												</div>
-												<div class="col-md-4 text-left">
-													<label for="DataPrazoTarefa">Prazo de Concl.:</label>
-													<div class="input-group <?php echo $datepicker; ?>">
-														<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-															   autofocus name="DataPrazoTarefa" value="<?php echo $tarefa['DataPrazoTarefa']; ?>">
-														<span class="input-group-addon" disabled>
-															<span class="glyphicon glyphicon-calendar"></span>
-														</span>
-													</div>
-												</div>
+											<div class="btn-group" data-toggle="buttons">
+												<?php
+												foreach ($select['ConcluidoProcedimento'] as $key => $row) {
+													if (!$tarefa['ConcluidoProcedimento'])
+														$tarefa['ConcluidoProcedimento'] = 'N';
+
+													($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+
+													if ($tarefa['ConcluidoProcedimento'] == $key) {
+														echo ''
+														. '<label class="btn btn-warning active" name="ConcluidoProcedimento_' . $hideshow . '">'
+														. '<input type="radio" name="ConcluidoProcedimento" id="' . $hideshow . '" '
+														. 'autocomplete="off" value="' . $key . '" checked>' . $row
+														. '</label>'
+														;
+													} else {
+														echo ''
+														. '<label class="btn btn-default" name="ConcluidoProcedimento_' . $hideshow . '">'
+														. '<input type="radio" name="ConcluidoProcedimento" id="' . $hideshow . '" '
+														. 'autocomplete="off" value="' . $key . '" >' . $row
+														. '</label>'
+														;
+													}
+												}
+												?>
+
 											</div>
 										</div>
-									</div>	
+									</div>
 								</div>
 							</div>	
 						</div>		
 					</div>
-
-						<hr>
-						
 					
 					<div class="panel-group" id="accordion3" role="tablist" aria-multiselectable="true">
 						<div class="panel panel-primary">
@@ -123,7 +294,7 @@
 									?>
 
 									<?php if ($metodo > 1) { ?>
-									<input type="hidden" name="idApp_Procedtarefa<?php echo $i ?>" value="<?php echo $procedtarefa[$i]['idApp_Procedtarefa']; ?>"/>
+									<input type="hidden" name="idApp_SubProcedimento<?php echo $i ?>" value="<?php echo $procedtarefa[$i]['idApp_SubProcedimento']; ?>"/>
 									<?php } ?>
 
 									<div class="form-group" id="3div<?php echo $i ?>">
@@ -150,40 +321,57 @@
 														</select>
 													</div>
 													-->
+													<input type="hidden" name="idSis_Usuario<?php echo $i ?>" value="<?php echo $procedtarefa[$i]['idSis_Usuario']; ?>"/>
 													<div class="col-md-4">
-														<label for="Procedtarefa<?php echo $i ?>">Ação:</label>
-														<textarea class="form-control" id="Procedtarefa<?php echo $i ?>" <?php echo $readonly; ?>
-																  name="Procedtarefa<?php echo $i ?>"><?php echo $procedtarefa[$i]['Procedtarefa']; ?></textarea>
+														<!--<label for="SubProcedimento<?php echo $i ?>">Ação:</label>-->
+														<label for="SubProcedimento<?php echo $i ?>">
+															Ação <?php echo $i ?>: 
+															<?php if ($procedtarefa[$i]['idSis_Usuario']) { ?>
+																<?php echo $_SESSION['Procedtarefa'][$i]['NomeCadastrou'];?>
+															<?php } ?>
+														</label>
+														<textarea class="form-control" id="SubProcedimento<?php echo $i ?>" <?php echo $readonly; ?>
+																  name="SubProcedimento<?php echo $i ?>"><?php echo $procedtarefa[$i]['SubProcedimento']; ?></textarea>
 													</div>
-													<div class="col-md-3">
-														<label for="DataProcedtarefa<?php echo $i ?>">Data da Ação:</label>
+													<div class="col-md-2">
+														<label for="DataSubProcedimento<?php echo $i ?>">Iniciar em:</label>
 														<div class="input-group <?php echo $datepicker; ?>">
-															<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-																   name="DataProcedtarefa<?php echo $i ?>" value="<?php echo $procedtarefa[$i]['DataProcedtarefa']; ?>">
 															<span class="input-group-addon" disabled>
 																<span class="glyphicon glyphicon-calendar"></span>
-															</span>
+															</span>															
+															<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+																   name="DataSubProcedimento<?php echo $i ?>" value="<?php echo $procedtarefa[$i]['DataSubProcedimento']; ?>">
 														</div>
 													</div>
-													<div class="col-md-3">
-														<label for="ConcluidoProcedtarefa">Ação. Concl.? </label><br>
+													<div class="col-md-2">
+														<label for="DataSubProcedimentoLimite<?php echo $i ?>">Concluir em:</label>
+														<div class="input-group <?php echo $datepicker; ?>">
+															<span class="input-group-addon" disabled>
+																<span class="glyphicon glyphicon-calendar"></span>
+															</span>															
+															<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+																   name="DataSubProcedimentoLimite<?php echo $i ?>" value="<?php echo $procedtarefa[$i]['DataSubProcedimentoLimite']; ?>">
+														</div>
+													</div>
+													<div class="col-md-2">
+														<label for="ConcluidoSubProcedimento">Ação. Concl.? </label><br>
 														<div class="form-group">
 															<div class="btn-group" data-toggle="buttons">
 																<?php
-																foreach ($select['ConcluidoProcedtarefa'] as $key => $row) {
-																	(!$procedtarefa[$i]['ConcluidoProcedtarefa']) ? $procedtarefa[$i]['ConcluidoProcedtarefa'] = 'N' : FALSE;
+																foreach ($select['ConcluidoSubProcedimento'] as $key => $row) {
+																	(!$procedtarefa[$i]['ConcluidoSubProcedimento']) ? $procedtarefa[$i]['ConcluidoSubProcedimento'] = 'N' : FALSE;
 
-																	if ($procedtarefa[$i]['ConcluidoProcedtarefa'] == $key) {
+																	if ($procedtarefa[$i]['ConcluidoSubProcedimento'] == $key) {
 																		echo ''
-																		. '<label class="btn btn-warning active" name="radiobutton_ConcluidoProcedtarefa' . $i . '" id="radiobutton_ConcluidoProcedtarefa' . $i .  $key . '">'
-																		. '<input type="radio" name="ConcluidoProcedtarefa' . $i . '" id="radiobuttondinamico" '
+																		. '<label class="btn btn-warning active" name="radiobutton_ConcluidoSubProcedimento' . $i . '" id="radiobutton_ConcluidoSubProcedimento' . $i .  $key . '">'
+																		. '<input type="radio" name="ConcluidoSubProcedimento' . $i . '" id="radiobuttondinamico" '
 																		. 'autocomplete="off" value="' . $key . '" checked>' . $row
 																		. '</label>'
 																		;
 																	} else {
 																		echo ''
-																		. '<label class="btn btn-default" name="radiobutton_ConcluidoProcedtarefa' . $i . '" id="radiobutton_ConcluidoProcedtarefa' . $i .  $key . '">'
-																		. '<input type="radio" name="ConcluidoProcedtarefa' . $i . '" id="radiobuttondinamico" '
+																		. '<label class="btn btn-default" name="radiobutton_ConcluidoSubProcedimento' . $i . '" id="radiobutton_ConcluidoSubProcedimento' . $i .  $key . '">'
+																		. '<input type="radio" name="ConcluidoSubProcedimento' . $i . '" id="radiobuttondinamico" '
 																		. 'autocomplete="off" value="' . $key . '" >' . $row
 																		. '</label>'
 																		;
@@ -193,12 +381,14 @@
 															</div>
 														</div>
 													</div>
-													<div class="col-md-2">
+													<!--
+													<div class="col-md-1">
 														<label><br></label><br>
 														<button type="button" id="<?php echo $i ?>" class="remove_field3 btn btn-danger">
 															<span class="glyphicon glyphicon-trash"></span>
 														</button>
 													</div>
+													-->
 												</div>
 											</div>	
 										</div>		
@@ -210,25 +400,21 @@
 
 									</div>
 
-									<div class="form-group">
-										<div class="row">
-											<div class="col-md-4">
-												<a class="add_field_button3 btn btn-xs btn-warning" onclick="adicionaProcedtarefa()">
-													<span class="glyphicon glyphicon-plus"></span> Adicionar Ação
-												</a>
-											</div>
+									<div class="row">
+										<div class="col-md-4">
+											<a class="btn btn-xs btn-warning" onclick="adicionaSubTarefa()">
+												<span class="glyphicon glyphicon-plus"></span> Adicionar Ação
+											</a>
 										</div>
 									</div>
-
 								</div>
 							</div>
 						</div>
 					</div>
-
-					<hr>
-
+					<!--
 					<div class="form-group">
 						<div class="row">
+							
 							<div class="col-md-2 text-left">
 								<label for="Rotina">Rotina?</label><br>
 								<div class="form-group">
@@ -257,76 +443,15 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-2 text-left" >
-								<label for="Prioridade">Prioridade?</label><br>
-								<div class="form-group">
-									<div class="btn-group" data-toggle="buttons">
-										<?php
-										foreach ($select['Prioridade'] as $key => $row) {
-											(!$tarefa['Prioridade']) ? $tarefa['Prioridade'] = 'N' : FALSE;
-
-											if ($tarefa['Prioridade'] == $key) {
-												echo ''
-												. '<label class="btn btn-warning active" name="radiobutton_Prioridade" id="radiobutton_Prioridade' . $key . '">'
-												. '<input type="radio" name="Prioridade" id="radiobutton" '
-												. 'autocomplete="off" value="' . $key . '" checked>' . $row
-												. '</label>'
-												;
-											} else {
-												echo ''
-												. '<label class="btn btn-default" name="radiobutton_Prioridade" id="radiobutton_Prioridade' . $key . '">'
-												. '<input type="radio" name="Prioridade" id="radiobutton" '
-												. 'autocomplete="off" value="' . $key . '" >' . $row
-												. '</label>'
-												;
-											}
-										}
-										?>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2 form-inline">
-								<label for="TarefaConcluida">Tarefa Concl.?</label><br>
-								<div class="form-group">
-									<div class="btn-group" data-toggle="buttons">
-										<?php
-										foreach ($select['TarefaConcluida'] as $key => $row) {
-											if (!$tarefa['TarefaConcluida'])
-												$tarefa['TarefaConcluida'] = 'N';
-
-											($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-
-											if ($tarefa['TarefaConcluida'] == $key) {
-												echo ''
-												. '<label class="btn btn-warning active" name="TarefaConcluida_' . $hideshow . '">'
-												. '<input type="radio" name="TarefaConcluida" id="' . $hideshow . '" '
-												. 'autocomplete="off" value="' . $key . '" checked>' . $row
-												. '</label>'
-												;
-											} else {
-												echo ''
-												. '<label class="btn btn-default" name="TarefaConcluida_' . $hideshow . '">'
-												. '<input type="radio" name="TarefaConcluida" id="' . $hideshow . '" '
-												. 'autocomplete="off" value="' . $key . '" >' . $row
-												. '</label>'
-												;
-											}
-										}
-										?>
-
-									</div>
-								</div>
-							</div>
-
 							<div class="form-group">
-								<div id="TarefaConcluida" <?php echo $div['TarefaConcluida']; ?>>																								
+								<div id="ConcluidoProcedimento" <?php echo $div['ConcluidoProcedimento']; ?>>																								
 									<div class="col-md-3">
 										<label for="DataConclusao">Data da Conclusão:</label>
 										<div class="input-group <?php echo $datepicker; ?>">
 											<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
 												   name="DataConclusao" value="<?php echo $tarefa['DataConclusao']; ?>">
 											<span class="input-group-addon" disabled>
-												<span class="glyphicon glyphicon-calendar"></span>
+											<span class="glyphicon glyphicon-calendar"></span>
 											</span>
 										</div>
 									</div>
@@ -342,87 +467,180 @@
 									</div>
 								</div>   													
 							</div>
+							
 						</div>					
 					</div>
+					-->
+					<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) || ($_SESSION['log']['idSis_Empresa'] == 5))  { ?>
+					<div class="row">
+						<!--<input type="hidden" name="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>">-->
+						<input type="hidden" name="idApp_Procedimento" value="<?php echo $tarefa['idApp_Procedimento']; ?>">
+						<?php if ($metodo > 1) { ?>
+						<!--<input type="hidden" name="idApp_SubProcedimento" value="<?php echo $procedtarefa['idApp_SubProcedimento']; ?>">
+						<input type="hidden" name="idApp_ParcelasRec" value="<?php echo $parcelasrec['idApp_ParcelasRec']; ?>">-->
+						<?php } ?>
+						<?php if ($metodo == 2) { ?>
+							<!--
+							<div class="col-md-12 text-center">
+								<button class="btn btn-lg btn-danger" id="inputDb" data-loading-text="Aguarde..." name="submit" value="1" type="submit">
+									<span class="glyphicon glyphicon-trash"></span> Excluir
+								</button>
+								<button class="btn btn-lg btn-warning" id="inputDb" onClick="history.go(-1);
+											return true;">
+									<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
+								</button>
+							</div>
+							<button type="button" class="btn btn-danger">
+								<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
+							</button>                        -->
 
-					<hr>
-
-					<div class="form-group">
-						<div class="row">
-							<!--<input type="hidden" name="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>">-->
-							<input type="hidden" name="idApp_Tarefa" value="<?php echo $tarefa['idApp_Tarefa']; ?>">
-							<?php if ($metodo > 1) { ?>
-							<!--<input type="hidden" name="idApp_Procedtarefa" value="<?php echo $procedtarefa['idApp_Procedtarefa']; ?>">
-							<input type="hidden" name="idApp_ParcelasRec" value="<?php echo $parcelasrec['idApp_ParcelasRec']; ?>">-->
-							<?php } ?>
-							<?php if ($metodo == 2) { ?>
-								<!--
-								<div class="col-md-12 text-center">
-									<button class="btn btn-lg btn-danger" id="inputDb" data-loading-text="Aguarde..." name="submit" value="1" type="submit">
-										<span class="glyphicon glyphicon-trash"></span> Excluir
-									</button>
-									<button class="btn btn-lg btn-warning" id="inputDb" onClick="history.go(-1);
-												return true;">
-										<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
-									</button>
-								</div>
-								<button type="button" class="btn btn-danger">
-									<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
-								</button>                        -->
-
-								<div class="col-md-6">
-									<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
-										<span class="glyphicon glyphicon-save"></span> Salvar
-									</button>
-								</div>
+							<div class="col-md-6">
+								<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
+									<span class="glyphicon glyphicon-save"></span> Salvar
+								</button>
+							</div>
+							<?php if ($_SESSION['Tarefa']['idSis_Usuario'] == $_SESSION['log']['idSis_Usuario'] || $_SESSION['Tarefa']['CelularCadastrou'] == $_SESSION['log']['CelularUsuario']) { ?>
 								<div class="col-md-6 text-right">
 									<button  type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 										<span class="glyphicon glyphicon-trash"></span> Excluir
 									</button>
 								</div>
-
-								<div class="modal fade bs-excluir-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header bg-danger">
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-												<h4 class="modal-title">Tem certeza que deseja excluir?</h4>
+							<?php } ?>
+							<div class="modal fade bs-excluir-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header bg-danger">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+											<h4 class="modal-title">Tem certeza que deseja excluir?</h4>
+										</div>
+										<div class="modal-body">
+											<p>Ao confirmar a exclusão todos os dados serão excluídos do banco de dados. Esta operação é irreversível.</p>
+										</div>
+										<div class="modal-footer">
+											<div class="col-md-6 text-left">
+												<button type="button" class="btn btn-warning" data-dismiss="modal">
+													<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
+												</button>
 											</div>
-											<div class="modal-body">
-												<p>Ao confirmar a exclusão todos os dados serão excluídos do banco de dados. Esta operação é irreversível.</p>
-											</div>
-											<div class="modal-footer">
-												<div class="col-md-6 text-left">
-													<button type="button" class="btn btn-warning" data-dismiss="modal">
-														<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
-													</button>
-												</div>
-												<div class="col-md-6 text-right">
-													<a class="btn btn-danger" href="<?php echo base_url() . 'tarefa/excluir/' . $tarefa['idApp_Tarefa'] ?>" role="button">
-														<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
-													</a>
-												</div>
+											<div class="col-md-6 text-right">
+												<a class="btn btn-danger" href="<?php echo base_url() . 'tarefa/excluir/' . $tarefa['idApp_Procedimento'] ?>" role="button">
+													<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
+												</a>
 											</div>
 										</div>
 									</div>
 								</div>
-							<?php } else { ?>
-								<div class="col-md-6">
-									<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
-										<span class="glyphicon glyphicon-save"></span> Salvar
-									</button>
+							</div>
+						<?php } else { ?>
+							<div class="col-md-6">
+								<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
+									<span class="glyphicon glyphicon-save"></span> Salvar
+								</button>
+							</div>
+						<?php } ?>
+						<div id="msgCadSucesso" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header bg-success text-center">
+										<h5 class="modal-title" id="visulUsuarioModalLabel">Categoria</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										  <span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										Categoria cadastrada com sucesso!
+									</div>
+									<div class="modal-footer">
+										<div class="col-md-6">	
+											<button class="btn btn-success btn-block" name="botaoFechar2" id="botaoFechar2" onclick="DesabilitaBotaoFechar(this.name)" value="0" type="submit">
+												<span class="glyphicon glyphicon-filter"></span> Fechar
+											</button>
+											<div class="col-md-12 alert alert-warning aguardar2" role="alert" >
+												Aguarde um instante! Estamos processando sua solicitação!
+											</div>
+										</div>	
+										<!--<button type="button" class="btn btn-info" data-dismiss="modal">Fechar</button>-->
+									</div>
 								</div>
-							<?php } ?>
+							</div>
 						</div>
 					</div>
+					<?php } ?>
 
 					</form>
-
 				</div>
-
 			</div>
-
 		</div>
-		<div class="col-md-2"></div>
+		<div class="col-md-1"></div>
 	</div>
-</div>	
+</div>
+
+<div id="addCategoriaModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addCategoriaModalLabel">Cadastrar Categoria</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<span id="msg-error-categoria"></span>
+				<form method="post" id="insert_categoria_form">
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Categoria</label>
+						<div class="col-sm-10">
+							<input name="Novo_Categoria" type="text" class="form-control" id="Novo_Categoria" placeholder="Categoria">
+						</div>
+					</div>
+					<div class="form-group row">	
+						<div class="col-sm-6">
+							<br>
+							<button type="submit" class="btn btn-success btn-block" name="botaoCad" id="botaoCad" >
+								<span class="glyphicon glyphicon-plus"></span> Cadastrar
+							</button>
+						</div>
+						<div class="col-sm-6">
+							<br>
+							<button type="button" class="btn btn-primary btn-block" data-dismiss="modal" name="botaoFechar" id="botaoFechar">
+								<span class="glyphicon glyphicon-remove"></span> Fechar
+							</button>
+						</div>	
+						<div class="col-md-12 alert alert-warning aguardar1" role="alert" >
+							Aguarde um instante! Estamos processando sua solicitação!
+						</div>
+					</div>
+				</form>
+				<?php if (isset($list_categoria)) echo $list_categoria; ?>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="alterarCategoria" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="alterarCategoriaLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="alterarCategoriaLabel">Categoria</h4>
+			</div>
+			<div class="modal-body">
+				<span id="msg-error-alterar-categoria"></span>
+				<form method="post" id="alterar_categoria_form">
+					<div class="form-group">
+						<label for="CategoriaAlterar" class="control-label">Categoria:</label>
+						<input type="text" class="form-control" name="CategoriaAlterar" id="CategoriaAlterar">
+					</div>
+					<input type="hidden" name="id_Categoria" id="id_Categoria">
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" name="CancelarCategoria" id="CancelarCategoria" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-danger" name="AlterarCategoria" id="AlterarCategoria" >Alterar</button>	
+						<div class="col-md-12 alert alert-warning aguardarAlterarCategoria" role="alert" >
+							Aguarde um instante! Estamos processando sua solicitação!
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

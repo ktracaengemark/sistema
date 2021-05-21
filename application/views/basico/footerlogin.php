@@ -7,6 +7,6 @@
 </div>
 -->
 <div class="text-center">
-    Desenvolvido por <a href="https://www.ktracaengenharia.com.br" title="www.ktracaengenharia.com.br">https://www.ktracaengenharia.com.br</a> 
+    Desenvolvido por <a href="https://www.enkontraki.com.br" title="www.enkontraki.com.br">https://www.enkontraki.com.br</a> 
 
 </div>

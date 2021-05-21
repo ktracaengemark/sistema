@@ -13,7 +13,7 @@ class Acesso extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Agenda_model', 'Relatorio_model'));
+        $this->load->model(array('Basico_model', 'Agenda_model', 'Empresa_model', 'Usuario_model', 'Relatorio_model'));
         $this->load->driver('session');
 
         #load header view
@@ -32,6 +32,9 @@ class Acesso extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
+		
+		$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($_SESSION['log']['idSis_Empresa'], TRUE);
+		$_SESSION['Usuario']  = $this->Usuario_model->get_usuario($_SESSION['log']['idSis_Usuario'], TRUE);
 		
 		$this->load->view('acesso/tela_acesso', $data);
 

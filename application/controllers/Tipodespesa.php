@@ -88,7 +88,7 @@ class Tipodespesa extends CI_Controller {
 
             $data['query']['TipoDespesa'] = trim(mb_strtoupper($data['query']['TipoDespesa'], 'ISO-8859-1'));
            # $data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 			$data['query']['Empresa'] = $_SESSION['log']['Empresa'];
 
@@ -169,7 +169,7 @@ class Tipodespesa extends CI_Controller {
 
             $data['query']['TipoDespesa'] = trim(mb_strtoupper($data['query']['TipoDespesa'], 'ISO-8859-1'));
             #$data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
-            #$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            #$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 
             $data['anterior'] = $this->Tipodespesa_model->get_tipodespesa($data['query']['idTab_TipoDespesa']);
             $data['campos'] = array_keys($data['query']);

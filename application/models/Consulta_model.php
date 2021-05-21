@@ -23,10 +23,210 @@ class Consulta_model extends CI_Model {
     }
 
     public function get_consulta($data) {
-        $query = $this->db->query('SELECT * FROM App_Consulta WHERE idApp_Consulta = ' . $data);
+        $query = $this->db->query('
+			SELECT * 
+			FROM 
+				App_Consulta AS C
+					LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = C.idSis_Empresa
+			WHERE 
+				C.idApp_Consulta = ' . $data
+		);
+		
         $query = $query->result_array();
 
         return $query[0];
+    }
+
+    public function get_consulta_orca($data) {
+        $query = $this->db->query('
+			SELECT * 
+			FROM 
+				App_Consulta
+			WHERE 
+				idApp_OrcaTrata = ' . $data
+		);
+		
+        $query = $query->result_array();
+
+        return $query[0];
+    }
+
+    public function get_consulta_repeticao($id, $repeticao, $quais, $dataini) {
+
+		if($quais == 4){
+			$query = $this->db->query('
+				SELECT idApp_Consulta, Repeticao, idApp_OrcaTrata
+				FROM App_Consulta WHERE Repeticao = ' . $repeticao . '	
+			');
+		}elseif($quais == 3){
+			$query = $this->db->query('
+				SELECT idApp_Consulta, Repeticao, idApp_OrcaTrata 
+				FROM App_Consulta WHERE Repeticao = ' . $repeticao . '	AND DataInicio >= "' . $dataini . '"	
+			');
+		}elseif($quais == 2){
+			$query = $this->db->query('
+				SELECT idApp_Consulta, Repeticao, idApp_OrcaTrata 
+				FROM App_Consulta WHERE Repeticao = ' . $repeticao . '	AND DataInicio <= "' . $dataini . '"	
+			');
+		}else{
+			$query = $this->db->query('
+				SELECT idApp_Consulta, Repeticao, idApp_OrcaTrata 
+				FROM App_Consulta WHERE idApp_Consulta = ' . $id . '	
+			');
+		}
+        $query = $query->result_array();
+
+        return $query;
+    }
+	
+    public function get_consultas_orca($data) {
+        $query = $this->db->query('
+			SELECT * 
+			FROM 
+				App_Consulta
+			WHERE 
+				idApp_OrcaTrata = ' . $data
+		);
+		
+        $query = $query->result_array();
+
+        return $query;
+    }
+	
+    public function get_consultas_zero($data) {
+        $query = $this->db->query('
+			SELECT * 
+			FROM 
+				App_Consulta
+			WHERE 
+				idApp_OrcaTrata = ' . $data . ' AND
+				idApp_OrcaTrata != 0 
+		');
+		
+        $query = $query->result_array();
+
+        return $query;
+    }
+	
+    public function get_consultas($data) {
+        $query = $this->db->query('
+			SELECT * 
+			FROM 
+				App_Consulta
+			WHERE 
+				Repeticao = ' . $data . '
+			ORDER BY
+				idApp_Consulta ASC
+		');
+		
+        $query = $query->result_array();
+
+        return $query;
+    }
+
+    public function get_consultas_repet($data) {
+        $query = $this->db->query('
+			SELECT * 
+			FROM 
+				App_Consulta
+			WHERE 
+				Repeticao = ' . $data . ' AND
+				idApp_OrcaTrata = 0
+			ORDER BY
+				idApp_Consulta ASC
+		');
+		
+        $query = $query->result_array();
+
+        return $query;
+    }
+	
+    public function get_horarios($data) {
+        $query = $this->db->query('
+			SELECT * 
+			FROM 
+				App_Consulta
+			WHERE
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				DataInicio = "' . $data . '"
+			ORDER BY
+				idApp_Consulta ASC
+		');
+		
+        $query = $query->result_array();
+
+        return $query;
+    }
+	
+    public function get_recorrencia() {
+        $query = $this->db->query('
+			SELECT 
+				idApp_Consulta,
+				Recorrencias,
+				Recorrencia
+			FROM 
+				App_Consulta
+		');
+		
+        $query = $query->result_array();
+
+        return $query;
+    }
+	
+    public function get_consulta_posterior($id, $repeticao, $quais, $dia) {
+		
+		if($quais == 1){
+			$filtro = 'idApp_Consulta = ' . $id . '';
+		}elseif($quais == 2){
+			$filtro = 'idApp_Consulta = ' . $id . ' OR (Repeticao = ' . $repeticao . ' AND DataInicio <= "' . $dia . '")';
+		}elseif($quais == 3){
+			$filtro = 'idApp_Consulta = ' . $id . ' OR (Repeticao = ' . $repeticao . ' AND DataInicio >= "' . $dia . '")';
+		}elseif($quais == 4){
+			$filtro = 'idApp_Consulta = ' . $id . ' OR Repeticao = ' . $repeticao . '';
+		}
+		
+		$query = $this->db->query('
+			SELECT 
+				*
+			FROM 
+			App_Consulta
+			WHERE
+				' . $filtro . '
+		');
+		
+        /*
+			echo $this->db->last_query();
+          
+		  echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+          */
+		  
+        $query = $query->result_array();
+
+        return $query;
+    }	
+    
+	public function get_orcatrata($data) {
+        $query = $this->db->query('
+			SELECT * 
+			FROM 
+				App_OrcaTrata
+			WHERE 
+				idApp_OrcaTrata = ' . $data
+		);
+		
+        $query = $query->result_array();
+
+        return $query[0];
+    }
+	
+    public function update_procedimento($data) {
+
+        $query = $this->db->update_batch('App_Consulta', $data, 'idApp_Consulta');
+        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
+
     }
 
     public function update_consulta($data, $id) {
@@ -47,9 +247,16 @@ class Consulta_model extends CI_Model {
             return TRUE;
     }
 
-    public function delete_consulta($data) {
-        $query = $this->db->delete('App_Consulta', array('idApp_Consulta' => $data));
-
+    public function delete_consulta($id, $repeticao, $quais, $dataini) {
+		if($quais == 4){
+			$this->db->delete('App_Consulta', array('Repeticao' => $repeticao));
+		}elseif($quais == 3){
+			$this->db->delete('App_Consulta', array('Repeticao' => $repeticao, 'DataInicio >=' => $dataini));
+		}elseif($quais == 2){
+			$this->db->delete('App_Consulta', array('Repeticao' => $repeticao, 'DataInicio <=' => $dataini));
+		}else{
+			$this->db->delete('App_Consulta', array('idApp_Consulta' => $id));
+		}
         if ($this->db->affected_rows() === 0)
             return FALSE;
         else
@@ -73,7 +280,7 @@ class Consulta_model extends CI_Model {
                 . 'C.Obs '
             . 'FROM '
                 . 'App_Consulta AS C '
-                    . 'LEFT JOIN app.App_ContatoCliente AS D ON C.idApp_ContatoCliente = D.idApp_ContatoCliente, '
+                    . 'LEFT JOIN App_ContatoCliente AS D ON C.idApp_ContatoCliente = D.idApp_ContatoCliente, '
                 . 'Tab_Status AS S, '                
                 . 'Sis_Usuario AS V '
             . 'WHERE '
@@ -108,7 +315,7 @@ class Consulta_model extends CI_Model {
                 . 'C.Obs '
             . 'FROM '
                 . 'App_Consulta AS C '
-                    . 'LEFT JOIN app.App_ContatoCliente AS D ON C.idApp_ContatoCliente = D.idApp_ContatoCliente, '
+                    . 'LEFT JOIN App_ContatoCliente AS D ON C.idApp_ContatoCliente = D.idApp_ContatoCliente, '
                 . 'Tab_Status AS S, '
                 . 'Sis_Usuario AS V '
             . 'WHERE '

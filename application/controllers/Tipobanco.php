@@ -86,7 +86,7 @@ class Tipobanco extends CI_Controller {
         } else {
 
             $data['query']['TipoBanco'] = trim(mb_strtoupper($data['query']['TipoBanco'], 'ISO-8859-1'));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
             $data['campos'] = array_keys($data['query']);
@@ -165,7 +165,7 @@ class Tipobanco extends CI_Controller {
 
             $data['query']['TipoBanco'] = trim(mb_strtoupper($data['query']['TipoBanco'], 'ISO-8859-1'));
          #   $data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 
             $data['anterior'] = $this->Tipobanco_model->get_tipobanco($data['query']['idTab_TipoBanco']);
             $data['campos'] = array_keys($data['query']);

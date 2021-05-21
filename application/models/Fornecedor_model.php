@@ -70,12 +70,52 @@ class Fornecedor_model extends CI_Model {
             return TRUE;
         }
     }
+    
+	public function list_atividade($data, $x) {
+		
+		$data['idSis_Empresa'] = ($data['idSis_Empresa'] != 0) ? ' AND TA.idSis_Empresa = ' . $data['idSis_Empresa'] : FALSE;
+
+        $query = $this->db->query('
+			SELECT 
+				TA.*
+			FROM 
+				App_Atividade AS TA
+			WHERE 
+                TA.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+                
+			ORDER BY  
+				TA.Atividade ASC 
+		');
+
+        /*
+          echo $this->db->last_query();
+          $query = $query->result_array();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+            if ($x === FALSE) {
+                return TRUE;
+            } else {
+                #foreach ($query->result_array() as $row) {
+                #    $row->idApp_Profissional = $row->idApp_Profissional;
+                #    $row->NomeProfissional = $row->NomeProfissional;
+                #}
+                $query = $query->result_array();
+                return $query;
+            }
+        }
+    }
 
     public function lista_fornecedorORIG($data, $x) {
 
         $query = $this->db->query('SELECT * '
                 . 'FROM App_Fornecedor WHERE '
-                . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                . 'idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND '
                 . 'idTab_Modulo = 1 AND '
                 . '(NomeFornecedor like "%' . $data . '%" OR '
                 #. 'DataNascimento = "' . $this->basico->mascara_data($data, 'mysql') . '" OR '
@@ -120,22 +160,22 @@ class Fornecedor_model extends CI_Model {
                 E.Telefone2,
                 E.Telefone3,
                 E.Sexo,
-                E.Endereco,
-                E.Bairro,
-                CONCAT(M.NomeMunicipio, "/", M.Uf) AS Municipio,
+                E.EnderecoFornecedor,
+                E.BairroFornecedor,
+                CONCAT(M.NomeMunicipio, "/", M.Uf) AS MunicipioFornecedor,
                 E.Email,
 				CE.NomeContatofornec,
 				CE.RelaCom,
 				CE.Sexo
             FROM
                 App_Fornecedor AS E
-                    LEFT JOIN Tab_Municipio AS M ON E.Municipio = M.idTab_Municipio
+                    LEFT JOIN Tab_Municipio AS M ON E.MunicipioFornecedor = M.idTab_Municipio
 					LEFT JOIN App_Contatofornec AS CE ON E.idApp_Fornecedor = CE.idApp_Fornecedor
 					LEFT JOIN Tab_TipoFornec AS TF ON TF.Abrev = E.TipoFornec
 					LEFT JOIN Tab_StatusSN AS TS ON TS.Abrev = E.VendaFornec
 					LEFT JOIN App_Atividade AS TA ON TA.idApp_Atividade = E.Atividade
             WHERE
-                E.Empresa = ' . $_SESSION['log']['Empresa'] . '
+                E.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
 				E.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
 			ORDER BY
                 E.NomeFornecedor ASC
@@ -177,21 +217,21 @@ class Fornecedor_model extends CI_Model {
                 E.Telefone2,
                 E.Telefone3,
                 E.Sexo,
-                E.Endereco,
-                E.Bairro,
-                CONCAT(M.NomeMunicipio, "/", M.Uf) AS Municipio,
+                E.EnderecoFornecedor,
+                E.BairroFornecedor,
+                CONCAT(M.NomeMunicipio, "/", M.Uf) AS MunicipioFornecedor,
                 E.Email,
 				CE.NomeContatofornec,
 				CE.RelaCom,
 				CE.Sexo
             FROM
                 App_Fornecedor AS E
-                    LEFT JOIN Tab_Municipio AS M ON E.Municipio = M.idTab_Municipio
+                    LEFT JOIN Tab_Municipio AS M ON E.MunicipioFornecedor = M.idTab_Municipio
 					LEFT JOIN App_Contatofornec AS CE ON E.idApp_Fornecedor = CE.idApp_Fornecedor
 					LEFT JOIN Tab_TipoFornec AS TF ON TF.Abrev = E.TipoFornec
 					LEFT JOIN Tab_StatusSN AS TS ON TS.Abrev = E.VendaFornec
             WHERE
-                E.idSis_Usuario = ' . $_SESSION['log']['id'] . '
+                E.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . '
 			ORDER BY
                 E.NomeFornecedor ASC
         ');
@@ -223,12 +263,12 @@ class Fornecedor_model extends CI_Model {
             $array = $this->db->query(					
 				'SELECT                
 				idApp_Fornecedor,
-				CONCAT(TipoFornec, " --- ", NomeFornecedor) AS NomeFornecedor				
+				CONCAT(NomeFornecedor) AS NomeFornecedor				
             FROM
                 App_Fornecedor
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' 
+                idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' 
 			ORDER BY NomeFornecedor ASC'
     );
 					
@@ -236,12 +276,12 @@ class Fornecedor_model extends CI_Model {
             $query = $this->db->query(
                 'SELECT                
 				idApp_Fornecedor,
-				CONCAT(TipoFornec, " --- ", NomeFornecedor) AS NomeFornecedor				
+				CONCAT(NomeFornecedor) AS NomeFornecedor				
             FROM
                 App_Fornecedor
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                Empresa = ' . $_SESSION['log']['Empresa'] . ' 
+                idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
 			ORDER BY NomeFornecedor ASC'
     );
             
@@ -265,11 +305,11 @@ class Fornecedor_model extends CI_Model {
                 App_Fornecedor
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND
 				VendaFornec = "S" AND
 				TipoFornec = "P" OR
 				idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND
 				VendaFornec = "S" AND
 				TipoFornec = "P&S"
 			ORDER BY NomeFornecedor ASC'
@@ -284,11 +324,11 @@ class Fornecedor_model extends CI_Model {
                 App_Fornecedor
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND
 				VendaFornec = "S" AND
 				TipoFornec = "P" OR
 				idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND
 				VendaFornec = "S" AND
 				TipoFornec = "P&S"
 			ORDER BY NomeFornecedor ASC'
@@ -314,11 +354,11 @@ class Fornecedor_model extends CI_Model {
                 App_Fornecedor
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND
 				VendaFornec = "S" AND
 				TipoFornec = "S" OR
 				idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND
 				VendaFornec = "S" AND
 				TipoFornec = "P&S"
 			ORDER BY NomeFornecedor ASC'
@@ -333,11 +373,11 @@ class Fornecedor_model extends CI_Model {
                 App_Fornecedor
             WHERE
                 idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND
 				VendaFornec = "S" AND
 				TipoFornec = "S" OR
 				idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-                idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
+                idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND
 				VendaFornec = "S" AND
 				TipoFornec = "P&S"
 			ORDER BY NomeFornecedor ASC'

@@ -14,7 +14,7 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin:
 input, select { vertical-align: middle; }
 
 body { font:13px/1.231 sans-serif; *font-size:small; } /* Hack retained to preserve specificity */
-select, input, textarea, button { font:99% sans-serif, float:left;}
+select, input, textarea, button { font:99% sans-serif; }
 pre, code, kbd, samp { font-family: monospace, sans-serif; }
 
 
@@ -67,10 +67,6 @@ ul.credits li { margin-bottom: .25em; }
 strong { font-weight: bold; }
 i { font-style: italic; }
 
-.navbar-toggle button{
-float:left
-}
-
 .button {
   background: #fafafa;
   background: -webkit-linear-gradient(top, #ffffff, #eeeeee);
@@ -98,7 +94,6 @@ float:left
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  float:left;
 }
 
 .button-blue {

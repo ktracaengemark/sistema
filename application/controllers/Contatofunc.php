@@ -48,26 +48,26 @@ class Contatofunc extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = quotes_to_entities($this->input->post(array(
-            'idApp_ContatoFunc',
-            'idSis_EmpresaFilial',			
-            'NomeContatoFunc',
+            'idSis_Usuario',
+			'idApp_ContatoUsuario',			
+            'NomeContatoUsuario',
             'StatusVida',
 			'Ativo',
             'DataNascimento',
             'Sexo',
 			'RelaPes',
-			'TelefoneContatoFunc',
+			'TelefoneContatoUsuario',
             'Obs',
-            'idSis_Usuario',
+            
                         ), TRUE));
 
         //echo '<br><br><br><br><br>==========================================='.$data['query']['StatusVida']='V';
         
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $this->form_validation->set_rules('NomeContatoFunc', 'Nome do Responsável', 'required|trim');
+        $this->form_validation->set_rules('NomeContatoUsuario', 'Nome do Responsável', 'required|trim');
         $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
-		$this->form_validation->set_rules('TelefoneContatoFunc', 'TelefoneContatoFunc', 'required|trim');
+		$this->form_validation->set_rules('TelefoneContatoUsuario', 'TelefoneContatoUsuario', 'required|trim');
         $this->form_validation->set_rules('RelaPes', 'RelaPes', 'required|trim');
 		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contatofunc_model->select_status_vida();
@@ -88,25 +88,25 @@ class Contatofunc extends CI_Controller {
             $this->load->view('contatofunc/form_contatofunc', $data);
         } else {
 
-            $data['query']['NomeContatoFunc'] = trim(mb_strtoupper($data['query']['NomeContatoFunc'], 'ISO-8859-1'));
+            $data['query']['NomeContatoUsuario'] = trim(mb_strtoupper($data['query']['NomeContatoUsuario'], 'ISO-8859-1'));
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
             $data['query']['Obs'] = nl2br($data['query']['Obs']);
-			$data['query']['idSis_EmpresaFilial'] = $_SESSION['log']['id'];
+			$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
 
-            $data['idApp_ContatoFunc'] = $this->Contatofunc_model->set_contatofunc($data['query']);
+            $data['idApp_ContatoUsuario'] = $this->Contatofunc_model->set_contatofunc($data['query']);
 
-            if ($data['idApp_ContatoFunc'] === FALSE) {
+            if ($data['idApp_ContatoUsuario'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
                 $this->basico->erro($msg);
                 $this->load->view('contatofunc/form_contatofunc', $data);
             } else {
 
-                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idApp_ContatoFunc'], FALSE);
-                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_ContatoFunc', 'CREATE', $data['auditoriaitem']);
+                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idApp_ContatoUsuario'], FALSE);
+                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_ContatoUsuario', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
                 redirect(base_url() . 'contatofunc/pesquisar/' . $_SESSION['Funcionario']['idSis_Usuario'] . $data['msg']);
@@ -127,30 +127,30 @@ class Contatofunc extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = $this->input->post(array(
-            'idApp_ContatoFunc',
-            'idSis_EmpresaFilial',
-            'NomeContatoFunc',
+            'idSis_Usuario',
+			'idApp_ContatoUsuario',
+            'idSis_Empresa',
+            'NomeContatoUsuario',
             'StatusVida',
             'DataNascimento',
             'Sexo',
 			'RelaPes',
-            'TelefoneContatoFunc',
+            'TelefoneContatoUsuario',
             'Obs',
-            'idSis_Usuario',
 			'Ativo',
                 ), TRUE);
 
         if ($id) {
             $data['query'] = $this->Contatofunc_model->get_contatofunc($id);
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'barras');
-            $_SESSION['log']['idApp_ContatoFunc'] = $id;
+            $_SESSION['log']['idApp_ContatoUsuario'] = $id;
         }
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $this->form_validation->set_rules('NomeContatoFunc', 'Nome do Responsável', 'required|trim');
+        $this->form_validation->set_rules('NomeContatoUsuario', 'Nome do Responsável', 'required|trim');
         $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
-		$this->form_validation->set_rules('TelefoneContatoFunc', 'TelefoneContatoFunc', 'required|trim');
+		$this->form_validation->set_rules('TelefoneContatoUsuario', 'TelefoneContatoUsuario', 'required|trim');
         $this->form_validation->set_rules('RelaPes', 'RelaPes', 'required|trim');
 		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contatofunc_model->select_status_vida();
@@ -171,27 +171,27 @@ class Contatofunc extends CI_Controller {
             $this->load->view('contatofunc/form_contatofunc', $data);
         } else {
 
-            $data['query']['NomeContatoFunc'] = trim(mb_strtoupper($data['query']['NomeContatoFunc'], 'ISO-8859-1'));
+            $data['query']['NomeContatoUsuario'] = trim(mb_strtoupper($data['query']['NomeContatoUsuario'], 'ISO-8859-1'));
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
             $data['query']['Obs'] = nl2br($data['query']['Obs']);
-            $data['query']['idSis_EmpresaFilial'] = $_SESSION['log']['id']; 
-			$data['query']['idApp_ContatoFunc'] = $_SESSION['log']['idApp_ContatoFunc'];
+            $data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa']; 
+			$data['query']['idApp_ContatoUsuario'] = $_SESSION['log']['idApp_ContatoUsuario'];
 
-            $data['anterior'] = $this->Contatofunc_model->get_contatofunc($data['query']['idApp_ContatoFunc']);
+            $data['anterior'] = $this->Contatofunc_model->get_contatofunc($data['query']['idApp_ContatoUsuario']);
             $data['campos'] = array_keys($data['query']);
 
-            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_ContatoFunc'], TRUE);
+            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_ContatoUsuario'], TRUE);
 
-            if ($data['auditoriaitem'] && $this->Contatofunc_model->update_contatofunc($data['query'], $data['query']['idApp_ContatoFunc']) === FALSE) {
+            if ($data['auditoriaitem'] && $this->Contatofunc_model->update_contatofunc($data['query'], $data['query']['idApp_ContatoUsuario']) === FALSE) {
                 $data['msg'] = '?m=2';
-                redirect(base_url() . 'contatofunc/form_contatofunc/' . $data['query']['idApp_ContatoFunc'] . $data['msg']);
+                redirect(base_url() . 'contatofunc/form_contatofunc/' . $data['query']['idApp_ContatoUsuario'] . $data['msg']);
                 exit();
             } else {
 
                 if ($data['auditoriaitem'] === FALSE) {
                     $data['msg'] = '';
                 } else {
-                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_ContatoFunc', 'UPDATE', $data['auditoriaitem']);
+                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_ContatoUsuario', 'UPDATE', $data['auditoriaitem']);
                     $data['msg'] = '?m=1';
                 }
 
@@ -213,7 +213,7 @@ class Contatofunc extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = $this->input->post(array(
-            'idApp_ContatoFunc',
+            'idApp_ContatoUsuario',
             'submit'
                 ), TRUE);
 
@@ -240,18 +240,18 @@ class Contatofunc extends CI_Controller {
             $this->load->view('contatofunc/tela_contatofunc', $data);
         } else {
 
-            if ($data['query']['idApp_ContatoFunc'] === FALSE) {
+            if ($data['query']['idApp_ContatoUsuario'] === FALSE) {
                 $data['msg'] = '?m=2';
                 $this->load->view('contatofunc/form_contatofunc', $data);
             } else {
 
-                $data['anterior'] = $this->Contatofunc_model->get_contatofunc($data['query']['idApp_ContatoFunc']);
+                $data['anterior'] = $this->Contatofunc_model->get_contatofunc($data['query']['idApp_ContatoUsuario']);
                 $data['campos'] = array_keys($data['anterior']);
 
-                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], NULL, $data['campos'], $data['query']['idApp_ContatoFunc'], FALSE, TRUE);
-                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_ContatoFunc', 'DELETE', $data['auditoriaitem']);
+                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], NULL, $data['campos'], $data['query']['idApp_ContatoUsuario'], FALSE, TRUE);
+                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_ContatoUsuario', 'DELETE', $data['auditoriaitem']);
 
-                $this->Contatofunc_model->delete_contatofunc($data['query']['idApp_ContatoFunc']);
+                $this->Contatofunc_model->delete_contatofunc($data['query']['idApp_ContatoUsuario']);
 
                 $data['msg'] = '?m=1';
 

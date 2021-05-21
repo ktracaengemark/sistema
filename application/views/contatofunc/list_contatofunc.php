@@ -46,7 +46,7 @@ foreach ($query->result_array() as $row) {
 
         <div class="bs-callout bs-callout-<?php echo $row['class']; ?>" id=callout-overview-not-both> 
 
-            <a class="btn btn-<?php echo $row['class']; ?>" href="<?php echo base_url() . 'contatofunc/alterar/' . $row['idApp_ContatoFunc'] ?>" role="button"> 
+            <a class="btn btn-<?php echo $row['class']; ?>" href="<?php echo base_url() . 'contatofunc/alterar/' . $row['idApp_ContatoUsuario'] ?>" role="button"> 
                 <span class="glyphicon glyphicon-edit"></span> Editar Dados
             </a>          
             
@@ -54,7 +54,7 @@ foreach ($query->result_array() as $row) {
             
             <h4>
                 <span class="<?php echo $row['icon']; ?>"></span> 
-                <?php echo $row['NomeContatoFunc'] . '</small></code>'; ?>
+                <?php echo $row['NomeContatoUsuario'] . '</small></code>'; ?>
                 <?php echo $row['vida']; ?>				
 			</h4>	
 			<h5>
@@ -75,8 +75,8 @@ foreach ($query->result_array() as $row) {
                 <?php } ?>
 			</p>
 			<p>	
-				<?php if ($row['TelefoneContatoFunc']) { ?>
-				<span class="glyphicon glyphicon-phone-alt"></span> <b>Telefone:</b> <?php echo $row['TelefoneContatoFunc']; ?>
+				<?php if ($row['TelefoneContatoUsuario']) { ?>
+				<span class="glyphicon glyphicon-phone-alt"></span> <b>Telefone:</b> <?php echo $row['TelefoneContatoUsuario']; ?>
 				<?php } ?>
             </p>
 			<p>	

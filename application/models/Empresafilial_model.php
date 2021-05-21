@@ -106,7 +106,7 @@ class Empresafilial_model extends CI_Model {
 
         $query = $this->db->query('SELECT * '
                 . 'FROM Sis_EmpresaFilial WHERE '
-                . 'Empresafilial = ' . $_SESSION['log']['id'] . ' AND '
+                . 'Empresafilial = ' . $_SESSION['log']['idSis_EmpresaFilial'] . ' AND '
 				. 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND '
                 . '(Nome like "%' . $data . '%" OR '
                 #. 'DataNascimento = "' . $this->basico->mascara_data($data, 'mysql') . '" OR '
@@ -168,42 +168,5 @@ class Empresafilial_model extends CI_Model {
             }
         }
     }
-	
-	public function select_empresafilial($data = FALSE) {
-
-        if ($data === TRUE) {
-            $array = $this->db->query(					
-				'SELECT                
-				idSis_EmpresaFilial,
-				Nome				
-            FROM
-                Sis_EmpresaFilial					
-            WHERE
-                Empresa = ' . $_SESSION['log']['Empresa'] . '
-			ORDER BY 
-				Nome ASC'
-    );
-					
-        } else {
-            $query = $this->db->query(
-                'SELECT                
-				idSis_EmpresaFilial,
-				Nome				
-            FROM
-                Sis_EmpresaFilial					
-            WHERE
-                Empresa = ' . $_SESSION['log']['Empresa'] . '
-			ORDER BY 
-				Nome ASC'
-    );
-            
-            $array = array();
-            foreach ($query->result() as $row) {
-                $array[$row->idSis_EmpresaFilial] = $row->Nome;
-            }
-        }
-
-        return $array;
-    }	
 
 }

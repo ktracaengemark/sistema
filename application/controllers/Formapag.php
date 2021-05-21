@@ -85,7 +85,7 @@ class Formapag extends CI_Controller {
 
             $data['query']['FormaPag'] = trim(mb_strtoupper($data['query']['FormaPag'], 'ISO-8859-1'));
            # $data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['query']['Empresa'] = $_SESSION['log']['Empresa'];			
 
@@ -165,7 +165,7 @@ class Formapag extends CI_Controller {
 
             $data['query']['FormaPag'] = trim(mb_strtoupper($data['query']['FormaPag'], 'ISO-8859-1'));
          #   $data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 
             $data['anterior'] = $this->Formapag_model->get_formapag($data['query']['idTab_FormaPag']);
             $data['campos'] = array_keys($data['query']);
@@ -239,7 +239,7 @@ class Formapag extends CI_Controller {
         } else {
 
             $data['query']['FormaPag'] = trim(mb_strtoupper($data['query']['FormaPag'], 'ISO-8859-1'));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 
             $data['anterior'] = $this->Formapag_model->get_formapag($data['query']['idTab_FormaPag']);
             $data['campos'] = array_keys($data['query']);

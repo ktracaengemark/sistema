@@ -81,7 +81,7 @@ class Relapes extends CI_Controller {
         } else {
 
             $data['query']['RelaPes'] = trim(mb_strtoupper($data['query']['RelaPes'], 'ISO-8859-1'));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
             $data['campos'] = array_keys($data['query']);
@@ -154,7 +154,7 @@ class Relapes extends CI_Controller {
         } else {
 
             $data['query']['RelaPes'] = trim(mb_strtoupper($data['query']['RelaPes'], 'ISO-8859-1'));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 
             $data['anterior'] = $this->Relapes_model->get_relapes($data['query']['idTab_RelaPes']);
             $data['campos'] = array_keys($data['query']);

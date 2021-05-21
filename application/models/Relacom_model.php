@@ -55,7 +55,7 @@ class Relacom_model extends CI_Model {
         $query = $this->db->query('SELECT * '
                 . 'FROM Tab_RelaCom '
                 #. 'WHERE '
-                #. 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                #. 'idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND '
                # . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
                 . 'ORDER BY RelaCom ASC ');
 
@@ -93,12 +93,12 @@ class Relacom_model extends CI_Model {
                     . 'FROM '
                     . 'Tab_RelaCom '
 					#. 'WHERE '
-                    #. 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                    #. 'idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND '
                     #. 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo']);
 					. 'ORDER BY RelaCom ASC ');
 
         } else {
-            #$query = $this->db->query('SELECT  idTab_RelaCom, RelaCom FROM Tab_RelaCom  WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
+            #$query = $this->db->query('SELECT  idTab_RelaCom, RelaCom FROM Tab_RelaCom  WHERE idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario']);
             $query = $this->db->query('SELECT  idTab_RelaCom, RelaCom FROM Tab_RelaCom  ORDER BY RelaCom ASC ');
             $array = array();
             foreach ($query->result() as $row) {

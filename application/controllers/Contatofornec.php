@@ -13,7 +13,7 @@ class Contatofornec extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Contatofornec_model', 'Relacom_model', 'Fornecedor_model'));
+        $this->load->model(array('Basico_model', 'Contatofornec_model', 'Relacao_model', 'Fornecedor_model'));
         $this->load->driver('session');
 
         #load header view
@@ -55,7 +55,7 @@ class Contatofornec extends CI_Controller {
 			'Ativo',
             'DataNascimento',
             'Sexo',
-			'RelaCom',
+			'Relacao',
 			'TelefoneContatofornec',
             'Obs',
             'idApp_Fornecedor',
@@ -68,10 +68,10 @@ class Contatofornec extends CI_Controller {
         $this->form_validation->set_rules('NomeContatofornec', 'Nome do Responsável', 'required|trim');
         $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
 		$this->form_validation->set_rules('TelefoneContatofornec', 'TelefoneContatofornec', 'required|trim');
-        $this->form_validation->set_rules('RelaCom', 'RelaCom', 'required|trim');
+        $this->form_validation->set_rules('Relacao', 'Relacao', 'required|trim');
 		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contatofornec_model->select_status_vida();
-		$data['select']['RelaCom'] = $this->Relacom_model->select_relacom();
+		$data['select']['Relacao'] = $this->Relacao_model->select_relacao();
         $data['select']['Ativo'] = $this->Basico_model->select_status_sn();
 		
 		$data['titulo'] = 'Cadastrar Contatofornec';
@@ -91,7 +91,7 @@ class Contatofornec extends CI_Controller {
             $data['query']['NomeContatofornec'] = trim(mb_strtoupper($data['query']['NomeContatofornec'], 'ISO-8859-1'));
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
             $data['query']['Obs'] = nl2br($data['query']['Obs']);
-			$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+			$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
@@ -133,7 +133,7 @@ class Contatofornec extends CI_Controller {
             'StatusVida',
             'DataNascimento',
             'Sexo',
-			'RelaCom',
+			'Relacao',
 			'Ativo',
             'TelefoneContatofornec',
             'Obs',
@@ -151,10 +151,10 @@ class Contatofornec extends CI_Controller {
         $this->form_validation->set_rules('NomeContatofornec', 'Nome do Responsável', 'required|trim');
         $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
 		$this->form_validation->set_rules('TelefoneContatofornec', 'TelefoneContatofornec', 'required|trim');
-        $this->form_validation->set_rules('RelaCom', 'RelaCom', 'required|trim');
+        $this->form_validation->set_rules('Relacao', 'Relacao', 'required|trim');
 		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contatofornec_model->select_status_vida();
-        $data['select']['RelaCom'] = $this->Relacom_model->select_relacom();       
+        $data['select']['Relacao'] = $this->Relacao_model->select_relacao();       
         $data['select']['Ativo'] = $this->Basico_model->select_status_sn();
 		
 		$data['titulo'] = 'Editar Dados';
@@ -174,7 +174,7 @@ class Contatofornec extends CI_Controller {
             $data['query']['NomeContatofornec'] = trim(mb_strtoupper($data['query']['NomeContatofornec'], 'ISO-8859-1'));
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
             $data['query']['Obs'] = nl2br($data['query']['Obs']);
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id']; 
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario']; 
 			$data['query']['idApp_Contatofornec'] = $_SESSION['log']['idApp_Contatofornec'];
 
             $data['anterior'] = $this->Contatofornec_model->get_contatofornec($data['query']['idApp_Contatofornec']);
@@ -183,8 +183,8 @@ class Contatofornec extends CI_Controller {
             $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Contatofornec'], TRUE);
 
             if ($data['auditoriaitem'] && $this->Contatofornec_model->update_contatofornec($data['query'], $data['query']['idApp_Contatofornec']) === FALSE) {
-                $data['msg'] = '?m=2';
-                redirect(base_url() . 'contatofornec/form_contatofornec/' . $data['query']['idApp_Contatofornec'] . $data['msg']);
+                $data['msg'] = '?m=1';
+                redirect(base_url() . 'contatofornec/pesquisar/' . $_SESSION['Fornecedor']['idApp_Fornecedor'] . $data['msg']);
                 exit();
             } else {
 

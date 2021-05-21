@@ -93,7 +93,7 @@ class Pessoa_model extends CI_Model {
 
         $query = $this->db->query('SELECT * '
                 . 'FROM App_Pessoa WHERE '
-                . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                . 'idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND '
                 . 'idTab_Modulo = 1 AND '
                 . '(NomePessoa like "%' . $data . '%" OR '
                 #. 'DataNascimento = "' . $this->basico->mascara_data($data, 'mysql') . '" OR '
@@ -133,10 +133,10 @@ class Pessoa_model extends CI_Model {
                     . 'FROM '
                     . 'App_Pessoa '
                     . 'WHERE '
-                    . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                    . 'idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND '
                     . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] );
         } else {
-            $query = $this->db->query('SELECT idApp_Pessoa, NomePessoa FROM App_Pessoa WHERE idSis_Usuario = ' . $_SESSION['log']['id']);
+            $query = $this->db->query('SELECT idApp_Pessoa, NomePessoa FROM App_Pessoa WHERE idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario']);
             
             $array = array();
             foreach ($query->result() as $row) {

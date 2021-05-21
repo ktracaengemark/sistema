@@ -106,7 +106,7 @@ class Associado_model extends CI_Model {
 
         $query = $this->db->query('SELECT * '
                 . 'FROM Sis_Usuario WHERE '
-                . 'Associado = ' . $_SESSION['log']['id'] . ' AND '
+                . 'Associado = ' . $_SESSION['log']['idSis_Usuario'] . ' AND '
 				. 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND '
                 . '(Nome like "%' . $data . '%" OR '
                 #. 'DataNascimento = "' . $this->basico->mascara_data($data, 'mysql') . '" OR '

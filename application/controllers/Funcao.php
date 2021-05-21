@@ -17,8 +17,8 @@ class Funcao extends CI_Controller {
         $this->load->driver('session');
 
         #load header view
-        $this->load->view('basico/headerempresamatriz');
-        $this->load->view('basico/nav_principalempresamatriz');
+        $this->load->view('basico/headerempresa');
+        $this->load->view('basico/nav_principalempresa');
 
         #$this->load->view('cliente/nav_secundario');
     }
@@ -57,9 +57,9 @@ class Funcao extends CI_Controller {
 
         $this->form_validation->set_rules('Funcao', 'Nome do Funcao', 'required|trim');
 		$this->form_validation->set_rules('Abrev', 'Abreviação', 'required|trim');
-		
-        $data['titulo'] = 'Cadastrar Funcao';
-        $data['form_open_path'] = 'funcao/cadastrar/funcao';
+			       
+		$data['titulo'] = 'Cadastrar Funcao';
+        $data['form_open_path'] = 'funcao/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
         $data['panel'] = 'primary';
@@ -70,7 +70,7 @@ class Funcao extends CI_Controller {
                     <span class="glyphicon glyphicon-plus"></span> Cadastrar
                 </button>
         ';
-
+			
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
@@ -84,9 +84,8 @@ class Funcao extends CI_Controller {
 
             $data['query']['Funcao'] = trim(mb_strtoupper($data['query']['Funcao'], 'ISO-8859-1'));
 			$data['query']['Abrev'] = trim(mb_strtoupper($data['query']['Abrev'], 'ISO-8859-1'));
-			$data['query']['Empresa'] = $_SESSION['log']['id'];
-			$data['query']['idSis_EmpresaFilial'] = $_SESSION['log']['id'];
-			#$data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+			$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
+			$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
             $data['campos'] = array_keys($data['query']);
@@ -98,14 +97,14 @@ class Funcao extends CI_Controller {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
                 $this->basico->erro($msg);
-                $this->load->view('funcao/cadastrar/funcao', $data);
+                $this->load->view('funcao/cadastrar', $data);
             } else {
 
                 $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Funcao'], FALSE);
                 $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Funcao', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
-                redirect(base_url() . 'funcao/cadastrar/funcao' . $data['msg']);
+                redirect(base_url() . 'funcao/cadastrar' . $data['msg']);
                 exit();
             }
         }
@@ -162,7 +161,7 @@ class Funcao extends CI_Controller {
 
             $data['query']['Funcao'] = trim(mb_strtoupper($data['query']['Funcao'], 'ISO-8859-1'));
             $data['query']['Abrev'] = trim(mb_strtoupper($data['query']['Abrev'], 'ISO-8859-1'));
-			$data['query']['idSis_EmpresaFilial'] = $_SESSION['log']['id'];
+			$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 
             $data['anterior'] = $this->Funcao_model->get_funcao($data['query']['idTab_Funcao']);
             $data['campos'] = array_keys($data['query']);

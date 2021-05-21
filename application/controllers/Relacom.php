@@ -81,7 +81,7 @@ class Relacom extends CI_Controller {
         } else {
 
             $data['query']['RelaCom'] = trim(mb_strtoupper($data['query']['RelaCom'], 'ISO-8859-1'));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
             $data['campos'] = array_keys($data['query']);
@@ -154,7 +154,7 @@ class Relacom extends CI_Controller {
         } else {
 
             $data['query']['RelaCom'] = trim(mb_strtoupper($data['query']['RelaCom'], 'ISO-8859-1'));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 
             $data['anterior'] = $this->Relacom_model->get_relacom($data['query']['idTab_RelaCom']);
             $data['campos'] = array_keys($data['query']);

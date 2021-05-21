@@ -12,10 +12,10 @@ class Contatocliente_model extends CI_Model {
         $this->load->library('basico');
         $this->load->model(array('Basico_model'));
     }
-    
+
     public function set_contatocliente($data) {
 
-        $query = $this->db->insert('App_ContatoUsuario', $data);
+        $query = $this->db->insert('App_ContatoCliente', $data);
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -26,8 +26,31 @@ class Contatocliente_model extends CI_Model {
     }
 
     public function get_contatocliente($data) {
-        $query = $this->db->query('SELECT * FROM App_ContatoUsuario WHERE idApp_ContatoUsuario = ' . $data);
-        
+        $query = $this->db->query('SELECT * FROM App_ContatoCliente WHERE idApp_ContatoCliente = ' . $data);
+        /*
+          $query = $this->db->query(
+          . 'SELECT '
+          . 'P.NomePaciente, '
+          . 'P.DataNascimento, '
+          . 'P.Telefone, '
+          . 'S.Sexo, '
+          . 'P.Endereco, '
+          . 'P.Bairro, '
+          . 'M.NomeMunicipio AS Municipio, '
+          . 'M.Uf, '
+          . 'P.Obs, '
+          . 'P.Email '
+          . 'FROM '
+          . 'App_ContatoCliente AS P, '
+          . 'Tab_Sexo AS S, '
+          . 'Tab_Municipio AS M '
+          . 'WHERE '
+          . 'P.idApp_ContatoCliente = ' . $data . ' AND '
+          . 'P.Sexo = S.idTab_Sexo AND '
+          . 'P.Municipio = M.idTab_Municipio'
+          );
+         *
+         */
         $query = $query->result_array();
 
         return $query[0];
@@ -36,7 +59,7 @@ class Contatocliente_model extends CI_Model {
     public function update_contatocliente($data, $id) {
 
         unset($data['Id']);
-        $query = $this->db->update('App_ContatoUsuario', $data, array('idApp_ContatoUsuario' => $id));
+        $query = $this->db->update('App_ContatoCliente', $data, array('idApp_ContatoCliente' => $id));
         /*
           echo $this->db->last_query();
           echo '<br>';
@@ -53,7 +76,7 @@ class Contatocliente_model extends CI_Model {
     }
 
     public function delete_contatocliente($data) {
-        $query = $this->db->delete('App_ContatoUsuario', array('idApp_ContatoUsuario' => $data));
+        $query = $this->db->delete('App_ContatoCliente', array('idApp_ContatoCliente' => $data));
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -65,9 +88,9 @@ class Contatocliente_model extends CI_Model {
     public function lista_contatocliente($x) {
 
         $query = $this->db->query('SELECT * '
-                . 'FROM App_ContatoUsuario WHERE '
-                . 'idSis_Usuario = ' . $_SESSION['Cliente']['idSis_Usuario'] . ' '
-                . 'ORDER BY NomeContatoUsuario ASC ');
+                . 'FROM App_ContatoCliente WHERE '
+                . 'idApp_Cliente = ' . $_SESSION['Cliente']['idApp_Cliente'] . ' '
+                . 'ORDER BY NomeContatoCliente ASC ');
         /*
           echo $this->db->last_query();
           echo "<pre>";
@@ -85,14 +108,15 @@ class Contatocliente_model extends CI_Model {
                     $row->Idade = $this->basico->calcula_idade($row->DataNascimento);
                     $row->DataNascimento = $this->basico->mascara_data($row->DataNascimento, 'barras');
                     $row->Sexo = $this->Basico_model->get_sexo($row->Sexo);
-					$row->RelaPes = $this->Basico_model->get_relapes($row->RelaPes);
+					$row->RelaCom = $this->Basico_model->get_relacom($row->RelaCom);
+					$row->Relacao = $this->Basico_model->get_relacao($row->Relacao);
                 }
 
                 return $query;
             }
         }
     }
-    
+
     public function select_status_vida($data = FALSE) {
 
         if ($data === TRUE) {
@@ -107,6 +131,6 @@ class Contatocliente_model extends CI_Model {
         }
 
         return $array;
-    }    
+    }
 
 }

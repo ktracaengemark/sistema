@@ -9,14 +9,14 @@
 
 			<div class="panel panel-primary">
 
-				<div class="panel-heading"><strong><?php echo '<strong>' . $_SESSION['Empresafilial']['NomeEmpresa'] . '</strong> - <small>Id.: ' . $_SESSION['Empresafilial']['idSis_EmpresaMatriz'] . '</small>' ?></strong></div>
+				<div class="panel-heading"><strong><?php echo '<strong>' . $_SESSION['Empresafilial']['Nome'] . '</strong> - <small>Id.: ' . $_SESSION['Empresafilial']['idSis_EmpresaFilial'] . '</small>' ?></strong></div>
 				<div class="panel-body">
 
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-12 col-lg-12">
 								<div class="col-md-4 text-left">
-									<label for="">Unidade:</label>
+									<label for="">Empresa:</label>
 									<div class="form-group">
 										<div class="row">
 											<a <?php if (preg_match("/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
@@ -52,7 +52,7 @@
 
 							<div class="panel panel-<?php echo $panel; ?>">
 
-								<div class="panel-heading"><strong>Unidade</strong> - <strong><?php echo '<strong>' . $_SESSION['Empresafilial']['Nome'] . '</strong> - <small>Id.: ' . $_SESSION['Empresafilial']['idSis_EmpresaFilial'] . '</small>' ?></strong> </div>
+								<div class="panel-heading"><strong>Empresa</strong></div>
 								<div class="panel-body">
 									<table class="table table-user-information">
 										<tbody>

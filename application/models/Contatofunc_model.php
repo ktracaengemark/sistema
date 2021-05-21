@@ -15,7 +15,7 @@ class Contatofunc_model extends CI_Model {
     
     public function set_contatofunc($data) {
 
-        $query = $this->db->insert('App_ContatoFunc', $data);
+        $query = $this->db->insert('App_ContatoUsuario', $data);
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -26,7 +26,7 @@ class Contatofunc_model extends CI_Model {
     }
 
     public function get_contatofunc($data) {
-        $query = $this->db->query('SELECT * FROM App_ContatoFunc WHERE idApp_ContatoFunc = ' . $data);
+        $query = $this->db->query('SELECT * FROM App_ContatoUsuario WHERE idApp_ContatoUsuario = ' . $data);
         
         $query = $query->result_array();
 
@@ -36,7 +36,7 @@ class Contatofunc_model extends CI_Model {
     public function update_contatofunc($data, $id) {
 
         unset($data['Id']);
-        $query = $this->db->update('App_ContatoFunc', $data, array('idApp_ContatoFunc' => $id));
+        $query = $this->db->update('App_ContatoUsuario', $data, array('idApp_ContatoUsuario' => $id));
         /*
           echo $this->db->last_query();
           echo '<br>';
@@ -53,7 +53,7 @@ class Contatofunc_model extends CI_Model {
     }
 
     public function delete_contatofunc($data) {
-        $query = $this->db->delete('App_ContatoFunc', array('idApp_ContatoFunc' => $data));
+        $query = $this->db->delete('App_ContatoUsuario', array('idApp_ContatoUsuario' => $data));
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -65,9 +65,9 @@ class Contatofunc_model extends CI_Model {
     public function lista_contatofunc($x) {
 
         $query = $this->db->query('SELECT * '
-                . 'FROM App_ContatoFunc WHERE '
+                . 'FROM App_ContatoUsuario WHERE '
                 . 'idSis_Usuario = ' . $_SESSION['Funcionario']['idSis_Usuario'] . ' '
-                . 'ORDER BY NomeContatoFunc ASC ');
+                . 'ORDER BY NomeContatoUsuario ASC ');
         /*
           echo $this->db->last_query();
           echo "<pre>";

@@ -15,52 +15,7 @@ class Tarefa_model extends CI_Model {
 
     public function set_tarefa($data) {
 
-        $query = $this->db->insert('App_Tarefa', $data);
-
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            #return TRUE;
-            return $this->db->insert_id();
-        }
-    }
-
-    public function set_servico_venda($data) {
-
-        /*
-        //echo $this->db->last_query();
-        echo '<br>';
-        echo "<pre>";
-        print_r($data);
-        echo "</pre>";
-        //exit ();
-        */
-
-        $query = $this->db->insert_batch('App_ServicoVenda', $data);
-
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            #return TRUE;
-            return $this->db->insert_id();
-        }
-    }
-
-    public function set_produto_venda($data) {
-
-        $query = $this->db->insert_batch('App_ProdutoVenda', $data);
-
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            #return TRUE;
-            return $this->db->insert_id();
-        }
-    }
-
-    public function set_parcelasrec($data) {
-
-        $query = $this->db->insert_batch('App_ParcelasRecebiveis', $data);
+        $query = $this->db->insert('App_Procedimento', $data);
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -72,7 +27,7 @@ class Tarefa_model extends CI_Model {
 
     public function set_procedtarefa($data) {
 
-        $query = $this->db->insert_batch('App_Procedtarefa', $data);
+        $query = $this->db->insert_batch('App_SubProcedimento', $data);
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -83,71 +38,484 @@ class Tarefa_model extends CI_Model {
     }
 
     public function get_tarefa($data) {
-        $query = $this->db->query('SELECT * FROM App_Tarefa WHERE idApp_Tarefa = ' . $data);
-        $query = $query->result_array();
-
-        /*
-        //echo $this->db->last_query();
+        $query = $this->db->query('
+			SELECT
+				PC.*,
+				PC.Compartilhar AS idCompartilhar,
+				CT.*,
+				CT.idTab_Categoria AS Categoria,
+				CT.Categoria AS NomeCategoria,
+				US.*,
+				US.idSis_Usuario AS Compartilhar,
+				US.CelularUsuario AS CelularCompartilhou,
+				US.Nome AS NomeCompartilhar,
+				USC.*,
+				USC.idSis_Usuario AS idSis_Usuario,
+				USC.CelularUsuario AS CelularCadastrou,
+				USC.Nome AS NomeCadastrou
+			FROM 
+				App_Procedimento AS PC
+					LEFT JOIN Tab_Categoria AS CT ON CT.idTab_Categoria = PC.Categoria
+					LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = PC.Compartilhar
+					LEFT JOIN Sis_Usuario AS USC ON USC.idSis_Usuario = PC.idSis_Usuario
+			WHERE 
+				PC.idApp_Procedimento = ' . $data . '
+		');
+		
+		foreach ($query->result_array() as $row) {
+			//$row->DataProcedimento = $this->basico->mascara_data($row->DataProcedimento, 'barras');
+			//$row->DataProcedimentoLimite = $this->basico->mascara_data($row->DataProcedimentoLimite, 'barras');
+			//$row->ConcluidoProcedimento = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimento, 'NS');
+			//$row->ConcluidoSubProcedimento = $this->basico->mascara_palavra_completa2($row->ConcluidoSubProcedimento, 'NS');
+			//$row->Prioridade = $this->basico->prioridade($row->Prioridade, '123');
+			//$row->SubPrioridade = $this->basico->prioridade($row->SubPrioridade, '123');
+			//$row->Statustarefa = $this->basico->statustrf($row->Statustarefa, '123');
+			//$row->Statussubtarefa = $this->basico->statustrf($row->Statussubtarefa, '123');
+			
+			if($row['Compartilhar'] == 0){
+				$row['NomeCompartilhar'] = 'TODOS';
+			}
+			
+		}
+		
+		//$query = $query->result_array();		
+		
+		/*
+        echo $this->db->last_query();
         echo '<br>';
         echo "<pre>";
-        print_r($query);
+        print_r($row);
+        echo '<br>';
+        print_r($row['Compartilhar']);
+        echo '<br>';
+        print_r($row['NomeCompartilhar']);
         echo "</pre>";
         exit ();
-        */
+       */
 
-        return $query[0];
-    }
-
-	public function get_servico($data) {
-		$query = $this->db->query('SELECT * FROM App_ServicoVenda WHERE idApp_Tarefa = ' . $data);
-        $query = $query->result_array();
-
-        return $query;
-    }
-
-    public function get_produto($data) {
-		$query = $this->db->query('SELECT * FROM App_ProdutoVenda WHERE idApp_Tarefa = ' . $data);
-        $query = $query->result_array();
-
-        return $query;
-    }
-
-    public function get_parcelasrec($data) {
-		$query = $this->db->query('SELECT * FROM App_ParcelasRecebiveis WHERE idApp_Tarefa = ' . $data);
-        $query = $query->result_array();
-
-        return $query;
+		return $row;
+        //return $query[0];
     }
 
     public function get_procedtarefa($data) {
-		$query = $this->db->query('SELECT * FROM App_Procedtarefa WHERE idApp_Tarefa = ' . $data);
+		$query = $this->db->query('
+			SELECT 
+				PC.*,
+				PC.idSis_Usuario,
+				USC.*,
+				USC.idSis_Usuario AS idSis_Usuario,
+				USC.CelularUsuario AS CelularCadastrou,
+				USC.Nome AS NomeCadastrou
+				
+			FROM 
+				App_SubProcedimento AS PC
+					LEFT JOIN Sis_Usuario AS USC ON USC.idSis_Usuario = PC.idSis_Usuario
+			WHERE 
+				PC.idApp_Procedimento = ' . $data . '
+		');
         $query = $query->result_array();
 
         return $query;
     }
 
+    public function get_procedtarefa_posterior($data) {
+		$query = $this->db->query('
+			SELECT 
+				PC.*
+			FROM 
+				App_SubProcedimento AS PC
+			WHERE 
+				PC.idApp_Procedimento = ' . $data . '
+		');
+        $query = $query->result_array();
+
+        return $query;
+    }	
+
+    public function get_profissional($data) {
+		$query = $this->db->query('SELECT NomeProfissional FROM App_Profissional WHERE idApp_Profissional = ' . $data);
+        $query = $query->result_array();
+
+        return (isset($query[0]['NomeProfissional'])) ? $query[0]['NomeProfissional'] : FALSE;
+    }
+	
+	public function list1_procedimento($data, $completo) {
+	
+		$date_inicio_proc = ($data['DataInicio']) ? 'P.DataProcedimento >= "' . $data['DataInicio'] . '" AND ' : FALSE;
+		$date_fim_proc = ($data['DataFim']) ? 'P.DataProcedimento <= "' . $data['DataFim'] . '" AND ' : FALSE;
+		
+		$date_inicio_limite = ($data['DataInicio2']) ? 'P.DataProcedimentoLimite >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
+		$date_fim_limite = ($data['DataFim2']) ? 'P.DataProcedimentoLimite <= "' . $data['DataFim2'] . '" AND ' : FALSE;
+		
+		$data['Dia'] = ($data['Dia']) ? ' AND DAY(P.DataProcedimento) = ' . $data['Dia'] : FALSE;
+		$data['Mesvenc'] = ($data['Mesvenc']) ? ' AND MONTH(P.DataProcedimento) = ' . $data['Mesvenc'] : FALSE;
+		$data['Ano'] = ($data['Ano']) ? ' AND YEAR(P.DataProcedimento) = ' . $data['Ano'] : FALSE;
+        $data['Campo'] = (!$data['Campo']) ? 'P.DataProcedimento' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'DESC' : $data['Ordenamento'];
+		$filtro5 = ($data['ConcluidoProcedimento']) ? 'P.ConcluidoProcedimento = "' . $data['ConcluidoProcedimento'] . '" AND ' : FALSE;
+		$filtro8 = ($data['ConcluidoSubProcedimento']) ? 'SP.ConcluidoSubProcedimento = "' . $data['ConcluidoSubProcedimento'] . '" AND ' : FALSE;
+		$filtro6 = ($data['Prioridade']) ? 'P.Prioridade = "' . $data['Prioridade'] . '" AND ' : FALSE;
+		$filtro10 = ($data['SubPrioridade']) ? 'SP.Prioridade = "' . $data['SubPrioridade'] . '" AND ' : FALSE;
+		$filtro9 = ($data['Categoria']) ? 'P.Categoria = "' . $data['Categoria'] . '" AND ' : FALSE;
+		$filtro11 = ($data['Statustarefa']) ? 'P.Statustarefa = "' . $data['Statustarefa'] . '" AND ' : FALSE;
+		$filtro12 = ($data['Statussubtarefa']) ? 'SP.Statussubtarefa = "' . $data['Statussubtarefa'] . '" AND ' : FALSE;
+		#$filtro5 = ($data['ConcluidoProcedimento'] != '0') ? 'P.ConcluidoProcedimento = "' . $data['ConcluidoProcedimento'] . '" AND ' : FALSE;
+        #$filtro6 = ($data['Prioridade'] != '0') ? 'P.Prioridade = "' . $data['Prioridade'] . '" AND ' : FALSE;		
+		#$filtro9 = ($data['Categoria'] != '0') ? 'P.Categoria = "' . $data['Categoria'] . '" AND ' : FALSE;		
+		#$filtro8 = (($data['ConcluidoSubProcedimento'] != '0') && ($data['ConcluidoSubProcedimento'] != 'M')) ? 'SP.ConcluidoSubProcedimento = "' . $data['ConcluidoSubProcedimento'] . '" AND ' : FALSE;
+		$filtro3 = ($data['ConcluidoSubProcedimento'] == 'M') ? '((SP.ConcluidoSubProcedimento = "S") OR (SP.ConcluidoSubProcedimento = "N")) AND ' : FALSE;		
+		$data['ConcluidoProcedimento'] = ($data['ConcluidoProcedimento'] != '') ? ' AND P.ConcluidoProcedimento = ' . $data['ConcluidoProcedimento'] : FALSE;
+		$data['ConcluidoSubProcedimento'] = ($data['ConcluidoSubProcedimento'] != '') ? ' AND SP.ConcluidoSubProcedimento = ' . $data['ConcluidoSubProcedimento'] : FALSE;
+		$data['Prioridade'] = ($data['Prioridade'] != '') ? ' AND P.Prioridade = ' . $data['Prioridade'] : FALSE;
+		$data['Procedimento'] = ($data['Procedimento']) ? ' AND P.idApp_Procedimento = ' . $data['Procedimento'] : FALSE;
+		$data['Compartilhar'] = ($data['Compartilhar']) ? ' AND P.Compartilhar = ' . $data['Compartilhar'] : FALSE;
+		$data['NomeUsuario'] = ($data['NomeUsuario']) ? ' AND P.idSis_Usuario = ' . $data['NomeUsuario'] : FALSE;
+		$data['NomeProfissional'] = ($data['NomeProfissional']) ? ' AND P.idSis_Usuario = ' . $data['NomeProfissional'] : FALSE;
+		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5) ? 'P.Compartilhar = ' . $_SESSION['log']['idSis_Usuario'] . ' AND' : FALSE;
+		$permissao200 = ($_SESSION['log']['idSis_Empresa'] != 5) ? 'OR P.Compartilhar = 0' : FALSE;
+		
+		$query = $this->db->query('
+            SELECT
+				E.NomeEmpresa,
+				U.idSis_Usuario,
+				U.CpfUsuario,
+				U.Nome AS NomeUsuario,
+				AU.Nome AS Comp,
+				P.idSis_Empresa,
+				P.idApp_Procedimento,
+                P.Procedimento,
+				P.DataProcedimento,
+				P.DataProcedimentoLimite,
+				P.ConcluidoProcedimento,
+				P.Prioridade,
+				P.Statustarefa,
+				P.Compartilhar,
+				CT.Categoria,
+				SP.SubProcedimento,
+				SP.Statussubtarefa,
+				SP.ConcluidoSubProcedimento,				
+				SP.DataSubProcedimento,
+				SP.DataSubProcedimentoLimite,
+				SP.Prioridade AS SubPrioridade,
+				SN.StatusSN
+            FROM
+				App_Procedimento AS P
+					LEFT JOIN App_SubProcedimento AS SP ON SP.idApp_Procedimento = P.idApp_Procedimento
+					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = P.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS AU ON AU.idSis_Usuario = P.Compartilhar
+					LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = P.idSis_Empresa
+					LEFT JOIN Tab_StatusSN AS SN ON SN.Abrev = P.ConcluidoProcedimento
+					LEFT JOIN Tab_Categoria AS CT ON CT.idTab_Categoria = P.Categoria
+            WHERE
+				' . $permissao . '
+				' . $date_inicio_proc . '
+                ' . $date_fim_proc . '
+                ' . $date_inicio_limite . '
+                ' . $date_fim_limite . '
+				' . $filtro6 . '
+				' . $filtro5 . '
+				' . $filtro9 . '
+				P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				(P.Compartilhar = ' . $_SESSION['log']['idSis_Usuario'] . ' OR P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' ' . $permissao200 . ') AND
+				P.idApp_OrcaTrata = "0" AND
+				P.idApp_Cliente = "0" AND
+				P.idApp_Fornecedor = "0" AND
+				P.ConcluidoProcedimento = "N"
+				' . $data['Compartilhar'] . '
+				' . $data['NomeProfissional'] . '
+			GROUP BY
+				P.idApp_Procedimento
+			ORDER BY
+				' . $data['Campo'] . '
+				' . $data['Ordenamento'] . '
+
+        ');
+        /*
+
+        #AND
+        #C.idApp_Cliente = OT.idApp_Cliente
+
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+				$row->DataProcedimento = $this->basico->mascara_data($row->DataProcedimento, 'barras');
+				$row->DataProcedimentoLimite = $this->basico->mascara_data($row->DataProcedimentoLimite, 'barras');
+				$row->ConcluidoProcedimento = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimento, 'NS');
+				$row->ConcluidoSubProcedimento = $this->basico->mascara_palavra_completa2($row->ConcluidoSubProcedimento, 'NS');
+				$row->Prioridade = $this->basico->prioridade($row->Prioridade, '123');
+				$row->SubPrioridade = $this->basico->prioridade($row->SubPrioridade, '123');
+				$row->Statustarefa = $this->basico->statustrf($row->Statustarefa, '123');
+				$row->Statussubtarefa = $this->basico->statustrf($row->Statussubtarefa, '123');
+				if($row->Compartilhar == 0){
+					$row->Comp = '" TODOS "';
+				}
+            }
+
+            return $query;
+        }
+
+    }
+
+	public function list2_procedimentocli($data, $completo) {
+
+		$data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+		$data['Diacli'] = ($data['Diacli']) ? ' AND DAY(P.DataProcedimentoLimite) = ' . $data['Diacli'] : FALSE;
+		$data['Mesvenccli'] = ($data['Mesvenccli']) ? ' AND MONTH(P.DataProcedimentoLimite) = ' . $data['Mesvenccli'] : FALSE;
+		$data['Anocli'] = ($data['Anocli']) ? ' AND YEAR(P.DataProcedimentoLimite) = ' . $data['Anocli'] : FALSE;
+        $data['Campo'] = (!$data['Campo']) ? 'P.DataProcedimento' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'DESC' : $data['Ordenamento'];
+		$filtro4 = ($data['Concluidocli']) ? 'P.ConcluidoProcedimento = "' . $data['Concluidocli'] . '" AND ' : FALSE;
+		
+		$query = $this->db->query('
+            SELECT
+				C.idApp_Cliente,
+				C.NomeCliente,
+				U.idSis_Usuario,
+				U.CpfUsuario,
+				P.idSis_Empresa,
+				P.idApp_Procedimento,
+                P.Procedimento,
+				P.DataProcedimento,
+				P.DataProcedimentoLimite,
+				P.ConcluidoProcedimento,
+				SN.StatusSN
+            FROM
+				App_Procedimento AS P
+					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = P.idSis_Usuario
+					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = P.idApp_Cliente
+					LEFT JOIN Tab_StatusSN AS SN ON SN.Abrev = P.ConcluidoProcedimento
+            WHERE
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				P.idSis_EmpresaCli = "0" AND
+				P.idApp_Cliente != "0" AND
+				' . $filtro4 . '
+				P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+                ' . $data['NomeCliente'] . '
+
+				' . $data['Diacli'] . ' 
+				' . $data['Mesvenccli'] . ' 
+				' . $data['Anocli'] . ' 
+				
+            ORDER BY
+                P.ConcluidoProcedimento ASC,
+				' . $data['Campo'] . '
+				' . $data['Ordenamento'] . '
+        ');
+        /*
+
+        #AND
+        #C.idApp_Cliente = OT.idApp_Cliente
+
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+				$row->DataProcedimento = $this->basico->mascara_data($row->DataProcedimento, 'barras');
+				$row->DataProcedimentoLimite = $this->basico->mascara_data($row->DataProcedimentoLimite, 'barras');
+				$row->ConcluidoProcedimento = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimento, 'NS');
+
+            }
+
+            return $query;
+        }
+
+    }
+
+	public function list3_mensagemenv($data, $completo) {
+
+		$data['NomeEmpresa'] = ($data['NomeEmpresa']) ? ' AND P.idSis_Empresa = ' . $data['NomeEmpresa'] : FALSE;
+		$data['NomeEmpresaCli'] = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['NomeEmpresaCli']) ? ' AND P.idSis_EmpresaCli = ' . $data['NomeEmpresaCli'] : FALSE;
+		$data['Diaemp'] = ($data['Diaemp']) ? ' AND DAY(P.DataProcedimento) = ' . $data['Diaemp'] : FALSE;
+		$data['Mesvencemp'] = ($data['Mesvencemp']) ? ' AND MONTH(P.DataProcedimento) = ' . $data['Mesvencemp'] : FALSE;
+		$data['Anoemp'] = ($data['Anoemp']) ? ' AND YEAR(P.DataProcedimento) = ' . $data['Anoemp'] : FALSE;
+        $data['Campo'] = (!$data['Campo']) ? 'P.ConcluidoProcedimento' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];		
+		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'P.idSis_UsuarioCli = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+		$filtro4 = ($data['Concluidoemp']) ? 'P.ConcluidoProcedimento = "' . $data['Concluidoemp'] . '" AND ' : FALSE;
+		
+		$query = $this->db->query('
+            SELECT
+				EE.NomeEmpresa AS NomeEmpresaCli,
+				ER.NomeEmpresa AS NomeEmpresa,
+				UE.Nome AS NomeCli,
+				UR.Nome AS Nome,
+				P.idSis_Empresa,
+				P.idSis_EmpresaCli,
+				P.idApp_Procedimento,
+                P.idApp_OrcaTrata,
+				P.idApp_Cliente,
+				P.Procedimento,
+				P.DataProcedimento,
+				P.ConcluidoProcedimento,
+				P.idSis_EmpresaCli,
+				P.ProcedimentoCli,
+				P.DataProcedimentoCli,
+				P.ConcluidoProcedimentoCli,
+				SN.StatusSN
+            FROM
+				App_Procedimento AS P
+					LEFT JOIN Sis_Empresa AS EE ON EE.idSis_Empresa = P.idSis_EmpresaCli
+					LEFT JOIN Sis_Empresa AS ER ON ER.idSis_Empresa = P.idSis_Empresa
+					LEFT JOIN Sis_Usuario AS UE ON UE.idSis_Usuario = P.idSis_UsuarioCli
+					LEFT JOIN Sis_Usuario AS UR ON UR.idSis_Usuario = P.idSis_Usuario
+					LEFT JOIN Tab_StatusSN AS SN ON SN.Abrev = P.ConcluidoProcedimento
+            WHERE 
+				P.idSis_EmpresaCli = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				' . $permissao . '
+				' . $filtro4 . '
+				P.idApp_OrcaTrata = "0" AND
+				P.idApp_Cliente = "0" 
+				' . $data['NomeEmpresa'] . '
+				' . $data['NomeEmpresaCli'] . '
+				' . $data['Diaemp'] . ' 
+				' . $data['Mesvencemp'] . ' 
+				' . $data['Anoemp'] . ' 
+            ORDER BY
+				P.ConcluidoProcedimento,
+				P.DataProcedimentoCli ASC
+        ');
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+				$row->DataProcedimento = $this->basico->mascara_data($row->DataProcedimento, 'barras');
+				$row->ConcluidoProcedimento = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimento, 'NS');
+				$row->DataProcedimentoCli = $this->basico->mascara_data($row->DataProcedimentoCli, 'barras');
+				$row->ConcluidoProcedimentoCli = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimentoCli, 'NS');
+            }
+
+            return $query;
+        }
+
+    }
+	
+	public function list4_mensagemrec($data, $completo) {
+
+		$data['NomeEmpresa'] = ($data['NomeEmpresa']) ? ' AND P.idSis_Empresa = ' . $data['NomeEmpresa'] : FALSE;
+		$data['NomeEmpresaCli'] = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['NomeEmpresaCli']) ? ' AND P.idSis_EmpresaCli = ' . $data['NomeEmpresaCli'] : FALSE;
+		$data['Diaemp'] = ($data['Diaemp']) ? ' AND DAY(P.DataProcedimento) = ' . $data['Diaemp'] : FALSE;
+		$data['Mesvencemp'] = ($data['Mesvencemp']) ? ' AND MONTH(P.DataProcedimento) = ' . $data['Mesvencemp'] : FALSE;
+		$data['Anoemp'] = ($data['Anoemp']) ? ' AND YEAR(P.DataProcedimento) = ' . $data['Anoemp'] : FALSE;
+        $data['Campo'] = (!$data['Campo']) ? 'P.ConcluidoProcedimento' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];		
+		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'P.idSis_UsuarioCli = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+		$filtro4 = ($data['Concluidoemp']) ? 'P.ConcluidoProcedimento = "' . $data['Concluidoemp'] . '" AND ' : FALSE;
+		
+		$query = $this->db->query('
+            SELECT
+				EE.NomeEmpresa AS NomeEmpresaCli,
+				ER.NomeEmpresa AS NomeEmpresa,
+				UE.Nome AS NomeCli,
+				UR.Nome AS Nome,
+				P.idSis_Empresa,
+				P.idSis_EmpresaCli,
+				P.idApp_Procedimento,
+                P.idApp_OrcaTrata,
+				P.idApp_Cliente,
+				P.Procedimento,
+				P.DataProcedimento,
+				P.ConcluidoProcedimento,
+				P.idSis_EmpresaCli,
+				P.ProcedimentoCli,
+				P.DataProcedimentoCli,
+				P.ConcluidoProcedimentoCli,
+				SN.StatusSN
+            FROM
+				App_Procedimento AS P
+					LEFT JOIN Sis_Empresa AS EE ON EE.idSis_Empresa = P.idSis_EmpresaCli
+					LEFT JOIN Sis_Empresa AS ER ON ER.idSis_Empresa = P.idSis_Empresa
+					LEFT JOIN Sis_Usuario AS UE ON UE.idSis_Usuario = P.idSis_UsuarioCli
+					LEFT JOIN Sis_Usuario AS UR ON UR.idSis_Usuario = P.idSis_Usuario
+					LEFT JOIN Tab_StatusSN AS SN ON SN.Abrev = P.ConcluidoProcedimento
+            WHERE 
+				P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				' . $permissao . '
+				' . $filtro4 . '
+				P.idSis_EmpresaCli != "0" AND
+				P.idApp_OrcaTrata = "0" AND
+				P.idApp_Cliente = "0" 
+				' . $data['NomeEmpresa'] . '
+				' . $data['NomeEmpresaCli'] . '
+				' . $data['Diaemp'] . ' 
+				' . $data['Mesvencemp'] . ' 
+				' . $data['Anoemp'] . ' 
+            ORDER BY
+				P.ConcluidoProcedimento,
+				P.DataProcedimentoCli ASC
+        ');
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+				$row->DataProcedimento = $this->basico->mascara_data($row->DataProcedimento, 'barras');
+				$row->ConcluidoProcedimento = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimento, 'NS');
+				$row->DataProcedimentoCli = $this->basico->mascara_data($row->DataProcedimentoCli, 'barras');
+				$row->ConcluidoProcedimentoCli = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimentoCli, 'NS');
+            }
+
+            return $query;
+        }
+
+    }
+	
     public function list_tarefa($id, $aprovado, $completo) {
 
         $query = $this->db->query('
             SELECT
-                TF.idApp_Tarefa,
-                TF.DataTarefa,
-    			TF.DataPrazoTarefa,
+                TF.idApp_Procedimento,
+                TF.DataProcedimento,
+    			TF.DataProcedimentoLimite,
 				TF.Prioridade,
+				TF.Statustarefa,
 				TF.Rotina,
-                TF.ProfissionalTarefa,
-                TF.TarefaConcluida,
-                TF.ObsTarefa
+                TF.ProfissionalProcedimento,
+                TF.ConcluidoProcedimento,
+                TF.Procedimento
             FROM
-                App_Tarefa AS TF
+                App_Procedimento AS TF
             WHERE
-                TF.idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND
-                TF.TarefaConcluida = "' . $aprovado . '"
+                TF.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND
+                TF.ConcluidoProcedimento = "' . $aprovado . '"
             ORDER BY
-                TF.ProfissionalTarefa ASC,
+                TF.ProfissionalProcedimento ASC,
 				TF.Rotina DESC,				
 				TF.Prioridade DESC,
-				TF.DataPrazoTarefa ASC
+				TF.DataProcedimentoLimite ASC
 				
         ');
         /*
@@ -165,13 +533,53 @@ class Tarefa_model extends CI_Model {
             } else {
 
                 foreach ($query->result() as $row) {
-					$row->DataTarefa = $this->basico->mascara_data($row->DataTarefa, 'barras');
-					$row->DataPrazoTarefa = $this->basico->mascara_data($row->DataPrazoTarefa, 'barras');
-                    $row->TarefaConcluida = $this->basico->mascara_palavra_completa($row->TarefaConcluida, 'NS');
+					$row->DataProcedimento = $this->basico->mascara_data($row->DataProcedimento, 'barras');
+					$row->DataProcedimentoLimite = $this->basico->mascara_data($row->DataProcedimentoLimite, 'barras');
+                    $row->ConcluidoProcedimento = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimento, 'NS');
 					$row->Rotina = $this->basico->mascara_palavra_completa($row->Rotina, 'NS');
-					$row->Prioridade = $this->basico->mascara_palavra_completa($row->Prioridade, 'NS');
-                    $row->ProfissionalTarefa = $this->get_profissional($row->ProfissionalTarefa);
+					#$row->Prioridade = $this->basico->mascara_palavra_completa($row->Prioridade, 'NS');
+                    $row->ProfissionalProcedimento = $this->get_profissional($row->ProfissionalProcedimento);
                 }
+                return $query;
+            }
+        }
+    }
+    
+	public function list_categoria($data, $x) {
+		
+		$data['idSis_Usuario'] = ($data['idSis_Empresa'] == 5) ? ' AND TA.idSis_Usuario = ' . $data['idSis_Usuario'] : FALSE;
+
+        $query = $this->db->query('
+			SELECT 
+				TA.*
+			FROM 
+				Tab_Categoria AS TA
+			WHERE 
+                TA.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+                ' . $data['idSis_Usuario'] . '
+			ORDER BY  
+				TA.Categoria ASC 
+		');
+
+        /*
+          echo $this->db->last_query();
+          $query = $query->result_array();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+            if ($x === FALSE) {
+                return TRUE;
+            } else {
+                #foreach ($query->result_array() as $row) {
+                #    $row->idApp_Profissional = $row->idApp_Profissional;
+                #    $row->NomeProfissional = $row->NomeProfissional;
+                #}
+                $query = $query->result_array();
                 return $query;
             }
         }
@@ -180,17 +588,17 @@ class Tarefa_model extends CI_Model {
     public function list_tarefaBKP($x) {
 
         $query = $this->db->query('SELECT '
-            . 'TF.idApp_Tarefa, '
-            . 'TF.DataTarefa, '
-			. 'TF.DataPrazoTarefa, '
-            . 'TF.ProfissionalTarefa, '
-            . 'TF.TarefaConcluida, '
-            . 'TF.ObsTarefa '
+            . 'TF.idApp_Procedimento, '
+            . 'TF.DataProcedimento, '
+			. 'TF.DataProcedimentoLimite, '
+            . 'TF.ProfissionalProcedimento, '
+            . 'TF.ConcluidoProcedimento, '
+            . 'TF.Procedimento '
             . 'FROM '
-            . 'App_Tarefa AS TF '
+            . 'App_Procedimento AS TF '
             . 'WHERE '
-            #. 'TF.idApp_Cliente = ' . $_SESSION['Tarefa']['idApp_Cliente'] . ' '
-            . 'ORDER BY TF.DataTarefa ASC ');
+            #. 'TF.idApp_Cliente = ' . $_SESSION['Procedimento']['idApp_Cliente'] . ' '
+            . 'ORDER BY TF.DataProcedimento ASC ');
         /*
           echo $this->db->last_query();
           echo "<pre>";
@@ -206,10 +614,10 @@ class Tarefa_model extends CI_Model {
             } else {
 
                 foreach ($query->result() as $row) {
-					$row->DataTarefa = $this->basico->mascara_data($row->DataTarefa, 'barras');
-					$row->DataPrazoTarefa = $this->basico->mascara_data($row->DataPrazoTarefa, 'barras');
-                    $row->TarefaConcluida = $this->basico->mascara_palavra_completa($row->TarefaConcluida, 'NS');
-                    $row->ProfissionalTarefa = $this->get_profissional($row->ProfissionalTarefa);
+					$row->DataProcedimento = $this->basico->mascara_data($row->DataProcedimento, 'barras');
+					$row->DataProcedimentoLimite = $this->basico->mascara_data($row->DataProcedimentoLimite, 'barras');
+                    $row->ConcluidoProcedimento = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimento, 'NS');
+                    $row->ProfissionalProcedimento = $this->get_profissional($row->ProfissionalProcedimento);
                 }
 
                 return $query;
@@ -219,82 +627,23 @@ class Tarefa_model extends CI_Model {
 
     public function update_tarefa($data, $id) {
 
-        unset($data['idApp_Tarefa']);
-        $query = $this->db->update('App_Tarefa', $data, array('idApp_Tarefa' => $id));
-        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
-
-    }
-
-    public function update_servico_venda($data) {
-
-        $query = $this->db->update_batch('App_ServicoVenda', $data, 'idApp_ServicoVenda');
-        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
-
-    }
-
-    public function update_produto_venda($data) {
-
-        $query = $this->db->update_batch('App_ProdutoVenda', $data, 'idApp_ProdutoVenda');
-        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
-
-    }
-
-    public function update_parcelasrec($data) {
-
-        $query = $this->db->update_batch('App_ParcelasRecebiveis', $data, 'idApp_ParcelasRecebiveis');
+        unset($data['idApp_Procedimento']);
+        $query = $this->db->update('App_Procedimento', $data, array('idApp_Procedimento' => $id));
         return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
 
     }
 
     public function update_procedtarefa($data) {
 
-        $query = $this->db->update_batch('App_Procedtarefa', $data, 'idApp_Procedtarefa');
+        $query = $this->db->update_batch('App_SubProcedimento', $data, 'idApp_SubProcedimento');
         return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
 
     }
 
-    public function delete_servico_venda($data) {
-
-        $this->db->where_in('idApp_ServicoVenda', $data);
-        $this->db->delete('App_ServicoVenda');
-
-        //$query = $this->db->delete('App_ServicoVenda', array('idApp_ServicoVenda' => $data));
-
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
-    public function delete_produto_venda($data) {
-
-        $this->db->where_in('idApp_ProdutoVenda', $data);
-        $this->db->delete('App_ProdutoVenda');
-
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
-    public function delete_parcelasrec($data) {
-
-        $this->db->where_in('idApp_ParcelasRecebiveis', $data);
-        $this->db->delete('App_ParcelasRecebiveis');
-
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
     public function delete_procedtarefa($data) {
 
-        $this->db->where_in('idApp_Procedtarefa', $data);
-        $this->db->delete('App_Procedtarefa');
+        $this->db->where_in('idApp_SubProcedimento', $data);
+        $this->db->delete('App_SubProcedimento');
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -306,16 +655,16 @@ class Tarefa_model extends CI_Model {
     public function delete_tarefa($id) {
 
         /*
-        $tables = array('App_ServicoVenda', 'App_ProdutoVenda', 'App_ParcelasRecebiveis', 'App_Procedtarefa', 'App_Tarefa');
-        $this->db->where('idApp_Tarefa', $id);
+        $tables = array('App_ServicoVenda', 'App_ProdutoVenda', 'App_ParcelasRecebiveis', 'App_SubProcedimento', 'App_Procedimento');
+        $this->db->where('idApp_Procedimento', $id);
         $this->db->delete($tables);
         */
 
-        #$query = $this->db->delete('App_ServicoVenda', array('idApp_Tarefa' => $id));
-        #$query = $this->db->delete('App_ProdutoVenda', array('idApp_Tarefa' => $id));
-        #$query = $this->db->delete('App_ParcelasRecebiveis', array('idApp_Tarefa' => $id));
-        $query = $this->db->delete('App_Procedtarefa', array('idApp_Tarefa' => $id));
-        $query = $this->db->delete('App_Tarefa', array('idApp_Tarefa' => $id));
+        #$query = $this->db->delete('App_ServicoVenda', array('idApp_Procedimento' => $id));
+        #$query = $this->db->delete('App_ProdutoVenda', array('idApp_Procedimento' => $id));
+        #$query = $this->db->delete('App_ParcelasRecebiveis', array('idApp_Procedimento' => $id));
+        $query = $this->db->delete('App_SubProcedimento', array('idApp_Procedimento' => $id));
+        $query = $this->db->delete('App_Procedimento', array('idApp_Procedimento' => $id));
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
@@ -324,11 +673,369 @@ class Tarefa_model extends CI_Model {
         }
     }
 
-    public function get_profissional($data) {
-		$query = $this->db->query('SELECT NomeProfissional FROM App_Profissional WHERE idApp_Profissional = ' . $data);
-        $query = $query->result_array();
+	public function select_categoria() {
+		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+		$query = $this->db->query('
+            SELECT
+                C.idTab_Categoria,
+                C.Categoria
+            FROM
+                Tab_Categoria AS C
+					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = C.idSis_Usuario
+            WHERE
+				' . $permissao . '
+				C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+            ORDER BY
+                C.Categoria ASC
+        ');
 
-        return (isset($query[0]['NomeProfissional'])) ? $query[0]['NomeProfissional'] : FALSE;
+        $array = array();	
+        foreach ($query->result() as $row) {
+            $array[$row->idTab_Categoria] = $row->Categoria;
+        }
+
+        return $array;
     }
 
+    public function select_categoria2() {
+		
+		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+        
+		$query = $this->db->query('
+            SELECT
+                C.idTab_Categoria,
+                C.Categoria
+            FROM
+                Tab_Categoria AS C
+					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = C.idSis_Usuario
+            WHERE
+				' . $permissao . '
+				C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+            ORDER BY
+                C.Categoria ASC
+        ');
+
+        $array = array();
+		$array[0] = '::Todos::';
+        foreach ($query->result() as $row) {
+			$array[$row->idTab_Categoria] = $row->Categoria;
+        }
+
+        return $array;
+    }
+	
+	public function select_usuario() {
+		
+        $query = $this->db->query('
+            SELECT
+				P.idSis_Usuario,
+				P.CpfUsuario,
+				P.CelularUsuario,
+				CONCAT(IFNULL(P.Nome,"")) AS NomeUsuario
+            FROM
+                Sis_Usuario AS P
+					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
+            WHERE
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND 
+				P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+			ORDER BY 
+				P.Nome ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idSis_Usuario] = $row->NomeUsuario;
+        }
+
+        return $array;
+    }
+
+	public function select_compartilhar() {
+
+        $query = $this->db->query('
+            SELECT
+				P.idSis_Usuario,
+				CONCAT(IFNULL(P.Nome,"")) AS NomeUsuario
+            FROM
+                Sis_Usuario AS P
+					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
+            WHERE
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+                P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+			ORDER BY 
+				P.Nome ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        //$array[50] = ':: O Próprio ::';
+        //$array[51] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idSis_Usuario] = $row->NomeUsuario;
+        }
+
+        return $array;
+    }
+	
+	public function select_usuario1() {
+		
+        $query = $this->db->query('
+            SELECT
+				P.idSis_Usuario,
+				P.CpfUsuario,
+				P.CelularUsuario,
+				CONCAT(IFNULL(F.Abrev,""), " --- ", IFNULL(P.Nome,"")) AS NomeUsuario
+            FROM
+                Sis_Usuario AS P
+					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
+            WHERE
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND 
+				P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+			ORDER BY 
+				F.Abrev ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->CpfUsuario] = $row->NomeUsuario;
+        }
+
+        return $array;
+    }	
+	
+    public function select_status_sn2($data = FALSE) {
+
+        $query = $this->db->query('
+            SELECT
+                idTab_StatusSN,
+                StatusSN,
+				Abrev
+            FROM
+                Tab_StatusSN 
+
+            ORDER BY
+                StatusSN DESC
+        ');
+
+        $array = array();
+        $array[0] = 'TODOS';
+        foreach ($query->result() as $row) {
+			$array[$row->Abrev] = $row->StatusSN;
+        }
+
+        return $array;
+    }
+	
+	public function select_status_sn($data = FALSE) {
+
+        if ($data === TRUE) {
+            $array = $this->db->query('SELECT * FROM Tab_StatusSN');
+        } else {
+            $query = $this->db->query('SELECT * FROM Tab_StatusSN');
+
+            $array = array();
+			$array[0] = 'TODOS';
+			foreach ($query->result() as $row) {
+			$array[$row->Abrev] = $row->StatusSN;
+			
+            }
+        }
+
+        return $array;
+    }
+
+	public function select_dia() {
+
+        $query = $this->db->query('
+            SELECT
+				D.idTab_Dia,
+				D.Dia				
+			FROM
+				Tab_Dia AS D
+			ORDER BY
+				D.Dia
+        ');
+
+        $array = array();
+        $array[0] = 'TODOS';
+        foreach ($query->result() as $row) {
+            $array[$row->idTab_Dia] = $row->Dia;
+        }
+
+        return $array;
+    }	
+	
+	public function select_mes() {
+
+        $query = $this->db->query('
+            SELECT
+				M.idTab_Mes,
+				M.Mesdesc,
+				CONCAT(M.Mes, " - ", M.Mesdesc) AS Mes
+			FROM
+				Tab_Mes AS M
+
+			ORDER BY
+				M.Mes
+        ');
+
+        $array = array();
+        $array[0] = 'TODOS';
+        foreach ($query->result() as $row) {
+            $array[$row->idTab_Mes] = $row->Mes;
+        }
+
+        return $array;
+    }	
+
+    public function select_cliente() {
+
+        $query = $this->db->query('
+            SELECT
+                C.idApp_Cliente,
+                CONCAT(IFNULL(C.NomeCliente, ""), " --- ", IFNULL(C.CelularCliente, ""), " --- ", IFNULL(C.Telefone2, ""), " --- ", IFNULL(C.Telefone3, "")) As NomeCliente
+            FROM
+                App_Cliente AS C
+
+            WHERE
+                C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
+            ORDER BY
+                C.NomeCliente ASC
+        ');
+
+        $array = array();
+        $array[0] = 'TODOS';
+        foreach ($query->result() as $row) {
+			$array[$row->idApp_Cliente] = $row->NomeCliente;
+        }
+
+        return $array;
+    }
+
+    public function select_empresarec() {
+
+        $query = $this->db->query('
+            SELECT
+                ER.idSis_Empresa,
+                ER.NomeEmpresa
+            FROM
+                Sis_Empresa AS ER
+
+            WHERE
+                ER.idSis_Empresa != "1"
+			ORDER BY	
+                ER.NomeEmpresa ASC
+        ');
+
+        $array = array();
+        $array[0] = 'TODOS';
+        foreach ($query->result() as $row) {
+			$array[$row->idSis_Empresa] = $row->NomeEmpresa;
+        }
+
+        return $array;
+    }
+
+    public function select_empresaenv() {
+
+        $query = $this->db->query('
+            SELECT
+                EE.idSis_Empresa,
+                EE.NomeEmpresa AS NomeEmpresaCli
+            FROM
+                Sis_Empresa AS EE
+
+            WHERE
+                EE.idSis_Empresa != "1"
+			ORDER BY	
+                EE.NomeEmpresa ASC
+        ');
+
+        $array = array();
+        $array[0] = 'TODOS';
+        foreach ($query->result() as $row) {
+			$array[$row->idSis_Empresa] = $row->NomeEmpresaCli;
+        }
+
+        return $array;
+    }	
+
+    public function select_procedimento() {
+
+        $query = $this->db->query('
+            SELECT
+                P.idApp_Procedimento,
+                P.Procedimento
+            FROM
+                App_Procedimento AS P
+					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = P.idSis_Usuario
+            WHERE
+                P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				P.idApp_OrcaTrata = "0" AND
+				P.idApp_Cliente = "0" AND
+				P.idSis_EmpresaCli = "0" AND
+				U.CelularUsuario = ' . $_SESSION['log']['CelularUsuario'] . ' 
+            ORDER BY
+                P.idApp_Procedimento ASC
+        ');
+
+        $array = array();
+        $array[0] = 'TODOS';
+        foreach ($query->result() as $row) {
+			$array[$row->idApp_Procedimento] = $row->Procedimento;
+        }
+
+        return $array;
+    }
+
+	public function select_tarefa() {
+
+		$permissao1 = (($_SESSION['FiltroAlteraProcedimento']['Categoria'] != "0" ) && ($_SESSION['FiltroAlteraProcedimento']['Categoria'] != '' )) ? 'P.Categoria = "' . $_SESSION['FiltroAlteraProcedimento']['Categoria'] . '" AND ' : FALSE;
+		$permissao2 = (($_SESSION['FiltroAlteraProcedimento']['ConcluidoProcedimento'] != "0" ) && ($_SESSION['FiltroAlteraProcedimento']['ConcluidoProcedimento'] != '' )) ? 'P.ConcluidoProcedimento = "' . $_SESSION['FiltroAlteraProcedimento']['ConcluidoProcedimento'] . '" AND ' : FALSE;
+		$permissao3 = (($_SESSION['FiltroAlteraProcedimento']['Prioridade'] != "0" ) && ($_SESSION['FiltroAlteraProcedimento']['Prioridade'] != '' )) ? 'P.Prioridade = "' . $_SESSION['FiltroAlteraProcedimento']['Prioridade'] . '" AND ' : FALSE;
+		$permissao6 = (($_SESSION['FiltroAlteraProcedimento']['Statustarefa'] != "0" ) && ($_SESSION['FiltroAlteraProcedimento']['Statustarefa'] != '' )) ? 'P.Statustarefa = "' . $_SESSION['FiltroAlteraProcedimento']['Statustarefa'] . '" AND ' : FALSE;
+		$permissao7 = (($_SESSION['FiltroAlteraProcedimento']['Statussubtarefa'] != "0" ) && ($_SESSION['FiltroAlteraProcedimento']['Statussubtarefa'] != '' )) ? 'SP.Statussubtarefa = "' . $_SESSION['FiltroAlteraProcedimento']['Statussubtarefa'] . '" AND ' : FALSE;
+		$permissao8 = (($_SESSION['FiltroAlteraProcedimento']['SubPrioridade'] != "0" ) && ($_SESSION['FiltroAlteraProcedimento']['SubPrioridade'] != '' )) ? 'SP.SubPrioridade = "' . $_SESSION['FiltroAlteraProcedimento']['SubPrioridade'] . '" AND ' : FALSE;
+		$permissao4 = ((($_SESSION['FiltroAlteraProcedimento']['ConcluidoSubProcedimento'] != "0")&& ($_SESSION['FiltroAlteraProcedimento']['ConcluidoSubProcedimento'] != 'M') ) && ($_SESSION['FiltroAlteraProcedimento']['ConcluidoSubProcedimento'] != '' )) ? 'SP.ConcluidoSubProcedimento = "' . $_SESSION['FiltroAlteraProcedimento']['ConcluidoSubProcedimento'] . '" AND ' : FALSE;
+		$permissao5 = (($_SESSION['FiltroAlteraProcedimento']['ConcluidoSubProcedimento'] == 'M') && ($_SESSION['FiltroAlteraProcedimento']['ConcluidoSubProcedimento'] != '' )) ? '((SP.ConcluidoSubProcedimento = "S") OR (SP.ConcluidoSubProcedimento = "N")) AND ' : FALSE;		
+		
+		$query = $this->db->query('
+            SELECT
+                P.idApp_Procedimento,
+                P.Procedimento
+            FROM
+				App_Procedimento AS P
+					LEFT JOIN App_SubProcedimento AS SP ON SP.idApp_Procedimento = P.idApp_Procedimento
+					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = P.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS AU ON AU.idSis_Usuario = P.Compartilhar
+					LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = P.idSis_Empresa
+					LEFT JOIN Tab_StatusSN AS SN ON SN.Abrev = P.ConcluidoProcedimento
+					LEFT JOIN Tab_Prioridade AS PR ON PR.idTab_Prioridade = P.Prioridade
+            WHERE
+				' . $permissao1 . '
+				' . $permissao3 . '
+				' . $permissao6 . '
+				' . $permissao7 . '
+				' . $permissao8 . '
+				(U.CelularUsuario = ' . $_SESSION['log']['CelularUsuario'] . ' OR
+				AU.CelularUsuario = ' . $_SESSION['log']['CelularUsuario'] . ' OR
+				P.Compartilhar = ' . $_SESSION['log']['idSis_Usuario'] . ' OR
+				(P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') OR
+				(P.Compartilhar = 51 AND P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '))
+            ORDER BY
+                P.Procedimento ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            $array[$row->idApp_Procedimento] = $row->Procedimento;
+        }
+
+        return $array;
+    }
+	
 }

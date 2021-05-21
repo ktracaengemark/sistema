@@ -81,9 +81,10 @@ class Atividade extends CI_Controller {
         } else {
 
             $data['query']['Atividade'] = trim(mb_strtoupper($data['query']['Atividade'], 'ISO-8859-1'));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-			$data['query']['Empresa'] = $_SESSION['log']['Empresa'];
+			$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
+			$data['query']['Data_Cad_Atividade'] = date('Y-m-d H:i:s', time());
 			
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
@@ -155,7 +156,7 @@ class Atividade extends CI_Controller {
         } else {
 
             $data['query']['Atividade'] = trim(mb_strtoupper($data['query']['Atividade'], 'ISO-8859-1'));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 
             $data['anterior'] = $this->Atividade_model->get_atividade($data['query']['idApp_Atividade']);
             $data['campos'] = array_keys($data['query']);

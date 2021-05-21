@@ -131,7 +131,7 @@ class Tabelas_model extends CI_Model {
         $query = $this->db->query('SELECT * '
                 . 'FROM App_Profissional '
                 . 'WHERE '
-                . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                . 'idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND '
                 . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
                 . 'ORDER BY NomeProfissional ASC ');
         
@@ -164,7 +164,7 @@ class Tabelas_model extends CI_Model {
         $query = $this->db->query('SELECT * '
                 . 'FROM Tab_Servico '
                 . 'WHERE '
-                . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                . 'idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND '
                 . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
                 . 'ORDER BY NomeServico ASC ');
         
@@ -197,7 +197,7 @@ class Tabelas_model extends CI_Model {
         $query = $this->db->query('SELECT * '
                 . 'FROM Tab_Produto '
                 . 'WHERE '
-                . 'idSis_Usuario = ' . $_SESSION['log']['id'] . ' AND '
+                . 'idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND '
                 . 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' '
                 . 'ORDER BY NomeProduto ASC ');
         

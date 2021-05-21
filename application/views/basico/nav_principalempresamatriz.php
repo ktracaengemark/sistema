@@ -6,7 +6,7 @@
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 					<span class="sr-only">MENU</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<!--<a class="navbar-brand" href="http://www.ktracaengemark.com.br"> Melhor loja</a>-->
+				<!--<a class="navbar-brand" href="https://www.enkontraki.com"> Melhor loja</a>-->
 			</div>
 			<div class="collapse navbar-collapse">
 
@@ -20,15 +20,15 @@
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="<?php echo base_url() ?>acessoempresamatriz/index"><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['UsuarioEmpresaMatriz']; ?></a></li>
 								<li role="separator" class="divider"></li>
-								<li><a href="<?php echo base_url() ?>relatorioempresa/empresafilial"><span class="glyphicon glyphicon-list"></span> Rel. Unidades</a></li>
+								<li><a href="<?php echo base_url() ?>funcao/cadastrar"><span class="glyphicon glyphicon-pencil"></span> Cad Funçoes </a></li>
 								<li role="separator" class="divider"></li>
-								<li><a href="<?php echo base_url() ?>loginempresafilial/registrar"><span class="glyphicon glyphicon-pencil"></span> Cad. Unidades</a></li>
+								<li><a href="<?php echo base_url() ?>relatorioempresamatriz/funcionario"><span class="glyphicon glyphicon-user"></span> Funcionários </a></li>
 								<li role="separator" class="divider"></li>
-								<li><a href="<?php echo base_url() ?>funcao/cadastrar"><span class="glyphicon glyphicon-pencil"></span> Funções dos Colab. </a></li>
+								<li><a href="<?php echo base_url() ?>relatorioempresamatriz/receitas"><span class="glyphicon glyphicon-user"></span> Receitas </a></li>
 								<li role="separator" class="divider"></li>
-								<li><a href="<?php echo base_url() ?>relatorioempresa/funcionario"><span class="glyphicon glyphicon-user"></span> Colaborador </a></li>
-								
-								
+								<!--<li><a href="<?php echo base_url() ?>orcatrataemp/cadastrar2"><span class="glyphicon glyphicon-pencil"></span> Receitas</a></li>
+								<li role="separator" class="divider"></li>-->
+								<li><a href="<?php echo base_url() ?>relatorioempresa/empresafilial"><span class="glyphicon glyphicon-list"></span> Dados da Empresa </a></li>
 							</ul>
 						</div>						
 						<div class="btn-group" role="group" aria-label="..."> </div>
@@ -36,7 +36,7 @@
 					<li class="btn-toolbar navbar-form navbar-left" role="toolbar" aria-label="...">
 
 						<div class="btn-group" role="group" aria-label="...">
-							<a href="<?php echo base_url(); ?>login/index">
+							<a href="<?php echo base_url(); ?>loginmatriz/index">
 								<button type="button" class="btn btn-md btn-success ">
 									<span class="glyphicon glyphicon-log-in"></span> Acesso dos Usuários
 								</button>
@@ -64,7 +64,7 @@
 							</a>	
 						</div>
 						<div class="btn-group" role="group" aria-label="...">
-							<a href="<?php echo base_url(); ?>loginempresamatriz/sair">
+							<a href="<?php echo base_url(); ?>login/sair">
 								<button type="button" class="btn btn-md btn-danger ">
 									<span class="glyphicon glyphicon-log-out"></span> Sair
 								</button>

@@ -3,30 +3,26 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>Fornecedor</th>
-            <th>Serv./Prod.</th>
-			<th>P/Venda</th>
-			<th>Atividade</th>			
+            <th>Paciente</th>
+            <th>Nascimento</th>
             <th>Telefone</th>
         </tr>
     </thead>
     <tbody>
         <?php
 
-        foreach ($query->result_array() as $row) {
-            
+        foreach ($list->result_array() as $row) {
+
             if (isset($_SESSION['agenda']))
-                $url = base_url() . 'consulta/cadastrar/' . $row['idApp_Empresa'];
+                $url = base_url() . 'consulta/cadastrar/' . $row['idSis_Usuario'];
             else
-                $url = base_url() . 'empresa/prontuario/' . $row['idApp_Empresa'];
-                    
+                $url = base_url() . 'empresa/prontuario/' . $row['idSis_Usuario'];
+
             echo '<tr class="clickable-row" data-href="' . $url . '">';
-                echo '<td>' . $row['NomeEmpresa'] . '</td>';
-				echo '<td>' . $row['TipoFornec'] . '</td>';
-				echo '<td>' . $row['StatusSN'] . '</td>';
-				echo '<td>' . $row['Atividade'] . '</td>';				               
-                echo '<td>' . $row['Telefone1'] . '</td>';
-            echo '</tr>';            
+                echo '<td>' . $row['NomeAdmin'] . '</td>';
+                echo '<td>' . $row['DataNascimento'] . '</td>';
+                echo '<td>' . $row['CelularAdmin'] . '</td>';
+            echo '</tr>';
         }
         ?>
 
@@ -37,6 +33,3 @@
         </tr>
     </tfoot>
 </table>
-
-
-

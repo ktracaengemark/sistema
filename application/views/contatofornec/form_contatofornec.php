@@ -126,16 +126,16 @@
 												</select>
 											</div>						
 											<div class="col-md-4">
-												<label for="RelaCom">Relação*</label>
-												<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>relacom/cadastrar/relacom" role="button"> 
+												<label for="Relacao">Relação*</label>
+												<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>relacao/cadastrar/relacao" role="button"> 
 													<span class="glyphicon glyphicon-plus"></span> <b>Nova Relação</b>
 												</a>-->
 												<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
-														id="RelaCom" name="RelaCom">
+														id="Relacao" name="Relacao">
 													<option value="">-- Selecione uma Relação --</option>
 													<?php
-													foreach ($select['RelaCom'] as $key => $row) {
-														if ($query['RelaCom'] == $key) {
+													foreach ($select['Relacao'] as $key => $row) {
+														if ($query['Relacao'] == $key) {
 															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 														} else {
 															echo '<option value="' . $key . '">' . $row . '</option>';

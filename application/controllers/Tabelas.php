@@ -109,7 +109,7 @@ class Tabelas extends CI_Controller {
         } else {
 
             $data['query']['NomeProfissional'] = trim(mb_strtoupper($data['query']['NomeProfissional'], 'ISO-8859-1'));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
             $data['campos'] = array_keys($data['query']);
@@ -196,7 +196,7 @@ class Tabelas extends CI_Controller {
         } else {
 
             $data['query']['NomeProfissional'] = trim(mb_strtoupper($data['query']['NomeProfissional'], 'ISO-8859-1'));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 
             $data['anterior'] = $this->Tabelas_model->get_profissional($data['query']['idApp_Profissional']);
             $data['campos'] = array_keys($data['query']);
@@ -270,7 +270,7 @@ class Tabelas extends CI_Controller {
 
             $data['query']['NomeServico'] = trim(mb_strtoupper($data['query']['NomeServico'], 'ISO-8859-1'));
             $data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
             $data['campos'] = array_keys($data['query']);
@@ -349,7 +349,7 @@ class Tabelas extends CI_Controller {
 
             $data['query']['NomeServico'] = trim(mb_strtoupper($data['query']['NomeServico'], 'ISO-8859-1'));
             $data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 
             $data['anterior'] = $this->Tabelas_model->get_servico($data['query']['idTab_Servico']);
             $data['campos'] = array_keys($data['query']);
@@ -428,7 +428,7 @@ class Tabelas extends CI_Controller {
             $data['query']['QuantidadeCompra'] = str_replace(',','.',str_replace('.','',$data['query']['QuantidadeCompra']));
             $data['query']['ValorCompra'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompra']));
             $data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 
             $data['campos'] = array_keys($data['query']);
@@ -509,7 +509,7 @@ class Tabelas extends CI_Controller {
             $data['query']['QuantidadeCompra'] = str_replace(',','.',str_replace('.','',$data['query']['QuantidadeCompra']));
             $data['query']['ValorCompra'] = str_replace(',','.',str_replace('.','',$data['query']['ValorCompra']));
             $data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 
             $data['anterior'] = $this->Tabelas_model->get_produto($data['query']['idTab_Produto']);
             $data['campos'] = array_keys($data['query']);
@@ -586,7 +586,7 @@ class Tabelas extends CI_Controller {
         } else {
 
             $data['query']['NomeProfissional'] = trim(mb_strtoupper($data['query']['NomeProfissional'], 'ISO-8859-1'));
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['id'];
+            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 
             $data['anterior'] = $this->Tabelas_model->get_profissional($data['query']['idApp_Profissional']);
             $data['campos'] = array_keys($data['query']);

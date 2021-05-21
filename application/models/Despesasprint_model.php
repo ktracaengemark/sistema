@@ -76,20 +76,14 @@ class Despesasprint_model extends CI_Model {
 				PV.idApp_Despesas,
 				P.UnidadeProduto,
 				P.CodProd,
-				TP3.Prodaux3,
-				TP1.Prodaux1,
-            	TP2.Prodaux2,
 				TFO.NomeFornecedor,
 				CONCAT(IFNULL(PV.QtdCompraProduto,""), " - " , IFNULL(P.UnidadeProduto,"")) AS QtdCompraProduto,
-            	CONCAT(IFNULL(P.CodProd,""), " -- ", IFNULL(TP3.Prodaux3,""), " -- ", IFNULL(P.Produtos,""), " -- ", IFNULL(TP1.Prodaux1,""), " -- ", IFNULL(TP2.Prodaux2,"")) AS NomeProduto,
+            	CONCAT(IFNULL(P.CodProd,""), " -- ", IFNULL(P.Produtos,"")) AS NomeProduto,
 				PV.ValorCompraProduto
             FROM
             	App_ProdutoCompra AS PV,
             	Tab_Produtos AS P
             		LEFT JOIN App_Fornecedor AS TFO ON TFO.idApp_Fornecedor = P.Fornecedor
-            		LEFT JOIN Tab_Prodaux3 AS TP3 ON TP3.idTab_Prodaux3 = P.Prodaux3
-            		LEFT JOIN Tab_Prodaux2 AS TP2 ON TP2.idTab_Prodaux2 = P.Prodaux2
-            		LEFT JOIN Tab_Prodaux1 AS TP1 ON TP1.idTab_Prodaux1 = P.Prodaux1
             WHERE
             	PV.idApp_Despesas = ' . $data . ' AND
                 PV.idTab_Produto = P.idTab_Produtos

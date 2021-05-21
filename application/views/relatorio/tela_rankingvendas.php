@@ -1,17 +1,17 @@
 <?php if ($msg) echo $msg; ?>
 
 
-	<div class="col-md-1"></div>
-	<div class="col-md-10">
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
 		<div class="row">
 
 			<div class="main">
 
 				<?php echo validation_errors(); ?>
 
-				<div class="panel panel-primary">
+				<div class="panel panel-info">
 
-					<div class="panel-heading"><strong><?php echo $titulo; ?></strong></div>
+					<div class="panel-heading"><span class="glyphicon glyphicon-pencil"></span><strong> Ranking de Vendas<?php #echo $titulo; ?></strong></div>
 					<div class="panel-body">
 
 						<?php echo form_open('relatorio/rankingvendas', 'role="form"'); ?>
@@ -33,7 +33,7 @@
 										?>
 									</select>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-8">
 									<label for="Ordenamento">Ordenamento:</label>
 
 									<div class="form-group">
@@ -69,31 +69,33 @@
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
+								</div>								
+							</div>												
+							<div class="row">
+								<div class="col-md-3">
 									<label for="DataInicio">Data Início: *</label>
 									<div class="input-group DatePicker">
-										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											   autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
 										<span class="input-group-addon" disabled>
 											<span class="glyphicon glyphicon-calendar"></span>
 										</span>
+										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+									   autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
 									</div>
 								</div>
-								<div class="col-md-2">
+								<div class="col-md-3">
 									<label for="DataFim">Data Fim: (opc.)</label>
 									<div class="input-group DatePicker">
-										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											   autofocus name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
 										<span class="input-group-addon" disabled>
 											<span class="glyphicon glyphicon-calendar"></span>
 										</span>
+										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+									   name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
 									</div>
 								</div>								
 							</div>												
 							<div class="row">	
 								<div class="col-md-2 text-left"><br />
-									<button class="btn btn-lg btn-primary" name="pesquisar" value="0" type="submit">
+									<button class="btn btn-lg btn-warning" name="pesquisar" value="0" type="submit">
 										<span class="glyphicon glyphicon-search"></span> Pesquisar
 									</button>
 								</div>
@@ -114,4 +116,4 @@
 
 		</div>
 	</div>
-	<div class="col-md-1"></div>
+	

@@ -61,14 +61,14 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-md-4">
-												<label for="NomeContatoFunc">Nome do ContatoFunc: *</label>
-												<input type="text" class="form-control" id="NomeContatoFunc" maxlength="255" <?php echo $readonly; ?>
-													   name="NomeContatoFunc" autofocus value="<?php echo $query['NomeContatoFunc']; ?>">
+												<label for="NomeContatoUsuario">Nome do ContatoUsuario: *</label>
+												<input type="text" class="form-control" id="NomeContatoUsuario" maxlength="255" <?php echo $readonly; ?>
+													   name="NomeContatoUsuario" autofocus value="<?php echo $query['NomeContatoUsuario']; ?>">
 											</div>
 											<div class="col-md-4">
-												<label for="TelefoneContatoFunc">Telefone Principal: *</label>
-												<input type="text" class="form-control Celular CelularVariavel" id="TelefoneContatoFunc" maxlength="14" <?php echo $readonly; ?>
-													   name="TelefoneContatoFunc" placeholder="(XX)999999999" value="<?php echo $query['TelefoneContatoFunc']; ?>">
+												<label for="TelefoneContatoUsuario">Telefone Principal: *</label>
+												<input type="text" class="form-control Celular CelularVariavel" id="TelefoneContatoUsuario" maxlength="14" <?php echo $readonly; ?>
+													   name="TelefoneContatoUsuario" placeholder="(XX)999999999" value="<?php echo $query['TelefoneContatoUsuario']; ?>">
 											</div>
 											<div class="col-md-4">
 												<label for="DataNascimento">Data de Nascimento:</label>
@@ -216,7 +216,7 @@
 																	</button>
 																</div>
 																<div class="col-md-6 text-right">
-																	<a class="btn btn-danger" href="<?php echo base_url() . 'contatofunc/excluir/' . $query['idApp_ContatoFunc'] ?>" role="button">
+																	<a class="btn btn-danger" href="<?php echo base_url() . 'contatofunc/excluir/' . $query['idApp_ContatoUsuario'] ?>" role="button">
 																		<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
 																	</a>
 																</div>

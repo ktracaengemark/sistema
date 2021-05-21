@@ -36,7 +36,7 @@ class Loginempresamatriz extends CI_Controller {
     public function index() {
 
         #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
-        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'ktraca';
+        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
         ###################################################
@@ -109,12 +109,14 @@ class Loginempresamatriz extends CI_Controller {
                 #$_SESSION['log']['UsuarioEmpresaFilial'] = $query['UsuarioEmpresaFilial'];
                 //se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
                 $_SESSION['log']['UsuarioEmpresaMatriz'] = (strlen($query['UsuarioEmpresaMatriz']) > 15) ? substr($query['UsuarioEmpresaMatriz'], 0, 15) : $query['UsuarioEmpresaMatriz'];
-                #$_SESSION['log']['Nome'] = (strlen($query['Nome']) > 10) ? substr($query['Nome'], 0, 10) : $query['Nome'];
-				#$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
-				$_SESSION['log']['id'] = $query['idSis_EmpresaMatriz'];				
-				#$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
-				$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];				
+                $_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
 				$_SESSION['log']['Nome'] = $query['Nome'];
+				#$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
+				$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];				
+				#$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
+				$_SESSION['log']['NomeEmpresa2'] = (strlen($query['NomeEmpresa']) > 12) ? substr($query['NomeEmpresa'], 0, 12) : $query['NomeEmpresa'];
+				$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];				
+				#$_SESSION['log']['Nome'] = $query['Nome'];
 
 			
                 $this->load->database();
@@ -123,7 +125,7 @@ class Loginempresamatriz extends CI_Controller {
                 $_SESSION['db']['password'] = $this->db->password;
                 $_SESSION['db']['database'] = $this->db->database;
 
-                if ($this->Loginempresamatriz_model->set_acesso($_SESSION['log']['id'], 'LOGIN') === FALSE) {
+                if ($this->Loginempresamatriz_model->set_acesso($_SESSION['log']['idSis_EmpresaMatriz'], 'LOGIN') === FALSE) {
                     $msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
 
                     $this->basico->erro($msg);
@@ -144,7 +146,7 @@ class Loginempresamatriz extends CI_Controller {
 
     public function registrar() {
 
-        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'ktraca';
+        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
         if ($this->input->get('m') == 1)
@@ -203,7 +205,7 @@ class Loginempresamatriz extends CI_Controller {
             $data['campos'] = array_keys($data['query']);
 
             $data['idSis_EmpresaMatriz'] = $this->Loginempresamatriz_model->set_usuario($data['query']);
-            $_SESSION['log']['id'] = 1;
+            $_SESSION['log']['idSis_EmpresaMatriz'] = 1;
 
             if ($data['idSis_EmpresaMatriz'] === FALSE) {
                 $data['msg'] = '?m=2';
@@ -264,7 +266,7 @@ class Loginempresamatriz extends CI_Controller {
 
     public function confirmar($codigo) {
 
-        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'ktraca';
+        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
 
@@ -296,7 +298,7 @@ class Loginempresamatriz extends CI_Controller {
 
     public function recuperar() {
 
-        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'ktraca';
+        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
         if ($this->input->get('m') == 1)
@@ -320,7 +322,7 @@ class Loginempresamatriz extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() === FALSE) {
 
-            $this->load->view('loginempresamatriz/form_recuperar', $data);
+            $this->load->view('loginempresamatriz/form_recuperarempresamatriz', $data);
         } else {
 
             $data['query']['Codigo'] = md5(uniqid(time() . rand()));
@@ -350,7 +352,7 @@ class Loginempresamatriz extends CI_Controller {
                 $this->email->subject('[KTRACA] Alteração de Senha - Usuário: ' . $data['query']['UsuarioEmpresaMatriz']);
                 $this->email->message('Por favor, clique no link a seguir para alterar sua senha: '
                         //. 'http://www.romati.com.br/app/loginempresafilial/trocar_senha/' . $data['query']['Codigo']);
-                        . base_url() . 'loginempresamatriz/trocar_senha/' . $data['query']['Codigo']);
+                        . base_url() . 'loginempresamatriz/trocar_senhaempresamatriz/' . $data['query']['Codigo']);
 
                 $this->email->send();
 
@@ -376,7 +378,7 @@ class Loginempresamatriz extends CI_Controller {
 
     public function trocar_senha($codigo = NULL) {
 
-        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'ktraca';
+        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
         if ($this->input->get('m') == 1)
@@ -454,12 +456,12 @@ class Loginempresamatriz extends CI_Controller {
 
         #set logout in database
         if ($_SESSION['log'] && $m === TRUE) {
-            $this->Loginempresamatriz_model->set_acesso($_SESSION['log']['id'], 'LOGOUT');
+            $this->Loginempresamatriz_model->set_acesso($_SESSION['log']['idSis_EmpresaMatriz'], 'LOGOUT');
         } else {
-            if (!isset($_SESSION['log']['id'])) {
-                $_SESSION['log']['id'] = 1;
+            if (!isset($_SESSION['log']['idSis_EmpresaMatriz'])) {
+                $_SESSION['log']['idSis_EmpresaMatriz'] = 1;
             }
-            $this->Loginempresamatriz_model->set_acesso($_SESSION['log']['id'], 'TIMEOUT');
+            $this->Loginempresamatriz_model->set_acesso($_SESSION['log']['idSis_EmpresaMatriz'], 'TIMEOUT');
             $data['msg'] = '?m=2';
         }
 
@@ -497,8 +499,6 @@ class Loginempresamatriz extends CI_Controller {
         }
     }
 	
-
-
     function valid_senha($senha, $usuario) {
 
         if ($this->Loginempresamatriz_model->check_dados_usuario($senha, $usuario) == FALSE) {
@@ -509,5 +509,4 @@ class Loginempresamatriz extends CI_Controller {
         }
     }
 	
-
 }

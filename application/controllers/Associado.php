@@ -101,7 +101,7 @@ class Associado extends CI_Controller {
             $data['query']['Senha'] = md5($data['query']['Senha']);
 			$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
             $data['query']['Codigo'] = md5(uniqid(time() . rand()));
-			$data['query']['Associado'] = $_SESSION['log']['id'];
+			$data['query']['Associado'] = $_SESSION['log']['idSis_Usuario'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 			$data['query']['Inativo'] = 0;
             unset($data['query']['Confirma']);
@@ -207,7 +207,7 @@ class Associado extends CI_Controller {
             $data['query']['Nome'] = trim(mb_strtoupper($data['query']['Nome'], 'ISO-8859-1'));
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
             $data['query']['Obs'] = nl2br($data['query']['Obs']);
-            $data['query']['Associado'] = $_SESSION['log']['id'];
+            $data['query']['Associado'] = $_SESSION['log']['idSis_Usuario'];
 
             $data['anterior'] = $this->Associado_model->get_associado($data['query']['idSis_Usuario']);
             $data['campos'] = array_keys($data['query']);

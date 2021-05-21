@@ -15,7 +15,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="refresh" content="<?php echo $tempo+1; ?>;<?php echo base_url(); ?>login/sair/FALSE"/>
@@ -26,7 +26,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         <link rel="icon" href="../../favicon.ico">
 
         <!-- <title>ROMATI - Agenda online de pacientes</title>-->
-        <title><?php echo $_SESSION['log']['UsuarioEmpresaMatriz'] ?> - KTRACA Sistemas</title>        
+        <title><?php echo $_SESSION['log']['UsuarioEmpresaFilial'] ?> - KTRACA Sistemas</title>        
 
         <!-- HUAP CSS Custom -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/huap.css">
