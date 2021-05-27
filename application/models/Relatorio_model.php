@@ -2422,8 +2422,13 @@ exit();
 
     }
 
-	public function list_rankingvendas($data) {
-
+	public function list_rankingvendas_orig($data) {
+		/*				
+		echo "<pre>";
+		print_r($data['idApp_Cliente']);
+		echo "</pre>";
+		//exit();
+		*/
         if ($data['DataFim']) {
             $consulta =
                 '(TPR.DataVencimento >= "' . $data['DataInicio'] . '" AND TPR.DataVencimento <= "' . $data['DataFim'] . '")';
@@ -2434,6 +2439,7 @@ exit();
         }
 		
         $data['NomeCliente'] = ($data['NomeCliente']) ? ' AND TC.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+        $data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND TC.idApp_Cliente = ' . $data['idApp_Cliente'] : FALSE;
         $data['Campo'] = (!$data['Campo']) ? 'TC.NomeCliente' : $data['Campo'];
         $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
         ####################################################################
@@ -2451,7 +2457,7 @@ exit();
                 TC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				TPR.Quitado = "S" AND
 				' . $consulta . '
-                ' . $data['NomeCliente'] . '
+                ' . $data['idApp_Cliente'] . '
             ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . ''
         );
@@ -2462,6 +2468,7 @@ exit();
 
         $query['Parcelas'] = $this->db->query(
             'SELECT
+                COUNT(TOT.idApp_OrcaTrata) AS Contagem,
                 SUM(TPR.ValorParcela) AS QtdParc,
                 TC.idApp_Cliente,
 				FP.idTab_FormaPag
@@ -2474,7 +2481,7 @@ exit();
             WHERE
                 TPR.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 (' . $consulta . ')
-                ' . $data['NomeCliente'] . ' AND
+                ' . $data['idApp_Cliente'] . ' AND
                 TOT.AprovadoOrca = "S" AND
 				TPR.Quitado = "S" AND
 				TPR.idTab_TipoRD = "2" AND
@@ -2494,6 +2501,7 @@ exit();
             #echo $row->idTab_Produto . ' # ' . $row->Produtos . '<br />';
             #$estoque[$row->idTab_Produto] = $row->Produtos;
             $rankingvendas->{$row->idApp_Cliente} = new stdClass();
+            $rankingvendas->{$row->idApp_Cliente}->idApp_Cliente = $row->idApp_Cliente;
             $rankingvendas->{$row->idApp_Cliente}->NomeCliente = $row->NomeCliente;
         }
 
@@ -2505,8 +2513,10 @@ exit();
 		exit();*/
 	
 		foreach ($query['Parcelas'] as $row) {
-            if (isset($rankingvendas->{$row->idApp_Cliente}))
-                $rankingvendas->{$row->idApp_Cliente}->QtdParc = $row->QtdParc;
+            if (isset($rankingvendas->{$row->idApp_Cliente})){
+					$rankingvendas->{$row->idApp_Cliente}->QtdParc = $row->QtdParc;
+				}
+                
         }
 
 		$rankingvendas->soma = new stdClass();
@@ -2524,15 +2534,112 @@ exit();
 		
 
         /*
-        echo $this->db->last_query();
+        #echo $this->db->last_query();
         echo "<pre>";
-        print_r($estoque);
+        print_r($rankingvendas);
         echo "</pre>";
         #echo "<pre>";
         #print_r($query);
         #echo "</pre>";
         exit();
         #*/
+
+        return $rankingvendas;
+
+    }
+
+	public function list_rankingvendas($data) {
+
+		$date_inicio_orca = ($data['DataInicio']) ? 'TOT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;
+		$date_fim_orca = ($data['DataFim']) ? 'TOT.DataOrca <= "' . $data['DataFim'] . '" AND ' : FALSE;
+
+		$data['Pedidos_de'] = ($data['Pedidos_de']) ? 'F.ContPedidos >= "' . $data['Pedidos_de'] . '" AND ' : FALSE;
+		$data['Pedidos_ate'] = ($data['Pedidos_ate']) ? 'F.ContPedidos <= "' . $data['Pedidos_ate'] . '" AND ' : FALSE;	
+		
+		$data['Valor_de'] = ($data['Valor_de']) ? 'F.Valor >= "' . $data['Valor_de'] . '" AND ' : FALSE;
+		$data['Valor_ate'] = ($data['Valor_ate']) ? 'F.Valor <= "' . $data['Valor_ate'] . '" AND ' : FALSE;	
+
+		$data['NomeCliente'] = ($data['NomeCliente']) ? ' AND TC.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
+        $data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND TC.idApp_Cliente = ' . $data['idApp_Cliente'] : FALSE;
+        $data['Campo'] = (!$data['Campo']) ? 'F.Valor' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'DESC' : $data['Ordenamento'];
+        
+        #LISTA DE CLIENTES
+        $query['NomeCliente'] = $this->db->query('
+			SELECT
+				F.idApp_Cliente,
+				F.NomeCliente,
+				F.ContPedidos,
+				F.Valor
+			FROM
+				(SELECT
+					TC.idApp_Cliente,
+					TC.NomeCliente,
+					TOT.DataOrca,
+					COUNT(TOT.idApp_OrcaTrata) AS ContPedidos,
+					SUM(TOT.ValorFinalOrca) AS Valor
+				FROM
+					App_Cliente AS TC
+						INNER JOIN App_OrcaTrata AS TOT ON TOT.idApp_Cliente = TC.idApp_Cliente
+				WHERE
+                ' . $date_inicio_orca . '
+                ' . $date_fim_orca . '
+					TOT.CanceladoOrca = "N" AND
+					TC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
+					' . $data['idApp_Cliente'] . ' 
+				GROUP BY
+					TC.idApp_Cliente
+				) AS F
+			WHERE
+				' . $data['Pedidos_de'] . '
+				' . $data['Pedidos_ate'] . '
+				' . $data['Valor_de'] . '
+				' . $data['Valor_ate'] . '
+				F.idApp_Cliente != 0
+			ORDER BY
+				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+        $query['NomeCliente'] = $query['NomeCliente']->result();
+
+		$rankingvendas = new stdClass();
+		$data['contagem'] = 0;
+        foreach ($query['NomeCliente'] as $row) {
+
+            $rankingvendas->{$row->idApp_Cliente} = new stdClass();
+            $rankingvendas->{$row->idApp_Cliente}->idApp_Cliente = $row->idApp_Cliente;
+            $rankingvendas->{$row->idApp_Cliente}->NomeCliente = $row->NomeCliente;
+			$rankingvendas->{$row->idApp_Cliente}->ContPedidos = $row->ContPedidos;
+			$rankingvendas->{$row->idApp_Cliente}->Valor = $row->Valor;
+			$data['contagem']++;
+		}
+		
+		$rankingvendas->soma = new stdClass();
+		$somaqtdorcam = $somaqtddescon = $somaqtdvendida = $somaqtdparc = $somaqtddevol = $somaqtdpedidos = 0;
+		
+		foreach ($rankingvendas as $row) {
+	
+			
+			$row->ContPedidos = (!isset($row->ContPedidos)) ? 0 : $row->ContPedidos;
+			$row->Valor = (!isset($row->Valor)) ? 0 : $row->Valor;
+			$somaqtdpedidos += $row->ContPedidos;
+			$somaqtdparc += $row->Valor;
+			$row->Valor2 = number_format($row->Valor, 2, ',', '.');																
+			
+		}
+		$rankingvendas->soma->somaqtdclientes = $data['contagem'];
+		$rankingvendas->soma->somaqtdpedidos = $somaqtdpedidos;
+		$rankingvendas->soma->somaqtdparc = number_format($somaqtdparc, 2, ',', '.');
+
+        /*
+        #echo $this->db->last_query();
+        echo "<pre>";
+        print_r($data['contagem']);
+        echo "</pre>";
+        #echo "<pre>";
+        #print_r($query);
+        #echo "</pre>";
+        //exit();
+        */
 
         return $rankingvendas;
 

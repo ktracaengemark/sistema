@@ -5269,7 +5269,12 @@ class Relatorio extends CI_Controller {
 		$data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
 	else
 		$data['msg'] = '';
-
+		
+	$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+		'id_Cliente_Auto',
+		'NomeClienteAuto',
+	), TRUE));	
+		
 	$data['query'] = quotes_to_entities($this->input->post(array(
 		'ValorOrca',
 		'NomeCliente',
@@ -5278,35 +5283,39 @@ class Relatorio extends CI_Controller {
 		'DataFim',
 		'Ordenamento',
 		'Campo',
+		'Pedidos_de',
+		'Pedidos_ate',
+		'Valor_de',
+		'Valor_ate',
 	), TRUE));
 
 	$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 	#$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
-	#$this->form_validation->set_rules('DataInicio', 'Data Inicio', 'trim|valid_date');
-	#$this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+	$this->form_validation->set_rules('DataInicio', 'Data Inicio', 'trim|valid_date');
+	$this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
 
 	$data['select']['Campo'] = array(
-
-		'TC.NomeCliente' => 'Cliente',
-		'TC.idApp_Cliente' => 'Id',
-
+		'Valor' => 'Valor',
+		'ContPedidos' => 'Pedidos',
+		'F.NomeCliente' => 'Cliente',
+		'F.idApp_Cliente' => 'Id',
 	);
 
 	$data['select']['Ordenamento'] = array(
-		'ASC' => 'Crescente',
 		'DESC' => 'Decrescente',
+		'ASC' => 'Crescente',
 	);
 
 
 
-	$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
-	$data['select']['idApp_Cliente'] = $this->Relatorio_model->select_cliente();
+	//$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
+	//$data['select']['idApp_Cliente'] = $this->Relatorio_model->select_cliente();
 
 
 	$data['titulo'] = 'Ranking de Vendas';
 
 	#run form validation
-	if ($this->form_validation->run() !== TRUE) {
+	if ($this->form_validation->run() !== FALSE) {
 
 		$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
 		$data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
@@ -5314,6 +5323,10 @@ class Relatorio extends CI_Controller {
 		$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
 		$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
 		$data['bd']['Campo'] = $data['query']['Campo'];
+		$data['bd']['Valor_de'] = $data['query']['Valor_de'];
+		$data['bd']['Valor_ate'] = $data['query']['Valor_ate'];
+		$data['bd']['Pedidos_de'] = $data['query']['Pedidos_de'];
+		$data['bd']['Pedidos_ate'] = $data['query']['Pedidos_ate'];
 
 		$data['report'] = $this->Relatorio_model->list_rankingvendas($data['bd'],TRUE);
 
@@ -5322,7 +5335,7 @@ class Relatorio extends CI_Controller {
 		  print_r($data['report']);
 		  echo "</pre>";
 		  #exit();
-		  #*/
+		  */
 
 		$data['list'] = $this->load->view('relatorio/list_rankingvendas', $data, TRUE);
 		//$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);

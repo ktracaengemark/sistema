@@ -1,5 +1,6 @@
 <div class="container-fluid">
-	<div class="row">
+	
+		
 		<div style="overflow: auto; width: auto; height: auto;">			
 			<div class="form-group">
 				<div class="row">			
@@ -13,68 +14,83 @@
 					
 				</div>	
 			</div>	
-		</div>	
+		</div>
+		
 		<table class="table table-bordered table-condensed table-striped">	
 			<tfoot>
 				<tr>						
-					<th colspan="1" class="active">Total:</th>
-					<th colspan="1" class="active"><?php echo $report->soma->somaqtdparc ?></th>						
+					<th colspan="1" class="active">Cont / id:</th>
+					<th colspan="9" class="active">Clientes = <?php echo $report->soma->somaqtdclientes ?></th>
+					<th colspan="1" class="active">Pedidos = <?php echo $report->soma->somaqtdpedidos ?></th>
+					<th colspan="1" class="active">Valor Total = <?php echo $report->soma->somaqtdparc ?></th>							
 				</tr>
 			</tfoot>
 		</table>
+		
 		<div style="overflow: auto; width: auto; height: 300px;">			
 			<table class="table table-bordered table-condensed table-striped">
-				
+				<!--
 				<thead>
 					<tr>
-						<th class="active text-center">CLIENTE</th>
-						<th class="active text-center">PAGO</th>
+						<th colspan="1" class="active text-center">id</th>
+						<th colspan="5" class="active text-center">Cliente</th>
+						<th colspan="3" class="active text-center">Pedidos = <?php #echo $report->soma->somaqtdpedidos ?></th>
+						<th colspan="3" class="active text-center">Valor Total = <?php #echo $report->soma->somaqtdparc ?></th>
 					</tr>
 				</thead>
+				
 				<thead>
 					<tr>						
 						<th colspan="1" class="active">Total :</th>
-						<th colspan="1" class="active"><?php echo $report->soma->somaqtdparc ?></th>												
+						<th colspan="1" class="active"><?php #echo $report->soma->somaqtdparc ?></th>												
 					</tr>
 				</thead>
+				-->
+				
 				<tbody>
 
 					<?php
 					$cliente = array ();
 					$valor = array();
 					$i = 0;
+					$cont = 1;
 					foreach ($report as $row) {
-					#for($i=0;$i<count($report);$i++) {
-
+					
 						if(isset($row->NomeCliente)) {
 							
 							echo '<tr>';
+								echo '<td>' . $cont . ' / ' . $row->idApp_Cliente . '</td>';
 								echo '<td>' . $row->NomeCliente . '</td>';
-								echo '<td>' . $row->QtdParc . '</td>';							
+								echo '<td>' . $row->ContPedidos . '</td>';
+								echo '<td>' . $row->Valor2 . '</td>';							
 							echo '</tr>';
 						
 							$nomecliente = $row->NomeCliente;
-							$valorcliente = $row->QtdParc;
+							$valorcliente = $row->Valor;
 							$cliente[$i] = $nomecliente;
 							$valor[$i] = $valorcliente;
 							$i = $i + 1;
-							
+							$cont++;
 						}
 					}
 					?>
 
 				</tbody>
+				
+				<!--
 				<tfoot>
 					<tr>						
 						<th colspan="1" class="active">Total:</th>
-						<th colspan="1" class="active"><?php echo $report->soma->somaqtdparc ?></th>						
+						<th colspan="1" class="active"><?php #echo $report->soma->somaqtdparc ?></th>						
 					</tr>
 				</tfoot>
-
+				-->
 			</table>
 		</div>	  
+		  
 		  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 		  <script type="text/javascript">
+			
 			google.charts.load("current", {packages:['corechart']});
 			google.charts.setOnLoadCallback(drawChart);
 			
@@ -85,9 +101,7 @@
 				<?php 
 				$k = $i;
 				for ($i = 0; $i < $k; $i++){?>
-						
-				['<?php echo $cliente[$i] ?>', ( <?php echo $valor[$i] ?> ), "#b87333"],
-
+					['<?php echo $cliente[$i] ?>', ( <?php echo $valor[$i] ?> ), "#b87333"],
 				<?php } ?>		
 			  ]);
 
@@ -109,9 +123,11 @@
 			  var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
 			  chart.draw(view, options);
 		  }
+		  
 		  </script>	
 
 		<script type="text/javascript">
+		  
 		  google.charts.load('current', {'packages':['corechart']});
 		  google.charts.setOnLoadCallback(drawChart);
 
@@ -137,6 +153,8 @@
 
 			chart.draw(data, options);
 		  }
+		  
 		</script>
-	</div>
+		
+	
 </div>
