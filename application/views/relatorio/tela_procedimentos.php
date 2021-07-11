@@ -2,217 +2,193 @@
 <?php echo form_open($form_open_path, 'role="form"'); ?>
 <div class="col-md-12">
 <?php echo validation_errors(); ?>
-	<div class="row">
-		<div class="col-md-12 ">
-			<div class="panel panel-<?php echo $panel; ?>">
-				<div class="panel-heading">
-					<div class="row">
+	<div class="panel panel-<?php echo $panel; ?>">
+		<div class="panel-heading">
+			<?php if($paginacao == "N") { ?>
+				<div class="row">
+					<div class="col-md-2 text-left">
+						<label>id <?php echo $titulo1;?></label>
+						<?php if($tipoproc == 1 || $tipoproc == 2) {?>
+							<div class="input-group">
+								<span class="input-group-btn">
+									<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
+										<span class="glyphicon glyphicon-search"></span> 
+									</button>
+								</span>
+								<input type="text" placeholder="Pesquisar <?php echo $titulo1;?>" class="form-control Numero btn-sm" name="Orcamento" id="Orcamento" value="<?php echo set_value('Orcamento', $query['Orcamento']); ?>">
+							</div>
+							<input type="hidden" name="idApp_Procedimento" id="idApp_Procedimento" value="">
+						<?php }elseif($tipoproc == 3 || $tipoproc == 4){ ?>
+							<div class="input-group">
+								<span class="input-group-btn">
+									<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
+										<span class="glyphicon glyphicon-search"></span> 
+									</button>
+								</span>
+								<input type="text" placeholder="Pesquisar <?php echo $titulo1;?>" class="form-control Numero btn-sm" name="idApp_Procedimento" id="idApp_Procedimento" value="<?php echo set_value('idApp_Procedimento', $query['idApp_Procedimento']); ?>">
+							</div>
+							<input type="hidden" name="Orcamento" id="Orcamento" value="">
+						<?php } ?>
+					</div>
+					<?php if($tipoproc == 3 || $tipoproc == 4){ ?>
 						<div class="col-md-2 text-left">
-							<label>id <?php echo $titulo1;?></label>
-							<?php if($tipoproc == 1 || $tipoproc == 2) {?>
-								<div class="input-group">
-									<span class="input-group-btn">
-										<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
-											<span class="glyphicon glyphicon-search"></span> 
-										</button>
-									</span>
-									<input type="text" placeholder="Pesquisar <?php echo $titulo1;?>" class="form-control Numero btn-sm" name="Orcamento" id="Orcamento" value="<?php echo set_value('Orcamento', $query['Orcamento']); ?>">
-								</div>
-								<input type="hidden" name="idApp_Procedimento" id="idApp_Procedimento" value="">
-							<?php }elseif($tipoproc == 3 || $tipoproc == 4){ ?>
-								<div class="input-group">
-									<span class="input-group-btn">
-										<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
-											<span class="glyphicon glyphicon-search"></span> 
-										</button>
-									</span>
-									<input type="text" placeholder="Pesquisar <?php echo $titulo1;?>" class="form-control Numero btn-sm" name="idApp_Procedimento" id="idApp_Procedimento" value="<?php echo set_value('idApp_Procedimento', $query['idApp_Procedimento']); ?>">
-								</div>
-								<input type="hidden" name="Orcamento" id="Orcamento" value="">
-							<?php } ?>
-						</div>
-						<?php if($tipoproc == 3 || $tipoproc == 4){ ?>
-							<div class="col-md-2 text-left">
-								<label for="<?php echo $titulo1;?>">Tipo de <?php echo $titulo1;?>:</label>
-								<div class="input-group">
-									<span class="input-group-btn">
-										<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
-											<span class="glyphicon glyphicon-search"></span> 
-										</button>
-									</span>
-									<select data-placeholder="Selecione uma opção..." class="form-control" 
-											id="<?php echo $titulo1;?>" name="<?php echo $titulo1;?>">
-										<?php
-										foreach ($select[$titulo1] as $key => $row) {
-											if ($query[$titulo1] == $key) {
-												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-											} else {
-												echo '<option value="' . $key . '">' . $row . '</option>';
-											}
+							<label for="<?php echo $titulo1;?>">Tipo de <?php echo $titulo1;?>:</label>
+							<div class="input-group">
+								<span class="input-group-btn">
+									<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
+										<span class="glyphicon glyphicon-search"></span> 
+									</button>
+								</span>
+								<select data-placeholder="Selecione uma opção..." class="form-control" 
+										id="<?php echo $titulo1;?>" name="<?php echo $titulo1;?>">
+									<?php
+									foreach ($select[$titulo1] as $key => $row) {
+										if ($query[$titulo1] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
 										}
-										?>
-									</select>
-								</div>
+									}
+									?>
+								</select>
 							</div>
-						<?php } ?>
-						<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
-							<div class="col-md-4 text-left">
-								<label  id="Nome<?php echo $nome; ?>Auto1"><?php echo $nome; ?>: <?php echo $cadastrar['Nome'.$nome.'Auto']; ?></label>
-								<div class="input-group">
-									<span class="input-group-btn">
-										<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
-											<span class="glyphicon glyphicon-search"></span> 
-										</button>
-									</span>
-									<input type="text" name="id_<?php echo $nome; ?>_Auto" id="id_<?php echo $nome; ?>_Auto" value="<?php echo $cadastrar['id_'.$nome.'_Auto']; ?>" class="form-control" placeholder="Pesquisar <?php echo $nome; ?>">
-									<input type="hidden" id="Nome<?php echo $nome; ?>Auto" name="Nome<?php echo $nome; ?>Auto" value="<?php echo $cadastrar['Nome'.$nome.'Auto']; ?>" />
-									<input type="hidden" id="Hidden_id_<?php echo $nome; ?>_Auto" name="Hidden_id_<?php echo $nome; ?>_Auto" value="<?php echo $query['idApp_'.$nome]; ?>" />
-									<input type="hidden" name="idApp_<?php echo $nome; ?>" id="idApp_<?php echo $nome; ?>" value="<?php echo $query['idApp_'.$nome]; ?>" class="form-control" readonly= "">
-									<?php if($metodo == 2) {?>
-										<input type="hidden" placeholder="Pesquisar <?php echo $nome; ?>" class="form-control Numero btn-sm" name="<?php echo $nome; ?>" id="<?php echo $nome; ?>" value="<?php echo set_value($nome, $query[$nome]); ?>">
-										<input type="hidden" name="Fornecedor" id="Fornecedor" value="">
-									<?php }elseif($metodo == 1){ ?>	
-										<input type="hidden" placeholder="Pesquisar <?php echo $nome; ?>" class="form-control Numero btn-sm" name="<?php echo $nome; ?>" id="<?php echo $nome; ?>" value="<?php echo set_value($nome, $query[$nome]); ?>">
-										<input type="hidden" name="Cliente" id="Cliente" value="">
-									<?php } ?>
-								</div>
+						</div>
+					<?php } ?>
+					<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
+						<div class="col-md-4 text-left">
+							<label  id="Nome<?php echo $nome; ?>Auto1"><?php echo $nome; ?>: <?php echo $cadastrar['Nome'.$nome.'Auto']; ?></label>
+							<div class="input-group">
+								<span class="input-group-btn">
+									<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
+										<span class="glyphicon glyphicon-search"></span> 
+									</button>
+								</span>
+								<input type="text" name="id_<?php echo $nome; ?>_Auto" id="id_<?php echo $nome; ?>_Auto" value="<?php echo $cadastrar['id_'.$nome.'_Auto']; ?>" class="form-control" placeholder="Pesquisar <?php echo $nome; ?>">
+								<input type="hidden" id="Nome<?php echo $nome; ?>Auto" name="Nome<?php echo $nome; ?>Auto" value="<?php echo $cadastrar['Nome'.$nome.'Auto']; ?>" />
+								<input type="hidden" id="Hidden_id_<?php echo $nome; ?>_Auto" name="Hidden_id_<?php echo $nome; ?>_Auto" value="<?php echo $query['idApp_'.$nome]; ?>" />
+								<input type="hidden" name="idApp_<?php echo $nome; ?>" id="idApp_<?php echo $nome; ?>" value="<?php echo $query['idApp_'.$nome]; ?>" class="form-control" readonly= "">
+								<?php if($metodo == 2) {?>
+									<input type="hidden" placeholder="Pesquisar <?php echo $nome; ?>" class="form-control Numero btn-sm" name="<?php echo $nome; ?>" id="<?php echo $nome; ?>" value="<?php echo set_value($nome, $query[$nome]); ?>">
+									<input type="hidden" name="Fornecedor" id="Fornecedor" value="">
+								<?php }elseif($metodo == 1){ ?>	
+									<input type="hidden" placeholder="Pesquisar <?php echo $nome; ?>" class="form-control Numero btn-sm" name="<?php echo $nome; ?>" id="<?php echo $nome; ?>" value="<?php echo set_value($nome, $query[$nome]); ?>">
+									<input type="hidden" name="Cliente" id="Cliente" value="">
+								<?php } ?>
 							</div>
-							<!--
-							<div class="col-md-2 text-left">	
-								<label for="Ordenamento"><?php #echo $nome; ?>:</label>
-								<div class="input-group">
-									<span class="input-group-btn">
-										<button class="btn btn-<?php #echo $panel; ?> btn-md" type="submit">
-											<span class="glyphicon glyphicon-search"></span> 
-										</button>
-									</span>
-									<?php if($metodo == 2) {?>
-										<input type="text" placeholder="Pesquisar <?php #echo $nome; ?>" class="form-control Numero btn-sm" name="<?php #echo $nome; ?>" id="<?php #echo $nome; ?>" value="<?php #echo set_value($nome, $query[$nome]); ?>">
-										<input type="hidden" name="Fornecedor" id="Fornecedor" value="">
-									<?php }elseif($metodo == 1){ ?>	
-										<input type="text" placeholder="Pesquisar <?php #echo $nome; ?>" class="form-control Numero btn-sm" name="<?php #echo $nome; ?>" id="<?php #echo $nome; ?>" value="<?php #echo set_value($nome, $query[$nome]); ?>">
-										<input type="hidden" name="Cliente" id="Cliente" value="">
-									<?php } ?>
-								</div>
-							</div>	
-							-->
-						<?php }else{ ?>
-							<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value=""/>
-							<input type="hidden" name="idApp_Fornecedor" id="idApp_Fornecedor" value=""/>
-							<input type="hidden" name="Cliente" id="Cliente" value=""/>
-							<input type="hidden" name="Fornecedor" id="Fornecedor" value=""/>
-						<?php } ?>
-						<input type="hidden" name="idTab_TipoRD" id="idTab_TipoRD" value="<?php echo $TipoRD; ?>"/>
+						</div>
+						<!--
+						<div class="col-md-2 text-left">	
+							<label for="Ordenamento"><?php #echo $nome; ?>:</label>
+							<div class="input-group">
+								<span class="input-group-btn">
+									<button class="btn btn-<?php #echo $panel; ?> btn-md" type="submit">
+										<span class="glyphicon glyphicon-search"></span> 
+									</button>
+								</span>
+								<?php if($metodo == 2) {?>
+									<input type="text" placeholder="Pesquisar <?php #echo $nome; ?>" class="form-control Numero btn-sm" name="<?php #echo $nome; ?>" id="<?php #echo $nome; ?>" value="<?php #echo set_value($nome, $query[$nome]); ?>">
+									<input type="hidden" name="Fornecedor" id="Fornecedor" value="">
+								<?php }elseif($metodo == 1){ ?>	
+									<input type="text" placeholder="Pesquisar <?php #echo $nome; ?>" class="form-control Numero btn-sm" name="<?php #echo $nome; ?>" id="<?php #echo $nome; ?>" value="<?php #echo set_value($nome, $query[$nome]); ?>">
+									<input type="hidden" name="Cliente" id="Cliente" value="">
+								<?php } ?>
+							</div>
+						</div>	
+						-->
+					<?php }else{ ?>
+						<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value=""/>
+						<input type="hidden" name="idApp_Fornecedor" id="idApp_Fornecedor" value=""/>
+						<input type="hidden" name="Cliente" id="Cliente" value=""/>
+						<input type="hidden" name="Fornecedor" id="Fornecedor" value=""/>
+					<?php } ?>
+					<input type="hidden" name="idTab_TipoRD" id="idTab_TipoRD" value="<?php echo $TipoRD; ?>"/>
 
-						<div class="col-md-2 text-left">
-							<label for="NomeUsuario">Quem Cadastrou:</label>
-							<div class="input-group">
-								<span class="input-group-btn">
-									<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
-										<span class="glyphicon glyphicon-search"></span> 
-									</button>
-								</span>
-								<select data-placeholder="Selecione uma opção..." class="form-control" id="NomeUsuario" name="NomeUsuario">
-									<?php
-									foreach ($select['NomeUsuario'] as $key => $row) {
-										if ($query['NomeUsuario'] == $key) {
-											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-										} else {
-											echo '<option value="' . $key . '">' . $row . '</option>';
-										}
+					<div class="col-md-2 text-left">
+						<label for="NomeUsuario">Quem Cadastrou:</label>
+						<div class="input-group">
+							<span class="input-group-btn">
+								<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
+									<span class="glyphicon glyphicon-search"></span> 
+								</button>
+							</span>
+							<select data-placeholder="Selecione uma opção..." class="form-control" id="NomeUsuario" name="NomeUsuario">
+								<?php
+								foreach ($select['NomeUsuario'] as $key => $row) {
+									if ($query['NomeUsuario'] == $key) {
+										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+									} else {
+										echo '<option value="' . $key . '">' . $row . '</option>';
 									}
-									?>
-								</select>
-							</div>	
-						</div>
-						<div class="col-md-2 text-left">
-							<label for="Compartilhar">Quem Fazer:</label>
-							<div class="input-group">
-								<span class="input-group-btn">
-									<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
-										<span class="glyphicon glyphicon-search"></span> 
-									</button>
-								</span>
-								<select data-placeholder="Selecione uma opção..." class="form-control" id="Compartilhar" name="Compartilhar">
-									<?php
-									foreach ($select['Compartilhar'] as $key => $row) {
-										if ($query['Compartilhar'] == $key) {
-											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-										} else {
-											echo '<option value="' . $key . '">' . $row . '</option>';
-										}
+								}
+								?>
+							</select>
+						</div>	
+					</div>
+					<div class="col-md-2 text-left">
+						<label for="Compartilhar">Quem Fazer:</label>
+						<div class="input-group">
+							<span class="input-group-btn">
+								<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
+									<span class="glyphicon glyphicon-search"></span> 
+								</button>
+							</span>
+							<select data-placeholder="Selecione uma opção..." class="form-control" id="Compartilhar" name="Compartilhar">
+								<?php
+								foreach ($select['Compartilhar'] as $key => $row) {
+									if ($query['Compartilhar'] == $key) {
+										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+									} else {
+										echo '<option value="' . $key . '">' . $row . '</option>';
 									}
-									?>
-								</select>
-							</div>
+								}
+								?>
+							</select>
 						</div>
-						<div class="col-md-2">
-							<div class="row">
-								<div class="col-md-4">
-									<label>Filtros</label>
-									<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
-										<span class="glyphicon glyphicon-filter"></span>
-									</button>
-								</div>
-								<?php if ($print == 1) { ?>	
-									<div class="col-md-4">
-										<label>Imprimir</label>
-										<a href="<?php echo base_url() . $imprimirlista . $_SESSION['log']['idSis_Empresa']; ?>">
-											<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
-												<span class="glyphicon glyphicon-print"></span>
-											</button>
-										</a>
-									</div>
-								<?php } ?>
-								<?php if ($editar == 1) { ?>	
-									<div class="col-md-4">
-										<label>Editar</label>
-										<a href="<?php echo base_url() . $alterarparc . $_SESSION['log']['idSis_Empresa']; ?>">
-											<button class="btn btn-success btn-md btn-block" type="button">
-												<span class="glyphicon glyphicon-edit"></span>
-											</button>
-										</a>
-									</div>	
-								<?php } ?>
-							</div>	
+					</div>
+				</div>	
+			<?php } ?>	
+				<div class="row">
+					<?php if($paginacao == "N") { ?>
+						<div class="col-md-1">
+							<label></label><br>
+							<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
+								<span class="glyphicon glyphicon-filter"></span>Filtros
+							</button>
 						</div>
-					</div>	
+					<?php }else{ ?>
+						<div class="col-md-1">
+							<label></label><br>
+							<a href="<?php echo base_url() . $caminho; ?>">
+								<button class="btn btn-warning btn-md btn-block" type="button">
+									<span class="glyphicon glyphicon-filter"></span>Filtros
+								</button>
+							</a>
+						</div>
+					<?php } ?>	
+					<?php if ($print == 1) { ?>	
+						<div class="col-md-1">
+							<label></label><br>
+							<a href="<?php echo base_url() . $imprimirlista . $_SESSION['log']['idSis_Empresa']; ?>">
+								<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
+									<span class="glyphicon glyphicon-print"></span>Imprimir
+								</button>
+							</a>
+						</div>
+					<?php } ?>
+					<?php if ($editar == 1) { ?>	
+						<div class="col-md-1">
+							<label></label><br>
+							<a href="<?php echo base_url() . $alterarparc . $_SESSION['log']['idSis_Empresa']; ?>">
+								<button class="btn btn-success btn-md btn-block" type="button">
+									<span class="glyphicon glyphicon-edit"></span>Editar
+								</button>
+							</a>
+						</div>	
+					<?php } ?>
 				</div>
-			</div>
-		</div>	
-	</div>	
-	<!--
-	<div class="row">
-		<div class="main">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					
-						
-					<button class="btn btn-sm btn-info" name="pesquisar" value="0" type="submit">
-						<span class="glyphicon glyphicon-search"></span> Pesq.
-					</button>
-					
-					<button  class="btn btn-sm btn-info" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
-						<span class="glyphicon glyphicon-search"></span> <?php echo $titulo1; ?>
-					</button>
-					<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>relatorio/alterarprocedimento" role="button"> 
-						<span class="glyphicon glyphicon-ok"></span> Edit Todas
-					</a>											
-					<a class="btn btn-sm btn-danger" href="<?php echo base_url() ?>procedimento/cadastrar" role="button"> 
-						<span class="glyphicon glyphicon-plus"></span> Nova
-					</a>
-				
-				</div>
-			</div>
+			
 		</div>
-	</div>
-	-->
-	<div class="row">	
-		<div class="col-md-12 ">
-			<div style="overflow: auto; height: 550px; ">
-				<?php echo (isset($list)) ? $list : FALSE ?>
-			</div>
-		</div>
+		<?php echo (isset($list)) ? $list : FALSE ?>
 	</div>
 </div>
 <div class="modal fade bs-excluir-modal2-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">

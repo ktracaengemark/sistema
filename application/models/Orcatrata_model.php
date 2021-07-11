@@ -19,7 +19,7 @@ class Orcatrata_model extends CI_Model {
 
         if ($this->db->affected_rows() === 0) {
             return FALSE;
-        } else {
+			} else {
             #return TRUE;
             return $this->db->insert_id();
         }
@@ -971,8 +971,8 @@ class Orcatrata_model extends CI_Model {
 
         return $query;
     }
-	
-    public function get_alterarorcamentos($data) {
+
+	public function get_alterarorcamentos($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		if ($_SESSION['FiltroAlteraParcela']['DataFim']) {
             $consulta =
@@ -1053,8 +1053,14 @@ class Orcatrata_model extends CI_Model {
 		$permissao60 = (!$_SESSION['FiltroAlteraParcela']['Campo']) ? 'OT.idApp_OrcaTrata' : $_SESSION['FiltroAlteraParcela']['Campo'];
         $permissao61 = (!$_SESSION['FiltroAlteraParcela']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroAlteraParcela']['Ordenamento'];
 
+        if ($limit){
+			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		}else{
+			$querylimit = '';
+		}
+
 		$query = $this->db->query('
-            SELECT
+			SELECT
 				C.idApp_Cliente,
 				C.NomeCliente,
 				F.idApp_Fornecedor,
@@ -1095,7 +1101,7 @@ class Orcatrata_model extends CI_Model {
 				
 				US.Nome AS NomeColaborador,
 				USA.Nome AS NomeAssociado
-            FROM
+			FROM
 				App_OrcaTrata AS OT
 				LEFT JOIN Sis_Empresa AS EF ON EF.idSis_Empresa = OT.idSis_Empresa
 				LEFT JOIN Tab_FormaPag AS FP ON FP.idTab_FormaPag = OT.FormaPagamento
@@ -1107,7 +1113,7 @@ class Orcatrata_model extends CI_Model {
 				LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
 				LEFT JOIN Sis_Usuario AS USA ON USA.idSis_Usuario = OT.Associado
 				LEFT JOIN Tab_TipoFrete AS TTF ON TTF.idTab_TipoFrete = OT.TipoFrete
-            WHERE
+			WHERE
 				' . $permissao . '
 				' . $permissao30 . '
 				' . $permissao31 . '
@@ -1132,29 +1138,52 @@ class Orcatrata_model extends CI_Model {
 				' . $permissao36 . '
 				' . $permissao37 . '
 				' . $permissao38 . '
-                ' . $date_inicio_orca . '
-                ' . $date_fim_orca . '
-                ' . $date_inicio_entrega . '
-                ' . $date_fim_entrega . '
-                ' . $date_inicio_vnc . '
-                ' . $date_fim_vnc . '
-                
+				' . $date_inicio_orca . '
+				' . $date_fim_orca . '
+				' . $date_inicio_entrega . '
+				' . $date_fim_entrega . '
+				' . $date_inicio_vnc . '
+				' . $date_fim_vnc . '
+				
 				OT.FinalizadoOrca = "N" AND 
 				OT.CanceladoOrca = "N" AND			
 				OT.idSis_Empresa = ' . $data . '
 			GROUP BY
-                OT.idApp_OrcaTrata	
-            ORDER BY
+				OT.idApp_OrcaTrata	
+			ORDER BY
 				' . $permissao60 . '
 				' . $permissao61 . '
-			LIMIT 100
-		');
-        $query = $query->result_array();
- 
+			' . $querylimit . '
+		');		
+	
+		if($total == TRUE) {
+			//return $query->num_rows();
+			
+			$somafinal2=0;
+			//$somacomissao2=0;
+			
+			foreach ($query->result() as $row) {
+				
+				$somafinal2 += $row->ValorFinalOrca;
+				//$somacomissao2 += $row->ValorComissao;
+				
+			}
+			
+			$query->soma2 = new stdClass();
+			
+			$query->soma2->somafinal2 = number_format($somafinal2, 2, ',', '.');
+			//$query->soma2->somacomissao2 = number_format($somacomissao2, 2, ',', '.');
+			
+			return $query;			
+		}	
+	
+		$query = $query->result_array();
+	
+		
         return $query;
     }
 	
-    public function get_baixadacomissao($data) {
+    public function get_baixadacomissao($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		if ($_SESSION['FiltroAlteraParcela']['DataFim']) {
             $consulta =
@@ -1196,7 +1225,10 @@ class Orcatrata_model extends CI_Model {
 		
 		$date_inicio_vnc_prc = ($_SESSION['FiltroAlteraParcela']['DataInicio4']) ? 'PR.DataVencimento >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio4'] . '" AND ' : FALSE;
 		$date_fim_vnc_prc = ($_SESSION['FiltroAlteraParcela']['DataFim4']) ? 'PR.DataVencimento <= "' . $_SESSION['FiltroAlteraParcela']['DataFim4'] . '" AND ' : FALSE;
-
+			
+		$date_inicio_pag_com = ($_SESSION['FiltroAlteraParcela']['DataInicio7']) ? 'OT.DataPagoComissaoOrca >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio7'] . '" AND ' : FALSE;
+		$date_fim_pag_com = ($_SESSION['FiltroAlteraParcela']['DataFim7']) ? 'OT.DataPagoComissaoOrca <= "' . $_SESSION['FiltroAlteraParcela']['DataFim7'] . '" AND ' : FALSE;
+			
 		  
 		$permissao30 = ($_SESSION['FiltroAlteraParcela']['Orcamento'] != "" ) ? 'OT.idApp_OrcaTrata = "' . $_SESSION['FiltroAlteraParcela']['Orcamento'] . '" AND ' : FALSE;
 		$permissao31 = ($_SESSION['FiltroAlteraParcela']['Cliente'] != "" ) ? 'OT.idApp_Cliente = "' . $_SESSION['FiltroAlteraParcela']['Cliente'] . '" AND ' : FALSE;
@@ -1224,6 +1256,12 @@ class Orcatrata_model extends CI_Model {
 		$permissao18 = ($_SESSION['FiltroAlteraParcela']['NomeAssociado'] != "" ) ? 'OT.Associado = "' . $_SESSION['FiltroAlteraParcela']['NomeAssociado'] . '" AND ' : FALSE;
 		$permissao12 = ($_SESSION['FiltroAlteraParcela']['StatusComissaoOrca'] != "0" ) ? 'OT.StatusComissaoOrca = "' . $_SESSION['FiltroAlteraParcela']['StatusComissaoOrca'] . '" AND ' : FALSE;
 		$permissao14 = ($_SESSION['FiltroAlteraParcela']['StatusComissaoOrca_Online'] != "0" ) ? 'OT.StatusComissaoOrca_Online = "' . $_SESSION['FiltroAlteraParcela']['StatusComissaoOrca_Online'] . '" AND ' : FALSE;
+
+        if ($limit){
+			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		}else{
+			$querylimit = '';
+		}
 
 		$query = $this->db->query('
             SELECT
@@ -1256,6 +1294,7 @@ class Orcatrata_model extends CI_Model {
 				OT.idApp_Fornecedor,
 				OT.ValorOrca,
 				OT.ValorTotalOrca,
+				OT.ValorFinalOrca,
 				OT.ValorDev,
 				OT.ValorDinheiro,
 				OT.ValorTroco,
@@ -1326,23 +1365,46 @@ class Orcatrata_model extends CI_Model {
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '
                 ' . $date_fim_vnc_prc . '
+                ' . $date_inicio_pag_com . '
+                ' . $date_fim_pag_com . '
 				OT.idSis_Empresa = ' . $data . ' AND
-				PR.idSis_Empresa = ' . $data . ' AND
-				OT.idTab_TipoRD = "2" AND
-				PR.idTab_TipoRD = "2" 
+				OT.idTab_TipoRD = "2" 
 			GROUP BY
                 OT.idApp_OrcaTrata	
             ORDER BY
 				OT.DataVencimentoOrca,
 				OT.idApp_OrcaTrata
-			LIMIT 100
+			' . $querylimit . '
 		');
+	
+		if($total == TRUE) {
+			//return $query->num_rows();
+			
+			//$somafinal2=0;
+			$somacomissao2=0;
+			
+			foreach ($query->result() as $row) {
+				
+				//$somafinal2 += $row->ValorFinalOrca;
+				$somacomissao2 += $row->ValorComissao;
+				
+			}
+			
+			$query->soma2 = new stdClass();
+			
+			//$query->soma2->somafinal2 = number_format($somafinal2, 2, ',', '.');
+			$query->soma2->somacomissao2 = number_format($somacomissao2, 2, ',', '.');
+			
+			return $query;				
+		}	
+			
         $query = $query->result_array();
  
         return $query;
     }
 	
-    public function get_baixadacomissaoservico($data) {
+    public function get_baixadacomissaoservico($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+		
 		$date_inicio_orca 		= ($_SESSION['FiltroAlteraParcela']['DataInicio']) ? 'OT.DataOrca >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio'] . '" AND ' : FALSE;
 		$date_fim_orca 			= ($_SESSION['FiltroAlteraParcela']['DataFim']) ? 'OT.DataOrca <= "' . $_SESSION['FiltroAlteraParcela']['DataFim'] . '" AND ' : FALSE;
 		
@@ -1383,6 +1445,12 @@ class Orcatrata_model extends CI_Model {
 		$groupby 				= (1 == 1) ? 'GROUP BY PRDS.idApp_Produto' : FALSE;
 		$Campo 					= (!$_SESSION['FiltroAlteraParcela']['Campo']) ? 'OT.DataOrca' : $_SESSION['FiltroAlteraParcela']['Campo'];
         $Ordenamento 			= (!$_SESSION['FiltroAlteraParcela']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroAlteraParcela']['Ordenamento'];        
+
+        if ($limit){
+			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		}else{
+			$querylimit = '';
+		}
 
 		$query = $this->db->query(
             'SELECT
@@ -1534,8 +1602,13 @@ class Orcatrata_model extends CI_Model {
 			ORDER BY
 				' . $Campo . '
                 ' . $Ordenamento . '
+			' . $querylimit . '
 		');
-
+	
+		if($total == TRUE) {
+			return $query->num_rows();
+		}	
+			
         $query = $query->result_array();
 
         return $query;
@@ -1781,7 +1854,7 @@ class Orcatrata_model extends CI_Model {
         return $query;
     }
 	
-    public function get_alterarparcela($data) {
+    public function get_alterarparcela($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
         if ($_SESSION['FiltroAlteraParcela']['DataFim']) {
             $consulta =
@@ -1841,6 +1914,12 @@ class Orcatrata_model extends CI_Model {
 		//$permissao5 = (($_SESSION['log']['idSis_Empresa'] != 5) && ($_SESSION['FiltroAlteraParcela']['NomeCliente'] != "0" )) ? 'OT.idApp_Cliente = "' . $_SESSION['FiltroAlteraParcela']['NomeCliente'] . '" AND ' : FALSE;
 		$permissao60 = (!$_SESSION['FiltroAlteraParcela']['Campo']) ? 'OT.idApp_OrcaTrata' : $_SESSION['FiltroAlteraParcela']['Campo'];
         $permissao61 = (!$_SESSION['FiltroAlteraParcela']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroAlteraParcela']['Ordenamento'];
+
+        if ($limit){
+			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		}else{
+			$querylimit = '';
+		}
 		
 		$query = $this->db->query('
 			SELECT
@@ -1918,8 +1997,14 @@ class Orcatrata_model extends CI_Model {
 				PR.Quitado = "N"
 			ORDER BY
 				' . $permissao60 . '
-				' . $permissao61 . ' 
+				' . $permissao61 . '
+				' . $querylimit . ' 
 		');
+	
+		if($total == TRUE) {
+			return $query->num_rows();
+		}
+		
         $query = $query->result_array();
           
         return $query;

@@ -482,6 +482,12 @@
 						</div>
 					</div>
 					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Abrev</label>
+						<div class="col-sm-10">
+							<input name="Novo_Abrev" type="text" class="form-control" id="Novo_Abrev" placeholder="Abreviacao">
+						</div>
+					</div>
+					<div class="form-group row">
 						<div class="col-sm-6">
 							<br>
 							<button type="button" class="btn btn-primary btn-block" data-dismiss="modal" name="botaoFecharFuncao" id="botaoFecharFuncao">
@@ -510,14 +516,18 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="alterarFuncaoLabel">Raca</h4>
+				<h4 class="modal-title" id="alterarFuncaoLabel">Funcao</h4>
 			</div>
 			<div class="modal-body">
 				<span id="msg-error-alterar-funcao"></span>
 				<form method="post" id="alterar_funcao_form">
 					<div class="form-group">
-						<label for="Nome_Funcao" class="control-label">Raca:</label>
+						<label for="Nome_Funcao" class="control-label">Funcao:</label>
 						<input type="text" class="form-control" name="Nome_Funcao" id="Nome_Funcao">
+					</div>
+					<div class="form-group">
+						<label for="Nome_Abrev" class="control-label">Abrev:</label>
+						<input type="text" class="form-control" name="Nome_Abrev" id="Nome_Abrev">
 					</div>
 					<input type="hidden" name="id_Funcao" id="id_Funcao">
 					<div class="modal-footer">
@@ -538,14 +548,18 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="excluirFuncaoLabel">Raca</h4>
+				<h4 class="modal-title" id="excluirFuncaoLabel">Funcao</h4>
 			</div>
 			<div class="modal-body">
 				<span id="msg-error-excluir-funcao"></span>
 				<form method="post" id="excluir_funcao_form">
 					<div class="form-group">
-						<label for="ExcluirFuncao" class="control-label">Raca:</label>
+						<label for="ExcluirFuncao" class="control-label">Funcao:</label>
 						<input type="text" class="form-control" name="ExcluirFuncao" id="ExcluirFuncao" readonly="">
+					</div>
+					<div class="form-group">
+						<label for="ExcluirAbrev" class="control-label">Abrev:</label>
+						<input type="text" class="form-control" name="ExcluirAbrev" id="ExcluirAbrev" readonly="">
 					</div>
 					<input type="hidden" name="id_ExcluirFuncao" id="id_ExcluirFuncao">
 					<div class="modal-footer">

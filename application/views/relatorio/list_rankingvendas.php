@@ -1,30 +1,54 @@
-<div class="container-fluid">
-	
-		
-		<div style="overflow: auto; width: auto; height: auto;">			
-			<div class="form-group">
-				<div class="row">			
-					<div class="col-md-6" >	
-						<div id="columnchart_values" ></div>
-					</div>
-					
-					<div class="col-md-6">
-						<div id="piechart" style="width: auto; height: auto;"></div>
-					</div>
-					
+<div class="container-fluid">		
+		<div class="row">		
+			<div style="overflow: auto; width: auto; height: auto;">			
+				<div class="form-group">
+					<div class="row">			
+						<div class="col-md-6" >	
+							<div id="columnchart_values" ></div>
+						</div>
+						
+						<div class="col-md-6">
+							<div id="piechart" style="width: auto; height: auto;"></div>
+						</div>
+						
+					</div>	
 				</div>	
-			</div>	
+			</div>
 		</div>
-		
+		<div class="row">
+			<div class="col-md-5 text-left">
+				<?php echo $pagination; ?>
+			</div>
+			<?php if($paginacao == "S") { ?>
+				<div class="col-md-2">
+					<br>
+					<a href="<?php echo base_url() . $caminho; ?>">
+						<button class="btn btn-warning btn-md btn-block" type="button">
+							<span class="glyphicon glyphicon-filter"></span> Filtros
+						</button>
+					</a>
+				</div>
+				<div class="col-md-2">
+					<br>
+					<a href="<?php echo base_url() . 'cliente/alterarcashback/' . $_SESSION['log']['idSis_Empresa']; ?>">
+						<button class="btn btn-success btn-md btn-block" type="button">
+							<span class="glyphicon glyphicon-pencil"></span> CashBack
+						</button>
+					</a>
+				</div>
+			<?php } ?>
+		</div>
 		<table class="table table-bordered table-condensed table-striped">	
-			<tfoot>
+			<thead>
 				<tr>						
-					<th colspan="1" class="active">Cont / id:</th>
-					<th colspan="9" class="active">Clientes = <?php echo $report->soma->somaqtdclientes ?></th>
+					<th colspan="1" class="active">Cont / id_Cliente:</th>
+					<th colspan="7" class="active">Clientes = <?php echo $report->soma->somaqtdclientes ?>/<?php echo $total_rows ?></th>
 					<th colspan="1" class="active">Pedidos = <?php echo $report->soma->somaqtdpedidos ?></th>
-					<th colspan="1" class="active">Valor Total = <?php echo $report->soma->somaqtdparc ?></th>							
+					<th colspan="1" class="active">Valor Total = <?php echo $report->soma->somaqtdparc ?></th>
+					<th colspan="1" class="active">CashBack<?php #echo $report->soma->somaqtdparc ?></th>	
+					<th colspan="1" class="active">Validade<?php #echo $report->soma->somaqtdparc ?></th>							
 				</tr>
-			</tfoot>
+			</thead>
 		</table>
 		
 		<div style="overflow: auto; width: auto; height: 300px;">			
@@ -53,16 +77,19 @@
 					$cliente = array ();
 					$valor = array();
 					$i = 0;
+					$linha =  $per_page*$pagina;
 					$cont = 1;
 					foreach ($report as $row) {
 					
 						if(isset($row->NomeCliente)) {
 							
 							echo '<tr>';
-								echo '<td>' . $cont . ' / ' . $row->idApp_Cliente . '</td>';
+								echo '<td>' . ($linha + $cont) . ' / ' . $row->idApp_Cliente . '</td>';
 								echo '<td>' . $row->NomeCliente . '</td>';
 								echo '<td>' . $row->ContPedidos . '</td>';
-								echo '<td>' . $row->Valor2 . '</td>';							
+								echo '<td>' . $row->Valor2 . '</td>';
+								echo '<td>' . $row->CashBackCliente . '</td>';	
+								echo '<td>' . $row->ValidadeCashBack . '</td>';							
 							echo '</tr>';
 						
 							$nomecliente = $row->NomeCliente;

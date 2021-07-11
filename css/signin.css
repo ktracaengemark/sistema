@@ -48,3 +48,22 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.acabamento {
+  display: block;
+  padding: 15px;
+  margin-bottom: 0px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -webkit-transition: border .2s ease-in-out;
+       -o-transition: border .2s ease-in-out;
+          transition: border .2s ease-in-out;
+}
+.acabamento2 {
+  margin-top: 15px;
+}
+.acabamento3 {
+  margin-top: 4px;
+}

@@ -11,7 +11,8 @@ class Orcatrataprintcobranca_model extends CI_Model {
         $this->load->model(array('Basico_model'));
     }
 
-    public function get_orcatrata($data) {
+    //public function get_orcatrata($data) {
+    public function get_orcatrata($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {		
 		
 		if ($_SESSION['FiltroAlteraParcela']['DataFim']) {
             $consulta =
@@ -70,7 +71,13 @@ class Orcatrataprintcobranca_model extends CI_Model {
 		$permissao25 = ($_SESSION['FiltroAlteraParcela']['Orcarec'] != "0" ) ? 'OT.idApp_OrcaTrata = "' . $_SESSION['FiltroAlteraParcela']['Orcarec'] . '" AND ' : FALSE;
 		$permissao60 = (!$_SESSION['FiltroAlteraParcela']['Campo']) ? 'OT.idApp_OrcaTrata' : $_SESSION['FiltroAlteraParcela']['Campo'];
         $permissao61 = (!$_SESSION['FiltroAlteraParcela']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroAlteraParcela']['Ordenamento'];
-		
+
+        if ($limit){
+			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		}else{
+			$querylimit = '';
+		}
+				
 		$query = $this->db->query(
             'SELECT
 				C.NomeCliente,
@@ -107,6 +114,7 @@ class Orcatrataprintcobranca_model extends CI_Model {
 				OT.idApp_Fornecedor,
 				OT.ValorOrca,
 				OT.ValorTotalOrca,
+				OT.ValorFinalOrca,
 				OT.ValorDev,
 				OT.ValorDinheiro,
 				OT.ValorTroco,
@@ -170,8 +178,15 @@ class Orcatrataprintcobranca_model extends CI_Model {
                 OT.idApp_OrcaTrata
             ORDER BY
 				' . $permissao60 . '
-				' . $permissao61 . ' 		
-        ');
+				' . $permissao61 . ' 
+				' . $querylimit . ' 		
+			
+		');
+	
+		if($total == TRUE) {
+			return $query->num_rows();
+		}
+				
         $query = $query->result_array();
 
         /*
@@ -204,11 +219,12 @@ class Orcatrataprintcobranca_model extends CI_Model {
 				PV.NomeProduto,
 				TPS.Nome_Prod
 			FROM 
-				App_OrcaTrata AS OT,
+				
 				App_Produto AS PV
+					
 					LEFT JOIN Tab_Produtos AS TPS ON TPS.idTab_Produtos = PV.idTab_Produtos_Produto
 			WHERE 
-				PV.idApp_OrcaTrata = OT.idApp_OrcaTrata AND
+				
 				PV.idSis_Empresa = ' . $data . ' 
             ORDER BY
             	PV.idTab_Produto ASC				
@@ -248,12 +264,13 @@ class Orcatrataprintcobranca_model extends CI_Model {
 				PR.Quitado,
 				FP.FormaPag
 			FROM 
-				App_OrcaTrata AS OT,
+				
 				App_Parcelas AS PR
+					
 					LEFT JOIN Tab_FormaPag AS FP ON FP.idTab_FormaPag = PR.FormaPagamentoParcela
 
 			WHERE 
-				PR.idApp_OrcaTrata = OT.idApp_OrcaTrata AND
+				
 				PR.idSis_Empresa = ' . $data . ' 
             ORDER BY
             	PR.DataVencimento ASC				
@@ -272,7 +289,12 @@ class Orcatrataprintcobranca_model extends CI_Model {
     }
 
     public function get_procedimento($data) {
-		$query = $this->db->query('SELECT * FROM App_Procedimento WHERE idSis_Empresa = ' . $data);
+		$query = $this->db->query('
+			SELECT * 
+			FROM 
+				App_Procedimento 
+			WHERE idSis_Empresa = ' . $data . '
+		');
         $query = $query->result_array();
 
         return $query;

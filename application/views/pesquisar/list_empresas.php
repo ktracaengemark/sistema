@@ -34,14 +34,14 @@
 						<!--<td><?php echo $row['idSis_Empresa'] ?></td>-->
 						<td><?php echo $row['CategoriaEmpresa'] ?></td>
 						<td class="notclickable">
-							<a type="button" class="btn btn-success" href="<?php echo base_url() ?>empresacli0/prontuario/<?php echo '' . $row['idSis_Empresa'] . '' ?> " role="button">
-								<h4><span class="glyphicon glyphicon-log-in"></span> Empresa - Nº <?php echo $row['idSis_Empresa'] ?></h4>
+							<a type="button" class="btn btn-success btn-xs" href="<?php echo base_url() ?>empresacli0/prontuario/<?php echo '' . $row['idSis_Empresa'] . '' ?> " role="button">
+								<h5><span class="glyphicon glyphicon-log-in"></span> Empresa - Nº <?php echo $row['idSis_Empresa'] ?></h5>
 							</a>
 						</td>						
 						<td class="notclickable">
 							<a href="https://www.enkontraki.com.br/<?php echo '' . $row['Site'] . '' ?> "target="_blank">
-								<button type="button" class="btn btn-info">
-									<h4><span class="glyphicon glyphicon-picture"></span> Site</h4>
+								<button type="button" class="btn btn-info btn-xs">
+									<h5><span class="glyphicon glyphicon-picture"></span> Site</h5>
 								</button>
 							</a>
 						</td>					

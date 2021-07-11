@@ -11,7 +11,7 @@ class Orcatrataprintcomissao_model extends CI_Model {
         $this->load->model(array('Basico_model'));
     }
 
-    public function get_orcatrata($data) {
+    public function get_orcatrata($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 		
 		if ($_SESSION['FiltroAlteraParcela']['DataFim']) {
             $consulta =
@@ -53,7 +53,10 @@ class Orcatrataprintcomissao_model extends CI_Model {
 		
 		$date_inicio_vnc_prc = ($_SESSION['FiltroAlteraParcela']['DataInicio4']) ? 'PR.DataVencimento >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio4'] . '" AND ' : FALSE;
 		$date_fim_vnc_prc = ($_SESSION['FiltroAlteraParcela']['DataFim4']) ? 'PR.DataVencimento <= "' . $_SESSION['FiltroAlteraParcela']['DataFim4'] . '" AND ' : FALSE;
-		
+			
+		$date_inicio_pag_com = ($_SESSION['FiltroAlteraParcela']['DataInicio7']) ? 'OT.DataPagoComissaoOrca >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio7'] . '" AND ' : FALSE;
+		$date_fim_pag_com = ($_SESSION['FiltroAlteraParcela']['DataFim7']) ? 'OT.DataPagoComissaoOrca <= "' . $_SESSION['FiltroAlteraParcela']['DataFim7'] . '" AND ' : FALSE;
+				
 		$permissao30 = ($_SESSION['FiltroAlteraParcela']['Orcamento'] != "" ) ? 'OT.idApp_OrcaTrata = "' . $_SESSION['FiltroAlteraParcela']['Orcamento'] . '" AND ' : FALSE;
 		$permissao31 = ($_SESSION['FiltroAlteraParcela']['Cliente'] != "" ) ? 'OT.idApp_Cliente = "' . $_SESSION['FiltroAlteraParcela']['Cliente'] . '" AND ' : FALSE;
 		$permissao37 = ($_SESSION['FiltroAlteraParcela']['idApp_Cliente'] != "" ) ? 'OT.idApp_Cliente = "' . $_SESSION['FiltroAlteraParcela']['idApp_Cliente'] . '" AND ' : FALSE;
@@ -79,7 +82,13 @@ class Orcatrataprintcomissao_model extends CI_Model {
 		$permissao18 = ($_SESSION['FiltroAlteraParcela']['NomeAssociado'] != "" ) ? 'OT.Associado = "' . $_SESSION['FiltroAlteraParcela']['NomeAssociado'] . '" AND ' : FALSE;
 		$permissao12 = ($_SESSION['FiltroAlteraParcela']['StatusComissaoOrca'] != "0" ) ? 'OT.StatusComissaoOrca = "' . $_SESSION['FiltroAlteraParcela']['StatusComissaoOrca'] . '" AND ' : FALSE;
 		$permissao14 = ($_SESSION['FiltroAlteraParcela']['StatusComissaoOrca_Online'] != "0" ) ? 'OT.StatusComissaoOrca_Online = "' . $_SESSION['FiltroAlteraParcela']['StatusComissaoOrca_Online'] . '" AND ' : FALSE;
-		
+
+        if ($limit){
+			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		}else{
+			$querylimit = '';
+		}
+				
 		$query = $this->db->query(
             'SELECT
 				C.NomeCliente,
@@ -111,6 +120,7 @@ class Orcatrataprintcomissao_model extends CI_Model {
 				OT.idApp_Fornecedor,
 				OT.ValorOrca,
 				OT.ValorTotalOrca,
+				OT.ValorFinalOrca,
 				OT.ValorDev,
 				OT.ValorDinheiro,
 				OT.ValorTroco,
@@ -120,6 +130,7 @@ class Orcatrataprintcomissao_model extends CI_Model {
 				OT.QtdParcelasOrca,
 				OT.DataEntregaOrca,
 				OT.DataVencimentoOrca,
+				OT.DataPagoComissaoOrca,
 				OT.StatusComissaoOrca,
 				OT.StatusComissaoOrca_Online,
 				OT.idSis_Usuario,
@@ -180,16 +191,38 @@ class Orcatrataprintcomissao_model extends CI_Model {
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '
                 ' . $date_fim_vnc_prc . '
+                ' . $date_inicio_pag_com . '
+                ' . $date_fim_pag_com . '
 				OT.idSis_Empresa = ' . $data . ' AND
-				PR.idSis_Empresa = ' . $data . ' AND
-				OT.idTab_TipoRD = "2" AND
-				PR.idTab_TipoRD = "2" 
+				OT.idTab_TipoRD = "2" 
 			GROUP BY
                 OT.idApp_OrcaTrata	
             ORDER BY
 				OT.DataVencimentoOrca,
-				OT.idApp_OrcaTrata		
+				OT.idApp_OrcaTrata
+			' . $querylimit . ' 		
         ');
+	
+		if($total == TRUE) {
+			//return $query->num_rows();
+			//$somafinal2=0;
+			$somacomissao2=0;
+			
+			foreach ($query->result() as $row) {
+				
+				//$somafinal2 += $row->ValorFinalOrca;
+				$somacomissao2 += $row->ValorComissao;
+				
+			}
+			
+			$query->soma2 = new stdClass();
+			
+			//$query->soma2->somafinal2 = number_format($somafinal2, 2, ',', '.');
+			$query->soma2->somacomissao2 = number_format($somacomissao2, 2, ',', '.');
+			
+			return $query;			
+		}
+				
         $query = $query->result_array();
 		/*
         //echo $this->db->last_query();

@@ -187,6 +187,7 @@ class Empresa extends CI_Controller {
 			'ContaEmpresa',
 			'PixEmpresa',
 			'CashBackAtivo',
+			'PrazoCashBackEmpresa',
         ), TRUE);
 				
 

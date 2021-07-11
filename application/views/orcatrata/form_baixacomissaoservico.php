@@ -3,19 +3,51 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12 ">
-
 			<div class="row">
-
 				<div class="col-md-12 col-lg-12">
-				
 					<?php echo validation_errors(); ?>
 					<?php echo form_open_multipart($form_open_path); ?>
 
 					<div class="panel panel-<?php echo $panel; ?>">
 						<div class="panel-heading">
-							<a class="btn btn-md btn-warning" href="<?php echo base_url() ?>relatoriocomissoes/porservicos" role="button">
-								<span class="glyphicon glyphicon-pencil"></span> Comissões dos <?php echo $titulo; ?> 
+							<div class="row">
+								<div class="col-md-12 ">
+									<div class="col-md-2 text-left">
+										<br>
+										<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>relatoriocomissoes/porservicos" role="button">
+											<span class="glyphicon glyphicon-pencil"></span><?php echo $titulo; ?>
+										</a>
+									</div>
+									<div class="col-md-2 text-left">	
+										<br>
+										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
+											<?php echo $_SESSION['Total_Rows'];?> Resultados
+										</a>
+									</div>
+									<!--
+									<div class="col-md-2 text-left">	
+										<br>
+										<a type= "button" class="btn btn-md btn-warning btn-block" type="button" href="<?php #echo base_url() . $imprimir . $_SESSION['log']['idSis_Empresa']; ?>">
+											<span class="glyphicon glyphicon-print"></span> Print.
+										</a>
+									</div>
+									<div class="col-md-2 text-left">	
+										<br>
+										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
+											<span class="glyphicon glyphicon-usd"></span>R$ <?php #echo $_SESSION['SomaTotal']; ?>
+										</a>
+									</div>
+									-->
+									<div class="col-md-4 text-left">
+										<?php echo $_SESSION['Pagination']; ?>
+									</div>
+								</div>
+							</div>
+							<!--
+							<a class="btn btn-md btn-warning" href="<?php #echo base_url() ?>relatoriocomissoes/porservicos" role="button">
+								<span class="glyphicon glyphicon-pencil"></span> Comissões dos <?php #echo $titulo; ?> 
 							</a>
+							-->
 						</div>
 						<div class="panel-body">
 
@@ -30,7 +62,9 @@
 												<input type="hidden" name="PRCount" id="PRCount" value="<?php echo $count['PRCount']; ?>"/>
 
 												<?php
+												$linha =  $_SESSION['Per_Page']*$_SESSION['Pagina'];
 												for ($i=1; $i <= $count['PRCount']; $i++) {
+													$contagem = ($linha + $i);
 												?>
 
 													<input type="hidden" name="idApp_Produto<?php echo $i ?>" value="<?php echo $produto[$i]['idApp_Produto']; ?>"/>
@@ -44,7 +78,7 @@
 																	<input type="hidden" name="ValorProduto<?php echo $i ?>" id="ValorProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ValorProduto']; ?>"/>
 																	<input type="hidden" name="ComissaoServicoProduto<?php echo $i ?>" id="ComissaoServicoProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ComissaoServicoProduto']; ?>"/>-->
 																	<div class="col-md-2">
-																		<label ><?php echo $i ?> / <?php echo $count['PRCount']; ?></label><br>
+																		<label ><?php echo $contagem ?> </label> -
 																		<span><?php echo $_SESSION['Produto'][$i]['Receita']; ?></span>
 																	</div>
 																	<div class="col-md-2">

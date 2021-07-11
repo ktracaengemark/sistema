@@ -1,53 +1,60 @@
 <?php if (isset($msg)) echo $msg; ?>
-
-
 <div class="container-fluid">
 	<div class="row">
-
 		<div class="col-md-12 ">
-
 			<div class="row">
-
 				<div class="col-md-12 col-lg-12">
-				
 					<?php echo validation_errors(); ?>
 					<?php echo form_open_multipart($form_open_path); ?>
 
 					<div class="panel panel-<?php echo $panel; ?>">
 						<div class="panel-heading">
-							<div class="btn-line">
-								<a class="btn btn-md btn-warning" href="<?php echo base_url() . $relatorio; ?>" role="button">
-									<span class="glyphicon glyphicon-pencil"></span><?php echo $titulo; ?>
-								</a>
-								<!--
-								<a class="btn btn-md btn-warning" type="button" href="<?php echo base_url() . $imprimir . $_SESSION['log']['idSis_Empresa']; ?>">
-									<span class="glyphicon glyphicon-print"></span> Print.
-								</a>
-								-->
-								<a class="btn btn-md btn-warning" href="" role="button">
-									<span class="glyphicon glyphicon-usd"></span>R$ <?php echo $somatotal; ?>
-								</a>
-							</div>	
+							<div class="row">
+								<div class="col-md-12 ">
+									<div class="col-md-2 text-left">
+										<br>
+										<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() . $relatorio; ?>" role="button">
+											<span class="glyphicon glyphicon-pencil"></span><?php echo $titulo; ?>
+										</a>
+									</div>
+									<div class="col-md-2 text-left">	
+										<br>
+										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
+											<?php echo $total_rows;?> Resultados
+										</a>
+									</div>	
+										<!--
+										<a class="btn btn-md btn-warning" type="button" href="<?php echo base_url() . $imprimir . $_SESSION['log']['idSis_Empresa']; ?>">
+											<span class="glyphicon glyphicon-print"></span> Print.
+										</a>
+										-->
+									<div class="col-md-2 text-left">	
+										<br>
+										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
+											<span class="glyphicon glyphicon-usd"></span>R$ <?php echo $somatotal; ?> / <?php echo $_SESSION['Pesquisa_Query']['FinalTotal'] ?>
+										</a>
+									</div>
+									<div class="col-md-6 text-left">
+										<?php echo $pagination; ?>
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="panel-body">
-
-							<div class="panel-group">	
+							<div class="panel-group">
 								
-								<div class="panel panel-primary">
-
 									<div  style="overflow: auto; height: 456px; ">
-									
-										<div class="panel-body">
+										
 											<!--App_parcelasRec-->
 											<input type="hidden" name="PRCount" id="PRCount" value="<?php echo $count['PRCount']; ?>"/>
 
 											<div class="input_fields_wrap21">
 
 											<?php
+											$linha =  $per_page*$pagina;
 											for ($i=1; $i <= $count['PRCount']; $i++) {
+												$contagem = ($linha + $i);
 											?>
-
-												
 												<input type="hidden" name="idApp_OrcaTrata<?php echo $i ?>" value="<?php echo $orcamento[$i]['idApp_OrcaTrata']; ?>"/>
 												<div class="form-group" id="21div<?php echo $i ?>">
 													<div class="panel panel-warning">
@@ -55,7 +62,7 @@
 															<div class="row">
 																<div class="col-md-2">
 																	<label for="DataVencimentoOrca">Cont - Pedido - Local:</label><br>
-																	<span><?php echo $i ?>/<?php echo $count['PRCount'] ?>
+																	<span><?php echo $contagem ?>
 																		- <?php echo $orcamento[$i]['idApp_OrcaTrata'] ?>
 																		
 																		- <?php if($orcamento[$i]['Tipo_Orca'] == "O") {
@@ -144,9 +151,9 @@
 											}
 											?>
 											</div>
-										</div>
+										
 									</div>									
-								</div>
+								
 							</div>
 						
 							<div class="form-group">

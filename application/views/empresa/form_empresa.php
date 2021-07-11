@@ -721,6 +721,19 @@
 														</div>
 													</div>
 												</div>
+												<div class="row">
+													<div class="col-md-2">
+														<h3 class="text-left">Prazo CashBack:</h3>
+													</div>
+													<div class="col-md-2">
+														<label for="PrazoCashBackEmpresa">Tempo:</label><br>
+														<div class="input-group">
+															<input type="text" class="form-control Numero" maxlength="2" placeholder="Ex.: 7 Dias"
+																	name="PrazoCashBackEmpresa" value="<?php echo $query['PrazoCashBackEmpresa'] ?>">
+															<span class="input-group-addon">Dias</span>
+														</div>
+													</div>
+												</div>
 											</div>											
 										</div>
 									</div>

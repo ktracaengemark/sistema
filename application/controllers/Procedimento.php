@@ -12,7 +12,7 @@ class Procedimento extends CI_Controller {
         #load libraries
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
-        $this->load->library(array('basico', 'form_validation'));
+        $this->load->library(array('basico', 'form_validation', 'pagination'));
         $this->load->model(array('Basico_model', 'Procedimento_model', 'Tarefa_model', 'Usuario_model', 'Relatorio_model', 'Formapag_model', 'Cliente_model'));
         $this->load->driver('session');
 
@@ -1153,17 +1153,56 @@ class Procedimento extends CI_Controller {
 		$data['print'] = 1;
 		$data['imprimir'] = 'Procedimento/imprimir/';
 		$data['imprimirlista'] = 'Procedimento/imprimir_lista_Sac/';
-		$data['imprimirrecibo'] = 'Procedimento/imprimirreciborec/';		
+		$data['imprimirrecibo'] = 'Procedimento/imprimirreciborec/';
+		$data['caminho'] = 'relatorio/proc_Sac/';		
 		
 		//$data['Imprimir']['DataInicio4'] = $this->basico->mascara_data($_SESSION['FiltroAlteraParcela']['DataInicio4'], 'barras');
 		//$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroAlteraParcela']['DataFim4'], 'barras');
 
+
+		//$this->load->library('pagination');
+		$config['per_page'] = 10;
+		$config["uri_segment"] = 4;
+		$config['reuse_query_string'] = TRUE;
+		$config['num_links'] = 2;
+		$config['use_page_numbers'] = TRUE;
+		$config['full_tag_open'] = "<ul class='pagination'>";
+		$config['full_tag_close'] = "</ul>";
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+		$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+		$config['next_tag_open'] = "<li>";
+		$config['next_tagl_close'] = "</li>";
+		$config['prev_tag_open'] = "<li>";
+		$config['prev_tagl_close'] = "</li>";
+		$config['first_tag_open'] = "<li>";
+		$config['first_tagl_close'] = "</li>";
+		$config['last_tag_open'] = "<li>";
+		$config['last_tagl_close'] = "</li>";
+		$data['Pesquisa'] = '';
 		
         if ($id) {
-            #### App_Procedimento ####
-            $data['procedimento'] = $this->Procedimento_model->get_procedimento_empresa($data['bd'],TRUE);
-            
 
+			$config['base_url'] = base_url() . 'Procedimento/imprimir_lista_Sac/' . $id . '/';
+			$config['total_rows'] = $this->Procedimento_model->get_procedimento_empresa($data['bd'], TRUE);
+		   
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
+			}else{
+				$data['total_rows'] = 0;
+			}
+			
+			$this->pagination->initialize($config);
+			
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+			$data['pagina'] = $page;
+			$data['per_page'] = $config['per_page'];
+			
+			$data['pagination'] = $this->pagination->create_links();
+		
+            #### App_Procedimento ####
+            $data['procedimento'] = $this->Procedimento_model->get_procedimento_empresa($data['bd'], FALSE, $config['per_page'], ($page * $config['per_page']));
 			if (count($data['procedimento']) > 0) {
                 $data['procedimento'] = array_combine(range(1, count($data['procedimento'])), array_values($data['procedimento']));
                 $data['count']['POCount'] = count($data['procedimento']);           
@@ -1943,17 +1982,55 @@ class Procedimento extends CI_Controller {
 		$data['print'] = 1;
 		$data['imprimir'] = 'Procedimento/imprimir_Marketing/';
 		$data['imprimirlista'] = 'Procedimento/imprimir_lista_Marketing/';
-		$data['imprimirrecibo'] = 'Procedimento/imprimirreciborec/';		
+		$data['imprimirrecibo'] = 'Procedimento/imprimirreciborec/';
+		$data['caminho'] = 'relatorio/proc_Marketing/';			
 		
 		//$data['Imprimir']['DataInicio4'] = $this->basico->mascara_data($_SESSION['FiltroAlteraParcela']['DataInicio4'], 'barras');
 		//$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroAlteraParcela']['DataFim4'], 'barras');
 
+		//$this->load->library('pagination');
+		$config['per_page'] = 10;
+		$config["uri_segment"] = 4;
+		$config['reuse_query_string'] = TRUE;
+		$config['num_links'] = 2;
+		$config['use_page_numbers'] = TRUE;
+		$config['full_tag_open'] = "<ul class='pagination'>";
+		$config['full_tag_close'] = "</ul>";
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+		$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+		$config['next_tag_open'] = "<li>";
+		$config['next_tagl_close'] = "</li>";
+		$config['prev_tag_open'] = "<li>";
+		$config['prev_tagl_close'] = "</li>";
+		$config['first_tag_open'] = "<li>";
+		$config['first_tagl_close'] = "</li>";
+		$config['last_tag_open'] = "<li>";
+		$config['last_tagl_close'] = "</li>";
+		$data['Pesquisa'] = '';
 		
         if ($id) {
-            #### App_Procedimento ####
-            $data['procedimento'] = $this->Procedimento_model->get_procedimento_empresa($data['bd'],TRUE);
-            
 
+			$config['base_url'] = base_url() . 'Procedimento/imprimir_lista_Marketing/' . $id . '/';
+			$config['total_rows'] = $this->Procedimento_model->get_procedimento_empresa($data['bd'], TRUE);
+		   
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
+			}else{
+				$data['total_rows'] = 0;
+			}
+			
+			$this->pagination->initialize($config);
+			
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+			$data['pagina'] = $page;
+			$data['per_page'] = $config['per_page'];
+			
+			$data['pagination'] = $this->pagination->create_links();
+				
+            #### App_Procedimento ####
+            $data['procedimento'] = $this->Procedimento_model->get_procedimento_empresa($data['bd'], FALSE, $config['per_page'], ($page * $config['per_page']));
 			if (count($data['procedimento']) > 0) {
                 $data['procedimento'] = array_combine(range(1, count($data['procedimento'])), array_values($data['procedimento']));
                 $data['count']['POCount'] = count($data['procedimento']);           

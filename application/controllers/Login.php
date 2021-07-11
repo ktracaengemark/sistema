@@ -35,7 +35,7 @@ class Login extends CI_Controller {
 
     public function index() {
 
-#$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
+		#$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
@@ -1707,7 +1707,8 @@ class Login extends CI_Controller {
          *
          */
 
-        redirect(base_url() . 'login/' . $data['msg']);
+        //redirect(base_url() . 'login/' . $data['msg']);
+        redirect(base_url() . '../enkontraki/');
         #redirect('login');
     }
 
@@ -1756,6 +1757,5 @@ class Login extends CI_Controller {
             return TRUE;
         }
     }
-
 
 }

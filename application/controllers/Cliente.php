@@ -12,7 +12,7 @@ class Cliente extends CI_Controller {
         #load libraries
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
-        $this->load->library(array('basico', 'form_validation'));
+        $this->load->library(array('basico', 'form_validation', 'pagination'));
         $this->load->model(array('Basico_model', 'Cliente_model', 'Contatocliente_model', 'Clientedep_model', 'Clientepet_model'));
         #$this->load->model(array('Basico_model', 'Cliente_model'));
         $this->load->driver('session');
@@ -1509,6 +1509,266 @@ class Cliente extends CI_Controller {
         }
 
         $this->load->view('basico/footer');
+    }
+	
+    public function alterarcashback($id = FALSE) {
+		
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+		$data['query'] = quotes_to_entities($this->input->post(array(
+			'AlterarTodos',
+			'TipoAdd',
+			'ValorAddCashBack',
+			'PrazoGeralCashBack',
+			'ValidadeGeralCashBack',
+        ), TRUE));
+		
+        $data['empresa'] = quotes_to_entities($this->input->post(array(
+            #### Sis_Empresa ####
+            'idSis_Empresa',
+			
+        ), TRUE));
+		 
+		$data['hoje'] = date('Y-m-d', time());		 
+		//(!$data['orcatrata']['HoraEntregaOrca']) ? $data['orcatrata']['HoraEntregaOrca'] = date('H:i:s', strtotime('+1 hour')) : FALSE; 
+		 
+		 
+		(!$this->input->post('PRCount')) ? $data['count']['PRCount'] = 0 : $data['count']['PRCount'] = $this->input->post('PRCount');
+		
+        $j = 1;
+        for ($i = 1; $i <= $data['count']['PRCount']; $i++) {
+
+            if ($this->input->post('CashBackCliente' . $i) || $this->input->post('ValidadeCashBack' . $i)) {
+                $data['orcamento'][$j]['idApp_Cliente'] = $this->input->post('idApp_Cliente' . $i);
+                $data['orcamento'][$j]['NomeCliente'] = $this->input->post('NomeCliente' . $i);
+                $data['orcamento'][$j]['addCashBackCliente'] = $this->input->post('addCashBackCliente' . $i);
+                $data['orcamento'][$j]['CashBackCliente'] = $this->input->post('CashBackCliente' . $i);
+                $data['orcamento'][$j]['PrazoCashBack'] = $this->input->post('PrazoCashBack' . $i);
+                $data['orcamento'][$j]['ValidadeCashBack'] = $this->input->post('ValidadeCashBack' . $i);
+                $data['orcamento'][$j]['Valor'] = $this->input->post('Valor' . $i);
+				$j++;
+            }
+		}
+		$data['count']['PRCount'] = $j - 1;
+
+		//$this->load->library('pagination');
+		$config['per_page'] = 10;
+		$config["uri_segment"] = 4;
+		$config['reuse_query_string'] = TRUE;
+		$config['num_links'] = 2;
+		$config['use_page_numbers'] = TRUE;
+		$config['full_tag_open'] = "<ul class='pagination'>";
+		$config['full_tag_close'] = "</ul>";
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+		$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+		$config['next_tag_open'] = "<li>";
+		$config['next_tagl_close'] = "</li>";
+		$config['prev_tag_open'] = "<li>";
+		$config['prev_tagl_close'] = "</li>";
+		$config['first_tag_open'] = "<li>";
+		$config['first_tagl_close'] = "</li>";
+		$config['last_tag_open'] = "<li>";
+		$config['last_tagl_close'] = "</li>";
+		$data['Pesquisa'] = '';
+				
+        if ($id) {
+		
+			$config['base_url'] = base_url() . 'cliente/alterarcashback/' . $id . '/';
+			$config['total_rows'] = $this->Cliente_model->get_alterarcashback($id, TRUE);
+		   
+			if($config['total_rows'] >= 1){
+				$_SESSION['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
+			}else{
+				$_SESSION['Total_Rows'] = $data['total_rows'] = 0;
+			}
+			
+			$this->pagination->initialize($config);
+
+			$_SESSION['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+			$_SESSION['Per_Page'] = $data['per_page'] = $config['per_page'];
+			
+			$_SESSION['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
+				
+            #### Sis_Empresa ####
+            $data['empresa'] = $this->Cliente_model->get_empresa($id);
+			
+            #### App_OrcaTrata ####
+            $_SESSION['Orcamento'] = $data['orcamento'] = $this->Cliente_model->get_alterarcashback($id, FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
+            
+			if (count($data['orcamento']) > 0) {
+                $data['orcamento'] = array_combine(range(1, count($data['orcamento'])), array_values($data['orcamento']));
+				$data['count']['PRCount'] = count($data['orcamento']);
+                if (isset($data['orcamento'])) {
+                    for($j=1; $j <= $data['count']['PRCount']; $j++) {
+						$data['orcamento'][$j]['ValidadeCashBack'] = $this->basico->mascara_data($data['orcamento'][$j]['ValidadeCashBack'], 'barras');
+						
+					}
+                }
+            
+			}
+			
+        }
+		/*
+          echo '<br>';
+          echo "<pre>";
+          print_r($data['empresa']);
+		  echo '<br>';
+          print_r($data['orcamento']);
+          echo "</pre>";
+          exit ();
+		*/
+		
+		$data['select']['TipoAdd'] = array (
+            'P' => '.%',
+            'V' => 'R$',
+        );
+		$data['select']['AlterarTodos'] = $this->Basico_model->select_status_sn();		
+		
+        $data['titulo'] = 'Ranking de Vendas';
+        $data['form_open_path'] = 'cliente/alterarcashback';
+		$data['relatorio'] = 'relatorio/rankingvendas/';
+		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
+        $data['nomeusuario'] = 'NomeColaborador';
+        $data['readonly'] = '';
+        $data['disabled'] = '';
+        $data['panel'] = 'info';
+        $data['metodo'] = 3;
+		$data['TipoFinanceiro'] = 'Receitas';
+		$data['TipoRD'] = 2;
+        $data['nome'] = 'Cliente';
+		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistarec/';
+		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['edit'] = 'orcatrata/alterarstatus/';
+		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+
+		$data['collapse'] = '';	
+		$data['collapse1'] = 'class="collapse"';		
+		
+        if ($data['count']['PRCount'] > 0 )
+            $data['parcelasin'] = 'in';
+        else
+            $data['parcelasin'] = '';
+
+        $data['sidebar'] = 'col-sm-3 col-md-2';
+        $data['main'] = 'col-sm-7 col-md-8';
+
+        $data['datepicker'] = 'DatePicker';
+        $data['timepicker'] = 'TimePicker';
+		
+		(!$data['query']['AlterarTodos']) ? $data['query']['AlterarTodos'] = 'N' : FALSE;
+        $data['radio'] = array(
+            'AlterarTodos' => $this->basico->radio_checked($data['query']['AlterarTodos'], 'AlterarTodos', 'NS'),
+        );
+        ($data['query']['AlterarTodos'] == 'S') ?
+            $data['div']['AlterarTodos'] = '' : $data['div']['AlterarTodos'] = 'style="display: none;"';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        $this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'trim');
+		if($data['query']['AlterarTodos'] == 'S'){
+			$this->form_validation->set_rules('ValorAddCashBack', 'ValorAddCashBack', 'required|trim');
+			$this->form_validation->set_rules('PrazoGeralCashBack', 'PrazoGeralCashBack', 'required|trim');
+		}
+		
+		
+        #run form validation
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('cliente/form_alterarcashback', $data);
+        } else {
+
+			$data['bd']['AlterarTodos'] = $data['query']['AlterarTodos'];
+			$data['bd']['PrazoGeralCashBack'] = $data['query']['PrazoGeralCashBack'];
+			$data['bd']['ValorAddCashBack'] = str_replace(',', '.', str_replace('.', '', $data['query']['ValorAddCashBack']));
+			$data['bd']['ValidadeGeralCashBack'] = $this->basico->mascara_data($data['query']['ValidadeGeralCashBack'], 'mysql');
+			////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
+
+            #### App_OrcaTrata ####
+            $data['update']['orcamento']['anterior'] = $this->Cliente_model->get_alterarcashback($data['empresa']['idSis_Empresa'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
+            if (isset($data['orcamento']) || (!isset($data['orcamento']) && isset($data['update']['orcamento']['anterior']) ) ) {
+
+                if (isset($data['orcamento']))
+                    $data['orcamento'] = array_values($data['orcamento']);
+                else
+                    $data['orcamento'] = array();
+
+                //faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
+                $data['update']['orcamento'] = $this->basico->tratamento_array_multidimensional($data['orcamento'], $data['update']['orcamento']['anterior'], 'idApp_Cliente');
+				
+                $max = count($data['update']['orcamento']['alterar']);
+                for($j=0;$j<$max;$j++) {
+
+					$data['update']['orcamento']['alterar'][$j]['Valor'] = str_replace(',', '.', str_replace('.', '', $data['update']['orcamento']['alterar'][$j]['Valor']));
+					$data['update']['orcamento']['alterar'][$j]['addCashBackCliente'] = str_replace(',', '.', str_replace('.', '', $data['update']['orcamento']['alterar'][$j]['addCashBackCliente']));
+
+					if($data['update']['orcamento']['alterar'][$j]['CashBackCliente'] == "" || $data['update']['orcamento']['alterar'][$j]['CashBackCliente'] == 0){
+						$data['update']['orcamento']['alterar'][$j]['CashBackCliente'] = "0.00";
+					}else{
+						$data['update']['orcamento']['alterar'][$j]['CashBackCliente'] = str_replace(',', '.', str_replace('.', '', $data['update']['orcamento']['alterar'][$j]['CashBackCliente']));
+					}
+					
+					if(isset($data['update']['orcamento']['alterar'][$j]['addCashBackCliente']) && $data['update']['orcamento']['alterar'][$j]['addCashBackCliente'] != ""){
+						$data['addValor'][$j] = $data['update']['orcamento']['alterar'][$j]['addCashBackCliente'];
+					}else{					
+						if($data['bd']['AlterarTodos'] == "S"){
+							$data['addValor'][$j] = $data['bd']['ValorAddCashBack'];
+						}else{
+							$data['addValor'][$j] = "0.00";
+						}
+					}
+					
+					if($data['query']['TipoAdd'] == "V"){					
+						$data['addCashBack'][$j] = $data['addValor'][$j];
+					}else{
+						$data['addCashBack'][$j] = $data['update']['orcamento']['alterar'][$j]['Valor']*$data['addValor'][$j]/100;
+					}
+					
+					$data['alterar']['orcamento'][$j]['CashBackCliente'] = $data['update']['orcamento']['alterar'][$j]['CashBackCliente'] + $data['addCashBack'][$j];
+					
+					
+					if(isset($data['update']['orcamento']['alterar'][$j]['ValidadeCashBack']) && $data['update']['orcamento']['alterar'][$j]['ValidadeCashBack'] != "00/00/0000" && $data['update']['orcamento']['alterar'][$j]['ValidadeCashBack'] != "" ){
+						$data['update']['orcamento']['alterar'][$j]['ValidadeCashBack'] = $this->basico->mascara_data($data['update']['orcamento']['alterar'][$j]['ValidadeCashBack'], 'mysql');
+					}else{
+						$data['update']['orcamento']['alterar'][$j]['ValidadeCashBack'] = $data['hoje'];
+					}					
+					
+					if(isset($data['update']['orcamento']['alterar'][$j]['PrazoCashBack']) && $data['update']['orcamento']['alterar'][$j]['PrazoCashBack'] != ""){
+						$data['prazo'][$j] = $data['update']['orcamento']['alterar'][$j]['PrazoCashBack'];
+						$data['alterar']['orcamento'][$j]['ValidadeCashBack'] = date('Y-m-d', strtotime($data['update']['orcamento']['alterar'][$j]['ValidadeCashBack'] . '+'.$data['prazo'][$j].'day'));
+					}else{					
+						if($data['bd']['AlterarTodos'] == "S"){
+							if($data['update']['orcamento']['alterar'][$j]['ValidadeCashBack'] >= $data['bd']['ValidadeGeralCashBack']){
+								$data['alterar']['orcamento'][$j]['ValidadeCashBack'] = $data['update']['orcamento']['alterar'][$j]['ValidadeCashBack'];
+							}else{
+								$data['alterar']['orcamento'][$j]['ValidadeCashBack'] = $data['bd']['ValidadeGeralCashBack'];
+							}
+						}else{
+							$data['alterar']['orcamento'][$j]['ValidadeCashBack'] = $data['update']['orcamento']['alterar'][$j]['ValidadeCashBack'];
+						}
+					}
+
+					$data['update']['orcamento']['bd'] = $this->Cliente_model->update_cliente($data['alterar']['orcamento'][$j], $data['update']['orcamento']['alterar'][$j]['idApp_Cliente']);
+
+				}
+	
+            }
+
+			$data['msg'] = '?m=1';
+			
+			redirect(base_url() . 'cliente/alterarcashback/' . $_SESSION['log']['idSis_Empresa'] . $data['msg']);
+
+			exit();			
+			
+        }
+
+        $this->load->view('basico/footer');
+
     }
 	
     public function excluir($id = FALSE) {

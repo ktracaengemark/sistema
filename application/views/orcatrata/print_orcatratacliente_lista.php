@@ -3,30 +3,26 @@
 <?php echo validation_errors(); ?>
 <div class="col-md-12">	
 	<nav class="navbar navbar-inverse navbar-fixed" role="banner">
-	  <div class="container-fluid">
-		<div class="navbar-header">
-			<div class="btn-line " role="group" aria-label="...">	
+		<div class="container-fluid">
+			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span> 
 				</button>
-				<div class="navbar-form btn-group">
-					<!--
-					<button type="button" class="btn btn-md btn-default  dropdown-toggle" data-toggle="dropdown">
-						<span class="glyphicon glyphicon-user"></span>
-					</button>
-					-->
-					<a type="button" class="btn btn-md btn-default " href="javascript:window.print()">
-						<span class="glyphicon glyphicon-print"></span> Print
-					</a>		
-					<a  type="button" class="btn btn-md btn-default text-left" href="<?php echo base_url() ?>relatorio/receitas" role="button"> 
+				<div class="navbar-brand btn-group">
+					<a type="button" class="col-md-3 btn btn-md btn-default " href="javascript:window.print()">
+						<span class="glyphicon glyphicon-print"></span>
+					</a>
+					<a type="button" class="col-md-9 btn btn-md btn-warning "  href="<?php echo base_url() ?>relatorio/receitas">
 						<span class="glyphicon glyphicon-pencil"></span> Receitas
 					</a>
 				</div>
 			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<?php echo $pagination; ?>
+			</div>
 		</div>
-	  </div>
 	</nav>	
 	<?php if( isset($count['POCount']) ) { ?>
 		<div style="overflow: auto; height: auto; ">
@@ -55,7 +51,7 @@
 			<table class="table table-bordered table-condensed table-striped">	
 				<thead>
 					<tr>
-						<th class="col-md-1" scope="col">cont: <?php echo $count['POCount'] ?> - Pedido</th>
+						<th class="col-md-1" scope="col"><?php echo $total_rows;?> - Pedido</th>
 						<th class="col-md-1" scope="col">DtPedido</th>
 						<th class="col-md-1" scope="col">id</th>
 						<th class="col-md-2" scope="col">Cliente</th>
@@ -65,29 +61,31 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php 
-					for ($i=1; $i <= $count['POCount']; $i++) { 
-					?>
+					<?php
+						$linha =  $per_page*$pagina;
+						for ($i=1; $i <= $count['POCount']; $i++) { 
+							$contagem = ($linha + $i);
+						?>
 						<tr>
-							<td class="col-md-1" scope="col"><?php echo $i ?> - <?php echo $orcatrata[$i]['idApp_OrcaTrata'] ?></td>
+							<td class="col-md-1" scope="col"><?php echo $contagem ?> - <?php echo $orcatrata[$i]['idApp_OrcaTrata'] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $orcatrata[$i]['DataOrca'] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $orcatrata[$i]['idApp_Cliente'] ?></td>
 							<td class="col-md-2" scope="col"><?php echo $orcatrata[$i]['NomeCliente'] ?></td>
 							<td class="col-md-2" scope="col"><?php echo $orcatrata[$i]['DataCadastroCliente'] ?></td>
 							<td class="col-md-2" scope="col"><?php echo $orcatrata[$i]['CelularCliente'] ?>
-															- <?php echo $orcatrata[$i]['Telefone'] ?>
-															- <?php echo $orcatrata[$i]['Telefone2'] ?>
-															- <?php echo $orcatrata[$i]['Telefone3'] ?>
-															</td>
+								- <?php echo $orcatrata[$i]['Telefone'] ?>
+								- <?php echo $orcatrata[$i]['Telefone2'] ?>
+								- <?php echo $orcatrata[$i]['Telefone3'] ?>
+							</td>
 							<td class="col-md-1" scope="col"><?php echo $orcatrata[$i]['AVAP'] ?>/<?php echo $orcatrata[$i]['FormaPag'] ?></td>
 						</tr>
-					
-					<?php
-					}
+						
+						<?php
+						}
 					?>
 				</tbody>
 			</table>
 		</div>
-	<?php } else echo '<h3 class="text-center">Nenhum Orçamento Filtrado!</h3>';{?>
+		<?php } else echo '<h3 class="text-center">Nenhum Orçamento Filtrado!</h3>';{?>
 	<?php } ?>
-</div>	
+</div>

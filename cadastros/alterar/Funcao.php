@@ -6,6 +6,7 @@ $Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
 $id = filter_var($Dados['id_Funcao'], FILTER_SANITIZE_STRING);
 $Funcao = filter_var($Dados['Nome_Funcao'], FILTER_SANITIZE_STRING);
+$Abrev = filter_var($Dados['Nome_Abrev'], FILTER_SANITIZE_STRING);
 
 $caracteres_sem_acento = array(
     'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
@@ -21,7 +22,10 @@ $caracteres_sem_acento = array(
 $Funcao1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($Funcao, $caracteres_sem_acento));
 $Funcao_maiuscula = trim(mb_strtoupper($Funcao1, 'ISO-8859-1'));
 
-$result_Funcao = "UPDATE Tab_Funcao SET Funcao='$Funcao_maiuscula' WHERE idTab_Funcao = '$id'";
+$Abrev1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($Abrev, $caracteres_sem_acento));
+$Abrev_maiuscula = trim(mb_strtoupper($Abrev1, 'ISO-8859-1'));
+
+$result_Funcao = "UPDATE Tab_Funcao SET Funcao='$Funcao_maiuscula', Abrev='$Abrev_maiuscula' WHERE idTab_Funcao = '$id'";
 $resultado_Funcao = mysqli_query($conn, $result_Funcao);
 
 if(mysqli_affected_rows($conn) != 0){

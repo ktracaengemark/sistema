@@ -471,9 +471,10 @@ class Usuario_model extends CI_Model {
 						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = AF.idSis_Usuario
 						LEFT JOIN Tab_Funcao AS TF ON TF.idTab_Funcao = AF.idTab_Funcao
 				WHERE 
+					' . $servico . '
 					' . $permissao . '
 					AF.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-					' . $servico . '
+					
 					U.Inativo = "0" AND
 					U.Servicos = "S"
 				ORDER BY 
@@ -491,9 +492,10 @@ class Usuario_model extends CI_Model {
 						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = AF.idSis_Usuario
 						LEFT JOIN Tab_Funcao AS TF ON TF.idTab_Funcao = AF.idTab_Funcao
 				WHERE 
+					' . $servico . '
 					' . $permissao . '
 					AF.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-					' . $servico . '
+					
 					U.Inativo = "0" AND
 					U.Servicos = "S"
 				ORDER BY 

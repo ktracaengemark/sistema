@@ -110,12 +110,130 @@ class Cliente_model extends CI_Model {
         return $query[0];
 
     }    
+	
+    public function get_empresa($data) {
+        $query = $this->db->query('SELECT idSis_Empresa FROM Sis_Empresa WHERE idSis_Empresa = ' . $data);
+        $query = $query->result_array();
 
+        /*
+        //echo $this->db->last_query();
+        echo '<br>';
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit ();
+        */
+
+        return $query[0];
+    }
+	
     public function get_empresa5($data) {
         $query = $this->db->query('SELECT * FROM Sis_Usuario WHERE idSis_Empresa = "5" AND CelularUsuario = ' . $data);
         $query = $query->result_array();
 
         return $query[0];
+
+    }
+
+	public function get_alterarcashback($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+
+		$date_inicio_orca = ($_SESSION['FiltroRankingVendas']['DataInicio']) ? 'TOT.DataOrca >= "' . $_SESSION['FiltroRankingVendas']['DataInicio'] . '" AND ' : FALSE;
+		$date_fim_orca = ($_SESSION['FiltroRankingVendas']['DataFim']) ? 'TOT.DataOrca <= "' . $_SESSION['FiltroRankingVendas']['DataFim'] . '" AND ' : FALSE;
+
+		$date_inicio_cash = ($_SESSION['FiltroRankingVendas']['DataInicio2']) ? 'TC.ValidadeCashBack >= "' . $_SESSION['FiltroRankingVendas']['DataInicio2'] . '" AND ' : FALSE;
+		$date_fim_cash = ($_SESSION['FiltroRankingVendas']['DataFim2']) ? 'TC.ValidadeCashBack <= "' . $_SESSION['FiltroRankingVendas']['DataFim2'] . '" AND ' : FALSE;
+		
+		$pedidos_de = ($_SESSION['FiltroRankingVendas']['Pedidos_de']) ? 'F.ContPedidos >= "' . $_SESSION['FiltroRankingVendas']['Pedidos_de'] . '" AND ' : FALSE;
+		$pedidos_ate = ($_SESSION['FiltroRankingVendas']['Pedidos_ate']) ? 'F.ContPedidos <= "' . $_SESSION['FiltroRankingVendas']['Pedidos_ate'] . '" AND ' : FALSE;	
+		
+		$valor_de = ($_SESSION['FiltroRankingVendas']['Valor_de']) ? 'F.Valor >= "' . $_SESSION['FiltroRankingVendas']['Valor_de'] . '" AND ' : FALSE;
+		$valor_ate = ($_SESSION['FiltroRankingVendas']['Valor_ate']) ? 'F.Valor <= "' . $_SESSION['FiltroRankingVendas']['Valor_ate'] . '" AND ' : FALSE;	
+
+		//$nome_cliente = ($_SESSION['FiltroRankingVendas']['NomeCliente']) ? ' AND TC.idApp_Cliente = ' . $_SESSION['FiltroRankingVendas']['NomeCliente'] : FALSE;
+        $idapp_cliente = ($_SESSION['FiltroRankingVendas']['idApp_Cliente']) ? ' AND TC.idApp_Cliente = ' . $_SESSION['FiltroRankingVendas']['idApp_Cliente'] : FALSE;
+        $campo = (!$_SESSION['FiltroRankingVendas']['Campo']) ? 'F.Valor' : $_SESSION['FiltroRankingVendas']['Campo'];
+        $ordenamento = (!$_SESSION['FiltroRankingVendas']['Ordenamento']) ? 'DESC' : $_SESSION['FiltroRankingVendas']['Ordenamento'];
+        
+		if($_SESSION['log']['idSis_Empresa'] != 5){
+			if($_SESSION['FiltroRankingVendas']['Ultimo'] != 0){	
+				if($_SESSION['FiltroRankingVendas']['Ultimo'] == 1){	
+					$ultimopedido1 = 'LEFT JOIN App_OrcaTrata AS TOT2 ON (TOT.idApp_Cliente = TOT2.idApp_Cliente AND TOT.idApp_OrcaTrata < TOT2.idApp_OrcaTrata)';
+					$ultimopedido2 = 'AND TOT2.idApp_OrcaTrata IS NULL';
+				}else{
+					$ultimopedido1 = FALSE;
+					$ultimopedido2 = FALSE;
+				}
+			}else{
+				$ultimopedido1 = FALSE;
+				$ultimopedido2 = FALSE;
+			}	
+		}else{
+			$ultimopedido1 = FALSE;
+			$ultimopedido2 = FALSE;
+		}		
+		
+        if ($limit){
+			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		}else{
+			$querylimit = '';
+		}
+
+        $query = $this->db->query('
+			SELECT
+				F.idApp_Cliente,
+				F.NomeCliente,
+				F.CashBackCliente,
+				F.addCashBackCliente,
+				F.PrazoCashBack,
+				F.ValidadeCashBack,
+				F.ContPedidos,
+				F.Valor
+			FROM
+				(SELECT
+					TC.idApp_Cliente,
+					TC.NomeCliente,
+					TC.CashBackCliente,
+					TC.addCashBackCliente,
+					TC.PrazoCashBack,
+					TC.ValidadeCashBack,
+					TOT.DataOrca,
+					COUNT(TOT.idApp_OrcaTrata) AS ContPedidos,
+					SUM(TOT.ValorFinalOrca) AS Valor
+				FROM
+					App_Cliente AS TC
+						INNER JOIN App_OrcaTrata AS TOT ON TOT.idApp_Cliente = TC.idApp_Cliente
+						' . $ultimopedido1 . '
+				WHERE
+					' . $date_inicio_orca . '
+					' . $date_fim_orca . '
+					' . $date_inicio_cash . '
+					' . $date_fim_cash . '
+					TOT.CanceladoOrca = "N" AND
+					TC.idSis_Empresa = ' . $data . ' 
+					' . $idapp_cliente . '
+					' . $ultimopedido2 . '
+				GROUP BY
+					TC.idApp_Cliente
+				) AS F
+			WHERE
+				' . $pedidos_de . '
+				' . $pedidos_ate . '
+				' . $valor_de . '
+				' . $valor_ate . '
+				F.idApp_Cliente != 0
+			ORDER BY
+				' . $campo . '
+				' . $ordenamento . '
+			' . $querylimit . '
+        ');
+	
+		if($total == TRUE) {
+			return $query->num_rows();
+		}	
+			
+        $query = $query->result_array();
+ 
+        return $query;		
 
     }
 	
@@ -758,5 +876,5 @@ class Cliente_model extends CI_Model {
 
         return $array;
     }
-
+	
 }

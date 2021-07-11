@@ -3,6 +3,7 @@
 <?php echo validation_errors(); ?>
 <div class="col-md-12">	
 	<nav class="navbar navbar-inverse navbar-fixed" role="banner">
+		<!--
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<div class="btn-line " role="group" aria-label="...">	
@@ -17,6 +18,27 @@
 						</a>
 					</div>
 				</div>
+			</div>
+		</div>
+		-->
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span> 
+				</button>
+				<div class="navbar-brand btn-group">
+					<a type="button" class="col-md-3 btn btn-md btn-default " href="javascript:window.print()">
+						<span class="glyphicon glyphicon-print"></span>
+					</a>
+					<a type="button" class="col-md-9 btn btn-md btn-warning "  href="<?php echo base_url() ?>relatorio/list_agendamentos">
+						<span class="glyphicon glyphicon-pencil"></span> Agendamentos
+					</a>
+				</div>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<?php echo $pagination; ?>
 			</div>
 		</div>
 	</nav>	
@@ -47,7 +69,8 @@
 			<table class="table table-bordered table-condensed table-striped">	
 				<thead>
 					<tr>
-						<th class="col-md-1" scope="col"><?php echo $count['POCount'] ?> Eventos</th>
+						<th class="col-md-1" scope="col"><?php echo $total_rows;?> Eventos</th>
+						<th class="col-md-2" scope="col">Cliente</th>
 						<th class="col-md-1" scope="col">Data</th>
 						<th class="col-md-1" scope="col">Hora</th>
 						<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
@@ -56,16 +79,18 @@
 						<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
 							<th class="col-md-5" scope="col">Dep</th>
 						<?php } ?>		
-						<th class="col-md-2" scope="col">Cliente</th>
 						<th class="col-md-2" scope="col">Evento</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php 
+						$linha =  $per_page*$pagina;
 						for ($i=1; $i <= $count['POCount']; $i++) { 
+							$contagem = ($linha + $i);
 						?>
 						<tr>
-							<td class="col-md-1" scope="col"><?php echo $i ?> - <?php echo $consulta[$i]['idApp_Consulta'] ?></td>
+							<td class="col-md-1" scope="col"><?php echo $contagem ?> - <?php echo $consulta[$i]['idApp_Consulta'] ?></td>
+							<td class="col-md-2" scope="col"><?php echo $consulta[$i]['NomeCliente'] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $consulta[$i]['DataInicio'] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $consulta[$i]['HoraInicio'] ?> / <?php echo $consulta[$i]['HoraFim'] ?></td>
 							<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
@@ -79,7 +104,6 @@
 									<?php echo $consulta[$i]['NomeClientePet'] ?>
 								</td>
 							<?php } ?>	
-							<td class="col-md-2" scope="col"><?php echo $consulta[$i]['NomeCliente'] ?></td>
 							<td class="col-md-2" scope="col"><?php echo $consulta[$i]['Obs'] ?></td>
 						</tr>
 						<?php

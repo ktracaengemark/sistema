@@ -7,6 +7,7 @@ include_once '../../conexao.php';
 $Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
 $Funcao0 = filter_var($Dados['Novo_Funcao'], FILTER_SANITIZE_STRING);
+$Abrev0 = filter_var($Dados['Novo_Abrev'], FILTER_SANITIZE_STRING);
 
 $caracteres_sem_acento = array(
     'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
@@ -19,15 +20,18 @@ $caracteres_sem_acento = array(
     'a'=>'a', 'î'=>'i', 'â'=>'a', 'ș'=>'s', 'ț'=>'t', 'A'=>'A', 'Î'=>'I', 'Â'=>'A', 'Ș'=>'S', 'Ț'=>'T',
 );
 
-$Funcao1 = preg_replace("/[^a-zA-Z]/", " ", strtr($Funcao0, $caracteres_sem_acento));
+$Funcao1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($Funcao0, $caracteres_sem_acento));
 $Funcao = trim(mb_strtoupper($Funcao1, 'ISO-8859-1'));
+
+$Abrev1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($Abrev0, $caracteres_sem_acento));
+$Abrev = trim(mb_strtoupper($Abrev1, 'ISO-8859-1'));
 
 //$usuario 	= $_SESSION['log']['idSis_Usuario'];
 $usuario 	= $_SESSION['log']['idSis_Empresa'];
 $empresa 	= $_SESSION['log']['idSis_Empresa'];
 $modulo 	= $_SESSION['log']['idTab_Modulo'];
 $datacad	= date('Y-m-d H:i:s', time());
-$query_usuario = "INSERT INTO Tab_Funcao (Funcao, idSis_Usuario, idSis_Empresa, idTab_Modulo) VALUES ('$Funcao', '$usuario', '$empresa', '$modulo')";
+$query_usuario = "INSERT INTO Tab_Funcao (Funcao, Abrev, idSis_Usuario, idSis_Empresa, idTab_Modulo) VALUES ('$Funcao', '$Abrev', '$usuario', '$empresa', '$modulo')";
 mysqli_query($conn, $query_usuario);
 
 if(mysqli_insert_id($conn)){

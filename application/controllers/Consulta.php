@@ -2376,7 +2376,7 @@ class Consulta extends CI_Controller {
 						unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
 						redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
 					}else{
-						if($data['query']['Recorrencias'] > 1){
+						
 							if($data['cadastrar']['NovaOS'] == "S"){
 								//Gera uma única O.S.
 								unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
@@ -2386,11 +2386,7 @@ class Consulta extends CI_Controller {
 								unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
 								redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
 							}
-						}else{
-							//Não Gera O.S. 
-							unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
-							redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-						}
+						
 					}
 				}else{
 					//Não Gera O.S.
@@ -2401,7 +2397,10 @@ class Consulta extends CI_Controller {
 			}else{
 				//Não Gera O.S.
 				unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
-				redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+				//redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+				redirect(base_url() . 'orcatrata/alterarstatus/' . $data['query']['idApp_OrcaTrata'] . $data['msg']);
+				
+				
 			}
 				
 			exit();

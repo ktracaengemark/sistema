@@ -821,18 +821,10 @@
 																<input type="hidden" id="Hidden_idApp_OrcaTrata" name="Hidden_idApp_OrcaTrata" value="<?php echo $query['idApp_OrcaTrata']; ?>" />
 															<?php } ?>
 														</div>
-													</div>	
-												<?php }else{ ?>
-													<div class="row">
-														<div class="col-md-12 ">
-															<a class="btn btn-md btn-info btn-block" name="submeter5" id="submeter5" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." href="<?php echo base_url() ?>orcatrata/alterarstatus/<?php echo $_SESSION['Consulta']['idApp_OrcaTrata'];?>" role="button">
-																<span class="glyphicon glyphicon-pencil"></span> O.S.<?php echo $_SESSION['Consulta']['idApp_OrcaTrata'];?>
-															</a>
-														</div>
 													</div>
-												<?php } ?>	
+													<br>
+												<?php } ?>
 											
-											<br>
 											<div class="row">
 												
 												<input type="hidden" name="idApp_Consulta" value="<?php echo $query['idApp_Consulta']; ?>">
@@ -846,7 +838,7 @@
 												<div class="col-md-12 text-center">
 													<?php if ($metodo == 2) { ?>
 														<button  type="button" class="btn btn-md btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-salvar-modal-sm">
-															<span class="glyphicon glyphicon-save"></span>Salvar
+															<span class="glyphicon glyphicon-save"></span> Salvar <span class="glyphicon glyphicon-pencil"></span> O.S.<?php echo $_SESSION['Consulta']['idApp_OrcaTrata'];?>
 														</button>
 														<!--
 														<button type="submit" class="btn btn-md btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." value="1" >

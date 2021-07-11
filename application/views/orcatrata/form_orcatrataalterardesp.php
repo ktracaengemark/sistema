@@ -1411,16 +1411,6 @@
 																	<input type="text" class="form-control Valor" name="SubValorFinal" id="SubValorFinal" value="<?php echo $orcatrata['SubValorFinal'] ?>" readonly=''/>
 																</div>
 															</div>
-															<div class="col-md-6">
-																<label for="CashBackOrca">CashBack.</label><br>
-																<div class="input-group" id="txtHint">
-																	<span class="input-group-addon" id="basic-addon1">R$</span>
-																	<input style="color: #FF0000"  type="text" class="form-control Valor" id="CashBackOrca" readonly=''
-																		   name="CashBackOrca" value="<?php echo $orcatrata['CashBackOrca'] ?>">
-																</div>
-															</div>
-														</div>
-														<div class="row">
 															<div class="col-md-6 text-left">
 																<label for="UsarCashBack">Usar CashBack?</label><br>
 																<?php 
@@ -1432,7 +1422,29 @@
 																?>
 																<input type="text" class="form-control" readonly="" value="<?php echo $UsarCashBack; ?>"/>
 															</div>
+														</div>
+														<div class="row">
 															<div class="col-md-6">
+																<label for="CashBackOrca">CashBack.</label><br>
+																<div class="input-group" id="txtHint">
+																	<span class="input-group-addon" id="basic-addon1">R$</span>
+																	<input style="color: #FF0000"  type="text" class="form-control Valor" id="CashBackOrca" readonly=''
+																		   name="CashBackOrca" value="<?php echo $orcatrata['CashBackOrca'] ?>">
+																</div>
+															</div>
+															<div class="col-md-6">
+																<label for="ValidadeCashBackOrca">Validade</label>
+																<div class="input-group <?php echo $datepicker; ?>">
+																	<span class="input-group-addon" disabled>
+																		<span class="glyphicon glyphicon-calendar"></span>
+																	</span>
+																	<input type="text" class="form-control Date" id="ValidadeCashBackOrca" maxlength="10" placeholder="DD/MM/AAAA"
+																		   name="ValidadeCashBackOrca" value="<?php echo $orcatrata['ValidadeCashBackOrca']; ?>" readonly=''>																			
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-12">
 																<label for="ValorFinalOrca">Valor Final:</label><br>
 																<div class="input-group" id="txtHint">
 																	<span class="input-group-addon" id="basic-addon1">R$</span>
@@ -2115,7 +2127,7 @@
 										<div class="row">
 											<div id="CanceladoOrca" <?php echo $div['CanceladoOrca']; ?>>	
 												<div id="FinalizadoOrca" <?php echo $div['FinalizadoOrca']; ?>>
-													<div class="col-md-2">
+													<div class="col-md-3">
 														<div class="panel panel-danger">
 															<div class="panel-heading">
 																<div class="row">
@@ -2147,7 +2159,8 @@
 																	</div>
 																</div>
 																<div class="row">
-																	<div class="col-md-12 text-left">
+																	<div class="col-md-6 text-left"></div>
+																	<div class="col-md-6 text-left">
 																		<label for="AprovadoOrca">Aprovado?</label><br>
 																		<div class="btn-group" data-toggle="buttons">
 																			<?php
@@ -2179,7 +2192,7 @@
 													</div>
 													<div id="CombinadoFrete" <?php echo $div['CombinadoFrete']; ?>>
 														<div id="AprovadoOrca" <?php echo $div['AprovadoOrca']; ?>>
-															<div class="col-md-2">
+															<div class="col-md-3">
 																<div class="panel panel-success">
 																	<div class="panel-heading">
 																		<div class="row">
@@ -2212,7 +2225,8 @@
 																			</div>
 																		</div>
 																		<div class="row">
-																			<div class="col-md-12 text-left">
+																			<div class="col-md-6 text-left"></div>
+																			<div class="col-md-6 text-left">
 																				<label for="EnviadoOrca">Enviado?</label><br>
 																				<div class="btn-group" data-toggle="buttons">
 																					<?php

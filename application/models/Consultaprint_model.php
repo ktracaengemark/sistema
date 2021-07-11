@@ -11,7 +11,7 @@ class Consultaprint_model extends CI_Model {
         $this->load->model(array('Basico_model'));
     }
 
-    public function get_consulta($data) {
+    public function get_consulta($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		$cliente 		= ($_SESSION['Agendamentos']['idApp_Cliente']) ? ' AND CO.idApp_Cliente = ' . $_SESSION['Agendamentos']['idApp_Cliente'] : FALSE;
 		$clientepet		= ($_SESSION['Empresa']['CadastrarPet'] == "S" && $_SESSION['Agendamentos']['idApp_ClientePet']) ? ' AND CO.idApp_ClientePet = ' . $_SESSION['Agendamentos']['idApp_ClientePet'] : FALSE;
@@ -19,23 +19,19 @@ class Consultaprint_model extends CI_Model {
 		
 		$campo 			= (!$_SESSION['Agendamentos']['Campo']) ? 'CO.DataInicio' : $_SESSION['Agendamentos']['Campo'];
         $ordenamento 	= (!$_SESSION['Agendamentos']['Ordenamento']) ? 'ASC' : $_SESSION['Agendamentos']['Ordenamento'];
-		
-		/*       
-        //echo $this->db->last_query();
-        echo '<br>';
-        echo "<pre>";
-        print_r($cliente);
-		echo '<br>';
-        print_r($clientepet);
-        echo "</pre>";
-        exit ();
-        */
+
 		($_SESSION['Agendamentos']['DataInicio']) ? $date_inicio = $_SESSION['Agendamentos']['DataInicio'] : FALSE;
 		($_SESSION['Agendamentos']['DataFim']) ? $date_fim = date('Y-m-d', strtotime('+1 days', strtotime($_SESSION['Agendamentos']['DataFim']))) : FALSE;
 		
 		$date_inicio_orca 	= ($_SESSION['Agendamentos']['DataInicio']) ? 'DataInicio >= "' . $date_inicio . '" AND ' : FALSE;
 		$date_fim_orca 		= ($_SESSION['Agendamentos']['DataFim']) ? 'DataInicio <= "' . $date_fim . '" AND ' : FALSE;
-		
+
+        if ($limit){
+			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		}else{
+			$querylimit = '';
+		}
+				
 		$query = $this->db->query('
             SELECT
 				CO.*,
@@ -64,7 +60,12 @@ class Consultaprint_model extends CI_Model {
 			ORDER BY
 				' . $campo . '
 				' . $ordenamento . '
+			' . $querylimit . ' 		
         ');
+	
+		if($total == TRUE) {
+			return $query->num_rows();
+		}
 		
         $query = $query->result_array();
 

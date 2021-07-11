@@ -13,7 +13,7 @@ class Orcatrataprint_model extends CI_Model {
         $this->load->model(array('Basico_model'));
     }
 
-    public function get_orcatrata_cliente($data) {
+    public function get_orcatrata_cliente($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 		
 		if ($_SESSION['FiltroAlteraParcela']['DataFim']) {
             $consulta =
@@ -127,6 +127,13 @@ class Orcatrataprint_model extends CI_Model {
         echo "</pre>";
         //exit ();		
 		*/
+
+        if ($limit){
+			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		}else{
+			$querylimit = '';
+		}
+		
 		$query = $this->db->query(
             'SELECT
 				C.NomeCliente,
@@ -221,8 +228,31 @@ class Orcatrataprint_model extends CI_Model {
 			' . $groupby . '
             ORDER BY
 				' . $permissao60 . '
-				' . $permissao61 . ' 		
+				' . $permissao61 . ' 
+			' . $querylimit . ' 		
         ');
+	
+		if($total == TRUE) {
+			//return $query->num_rows();
+			/*
+			$somafinal2=0;
+			$somacomissao2=0;
+			*/
+			foreach ($query->result() as $row) {
+				/*
+				$somafinal2 += $row->ValorFinalOrca;
+				$somacomissao2 += $row->ValorComissao;
+				*/
+			}
+			
+			$query->soma2 = new stdClass();
+			/*
+			$query->soma2->somafinal2 = number_format($somafinal2, 2, ',', '.');
+			$query->soma2->somacomissao2 = number_format($somacomissao2, 2, ',', '.');
+			*/
+			return $query;
+		}
+				
         $query = $query->result_array();
 
         /*

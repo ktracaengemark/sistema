@@ -216,15 +216,15 @@
 											<label for=""><h4><b>Estatísticas</b></h4></label>
 											<div class="form-group col-md-12 text-left">
 												<div class="row">										
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/rankingformapag" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Forma de Pag.
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/rankingvendas" role="button"> 
+														<span class="glyphicon glyphicon-usd"></span> Ranking de Vendas
 													</a>
 												</div>	
 											</div>
 											<div class="form-group col-md-12 text-left">
 												<div class="row">										
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/rankingvendas" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Vendas
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/rankingformapag" role="button"> 
+														<span class="glyphicon glyphicon-usd"></span> Forma de Pag.
 													</a>
 												</div>	
 											</div>

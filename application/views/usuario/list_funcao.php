@@ -5,6 +5,7 @@
 			<tr>
 				<th>id</th>
 				<th>Funcao</th>
+				<th>Abrev</th>
 				<th>Editar</th>
 				<th>Apagar</th>
 				<th></th>
@@ -25,14 +26,15 @@
 					echo '<tr>';
 						echo '<td>' . $row['idTab_Funcao'] . '</td>';
 						echo '<td>'. $cont . ') ' . $row['Funcao'] . '</td>';
+						echo '<td>' . $row['Abrev'] . '</td>';
 						echo '<td><button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#alterarFuncao" 
-										data-whateveridfuncao="' . $row['idTab_Funcao'] . '" data-whateverfuncao="' . $row['Funcao'] . '">
+										data-whateveridfuncao="' . $row['idTab_Funcao'] . '" data-whateverfuncao="' . $row['Funcao'] . '" data-whateverabrev="' . $row['Abrev'] . '">
 										Editar
 									</button>
 								</td>';
 						if($row['VariacaoUsada'] == "N"){		
 							echo '<td><button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#excluirFuncao" 
-											data-whateveridfuncao="' . $row['idTab_Funcao'] . '" data-whateverfuncao="' . $row['Funcao'] . '">
+											data-whateveridfuncao="' . $row['idTab_Funcao'] . '" data-whateverfuncao="' . $row['Funcao'] . '" data-whateverabrev="' . $row['Abrev'] . '">
 											Apagar
 										</button>
 									</td>';
