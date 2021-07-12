@@ -1,19 +1,18 @@
 <?php if (isset($msg)) echo $msg; ?>
 <div class="container col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 col-xs-12 text-center">
     <?php echo form_open('login/index2', 'role="form"'); ?>
-	<h2 class="form-signin-heading text-center">enkontraki</h2>		 
-	<!--
-	<div class="col-md-5 ">		
+	<!--<h2 class="form-signin-heading text-center">enkontraki</h2>-->		 
+	
+	<div class="col-md-12 col-sm-12 col-xs-12 text-center img-responsive">	
 		<center>
 			<figure>
 				<div class="boxVideo">
-					<iframe width="270" height="270" src="https://www.youtube.com/embed/videoseries?list=PLPP9yl-2bfZFWltdqkqZ2WSazBo7dnDx1" frameborder="0" allowfullscreen></iframe>
-					<iframe width="255" height="255" src="<?php #echo base_url() . 'arquivos/videos/apresentacao.mp4'; ?>" frameborder="0" allowfullscreen></iframe>
+					<img class="img-responsive" src="<?php echo base_url() . 'arquivos/imagens/Logo_Navegador.png'; ?>" >
 				</div>
 			</figure>
 		</center>	
 	</div>
-	-->
+	
 	<div class="col-md-12 col-sm-12 col-xs-12 text-center">
 		<div class="row acabamento text-center">
 			<div class="col-md-6 col-sm-6 col-xs-6 "style="color: #000000">			
