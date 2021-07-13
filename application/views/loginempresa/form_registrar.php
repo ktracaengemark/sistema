@@ -7,7 +7,9 @@
 		<center>
 			<figure>
 				<div class="boxVideo">
-					<img class="img-responsive" src="<?php echo base_url() . 'arquivos/imagens/Logo_Navegador.png'; ?>" >
+					<a  href="<?php echo base_url() ?>../enkontraki" role="button">
+						<img class="img-responsive" src="<?php echo base_url() . 'arquivos/imagens/Logo_Navegador.png'; ?>" >
+					</a>
 				</div>
 			</figure>
 		</center>	

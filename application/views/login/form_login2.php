@@ -7,7 +7,9 @@
 		<center>
 			<figure>
 				<div class="boxVideo">
-					<img class="img-responsive" src="<?php echo base_url() . 'arquivos/imagens/Logo_Navegador.png'; ?>" >
+					<a  href="<?php echo base_url() ?>../enkontraki" role="button">
+						<img class="img-responsive" src="<?php echo base_url() . 'arquivos/imagens/Logo_Navegador.png'; ?>" >
+					</a>
 				</div>
 			</figure>
 		</center>	
@@ -47,14 +49,12 @@
 			<div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12 text-center">				
 				<label class="sr-only">Empresa</label>
 				<input type="text" id="idSis_Empresa" class="form-control acabamento2" placeholder=" XXX  'Número da Empresa'" autofocus name="idSis_Empresa" value="<?php echo set_value('idSis_Empresa'); ?>">	   
-				<?php echo form_error('idSis_Empresa'); ?>			
-			
+				<?php echo form_error('idSis_Empresa'); ?>
 			</div>
 			<div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12 text-center">		
 				<label class="sr-only">Celular do Usuário</label>
 				<input type="text" id="CelularUsuario" maxlength="11" class="form-control acabamento3" placeholder="Celular Usuário (xx)999999999" name="CelularUsuario" value="<?php echo set_value('CelularUsuario'); ?>">	   
 				<?php echo form_error('CelularUsuario'); ?>
-			
 			</div>
 			<div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12 text-center">		
 				<label class="sr-only">Senha</label>
@@ -87,10 +87,7 @@
 				</div>
 				<!--<input type="password" id="inputPassword" class="form-control" placeholder="Senha" name="Senha" value="">-->
 				<?php echo form_error('Senha'); ?>
-			
 			</div>
-				
-				<input type="hidden" name="modulo" value="<?php echo $modulo; ?>">
 			<div class=" col-md-12 col-sm-12 col-xs-12 center">		
 				<button class="btn btn-lg btn-info btn-block acabamento2" type="submit">
 					<span class="glyphicon glyphicon-log-in"></span> Acessar
@@ -106,6 +103,7 @@
 					<span class="glyphicon glyphicon-search"></span> enkontraki
 				</a>
 			</div>
+			<input type="hidden" name="modulo" value="<?php echo $modulo; ?>">
 				<!--
 				<br>
 				<a class="btn btn-md btn-success  btn-block" href="<?php echo base_url(); ?>login/index3" role="button">
