@@ -16,6 +16,7 @@ class Loginempresa extends CI_Controller {
 
         #load header view
         $this->load->view('basico/headerloginempresa');
+        //$this->load->view('basico/nav_principal_site');
 
         if ($this->agent->is_browser()) {
 

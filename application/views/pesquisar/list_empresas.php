@@ -8,7 +8,7 @@
 				</tr>
 			</tfoot>
 		</table>
-		<div style="overflow: auto; height: 400px; ">
+		<div style="overflow: auto; height: auto; ">
 			<table class="table table-bordered table-condensed table-striped">
 
 				<thead>
@@ -35,14 +35,12 @@
 						<td><?php echo $row['CategoriaEmpresa'] ?></td>
 						<td class="notclickable">
 							<a type="button" class="btn btn-success btn-xs" href="<?php echo base_url() ?>empresacli0/prontuario/<?php echo '' . $row['idSis_Empresa'] . '' ?> " role="button">
-								<h5><span class="glyphicon glyphicon-log-in"></span> Empresa - Nº <?php echo $row['idSis_Empresa'] ?></h5>
+								<span class="glyphicon glyphicon-log-in"></span> Empresa - Nº <?php echo $row['idSis_Empresa'] ?>
 							</a>
 						</td>						
 						<td class="notclickable">
-							<a href="https://www.enkontraki.com.br/<?php echo '' . $row['Site'] . '' ?> "target="_blank">
-								<button type="button" class="btn btn-info btn-xs">
-									<h5><span class="glyphicon glyphicon-picture"></span> Site</h5>
-								</button>
+							<a type="button" class="btn btn-info btn-xs" href="https://www.enkontraki.com.br/<?php echo '' . $row['Site'] . '' ?> "target="_blank">
+								<span class="glyphicon glyphicon-picture"></span> Site
 							</a>
 						</td>					
 					</tr>						

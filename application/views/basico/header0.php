@@ -47,7 +47,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/calendrical.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/font-awesome/css/font-awesome.min.css">
 
-        <link rel="stylesheet" href="<?php echo base_url(); ?>css/select2.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="<?php echo base_url(); ?>css/select2.min.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>css/style_site.css">
 
 
     </head>

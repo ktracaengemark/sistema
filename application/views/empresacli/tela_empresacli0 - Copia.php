@@ -73,17 +73,48 @@
 						</center>	
 					</div>
 					<?php if ( !isset($evento) && isset($_SESSION['Empresa'])) { ?>
-					<div class="container ">
-						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<div class="panel panel-primary">
-								<div style="overflow: auto; height: auto; ">
-									<div class="panel-body">
+
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="panel panel-default">
+									<!--
+									<div class="modal fade bs-excluir-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header bg-danger">
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+													<h4 class="modal-title">"Para enviar uma Mensagem,<br>
+																			Você precisa estar logado em uma Conta!"</h4>
+												</div>
+												<div class="modal-footer">
+													<div class="form-group col-md-6 text-left">
+															<div class="form-footer ">
+																<button type="button" class="btn btn-primary btn-block" data-dismiss="modal">
+																	<span class="glyphicon glyphicon-remove"></span> Fechar
+																</button>
+															</div>
+														</div>
+													<div class="form-group col-md-6 text-right">
+														<div class="form-footer">		
+															<a class="btn btn-danger btn-block" href="<?php echo base_url() ?>login/index4" role="button">
+																<span class="glyphicon glyphicon-plus"></span> Acessar sua Conta
+															</a>
+														</div>	
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									-->
+									
 										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 " align="left"> 
 											<img alt="User Pic" src="<?php echo base_url() . '../'.$query['Site'].'/' . $query['idSis_Empresa'] . '/documentos/miniatura/' . $query['Arquivo'] . ''; ?> " class="img-circle img-responsive" width='100'>
 										</div>
 										<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 ">					
 											<h4><?php echo '<strong>' . $_SESSION['Empresa']['NomeEmpresa'] . '</strong> - <strong>Id.: ' . $_SESSION['Empresa']['idSis_Empresa'] . '</strong>' ?></h4>
 										</div>
+										
 										<div class=" col-md-12"> 
 											<table class="table table-user-information">
 												<tbody>
@@ -140,19 +171,28 @@
 												</tbody>
 											</table>
 										</div>
+									
 										<div class="col-md-12">
-											<div class="row">
-												<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">		
-													<a type="button" class="btn btn-success btn-xs btn-block" href="<?php echo base_url() ?>login/index4" role="button">
-														<span class="glyphicon glyphicon-log-in"></span> Empresa
-													</a>	
-												</div>
-												<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-													<a type="button" class="btn btn-info btn-xs btn-block" href="https://www.enkontraki.com.br/<?php echo '' . $_SESSION['Empresa']['Site'] . '' ?> "target="_blank">
-														<span class="glyphicon glyphicon-picture"></span> Site
+											<div class="form-group col-md-6 text-center">
+												<div class="form-footer">		
+													<a type="button" class="btn btn-success btn-xs " href="<?php echo base_url() ?>login/index4" role="button">
+														<h4><span class="glyphicon glyphicon-log-in"></span> Acessar Empresa</h4>
 													</a>
-												</div>
-											</div>	
+												</div>	
+											</div>
+											<div class="col-md-6 text-center">
+												<!--<label for="">Empresa:</label>-->
+												<div class="form-group">
+													<div class="row">							
+														<!--<a href="https://www.enkontraki.com/<?php #echo '' . $_SESSION['Empresa']['Site'] . '' ?> "target="_blank">-->
+														<a href="https://www.enkontraki.com.br/<?php echo '' . $_SESSION['Empresa']['Site'] . '' ?> "target="_blank">
+															<button type="button" class="btn btn-info btn-xs">
+																<h4><span class="glyphicon glyphicon-picture"></span> Acesse o Site</h4>
+															</button>
+														</a>
+													</div>
+												</div>	
+											</div>									
 											<!--
 											<div class="col-md-6 text-center">
 												<div class="form-group">
@@ -177,8 +217,7 @@
 											</div>
 											-->
 										</div>	
-
-									</div>
+									
 								</div>
 							</div>
 						</div>

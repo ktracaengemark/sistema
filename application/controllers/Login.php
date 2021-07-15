@@ -16,6 +16,7 @@ class Login extends CI_Controller {
 
         #load header view
         $this->load->view('basico/headerlogin');
+        //$this->load->view('basico/nav_principal_site');
 
         if ($this->agent->is_browser()) {
 			
@@ -34,7 +35,7 @@ class Login extends CI_Controller {
     }
 
     public function index() {
-
+		
 		#$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
@@ -335,7 +336,7 @@ class Login extends CI_Controller {
     }
 
     public function index2() {
-
+		
         #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;

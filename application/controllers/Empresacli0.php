@@ -17,7 +17,9 @@ class Empresacli0 extends CI_Controller {
 
         #load header view
         $this->load->view('basico/header0');
-        $this->load->view('basico/nav_principal0');
+        //$this->load->view('basico/nav_principal0');
+        //$this->load->view('basico/headerlogin');
+        //$this->load->view('basico/nav_principal_site');
 
         #$this->load->view('empresa/nav_secundario');
     }
