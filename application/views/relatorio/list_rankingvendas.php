@@ -38,21 +38,34 @@
 				</div>
 			<?php } ?>
 		</div>
-		<table class="table table-bordered table-condensed table-striped">	
-			<thead>
-				<tr>						
-					<th colspan="1" class="active">Cont / id_Cliente:</th>
-					<th colspan="7" class="active">Clientes = <?php echo $report->soma->somaqtdclientes ?>/<?php echo $total_rows ?></th>
-					<th colspan="1" class="active">Pedidos = <?php echo $report->soma->somaqtdpedidos ?></th>
-					<th colspan="1" class="active">Valor Total = <?php echo $report->soma->somaqtdparc ?></th>
-					<th colspan="1" class="active">CashBack<?php #echo $report->soma->somaqtdparc ?></th>	
-					<th colspan="1" class="active">Validade<?php #echo $report->soma->somaqtdparc ?></th>							
-				</tr>
-			</thead>
-		</table>
 		
-		<div style="overflow: auto; width: auto; height: 300px;">			
+		<div style="overflow: auto; width: auto; height: 300px;">
+			<!--
+			<table class="table table-bordered table-condensed table-striped">	
+				<thead>
+					<tr>						
+						<th colspan="1" class="active">Cont / id_Cliente:</th>
+						<th colspan="7" class="active">Clientes = <?php #echo $report->soma->somaqtdclientes ?>/<?php echo $total_rows ?></th>
+						<th colspan="1" class="active">Pedidos = <?php #echo $report->soma->somaqtdpedidos ?></th>
+						<th colspan="1" class="active">Valor Total = <?php #echo $report->soma->somaqtdparc ?></th>
+						<th colspan="1" class="active">CashBack<?php #echo $report->soma->somaqtdparc ?></th>	
+						<th colspan="1" class="active">Validade<?php #echo $report->soma->somaqtdparc ?></th>							
+					</tr>
+				</thead>
+			</table>
+			-->		
 			<table class="table table-bordered table-condensed table-striped">
+				
+				<thead>
+					<tr>						
+						<th colspan="1" class="active">Cont / id_Cliente:</th>
+						<th colspan="7" class="active">Clientes = <?php echo $report->soma->somaqtdclientes ?>/<?php echo $total_rows ?></th>
+						<th colspan="1" class="active">Pedidos = <?php echo $report->soma->somaqtdpedidos ?></th>
+						<th colspan="1" class="active">Valor Total = <?php echo $report->soma->somaqtdparc ?></th>
+						<th colspan="1" class="active">CashBack</th>	
+						<th colspan="1" class="active">Validade</th>							
+					</tr>
+				</thead>
 				<!--
 				<thead>
 					<tr>
@@ -84,12 +97,12 @@
 						if(isset($row->NomeCliente)) {
 							
 							echo '<tr>';
-								echo '<td>' . ($linha + $cont) . ' / ' . $row->idApp_Cliente . '</td>';
-								echo '<td>' . $row->NomeCliente . '</td>';
-								echo '<td>' . $row->ContPedidos . '</td>';
-								echo '<td>' . $row->Valor2 . '</td>';
-								echo '<td>' . $row->CashBackCliente . '</td>';	
-								echo '<td>' . $row->ValidadeCashBack . '</td>';							
+								echo '<td colspan="1">' . ($linha + $cont) . ' / ' . $row->idApp_Cliente . '</td>';
+								echo '<td colspan="7">' . $row->NomeCliente . '</td>';
+								echo '<td colspan="1">' . $row->ContPedidos . '</td>';
+								echo '<td colspan="1">' . $row->Valor2 . '</td>';
+								echo '<td colspan="1">' . $row->CashBackCliente . '</td>';	
+								echo '<td colspan="1">' . $row->ValidadeCashBack . '</td>';							
 							echo '</tr>';
 						
 							$nomecliente = $row->NomeCliente;

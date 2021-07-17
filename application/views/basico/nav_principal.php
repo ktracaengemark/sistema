@@ -1,5 +1,5 @@
 <nav class="navbar navbar-inverse navbar-fixed-top " role="banner">
-	<div class="col-lg-12 col-md-12 col-sm-12 ">
+	<div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
 		<div class="navbar-header ">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar1">
 				<span class="sr-only">MENU</span>
@@ -12,11 +12,11 @@
 					 <?php echo $_SESSION['log']['Nome2']; ?>./<?php echo $_SESSION['log']['NomeEmpresa2']; ?>.
 				</a>
 			<?php }else{?>	
-				<?php echo form_open(base_url() . 'cliente/pesquisar', 'class="navbar-form navbar-left"'); ?>
+				<?php echo form_open(base_url() . 'cliente/pesquisar', 'class="pesquisarnav navbar-left"'); ?>
 				<div class="input-group">
 					<span class="input-group-btn">
 						<button class="btn btn-info btn-md" type="submit">
-							<span class="glyphicon glyphicon-user"></span> <span class="glyphicon glyphicon-search"></span> 
+							</span> <span class="glyphicon glyphicon-search"></span> 
 						</button>
 					</span>
 					<input type="text" placeholder="Pesquisar Cliente" class="form-control btn-sm " name="Pesquisa" value="">
@@ -24,8 +24,9 @@
 				</form>
 			<?php } ?>	
 		</div>
+	</div>		
+	<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 ">		
 		<div class="collapse navbar-collapse" id="myNavbar1">
-
 			<ul class="nav navbar-nav navbar-center">
 				<!--
 				<li>
@@ -41,7 +42,7 @@
 					</form>
 				</li>
 				-->
-				<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
+				<li class="botoesnav" >
 					<div class="btn-group">
 						<!--
 						<a type="button" class="btn btn-sm btn-success" role="button" href="<?php echo base_url(); ?>agenda">
@@ -53,8 +54,7 @@
 						</button>
 						-->
 						<button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown">
-							<span class="glyphicon glyphicon-calendar"></span> Agenda | 
-							<span class="glyphicon glyphicon-pencil"></span> Tarefas |  <span class="caret"></span>
+							Agenda | Tarefas | <span class="caret"></span>
 						</button>
 						
 						<ul class="dropdown-menu" role="menu">
@@ -68,7 +68,7 @@
 						</ul>
 					</div>							
 				</li>						
-				<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
+				<li class="botoesnav">
 					<div class="btn-group">
 						<!--
 							<a type="button" class="btn btn-sm btn-primary" role="button" href="<?php echo base_url(); ?>pedidos/pedidos">
@@ -81,8 +81,7 @@
 						</button>
 						-->
 						<button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-							<span class="glyphicon glyphicon-usd"></span> Receitas <span class="glyphicon glyphicon-arrow-down"></span> |  
-							<span class="glyphicon glyphicon-gift"></span> Vendas <span class="glyphicon glyphicon-arrow-up"></span> | <span class="caret"></span>
+							Receitas | Vendas | <span class="caret"></span>
 						</button>
 						
 						<ul class="dropdown-menu" role="menu">
@@ -112,7 +111,7 @@
 						</ul>
 					</div>							
 				</li>
-				<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
+				<li class="botoesnav">
 					<div class="btn-group">
 						<!--
 							<a type="button" class="btn btn-sm btn-danger" role="button" href="<?php echo base_url(); ?>despesas/despesas">
@@ -124,8 +123,7 @@
 						</button>
 						-->
 						<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown">
-							 <span class="glyphicon glyphicon-usd"></span> Despesas <span class="glyphicon glyphicon-arrow-up"></span>  | 
-							 <span class="glyphicon glyphicon-gift"></span> Compras <span class="glyphicon glyphicon-arrow-down"></span>  | <span class="caret"></span>
+							 Despesas | Compras | <span class="caret"></span>
 						</button>
 						
 						<ul class="dropdown-menu" role="menu">
@@ -150,7 +148,7 @@
 						</ul>
 					</div>							
 				</li>
-				<li class="btn-toolbar btn-sm navbar-form" role="toolbar" aria-label="...">								
+				<li class="botoesnav">								
 					<div class="btn-group">
 						<!--
 						<a type="button" class="btn btn-sm btn-default" role="button" href="<?php echo base_url(); ?>relatorio/loginempresa">
@@ -172,14 +170,14 @@
 						<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
 							
 							<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
-								<span class="glyphicon glyphicon-hand-right"></span>
+								
 								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?> 
-								 | <span class="glyphicon glyphicon-home"></span> Admin | Sair
+								 | Sair
 							<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
-								<span class="glyphicon glyphicon-warning-sign"></span> Renovar ! 
-								<span class="glyphicon glyphicon-home"></span> Admin | Sair
+								<span class="glyphicon glyphicon-warning-sign"></span>Renovar ! 
+								<span class="glyphicon glyphicon-home"></span>Sair
 							<?php } else {?>
-								<span class="glyphicon glyphicon-home"></span> enkontraki | Sair
+								<span class="glyphicon glyphicon-home"></span> enkontraki|Sair
 							<?php } ?>
 							 | <span class="caret"></span>
 						</button>
@@ -205,7 +203,8 @@
 					</div>
 				</li>	
 			</ul>
-		</div>			
+		</div>
+	</div>		
 	</div>
 </nav>
 <br>

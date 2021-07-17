@@ -5,11 +5,11 @@
 	<?php echo validation_errors(); ?>
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			
-			<?php echo form_open('tarefa', 'role="form"'); ?>
+			<div class="row">
+				<?php echo form_open('tarefa', 'role="form"'); ?>
 				<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>				
-						<div class="col-md-4 text-left">
-							<label class="sr-only" for="Compartilhar">Quem Fazer</label>
+						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 form-group text-left">
+							<label class="" for="Compartilhar">Quem Fazer</label>
 							<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" onchange="this.form.submit()"
 									id="Compartilhar" name="Compartilhar">
 								<?php
@@ -23,8 +23,8 @@
 								?>
 							</select>
 						</div>
-						<div class="col-md-4 text-left">
-							<label  class="sr-only" for="NomeProfissional">Quem Cadastrou?</label>
+						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 form-group  text-left">
+							<label  class="" for="NomeProfissional">Quem Cadastrou?</label>
 							<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" onchange="this.form.submit()"
 									id="NomeProfissional" name="NomeProfissional">
 								<?php
@@ -43,66 +43,72 @@
 					<input type="hidden" name="Compartilhar" id="Compartilhar" value="">
 				<?php } ?>
 				
-				<div class="input-group col-md-4">
-					<!--
-					<span class="input-group-btn">	
-						<div class=" btn btn-success" type="button" data-toggle="collapse" data-target="#Tarefas" aria-expanded="false" aria-controls="Tarefas">
-							<span class="glyphicon glyphicon-chevron-down"></span> Tarefas
-						</div>
-					</span>
-					-->
-						<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) || ($_SESSION['log']['idSis_Empresa'] == 5))  { ?>
-						<span class="input-group-btn">
-							<a class="btn btn-md btn-danger" href="<?php echo base_url() ?>tarefa/cadastrar" role="button"> 
-								<span class="glyphicon glyphicon-plus"></span> Nova
-							</a>
-						</span>
-						<?php } ?>
-					<span class="input-group-btn">
-						<a type="button" class="btn btn-md btn-warning" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
-							<span class="glyphicon glyphicon-filter"></span> Filtrar
-						</a>
-						<!--
-						<button type="button" class="btn btn-md btn-warning dropdown-toggle dropdown-toggle-split" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">							
-							<li>
-								<a class="dropdown-item" href="<?php echo base_url() ?>relatorio/tarefa" role="button">
-									<span class="glyphicon glyphicon-pencil"></span> Estatística das Tarefas
-								</a>
-							</li>					
-							
-							<li>
-								<a class="dropdown-item" href="<?php echo base_url() . 'orcatrata/alterarprocedimento/' . $_SESSION['log']['idSis_Empresa']; ?>">
-									<span class="glyphicon glyphicon-pencil"></span> Editar Tarefas Filtradas
-								</a>
-							</li>
-							
-						</ul>
-						-->
-					</span>
-					<span class="input-group-btn">
-						<a class="btn btn-md btn-success" href="<?php echo base_url() . 'orcatrata/alterarprocedimento/' . $_SESSION['log']['idSis_Empresa']; ?>">
-							<span class="glyphicon glyphicon-pencil"></span> Editar
-						</a>
-					</span>	
-				</div>			
-
 				
-			<!--
-			<button  class="btn btn-md btn-info" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
-				<span class="glyphicon glyphicon-filter"></span>Filtrar
-			</button>
-			<a href="<?php echo base_url() . 'orcatrata/alterarprocedimento/' . $_SESSION['log']['idSis_Empresa']; ?>">
-				<button type="button" class="btn btn-md btn-info">
-					<span class="glyphicon glyphicon-edit"></span> Editar
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+				
+					<label  class="" for="">Ações</label>
+					<div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+						<!--
+						<span class="input-group-btn">	
+							<div class=" btn btn-success" type="button" data-toggle="collapse" data-target="#Tarefas" aria-expanded="false" aria-controls="Tarefas">
+								<span class="glyphicon glyphicon-chevron-down"></span> Tarefas
+							</div>
+						</span>
+						-->
+							<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) || ($_SESSION['log']['idSis_Empresa'] == 5))  { ?>
+							<span class="input-group-btn">
+								<a class="btn btn-md btn-danger" href="<?php echo base_url() ?>tarefa/cadastrar" role="button"> 
+									<span class="glyphicon glyphicon-plus"></span>Nova
+								</a>
+							</span>
+							<?php } ?>
+						<span class="input-group-btn">
+							<a type="button" class="btn btn-md btn-warning" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
+								<span class="glyphicon glyphicon-filter"></span>Filtrar
+							</a>
+							<!--
+							<button type="button" class="btn btn-md btn-warning dropdown-toggle dropdown-toggle-split" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">							
+								<li>
+									<a class="dropdown-item" href="<?php echo base_url() ?>relatorio/tarefa" role="button">
+										<span class="glyphicon glyphicon-pencil"></span> Estatística das Tarefas
+									</a>
+								</li>					
+								
+								<li>
+									<a class="dropdown-item" href="<?php echo base_url() . 'orcatrata/alterarprocedimento/' . $_SESSION['log']['idSis_Empresa']; ?>">
+										<span class="glyphicon glyphicon-pencil"></span> Editar Tarefas Filtradas
+									</a>
+								</li>
+								
+							</ul>
+							-->
+						</span>
+						<span class="input-group-btn">
+							<a class="btn btn-md btn-success" href="<?php echo base_url() . 'orcatrata/alterarprocedimento/' . $_SESSION['log']['idSis_Empresa']; ?>">
+								<span class="glyphicon glyphicon-pencil"></span>Editar
+							</a>
+						</span>	
+						
+					</div>	
+				</div>
+				
+				<!--
+				<button  class="btn btn-md btn-info" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
+					<span class="glyphicon glyphicon-filter"></span>Filtrar
 				</button>
-			</a>
-			-->
-			<!--<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>relatorio/alterarprocedimento" role="button"> 
-				<span class="glyphicon glyphicon-ok"></span> Edit Todas
-			</a>-->											
+				<a href="<?php echo base_url() . 'orcatrata/alterarprocedimento/' . $_SESSION['log']['idSis_Empresa']; ?>">
+					<button type="button" class="btn btn-md btn-info">
+						<span class="glyphicon glyphicon-edit"></span> Editar
+					</button>
+				</a>
+				-->
+				<!--<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>relatorio/alterarprocedimento" role="button"> 
+					<span class="glyphicon glyphicon-ok"></span> Edit Todas
+				</a>-->	
+			</div>
 		</div>
 															
 		<div class="modal fade bs-excluir-modal2-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">

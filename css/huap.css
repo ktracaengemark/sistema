@@ -228,3 +228,46 @@ Para o alinhamento do modal da agenda, centralizando em relação a tela
     margin: 0 auto;
     pointer-events: all;
 }
+.pesquisarnav{
+	margin-top: 8px;
+}
+.botoesnav{
+  margin-top: 8px;
+  /*
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  margin-right: 1px;
+  margin-left: 1px;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), 0 1px 0 rgba(255, 255, 255, .1);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), 0 1px 0 rgba(255, 255, 255, .1);
+  */
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent; 	  
+}
+@media (max-width: 767px) {	
+	.botoesnav{
+		/*margin-top: 20px;*/
+		margin-bottom: 20px;
+		margin-right: 10px;
+		margin-left: 10px;
+	}
+}
+@media (min-width: 768px) and (max-width: 991px) {
+	.botoesnav{
+		margin-right: 1px;
+		margin-left: 1px;
+	}
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+	.botoesnav{
+		margin-right: 5px;
+		margin-left: 5px;
+	}
+}
+@media (min-width: 1200px){
+	.botoesnav{
+		margin-right: 10px;
+		margin-left: 10px;
+	}
+}
+	

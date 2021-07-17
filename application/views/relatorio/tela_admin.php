@@ -5,7 +5,7 @@
 	
 	<div class="row">
 		
-		<div class="col-md-3">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 			<div class="panel panel-success">
 				<div class="panel-heading">
 					<div class=" text-center" style="color: #3CB371" data-toggle="collapse" data-target="#Tarefas" aria-expanded="false" aria-controls="Tarefas">
@@ -55,7 +55,7 @@
 			</div>
 		</div>	
 		
-		<div class="col-md-3">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<div class="text-center" style="color: #00008B" data-toggle="collapse" data-target="#Receitas" aria-expanded="false" aria-controls="Receitas">
@@ -245,7 +245,7 @@
 			</div>
 		</div>
 			
-		<div class="col-md-3">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 			<div class="panel panel-danger">
 				<div class="panel-heading">
 					<div class="text-center" style="color: #8B0000" data-toggle="collapse" data-target="#Despesas" aria-expanded="false" aria-controls="Despesas">
@@ -373,7 +373,7 @@
 			</div>
 		</div>
 		
-		<div class="col-md-3">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="text-center" style="color: #4F4F4F" data-toggle="collapse" data-target="#Administracao" aria-expanded="false" aria-controls="Administracao">
