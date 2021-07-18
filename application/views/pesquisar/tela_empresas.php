@@ -1,8 +1,8 @@
 <?php if ($msg) echo $msg; ?>
-<section id="banner" class="img-responsive">
+<section id="banner" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	<div class="bg-color">
-		<nav class="navbar navbar-inverse navbar-fixed-top header-menu">
-			<div class="container">
+		<nav class="navbar navbar-inverse navbar-fixed-top navbar-menu">
+			
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 						<span class="sr-only">Toggle navigation</span>
@@ -10,57 +10,36 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>					
-					<a class="navbar-brand" href="<?php echo base_url() ?>../enkontraki/index.php"><img src="<?php echo base_url() ?>/arquivos/imagens/Logo_Navegador.png"></a>
+					<a class="navbar-brand navbar-logo" href="<?php echo base_url() ?>../enkontraki/index.php"><img src="<?php echo base_url() ?>/arquivos/imagens/Logo_Navegador.png"></a>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
-					<ul class="nav navbar-nav navbar-right">
+					<ul class="nav navbar-nav navbar-right navbar-fonte">
 						<li class="nav-item">
-							<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/contato.php">Fale Conosco</a>
+							<a class="nav-link" href="<?php echo base_url() . '../enkontraki/#banner';?>">Enkontraki</a>
 						</li>
-						<!--
 						<li class="nav-item">
-							<a class="nav-link" href="#cta-1">Planos</a>
+							<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/#about">A Plataforma</a>
 						</li>
-						-->
 						<li class="nav-item">
-							<a class="nav-link" href="<?php echo base_url() ?>../enkontraki">Site</a>
+							<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/#cta-1">Planos</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/#testimonial">Depoimentos</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/#dicas">Dicas</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/#contact">Fale Conosco</a>
 						</li>
 					</ul>
 				</div>		
-			</div>
+			
 		</nav>
 				
-		<div class="container">
+		
 			<div class="row">
 				<div class="banner-info">
-					<!--
-					<div data-interval="3000" id="carouselSite" class="carousel slide" data-ride="carousel">
-						<ol class="carousel-indicators">
-							<li data-target="#carouselSite" data-slide-to="0" class="active"></li>
-							<li data-target="#carouselSite" data-slide-to="1"></li>
-							<li data-target="#carouselSite" data-slide-to="2"></li>
-							<li data-target="#carouselSite" data-slide-to="3"></li>
-							<li data-target="#carouselSite" data-slide-to="4"></li>				
-						</ol>
-						<div class="carousel-inner" role="listbox">
-							<div class="item active">
-								<img src="<?php echo base_url() ?>/arquivos/imagens/Slide1.jpg" class="img-responsive d-block">												
-							</div>
-							<div class="item">
-								<img src="<?php echo base_url() ?>/arquivos/imagens/Slide2.jpg" class="img-responsive d-block">												
-							</div>
-							<div class="item">
-								<img src="<?php echo base_url() ?>/arquivos/imagens/Slide3.jpg" class="img-responsive d-block">												
-							</div>
-							<div class="item">
-								<img src="<?php echo base_url() ?>/arquivos/imagens/Slide4.jpg" class="img-responsive d-block">												
-							</div>
-							<div class="item">
-								<img src="<?php echo base_url() ?>/arquivos/imagens/Slide5.jpg" class="img-responsive d-block">												
-							</div>
-						</div>
-					</div>
-					-->
 					<div class="col-md-12 col-sm-12 col-xs-12 text-center img-responsive">	
 						<center>
 							<figure>
@@ -288,6 +267,6 @@
 				<a href="#service"><i class="fa fa-angle-down"></i></a>
 			</div>
 			-->
-		</div>
+		
 	</div>
 </section>

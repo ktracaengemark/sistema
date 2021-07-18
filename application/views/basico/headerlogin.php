@@ -13,11 +13,13 @@
         <title>enkontraki</title>
 
         <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap.min.css" >
+        <!--<link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap.min.css" >-->
+        <link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap.css">
 
         <!-- Custom styles for this template -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/signin.css" >
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/style_site.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>css/huap.css" >
 
     </head>
 

@@ -16,7 +16,7 @@
 				<div class="input-group">
 					<span class="input-group-btn">
 						<button class="btn btn-info btn-md" type="submit">
-							</span> <span class="glyphicon glyphicon-search"></span> 
+							<span class="glyphicon glyphicon-search"></span> 
 						</button>
 					</span>
 					<input type="text" placeholder="Pesquisar Cliente" class="form-control btn-sm " name="Pesquisa" value="">
@@ -171,8 +171,7 @@
 							
 							<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
 								
-								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?> 
-								 | Sair
+								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?>| Sair
 							<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
 								<span class="glyphicon glyphicon-warning-sign"></span>Renovar ! 
 								<span class="glyphicon glyphicon-home"></span>Sair
@@ -204,7 +203,6 @@
 				</li>	
 			</ul>
 		</div>
-	</div>		
 	</div>
 </nav>
 <br>

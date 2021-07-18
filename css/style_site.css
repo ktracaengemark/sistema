@@ -72,11 +72,6 @@ a, a:hover, a:focus, a:active{
 	opacity:.6;
 	background-color: #FFFFFF;
 }
-.header-menu{
-    background-color: #003761;
-    color: #fff;
-    font-size: 15px;
-}
 .header-text{
 	background:rgba(33, 191, 252, 0.35);
 	width:55%;
@@ -202,6 +197,36 @@ banner
 
 .navbar-default .navbar-brand, .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
     color: #EA6045;
+}
+
+.navbar-logo{
+	/*margin-top:-15px;*/
+}
+
+.navbar-logo  img{
+	margin-left: 30px;
+	margin-top:-15px;
+}
+
+.navbar-menu{
+    background-color: #003761;
+    color: #fff;
+    font-size: 15px;
+}
+
+.navbar-fonte{
+		margin-right: 15px;
+		margin-left: 5px;
+}
+@media (min-width: 768px) and (max-width: 991px){
+	.navbar-fonte{
+		font-size: 14px;
+	}
+}
+@media (min-width: 992px) and (max-width: 1054px){
+	.navbar-fonte{
+		font-size: 15px;
+	}
 }
 
 .top-nav-collapse {
