@@ -28,9 +28,6 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         <!-- <title>ROMATI - Agenda online de pacientes</title>-->
         <title>Empresas</title>        
 
-        <!-- HUAP CSS Custom -->
-        <link rel="stylesheet" href="<?php echo base_url(); ?>css/huap.css">
-
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap.css">
 
@@ -48,8 +45,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/font-awesome/css/font-awesome.min.css">
 
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/select2.min.css">
+		
+        <link rel="stylesheet" href="<?php echo base_url(); ?>css/signin.css" >
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/style_site.css">
-
+        <link rel="stylesheet" href="<?php echo base_url(); ?>css/huap.css">
 
     </head>
 

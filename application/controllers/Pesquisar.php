@@ -20,7 +20,7 @@ class Pesquisar extends CI_Controller {
         $this->load->view('basico/header0');
         #$this->load->view('basico/nav_principal0');
         #$this->load->view('basico/headerlogin');
-        #$this->load->view('basico/nav_principal_site');
+        $this->load->view('basico/nav_principal_site');
 
         #$this->load->view('relatorio/nav_secundario');
     }
@@ -41,6 +41,8 @@ class Pesquisar extends CI_Controller {
     }
 
 	public function empresas() {
+	
+        $this->load->view('basico/logologin');
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -104,7 +106,8 @@ class Pesquisar extends CI_Controller {
         }
 
         $this->load->view('pesquisar/tela_empresas', $data);
-
+        
+		$this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
 
     }

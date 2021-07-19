@@ -7,6 +7,9 @@ body {
 	font-size: 16px;
 }
 */
+body {
+	background-color: #003761;
+}
 ol, ul {
 	list-style: none;
 }
@@ -269,6 +272,32 @@ banner
     background-color: rgba(12, 184, 182) !important;
 }
 
+#login{
+	/*background: url('../img/bg-banner.jpg') no-repeat fixed;*/
+	background-color: #003761;
+	background-size: cover;
+	min-height: 0px;
+	position: relative;
+}
+
+#logologin{
+	background-color: #003761;
+	background-size: cover;
+	min-height: 0px;
+	position: relative;
+}
+
+.bg-logo{
+	padding-top: 5px;
+}
+
+#baselogin{
+	background-color: #003761;
+	background-size: cover;
+	min-height: 0px;
+	position: relative;
+}
+
 #banner{
 	/*background: url('../img/bg-banner.jpg') no-repeat fixed;*/
 	background-color: #003761;
@@ -278,11 +307,12 @@ banner
 }
 
 .bg-color{
-	background-color: transparent;
+	/*background-color: transparent;*/
+	background-color: #003761;
 	min-height: 150px;/*esta linha comanda o tamanho do bg, era 650px*/
 }
 .banner-info{
-	padding-top: 20px;
+	padding-top: 0px;
 }
 .banner-logo img{
 	display: inline-block;

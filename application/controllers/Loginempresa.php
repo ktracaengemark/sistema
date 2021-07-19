@@ -16,7 +16,7 @@ class Loginempresa extends CI_Controller {
 
         #load header view
         $this->load->view('basico/headerloginempresa');
-        //$this->load->view('basico/nav_principal_site');
+        $this->load->view('basico/nav_principal_site');
 
         if ($this->agent->is_browser()) {
 
@@ -153,6 +153,8 @@ class Loginempresa extends CI_Controller {
     }
 
     public function registrar() {
+	
+        $this->load->view('basico/logologin');
 		
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
@@ -187,7 +189,7 @@ class Loginempresa extends CI_Controller {
 			'NumUsuarios',
 			'Site',
 		), TRUE);
-
+		
 		$caracteres_sem_acento = array(
 			'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
 			'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
@@ -651,6 +653,7 @@ class Loginempresa extends CI_Controller {
         }
 
         #$this->load->view('basico/footerloginempresa');
+        $this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }
 

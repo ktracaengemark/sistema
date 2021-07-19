@@ -19,7 +19,7 @@ class Empresacli0 extends CI_Controller {
         $this->load->view('basico/header0');
         //$this->load->view('basico/nav_principal0');
         //$this->load->view('basico/headerlogin');
-        //$this->load->view('basico/nav_principal_site');
+        $this->load->view('basico/nav_principal_site');
 
         #$this->load->view('empresa/nav_secundario');
     }
@@ -40,6 +40,8 @@ class Empresacli0 extends CI_Controller {
     }
 
     public function prontuario($id) {
+	
+        $this->load->view('basico/logologin');
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -77,11 +79,14 @@ class Empresacli0 extends CI_Controller {
 		*/
 
 		$this->load->view('empresacli/tela_empresacli0', $data);
-
+		
+        $this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }
 
     public function pesquisar() {
+	
+        $this->load->view('basico/logologin');
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -114,7 +119,8 @@ class Empresacli0 extends CI_Controller {
         ($data['Pesquisa']) ? $data['cadastrar'] = TRUE : $data['cadastrar'] = FALSE;
 
         $this->load->view('empresacli/pesq_empresa0', $data);
-
+		
+        $this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }
 

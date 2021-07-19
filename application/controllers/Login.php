@@ -16,7 +16,7 @@ class Login extends CI_Controller {
 
         #load header view
         $this->load->view('basico/headerlogin');
-        //$this->load->view('basico/nav_principal_site');
+        $this->load->view('basico/nav_principal_site');
 
         if ($this->agent->is_browser()) {
 			
@@ -35,6 +35,8 @@ class Login extends CI_Controller {
     }
 
     public function index() {
+	
+        $this->load->view('basico/logologin');
 		
 		#$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
@@ -183,10 +185,13 @@ class Login extends CI_Controller {
 
         #load footer view
         #$this->load->view('basico/footerlogin');
+        $this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }	
 
     public function index1() {
+	
+        $this->load->view('basico/logologin');
 
         #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
@@ -332,10 +337,13 @@ class Login extends CI_Controller {
 
         #load footer view
         #$this->load->view('basico/footerlogin');
+        $this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }
 
     public function index2() {
+
+        $this->load->view('basico/logologin');
 		
         #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
@@ -481,10 +489,14 @@ class Login extends CI_Controller {
 
         #load footer view
         #$this->load->view('basico/footerlogin');
+        $this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }
 	
     public function index3() {
+	
+        $this->load->view('basico/logologin');
+
 
         #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
@@ -630,10 +642,14 @@ class Login extends CI_Controller {
 
         #load footer view
         #$this->load->view('basico/footerlogin');
+        $this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }	
 
     public function index4() {
+	
+        $this->load->view('basico/logologin');
+
 
         #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
@@ -784,10 +800,14 @@ class Login extends CI_Controller {
 
         #load footer view
         #$this->load->view('basico/footerlogin');
+        $this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }
 	
     public function index5() {
+	
+        $this->load->view('basico/logologin');
+
 
         #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
@@ -955,6 +975,7 @@ class Login extends CI_Controller {
 		}
         #load footer view
         #$this->load->view('basico/footerlogin');
+        $this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }	
 	
