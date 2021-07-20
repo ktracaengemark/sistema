@@ -4199,9 +4199,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   float: right;
   padding: 9px 10px;
   margin-top: 8px;
-  margin-right: 15px;
+  margin-right: 0px;
   margin-bottom: 8px;
-  background-color: transparent;
+  background-color: #e7e7e7;/*alterei esta cor "transparent"*/
   background-image: none;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -4531,10 +4531,10 @@ fieldset[disabled] .navbar-default .btn-link:focus {
 }
 .navbar-inverse .navbar-toggle:hover,
 .navbar-inverse .navbar-toggle:focus {
-  background-color: #333;
+  background-color: #fff; /*alterei esta cor #333*/
 }
 .navbar-inverse .navbar-toggle .icon-bar {
-  background-color: #fff;
+  background-color: #101010;
 }
 .navbar-inverse .navbar-collapse,
 .navbar-inverse .navbar-form {

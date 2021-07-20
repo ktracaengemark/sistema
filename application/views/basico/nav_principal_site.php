@@ -2,7 +2,7 @@
 <section id="login" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	<nav class="navbar navbar-inverse navbar-fixed-top navbar-menu">
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			<button type="button" class="navbar-toggle navbar-toggle-site collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 				<span class="sr-only">Toggle navigation</span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>

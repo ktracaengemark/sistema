@@ -264,6 +264,11 @@ banner
     text-transform: uppercase;
     background-color: rgba(12, 184, 182, 0.21);
 }
+
+.navbar-toggle-site{
+	margin-right: 15px;
+}
+
 .affix {
     background-color: #ffffff !important;
 }
