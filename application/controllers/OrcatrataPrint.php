@@ -700,7 +700,7 @@ class OrcatrataPrint extends CI_Controller {
 			$config['base_url'] = base_url() . 'OrcatrataPrint/imprimirlistarec/' . $id . '/';
 			$config['total_rows'] = $this->Orcatrataprintcobranca_model->get_orcatrata($id, TRUE);
 			
-			$config['per_page'] = 12;
+			$config['per_page'] = 24;
 			$config["uri_segment"] = 4;
 			$config['reuse_query_string'] = TRUE;
 			$config['num_links'] = 2;
