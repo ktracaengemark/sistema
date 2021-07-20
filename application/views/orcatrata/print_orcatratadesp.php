@@ -4,7 +4,7 @@
 	<?php if ( !isset($evento) && isset($query)) { ?>
 		<?php if ($query['idApp_OrcaTrata'] != 1 ) { ?>
 			<nav class="navbar navbar-inverse navbar-fixed" role="banner">
-			  <div class="container-fluid">
+			  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
 						<span class="icon-bar"></span>

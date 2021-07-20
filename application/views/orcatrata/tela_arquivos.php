@@ -6,14 +6,14 @@
 			<?php if ( !isset($evento) && isset($orcatrata) && ($_SESSION['log']['idSis_Empresa'] != 5 || $_SESSION['log']['idSis_Empresa'] == $orcatrata['idSis_Empresa'])) { ?>
 				<?php if ($orcatrata['idApp_Cliente'] != 150001 && $orcatrata['idApp_Cliente'] != 1 && $orcatrata['idApp_Cliente'] != 0) { ?>
 					<nav class="navbar navbar-inverse navbar-fixed" role="banner">
-						<div class="container-fluid">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="navbar-header">
 								<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
 									<span class="icon-bar"></span>
 									<span class="icon-bar"></span>
 									<span class="icon-bar"></span> 
 								</button>
-								<div class="navbar-form btn-group">
+								<div class="btn-menu btn-group">
 									<button type="button" class="btn btn-md btn-default  dropdown-toggle" data-toggle="dropdown">
 										<span class="glyphicon glyphicon-user"></span>
 											<?php echo '<small>' . $_SESSION['Cliente']['NomeCliente'] . '</small> - <small>' . $_SESSION['Cliente']['idApp_Cliente'] . '</small>' ?>
@@ -53,7 +53,7 @@
 							</div>
 							<div class="collapse navbar-collapse" id="myNavbar">
 								<ul class="nav navbar-nav navbar-center">
-									<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
+									<li class="botoesnav" role="toolbar" aria-label="...">
 										<div class="btn-group">
 											<button type="button" class="btn btn-md btn-default  dropdown-toggle" data-toggle="dropdown">
 												<span class="glyphicon glyphicon-calendar"></span> Agenda <span class="caret"></span>
@@ -78,7 +78,7 @@
 										</div>									
 									</li>								
 									<?php if ($orcatrata['idSis_Empresa'] == $_SESSION['log']['idSis_Empresa'] ) { ?>
-									<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
+									<li class="botoesnav" role="toolbar" aria-label="...">
 										<div class="btn-group">
 											<button type="button" class="btn btn-md btn-default  dropdown-toggle" data-toggle="dropdown">
 												<span class="glyphicon glyphicon-usd"></span> Orcs. <span class="caret"></span>
@@ -104,7 +104,7 @@
 									</li>
 									<?php } ?>
 									<?php if ($_SESSION['Usuario']['Edit_Orcam'] == "S" ) { ?>
-										<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
+										<li class="botoesnav" role="toolbar" aria-label="...">
 											<div class="btn-group">
 												<a type="button" class="btn btn-md btn-default " href="<?php echo base_url() . 'orcatrata/alterarstatus/' . $orcatrata['idApp_OrcaTrata']; ?>">
 													<span class="glyphicon glyphicon-edit"></span> Editar
@@ -112,21 +112,21 @@
 											</div>									
 										</li>
 									<?php } ?>
-									<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
+									<li class="botoesnav" role="toolbar" aria-label="...">
 										<div class="btn-group">
 											<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'orcatrata/arquivos/' . $orcatrata['idApp_OrcaTrata']; ?>">
 												<span class="glyphicon glyphicon-picture"></span> Arquivos
 											</a>
 										</div>									
 									</li>	
-									<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
+									<li class="botoesnav" role="toolbar" aria-label="...">
 										<div class="btn-group">
 											<a type="button" class="btn btn-md btn-default " href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $orcatrata['idApp_OrcaTrata']; ?>">
 												<span class="glyphicon glyphicon-edit"></span> Impressao
 											</a>
 										</div>									
 									</li>
-									<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
+									<li class="botoesnav" role="toolbar" aria-label="...">
 										<div class="btn-group">
 											<button type="button" class="btn btn-md btn-default  dropdown-toggle" data-toggle="dropdown">
 												<span class="glyphicon glyphicon-pencil"></span> SAC <span class="caret"></span>
@@ -150,7 +150,7 @@
 											</ul>
 										</div>
 									</li>
-									<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">
+									<li class="botoesnav" role="toolbar" aria-label="...">
 										<div class="btn-group">
 											<button type="button" class="btn btn-md btn-default  dropdown-toggle" data-toggle="dropdown">
 												<span class="glyphicon glyphicon-pencil"></span> Marketing <span class="caret"></span>

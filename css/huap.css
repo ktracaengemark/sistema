@@ -279,3 +279,12 @@ Para o alinhamento do modal da agenda, centralizando em relação a tela
 .btn-menu{
 	margin-top:9px;
 }
+.btn-menu-print{
+	margin-top:9px;
+	margin-right: 10px;
+}
+@media (min-width: 768px) {	
+	.btn-paginacao{
+		margin-top:-11px;
+	}
+}

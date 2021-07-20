@@ -4,14 +4,14 @@
 <div class="col-md-2"></div>
 <div class="col-md-8">	
 	<nav class="navbar navbar-inverse navbar-fixed" role="banner">
-		<div class="container-fluid">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span> 
 				</button>
-				<div class="navbar-brand btn-group">
+				<div class="btn-menu-print btn-group">
 					<a type="button" class="col-md-4 btn btn-md btn-default " href="javascript:window.print()">
 						<span class="glyphicon glyphicon-print"></span>
 					</a>
@@ -20,7 +20,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="collapse navbar-collapse" id="myNavbar">
+			<div class="btn-paginacao collapse navbar-collapse" id="myNavbar">
 				<?php echo $pagination; ?>
 			</div>
 		</div>
