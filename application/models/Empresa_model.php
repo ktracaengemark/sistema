@@ -188,55 +188,58 @@ class Empresa_model extends CI_Model {
 	
     public function delete_empresa_toda($data) { 
 		
-		$this->db->delete('Sis_Empresa', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Agenda', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Atendimento', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Atividade', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Cliente', array('idSis_Empresa' => $data));
-        $this->db->delete('App_ClienteDep', array('idSis_Empresa' => $data));
-        $this->db->delete('App_ClientePet', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Consulta', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Contato', array('idSis_Empresa' => $data));
-        $this->db->delete('App_ContatoCliente', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Contatofornec', array('idSis_Empresa' => $data));
-        $this->db->delete('App_ContatoUsuario', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Documentos', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Fornecedor', array('idSis_Empresa' => $data));
-        $this->db->delete('App_OrcaTrata', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Pagamento', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Parcelas', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Parcelas_Pagamento', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Procedimento', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Produto', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Produto_Pagamento', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Servico', array('idSis_Empresa' => $data));
-        $this->db->delete('App_Slides', array('idSis_Empresa' => $data));
-        $this->db->delete('App_SubProcedimento', array('idSis_Empresa' => $data));
-        $this->db->delete('Sis_Arquivo', array('idSis_Empresa' => $data));
-        $this->db->delete('Sis_EmpresaFilial', array('idSis_Empresa' => $data));
-        $this->db->delete('Sis_Usuario', array('idSis_Empresa' => $data));
-        $this->db->delete('Tab_Atributo', array('idSis_Empresa' => $data));
-        $this->db->delete('Tab_Categoria', array('idSis_Empresa' => $data));
-        $this->db->delete('Tab_Catprod', array('idSis_Empresa' => $data));
-        $this->db->delete('Tab_Catprom', array('idSis_Empresa' => $data));
-        $this->db->delete('Tab_Convenio', array('idSis_Empresa' => $data));
-        $this->db->delete('Tab_Dia_Prom', array('idSis_Empresa' => $data));
-        $this->db->delete('Tab_Funcao', array('idSis_Empresa' => $data));
-        $this->db->delete('Tab_Motivo', array('idSis_Empresa' => $data));
-        $this->db->delete('Tab_Opcao', array('idSis_Empresa' => $data));
-        $this->db->delete('Tab_Produto', array('idSis_Empresa' => $data));
-        $this->db->delete('Tab_Produtos', array('idSis_Empresa' => $data));
-        $this->db->delete('Tab_Promocao', array('idSis_Empresa' => $data));
-        $this->db->delete('Tab_Valor', array('idSis_Empresa' => $data));
+		if(isset($data) && $data !=0){
+			
+			$this->db->delete('Sis_Empresa', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Agenda', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Atendimento', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Atividade', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Cliente', array('idSis_Empresa' => $data));
+			$this->db->delete('App_ClienteDep', array('idSis_Empresa' => $data));
+			$this->db->delete('App_ClientePet', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Consulta', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Contato', array('idSis_Empresa' => $data));
+			$this->db->delete('App_ContatoCliente', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Contatofornec', array('idSis_Empresa' => $data));
+			$this->db->delete('App_ContatoUsuario', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Documentos', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Fornecedor', array('idSis_Empresa' => $data));
+			$this->db->delete('App_OrcaTrata', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Pagamento', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Parcelas', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Parcelas_Pagamento', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Procedimento', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Produto', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Produto_Pagamento', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Servico', array('idSis_Empresa' => $data));
+			$this->db->delete('App_Slides', array('idSis_Empresa' => $data));
+			$this->db->delete('App_SubProcedimento', array('idSis_Empresa' => $data));
+			$this->db->delete('Sis_Arquivo', array('idSis_Empresa' => $data));
+			$this->db->delete('Sis_EmpresaFilial', array('idSis_Empresa' => $data));
+			$this->db->delete('Sis_Usuario', array('idSis_Empresa' => $data));
+			$this->db->delete('Tab_Atributo', array('idSis_Empresa' => $data));
+			$this->db->delete('Tab_Categoria', array('idSis_Empresa' => $data));
+			$this->db->delete('Tab_Catprod', array('idSis_Empresa' => $data));
+			$this->db->delete('Tab_Catprom', array('idSis_Empresa' => $data));
+			$this->db->delete('Tab_Convenio', array('idSis_Empresa' => $data));
+			$this->db->delete('Tab_Dia_Prom', array('idSis_Empresa' => $data));
+			$this->db->delete('Tab_Funcao', array('idSis_Empresa' => $data));
+			$this->db->delete('Tab_Motivo', array('idSis_Empresa' => $data));
+			$this->db->delete('Tab_Opcao', array('idSis_Empresa' => $data));
+			$this->db->delete('Tab_Produto', array('idSis_Empresa' => $data));
+			$this->db->delete('Tab_Produtos', array('idSis_Empresa' => $data));
+			$this->db->delete('Tab_Promocao', array('idSis_Empresa' => $data));
+			$this->db->delete('Tab_Valor', array('idSis_Empresa' => $data));
 
-		//$query = $this->db->delete('Tab_Produtos', array('idTab_Produtos' => $id));
-        //$query = $this->db->delete('Tab_Valor', array('idTab_Produtos' => $id));
-		
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
+			//$query = $this->db->delete('Tab_Produtos', array('idTab_Produtos' => $id));
+			//$query = $this->db->delete('Tab_Valor', array('idTab_Produtos' => $id));
+			
+			if ($this->db->affected_rows() === 0) {
+				return FALSE;
+			} else {
+				return TRUE;
+			}
+		}	
     }
 
     public function delete_arquivo($data) {

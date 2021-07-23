@@ -17,6 +17,7 @@ $db['default'] = array(
 
     #'database' => 'ci',
     'database' => 'app',	
+	#'database' => 'app.testes',
 	#'database' => 'app.testes3',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
