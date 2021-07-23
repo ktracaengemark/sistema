@@ -52,23 +52,47 @@ class Agenda_model extends CI_Model {
         //else
     }
 
-    public function cliente_aniversariantes($data) {
-
+    public function cliente_aniversariantes($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+		if($data != FALSE){
+			$data['Dia'] = ($data['Dia']) ? ' AND DAY(DataNascimento) = ' . $data['Dia'] : FALSE;
+			$data['Mesvenc'] = ($data['Mesvenc']) ? ' AND MONTH(DataNascimento) = ' . $data['Mesvenc'] : FALSE;
+			$data['Ano'] = ($data['Ano']) ? ' AND YEAR(DataNascimento) = ' . $data['Ano'] : FALSE;	
+			$data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND idApp_Cliente = ' . $data['idApp_Cliente'] : FALSE;	
+		}else{
+			$data['Dia'] = ($_SESSION['FiltroAlteraProcedimento']['Dia']) ? ' AND DAY(DataNascimento) = ' . $_SESSION['FiltroAlteraProcedimento']['Dia'] : FALSE;
+			$data['Mesvenc'] = ($_SESSION['FiltroAlteraProcedimento']['Mesvenc']) ? ' AND MONTH(DataNascimento) = ' . $_SESSION['FiltroAlteraProcedimento']['Mesvenc'] : FALSE;
+			$data['Ano'] = ($_SESSION['FiltroAlteraProcedimento']['Ano']) ? ' AND YEAR(DataNascimento) = ' . $_SESSION['FiltroAlteraProcedimento']['Ano'] : FALSE;
+			$data['idApp_Cliente'] = ($_SESSION['FiltroAlteraProcedimento']['idApp_Cliente']) ? ' AND idApp_Cliente = ' . $_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'] : FALSE;	
+		}
+		
+		$querylimit = '';
+        if ($limit)
+            $querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		
         $query = $this->db->query('
             SELECT 
                 idApp_Cliente, 
                 NomeCliente,
                 DataNascimento,
-
 				CelularCliente				
             FROM 
                 App_Cliente
             WHERE 
-
-                (MONTH(DataNascimento) = ' . date('m', time()) . ')
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
+				' . $data['idApp_Cliente'] . '
+				' . $data['Dia'] . ' 
+				' . $data['Mesvenc'] . '
+				' . $data['Ano'] . '
             ORDER BY 
-				NomeCliente ASC');
+				DAY(DataNascimento) ASC,
+				NomeCliente ASC
+			' . $querylimit . '
+		');
 
+		if($total == TRUE) {
+			return $query->num_rows();
+		}
+		
         /*
 		
           echo $this->db->last_query();
@@ -79,12 +103,13 @@ class Agenda_model extends CI_Model {
           exit ();
          */
 
-        if ($query->num_rows() === 0)
+        if ($completo === FALSE)
             return FALSE;
         else {
 
             foreach ($query->result() as $row) {
 				$row->Idade = $this->basico->calcula_idade($row->DataNascimento);
+				$row->DataNascimento = $this->basico->mascara_data($row->DataNascimento, 'barras');
             }            
             return $query;
         }
