@@ -8,10 +8,10 @@
 			<div class="panel-heading">
 				<div class="btn-group " role="group" aria-label="...">
 					<div class="row text-left">
-						<div class="col-md-3 text-left">
-							<label></label><br>
+						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-left">
+							<label>Filtros</label>
 							<button  class="btn btn-md btn-warning btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
-								<span class="glyphicon glyphicon-filter"></span>Filtros
+								<span class="glyphicon glyphicon-filter"></span>
 							</button>
 						</div>
 						<!--
@@ -33,15 +33,7 @@
 							</a>
 						</div>
 						-->
-						<div class="col-md-3 text-left">
-							<label></label><br>
-							<a href="<?php echo base_url() . 'gerar_excel/Clientes/clientes_tudo.php'; ?>">
-								<button type='button' class='btn btn-md btn-success btn-block'>
-									Gerar XLSX
-								</button>
-							</a>
-						</div>
-						<div class="col-md-6 text-left">
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
 							<label  id="NomeClienteAuto1">Cliente: <?php echo $cadastrar['NomeClienteAuto']; ?></label>
 							<div class="input-group">
 								<span class="input-group-btn">
@@ -50,10 +42,10 @@
 									</button>
 								</span>
 								<input type="text" autofocus name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php echo $cadastrar['id_Cliente_Auto']; ?>" class="form-control" placeholder="Pesquisar Cliente">
-								<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php echo $cadastrar['NomeClienteAuto']; ?>" />
-								<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php echo $query['idApp_Cliente']; ?>" />
-								<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">
 							</div>
+							<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php echo $cadastrar['NomeClienteAuto']; ?>" />
+							<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php echo $query['idApp_Cliente']; ?>" />
+							<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">
 						</div>
 						<!--
 						<button  class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
@@ -248,7 +240,7 @@
 					<div class="form-group col-md-3">
 						<div class="form-footer ">
 							<button class="btn btn-warning btn-block" name="pesquisar" value="0" type="submit">
-								<span class="glyphicon glyphicon-filter"></span> Filtrar
+								<span class="glyphicon glyphicon-search"></span> Pesquisar
 							</button>
 						</div>
 					</div>
@@ -256,7 +248,7 @@
 					<div class="form-group col-md-4">
 						<div class="form-footer">		
 							<a class="btn btn-warning btn-block" href="<?php echo base_url() ?>relatorio/aniversario" role="button">
-								<span class="glyphicon glyphicon-search"></span> Estoque
+								<span class="glyphicon glyphicon-search"></span> Aniversário
 							</a>
 						</div>	
 					</div>

@@ -1,7 +1,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<?php if($paginacao == "S") { ?>
-			<div class="col-md-2">
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
 				<label></label><br>
 				<a href="<?php echo base_url() . $caminho; ?>">
 					<button class="btn btn-warning btn-md btn-block" type="button">
@@ -10,19 +10,27 @@
 				</a>
 			</div>
 		<?php } ?>
-		<div class="col-md-2">
+		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+			<label></label><br>
+			<a href="<?php echo base_url() . 'gerar_excel/Clientes/clientes_tudo.php'; ?>">
+				<button type='button' class='btn btn-md btn-success btn-block'>
+					Gerar Excel
+				</button>
+			</a>
+		</div>
+		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
 			<label></label><br>
 			<div class="input-group">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
 				<input type="text" class="form-control" disabled aria-label="Contagem" value="<?php echo $report->num_rows(); ?> / <?php echo $total_rows; ?>">
 			</div>
 		</div>
-		<div class="col-md-6 text-left">
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-left">
 			<?php echo $pagination; ?>
 		</div>
 	</div>
 	<div class="row">	
-		<div class="col-md-12 text-left">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">
 			<div style="overflow: auto; height: 550px; ">
 				<!--
 				<table class="table table-bordered table-condensed table-striped">	
@@ -75,7 +83,7 @@
 						?>
 						<tr class="clickable-row" data-href="<?php echo base_url() . 'cliente/prontuario/' . $row['idApp_Cliente'] . ''; ?>">
 							<td><?php echo ($linha + $count) ?></td>
-							<td><img  alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/clientes/miniatura/' . $row['Arquivo'] . ''; ?> "class="img-circle img-responsive" width='100'></td>
+							<td><img  class="img-circle img-responsive" width='50' alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/clientes/miniatura/' . $row['Arquivo'] . ''; ?> "></td>
 							<td><?php echo $row['idApp_Cliente'] ?></td>
 							<td><?php echo $row['NomeCliente'] ?></td>
 							<td><?php echo $row['RegistroFicha'] ?></td>
