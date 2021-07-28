@@ -8,13 +8,40 @@
 			<div class="panel-heading">
 				<div class="btn-group " role="group" aria-label="...">
 					<div class="row text-left">
-						<div class="col-md-2 text-left">
+						<div class="col-md-3 text-left">
 							<label></label><br>
 							<button  class="btn btn-md btn-warning btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
 								<span class="glyphicon glyphicon-filter"></span>Filtros
 							</button>
 						</div>
-						<div class="col-md-8 text-left">
+						<!--
+						<div class="col-md-2 text-left">
+							<label></label><br>
+							<a href="<?php echo base_url() . 'gerar_excel/Clientes/Clientes.php'; ?>">
+								<button type='button' class='btn btn-md btn-success btn-block'>
+									Exprtar Excel
+								</button>
+							</a>
+						</div>
+						
+						<div class="col-md-2 text-left">
+							<label></label><br>
+							<a href="<?php echo base_url() . 'gerar_excel/Clientes/export.php'; ?>">
+								<button type='button' class='btn btn-md btn-success btn-block'>
+									Gerar XLSX
+								</button>
+							</a>
+						</div>
+						-->
+						<div class="col-md-3 text-left">
+							<label></label><br>
+							<a href="<?php echo base_url() . 'gerar_excel/Clientes/clientes_tudo.php'; ?>">
+								<button type='button' class='btn btn-md btn-success btn-block'>
+									Gerar XLSX
+								</button>
+							</a>
+						</div>
+						<div class="col-md-6 text-left">
 							<label  id="NomeClienteAuto1">Cliente: <?php echo $cadastrar['NomeClienteAuto']; ?></label>
 							<div class="input-group">
 								<span class="input-group-btn">
