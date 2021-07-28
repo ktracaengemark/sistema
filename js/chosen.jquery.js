@@ -118,7 +118,7 @@
             this.form_field = form_field;
             this.options = options != null ? options : {};
             if (!AbstractChosen.browser_is_supported()) {
-                return;
+                return true; //mudei esta linha para de "return;"  para "return true;"
             }
             this.is_multiple = this.form_field.multiple;
             this.set_default_text();
@@ -483,11 +483,11 @@
                 return document.documentMode >= 8;
             }
             if (/iP(od|hone)/i.test(window.navigator.userAgent)) {
-                return false;
+                return true; //mudei esta linha de "return false" para "return true"
             }
             if (/Android/i.test(window.navigator.userAgent)) {
                 if (/Mobile/i.test(window.navigator.userAgent)) {
-                    return false;
+                    return true; //mudei esta linha de "return false" para "return true"
                 }
             }
             return true;
@@ -508,7 +508,7 @@
     $.fn.extend({
         chosen: function (options) {
             if (!AbstractChosen.browser_is_supported()) {
-                return this;
+                return true; //mudei esta linha de "return this;" para "return true;"
             }
             return this.each(function (input_field) {
                 var $this, chosen;
