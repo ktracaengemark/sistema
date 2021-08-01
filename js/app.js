@@ -6041,19 +6041,12 @@ function calculaParcelas(mod) {
 					<div class="panel panel-warning">\
 						<div class="panel-heading">\
 							<div class="row">\
-								<div class="col-md-1">\
+								<div class="col-sm-3 col-md-2 col-lg-1">\
 									<label for="Parcela">Prcl.:'+i+'</label><br>\
 									<input type="text" class="form-control" maxlength="6"\
 										   name="Parcela'+i+'" value="'+i+'/'+parcelas+'">\
 								</div>\
-								<div class="col-md-2">\
-									<label for="FormaPagamentoParcela'+i+'">FormaPag:</label>\
-									<select data-placeholder="Selecione uma opção..." class="form-control Chosen_Parcela"\
-											 id="FormaPagamentoParcela'+i+'" name="FormaPagamentoParcela'+i+'">\
-										<option value="'+formapag+'"></option>\
-									</select>\
-								</div>\
-								<div class="col-md-2">\
+								<div class="col-sm-3 col-md-3 col-lg-2">\
 									<label for="ValorParcela">Valor Parcela:</label><br>\
 									<div class="input-group" id="txtHint">\
 										<span class="input-group-addon" id="basic-addon1">R$</span>\
@@ -6061,7 +6054,7 @@ function calculaParcelas(mod) {
 												id="ValorParcela'+i+'" name="ValorParcela'+i+'" value="'+parcorca+'">\
 									</div>\
 								</div>\
-								<div class="col-md-2">\
+								<div class="col-sm-3 col-md-3 col-lg-2">\
 									<label for="DataVencimento">Vencimento</label>\
 									<div class="input-group DatePicker">\
 										<span class="input-group-addon" disabled>\
@@ -6071,7 +6064,14 @@ function calculaParcelas(mod) {
 											   name="DataVencimento'+i+'" value="'+futureMonth.format('DD/MM/YYYY')+'">\
 									</div>\
 								</div>\
-								<div class="col-md-2">\
+								<div class="col-sm-3 col-md-3 col-lg-2">\
+									<label for="FormaPagamentoParcela'+i+'">FormaPag:</label>\
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen_Parcela"\
+											 id="FormaPagamentoParcela'+i+'" name="FormaPagamentoParcela'+i+'">\
+										<option value="'+formapag+'"></option>\
+									</select>\
+								</div>\
+								<div class="col-sm-3  col-md-2 col-lg-2">\
 									<label for="Quitado">Parc.Quitada?</label><br>\
 									<div class="btn-group" data-toggle="buttons">\
 										<label class="btn btn-warning active" name="radio_Quitado'+i+'" id="radio_Quitado'+i+'N">\
@@ -6084,7 +6084,7 @@ function calculaParcelas(mod) {
 										</label>\
 									</div>\
 								</div>\
-								<div class="col-md-2">\
+								<div class="col-sm-3  col-md-3 col-lg-2">\
 									<div id="Quitado'+i+'" style="display:none">\
 										<label for="DataPago">Pagamento</label>\
 										<div class="input-group DatePicker">\
@@ -6193,19 +6193,12 @@ function adicionaParcelas() {
 			<div class="panel panel-warning">\
 				<div class="panel-heading">\
 					<div class="row">\
-						<div class="col-md-1">\
+						<div class="col-sm-3 col-md-2 col-lg-1">\
 							<label for="Parcela">Prcl.:</label><br>\
 							<input type="text" class="form-control" maxlength="6"\
 								   name="Parcela'+pr+'" value="Ex.">\
 						</div>\
-						<div class="col-md-2">\
-							<label for="FormaPagamentoParcela'+pr+'">FormaPag:</label>\
-							<select data-placeholder="Selecione uma opção..." class="form-control Chosen_Parcela"\
-									 id="FormaPagamentoParcela'+pr+'" name="FormaPagamentoParcela'+pr+'">\
-								<option value="'+formapag+'"></option>\
-							</select>\
-						</div>\
-						<div class="col-md-2">\
+						<div class="col-sm-3 col-md-3 col-lg-2">\
 							<label for="ValorParcela">Valor:</label><br>\
 							<div class="input-group" id="txtHint">\
 								<span class="input-group-addon" id="basic-addon1">R$</span>\
@@ -6213,7 +6206,7 @@ function adicionaParcelas() {
 										id="ValorParcela'+pr+'" name="ValorParcela'+pr+'" value="">\
 							</div>\
 						</div>\
-						<div class="col-md-2">\
+						<div class="col-sm-3 col-md-3 col-lg-2">\
 							<label for="DataVencimento">Vencimento</label>\
 							<div class="input-group DatePicker">\
 								<span class="input-group-addon" disabled>\
@@ -6223,7 +6216,14 @@ function adicionaParcelas() {
 									   name="DataVencimento'+pr+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
 							</div>\
 						</div>\
-						<div class="col-md-2">\
+						<div class="col-sm-3 col-md-3 col-lg-2">\
+							<label for="FormaPagamentoParcela'+pr+'">FormaPag:</label>\
+							<select data-placeholder="Selecione uma opção..." class="form-control Chosen_Parcela"\
+									 id="FormaPagamentoParcela'+pr+'" name="FormaPagamentoParcela'+pr+'">\
+								<option value="'+formapag+'"></option>\
+							</select>\
+						</div>\
+						<div class="col-sm-3  col-md-2 col-lg-2">\
 							<label for="Quitado">Parc.Quitado?</label><br>\
 							<div class="btn-group" data-toggle="buttons">\
 								<label class="btn btn-warning active" name="radio_Quitado'+pr+'" id="radio_Quitado'+pr+'N">\
@@ -6236,7 +6236,7 @@ function adicionaParcelas() {
 								</label>\
 							</div>\
 						</div>\
-						<div class="col-md-2">\
+						<div class="col-sm-3  col-md-3 col-lg-2">\
 							<div id="Quitado'+pr+'" style="display:none">\
 								<label for="DataPago">Pagamento</label>\
 								<div class="input-group DatePicker">\
@@ -6248,11 +6248,11 @@ function adicionaParcelas() {
 								</div>\
 							</div>\
 						</div>\
-						<div class="col-md-1">\
+						<div class="col-sm-1 col-md-1 col-lg-1">\
 							<label><br></label><br>\
-							<a href="#" id="'+pr+'" class="remove_field21 btn btn-danger">\
+							<button type="button" id="'+pr+'" class="remove_field21 btn btn-danger">\
 								<span class="glyphicon glyphicon-trash"></span>\
-							</a>\
+							</button>\
 						</div>\
 					</div>\
 				</div>\
@@ -6681,41 +6681,19 @@ function adicionaProcedimento() {
 			<div class="panel panel-warning">\
 				<div class="panel-heading">\
 					<div class="row">\
-						<div class="col-md-4">\
+						<div class="col-sm-5 col-md-5 col-lg-4">\
 							<label for="Procedimento'+pn+'">Proced.:</label>\
 							<textarea class="form-control" id="Procedimento'+pn+'"\
 									  name="Procedimento'+pn+'"></textarea>\
 						</div>\
-						<div class="col-md-4">\
+						<div class="col-sm-4 col-md-5 col-lg-4">\
 							<label for="Compartilhar'+pn+'">Quem Fazer:</label>\
 							<select data-placeholder="Selecione uma opção..." class="form-control Chosen3"\
 									 id="listadinamica_comp'+pn+'" name="Compartilhar'+pn+'">\
 								<option value=""></option>\
 							</select>\
 						</div>\
-					</div>\
-					<div class="row">\
-						<div class="col-md-2">\
-							<label for="DataProcedimento'+pn+'">Data do Proced.:</label>\
-							<div class="input-group DatePicker">\
-								<span class="input-group-addon" disabled>\
-									<span class="glyphicon glyphicon-calendar"></span>\
-								</span>\
-								<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA" readonly=""\
-									   name="DataProcedimento'+pn+'" id="DataProcedimento'+pn+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
-							</div>\
-						</div>\
-						<div class="col-md-2">\
-							<label for="HoraProcedimento'+pn+'">Hora Proced.</label>\
-							<div class="input-group TimePicker">\
-								<span class="input-group-addon" disabled>\
-									<span class="glyphicon glyphicon-time"></span>\
-								</span>\
-								<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM" readonly=""\
-									   name="HoraProcedimento'+pn+'"  id="HoraProcedimento'+pn+'" value="'+currentDate.format('HH:mm')+'">\
-							</div>\
-						</div>\
-						<div class="col-md-2">\
+						<div class="col-sm-3 col-md-2 col-lg-2">\
 							<label for="ConcluidoProcedimento">Proc. Concl.? </label><br>\
 							<div class="btn-group" data-toggle="buttons">\
 								<label class="btn btn-warning active" name="radio_ConcluidoProcedimento'+pn+'" id="radio_ConcluidoProcedimento'+pn+'N">\
@@ -6728,10 +6706,32 @@ function adicionaProcedimento() {
 								</label>\
 							</div>\
 						</div>\
-						<div class="col-md-4">\
+					</div>\
+					<div class="row">\
+						<div class="col-sm-3 col-md-3 col-lg-2">\
+							<label for="DataProcedimento'+pn+'">Data do Proced.:</label>\
+							<div class="input-group DatePicker">\
+								<span class="input-group-addon" disabled>\
+									<span class="glyphicon glyphicon-calendar"></span>\
+								</span>\
+								<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA" readonly=""\
+									   name="DataProcedimento'+pn+'" id="DataProcedimento'+pn+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
+							</div>\
+						</div>\
+						<div class="col-sm-3 col-md-2 col-lg-2">\
+							<label for="HoraProcedimento'+pn+'">Hora Proced.</label>\
+							<div class="input-group TimePicker">\
+								<span class="input-group-addon" disabled>\
+									<span class="glyphicon glyphicon-time"></span>\
+								</span>\
+								<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM" readonly=""\
+									   name="HoraProcedimento'+pn+'"  id="HoraProcedimento'+pn+'" value="'+currentDate.format('HH:mm')+'">\
+							</div>\
+						</div>\
+						<div class="col-md-5 col-lg-4">\
 							<div class="row">\
 								<div id="ConcluidoProcedimento'+pn+'" style="display:none">\
-									<div class="col-md-6">\
+									<div class="col-sm-3 col-md-7 col-lg-6">\
 										<label for="DataConcluidoProcedimento'+pn+'">Data Concl</label>\
 										<div class="input-group DatePicker">\
 											<span class="input-group-addon" disabled>\
@@ -6741,7 +6741,7 @@ function adicionaProcedimento() {
 												   name="DataConcluidoProcedimento'+pn+'"  id="DataConcluidoProcedimento'+pn+'" value="">\
 										</div>\
 									</div>\
-									<div class="col-md-6">\
+									<div class="col-sm-3 col-md-5 col-lg-6">\
 										<label for="HoraConcluidoProcedimento'+pn+'">Hora Concl.</label>\
 										<div class="input-group TimePicker">\
 											<span class="input-group-addon" disabled>\
@@ -6754,7 +6754,7 @@ function adicionaProcedimento() {
 								</div>\
 							</div>\
 						</div>\
-						<div class="col-md-1">\
+						<div class="col-sm-8 col-md-1 col-lg-1">\
 							<label><br></label><br>\
 							<button type="button" id="'+pn+'" class="remove_field3 btn btn-danger">\
 								<span class="glyphicon glyphicon-trash"></span>\
@@ -8663,17 +8663,17 @@ $(document).ready(function () {
             <div class="form-group" id="9div'+pc+'">\
                 <div class="panel panel-warning">\
                     <div class="panel-heading">\
+						<input type="hidden" class="form-control" id="idTab_Valor_Produto'+pc+'" name="idTab_Valor_Produto'+pc+'" value="">\
+						<input type="hidden" class="form-control" id="idTab_Produtos_Produto'+pc+'" name="idTab_Produtos_Produto'+pc+'" value="">\
+						<input type="hidden" class="form-control" id="ComissaoProduto'+pc+'" name="ComissaoProduto'+pc+'" value="0.00">\
+						<input type="hidden" class="form-control" id="ComissaoServicoProduto'+pc+'" name="ComissaoServicoProduto'+pc+'" value="0.00">\
+						<input type="hidden" class="form-control" id="ComissaoCashBackProduto'+pc+'" name="ComissaoCashBackProduto'+pc+'" value="0.00">\
+						<input type="hidden" class="form-control" id="Prod_Serv_Produto'+pc+'" name="Prod_Serv_Produto'+pc+'" value="">\
+						<input type="hidden" class="form-control" id="NomeProduto'+pc+'" name="NomeProduto'+pc+'" value="">\
 						<div class="row">\
-							<div class="col-md-8">\
-								<input type="hidden" class="form-control" id="idTab_Valor_Produto'+pc+'" name="idTab_Valor_Produto'+pc+'" value="">\
-								<input type="hidden" class="form-control" id="idTab_Produtos_Produto'+pc+'" name="idTab_Produtos_Produto'+pc+'" value="">\
-								<input type="hidden" class="form-control" id="ComissaoProduto'+pc+'" name="ComissaoProduto'+pc+'" value="0.00">\
-								<input type="hidden" class="form-control" id="ComissaoServicoProduto'+pc+'" name="ComissaoServicoProduto'+pc+'" value="0.00">\
-								<input type="hidden" class="form-control" id="ComissaoCashBackProduto'+pc+'" name="ComissaoCashBackProduto'+pc+'" value="0.00">\
-								<input type="hidden" class="form-control" id="Prod_Serv_Produto'+pc+'" name="Prod_Serv_Produto'+pc+'" value="">\
-								<input type="hidden" class="form-control" id="NomeProduto'+pc+'" name="NomeProduto'+pc+'" value="">\
+							<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">\
 								<div class="row">\
-									<div class="col-md-12">\
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
 										<label for="idTab_Produto">Produto '+pc+':</label><br>\
 										<select class="form-control Chosen" id="listadinamicab'+pc+'" name="idTab_Produto'+pc+'" onchange="'+buscavalor+'(this.value,this.name,\''+tblbusca+'\','+pc+',\'Produto\','+recorrencias+'),calculaQtdSoma(\'QtdProduto\',\'QtdSoma\',\'ProdutoSoma\',0,0,\'CountMax\',0,\'ProdutoHidden\')">\
 											<option value="">-- Selecione uma opção --</option>\
@@ -8682,30 +8682,30 @@ $(document).ready(function () {
 								</div>\
 								<div id="EscreverProduto'+pc+'" style="display:none">\
 									<div class="row">\
-										<div class="col-md-2">\
+										<div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">\
 											<label for="QtdProduto">Qtd.Item</label><br>\
-											<input type="text" class="form-control Numero" maxlength="10" id="QtdProduto'+pc+'" placeholder="0"\
+											<input type="text" class="form-control Numero " maxlength="10" id="QtdProduto'+pc+'" placeholder="0"\
 												onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'QTD\',\'Produto\'),calculaQtdSoma(\'QtdProduto\',\'QtdSoma\',\'ProdutoSoma\',0,0,\'CountMax\',0,\'ProdutoHidden\')" onkeydown="calculaSubtotal(this.value,this.name,'+pc+',\'QTD\',\'Produto\'),calculaQtdSoma(\'QtdProduto\',\'QtdSoma\',\'ProdutoSoma\',0,0,\'CountMax\',0,\'ProdutoHidden\')"\
 											   autofocus name="QtdProduto'+pc+'" value="1">\
 										</div>\
-										<div class="col-md-2">\
+										<div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">\
 											<label for="QtdIncrementoProduto">Qtd.Embl</label><br>\
-											<input type="text" class="form-control Numero" maxlength="10" id="QtdIncrementoProduto'+pc+'" placeholder="0" '+ escrita +' \
+											<input type="text" class="form-control Numero " maxlength="10" id="QtdIncrementoProduto'+pc+'" placeholder="0" '+ escrita +' \
 												onkeyup="calculaSubtotal(this.value,this.name,'+pc+',\'QTDINC\',\'Produto\'),calculaQtdSoma(\'QtdProduto\',\'QtdSoma\',\'ProdutoSoma\',0,0,\'CountMax\',0,\'ProdutoHidden\')" onkeydown="calculaSubtotal(this.value,this.name,'+pc+',\'QTDINC\',\'Produto\'),calculaQtdSoma(\'QtdProduto\',\'QtdSoma\',\'ProdutoSoma\',0,0,\'CountMax\',0,\'ProdutoHidden\')"\
 											   name="QtdIncrementoProduto'+pc+'" value="1">\
 										</div>\
 										<input type="hidden" class="form-control" id="SubtotalComissaoProduto'+pc+'" name="SubtotalComissaoProduto'+pc+'" value="0.00">\
 										<input type="hidden" class="form-control" id="SubtotalComissaoServicoProduto'+pc+'" name="SubtotalComissaoServicoProduto'+pc+'" value="0.00">\
 										<input type="hidden" class="form-control" id="SubtotalComissaoCashBackProduto'+pc+'" name="SubtotalComissaoCashBackProduto'+pc+'" value="0.00">\
-										<div class="col-md-2">\
-											<label for="SubtotalQtdProduto">Sub.Qtd.Prod</label><br>\
+										<div class="col-xs-12 col-sm-4 col-md-2  col-lg-2">\
+											<label for="SubtotalQtdProduto">Sub.Qtd</label><br>\
 											<div id="txtHint">\
-												<input type="text" class="form-control Numero text-left" maxlength="10" readonly="" id="SubtotalQtdProduto'+pc+'"\
+												<input type="text" class="form-control Numero text-left " maxlength="10" readonly="" id="SubtotalQtdProduto'+pc+'"\
 													   name="SubtotalQtdProduto'+pc+'" value="">\
 											</div>\
 										</div>\
-										<div class="col-md-3">\
-											<label for="ValorProduto">Valor da Embl</label><br>\
+										<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">\
+											<label for="ValorProduto">Valor Embl</label><br>\
 											<div class="input-group id="txtHint">\
 												<span class="input-group-addon" id="basic-addon1">R$</span>\
 												<input type="text" class="form-control Valor" id="idTab_Produto'+pc+'" maxlength="10" placeholder="0,00" \
@@ -8713,8 +8713,8 @@ $(document).ready(function () {
 													name="ValorProduto'+pc+'" value="">\
 											</div>\
 										</div>\
-										<div class="col-md-3">\
-											<label for="SubtotalProduto">Sub.Valor.Prod</label><br>\
+										<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">\
+											<label for="SubtotalProduto">Sub.Valor</label><br>\
 											<div class="input-group id="txtHint">\
 												<span class="input-group-addon" id="basic-addon1">R$</span>\
 												<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" id="SubtotalProduto'+pc+'" readonly=""\
@@ -8724,30 +8724,25 @@ $(document).ready(function () {
 									</div>\
 								</div>\
 							</div>\
-							<div class="col-md-4">\
+							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">\
 								<div class="row">\
-									<div class="col-md-7">\
-										<label for="ObsProduto">Obs</label><br>\
-										<input type="text" class="form-control" maxlength="200" placeholder="Observacao:" id="ObsProduto'+pc+'"\
-										   name="ObsProduto'+pc+'" value=""></input>\
-									</div>\
-									<div class="col-md-3">\
-										<label for="PrazoProduto">Prazo</label><br>\
-										<input type="text" class="form-control Numero" maxlength="3" placeholder="0" id="PrazoProduto'+pc+'"\
-											onkeyup="calculaPrazoProdutos(\'PrazoProduto\',\'QtdSoma\',\'ProdutoSoma\',0,0,\'CountMax\',0,\'ProdutoHidden\')"\
-											name="PrazoProduto'+pc+'" value="0" >\
-									</div>\
-									<div class="col-md-1 text-left">\
-										<label><br></label><br>\
-										<a href="#" id="'+pc+'" class="remove_field9 btn btn-danger"\
-												onclick="calculaQtdSoma(\'QtdProduto\',\'QtdSoma\',\'ProdutoSoma\',1,'+pc+',\'CountMax\',0,\'ProdutoHidden\')">\
-											<span class="glyphicon glyphicon-trash"></span>\
-										</a>\
-									</div>\
-								</div>\
-								<div id="EntregueProduto'+pc+'" style="display:none">\
-									<div class="row">\
-										<div class="col-md-6">\
+									<div id="EntregueProduto'+pc+'" style="display:none">\
+										<div class="col-md-12 col-md-12 col-md-12 col-lg-12">\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">\
+													<label for="ObsProduto">Obs</label><br>\
+													<textarea type="text" class="form-control" maxlength="200" placeholder="Observacao:" id="ObsProduto'+pc+'"\
+													   name="ObsProduto'+pc+'" value=""  rows="1"></textarea>\
+												</div>\
+												<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">\
+													<label for="PrazoProduto">Prazo</label><br>\
+													<input type="text" class="form-control Numero" maxlength="3" placeholder="0" id="PrazoProduto'+pc+'"\
+														onkeyup="calculaPrazoProdutos(\'PrazoProduto\',\'QtdSoma\',\'ProdutoSoma\',0,0,\'CountMax\',0,\'ProdutoHidden\')"\
+														name="PrazoProduto'+pc+'" value="0" >\
+												</div>\
+											</div>\
+										</div>\
+										<div class="col-xs-12 col-sm-4 col-md-6 col-lg-6">\
 											<label for="DataConcluidoProduto">Data Entrega</label>\
 											<div class="input-group DatePicker">\
 												<span class="input-group-addon" disabled>\
@@ -8757,7 +8752,7 @@ $(document).ready(function () {
 													   name="DataConcluidoProduto'+pc+'" value="">\
 											</div>\
 										</div>\
-										<div class="col-md-6">\
+										<div class="col-xs-12 col-sm-4 col-md-6 col-lg-6">\
 											<label for="HoraConcluidoProduto">Hora Entrega</label>\
 											<div class="input-group TimePicker">\
 												<span class="input-group-addon" disabled>\
@@ -8767,9 +8762,7 @@ $(document).ready(function () {
 													   name="HoraConcluidoProduto'+pc+'" value="">\
 											</div>\
 										</div>\
-									</div>\
-									<div class="row">\
-										<div class="col-md-6">\
+										<div class="col-xs-8 col-sm-3 col-md-9  col-lg-9">\
 											<label for="ConcluidoProduto">Entregue? </label><br>\
 											<div class="btn-group" data-toggle="buttons">\
 												<label class="btn btn-warning active" name="radio_ConcluidoProduto'+pc+'" id="radio_ConcluidoProduto'+pc+'N">\
@@ -8782,8 +8775,15 @@ $(document).ready(function () {
 												</label>\
 											</div>\
 										</div>\
+										<div id="ConcluidoProduto'+pc+'" style="display:none">\
+										</div>\
 									</div>\
-									<div id="ConcluidoProduto'+pc+'" style="display:none">\
+									<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right">\
+										<label>Excl</label><br>\
+										<button type="button" id="'+pc+'" class="remove_field9 btn btn-danger"\
+												onclick="calculaQtdSoma(\'QtdProduto\',\'QtdSoma\',\'ProdutoSoma\',1,'+pc+',\'CountMax\',0,\'ProdutoHidden\')">\
+											<span class="glyphicon glyphicon-trash"></span>\
+										</button>\
 									</div>\
 								</div>\
 							</div>\
@@ -8920,17 +8920,17 @@ $(document).ready(function () {
 			<div class="form-group" id="10div'+ps+'">\
 				<div class="panel panel-danger">\
 					<div class="panel-heading">\
+						<input type="hidden" class="form-control" id="idTab_Valor_Servico'+ps+'" name="idTab_Valor_Servico'+ps+'" value="">\
+						<input type="hidden" class="form-control" id="idTab_Produtos_Servico'+ps+'" name="idTab_Produtos_Servico'+ps+'" value="">\
+						<input type="hidden" class="form-control" id="ComissaoServico'+ps+'" name="ComissaoServico'+ps+'" value="">\
+						<input type="hidden" class="form-control" id="ComissaoServicoServico'+ps+'" name="ComissaoServicoServico'+ps+'" value="">\
+						<input type="hidden" class="form-control" id="ComissaoCashBackServico'+ps+'" name="ComissaoCashBackServico'+ps+'" value="">\
+						<input type="hidden" class="form-control" id="Prod_Serv_Servico'+ps+'" name="Prod_Serv_Servico'+ps+'" value="">\
+						<input type="hidden" class="form-control" id="NomeServico'+ps+'" name="NomeServico'+ps+'" value="">\
 						<div class="row">\
-							<div class="col-md-8">\
-								<input type="hidden" class="form-control" id="idTab_Valor_Servico'+ps+'" name="idTab_Valor_Servico'+ps+'" value="">\
-								<input type="hidden" class="form-control" id="idTab_Produtos_Servico'+ps+'" name="idTab_Produtos_Servico'+ps+'" value="">\
-								<input type="hidden" class="form-control" id="ComissaoServico'+ps+'" name="ComissaoServico'+ps+'" value="">\
-								<input type="hidden" class="form-control" id="ComissaoServicoServico'+ps+'" name="ComissaoServicoServico'+ps+'" value="">\
-								<input type="hidden" class="form-control" id="ComissaoCashBackServico'+ps+'" name="ComissaoCashBackServico'+ps+'" value="">\
-								<input type="hidden" class="form-control" id="Prod_Serv_Servico'+ps+'" name="Prod_Serv_Servico'+ps+'" value="">\
-								<input type="hidden" class="form-control" id="NomeServico'+ps+'" name="NomeServico'+ps+'" value="">\
+							<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">\
 								<div class="row">\
-									<div class="col-md-12">\
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
 										<label for="idTab_Servico">Servico '+ps+':</label><br>\
 										<select class="form-control Chosen4" id="listadinamica'+ps+'"  name="idTab_Servico'+ps+'" onchange="'+buscavalor_serv+'(this.value,this.name,\''+tblbusca_serv+'\','+ps+',\'Servico\','+recorrencias+'),calculaQtdSomaDev(\'QtdServico\',\'QtdSomaDev\',\'ServicoSoma\',0,0,\'CountMax2\',0,\'ServicoHidden\')">\
 											<option value="">-- Selecione uma opção --</option>\
@@ -8939,25 +8939,25 @@ $(document).ready(function () {
 								</div>\
 								<div id="EscreverServico'+ps+'" style="display:none">\
 									<div class="row">\
-										<div class="col-md-2">\
-											<label for="QtdServico">Qtd</label><br>\
+										<div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">\
+											<label for="QtdServico">Qtd.Item</label><br>\
 											<input type="text" class="form-control Numero" maxlength="10" id="QtdServico'+ps+'" placeholder="0"\
 												onkeyup="calculaSubtotal(this.value,this.name,'+ps+',\'QTD\',\'Servico\'),calculaQtdSomaDev(\'QtdServico\',\'QtdSomaDev\',\'ServicoSoma\',0,0,\'CountMax2\',0,\'ServicoHidden\')"\
 												name="QtdServico'+ps+'" value="1">\
 										</div>\
-										<div class="col-md-2">\
+										<div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">\
 											<label for="QtdIncrementoServico">QtdEmb</label><br>\
 											<input type="text" class="form-control Numero" id="QtdIncrementoServico'+ps+'" name="QtdIncrementoServico'+ps+'" value="1" readonly="">\
 										</div>\
-										<div class="col-md-2">\
-											<label for="SubtotalQtdServico">Sub.Qtd.Serv</label><br>\
+										<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">\
+											<label for="SubtotalQtdServico">Sub.Qtd</label><br>\
 											<input type="text" class="form-control Numero" id="SubtotalQtdServico'+ps+'" name="SubtotalQtdServico'+ps+'" value="" readonly="">\
 										</div>\
 										<input type="hidden" class="form-control" id="SubtotalComissaoServico'+ps+'" name="SubtotalComissaoServico'+ps+'" value="0.00">\
 										<input type="hidden" class="form-control" id="SubtotalComissaoServicoServico'+ps+'" name="SubtotalComissaoServicoServico'+ps+'" value="0.00">\
 										<input type="hidden" class="form-control" id="SubtotalComissaoCashBackServico'+ps+'" name="SubtotalComissaoCashBackServico'+ps+'" value="0.00">\
-										<div class="col-md-3">\
-											<label for="ValorServico">Valor da Embl</label><br>\
+										<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">\
+											<label for="ValorServico">ValorEmbl</label><br>\
 											<div class="input-group">\
 												<span class="input-group-addon" id="basic-addon1">R$</span>\
 												<input type="text" class="form-control Valor" id="idTab_Servico'+ps+'" maxlength="10" placeholder="0,00" \
@@ -8965,8 +8965,8 @@ $(document).ready(function () {
 													name="ValorServico'+ps+'" value="">\
 											</div>\
 										</div>\
-										<div class="col-md-3">\
-											<label for="SubtotalServico">Sub.Valor.Serv.</label><br>\
+										<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">\
+											<label for="SubtotalServico">Sub.Valor</label><br>\
 											<div class="input-group id="txtHint">\
 												<span class="input-group-addon" id="basic-addon1">R$</span>\
 												<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalServico'+ps+'"\
@@ -8975,29 +8975,29 @@ $(document).ready(function () {
 										</div>\
 									</div>\
 									<div class="row">\
-										<div class="col-md-3">\
-											<label for="ProfissionalServico_1'+ps+'">Profissional 1:</label>\
+										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
+											<label for="ProfissionalServico_1'+ps+'">Profissional 1</label>\
 											<select data-placeholder="Selecione uma opção..." class="form-control Chosen_1"\
 													 id="listadinamica_prof_1'+ps+'" name="ProfissionalServico_1'+ps+'">\
 												<option value=""></option>\
 											</select>\
 										</div>\
-										<div class="col-md-3">\
-											<label for="ProfissionalServico_2'+ps+'">Profissional 2:</label>\
+										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
+											<label for="ProfissionalServico_2'+ps+'">Profissional 2</label>\
 											<select data-placeholder="Selecione uma opção..." class="form-control Chosen_2"\
 													 id="listadinamica_prof_2'+ps+'" name="ProfissionalServico_2'+ps+'">\
 												<option value=""></option>\
 											</select>\
 										</div>\
-										<div class="col-md-3">\
-											<label for="ProfissionalServico_3'+ps+'">Profissional 3:</label>\
+										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
+											<label for="ProfissionalServico_3'+ps+'">Profissional 3</label>\
 											<select data-placeholder="Selecione uma opção..." class="form-control Chosen_3"\
 													 id="listadinamica_prof_3'+ps+'" name="ProfissionalServico_3'+ps+'">\
 												<option value=""></option>\
 											</select>\
 										</div>\
-										<div class="col-md-3">\
-											<label for="ProfissionalServico_4'+ps+'">Profissional 4:</label>\
+										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
+											<label for="ProfissionalServico_4'+ps+'">Profissional 4</label>\
 											<select data-placeholder="Selecione uma opção..." class="form-control Chosen_4"\
 													 id="listadinamica_prof_4'+ps+'" name="ProfissionalServico_4'+ps+'">\
 												<option value=""></option>\
@@ -9006,30 +9006,25 @@ $(document).ready(function () {
 									</div>\
 								</div>\
 							</div>\
-							<div class="col-md-4">\
+							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">\
 								<div class="row">\
-									<div class="col-md-7">\
-										<label for="ObsServico">Obs</label><br>\
-										<input type="text" class="form-control " maxlength="200" id="ObsServico'+ps+'" placeholder="Observacao"\
-											name="ObsServico'+ps+'" value="">\
-									</div>\
-									<div class="col-md-3">\
-										<label for="PrazoServico">Prazo</label><br>\
-										<input type="text" class="form-control Numero" maxlength="3" placeholder="0" id="PrazoServico'+ps+'"\
-											onkeyup="calculaPrazoServicos(\'PrazoServico\',\'QtdSomaDev\',\'ServicoSoma\',0,0,\'CountMax2\',0,\'ServicoHidden\')"\
-											name="PrazoServico'+ps+'" value="0" >\
-									</div>\
-									<div class="col-md-1 text-left">\
-										<label><br></label><br>\
-										<a href="#" id="'+ps+'" class="remove_field10 btn btn-danger"\
-											onclick="calculaQtdSomaDev(\'QtdServico\',\'QtdSomaDev\',\'ServicoSoma\',1,'+ps+',\'CountMax2\',0,\'ServicoHidden\')">\
-											<span class="glyphicon glyphicon-trash"></span>\
-										</a>\
-									</div>\
-								</div>\
-								<div id="EntregueServico'+ps+'" style="display:none">\
-									<div class="row">\
-										<div class="col-md-6">\
+									<div id="EntregueServico'+ps+'" style="display:none">\
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">\
+													<label for="ObsServico">Obs</label><br>\
+													<textarea type="text" class="form-control " maxlength="200" id="ObsServico'+ps+'" placeholder="Observacao"\
+														name="ObsServico'+ps+'" value=""  rows="1"></textarea>\
+												</div>\
+												<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">\
+													<label for="PrazoServico">Prazo</label><br>\
+													<input type="text" class="form-control Numero" maxlength="3" placeholder="0" id="PrazoServico'+ps+'"\
+														onkeyup="calculaPrazoServicos(\'PrazoServico\',\'QtdSomaDev\',\'ServicoSoma\',0,0,\'CountMax2\',0,\'ServicoHidden\')"\
+														name="PrazoServico'+ps+'" value="0" >\
+												</div>\
+											</div>\
+										</div>\
+										<div class="col-xs-12 col-sm-4 col-md-6 col-lg-6">\
 											<label for="DataConcluidoServico">Data Entrega</label>\
 											<div class="input-group DatePicker">\
 												<span class="input-group-addon" disabled>\
@@ -9039,7 +9034,7 @@ $(document).ready(function () {
 													   name="DataConcluidoServico'+ps+'" value="">\
 											</div>\
 										</div>\
-										<div class="col-md-6">\
+										<div class="col-xs-12 col-sm-4 col-md-6 col-lg-6">\
 											<label for="HoraConcluidoServico">Hora Entrega</label>\
 											<div class="input-group TimePicker">\
 												<span class="input-group-addon" disabled>\
@@ -9049,9 +9044,7 @@ $(document).ready(function () {
 													   name="HoraConcluidoServico'+ps+'" value="">\
 											</div>\
 										</div>\
-									</div>\
-									<div class="row">\
-										<div class="col-md-6">\
+										<div class="col-xs-8 col-sm-3 col-md-9  col-lg-9">\
 											<label for="ConcluidoServico">Entregue? </label><br>\
 											<div class="btn-group" data-toggle="buttons">\
 												<label class="btn btn-warning active" name="radio_ConcluidoServico'+ps+'" id="radio_ConcluidoServico'+ps+'N">\
@@ -9064,8 +9057,15 @@ $(document).ready(function () {
 												</label>\
 											</div>\
 										</div>\
+										<div id="ConcluidoServico'+ps+'" style="display:none">\
+										</div>\
 									</div>\
-									<div id="ConcluidoServico'+ps+'" style="display:none">\
+									<div class="col-xs-1 col-sm-1 col-md-1  col-lg-1 text-right">\
+										<label><br></label><br>\
+										<button type="button" id="'+ps+'" class="remove_field10 btn btn-danger"\
+											onclick="calculaQtdSomaDev(\'QtdServico\',\'QtdSomaDev\',\'ServicoSoma\',1,'+ps+',\'CountMax2\',0,\'ServicoHidden\')">\
+											<span class="glyphicon glyphicon-trash"></span>\
+										</button>\
 									</div>\
 								</div>\
 							</div>\

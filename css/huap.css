@@ -244,6 +244,15 @@ Para o alinhamento do modal da agenda, centralizando em relação a tela
   border-top: 1px solid transparent;
   border-bottom: 1px solid transparent; 	  
 }
+
+@media (max-width: 343px) {	
+	.btn-larg-right{
+		/*margin-top: 20px;*/
+		/*margin-bottom: 20px;*/
+		margin-right: -15px;
+		/*margin-left: 10px;*/
+	}
+}
 @media (max-width: 767px) {	
 	.botoesnav{
 		/*margin-top: 20px;*/
@@ -262,6 +271,10 @@ Para o alinhamento do modal da agenda, centralizando em relação a tela
 	.botoesnav{
 		margin-right: 5px;
 		margin-left: 5px;
+	}
+	.btn-larg-group{
+		margin-left: -15px;
+		margin-right: -15px;
 	}
 }
 @media (min-width: 1200px){
@@ -287,4 +300,15 @@ Para o alinhamento do modal da agenda, centralizando em relação a tela
 	.btn-paginacao{
 		margin-top:-11px;
 	}
+}
+.btn-larg-right{
+	/*margin-top: 20px;*/
+	/*margin-bottom: 20px;*/
+	margin-right: -15px;
+	/*margin-left: 10px;*/
+}
+.input_textarea{
+	/*width: 100px;
+	height: -200px;*/ 
+	resize: none;
 }
