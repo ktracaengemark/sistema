@@ -12,7 +12,8 @@
 	<body>
 		<?php
 		// Definimos o nome do arquivo que será exportado
-		$arquivo = 'clientes.xls';
+		//$arquivo = 'clientes.xls';
+		$arquivo = 'Clientes_' . date('d-m-Y') . '.xls';
 		
 		// Título da Tabela
 		$html = '';
@@ -50,8 +51,40 @@
 		$html .= '<td><b>Valid.Cash</b></td>';
 		$html .= '</tr>';
 		
-		//Selecionar os itens da Tabela 
-		$result_msg_contatos = "SELECT * FROM App_Cliente WHERE idSis_Empresa = " . $_SESSION['log']['idSis_Empresa'] . "";
+		//Selecionar os itens da Tabela
+		
+		$date_inicio_orca = ($_SESSION['FiltroAlteraParcela']['DataInicio']) ? 'C.DataCadastroCliente >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio'] . '" AND ' : FALSE;
+		$date_fim_orca = ($_SESSION['FiltroAlteraParcela']['DataFim']) ? 'C.DataCadastroCliente <= "' . $_SESSION['FiltroAlteraParcela']['DataFim'] . '" AND ' : FALSE;		
+
+		$data['Dia'] = ($_SESSION['FiltroAlteraParcela']['Dia']) ? ' AND DAY(C.DataNascimento) = ' . $_SESSION['FiltroAlteraParcela']['Dia'] : FALSE;
+		$data['Mesvenc'] = ($_SESSION['FiltroAlteraParcela']['Mesvenc']) ? ' AND MONTH(C.DataNascimento) = ' . $_SESSION['FiltroAlteraParcela']['Mesvenc'] : FALSE;
+		$data['Ano'] = ($_SESSION['FiltroAlteraParcela']['Ano']) ? ' AND YEAR(C.DataNascimento) = ' . $_SESSION['FiltroAlteraParcela']['Ano'] : FALSE;
+
+		//$data['NomeCliente'] = ($_SESSION['FiltroAlteraParcela']['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $_SESSION['FiltroAlteraParcela']['NomeCliente'] : FALSE;
+		$data['idApp_Cliente'] = ($_SESSION['FiltroAlteraParcela']['idApp_Cliente']) ? ' AND C.idApp_Cliente = ' . $_SESSION['FiltroAlteraParcela']['idApp_Cliente'] : FALSE;
+		$data['Campo'] = (!$_SESSION['FiltroAlteraParcela']['Campo']) ? 'C.NomeCliente' : $_SESSION['FiltroAlteraParcela']['Campo'];
+		$data['Ordenamento'] = (!$_SESSION['FiltroAlteraParcela']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroAlteraParcela']['Ordenamento'];
+		$filtro10 = ($_SESSION['FiltroAlteraParcela']['Ativo'] != '#') ? 'C.Ativo = "' . $_SESSION['FiltroAlteraParcela']['Ativo'] . '" AND ' : FALSE;
+		$filtro20 = ($_SESSION['FiltroAlteraParcela']['Motivo'] != '0') ? 'C.Motivo = "' . $_SESSION['FiltroAlteraParcela']['Motivo'] . '" AND ' : FALSE;
+		
+		$result_msg_contatos = '
+								SELECT * 
+								FROM 
+									App_Cliente AS C
+								WHERE
+									' . $date_inicio_orca . '
+									' . $date_fim_orca . '
+									' . $filtro10 . '
+									' . $filtro20 . '
+									C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+									' . $data['idApp_Cliente'] . ' 
+									' . $data['Dia'] . ' 
+									' . $data['Mesvenc'] . '
+									' . $data['Ano'] . '
+								ORDER BY
+									' . $data['Campo'] . '
+									' . $data['Ordenamento'] . '
+								';
 		$resultado_msg_contatos = mysqli_query($conn , $result_msg_contatos);
 		
 		while($row_msg_contatos = mysqli_fetch_assoc($resultado_msg_contatos)){

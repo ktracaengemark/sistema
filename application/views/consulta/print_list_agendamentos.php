@@ -14,8 +14,15 @@
 					<a type="button" class="col-md-3 btn btn-md btn-default " href="javascript:window.print()">
 						<span class="glyphicon glyphicon-print"></span>
 					</a>
-					<a type="button" class="col-md-9 btn btn-md btn-warning "  href="<?php echo base_url() ?>relatorio/list_agendamentos">
-						<span class="glyphicon glyphicon-pencil"></span> Agendamentos
+					<?php if(isset($_SESSION['Agendamentos']['TipoEvento']) && $_SESSION['Agendamentos']['TipoEvento'] == 1){
+						$caminho = 'relatorio/evento';
+						$evento = 'Outros Eventos';
+					}else{
+						$caminho = 'relatorio/evento_cli';
+						$evento = 'Eventos C/Cli';
+					}?>
+					<a type="button" class="col-md-9 btn btn-md btn-warning "  href="<?php echo base_url() . $caminho;?>">
+						<span class="glyphicon glyphicon-pencil"></span> <?php echo $evento;?>
 					</a>
 				</div>
 			</div>

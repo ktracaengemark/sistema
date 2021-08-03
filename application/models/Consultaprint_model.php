@@ -13,6 +13,8 @@ class Consultaprint_model extends CI_Model {
 
     public function get_consulta($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
+		$tipoevento = 'CO.Tipo = ' . $_SESSION['Agendamentos']['TipoEvento'];
+			
 		$cliente 		= ($_SESSION['Agendamentos']['idApp_Cliente']) ? ' AND CO.idApp_Cliente = ' . $_SESSION['Agendamentos']['idApp_Cliente'] : FALSE;
 		$clientepet		= ($_SESSION['Empresa']['CadastrarPet'] == "S" && $_SESSION['Agendamentos']['idApp_ClientePet']) ? ' AND CO.idApp_ClientePet = ' . $_SESSION['Agendamentos']['idApp_ClientePet'] : FALSE;
 		$clientedep		= ($_SESSION['Empresa']['CadastrarDep'] == "S" && $_SESSION['Agendamentos']['idApp_ClienteDep']) ? ' AND CO.idApp_ClienteDep = ' . $_SESSION['Agendamentos']['idApp_ClienteDep'] : FALSE;			
@@ -53,7 +55,7 @@ class Consultaprint_model extends CI_Model {
 				' . $date_inicio_orca . '
 				' . $date_fim_orca . '
                 CO.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-				CO.Tipo = 2
+				' . $tipoevento . '
 				' . $cliente . '
 				' . $clientepet . '
 				' . $clientepet . '

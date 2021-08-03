@@ -12,7 +12,7 @@
 		<?php } ?>
 		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
 			<label></label><br>
-			<a href="<?php echo base_url() . 'gerar_excel/Clientes/clientes_tudo.php'; ?>">
+			<a href="<?php echo base_url() . 'gerar_excel/Clientes/Clientes.php'; ?>">
 				<button type='button' class='btn btn-md btn-success btn-block'>
 					Gerar Excel
 				</button>

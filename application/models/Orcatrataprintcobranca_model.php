@@ -72,6 +72,10 @@ class Orcatrataprintcobranca_model extends CI_Model {
 		$permissao60 = (!$_SESSION['FiltroAlteraParcela']['Campo']) ? 'OT.idApp_OrcaTrata' : $_SESSION['FiltroAlteraParcela']['Campo'];
         $permissao61 = (!$_SESSION['FiltroAlteraParcela']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroAlteraParcela']['Ordenamento'];
 
+		$agrupar = $_SESSION['FiltroAlteraParcela']['Agrupar'];
+		
+		$groupby = ($agrupar != "0") ? 'GROUP BY OT.' . $agrupar . '' : FALSE;		
+		
         if ($limit){
 			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
 		}else{
@@ -174,8 +178,7 @@ class Orcatrataprintcobranca_model extends CI_Model {
                 ' . $date_fim_vnc_prc . '
 				OT.idSis_Empresa = ' . $data . ' AND
 				PR.idSis_Empresa = ' . $data . '
-			GROUP BY
-                OT.idApp_OrcaTrata
+			' . $groupby . '
             ORDER BY
 				' . $permissao60 . '
 				' . $permissao61 . ' 

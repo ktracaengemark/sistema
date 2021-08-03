@@ -20,7 +20,8 @@ $filtro10 = ($_SESSION['FiltroAlteraParcela']['Ativo'] != '#') ? 'C.Ativo = "' .
 $filtro20 = ($_SESSION['FiltroAlteraParcela']['Motivo'] != '0') ? 'C.Motivo = "' . $_SESSION['FiltroAlteraParcela']['Motivo'] . '" AND ' : FALSE;
 
 
-$result_query = 'SELECT * 
+$result_query = '
+					SELECT * 
 					FROM 
 						App_Cliente AS C
 					WHERE

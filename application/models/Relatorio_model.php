@@ -16,7 +16,9 @@ class Relatorio_model extends CI_Model {
 	public function list_agendamentos($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		if($data != FALSE){
-	
+			
+			$tipoevento = 'CO.Tipo = ' . $data['TipoEvento'];
+			
 			$cliente 	= ($data['idApp_Cliente']) ? ' AND CO.idApp_Cliente = ' . $data['idApp_Cliente'] : FALSE;
 			$clientepet = ($_SESSION['Empresa']['CadastrarPet'] == "S" && $data['idApp_ClientePet']) ? ' AND CO.idApp_ClientePet = ' . $data['idApp_ClientePet'] : FALSE;
 			$clientedep = ($_SESSION['Empresa']['CadastrarDep'] == "S" && $data['idApp_ClienteDep']) ? ' AND CO.idApp_ClienteDep = ' . $data['idApp_ClienteDep'] : FALSE;
@@ -31,6 +33,8 @@ class Relatorio_model extends CI_Model {
 			$date_fim_orca 		= ($data['DataFim']) ? 'DataInicio <= "' . $date_fim . '" AND ' : FALSE;		
 		
 		}else{
+		
+			$tipoevento = 'CO.Tipo = ' . $_SESSION['Agendamentos']['TipoEvento'];
 	
 			$cliente 	= ($_SESSION['Agendamentos']['idApp_Cliente']) ? ' AND CO.idApp_Cliente = ' . $_SESSION['Agendamentos']['idApp_Cliente'] : FALSE;
 			$clientepet = ($_SESSION['Empresa']['CadastrarPet'] == "S" && $_SESSION['Agendamentos']['idApp_ClientePet']) ? ' AND CO.idApp_ClientePet = ' . $_SESSION['Agendamentos']['idApp_ClientePet'] : FALSE;
@@ -75,7 +79,7 @@ class Relatorio_model extends CI_Model {
 				' . $date_inicio_orca . '
 				' . $date_fim_orca . '
                 CO.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-				CO.Tipo = 2
+				' . $tipoevento . '
 				' . $cliente . '
 				' . $clientepet . '
 				' . $clientedep . '
@@ -528,7 +532,7 @@ class Relatorio_model extends CI_Model {
 				' . $comissao1 . '
 				' . $comissao2 . '
 				' . $comissao3 . '
-			GROUP BY OT.idApp_OrcaTrata
+			' . $groupby . '
             ORDER BY
 				' . $data['Campo'] . '
 				' . $data['Ordenamento'] . '
