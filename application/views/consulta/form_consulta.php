@@ -173,48 +173,106 @@
 							<input type="hidden" id="Caminho2" name="Caminho2" value="<?php echo $caminho2; ?>">
 							<input type="hidden" id="metodo" value="<?php echo $metodo; ?>">
 							<input type="hidden" id="count_repet" value="<?php echo $count_repet; ?>">
-							<div class="row">
-								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-									<label for="idApp_Agenda">Profissional:*</label>
-									<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
-											id="idApp_Agenda" name="idApp_Agenda">
-										<!--<option value="">-- Selecione um Profissional --</option>-->												
-										<?php echo $select['option']; ?>
-										<?php
-										foreach ($select['idApp_Agenda'] as $key => $row) {
-											if ($query['idApp_Agenda'] == $key) {
-												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-											} else {
-												echo '<option value="' . $key . '">' . $row . '</option>';
+							<div class="form-group">
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+										<label for="idApp_Agenda">Profissional:*</label>
+										<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
+												id="idApp_Agenda" name="idApp_Agenda">
+											<!--<option value="">-- Selecione um Profissional --</option>-->												
+											<?php echo $select['option']; ?>
+											<?php
+											foreach ($select['idApp_Agenda'] as $key => $row) {
+												if ($query['idApp_Agenda'] == $key) {
+													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+												} else {
+													echo '<option value="' . $key . '">' . $row . '</option>';
+												}
 											}
-										}
-										?>
-									</select>
-									<?php echo form_error('idApp_Agenda'); ?>
-								</div>
-								<?php if($alterarcliente == 1){?>
-									
-									<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
-										<label  id="NomeClienteAuto1">Cliente: <?php echo $cadastrar['NomeClienteAuto']; ?></label>
-										<input type="text" name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php echo $cadastrar['id_Cliente_Auto']; ?>" class="form-control" placeholder="Pesquisar Cliente">
-										<?php echo form_error('idApp_Cliente'); ?>
+											?>
+										</select>
+										<?php echo form_error('idApp_Agenda'); ?>
 									</div>
-									<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php echo $cadastrar['NomeClienteAuto']; ?>" />
-									<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php echo $query['idApp_Cliente']; ?>" />
-									<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">	
-									
-									<!--
-									<div class="col-md-4">
-										<div class="row">
-											<div class="col-md-12 text-left">	
-												<label  for="idApp_Cliente">Cliente:</label>
-												<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="buscaEnderecoCliente(this.value),clientePet(this.value),clienteDep(this.value),clienteOT(this.value)"
-														id="idApp_Cliente" name="idApp_Cliente">
-													<option value="">-- Sel. Cliente --</option>
+									<?php if($alterarcliente == 1){?>
+										<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
+											<label  >Cliente: </label>
+											<input type="text" name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php echo $cadastrar['id_Cliente_Auto']; ?>" class="form-control" placeholder="Pesquisar Cliente">
+											<span class="modal-title" id="NomeClienteAuto1"><?php echo $cadastrar['NomeClienteAuto']; ?></span>
+											<?php echo form_error('idApp_Cliente'); ?>
+										</div>
+										<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php echo $cadastrar['NomeClienteAuto']; ?>" />
+										<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php echo $query['idApp_Cliente']; ?>" />
+										<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">	
+										
+										<!--
+										<div class="col-md-4">
+											<div class="row">
+												<div class="col-md-12 text-left">	
+													<label  for="idApp_Cliente">Cliente:</label>
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="buscaEnderecoCliente(this.value),clientePet(this.value),clienteDep(this.value),clienteOT(this.value)"
+															id="idApp_Cliente" name="idApp_Cliente">
+														<option value="">-- Sel. Cliente --</option>
+														<?php
+														/*
+														foreach ($select['idApp_Cliente'] as $key => $row) {
+															if ($query['idApp_Cliente'] == $key) {
+																echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+															} else {
+																echo '<option value="' . $key . '">' . $row . '</option>';
+															}
+														}
+														*/
+														?>
+													</select>
+													<?php #echo form_error('idApp_Cliente'); ?>
+												</div>
+											</div>
+										</div>
+										-->
+										<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
+											<input type="hidden" id="Hidden_idApp_ClienteDep" name="Hidden_idApp_ClienteDep" value="<?php echo $query['idApp_ClienteDep']; ?>" />
+											<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
+												<label  for="idApp_ClienteDep">Dep</label>
+												<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClienteDep" name="idApp_ClienteDep">
+													<option value=""></option>
+												</select>
+												<span class="modal-title" id="Dep"></span>
+											</div>
+										<?php } ?>
+										<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
+											<input type="hidden" id="Hidden_idApp_ClientePet" name="Hidden_idApp_ClientePet" value="<?php echo $query['idApp_ClientePet']; ?>" />
+											<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
+												<label  for="idApp_ClientePet">Pet</label>
+												<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClientePet" name="idApp_ClientePet">
+													<option value=""></option>
+												</select>
+												<span class="modal-title" id="Pet"></span>
+											</div>
+										<?php } ?>
+									<?php }elseif($alterarcliente == 2){?>	
+										<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 ">
+											<label >Cliente</label>
+											<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['Cliente']['NomeCliente']; ?>">
+										</div>
+										<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
+											<input type="hidden" id="Hidden_idApp_ClienteDep" name="Hidden_idApp_ClienteDep" value="<?php echo $query['idApp_ClienteDep']; ?>" />
+											<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
+												<label  for="idApp_ClienteDep">Dep</label>
+												<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClienteDep" name="idApp_ClienteDep">
+													<option value=""></option>
+												</select>
+												<span class="modal-title" id="Dep"></span>
+											</div>
+											<!--
+											<div class="col-md-4 text-left">	
+												<label  for="idApp_ClienteDep">Dependente:</label>
+												<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php #echo $readonly; ?>
+														id="idApp_ClienteDep" name="idApp_ClienteDep">
+													<option value="">-- Sel. Dependente --</option>
 													<?php
 													/*
-													foreach ($select['idApp_Cliente'] as $key => $row) {
-														if ($query['idApp_Cliente'] == $key) {
+													foreach ($select['idApp_ClienteDep'] as $key => $row) {
+														if ($query['idApp_ClienteDep'] == $key) {
 															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 														} else {
 															echo '<option value="' . $key . '">' . $row . '</option>';
@@ -223,100 +281,44 @@
 													*/
 													?>
 												</select>
-												<?php #echo form_error('idApp_Cliente'); ?>
+												<?php #echo form_error('idApp_ClienteDep'); ?>
 											</div>
-										</div>
-									</div>
-									-->
-									<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
-										<input type="hidden" id="Hidden_idApp_ClienteDep" name="Hidden_idApp_ClienteDep" value="<?php echo $query['idApp_ClienteDep']; ?>" />
-										<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
-											<label  for="idApp_ClienteDep">Dep</label>
-											<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClienteDep" name="idApp_ClienteDep">
-												<option value=""></option>
-											</select>
-											<span class="modal-title" id="Dep"></span>
-										</div>
-									<?php } ?>
-									<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
-										<input type="hidden" id="Hidden_idApp_ClientePet" name="Hidden_idApp_ClientePet" value="<?php echo $query['idApp_ClientePet']; ?>" />
-										<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
-											<label  for="idApp_ClientePet">Pet</label>
-											<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClientePet" name="idApp_ClientePet">
-												<option value=""></option>
-											</select>
-											<span class="modal-title" id="Pet"></span>
-										</div>
-									<?php } ?>
-								<?php }elseif($alterarcliente == 2){?>	
-									<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 ">
-										<label >Cliente</label>
-										<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['Cliente']['NomeCliente']; ?>">
-									</div>
-									<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
-										<input type="hidden" id="Hidden_idApp_ClienteDep" name="Hidden_idApp_ClienteDep" value="<?php echo $query['idApp_ClienteDep']; ?>" />
-										<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
-											<label  for="idApp_ClienteDep">Dep</label>
-											<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClienteDep" name="idApp_ClienteDep">
-												<option value=""></option>
-											</select>
-											<span class="modal-title" id="Dep"></span>
-										</div>
-										<!--
-										<div class="col-md-4 text-left">	
-											<label  for="idApp_ClienteDep">Dependente:</label>
-											<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php #echo $readonly; ?>
-													id="idApp_ClienteDep" name="idApp_ClienteDep">
-												<option value="">-- Sel. Dependente --</option>
-												<?php
-												/*
-												foreach ($select['idApp_ClienteDep'] as $key => $row) {
-													if ($query['idApp_ClienteDep'] == $key) {
-														echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-													} else {
-														echo '<option value="' . $key . '">' . $row . '</option>';
+											-->
+										<?php } ?>
+										<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
+											<input type="hidden" id="Hidden_idApp_ClientePet" name="Hidden_idApp_ClientePet" value="<?php echo $query['idApp_ClientePet']; ?>" />
+											<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
+												<label  for="idApp_ClientePet">Pet</label>
+												<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClientePet" name="idApp_ClientePet">
+													<option value=""></option>
+												</select>
+												<span class="modal-title" id="Pet"></span>
+											</div>
+											<!--
+											<div class="col-md-4 text-left">	
+												<label  for="idApp_ClientePet">Pet:</label>
+												<select data-placeholder="Selecione uma opção..." class="form-control" <?php #echo $readonly; ?>
+														id="idApp_ClientePet" name="idApp_ClientePet">
+													<option value="">-- Sel. Pet --</option>
+													<?php
+													/*
+													foreach ($select['idApp_ClientePet'] as $key => $row) {
+														if ($query['idApp_ClientePet'] == $key) {
+															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+														} else {
+															echo '<option value="' . $key . '">' . $row . '</option>';
+														}
 													}
-												}
-												*/
-												?>
-											</select>
-											<?php #echo form_error('idApp_ClienteDep'); ?>
-										</div>
-										-->
+													*/
+													?>
+												</select>
+												<?php #echo form_error('idApp_ClientePet'); ?>
+											</div>
+											-->
+										<?php } ?>	
 									<?php } ?>
-									<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
-										<input type="hidden" id="Hidden_idApp_ClientePet" name="Hidden_idApp_ClientePet" value="<?php echo $query['idApp_ClientePet']; ?>" />
-										<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
-											<label  for="idApp_ClientePet">Pet</label>
-											<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClientePet" name="idApp_ClientePet">
-												<option value=""></option>
-											</select>
-											<span class="modal-title" id="Pet"></span>
-										</div>
-										<!--
-										<div class="col-md-4 text-left">	
-											<label  for="idApp_ClientePet">Pet:</label>
-											<select data-placeholder="Selecione uma opção..." class="form-control" <?php #echo $readonly; ?>
-													id="idApp_ClientePet" name="idApp_ClientePet">
-												<option value="">-- Sel. Pet --</option>
-												<?php
-												/*
-												foreach ($select['idApp_ClientePet'] as $key => $row) {
-													if ($query['idApp_ClientePet'] == $key) {
-														echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-													} else {
-														echo '<option value="' . $key . '">' . $row . '</option>';
-													}
-												}
-												*/
-												?>
-											</select>
-											<?php #echo form_error('idApp_ClientePet'); ?>
-										</div>
-										-->
-									<?php } ?>	
-								<?php } ?>
-							</div>
+								</div>
+							</div>	
 							<div class="row">
 								<div class="col-xs-6 col-sm-3 col-md-2 col-lg-2 text-left">
 									<label for="Cadastrar">Encontrou?</label><br>
@@ -348,43 +350,39 @@
 									</div>
 								</div>											
 								<div id="Cadastrar" <?php echo $div['Cadastrar']; ?>>
-									
 									<div class="col-xs-6 col-sm-3 col-md-2 col-lg-2 text-left">
 										<label >Recarregar</label><br>
 										<button class="btn btn-md btn-primary btn-block"  id="inputDb" data-loading-text="Aguarde..." type="submit">
 												<span class="glyphicon glyphicon-refresh"></span>Recar
 										</button>
 									</div>
-										
-										<div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 text-left">	
-											<label for="Cadastrar">Cliente</label><br>
-											<button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#addClienteModal">
+									<div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 text-left">	
+										<label for="Cadastrar">Cliente</label><br>
+										<button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#addClienteModal">
+											<span class="glyphicon glyphicon-plus"></span>Cad
+										</button>
+									</div>
+									<?php if ($_SESSION['Empresa']['CadastrarPet'] == "S") { ?>
+										<div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 text-left">
+											<label >Pet</label><br>
+											<button type="button" class="btn btn-success btn-block" id="addPet" data-toggle="modal" data-target="#addClientePetModal">
 												<span class="glyphicon glyphicon-plus"></span>Cad
 											</button>
 										</div>
-										<?php if ($_SESSION['Empresa']['CadastrarPet'] == "S") { ?>
+									<?php }else{ ?>	
+										<?php if ($_SESSION['Empresa']['CadastrarDep'] == "S") { ?>
 											<div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 text-left">
-												<label >Pet</label><br>
-												<button type="button" class="btn btn-success btn-block" id="addPet" data-toggle="modal" data-target="#addClientePetModal">
+												<label >Dependente</label><br>
+												<button type="button" class="btn btn-success btn-block" id="addDep"  data-toggle="modal" data-target="#addClienteDepModal">
 													<span class="glyphicon glyphicon-plus"></span>Cad
 												</button>
 											</div>
-										<?php }else{ ?>	
-											<?php if ($_SESSION['Empresa']['CadastrarDep'] == "S") { ?>
-												<div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 text-left">
-													<label >Dependente</label><br>
-													<button type="button" class="btn btn-success btn-block" id="addDep"  data-toggle="modal" data-target="#addClienteDepModal">
-														<span class="glyphicon glyphicon-plus"></span>Cad
-													</button>
-												</div>
-											<?php } ?>
 										<?php } ?>
+									<?php } ?>
 									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">
 										<?php echo form_error('Cadastrar'); ?>
 									</div>		
-								</div>	
-									
-								
+								</div>
 							</div>
 							<br>
 							<div class="row">
@@ -466,7 +464,6 @@
 										</div>
 									</div>
 								</div>
-								
 								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
 									<div class="panel panel-warning">
 										<div class="panel-heading">
@@ -510,7 +507,6 @@
 																<input type="text" class="form-control" name="Recorrencias" id="Recorrencias" value="<?php echo $query['Recorrencias']; ?>" onkeyup="ocorrencias(), qtd_ocorrencias(), fechaBuscaOS()">
 															<?php echo form_error('Recorrencias'); ?>	
 														</div>
-														
 														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 															<div class="row">
 																<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -624,7 +620,7 @@
 																;
 															} else {
 																echo ''
-																. '<label class="btn btn-default" name="radio" id="radio' . $key . '">'
+																. '<label class="btn btn-default " name="radio" id="radio' . $key . '">'
 																. '<input type="radio" name="idTab_Status" id="radio" class="idTab_Status" '
 																	. 'autocomplete="off" value="' . $key . '" >' . $row
 																. '</label>'
@@ -638,7 +634,6 @@
 										</div>
 									</div>
 								</div>
-								
 								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 text-left">
 									<div class="panel panel-warning">
 										<div class="panel-heading">
@@ -672,29 +667,59 @@
 															<?php echo form_error('Adicionar'); ?>
 														</div>
 													<div id="Adicionar" <?php echo $div['Adicionar']; ?>>
-														
+														<div class="col-xs-12 col-sm-3 col-md-6 col-lg-6">
+															<label for="PorConsulta">Gerar " <span id="Ocorrencias"></span> " O.S.</label><br>
+															<div class="btn-group" data-toggle="buttons">
+																<?php
+																foreach ($select['PorConsulta'] as $key => $row) {
+																	if (!$cadastrar['PorConsulta']) $cadastrar['PorConsulta'] = 'S';
+
+																	($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+
+																	if ($cadastrar['PorConsulta'] == $key) {
+																		echo ''
+																		. '<label class="btn btn-warning active" name="PorConsulta_' . $hideshow . '">'
+																		. '<input type="radio" name="PorConsulta" id="' . $hideshow . '" '
+																		. 'onchange="qtd_ocorrencias(this.value)" '
+																		. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																		. '</label>'
+																		;
+																	} else {
+																		echo ''
+																		. '<label class="btn btn-default" name="PorConsulta_' . $hideshow . '">'
+																		. '<input type="radio" name="PorConsulta" id="' . $hideshow . '" '
+																		. 'onchange="qtd_ocorrencias(this.value)" '
+																		. 'autocomplete="off" value="' . $key . '" >' . $row
+																		. '</label>'
+																		;
+																	}
+																}
+																?>
+															</div>
+														</div>
+														<div id="PorConsulta" <?php echo $div['PorConsulta']; ?>>
 															<div class="col-xs-12 col-sm-3 col-md-6 col-lg-6">
-																<label for="PorConsulta">Gerar " <span id="Ocorrencias"></span> " O.S.</label><br>
-																<div class="btn-group" data-toggle="buttons">
+																<label class="novaos" for="NovaOS">Gerar "1" O.S.</label><br>
+																<div class="btn-group novaos" data-toggle="buttons">
 																	<?php
-																	foreach ($select['PorConsulta'] as $key => $row) {
-																		if (!$cadastrar['PorConsulta']) $cadastrar['PorConsulta'] = 'S';
+																	foreach ($select['NovaOS'] as $key => $row) {
+																		if (!$cadastrar['NovaOS']) $cadastrar['NovaOS'] = 'S';
 
 																		($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
 
-																		if ($cadastrar['PorConsulta'] == $key) {
+																		if ($cadastrar['NovaOS'] == $key) {
 																			echo ''
-																			. '<label class="btn btn-warning active" name="PorConsulta_' . $hideshow . '">'
-																			. '<input type="radio" name="PorConsulta" id="' . $hideshow . '" '
-																			. 'onchange="qtd_ocorrencias(this.value)" '
+																			. '<label class="btn btn-warning active" name="NovaOS_' . $hideshow . '">'
+																			. '<input type="radio" name="NovaOS" id="' . $hideshow . '" '
+																			. 'onchange="fechaBuscaOS(this.value)" '
 																			. 'autocomplete="off" value="' . $key . '" checked>' . $row
 																			. '</label>'
 																			;
 																		} else {
 																			echo ''
-																			. '<label class="btn btn-default" name="PorConsulta_' . $hideshow . '">'
-																			. '<input type="radio" name="PorConsulta" id="' . $hideshow . '" '
-																			. 'onchange="qtd_ocorrencias(this.value)" '
+																			. '<label class="btn btn-default" name="NovaOS_' . $hideshow . '">'
+																			. '<input type="radio" name="NovaOS" id="' . $hideshow . '" '
+																			. 'onchange="fechaBuscaOS(this.value)" '
 																			. 'autocomplete="off" value="' . $key . '" >' . $row
 																			. '</label>'
 																			;
@@ -703,126 +728,92 @@
 																	?>
 																</div>
 															</div>
-															<div id="PorConsulta" <?php echo $div['PorConsulta']; ?>>
-																<div class="col-xs-12 col-sm-3 col-md-6 col-lg-6">
-																	<label class="novaos" for="NovaOS">Gerar "1" O.S.</label><br>
-																	<div class="btn-group novaos" data-toggle="buttons">
-																		<?php
-																		foreach ($select['NovaOS'] as $key => $row) {
-																			if (!$cadastrar['NovaOS']) $cadastrar['NovaOS'] = 'S';
+															<div class="col-xs-12 col-sm-3 col-md-6 col-lg-6">
+																<label class="vincular" for="Vincular">Buscar O.S.?</label><br>
+																<div class="btn-group vincular" data-toggle="buttons">
+																	<?php
+																	foreach ($select['Vincular'] as $key => $row) {
+																		if (!$cadastrar['Vincular']) $cadastrar['Vincular'] = 'S';
 
-																			($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																		($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
 
-																			if ($cadastrar['NovaOS'] == $key) {
-																				echo ''
-																				. '<label class="btn btn-warning active" name="NovaOS_' . $hideshow . '">'
-																				. '<input type="radio" name="NovaOS" id="' . $hideshow . '" '
-																				. 'onchange="fechaBuscaOS(this.value)" '
-																				. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																				. '</label>'
-																				;
-																			} else {
-																				echo ''
-																				. '<label class="btn btn-default" name="NovaOS_' . $hideshow . '">'
-																				. '<input type="radio" name="NovaOS" id="' . $hideshow . '" '
-																				. 'onchange="fechaBuscaOS(this.value)" '
-																				. 'autocomplete="off" value="' . $key . '" >' . $row
-																				. '</label>'
-																				;
-																			}
+																		if ($cadastrar['Vincular'] == $key) {
+																			echo ''
+																			. '<label class="btn btn-warning active" name="Vincular_' . $hideshow . '">'
+																			. '<input type="radio" name="Vincular" id="' . $hideshow . '" '
+																			
+																			. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																			. '</label>'
+																			;
+																		} else {
+																			echo ''
+																			. '<label class="btn btn-default" name="Vincular_' . $hideshow . '">'
+																			. '<input type="radio" name="Vincular" id="' . $hideshow . '" '
+																			
+																			. 'autocomplete="off" value="' . $key . '" >' . $row
+																			. '</label>'
+																			;
 																		}
-																		?>
-																	</div>
+																	}
+																	?>
 																</div>
-																<div class="col-xs-12 col-sm-3 col-md-6 col-lg-6">
-																	<label class="vincular" for="Vincular">Buscar O.S.?</label><br>
-																	<div class="btn-group vincular" data-toggle="buttons">
-																		<?php
-																		foreach ($select['Vincular'] as $key => $row) {
-																			if (!$cadastrar['Vincular']) $cadastrar['Vincular'] = 'S';
-
-																			($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-
-																			if ($cadastrar['Vincular'] == $key) {
-																				echo ''
-																				. '<label class="btn btn-warning active" name="Vincular_' . $hideshow . '">'
-																				. '<input type="radio" name="Vincular" id="' . $hideshow . '" '
-																				
-																				. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																				. '</label>'
-																				;
-																			} else {
-																				echo ''
-																				. '<label class="btn btn-default" name="Vincular_' . $hideshow . '">'
-																				. '<input type="radio" name="Vincular" id="' . $hideshow . '" '
-																				
-																				. 'autocomplete="off" value="' . $key . '" >' . $row
-																				. '</label>'
-																				;
-																			}
-																		}
-																		?>
-																	</div>
-																</div>
-																<?php if($alterarcliente == 1){?>
-																	<div id="Vincular" <?php echo $div['Vincular']; ?>>
-																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left hnovaos"><?php //retirei essa classe "" desta div?>
-																			<label  for="idApp_OrcaTrata">O.S.</label>
-																			<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_OrcaTrata" name="idApp_OrcaTrata">
-																				<option value=""></option>
-																			</select>
-																		</div>
-																	</div>
-																<?php } elseif($alterarcliente == 2){?>	
-																	<div id="Vincular" <?php echo $div['Vincular']; ?>>
-																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left hnovaos"><?php //retirei essa classe "" desta div?>
-																			<label  for="idApp_OrcaTrata">O.S.</label>
-																			<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_OrcaTrata" name="idApp_OrcaTrata">
-																				<option value=""></option>
-																			</select>
-																		</div>
-																		<!--
-																		<div class="col-md-12 text-left hnovaos"><?php //retirei essa classe "" desta div?>	
-																			<label  for="idApp_OrcaTrata">O.S.:</label>
-																			<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php #echo $readonly; ?>
-																					id="idApp_OrcaTrata" name="idApp_OrcaTrata">
-																				<option value="">-- Sel. Orcamento --</option>
-																				<?php
-																				/*
-																				foreach ($select['idApp_OrcaTrata'] as $key => $row) {
-																					if ($query['idApp_OrcaTrata'] == $key) {
-																						echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-																					} else {
-																						echo '<option value="' . $key . '">' . $row . '</option>';
-																					}
-																				}
-																				*/
-																				?>
-																			</select>
-																			<?php #echo form_error('idApp_OrcaTrata'); ?>
-																		</div>
-																		-->
-																	</div>	
-																<?php } ?>
 															</div>
-															<?php if ($metodo == 1) { ?>	
-																<input type="hidden" id="Hidden_Status_PorConsulta" value="<?php echo $cadastrar['PorConsulta']; ?>" />
-																<input type="hidden" id="Hidden_NovaOS" value="<?php echo $cadastrar['NovaOS']; ?>" />
-																<input type="hidden" id="Hidden_Status_Vincular" value="<?php echo $cadastrar['Vincular']; ?>" />
-																<input type="hidden" id="Hidden_idApp_OrcaTrata" name="Hidden_idApp_OrcaTrata" value="<?php echo $query['idApp_OrcaTrata']; ?>" />
-															<?php }else{ ?>
-																<input type="hidden" id="Hidden_Status_PorConsulta" value="<?php echo $cadastrar['PorConsulta']; ?>" />
-																<input type="hidden" id="Hidden_NovaOS" value="<?php echo $cadastrar['NovaOS']; ?>" />
-																<input type="hidden" id="Hidden_Status_Vincular" value="<?php echo $cadastrar['Vincular']; ?>" />
-																<input type="hidden" id="Hidden_idApp_OrcaTrata" name="Hidden_idApp_OrcaTrata" value="<?php echo $query['idApp_OrcaTrata']; ?>" />
+															<?php if($alterarcliente == 1){?>
+																<div id="Vincular" <?php echo $div['Vincular']; ?>>
+																	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left hnovaos"><?php //retirei essa classe "" desta div?>
+																		<label  for="idApp_OrcaTrata">O.S.</label>
+																		<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_OrcaTrata" name="idApp_OrcaTrata">
+																			<option value=""></option>
+																		</select>
+																	</div>
+																</div>
+															<?php } elseif($alterarcliente == 2){?>	
+																<div id="Vincular" <?php echo $div['Vincular']; ?>>
+																	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left hnovaos"><?php //retirei essa classe "" desta div?>
+																		<label  for="idApp_OrcaTrata">O.S.</label>
+																		<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_OrcaTrata" name="idApp_OrcaTrata">
+																			<option value=""></option>
+																		</select>
+																	</div>
+																	<!--
+																	<div class="col-md-12 text-left hnovaos"><?php //retirei essa classe "" desta div?>	
+																		<label  for="idApp_OrcaTrata">O.S.:</label>
+																		<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php #echo $readonly; ?>
+																				id="idApp_OrcaTrata" name="idApp_OrcaTrata">
+																			<option value="">-- Sel. Orcamento --</option>
+																			<?php
+																			/*
+																			foreach ($select['idApp_OrcaTrata'] as $key => $row) {
+																				if ($query['idApp_OrcaTrata'] == $key) {
+																					echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+																				} else {
+																					echo '<option value="' . $key . '">' . $row . '</option>';
+																				}
+																			}
+																			*/
+																			?>
+																		</select>
+																		<?php #echo form_error('idApp_OrcaTrata'); ?>
+																	</div>
+																	-->
+																</div>	
 															<?php } ?>
-														
+														</div>
+														<?php if ($metodo == 1) { ?>	
+															<input type="hidden" id="Hidden_Status_PorConsulta" value="<?php echo $cadastrar['PorConsulta']; ?>" />
+															<input type="hidden" id="Hidden_NovaOS" value="<?php echo $cadastrar['NovaOS']; ?>" />
+															<input type="hidden" id="Hidden_Status_Vincular" value="<?php echo $cadastrar['Vincular']; ?>" />
+															<input type="hidden" id="Hidden_idApp_OrcaTrata" name="Hidden_idApp_OrcaTrata" value="<?php echo $query['idApp_OrcaTrata']; ?>" />
+														<?php }else{ ?>
+															<input type="hidden" id="Hidden_Status_PorConsulta" value="<?php echo $cadastrar['PorConsulta']; ?>" />
+															<input type="hidden" id="Hidden_NovaOS" value="<?php echo $cadastrar['NovaOS']; ?>" />
+															<input type="hidden" id="Hidden_Status_Vincular" value="<?php echo $cadastrar['Vincular']; ?>" />
+															<input type="hidden" id="Hidden_idApp_OrcaTrata" name="Hidden_idApp_OrcaTrata" value="<?php echo $query['idApp_OrcaTrata']; ?>" />
+														<?php } ?>
 													</div>
-													
 												<?php } ?>
 											</div>
 											<div class="row">
-												
 												<input type="hidden" name="idApp_Consulta" value="<?php echo $query['idApp_Consulta']; ?>">
 												<?php if ($alterarcliente == 2) { ?>
 													<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>">
@@ -830,7 +821,6 @@
 												<!--
 												<input type="hidden" name="Evento" value="1">
 												-->
-												
 												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
 													<?php if ($metodo == 2) { ?>
 														<br>

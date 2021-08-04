@@ -60,7 +60,7 @@ $("#id_Cliente_Auto").autocomplete({
 				var nomecliente = data[0]['nome'];
 				var celularcliente = data[0]['celular'];
 				
-				$("#NomeClienteAuto1").html('<label>Cliente: '+idcliente+ ' | ' + nomecliente + ' | Cel: ' + celularcliente + '</label>');
+				$("#NomeClienteAuto1").html('<label>'+idcliente+ ' | ' + nomecliente + ' | Cel: ' + celularcliente + '</label>');
 				$("#NomeClienteAuto").val(''+idcliente+ ' | ' + nomecliente + ' | Cel: ' + celularcliente + '');
 				
 			},
@@ -2879,7 +2879,7 @@ function clientePet(id = null){
 		});
 			
 	} else {
-		$('#idApp_ClientePet').html('<option value="">– Selecione um Cliente –</option>');
+		$('#idApp_ClientePet').html('<option value="">– Selecione um Pet –</option>');
 		//console.log('Nenhum Cliente');
 	}
 
@@ -2959,7 +2959,7 @@ function clienteDep(id = null){
 		});
 		
 	} else {
-		$('#idApp_ClienteDep').html('<option value="">– Selecione um Cliente –</option>');
+		$('#idApp_ClienteDep').html('<option value="">– Selecione um Dep –</option>');
 	}
 
 }
@@ -3057,7 +3057,7 @@ function clienteOT(id = null){
 		});
 		
 	} else {
-		$('#idApp_OrcaTrata').html('<option value="">– Selecione um Cliente –</option>');
+		$('#idApp_OrcaTrata').html('<option value="">– Selecione um Orcam. –</option>');
 	}
 
 }
