@@ -1029,38 +1029,38 @@
 					
 					<div class="form-group">
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<label for="NomeCliente">Nome do Cliente: *</label>
 								<input name="NomeCliente" type="text" class="form-control" id="NomeCliente" maxlength="255" placeholder="Nome do Cliente">
 							</div>
-							<div class="col-md-3">
+							<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
 								<label for="CelularCliente">Celular: *</label>
 								<input type="text" class="form-control Celular" id="CelularCliente" maxlength="11" name="CelularCliente" placeholder="(XX)999999999">
 							</div>
-							<div class="col-md-3">
-								<label for="DataNascimento">Data do Aniversário:</label>
+							<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+								<label for="DataNascimento">Aniversário:</label>
 								<input type="text" class="form-control Date" maxlength="10" name="DataNascimento" placeholder="DD/MM/AAAA">
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6 ">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 								<h4 class="mb-3">Sexo</h4>
-								<div class="col-md-3 mb-3 ">	
-									<div class="custom-control custom-radio">
-										<input type="radio" name="Sexo" class="custom-control-input "  id="Retirada" value="M">
-										<label class="custom-control-label" for="Masculino">Mas</label>
+								<div class="row">
+									<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mb-3 ">	
+										<div class="custom-control custom-radio">
+											<input type="radio" name="Sexo" class="custom-control-input "  id="Retirada" value="M">
+											<label class="custom-control-label" for="Masculino">Mas</label>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-3 mb-3 ">	
-									<div class="custom-control custom-radio">
-										<input type="radio" name="Sexo" class="custom-control-input " id="Combinar" value="F">
-										<label class="custom-control-label" for="Feminino">Fem </label>
+									<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mb-3 ">	
+										<div class="custom-control custom-radio">
+											<input type="radio" name="Sexo" class="custom-control-input " id="Combinar" value="F">
+											<label class="custom-control-label" for="Feminino">Fem </label>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-3 mb-3 ">
-									<div class="custom-control custom-radio">
-										<input type="radio" name="Sexo" class="custom-control-input " id="Correios" value="O" checked>
-										<label class="custom-control-label" for="Outros">Outros</label>
+									<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mb-3 ">
+										<div class="custom-control custom-radio">
+											<input type="radio" name="Sexo" class="custom-control-input " id="Correios" value="O" checked>
+											<label class="custom-control-label" for="Outros">Out</label>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -1068,7 +1068,7 @@
 					</div>
 					<div class="form-group">
 						<div class="row">
-							<div class="col-md-12 text-center">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
 								<button class="btn btn-info" type="button" data-toggle="collapse" data-target="#DadosComplementares" aria-expanded="false" aria-controls="DadosComplementares">
 									<span class="glyphicon glyphicon-menu-down"></span> Completar Dados
 								</button>
@@ -1078,39 +1078,35 @@
 					<div class="collapse" id="DadosComplementares">
 						<div class="form-group">
 							<div class="row">
-								<div class="col-md-3">
+								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 ">
 									<label for="CepCliente">Cep:</label>
 									<input type="text" class="form-control Numero" id="CepCliente" maxlength="8" name="CepCliente">
 								</div>
-								<div class="col-md-6">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 									<label for="EnderecoCliente">Endreço:</label>
 									<input type="text" class="form-control" id="EnderecoCliente" maxlength="100" name="EnderecoCliente">
 								</div>
-								<div class="col-md-3">
+								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
 									<label for="NumeroCliente">Numero:</label>
 									<input type="text" class="form-control" id="NumeroCliente" maxlength="100" name="NumeroCliente">
 								</div>
-							</div>	
-							<div class="row">
-								<div class="col-md-3">
+								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
 									<label for="ComplementoCliente">Complemento:</label>
 									<input type="text" class="form-control" id="ComplementoCliente" maxlength="100" name="ComplementoCliente" >
 								</div>	
-								<div class="col-md-3">
+								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
 									<label for="BairroCliente">Bairro:</label>
 									<input type="text" class="form-control" id="BairroCliente" maxlength="100" name="BairroCliente" >
 								</div>
-								<div class="col-md-3">
+								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
 									<label for="CidadeCliente">Município:</label>
 									<input type="text" class="form-control" id="CidadeCliente" maxlength="100" name="CidadeCliente" >
 								</div>
-								<div class="col-md-3">
+								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
 									<label for="EstadoCliente">Estado:</label>
 									<input type="text" class="form-control" id="EstadoCliente" maxlength="2" name="EstadoCliente" >
 								</div>
-							</div>	
-							<div class="row">
-								<div class="col-md-3 ">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 ">
 									<label class="" for="ReferenciaCliente">Referencia:</label>
 									<textarea class="form-control " id="ReferenciaCliente" name="ReferenciaCliente"></textarea>
 								</div>
@@ -1118,19 +1114,19 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<div class="col-sm-6">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 							<br>
 							<button type="button" class="btn btn-primary btn-block" data-dismiss="modal" name="botaoFecharCliente" id="botaoFecharCliente">
 								<span class="glyphicon glyphicon-remove"></span> Fechar
 							</button>
 						</div>	
-						<div class="col-sm-6">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 							<br>
 							<button type="submit" class="btn btn-success btn-block" name="botaoCadCliente" id="botaoCadCliente" >
 								<span class="glyphicon glyphicon-plus"></span> Cadastrar
 							</button>
 						</div>	
-						<div class="col-md-12 alert alert-warning aguardarCliente" role="alert" >
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning aguardarCliente" role="alert" >
 							Aguarde um instante! Estamos processando sua solicitação!
 						</div>
 					</div>
@@ -1174,24 +1170,24 @@
 					<form method="post" id="insert_clientepet_form">
 						<div class="form-group">
 							<div class="row">
-								<div class="col-md-6">
-									<label for="NomeClientePet">Nome do Pet: *</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<label for="NomeClientePet">Nome*</label>
 									<input name="NomeClientePet" type="text" class="form-control" id="NomeClientePet" maxlength="255" placeholder="Nome do Pet">
 								</div>
-								<div class="col-md-3">
-									<label for="DataNascimentoPet">Data de Nascimento:</label>
+								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+									<label for="DataNascimentoPet">Nascimento:</label>
 									<input type="text" class="form-control Date" maxlength="10" name="DataNascimentoPet" placeholder="DD/MM/AAAA">
 								</div>
-								<div class="col-lg-3 ">
+								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 ">
 									<h4 class="mb-3">Gênero</h4>
 									<div class="row">
-										<div class="col-md-6 mb-3 ">	
+										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-3 ">	
 											<div class="custom-control custom-radio">
 												<input type="radio" name="SexoPet" class="custom-control-input "  id="Retirada" value="M" checked>
 												<label class="custom-control-label" for="Masculino">MACHO</label>
 											</div>
 										</div>
-										<div class="col-md-6 mb-3 ">	
+										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-3 ">	
 											<div class="custom-control custom-radio">
 												<input type="radio" name="SexoPet" class="custom-control-input " id="Combinar" value="F">
 												<label class="custom-control-label" for="Feminino">FÊMEA</label>
@@ -1208,11 +1204,11 @@
 									<input name="EspeciePet" type="text" class="form-control" id="EspeciePet" maxlength="45" placeholder="Especie do Pet">
 								</div>
 								-->
-								<div class="col-md-3 text-left">
+								<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 text-left">
 									<label for="EspeciePet">Especie:</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control"
 											id="EspeciePet" name="EspeciePet">
-										<option value="">-- Selecione uma opção --</option>
+										<option value="">-- Especie --</option>
 										<?php
 										foreach ($select['EspeciePet'] as $key => $row) {
 											if ($cadastrar['EspeciePet'] == $key) {
@@ -1224,11 +1220,11 @@
 										?>
 									</select>
 								</div>
-								<div class="col-md-3 text-left">
+								<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 text-left">
 									<label for="RacaPet">Raca:</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control"
 											id="RacaPet" name="RacaPet">
-										<option value="">-- Selecione uma opção --</option>
+										<option value="">-- Raca --</option>
 										<?php
 										foreach ($select['RacaPet'] as $key => $row) {
 											if ($cadastrar['RacaPet'] == $key) {
@@ -1246,11 +1242,11 @@
 									<input name="RacaPet" type="text" class="form-control" id="RacaPet" maxlength="45" placeholder="Raca do Pet">
 								</div>
 								-->
-								<div class="col-md-3 text-left">
+								<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 text-left">
 									<label for="PeloPet">Pelo:</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control"
 											id="PeloPet" name="PeloPet">
-										<option value="">-- Selecione uma opção --</option>
+										<option value="">-- Pelo --</option>
 										<?php
 										foreach ($select['PeloPet'] as $key => $row) {
 											if ($cadastrar['PeloPet'] == $key) {
@@ -1262,17 +1258,15 @@
 										?>
 									</select>
 								</div>
-								<div class="col-md-3">
+								<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
 									<label for="CorPet">Cor: *</label>
 									<input name="CorPet" type="text" class="form-control" id="CorPet" maxlength="45" placeholder="Cor do Pet">
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3 text-left">
+								<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 text-left">
 									<label for="PortePet">Porte?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control"
 											id="PortePet" name="PortePet">
-										<option value="">-- Selecione uma opção --</option>
+										<option value="">-- Porte --</option>
 										<?php
 										foreach ($select['PortePet'] as $key => $row) {
 											if ($cadastrar['PortePet'] == $key) {
@@ -1284,23 +1278,23 @@
 										?>
 									</select>
 								</div>
-								<div class="col-md-3">
+								<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
 									<label for="PesoPet">Peso: </label>
 									<div class="input-group">
 										<input name="PesoPet" type="text" class="form-control ValorPeso" id="PesoPet" maxlength="10" placeholder="0,000">
 										<span class="input-group-addon">kg</span>
 									</div>
 								</div>
-								<div class="col-lg-3 ">
+								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 ">
 									<h4 class="mb-3">Alérgico</h4>
 									<div class="row">
-										<div class="col-md-6 mb-3 ">	
+										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-3 ">	
 											<div class="custom-control custom-radio">
 												<input type="radio" name="AlergicoPet" class="custom-control-input "  id="AlergicoPet_Nao" value="N" checked>
 												<label class="custom-control-label" for="Nao">Não</label>
 											</div>
 										</div>
-										<div class="col-md-6 mb-3 ">	
+										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-3 ">	
 											<div class="custom-control custom-radio">
 												<input type="radio" name="AlergicoPet" class="custom-control-input " id="AlergicoPet_Sim" value="S">
 												<label class="custom-control-label" for="Sim">Sim</label>
@@ -1308,28 +1302,28 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
 									<label for="ObsPet">Obs:</label>
 									<textarea name="ObsPet" type="text" class="form-control" id="ObsPet" maxlength="255" placeholder="Observacao"></textarea>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-3 text-left">	
+								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 text-left">	
 									<label >Raca</label><br>
 									<button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#addRacaPetModal">
-										Cadastrar/Edit./Excl.
+										Cad/Edit/Excl
 									</button>
 								</div>
 							</div>								
 						</div>
 						<div class="form-group row">
-							<div class="col-sm-6">
+							<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
 								<br>
 								<button type="button" class="btn btn-primary btn-block" data-dismiss="modal" name="botaoFechar" id="botaoFechar">
 									<span class="glyphicon glyphicon-remove"></span> Fechar
 								</button>
 							</div>	
-							<div class="col-sm-6">
+							<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
 								<br>
 								<button type="submit" class="btn btn-success btn-block" name="botaoCad" id="botaoCad" >
 									<span class="glyphicon glyphicon-plus"></span> Cadastrar
@@ -1455,39 +1449,41 @@
 						<form method="post" id="insert_clientedep_form">
 							<div class="form-group">
 								<div class="row">
-									<div class="col-md-6">
-										<label for="NomeClienteDep">Nome do Dependente: *</label>
+									<div class="col-xs-6 col-sm-6 col-md-4 col-lg-6">
+										<label for="NomeClienteDep">Nome*</label>
 										<input name="NomeClienteDep" type="text" class="form-control" id="NomeClienteDep" maxlength="255" placeholder="Nome do Dependente">
 									</div>
-									<div class="col-md-3">
-										<label for="DataNascimentoDep">Data de Nascimento:</label>
+									<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+										<label for="DataNascimentoDep">Nascimento</label>
 										<input type="text" class="form-control Date" maxlength="10" name="DataNascimentoDep" placeholder="DD/MM/AAAA">
 									</div>
-									<div class="col-lg-3 ">
+									<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 ">
 										<h4 class="mb-3">Sexo</h4>
-										<div class="col-md-4 mb-3 ">	
-											<div class="custom-control custom-radio">
-												<input type="radio" name="SexoDep" class="custom-control-input "  id="Retirada" value="M">
-												<label class="custom-control-label" for="Masculino">Mas</label>
+										<div class="row">
+											<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mb-3 ">	
+												<div class="custom-control custom-radio">
+													<input type="radio" name="SexoDep" class="custom-control-input "  id="Retirada" value="M">
+													<label class="custom-control-label" for="Masculino">Mas</label>
+												</div>
 											</div>
-										</div>
-										<div class="col-md-4 mb-3 ">	
-											<div class="custom-control custom-radio">
-												<input type="radio" name="SexoDep" class="custom-control-input " id="Combinar" value="F">
-												<label class="custom-control-label" for="Feminino">Fem </label>
+											<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mb-3 ">	
+												<div class="custom-control custom-radio">
+													<input type="radio" name="SexoDep" class="custom-control-input " id="Combinar" value="F">
+													<label class="custom-control-label" for="Feminino">Fem </label>
+												</div>
 											</div>
-										</div>
-										<div class="col-md-4 mb-3 ">
-											<div class="custom-control custom-radio">
-												<input type="radio" name="SexoDep" class="custom-control-input " id="Correios" value="O" checked>
-												<label class="custom-control-label" for="Outros">Outros</label>
+											<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mb-3 ">
+												<div class="custom-control custom-radio">
+													<input type="radio" name="SexoDep" class="custom-control-input " id="Correios" value="O" checked>
+													<label class="custom-control-label" for="Outros">Out</label>
+												</div>
 											</div>
 										</div>
 									</div>
 									<input type="hidden" name="id_Cliente" id="id_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" >
 								</div>
 								<div class="row">					
-									<div class="col-md-6">
+									<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
 										<label for="RelacaoDep">Relação</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control"
 												id="RelacaoDep" name="RelacaoDep">
@@ -1504,26 +1500,26 @@
 										</select>
 										<?php echo form_error('RelacaoDep'); ?>           
 									</div>
-									<div class="col-md-6">
+									<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
 										<label for="ObsDep">Obs: *</label>
 										<input name="ObsDep" type="text" class="form-control" id="ObsDep" maxlength="255" placeholder="Observacao">
 									</div>
 								</div>								
 							</div>
 							<div class="form-group row">
-								<div class="col-sm-6">
+								<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
 									<br>
 									<button type="button" class="btn btn-primary btn-block" data-dismiss="modal" name="botaoFechar" id="botaoFechar">
 										<span class="glyphicon glyphicon-remove"></span> Fechar
 									</button>
 								</div>	
-								<div class="col-sm-6">
+								<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
 									<br>
 									<button type="submit" class="btn btn-success btn-block" name="botaoCad" id="botaoCad" >
 										<span class="glyphicon glyphicon-plus"></span> Cadastrar
 									</button>
 								</div>	
-								<div class="col-md-12 alert alert-warning aguardar1" role="alert" >
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning aguardar1" role="alert" >
 									Aguarde um instante! Estamos processando sua solicitação!
 								</div>
 							</div>
