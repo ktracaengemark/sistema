@@ -40,7 +40,7 @@
 								-->
 								<input type="hidden" class="form-control Numero" placeholder="Pesquisar Cliente"  name="Cliente" value="<?php echo set_value('Cliente', $query['Cliente']); ?>">
 								<div class="col-md-5 text-left">
-									<label  id="NomeClienteAuto1">Cliente: <?php echo $cadastrar['NomeClienteAuto']; ?></label>
+									<label  >Cliente:</label>
 									<div class="input-group">
 										<span class="input-group-btn">
 											<button class="btn btn-primary btn-md" type="submit">
@@ -48,10 +48,12 @@
 											</button>
 										</span>
 										<input type="text" name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php echo $cadastrar['id_Cliente_Auto']; ?>" class="form-control" placeholder="Pesquisar Cliente">
-										<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php echo $cadastrar['NomeClienteAuto']; ?>" />
-										<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php echo $query['idApp_Cliente']; ?>" />
-										<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">
+										
 									</div>
+									<span class="modal-title" id="NomeClienteAuto1"><?php echo $cadastrar['NomeClienteAuto']; ?></span>
+									<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php echo $cadastrar['NomeClienteAuto']; ?>" />
+									<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php echo $query['idApp_Cliente']; ?>" />
+									<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">
 								</div>
 							<?php }else{ ?>
 								<input type="hidden" name="Cliente" id="Cliente" value=""/>
