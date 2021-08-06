@@ -1401,7 +1401,8 @@ class Loginempresa extends CI_Controller {
          *
          */
 
-        redirect(base_url() . 'login/' . $data['msg']);
+        //redirect(base_url() . 'login/' . $data['msg']);
+        redirect(base_url() . '../enkontraki/');
         #redirect('loginempresa');
     }
 
