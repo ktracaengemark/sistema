@@ -44,8 +44,10 @@ class Loginempresa extends CI_Controller {
         #só pra eu saber quando estou no banco de testes ou de produção
         #$CI = & get_instance();
         #$CI->load->database();
-        #if ($CI->db->database != 'sishuap')
+        /*
+		#if ($CI->db->database != 'sishuap')
         #echo $CI->db->database;
+		*/
         ###################################################
         #change error delimiter view
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -204,8 +206,28 @@ class Loginempresa extends CI_Controller {
 		$nomeadmin1 = preg_replace("/[^a-zA-Z]/", " ", strtr($data['query']['NomeAdmin'], $caracteres_sem_acento));		
 				
 		(!$data['query']['DataCriacao']) ? $data['query']['DataCriacao'] = date('d/m/Y', time()) : FALSE;
-		(!$data['query']['DataDeValidade']) ? $data['query']['DataDeValidade'] = date('d/m/Y', strtotime('+1 month')) : FALSE;
-        
+		
+				
+		$data['Ano'] = date('Y', time());
+		$data['Mes'] = date('m', time());
+		$data['Dia'] = date('d', time());
+		
+		if($data['Dia'] <= 15){
+			$data['Diaref'] = "01";
+		}else{
+			$data['Diaref'] = "15";
+		}
+		
+		$data['DataRef'] = date($data['Ano']. '-'.$data['Mes'].'-'.$data['Diaref']);
+		$data['DataValidade'] = date('d/m/Y', strtotime('+1 month',strtotime($data['DataRef'])));
+			
+		//(!$data['query']['DataDeValidade']) ? $data['query']['DataDeValidade'] = date('d/m/Y', strtotime('+1 month')) : FALSE;
+		(!$data['query']['DataDeValidade']) ? $data['query']['DataDeValidade'] = $data['DataValidade'] : FALSE;
+        /*
+		echo "<pre>";
+		print_r($data['query']['DataDeValidade']);
+		echo "</pre>";		
+		*/
 		if (isset($data['query']['Site'])) {
 			$data['query']['Site'] = $this->basico->url_amigavel($data['query']['Site']);
 		}
@@ -636,7 +658,7 @@ class Loginempresa extends CI_Controller {
 					  <div class="alert alert-success" role="alert">
 					  <h4>
 					  <p><b>Empresa cadastrado com sucesso! "' . $data['query']['NomeEmpresa'] . '" Nº ' . $data['idSis_Empresa'] . '</b></p>
-					  <p>Clique no botão abaixo e retorne para a tela de Login do Administrador.<br>
+					  <p>Clique no botão abaixo e retorne para a tela de Login do Usuário.<br>
 					  Para entrar no sistema, insira o número da empresa, informado acima,<br>
 					  o celular cadastrado como login e a senha cadastrada.</p>
 					  </h4>
@@ -1415,6 +1437,5 @@ class Loginempresa extends CI_Controller {
             return TRUE;
         }
     }
-	
 
 }

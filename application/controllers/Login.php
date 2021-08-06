@@ -42,13 +42,15 @@ class Login extends CI_Controller {
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
+		/*
         ###################################################
         #só pra eu saber quando estou no banco de testes ou de produção
         #$CI = & get_instance();
         #$CI->load->database();
-        #if ($CI->db->database != 'sishuap')
+		#if ($CI->db->database != 'sishuap')
         #echo $CI->db->database;
-        ###################################################
+		###################################################
+        */
         #change error delimiter view
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
@@ -196,7 +198,7 @@ class Login extends CI_Controller {
         #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
-
+		/*
         ###################################################
         #só pra eu saber quando estou no banco de testes ou de produção
         #$CI = & get_instance();
@@ -204,7 +206,8 @@ class Login extends CI_Controller {
         #if ($CI->db->database != 'sishuap')
         #echo $CI->db->database;
         ###################################################
-        #change error delimiter view
+        */
+		#change error delimiter view
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #Get GET or POST data
@@ -349,6 +352,7 @@ class Login extends CI_Controller {
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
+		/*
         ###################################################
         #só pra eu saber quando estou no banco de testes ou de produção
         #$CI = & get_instance();
@@ -356,7 +360,8 @@ class Login extends CI_Controller {
         #if ($CI->db->database != 'sishuap')
         #echo $CI->db->database;
         ###################################################
-        #change error delimiter view
+        */
+		#change error delimiter view
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #Get GET or POST data
@@ -501,7 +506,8 @@ class Login extends CI_Controller {
         #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
-
+		
+		/*
         ###################################################
         #só pra eu saber quando estou no banco de testes ou de produção
         #$CI = & get_instance();
@@ -509,7 +515,8 @@ class Login extends CI_Controller {
         #if ($CI->db->database != 'sishuap')
         #echo $CI->db->database;
         ###################################################
-        #change error delimiter view
+        */
+		#change error delimiter view
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #Get GET or POST data
@@ -655,6 +662,7 @@ class Login extends CI_Controller {
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
+		/*
         ###################################################
         #só pra eu saber quando estou no banco de testes ou de produção
         #$CI = & get_instance();
@@ -662,7 +670,8 @@ class Login extends CI_Controller {
         #if ($CI->db->database != 'sishuap')
         #echo $CI->db->database;
         ###################################################
-        #change error delimiter view
+        */
+		#change error delimiter view
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #Get GET or POST data
@@ -812,7 +821,8 @@ class Login extends CI_Controller {
         #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
-
+		
+		/*
         ###################################################
         #só pra eu saber quando estou no banco de testes ou de produção
         #$CI = & get_instance();
@@ -820,7 +830,8 @@ class Login extends CI_Controller {
         #if ($CI->db->database != 'sishuap')
         #echo $CI->db->database;
         ###################################################
-        #change error delimiter view
+        */
+		#change error delimiter view
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #Get GET or POST data

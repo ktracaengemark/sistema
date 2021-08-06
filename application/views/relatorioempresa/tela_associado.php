@@ -14,9 +14,11 @@
 			<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>relatorioempresa/empresas" role="button">
 				<span class="glyphicon glyphicon-search"></span>Empresas
 			</a>
+			<!--
 			<button  class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 				<span class="glyphicon glyphicon-plus"></span>
 			</button>
+			-->
 		</div>
 
 		<div class="panel-body">
