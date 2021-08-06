@@ -40,21 +40,22 @@
 	<?php if (isset($msg)) echo $msg; ?>
 	<?php #echo form_open('agenda', 'role="form"'); ?>
 	<?php echo form_open($form_open_path, 'role="form"'); ?>
-	<div class="panel panel-primary">
+	<div class="panel panel-info">
 		<div class="panel-heading">
 			<?php if($paginacao == "N") { ?>					
 				<div class="row text-left">
 					<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>
 						<div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 text-left">
-							<label  id="NomeClienteAuto1">Cliente: <?php echo $cadastrar['NomeClienteAuto']; ?></label>
+							<label  >Cliente:</label>
 							<div class="input-group">
 								<input type="text" class="form-control" name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php echo $cadastrar['id_Cliente_Auto']; ?>"  placeholder="Pesquisar Cliente">
 								<span class="input-group-btn">
-									<button class="btn btn-info btn-md" type="submit">
+									<button class="btn btn-primary btn-md" type="submit">
 										<span class="glyphicon glyphicon-search"></span> 
 									</button>
 								</span>
 							</div>
+							<span class="modal-title" id="NomeClienteAuto1"><?php echo $cadastrar['NomeClienteAuto']; ?></span>
 							<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php echo $cadastrar['NomeClienteAuto']; ?>" />
 							<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php echo $query['idApp_Cliente']; ?>" />
 							<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">
@@ -98,7 +99,7 @@
 						<?php } ?>
 						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-left">	
 							<label class="" for="Ordenamento">Cal.</label><br>
-							<div class=" btn btn-info" type="button" data-toggle="collapse" data-target="#Calendario" aria-expanded="false" aria-controls="Calendario">
+							<div class=" btn btn-primary" type="button" data-toggle="collapse" data-target="#Calendario" aria-expanded="false" aria-controls="Calendario">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</div>
 						</div>
@@ -133,7 +134,7 @@
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 		<?php #echo form_open('agenda', 'role="form"'); ?>
 		<?php echo form_open($form_open_path, 'role="form"'); ?>
-		<div class="panel panel-primary">
+		<div class="panel panel-info">
 			<div class="panel-heading">
 				
 				<?php if($paginacao == "N") { ?>					
