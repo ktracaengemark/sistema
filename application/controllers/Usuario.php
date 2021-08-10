@@ -1060,6 +1060,7 @@ class Usuario extends CI_Controller {
 			'Bx_Pag',
 			'Bx_Prd',
 			'Bx_Prc',
+			'Permissao_Orcam',
 			'Permissao_Comissao',
         ), TRUE);
 
@@ -1069,11 +1070,6 @@ class Usuario extends CI_Controller {
             $data['query'] = $this->Usuario_model->get_usuario($id);
         }
 
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        $this->form_validation->set_rules('DataEmUsuario', 'Data de Emissão', 'trim|valid_date');	
-		if($data['query']['Rel_Com'] == "S"){
-			$this->form_validation->set_rules('Permissao_Comissao', 'Permissão da Comissão', 'required|trim');
-		}
         $data['select']['Cad_Orcam'] = $this->Basico_model->select_status_sn();
         $data['select']['Ver_Orcam'] = $this->Basico_model->select_status_sn();
         $data['select']['Edit_Orcam'] = $this->Basico_model->select_status_sn();
@@ -1092,10 +1088,14 @@ class Usuario extends CI_Controller {
         $data['select']['Bx_Pag'] = $this->Basico_model->select_status_sn();
         $data['select']['Bx_Prd'] = $this->Basico_model->select_status_sn();
         $data['select']['Bx_Prc'] = $this->Basico_model->select_status_sn();
+		$data['select']['Permissao_Orcam'] = array (
+            '1' => '1-Retrito',
+            '2' => '2-Irrestrito',
+        );
 		$data['select']['Permissao_Comissao'] = array (
-            '1' => '1-Retrita à Própria',
-            '2' => '2-Irrestrita s/Edição',
-			'3' => '3-Irrestrita c/Edição',
+            '1' => '1-Retrito à Própria',
+            '2' => '2-Irrestrito s/Edição',
+			'3' => '3-Irrestrito c/Edição',
         );
 		
         $data['titulo'] = 'Permissões do Usuário';
@@ -1122,6 +1122,13 @@ class Usuario extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2 sidebar';
         $data['main'] = 'col-sm-7 col-sm-offset-3 col-md-8 col-md-offset-2 main';
 
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        $this->form_validation->set_rules('DataEmUsuario', 'Data de Emissão', 'trim|valid_date');
+		$this->form_validation->set_rules('Permissao_Orcam', 'Acesso Orcam.', 'required|trim');	
+		if($data['query']['Rel_Com'] == "S"){
+			$this->form_validation->set_rules('Permissao_Comissao', 'Permissão da Comissão', 'required|trim');
+		}
+		
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('usuario/form_permissoes', $data);
