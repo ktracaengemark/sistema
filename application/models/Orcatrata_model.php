@@ -2770,7 +2770,9 @@ class Orcatrata_model extends CI_Model {
     }
 	
     public function list_orcamentocomb($id, $combinado, $completo) {
-
+		
+		$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+		
         $query = $this->db->query('SELECT '
             . 'OT.idApp_OrcaTrata, '
 			. 'OT.idSis_Empresa, '
@@ -2791,6 +2793,7 @@ class Orcatrata_model extends CI_Model {
             . 'FROM '
             . 'App_OrcaTrata AS OT '
             . 'WHERE '
+			. $permissao_orcam 
 			. 'OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND '
 			. 'OT.idApp_Cliente = ' . $id . ' AND '
 			. 'OT.idTab_TipoRD = "2" AND '
@@ -2836,6 +2839,8 @@ class Orcatrata_model extends CI_Model {
 	
     public function list_orcamento($id, $aprovado, $completo) {
 
+		$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+		
         $query = $this->db->query('SELECT '
             . 'OT.idApp_OrcaTrata, '
 			. 'OT.idSis_Empresa, '
@@ -2856,6 +2861,7 @@ class Orcatrata_model extends CI_Model {
             . 'FROM '
             . 'App_OrcaTrata AS OT '
             . 'WHERE '
+			. $permissao_orcam 
 			. 'OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND '
 			. 'OT.idApp_Cliente = ' . $id . ' AND '
 			. 'OT.idTab_TipoRD = "2" AND '
@@ -2900,6 +2906,8 @@ class Orcatrata_model extends CI_Model {
 
     public function list_orcamentofinal($id, $finalizado, $completo) {
 
+		$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+		
         $query = $this->db->query('SELECT '
             . 'OT.idApp_OrcaTrata, '
 			. 'OT.idSis_Empresa, '
@@ -2919,6 +2927,7 @@ class Orcatrata_model extends CI_Model {
             . 'FROM '
             . 'App_OrcaTrata AS OT '
             . 'WHERE '
+			. $permissao_orcam
 			. 'OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND '
 			. 'OT.idApp_Cliente = ' . $id . ' AND '
 			. 'OT.idTab_TipoRD = "2" AND '
@@ -2961,6 +2970,8 @@ class Orcatrata_model extends CI_Model {
 
     public function list_orcamentocancel($id, $cancelado, $completo) {
 
+		$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+		
         $query = $this->db->query('SELECT '
             . 'OT.idApp_OrcaTrata, '
 			. 'OT.idSis_Empresa, '
@@ -2980,6 +2991,7 @@ class Orcatrata_model extends CI_Model {
             . 'FROM '
             . 'App_OrcaTrata AS OT '
             . 'WHERE '
+			. $permissao_orcam 
 			. 'OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND '
 			. 'OT.idApp_Cliente = ' . $id . ' AND '
 			. 'OT.idTab_TipoRD = "2" AND '

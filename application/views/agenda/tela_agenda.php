@@ -13,11 +13,13 @@
 									<div class="col-md-12 col-lg-12">
 										<label for="">Agendamento:</label>
 										<div class="form-group">
-											<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>				
-											<div class="row">
-												<button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary"> Com Cliente
-												</button>
-											</div>
+											<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>
+												<?php if ($_SESSION['Usuario']['Cad_Agend'] == "S" ) { ?>
+													<div class="row">
+														<button type="button" id="MarcarConsulta" onclick="redirecionar(2)" class="btn btn-primary"> Com Cliente
+														</button>
+													</div>
+												<?php } ?>
 											<?php } ?>
 											<br>
 											<div class="row">

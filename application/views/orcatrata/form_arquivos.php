@@ -67,14 +67,16 @@
 														</a>
 													</a>
 												</li>
-												<li role="separator" class="divider"></li>
-												<li>
-													<a <?php if (preg_match("/consulta\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/cadastrar1/    ?>>
-														<a href="<?php echo base_url() . 'consulta/cadastrar/' . $orcatrata['idApp_Cliente']; ?>">
-															<span class="glyphicon glyphicon-plus"></span> Novo Agendamento
+												<?php if ($_SESSION['Usuario']['Cad_Agend'] == "S" ) { ?>
+													<li role="separator" class="divider"></li>
+													<li>
+														<a <?php if (preg_match("/consulta\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/cadastrar1/    ?>>
+															<a href="<?php echo base_url() . 'consulta/cadastrar/' . $orcatrata['idApp_Cliente']; ?>">
+																<span class="glyphicon glyphicon-plus"></span> Novo Agendamento
+															</a>
 														</a>
-													</a>
-												</li>
+													</li>
+												<?php } ?>
 											</ul>
 										</div>									
 									</li>								
@@ -92,14 +94,16 @@
 														</a>
 													</a>
 												</li>
-												<li role="separator" class="divider"></li>
-												<li>
-													<a <?php if (preg_match("/orcatrata\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/cadastrar1/    ?>>
-														<a href="<?php echo base_url() . 'orcatrata/cadastrar/' . $orcatrata['idApp_Cliente']; ?>">
-															<span class="glyphicon glyphicon-plus"></span> Novo Orçamento
+												<?php if ($_SESSION['Usuario']['Cad_Orcam'] == "S" ) { ?>
+													<li role="separator" class="divider"></li>
+													<li>
+														<a <?php if (preg_match("/orcatrata\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/cadastrar1/    ?>>
+															<a href="<?php echo base_url() . 'orcatrata/cadastrar/' . $orcatrata['idApp_Cliente']; ?>">
+																<span class="glyphicon glyphicon-plus"></span> Novo Orçamento
+															</a>
 														</a>
-													</a>
-												</li>
+													</li>
+												<?php } ?>
 											</ul>
 										</div>
 									</li>

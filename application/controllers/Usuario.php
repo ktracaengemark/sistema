@@ -1046,6 +1046,10 @@ class Usuario extends CI_Controller {
 			'Ver_Orcam',
 			'Edit_Orcam',
 			'Delet_Orcam',
+			'Cad_Agend',
+			'Ver_Agend',
+			'Edit_Agend',
+			'Delet_Agend',
 			'Cad_Prd',
 			'Ver_Prd',
 			'Edit_Prd',
@@ -1061,6 +1065,7 @@ class Usuario extends CI_Controller {
 			'Bx_Prd',
 			'Bx_Prc',
 			'Permissao_Orcam',
+			'Permissao_Agend',
 			'Permissao_Comissao',
         ), TRUE);
 
@@ -1074,6 +1079,10 @@ class Usuario extends CI_Controller {
         $data['select']['Ver_Orcam'] = $this->Basico_model->select_status_sn();
         $data['select']['Edit_Orcam'] = $this->Basico_model->select_status_sn();
         $data['select']['Delet_Orcam'] = $this->Basico_model->select_status_sn();
+        $data['select']['Cad_Agend'] = $this->Basico_model->select_status_sn();
+        $data['select']['Ver_Agend'] = $this->Basico_model->select_status_sn();
+        $data['select']['Edit_Agend'] = $this->Basico_model->select_status_sn();
+        $data['select']['Delet_Agend'] = $this->Basico_model->select_status_sn();
         $data['select']['Cad_Prd'] = $this->Basico_model->select_status_sn();
         $data['select']['Ver_Prd'] = $this->Basico_model->select_status_sn();
         $data['select']['Edit_Prd'] = $this->Basico_model->select_status_sn();
@@ -1089,6 +1098,10 @@ class Usuario extends CI_Controller {
         $data['select']['Bx_Prd'] = $this->Basico_model->select_status_sn();
         $data['select']['Bx_Prc'] = $this->Basico_model->select_status_sn();
 		$data['select']['Permissao_Orcam'] = array (
+            '1' => '1-Retrito',
+            '2' => '2-Irrestrito',
+        );
+		$data['select']['Permissao_Agend'] = array (
             '1' => '1-Retrito',
             '2' => '2-Irrestrito',
         );
@@ -1125,6 +1138,7 @@ class Usuario extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         $this->form_validation->set_rules('DataEmUsuario', 'Data de Emissão', 'trim|valid_date');
 		$this->form_validation->set_rules('Permissao_Orcam', 'Acesso Orcam.', 'required|trim');	
+		$this->form_validation->set_rules('Permissao_Agend', 'Acesso Agend.', 'required|trim');	
 		if($data['query']['Rel_Com'] == "S"){
 			$this->form_validation->set_rules('Permissao_Comissao', 'Permissão da Comissão', 'required|trim');
 		}

@@ -65,12 +65,14 @@
 										<span class="glyphicon glyphicon-filter"></span>
 									</button>
 								</div>
-								<div class="col-md-8">
-									<label>Cadastrar Novo Pedido</label>	
-									<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>orcatrata/cadastrar3" role="button"> 
-										<span class="glyphicon glyphicon-plus"></span> Nova Venda / Receita
-									</a>
-								</div>	
+								<?php if ($_SESSION['Usuario']['Cad_Orcam'] == "S" ) { ?>	
+									<div class="col-md-8">
+										<label>Cadastrar Novo Pedido</label>	
+										<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>orcatrata/cadastrar3" role="button"> 
+											<span class="glyphicon glyphicon-plus"></span> Nova Venda / Receita
+										</a>
+									</div>
+								<?php } ?>
 							</div>
 						</div>	
 					</div>

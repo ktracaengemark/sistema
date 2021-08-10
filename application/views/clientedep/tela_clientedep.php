@@ -85,14 +85,16 @@
 													</a>
 												</a>
 											</li>
-											<li role="separator" class="divider"></li>
-											<li>
-												<a <?php if (preg_match("/consulta\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/cadastrar1/    ?>>
-													<a href="<?php echo base_url() . 'consulta/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
-														<span class="glyphicon glyphicon-plus"></span> Novo Agendamento
+											<?php if ($_SESSION['Usuario']['Cad_Agend'] == "S" ) { ?>
+												<li role="separator" class="divider"></li>
+												<li>
+													<a <?php if (preg_match("/consulta\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/cadastrar1/    ?>>
+														<a href="<?php echo base_url() . 'consulta/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+															<span class="glyphicon glyphicon-plus"></span> Novo Agendamento
+														</a>
 													</a>
-												</a>
-											</li>
+												</li>
+											<?php } ?>
 										</ul>
 									</div>									
 								</li>								
@@ -100,24 +102,26 @@
 								<li class="botoesnav" role="toolbar" aria-label="...">
 									<div class="btn-group">
 										<button type="button" class="btn btn-md btn-default  dropdown-toggle" data-toggle="dropdown">
-											<span class="glyphicon glyphicon-usd"></span> Orçs. <span class="caret"></span>
+											<span class="glyphicon glyphicon-usd"></span> Orcs. <span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu" role="menu">
 											<li>
 												<a <?php if (preg_match("/orcatrata\/listar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/consulta/   ?>>
 													<a href="<?php echo base_url() . 'orcatrata/listar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
-														<span class="glyphicon glyphicon-usd"></span> Lista de Orçamentos
+														<span class="glyphicon glyphicon-usd"></span> Lista de Orcamentos
 													</a>
 												</a>
 											</li>
-											<li role="separator" class="divider"></li>
-											<li>
-												<a <?php if (preg_match("/orcatrata\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/cadastrar1/    ?>>
-													<a href="<?php echo base_url() . 'orcatrata/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
-														<span class="glyphicon glyphicon-plus"></span> Novo Orçamento
+											<?php if ($_SESSION['Usuario']['Cad_Orcam'] == "S" ) { ?>
+												<li role="separator" class="divider"></li>
+												<li>
+													<a <?php if (preg_match("/orcatrata\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/cadastrar1/    ?>>
+														<a href="<?php echo base_url() . 'orcatrata/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+															<span class="glyphicon glyphicon-plus"></span> Novo Orçamento
+														</a>
 													</a>
-												</a>
-											</li>
+												</li>
+											<?php } ?>
 										</ul>
 									</div>
 								</li>

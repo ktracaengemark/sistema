@@ -51,14 +51,16 @@
 									</a>
 								</a>
 							</li>
-							<li role="separator" class="divider"></li>
-							<li>
-								<a <?php if (preg_match("/consulta\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/cadastrar1/    ?>>
-									<a href="<?php echo base_url() . 'consulta/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
-										<span class="glyphicon glyphicon-plus"></span> Novo Agendamento
+							<?php if ($_SESSION['Usuario']['Cad_Agend'] == "S" ) { ?>
+								<li role="separator" class="divider"></li>
+								<li>
+									<a <?php if (preg_match("/consulta\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/cadastrar1/    ?>>
+										<a href="<?php echo base_url() . 'consulta/cadastrar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
+											<span class="glyphicon glyphicon-plus"></span> Novo Agendamento
+										</a>
 									</a>
-								</a>
-							</li>
+								</li>
+							<?php } ?>
 						</ul>
 					</div>
 
@@ -128,13 +130,15 @@
 					</li>
 					<?php } ?>
 					<li class="btn-toolbar btn-sm navbar-form" role="toolbar" aria-label="...">
-						<div class="btn-group " role="group" aria-label="...">
-							<a href="<?php echo base_url(); ?>orcatrata/cadastrar3">
-								<button type="button" class="btn btn-lg btn-primary ">
-									<span class="glyphicon glyphicon-plus"></span>Receitas
-								</button>
-							</a>
-						</div>
+						<?php if ($_SESSION['Usuario']['Cad_Orcam'] == "S" ) { ?>
+							<div class="btn-group " role="group" aria-label="...">
+								<a href="<?php echo base_url(); ?>orcatrata/cadastrar3">
+									<button type="button" class="btn btn-lg btn-primary ">
+										<span class="glyphicon glyphicon-plus"></span>Receitas
+									</button>
+								</a>
+							</div>
+						<?php } ?>
 						<div class="btn-group " role="group" aria-label="...">
 							<a href="<?php echo base_url(); ?>orcatrata/cadastrardesp">
 								<button type="button" class="btn btn-lg btn-danger ">

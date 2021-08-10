@@ -73,6 +73,141 @@
 				<div class="panel-body">
 					<div class="panel panel-info">
 						<div class="panel-heading">
+							<h4>Agendamentos</h4>
+							<div class="row">
+								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+									<label for="Cad_Agend">Cadastrar?</label><br>
+									<div class="form-group">
+										<div class="btn-larg-right btn-group" data-toggle="buttons">
+											<?php
+											foreach ($select['Cad_Agend'] as $key => $row) {
+												(!$query['Cad_Agend']) ? $query['Cad_Agend'] = 'N' : FALSE;
+
+												if ($query['Cad_Agend'] == $key) {
+													echo ''
+													. '<label class="btn btn-warning active" name="radiobutton_Cad_Agend" id="radiobutton_Cad_Agend' . $key . '">'
+													. '<input type="radio" name="Cad_Agend" id="radiobutton" '
+													. 'autocomplete="off" value="' . $key . '" checked>' . $row
+													. '</label>'
+													;
+												} else {
+													echo ''
+													. '<label class="btn btn-default" name="radiobutton_Cad_Agend" id="radiobutton_Cad_Agend' . $key . '">'
+													. '<input type="radio" name="Cad_Agend" id="radiobutton" '
+													. 'autocomplete="off" value="' . $key . '" >' . $row
+													. '</label>'
+													;
+												}
+											}
+											?>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+									<label for="Ver_Agend">Ver?</label><br>
+									<div class="form-group">
+										<div class="btn-larg-right btn-group" data-toggle="buttons">
+											<?php
+											foreach ($select['Ver_Agend'] as $key => $row) {
+												(!$query['Ver_Agend']) ? $query['Ver_Agend'] = 'N' : FALSE;
+
+												if ($query['Ver_Agend'] == $key) {
+													echo ''
+													. '<label class="btn btn-warning active" name="radiobutton_Ver_Agend" id="radiobutton_Ver_Agend' . $key . '">'
+													. '<input type="radio" name="Ver_Agend" id="radiobutton" '
+													. 'autocomplete="off" value="' . $key . '" checked>' . $row
+													. '</label>'
+													;
+												} else {
+													echo ''
+													. '<label class="btn btn-default" name="radiobutton_Ver_Agend" id="radiobutton_Ver_Agend' . $key . '">'
+													. '<input type="radio" name="Ver_Agend" id="radiobutton" '
+													. 'autocomplete="off" value="' . $key . '" >' . $row
+													. '</label>'
+													;
+												}
+											}
+											?>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+									<label for="Edit_Agend">Editar?</label><br>
+									<div class="form-group">
+										<div class="btn-larg-right btn-group" data-toggle="buttons">
+											<?php
+											foreach ($select['Edit_Agend'] as $key => $row) {
+												(!$query['Edit_Agend']) ? $query['Edit_Agend'] = 'N' : FALSE;
+
+												if ($query['Edit_Agend'] == $key) {
+													echo ''
+													. '<label class="btn btn-warning active" name="radiobutton_Edit_Agend" id="radiobutton_Edit_Agend' . $key . '">'
+													. '<input type="radio" name="Edit_Agend" id="radiobutton" '
+													. 'autocomplete="off" value="' . $key . '" checked>' . $row
+													. '</label>'
+													;
+												} else {
+													echo ''
+													. '<label class="btn btn-default" name="radiobutton_Edit_Agend" id="radiobutton_Edit_Agend' . $key . '">'
+													. '<input type="radio" name="Edit_Agend" id="radiobutton" '
+													. 'autocomplete="off" value="' . $key . '" >' . $row
+													. '</label>'
+													;
+												}
+											}
+											?>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+									<label for="Delet_Agend">Deletar?</label><br>
+									<div class="form-group">
+										<div class="btn-larg-right btn-group" data-toggle="buttons">
+											<?php
+											foreach ($select['Delet_Agend'] as $key => $row) {
+												(!$query['Delet_Agend']) ? $query['Delet_Agend'] = 'N' : FALSE;
+
+												if ($query['Delet_Agend'] == $key) {
+													echo ''
+													. '<label class="btn btn-warning active" name="radiobutton_Delet_Agend" id="radiobutton_Delet_Agend' . $key . '">'
+													. '<input type="radio" name="Delet_Agend" id="radiobutton" '
+													. 'autocomplete="off" value="' . $key . '" checked>' . $row
+													. '</label>'
+													;
+												} else {
+													echo ''
+													. '<label class="btn btn-default" name="radiobutton_Delet_Agend" id="radiobutton_Delet_Agend' . $key . '">'
+													. '<input type="radio" name="Delet_Agend" id="radiobutton" '
+													. 'autocomplete="off" value="' . $key . '" >' . $row
+													. '</label>'
+													;
+												}
+											}
+											?>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+									<label for="Permissao_Agend">Acesso Agend.</label>		
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" id="Permissao_Agend" name="Permissao_Agend">
+										<option value="">- Selec. Permissão-</option>	
+										<?php
+										foreach ($select['Permissao_Agend'] as $key => $row) {
+											if ($query['Permissao_Agend'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+									<?php echo form_error('Permissao_Agend'); ?>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-info">
+						<div class="panel-heading">
 							<h4>Orçamentos</h4>
 							<div class="row">
 								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">

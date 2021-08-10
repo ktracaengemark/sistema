@@ -12,11 +12,13 @@
 						<div class="col-md-9">	
 							<h4 class="text-center"><b> Selecione o <?php echo $titulo; ?></h4>
 						</div>
-						<div class="col-md-3">										
-							<a class="btn btn-md btn-danger" href="<?php echo base_url() ?>orcatrata/cadastrar3" role="button"> 
-								<span class="glyphicon glyphicon-plus"></span> Novo Pedido
-							</a>
-						</div>
+						<?php if ($_SESSION['Usuario']['Cad_Orcam'] == "S" ) { ?>
+							<div class="col-md-3">										
+								<a class="btn btn-md btn-danger" href="<?php echo base_url() ?>orcatrata/cadastrar3" role="button"> 
+									<span class="glyphicon glyphicon-plus"></span> Novo Pedido
+								</a>
+							</div>
+						<?php } ?>
 					</div>	
 				</div>
 			</div>
