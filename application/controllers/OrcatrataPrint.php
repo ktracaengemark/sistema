@@ -518,7 +518,7 @@ class OrcatrataPrint extends CI_Controller {
 
     }
 
-    public function imprimirreciborec($id = FALSE) {
+    public function imprimirreciborec_orig($id = FALSE) {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -654,6 +654,231 @@ class OrcatrataPrint extends CI_Controller {
                 }
             }
 
+        }
+		
+        $data['titulo'] = 'Versão Recibo Cobrança';
+        $data['form_open_path'] = 'OrcatrataPrint/imprimirreciborec';
+        $data['panel'] = 'info';
+        $data['metodo'] = 1;
+		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistarec/';
+		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';		
+		
+
+        /*
+          echo '<br>';
+          echo "<pre>";
+          print_r($data);
+          echo "</pre>";
+          #exit ();
+         */
+
+        $this->load->view('orcatrata/print_orcatratacobranca', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+    public function imprimirreciborec($id = FALSE) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		$data['Imprimir']['DataInicio4'] = $this->basico->mascara_data($_SESSION['FiltroAlteraParcela']['DataInicio4'], 'barras');
+		$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroAlteraParcela']['DataFim4'], 'barras');
+
+		//$this->load->library('pagination');
+
+		$data['Pesquisa'] = '';
+				
+        if ($id) {
+            
+			$config['base_url'] = base_url() . 'OrcatrataPrint/imprimirreciborec/' . $id . '/';
+			$config['total_rows'] = $this->Orcatrataprintcobranca_model->get_orcatrata($id, TRUE);
+			
+			$config['per_page'] = 12;
+			$config["uri_segment"] = 4;
+			$config['reuse_query_string'] = TRUE;
+			$config['num_links'] = 2;
+			$config['use_page_numbers'] = TRUE;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";		   
+			
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
+			}else{
+				$data['total_rows'] = 0;
+			}
+			
+			$this->pagination->initialize($config);
+			
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+			$data['pagina'] = $page;
+			$data['per_page'] = $config['per_page'];
+			
+			$data['pagination'] = $this->pagination->create_links();		
+
+			#### App_OrcaTrata ####
+            $data['orcatrata'] = $this->Orcatrataprintcobranca_model->get_orcatrata($id, FALSE, $config['per_page'], ($page * $config['per_page']));
+            if (count($data['orcatrata']) > 0) {
+                $data['orcatrata'] = array_combine(range(1, count($data['orcatrata'])), array_values($data['orcatrata']));
+                $data['count']['POCount'] = count($data['orcatrata']);           
+
+				if (isset($data['orcatrata'])) {
+
+                    for($i=1;$i<=$data['count']['POCount'];$i++) {
+						
+						$data['orcatrata'][$i]['idApp_OrcaTrata'] = $data['orcatrata'][$i]['idApp_OrcaTrata'];
+						$data['orcatrata'][$i]['DataOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataOrca'], 'barras');
+						$data['orcatrata'][$i]['DataPrazo'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataPrazo'], 'barras');
+						$data['orcatrata'][$i]['DataConclusao'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataConclusao'], 'barras');
+						$data['orcatrata'][$i]['DataRetorno'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataRetorno'], 'barras');
+						$data['orcatrata'][$i]['DataQuitado'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataQuitado'], 'barras');
+						$data['orcatrata'][$i]['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataEntradaOrca'], 'barras');
+						$data['orcatrata'][$i]['DataEntregaOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataEntregaOrca'], 'barras');
+						$data['orcatrata'][$i]['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataVencimentoOrca'], 'barras');
+						$data['orcatrata'][$i]['ValorTotalOrca'] = number_format(($data['orcatrata'][$i]['ValorTotalOrca']), 2, ',', '.');
+						$data['orcatrata'][$i]['ValorFinalOrca'] = number_format(($data['orcatrata'][$i]['ValorFinalOrca']), 2, ',', '.');
+						$data['orcatrata'][$i]['ConcluidoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['ConcluidoOrca'], 'NS');
+						$data['orcatrata'][$i]['QuitadoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['QuitadoOrca'], 'NS');
+						/*
+						echo '<br>';
+						echo "<pre>";
+						print_r($data['orcatrata'][$i]);
+						echo "</pre>";
+						*/
+						#### App_ProdutoVenda ####
+						$data['produto'][$i] = $this->Orcatrataprintcobranca_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
+						if (count($data['produto'][$i]) > 0) {
+							$data['produto'][$i] = array_combine(range(1, count($data['produto'][$i])), array_values($data['produto'][$i]));
+							$data['count']['PCount'][$i] = count($data['produto'][$i]);
+
+							if (isset($data['produto'][$i])) {
+
+								for($k=1;$k<=$data['count']['PCount'][$i];$k++) {
+									$data['produto'][$i][$k]['SubtotalProduto'] = number_format(($data['produto'][$i][$k]['ValorProduto'] * $data['produto'][$i][$k]['QtdProduto']), 2, ',', '.');
+									$data['produto'][$i][$k]['ValorProduto'] = number_format(($data['produto'][$i][$k]['ValorProduto']), 2, ',', '.');
+									$data['produto'][$i][$k]['DataValidadeProduto'] = $this->basico->mascara_data($data['produto'][$i][$k]['DataValidadeProduto'], 'barras');
+									$data['produto'][$i][$k]['ConcluidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$i][$k]['ConcluidoProduto'], 'NS');
+									$data['produto'][$i][$k]['DevolvidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$i][$k]['DevolvidoProduto'], 'NS');
+								}
+							}
+						}
+						/*
+						echo '<br>';
+						echo "<pre>";
+						print_r($data['produto'][$i]);
+						echo "</pre>";
+						*/		
+						#### App_Parcelas####
+						$data['parcelasrec'][$i] = $this->Orcatrataprintcobranca_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
+						if (count($data['parcelasrec'][$i]) > 0) {
+							$data['parcelasrec'][$i] = array_combine(range(1, count($data['parcelasrec'][$i])), array_values($data['parcelasrec'][$i]));
+							$data['count']['PRCount'][$i] = count($data['parcelasrec'][$i]);
+							
+							if (isset($data['parcelasrec'][$i])) {
+
+								for($j=1; $j <= $data['count']['PRCount'][$i]; $j++) {
+									$data['parcelasrec'][$i][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataVencimento'], 'barras');
+									$data['parcelasrec'][$i][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataPago'], 'barras');
+								}
+							}
+						}
+						/*
+						echo '<br>';
+						echo "<pre>";
+						print_r($data['parcelasrec'][$i]);
+						echo "</pre>";
+						*/
+						#### App_Procedimento ####
+						$data['procedimento'][$i] = $this->Orcatrataprintcobranca_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
+						if (count($data['procedimento'][$i]) > 0) {
+							$data['procedimento'][$i] = array_combine(range(1, count($data['procedimento'][$i])), array_values($data['procedimento'][$i]));
+							$data['count']['PMCount'][$i] = count($data['procedimento'][$i]);
+
+							if (isset($data['procedimento'][$i])) {
+
+								for($j=1; $j <= $data['count']['PMCount'][$i]; $j++){
+									$data['procedimento'][$i][$j]['DataProcedimento'] = $this->basico->mascara_data($data['procedimento'][$i][$j]['DataProcedimento'], 'barras');						
+								}
+							}
+						}						
+						
+					}
+				}	
+			}
+			/*
+			  echo '<br>';
+			  echo "<pre>";
+			  print_r($data['orcatrata']);
+			  echo "</pre>";
+			  exit ();
+			  */
+			/*
+            #### App_ProdutoVenda ####
+            $data['produto'] = $this->Orcatrataprintcobranca_model->get_produto($id);
+            if (count($data['produto']) > 0) {
+                $data['produto'] = array_combine(range(1, count($data['produto'])), array_values($data['produto']));
+                $data['count']['PCount'] = count($data['produto']);
+
+                if (isset($data['produto'])) {
+
+                    for($j=1;$j<=$data['count']['PCount'];$j++) {
+						$data['produto'][$j]['SubtotalProduto'] = number_format(($data['produto'][$j]['ValorProduto'] * $data['produto'][$j]['QtdProduto']), 2, ',', '.');
+						$data['produto'][$j]['ValorProduto'] = number_format(($data['produto'][$j]['ValorProduto']), 2, ',', '.');
+						$data['produto'][$j]['DataValidadeProduto'] = $this->basico->mascara_data($data['produto'][$j]['DataValidadeProduto'], 'barras');
+						$data['produto'][$j]['ConcluidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$j]['ConcluidoProduto'], 'NS');
+						$data['produto'][$j]['DevolvidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$j]['DevolvidoProduto'], 'NS');
+					}
+                }
+            }
+			*/
+			/*
+            #### App_Parcelas####
+            $data['parcelasrec'] = $this->Orcatrataprintcobranca_model->get_parcelasrec($id);
+            if (count($data['parcelasrec']) > 0) {
+                $data['parcelasrec'] = array_combine(range(1, count($data['parcelasrec'])), array_values($data['parcelasrec']));
+				$data['count']['PRCount'] = count($data['parcelasrec']);
+                if (isset($data['parcelasrec'])) {
+
+                    for($j=1; $j <= $data['count']['PRCount']; $j++) {
+                        $data['parcelasrec'][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimento'], 'barras');
+                        $data['parcelasrec'][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPago'], 'barras');
+                    }
+                }
+            }
+			*/
+			/*
+            #### App_Procedimento ####
+            $data['procedimento'] = $this->Orcatrataprintcobranca_model->get_procedimento($id);
+            if (count($data['procedimento']) > 0) {
+                $data['procedimento'] = array_combine(range(1, count($data['procedimento'])), array_values($data['procedimento']));
+                $data['count']['PMCount'] = count($data['procedimento']);
+
+                if (isset($data['procedimento'])) {
+
+                    for($j=1; $j <= $data['count']['PMCount']; $j++){
+                        $data['procedimento'][$j]['DataProcedimento'] = $this->basico->mascara_data($data['procedimento'][$j]['DataProcedimento'], 'barras');						
+					}
+                }
+            }
+			*/
         }
 		
         $data['titulo'] = 'Versão Recibo Cobrança';
@@ -902,21 +1127,82 @@ class OrcatrataPrint extends CI_Controller {
 
 				if (isset($data['orcatrata'])) {
 
-                    for($j=1;$j<=$data['count']['POCount'];$j++) {
+                    for($i=1;$i<=$data['count']['POCount'];$i++) {
 						
-						$data['orcatrata'][$j]['idApp_OrcaTrata'] = $data['orcatrata'][$j]['idApp_OrcaTrata'];
-						$data['orcatrata'][$j]['DataOrca'] = $this->basico->mascara_data($data['orcatrata'][$j]['DataOrca'], 'barras');
-						$data['orcatrata'][$j]['DataPrazo'] = $this->basico->mascara_data($data['orcatrata'][$j]['DataPrazo'], 'barras');
-						$data['orcatrata'][$j]['DataConclusao'] = $this->basico->mascara_data($data['orcatrata'][$j]['DataConclusao'], 'barras');
-						$data['orcatrata'][$j]['DataRetorno'] = $this->basico->mascara_data($data['orcatrata'][$j]['DataRetorno'], 'barras');
-						$data['orcatrata'][$j]['DataQuitado'] = $this->basico->mascara_data($data['orcatrata'][$j]['DataQuitado'], 'barras');
-						$data['orcatrata'][$j]['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata'][$j]['DataEntradaOrca'], 'barras');
-						$data['orcatrata'][$j]['DataEntregaOrca'] = $this->basico->mascara_data($data['orcatrata'][$j]['DataEntregaOrca'], 'barras');
-						$data['orcatrata'][$j]['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata'][$j]['DataVencimentoOrca'], 'barras');
-						$data['orcatrata'][$j]['ValorTotalOrca'] = number_format(($data['orcatrata'][$j]['ValorTotalOrca']), 2, ',', '.');
-						$data['orcatrata'][$j]['ConcluidoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$j]['ConcluidoOrca'], 'NS');
-						$data['orcatrata'][$j]['QuitadoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$j]['QuitadoOrca'], 'NS');
+						$data['orcatrata'][$i]['idApp_OrcaTrata'] = $data['orcatrata'][$i]['idApp_OrcaTrata'];
+						$data['orcatrata'][$i]['DataOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataOrca'], 'barras');
+						$data['orcatrata'][$i]['DataPrazo'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataPrazo'], 'barras');
+						$data['orcatrata'][$i]['DataConclusao'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataConclusao'], 'barras');
+						$data['orcatrata'][$i]['DataRetorno'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataRetorno'], 'barras');
+						$data['orcatrata'][$i]['DataQuitado'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataQuitado'], 'barras');
+						$data['orcatrata'][$i]['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataEntradaOrca'], 'barras');
+						$data['orcatrata'][$i]['DataEntregaOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataEntregaOrca'], 'barras');
+						$data['orcatrata'][$i]['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataVencimentoOrca'], 'barras');
+						$data['orcatrata'][$i]['ValorTotalOrca'] = number_format(($data['orcatrata'][$i]['ValorTotalOrca']), 2, ',', '.');
+						$data['orcatrata'][$i]['ConcluidoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['ConcluidoOrca'], 'NS');
+						$data['orcatrata'][$i]['QuitadoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['QuitadoOrca'], 'NS');
+						/*
+						echo '<br>';
+						echo "<pre>";
+						print_r($data['orcatrata'][$i]);
+						echo "</pre>";
+						*/
+						#### App_ProdutoVenda ####
+						$data['produto'][$i] = $this->Orcatrataprintcobranca_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
+						if (count($data['produto'][$i]) > 0) {
+							$data['produto'][$i] = array_combine(range(1, count($data['produto'][$i])), array_values($data['produto'][$i]));
+							$data['count']['PCount'][$i] = count($data['produto'][$i]);
 
+							if (isset($data['produto'][$i])) {
+
+								for($k=1;$k<=$data['count']['PCount'][$i];$k++) {
+									$data['produto'][$i][$k]['SubtotalProduto'] = number_format(($data['produto'][$i][$k]['ValorProduto'] * $data['produto'][$i][$k]['QtdProduto']), 2, ',', '.');
+									$data['produto'][$i][$k]['ValorProduto'] = number_format(($data['produto'][$i][$k]['ValorProduto']), 2, ',', '.');
+									$data['produto'][$i][$k]['DataValidadeProduto'] = $this->basico->mascara_data($data['produto'][$i][$k]['DataValidadeProduto'], 'barras');
+									$data['produto'][$i][$k]['ConcluidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$i][$k]['ConcluidoProduto'], 'NS');
+									$data['produto'][$i][$k]['DevolvidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$i][$k]['DevolvidoProduto'], 'NS');
+								}
+							}
+						}
+						/*
+						echo '<br>';
+						echo "<pre>";
+						print_r($data['produto'][$i]);
+						echo "</pre>";
+						*/		
+						#### App_Parcelas####
+						$data['parcelasrec'][$i] = $this->Orcatrataprintcobranca_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
+						if (count($data['parcelasrec'][$i]) > 0) {
+							$data['parcelasrec'][$i] = array_combine(range(1, count($data['parcelasrec'][$i])), array_values($data['parcelasrec'][$i]));
+							$data['count']['PRCount'][$i] = count($data['parcelasrec'][$i]);
+							
+							if (isset($data['parcelasrec'][$i])) {
+
+								for($j=1; $j <= $data['count']['PRCount'][$i]; $j++) {
+									$data['parcelasrec'][$i][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataVencimento'], 'barras');
+									$data['parcelasrec'][$i][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataPago'], 'barras');
+								}
+							}
+						}
+						/*
+						echo '<br>';
+						echo "<pre>";
+						print_r($data['parcelasrec'][$i]);
+						echo "</pre>";
+						*/
+						#### App_Procedimento ####
+						$data['procedimento'][$i] = $this->Orcatrataprintcobranca_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
+						if (count($data['procedimento'][$i]) > 0) {
+							$data['procedimento'][$i] = array_combine(range(1, count($data['procedimento'][$i])), array_values($data['procedimento'][$i]));
+							$data['count']['PMCount'][$i] = count($data['procedimento'][$i]);
+
+							if (isset($data['procedimento'][$i])) {
+
+								for($j=1; $j <= $data['count']['PMCount'][$i]; $j++){
+									$data['procedimento'][$i][$j]['DataProcedimento'] = $this->basico->mascara_data($data['procedimento'][$i][$j]['DataProcedimento'], 'barras');						
+								}
+							}
+						}
 					}
 				}	
 			}
@@ -927,7 +1213,7 @@ class OrcatrataPrint extends CI_Controller {
 			  echo "</pre>";
 			  exit ();
 			  */
-
+			/*
             #### App_ProdutoVenda ####
             $data['produto'] = $this->Orcatrataprintcobranca_model->get_produto($id);
             if (count($data['produto']) > 0) {
@@ -973,7 +1259,7 @@ class OrcatrataPrint extends CI_Controller {
 					}
                 }
             }
-
+			*/
         }
 		
         $data['titulo'] = 'Versão Recibo Debito';

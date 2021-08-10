@@ -1,7 +1,7 @@
 <?php if (isset($msg)) echo $msg; ?>
 
 <?php echo validation_errors(); ?>
-<div class="col-md-3"></div>
+<div class="col-md-3"></div>	
 <div class="col-md-6">	
 	<!--
 	<nav class="navbar navbar-inverse navbar-fixed" role="banner">
@@ -42,6 +42,14 @@
 						<span class="glyphicon glyphicon-pencil"></span> Versão Lista
 					</a>
 				</div>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+				<label></label>
+				<a href="<?php echo base_url() . 'gerar_excel/Receitas/Parcelas_xls.php'; ?>">
+					<button type='button' class='btn-paginacao btn btn-md btn-success btn-block'>
+						Excel
+					</button>
+				</a>
 			</div>
 			<div class="btn-paginacao collapse navbar-collapse" id="myNavbar">
 				<?php echo $pagination; ?>
@@ -99,79 +107,79 @@
 						</tr>
 					</thead>
 					
-					<thead>
-						<tr>
-							<th class="col-md-1" scope="col">Qtd</th>
-							<th class="col-md-3" scope="col">Produto</th>							
-							<th class="col-md-1" scope="col">R$</th>
-							<th class="col-md-1" scope="col">Ent?</th>
-						</tr>
-					</thead>
-					
-					<tbody>
-
-						<?php
+						<thead>
+							<tr>
+								<th class="col-md-1" scope="col">Qtd</th>
+								<th class="col-md-3" scope="col">Produto</th>							
+								<th class="col-md-1" scope="col">R$</th>
+								<th class="col-md-1" scope="col">Ent?</th>
+							</tr>
+						</thead>
 						
-						for ($k=1; $k <= $count['PCount']; $k++) {
-						?>
-							<?php if($orcatrata[$i]['idApp_OrcaTrata'] == $produto[$k]['idApp_OrcaTrata'])
-							{ 
-							?>
+						<tbody>
+							<?php if( isset($count['PCount'][$i]) ) { ?>
+								<?php for ($k=1; $k <= $count['PCount'][$i]; $k++) { ?>
+										<tr>
+											<td class="col-md-1" scope="col"><?php echo $produto[$i][$k]['Qtd_Prod'] ?></td>
+											<td class="col-md-3" scope="col"><?php echo $produto[$i][$k]['NomeProduto'] ?></td>
+											<td class="col-md-1" scope="col"><?php echo $produto[$i][$k]['SubtotalProduto'] ?></td>
+											<td class="col-md-1" scope="col"><?php echo $produto[$i][$k]['ConcluidoProduto'] ?></td>										
+										</tr>
+								<?php } ?>					
+							<?php } else { ?>
 								<tr>
-									<td class="col-md-1" scope="col"><?php echo $produto[$k]['Qtd_Prod'] ?></td>
-									<td class="col-md-3" scope="col"><?php echo $produto[$k]['NomeProduto'] ?></td>
-									<td class="col-md-1" scope="col"><?php echo $produto[$k]['SubtotalProduto'] ?></td>
-									<td class="col-md-1" scope="col"><?php echo $produto[$k]['ConcluidoProduto'] ?></td>										
+									<td class="col-md-1" scope="col"></td>
+									<td class="col-md-3" scope="col"></td>
+									<td class="col-md-1" scope="col"></td>
+									<td class="col-md-1" scope="col"></td>										
 								</tr>
-							<?php
-							}
-							?>
-						<?php
-						}
-						
-						?>
+							<?php } ?>
 
-					</tbody>
+						</tbody>
+
 					
-					<thead>
-						<tr>
-							<th class="col-md-1" scope="col">Parcela</th>
-							<th class="col-md-3" scope="col">FormaPag || Venc. || Dt.Pago</th>
-							<th class="col-md-1" scope="col">R$</th>
-							<th class="col-md-1" scope="col">Pago?</th>										
-						</tr>
-					</thead>
-					
-					<tbody>
-						<?php 
+						<thead>
+							<tr>
+								<th class="col-md-1" scope="col">Parcela</th>
+								<th class="col-md-3" scope="col">FormaPag || Venc. || Dt.Pago</th>
+								<th class="col-md-1" scope="col">R$</th>
+								<th class="col-md-1" scope="col">Pago?</th>										
+							</tr>
+						</thead>
 						
-						for ($j=1; $j <= $count['PRCount']; $j++){ 
-						?>
-							<?php if($orcatrata[$i]['idApp_OrcaTrata'] == $parcelasrec[$j]['idApp_OrcaTrata'])
-							{ 
-							?>
-								<tr>
-									<td class="col-md-1" scope="col"><?php echo $parcelasrec[$j]['Parcela'] ?></td>
-									<td class="col-md-3" scope="col"><?php echo $parcelasrec[$j]['FormaPag'] ?> || <?php echo $parcelasrec[$j]['DataVencimento'] ?> || <?php echo $parcelasrec[$j]['DataPago'] ?></td>
-									<td class="col-md-1" scope="col"><?php echo number_format($parcelasrec[$j]['ValorParcela'], 2, ',', '.') ?></td>
-									<td class="col-md-1" scope="col"><?php echo $this->basico->mascara_palavra_completa($parcelasrec[$j]['Quitado'], 'NS') ?></td>									
-								</tr>
-							<?php 
-							} 
-							?>
-						<?php
-						}
-						
-						?>
-					</tbody>
+						<tbody>
+							<?php if( isset($count['PRCount'][$i]) ) { ?>
+								<?php 
+								for ($j=1; $j <= $count['PRCount'][$i]; $j++){ 
+								?>
+									
+									<tr>
+										<td class="col-md-1" scope="col"><?php echo $parcelasrec[$i][$j]['Parcela'] ?></td>
+										<td class="col-md-3" scope="col"><?php echo $parcelasrec[$i][$j]['FormaPag'] ?> || <?php echo $parcelasrec[$i][$j]['DataVencimento'] ?> || <?php echo $parcelasrec[$i][$j]['DataPago'] ?></td>
+										<td class="col-md-1" scope="col"><?php echo number_format($parcelasrec[$i][$j]['ValorParcela'], 2, ',', '.') ?></td>
+										<td class="col-md-1" scope="col"><?php echo $this->basico->mascara_palavra_completa($parcelasrec[$i][$j]['Quitado'], 'NS') ?></td>									
+									</tr>
+									
+								<?php
+								}
+								?>					
+							<?php } else { ?>
+							
+									<tr>
+										<td class="col-md-1" scope="col"></td>
+										<td class="col-md-3" scope="col"></td>
+										<td class="col-md-1" scope="col"></td>
+										<td class="col-md-1" scope="col"></td>									
+									</tr>
+							<?php } ?>
+						</tbody>
 					
 				</table>
-				<?php if( isset($count['PCount']) ) { ?>
-				<?php } else echo '<h3 class="text-left">S/Produtos Entregues </h3>';{?>
-				<?php } ?>
+				
 			</div>
 		<?php } ?>
-	<?php } else echo '<h3 class="text-center">Nenhum Orçamento Filtrado!</h3>';{?>
+	<?php } else {?>
+		<h3 class="text-center">Nenhum Orçamento Filtrado!</h3>
 	<?php } ?>		
 
 </div>	
