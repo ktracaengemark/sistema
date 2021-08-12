@@ -42,11 +42,12 @@ class Login_model extends CI_Model {
 
     }
 	
-	public function check_dados_empresa($empresa, $celular, $retorna = FALSE) {
+	public function check_dados_empresa($empresa, $celular, $senha, $retorna = FALSE) {
 
         $query = $this->db->query('SELECT * FROM Sis_Usuario WHERE '
-                . '(CelularUsuario = "' . $celular . '" AND '
-                . 'idSis_Empresa = "' . $empresa . '")'
+                . '(idSis_Empresa = "' . $empresa . '" AND '
+                . 'CelularUsuario = "' . $celular . '" AND '
+                . 'Senha = "' . $senha . '")'
 
         );
         #$query = $this->db->get_where('Sis_Usuario', $data);
@@ -149,10 +150,12 @@ class Login_model extends CI_Model {
 
     }	
 
-    public function check_celular($celular) {
+    public function check_celular($empresa, $celular, $senha) {
 
         $query = $this->db->query('SELECT * FROM Sis_Usuario WHERE '
-                . '(CelularUsuario = "' . $celular . '" ) '
+                . '(idSis_Empresa = "' . $empresa . '" AND '
+                . 'CelularUsuario = "' . $celular . '" AND '
+                . 'Senha = "' . $senha . '")'
         );
         if ($query->num_rows() === 0) {
             return 1;
@@ -432,28 +435,28 @@ class Login_model extends CI_Model {
         if ($data === TRUE) {
             $array = $this->db->query(					
 				'SELECT                
-				idSis_Empresa,
-				CONCAT(NomeEmpresa, " ", "(", idSis_Empresa, ")") AS NomeEmpresa				
-            FROM
-                Sis_Empresa
-			WHERE 
-				idSis_Empresa != "1"
-			ORDER BY 
-				NomeEmpresa ASC'
-    );
+					idSis_Empresa,
+					CONCAT(NomeEmpresa, " ", "(", idSis_Empresa, ")") AS NomeEmpresa				
+				FROM
+					Sis_Empresa
+				WHERE 
+					idSis_Empresa != "1"
+				ORDER BY 
+					NomeEmpresa ASC'
+			);
 					
         } else {
             $query = $this->db->query(
                 'SELECT                
-				idSis_Empresa,
-				CONCAT(NomeEmpresa, " ", "(", idSis_Empresa, ")") AS NomeEmpresa			
-            FROM
-                Sis_Empresa					
-			WHERE 
-				idSis_Empresa != "1"
-			ORDER BY 
-				NomeEmpresa ASC'
-    );
+					idSis_Empresa,
+					CONCAT(NomeEmpresa, " ", "(", idSis_Empresa, ")") AS NomeEmpresa			
+				FROM
+					Sis_Empresa					
+				WHERE 
+					idSis_Empresa != "1"
+				ORDER BY 
+					NomeEmpresa ASC'
+			);
             
             $array = array();
             foreach ($query->result() as $row) {

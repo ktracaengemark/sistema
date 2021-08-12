@@ -88,7 +88,7 @@
 							<li><a href="<?php echo base_url() ?>pedidos/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor de Receitas Dinamico</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<?php echo base_url() ?>orcatrata/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor de Receitas Statico</a></li>
-							<?php if ($_SESSION['Usuario']['Cad_Orcam'] == "S" ) { ?>	
+							<?php if ($_SESSION['log']['Cad_Orcam'] == "S" ) { ?>	
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>Orcatrata/cadastrar3"><span class="glyphicon glyphicon-plus"></span> Nova Receita</a></li>
 							<?php } ?>	
