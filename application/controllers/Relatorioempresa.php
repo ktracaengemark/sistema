@@ -686,11 +686,15 @@ class Relatorioempresa extends CI_Controller {
 		$senha = md5($this->input->get_post('Senha'));
 
         #set validation rules
-        
+        /*
 		$this->form_validation->set_rules('CelularUsuario', 'Celular do Usuário', 'required|trim|callback_valid_celular');
         $this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'required|trim|callback_check_empresa|callback_valid_empresa[' . $celular . ']');
 		$this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5|callback_valid_senha[' . $celular . ']');
-
+		*/
+		$this->form_validation->set_rules('CelularUsuario', 'Celular do Usuário', 'required|trim');
+        $this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'required|trim');
+		$this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5');
+		
         #$data['select']['idSis_Empresa'] = $this->Login_model->select_empresa2();
 		$data['select']['idSis_Empresa'] = $this->Basico_model->select_empresa3();
 		
@@ -725,27 +729,38 @@ class Relatorioempresa extends CI_Controller {
               exit();
              */
             
-			$query = $this->Login_model->check_dados_celular($senha, $celular, TRUE);
-			$query = $this->Login_model->check_dados_empresa($empresa, $celular, TRUE);
+			//$query = $this->Login_model->check_dados_celular($senha, $celular, TRUE);
+			//$query = $this->Login_model->check_dados_empresa($empresa, $celular, TRUE);
+			
+			$query = $this->Login_model->check_dados_empresa($empresa, $celular, $senha, TRUE);
+            
+			/*
             $_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
 
-            
 			#### Carrega os dados da Empresa nas vari?ves de sess?o ####
 
 			$_SESSION['log']['NivelEmpresa'] = $this->Login_model->get_empresa($query['idSis_Usuario']);
 			$_SESSION['log']['DataDeValidade'] = $this->Login_model->get_empresa2($query['idSis_Usuario']);			
-			
+			*/
 			#echo "<pre>".print_r($query)."</pre>";
             #exit();
 
             if ($query === FALSE) {
                 #$msg = "<strong>Senha</strong> incorreta ou <strong>usuário</strong> inexistente.";
                 #$this->basico->erro($msg);
-                $data['msg'] = $this->basico->msg('<strong>Senha</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
+                $data['msg'] = $this->basico->msg('<strong>Celular ou Senha</strong> incorretos.', 'erro', FALSE, FALSE, FALSE);
 				#$data['msg'] = $this->basico->msg('<strong>NomeEmpresa</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
                 $this->load->view('relatorioempresa/form_login', $data);
 
             } else {
+			
+				$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
+
+				#### Carrega os dados da Empresa nas vari?ves de sess?o ####
+
+				$_SESSION['log']['NivelEmpresa'] = $this->Login_model->get_empresa($query['idSis_Usuario']);
+				$_SESSION['log']['DataDeValidade'] = $this->Login_model->get_empresa2($query['idSis_Usuario']);			
+							
                 #initialize session
                 $this->load->driver('session');
 

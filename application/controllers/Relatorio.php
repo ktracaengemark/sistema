@@ -1,6 +1,6 @@
 <?php
 	
-#controlador de Login
+	#controlador de Login
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -8802,10 +8802,15 @@ class Relatorio extends CI_Controller {
         $senha = md5($this->input->get_post('Senha'));
 
         #set validation rules
-        $this->form_validation->set_rules('CelularAdmin', 'Celular do Admin', 'required|trim|callback_valid_celular');
+        /*
+		$this->form_validation->set_rules('CelularAdmin', 'Celular do Admin', 'required|trim|callback_valid_celular');
 		$this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'required|trim|callback_valid_empresa[' . $celular . ']');
         $this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5|callback_valid_senha[' . $celular . ']');
-
+		*/
+		$this->form_validation->set_rules('CelularAdmin', 'Celular do Admin', 'required|trim');
+        $this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'required|trim');
+		$this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5');
+		
 		#$data['select']['idSis_Empresa'] = $this->Loginempresa_model->select_empresa();
 		$data['select']['idSis_Empresa'] = $this->Basico_model->select_empresa31();
 		
@@ -8839,8 +8844,11 @@ class Relatorio extends CI_Controller {
               echo "</pre>";
               exit();
              */
-            $query = $this->Loginempresa_model->check_dados_celular($senha, $celular, TRUE);
-			$query = $this->Loginempresa_model->check_dados_empresa($empresa, $celular, TRUE);
+            //$query = $this->Loginempresa_model->check_dados_celular($senha, $celular, TRUE);
+			//$query = $this->Loginempresa_model->check_dados_empresa($empresa, $celular, TRUE);
+			
+			$query = $this->Loginempresa_model->check_dados_empresa($empresa, $celular, $senha, TRUE);
+            
 			#$_SESSION['log']['Agenda'] = $this->Loginempresa_model->get_agenda_padrao($query['idSis_Empresa']);
 			
             #echo "<pre>".print_r($query)."</pre>";
@@ -8849,7 +8857,7 @@ class Relatorio extends CI_Controller {
             if ($query === FALSE) {
                 #$msg = "<strong>Senha</strong> incorreta ou <strong>usuário</strong> inexistente.";
                 #$this->basico->erro($msg);
-                $data['msg'] = $this->basico->msg('<strong>Senha</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
+                $data['msg'] = $this->basico->msg('<strong>Celular ou Senha</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
 				#$data['msg'] = $this->basico->msg('<strong>NomeEmpresa</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
                 $this->load->view('relatorio/form_loginempresa', $data);
 

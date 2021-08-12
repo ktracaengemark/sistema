@@ -1,5 +1,5 @@
-<?php if (isset($msg)) echo $msg; ?>
 <div class="container col-sm-offset-4 col-md-4 ">
+	<?php if (isset($msg)) echo $msg; ?>
     <?php echo form_open('relatorio/loginempresa', 'role="form"'); ?>
 	<script>
 		function mostrarSenha(){

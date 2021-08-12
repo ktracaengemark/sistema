@@ -43,11 +43,12 @@ class Loginempresa_model extends CI_Model {
 
     }
 	
-	public function check_dados_empresa($empresa, $celular, $retorna = FALSE) {
+	public function check_dados_empresa($empresa, $celular, $senha, $retorna = FALSE) {
 
         $query = $this->db->query('SELECT * FROM Sis_Empresa WHERE '
-                . '(CelularAdmin = "' . $celular . '" AND '
-                . 'idSis_Empresa = "' . $empresa . '")'
+                . '(idSis_Empresa = "' . $empresa . '" AND '
+                . 'CelularAdmin = "' . $celular . '" AND '
+                . 'Senha = "' . $senha . '")'
         );
         #$query = $this->db->get_where('Sis_Usuario', $data);
         /*

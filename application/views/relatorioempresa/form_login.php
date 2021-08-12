@@ -1,6 +1,6 @@
-<?php if (isset($msg)) echo $msg; ?>
 <div class="container col-sm-offset-4 col-md-4 ">
-    <?php echo form_open('relatorioempresa/login', 'role="form"'); ?>
+    <?php if (isset($msg)) echo $msg; ?>
+	<?php echo form_open('relatorioempresa/login', 'role="form"'); ?>
 	<script>
 		function mostrarSenha(){
 			var tipo = document.getElementById("inputPassword");
@@ -17,6 +17,7 @@
 	</script>
 	<div class="col-md-2 "></div>
 	<div class="col-md-8 ">
+	
 		<div class="row">	
 
 			<label class="sr-only">Empresa</label>
