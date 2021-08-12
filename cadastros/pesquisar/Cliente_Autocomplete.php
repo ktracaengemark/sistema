@@ -77,7 +77,10 @@ $result_msg_cont = '
 						idSis_Empresa, 
 						NomeCliente,
 						RegistroFicha,
-						CelularCliente
+						CelularCliente,
+						Telefone,
+						Telefone2,
+						Telefone3
 					FROM 
 						App_Cliente 
 					WHERE
@@ -95,7 +98,9 @@ while($row_msg_cont = $resultado_msg_cont->fetch(PDO::FETCH_ASSOC)){
 	
     //$data[] = $row_msg_cont['NomeCliente'];
 	
-	$data[$row_msg_cont['idApp_Cliente']] = $row_msg_cont['idApp_Cliente'] . '#' . $row_msg_cont['NomeCliente'] . ' | Fch:' . $row_msg_cont['RegistroFicha'] . ' | Cel:' . $row_msg_cont['CelularCliente'];
+	$data[$row_msg_cont['idApp_Cliente']] = $row_msg_cont['idApp_Cliente'] . '#' . $row_msg_cont['NomeCliente'] . ' | Fch:' . $row_msg_cont['RegistroFicha']
+											. ' | Cel:' . $row_msg_cont['CelularCliente'] . ' | Tel1:' . $row_msg_cont['Telefone']
+											. ' | Tel2:' . $row_msg_cont['Telefone2'] . ' | Tel3:' . $row_msg_cont['Telefone3'];
 	//$data[$row_msg_cont['NomeCliente']] = $row_msg_cont['idApp_Cliente'];
 }
 
