@@ -35,6 +35,16 @@ qtd_ocorrencias();
 calculacashback();
 //calculaTotalOS();
 
+function exibir(){
+	$('.Mostrar').show();
+	$('.NMostrar').hide();
+}
+
+function exibir_confirmar(){
+	$('.Open').show();
+	$('.Close').hide();
+}
+
 //função autocomplete 
 
 // função para limpeza dos campos do Cliente
@@ -307,18 +317,6 @@ function Aguardar () {
 	$('.exibir').show();
 	$('#botaoFechar2').show();
 	$('#botaoSalvar').show();
-}
-
-function exibir(){
-	
-	$('.Mostrar').show();
-	$('.NMostrar').hide();
-	
-}
-
-function exibir_confirmar(){
-	$('.Open').show();
-	$('.Close').hide();
 }
 
 // Funções de cadastros auxiliares
