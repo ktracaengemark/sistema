@@ -72,7 +72,37 @@ class Login_model extends CI_Model {
         }
 
     }
-	
+
+    public function check_usuario($empresa, $celular, $senha) {
+
+        $query = $this->db->query('SELECT * FROM Sis_Usuario WHERE '
+                . '(idSis_Empresa = "' . $empresa . '" AND '
+                . 'CelularUsuario = "' . $celular . '" AND '
+                . 'Senha = "' . $senha . '")'
+        );
+        if ($query->num_rows() === 0) {
+            return 1;
+        }
+        else {
+            $query = $query->result_array();
+
+            if ($query[0]['Inativo'] == 1)
+                return 2;
+            else
+                return FALSE;
+        }
+
+        #$query = $this->db->get_where('Sis_Usuario', $data);
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+         */
+
+    }
+		
 	public function check_documentos_log($empresa, $retorna = FALSE) {
 
         $query2 = $this->db->query('SELECT * FROM App_Documentos WHERE '
