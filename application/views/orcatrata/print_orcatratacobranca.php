@@ -1,61 +1,44 @@
 <?php if (isset($msg)) echo $msg; ?>
 
-<?php echo validation_errors(); ?>
-<div class="col-md-3"></div>	
-<div class="col-md-6">	
-	<!--
-	<nav class="navbar navbar-inverse navbar-fixed" role="banner">
-	  <div class="container-fluid">
-		<div class="navbar-header">
-			<div class="btn-line " role="group" aria-label="...">	
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span> 
-				</button>
-				<a type="button" class="btn btn-md btn-default " href="javascript:window.print()">
-					<span class="glyphicon glyphicon-print"></span>
-				</a>
-				
-				<a type="button" class="btn btn-md btn-warning"  href="<?php echo base_url() . $imprimirlista . $_SESSION['log']['idSis_Empresa']; ?>">
-					<span class="glyphicon glyphicon-pencil"></span> Versão Lista
-				</a>
-				
-			</div>
-		</div>
-	  </div>
-	</nav>
-	-->
-	<nav class="navbar navbar-inverse navbar-fixed" role="banner">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span> 
-				</button>
-				<div class="btn-menu-print btn-group">
-					<a type="button" class="col-md-3 btn btn-md btn-default " href="javascript:window.print()">
-						<span class="glyphicon glyphicon-print"></span>
-					</a>
-					<a type="button" class="col-md-9 btn btn-md btn-warning "  href="<?php echo base_url() . $imprimirlista . $_SESSION['log']['idSis_Empresa']; ?>">
-						<span class="glyphicon glyphicon-pencil"></span> Versão Lista
-					</a>
+<?php echo validation_errors(); ?>	
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	
+		<nav class="navbar navbar-inverse navbar-fixed" role="banner">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span> 
+					</button>
+					<div class="btn-menu-print btn-group">
+						<a type="button" class="col-md-3 btn btn-md btn-default " href="javascript:window.print()">
+							<span class="glyphicon glyphicon-print"></span>
+						</a>
+						<a type="button" class="col-md-9 btn btn-md btn-warning "  href="<?php echo base_url() . $imprimirlista . $_SESSION['log']['idSis_Empresa']; ?>">
+							<span class="glyphicon glyphicon-pencil"></span> Versão Lista
+						</a>
+					</div>
+				</div>
+
+				<div class="btn-paginacao collapse navbar-collapse" id="myNavbar">
+					<!--
+					<div class="col-xs-6 col-sm-2 col-md-2 col-lg-2 text-left">
+						<label></label>
+						<a href="<?php #echo base_url() . 'gerar_excel/Receitas/Parcelas_xls.php'; ?>">
+							<button type='button' class='btn-paginacao btn btn-md btn-success btn-block'>
+								Excel
+							</button>
+						</a>
+					</div>
+					-->
+					<?php echo $pagination; ?>
 				</div>
 			</div>
-			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
-				<label></label>
-				<a href="<?php echo base_url() . 'gerar_excel/Receitas/Parcelas_xls.php'; ?>">
-					<button type='button' class='btn-paginacao btn btn-md btn-success btn-block'>
-						Excel
-					</button>
-				</a>
-			</div>
-			<div class="btn-paginacao collapse navbar-collapse" id="myNavbar">
-				<?php echo $pagination; ?>
-			</div>
-		</div>
-	</nav>	
+		</nav>
+		
+</div>	
+<div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3  col-lg-6">	
 	<?php if( isset($count['POCount']) ) { ?>	
 		<?php 
 			$linha =  $per_page*$pagina;
