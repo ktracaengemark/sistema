@@ -256,7 +256,7 @@ class Pedidos extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();		
 		
-        $data['titulo'] = 'Gestor Dinâmico';
+        $data['titulo'] = 'Dinâmico';
         $data['form_open_path'] = 'Pedidos/pedidos';
 		$data['comissao'] = 'relatorio/comissao/';
         $data['status'] = 'Orcatrata/alterarstatus/';

@@ -1,10 +1,9 @@
 <?php if ($msg) echo $msg; ?>
 <?php echo validation_errors(); ?>    
 	<?php echo form_open('despesas/despesas', 'role="form"'); ?>
-	<div class="col-md-1 "></div>
-	<div class="col-md-10 ">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-offset-1 col-lg-10 ">
 		<div class="row">	
-			<div class="col-md-12 ">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
 				<div class="panel panel-danger">
 					<div class="panel-heading">
 						<div class="row">
@@ -13,8 +12,8 @@
 								<h5 class="text-center"><b> Selecione o Pedido</b><?php #echo $titulo; ?></h5>
 							</div>
 							-->
-							<div class="col-md-2 text-left">
-							<label>Gestor de Despesas</label>
+							<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 text-left">
+								<label>Despesas</label>
 								<div class="input-group">
 									<span class="input-group-btn">
 										<button class="btn btn-danger btn-md" type="submit">
@@ -25,8 +24,8 @@
 								</div>
 							</div>
 							<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>
-								<div class="col-md-5 text-left">
-								<label>.</label>	
+								<div class="col-xs-12 col-sm-9 col-md-5 col-lg-5 text-left">
+								<label>Fornecedor</label>	
 									<div class="input-group">
 										<span class="input-group-btn">
 											<button class="btn btn-danger btn-md" type="submit">
@@ -39,18 +38,20 @@
 							<?php }else{ ?>
 								<input type="hidden" name="Fornecedor" id="Fornecedor" value=""/>
 							<?php } ?>
-							<div class="col-md-5">
-								<div class="col-md-4">
-								<label>Filtros</label>	
-									<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
-										<span class="glyphicon glyphicon-filter"></span>
-									</button>
-								</div>
-								<div class="col-md-8">
-								<label>Cadastrar Nova Despesa</label>
-									<a class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>orcatrata/cadastrardesp" role="button"> 
-										<span class="glyphicon glyphicon-plus"></span> Nova Compra / Despesa
-									</a>
+							<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 ">
+								<div class="row">
+									<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 ">
+										<label>Filtros</label>	
+										<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
+											<span class="glyphicon glyphicon-filter"></span>
+										</button>
+									</div>	
+									<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8 ">
+										<label>Cadastrar Nova Despesa</label>
+										<a class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>orcatrata/cadastrardesp" role="button"> 
+											<span class="glyphicon glyphicon-plus"></span> Nova Compra / Despesa
+										</a>
+									</div>
 								</div>	
 							</div>
 						</div>	

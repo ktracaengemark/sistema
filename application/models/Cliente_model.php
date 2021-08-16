@@ -136,7 +136,9 @@ class Cliente_model extends CI_Model {
     }
 
 	public function get_alterarcashback($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
-
+		
+		$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'TOT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+			
 		$date_inicio_orca = ($_SESSION['FiltroRankingVendas']['DataInicio']) ? 'TOT.DataOrca >= "' . $_SESSION['FiltroRankingVendas']['DataInicio'] . '" AND ' : FALSE;
 		$date_fim_orca = ($_SESSION['FiltroRankingVendas']['DataFim']) ? 'TOT.DataOrca <= "' . $_SESSION['FiltroRankingVendas']['DataFim'] . '" AND ' : FALSE;
 
@@ -204,6 +206,7 @@ class Cliente_model extends CI_Model {
 						INNER JOIN App_OrcaTrata AS TOT ON TOT.idApp_Cliente = TC.idApp_Cliente
 						' . $ultimopedido1 . '
 				WHERE
+					' . $permissao_orcam . '
 					' . $date_inicio_orca . '
 					' . $date_fim_orca . '
 					' . $date_inicio_cash . '

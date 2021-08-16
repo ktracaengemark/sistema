@@ -1,10 +1,9 @@
 
 <?php echo validation_errors(); ?> 
 	<?php echo form_open($form_open_path, 'role="form"'); ?>
-	<div class="col-md-1 "></div>
-	<div class="col-md-10 ">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-offset-1 col-lg-10 ">
 		<div class="row">	
-			<div class="col-md-12 ">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
 				<div class="panel panel-info">
 					<div class="panel-heading">
 						<div class="row">
@@ -13,7 +12,7 @@
 								<h5 class="text-center"><b> Selecione o Pedido</b><?php #echo $titulo; ?></h5>
 							</div>
 							-->
-							<div class="col-md-2 text-left">
+							<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 text-left">
 								<label><?php echo $titulo;?></label>
 								<div class="input-group">
 									<span class="input-group-btn">
@@ -39,7 +38,7 @@
 								</div>
 								-->
 								<input type="hidden" class="form-control Numero" placeholder="Pesquisar Cliente"  name="Cliente" value="<?php echo set_value('Cliente', $query['Cliente']); ?>">
-								<div class="col-md-5 text-left">
+								<div class="col-xs-12 col-sm-9 col-md-5 col-lg-5 text-left">
 									<label  >Cliente:</label>
 									<div class="input-group">
 										<span class="input-group-btn">
@@ -58,21 +57,23 @@
 							<?php }else{ ?>
 								<input type="hidden" name="Cliente" id="Cliente" value=""/>
 							<?php } ?>
-							<div class="col-md-5">
-								<div class="col-md-4">
-									<label>Filtros</label>
-									<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
-										<span class="glyphicon glyphicon-filter"></span>
-									</button>
-								</div>
-								<?php if ($_SESSION['Usuario']['Cad_Orcam'] == "S" ) { ?>	
-									<div class="col-md-8">
-										<label>Cadastrar Novo Pedido</label>	
-										<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>orcatrata/cadastrar3" role="button"> 
-											<span class="glyphicon glyphicon-plus"></span> Nova Venda / Receita
-										</a>
+							<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 ">
+								<div class="row">
+									<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 ">
+										<label>Filtros</label>
+										<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
+											<span class="glyphicon glyphicon-filter"></span>
+										</button>
 									</div>
-								<?php } ?>
+									<?php if ($_SESSION['Usuario']['Cad_Orcam'] == "S" ) { ?>	
+										<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8 ">
+											<label>Cadastrar Pedido</label>	
+											<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>orcatrata/cadastrar3" role="button"> 
+												<span class="glyphicon glyphicon-plus"></span> Nova Venda / Receita
+											</a>
+										</div>
+									<?php } ?>
+								</div>
 							</div>
 						</div>	
 					</div>
