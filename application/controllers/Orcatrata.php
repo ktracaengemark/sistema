@@ -862,21 +862,30 @@ class Orcatrata extends CI_Controller {
 				$data['orcatrata']['QuitadoOrca'] = "S";
 			}
 			*/
+			
 			if ($data['orcatrata']['FinalizadoOrca'] == 'S'){
-					$data['orcatrata']['AprovadoOrca'] = "S";
-					$data['orcatrata']['CombinadoFrete'] = "S";
-					$data['orcatrata']['ProntoOrca'] = "S";
-					$data['orcatrata']['EnviadoOrca'] = "S";
-					$data['orcatrata']['ConcluidoOrca'] = "S";
-					$data['orcatrata']['QuitadoOrca'] = "S";
-			} elseif($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
-					$data['orcatrata']['AprovadoOrca'] = "S";
-					$data['orcatrata']['FinalizadoOrca'] = "S";
-					$data['orcatrata']['CombinadoFrete'] = "S";
-					$data['orcatrata']['ProntoOrca'] = "S";
-					$data['orcatrata']['EnviadoOrca'] = "S";
-			} elseif ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
-					$data['orcatrata']['EnviadoOrca'] = "S";
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+				$data['orcatrata']['ConcluidoOrca'] = "S";
+				$data['orcatrata']['QuitadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['FinalizadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S'){
+				$data['orcatrata']['CombinadoFrete'] = "S";
+			} 
+			if($data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+			} 
+			if ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
+				$data['orcatrata']['EnviadoOrca'] = "S";
 			}
 			
             $data['orcatrata']['ValorOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorOrca']));
@@ -1214,7 +1223,7 @@ class Orcatrata extends CI_Controller {
 					$max_produto = count($data['update']['produto']['posterior']);
 					if($max_produto == 0){
 						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['AprovadoOrca'] = "S";
+						#$data['orcatrata']['AprovadoOrca'] = "S";
 						$data['orcatrata']['ProntoOrca'] = "S";
 						$data['orcatrata']['EnviadoOrca'] = "S";
 						$data['orcatrata']['ConcluidoOrca'] = "S";
@@ -1227,7 +1236,7 @@ class Orcatrata extends CI_Controller {
 				if (isset($data['update']['parcelasrec']['posterior'])){
 					$max_parcela = count($data['update']['parcelasrec']['posterior']);
 					if($max_parcela == 0){
-						$data['orcatrata']['CombinadoFrete'] = "S";
+						#$data['orcatrata']['CombinadoFrete'] = "S";
 						$data['orcatrata']['AprovadoOrca'] = "S";
 						$data['orcatrata']['QuitadoOrca'] = "S";				
 					}else{
@@ -1241,7 +1250,7 @@ class Orcatrata extends CI_Controller {
 					$max_produto = count($data['update']['produto']['posterior']);
 					if($max_produto > 0){
 						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['AprovadoOrca'] = "S";
+						#$data['orcatrata']['AprovadoOrca'] = "S";
 					}
 				}			
 
@@ -1249,7 +1258,7 @@ class Orcatrata extends CI_Controller {
 				if (isset($data['update']['parcelasrec']['posterior'])){
 					$max_parcela = count($data['update']['parcelasrec']['posterior']);
 					if($max_parcela > 0){
-						$data['orcatrata']['CombinadoFrete'] = "S";
+						#$data['orcatrata']['CombinadoFrete'] = "S";
 						$data['orcatrata']['AprovadoOrca'] = "S";				
 					}
 
@@ -1406,12 +1415,19 @@ class Orcatrata extends CI_Controller {
 					$datapago = "0000-00-00";
 				}
 				
+				$combinadofrete = "N";
+				$aprovadoorca = "N";
+				$prontooorca = "N";
+				$enviadooorca = "N";
+				$finalizadoorca = "N";
+				
 				if($concluidoorca == "S"){
 					$combinadofrete = "S";
-					$aprovadoorca = "S";
+					//$aprovadoorca = "S";
 					$prontooorca = "S";
 					$enviadooorca = "S";
 					if($quitadoorca == "S"){
+						$aprovadoorca = "S";
 						$finalizadoorca = "S";
 					}else{
 						$finalizadoorca = "N";
@@ -1419,16 +1435,16 @@ class Orcatrata extends CI_Controller {
 				}else{
 					if($quitadoorca == "S"){
 						$finalizadoorca = "N";
-						$combinadofrete = "S";
+						//$combinadofrete = "S";
 						$aprovadoorca = "S";
-						$prontooorca = "N";
-						$enviadooorca = "N";
+						//$prontooorca = "N";
+						//$enviadooorca = "N";
 					}else{
 						$finalizadoorca = "N";
-						$combinadofrete = "N";
-						$aprovadoorca = "N";
-						$prontooorca = "N";
-						$enviadooorca = "N";
+						//$combinadofrete = "N";
+						//$aprovadoorca = "N";
+						//$prontooorca = "N";
+						//$enviadooorca = "N";
 					}
 				}
 
@@ -2598,28 +2614,30 @@ class Orcatrata extends CI_Controller {
 			$data['orcatrata']['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata']['DataVencimentoOrca'], 'mysql');
 			$data['orcatrata']['Tipo_Orca'] = "B";
 			
-				if ($data['orcatrata']['FinalizadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['ProntoOrca'] = "S";
-						$data['orcatrata']['EnviadoOrca'] = "S";
-						$data['orcatrata']['ConcluidoOrca'] = "S";
-						$data['orcatrata']['QuitadoOrca'] = "S";
-				} 
-				if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['FinalizadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['ProntoOrca'] = "S";
-						$data['orcatrata']['EnviadoOrca'] = "S";
-				} 
-				if($data['orcatrata']['ConcluidoOrca'] == 'S' || $data['orcatrata']['QuitadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-				} 
-				if ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
-						$data['orcatrata']['EnviadoOrca'] = "S";
-				}
+			if ($data['orcatrata']['FinalizadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+				$data['orcatrata']['ConcluidoOrca'] = "S";
+				$data['orcatrata']['QuitadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['FinalizadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S'){
+				$data['orcatrata']['CombinadoFrete'] = "S";
+			} 
+			if($data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+			} 
+			if ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
+				$data['orcatrata']['EnviadoOrca'] = "S";
+			}
 			
             $data['orcatrata']['ValorOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorOrca']));
 			$data['orcatrata']['ValorComissao'] = $data['orcatrata']['ValorComissao'];
@@ -2951,7 +2969,7 @@ class Orcatrata extends CI_Controller {
 					$max_produto = count($data['update']['produto']['posterior']);
 					if($max_produto == 0){
 						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['AprovadoOrca'] = "S";
+						#$data['orcatrata']['AprovadoOrca'] = "S";
 						$data['orcatrata']['ProntoOrca'] = "S";
 						$data['orcatrata']['EnviadoOrca'] = "S";
 						$data['orcatrata']['ConcluidoOrca'] = "S";
@@ -2964,7 +2982,7 @@ class Orcatrata extends CI_Controller {
 				if (isset($data['update']['parcelasrec']['posterior'])){
 					$max_parcela = count($data['update']['parcelasrec']['posterior']);
 					if($max_parcela == 0){
-						$data['orcatrata']['CombinadoFrete'] = "S";
+						#$data['orcatrata']['CombinadoFrete'] = "S";
 						$data['orcatrata']['AprovadoOrca'] = "S";
 						$data['orcatrata']['QuitadoOrca'] = "S";				
 					}else{
@@ -2978,7 +2996,7 @@ class Orcatrata extends CI_Controller {
 					$max_produto = count($data['update']['produto']['posterior']);
 					if($max_produto > 0){
 						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['AprovadoOrca'] = "S";
+						#$data['orcatrata']['AprovadoOrca'] = "S";
 					}
 				}			
 
@@ -2986,7 +3004,7 @@ class Orcatrata extends CI_Controller {
 				if (isset($data['update']['parcelasrec']['posterior'])){
 					$max_parcela = count($data['update']['parcelasrec']['posterior']);
 					if($max_parcela > 0){
-						$data['orcatrata']['CombinadoFrete'] = "S";
+						#$data['orcatrata']['CombinadoFrete'] = "S";
 						$data['orcatrata']['AprovadoOrca'] = "S";				
 					}
 
@@ -3925,28 +3943,30 @@ class Orcatrata extends CI_Controller {
 			$data['orcatrata']['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata']['DataVencimentoOrca'], 'mysql');
 			$data['orcatrata']['Tipo_Orca'] = "B";
 			
-				if ($data['orcatrata']['FinalizadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['ProntoOrca'] = "S";
-						$data['orcatrata']['EnviadoOrca'] = "S";
-						$data['orcatrata']['ConcluidoOrca'] = "S";
-						$data['orcatrata']['QuitadoOrca'] = "S";
-				} 
-				if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['FinalizadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['ProntoOrca'] = "S";
-						$data['orcatrata']['EnviadoOrca'] = "S";
-				} 
-				if($data['orcatrata']['ConcluidoOrca'] == 'S' || $data['orcatrata']['QuitadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-				} 
-				if ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
-						$data['orcatrata']['EnviadoOrca'] = "S";
-				}
+			if ($data['orcatrata']['FinalizadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+				$data['orcatrata']['ConcluidoOrca'] = "S";
+				$data['orcatrata']['QuitadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['FinalizadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S'){
+				$data['orcatrata']['CombinadoFrete'] = "S";
+			} 
+			if($data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+			} 
+			if ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
+				$data['orcatrata']['EnviadoOrca'] = "S";
+			}
 			
 			$data['orcatrata']['ValorOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorOrca']));
             $data['orcatrata']['ValorDev'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorDev']));
@@ -4333,7 +4353,7 @@ class Orcatrata extends CI_Controller {
 					$max_produto = count($data['update']['produto']['posterior']);
 					if($max_produto > 0){
 						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['AprovadoOrca'] = "S";
+						#$data['orcatrata']['AprovadoOrca'] = "S";
 					}
 				}			
 
@@ -4341,7 +4361,7 @@ class Orcatrata extends CI_Controller {
 				if (isset($data['update']['parcelasrec']['posterior'])){
 					$max_parcela = count($data['update']['parcelasrec']['posterior']);
 					if($max_parcela > 0){
-						$data['orcatrata']['CombinadoFrete'] = "S";
+						#$data['orcatrata']['CombinadoFrete'] = "S";
 						$data['orcatrata']['AprovadoOrca'] = "S";				
 					}
 
@@ -5581,24 +5601,32 @@ class Orcatrata extends CI_Controller {
             $data['orcatrata']['DataRetorno'] = $this->basico->mascara_data($data['orcatrata']['DataRetorno'], 'mysql');
             $data['orcatrata']['DataQuitado'] = $this->basico->mascara_data($data['orcatrata']['DataQuitado'], 'mysql');
 			//$data['orcatrata']['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata']['DataVencimentoOrca'], 'mysql');
-			
-				if ($data['orcatrata']['FinalizadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['ProntoOrca'] = "S";
-						$data['orcatrata']['EnviadoOrca'] = "S";
-						$data['orcatrata']['ConcluidoOrca'] = "S";
-						$data['orcatrata']['QuitadoOrca'] = "S";
-				} elseif($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['FinalizadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['ProntoOrca'] = "S";
-						$data['orcatrata']['EnviadoOrca'] = "S";
-				} elseif ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
-						$data['orcatrata']['EnviadoOrca'] = "S";
-				}
-			
+
+			if ($data['orcatrata']['FinalizadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+				$data['orcatrata']['ConcluidoOrca'] = "S";
+				$data['orcatrata']['QuitadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['FinalizadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S'){
+				$data['orcatrata']['CombinadoFrete'] = "S";
+			} 
+			if($data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+			} 
+			if ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
+				$data['orcatrata']['EnviadoOrca'] = "S";
+			}
+
             $data['orcatrata']['ValorOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorOrca']));
 			$data['orcatrata']['ValorComissao'] = $data['orcatrata']['ValorComissao'];
             $data['orcatrata']['ValorDev'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorDev']));
@@ -6060,7 +6088,7 @@ class Orcatrata extends CI_Controller {
 				$max_produto = count($data['update']['produto']['posterior']);
 				if($max_produto == 0){
 					$data['orcatrata']['CombinadoFrete'] = "S";
-					$data['orcatrata']['AprovadoOrca'] = "S";
+					#$data['orcatrata']['AprovadoOrca'] = "S";
 					$data['orcatrata']['ProntoOrca'] = "S";
 					$data['orcatrata']['EnviadoOrca'] = "S";
 					$data['orcatrata']['ConcluidoOrca'] = "S";
@@ -6073,7 +6101,7 @@ class Orcatrata extends CI_Controller {
 			if (isset($data['update']['parcelasrec']['posterior'])){
 				$max_parcela = count($data['update']['parcelasrec']['posterior']);
 				if($max_parcela == 0){
-					$data['orcatrata']['CombinadoFrete'] = "S";
+					#$data['orcatrata']['CombinadoFrete'] = "S";
 					$data['orcatrata']['AprovadoOrca'] = "S";
 					$data['orcatrata']['QuitadoOrca'] = "S";				
 				}else{
@@ -6086,7 +6114,7 @@ class Orcatrata extends CI_Controller {
 				$max_produto = count($data['update']['produto']['posterior']);
 				if($max_produto > 0){
 					$data['orcatrata']['CombinadoFrete'] = "S";
-					$data['orcatrata']['AprovadoOrca'] = "S";
+					#$data['orcatrata']['AprovadoOrca'] = "S";
 				}
 			}			
 
@@ -6094,7 +6122,7 @@ class Orcatrata extends CI_Controller {
 			if (isset($data['update']['parcelasrec']['posterior'])){
 				$max_parcela = count($data['update']['parcelasrec']['posterior']);
 				if($max_parcela > 0){
-					$data['orcatrata']['CombinadoFrete'] = "S";
+					#$data['orcatrata']['CombinadoFrete'] = "S";
 					$data['orcatrata']['AprovadoOrca'] = "S";				
 				}
 
@@ -7246,23 +7274,31 @@ class Orcatrata extends CI_Controller {
             $data['orcatrata']['DataQuitado'] = $this->basico->mascara_data($data['orcatrata']['DataQuitado'], 'mysql');
 			//$data['orcatrata']['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata']['DataVencimentoOrca'], 'mysql');
 			
-				if ($data['orcatrata']['FinalizadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['ProntoOrca'] = "S";
-						$data['orcatrata']['EnviadoOrca'] = "S";
-						$data['orcatrata']['ConcluidoOrca'] = "S";
-						$data['orcatrata']['QuitadoOrca'] = "S";
-				} elseif($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['FinalizadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['ProntoOrca'] = "S";
-						$data['orcatrata']['EnviadoOrca'] = "S";
-				} elseif ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
-						$data['orcatrata']['EnviadoOrca'] = "S";
-				}
-					
+			if ($data['orcatrata']['FinalizadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+				$data['orcatrata']['ConcluidoOrca'] = "S";
+				$data['orcatrata']['QuitadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['FinalizadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S'){
+				$data['orcatrata']['CombinadoFrete'] = "S";
+			} 
+			if($data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+			} 
+			if ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
+				$data['orcatrata']['EnviadoOrca'] = "S";
+			}
+			
             $data['orcatrata']['ValorOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorOrca']));
 			$data['orcatrata']['ValorComissao'] = $data['orcatrata']['ValorComissao'];
             $data['orcatrata']['ValorDev'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorDev']));
@@ -7740,7 +7776,7 @@ class Orcatrata extends CI_Controller {
 				$max_produto = count($data['update']['produto']['posterior']);
 				if($max_produto == 0){
 					$data['orcatrata']['CombinadoFrete'] = "S";
-					$data['orcatrata']['AprovadoOrca'] = "S";
+					#$data['orcatrata']['AprovadoOrca'] = "S";
 					$data['orcatrata']['ProntoOrca'] = "S";
 					$data['orcatrata']['EnviadoOrca'] = "S";
 					$data['orcatrata']['ConcluidoOrca'] = "S";
@@ -7753,7 +7789,7 @@ class Orcatrata extends CI_Controller {
 			if (isset($data['update']['parcelasrec']['posterior'])){
 				$max_parcela = count($data['update']['parcelasrec']['posterior']);
 				if($max_parcela == 0){
-					$data['orcatrata']['CombinadoFrete'] = "S";
+					#$data['orcatrata']['CombinadoFrete'] = "S";
 					$data['orcatrata']['AprovadoOrca'] = "S";
 					$data['orcatrata']['QuitadoOrca'] = "S";				
 				}else{
@@ -7766,7 +7802,7 @@ class Orcatrata extends CI_Controller {
 				$max_produto = count($data['update']['produto']['posterior']);
 				if($max_produto > 0){
 					$data['orcatrata']['CombinadoFrete'] = "S";
-					$data['orcatrata']['AprovadoOrca'] = "S";
+					#$data['orcatrata']['AprovadoOrca'] = "S";
 				}
 			}			
 
@@ -7774,7 +7810,7 @@ class Orcatrata extends CI_Controller {
 			if (isset($data['update']['parcelasrec']['posterior'])){
 				$max_parcela = count($data['update']['parcelasrec']['posterior']);
 				if($max_parcela > 0){
-					$data['orcatrata']['CombinadoFrete'] = "S";
+					#$data['orcatrata']['CombinadoFrete'] = "S";
 					$data['orcatrata']['AprovadoOrca'] = "S";				
 				}
 
@@ -8891,23 +8927,32 @@ class Orcatrata extends CI_Controller {
             $data['orcatrata']['DataRetorno'] = $this->basico->mascara_data($data['orcatrata']['DataRetorno'], 'mysql');
             $data['orcatrata']['DataQuitado'] = $this->basico->mascara_data($data['orcatrata']['DataQuitado'], 'mysql');
 			//$data['orcatrata']['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata']['DataVencimentoOrca'], 'mysql');
-			
-				if ($data['orcatrata']['FinalizadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['ProntoOrca'] = "S";
-						$data['orcatrata']['EnviadoOrca'] = "S";
-						$data['orcatrata']['ConcluidoOrca'] = "S";
-						$data['orcatrata']['QuitadoOrca'] = "S";
-				} elseif($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['FinalizadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['ProntoOrca'] = "S";
-						$data['orcatrata']['EnviadoOrca'] = "S";
-				} elseif ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
-						$data['orcatrata']['EnviadoOrca'] = "S";
-				}		
+
+			if ($data['orcatrata']['FinalizadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+				$data['orcatrata']['ConcluidoOrca'] = "S";
+				$data['orcatrata']['QuitadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['FinalizadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S'){
+				$data['orcatrata']['CombinadoFrete'] = "S";
+			} 
+			if($data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+			} 
+			if ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
+				$data['orcatrata']['EnviadoOrca'] = "S";
+			}
+
             $data['orcatrata']['ValorOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorOrca']));
 			$data['orcatrata']['ValorComissao'] = $data['orcatrata']['ValorComissao'];
             $data['orcatrata']['ValorDev'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorDev']));
@@ -9334,7 +9379,7 @@ class Orcatrata extends CI_Controller {
 				$max_produto = count($data['update']['produto']['posterior']);
 				if($max_produto == 0){
 					$data['orcatrata']['CombinadoFrete'] = "S";
-					$data['orcatrata']['AprovadoOrca'] = "S";
+					#$data['orcatrata']['AprovadoOrca'] = "S";
 					$data['orcatrata']['ProntoOrca'] = "S";
 					$data['orcatrata']['EnviadoOrca'] = "S";
 					$data['orcatrata']['ConcluidoOrca'] = "S";
@@ -9347,7 +9392,7 @@ class Orcatrata extends CI_Controller {
 			if (isset($data['update']['parcelasrec']['posterior'])){
 				$max_parcela = count($data['update']['parcelasrec']['posterior']);
 				if($max_parcela == 0){
-					$data['orcatrata']['CombinadoFrete'] = "S";
+					#$data['orcatrata']['CombinadoFrete'] = "S";
 					$data['orcatrata']['AprovadoOrca'] = "S";
 					$data['orcatrata']['QuitadoOrca'] = "S";				
 				}else{
@@ -9360,7 +9405,7 @@ class Orcatrata extends CI_Controller {
 				$max_produto = count($data['update']['produto']['posterior']);
 				if($max_produto > 0){
 					$data['orcatrata']['CombinadoFrete'] = "S";
-					$data['orcatrata']['AprovadoOrca'] = "S";
+					#$data['orcatrata']['AprovadoOrca'] = "S";
 				}
 			}			
 
@@ -9368,7 +9413,7 @@ class Orcatrata extends CI_Controller {
 			if (isset($data['update']['parcelasrec']['posterior'])){
 				$max_parcela = count($data['update']['parcelasrec']['posterior']);
 				if($max_parcela > 0){
-					$data['orcatrata']['CombinadoFrete'] = "S";
+					#$data['orcatrata']['CombinadoFrete'] = "S";
 					$data['orcatrata']['AprovadoOrca'] = "S";				
 				}
 
@@ -9392,7 +9437,7 @@ class Orcatrata extends CI_Controller {
 				$data['update']['orcatrata']['campos'],
 				$data['orcatrata']['idApp_OrcaTrata'], TRUE);
 			$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['orcatrata']['idApp_OrcaTrata']);			
-
+			//sobre a baixa do estoque
 			if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
 				
 				$data['busca']['estoque']['posterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
@@ -10382,22 +10427,30 @@ class Orcatrata extends CI_Controller {
 			$data['orcatrata']['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata']['DataVencimentoOrca'], 'mysql');
 			$data['orcatrata']['Tipo_Orca'] = "B";
 			
-				if ($data['orcatrata']['FinalizadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['ProntoOrca'] = "S";
-						$data['orcatrata']['EnviadoOrca'] = "S";
-						$data['orcatrata']['ConcluidoOrca'] = "S";
-						$data['orcatrata']['QuitadoOrca'] = "S";
-				} elseif($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['FinalizadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['ProntoOrca'] = "S";
-						$data['orcatrata']['EnviadoOrca'] = "S";
-				} elseif ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
-						$data['orcatrata']['EnviadoOrca'] = "S";
-				}
+			if ($data['orcatrata']['FinalizadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+				$data['orcatrata']['ConcluidoOrca'] = "S";
+				$data['orcatrata']['QuitadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['FinalizadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S'){
+				$data['orcatrata']['CombinadoFrete'] = "S";
+			} 
+			if($data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+			} 
+			if ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
+				$data['orcatrata']['EnviadoOrca'] = "S";
+			}
 			
 			$data['orcatrata']['ValorOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorOrca']));
 			$data['orcatrata']['ValorComissao'] = $data['orcatrata']['ValorComissao'];
@@ -10709,7 +10762,7 @@ class Orcatrata extends CI_Controller {
 				$max_produto = count($data['update']['produto']['posterior']);
 				if($max_produto == 0){
 					$data['orcatrata']['CombinadoFrete'] = "S";
-					$data['orcatrata']['AprovadoOrca'] = "S";
+					#$data['orcatrata']['AprovadoOrca'] = "S";
 					$data['orcatrata']['ProntoOrca'] = "S";
 					$data['orcatrata']['EnviadoOrca'] = "S";
 					$data['orcatrata']['ConcluidoOrca'] = "S";
@@ -10722,7 +10775,7 @@ class Orcatrata extends CI_Controller {
 			if (isset($data['update']['parcelasrec']['posterior'])){
 				$max_parcela = count($data['update']['parcelasrec']['posterior']);
 				if($max_parcela == 0){
-					$data['orcatrata']['CombinadoFrete'] = "S";
+					#$data['orcatrata']['CombinadoFrete'] = "S";
 					$data['orcatrata']['AprovadoOrca'] = "S";
 					$data['orcatrata']['QuitadoOrca'] = "S";				
 				}else{
@@ -10736,7 +10789,7 @@ class Orcatrata extends CI_Controller {
 				$max_produto = count($data['update']['produto']['posterior']);
 				if($max_produto > 0){
 					$data['orcatrata']['CombinadoFrete'] = "S";
-					$data['orcatrata']['AprovadoOrca'] = "S";
+					#$data['orcatrata']['AprovadoOrca'] = "S";
 				}
 			}			
 
@@ -10744,7 +10797,7 @@ class Orcatrata extends CI_Controller {
 			if (isset($data['update']['parcelasrec']['posterior'])){
 				$max_parcela = count($data['update']['parcelasrec']['posterior']);
 				if($max_parcela > 0){
-					$data['orcatrata']['CombinadoFrete'] = "S";
+					#$data['orcatrata']['CombinadoFrete'] = "S";
 					$data['orcatrata']['AprovadoOrca'] = "S";				
 				}
 
@@ -11752,23 +11805,31 @@ class Orcatrata extends CI_Controller {
             $data['orcatrata']['DataQuitado'] = $this->basico->mascara_data($data['orcatrata']['DataQuitado'], 'mysql');
 			//$data['orcatrata']['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata']['DataVencimentoOrca'], 'mysql');
 			
-				if ($data['orcatrata']['FinalizadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['ProntoOrca'] = "S";
-						$data['orcatrata']['EnviadoOrca'] = "S";
-						$data['orcatrata']['ConcluidoOrca'] = "S";
-						$data['orcatrata']['QuitadoOrca'] = "S";
-				} elseif($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['FinalizadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['ProntoOrca'] = "S";
-						$data['orcatrata']['EnviadoOrca'] = "S";
-				} elseif ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
-						$data['orcatrata']['EnviadoOrca'] = "S";
-				}
-					
+			if ($data['orcatrata']['FinalizadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+				$data['orcatrata']['ConcluidoOrca'] = "S";
+				$data['orcatrata']['QuitadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+				$data['orcatrata']['FinalizadoOrca'] = "S";
+				$data['orcatrata']['CombinadoFrete'] = "S";
+				$data['orcatrata']['ProntoOrca'] = "S";
+				$data['orcatrata']['EnviadoOrca'] = "S";
+			} 
+			if($data['orcatrata']['ConcluidoOrca'] == 'S'){
+				$data['orcatrata']['CombinadoFrete'] = "S";
+			} 
+			if($data['orcatrata']['QuitadoOrca'] == 'S'){
+				$data['orcatrata']['AprovadoOrca'] = "S";
+			} 
+			if ($data['orcatrata']['TipoFrete'] == '1' && $data['orcatrata']['ProntoOrca'] == 'S') {
+				$data['orcatrata']['EnviadoOrca'] = "S";
+			}
+				
             $data['orcatrata']['ValorOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorOrca']));
 			$data['orcatrata']['ValorComissao'] = $data['orcatrata']['ValorComissao'];
             $data['orcatrata']['ValorDev'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorDev']));
@@ -12239,7 +12300,7 @@ class Orcatrata extends CI_Controller {
 				$max_produto = count($data['update']['produto']['posterior']);
 				if($max_produto == 0){
 					$data['orcatrata']['CombinadoFrete'] = "S";
-					$data['orcatrata']['AprovadoOrca'] = "S";
+					#$data['orcatrata']['AprovadoOrca'] = "S";
 					$data['orcatrata']['ProntoOrca'] = "S";
 					$data['orcatrata']['EnviadoOrca'] = "S";
 					$data['orcatrata']['ConcluidoOrca'] = "S";
@@ -12252,7 +12313,7 @@ class Orcatrata extends CI_Controller {
 			if (isset($data['update']['parcelasrec']['posterior'])){
 				$max_parcela = count($data['update']['parcelasrec']['posterior']);
 				if($max_parcela == 0){
-					$data['orcatrata']['CombinadoFrete'] = "S";
+					#$data['orcatrata']['CombinadoFrete'] = "S";
 					$data['orcatrata']['AprovadoOrca'] = "S";
 					$data['orcatrata']['QuitadoOrca'] = "S";				
 				}else{
@@ -12265,7 +12326,7 @@ class Orcatrata extends CI_Controller {
 				$max_produto = count($data['update']['produto']['posterior']);
 				if($max_produto > 0){
 					$data['orcatrata']['CombinadoFrete'] = "S";
-					$data['orcatrata']['AprovadoOrca'] = "S";
+					#$data['orcatrata']['AprovadoOrca'] = "S";
 				}
 			}			
 
@@ -12273,7 +12334,7 @@ class Orcatrata extends CI_Controller {
 			if (isset($data['update']['parcelasrec']['posterior'])){
 				$max_parcela = count($data['update']['parcelasrec']['posterior']);
 				if($max_parcela > 0){
-					$data['orcatrata']['CombinadoFrete'] = "S";
+					#$data['orcatrata']['CombinadoFrete'] = "S";
 					$data['orcatrata']['AprovadoOrca'] = "S";				
 				}
 
@@ -13960,6 +14021,7 @@ class Orcatrata extends CI_Controller {
 						
 						}
 					}
+					$data['orcatrata']['AprovadoOrca'] = "S";
 				}else{
 					$data['orcatrata']['QuitadoOrca'] = "N";
 				}	
@@ -13971,7 +14033,7 @@ class Orcatrata extends CI_Controller {
 				$max_produto = count($data['update']['produto']['posterior']);
 				if($max_produto == 0){
 					$data['orcatrata']['CombinadoFrete'] = "S";
-					$data['orcatrata']['AprovadoOrca'] = "S";
+					#$data['orcatrata']['AprovadoOrca'] = "S";
 					$data['orcatrata']['ProntoOrca'] = "S";
 					$data['orcatrata']['EnviadoOrca'] = "S";
 					$data['orcatrata']['ConcluidoOrca'] = "S";
@@ -16104,6 +16166,7 @@ class Orcatrata extends CI_Controller {
 								}
 							}
 							$data['orcatrata']['QuitadoOrca'] = "S";
+							$data['orcatrata']['AprovadoOrca'] = "S";
 						}else{
 							$data['orcatrata']['QuitadoOrca'] = "N";
 						}	
@@ -16114,7 +16177,7 @@ class Orcatrata extends CI_Controller {
 						$max_produto = count($data['update']['produto']['posterior']);
 						if($max_produto == 0){
 							$data['orcatrata']['CombinadoFrete'] = "S";
-							$data['orcatrata']['AprovadoOrca'] = "S";
+							#$data['orcatrata']['AprovadoOrca'] = "S";
 							$data['orcatrata']['ProntoOrca'] = "S";
 							$data['orcatrata']['EnviadoOrca'] = "S";
 							$data['orcatrata']['ConcluidoOrca'] = "S";
@@ -16468,7 +16531,8 @@ class Orcatrata extends CI_Controller {
 					if (isset($data['update']['parcelasrec']['posterior'])){
 						$max_parcela = count($data['update']['parcelasrec']['posterior']);
 						if($max_parcela == 0){
-							$data['orcatrata']['QuitadoOrca'] = "S";				
+							$data['orcatrata']['QuitadoOrca'] = "S";
+							$data['orcatrata']['AprovadoOrca'] = "S";				
 						}else{
 							$data['orcatrata']['QuitadoOrca'] = "N";
 						}
@@ -16479,7 +16543,7 @@ class Orcatrata extends CI_Controller {
 						$max_produto = count($data['update']['produto']['posterior']);
 						if($max_produto == 0){
 							$data['orcatrata']['CombinadoFrete'] = "S";
-							$data['orcatrata']['AprovadoOrca'] = "S";
+							#$data['orcatrata']['AprovadoOrca'] = "S";
 							$data['orcatrata']['ProntoOrca'] = "S";
 							$data['orcatrata']['EnviadoOrca'] = "S";
 							$data['orcatrata']['ConcluidoOrca'] = "S";

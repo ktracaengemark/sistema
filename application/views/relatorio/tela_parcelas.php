@@ -124,7 +124,7 @@
 						<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 						<div class="row">	
 							<div class="col-md-3">
-								<label for="CombinadoFrete">Combinado</label>
+								<label for="CombinadoFrete">Comb.Entrega</label>
 								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 										id="CombinadoFrete" name="CombinadoFrete">
 									<?php
@@ -139,7 +139,7 @@
 								</select>
 							</div>
 							<div class="col-md-3">
-								<label for="AprovadoOrca">Aprovado</label>
+								<label for="AprovadoOrca">Comb.Pagam</label>
 								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 										id="AprovadoOrca" name="AprovadoOrca">
 									<?php

@@ -421,7 +421,7 @@ class Pedidos_model extends CI_Model {
 				' . $filtro13 . '
 				OT.idTab_TipoRD = "2" AND
 				OT.CanceladoOrca = "N" AND
-				OT.CombinadoFrete = "S" AND
+				
 				OT.AprovadoOrca = "N"
                 ' . $data['Orcamento'] . '
                 ' . $data['Cliente'] . '

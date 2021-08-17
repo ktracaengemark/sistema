@@ -621,63 +621,63 @@ class Relatorio extends CI_Controller {
 		$data['collapse1'] = 'class="collapse"';
 		
         $data['select']['AprovadoOrca'] = array(
-            '0' => 'TODOS',
-			'N' => 'Não Aprovado',
-			'S' => 'Aprovado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
         $data['select']['CombinadoFrete'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 
         $data['select']['QuitadoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Pago',
-            'S' => 'Pago',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Entregue',
-            'S' => 'Entregue',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['FinalizadoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Finalizado',
-            'S' => 'Finalizado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['CanceladoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Cancelado',
-            'S' => 'Cancelado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['Quitado'] = array(
-			'0' => 'TODOS',
-			'N' => 'Não Quitado',
-            'S' => 'Quitado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoProduto'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['DevolvidoProduto'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 		
 		$data['select']['ConcluidoServico'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 		
 		$data['select']['Modalidade'] = array(
@@ -1504,63 +1504,63 @@ class Relatorio extends CI_Controller {
 		
 		
         $data['select']['AprovadoOrca'] = array(
-            '0' => 'TODOS',
-			'N' => 'Não Aprovado',
-			'S' => 'Aprovado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
         $data['select']['CombinadoFrete'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 
         $data['select']['QuitadoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Pago',
-            'S' => 'Pago',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Entregue',
-            'S' => 'Entregue',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['FinalizadoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Finalizado',
-            'S' => 'Finalizado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['CanceladoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Cancelado',
-            'S' => 'Cancelado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['Quitado'] = array(
-			'0' => 'TODOS',
-			'N' => 'Não Quitado',
-            'S' => 'Quitado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoProduto'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['DevolvidoProduto'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 		
 		$data['select']['ConcluidoServico'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 		
 		$data['select']['Modalidade'] = array(
@@ -1952,63 +1952,63 @@ class Relatorio extends CI_Controller {
 		
 		
         $data['select']['AprovadoOrca'] = array(
-            '0' => 'TODOS',
-			'N' => 'Não Aprovado',
-			'S' => 'Aprovado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
         $data['select']['CombinadoFrete'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 
         $data['select']['QuitadoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Pago',
-            'S' => 'Pago',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Entregue',
-            'S' => 'Entregue',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['FinalizadoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Finalizado',
-            'S' => 'Finalizado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['CanceladoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Cancelado',
-            'S' => 'Cancelado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['Quitado'] = array(
-			'0' => 'TODOS',
-			'N' => 'Não Quitado',
-            'S' => 'Quitado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoProduto'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['DevolvidoProduto'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 		
 		$data['select']['ConcluidoServico'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 		
 		$data['select']['Modalidade'] = array(
@@ -2391,63 +2391,63 @@ class Relatorio extends CI_Controller {
 		
 		
         $data['select']['AprovadoOrca'] = array(
-            '0' => 'TODOS',
-			'N' => 'Não Aprovado',
-			'S' => 'Aprovado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
         $data['select']['CombinadoFrete'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 
         $data['select']['QuitadoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Pago',
-            'S' => 'Pago',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Entregue',
-            'S' => 'Entregue',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['FinalizadoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Finalizado',
-            'S' => 'Finalizado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['CanceladoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Cancelado',
-            'S' => 'Cancelado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['Quitado'] = array(
-			'0' => 'TODOS',
-			'N' => 'Não Quitado',
-            'S' => 'Quitado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoProduto'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['DevolvidoProduto'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 		
 		$data['select']['ConcluidoServico'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 		
 		$data['select']['Modalidade'] = array(
@@ -2832,63 +2832,63 @@ class Relatorio extends CI_Controller {
 		
 		
         $data['select']['AprovadoOrca'] = array(
-            '0' => 'TODOS',
-			'N' => 'Não Aprovado',
-			'S' => 'Aprovado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
         $data['select']['CombinadoFrete'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 
         $data['select']['QuitadoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Pago',
-            'S' => 'Pago',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Entregue',
-            'S' => 'Entregue',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['FinalizadoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Finalizado',
-            'S' => 'Finalizado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['CanceladoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não Cancelado',
-            'S' => 'Cancelado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['Quitado'] = array(
-			'0' => 'TODOS',
-			'N' => 'Não Quitado',
-            'S' => 'Quitado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoProduto'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['DevolvidoProduto'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 		
 		$data['select']['ConcluidoServico'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
+            '0' => '::TODOS::',
             'S' => 'Sim',
+            'N' => 'Não',
         );
 		
 		$data['select']['Modalidade'] = array(
@@ -3264,45 +3264,45 @@ class Relatorio extends CI_Controller {
 		$data['collapse1'] = 'class="collapse"';
 		
         $data['select']['AprovadoOrca'] = array(
-			'0' => '::TODOS::',		
-			'S' => 'Aprovado',
-			'N' => 'Não Aprovado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
         $data['select']['QuitadoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Pago',
-            'N' => 'Não Pago',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Entregues',
-            'N' => 'Não Entregues',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['FinalizadoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Finalizado',
-            'N' => 'Não Finalizado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['CanceladoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Cancelado',
-            'N' => 'Não Cancelado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['CombinadoFrete'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Combinado',
-            'N' => 'Não Combinado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['Quitado'] = array(
-			'0' => '::TODOS::',			
-			'S' => 'Quitada',
-			'N' => 'NÃO Quitada',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 		
 		$data['select']['Modalidade'] = array(
@@ -3660,45 +3660,45 @@ class Relatorio extends CI_Controller {
 		$data['collapse1'] = 'class="collapse"';
 		
         $data['select']['AprovadoOrca'] = array(
-			'0' => '::TODOS::',		
-			'S' => 'Aprovado',
-			'N' => 'Não Aprovado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
         $data['select']['QuitadoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Pago',
-            'N' => 'Não Pago',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Entregues',
-            'N' => 'Não Entregues',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['FinalizadoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Finalizado',
-            'N' => 'Não Finalizado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['CanceladoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Cancelado',
-            'N' => 'Não Cancelado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['CombinadoFrete'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Combinado',
-            'N' => 'Não Combinado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['Quitado'] = array(
-			'0' => '::TODOS::',			
-			'S' => 'Quitada',
-			'N' => 'NÃO Quitada',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 		
 		$data['select']['Modalidade'] = array(
@@ -4130,51 +4130,51 @@ class Relatorio extends CI_Controller {
 		$data['collapse1'] = 'class="collapse"';
 		
         $data['select']['AprovadoOrca'] = array(
-			'0' => '::TODOS::',		
-			'S' => 'Aprovado',
-			'N' => 'Não Aprovado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
         $data['select']['QuitadoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Pago',
-            'N' => 'Não Pago',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Entregues',
-            'N' => 'Não Entregues',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['FinalizadoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Finalizado',
-            'N' => 'Não Finalizado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['CanceladoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Cancelado',
-            'N' => 'Não Cancelado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['CombinadoFrete'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Combinado',
-            'N' => 'Não Combinado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['Quitado'] = array(
-			'0' => '::TODOS::',			
-			'S' => 'Quitada',
-			'N' => 'NÃO Quitada',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoProduto'] = array(
-			'0' => '::TODOS::',			
-			'S' => 'Entregue',
-			'N' => 'NÃO Entregue',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 		
 		$data['select']['Modalidade'] = array(
@@ -4485,51 +4485,51 @@ class Relatorio extends CI_Controller {
 		$data['collapse1'] = 'class="collapse"';
 		
         $data['select']['AprovadoOrca'] = array(
-			'0' => '::TODOS::',		
-			'S' => 'Aprovado',
-			'N' => 'Não Aprovado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
         $data['select']['QuitadoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Pago',
-            'N' => 'Não Pago',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Entregues',
-            'N' => 'Não Entregues',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['FinalizadoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Finalizado',
-            'N' => 'Não Finalizado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['CanceladoOrca'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Cancelado',
-            'N' => 'Não Cancelado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['CombinadoFrete'] = array(
-			'0' => '::TODOS::',            
-			'S' => 'Combinado',
-            'N' => 'Não Combinado',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['Quitado'] = array(
-			'0' => '::TODOS::',			
-			'S' => 'Quitada',
-			'N' => 'NÃO Quitada',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 
 		$data['select']['ConcluidoProduto'] = array(
-			'0' => '::TODOS::',			
-			'S' => 'Entregue',
-			'N' => 'NÃO Entregue',
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
         );
 		
 		$data['select']['Modalidade'] = array(

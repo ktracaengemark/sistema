@@ -1966,7 +1966,7 @@
 																	<div class="panel-heading">
 																		<div class="row">
 																			<div class="col-md-12 text-left">
-																				<label for="CombinadoFrete">Informado?</label><br>
+																				<label for="CombinadoFrete">Comb.Entrega?</label><br>
 																				<div class="btn-larg-right btn-group" data-toggle="buttons">
 																					<?php
 																					foreach ($select['CombinadoFrete'] as $key => $row) {
@@ -1994,7 +1994,7 @@
 																		</div>
 																		<div class="row">
 																			<div class="col-md-12 text-left">
-																				<label for="AprovadoOrca">Aprovado?</label><br>
+																				<label for="AprovadoOrca">Comb.Pagam?</label><br>
 																				<div class="btn-larg-right btn-group" data-toggle="buttons">
 																					<?php
 																					foreach ($select['AprovadoOrca'] as $key => $row) {
@@ -2025,8 +2025,6 @@
 															</div>
 															<div class="col-sm-3 col-md-2">
 																<div class="row">
-																	<div id="CombinadoFrete" <?php echo $div['CombinadoFrete']; ?>>
-																		<div id="AprovadoOrca" <?php echo $div['AprovadoOrca']; ?>>
 																			<div class="col-sm-12 col-md-12">
 																				<div class="panel panel-success">
 																					<div class="panel-heading">
@@ -2091,8 +2089,6 @@
 																					</div>
 																				</div>
 																			</div>
-																		</div>
-																	</div>
 																</div>
 															</div>
 															<div class="col-sm-3 col-md-2">

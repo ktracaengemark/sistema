@@ -96,8 +96,8 @@
 						<th class="active">Pedido</th>
 						<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 							<th class="col-md-2 active"><?php echo $nome; ?></th>
-							<th class="active">Comb.</th>
-							<th class="active">Apro.</th>
+							<th class="active">Comb.Ent</th>
+							<th class="active">Comb.Pag</th>
 							<th class="active">Entr.</th>
 							<th class="active">Pago.</th>
 							<th class="active">Final.</th>

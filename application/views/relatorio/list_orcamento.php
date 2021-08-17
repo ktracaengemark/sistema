@@ -156,8 +156,8 @@
 							<th class="active">FinalR$</th>
 						<?php } ?>	
 						<th class="active"><?php echo $nomeusuario ?></th>
-						<th class="active">Comb.</th>
-						<th class="active">Apr.</th>
+						<th class="active">Comb.Ent</th>
+						<th class="active">Comb.Pag</th>
 						<th class="active">Entr.</th>
 						<th class="active">Pago</th>
 						<th class="active">Final.</th>
