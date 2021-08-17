@@ -558,9 +558,10 @@
 							</div>							
 							<label for=""><h4><b><?php echo $_SESSION['log']['NomeEmpresa']; ?></b></h4></label>
 							<div class="row">
-								<div class="form-group col-md-12 text-left">
-									<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>usuario2/prontuario/<?php echo $_SESSION['log']['idSis_Usuario']; ?>" role="button"> 
-										<span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['log']['Nome']; ?>
+								<div class="form-group col-md-12 text-left">	
+									<a class="container-img" href="<?php echo base_url() ?>usuario2/prontuario/<?php echo $_SESSION['log']['idSis_Usuario']; ?>" > 
+										<img alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Usuario']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Usuario']['Arquivo'] . ''; ?>" class="img-circle img-responsive" width='50'>
+										<?php echo $_SESSION['log']['Nome']; ?>
 									</a>
 								</div>	
 							</div>

@@ -283,6 +283,9 @@ Para o alinhamento do modal da agenda, centralizando em relação a tela
 		margin-left: 10px;
 	}
 }
+.container-img{
+	display: flex;
+}
 .container3 {
   margin-right: 10px;
 }
