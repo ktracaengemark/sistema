@@ -2091,11 +2091,11 @@
 																			</div>
 																</div>
 															</div>
-															<div class="col-sm-3 col-md-2">
+															<div class="col-sm-6 col-md-4">
 																<div class="panel panel-warning">
 																	<div class="panel-heading text-left">				
 																		<div class="row">
-																			<div class="col-sm-12 col-md-12 text-left">
+																			<div class="col-sm-6 col-md-6 text-left">
 																				<label for="ConcluidoOrca">TudoEntregue?</label><br>
 																				<?php if ($_SESSION['Usuario']['Bx_Prd'] == "S") { ?>
 																					<div class="btn-larg-right btn-group" data-toggle="buttons">
@@ -2136,13 +2136,11 @@
 																					</span>
 																				<?php } ?>
 																			</div>
-																		</div>
-																		<div id="ConcluidoOrca" <?php echo $div['ConcluidoOrca']; ?>>				
-																			<div class="row">
+																			<div id="ConcluidoOrca" <?php echo $div['ConcluidoOrca']; ?>>
 																				<div <?php echo $textoEntregues; ?> >
-																					<div class="col-sm-12 col-md-12 text-left">
+																					<div class="col-sm-6 col-md-6 text-right">
 																						<label for="StatusProdutos">As <strong><?php echo $Recorrencias; ?></strong> OS?</label><br>
-																						<div class="btn-larg-right btn-group" data-toggle="buttons">
+																						<div class="btn-group" data-toggle="buttons">
 																							<?php
 																							foreach ($select['StatusProdutos'] as $key => $row) {
 																								if (!$cadastrar['StatusProdutos'])$cadastrar['StatusProdutos'] = 'N';
@@ -2176,15 +2174,9 @@
 																					-->
 																				</div>
 																			</div>
-																		</div>	
-																	</div>
-																</div>
-															</div>
-															<div class="col-sm-3 col-md-2">
-																<div class="panel panel-warning">
-																	<div class="panel-heading text-left">
+																		</div>
 																		<div class="row">
-																			<div class="col-sm-12 col-md-12 text-left">
+																			<div class="col-sm-6 col-md-6 text-left">
 																				<label for="QuitadoOrca">TudoPago?</label><br>
 																				<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
 																					<div class="btn-larg-right btn-group" data-toggle="buttons">
@@ -2226,13 +2218,13 @@
 																					</span>
 																				<?php } ?>
 																			</div>
-																		</div>
-																		<div id="QuitadoOrca" <?php echo $div['QuitadoOrca']; ?>>
-																			<div class="row">
+																		
+																			<div id="QuitadoOrca" <?php echo $div['QuitadoOrca']; ?>>
+																			
 																				<div <?php echo $textoPagas; ?> >
-																					<div class="col-sm-12 col-md-12 text-left">
+																					<div class="col-sm-6 col-md-6 text-right">
 																						<label for="StatusParcelas">As <strong><?php echo $Recorrencias; ?></strong> OS?</label><br>
-																						<div class="btn-larg-right btn-group" data-toggle="buttons">
+																						<div class="btn-group" data-toggle="buttons">
 																							<?php
 																							foreach ($select['StatusParcelas'] as $key => $row) {
 																								if (!$cadastrar['StatusParcelas'])$cadastrar['StatusParcelas'] = 'N';
