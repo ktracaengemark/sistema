@@ -15,6 +15,7 @@
 				<li class="nav-item">
 					<a class="nav-link" href="<?php echo base_url() . '../enkontraki/#banner';?>">Enkontraki</a>
 				</li>
+				<!--
 				<li class="nav-item">
 					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/#about">A Plataforma</a>
 				</li>
@@ -27,6 +28,7 @@
 				<li class="nav-item">
 					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/#dicas">Dicas</a>
 				</li>
+				-->
 				<li class="nav-item">
 					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/#contact">Fale Conosco</a>
 				</li>
