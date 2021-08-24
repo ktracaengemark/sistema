@@ -190,9 +190,9 @@ class Relatorio_model extends CI_Model {
     }
 
     public function list_orcamento($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
-	
+
 		if($data != FALSE){
-			
+
 			$date_inicio_orca = ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;
 			$date_fim_orca = ($data['DataFim']) ? 'OT.DataOrca <= "' . $data['DataFim'] . '" AND ' : FALSE;
 			
@@ -220,6 +220,26 @@ class Relatorio_model extends CI_Model {
 			$date_fim_pag_com = ($data['DataFim7']) ? 'OT.DataPagoComissaoOrca <= "' . $data['DataFim7'] . '" AND ' : FALSE;
 			
 			$data['idSis_Empresa'] = ($_SESSION['log']['idSis_Empresa'] != 5) ? ' OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '  ': ' OT.Tipo_Orca = "O" ';
+
+			if(isset($data['Associado'])){
+				if($data['Associado'] == 0){
+					$associado = ' AND OT.Associado = 0 ';
+				}else{
+					$associado = ' AND OT.Associado != 0 ';
+				}
+			}else{
+				$associado = FALSE;
+			}
+			
+			if(isset($data['Vendedor'])){
+				if($data['Vendedor'] == 0){
+					$vendedor = ' AND OT.idSis_Usuario = 0 ';
+				}else{
+					$vendedor = ' AND OT.idSis_Usuario != 0 ';
+				}
+			}else{
+				$vendedor = FALSE;
+			}			
 			
 			$data['Orcamento'] = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
 			$data['Cliente'] = ($data['Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
@@ -325,6 +345,26 @@ class Relatorio_model extends CI_Model {
 			$date_fim_pag_com = ($_SESSION['FiltroAlteraParcela']['DataFim7']) ? 'OT.DataPagoComissaoOrca <= "' . $_SESSION['FiltroAlteraParcela']['DataFim7'] . '" AND ' : FALSE;
 			
 			$data['idSis_Empresa'] = ($_SESSION['log']['idSis_Empresa'] != 5) ? ' OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '  ': ' OT.Tipo_Orca = "O" ';
+			
+			if(isset($_SESSION['FiltroAlteraParcela']['Associado'])){
+				if($_SESSION['FiltroAlteraParcela']['Associado'] == 0){
+					$associado = ' AND OT.Associado = 0 ';
+				}else{
+					$associado = ' AND OT.Associado != 0 ';
+				}
+			}else{
+				$associado = FALSE;
+			}
+			
+			if(isset($_SESSION['FiltroAlteraParcela']['Vendedor'])){
+				if($_SESSION['FiltroAlteraParcela']['Vendedor'] == 0){
+					$vendedor = ' AND OT.idSis_Usuario = 0 ';
+				}else{
+					$vendedor = ' AND OT.idSis_Usuario != 0 ';
+				}
+			}else{
+				$vendedor = FALSE;
+			}			
 			
 			$data['Orcamento'] = ($_SESSION['FiltroAlteraParcela']['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $_SESSION['FiltroAlteraParcela']['Orcamento'] . '  ': FALSE;
 			$data['Cliente'] = ($_SESSION['FiltroAlteraParcela']['Cliente']) ? ' AND OT.idApp_Cliente = ' . $_SESSION['FiltroAlteraParcela']['Cliente'] . '' : FALSE;
@@ -535,6 +575,8 @@ class Relatorio_model extends CI_Model {
 				' . $comissao1 . '
 				' . $comissao2 . '
 				' . $comissao3 . '
+				' . $associado . '
+				' . $vendedor . '
 			' . $groupby . '
             ORDER BY
 				' . $data['Campo'] . '
@@ -1035,7 +1077,7 @@ class Relatorio_model extends CI_Model {
     }
 
 	public function list_parcelas($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
-        
+	
 		if($data != FALSE){
 
 			$date_inicio_orca = ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;

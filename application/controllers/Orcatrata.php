@@ -15018,7 +15018,7 @@ class Orcatrata extends CI_Controller {
 		$data['select']['Orcarec'] = $this->Basico_model->select_orcarec();
 		$data['select']['NomeCliente'] = $this->Basico_model->select_cliente();		
 		
-        $data['titulo'] = 'Baixa da Comissao NaLoja';
+        $data['titulo'] = 'Comissao Colaborador';
         $data['form_open_path'] = 'orcatrata/baixadacomissao';
 		$data['relatorio'] = 'relatorio/comissao/';
 		$data['imprimir'] = 'OrcatrataPrint/imprimircomissao/';
@@ -15315,7 +15315,7 @@ class Orcatrata extends CI_Controller {
 		$data['select']['Orcarec'] = $this->Basico_model->select_orcarec();
 		$data['select']['NomeCliente'] = $this->Basico_model->select_cliente();		
 		
-        $data['titulo'] = 'Baixa da Comissao OnLine';
+        $data['titulo'] = 'Comissao Associado';
         $data['form_open_path'] = 'orcatrata/baixadacomissao_online';
 		$data['relatorio'] = 'relatorio/comissao_online/';
 		$data['imprimir'] = 'OrcatrataPrint/imprimircomissao_online/';

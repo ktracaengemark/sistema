@@ -57,7 +57,27 @@ class Orcatrataprintcomissao_model extends CI_Model {
 			
 		$date_inicio_pag_com = ($_SESSION['FiltroAlteraParcela']['DataInicio7']) ? 'OT.DataPagoComissaoOrca >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio7'] . '" AND ' : FALSE;
 		$date_fim_pag_com = ($_SESSION['FiltroAlteraParcela']['DataFim7']) ? 'OT.DataPagoComissaoOrca <= "' . $_SESSION['FiltroAlteraParcela']['DataFim7'] . '" AND ' : FALSE;
-				
+			
+		if(isset($_SESSION['FiltroAlteraParcela']['Associado'])){
+			if($_SESSION['FiltroAlteraParcela']['Associado'] == 0){
+				$associado = ' AND OT.Associado = 0 ';
+			}else{
+				$associado = ' AND OT.Associado != 0 ';
+			}
+		}else{
+			$associado = FALSE;
+		}
+		
+		if(isset($_SESSION['FiltroAlteraParcela']['Vendedor'])){
+			if($_SESSION['FiltroAlteraParcela']['Vendedor'] == 0){
+				$vendedor = ' AND OT.idSis_Usuario = 0 ';
+			}else{
+				$vendedor = ' AND OT.idSis_Usuario != 0 ';
+			}
+		}else{
+			$vendedor = FALSE;
+		}			
+		 				
 		$permissao30 = ($_SESSION['FiltroAlteraParcela']['Orcamento'] != "" ) ? 'OT.idApp_OrcaTrata = "' . $_SESSION['FiltroAlteraParcela']['Orcamento'] . '" AND ' : FALSE;
 		$permissao31 = ($_SESSION['FiltroAlteraParcela']['Cliente'] != "" ) ? 'OT.idApp_Cliente = "' . $_SESSION['FiltroAlteraParcela']['Cliente'] . '" AND ' : FALSE;
 		$permissao37 = ($_SESSION['FiltroAlteraParcela']['idApp_Cliente'] != "" ) ? 'OT.idApp_Cliente = "' . $_SESSION['FiltroAlteraParcela']['idApp_Cliente'] . '" AND ' : FALSE;
@@ -197,6 +217,8 @@ class Orcatrataprintcomissao_model extends CI_Model {
                 ' . $date_fim_pag_com . '
 				OT.idSis_Empresa = ' . $data . ' AND
 				OT.idTab_TipoRD = "2" 
+                ' . $associado . '
+                ' . $vendedor . '
 			GROUP BY
                 OT.idApp_OrcaTrata	
             ORDER BY

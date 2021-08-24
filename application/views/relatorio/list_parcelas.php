@@ -55,6 +55,14 @@
 						</button>
 					</a>
 				</div>
+			<?php }else{ ?>
+				<div class="col-md-1">
+					<label>Filtros</label>
+					<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
+						<span class="glyphicon glyphicon-filter"></span>
+					</button>
+				</div>
+			<?php } ?>
 				<?php if ($editar == 1) { ?>
 					<?php if ($print == 1) { ?>	
 						<div class="col-md-1">
@@ -76,8 +84,7 @@
 							</a>
 						</div>
 					<?php } ?>	
-				<?php } ?>
-			<?php } ?>				
+				<?php } ?>				
 		</div>	
 	</div>
 </div>	

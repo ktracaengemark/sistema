@@ -82,37 +82,43 @@
 						</button>
 					</a>
 				</div>
-				
-				<?php if ($print == 1) { ?>	
+			<?php }else{ ?>
+				<div class="col-md-1">
+					<label>Filtros</label>
+					<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
+						<span class="glyphicon glyphicon-filter"></span>
+					</button>
+				</div>
+			<?php } ?>	
+			<?php if ($print == 1) { ?>	
+				<div class="col-md-1">
+					<label>Imprimir</label>
+					<a href="<?php echo base_url() . $imprimirlista . $_SESSION['log']['idSis_Empresa']; ?>">
+						<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
+							<span class="glyphicon glyphicon-print"></span>
+						</button>
+					</a>
+				</div>
+			<?php } ?>
+			<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") {?>
+				<?php if ($editar == 1) { ?>
 					<div class="col-md-1">
-						<label>Imprimir</label>
-						<a href="<?php echo base_url() . $imprimirlista . $_SESSION['log']['idSis_Empresa']; ?>">
-							<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
-								<span class="glyphicon glyphicon-print"></span>
+						<label>Todas</label>
+						<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
+							<button class="btn btn-success btn-md btn-block" type="button">
+								<span class="glyphicon glyphicon-edit"></span>
+							</button>
+						</a>
+					</div>	
+				<?php }elseif($editar == 2){ ?>
+					<div class="col-md-1">
+						<label>Baixa</label>
+						<a href="<?php echo base_url() . $alterar; ?>">
+							<button class="btn btn-danger btn-md btn-block" type="button">
+								<span class="glyphicon glyphicon-alert"></span>
 							</button>
 						</a>
 					</div>
-				<?php } ?>
-				<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") {?>
-					<?php if ($editar == 1) { ?>
-						<div class="col-md-1">
-							<label>Todas</label>
-							<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
-								<button class="btn btn-success btn-md btn-block" type="button">
-									<span class="glyphicon glyphicon-edit"></span>
-								</button>
-							</a>
-						</div>	
-					<?php }elseif($editar == 2){ ?>
-						<div class="col-md-1">
-							<label>Baixa</label>
-							<a href="<?php echo base_url() . $alterar; ?>">
-								<button class="btn btn-danger btn-md btn-block" type="button">
-									<span class="glyphicon glyphicon-alert"></span>
-								</button>
-							</a>
-						</div>
-					<?php } ?>
 				<?php } ?>
 			<?php } ?>
 		</div>

@@ -50,7 +50,27 @@ class Orcatrataprint_model extends CI_Model {
 		
 		$date_inicio_cadastro = ($_SESSION['FiltroAlteraParcela']['DataInicio6']) ? 'C.DataCadastroCliente >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio6'] . '" AND ' : FALSE;
 		$date_fim_cadastro = ($_SESSION['FiltroAlteraParcela']['DataFim6']) ? 'C.DataCadastroCliente <= "' . $_SESSION['FiltroAlteraParcela']['DataFim6'] . '" AND ' : FALSE;
+			
+		if(isset($_SESSION['FiltroAlteraParcela']['Associado'])){
+			if($_SESSION['FiltroAlteraParcela']['Associado'] == 0){
+				$associado = ' AND OT.Associado = 0 ';
+			}else{
+				$associado = ' AND OT.Associado != 0 ';
+			}
+		}else{
+			$associado = FALSE;
+		}
 		
+		if(isset($_SESSION['FiltroAlteraParcela']['Vendedor'])){
+			if($_SESSION['FiltroAlteraParcela']['Vendedor'] == 0){
+				$vendedor = ' AND OT.idSis_Usuario = 0 ';
+			}else{
+				$vendedor = ' AND OT.idSis_Usuario != 0 ';
+			}
+		}else{
+			$vendedor = FALSE;
+		}			
+					
 		$permissao30 = ($_SESSION['FiltroAlteraParcela']['Orcamento'] != "" ) ? 'OT.idApp_OrcaTrata = "' . $_SESSION['FiltroAlteraParcela']['Orcamento'] . '" AND ' : FALSE;
 		$permissao31 = ($_SESSION['FiltroAlteraParcela']['Cliente'] != "" ) ? 'OT.idApp_Cliente = "' . $_SESSION['FiltroAlteraParcela']['Cliente'] . '" AND ' : FALSE;
 		$permissao36 = ($_SESSION['FiltroAlteraParcela']['Fornecedor'] != "" ) ? 'OT.idApp_Fornecedor = "' . $_SESSION['FiltroAlteraParcela']['Fornecedor'] . '" AND ' : FALSE;
@@ -227,6 +247,8 @@ class Orcatrataprint_model extends CI_Model {
 				OT.idSis_Empresa = ' . $data . ' 
 				
 				' . $ultimopedido2 . '
+				' . $associado . '
+				' . $vendedor . '
 			' . $groupby . '
             ORDER BY
 				' . $permissao60 . '

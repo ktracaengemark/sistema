@@ -53,6 +53,8 @@ class Relatoriocomissoes extends CI_Controller {
     }
 
 	public function porservicos() {
+		
+		unset($_SESSION['FiltroAlteraParcela']);
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);

@@ -115,6 +115,8 @@
 													</a>
 												</div>	
 											</div>
+											
+											<!--
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
 													<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/estoque" role="button"> 
@@ -122,10 +124,9 @@
 													</a>
 												</div>	
 											</div>
-											<!--
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
-											<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/produtosvend" role="button"> 
+													<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/produtosvend" role="button"> 
 														<span class="glyphicon glyphicon-barcode"></span> Produtos Vendidos
 													</a>
 												</div>	
@@ -185,7 +186,7 @@
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
 														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/comissao" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span>Por Pedido NaLoja
+															<span class="glyphicon glyphicon-usd"></span>Por Pedido/ Colaborador
 														</a>
 													</div>	
 												</div>
@@ -194,7 +195,7 @@
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
 														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/comissao_online" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span>Por Pedido OnLine
+															<span class="glyphicon glyphicon-usd"></span>Por Pedido/ Associado
 														</a>
 													</div>	
 												</div>
@@ -291,13 +292,6 @@
 													<span class="glyphicon glyphicon-usd"></span> Parcelas
 												</a>
 											</div>	
-										</div>
-										<div class="form-group col-md-12 text-left">
-											<div class="row">		
-												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/balanco" role="button"> 
-													<span class="glyphicon glyphicon-usd"></span> Balanço
-												</a>
-											</div>	
 										</div>											
 									</div>
 								<?php } ?>
@@ -312,6 +306,7 @@
 													</a>
 												</div>	
 											</div>
+											<!--
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
 													<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/estoque" role="button"> 
@@ -319,7 +314,6 @@
 													</a>
 												</div>	
 											</div>
-											<!--
 											<div class="form-group col-md-12 text-left">
 												<div class="row">
 													<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/produtoscomp" role="button"> 
@@ -372,7 +366,21 @@
 											</div>
 										</div>
 									<?php } ?>
-								<?php } ?>	
+								<?php } ?>
+								<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>	
+									<?php if($_SESSION['Usuario']['Rel_Est'] == "S") {?>	
+										<div class="col-md-12">											
+											<label for=""><h4><b>Estatísticas</b></h4></label>
+											<div class="form-group col-md-12 text-left">
+												<div class="row">		
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/balanco" role="button"> 
+														<span class="glyphicon glyphicon-usd"></span> Balanço
+													</a>
+												</div>	
+											</div>									
+										</div>
+									<?php }?>
+								<?php }?>
 							</div>
 						</div>
 					</div>

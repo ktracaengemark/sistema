@@ -1603,7 +1603,7 @@ class OrcatrataPrint extends CI_Controller {
 
         }
 
-        $data['titulo'] = 'Baixa da Comissao NaLoja';
+        $data['titulo'] = 'Comissao Colaborador';
         $data['form_open_path'] = 'orcatrata/baixadacomissao/';
 		$data['comissao'] = 'relatorio/comissao/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
@@ -1774,7 +1774,7 @@ class OrcatrataPrint extends CI_Controller {
 
         }
 
-        $data['titulo'] = 'Baixa da Comissao OnLine';
+        $data['titulo'] = 'Comissao Associado';
         $data['form_open_path'] = 'orcatrata/baixadacomissao_online/';
 		$data['comissao'] = 'relatorio/comissao_online/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir_online/';
