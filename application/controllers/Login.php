@@ -975,7 +975,7 @@ class Login extends CI_Controller {
         $this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'required|trim');
 		$this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5');
 		
-        if($_SESSION['Acesso']['idSis_Empresa']){
+        if(isset($_SESSION['Site_Back']['Acesso']['idSis_Empresa'])){
 				
 			$data['select']['idSis_Empresa'] = $this->Login_model->select_empresa5();
 			
@@ -996,7 +996,7 @@ class Login extends CI_Controller {
 			#run form validation
 			if ($this->form_validation->run() === FALSE) {
 				#load login view
-				if($_SESSION['Acesso']['idSis_Empresa']){
+				if($_SESSION['Site_Back']['Acesso']['idSis_Empresa']){
 					$this->load->view('login/form_login5', $data);
 				}else{
 					$this->load->view('login/form_login2', $data);
@@ -1063,7 +1063,7 @@ class Login extends CI_Controller {
 					#$this->basico->erro($msg);
 					$data['msg'] = $this->basico->msg('<strong>Empresa, Celular ou Senha</strong> incorretos.', 'erro', FALSE, FALSE, FALSE);
 					#$data['msg'] = $this->basico->msg('<strong>NomeEmpresa</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
-					if($_SESSION['Acesso']['idSis_Empresa']){
+					if($_SESSION['Site_Back']['Acesso']['idSis_Empresa']){
 						$this->load->view('login/form_login5', $data);
 					}else{
 						$this->load->view('login/form_login2', $data);
@@ -1073,14 +1073,14 @@ class Login extends CI_Controller {
                 
 					if ($this->Login_model->check_usuario($empresa, $celular, $senha) == 1) {
 						$data['msg'] = $this->basico->msg('<strong>Usuario</strong> não existe.', 'erro', FALSE, FALSE, FALSE);
-						if($_SESSION['Acesso']['idSis_Empresa']){
+						if($_SESSION['Site_Back']['Acesso']['idSis_Empresa']){
 							$this->load->view('login/form_login5', $data);
 						}else{
 							$this->load->view('login/form_login2', $data);
 						}
 					} else if ($this->Login_model->check_usuario($empresa, $celular, $senha) == 2) {
 						$data['msg'] = $this->basico->msg('<strong>Usuario</strong> inativo! Fale com o Administrador da sua Empresa!', 'erro', FALSE, FALSE, FALSE);
-						if($_SESSION['Acesso']['idSis_Empresa']){
+						if($_SESSION['Site_Back']['Acesso']['idSis_Empresa']){
 							$this->load->view('login/form_login5', $data);
 						}else{
 							$this->load->view('login/form_login2', $data);
@@ -1134,7 +1134,7 @@ class Login extends CI_Controller {
 							$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
 
 							$this->basico->erro($msg);
-							if($_SESSION['Acesso']['idSis_Empresa']){
+							if($_SESSION['Site_Back']['Acesso']['idSis_Empresa']){
 								$this->load->view('login/form_login5', $data);
 							}else{
 								$this->load->view('login/form_login2', $data);
@@ -1891,10 +1891,23 @@ class Login extends CI_Controller {
 
         #clear de session data
         $this->session->unset_userdata('log');
-        session_unset();     // unset $_SESSION variable for the run-time
-        session_destroy();   // destroy session data in storage
+		
+        foreach ($_SESSION as $key => $value) {
 
-        /*
+			if ($key != 'Site_Back') {
+
+				unset($_SESSION[$key]);
+				
+			}
+		}
+		
+		//desliguei,abaixo, todas as funções que apagam todas as sessões 
+		/*
+		session_unset();     // unset $_SESSION variable for the run-time
+        session_destroy();   // destroy session data in storage
+		*/
+        
+		/*
           #load header view
           $this->load->view('basico/headerlogin');
 

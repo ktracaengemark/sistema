@@ -76,7 +76,7 @@
 								<div class="panel-body">
 									<div class="panel panel-info">
 										<div class="panel-heading">
-											<h4>Serviços</h4>
+											<h4>Setor</h4>
 											<div class="row">
 												<div class="col-md-3">
 													<label for="Agenda">Agenda?</label><br>

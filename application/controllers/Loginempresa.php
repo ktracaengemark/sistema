@@ -1386,8 +1386,21 @@ class Loginempresa extends CI_Controller {
 
         #clear de session data
         $this->session->unset_userdata('log');
-        session_unset();     // unset $_SESSION variable for the run-time
+		
+        foreach ($_SESSION as $key => $value) {
+
+			if ($key != 'Site_Back') {
+
+				unset($_SESSION[$key]);
+				
+			}
+		}
+		
+		//desliguei,abaixo, todas as funções que apagam todas as sessões 
+		/*
+		session_unset();     // unset $_SESSION variable for the run-time
         session_destroy();   // destroy session data in storage
+		*/
 
         /*
           #load header view

@@ -657,7 +657,7 @@ class Login_model extends CI_Model {
 				FROM
 					Sis_Empresa					
 				WHERE
-					idSis_Empresa = ' . $_SESSION['Acesso']['idSis_Empresa'] . '
+					idSis_Empresa = ' . $_SESSION['Site_Back']['Acesso']['idSis_Empresa'] . '
 				ORDER BY 
 					NomeEmpresa ASC'
 			);
@@ -670,7 +670,7 @@ class Login_model extends CI_Model {
 				FROM
 					Sis_Empresa					
 				WHERE
-					idSis_Empresa = ' . $_SESSION['Acesso']['idSis_Empresa'] . '
+					idSis_Empresa = ' . $_SESSION['Site_Back']['Acesso']['idSis_Empresa'] . '
 				ORDER BY 
 					NomeEmpresa ASC'
 			);

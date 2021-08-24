@@ -52,11 +52,16 @@
 								<h4>CNPJ:<?php echo '<strong>' . $orcatrata['Cnpj'] . '</strong>' ?></h4>
 								<h4>Endereço:<?php echo '<small>' . $orcatrata['EnderecoEmpresa'] . '</small> <small>' . $orcatrata['NumeroEmpresa'] . '</small> <small>' . $orcatrata['ComplementoEmpresa'] . '</small><br>
 														<small>' . $orcatrata['BairroEmpresa'] . '</small> - <small>' . $orcatrata['MunicipioEmpresa'] . '</small> - <small>' . $orcatrata['EstadoEmpresa'] . '</small>' ?></h4>
-								<h5>Colab.:<?php echo '<strong>' . $usuario['Nome'] . '</strong>' ?></h5>
-								<?php if ($_SESSION['log']['NivelEmpresa'] >= 4 ) { ?>								
-								
-								<h4 class="text-center">Orçamento<?php echo ' - <strong>' . $query['idApp_OrcaTrata'] . '</strong>' ?> </h4>
-								
+								<h5>Colab.:<?php 
+												if(isset($usuario)){
+													$colaborador = $usuario['Nome'];
+												}else{
+													$colaborador = "O Cliente";
+												} echo '<strong>' . $colaborador . '</strong>'
+											?>
+								</h5>
+								<?php if ($_SESSION['log']['NivelEmpresa'] >= 4 ) { ?>
+									<h4 class="text-center">Orçamento<?php echo ' - <strong>' . $query['idApp_OrcaTrata'] . '</strong>' ?> </h4>
 								<?php } ?></td>
 							</tr>
 						</tbody>

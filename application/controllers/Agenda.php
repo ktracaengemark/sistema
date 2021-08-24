@@ -86,44 +86,38 @@ class Agenda extends CI_Controller {
 		if (!$data['query']['Mesvenc'])
            $data['query']['Mesvenc'] = date('m', time());
 		*/
-        $_SESSION['FiltroAgenda']['Dia'] = $_SESSION['FiltroAlteraProcedimento']['Dia'] = $data['query']['Dia'];
-        $_SESSION['FiltroAgenda']['Mesvenc'] = $_SESSION['FiltroAlteraProcedimento']['Mesvenc'] = $data['query']['Mesvenc'];
-        $_SESSION['FiltroAgenda']['Ano'] = $_SESSION['FiltroAlteraProcedimento']['Ano'] = $data['query']['Ano'];
-		$_SESSION['FiltroAgenda']['ConcluidoProcedimento'] = $_SESSION['FiltroAlteraProcedimento']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
-		$_SESSION['FiltroAgenda']['ConcluidoSubProcedimento'] = $_SESSION['FiltroAlteraProcedimento']['ConcluidoSubProcedimento'] = $data['query']['ConcluidoSubProcedimento'];
-        $_SESSION['FiltroAgenda']['Prioridade'] = $_SESSION['FiltroAlteraProcedimento']['Prioridade'] = $data['query']['Prioridade'];
-		$_SESSION['FiltroAgenda']['Statustarefa'] = $_SESSION['FiltroAlteraProcedimento']['Statustarefa'] = $data['query']['Statustarefa'];
-		$_SESSION['FiltroAgenda']['Statussubtarefa'] = $_SESSION['FiltroAlteraProcedimento']['Statussubtarefa'] = $data['query']['Statussubtarefa'];
-		$_SESSION['FiltroAgenda']['SubPrioridade'] = $_SESSION['FiltroAlteraProcedimento']['SubPrioridade'] = $data['query']['SubPrioridade'];
-		$_SESSION['FiltroAgenda']['Categoria'] = $_SESSION['FiltroAlteraProcedimento']['Categoria'] = $data['query']['Categoria'];
-		$_SESSION['FiltroAgenda']['Procedimento'] = $_SESSION['FiltroAlteraProcedimento']['Procedimento'] = $data['query']['Procedimento'];
-		$_SESSION['FiltroAgenda']['Diacli'] = $_SESSION['FiltroAlteraProcedimento']['Diacli'] = $data['query']['Diacli'];
-        $_SESSION['FiltroAgenda']['Mesvenccli'] = $_SESSION['FiltroAlteraProcedimento']['Mesvenccli'] = $data['query']['Mesvenccli'];
-        $_SESSION['FiltroAgenda']['Anocli'] = $_SESSION['FiltroAlteraProcedimento']['Anocli'] = $data['query']['Anocli'];		
-		$_SESSION['FiltroAgenda']['Concluidocli'] = $_SESSION['FiltroAlteraProcedimento']['Concluidocli'] = $data['query']['Concluidocli'];
-		$_SESSION['FiltroAgenda']['NomeCliente'] = $_SESSION['FiltroAlteraProcedimento']['NomeCliente'] = $data['query']['NomeCliente'];
-		$_SESSION['FiltroAgenda']['NomeClientePet'] = $_SESSION['FiltroAlteraProcedimento']['NomeClientePet'] = $data['query']['NomeClientePet'];
-		$_SESSION['FiltroAgenda']['idApp_Cliente'] = $_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'] = $data['query']['NomeClienteDep'];
-		$_SESSION['FiltroAgenda']['idApp_Cliente'] = $_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-		$_SESSION['FiltroAgenda']['idApp_ClientePet'] = $_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-		$_SESSION['FiltroAgenda']['idApp_ClienteDep'] = $_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];			
-        $_SESSION['FiltroAgenda']['Diaemp'] = $_SESSION['FiltroAlteraProcedimento']['Diaemp'] = $data['query']['Diaemp'];
-        $_SESSION['FiltroAgenda']['Mesvencemp'] = $_SESSION['FiltroAlteraProcedimento']['Mesvencemp'] = $data['query']['Mesvencemp'];
-        $_SESSION['FiltroAgenda']['Anoemp'] = $_SESSION['FiltroAlteraProcedimento']['Anoemp'] = $data['query']['Anoemp'];		
-		$_SESSION['FiltroAgenda']['Concluidoemp'] = $_SESSION['FiltroAlteraProcedimento']['Concluidoemp'] = $data['query']['Concluidoemp'];			
-		$_SESSION['FiltroAgenda']['NomeEmpresa'] = $_SESSION['FiltroAlteraProcedimento']['NomeEmpresa'] = $data['query']['NomeEmpresa'];
-		$_SESSION['FiltroAgenda']['NomeEmpresaCli'] = $_SESSION['FiltroAlteraProcedimento']['NomeEmpresaCli'] = $data['query']['NomeEmpresaCli'];
-		$_SESSION['FiltroAgenda']['NomeUsuario'] = $_SESSION['FiltroAlteraProcedimento']['NomeUsuario'] = $data['query']['NomeUsuario'];
+		
+        $_SESSION['FiltroAlteraProcedimento']['Dia'] = $data['query']['Dia'];
+        $_SESSION['FiltroAlteraProcedimento']['Mesvenc'] = $data['query']['Mesvenc'];
+        $_SESSION['FiltroAlteraProcedimento']['Ano'] = $data['query']['Ano'];
+		$_SESSION['FiltroAlteraProcedimento']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
+		$_SESSION['FiltroAlteraProcedimento']['ConcluidoSubProcedimento'] = $data['query']['ConcluidoSubProcedimento'];
+        $_SESSION['FiltroAlteraProcedimento']['Prioridade'] = $data['query']['Prioridade'];
+		$_SESSION['FiltroAlteraProcedimento']['Statustarefa'] = $data['query']['Statustarefa'];
+		$_SESSION['FiltroAlteraProcedimento']['Statussubtarefa'] = $data['query']['Statussubtarefa'];
+		$_SESSION['FiltroAlteraProcedimento']['SubPrioridade'] = $data['query']['SubPrioridade'];
+		$_SESSION['FiltroAlteraProcedimento']['Categoria'] = $data['query']['Categoria'];
+		$_SESSION['FiltroAlteraProcedimento']['Procedimento'] = $data['query']['Procedimento'];
+		$_SESSION['FiltroAlteraProcedimento']['Diacli'] = $data['query']['Diacli'];
+        $_SESSION['FiltroAlteraProcedimento']['Mesvenccli'] = $data['query']['Mesvenccli'];
+        $_SESSION['FiltroAlteraProcedimento']['Anocli'] = $data['query']['Anocli'];		
+		$_SESSION['FiltroAlteraProcedimento']['Concluidocli'] = $data['query']['Concluidocli'];
+		$_SESSION['FiltroAlteraProcedimento']['NomeCliente'] = $data['query']['NomeCliente'];
+		$_SESSION['FiltroAlteraProcedimento']['NomeClientePet'] = $data['query']['NomeClientePet'];
+		$_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'] = $data['query']['NomeClienteDep'];
+		$_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+		$_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+		$_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];			
+        $_SESSION['FiltroAlteraProcedimento']['Diaemp'] = $data['query']['Diaemp'];
+        $_SESSION['FiltroAlteraProcedimento']['Mesvencemp'] = $data['query']['Mesvencemp'];
+        $_SESSION['FiltroAlteraProcedimento']['Anoemp'] = $data['query']['Anoemp'];		
+		$_SESSION['FiltroAlteraProcedimento']['Concluidoemp'] = $data['query']['Concluidoemp'];			
+		$_SESSION['FiltroAlteraProcedimento']['NomeEmpresa'] = $data['query']['NomeEmpresa'];
+		$_SESSION['FiltroAlteraProcedimento']['NomeEmpresaCli'] = $data['query']['NomeEmpresaCli'];
+		$_SESSION['FiltroAlteraProcedimento']['NomeUsuario'] = $data['query']['NomeUsuario'];
         //$_SESSION['log']['NomeUsuario'] = ($data['query']['NomeUsuario']) ? $data['query']['NomeUsuario'] : FALSE;
         $_SESSION['log']['NomeProfissional'] = ($data['query']['NomeProfissional']) ? $data['query']['NomeProfissional'] : FALSE;
         $_SESSION['log']['Compartilhar'] = ($data['query']['Compartilhar']) ? $data['query']['Compartilhar'] : FALSE;
-        /*
-		echo "<br>";
-		echo "<pre>";
-		print_r($_SESSION['FiltroAgenda']);
-		echo "</pre>";		
-		*/
-
 
         $data['select']['ConcluidoProcedimento'] = array(
 			'0' => '::Todos::',

@@ -186,6 +186,7 @@ class Empresa extends CI_Controller {
 			'AgenciaEmpresa',
 			'ContaEmpresa',
 			'PixEmpresa',
+			'AssociadoAtivo',
 			'CashBackAtivo',
 			'PrazoCashBackEmpresa',
         ), TRUE);
@@ -218,6 +219,7 @@ class Empresa extends CI_Controller {
 		$data['select']['Cartao'] = $this->Basico_model->select_status_sn();
 		
 		$data['select']['CashBackAtivo'] = $this->Basico_model->select_status_sn();
+		$data['select']['AssociadoAtivo'] = $this->Basico_model->select_status_sn();
         #$data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		#$data['select']['Empresa'] = $this->Basico_model->select_status_sn();
 		#$data['select']['Inativo'] = $this->Basico_model->select_inativo();
@@ -269,6 +271,23 @@ class Empresa extends CI_Controller {
         );
         ($data['query']['Boleto'] == 'S') ?
             $data['div']['Boleto'] = '' : $data['div']['Boleto'] = 'style="display: none;"';		
+		
+			
+		(!$data['query']['AssociadoAtivo']) ? $data['query']['AssociadoAtivo'] = 'N' : FALSE;
+        $data['radio'] = array(
+            'AssociadoAtivo' => $this->basico->radio_checked($data['query']['AssociadoAtivo'], 'E-Comerce', 'NS'),
+        );
+        ($data['query']['AssociadoAtivo'] == 'S') ?
+            $data['div']['AssociadoAtivo'] = '' : $data['div']['AssociadoAtivo'] = 'style="display: none;"';
+			
+			
+		(!$data['query']['CashBackAtivo']) ? $data['query']['CashBackAtivo'] = 'N' : FALSE;
+        $data['radio'] = array(
+            'CashBackAtivo' => $this->basico->radio_checked($data['query']['CashBackAtivo'], 'E-Comerce', 'NS'),
+        );
+        ($data['query']['CashBackAtivo'] == 'S') ?
+            $data['div']['CashBackAtivo'] = '' : $data['div']['CashBackAtivo'] = 'style="display: none;"';
+			
 		
         $data['nav_secundario'] = $this->load->view('empresa/nav_secundario', $data, TRUE);
 

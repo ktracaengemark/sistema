@@ -237,7 +237,14 @@
 													<h4>CNPJ:<?php echo '<strong>' . $orcatrata['Cnpj'] . '</strong>' ?></h4>
 													<h4>Endereço:<?php echo '<small>' . $orcatrata['EnderecoEmpresa'] . '</small> <small>' . $orcatrata['NumeroEmpresa'] . '</small> <small>' . $orcatrata['ComplementoEmpresa'] . '</small><br>
 																			<small>' . $orcatrata['BairroEmpresa'] . '</small> - <small>' . $orcatrata['MunicipioEmpresa'] . '</small> - <small>' . $orcatrata['EstadoEmpresa'] . '</small><br><strong>Tel: </strong>'  . $orcatrata['Telefone'] ?></h4>
-													<h5>Colab.:<?php echo '<strong>' . $usuario['Nome'] . '</strong>' ?></h5>
+													<h5>Colab.:<?php 
+																	if(isset($usuario)){
+																		$colaborador = $usuario['Nome'];
+																	}else{
+																		$colaborador = "O Cliente";
+																	} echo '<strong>' . $colaborador . '</strong>'
+																?>
+													</h5>
 																					
 													
 													<h4 class="text-center">
