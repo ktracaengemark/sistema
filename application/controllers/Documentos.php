@@ -306,24 +306,26 @@ class Documentos extends CI_Controller {
 					
 					break;					
 
-					case 'image/png':
+					case 'image/png';
 					case 'image/x-png';
-						
-						list($largura, $altura, $tipo) = getimagesize($diretorio);
-						
-						$img = imagecreatefrompng($diretorio);
 
-						$thumb = imagecreatetruecolor(150, 66);
+						list($width, $height) = getimagesize($diretorio);
+						$newwidth = 150;
+						$newheight = 66;
+
+						$thumb = imagecreatetruecolor($newwidth, $newheight);
+						imagealphablending($thumb, false);
+						imagesavealpha($thumb, true);
+						$source = imagecreatefrompng($diretorio);
+						imagealphablending($source, true);
+						imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+						imagepng($thumb, $dir2 . $foto);
+						imagedestroy($thumb);
+						imagedestroy($source);						
 						
-						imagecopyresampled($thumb, $img, 0, 0, 0, 0, 150, 66, $largura, $altura);
-						
-						imagejpeg($thumb, $dir2 . $foto);
-						imagedestroy($img);
-						imagedestroy($thumb);				      
-					
 					break;
 					
-				endswitch;			
+				endswitch;
 
                 $data['camposfile'] = array_keys($data['file']);
 				$data['file']['idSis_Empresa'] = $_SESSION['Empresa']['idSis_Empresa'];
@@ -378,7 +380,7 @@ class Documentos extends CI_Controller {
 
         $this->load->view('basico/footer');
     }
-
+	
     public function alterar_icone($id = FALSE) {
 
         if ($this->input->get('m') == 1)
@@ -465,25 +467,27 @@ class Documentos extends CI_Controller {
 					
 					break;					
 
-					case 'image/png':
+					case 'image/png';
 					case 'image/x-png';
-						
-						list($largura, $altura, $tipo) = getimagesize($diretorio);
-						
-						$img = imagecreatefrompng($diretorio);
 
-						$thumb = imagecreatetruecolor(300, 300);
+						list($width, $height) = getimagesize($diretorio);
+						$newwidth = 300;
+						$newheight = 300;
+
+						$thumb = imagecreatetruecolor($newwidth, $newheight);
+						imagealphablending($thumb, false);
+						imagesavealpha($thumb, true);
+						$source = imagecreatefrompng($diretorio);
+						imagealphablending($source, true);
+						imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+						imagepng($thumb, $dir2 . $foto);
+						imagedestroy($thumb);
+						imagedestroy($source);						
 						
-						imagecopyresampled($thumb, $img, 0, 0, 0, 0, 300, 300, $largura, $altura);
-						
-						imagejpeg($thumb, $dir2 . $foto);
-						imagedestroy($img);
-						imagedestroy($thumb);				      
-					
 					break;
 					
-				endswitch;			
-
+				endswitch;
+				
                 $data['camposfile'] = array_keys($data['file']);
 				$data['file']['idSis_Empresa'] = $_SESSION['Empresa']['idSis_Empresa'];
 				$data['idSis_Arquivo'] = $this->Documentos_model->set_arquivo($data['file']);
