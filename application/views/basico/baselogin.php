@@ -8,7 +8,12 @@
 			</div>
 			<div class="row">
 				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-group text-center">
-					<a  type="button" class="btn btn-sm btn-warning btn-block text-left" href="<?php echo base_url() ?>pesquisar/empresas" role="button" > 
+					<!--
+					<a  type="button" class="btn btn-sm btn-warning btn-block text-left" href="<?php #echo base_url() ?>pesquisar/empresas" role="button" > 
+						 Pesquisar!
+					</a>
+					-->
+					<a  type="button" class="btn btn-sm btn-warning btn-block text-left" href="../../enkontraki/pesquisar.php" role="button" > 
 						 Pesquisar!
 					</a>											
 				</div>

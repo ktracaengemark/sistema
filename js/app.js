@@ -45,8 +45,311 @@ function exibir_confirmar(){
 	$('.Close').hide();
 }
 
-//função autocomplete 
+$('.input-produto').show();
+$('.input-promocao').hide();
+$('.input-empresa').hide();
 
+$('#SetProduto').on('click', function () {
+	//alert('Copiando');
+	$('.input-produto').show();
+	$('.input-promocao').hide();
+	$('.input-empresa').hide();
+	$(".input_fields_produtos").empty();
+	$('#Produto').val('');
+	$(".input_fields_promocao").empty();
+	$('#Promocao').val('');	
+	$(".input_fields_empresa").empty();
+	$('#Empresa').val('');
+});
+
+$('#SetPromocao').on('click', function () {
+	//alert('Copiando');
+	$('.input-produto').hide();
+	$('.input-promocao').show();
+	$('.input-empresa').hide();
+	$(".input_fields_produtos").empty();
+	$('#Produto').val('');
+	$(".input_fields_promocao").empty();
+	$('#Promocao').val('');	
+	$(".input_fields_empresa").empty();
+	$('#Empresa').val('');
+});
+
+$('#SetEmpresa').on('click', function () {
+	//alert('Copiando');
+	$('.input-produto').hide();
+	$('.input-promocao').hide();
+	$('.input-empresa').show();
+	$(".input_fields_produtos").empty();
+	$('#Produto').val('');
+	$(".input_fields_promocao").empty();
+	$('#Promocao').val('');	
+	$(".input_fields_empresa").empty();
+	$('#Empresa').val('');
+});
+
+// função que LIMPA busca de Produto da empresa
+function limpaBuscaProduto(){
+	$(".input_fields_produtos").empty();
+	$('#Produto').val('');
+}
+
+// função que LIMPA busca de Promocao da empresa
+function limpaBuscaPromocao(){
+	$(".input_fields_promocao").empty();
+	$('#Promocao').val('');
+}
+
+// função que LIMPA busca de Empresa
+function limpaBuscaEmpresa(){
+	$(".input_fields_empresa").empty();
+	$('#Empresa').val('');
+}
+
+// função que busca Produtos da empresa
+$('#Produto').on('keyup', function () {
+	//alert('produto');
+	var produto = $('#Produto').val();
+	//console.log('id_empresa = '+id_empresa);
+	//console.log('produto = '+produto);
+	$.ajax({
+		url: window.location.origin+ '/' + app + '/cadastros/pesquisar/Produto.php?produto='+produto,
+		dataType: "json",
+		success: function (data) {
+			//console.log(data);
+			//console.log(data.length);
+			
+			$(".input_fields_produtos").empty();
+            // executo este laço para acessar os itens do objeto javaScript
+            for (i = 0; i < data.length; i++) {
+					
+				data[i].ver 		= 'href="../../'+data[i].site+'/produto.php?id='+data[i].id_valor+'" target="_blank"';
+				
+				//console.log( data[i].contarestoque +' - '+ data[i].estoque);	
+				
+				if(data[i].contarestoque == "S"){
+					data[i].contar = "S";
+					if(data[i].estoque > 0){
+						data[i].liberar = 'href="meu_carrinho.php?carrinho=produto&id='+data[i].id_valor+'"';
+						data[i].carrinho = "carrinho_inserir.png";
+						data[i].texto = "";
+					}else{
+						data[i].liberar = '';
+						data[i].carrinho = "carrinho_indisp.png";
+						data[i].texto = " | indisp. no momento";
+					}
+				}else{
+					data[i].contar = "N";
+					data[i].liberar = 'href="meu_carrinho.php?carrinho=produto&id='+data[i].id_valor+'"';
+					data[i].carrinho = "carrinho_inserir.png";
+					data[i].texto = "";
+				}
+				
+				$(".input_fields_produtos").append('\
+					<div class="form-group">\
+						<div class="row">\
+							<div class="container-2">\
+								<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">\
+									<a '+data[i].ver+'>\
+										<img class="team-img img-responsive" src="../../'+data[i].site+'/'+data[i].id_empresa+'/documentos/miniatura/'+data[i].arquivo_empresa+'" alt="" width="50" >\
+									</a>\
+								</div>\
+								<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">\
+									<a '+data[i].ver+'>\
+										<img class="team-img img-responsive" src="../../'+data[i].site+'/'+data[i].id_empresa+'/produtos/miniatura/'+data[i].arquivo_produto+'" alt="" width="50" >\
+									</a>\
+								</div>\
+								<div class="col-xs-6 col-sm-8 col-md-8 col-lg-8 ">\
+									<a '+data[i].ver+'>\
+										<div class="row">\
+											<span class="card-title" style="color: #000000">\
+												'+data[i].nomeprod+'\
+											</span>\
+										</div>\
+										<div class="row">\
+											<span class="card-title" style="color: #000000">\
+												'+data[i].descprod+'\
+											</span>\
+										</div>\
+										<div class="row">\
+											<span class="card-title" style="color: #000000">\
+												'+data[i].qtdinc+' Unid | R$ '+data[i].valor+'\
+											</span>\
+										</div>\
+										<div class="row">\
+											<span class="card-title busca-fonte3" style="color: #000000">\
+												'+data[i].codprod+'\
+											</span>\
+											<span class="card-title busca-fonte3" style="color: #FF0000">\
+												'+' | ' +data[i].codbarra+'\
+											</span>\
+										</div>\
+									</a>\
+								</div>\
+							</div>\
+						</div>\
+					</div>\
+					<hr>'
+				);						
+
+            }//fim do laço		
+			
+		},
+		error:function(data){
+			//console.log('erro');
+			$(".input_fields_produtos").empty();
+		}
+	});	
+});
+
+// função que busca Promocoes da empresa
+$('#Promocao').on('keyup', function () {
+	//alert('promocao');
+	var promocao = $('#Promocao').val();
+	//console.log('id_empresa = '+id_empresa);
+	//console.log('promocao = '+promocao);
+	
+	$.ajax({
+		url: window.location.origin+ '/' + app + '/cadastros/pesquisar/Promocao.php?promocao='+promocao,
+		dataType: "json",
+		success: function (data) {
+			//console.log(data);
+			//console.log(data.length);
+			$(".input_fields_promocao").empty();
+            // executo este laço para acessar os itens do objeto javaScript
+            for (i = 0; i < data.length; i++) {
+	
+				//console.log( data[i].id_promocao +' - '+ data[i].arquivo_promocao);
+				data[i].liberar 	= 'href="meu_carrinho.php?carrinho=promocao&id='+data[i].id_promocao+'"';	
+				data[i].ver 		= 'href="../../'+data[i].site+'/produtospromocao.php?promocao='+data[i].id_promocao+'" target="_blank"';
+				
+				data[i].carrinho 	= "carrinho_inserir.png";
+				/*
+				if(data[i].contarestoque == "S"){
+					data[i].contar = "S";
+					if(data[i].estoque > 0){
+						data[i].liberar = 'href="meu_carrinho.php?carrinho=promocao&id='+data[i].id_promocao+'"';
+						data[i].texto = "";
+					}else{
+						data[i].liberar = '';
+						data[i].texto = " | indisp. no momento";
+					}
+					}else{
+					data[i].contar = "N";
+					data[i].liberar = 'href="meu_carrinho.php?carrinho=promocao&id='+data[i].id_promocao+'"';
+					data[i].texto = "";
+				}
+				*/
+				$(".input_fields_promocao").append('\
+					<div class="form-group">\
+						<div class="row">\
+							<div class="container-2">\
+								<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">\
+									<a '+data[i].ver+'>\
+										<img class="team-img img-responsive" src="../../'+data[i].site+'/'+data[i].id_empresa+'/documentos/miniatura/'+data[i].arquivo_empresa+'" alt="" width="50" >\
+									</a>\
+								</div>\
+								<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">\
+									<a '+data[i].ver+'>\
+										<img class="team-img img-responsive" src="../../'+data[i].site+'/'+data[i].id_empresa+'/promocao/miniatura/'+data[i].arquivo_promocao+'" alt="" width="50" >\
+									</a>\
+								</div>\
+								<div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">\
+									<a '+data[i].ver+'>\
+										<div class="row">\
+											<span class="card-title" style="color: #000000">\
+												'+data[i].promocao+'\
+											</span>\
+										</div>\
+										<div class="row">\
+											<span class="card-title" style="color: #000000">\
+												'+data[i].descricao+'\
+											</span>\
+										</div>\
+										<div class="row">\
+											<span class="card-title" style="color: #000000">\
+												'+data[i].total+'\
+											</span>\
+										</div>\
+									</a>\
+								</div>\
+							</div>\
+						</div>\
+					</div>\
+					<hr>'
+				);				
+				
+            }//fim do laço	
+		},
+		error:function(data){
+			//console.log('erro');
+			//console.log(data);
+			$(".input_fields_promocao").empty();
+		}
+	});	
+	
+});
+
+// função que busca Empresa
+$('#Empresa').on('keyup', function () {
+	//alert('empresa');
+	var empresa = $('#Empresa').val();
+	//console.log('empresa = '+empresa);
+	$.ajax({
+		url: window.location.origin+ '/' + app + '/cadastros/pesquisar/Empresa.php?empresa='+empresa,
+		dataType: "json",
+		success: function (data) {
+			//console.log(data);
+			//console.log(data.length);
+			
+			$(".input_fields_empresa").empty();
+            // executo este laço para acessar os itens do objeto javaScript
+            for (i = 0; i < data.length; i++) {
+					
+				data[i].ver 		= 'href="../../'+data[i].site+'" target="_blank"';
+				
+				//console.log( data[i].nomeempresa +' - '+ data[i].site);	
+				const decoder = new TextDecoder();
+				const encoder = new TextEncoder();
+
+				data[i].novonomeempresa = encoder.encode(data[i].nomeempresa);
+				data[i].novonomeempresa2 = decoder.decode(data[i].novonomeempresa);
+				
+				$(".input_fields_empresa").append('\
+					<div class="form-group">\
+						<div class="row">\
+							<div class="container-2">\
+								<div class="col-xs-4 col-sm-2 col-md-2 col-lg-1">\
+									<a '+data[i].ver+'>\
+										<img class="team-img img-responsive" src="../../'+data[i].site+'/'+data[i].id_empresa+'/documentos/miniatura/'+data[i].arquivo_empresa+'" alt="" width="50" >\
+									</a>\
+								</div>\
+								<div class="col-xs-8 col-sm-8 col-md-8 col-lg-9 ">\
+									<a '+data[i].ver+'>\
+										<div class="row">\
+											<span class="card-title" style="color: #000000">\
+												'+data[i].novonomeempresa2+'\
+											</span>\
+										</div>\
+									</a>\
+								</div>\
+							</div>\
+						</div>\
+					</div>\
+					<hr>'
+				);						
+
+            }//fim do laço		
+			
+		},
+		error:function(data){
+			//console.log('erro');
+			$(".input_fields_empresa").empty();
+		}
+	});	
+});
+
+//função autocomplete 
 // função para limpeza dos campos do Cliente
 $('#id_Cliente_Auto').on('input', limpaCampos_Cliente);
 // função que busca os nomes do Cliente
@@ -198,7 +501,6 @@ function limpaCampos_Fornecedor(){
    }
 }	
 	
-
 function SomaDias(dias){
 
 	if(dias){
@@ -489,7 +791,7 @@ $('#addDep').on('click', function(event){
 		url: window.location.origin+ '/' + app + '/cadastros/pesquisar/Cliente.php?id=' + id_cliente,
 		dataType: "json",
 		success: function (data) {
-		
+			//console.log(data);
 			var idcliente = data[0]['id'];
 			var nomecliente = data[0]['nome'];
 			var celularcliente = data[0]['celular'];
@@ -498,6 +800,7 @@ $('#addDep').on('click', function(event){
 			
 		},
 		error:function(data){
+			//console.log(data);
 			$("#addClienteDepModalLabel").html('<div class="alert alert-warning" role="alert">Nenhum Cliente Selecionado!</div>');
 		}
 		

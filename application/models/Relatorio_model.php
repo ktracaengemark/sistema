@@ -4208,11 +4208,6 @@ exit();*/
                 Sis_Empresa AS E
 					LEFT JOIN Tab_CategoriaEmpresa AS CE ON CE.idTab_CategoriaEmpresa = E.CategoriaEmpresa
             WHERE
-				
-				E.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' 
-				' . $data['Atuacao'] . ' 
-				' . $data['NomeEmpresa'] . ' 
-				' . $data['CategoriaEmpresa'] . ' AND
 
 				E.idSis_Empresa != "1" AND
 				E.idSis_Empresa != "5" 

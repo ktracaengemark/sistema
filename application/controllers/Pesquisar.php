@@ -1,6 +1,6 @@
 <?php
 
-#controlador de Login
+	#controlador de Login
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -18,11 +18,23 @@ class Pesquisar extends CI_Controller {
 
         #load header view
         $this->load->view('basico/header0');
-        #$this->load->view('basico/nav_principal0');
-        #$this->load->view('basico/headerlogin');
         $this->load->view('basico/nav_principal_site');
 
         #$this->load->view('relatorio/nav_secundario');
+		if ($this->agent->is_browser()) {
+
+            if (
+                    (preg_match("/(chrome|Firefox)/i", $this->agent->browser()) && $this->agent->version() < 30) ||
+                    (preg_match("/(safari)/i", $this->agent->browser()) && $this->agent->version() < 6) ||
+                    (preg_match("/(opera)/i", $this->agent->browser()) && $this->agent->version() < 12) ||
+                    (preg_match("/(internet explorer)/i", $this->agent->browser()) && $this->agent->version() < 9 )
+            ) {
+                $msg = '<h2><strong>Navegador não suportado.</strong></h2>';
+
+                echo $this->basico->erro($msg);
+                exit();
+            }
+        }
     }
 
     public function index() {
@@ -61,8 +73,6 @@ class Pesquisar extends CI_Controller {
 
         //$_SESSION['Empresa'] = $data['query'] = $this->Empresacli_model->get_empresa($id, TRUE);
 		
-		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
 
 
         $data['select']['Campo'] = array(
@@ -83,6 +93,9 @@ class Pesquisar extends CI_Controller {
 		$data['select']['Atuacao'] = $this->Pesquisar_model->select_atuacao();
 
         $data['titulo'] = 'Empresas';
+		
+		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
 
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
