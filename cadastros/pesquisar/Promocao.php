@@ -18,6 +18,7 @@ if (isset($_GET['promocao'])) {
 		if (isset($promocao2)){
 		
 			$query2 = '(TPS.Nome_Prod like "%' . $promocao2 . '%"  OR '
+						. 'EP.NomeEmpresa like "%' . $promocao2 . '%"  OR '
 						. 'TPS.Produtos_Descricao like "%' . $promocao2 . '%"  OR '
 						. 'TPR.Promocao like "%' . $promocao2 . '%"  OR '
 						. 'TPR.Descricao like "%' . $promocao2 . '%"  OR '
@@ -37,6 +38,7 @@ if (isset($_GET['promocao'])) {
 		if (isset($promocao1)){	
 			
 			$query1 = '(TPS.Nome_Prod like "%' . $promocao1 . '%"  OR '
+						. 'EP.NomeEmpresa like "%' . $promocao1 . '%"  OR '
 						. 'TPS.Produtos_Descricao like "%' . $promocao1 . '%"  OR '
 						. 'TPR.Promocao like "%' . $promocao1 . '%"  OR '
 						. 'TPR.Descricao like "%' . $promocao1 . '%"  OR '
@@ -52,6 +54,7 @@ if (isset($_GET['promocao'])) {
 	}
 
 	$query0 = '(TPS.Nome_Prod like "%' . $promocao0 . '%"  OR '
+				. 'EP.NomeEmpresa like "%' . $promocao0 . '%"  OR '
 				. 'TPS.Produtos_Descricao like "%' . $promocao0 . '%"  OR '
 				. 'TPR.Promocao like "%' . $promocao0 . '%"  OR '
 				. 'TPR.Descricao like "%' . $promocao0 . '%"  OR '
@@ -63,7 +66,6 @@ if (isset($_GET['promocao'])) {
 		$result = ('
 			SELECT 
 				TPR.idTab_Promocao,
-				TPR.idSis_Empresa,
 				TPR.Promocao,
 				TPR.Descricao,
 				TPR.Arquivo AS Arquivo_Promocao,
@@ -71,6 +73,8 @@ if (isset($_GET['promocao'])) {
 				IFNULL(TPS.Produtos_Descricao,"") AS DescProd,
 				TPS.Cod_Prod,
 				TPS.Cod_Barra,
+				EP.idSis_Empresa,
+				EP.NomeEmpresa,
 				EP.Site,
 				EP.Arquivo AS Arquivo_Empresa
 			FROM 
@@ -115,9 +119,10 @@ if (isset($_GET['promocao'])) {
 			foreach($read_produtos as $row_produtos){
 				$total 		= $row_produtos['Total'];
 			}
-			$data[] 	= array(
+			$data[] = array(
 					
 					'id_empresa' 		=> $row['idSis_Empresa'],
+					'nomeempresa' 		=> utf8_encode ($row['NomeEmpresa']),
 					'site' 				=> $row['Site'],
 					'arquivo_empresa' 	=> $row['Arquivo_Empresa'],
 					'id_promocao' 		=> $row['idTab_Promocao'],

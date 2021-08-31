@@ -17,6 +17,7 @@ if (isset($_GET['produto'])) {
 		if (isset($produto2)){
 		
 			$query2 = '(TPS.Nome_Prod like "%' . $produto2 . '%"  OR '
+						. 'EP.NomeEmpresa like "%' . $produto2 . '%"  OR '
 						. 'TPS.Produtos_Descricao like "%' . $produto2 . '%"  OR '
 						. 'TPS.Cod_Prod like "%' . $produto2 . '%"  OR '
 						. 'TPS.Cod_Barra like "%' . $produto2 . '%" )';
@@ -34,6 +35,7 @@ if (isset($_GET['produto'])) {
 		if (isset($produto1)){	
 			
 			$query1 = '(TPS.Nome_Prod like "%' . $produto1 . '%"  OR '
+						. 'EP.NomeEmpresa like "%' . $produto1 . '%"  OR '
 						. 'TPS.Produtos_Descricao like "%' . $produto1 . '%"  OR '
 						. 'TPS.Cod_Prod like "%' . $produto1 . '%"  OR '
 						. 'TPS.Cod_Barra like "%' . $produto1 . '%"  )';
@@ -47,6 +49,7 @@ if (isset($_GET['produto'])) {
 	}
 
 	$query0 = '(TPS.Nome_Prod like "%' . $produto0 . '%"  OR '
+				. 'EP.NomeEmpresa like "%' . $produto0 . '%"  OR '
 				. 'TPS.Produtos_Descricao like "%' . $produto0 . '%"  OR '
 				. 'TPS.Cod_Prod like "%' . $produto0 . '%"  OR '
 				. 'TPS.Cod_Barra like "%' . $produto0 . '%"  )';
@@ -74,7 +77,6 @@ if (isset($_GET['produto'])) {
 				TV.TempoDeEntrega,
 				TPS.idTab_Produtos,
 				TPS.idTab_Produto,
-				TPS.idSis_Empresa,
 				TPS.Nome_Prod,
 				IFNULL(TPS.Produtos_Descricao,"") AS DescProd,
 				TPS.Arquivo AS Arquivo_Produto,
@@ -83,6 +85,8 @@ if (isset($_GET['produto'])) {
 				TPS.Estoque,
 				TPS.Cod_Prod,
 				TPS.Cod_Barra,
+				EP.idSis_Empresa,
+				EP.NomeEmpresa,
 				EP.Site,
 				EP.Arquivo AS Arquivo_Empresa
 			FROM 
@@ -105,9 +109,10 @@ if (isset($_GET['produto'])) {
 		$read_produto = mysqli_query($conn, $result);
 		foreach($read_produto as $row){		
 			
-			$data[] 	= array(
+			$data[] = array(
 				
 				'id_empresa' 		=> $row['idSis_Empresa'],
+				'nomeempresa' 		=> utf8_encode ($row['NomeEmpresa']),
 				'site' 				=> $row['Site'],
 				'arquivo_empresa' 	=> $row['Arquivo_Empresa'],
 				'id_produto' 		=> $row['idTab_Produtos'],

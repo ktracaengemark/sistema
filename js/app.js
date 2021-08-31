@@ -45,9 +45,9 @@ function exibir_confirmar(){
 	$('.Close').hide();
 }
 
-$('.input-produto').show();
+$('.input-produto').hide();
 $('.input-promocao').hide();
-$('.input-empresa').hide();
+$('.input-empresa').show();
 
 $('#SetProduto').on('click', function () {
 	//alert('Copiando');
@@ -163,6 +163,14 @@ $('#Produto').on('keyup', function () {
 									<a '+data[i].ver+'>\
 										<div class="row">\
 											<span class="card-title" style="color: #000000">\
+												'+data[i].nomeempresa+'\
+											</span>\
+											<span class="card-title busca-fonte3" style="color: #FF0000">\
+												'+' | ' +data[i].id_empresa+'\
+											</span>\
+										</div>\
+										<div class="row">\
+											<span class="card-title" style="color: #000000">\
 												'+data[i].nomeprod+'\
 											</span>\
 										</div>\
@@ -240,6 +248,12 @@ $('#Promocao').on('keyup', function () {
 					data[i].texto = "";
 				}
 				*/
+				const decoder = new TextDecoder();
+				const encoder = new TextEncoder();
+
+				data[i].novonomeempresa = encoder.encode(data[i].nomeempresa);
+				data[i].novonomeempresa2 = decoder.decode(data[i].novonomeempresa);					
+				
 				$(".input_fields_promocao").append('\
 					<div class="form-group">\
 						<div class="row">\
@@ -256,6 +270,14 @@ $('#Promocao').on('keyup', function () {
 								</div>\
 								<div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">\
 									<a '+data[i].ver+'>\
+										<div class="row">\
+											<span class="card-title" style="color: #000000">\
+												'+data[i].novonomeempresa2+'\
+											</span>\
+											<span class="card-title busca-fonte3" style="color: #FF0000">\
+												'+' | ' +data[i].id_empresa+'\
+											</span>\
+										</div>\
 										<div class="row">\
 											<span class="card-title" style="color: #000000">\
 												'+data[i].promocao+'\
@@ -329,6 +351,9 @@ $('#Empresa').on('keyup', function () {
 										<div class="row">\
 											<span class="card-title" style="color: #000000">\
 												'+data[i].novonomeempresa2+'\
+											</span>\
+											<span class="card-title busca-fonte3" style="color: #FF0000">\
+												'+' | ' +data[i].id_empresa+'\
 											</span>\
 										</div>\
 									</a>\

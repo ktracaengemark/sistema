@@ -55,13 +55,13 @@
 						<div class="row">
 							<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 mb-3 ">	
 								<div class="custom-control custom-radio">
-									<input type="radio" name="SetBusca" class="custom-control-input " id="SetEmpresa" value="EM">
+									<input type="radio" name="SetBusca" class="custom-control-input " id="SetEmpresa" value="EM" checked>
 									<label class="custom-control-label" for="Empresa">Empresas</label>
 								</div>
 							</div>
 							<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 mb-3 ">	
 								<div class="custom-control custom-radio">
-									<input type="radio" name="SetBusca" class="custom-control-input "  id="SetProduto" value="PD" checked >
+									<input type="radio" name="SetBusca" class="custom-control-input "  id="SetProduto" value="PD"  >
 									<label class="custom-control-label" for="Produto">Produtos</label>
 								</div>
 							</div>
