@@ -999,14 +999,16 @@
 														<input type="hidden" name="ValorDeclarado" id="ValorDeclarado" placeholder="ValorDeclarado" value="0">
 														<input type="hidden" name="AvisoRecebimento" id="AvisoRecebimento" placeholder="AvisoRecebimento" value="N">
 														<div class="row ">
-															<div class="col-sm-3 col-md-2 mb-3 ">	
-																<label >Busca Correios</label>
-																<button class=" form-control btn btn-md btn-success" type="button">Buscar/Calcular</button>
-															</div>
-															<div class="col-sm-3 col-md-2 ">
-																<label class="" for="Cep">Cep:</label>
-																<input type="text" class="form-control " id="Cep" maxlength="8" <?php echo $readonly; ?>
-																name="Cep" readonly="" value="<?php echo $orcatrata['Cep']; ?>">
+															<div class="col-sm-6 col-md-4 ">
+																<label class="" for="Cep">Cep:</label><br>
+																<div class="input-group">
+																	<input type="text" class="form-control btn-sm Numero" maxlength="8" <?php echo $readonly; ?> id="Cep" name="Cep" value="<?php echo $orcatrata['Cep']; ?>" readonly="" >
+																	<span class="input-group-btn">
+																		<button class="btn btn-success btn-md" type="button">
+																			Buscar/Calcular
+																		</button>
+																	</span>
+																</div>
 															</div>
 															<div class="col-sm-6 col-md-4 ">
 																<label class="" for="Logradouro">Endreço:</label>

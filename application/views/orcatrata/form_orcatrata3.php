@@ -1065,7 +1065,7 @@
 															</div>
 															-->
 															<div class="col-sm-6 col-md-4 ">
-																<label >Cep:</label><br>
+																<label class="" for="Cep">Cep:</label><br>
 																<div class="input-group">
 																	<input type="text" class="form-control btn-sm Numero" maxlength="8" <?php echo $readonly; ?> id="Cep" name="Cep" value="<?php echo $orcatrata['Cep']; ?>">
 																	<span class="input-group-btn">
@@ -1075,7 +1075,6 @@
 																	</span>
 																</div>
 															</div>
-															
 															<div class="col-sm-6 col-md-4 ">
 																<label class="" for="Logradouro">Endreço:</label><br>
 																<input type="text" class="form-control " id="Logradouro" maxlength="100" <?php echo $readonly; ?>
