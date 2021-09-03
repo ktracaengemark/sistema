@@ -1072,9 +1072,22 @@
 					<div class="collapse" id="DadosComplementares">
 						<div class="form-group">
 							<div class="row">
+								<!--
 								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 ">
 									<label for="CepCliente">Cep:</label>
 									<input type="text" class="form-control Numero" id="CepCliente" maxlength="8" name="CepCliente">
+								</div>
+								-->		
+								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 ">
+									<label for="CepCliente">Cep:</label><br>
+									<div class="input-group">
+										<input type="text" class="form-control btn-sm Numero" maxlength="8" id="CepCliente" name="CepCliente" >
+										<span class="input-group-btn">
+											<button class="btn btn-success btn-md" type="button" onclick="BuscaEndCliente()">
+												Buscar
+											</button>
+										</span>
+									</div>
 								</div>
 								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 									<label for="EnderecoCliente">Endreço:</label>
