@@ -1051,16 +1051,31 @@
 														<input type="hidden" name="ValorDeclarado" id="ValorDeclarado" placeholder="ValorDeclarado" value="0">
 														<input type="hidden" name="AvisoRecebimento" id="AvisoRecebimento" placeholder="AvisoRecebimento" value="N">
 														<div class="row ">
+															<!--
 															<div class="col-sm-3 col-md-2 mb-3 ">	
 																<label >Busca Correios</label><br>
-																<!--<button class=" form-control btn btn-lg btn-success" type="button" onclick="Procuraendereco(), LoadFrete(), calculaTotal(), calculaParcelas()" >Buscar</button>-->
+																<button class=" form-control btn btn-lg btn-success" type="button" onclick="Procuraendereco(), LoadFrete(), calculaTotal(), calculaParcelas()" >Buscar</button>
 																<button class=" form-control btn btn-md btn-success" type="button" onclick="Procuraendereco()" >Buscar/Calcular</button>
 															</div>
+															-->
+															<!--
 															<div class="col-sm-3 col-md-2 ">
 																<label class="" for="Cep">Cep:</label><br>
-																<input type="text" class="form-control " id="Cep" maxlength="8" <?php echo $readonly; ?>
-																	   name="Cep" value="<?php echo $orcatrata['Cep']; ?>">
+																<input type="text" class="form-control " maxlength="8" <?php echo $readonly; ?> id="Cep" name="Cep" value="<?php echo $orcatrata['Cep']; ?>">
 															</div>
+															-->
+															<div class="col-sm-6 col-md-4 ">
+																<label >Cep:</label><br>
+																<div class="input-group">
+																	<input type="text" class="form-control btn-sm Numero" maxlength="8" <?php echo $readonly; ?> id="Cep" name="Cep" value="<?php echo $orcatrata['Cep']; ?>">
+																	<span class="input-group-btn">
+																		<button class="btn btn-success btn-md" type="button" onclick="Procuraendereco()">
+																			Buscar/Calcular
+																		</button>
+																	</span>
+																</div>
+															</div>
+															
 															<div class="col-sm-6 col-md-4 ">
 																<label class="" for="Logradouro">Endreço:</label><br>
 																<input type="text" class="form-control " id="Logradouro" maxlength="100" <?php echo $readonly; ?>
@@ -2562,41 +2577,54 @@
 					<div class="collapse" id="DadosComplementares">
 						<div class="form-group">
 							<div class="row">
+								<!--
 								<div class="col-md-3">
 									<label for="CepCliente">Cep:</label>
 									<input type="text" class="form-control Numero" id="CepCliente" maxlength="8" name="CepCliente">
 								</div>
+								-->
+								<div class="col-md-3 ">
+									<label for="CepCliente">Cep:</label><br>
+									<div class="input-group">
+										<input type="text" class="form-control btn-sm Numero" maxlength="8" <?php echo $readonly; ?> id="CepCliente" name="CepCliente" value="<?php echo $cliente['CepCliente']; ?>">
+										<span class="input-group-btn">
+											<button class="btn btn-success btn-md" type="button" onclick="BuscaEndCliente()">
+												Buscar
+											</button>
+										</span>
+									</div>
+								</div>
 								<div class="col-md-6">
 									<label for="EnderecoCliente">Endreço:</label>
-									<input type="text" class="form-control" id="EnderecoCliente" maxlength="100" name="EnderecoCliente">
+									<input type="text" class="form-control" id="EnderecoCliente" maxlength="100" name="EnderecoCliente" value="<?php echo $cliente['EnderecoCliente']; ?>">
 								</div>
 								<div class="col-md-3">
 									<label for="NumeroCliente">Numero:</label>
-									<input type="text" class="form-control" id="NumeroCliente" maxlength="100" name="NumeroCliente">
+									<input type="text" class="form-control" id="NumeroCliente" maxlength="100" name="NumeroCliente" value="<?php echo $cliente['NumeroCliente']; ?>">
 								</div>
 							</div>	
 							<div class="row">
 								<div class="col-md-3">
 									<label for="ComplementoCliente">Complemento:</label>
-									<input type="text" class="form-control" id="ComplementoCliente" maxlength="100" name="ComplementoCliente" >
+									<input type="text" class="form-control" id="ComplementoCliente" maxlength="100" name="ComplementoCliente" value="<?php echo $cliente['ComplementoCliente']; ?>">
 								</div>	
 								<div class="col-md-3">
 									<label for="BairroCliente">Bairro:</label>
-									<input type="text" class="form-control" id="BairroCliente" maxlength="100" name="BairroCliente" >
+									<input type="text" class="form-control" id="BairroCliente" maxlength="100" name="BairroCliente" value="<?php echo $cliente['BairroCliente']; ?>">
 								</div>
 								<div class="col-md-3">
 									<label for="CidadeCliente">Município:</label>
-									<input type="text" class="form-control" id="CidadeCliente" maxlength="100" name="CidadeCliente" >
+									<input type="text" class="form-control" id="CidadeCliente" maxlength="100" name="CidadeCliente" value="<?php echo $cliente['CidadeCliente']; ?>">
 								</div>
 								<div class="col-md-3">
 									<label for="EstadoCliente">Estado:</label>
-									<input type="text" class="form-control" id="EstadoCliente" maxlength="2" name="EstadoCliente" >
+									<input type="text" class="form-control" id="EstadoCliente" maxlength="2" name="EstadoCliente" value="<?php echo $cliente['EstadoCliente']; ?>">
 								</div>
 							</div>	
 							<div class="row">
 								<div class="col-md-3 ">
 									<label class="" for="ReferenciaCliente">Referencia:</label>
-									<textarea class="form-control " id="ReferenciaCliente" name="ReferenciaCliente"></textarea>
+									<textarea class="form-control " id="ReferenciaCliente" name="ReferenciaCliente" value="<?php echo $cliente['ReferenciaCliente']; ?>"><?php echo $cliente['ReferenciaCliente']; ?></textarea>
 								</div>
 							</div>
 						</div>

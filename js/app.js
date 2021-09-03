@@ -4193,6 +4193,37 @@ function valorTipoFrete(valor, nome) {
 	//calculaParcelas();
 }
 
+function BuscaEndCliente() {
+	//alert('BuscaEndCliente - BuscaEndCliente');
+	var Dados=$(this).serialize();
+	var CepDestino=$('#CepCliente').val();
+	$.ajax({
+		url: 'https://viacep.com.br/ws/'+CepDestino+'/json/',
+		method:'get',
+		dataType:'json',
+		data: Dados,
+		success:function(Dados){
+			//console.log(Dados);
+			$('.ResultCep').html('').append('<div>'+Dados.logradouro+','+Dados.bairro+'-'+Dados.localidade+'-'+Dados.uf+'</div>');			
+			
+			$('#EnderecoCliente').val(Dados.logradouro);
+			$('#NumeroCliente').val('');
+			$('#ComplementoCliente').val('');
+			$('#BairroCliente').val(Dados.bairro);
+			$('#CidadeCliente').val(Dados.localidade);
+			$('#EstadoCliente').val(Dados.uf);
+			$('#ReferenciaCliente').val('');
+	
+		},
+		error:function(Dados){
+			//console.log('erro');
+			alert('Cep não encontrado. Confira o Cep e Tente Novamente');
+			$('#CepCliente').val(CepDestino);
+		}
+	});
+	
+}
+
 function Procuraendereco() {
 	//alert('Procuraendereco - funcionando');
 	

@@ -333,10 +333,23 @@
 								</div>
 								<div class="form-group">
 									<div class="row">
+										<!--
 										<div class="col-md-3">
 											<label for="CepCliente">Cep:</label>
 											<input type="text" class="form-control" id="CepCliente" maxlength="8" <?php echo $readonly; ?>
-											name="CepCliente" value="<?php echo $query['CepCliente']; ?>">
+											name="CepCliente" value="<?php #echo $query['CepCliente']; ?>">
+										</div>
+										-->
+										<div class="col-md-3 ">
+											<label for="CepCliente">Cep:</label><br>
+											<div class="input-group">
+												<input type="text" class="form-control btn-sm Numero" maxlength="8" <?php echo $readonly; ?> id="CepCliente" name="CepCliente" value="<?php echo $query['CepCliente']; ?>">
+												<span class="input-group-btn">
+													<button class="btn btn-success btn-md" type="button" onclick="BuscaEndCliente()">
+														Buscar
+													</button>
+												</span>
+											</div>
 										</div>
 										<div class="col-md-6">
 											<label for="EnderecoCliente">Endreço:</label>
