@@ -39,6 +39,22 @@ class Documentos_model extends CI_Model {
 
     }
 	
+    public function get_empresa($data) {
+        $query = $this->db->query('SELECT * FROM Sis_Empresa WHERE idSis_Empresa = ' . $data);
+        $query = $query->result_array();
+
+        /*
+        //echo $this->db->last_query();
+        echo '<br>';
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit ();
+        */
+
+        return $query[0];
+    }
+		
     public function get_slides($data) {
         $query = $this->db->query('SELECT * FROM App_Documentos WHERE idApp_Documentos = ' . $data);
         $query = $query->result_array();
@@ -54,6 +70,14 @@ class Documentos_model extends CI_Model {
 
         return $query[0];
     }
+
+    public function update_empresa($data, $id) {
+		
+		unset($data['idSis_Empresa']);
+        $query = $this->db->update('Sis_Empresa', $data, array('idSis_Empresa' => $id));
+        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
+
+    }	
 	
     public function update_slides($data, $id) {
 

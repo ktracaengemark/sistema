@@ -186,8 +186,8 @@ class Documentos extends CI_Controller {
 
         $this->load->view('basico/footer');
     }
-	
-	public function excluir($id = FALSE) {
+    
+    public function alterar_title($id = FALSE) {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -196,26 +196,121 @@ class Documentos extends CI_Controller {
         else
             $data['msg'] = '';
 
-			if ($id) {
-				$_SESSION['Documentos'] = $this->Documentos_model->get_slides($id, TRUE);
-			}		
-			$this->Documentos_model->delete_slides($id);
+        $data['empresa'] = $this->input->post(array(
+			'idSis_Empresa',
+			'Title',
+        ), TRUE);
+				
 
-			$data['msg'] = '?m=1';
-			
-			if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/original/' . $_SESSION['Documentos']['Logo_Nav'] . ''))
-				&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/original/' . $_SESSION['Documentos']['Logo_Nav'] . '')
-				!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/original/slide.jpg'))){
-				unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/original/' . $_SESSION['Documentos']['Logo_Nav'] . '');						
-			}
-			if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/miniatura/' . $_SESSION['Documentos']['Logo_Nav'] . ''))
-				&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/miniatura/' . $_SESSION['Documentos']['Logo_Nav'] . '')
-				!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/miniatura/slide.jpg'))){
-				unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/miniatura/' . $_SESSION['Documentos']['Logo_Nav'] . '');						
-			}
-			
-			redirect(base_url() . 'relatorio/slides/' . $data['msg']);
-			exit();
+        if ($id) {
+            $data['empresa'] = $this->Documentos_model->get_empresa($id, TRUE);
+        }
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+		$this->form_validation->set_rules('Title', 'Título', 'required|trim');
+
+        $data['titulo'] = 'Título';
+        $data['form_open_path'] = 'documentos/alterar_title';
+        $data['readonly'] = '';
+        $data['disabled'] = '';
+        $data['panel'] = 'primary';
+        $data['metodo'] = 2;
+
+        $data['sidebar'] = 'col-sm-3 col-md-2 sidebar';
+        $data['main'] = 'col-sm-7 col-sm-offset-3 col-md-8 col-md-offset-2 main';
+
+        #run form validation
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('documentos/form_alterar_title', $data);
+        } else {
+
+            $data['anterior'] = $this->Documentos_model->get_empresa($data['empresa']['idSis_Empresa']);
+            $data['campos'] = array_keys($data['empresa']);
+
+            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['empresa'], $data['campos'], $data['empresa']['idSis_Empresa'], TRUE);
+
+            if ($data['auditoriaitem'] && $this->Documentos_model->update_empresa($data['empresa'], $data['empresa']['idSis_Empresa']) === FALSE) {
+                $data['msg'] = '?m=2';
+                redirect(base_url() . 'documentos/alterar_title/' . $data['empresa']['idSis_Empresa'] . $data['msg']);
+                exit();
+            } else {
+
+                if ($data['auditoriaitem'] === FALSE) {
+                    $data['msg'] = '';
+                } else {
+                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_Empresa', 'UPDATE', $data['auditoriaitem']);
+                    $data['msg'] = '?m=1';
+                }
+
+				redirect(base_url() . 'relatorio/site/' . $data['msg']);
+                exit();
+            }
+        }
+
+        $this->load->view('basico/footer');
+    }
+    
+    public function alterar_description($id = FALSE) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['empresa'] = $this->input->post(array(
+			'idSis_Empresa',
+			'Description',
+        ), TRUE);
+				
+
+        if ($id) {
+            $data['empresa'] = $this->Documentos_model->get_empresa($id, TRUE);
+        }
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+		$this->form_validation->set_rules('Description', 'Descrição', 'required|trim');
+
+        $data['titulo'] = 'Título';
+        $data['form_open_path'] = 'documentos/alterar_description';
+        $data['readonly'] = '';
+        $data['disabled'] = '';
+        $data['panel'] = 'primary';
+        $data['metodo'] = 2;
+
+        $data['sidebar'] = 'col-sm-3 col-md-2 sidebar';
+        $data['main'] = 'col-sm-7 col-sm-offset-3 col-md-8 col-md-offset-2 main';
+
+        #run form validation
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('documentos/form_alterar_description', $data);
+        } else {
+
+            $data['anterior'] = $this->Documentos_model->get_empresa($data['empresa']['idSis_Empresa']);
+            $data['campos'] = array_keys($data['empresa']);
+
+            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['empresa'], $data['campos'], $data['empresa']['idSis_Empresa'], TRUE);
+
+            if ($data['auditoriaitem'] && $this->Documentos_model->update_empresa($data['empresa'], $data['empresa']['idSis_Empresa']) === FALSE) {
+                $data['msg'] = '?m=2';
+                redirect(base_url() . 'documentos/alterar_description/' . $data['empresa']['idSis_Empresa'] . $data['msg']);
+                exit();
+            } else {
+
+                if ($data['auditoriaitem'] === FALSE) {
+                    $data['msg'] = '';
+                } else {
+                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_Empresa', 'UPDATE', $data['auditoriaitem']);
+                    $data['msg'] = '?m=1';
+                }
+
+				redirect(base_url() . 'relatorio/site/' . $data['msg']);
+                exit();
+            }
+        }
 
         $this->load->view('basico/footer');
     }
@@ -538,6 +633,39 @@ class Documentos extends CI_Controller {
 				}
             }
         }
+
+        $this->load->view('basico/footer');
+    }
+		
+	public function excluir($id = FALSE) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+			if ($id) {
+				$_SESSION['Documentos'] = $this->Documentos_model->get_slides($id, TRUE);
+			}		
+			$this->Documentos_model->delete_slides($id);
+
+			$data['msg'] = '?m=1';
+			
+			if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/original/' . $_SESSION['Documentos']['Logo_Nav'] . ''))
+				&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/original/' . $_SESSION['Documentos']['Logo_Nav'] . '')
+				!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/original/slide.jpg'))){
+				unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/original/' . $_SESSION['Documentos']['Logo_Nav'] . '');						
+			}
+			if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/miniatura/' . $_SESSION['Documentos']['Logo_Nav'] . ''))
+				&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/miniatura/' . $_SESSION['Documentos']['Logo_Nav'] . '')
+				!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/miniatura/slide.jpg'))){
+				unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/miniatura/' . $_SESSION['Documentos']['Logo_Nav'] . '');						
+			}
+			
+			redirect(base_url() . 'relatorio/slides/' . $data['msg']);
+			exit();
 
         $this->load->view('basico/footer');
     }
