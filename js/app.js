@@ -35,6 +35,16 @@ qtd_ocorrencias();
 calculacashback();
 //calculaTotalOS();
 
+function logar_cliente(){
+	var id_empresa = $('#id_empresa').val();
+	//console.log(id_empresa);
+	var logar = 'https://enkontraki.com.br/enkontraki/login_cliente.php?id_empresa=' + id_empresa;
+	//window.location = 'https://enkontraki.com.br/enkontraki/login_cliente.php?id_empresa=' + id_empresa;
+	window.location = '../enkontraki/login_cliente.php?id_empresa=' + id_empresa;
+	//alert(logar);
+
+}
+
 function exibir(){
 	$('.Mostrar').show();
 	$('.NMostrar').hide();
