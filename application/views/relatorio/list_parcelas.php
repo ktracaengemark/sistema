@@ -75,6 +75,7 @@
 						</div>
 					<?php } ?>
 					<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+						<!--
 						<div class="col-md-1">
 							<label>Baixa</label>
 							<a href="<?php echo base_url() . $alterarparc . $_SESSION['log']['idSis_Empresa']; ?>">
@@ -83,6 +84,7 @@
 								</button>
 							</a>
 						</div>
+						-->
 					<?php } ?>	
 				<?php } ?>				
 		</div>	

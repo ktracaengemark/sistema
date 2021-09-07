@@ -15,15 +15,30 @@ $cidade0 = filter_var($dados['CidadeCliente'], FILTER_SANITIZE_STRING);
 $estado0 = filter_var($dados['EstadoCliente'], FILTER_SANITIZE_STRING);
 $referencia0 = filter_var($dados['ReferenciaCliente'], FILTER_SANITIZE_STRING);
 
-$data = $dados['DataNascimento'];
-        
-if (preg_match("/[0-9]{2,4}(\/|-)[0-9]{2,4}(\/|-)[0-9]{2,4}/", $data)) {
+if(empty($dados['DataNascimento'])){
+	$data = "0000-00-00";
+}else{
+	$data = $dados['DataNascimento'];
 	
 	if ($data) {
-		$data = DateTime::createFromFormat('d/m/Y', $data);
-		$data = $data->format('Y-m-d');
-	} else {
-		$data = NULL;
+		
+		if (preg_match("/^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](1[89][0-9][0-9]|2[0189][0-9][0-9])$/", $data) && checkdate(substr($data, 3, 2), substr($data, 0, 2), substr($data, 6, 4))){
+			
+			if (preg_match("/[0-9]{2,4}(\/|-)[0-9]{2,4}(\/|-)[0-9]{2,4}/", $data)) {
+				
+				if ($data) {
+					$data = DateTime::createFromFormat('d/m/Y', $data);
+					$data = $data->format('Y-m-d');
+				}else{
+					//$data = NULL;
+					$data = "0000-00-00";
+				}
+			}					
+		}else{
+			$data = "0000-00-00";
+		}
+	}else{
+		$data = "0000-00-00";
 	}
 }
 

@@ -2520,7 +2520,7 @@
 										<?php } ?>
 										<div class="panel panel-default">
 											<div class="panel-heading">
-												<input type="hidden" name="idApp_OrcaTrata" value="<?php echo $orcatrata['idApp_OrcaTrata']; ?>">
+												<!--<input type="hidden" name="idApp_OrcaTrata" value="<?php echo $orcatrata['idApp_OrcaTrata']; ?>">-->
 												<input type="hidden" name="Tipo_Orca"  id="Tipo_Orca" value="<?php echo $orcatrata['Tipo_Orca']; ?>">
 												<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>">
 												<input type="hidden" name="Hidden_idApp_Cliente" id="Hidden_idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>" />

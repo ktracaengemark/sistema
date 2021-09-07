@@ -154,6 +154,7 @@
 								<?php } ?>
 								<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") {?>
 									<?php if ($editar == 1) { ?>
+										<!--
 										<div class="col-md-4">
 											<label>Todas</label>
 											<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
@@ -161,8 +162,10 @@
 													<span class="glyphicon glyphicon-edit"></span>
 												</button>
 											</a>
-										</div>	
+										</div>
+										-->
 									<?php }elseif($editar == 2){ ?>
+										
 										<div class="col-md-4">
 											<label>Baixa</label>
 											<a href="<?php echo base_url() . $alterar; ?>">
@@ -171,6 +174,7 @@
 												</button>
 											</a>
 										</div>
+										
 									<?php } ?>
 								<?php } ?>	
 							</div>

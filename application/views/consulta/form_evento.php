@@ -263,7 +263,9 @@
 								
 								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left">
 									<div class="row">
-										<input type="hidden" name="idApp_Consulta" value="<?php echo $query['idApp_Consulta']; ?>">
+										<?php if ($metodo > 1) { ?>
+											<input type="hidden" name="idApp_Consulta" value="<?php echo $query['idApp_Consulta']; ?>">
+										<?php } ?>
 										<!--<input type="hidden" name="idApp_Agenda" value="<?php echo $_SESSION['log']['Agenda']; ?>">-->
 										<input type="hidden" name="Evento" value="1">
 										<?php if ($metodo == 2) { ?>

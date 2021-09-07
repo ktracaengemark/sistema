@@ -185,7 +185,14 @@
 									<div class="panel-heading">
 										<div class="row text-left">
 											<div class="col-md-3 " >
-												<label for="<?php echo $titulo; ?>"><?php echo $titulo; ?> Nº <?php echo $orcatrata['idApp_Procedimento']; ?> - Tipo:</label>
+												<label for="<?php echo $titulo; ?>">
+												<?php echo $titulo; ?> Nº 
+												<?php 
+													if ($metodo !=1 && $metodo !=3) {
+															echo $orcatrata['idApp_Procedimento']; 
+													}
+												?> - Tipo:
+												</label>
 												<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" id="<?php echo $titulo; ?>" name="<?php echo $titulo; ?>">
 													<option value="">- Selec. <?php echo $titulo; ?> -</option>	
 													<?php
@@ -538,10 +545,14 @@
 							<div class="form-group">
 								<div class="row">
 									<input type="hidden" name="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>">
-									<input type="hidden" name="idApp_Procedimento" value="<?php echo $orcatrata['idApp_Procedimento']; ?>">
-									<?php if ($metodo > 1) { ?>
-									<!--<input type="hidden" name="idApp_Procedimento" value="<?php echo $procedimento['idApp_Procedimento']; ?>">
-									<input type="hidden" name="idApp_ParcelasRec" value="<?php echo $parcelasrec['idApp_ParcelasRec']; ?>">-->
+									
+									<?php if ($metodo !=1 && $metodo !=3) { ?>
+										
+										<input type="hidden" name="idApp_Procedimento" value="<?php echo $orcatrata['idApp_Procedimento']; ?>">
+										
+										<!--<input type="hidden" name="idApp_Procedimento" value="<?php echo $procedimento['idApp_Procedimento']; ?>">
+										<input type="hidden" name="idApp_ParcelasRec" value="<?php echo $parcelasrec['idApp_ParcelasRec']; ?>">-->
+										
 									<?php } ?>
 									<?php if ($metodo == 2 || $metodo == 4) { ?>
 									

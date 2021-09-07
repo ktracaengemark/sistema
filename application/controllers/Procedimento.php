@@ -460,7 +460,7 @@ class Procedimento extends CI_Controller {
 
 		$data['orcatrata'] = quotes_to_entities($this->input->post(array(
             #### App_Procedimento ####
-            'idApp_Procedimento',
+            //'idApp_Procedimento',
             'idSis_Usuario',
 			'idApp_Cliente',
             'DataProcedimento',
@@ -600,6 +600,10 @@ class Procedimento extends CI_Controller {
         $this->form_validation->set_rules('Compartilhar', 'Quem Fazer', 'required|trim');
 		if($data['orcatrata']['ConcluidoProcedimento'] == "S"){
 			$this->form_validation->set_rules('DataConcluidoProcedimento', 'Concluído em:', 'required|trim|valid_date');
+		}else{
+			$data['orcatrata']['DataConcluidoProcedimento'] = "0000-00-00";
+			//$data['orcatrata']['DataConcluidoProcedimento'] = "00/00/0000";
+			$data['orcatrata']['HoraConcluidoProcedimento'] = "00:00:00";		
 		}
 		
         #run form validation
@@ -610,10 +614,13 @@ class Procedimento extends CI_Controller {
 
             ////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
             #### App_Procedimento ####
+			/*
 			if($data['orcatrata']['ConcluidoProcedimento'] == "N"){
-				$data['orcatrata']['DataConcluidoProcedimento'] = "00/00/0000";
+				$data['orcatrata']['DataConcluidoProcedimento'] = "0000-00-00";
+				//$data['orcatrata']['DataConcluidoProcedimento'] = "00/00/0000";
 				$data['orcatrata']['HoraConcluidoProcedimento'] = "00:00:00";
 			}
+			*/
             $data['orcatrata']['DataProcedimento'] = $this->basico->mascara_data($data['orcatrata']['DataProcedimento'], 'mysql');
 			$data['orcatrata']['DataConcluidoProcedimento'] = $this->basico->mascara_data($data['orcatrata']['DataConcluidoProcedimento'], 'mysql');
 			$data['orcatrata']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
@@ -621,37 +628,46 @@ class Procedimento extends CI_Controller {
             $data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['orcatrata']['TipoProcedimento'] = 3;
             $data['orcatrata']['idApp_Procedimento'] = $this->Procedimento_model->set_orcatrata($data['orcatrata']);
-			
-            #### App_SubProcedimento ####
-            if (isset($data['procedtarefa'])) {
-                $max = count($data['procedtarefa']);
-                for($j=1;$j<=$max;$j++) {
-                    $data['procedtarefa'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-                    $data['procedtarefa'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
-                    $data['procedtarefa'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-                    $data['procedtarefa'][$j]['TipoSubProcedimento'] = 3;
-                    $data['procedtarefa'][$j]['idApp_Procedimento'] = $data['orcatrata']['idApp_Procedimento'];
-                    $data['procedtarefa'][$j]['DataSubProcedimento'] = $this->basico->mascara_data($data['procedtarefa'][$j]['DataSubProcedimento'], 'mysql');
-					$data['procedtarefa'][$j]['DataConcluidoSubProcedimento'] = $this->basico->mascara_data($data['procedtarefa'][$j]['DataConcluidoSubProcedimento'], 'mysql');
-                }
-                $data['procedtarefa']['idApp_SubProcedimento'] = $this->Tarefa_model->set_procedtarefa($data['procedtarefa']);
-            }			
-
-/*
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //*******CORRIGIR -  ALTERAR PARA ENTRAR COM TODAS AS MUDANÇAS NA TABELA DE LOG*****
-            $data['campos'] = array_keys($data['query']);
-            $data['anterior'] = array();
-            //*******CORRIGIR -  ALTERAR PARA ENTRAR COM TODAS AS MUDANÇAS NA TABELA DE LOG*****
-//////////////////////////////////////////////////Dados Basicos/////////////////////////////////////////////////////////////////////////
-*/
-
-            if ($data['idApp_Procedimento'] === FALSE) {
+            
+			if ($data['orcatrata']['idApp_Procedimento'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
                 $this->basico->erro($msg);
                 $this->load->view('procedimento/form_procedcli', $data);
+				
             } else {
+			
+				#### App_SubProcedimento ####
+				if (isset($data['procedtarefa'])) {
+					$max = count($data['procedtarefa']);
+					for($j=1;$j<=$max;$j++) {
+						$data['procedtarefa'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+						$data['procedtarefa'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
+						$data['procedtarefa'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+						$data['procedtarefa'][$j]['TipoSubProcedimento'] = 3;
+						$data['procedtarefa'][$j]['idApp_Procedimento'] = $data['orcatrata']['idApp_Procedimento'];
+						$data['procedtarefa'][$j]['DataSubProcedimento'] = $this->basico->mascara_data($data['procedtarefa'][$j]['DataSubProcedimento'], 'mysql');
+
+						if(!$data['procedtarefa'][$j]['DataConcluidoSubProcedimento']){
+							$data['procedtarefa'][$j]['DataConcluidoSubProcedimento'] = "0000-00-00";
+						}else{
+							$data['procedtarefa'][$j]['DataConcluidoSubProcedimento'] = $this->basico->mascara_data($data['procedtarefa'][$j]['DataConcluidoSubProcedimento'], 'mysql');
+						}
+					
+					}
+					$data['procedtarefa']['idApp_SubProcedimento'] = $this->Tarefa_model->set_procedtarefa($data['procedtarefa']);
+				}			
+
+				/*
+				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+							//*******CORRIGIR -  ALTERAR PARA ENTRAR COM TODAS AS MUDANÇAS NA TABELA DE LOG*****
+							$data['campos'] = array_keys($data['query']);
+							$data['anterior'] = array();
+							//*******CORRIGIR -  ALTERAR PARA ENTRAR COM TODAS AS MUDANÇAS NA TABELA DE LOG*****
+				//////////////////////////////////////////////////Dados Basicos/////////////////////////////////////////////////////////////////////////
+				*/
+
+
 
                 //$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idApp_Procedimento'], FALSE);
                 //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Procedimento', 'CREATE', $data['auditoriaitem']);
@@ -696,6 +712,7 @@ class Procedimento extends CI_Controller {
 
         (!$this->input->post('PTCount')) ? $data['count']['PTCount'] = 0 : $data['count']['PTCount'] = $this->input->post('PTCount');
 		(!$data['orcatrata']['Compartilhar']) ? $data['orcatrata']['Compartilhar'] = $_SESSION['log']['idSis_Usuario'] : FALSE;
+		
 
         $j = 1;
         for ($i = 1; $i <= $data['count']['PTCount']; $i++) {
@@ -854,7 +871,7 @@ class Procedimento extends CI_Controller {
 		if($data['orcatrata']['ConcluidoProcedimento'] == "S"){
 			$this->form_validation->set_rules('DataConcluidoProcedimento', 'Concluído em:', 'required|trim|valid_date');
 		}else{
-			$data['orcatrata']['DataConcluidoProcedimento'] = "00/00/0000";
+			$data['orcatrata']['DataConcluidoProcedimento'] = "0000-00-00";
 		}
 		
         #run form validation
@@ -898,14 +915,27 @@ class Procedimento extends CI_Controller {
 					$data['update']['procedtarefa']['inserir'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
                     $data['update']['procedtarefa']['inserir'][$j]['TipoSubProcedimento'] = 3;
                     $data['update']['procedtarefa']['inserir'][$j]['idApp_Procedimento'] = $data['orcatrata']['idApp_Procedimento'];
-                    $data['update']['procedtarefa']['inserir'][$j]['DataSubProcedimento'] = $this->basico->mascara_data($data['update']['procedtarefa']['inserir'][$j]['DataSubProcedimento'], 'mysql');
-					$data['update']['procedtarefa']['inserir'][$j]['DataConcluidoSubProcedimento'] = $this->basico->mascara_data($data['update']['procedtarefa']['inserir'][$j]['DataConcluidoSubProcedimento'], 'mysql');
-                }
+                    
+					$data['update']['procedtarefa']['inserir'][$j]['DataSubProcedimento'] = $this->basico->mascara_data($data['update']['procedtarefa']['inserir'][$j]['DataSubProcedimento'], 'mysql');
+					
+					if(!$data['update']['procedtarefa']['inserir'][$j]['DataConcluidoSubProcedimento']){
+						$data['update']['procedtarefa']['inserir'][$j]['DataConcluidoSubProcedimento'] = "0000-00-00";
+					}else{
+						$data['update']['procedtarefa']['inserir'][$j]['DataConcluidoSubProcedimento'] = $this->basico->mascara_data($data['update']['procedtarefa']['inserir'][$j]['DataConcluidoSubProcedimento'], 'mysql');
+					}
+                
+				}
 
                 $max = count($data['update']['procedtarefa']['alterar']);
                 for($j=0;$j<$max;$j++) {
-                    $data['update']['procedtarefa']['alterar'][$j]['DataSubProcedimento'] = $this->basico->mascara_data($data['update']['procedtarefa']['alterar'][$j]['DataSubProcedimento'], 'mysql');
-					$data['update']['procedtarefa']['alterar'][$j]['DataConcluidoSubProcedimento'] = $this->basico->mascara_data($data['update']['procedtarefa']['alterar'][$j]['DataConcluidoSubProcedimento'], 'mysql');
+                    
+					$data['update']['procedtarefa']['alterar'][$j]['DataSubProcedimento'] = $this->basico->mascara_data($data['update']['procedtarefa']['alterar'][$j]['DataSubProcedimento'], 'mysql');
+					
+					if(!$data['update']['procedtarefa']['alterar'][$j]['DataConcluidoSubProcedimento']){
+						$data['update']['procedtarefa']['alterar'][$j]['DataConcluidoSubProcedimento'] = "0000-00-00";
+					}else{
+						$data['update']['procedtarefa']['alterar'][$j]['DataConcluidoSubProcedimento'] = $this->basico->mascara_data($data['update']['procedtarefa']['alterar'][$j]['DataConcluidoSubProcedimento'], 'mysql');
+					}
 				}
 
                 if (count($data['update']['procedtarefa']['inserir']))
@@ -1277,7 +1307,7 @@ class Procedimento extends CI_Controller {
 
 		$data['orcatrata'] = quotes_to_entities($this->input->post(array(
             #### App_Procedimento ####
-            'idApp_Procedimento',
+            //'idApp_Procedimento',
             'idSis_Usuario',
             'idApp_Cliente',
             'DataProcedimento',
@@ -1418,11 +1448,13 @@ class Procedimento extends CI_Controller {
         //$this->form_validation->set_rules('Procedimento', 'Procedimento', 'required|trim');
         $this->form_validation->set_rules('Marketing', 'Marketing', 'required|trim');
         $this->form_validation->set_rules('Compartilhar', 'Quem Fazer', 'required|trim');
+
 		if($data['orcatrata']['ConcluidoProcedimento'] == "S"){
 			$this->form_validation->set_rules('DataConcluidoProcedimento', 'Concluído em:', 'required|trim|valid_date');
 		}else{
-			$data['orcatrata']['DataConcluidoProcedimento'] = "00/00/0000";
-		}
+			$data['orcatrata']['DataConcluidoProcedimento'] = "0000-00-00";
+			$data['orcatrata']['HoraConcluidoProcedimento'] = "00:00:00";		
+		}		
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
@@ -1439,37 +1471,44 @@ class Procedimento extends CI_Controller {
             $data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 			$data['orcatrata']['TipoProcedimento'] = 4;
             $data['orcatrata']['idApp_Procedimento'] = $this->Procedimento_model->set_orcatrata($data['orcatrata']);
-			
-            #### App_SubProcedimento ####
-            if (isset($data['procedtarefa'])) {
-                $max = count($data['procedtarefa']);
-                for($j=1;$j<=$max;$j++) {
-                    $data['procedtarefa'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-                    $data['procedtarefa'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
-                    $data['procedtarefa'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-                    $data['procedtarefa'][$j]['TipoSubProcedimento'] = 4;
-                    $data['procedtarefa'][$j]['idApp_Procedimento'] = $data['orcatrata']['idApp_Procedimento'];
-                    $data['procedtarefa'][$j]['DataSubProcedimento'] = $this->basico->mascara_data($data['procedtarefa'][$j]['DataSubProcedimento'], 'mysql');
-					$data['procedtarefa'][$j]['DataConcluidoSubProcedimento'] = $this->basico->mascara_data($data['procedtarefa'][$j]['DataConcluidoSubProcedimento'], 'mysql');
-                }
-                $data['procedtarefa']['idApp_SubProcedimento'] = $this->Tarefa_model->set_procedtarefa($data['procedtarefa']);
-            }			
 
-/*
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //*******CORRIGIR -  ALTERAR PARA ENTRAR COM TODAS AS MUDANÇAS NA TABELA DE LOG*****
-            $data['campos'] = array_keys($data['query']);
-            $data['anterior'] = array();
-            //*******CORRIGIR -  ALTERAR PARA ENTRAR COM TODAS AS MUDANÇAS NA TABELA DE LOG*****
-//////////////////////////////////////////////////Dados Basicos/////////////////////////////////////////////////////////////////////////
-*/
-
-            if ($data['idApp_Procedimento'] === FALSE) {
+            if ($data['orcatrata']['idApp_Procedimento'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
                 $this->basico->erro($msg);
                 $this->load->view('procedimento/form_procedcli', $data);
             } else {
+			
+				#### App_SubProcedimento ####
+				if (isset($data['procedtarefa'])) {
+					$max = count($data['procedtarefa']);
+					for($j=1;$j<=$max;$j++) {
+						$data['procedtarefa'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+						$data['procedtarefa'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
+						$data['procedtarefa'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+						$data['procedtarefa'][$j]['TipoSubProcedimento'] = 4;
+						$data['procedtarefa'][$j]['idApp_Procedimento'] = $data['orcatrata']['idApp_Procedimento'];
+						$data['procedtarefa'][$j]['DataSubProcedimento'] = $this->basico->mascara_data($data['procedtarefa'][$j]['DataSubProcedimento'], 'mysql');
+
+						if(!$data['procedtarefa'][$j]['DataConcluidoSubProcedimento']){
+							$data['procedtarefa'][$j]['DataConcluidoSubProcedimento'] = "0000-00-00";
+						}else{
+							$data['procedtarefa'][$j]['DataConcluidoSubProcedimento'] = $this->basico->mascara_data($data['procedtarefa'][$j]['DataConcluidoSubProcedimento'], 'mysql');
+						}
+						
+					}
+					$data['procedtarefa']['idApp_SubProcedimento'] = $this->Tarefa_model->set_procedtarefa($data['procedtarefa']);
+				}			
+
+				/*
+				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				//*******CORRIGIR -  ALTERAR PARA ENTRAR COM TODAS AS MUDANÇAS NA TABELA DE LOG*****
+				$data['campos'] = array_keys($data['query']);
+				$data['anterior'] = array();
+				//*******CORRIGIR -  ALTERAR PARA ENTRAR COM TODAS AS MUDANÇAS NA TABELA DE LOG*****
+				//////////////////////////////////////////////////Dados Basicos/////////////////////////////////////////////////////////////////////////
+				*/
+
 
                 //$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idApp_Procedimento'], FALSE);
                 //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Procedimento', 'CREATE', $data['auditoriaitem']);
@@ -1670,7 +1709,7 @@ class Procedimento extends CI_Controller {
 		if($data['orcatrata']['ConcluidoProcedimento'] == "S"){
 			$this->form_validation->set_rules('DataConcluidoProcedimento', 'Concluído em:', 'required|trim|valid_date');
 		}else{
-			$data['orcatrata']['DataConcluidoProcedimento'] = "00/00/0000";
+			$data['orcatrata']['DataConcluidoProcedimento'] = "0000-00-00";
 		}
 
         #run form validation
@@ -1715,13 +1754,24 @@ class Procedimento extends CI_Controller {
 					$data['update']['procedtarefa']['inserir'][$j]['TipoSubProcedimento'] = 4;
                     $data['update']['procedtarefa']['inserir'][$j]['idApp_Procedimento'] = $data['orcatrata']['idApp_Procedimento'];
                     $data['update']['procedtarefa']['inserir'][$j]['DataSubProcedimento'] = $this->basico->mascara_data($data['update']['procedtarefa']['inserir'][$j]['DataSubProcedimento'], 'mysql');
-					$data['update']['procedtarefa']['inserir'][$j]['DataConcluidoSubProcedimento'] = $this->basico->mascara_data($data['update']['procedtarefa']['inserir'][$j]['DataConcluidoSubProcedimento'], 'mysql');
+
+					if(!$data['update']['procedtarefa']['inserir'][$j]['DataConcluidoSubProcedimento']){
+						$data['update']['procedtarefa']['inserir'][$j]['DataConcluidoSubProcedimento'] = "0000-00-00";
+					}else{
+						$data['update']['procedtarefa']['inserir'][$j]['DataConcluidoSubProcedimento'] = $this->basico->mascara_data($data['update']['procedtarefa']['inserir'][$j]['DataConcluidoSubProcedimento'], 'mysql');
+					}
+
                 }
 
                 $max = count($data['update']['procedtarefa']['alterar']);
                 for($j=0;$j<$max;$j++) {
                     $data['update']['procedtarefa']['alterar'][$j]['DataSubProcedimento'] = $this->basico->mascara_data($data['update']['procedtarefa']['alterar'][$j]['DataSubProcedimento'], 'mysql');
-					$data['update']['procedtarefa']['alterar'][$j]['DataConcluidoSubProcedimento'] = $this->basico->mascara_data($data['update']['procedtarefa']['alterar'][$j]['DataConcluidoSubProcedimento'], 'mysql');
+										
+					if(!$data['update']['procedtarefa']['alterar'][$j]['DataConcluidoSubProcedimento']){
+						$data['update']['procedtarefa']['alterar'][$j]['DataConcluidoSubProcedimento'] = "0000-00-00";
+					}else{
+						$data['update']['procedtarefa']['alterar'][$j]['DataConcluidoSubProcedimento'] = $this->basico->mascara_data($data['update']['procedtarefa']['alterar'][$j]['DataConcluidoSubProcedimento'], 'mysql');
+					}
                 }
 
                 if (count($data['update']['procedtarefa']['inserir']))

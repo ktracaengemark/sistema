@@ -24,7 +24,14 @@
 
 				<div class="panel-heading"><strong></strong>
 						<div class="text-left ">											
-							<span class="glyphicon glyphicon-pencil"></span> <?php echo $titulo; ?> : <?php echo $tarefa['idApp_Procedimento'] ?> 
+							<span class="glyphicon glyphicon-pencil"></span> 
+							<?php echo $titulo; ?> : 
+							
+							<?php 
+								if ($metodo > 1) { 
+									echo $tarefa['idApp_Procedimento'];
+								}
+							?> 
 							<!--
 							<a class="btn btn-md btn-success" href="<?php echo base_url() ?>relatorio/tarefa" role="button"> 
 								<span class="glyphicon glyphicon-list"></span> Listar
@@ -471,10 +478,13 @@
 						</div>					
 					</div>
 					-->
+					<?php if ($metodo > 1) { ?>
+						<input type="hidden" name="idApp_Procedimento" value="<?php echo $tarefa['idApp_Procedimento']; ?>">
+					<?php } ?>
 					<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) || ($_SESSION['log']['idSis_Empresa'] == 5))  { ?>
 					<div class="row">
 						<!--<input type="hidden" name="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>">-->
-						<input type="hidden" name="idApp_Procedimento" value="<?php echo $tarefa['idApp_Procedimento']; ?>">
+						
 						<?php if ($metodo > 1) { ?>
 						<!--<input type="hidden" name="idApp_SubProcedimento" value="<?php echo $procedtarefa['idApp_SubProcedimento']; ?>">
 						<input type="hidden" name="idApp_ParcelasRec" value="<?php echo $parcelasrec['idApp_ParcelasRec']; ?>">-->

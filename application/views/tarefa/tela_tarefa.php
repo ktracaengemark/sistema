@@ -86,12 +86,13 @@
 							</ul>
 							-->
 						</span>
+						<!--
 						<span class="input-group-btn">
 							<a class="btn btn-md btn-success" href="<?php echo base_url() . 'orcatrata/alterarprocedimento/' . $_SESSION['log']['idSis_Empresa']; ?>">
 								<span class="glyphicon glyphicon-pencil"></span>Editar
 							</a>
 						</span>	
-						
+						-->
 					</div>	
 				</div>
 				

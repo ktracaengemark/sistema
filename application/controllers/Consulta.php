@@ -63,13 +63,13 @@ class Consulta extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'idSis_Usuario',
-			'idApp_Consulta',
+			//'idApp_Consulta',
             'idApp_Agenda',
             'idApp_Cliente',
             'idApp_ClienteDep',
             'idApp_ClientePet',
 			'idApp_OrcaTrata',
-			'idSis_EmpresaFilial',
+			//'idSis_EmpresaFilial',
             'Data2',
 			'Data',
             'HoraInicio',
@@ -77,8 +77,8 @@ class Consulta extends CI_Controller {
             'Paciente',
 			'idTab_Status',
             'idTab_TipoConsulta',
-            'idApp_ContatoCliente',
-            'idApp_Profissional',
+            //'idApp_ContatoCliente',
+            //'idApp_Profissional',
             'Procedimento',
             'Obs',
 			'Intervalo',
@@ -476,7 +476,7 @@ class Consulta extends CI_Controller {
 								'idApp_OrcaTrata' 		=> $data['query']['idApp_OrcaTrata'],
 								//'Evento' 				=> $data['query']['Evento'],
 								'Obs' 					=> $data['query']['Obs'],
-								'idApp_Profissional' 	=> $data['query']['idApp_Profissional'],
+								//'idApp_Profissional' 	=> $data['query']['idApp_Profissional'],
 								'idTab_Status' 			=> $data['query']['idTab_Status'],
 								'Tipo' 					=> $data['query']['Tipo'],
 								'idTab_TipoConsulta' 	=> $data['query']['idTab_TipoConsulta'],
@@ -581,13 +581,13 @@ class Consulta extends CI_Controller {
 
         $data['query'] = quotes_to_entities($this->input->post(array(
             'idSis_Usuario',
-			'idApp_Consulta',
+			//'idApp_Consulta',
             'idApp_Agenda',
             'idApp_Cliente',
             'idApp_ClienteDep',
             'idApp_ClientePet',
             'idApp_OrcaTrata',
-			'idSis_EmpresaFilial',
+			//'idSis_EmpresaFilial',
             'Data2',
 			'Data',
             'HoraInicio',
@@ -595,8 +595,8 @@ class Consulta extends CI_Controller {
             'Paciente',
 			'idTab_Status',
             'idTab_TipoConsulta',
-            'idApp_ContatoCliente',
-            'idApp_Profissional',
+            //'idApp_ContatoCliente',
+            //'idApp_Profissional',
             'Procedimento',
             'Obs',
 			'Intervalo',
@@ -887,10 +887,10 @@ class Consulta extends CI_Controller {
 		$this->form_validation->set_rules('idApp_Agenda', 'Profissional', 'required|trim');
 		#$this->form_validation->set_rules('idSis_EmpresaFilial', 'Unidade', 'required|trim');
 		
-/*
+		/*
         if ($data['query']['Paciente'] == 'D')
             $this->form_validation->set_rules('idApp_ContatoCliente', 'ContatoCliente', 'required|trim');
-*/
+		*/
         #$data['resumo'] = $this->Cliente_model->get_cliente($data['query']['idApp_Cliente']);
 		#$data['resumo'] = $this->Clienteusuario_model->get_clienteusuario($data['query']['idApp_Cliente']);
 		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');		
@@ -1065,7 +1065,7 @@ class Consulta extends CI_Controller {
 								'idApp_OrcaTrata' 		=> $data['query']['idApp_OrcaTrata'],
 								//'Evento' 				=> $data['query']['Evento'],
 								'Obs' 					=> $data['query']['Obs'],
-								'idApp_Profissional' 	=> $data['query']['idApp_Profissional'],
+								//'idApp_Profissional' 	=> $data['query']['idApp_Profissional'],
 								'idTab_Status' 			=> $data['query']['idTab_Status'],
 								'Tipo' 					=> $data['query']['Tipo'],
 								'idTab_TipoConsulta' 	=> $data['query']['idTab_TipoConsulta'],
@@ -1164,7 +1164,7 @@ class Consulta extends CI_Controller {
             'idApp_Cliente',
             'idApp_ClienteDep',
             'idApp_ClientePet',
-			'idSis_EmpresaFilial',
+			//'idSis_EmpresaFilial',
             'Data2',
 			'Data',
             'HoraInicio',
@@ -1172,8 +1172,8 @@ class Consulta extends CI_Controller {
             'Paciente',
 			'idTab_Status',
             'idTab_TipoConsulta',
-            'idApp_ContatoCliente',
-            'idApp_Profissional',
+            //'idApp_ContatoCliente',
+            //'idApp_Profissional',
             'Procedimento',
             'Obs',
 			'Intervalo',
@@ -1491,7 +1491,7 @@ class Consulta extends CI_Controller {
 								'idApp_ClientePet' 		=> $data['query']['idApp_ClientePet'],
 								//'Evento' 				=> $data['query']['Evento'],
 								'Obs' 					=> $data['query']['Obs'],
-								'idApp_Profissional' 	=> $data['query']['idApp_Profissional'],
+								//'idApp_Profissional' 	=> $data['query']['idApp_Profissional'],
 								'idTab_Status' 			=> $data['query']['idTab_Status'],
 								'Tipo' 					=> $data['query']['Tipo'],
 								'idTab_TipoConsulta' 	=> $data['query']['idTab_TipoConsulta'],
@@ -1544,7 +1544,7 @@ class Consulta extends CI_Controller {
 			'idTab_Status',
             'idTab_TipoConsulta',
             'idApp_ContatoCliente',
-            'idApp_Profissional',
+            //'idApp_Profissional',
             'Procedimento',
             'Obs',
                 ), TRUE));
@@ -1704,8 +1704,8 @@ class Consulta extends CI_Controller {
             'Paciente',
 			'idTab_Status',
             'idTab_TipoConsulta',
-            'idApp_ContatoCliente',
-            'idApp_Profissional',
+            //'idApp_ContatoCliente',
+            //'idApp_Profissional',
             'Procedimento',
             'Obs',
                 ), TRUE));
@@ -1882,8 +1882,8 @@ class Consulta extends CI_Controller {
             'HoraFim',
             'idTab_Status',
             'Paciente',
-            'idApp_ContatoCliente',
-            'idApp_Profissional',
+            //'idApp_ContatoCliente',
+            //'idApp_Profissional',
             'Procedimento',
             'Obs',
 			'idTab_TipoConsulta',
@@ -2081,8 +2081,10 @@ class Consulta extends CI_Controller {
 		$this->form_validation->set_rules('idApp_Cliente', 'Cliente', 'required|trim');
 		$this->form_validation->set_rules('idApp_Agenda', 'Profissional', 'required|trim');
 		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');	
-        if ($data['query']['Paciente'] == 'D')
+        /*
+		if ($data['query']['Paciente'] == 'D')
             $this->form_validation->set_rules('idApp_ContatoCliente', 'ContatoCliente', 'required|trim');
+		*/
 		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');
 		$this->form_validation->set_rules('Quais', 'Quais Alterar', 'required|trim');	
 		
@@ -2294,7 +2296,7 @@ class Consulta extends CI_Controller {
 						$data['repeticao'][$j]['idApp_ClienteDep'] 		= $data['query']['idApp_ClienteDep'];
 						$data['repeticao'][$j]['idApp_ClientePet'] 		= $data['query']['idApp_ClientePet'];
 						$data['repeticao'][$j]['Obs'] 					= $data['query']['Obs'];
-						$data['repeticao'][$j]['idApp_Profissional'] 	= $data['query']['idApp_Profissional'];
+						//$data['repeticao'][$j]['idApp_Profissional'] 	= $data['query']['idApp_Profissional'];
 						$data['repeticao'][$j]['idTab_Status'] 			= $data['query']['idTab_Status'];
 						$data['repeticao'][$j]['idTab_TipoConsulta'] 	= $data['query']['idTab_TipoConsulta'];
 						
@@ -2440,8 +2442,8 @@ class Consulta extends CI_Controller {
             'HoraFim',
             'idTab_Status',
             'Paciente',
-            'idApp_ContatoCliente',
-            'idApp_Profissional',
+            //'idApp_ContatoCliente',
+            //'idApp_Profissional',
             'Procedimento',
             'Obs',
 			'idTab_TipoConsulta',
@@ -2557,8 +2559,10 @@ class Consulta extends CI_Controller {
 		}
 		$this->form_validation->set_rules('idApp_Cliente', 'Cliente', 'required|trim');
 		$this->form_validation->set_rules('idApp_Agenda', 'Profissional', 'required|trim');	
-        if ($data['query']['Paciente'] == 'D')
+        /*
+		if ($data['query']['Paciente'] == 'D')
             $this->form_validation->set_rules('idApp_ContatoCliente', 'ContatoCliente', 'required|trim');
+		*/
 		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');			
 		
         #run form validation
@@ -2655,7 +2659,7 @@ class Consulta extends CI_Controller {
 						$data['repeticao'][$j]['idApp_ClienteDep'] 		= $data['query']['idApp_ClienteDep'];
 						$data['repeticao'][$j]['idApp_ClientePet'] 		= $data['query']['idApp_ClientePet'];
 						$data['repeticao'][$j]['Obs'] 					= $data['query']['Obs'];
-						$data['repeticao'][$j]['idApp_Profissional'] 	= $data['query']['idApp_Profissional'];
+						//$data['repeticao'][$j]['idApp_Profissional'] 	= $data['query']['idApp_Profissional'];
 						$data['repeticao'][$j]['idTab_Status'] 			= $data['query']['idTab_Status'];
 						$data['repeticao'][$j]['idTab_TipoConsulta'] 	= $data['query']['idTab_TipoConsulta'];
 						
@@ -2820,9 +2824,9 @@ class Consulta extends CI_Controller {
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
 			'idSis_Usuario',
-			'idApp_Consulta',
+			//'idApp_Consulta',
 			'idApp_Agenda',
-			'idApp_Cliente',
+			//'idApp_Cliente',
 			#'idSis_EmpresaFilial',
 			'Data',
 			'Data2',
@@ -2830,7 +2834,7 @@ class Consulta extends CI_Controller {
 			'HoraFim',
 			'Evento',
 			'Obs',
-			'idApp_Profissional',
+			//'idApp_Profissional',
 			'idTab_Status',
 			'Intervalo',
 			'Periodo',
@@ -2894,7 +2898,7 @@ class Consulta extends CI_Controller {
 			$this->form_validation->set_rules('DataTermino', 'Termina em:', 'required|trim|valid_date|valid_data_termino[' . $data['cadastrar']['DataMinima'] . ']|valid_data_termino2[' . $data['query']['Data'] . ']');
 		}
 		
-		$data['select']['idApp_Cliente'] = $this->Cliente_model->select_cliente();
+		//$data['select']['idApp_Cliente'] = $this->Cliente_model->select_cliente();
 		#$data['select']['idSis_EmpresaFilial'] = $this->Empresafilial_model->select_empresafilial();
 		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
 		$data['select']['Status'] = $this->Basico_model->select_status();
@@ -3025,10 +3029,10 @@ class Consulta extends CI_Controller {
 								'Recorrencias' 			=> $data['query']['Recorrencias'],
 								'Recorrencia' 			=> ($j + 1) .  '/' . $data['query']['Recorrencias'],
 								'idApp_Agenda' 			=> $data['query']['idApp_Agenda'],
-								'idApp_Cliente' 		=> $data['query']['idApp_Cliente'],
+								//'idApp_Cliente' 		=> $data['query']['idApp_Cliente'],
 								'Evento' 				=> $data['query']['Evento'],
 								'Obs' 					=> $data['query']['Obs'],
-								'idApp_Profissional' 	=> $data['query']['idApp_Profissional'],
+								//'idApp_Profissional' 	=> $data['query']['idApp_Profissional'],
 								'idTab_Status' 			=> $data['query']['idTab_Status'],
 								'Tipo' 					=> $data['query']['Tipo'],
 								'DataInicio' 			=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) .  $ref,strtotime($dataini_cad))) . ' ' . $horaini_cad,
@@ -3080,7 +3084,7 @@ class Consulta extends CI_Controller {
             'HoraFim',
             'Evento',
             'Obs',
-			'idApp_Profissional',
+			//'idApp_Profissional',
 			'idTab_Status',
                 ), TRUE);
 
@@ -3132,7 +3136,7 @@ class Consulta extends CI_Controller {
 		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
 		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
 
-		$data['select']['idApp_Cliente'] = $this->Cliente_model->select_cliente();
+		//$data['select']['idApp_Cliente'] = $this->Cliente_model->select_cliente();
 		#$data['select']['idSis_EmpresaFilial'] = $this->Empresafilial_model->select_empresafilial();
 		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
 		$data['select']['Status'] = $this->Basico_model->select_status();
@@ -3217,7 +3221,7 @@ class Consulta extends CI_Controller {
 						$data['repeticao'][$j]['idApp_Agenda'] 			= $data['query']['idApp_Agenda'];
 						//$data['repeticao'][$j]['idApp_Cliente'] 		= $data['query']['idApp_Cliente'];
 						$data['repeticao'][$j]['Obs'] 					= $data['query']['Obs'];
-						$data['repeticao'][$j]['idApp_Profissional'] 	= $data['query']['idApp_Profissional'];
+						//$data['repeticao'][$j]['idApp_Profissional'] 	= $data['query']['idApp_Profissional'];
 						$data['repeticao'][$j]['idTab_Status'] 			= $data['query']['idTab_Status'];
 						
 						$data['update']['repeticao'][$j]['bd'] 			= $this->Consulta_model->update_consulta($data['repeticao'][$j], $data['repeticao'][$j]['idApp_Consulta']);
@@ -3321,7 +3325,7 @@ class Consulta extends CI_Controller {
                     'HoraFim',
                     'Evento',
                     'Obs',
-					'idApp_Profissional',
+					//'idApp_Profissional',
                         ), TRUE));
 
         if ($this->input->get('start') && $this->input->get('end')) {
@@ -3413,7 +3417,7 @@ class Consulta extends CI_Controller {
             'HoraFim',
             'Evento',
             'Obs',
-			'idApp_Profissional',
+			//'idApp_Profissional',
                 ), TRUE);
 
 

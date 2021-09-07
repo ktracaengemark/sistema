@@ -339,7 +339,7 @@ class Basico {
                     $data = '';
                 }
             } elseif ($opcao == 'mysql') {
-                if ($data) {
+                if ($data && $data != '0000-00-00') {
                     $data = DateTime::createFromFormat('d/m/Y', $data);
                     $data = $data->format('Y-m-d');
                 } else {

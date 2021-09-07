@@ -59,7 +59,7 @@ class Cliente extends CI_Controller {
 		$data['query'] = quotes_to_entities($this->input->post(array(
             'idSis_Empresa',
 			'idSis_Usuario',
-			'idApp_Cliente',
+			//'idApp_Cliente',
             'NomeCliente',
             'DataNascimento',
 			'DataCadastroCliente',
@@ -82,7 +82,7 @@ class Cliente extends CI_Controller {
 			'ComplementoCliente',
 			'CidadeCliente',
             'BairroCliente',
-            'MunicipioCliente',
+            //'MunicipioCliente',
 			'EstadoCliente',
 			'ReferenciaCliente',
             'Obs',
@@ -131,11 +131,11 @@ class Cliente extends CI_Controller {
 		(!$data['query']['DataCadastroCliente']) ? $data['query']['DataCadastroCliente'] = date('d/m/Y', time()) : FALSE;
 		(!$data['query']['ClienteConsultor']) ? $data['query']['ClienteConsultor'] = 'N' : FALSE;
 		(!$data['query']['Ativo']) ? $data['query']['Ativo'] = 'S' : FALSE;
-		
+
 
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
         $data['select']['CadastrarResp'] = $this->Basico_model->select_status_sn();		
-        $data['select']['MunicipioCliente'] = $this->Basico_model->select_municipio();
+        //$data['select']['MunicipioCliente'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Associado'] = $this->Basico_model->select_status_sn();
 		$data['select']['Ativo'] = $this->Basico_model->select_status_sn();
@@ -158,7 +158,7 @@ class Cliente extends CI_Controller {
         $data['metodo'] = 1;
 
         if ($data['query']['Sexo'] || $data['query']['EnderecoCliente'] || $data['query']['BairroCliente'] ||
-			$data['query']['MunicipioCliente'] || $data['query']['Obs'] || $data['query']['Email'] || 
+			$data['query']['Obs'] || $data['query']['Email'] || 
 			$data['query']['RegistroFicha'] || $data['query']['CepCliente'] || $data['query']['CpfCliente'] || 
 			$data['query']['Rg']  || $data['query']['OrgaoExp'] || $data['query']['EstadoCliente']  || $data['query']['DataEmissao'])
             $data['collapse'] = '';
@@ -221,7 +221,12 @@ class Cliente extends CI_Controller {
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('cliente/form_cliente', $data);
         } else {
-		
+			if($data['query']['DataNascimento'] == ''){
+				$data['query']['DataNascimento'] = "0000-00-00";
+			}
+			if($data['query']['DataEmissao'] == ''){
+				$data['query']['DataEmissao'] = "0000-00-00";
+			}
 			if($data['cadastrar']['Responsavel'] == 'S'){
 			
 				$_SESSION['Empresa5'] = $data['empresa5'] = $this->Cliente_model->get_empresa5($data['query']['CelularCliente']);
@@ -799,7 +804,7 @@ class Cliente extends CI_Controller {
 			'ComplementoCliente',
 			'CidadeCliente',
             'BairroCliente',
-            'MunicipioCliente',
+            //'MunicipioCliente',
 			'EstadoCliente',
 			'ReferenciaCliente',
             'Obs',
@@ -851,7 +856,7 @@ class Cliente extends CI_Controller {
 		
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
         $data['select']['CadastrarResp'] = $this->Basico_model->select_status_sn();
-        $data['select']['MunicipioCliente'] = $this->Basico_model->select_municipio();
+        //$data['select']['MunicipioCliente'] = $this->Basico_model->select_municipio();
         $data['select']['Sexo'] = $this->Basico_model->select_sexo();
 		$data['select']['Associado'] = $this->Basico_model->select_status_sn();
 		$data['select']['Ativo'] = $this->Basico_model->select_status_sn();
@@ -876,7 +881,7 @@ class Cliente extends CI_Controller {
         $data['metodo'] = 2;
 
         if ($data['query']['Sexo'] || $data['query']['EnderecoCliente'] || $data['query']['BairroCliente'] ||
-			$data['query']['MunicipioCliente'] || $data['query']['Obs'] || $data['query']['Email'] || 
+			$data['query']['Obs'] || $data['query']['Email'] || 
 			$data['query']['RegistroFicha'] || $data['query']['CepCliente'] || $data['query']['CpfCliente'] || 
 			$data['query']['Rg']  || $data['query']['OrgaoExp'] || $data['query']['EstadoCliente']  || $data['query']['DataEmissao'])
             $data['collapse'] = '';
@@ -939,6 +944,12 @@ class Cliente extends CI_Controller {
             $this->load->view('cliente/form_cliente', $data);
         } else {
 
+			if($data['query']['DataNascimento'] == ''){
+				$data['query']['DataNascimento'] = "0000-00-00";
+			}
+			if($data['query']['DataEmissao'] == ''){
+				$data['query']['DataEmissao'] = "0000-00-00";
+			}
 			$_SESSION['Empresa5'] = $data['empresa5'] = $this->Cliente_model->get_empresa5($data['query']['CelularCliente']);
 			
 			if (!isset($_SESSION['Empresa5'])){

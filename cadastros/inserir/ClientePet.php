@@ -18,7 +18,7 @@ $alergicopet0 = filter_var($dados['AlergicoPet'], FILTER_SANITIZE_STRING);
 $pesopet0 = filter_var($dados['PesoPet'], FILTER_SANITIZE_STRING);
 
 $pesopet1 = str_replace(',', '.', str_replace('.', '', $pesopet0));	
-
+/*
 $datanascimento = $dados['DataNascimentoPet'];
         
 if (preg_match("/[0-9]{2,4}(\/|-)[0-9]{2,4}(\/|-)[0-9]{2,4}/", $datanascimento)) {
@@ -28,6 +28,34 @@ if (preg_match("/[0-9]{2,4}(\/|-)[0-9]{2,4}(\/|-)[0-9]{2,4}/", $datanascimento))
 		$datanascimento = $datanascimento->format('Y-m-d');
 	} else {
 		$datanascimento = NULL;
+	}
+}
+*/
+
+if(empty($dados['DataNascimentoPet'])){
+	$datanascimento = "0000-00-00";
+}else{
+	$datanascimento = $dados['DataNascimentoPet'];
+	
+	if ($datanascimento) {
+		
+		if (preg_match("/^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](1[89][0-9][0-9]|2[0189][0-9][0-9])$/", $datanascimento) && checkdate(substr($datanascimento, 3, 2), substr($datanascimento, 0, 2), substr($datanascimento, 6, 4))){
+			
+			if (preg_match("/[0-9]{2,4}(\/|-)[0-9]{2,4}(\/|-)[0-9]{2,4}/", $datanascimento)) {
+				
+				if ($datanascimento) {
+					$datanascimento = DateTime::createFromFormat('d/m/Y', $datanascimento);
+					$datanascimento = $datanascimento->format('Y-m-d');
+				}else{
+					//$datanascimento = NULL;
+					$datanascimento = "0000-00-00";
+				}
+			}					
+		}else{
+			$ddatanascimentoata = "0000-00-00";
+		}
+	}else{
+		$datanascimento = "0000-00-00";
 	}
 }
 

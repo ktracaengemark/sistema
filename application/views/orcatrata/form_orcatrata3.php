@@ -2395,7 +2395,7 @@
 										<?php } ?>
 										<div class="panel panel-default">
 											<div class="panel-heading">
-												<input type="hidden" name="idApp_OrcaTrata" value="<?php echo $orcatrata['idApp_OrcaTrata']; ?>">
+												<!--<input type="hidden" name="idApp_OrcaTrata" value="<?php echo $orcatrata['idApp_OrcaTrata']; ?>">-->
 												<input type="hidden" name="Tipo_Orca"  id="Tipo_Orca" value="<?php echo $orcatrata['Tipo_Orca']; ?>">
 												<!--<input type="hidden" name="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>">-->
 												<h4 class="mb-3"><b>Pedido</b></h4>
@@ -2537,7 +2537,7 @@
 							</div>
 							<div class="col-md-3">
 								<label for="DataNascimento">Data do Aniversário:</label>
-								<input type="text" class="form-control Date" maxlength="10" name="DataNascimento" placeholder="DD/MM/AAAA">
+								<input type="text" class="form-control Date" maxlength="10" id="DataNascimento" name="DataNascimento" placeholder="DD/MM/AAAA">
 							</div>
 						</div>
 						<div class="row">
