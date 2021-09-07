@@ -452,9 +452,9 @@
 												</div>
 											</div>
 										<?php } ?>
-										
-										<input type="hidden" name="idTab_Produtos" id="idTab_Produtos" value="<?php echo $produtos['idTab_Produtos']; ?>">
-										
+										<?php if ($metodo > 1) { ?>
+											<input type="hidden" name="idTab_Produtos" id="idTab_Produtos" value="<?php echo $produtos['idTab_Produtos']; ?>">
+										<?php } ?>
 										<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) || ($_SESSION['log']['idSis_Empresa'] == 5))  { ?>
 											<div class="row">
 												<div class="col-md-12">

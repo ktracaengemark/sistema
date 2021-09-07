@@ -54,7 +54,7 @@ class Produtos extends CI_Controller {
 
         $data['produtos'] = quotes_to_entities($this->input->post(array(
             #### Tab_Produtos ####
-            'idTab_Produtos',  
+            //'idTab_Produtos',  
             'idTab_Catprod',
         ), TRUE));
 
@@ -121,7 +121,7 @@ class Produtos extends CI_Controller {
             exit ();
             */
 
-            if ($data['idTab_Produtos'] === FALSE) {
+            if ($data['produtos']['idTab_Produtos'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
                 $this->basico->erro($msg);
@@ -1141,23 +1141,75 @@ class Produtos extends CI_Controller {
                     $data['update']['valor']['inserir'][$j]['idTab_Promocao'] = 1;
 					$data['update']['valor']['inserir'][$j]['idTab_Catprod'] = $_SESSION['Produtos']['idTab_Catprod'];
 					$data['update']['valor']['inserir'][$j]['idTab_Produto'] = $_SESSION['Produtos']['idTab_Produto'];
-					$data['update']['valor']['inserir'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ValorProduto']));
-					$data['update']['valor']['inserir'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ComissaoVenda']));
-					$data['update']['valor']['inserir'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ComissaoServico']));
-					$data['update']['valor']['inserir'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ComissaoCashBack']));
+					
+					if(empty($data['update']['valor']['inserir'][$j]['ValorProduto'])){
+						$data['update']['valor']['inserir'][$j]['ValorProduto'] = "0.00";
+					}else{
+						$data['update']['valor']['inserir'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ValorProduto']));
+					}
+					if(empty($data['update']['valor']['inserir'][$j]['ComissaoVenda'])){
+						$data['update']['valor']['inserir'][$j]['ComissaoVenda'] = "0.00";
+					}else{
+						$data['update']['valor']['inserir'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ComissaoVenda']));
+					}						
+					if(empty($data['update']['valor']['inserir'][$j]['ComissaoServico'])){
+						$data['update']['valor']['inserir'][$j]['ComissaoServico'] = "0.00";
+					}else{
+						$data['update']['valor']['inserir'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ComissaoServico']));
+					}						
+					if(empty($data['update']['valor']['inserir'][$j]['ComissaoCashBack'])){
+						$data['update']['valor']['inserir'][$j]['ComissaoCashBack'] = "0.00";
+					}else{
+						$data['update']['valor']['inserir'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ComissaoCashBack']));
+					}
+					if(empty($data['update']['valor']['inserir'][$j]['QtdProdutoDesconto'])){
+						$data['update']['valor']['inserir'][$j]['QtdProdutoDesconto'] = "1";
+					}
+					if(empty($data['update']['valor']['inserir'][$j]['QtdProdutoIncremento'])){
+						$data['update']['valor']['inserir'][$j]['QtdProdutoIncremento'] = "1";
+					}
+					if(empty($data['update']['valor']['inserir'][$j]['TempoDeEntrega'])){
+						$data['update']['valor']['inserir'][$j]['TempoDeEntrega'] = "0";
+					}
 				}
 
                 $max = count($data['update']['valor']['alterar']);
                 for($j=0;$j<$max;$j++) {
 					$data['update']['valor']['alterar'][$j]['Item_Promocao'] = 1;
+					$data['update']['valor']['alterar'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['valor']['alterar'][$j]['Convdesc'], 'UTF-8'));
 					$data['update']['valor']['alterar'][$j]['Desconto'] = 1;
                     $data['update']['valor']['alterar'][$j]['idTab_Promocao'] = 1;
 					$data['update']['valor']['alterar'][$j]['idTab_Produto'] = $_SESSION['Produtos']['idTab_Produto'];
-					$data['update']['valor']['alterar'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ValorProduto']));
-					$data['update']['valor']['alterar'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ComissaoVenda']));
-					$data['update']['valor']['alterar'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ComissaoServico']));
-					$data['update']['valor']['alterar'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ComissaoCashBack']));
-					$data['update']['valor']['alterar'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['valor']['alterar'][$j]['Convdesc'], 'UTF-8'));
+
+					if(empty($data['update']['valor']['alterar'][$j]['ValorProduto'])){
+						$data['update']['valor']['alterar'][$j]['ValorProduto'] = "0.00";
+					}else{
+						$data['update']['valor']['alterar'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ValorProduto']));
+					}
+					if(empty($data['update']['valor']['alterar'][$j]['ComissaoVenda'])){
+						$data['update']['valor']['alterar'][$j]['ComissaoVenda'] = "0.00";
+					}else{
+						$data['update']['valor']['alterar'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ComissaoVenda']));
+					}						
+					if(empty($data['update']['valor']['alterar'][$j]['ComissaoServico'])){
+						$data['update']['valor']['alterar'][$j]['ComissaoServico'] = "0.00";
+					}else{
+						$data['update']['valor']['alterar'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ComissaoServico']));
+					}						
+					if(empty($data['update']['valor']['alterar'][$j]['ComissaoCashBack'])){
+						$data['update']['valor']['alterar'][$j]['ComissaoCashBack'] = "0.00";
+					}else{
+						$data['update']['valor']['alterar'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ComissaoCashBack']));
+					}
+					if(empty($data['update']['valor']['alterar'][$j]['QtdProdutoDesconto'])){
+						$data['update']['valor']['alterar'][$j]['QtdProdutoDesconto'] = "1";
+					}
+					if(empty($data['update']['valor']['alterar'][$j]['QtdProdutoIncremento'])){
+						$data['update']['valor']['alterar'][$j]['QtdProdutoIncremento'] = "1";
+					}					
+					if(empty($data['update']['valor']['alterar'][$j]['TempoDeEntrega'])){
+						$data['update']['valor']['alterar'][$j]['TempoDeEntrega'] = "0";
+					}
 				}
 
                 if (count($data['update']['valor']['inserir']))
@@ -1278,11 +1330,43 @@ class Produtos extends CI_Controller {
 			$data['valor']['idTab_Promocao'] = 1;
 			$data['valor']['idTab_Produto'] = $_SESSION['Valor']['idTab_Produto'];
 			$data['valor']['idTab_Catprod'] = $_SESSION['Valor']['idTab_Catprod'];
-			$data['valor']['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ValorProduto']));
-			$data['valor']['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoVenda']));
-			$data['valor']['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoServico']));
-			$data['valor']['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoCashBack']));
-			$data['valor']['Convdesc'] = trim(mb_strtoupper($convdesc1, 'UTF-8'));			
+			$data['valor']['Convdesc'] = trim(mb_strtoupper($convdesc1, 'UTF-8'));	
+
+			if(empty($data['valor']['ValorProduto'])){
+				$data['valor']['ValorProduto'] = "0.00";
+			}else{
+				$data['valor']['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ValorProduto']));			
+			}
+			
+			if(empty($data['valor']['ComissaoVenda'])){
+				$data['valor']['ComissaoVenda'] = "0.00";
+			}else{
+				$data['valor']['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoVenda']));			
+			}			
+			
+			if(empty($data['valor']['ComissaoServico'])){
+				$data['valor']['ComissaoServico'] = "0.00";
+			}else{
+				$data['valor']['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoServico']));			
+			}			
+			
+			if(empty($data['valor']['ComissaoCashBack'])){
+				$data['valor']['ComissaoCashBack'] = "0.00";
+			}else{
+				$data['valor']['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoCashBack']));			
+			}			
+			
+			if(empty($data['valor']['QtdProdutoDesconto'])){
+				$data['valor']['QtdProdutoDesconto'] = "1";
+			}
+						
+			if(empty($data['valor']['QtdProdutoIncremento'])){
+				$data['valor']['QtdProdutoIncremento'] = "1";
+			}
+						
+			if(empty($data['valor']['TempoDeEntrega'])){
+				$data['valor']['TempoDeEntrega'] = "0";
+			}
 			
 			$data['update']['valor']['anterior'] = $this->Produtos_model->get_valor($data['valor']['idTab_Valor']);
             $data['update']['valor']['campos'] = array_keys($data['valor']);

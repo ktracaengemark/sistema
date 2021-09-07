@@ -41,10 +41,10 @@
 												<div class="col-md-1 text-center" >
 													<?php if ($metodo > 1) { ?>
 														<?php 
-															if($metodo == 3) { 
-																$url = '';
-															}elseif($metodo == 2){
+															if($metodo == 2 || $metodo == 3){ 
 																$url = base_url() . 'promocao/alterarlogo/' . $_SESSION['Promocao']['idTab_Promocao'];
+															}else{
+																$url = '';
 															}
 														?>
 														<a class="notclickable" href="<?php echo $url ;?>">
@@ -330,7 +330,9 @@
 													?>
 
 													<?php if ($metodo > 1) { ?>
-													<input type="hidden" name="idTab_Valor<?php echo $i ?>" value="<?php echo $item_promocao[$i]['idTab_Valor']; ?>"/>
+														<?php if (isset($item_promocao[$i]['idTab_Valor'])) { ?>
+															<input type="hidden" name="idTab_Valor<?php echo $i ?>" value="<?php echo $item_promocao[$i]['idTab_Valor']; ?>"/>
+														<?php } ?>
 													<?php } ?>
 
 													<div class="form-group" id="3div<?php echo $i ?>">
