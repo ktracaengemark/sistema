@@ -48,7 +48,7 @@ class Clientedep extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = quotes_to_entities($this->input->post(array(
-            'idApp_ClienteDep',
+            //'idApp_ClienteDep',
             'idApp_Cliente',
             'idSis_Usuario',
             'NomeClienteDep',
@@ -100,12 +100,22 @@ class Clientedep extends CI_Controller {
             $this->load->view('clientedep/form_clientedep', $data);
         } else {
 
-            $data['query']['NomeClienteDep'] = trim(mb_strtoupper($clientedep1, 'ISO-8859-1'));
-            $data['query']['DataNascimentoDep'] = $this->basico->mascara_data($data['query']['DataNascimentoDep'], 'mysql');
-            $data['query']['ObsDep'] = nl2br($data['query']['ObsDep']);
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 			$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+            $data['query']['NomeClienteDep'] = trim(mb_strtoupper($clientedep1, 'ISO-8859-1'));
+            $data['query']['ObsDep'] = nl2br($data['query']['ObsDep']);
+
+			if(empty($data['query']['DataNascimentoDep'])){
+				$data['query']['DataNascimentoDep'] = "0000-00-00";
+			}else{
+				$data['query']['DataNascimentoDep'] = $this->basico->mascara_data($data['query']['DataNascimentoDep'], 'mysql');
+			}
+			
+			if(empty($data['query']['RelacaoDep'])){
+				$data['query']['RelacaoDep'] = "0";
+			}				
+									
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
 
@@ -196,12 +206,20 @@ class Clientedep extends CI_Controller {
             $this->load->view('clientedep/form_clientedep', $data);
         } else {
 
-            $data['query']['NomeClienteDep'] = trim(mb_strtoupper($clientedep1, 'ISO-8859-1'));
-            $data['query']['DataNascimentoDep'] = $this->basico->mascara_data($data['query']['DataNascimentoDep'], 'mysql');
-            $data['query']['ObsDep'] = nl2br($data['query']['ObsDep']);
-            //$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 			$data['query']['idApp_ClienteDep'] = $_SESSION['ClienteDep']['idApp_ClienteDep'];
+            $data['query']['NomeClienteDep'] = trim(mb_strtoupper($clientedep1, 'ISO-8859-1'));
+            $data['query']['ObsDep'] = nl2br($data['query']['ObsDep']);
 
+			if(empty($data['query']['DataNascimentoDep'])){
+				$data['query']['DataNascimentoDep'] = "0000-00-00";
+			}else{
+				$data['query']['DataNascimentoDep'] = $this->basico->mascara_data($data['query']['DataNascimentoDep'], 'mysql');
+			}
+			
+			if(empty($data['query']['RelacaoDep'])){
+				$data['query']['RelacaoDep'] = "0";
+			}				
+			
             $data['anterior'] = $this->Clientedep_model->get_clientedep($data['query']['idApp_ClienteDep']);
             $data['campos'] = array_keys($data['query']);
 

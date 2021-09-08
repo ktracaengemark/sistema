@@ -63,8 +63,20 @@ $caracteres_sem_acento = array(
 
 $clientedep1 = preg_replace("/[^a-zA-Z]/", " ", strtr($clientedep0, $caracteres_sem_acento));
 $clientedep = trim(mb_strtoupper($clientedep1, 'ISO-8859-1'));
-$sexo = trim(mb_strtoupper($sexo0, 'ISO-8859-1'));
 $obsdep = trim(mb_strtoupper($obsdep0, 'ISO-8859-1'));
+	
+if(empty($relacao0)){
+	$relacao = "0";
+}else{
+	$relacao = trim(mb_strtoupper($relacao0, 'ISO-8859-1'));
+}
+	
+if(empty($sexo0)){
+	$sexo = "O";
+}else{
+	$sexo = trim(mb_strtoupper($sexo0, 'ISO-8859-1'));
+}
+	
 
 $usuario 	= $_SESSION['log']['idSis_Usuario'];
 $empresa 	= $_SESSION['log']['idSis_Empresa'];
@@ -91,7 +103,7 @@ $result_clientedep = "INSERT INTO App_ClienteDep (
 													'" .$clientedep. "',
 													'" .$datanascimento. "',
 													'" .$sexo. "',
-													'" .$relacao0. "',
+													'" .$relacao. "',
 													'" .$obsdep. "'
 												)";
 $resultado_clientedep = mysqli_query($conn, $result_clientedep);

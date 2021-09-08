@@ -52,7 +52,7 @@ class Clientepet extends CI_Controller {
         ), TRUE));
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
-            'idApp_ClientePet',
+            //'idApp_ClientePet',
             'idApp_Cliente',
             'idSis_Usuario',
             'NomeClientePet',
@@ -146,19 +146,55 @@ class Clientepet extends CI_Controller {
             $this->load->view('clientepet/form_clientepet', $data);
         } else {
 			
-			$data['query']['PesoPet'] = str_replace(',', '.', str_replace('.', '', $data['query']['PesoPet']));
-            $data['query']['NomeClientePet'] = trim(mb_strtoupper($clientepet1, 'ISO-8859-1'));
-            $data['query']['DataNascimentoPet'] = $this->basico->mascara_data($data['query']['DataNascimentoPet'], 'mysql');
-            $data['query']['ObsPet'] = trim(mb_strtoupper($data['query']['ObsPet'], 'ISO-8859-1'));
-            $data['query']['EspeciePet'] = trim(mb_strtoupper($data['query']['EspeciePet'], 'ISO-8859-1'));
-            $data['query']['RacaPet'] = trim(mb_strtoupper($data['query']['RacaPet'], 'ISO-8859-1'));
-            $data['query']['PeloPet'] = trim(mb_strtoupper($data['query']['PeloPet'], 'ISO-8859-1'));
-            $data['query']['CorPet'] = trim(mb_strtoupper($data['query']['CorPet'], 'ISO-8859-1'));
-            $data['query']['PortePet'] = trim(mb_strtoupper($data['query']['PortePet'], 'ISO-8859-1'));
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 			$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-            $data['campos'] = array_keys($data['query']);
+            $data['query']['NomeClientePet'] = trim(mb_strtoupper($clientepet1, 'ISO-8859-1'));
+            $data['query']['CorPet'] = trim(mb_strtoupper($data['query']['CorPet'], 'ISO-8859-1'));
+            $data['query']['ObsPet'] = trim(mb_strtoupper($data['query']['ObsPet'], 'ISO-8859-1'));
+			
+			if(empty($data['query']['DataNascimentoPet'])){
+				$data['query']['DataNascimentoPet'] = "0000-00-00";
+			}else{
+				$data['query']['DataNascimentoPet'] = $this->basico->mascara_data($data['query']['DataNascimentoPet'], 'mysql');
+			}
+			
+			if(empty($data['query']['PesoPet'])){
+				$data['query']['PesoPet'] = "0.000";
+			}else{
+				$data['query']['PesoPet'] = str_replace(',', '.', str_replace('.', '', $data['query']['PesoPet']));
+			}				
+			
+			if(empty($data['query']['EspeciePet'])){
+				$data['query']['EspeciePet'] = "0";
+			}else{
+				$data['query']['EspeciePet'] = trim(mb_strtoupper($data['query']['EspeciePet'], 'ISO-8859-1'));
+			}				
+			
+			if(empty($data['query']['RacaPet'])){
+				$data['query']['RacaPet'] = "0";
+			}else{
+				$data['query']['RacaPet'] = trim(mb_strtoupper($data['query']['RacaPet'], 'ISO-8859-1'));
+			}				
+			
+			if(empty($data['query']['PeloPet'])){
+				$data['query']['PeloPet'] = "0"; 
+			}else{
+				$data['query']['PeloPet'] = trim(mb_strtoupper($data['query']['PeloPet'], 'ISO-8859-1'));
+			}				
+			
+			if(empty($data['query']['PortePet'])){
+				$data['query']['PortePet'] = "0";
+			}else{
+				$data['query']['PortePet'] = trim(mb_strtoupper($data['query']['PortePet'], 'ISO-8859-1'));
+			}				
+            			
+			if(empty($data['query']['SexoPet'])){
+				$data['query']['SexoPet'] = "O";
+			}
+			
+			
+			$data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
 
             $data['idApp_ClientePet'] = $this->Clientepet_model->set_clientepet($data['query']);
@@ -292,17 +328,57 @@ class Clientepet extends CI_Controller {
             $this->load->view('clientepet/form_clientepet', $data);
         } else {
 
-			$data['query']['PesoPet'] = str_replace(',', '.', str_replace('.', '', $data['query']['PesoPet']));		
+			$data['query']['idApp_ClientePet'] = $_SESSION['ClientePet']['idApp_ClientePet'];
             $data['query']['NomeClientePet'] = trim(mb_strtoupper($clientepet1, 'ISO-8859-1'));
-            $data['query']['DataNascimentoPet'] = $this->basico->mascara_data($data['query']['DataNascimentoPet'], 'mysql');
             $data['query']['ObsPet'] = trim(mb_strtoupper($data['query']['ObsPet'], 'ISO-8859-1'));
+            $data['query']['CorPet'] = trim(mb_strtoupper($data['query']['CorPet'], 'ISO-8859-1'));
+			/*
+            $data['query']['DataNascimentoPet'] = $this->basico->mascara_data($data['query']['DataNascimentoPet'], 'mysql');
+			$data['query']['PesoPet'] = str_replace(',', '.', str_replace('.', '', $data['query']['PesoPet']));		
             $data['query']['EspeciePet'] = trim(mb_strtoupper($data['query']['EspeciePet'], 'ISO-8859-1'));
             $data['query']['RacaPet'] = trim(mb_strtoupper($data['query']['RacaPet'], 'ISO-8859-1'));
             $data['query']['PeloPet'] = trim(mb_strtoupper($data['query']['PeloPet'], 'ISO-8859-1'));
-            $data['query']['CorPet'] = trim(mb_strtoupper($data['query']['CorPet'], 'ISO-8859-1'));
             $data['query']['PortePet'] = trim(mb_strtoupper($data['query']['PortePet'], 'ISO-8859-1'));
-            //$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-			$data['query']['idApp_ClientePet'] = $_SESSION['ClientePet']['idApp_ClientePet'];
+			*/
+			if(empty($data['query']['DataNascimentoPet'])){
+				$data['query']['DataNascimentoPet'] = "0000-00-00";
+			}else{
+				$data['query']['DataNascimentoPet'] = $this->basico->mascara_data($data['query']['DataNascimentoPet'], 'mysql');
+			}
+			
+			if(empty($data['query']['PesoPet'])){
+				$data['query']['PesoPet'] = "0.000";
+			}else{
+				$data['query']['PesoPet'] = str_replace(',', '.', str_replace('.', '', $data['query']['PesoPet']));
+			}				
+			
+			if(empty($data['query']['EspeciePet'])){
+				$data['query']['EspeciePet'] = "0";
+			}else{
+				$data['query']['EspeciePet'] = trim(mb_strtoupper($data['query']['EspeciePet'], 'ISO-8859-1'));
+			}				
+			
+			if(empty($data['query']['RacaPet'])){
+				$data['query']['RacaPet'] = "0";
+			}else{
+				$data['query']['RacaPet'] = trim(mb_strtoupper($data['query']['RacaPet'], 'ISO-8859-1'));
+			}				
+			
+			if(empty($data['query']['PeloPet'])){
+				$data['query']['PeloPet'] = "0"; 
+			}else{
+				$data['query']['PeloPet'] = trim(mb_strtoupper($data['query']['PeloPet'], 'ISO-8859-1'));
+			}				
+			
+			if(empty($data['query']['PortePet'])){
+				$data['query']['PortePet'] = "0";
+			}else{
+				$data['query']['PortePet'] = trim(mb_strtoupper($data['query']['PortePet'], 'ISO-8859-1'));
+			}				
+            			
+			if(empty($data['query']['SexoPet'])){
+				$data['query']['SexoPet'] = "O";
+			}
 
             $data['anterior'] = $this->Clientepet_model->get_clientepet($data['query']['idApp_ClientePet']);
             $data['campos'] = array_keys($data['query']);

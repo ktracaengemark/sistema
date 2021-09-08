@@ -17,7 +17,7 @@ $obspet0 = filter_var($dados['ObsPet'], FILTER_SANITIZE_STRING);
 $alergicopet0 = filter_var($dados['AlergicoPet'], FILTER_SANITIZE_STRING);
 $pesopet0 = filter_var($dados['PesoPet'], FILTER_SANITIZE_STRING);
 
-$pesopet1 = str_replace(',', '.', str_replace('.', '', $pesopet0));	
+//$pesopet1 = str_replace(',', '.', str_replace('.', '', $pesopet0));	
 /*
 $datanascimento = $dados['DataNascimentoPet'];
         
@@ -72,16 +72,41 @@ $caracteres_sem_acento = array(
 
 $clientepet1 = preg_replace("/[^a-zA-Z]/", " ", strtr($clientepet0, $caracteres_sem_acento));
 $clientepet = trim(mb_strtoupper($clientepet1, 'ISO-8859-1'));
-$sexo = trim(mb_strtoupper($sexo0, 'ISO-8859-1'));
-$especiepet = trim(mb_strtoupper($especiepet0, 'ISO-8859-1'));
-$racapet = trim(mb_strtoupper($racapet0, 'ISO-8859-1'));
-$pelopet = trim(mb_strtoupper($pelopet0, 'ISO-8859-1'));
-$corpet = trim(mb_strtoupper($corpet0, 'ISO-8859-1'));
-$portepet = trim(mb_strtoupper($portepet0, 'ISO-8859-1'));
 $obspet = trim(mb_strtoupper($obspet0, 'ISO-8859-1'));
-
+$corpet = trim(mb_strtoupper($corpet0, 'ISO-8859-1'));
 $alergicopet = trim(mb_strtoupper($alergicopet0, 'ISO-8859-1'));
-$pesopet = trim(mb_strtoupper($pesopet1, 'ISO-8859-1'));
+
+if(empty($pesopet0)){
+	$pesopet = "0.000";
+}else{
+	$pesopet1 = str_replace(',', '.', str_replace('.', '', $pesopet0));
+	$pesopet = trim(mb_strtoupper($pesopet1, 'ISO-8859-1'));
+}
+if(empty($especiepet0)){
+	$especiepet = "0";
+}else{
+	$especiepet = trim(mb_strtoupper($especiepet0, 'ISO-8859-1'));
+}	
+if(empty($racapet0)){
+	$racapet = "0";
+}else{
+	$racapet = trim(mb_strtoupper($racapet0, 'ISO-8859-1'));
+}	
+if(empty($pelopet0)){
+	$pelopet = "0";
+}else{
+	$pelopet = trim(mb_strtoupper($pelopet0, 'ISO-8859-1'));
+}	
+if(empty($portepet0)){
+	$portepet = "0";
+}else{
+	$portepet = trim(mb_strtoupper($portepet0, 'ISO-8859-1'));
+}	
+if(empty($sexo0)){
+	$sexo = "O";
+}else{
+	$sexo = trim(mb_strtoupper($sexo0, 'ISO-8859-1'));
+}	
 
 $usuario 	= $_SESSION['log']['idSis_Usuario'];
 $empresa 	= $_SESSION['log']['idSis_Empresa'];
