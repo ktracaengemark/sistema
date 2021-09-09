@@ -1015,6 +1015,8 @@ class Orcatrata extends CI_Controller {
 					
 				}
 				
+				//início do código que será desligado. Não preciso dizer qual produto foi pago o cashback
+				/*
 				if ($data['orcatrata']['Cli_Forn_Orca'] == 'S' && $data['orcatrata']['UsarCashBack'] == 'S' && $data['orcatrata']['idApp_Cliente'] != 0){
 					$data['update']['cashback'] = $this->Orcatrata_model->get_produto_cashback($data['orcatrata']['idApp_Cliente']);
 					if (isset($data['update']['cashback'])){
@@ -1031,6 +1033,9 @@ class Orcatrata extends CI_Controller {
 						}
 					}
 				}
+				*/
+				//fim do código que será desligado
+				
 				/*
 				//echo count($data['servico']);
 				echo '<br>';
@@ -2789,6 +2794,8 @@ class Orcatrata extends CI_Controller {
 					
 				}
 				
+				//início do código que será desligado. Não preciso dizer qual produto foi pago o cashback
+				/*
 				if ($data['orcatrata']['Cli_Forn_Orca'] == 'S' && $data['orcatrata']['UsarCashBack'] == 'S' && $data['orcatrata']['idApp_Cliente'] != 0){
 					$data['update']['cashback'] = $this->Orcatrata_model->get_produto_cashback($data['orcatrata']['idApp_Cliente']);
 					if (isset($data['update']['cashback'])){
@@ -2805,6 +2812,9 @@ class Orcatrata extends CI_Controller {
 						}
 					}
 				}
+				*/
+				//fim do código que será desligado
+				
 				/*
 				//echo count($data['servico']);
 				echo '<br>';
@@ -4161,6 +4171,9 @@ class Orcatrata extends CI_Controller {
 					*/
 					
 				}
+				
+				//início do código que será desligado. Não preciso dizer qual produto foi pago o cashback
+				/*
 				if ($data['orcatrata']['Cli_Forn_Orca'] == 'S' && $data['orcatrata']['UsarCashBack'] == 'S' && $data['orcatrata']['idApp_Cliente'] != 0){
 					$data['update']['cashback'] = $this->Orcatrata_model->get_produto_cashback($data['orcatrata']['idApp_Cliente']);
 					if (isset($data['update']['cashback'])){
@@ -4177,6 +4190,8 @@ class Orcatrata extends CI_Controller {
 						}
 					}
 				}
+				*/
+				//fim do código que será desligado
 				
 				$data['CashBackServicos'] = 0;
 				#### App_Servico ####
