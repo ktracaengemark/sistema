@@ -218,12 +218,11 @@
 														for ($i=1; $i <= $count['PCount']; $i++) {
 														?>
 
-														<?php if ($metodo > 1) { ?>
-														<input type="hidden" name="idApp_Produto<?php echo $i ?>" value="<?php echo $produto[$i]['idApp_Produto']; ?>"/>
+														<?php if (isset($produto[$i]['idApp_Produto'])) { ?>
+															<input type="hidden" name="idApp_Produto<?php echo $i ?>" value="<?php echo $produto[$i]['idApp_Produto']; ?>"/>
+
+															<input type="hidden" name="ProdutoHidden" id="ProdutoHidden<?php echo $i ?>" value="<?php echo $i ?>">
 														<?php } ?>
-
-														<input type="hidden" name="ProdutoHidden" id="ProdutoHidden<?php echo $i ?>" value="<?php echo $i ?>">
-
 														<div class="form-group" id="9div<?php echo $i ?>">
 															<div class="panel panel-warning">
 																<div class="panel-heading">
@@ -423,12 +422,11 @@
 														for ($i=1; $i <= $count['SCount']; $i++) {
 														?>
 
-														<?php if ($metodo > 1) { ?>
-														<input type="hidden" name="idApp_Servico<?php echo $i ?>" value="<?php echo $servico[$i]['idApp_Produto']; ?>"/>
-														<?php } ?>
+														<?php if (isset($servico[$i]['idApp_Produto'])) { ?>
+															<input type="hidden" name="idApp_Servico<?php echo $i ?>" value="<?php echo $servico[$i]['idApp_Produto']; ?>"/>
 
-														<input type="hidden" name="ServicoHidden" id="ServicoHidden<?php echo $i ?>" value="<?php echo $i ?>">
-														
+															<input type="hidden" name="ServicoHidden" id="ServicoHidden<?php echo $i ?>" value="<?php echo $i ?>">
+														<?php } ?>
 														<div class="form-group" id="10div<?php echo $i ?>">
 															<div class="panel panel-danger">
 																<div class="panel-heading">
@@ -1580,165 +1578,168 @@
 													?>
 
 														<?php if ($metodo > 1) { ?>
-														<input type="hidden" name="idApp_Parcelas<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['idApp_Parcelas']; ?>"/>
+															<?php if (isset($parcelasrec[$i]['idApp_Parcelas'])) { ?>
+																<input type="hidden" name="idApp_Parcelas<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['idApp_Parcelas']; ?>"/>
+															<?php } ?>
 														<?php } ?>
-
-														<div class="form-group" id="21div<?php echo $i ?>">
-															<div class="panel panel-warning">
-																<div class="panel-heading">
-																	<div class="row">
-																		<div class="col-sm-3 col-md-2 col-lg-1">
-																			<label for="Parcela">Prcl.:<?php echo $i ?></label><br>
-																			<input type="text" class="form-control" maxlength="6" 
-																				   name="Parcela<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['Parcela'] ?>">
-																		</div>
-																		<div class="col-sm-3 col-md-3 col-lg-2">
-																			<label for="ValorParcela">Valor:</label><br>
-																			<div class="input-group" id="txtHint">
-																				<span class="input-group-addon" id="basic-addon1">R$</span>
-																				<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" id="ValorParcela<?php echo $i ?>"
-																					   name="ValorParcela<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['ValorParcela'] ?>">
+														
+															<div class="form-group" id="21div<?php echo $i ?>">
+																<div class="panel panel-warning">
+																	<div class="panel-heading">
+																		<div class="row">
+																			<div class="col-sm-3 col-md-2 col-lg-1">
+																				<label for="Parcela">Prcl.:<?php echo $i ?></label><br>
+																				<input type="text" class="form-control" maxlength="6" 
+																					   name="Parcela<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['Parcela'] ?>">
 																			</div>
-																		</div>
-																		<div class="col-sm-3 col-md-3 col-lg-2">
-																			<label for="DataVencimento">Vencimento:</label>
-																			<div class="input-group DatePicker">
-																				<span class="input-group-addon" disabled>
-																					<span class="glyphicon glyphicon-calendar"></span>
-																				</span>
-																				<input type="text" class="form-control Date" id="DataVencimento<?php echo $i ?>" maxlength="10" placeholder="DD/MM/AAAA"
-																					   name="DataVencimento<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['DataVencimento'] ?>">																
-																			</div>
-																		</div>
-																		<div class="col-sm-3 col-md-3 col-lg-2">
-																			<label for="FormaPagamentoParcela<?php echo $i ?>">FormaPagParcela</label>
-																			<?php if ($i == 1) { ?>
-																			<?php } ?>
-																			<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-																					 id="FormaPagamentoParcela<?php echo $i ?>" name="FormaPagamentoParcela<?php echo $i ?>">
-																				<option value="">-- Sel.FormaPag --</option>
-																				<?php
-																				foreach ($select['FormaPagamentoParcela'] as $key => $row) {
-																					if ($parcelasrec[$i]['FormaPagamentoParcela'] == $key) {
-																						echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-																					} else {
-																						echo '<option value="' . $key . '">' . $row . '</option>';
-																					}
-																				}
-																				?>
-																			</select>
-																		</div>
-																		<div class="col-sm-3  col-md-2 col-lg-2">
-																			<label for="Quitado">Parc. Paga?</label><br>
-																			<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
-																				<div class="btn-group" data-toggle="buttons">
-																					<?php
-																					/*
-																					foreach ($select['Quitado'] as $key => $row) {
-																						(!$parcelasrec[$i]['Quitado']) ? $parcelasrec[$i]['Quitado'] = 'N' : FALSE;
-																						if ($parcelasrec[$i]['Quitado'] == $key) {
-																							echo ''
-																							. '<label class="btn btn-warning active" name="radiobutton_Quitado' . $i . '" id="radiobutton_Quitado' . $i .  $key . '">'
-																							. '<input type="radio" name="Quitado' . $i . '" id="radiobuttondinamico" '
-																							. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
-																							. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																							. '</label>'
-																							;
-																						} else {
-																							echo ''
-																							. '<label class="btn btn-default" name="radiobutton_Quitado' . $i . '" id="radiobutton_Quitado' . $i .  $key . '">'
-																							. '<input type="radio" name="Quitado' . $i . '" id="radiobuttondinamico" '
-																							. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
-																							. 'autocomplete="off" value="' . $key . '" >' . $row
-																							. '</label>'
-																							;
-																						}
-																					}
-																					*/
-																					foreach ($select['Quitado'] as $key => $row) {
-																						if (!$parcelasrec[$i]['Quitado'])$parcelasrec[$i]['Quitado'] = 'N';
-																						($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-																						if ($parcelasrec[$i]['Quitado'] == $key) {
-																							echo ''
-																							. '<label class="btn btn-warning active" name="Quitado' . $i . '_' . $hideshow . '">'
-																							. '<input type="radio" name="Quitado' . $i . '" id="' . $hideshow . '" '
-																							. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
-																							. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																							. '</label>'
-																							;
-																						} else {
-																							echo ''
-																							. '<label class="btn btn-default" name="Quitado' . $i . '_' . $hideshow . '">'
-																							. '<input type="radio" name="Quitado' . $i . '" id="' . $hideshow . '" '
-																							. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
-																							. 'autocomplete="off" value="' . $key . '" >' . $row
-																							. '</label>'
-																							;
-																						}
-																					}
-																					?>
+																			<div class="col-sm-3 col-md-3 col-lg-2">
+																				<label for="ValorParcela">Valor:</label><br>
+																				<div class="input-group" id="txtHint">
+																					<span class="input-group-addon" id="basic-addon1">R$</span>
+																					<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" id="ValorParcela<?php echo $i ?>"
+																						   name="ValorParcela<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['ValorParcela'] ?>">
 																				</div>
-																			<?php }else{ ?>
-																				<input type="hidden" name="Quitado<?php echo $i ?>" id="Quitado<?php echo $i ?>"  value="<?php echo $parcelasrec[$i]['Quitado']; ?>"/>
-																				<span><?php if($parcelasrec[$i]['Quitado'] == "S") {
-																								echo 'Sim';
-																							} elseif($parcelasrec[$i]['Quitado'] == "N"){
-																								echo 'Não';
-																							}else{
-																								echo 'Não';
-																							}?>
-																				</span>
-																			<?php } ?>
-																		</div>
-																		<div class="col-sm-3  col-md-3 col-lg-2">
-																			<div id="Quitado<?php echo $i ?>" <?php echo $div['Quitado' . $i]; ?>>
-																				<label for="DataPago">Pagamento</label>
+																			</div>
+																			<div class="col-sm-3 col-md-3 col-lg-2">
+																				<label for="DataVencimento">Vencimento:</label>
 																				<div class="input-group DatePicker">
 																					<span class="input-group-addon" disabled>
 																						<span class="glyphicon glyphicon-calendar"></span>
 																					</span>
-																					<input type="text" class="form-control Date" id="DataPago<?php echo $i ?>" maxlength="10" placeholder="DD/MM/AAAA" 
-																							<?php if ($_SESSION['Usuario']['Bx_Pag'] == "N") echo 'readonly=""' ?>
-																						   name="DataPago<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['DataPago'] ?>">
-																					
+																					<input type="text" class="form-control Date" id="DataVencimento<?php echo $i ?>" maxlength="10" placeholder="DD/MM/AAAA"
+																						   name="DataVencimento<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['DataVencimento'] ?>">																
 																				</div>
 																			</div>
-																		</div>
-																		<!--
-																		<div class="col-md-2">
-																			<label for="idSis_Usuario<?php echo $i ?>">Cobrador:</label>
-																			<?php if ($i == 1) { ?>
-																			<?php } ?>
-																			<select data-placeholder="Selecione uma opção..." class="form-control"
-																					 id="listadinamicac<?php echo $i ?>" name="idSis_Usuario<?php echo $i ?>">
-																				<option value="">-- Sel.Profis. --</option>
-																				<?php
-																				/*
-																				foreach ($select['idSis_Usuario'] as $key => $row) {
-																					(!$parcelasrec['idSis_Usuario']) ? $parcelasrec['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario']: FALSE;
-																					if ($parcelasrec[$i]['idSis_Usuario'] == $key) {
-																						echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-																					} else {
-																						echo '<option value="' . $key . '">' . $row . '</option>';
+																			<div class="col-sm-3 col-md-3 col-lg-2">
+																				<label for="FormaPagamentoParcela<?php echo $i ?>">FormaPagParcela</label>
+																				<?php if ($i == 1) { ?>
+																				<?php } ?>
+																				<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+																						 id="FormaPagamentoParcela<?php echo $i ?>" name="FormaPagamentoParcela<?php echo $i ?>">
+																					<option value="">-- Sel.FormaPag --</option>
+																					<?php
+																					foreach ($select['FormaPagamentoParcela'] as $key => $row) {
+																						if ($parcelasrec[$i]['FormaPagamentoParcela'] == $key) {
+																							echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+																						} else {
+																							echo '<option value="' . $key . '">' . $row . '</option>';
+																						}
 																					}
-																				}
-																				*/
-																				?>
-																			</select>
-																		</div>
-																		-->
-																		<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
-																			<div class="col-sm-1 col-md-1 col-lg-1">
-																				<label><br></label><br>
-																				<button type="button" id="<?php echo $i ?>" class="remove_field21 btn btn-danger">
-																					<span class="glyphicon glyphicon-trash"></span>
-																				</button>
+																					?>
+																				</select>
 																			</div>
-																		<?php } ?>
+																			<div class="col-sm-3  col-md-2 col-lg-2">
+																				<label for="Quitado">Parc. Paga?</label><br>
+																				<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+																					<div class="btn-group" data-toggle="buttons">
+																						<?php
+																						/*
+																						foreach ($select['Quitado'] as $key => $row) {
+																							(!$parcelasrec[$i]['Quitado']) ? $parcelasrec[$i]['Quitado'] = 'N' : FALSE;
+																							if ($parcelasrec[$i]['Quitado'] == $key) {
+																								echo ''
+																								. '<label class="btn btn-warning active" name="radiobutton_Quitado' . $i . '" id="radiobutton_Quitado' . $i .  $key . '">'
+																								. '<input type="radio" name="Quitado' . $i . '" id="radiobuttondinamico" '
+																								. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
+																								. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																								. '</label>'
+																								;
+																							} else {
+																								echo ''
+																								. '<label class="btn btn-default" name="radiobutton_Quitado' . $i . '" id="radiobutton_Quitado' . $i .  $key . '">'
+																								. '<input type="radio" name="Quitado' . $i . '" id="radiobuttondinamico" '
+																								. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
+																								. 'autocomplete="off" value="' . $key . '" >' . $row
+																								. '</label>'
+																								;
+																							}
+																						}
+																						*/
+																						foreach ($select['Quitado'] as $key => $row) {
+																							if (!$parcelasrec[$i]['Quitado'])$parcelasrec[$i]['Quitado'] = 'N';
+																							($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																							if ($parcelasrec[$i]['Quitado'] == $key) {
+																								echo ''
+																								. '<label class="btn btn-warning active" name="Quitado' . $i . '_' . $hideshow . '">'
+																								. '<input type="radio" name="Quitado' . $i . '" id="' . $hideshow . '" '
+																								. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
+																								. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																								. '</label>'
+																								;
+																							} else {
+																								echo ''
+																								. '<label class="btn btn-default" name="Quitado' . $i . '_' . $hideshow . '">'
+																								. '<input type="radio" name="Quitado' . $i . '" id="' . $hideshow . '" '
+																								. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
+																								. 'autocomplete="off" value="' . $key . '" >' . $row
+																								. '</label>'
+																								;
+																							}
+																						}
+																						?>
+																					</div>
+																				<?php }else{ ?>
+																					<input type="hidden" name="Quitado<?php echo $i ?>" id="Quitado<?php echo $i ?>"  value="<?php echo $parcelasrec[$i]['Quitado']; ?>"/>
+																					<span><?php if($parcelasrec[$i]['Quitado'] == "S") {
+																									echo 'Sim';
+																								} elseif($parcelasrec[$i]['Quitado'] == "N"){
+																									echo 'Não';
+																								}else{
+																									echo 'Não';
+																								}?>
+																					</span>
+																				<?php } ?>
+																			</div>
+																			<div class="col-sm-3  col-md-3 col-lg-2">
+																				<div id="Quitado<?php echo $i ?>" <?php echo $div['Quitado' . $i]; ?>>
+																					<label for="DataPago">Pagamento</label>
+																					<div class="input-group DatePicker">
+																						<span class="input-group-addon" disabled>
+																							<span class="glyphicon glyphicon-calendar"></span>
+																						</span>
+																						<input type="text" class="form-control Date" id="DataPago<?php echo $i ?>" maxlength="10" placeholder="DD/MM/AAAA" 
+																								<?php if ($_SESSION['Usuario']['Bx_Pag'] == "N") echo 'readonly=""' ?>
+																							   name="DataPago<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['DataPago'] ?>">
+																						
+																					</div>
+																				</div>
+																			</div>
+																			<!--
+																			<div class="col-md-2">
+																				<label for="idSis_Usuario<?php echo $i ?>">Cobrador:</label>
+																				<?php if ($i == 1) { ?>
+																				<?php } ?>
+																				<select data-placeholder="Selecione uma opção..." class="form-control"
+																						 id="listadinamicac<?php echo $i ?>" name="idSis_Usuario<?php echo $i ?>">
+																					<option value="">-- Sel.Profis. --</option>
+																					<?php
+																					/*
+																					foreach ($select['idSis_Usuario'] as $key => $row) {
+																						(!$parcelasrec['idSis_Usuario']) ? $parcelasrec['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario']: FALSE;
+																						if ($parcelasrec[$i]['idSis_Usuario'] == $key) {
+																							echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+																						} else {
+																							echo '<option value="' . $key . '">' . $row . '</option>';
+																						}
+																					}
+																					*/
+																					?>
+																				</select>
+																			</div>
+																			-->
+																			<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+																				<div class="col-sm-1 col-md-1 col-lg-1">
+																					<label><br></label><br>
+																					<button type="button" id="<?php echo $i ?>" class="remove_field21 btn btn-danger">
+																						<span class="glyphicon glyphicon-trash"></span>
+																					</button>
+																				</div>
+																			<?php } ?>
+																		</div>
 																	</div>
 																</div>
 															</div>
-														</div>
+															
 													<?php
 													}
 													?>
@@ -1783,7 +1784,9 @@
 													?>
 
 													<?php if ($metodo > 1) { ?>
-													<input type="hidden" name="idApp_Procedimento<?php echo $i ?>" value="<?php echo $procedimento[$i]['idApp_Procedimento']; ?>"/>
+														<?php if (isset($procedimento[$i]['idApp_Procedimento'])) { ?>
+															<input type="hidden" name="idApp_Procedimento<?php echo $i ?>" value="<?php echo $procedimento[$i]['idApp_Procedimento']; ?>"/>
+														<?php } ?>
 													<?php } ?>
 
 													<div class="form-group" id="3div<?php echo $i ?>">
