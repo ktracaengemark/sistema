@@ -55,9 +55,9 @@ function exibir_confirmar(){
 	$('.Close').hide();
 }
 
-$('.input-produto').hide();
+$('.input-produto').show();
 $('.input-promocao').hide();
-$('.input-empresa').show();
+$('.input-empresa').hide();
 
 $('#SetProduto').on('click', function () {
 	//alert('Copiando');

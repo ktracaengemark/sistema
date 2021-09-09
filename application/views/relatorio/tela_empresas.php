@@ -55,13 +55,7 @@
 						<div class="row">
 							<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 mb-3 ">	
 								<div class="custom-control custom-radio">
-									<input type="radio" name="SetBusca" class="custom-control-input " id="SetEmpresa" value="EM" checked>
-									<label class="custom-control-label" for="Empresa">Empresas</label>
-								</div>
-							</div>
-							<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 mb-3 ">	
-								<div class="custom-control custom-radio">
-									<input type="radio" name="SetBusca" class="custom-control-input "  id="SetProduto" value="PD"  >
+									<input type="radio" name="SetBusca" class="custom-control-input "  id="SetProduto" value="PD" checked>
 									<label class="custom-control-label" for="Produto">Produtos</label>
 								</div>
 							</div>
@@ -69,6 +63,12 @@
 								<div class="custom-control custom-radio">
 									<input type="radio" name="SetBusca" class="custom-control-input " id="SetPromocao" value="PM">
 									<label class="custom-control-label" for="Promocao">Promoções</label>
+								</div>
+							</div>
+							<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 mb-3 ">	
+								<div class="custom-control custom-radio">
+									<input type="radio" name="SetBusca" class="custom-control-input " id="SetEmpresa" value="EM" >
+									<label class="custom-control-label" for="Empresa">Empresas</label>
 								</div>
 							</div>
 						</div>
