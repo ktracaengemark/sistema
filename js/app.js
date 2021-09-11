@@ -132,7 +132,7 @@ $('#Produto').on('keyup', function () {
 			$(".input_fields_produtos").empty();
             // executo este laço para acessar os itens do objeto javaScript
             for (i = 0; i < data.length; i++) {
-					
+				
 				data[i].ver 		= 'href="../../'+data[i].site+'/produto.php?id='+data[i].id_valor+'" target="_blank"';
 				
 				//console.log( data[i].contarestoque +' - '+ data[i].estoque);	
@@ -10516,7 +10516,7 @@ $('#calendar').fullCalendar({
     defaultView: 'month',
     //contentHeight: 700,
     //height: 'auto',
-    height: 500,
+    //height: 500,
     //handleWindowResize: false,
     //aspectRatio: 2,
 	//showNonCurrentDates: false,

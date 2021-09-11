@@ -15,11 +15,9 @@
 					<a type="button" class="col-md-4 btn btn-md btn-default " href="javascript:window.print()">
 						<span class="glyphicon glyphicon-print"></span>
 					</a>
-					<!--
 					<a type="button" class="col-md-8 btn btn-md btn-warning "  href="<?php echo base_url() . $form_open_path . $_SESSION['log']['idSis_Empresa'];?>">
 						<span class="glyphicon glyphicon-pencil"></span> Baixa
 					</a>
-					-->
 				</div>
 			</div>
 			<div class="btn-paginacao collapse navbar-collapse" id="myNavbar">

@@ -1411,7 +1411,9 @@
 																<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
 																	<label for="FormaPagamento">Forma de Pagamento</label><br>
 																	<?php 
-																		if($orcatrata['FormaPagamento'] == 1) {
+																		if($orcatrata['FormaPagamento'] == 0) {
+																			$FormaPagamento = 'Não Informado';
+																		}elseif($orcatrata['FormaPagamento'] == 1){
 																			$FormaPagamento = 'CARTÃO CRÉDITO';
 																		}elseif($orcatrata['FormaPagamento'] == 2){
 																			$FormaPagamento = 'BOLETO PAGSEGURO';

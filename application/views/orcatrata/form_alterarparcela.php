@@ -81,7 +81,7 @@
 																		<span><?php echo $_SESSION['Parcelasrec'][$i]['Despesa'] ?></span>
 																	</div>
 																	<?php } ?>
-																	<!--<input type="hidden" name="DataOrca<?php echo $i ?>" id="DataOrca<?php echo $i ?>" value="<?php #echo $parcelasrec[$i]['DataOrca']; ?>"/>-->
+																	<input type="hidden" name="FormaPagamentoParcela<?php echo $i ?>" id="FormaPagamentoParcela<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['FormaPagamentoParcela']; ?>"/>
 																	<div class="col-md-2">
 																		<label for="ValorParcela">Valor Parcela / <?php echo $_SESSION['Parcelasrec'][$i]['Tipo'] ?></label><br>
 																		<div class="input-group" id="txtHint">

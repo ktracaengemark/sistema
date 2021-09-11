@@ -451,7 +451,8 @@ class Orcatrata_model extends CI_Model {
 				idApp_OrcaTrata,
 				idApp_Cliente,
 				CanceladoOrca,
-				QuitadoOrca
+				QuitadoOrca,
+				FormaPagamento
 			FROM 
 				App_OrcaTrata
 			WHERE 
@@ -1997,6 +1998,7 @@ class Orcatrata_model extends CI_Model {
 				PR.idApp_OrcaTrata,
 				CONCAT(IFNULL(PR.idApp_OrcaTrata,""), "--", IFNULL(TR.TipoFinanceiro,""), "--", IFNULL(C.idApp_Cliente,""), "--", IFNULL(C.NomeCliente,""), "--", IFNULL(OT.Descricao,"")) AS Receita,
 				CONCAT(IFNULL(PR.idApp_OrcaTrata,""), "--", IFNULL(TR.TipoFinanceiro,""), "--", IFNULL(F.idApp_Fornecedor,""), "--", IFNULL(F.NomeFornecedor,""), "--", IFNULL(OT.Descricao,"")) AS Despesa,
+				PR.FormaPagamentoParcela,
 				PR.ValorParcela,
 				PR.DataVencimento,
 				PR.ValorPago,
