@@ -97,7 +97,7 @@ elseif ($_GET['q'] == 30) {
     $result = mysql_query('
             SELECT
 				AF.idApp_Funcao,
-				CONCAT(IFNULL(TF.Abrev,""), " || ", IFNULL(U.Nome,"")) AS Nome
+				CONCAT(IFNULL(TF.Abrev,""), " || ", IFNULL(U.Nome,""), " ||| ", IFNULL(AF.Comissao_Funcao,"")) AS Nome
             FROM
                 App_Funcao AS AF
 					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = AF.idSis_Usuario
