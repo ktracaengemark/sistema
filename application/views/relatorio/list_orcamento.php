@@ -153,13 +153,13 @@
 						<th class="active"><?php echo $nome ?></th>
 						<th class="active">Tipo</th>
 						<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
-							<th class="active">Prd.SrvR$</th>
-							<th class="active">FreteR$</th>
-							<th class="active">ExtraR$</th>
-							<th class="active">TotalR$</th>
-							<th class="active">DescR$</th>
-							<th class="active">CashR$</th>
-							<th class="active">FinalR$</th>
+							<th class="active">Prd/Srv</th>
+							<th class="active">Frete</th>
+							<th class="active">Extra</th>
+							<th class="active">Total</th>
+							<th class="active">Desc</th>
+							<th class="active">Cash</th>
+							<th class="active">Final</th>
 						<?php } ?>	
 						<th class="active"><?php echo $nomeusuario ?></th>
 						<th class="active">Comb.Ent</th>
