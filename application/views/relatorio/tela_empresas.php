@@ -22,7 +22,7 @@
 
 				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 					<a type="button" class="btn  btn-warning btn-block" data-toggle="modal" data-target="#buscaModal">
-						<img class="" type="button"  width='20' src="../arquivos/imagens/lupa.png" > Pesquisar
+						<img class="" type="button"  width='20' src="../arquivos/imagens/lupa.png" > Produtos & Empresas
 					</a>
 				</div>				
 			</div>
