@@ -4862,6 +4862,7 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['QtdSrvOrca']) ? $data['orcatrata']['QtdSrvOrca'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoProdutos']) ? $data['orcatrata']['PrazoProdutos'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoServicos']) ? $data['orcatrata']['PrazoServicos'] = '0' : FALSE;
+		(!$data['orcatrata']['PrazoCorreios']) ? $data['orcatrata']['PrazoCorreios'] = '0' : FALSE;
 		
         $j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
@@ -6822,6 +6823,7 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['QtdSrvOrca']) ? $data['orcatrata']['QtdSrvOrca'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoProdutos']) ? $data['orcatrata']['PrazoProdutos'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoServicos']) ? $data['orcatrata']['PrazoServicos'] = '0' : FALSE;
+		(!$data['orcatrata']['PrazoCorreios']) ? $data['orcatrata']['PrazoCorreios'] = '0' : FALSE;
 		/*
         $j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
@@ -8477,6 +8479,7 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['QtdSrvOrca']) ? $data['orcatrata']['QtdSrvOrca'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoProdutos']) ? $data['orcatrata']['PrazoProdutos'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoServicos']) ? $data['orcatrata']['PrazoServicos'] = '0' : FALSE;
+		(!$data['orcatrata']['PrazoCorreios']) ? $data['orcatrata']['PrazoCorreios'] = '0' : FALSE;
 
         $j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
@@ -11627,6 +11630,7 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['QtdSrvOrca']) ? $data['orcatrata']['QtdSrvOrca'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoProdutos']) ? $data['orcatrata']['PrazoProdutos'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoServicos']) ? $data['orcatrata']['PrazoServicos'] = '0' : FALSE;
+		(!$data['orcatrata']['PrazoCorreios']) ? $data['orcatrata']['PrazoCorreios'] = '0' : FALSE;
 		/*
         $j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
