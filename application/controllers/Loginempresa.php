@@ -207,27 +207,26 @@ class Loginempresa extends CI_Controller {
 				
 		(!$data['query']['DataCriacao']) ? $data['query']['DataCriacao'] = date('d/m/Y', time()) : FALSE;
 		
-				
 		$data['Ano'] = date('Y', time());
 		$data['Mes'] = date('m', time());
 		$data['Dia'] = date('d', time());
-		
-		if($data['Dia'] <= 15){
-			$data['Diaref'] = "01";
+
+		if($data['Dia'] <= 28){
+			$data['Diaref'] = $data['Dia'];
+			$data['Qtd'] = "1";
 		}else{
-			$data['Diaref'] = "15";
+			$data['Diaref'] = "01";
+			$data['Qtd'] = "2";
 		}
 		
 		$data['DataRef'] = date($data['Ano']. '-'.$data['Mes'].'-'.$data['Diaref']);
-		$data['DataValidade'] = date('d/m/Y', strtotime('+1 month',strtotime($data['DataRef'])));
-			
+		//$data['DataValidade'] = date('d/m/Y', strtotime('+1 month',strtotime($data['DataRef'])));
+		
+		$data['DataValidade'] = date('d/m/Y', strtotime('+'.$data['Qtd']. ' month',strtotime($data['DataRef'])));	
+		
 		//(!$data['query']['DataDeValidade']) ? $data['query']['DataDeValidade'] = date('d/m/Y', strtotime('+1 month')) : FALSE;
 		(!$data['query']['DataDeValidade']) ? $data['query']['DataDeValidade'] = $data['DataValidade'] : FALSE;
-        /*
-		echo "<pre>";
-		print_r($data['query']['DataDeValidade']);
-		echo "</pre>";		
-		*/
+
 		if (isset($data['query']['Site'])) {
 			$data['query']['Site'] = $this->basico->url_amigavel($data['query']['Site']);
 		}
@@ -734,24 +733,23 @@ class Loginempresa extends CI_Controller {
 		$data['Ano'] = date('Y', time());
 		$data['Mes'] = date('m', time());
 		$data['Dia'] = date('d', time());
-		
-		if($data['Dia'] <= 15){
-			$data['Diaref'] = "01";
+
+		if($data['Dia'] <= 28){
+			$data['Diaref'] = $data['Dia'];
+			$data['Qtd'] = "1";
 		}else{
-			$data['Diaref'] = "15";
+			$data['Diaref'] = "01";
+			$data['Qtd'] = "2";
 		}
 		
 		$data['DataRef'] = date($data['Ano']. '-'.$data['Mes'].'-'.$data['Diaref']);
-		$data['DataValidade'] = date('d/m/Y', strtotime('+1 month',strtotime($data['DataRef'])));
-			
+		//$data['DataValidade'] = date('d/m/Y', strtotime('+1 month',strtotime($data['DataRef'])));
+		
+		$data['DataValidade'] = date('d/m/Y', strtotime('+'.$data['Qtd']. ' month',strtotime($data['DataRef'])));	
+		
 		//(!$data['query']['DataDeValidade']) ? $data['query']['DataDeValidade'] = date('d/m/Y', strtotime('+1 month')) : FALSE;
 		(!$data['query']['DataDeValidade']) ? $data['query']['DataDeValidade'] = $data['DataValidade'] : FALSE;
-        /*
-		echo "<pre>";
-		print_r($data['query']['DataDeValidade']);
-		echo "</pre>";		
-		*/		
-		
+
 		if (isset($data['query']['Site'])) {
 			$data['query']['Site'] = $this->basico->url_amigavel($data['query']['Site']);
 		}		
