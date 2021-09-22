@@ -316,7 +316,26 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['ValorDinheiro']) ? $data['orcatrata']['ValorDinheiro'] = '0.00' : FALSE;
 		(!$data['orcatrata']['ValorFrete']) ? $data['orcatrata']['ValorFrete'] = '0.00' : FALSE;
 		(!$data['orcatrata']['PrazoProdServ']) ? $data['orcatrata']['PrazoProdServ'] = '0' : FALSE;
-
+		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
+		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
+		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
+		(!$data['orcatrata']['TipoFrete']) ? $data['orcatrata']['TipoFrete'] = "1" : FALSE;
+		(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
+		(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;		
+		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;       
+		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
+        (!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
+		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
+ 		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
+		
 		$j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
 
@@ -616,27 +635,7 @@ class Orcatrata extends CI_Controller {
         ($data['orcatrata']['AVAP'] == 'P') ?
             $data['div']['AVAP'] = '' : $data['div']['AVAP'] = 'style="display: none;"';
 		*/
-		
-		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
-		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
-		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
-		(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
-		(!$data['orcatrata']['TipoFrete']) ? $data['orcatrata']['TipoFrete'] = "1" : FALSE;
-		(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;		
-		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;       
-		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
-        (!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
-		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
- 		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
- 		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
- 		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
-		
+
 		($data['orcatrata']['TipoFrete'] == '1') ? $data['div']['TipoFrete'] = 'style="display: none;"' : $data['div']['TipoFrete'] = '';
 		
 		$data['radio'] = array(
@@ -2110,7 +2109,26 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['ValorDinheiro']) ? $data['orcatrata']['ValorDinheiro'] = '0.00' : FALSE;
 		(!$data['orcatrata']['ValorFrete']) ? $data['orcatrata']['ValorFrete'] = '0.00' : FALSE;
 		(!$data['orcatrata']['PrazoProdServ']) ? $data['orcatrata']['PrazoProdServ'] = '0' : FALSE;
-
+		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
+		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
+		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
+		(!$data['orcatrata']['TipoFrete']) ? $data['orcatrata']['TipoFrete'] = "1" : FALSE;
+		(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
+		(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;		
+		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;       
+		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
+        (!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
+		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
+		
 		$j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
 
@@ -2434,27 +2452,7 @@ class Orcatrata extends CI_Controller {
         ($data['orcatrata']['AVAP'] == 'P') ?
             $data['div']['AVAP'] = '' : $data['div']['AVAP'] = 'style="display: none;"';
 		*/
-		
-		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
-		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
-		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
-		(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
-		(!$data['orcatrata']['TipoFrete']) ? $data['orcatrata']['TipoFrete'] = "1" : FALSE;
-		(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;		
-		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;       
-		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
-        (!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
-		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
- 		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
- 		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
- 		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
-		
+
 		($data['orcatrata']['TipoFrete'] == '1') ? $data['div']['TipoFrete'] = 'style="display: none;"' : $data['div']['TipoFrete'] = '';
 		
 		$data['radio'] = array(
@@ -3475,6 +3473,21 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['PrazoCorreios']) ? $data['orcatrata']['PrazoCorreios'] = '0' : FALSE;
 		(!$data['orcatrata']['ValorDinheiro']) ? $data['orcatrata']['ValorDinheiro'] = '0.00' : FALSE;
 		(!$data['orcatrata']['PrazoProdServ']) ? $data['orcatrata']['PrazoProdServ'] = '0' : FALSE;
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'S' : FALSE;
+			(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'S' : FALSE;			
+		}else{
+			(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
+			(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;		
+		}
+		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
 		
 		/*
 		$j = 1;
@@ -3803,20 +3816,6 @@ class Orcatrata extends CI_Controller {
         else
             $data['visivel'] = 'style="display: none;"';
 		
-		//(!$data['orcatrata']['AVAP']) ? $data['orcatrata']['AVAP'] = 'V' : FALSE;
-		(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
-		//(!$data['orcatrata']['QtdParcelasOrca']) ? $data['orcatrata']['QtdParcelasOrca'] = "1" : FALSE;
-		//(!$data['orcatrata']['TipoFrete']) ? $data['orcatrata']['TipoFrete'] = "1" : FALSE;
-		//(!$data['orcatrata']['Modalidade']) ? $data['orcatrata']['Modalidade'] = 'P' : FALSE;
-		(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
 
 		($data['orcatrata']['TipoFrete'] == '1') ? $data['div']['TipoFrete'] = 'style="display: none;"' : $data['div']['TipoFrete'] = '';
 		
@@ -4863,7 +4862,28 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['PrazoProdutos']) ? $data['orcatrata']['PrazoProdutos'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoServicos']) ? $data['orcatrata']['PrazoServicos'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoCorreios']) ? $data['orcatrata']['PrazoCorreios'] = '0' : FALSE;
-		
+		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
+		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
+		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
+		(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
+		(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['Modalidade']) ? $data['orcatrata']['Modalidade'] = 'P' : FALSE;
+ 		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
+		(!$data['orcatrata']['TipoFrete']) ? $data['orcatrata']['TipoFrete'] = "1" : FALSE;	
+		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;	
+ 		
+		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE; 
+		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
+				
         $j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
 
@@ -5433,28 +5453,7 @@ class Orcatrata extends CI_Controller {
         ($data['orcatrata']['AVAP'] == 'P') ?
             $data['div']['AVAP'] = '' : $data['div']['AVAP'] = 'style="display: none;"';
 		*/
-		
-		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
-		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
-		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
-		(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
-		(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['Modalidade']) ? $data['orcatrata']['Modalidade'] = 'P' : FALSE;
- 		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
-		(!$data['orcatrata']['TipoFrete']) ? $data['orcatrata']['TipoFrete'] = "1" : FALSE;	
-		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;	
- 		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE; 
-		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
- 		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
- 		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
-		
+
 		($data['orcatrata']['TipoFrete'] == '1') ? $data['div']['TipoFrete'] = 'style="display: none;"' : $data['div']['TipoFrete'] = '';
 		
 		$data['radio'] = array(
@@ -6824,6 +6823,32 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['PrazoProdutos']) ? $data['orcatrata']['PrazoProdutos'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoServicos']) ? $data['orcatrata']['PrazoServicos'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoCorreios']) ? $data['orcatrata']['PrazoCorreios'] = '0' : FALSE;
+		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
+		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
+		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'S' : FALSE;
+			(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'S' : FALSE;			
+		}else{
+			(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
+			(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;		
+		}
+		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['Modalidade']) ? $data['orcatrata']['Modalidade'] = 'P' : FALSE;
+ 		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
+		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;
+		
+		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
+		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
+				
 		/*
         $j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
@@ -7262,29 +7287,7 @@ class Orcatrata extends CI_Controller {
             $data['visivel'] = '';
         else
             $data['visivel'] = 'style="display: none;"';		
-		
-		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
-		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
-		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
-		//(!$data['orcatrata']['TipoFrete']) ? $data['orcatrata']['TipoFrete'] = "1" : FALSE;
-		//(!$data['orcatrata']['AVAP']) ? $data['orcatrata']['AVAP'] = 'V' : FALSE;
-		(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
-		(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['Modalidade']) ? $data['orcatrata']['Modalidade'] = 'P' : FALSE;
- 		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
-		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;
-		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
-		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
- 		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
- 		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
-		
+
         ($data['orcatrata']['TipoFrete'] == '1') ? $data['div']['TipoFrete'] = 'style="display: none;"' : $data['div']['TipoFrete'] = '';
 		
 		$data['radio'] = array(
@@ -8480,7 +8483,28 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['PrazoProdutos']) ? $data['orcatrata']['PrazoProdutos'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoServicos']) ? $data['orcatrata']['PrazoServicos'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoCorreios']) ? $data['orcatrata']['PrazoCorreios'] = '0' : FALSE;
-
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'S' : FALSE;
+			(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'S' : FALSE;			
+		}else{
+			(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
+			(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;		
+		}
+		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
+		//(!$data['orcatrata']['Modalidade']) ? $data['orcatrata']['Modalidade'] = 'P' : FALSE;	
+ 		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
+		
+		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;       
+		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
+		
         $j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
 
@@ -8983,24 +9007,6 @@ class Orcatrata extends CI_Controller {
         else
             $data['visivel'] = 'style="display: none;"';		
 
-		//(!$data['orcatrata']['AVAP']) ? $data['orcatrata']['AVAP'] = 'V' : FALSE;
-		(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
-		(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
-		//(!$data['orcatrata']['Modalidade']) ? $data['orcatrata']['Modalidade'] = 'P' : FALSE;		
-		//(!$data['orcatrata']['TipoFrete']) ? $data['orcatrata']['TipoFrete'] = "1" : FALSE;
- 		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
-		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;       
-		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
- 		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
- 		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
-		
         ($data['orcatrata']['TipoFrete'] == '1') ? $data['div']['TipoFrete'] = 'style="display: none;"' : $data['div']['TipoFrete'] = '';
 		
 		$data['radio'] = array(
@@ -10335,6 +10341,32 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['PrazoCorreios']) ? $data['orcatrata']['PrazoCorreios'] = '0' : FALSE;
 		(!$data['orcatrata']['ValorDinheiro']) ? $data['orcatrata']['ValorDinheiro'] = '0.00' : FALSE;
 		(!$data['orcatrata']['PrazoProdServ']) ? $data['orcatrata']['PrazoProdServ'] = '0' : FALSE;
+		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
+		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
+		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
+		(!$data['orcatrata']['Modalidade']) ? $data['orcatrata']['Modalidade'] = 'P' : FALSE;
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'S' : FALSE;
+			(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'S' : FALSE;			
+		}else{
+			(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
+			(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;		
+		}
+		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
+		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;
+ 		
+		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
+		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
+		
 		/*
 		$j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
@@ -10646,29 +10678,6 @@ class Orcatrata extends CI_Controller {
             $data['visivel'] = '';
         else
             $data['visivel'] = 'style="display: none;"';
-		
-		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
-		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
-		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
-		#(!$data['orcatrata']['AVAP']) ? $data['orcatrata']['AVAP'] = 'V' : FALSE;
-		(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
-		//(!$data['orcatrata']['QtdParcelasOrca']) ? $data['orcatrata']['QtdParcelasOrca'] = "1" : FALSE;
-		//(!$data['orcatrata']['TipoFrete']) ? $data['orcatrata']['TipoFrete'] = "1" : FALSE;
-		(!$data['orcatrata']['Modalidade']) ? $data['orcatrata']['Modalidade'] = 'P' : FALSE;
-		(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
-		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;
- 		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
-		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
- 		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
- 		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
 
 		($data['orcatrata']['TipoFrete'] == '1') ? $data['div']['TipoFrete'] = 'style="display: none;"' : $data['div']['TipoFrete'] = '';
 		
@@ -11631,6 +11640,32 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['PrazoProdutos']) ? $data['orcatrata']['PrazoProdutos'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoServicos']) ? $data['orcatrata']['PrazoServicos'] = '0' : FALSE;
 		(!$data['orcatrata']['PrazoCorreios']) ? $data['orcatrata']['PrazoCorreios'] = '0' : FALSE;
+		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
+		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
+		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'S' : FALSE;
+			(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'S' : FALSE;			
+		}else{
+			(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
+			(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;		
+		}
+		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
+		(!$data['orcatrata']['Modalidade']) ? $data['orcatrata']['Modalidade'] = 'P' : FALSE;		
+ 		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
+		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;
+		
+		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
+		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
+				
 		/*
         $j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
@@ -12068,29 +12103,7 @@ class Orcatrata extends CI_Controller {
         else
             $data['visivel'] = 'style="display: none;"';		
 		
-		
-		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
-		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
-		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
-		//(!$data['orcatrata']['TipoFrete']) ? $data['orcatrata']['TipoFrete'] = "1" : FALSE;
-		//(!$data['orcatrata']['AVAP']) ? $data['orcatrata']['AVAP'] = 'V' : FALSE;
-		(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
-		(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['FinalizadoOrca']) ? $data['orcatrata']['FinalizadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['CanceladoOrca']) ? $data['orcatrata']['CanceladoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['ConcluidoOrca']) ? $data['orcatrata']['ConcluidoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['ProntoOrca']) ? $data['orcatrata']['ProntoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['DevolvidoOrca']) ? $data['orcatrata']['DevolvidoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['QuitadoOrca']) ? $data['orcatrata']['QuitadoOrca'] = 'N' : FALSE;
-		(!$data['orcatrata']['Modalidade']) ? $data['orcatrata']['Modalidade'] = 'P' : FALSE;		
- 		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
-		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
-		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;
-		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
- 		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
- 		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
-		
+
         ($data['orcatrata']['TipoFrete'] == '1') ? $data['div']['TipoFrete'] = 'style="display: none;"' : $data['div']['TipoFrete'] = '';
 		
 		$data['radio'] = array(

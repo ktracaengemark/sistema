@@ -2180,7 +2180,7 @@
 																				<div class="btn-larg-right btn-group" data-toggle="buttons">
 																					<?php
 																					foreach ($select['CombinadoFrete'] as $key => $row) {
-																						if (!$orcatrata['CombinadoFrete'])$orcatrata['CombinadoFrete'] = 'S';
+																						//if (!$orcatrata['CombinadoFrete'])$orcatrata['CombinadoFrete'] = 'S';
 																						($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
 																						if ($orcatrata['CombinadoFrete'] == $key) {
 																							echo ''
@@ -2208,7 +2208,7 @@
 																				<div class="btn-larg-right btn-group" data-toggle="buttons">
 																					<?php
 																					foreach ($select['AprovadoOrca'] as $key => $row) {
-																						if (!$orcatrata['AprovadoOrca'])$orcatrata['AprovadoOrca'] = 'S';
+																						//if (!$orcatrata['AprovadoOrca'])$orcatrata['AprovadoOrca'] = 'S';
 																						($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
 																						if ($orcatrata['AprovadoOrca'] == $key) {
 																							echo ''
