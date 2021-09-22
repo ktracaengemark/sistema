@@ -730,7 +730,27 @@ class Loginempresa extends CI_Controller {
 		$nomeadmin1 = preg_replace("/[^a-zA-Z]/", " ", strtr($data['query']['NomeAdmin'], $caracteres_sem_acento));		
 		
 		(!$data['query']['DataCriacao']) ? $data['query']['DataCriacao'] = date('d/m/Y', time()) : FALSE;
-		(!$data['query']['DataDeValidade']) ? $data['query']['DataDeValidade'] = date('d/m/Y', strtotime('+1 month')) : FALSE;
+		
+		$data['Ano'] = date('Y', time());
+		$data['Mes'] = date('m', time());
+		$data['Dia'] = date('d', time());
+		
+		if($data['Dia'] <= 15){
+			$data['Diaref'] = "01";
+		}else{
+			$data['Diaref'] = "15";
+		}
+		
+		$data['DataRef'] = date($data['Ano']. '-'.$data['Mes'].'-'.$data['Diaref']);
+		$data['DataValidade'] = date('d/m/Y', strtotime('+1 month',strtotime($data['DataRef'])));
+			
+		//(!$data['query']['DataDeValidade']) ? $data['query']['DataDeValidade'] = date('d/m/Y', strtotime('+1 month')) : FALSE;
+		(!$data['query']['DataDeValidade']) ? $data['query']['DataDeValidade'] = $data['DataValidade'] : FALSE;
+        /*
+		echo "<pre>";
+		print_r($data['query']['DataDeValidade']);
+		echo "</pre>";		
+		*/		
 		
 		if (isset($data['query']['Site'])) {
 			$data['query']['Site'] = $this->basico->url_amigavel($data['query']['Site']);
