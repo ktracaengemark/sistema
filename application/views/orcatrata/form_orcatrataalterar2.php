@@ -859,7 +859,7 @@
 														<div class="row">	
 															<div class="col-sm-4 col-md-4 ">
 																<label class="" for="NomeRec">Nome Recebedor:</label>
-																<input type="text" class="form-control " id="NomeRec" maxlength="100" <?php echo $readonly; ?>
+																<input type="text" class="form-control " id="NomeRec" maxlength="40" <?php echo $readonly; ?>
 																	   name="NomeRec" value="<?php echo $orcatrata['NomeRec']; ?>">
 															</div>
 															<div class="col-sm-4 col-md-4 ">
@@ -869,19 +869,19 @@
 															</div>
 															<div class="col-sm-4 col-md-4 ">
 																<label class="" for="ParentescoRec">Parentesco:</label>
-																<input type="text" class="form-control " id="ParentescoRec" maxlength="100" <?php echo $readonly; ?>
+																<input type="text" class="form-control " id="ParentescoRec" maxlength="40" <?php echo $readonly; ?>
 																	   name="ParentescoRec" value="<?php echo $orcatrata['ParentescoRec']; ?>">
 															</div>
 														</div>	
 														<div class="row">	
 															<div class="col-sm-4 col-md-4 ">
 																<label class="" for="Aux1Entrega">Aux1:</label>
-																<input type="text" class="form-control " id="Aux1Entrega" maxlength="100" <?php echo $readonly; ?>
+																<input type="text" class="form-control " id="Aux1Entrega" maxlength="40" <?php echo $readonly; ?>
 																	   name="Aux1Entrega" value="<?php echo $orcatrata['Aux1Entrega']; ?>">
 															</div>
 															<div class="col-sm-4 col-md-4 ">
 																<label class="" for="Aux2Entrega">Aux2:</label>
-																<input type="text" class="form-control " id="Aux2Entrega" maxlength="100" <?php echo $readonly; ?>
+																<input type="text" class="form-control " id="Aux2Entrega" maxlength="40" <?php echo $readonly; ?>
 																	   name="Aux2Entrega" value="<?php echo $orcatrata['Aux2Entrega']; ?>">
 															</div>
 															<div class="col-sm-4 col-md-4 ">
