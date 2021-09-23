@@ -214,8 +214,14 @@ class Loginempresa extends CI_Controller {
 		if($data['Dia'] <= 28){
 			$data['Diaref'] = $data['Dia'];
 			$data['Qtd'] = "1";
-		}else{
+		}elseif($data['Dia'] == 29){
 			$data['Diaref'] = "01";
+			$data['Qtd'] = "2";
+		}elseif($data['Dia'] == 30){
+			$data['Diaref'] = "02";
+			$data['Qtd'] = "2";
+		}elseif($data['Dia'] == 31){
+			$data['Diaref'] = "03";
 			$data['Qtd'] = "2";
 		}
 		
@@ -733,12 +739,18 @@ class Loginempresa extends CI_Controller {
 		$data['Ano'] = date('Y', time());
 		$data['Mes'] = date('m', time());
 		$data['Dia'] = date('d', time());
-
+		
 		if($data['Dia'] <= 28){
 			$data['Diaref'] = $data['Dia'];
 			$data['Qtd'] = "1";
-		}else{
+		}elseif($data['Dia'] == 29){
 			$data['Diaref'] = "01";
+			$data['Qtd'] = "2";
+		}elseif($data['Dia'] == 30){
+			$data['Diaref'] = "02";
+			$data['Qtd'] = "2";
+		}elseif($data['Dia'] == 31){
+			$data['Diaref'] = "03";
 			$data['Qtd'] = "2";
 		}
 		
