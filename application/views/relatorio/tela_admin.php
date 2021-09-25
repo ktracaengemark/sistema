@@ -590,7 +590,7 @@
 								</div>
 								<div class="row">
 									<div class="form-group col-md-12 text-left">
-										<a type="button" class="btn btn-md btn-default btn-block"  href="<?php echo base_url() ?>../enkontraki" target="_blank"  role="button">
+										<a type="button" class="btn btn-md btn-default btn-block"  href="<?php echo base_url() ?>../enkontraki/login_cliente.php?id_empresa=<?php echo $_SESSION['Empresa']['idSis_Empresa'];?>" target="_blank"  role="button">
 											<span class="glyphicon glyphicon-barcode"></span> Renovar Assinatura
 										</a>
 									</div>	
