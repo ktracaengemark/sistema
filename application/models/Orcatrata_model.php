@@ -847,7 +847,21 @@ class Orcatrata_model extends CI_Model {
 
         return $query;
     }
-	
+
+    public function get_produto_alterar($data) {
+		$query = $this->db->query('
+			SELECT 
+				TAP.idApp_Produto
+			FROM 
+				App_Produto AS TAP
+			WHERE 
+				TAP.idApp_OrcaTrata = ' . $data . ' 
+		');
+        $query = $query->result_array();
+
+        return $query;
+    }	
+		
     public function get_produtodesp_bkp($data) {
 		$query = $this->db->query('SELECT * FROM App_Produto WHERE idTab_TipoRD = "1" AND idApp_OrcaTrata = ' . $data);
         $query = $query->result_array();

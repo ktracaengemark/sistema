@@ -2149,8 +2149,6 @@ class Consulta extends CI_Controller {
 			$horaini_alt 	= $data['query']['HoraInicio'];
 			$horafim_alt 	= $data['query']['HoraFim'];
 
-			
-			
 			/*
 			if($data['cadastrar']['Vincular'] == "N"){
 				$data['query']['OS'] = "0";
@@ -2209,12 +2207,7 @@ class Consulta extends CI_Controller {
 				$data['query']['idApp_OrcaTrata'] = $_SESSION['Consulta']['idApp_OrcaTrata'];
 				$data['query']['OS'] = $_SESSION['Consulta']['OS'];
 			}			
-			
-			
-			
-			
-			
-			
+
 			/*
 			if($_SESSION['Consulta']['idApp_OrcaTrata'] == 0 || $_SESSION['Consulta']['idApp_OrcaTrata'] == ""){
 				
@@ -2268,12 +2261,41 @@ class Consulta extends CI_Controller {
 				$data['orca']['idApp_ClientePet']	= $data['query']['idApp_ClientePet'];
 				$data['orca']['DataEntregaOrca']	= $dataini_alt;
 				$data['orca']['HoraEntregaOrca']	= $horaini_alt;
-				
-				$data['update']['orca']['bd'] 	= $this->Orcatrata_model->update_orcatrata($data['orca'], $data['query']['idApp_OrcaTrata']);
-			}
-			
-			$_SESSION['Repeticao'] = $data['repeticao'] = $this->Consulta_model->get_consulta_posterior($data['query']['idApp_Consulta'], $_SESSION['Consulta']['Repeticao'], $data['alterar']['Quais'], $dataini_alt);
 
+				$data['update']['orca']['bd'] 	= $this->Orcatrata_model->update_orcatrata($data['orca'], $data['query']['idApp_OrcaTrata']);
+
+				#### App_Produto ####
+				$data['update']['produto']['alterar'] = $this->Orcatrata_model->get_produto_alterar($data['query']['idApp_OrcaTrata']);
+				if (isset($data['update']['produto']['alterar'])){
+
+					$max = count($data['update']['produto']['alterar']);
+					for($j=0;$j<$max;$j++) {
+						$data['update']['produto']['alterar'][$j]['DataConcluidoProduto'] = $dataini_alt;
+						$data['update']['produto']['alterar'][$j]['HoraConcluidoProduto'] = $horaini_alt;
+
+						$data['update']['produto']['bd'][$j] = $this->Orcatrata_model->update_produto_id($data['update']['produto']['alterar'][$j], $data['update']['produto']['alterar'][$j]['idApp_Produto']);
+					
+					}
+				}
+			}
+			/*
+			echo '<br>';
+			echo "<pre>";
+			print_r($data['query']['idApp_OrcaTrata']);
+			echo '<br>';
+			print_r($dataini_alt);
+			echo '<br>';
+			//print_r($data['update']['orca']['bd']);
+			echo '<br>';
+			print_r('Contagem = '.$max);
+			echo '<br>';
+			print_r($data['update']['produto']['alterar']);
+			echo '<br>';
+			echo "</pre>";			
+			exit();
+			*/
+			$_SESSION['Repeticao'] = $data['repeticao'] = $this->Consulta_model->get_consulta_posterior($data['query']['idApp_Consulta'], $_SESSION['Consulta']['Repeticao'], $data['alterar']['Quais'], $dataini_alt);
+			
 			if (count($data['repeticao']) > 0) {
 				$data['repeticao'] = array_combine(range(1, count($data['repeticao'])), array_values($data['repeticao']));
                 $max = count($data['repeticao']);
@@ -2302,14 +2324,31 @@ class Consulta extends CI_Controller {
 						
 						$data['update']['repeticao'][$j]['bd'] 			= $this->Consulta_model->update_consulta($data['repeticao'][$j], $data['repeticao'][$j]['idApp_Consulta']);
 						
-						if($data['repeticao'][$j]['idApp_OrcaTrata'] != 0){
+						if($data['repeticao'][$j]['idApp_OrcaTrata'] != 0 && $data['repeticao'][$j]['idApp_OrcaTrata'] != $data['query']['idApp_OrcaTrata']){
 							
 							$data['orca'][$j]['idApp_ClientePet'] 	= $data['query']['idApp_ClientePet'];
 							$data['orca'][$j]['DataEntregaOrca'] 	= $dataatualinicio[$j];
 							$data['orca'][$j]['HoraEntregaOrca'] 	= $horaini_alt;
 							
-							$data['update']['orca']['bd'] 			= $this->Orcatrata_model->update_orcatrata($data['orca'][$j], $data['repeticao'][$j]['idApp_OrcaTrata']);
+							$data['update']['orca']['bd'][$j] 		= $this->Orcatrata_model->update_orcatrata($data['orca'][$j], $data['repeticao'][$j]['idApp_OrcaTrata']);
 
+							#### App_Produto ####
+							$data['update']['produto']['posterior'][$j] = $this->Orcatrata_model->get_produto_alterar($data['repeticao'][$j]['idApp_OrcaTrata']);
+							if (isset($data['update']['produto']['posterior'][$j])){
+								
+								$max_produto = count($data['update']['produto']['posterior'][$j]);
+								
+								for($k=0;$k<$max_produto;$k++) {
+									
+									$data['update']['produto']['posterior'][$j][$k]['DataConcluidoProduto'] = $dataatualinicio[$j];
+									$data['update']['produto']['posterior'][$j][$k]['HoraConcluidoProduto'] = $horaini_alt;
+									
+									$data['update']['produto']['bd']['posterior'][$j][$k] = $this->Orcatrata_model->update_produto_id($data['update']['produto']['posterior'][$j][$k], $data['update']['produto']['posterior'][$j][$k]['idApp_Produto']);
+
+								}
+								
+							}							
+							
 						}
 						
 					}
