@@ -96,7 +96,7 @@
 			//console.log(tempo);
 			
 			// Abre uma mensagem, quando essa janela é selecionada
-			if(exibirPost == 1){
+			if(exibirPost == 1 && id_empresa != 5 && id_empresa != 1){
 				Shadowbox.open({
 					//content:    '<div align="center"><a onclick="Shadowbox.close()" target="_blank" href="../../enkontraki/login_cliente.php?id_empresa="><img src="arquivos/imagens/popup.jpg" width="250" height="220" alt="" border="0" style="margin-top: 30px;"/></a></div>',
 					content:    '<div align="center">\

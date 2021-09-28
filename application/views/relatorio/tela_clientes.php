@@ -8,7 +8,7 @@
 			<div class="panel-heading">
 				<div class="btn-group " role="group" aria-label="...">
 					<div class="row text-left">
-						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-left">
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
 							<label>Filtros</label>
 							<button  class="btn btn-md btn-warning btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
 								<span class="glyphicon glyphicon-filter"></span>
@@ -33,21 +33,56 @@
 							</a>
 						</div>
 						-->
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
 							<label >Cliente:</label>
 							<div class="input-group">
+								<input type="text" autofocus name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php echo $cadastrar['id_Cliente_Auto']; ?>" class="form-control" placeholder="Pesquisar Cliente">
 								<span class="input-group-btn">
 									<button class="btn btn-info btn-md" type="submit">
 										<span class="glyphicon glyphicon-search"></span> 
 									</button>
 								</span>
-								<input type="text" autofocus name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php echo $cadastrar['id_Cliente_Auto']; ?>" class="form-control" placeholder="Pesquisar Cliente">
 							</div>
 							<span class="modal-title" id="NomeClienteAuto1"><?php echo $cadastrar['NomeClienteAuto']; ?></span>
 							<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php echo $cadastrar['NomeClienteAuto']; ?>" />
 							<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php echo $query['idApp_Cliente']; ?>" />
 							<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">
 						</div>
+						<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
+							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-left">
+								<label >Pet:</label>
+								<div class="input-group">
+									<input type="text" name="id_ClientePet_Auto" id="id_ClientePet_Auto" value="<?php echo $cadastrar['id_ClientePet_Auto']; ?>" class="form-control" placeholder="Pesquisar ClientePet">
+									<span class="input-group-btn">
+										<button class="btn btn-info btn-md" type="submit">
+											<span class="glyphicon glyphicon-search"></span> 
+										</button>
+									</span>
+								</div>
+								<span class="modal-title" id="NomeClientePetAuto1"><?php echo $cadastrar['NomeClientePetAuto']; ?></span>
+								<input type="hidden" id="NomeClientePetAuto" name="NomeClientePetAuto" value="<?php echo $cadastrar['NomeClientePetAuto']; ?>" />
+								<input type="hidden" id="Hidden_id_Cliente_AutoPet" name="Hidden_id_Cliente_AutoPet" value="<?php echo $query['idApp_ClientePet']; ?>" />
+								<input type="hidden" name="idApp_ClientePet" id="idApp_ClientePet" value="<?php echo $query['idApp_ClientePet']; ?>" class="form-control" readonly= "">
+							</div>
+						<?php }else{ ?>
+							<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-left">
+									<label >Dep:</label>
+									<div class="input-group">
+										<input type="text" name="id_ClienteDep_Auto" id="id_ClienteDep_Auto" value="<?php echo $cadastrar['id_ClienteDep_Auto']; ?>" class="form-control" placeholder="Pesquisar ClienteDep">
+										<span class="input-group-btn">
+											<button class="btn btn-info btn-md" type="submit">
+												<span class="glyphicon glyphicon-search"></span> 
+											</button>
+										</span>
+									</div>
+									<span class="modal-title" id="NomeClienteDepAuto1"><?php echo $cadastrar['NomeClienteDepAuto']; ?></span>
+									<input type="hidden" id="NomeClienteDepAuto" name="NomeClienteDepAuto" value="<?php echo $cadastrar['NomeClienteDepAuto']; ?>" />
+									<input type="hidden" id="Hidden_id_Cliente_AutoDep" name="Hidden_id_Cliente_AutoDep" value="<?php echo $query['idApp_ClienteDep']; ?>" />
+									<input type="hidden" name="idApp_ClienteDep" id="idApp_ClienteDep" value="<?php echo $query['idApp_ClienteDep']; ?>" class="form-control" readonly= "">
+								</div>
+							<?php } ?>
+						<?php } ?>
 						<!--
 						<button  class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 							<span class="glyphicon glyphicon-plus"></span> Novo Cliente

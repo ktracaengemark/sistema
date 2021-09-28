@@ -48,6 +48,13 @@
 							<th class=" col-md-1" scope="col">Foto</th>
 							<th class="active">id</th>
 							<th class="active">Cliente</th>
+							<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
+								<th class="active">Pet</th>
+							<?php }else{ ?>
+								<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
+									<th class="active">Dep</th>
+								<?php } ?>
+							<?php } ?>
 							<th class="active">Ficha</th>
 							<th class="active">Sexo</th>
 							<th class="active">Celular</th>
@@ -86,6 +93,13 @@
 							<td><img  class="img-circle img-responsive" width='50' alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/clientes/miniatura/' . $row['Arquivo'] . ''; ?> "></td>
 							<td><?php echo $row['idApp_Cliente'] ?></td>
 							<td><?php echo $row['NomeCliente'] ?></td>
+							<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
+								<td><?php echo $row['NomeClientePet'] ?></td>
+							<?php }else{ ?>
+								<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
+									<td><?php echo $row['NomeClienteDep'] ?></td>
+								<?php } ?>
+							<?php } ?>
 							<td><?php echo $row['RegistroFicha'] ?></td>
 							<td><?php echo $row['Sexo'] ?></td>
 							<td><?php echo $row['CelularCliente'] ?></td>

@@ -380,7 +380,7 @@ $('#Empresa').on('keyup', function () {
 	});	
 });
 
-//função autocomplete 
+//função autocomplete Cliente
 // função para limpeza dos campos do Cliente
 $('#id_Cliente_Auto').on('input', limpaCampos_Cliente);
 // função que busca os nomes do Cliente
@@ -457,6 +457,113 @@ function limpaCampos_Cliente(){
    }
 }	
 
+//função autocomplete ClientePet
+// função para limpeza dos campos do ClientePet
+$('#id_ClientePet_Auto').on('input', limpaCampos_ClientePet);
+// função que busca os nomes do ClientePet
+$("#id_ClientePet_Auto").autocomplete({
+	source: window.location.origin+ '/' + app + '/cadastros/pesquisar/ClientePet_Autocomplete.php',
+
+	select: function(event, ui){
+		var pegar = ui.item.value;
+		//console.log('pegar = '+pegar);
+		var pegarSplit = pegar.split('#');
+		var id_ClientePet = pegarSplit[0];
+		
+		//console.log('id cliente Autocomplete = '+id_ClientePet);
+		
+		$.ajax({
+			url: window.location.origin+ '/' + app + '/cadastros/pesquisar/Pet.php?id=' + id_ClientePet,
+			dataType: "json",
+			success: function (data) {
+				
+				var idclientePet = data[0]['id'];
+				var nomeclientePet = data[0]['nome'];
+				
+				$("#NomeClientePetAuto1").html('<label>'+idclientePet+ ' | ' + nomeclientePet + '</label>');
+				$("#NomeClientePetAuto").val(''+idclientePet+ ' | ' + nomeclientePet + '');
+				
+			},
+			error:function(data){
+				$("#NomeClientePetAuto1").html('<label>Nenhum ClientePet Selecionado!</label>');
+				$("#NomeClientePetAuto").val('Nenhum ClientePet Selecionado!');
+			}
+			
+		});
+
+		$('#idApp_ClientePet').val(id_ClientePet);
+
+	}
+	
+});
+// Função para limpar os campos caso a busca esteja vazia
+function limpaCampos_ClientePet(){
+   var busca = $('#id_ClientePet_Auto').val();
+
+   if(busca == ""){
+		
+		$('#idApp_ClientePet').val('');
+
+		$("#NomeClientePetAuto1").html('<label>Nenhum ClientePet Selecionado!</label>');
+		$("#NomeClientePetAuto").val('Nenhum ClientePet Selecionado!');
+
+   }
+}	
+
+//função autocomplete ClienteDep
+// função para limpeza dos campos do ClienteDep
+$('#id_ClienteDep_Auto').on('input', limpaCampos_ClienteDep);
+// função que busca os nomes do ClienteDep
+$("#id_ClienteDep_Auto").autocomplete({
+	source: window.location.origin+ '/' + app + '/cadastros/pesquisar/ClienteDep_Autocomplete.php',
+
+	select: function(event, ui){
+		var pegar = ui.item.value;
+		//console.log('pegar = '+pegar);
+		var pegarSplit = pegar.split('#');
+		var id_ClienteDep = pegarSplit[0];
+		
+		//console.log('id cliente Autocomplete = '+id_ClienteDep);
+		
+		$.ajax({
+			url: window.location.origin+ '/' + app + '/cadastros/pesquisar/Dep.php?id=' + id_ClienteDep,
+			dataType: "json",
+			success: function (data) {
+				
+				var idclienteDep = data[0]['id'];
+				var nomeclienteDep = data[0]['nome'];
+				
+				$("#NomeClienteDepAuto1").html('<label>'+idclienteDep+ ' | ' + nomeclienteDep + '</label>');
+				$("#NomeClienteDepAuto").val(''+idclienteDep+ ' | ' + nomeclienteDep + '');
+				
+			},
+			error:function(data){
+				$("#NomeClienteDepAuto1").html('<label>Nenhum ClienteDep Selecionado!</label>');
+				$("#NomeClienteDepAuto").val('Nenhum ClienteDep Selecionado!');
+			}
+			
+		});
+
+		$('#idApp_ClienteDep').val(id_ClienteDep);
+
+	}
+	
+});
+// Função para limpar os campos caso a busca esteja vazia
+function limpaCampos_ClienteDep(){
+   var busca = $('#id_ClienteDep_Auto').val();
+
+   if(busca == ""){
+		
+		$('#idApp_ClienteDep').val('');
+
+		$("#NomeClienteDepAuto1").html('<label>Nenhum ClienteDep Selecionado!</label>');
+		$("#NomeClienteDepAuto").val('Nenhum ClienteDep Selecionado!');
+
+   }
+}	
+
+//função autocomplete Fornecedor
 // função para limpeza dos campos do Fornecedor
 $('#id_Fornecedor_Auto').on('input', limpaCampos_Fornecedor);
 // função que busca os nomes do Fornecedor

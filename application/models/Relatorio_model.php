@@ -3780,6 +3780,19 @@ exit();*/
 			
 			//$data['NomeCliente'] = ($data['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 			$data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND C.idApp_Cliente = ' . $data['idApp_Cliente'] : FALSE;
+			
+			if($_SESSION['Empresa']['CadastrarPet'] == "S"){
+				$data['idApp_ClientePet'] = ($data['idApp_ClientePet']) ? ' AND CP.idApp_ClientePet = ' . $data['idApp_ClientePet'] : FALSE;
+				$data['idApp_ClienteDep'] = FALSE;
+			}else{
+				$data['idApp_ClientePet'] = FALSE;
+				if($_SESSION['Empresa']['CadastrarDep'] == "S"){
+					$data['idApp_ClienteDep'] = ($data['idApp_ClienteDep']) ? ' AND CD.idApp_ClienteDep = ' . $data['idApp_ClienteDep'] : FALSE;
+				}else{	
+					$data['idApp_ClienteDep'] = FALSE;
+				}
+			}
+			
 			$data['Campo'] = (!$data['Campo']) ? 'C.NomeCliente' : $data['Campo'];
 			$data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 			$filtro10 = ($data['Ativo'] != '#') ? 'C.Ativo = "' . $data['Ativo'] . '" AND ' : FALSE;
@@ -3797,6 +3810,19 @@ exit();*/
 			
 			//$data['NomeCliente'] = ($_SESSION['FiltroAlteraParcela']['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $_SESSION['FiltroAlteraParcela']['NomeCliente'] : FALSE;
 			$data['idApp_Cliente'] = ($_SESSION['FiltroAlteraParcela']['idApp_Cliente']) ? ' AND C.idApp_Cliente = ' . $_SESSION['FiltroAlteraParcela']['idApp_Cliente'] : FALSE;
+			
+			if($_SESSION['Empresa']['CadastrarPet'] == "S"){
+				$data['idApp_ClientePet'] = ($_SESSION['FiltroAlteraParcela']['idApp_ClientePet']) ? ' AND CP.idApp_ClientePet = ' . $_SESSION['FiltroAlteraParcela']['idApp_ClientePet'] : FALSE;
+				$data['idApp_ClienteDep'] = FALSE;
+			}else{
+				$data['idApp_ClientePet'] = FALSE;
+				if($_SESSION['Empresa']['CadastrarDep'] == "S"){
+					$data['idApp_ClienteDep'] = ($_SESSION['FiltroAlteraParcela']['idApp_ClienteDep']) ? ' AND CD.idApp_ClienteDep = ' . $_SESSION['FiltroAlteraParcela']['idApp_ClienteDep'] : FALSE;
+				}else{
+					$data['idApp_ClienteDep'] = FALSE;
+				}
+			}
+			
 			$data['Campo'] = (!$_SESSION['FiltroAlteraParcela']['Campo']) ? 'C.NomeCliente' : $_SESSION['FiltroAlteraParcela']['Campo'];
 			$data['Ordenamento'] = (!$_SESSION['FiltroAlteraParcela']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroAlteraParcela']['Ordenamento'];
 			$filtro10 = ($_SESSION['FiltroAlteraParcela']['Ativo'] != '#') ? 'C.Ativo = "' . $_SESSION['FiltroAlteraParcela']['Ativo'] . '" AND ' : FALSE;
@@ -3805,6 +3831,28 @@ exit();*/
 	
 		}
 		
+		if($_SESSION['Empresa']['CadastrarPet'] == "S"){
+			$data['ClientePet'] = 'LEFT JOIN App_ClientePet AS CP ON CP.idApp_Cliente = C.idApp_Cliente';
+			$data['CP.idApp_ClientePet'] = 'CP.idApp_ClientePet,';
+			$data['CP.NomeClientePet'] = 'CP.NomeClientePet,';
+			$data['ClienteDep'] = FALSE;
+			$data['CD.idApp_ClienteDep'] = FALSE;
+			$data['CD.NomeClienteDep'] = FALSE;
+		}else{
+			$data['ClientePet'] = FALSE;
+			$data['CP.idApp_ClientePet'] = FALSE;
+			$data['CP.NomeClientePet'] = FALSE;
+			if($_SESSION['Empresa']['CadastrarDep'] == "S"){
+				$data['ClienteDep'] = 'LEFT JOIN App_ClienteDep AS CD ON CD.idApp_Cliente = C.idApp_Cliente';
+				$data['CD.idApp_ClienteDep'] = 'CD.idApp_ClienteDep,';
+				$data['CD.NomeClienteDep'] = 'CD.NomeClienteDep,';
+			}else{
+				$data['ClienteDep'] = FALSE;
+				$data['CD.idApp_ClienteDep'] = FALSE;
+				$data['CD.NomeClienteDep'] = FALSE;
+			}
+		}
+
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
@@ -3813,6 +3861,10 @@ exit();*/
             SELECT
 				C.idApp_Cliente,
                 C.NomeCliente,
+				' . $data['CP.idApp_ClientePet'] . '
+				' . $data['CP.NomeClientePet'] . '
+				' . $data['CD.idApp_ClienteDep'] . '
+				' . $data['CD.NomeClienteDep'] . '
 				C.Arquivo,
 				C.Ativo,
 				C.Motivo,
@@ -3839,7 +3891,8 @@ exit();*/
 				App_Cliente AS C
                     LEFT JOIN Tab_Municipio AS M ON C.MunicipioCliente = M.idTab_Municipio
                     LEFT JOIN Tab_Motivo AS MT ON  MT.idTab_Motivo = C.Motivo
-			
+					' . $data['ClientePet'] . '
+					' . $data['ClienteDep'] . '
 			WHERE
 				' . $date_inicio_orca . '
 				' . $date_fim_orca . '
@@ -3847,6 +3900,8 @@ exit();*/
 				' . $filtro20 . '
 				C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
 				' . $data['idApp_Cliente'] . ' 
+				' . $data['idApp_ClientePet'] . '
+				' . $data['idApp_ClienteDep'] . '
 				' . $data['Dia'] . ' 
 				' . $data['Mesvenc'] . '
 				' . $data['Ano'] . '

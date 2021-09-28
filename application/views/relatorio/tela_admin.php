@@ -401,7 +401,7 @@
 								<div class="row">
 									<div class="form-group col-md-12 text-left">																				
 										<a class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/clientes" role="button"> 
-											<span class="glyphicon glyphicon-user"></span> Clientes / Aniversariantes
+											<span class="glyphicon glyphicon-user"></span> Clientes/ Dep/ Pet
 										</a>
 									</div>
 								</div>

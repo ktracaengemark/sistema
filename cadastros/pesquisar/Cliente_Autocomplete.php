@@ -43,7 +43,7 @@ if (isset($clientex[1]) && $clientex[1] != ''){
 						. 'Telefone like "%' . $cliente1 . '%" OR '
 						. 'Telefone2 like "%' . $cliente1 . '%" OR '
 						. 'Telefone3 like "%' . $cliente1 . '%" )';
-			}		
+						}		
 		}else{
 			$query1 = '(NomeCliente like "%' . $cliente1 . '%" )';
 		}

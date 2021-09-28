@@ -354,11 +354,17 @@ class Relatorio_pag extends CI_Controller {
 		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 			'id_Cliente_Auto',
 			'NomeClienteAuto',
+			'id_ClientePet_Auto',
+			'NomeClientePetAuto',
+			'id_ClienteDep_Auto',
+			'NomeClienteDepAuto',
 		), TRUE));	
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
             //'NomeCliente',
 			'idApp_Cliente',
+			'idApp_ClientePet',
+			'idApp_ClienteDep',
 			'Ativo',
 			'Motivo',
             'Ordenamento',

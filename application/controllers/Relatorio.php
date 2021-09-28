@@ -6618,11 +6618,17 @@ class Relatorio extends CI_Controller {
 		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 			'id_Cliente_Auto',
 			'NomeClienteAuto',
+			'id_ClientePet_Auto',
+			'NomeClientePetAuto',
+			'id_ClienteDep_Auto',
+			'NomeClienteDepAuto',
 		), TRUE));	
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
             //'NomeCliente',
 			'idApp_Cliente',
+			'idApp_ClientePet',
+			'idApp_ClienteDep',
 			'Ativo',
 			'Motivo',
             'Ordenamento',
@@ -6676,6 +6682,8 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');        
 		$_SESSION['FiltroAlteraParcela']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+		$_SESSION['FiltroAlteraParcela']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+		$_SESSION['FiltroAlteraParcela']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
 		$_SESSION['FiltroAlteraParcela']['Ativo'] = $data['query']['Ativo'];
 		$_SESSION['FiltroAlteraParcela']['Motivo'] = $data['query']['Motivo'];
 		$_SESSION['FiltroAlteraParcela']['Campo'] = $data['query']['Campo'];
@@ -6696,6 +6704,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
             //$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
 			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
 			$data['bd']['Ativo'] = $data['query']['Ativo'];
 			$data['bd']['Motivo'] = $data['query']['Motivo'];
             $data['bd']['Campo'] = $data['query']['Campo'];
