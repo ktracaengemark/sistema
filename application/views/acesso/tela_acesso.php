@@ -15,8 +15,9 @@
 <?php 
 
 	$dateNow   = new \DateTime(date('Y-m-d'));
-	$dateStart = new \DateTime($_SESSION['log']['DataDeValidade']);
-	//$dateStart = new \DateTime('2021-09-24');	
+	//$dateStart = new \DateTime($_SESSION['log']['DataDeValidade']);
+	//depois tenho que voltar a linha correta
+	$dateStart = new \DateTime('2022-09-24');	
 
 	$dateDiff = $dateNow->diff($dateStart);
 	
