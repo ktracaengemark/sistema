@@ -95,6 +95,14 @@ class Cliente_model extends CI_Model {
         return $query[0];
     }
 
+    public function get_cliente_associado($data) {
+        $query = $this->db->query('SELECT idApp_Cliente FROM App_Cliente WHERE idSis_Usuario_5 = ' . $data);
+
+        $query = $query->result_array();
+
+        return $query;
+    }
+
     public function get_usuario($data) {
         $query = $this->db->query('SELECT * FROM Sis_Usuario WHERE idSis_Usuario = ' . $data);
 
@@ -258,7 +266,7 @@ class Cliente_model extends CI_Model {
             return TRUE;
         }
     }
-	
+
     public function update_usuario($data, $id) {
 
         unset($data['idSis_Usuario']);

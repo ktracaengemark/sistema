@@ -13,7 +13,7 @@ class Usuario2 extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Funcao_model', 'Usuario_model'));
+        $this->load->model(array('Basico_model', 'Funcao_model', 'Cliente_model', 'Usuario_model'));
         #$this->load->model(array('Basico_model', 'Usuario_model'));
         $this->load->driver('session');
 
@@ -200,8 +200,8 @@ class Usuario2 extends CI_Controller {
         ), TRUE);
 
         if ($id) {
-            $data['query'] = $this->Usuario_model->get_usuario($id);
-        }
+			$data['query'] = $this->Usuario_model->get_usuario($id);
+		}
 
 		$caracteres_sem_acento = array(
 			'Š'=>'S', 'š'=>'s', 'Ğ'=>'Dj',''=>'Z', ''=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
@@ -246,7 +246,8 @@ class Usuario2 extends CI_Controller {
         } else {
 
             $data['query']['Nome'] = trim(mb_strtoupper($nomeusuario1, 'ISO-8859-1'));
-            $data['query']['Senha'] = md5($data['query']['Senha']);	
+            $data['query']['Senha'] = md5($data['query']['Senha']);
+			$data['query']['Codigo'] = md5(uniqid(time() . rand()));	
 
 
             $data['anterior'] = $this->Usuario_model->get_usuario($data['query']['idSis_Usuario']);
@@ -254,8 +255,11 @@ class Usuario2 extends CI_Controller {
 
             $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idSis_Usuario'], TRUE);
 
-            if ($data['auditoriaitem'] && $this->Usuario_model->update_usuario($data['query'], $data['query']['idSis_Usuario']) === FALSE) {
-                $data['msg'] = '?m=1';
+			$data['update']['associado'] = $this->Usuario_model->update_usuario($data['query'], $data['query']['idSis_Usuario']);
+			
+            if ($data['auditoriaitem'] && $data['update']['associado'] === FALSE) {
+                $data['msg'] = '?m=1';				
+
                 redirect(base_url() . 'usuario2/prontuario/' . $data['query']['idSis_Usuario'] . $data['msg']);
                 exit();
             } else {
@@ -266,7 +270,23 @@ class Usuario2 extends CI_Controller {
                     $data['auditoria'] = $this->Basico_model->set_auditoriaempresa($data['auditoriaitem'], 'Sis_Usuario', 'UPDATE', $data['auditoriaitem']);
                     $data['msg'] = '?m=1';
                 }
+				
+				#### App_Cliente ####
+				$data['update']['cliente']['alterar'] = $this->Cliente_model->get_cliente_associado($data['query']['idSis_Usuario']);
+				if (isset($data['update']['cliente']['alterar'])){
 
+					$max = count($data['update']['cliente']['alterar']);
+					for($j=0;$j<$max;$j++) {
+					
+						$data['update']['cliente']['alterar'][$j]['senha'] 	= $data['query']['Senha'];
+						$data['update']['cliente']['alterar'][$j]['Codigo'] = $data['query']['Codigo'];
+
+						$data['update']['cliente']['bd'][$j] = $this->Cliente_model->update_cliente($data['update']['cliente']['alterar'][$j], $data['update']['cliente']['alterar'][$j]['idApp_Cliente']);
+					
+					}
+				}				
+
+				
                 redirect(base_url() . 'usuario2/prontuario/' . $data['query']['idSis_Usuario'] . $data['msg']);
                 exit();
             }
