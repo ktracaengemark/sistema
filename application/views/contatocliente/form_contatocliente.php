@@ -313,8 +313,10 @@
 										</div>
 									</div>-->
 
-							<br>
-										
+							<br>   
+							<?php if ($metodo > 1) { ?>
+								<input type="hidden" name="idApp_ContatoCliente" value="<?php echo $query['idApp_ContatoCliente']; ?>">
+							<?php } ?>
 							<div class="form-group">
 								<div class="row">
 									<input type="hidden" name="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>"> 

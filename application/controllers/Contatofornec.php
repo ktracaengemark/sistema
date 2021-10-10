@@ -91,7 +91,7 @@ class Contatofornec extends CI_Controller {
 
 		
             $data['query']['NomeContatofornec'] = trim(mb_strtoupper($data['query']['NomeContatofornec'], 'ISO-8859-1'));
- 			if($data['query']['DataNascimento'] == ''){
+ 			if(!isset($data['query']['DataNascimento']) || $data['query']['DataNascimento'] == ''){
 				$data['query']['DataNascimento'] = "0000-00-00";
 			}else{
 				$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
@@ -179,7 +179,7 @@ class Contatofornec extends CI_Controller {
         } else {
 
             $data['query']['NomeContatofornec'] = trim(mb_strtoupper($data['query']['NomeContatofornec'], 'ISO-8859-1'));
- 			if($data['query']['DataNascimento'] == ''){
+ 			if(!isset($data['query']['DataNascimento']) || $data['query']['DataNascimento'] == ''){
 				$data['query']['DataNascimento'] = "0000-00-00";
 			}else{
 				$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');

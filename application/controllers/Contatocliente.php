@@ -48,7 +48,7 @@ class Contatocliente extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = quotes_to_entities($this->input->post(array(
-            'idApp_ContatoCliente',
+            //'idApp_ContatoCliente',
             'idSis_Usuario',
             'NomeContatoCliente',
             'StatusVida',
@@ -56,7 +56,7 @@ class Contatocliente extends CI_Controller {
 			'Ativo',
             'Sexo',
 			'Relacao',
-			'RelaCom',
+			//'RelaCom',
             'Telefone1',
             'Obs',
             'idApp_Cliente',
@@ -64,17 +64,10 @@ class Contatocliente extends CI_Controller {
 
         //echo '<br><br><br><br><br>==========================================='.$data['query']['StatusVida']='V';
 
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-        $this->form_validation->set_rules('NomeContatoCliente', 'Nome do Responsável', 'required|trim');
-        $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
-		$this->form_validation->set_rules('Telefone1', 'Telefone1', 'required|trim');
-		#$this->form_validation->set_rules('Relacao', 'Relacao', 'required|trim');
-        #$this->form_validation->set_rules('RelaCom', 'RelaCom', 'required|trim');
 		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contatocliente_model->select_status_vida();
 		$data['select']['Relacao'] = $this->Relacao_model->select_relacao();
-        $data['select']['RelaCom'] = $this->Relacom_model->select_relacom();
+        //$data['select']['RelaCom'] = $this->Relacom_model->select_relacom();
 		$data['select']['Ativo'] = $this->Basico_model->select_status_sn();
 		
 		$data['titulo'] = 'Contatos e Responsáveis';
@@ -86,13 +79,25 @@ class Contatocliente extends CI_Controller {
 
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+        $this->form_validation->set_rules('NomeContatoCliente', 'Nome do Responsável', 'required|trim');
+        $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
+		$this->form_validation->set_rules('Telefone1', 'Telefone1', 'required|trim');
+		$this->form_validation->set_rules('Relacao', 'Relacao', 'required|trim');
+        #$this->form_validation->set_rules('RelaCom', 'RelaCom', 'required|trim');
+		
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('contatocliente/form_contatocliente', $data);
         } else {
 
             $data['query']['NomeContatoCliente'] = trim(mb_strtoupper($data['query']['NomeContatoCliente'], 'ISO-8859-1'));
-            $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
+ 			if(!isset($data['query']['DataNascimento']) || $data['query']['DataNascimento'] == ''){
+				$data['query']['DataNascimento'] = "0000-00-00";
+			}else{
+				$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
+			}
             $data['query']['Obs'] = nl2br($data['query']['Obs']);
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 			$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
@@ -100,16 +105,16 @@ class Contatocliente extends CI_Controller {
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
 
-            $data['idApp_ContatoCliente'] = $this->Contatocliente_model->set_contatocliente($data['query']);
+            $data['query']['idApp_ContatoCliente'] = $this->Contatocliente_model->set_contatocliente($data['query']);
 
-            if ($data['idApp_ContatoCliente'] === FALSE) {
+            if ($data['query']['idApp_ContatoCliente'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
                 $this->basico->erro($msg);
                 $this->load->view('contatocliente/form_contatocliente', $data);
             } else {
 
-                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idApp_ContatoCliente'], FALSE);
+                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_ContatoCliente'], FALSE);
                 $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_ContatoCliente', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
@@ -141,7 +146,7 @@ class Contatocliente extends CI_Controller {
             'Obs',
             'idApp_Cliente',
 			'Relacao',
-			'RelaCom',
+			//'RelaCom',
             'Telefone1',
 			'Ativo',
                 ), TRUE);
@@ -152,13 +157,6 @@ class Contatocliente extends CI_Controller {
             $_SESSION['log']['idApp_ContatoCliente'] = $id;
         }
 
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-        $this->form_validation->set_rules('NomeContatoCliente', 'Nome do Responsável', 'required|trim');
-        $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
-		$this->form_validation->set_rules('Telefone1', 'Telefone1', 'required|trim');
-		#$this->form_validation->set_rules('Relacao', 'Relacao', 'required|trim');
-        #$this->form_validation->set_rules('RelaCom', 'RelaCom', 'required|trim');
 		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contatocliente_model->select_status_vida();
         $data['select']['Relacao'] = $this->Relacao_model->select_relacao();
@@ -174,13 +172,25 @@ class Contatocliente extends CI_Controller {
 
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+        $this->form_validation->set_rules('NomeContatoCliente', 'Nome do Responsável', 'required|trim');
+        $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
+		$this->form_validation->set_rules('Telefone1', 'Telefone1', 'required|trim');
+		$this->form_validation->set_rules('Relacao', 'Relacao', 'required|trim');
+        #$this->form_validation->set_rules('RelaCom', 'RelaCom', 'required|trim');
+		
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('contatocliente/form_contatocliente', $data);
         } else {
 
             $data['query']['NomeContatoCliente'] = trim(mb_strtoupper($data['query']['NomeContatoCliente'], 'ISO-8859-1'));
-            $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
+ 			if(!isset($data['query']['DataNascimento']) || $data['query']['DataNascimento'] == ''){
+				$data['query']['DataNascimento'] = "0000-00-00";
+			}else{
+				$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
+			}
             $data['query']['Obs'] = nl2br($data['query']['Obs']);
             $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 			$data['query']['idApp_ContatoCliente'] = $_SESSION['log']['idApp_ContatoCliente'];
