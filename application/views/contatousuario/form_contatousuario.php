@@ -84,7 +84,7 @@
 													<div class="col-md-4">
 														<label for="TelefoneContatoUsuario">Telefone Principal: *</label>
 														<input type="text" class="form-control Celular CelularVariavel" id="TelefoneContatoUsuario" maxlength="14" <?php echo $readonly; ?>
-															   name="TelefoneContatoUsuario" placeholder="(XX)999999999" value="<?php echo $query['TelefoneContatoUsuario']; ?>">
+														name="TelefoneContatoUsuario" placeholder="(XX)999999999" value="<?php echo $query['TelefoneContatoUsuario']; ?>">
 													</div>
 													<div class="col-md-4">
 														<label for="DataNascimento">Data de Nascimento:</label>
@@ -203,6 +203,9 @@
 									</div>
 								</div>
 							</div>
+							<?php if ($metodo > 1) { ?>
+								<input type="hidden" name="idApp_ContatoUsuario" value="<?php echo $query['idApp_ContatoUsuario']; ?>">
+							<?php } ?>
 							<div class="form-group">
 								<div class="row">
 									<input type="hidden" name="idSis_Usuario" value="<?php echo $_SESSION['Usuario']['idSis_Usuario']; ?>"> 

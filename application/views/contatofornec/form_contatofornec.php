@@ -178,7 +178,7 @@
 												</div>
 											</div>
 										</div>
-									</div>   
+									</div>
 									<?php if ($metodo > 1) { ?>
 										<input type="hidden" name="idApp_Contatofornec" value="<?php echo $query['idApp_Contatofornec']; ?>">
 									<?php } ?>
