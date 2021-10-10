@@ -300,15 +300,14 @@
 									</div>
 								</div>                 
 							</div>                                    
-							<br>               
+							<br>
+							<?php if ($metodo > 1) { ?>
+								<input type="hidden" name="idApp_Fornecedor" value="<?php echo $query['idApp_Fornecedor']; ?>">
+							<?php } ?>
 							<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) || ($_SESSION['log']['idSis_Empresa'] == 5))  { ?>
 							<div class="form-group">
 								<div class="row">
-								
-									<input type="hidden" name="idApp_Fornecedor" value="<?php echo $query['idApp_Fornecedor']; ?>">
-									
 									<?php if ($metodo == 2) { ?>
-
 										<div class="col-md-6">
 											<button type="submit" class="btn btn-lg btn-primary" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." >
 												<span class="glyphicon glyphicon-save"></span> Salvar

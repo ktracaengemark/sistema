@@ -74,7 +74,7 @@
 												<label for="DataNascimento">Data de Nascimento:</label>
 												<input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
 													   name="DataNascimento" placeholder="DD/MM/AAAA" value="<?php echo $query['DataNascimento']; ?>">
-											</div>																											
+											</div>
 											<!--<div class="col-md-2 form-inline">
 												<label for="StatusVida">Status de Vida:</label><br>
 												<div class="form-group">
@@ -178,8 +178,10 @@
 												</div>
 											</div>
 										</div>
-									</div>                 
-									
+									</div>   
+									<?php if ($metodo > 1) { ?>
+										<input type="hidden" name="idApp_Contatofornec" value="<?php echo $query['idApp_Contatofornec']; ?>">
+									<?php } ?>
 									<div class="form-group">
 										<div class="row">
 											<input type="hidden" name="idApp_Fornecedor" value="<?php echo $_SESSION['Fornecedor']['idApp_Fornecedor']; ?>">  

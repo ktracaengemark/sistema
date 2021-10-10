@@ -48,7 +48,7 @@ class Contatofornec extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = quotes_to_entities($this->input->post(array(
-            'idApp_Contatofornec',
+            //'idApp_Contatofornec',
             'idSis_Usuario',
             'NomeContatofornec',
             'StatusVida',
@@ -62,13 +62,7 @@ class Contatofornec extends CI_Controller {
                         ), TRUE));
 
         //echo '<br><br><br><br><br>==========================================='.$data['query']['StatusVida']='V';
-        
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $this->form_validation->set_rules('NomeContatofornec', 'Nome do Responsável', 'required|trim');
-        $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
-		$this->form_validation->set_rules('TelefoneContatofornec', 'TelefoneContatofornec', 'required|trim');
-        $this->form_validation->set_rules('Relacao', 'Relacao', 'required|trim');
 		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contatofornec_model->select_status_vida();
 		$data['select']['Relacao'] = $this->Relacao_model->select_relacao();
@@ -83,29 +77,41 @@ class Contatofornec extends CI_Controller {
 
         $data['nav_secundario'] = $this->load->view('fornecedor/nav_secundario', $data, TRUE);
         
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+        $this->form_validation->set_rules('NomeContatofornec', 'Nome do Responsável', 'required|trim');
+        $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
+		$this->form_validation->set_rules('TelefoneContatofornec', 'TelefoneContatofornec', 'required|trim');
+        $this->form_validation->set_rules('Relacao', 'Relacao', 'required|trim');
+        
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('contatofornec/form_contatofornec', $data);
         } else {
 
+		
             $data['query']['NomeContatofornec'] = trim(mb_strtoupper($data['query']['NomeContatofornec'], 'ISO-8859-1'));
-            $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
+ 			if($data['query']['DataNascimento'] == ''){
+				$data['query']['DataNascimento'] = "0000-00-00";
+			}else{
+				$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
+			}
             $data['query']['Obs'] = nl2br($data['query']['Obs']);
 			$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
             $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
 
-            $data['idApp_Contatofornec'] = $this->Contatofornec_model->set_contatofornec($data['query']);
+            $data['query']['idApp_Contatofornec'] = $this->Contatofornec_model->set_contatofornec($data['query']);
 
-            if ($data['idApp_Contatofornec'] === FALSE) {
+            if ($data['query']['idApp_Contatofornec'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contatofornec com o administrador deste sistema.</strong>";
 
                 $this->basico->erro($msg);
                 $this->load->view('contatofornec/form_contatofornec', $data);
             } else {
 
-                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idApp_Contatofornec'], FALSE);
+                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Contatofornec'], FALSE);
                 $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Contatofornec', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
@@ -146,12 +152,6 @@ class Contatofornec extends CI_Controller {
             $_SESSION['log']['idApp_Contatofornec'] = $id;
         }
 
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-        $this->form_validation->set_rules('NomeContatofornec', 'Nome do Responsável', 'required|trim');
-        $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
-		$this->form_validation->set_rules('TelefoneContatofornec', 'TelefoneContatofornec', 'required|trim');
-        $this->form_validation->set_rules('Relacao', 'Relacao', 'required|trim');
 		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVida'] = $this->Contatofornec_model->select_status_vida();
         $data['select']['Relacao'] = $this->Relacao_model->select_relacao();       
@@ -166,13 +166,24 @@ class Contatofornec extends CI_Controller {
 
         $data['nav_secundario'] = $this->load->view('fornecedor/nav_secundario', $data, TRUE);
 
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+        $this->form_validation->set_rules('NomeContatofornec', 'Nome do Responsável', 'required|trim');
+        $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
+		$this->form_validation->set_rules('TelefoneContatofornec', 'TelefoneContatofornec', 'required|trim');
+        $this->form_validation->set_rules('Relacao', 'Relacao', 'required|trim');
+		
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('contatofornec/form_contatofornec', $data);
         } else {
 
             $data['query']['NomeContatofornec'] = trim(mb_strtoupper($data['query']['NomeContatofornec'], 'ISO-8859-1'));
-            $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
+ 			if($data['query']['DataNascimento'] == ''){
+				$data['query']['DataNascimento'] = "0000-00-00";
+			}else{
+				$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
+			}
             $data['query']['Obs'] = nl2br($data['query']['Obs']);
             $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario']; 
 			$data['query']['idApp_Contatofornec'] = $_SESSION['log']['idApp_Contatofornec'];
