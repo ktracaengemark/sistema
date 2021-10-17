@@ -92,7 +92,7 @@
 										</div>
 									<?php } ?>
 								<?php } ?>
-								<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
+								<?php if($_SESSION['log']['idSis_Empresa'] == "5") {?>
 									<div class="col-md-12">	
 										<label for=""><h4><b>Pagamentos</b></h4></label>
 										<div class="form-group col-md-12 text-left">
@@ -102,8 +102,21 @@
 												</a>
 											</div>	
 										</div>
-									</div>	
-								<?php } ?>
+									</div>
+								<?php }else{ ?>
+									<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
+										<div class="col-md-12">	
+											<label for=""><h4><b>Pagamentos</b></h4></label>
+											<div class="form-group col-md-12 text-left">
+												<div class="row">										
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/cobrancas" role="button"> 
+														<span class="glyphicon glyphicon-usd"></span> Parcelas
+													</a>
+												</div>	
+											</div>
+										</div>	
+									<?php } ?>
+								<?php } ?>	
 								<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 									<?php if($_SESSION['Usuario']['Rel_Prd'] == "S") {?>
 										<div class="col-md-12">											
@@ -178,7 +191,21 @@
 											</div>
 										</div>
 									<?php }?>	
-								<?php } ?>	
+								<?php } ?>
+								<?php if($_SESSION['log']['idSis_Empresa'] == "5") {?>
+									<div class="col-md-12">											
+										<label for=""><h4><b>Comissões</b></h4></label>
+										<?php if($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Permissao_Comissao'] >= 2) {?>
+											<div class="form-group col-md-12 text-left">
+												<div class="row">										
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/comissao_online" role="button"> 
+														<span class="glyphicon glyphicon-usd"></span>Por Pedido/ Associado
+													</a>
+												</div>	
+											</div>
+										<?php }?>
+									</div>
+								<?php }else{ ?>
 									<?php if($_SESSION['Usuario']['Rel_Com'] == "S") {?>	
 										<div class="col-md-12">											
 											<label for=""><h4><b>Comissões</b></h4></label>
@@ -210,7 +237,8 @@
 												</div>
 											<?php } ?>	
 										</div>
-									<?php }?>
+									<?php }?>								
+								<?php } ?>	
 								<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>	
 									<?php if($_SESSION['Usuario']['Rel_Est'] == "S") {?>	
 										<div class="col-md-12">											
@@ -283,7 +311,7 @@
 										</div>
 									<?php } ?>
 								<?php } ?>
-								<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
+								<?php if($_SESSION['log']['idSis_Empresa'] == "5") {?>
 									<div class="col-md-12">		
 										<label for=""><h4><b>Pagamentos</b></h4></label>	
 										<div class="form-group col-md-12 text-left">
@@ -294,7 +322,20 @@
 											</div>	
 										</div>											
 									</div>
-								<?php } ?>
+								<?php }else{ ?>
+									<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
+										<div class="col-md-12">		
+											<label for=""><h4><b>Pagamentos</b></h4></label>	
+											<div class="form-group col-md-12 text-left">
+												<div class="row">										
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/debitos" role="button"> 
+														<span class="glyphicon glyphicon-usd"></span> Parcelas
+													</a>
+												</div>	
+											</div>											
+										</div>
+									<?php } ?>
+								<?php } ?>	
 								<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 									<?php if($_SESSION['Usuario']['Rel_Prd'] == "S") {?>
 										<div class="col-md-12">
@@ -565,9 +606,18 @@
 								</div>	
 							</div>							
 							<label for=""><h4><b><?php echo $_SESSION['log']['NomeEmpresa']; ?></b></h4></label>
+							
+							<?php 
+								if($_SESSION['log']['idSis_Empresa'] == "5"){
+									$usuario = 'associado';
+								}else{
+									
+									$usuario = 'usuario2';
+								}
+							?>
 							<div class="row">
 								<div class="form-group col-md-12 text-left">	
-									<a class="container-img" href="<?php echo base_url() ?>usuario2/prontuario/<?php echo $_SESSION['log']['idSis_Usuario']; ?>" > 
+									<a class="container-img" href="<?php echo base_url() ?><?php echo $usuario; ?>/prontuario/<?php echo $_SESSION['log']['idSis_Usuario']; ?>" > 
 										<img alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Usuario']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Usuario']['Arquivo'] . ''; ?>" class="img-circle img-responsive" width='50'>
 										<?php echo $_SESSION['log']['Nome']; ?>
 									</a>

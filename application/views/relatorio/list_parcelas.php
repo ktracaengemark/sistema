@@ -64,7 +64,7 @@
 				</div>
 			<?php } ?>
 			<?php if ($editar == 1) { ?>
-				<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+				<?php if ($_SESSION['log']['idSis_Empresa'] == 5) { ?>
 					<div class="col-md-1">
 						<label>Baixa</label>
 						<a href="<?php echo base_url() . $alterarparc . $_SESSION['log']['idSis_Empresa']; ?>">
@@ -73,16 +73,27 @@
 							</button>
 						</a>
 					</div>
-				<?php } ?>
-				<?php if ($print == 1) { ?>	
-					<div class="col-md-1">
-						<label>Imprimir</label>
-						<a href="<?php echo base_url() . $imprimirlista . $_SESSION['log']['idSis_Empresa']; ?>">
-							<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
-								<span class="glyphicon glyphicon-print"></span>
-							</button>
-						</a>
-					</div>
+				<?php }else{ ?>
+					<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+						<div class="col-md-1">
+							<label>Baixa</label>
+							<a href="<?php echo base_url() . $alterarparc . $_SESSION['log']['idSis_Empresa']; ?>">
+								<button class="btn btn-success btn-md btn-block" type="button">
+									<span class="glyphicon glyphicon-edit"></span>
+								</button>
+							</a>
+						</div>
+					<?php } ?>
+					<?php if ($print == 1) { ?>	
+						<div class="col-md-1">
+							<label>Imprimir</label>
+							<a href="<?php echo base_url() . $imprimirlista . $_SESSION['log']['idSis_Empresa']; ?>">
+								<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
+									<span class="glyphicon glyphicon-print"></span>
+								</button>
+							</a>
+						</div>
+					<?php } ?>
 				<?php } ?>	
 			<?php } ?>				
 		</div>	
@@ -95,9 +106,13 @@
 				<thead>
 					<tr>
 						<th class="active">Imp.</th>
-						<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+						<?php if($_SESSION['log']['idSis_Empresa'] == "5") {?>
 							<th class="active">Baixa</th>
-						<?php } ?>
+						<?php }else{ ?>
+							<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+								<th class="active">Baixa</th>
+							<?php } ?>
+						<?php } ?>	
 						<th class="active">Cont.</th>
 						<th class="active">Pc</th>
 						<th class="active">Pedido</th>
@@ -156,7 +171,7 @@
 										<span class="glyphicon glyphicon-print notclickable"></span>
 									</a>
 								</td>';
-							if ($_SESSION['Usuario']['Bx_Pag'] == "S") {
+							if ($_SESSION['log']['idSis_Empresa'] == 5) {
 								if($row['CanceladoOrca'] == "Não" && $row['Quitado'] == "Não"){	
 									echo '<td class="notclickable">
 											<a class="btn btn-md btn-success notclickable" href="' . base_url() . $edit . $row['idApp_Parcelas'] . '">
@@ -170,7 +185,23 @@
 											</a>
 										</td>';
 								}
-							}
+							}else{	
+								if ($_SESSION['Usuario']['Bx_Pag'] == "S") {
+									if($row['CanceladoOrca'] == "Não" && $row['Quitado'] == "Não"){	
+										echo '<td class="notclickable">
+												<a class="btn btn-md btn-success notclickable" href="' . base_url() . $edit . $row['idApp_Parcelas'] . '">
+													<span class="glyphicon glyphicon-ok notclickable"></span>
+												</a>
+											</td>';
+									}else{
+										echo '<td class="notclickable">
+												<a class="btn btn-md btn-danger notclickable">
+													<span class="glyphicon glyphicon-ok notclickable"></span>
+												</a>
+											</td>';
+									}
+								}
+							}	
 							echo '<td>' . ($linha + $count) . '</td>';	
 							echo '<td>' . $row['Parcela'] . '</td>';
 							echo '<td>' . $row['idApp_OrcaTrata'] . '- ' . $row['TipoFinanceiro'] . ' - ' . $row['Descricao'] . '</td>';

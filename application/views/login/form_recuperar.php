@@ -22,10 +22,10 @@
     <h2 class="form-signin-heading text-center">Recuperar Senha</h2>
     <br>
 
-    <label>Usuário ou E-mail:</label>
-    <input type="text" class="form-control" id="Usuario" maxlength="100" autofocus="" placeholder="Usuário ou E-mail de cadastro"
-           name="Usuario" value="<?php echo $query['Usuario']; ?>">
-    <?php echo form_error('Usuario'); ?>
+    <label>Celular/Login Cadastrado:</label>
+    <input type="text" class="form-control" id="Associado" maxlength="11" autofocus="" placeholder="(XX)999999999"
+           name="Associado" value="<?php echo $query['Associado']; ?>">
+    <?php echo form_error('Associado'); ?>
     <br>
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Enviar Link</button>

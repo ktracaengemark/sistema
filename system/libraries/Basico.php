@@ -557,6 +557,15 @@ class Basico {
 		return $data;
     }
 	
+    function renomeiaassociado($data) {
+		$extensao	= explode('.', $data);
+		$extensao	= end($extensao);
+		$extensao	= '.' . $extensao;
+        //$data = 'usuario' . '_' . $_SESSION['Usuario']['idSis_Usuario'] . '_' . $_SESSION['Empresa']['idSis_Empresa'] . $extensao;
+		$data = rand() . '_' . 'associado' . '_' . $_SESSION['Usuario']['idSis_Associado'] . '_' . $_SESSION['Empresa']['idSis_Empresa'] . $extensao;
+		return $data;
+    }
+	
     function renomeiausuario($data) {
 		$extensao	= explode('.', $data);
 		$extensao	= end($extensao);

@@ -13,7 +13,7 @@ class OrcatrataPrint extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation', 'pagination'));
-        $this->load->model(array('Basico_model', 'Orcatrata_model', 'Orcatrataprint_model', 'Orcatrataprintcobranca_model', 'Orcatrataprintcomissao_model', 'Relatorio_model', 'Formapag_model' , 'Usuario_model' , 'Cliente_model' , 'Fornecedor_model'));
+        $this->load->model(array('Basico_model', 'Orcatrata_model', 'Orcatrataprint_model', 'Orcatrataprintcobranca_model', 'Orcatrataprintcomissao_model', 'Relatorio_model', 'Formapag_model' , 'Usuario_model' , 'Cliente_model' , 'Fornecedor_model', 'Associado_model'));
         $this->load->driver('session');
 
         #load header view
@@ -69,7 +69,11 @@ class OrcatrataPrint extends CI_Controller {
 			}
 			
 			if(isset($data['orcatrata']['idSis_Usuario']) && $data['orcatrata']['idSis_Usuario'] != 0){
-				$data['usuario'] = $this->Usuario_model->get_usuario($data['orcatrata']['idSis_Usuario'], TRUE);
+				if($_SESSION['log']['idSis_Empresa'] == 5){
+					$data['usuario'] = $this->Associado_model->get_associado($data['orcatrata']['idSis_Usuario'], TRUE);
+				}else{
+					$data['usuario'] = $this->Usuario_model->get_usuario($data['orcatrata']['idSis_Usuario'], TRUE);
+				}
 			}
 				
 			$data['query'] = $this->Orcatrataprint_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata'], TRUE);
@@ -190,7 +194,11 @@ class OrcatrataPrint extends CI_Controller {
 			}
 			
 			if(isset($data['orcatrata']['idSis_Usuario']) && $data['orcatrata']['idSis_Usuario'] != 0){
-				$data['usuario'] = $this->Usuario_model->get_usuario($data['orcatrata']['idSis_Usuario'], TRUE);
+				if($_SESSION['log']['idSis_Empresa'] == 5){
+					$data['usuario'] = $this->Associado_model->get_associado($data['orcatrata']['idSis_Usuario'], TRUE);
+				}else{
+					$data['usuario'] = $this->Usuario_model->get_usuario($data['orcatrata']['idSis_Usuario'], TRUE);
+				}
 			}
 			
 			$data['query'] = $this->Orcatrataprint_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata'], TRUE);	
@@ -437,9 +445,13 @@ class OrcatrataPrint extends CI_Controller {
 			}
 			
 			if(isset($data['orcatrata']['idSis_Usuario']) && $data['orcatrata']['idSis_Usuario'] != 0){
-				$data['usuario'] = $this->Usuario_model->get_usuario($data['orcatrata']['idSis_Usuario'], TRUE);
+				if($_SESSION['log']['idSis_Empresa'] == 5){
+					$data['usuario'] = $this->Associado_model->get_associado($data['orcatrata']['idSis_Usuario'], TRUE);
+				}else{
+					$data['usuario'] = $this->Usuario_model->get_usuario($data['orcatrata']['idSis_Usuario'], TRUE);
+				}
 			}
-			
+
 			$data['query'] = $this->Orcatrataprint_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata'], TRUE);
 
             

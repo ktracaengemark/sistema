@@ -1560,31 +1560,9 @@
 																	?>
 																	<div class="col-sm-3  col-md-2 col-lg-2">
 																		<label for="Quitado">Parc. Paga?</label><br>
-																		<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S" && $parcelasrec[$i]['Quitado'] == "N") { ?>
+																		<?php if ($_SESSION['log']['idSis_Empresa'] == 5) { ?>
 																			<div class="btn-group" data-toggle="buttons">
 																				<?php
-																					/*
-																						foreach ($select['Quitado'] as $key => $row) {
-																						(!$parcelasrec[$i]['Quitado']) ? $parcelasrec[$i]['Quitado'] = 'N' : FALSE;
-																						if ($parcelasrec[$i]['Quitado'] == $key) {
-																						echo ''
-																						. '<label class="btn btn-warning active" name="radiobutton_Quitado' . $i . '" id="radiobutton_Quitado' . $i .  $key . '">'
-																						. '<input type="radio" name="Quitado' . $i . '" id="radiobuttondinamico" '
-																						. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
-																						. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																						. '</label>'
-																						;
-																						} else {
-																						echo ''
-																						. '<label class="btn btn-default" name="radiobutton_Quitado' . $i . '" id="radiobutton_Quitado' . $i .  $key . '">'
-																						. '<input type="radio" name="Quitado' . $i . '" id="radiobuttondinamico" '
-																						. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
-																						. 'autocomplete="off" value="' . $key . '" >' . $row
-																						. '</label>'
-																						;
-																						}
-																						}
-																					*/
 																					foreach ($select['Quitado'] as $key => $row) {
 																						if (!$parcelasrec[$i]['Quitado'])$parcelasrec[$i]['Quitado'] = 'N';
 																						($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
@@ -1608,10 +1586,38 @@
 																					}
 																				?>
 																			</div>
+																		<?php }else{ ?>
+																			<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S" && $parcelasrec[$i]['Quitado'] == "N") { ?>
+																				<div class="btn-group" data-toggle="buttons">
+																					<?php
+																						foreach ($select['Quitado'] as $key => $row) {
+																							if (!$parcelasrec[$i]['Quitado'])$parcelasrec[$i]['Quitado'] = 'N';
+																							($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																							if ($parcelasrec[$i]['Quitado'] == $key) {
+																								echo ''
+																								. '<label class="btn btn-warning active" name="Quitado' . $i . '_' . $hideshow . '">'
+																								. '<input type="radio" name="Quitado' . $i . '" id="' . $hideshow . '" '
+																								. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
+																								. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																								. '</label>'
+																								;
+																								} else {
+																								echo ''
+																								. '<label class="btn btn-default" name="Quitado' . $i . '_' . $hideshow . '">'
+																								. '<input type="radio" name="Quitado' . $i . '" id="' . $hideshow . '" '
+																								. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
+																								. 'autocomplete="off" value="' . $key . '" >' . $row
+																								. '</label>'
+																								;
+																							}
+																						}
+																					?>
+																				</div>
 																			<?php }else{ ?>
-																			<input type="hidden" name="Quitado<?php echo $i ?>" id="Quitado<?php echo $i ?>"  value="<?php echo $parcelasrec[$i]['Quitado']; ?>"/>
-																			<input type="text" class="form-control" readonly="" value="<?php echo $concparc[$i]; ?>"/>
-																		<?php } ?>
+																				<input type="hidden" name="Quitado<?php echo $i ?>" id="Quitado<?php echo $i ?>"  value="<?php echo $parcelasrec[$i]['Quitado']; ?>"/>
+																				<input type="text" class="form-control" readonly="" value="<?php echo $concparc[$i]; ?>"/>
+																			<?php } ?>
+																		<?php } ?>	
 																	</div>
 																	<div class="col-sm-3  col-md-3 col-lg-2">
 																		<div id="Quitado<?php echo $i ?>" <?php echo $div['Quitado' . $i]; ?>>
@@ -2391,7 +2397,7 @@
 														<div class="col-sm-6 col-md-4 text-center">
 															<label ></label>
 															<div class="btn-group">
-																<?php if ($_SESSION['Usuario']['Edit_Orcam'] == "S" ) { ?>
+																<?php if ($_SESSION['log']['idSis_Empresa'] == 5) { ?>
 																	<span class="input-group-btn">	
 																		<?php 
 																			if($orcatrata['idApp_Cliente'] == 0 || $orcatrata['idApp_Cliente'] == 1 || $orcatrata['idApp_Cliente'] == 150001 || $_SESSION['log']['idSis_Empresa'] == 5) { 
@@ -2405,7 +2411,23 @@
 																			<span class="glyphicon glyphicon-edit"></span>Edit
 																		</a>
 																	</span>
-																<?php } ?>
+																<?php }else{ ?>	
+																	<?php if ($_SESSION['Usuario']['Edit_Orcam'] == "S" ) { ?>
+																		<span class="input-group-btn">	
+																			<?php 
+																				if($orcatrata['idApp_Cliente'] == 0 || $orcatrata['idApp_Cliente'] == 1 || $orcatrata['idApp_Cliente'] == 150001 || $_SESSION['log']['idSis_Empresa'] == 5) { 
+																					$ref_alterar = 'alterar2';
+																					
+																					}else{
+																					$ref_alterar = 'alterar';
+																				}
+																			?>
+																			<a class="btn btn-lg btn-warning" name="submeter5" id="submeter5" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." href="<?php echo base_url() . 'Orcatrata/' . $ref_alterar . '/' . $orcatrata['idApp_OrcaTrata']; ?>">
+																				<span class="glyphicon glyphicon-edit"></span>Edit
+																			</a>
+																		</span>
+																	<?php } ?>
+																<?php } ?>	
 																<span class="input-group-btn">
 																	<a class="btn btn-lg btn-info" name="submeter2" id="submeter2" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $orcatrata['idApp_OrcaTrata']; ?>">
 																		<span class="glyphicon glyphicon-print"></span>										

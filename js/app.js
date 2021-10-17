@@ -10644,7 +10644,7 @@ $('#calendar').fullCalendar({
     editable: false,
     timezone: "local",
     lang: 'pt-br',
-    eventAfterRender: function (event, element) {
+	eventAfterRender: function (event, element) {
 		//console.log('CadastrarPet = '+event.CadastrarPet);
 		//console.log('CadastrarDep = '+event.CadastrarDep);
         if (event.Evento == 1){

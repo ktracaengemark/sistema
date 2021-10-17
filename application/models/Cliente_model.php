@@ -96,7 +96,7 @@ class Cliente_model extends CI_Model {
     }
 
     public function get_cliente_associado($data) {
-        $query = $this->db->query('SELECT idApp_Cliente FROM App_Cliente WHERE idSis_Usuario_5 = ' . $data);
+        $query = $this->db->query('SELECT idApp_Cliente FROM App_Cliente WHERE idSis_Associado = ' . $data);
 
         $query = $query->result_array();
 
@@ -141,6 +141,23 @@ class Cliente_model extends CI_Model {
 
         return $query[0];
 
+    }
+	
+    public function get_associado($data) {
+        $query = $this->db->query('SELECT * FROM Sis_Associado WHERE Associado = ' . $data . ' LIMIT 1');
+        $count = $query->num_rows();
+		$query = $query->result_array();
+		
+		if(isset($count)){
+			if($count == 0){
+				return FALSE;
+			}else{
+				return $query[0];
+			}
+		}else{
+			return FALSE;
+		}
+		
     }
 
 	public function get_alterarcashback($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {

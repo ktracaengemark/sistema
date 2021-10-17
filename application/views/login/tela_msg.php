@@ -8,11 +8,16 @@
         </a>
     </p>
     -->
+	<p class="text-center">
+        <a href="<?php echo base_url(); ?>login">
+            <img src="<?php echo base_url() . 'arquivos/imagens/' . $modulo . '.png'; ?>" />
+        </a>
+    </p>	
     <h2 class="form-signin-heading text-center">Bem Vindo!! <?php #echo ucfirst($_SESSION['log']['nome_modulo']) ?></h2>
 
     <?php if ($aviso) echo $aviso; ?>
 
-    <a class="btn btn-lg btn-primary" href="<?php echo base_url() ?>login/index1" role="button">
+    <a class="btn btn-lg btn-primary" href="<?php echo base_url() ?>login/index" role="button">
     <!--<a class="btn btn-lg btn-primary" href="<?php echo base_url() . $_SESSION['log']['modulo']; ?>">-->
         <span class="glyphicon glyphicon-home"></span> Login Pessoal
     </a>

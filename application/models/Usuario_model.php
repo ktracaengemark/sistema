@@ -85,6 +85,31 @@ class Usuario_model extends CI_Model {
         return $query[0];
     }
 
+    public function get_usuario_associado($data) {
+        $query = $this->db->query('SELECT idSis_Usuario FROM Sis_Usuario WHERE idSis_Associado = ' . $data);
+
+        $query = $query->result_array();
+
+        return $query;
+    }
+	
+    public function get_associado($data) {
+        $query = $this->db->query('SELECT * FROM Sis_Associado WHERE Associado = ' . $data . ' LIMIT 1');
+        $count = $query->num_rows();
+		$query = $query->result_array();
+		
+		if(isset($count)){
+			if($count == 0){
+				return FALSE;
+			}else{
+				return $query[0];
+			}
+		}else{
+			return FALSE;
+		}
+		
+    }
+
     public function get_usuario_online($data) {
         $query = $this->db->query('SELECT * FROM Sis_Usuario_Online WHERE idSis_Usuario_Online = ' . $data);
 

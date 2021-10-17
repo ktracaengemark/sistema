@@ -76,7 +76,7 @@
 									</button>
 								</div>
 								<?php if ($editar == 1) { ?>
-									<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+									<?php if ($_SESSION['log']['idSis_Empresa'] == 5) { ?>
 										<div class="col-md-4">
 											<label>Baixa</label>
 											<a href="<?php echo base_url() . $alterarparc . $_SESSION['log']['idSis_Empresa']; ?>">
@@ -85,7 +85,18 @@
 												</button>
 											</a>
 										</div>
-									<?php } ?>
+									<?php }else{ ?>
+										<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+											<div class="col-md-4">
+												<label>Baixa</label>
+												<a href="<?php echo base_url() . $alterarparc . $_SESSION['log']['idSis_Empresa']; ?>">
+													<button class="btn btn-success btn-md btn-block" type="button">
+														<span class="glyphicon glyphicon-edit"></span>
+													</button>
+												</a>
+											</div>
+										<?php } ?>
+									<?php } ?>	
 									<?php if ($print == 1) { ?>
 										<!--
 										<div class="col-md-4">

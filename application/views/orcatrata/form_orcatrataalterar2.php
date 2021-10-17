@@ -1553,31 +1553,9 @@
 																			</div>
 																			<div class="col-sm-3  col-md-2 col-lg-2">
 																				<label for="Quitado">Parc. Paga?</label><br>
-																				<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+																				<?php if ($_SESSION['log']['idSis_Empresa'] == 5) { ?>
 																					<div class="btn-group" data-toggle="buttons">
 																						<?php
-																						/*
-																						foreach ($select['Quitado'] as $key => $row) {
-																							(!$parcelasrec[$i]['Quitado']) ? $parcelasrec[$i]['Quitado'] = 'N' : FALSE;
-																							if ($parcelasrec[$i]['Quitado'] == $key) {
-																								echo ''
-																								. '<label class="btn btn-warning active" name="radiobutton_Quitado' . $i . '" id="radiobutton_Quitado' . $i .  $key . '">'
-																								. '<input type="radio" name="Quitado' . $i . '" id="radiobuttondinamico" '
-																								. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
-																								. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																								. '</label>'
-																								;
-																							} else {
-																								echo ''
-																								. '<label class="btn btn-default" name="radiobutton_Quitado' . $i . '" id="radiobutton_Quitado' . $i .  $key . '">'
-																								. '<input type="radio" name="Quitado' . $i . '" id="radiobuttondinamico" '
-																								. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
-																								. 'autocomplete="off" value="' . $key . '" >' . $row
-																								. '</label>'
-																								;
-																							}
-																						}
-																						*/
 																						foreach ($select['Quitado'] as $key => $row) {
 																							if (!$parcelasrec[$i]['Quitado'])$parcelasrec[$i]['Quitado'] = 'N';
 																							($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
@@ -1601,17 +1579,45 @@
 																						}
 																						?>
 																					</div>
-																				<?php }else{ ?>
-																					<input type="hidden" name="Quitado<?php echo $i ?>" id="Quitado<?php echo $i ?>"  value="<?php echo $parcelasrec[$i]['Quitado']; ?>"/>
-																					<span><?php if($parcelasrec[$i]['Quitado'] == "S") {
-																									echo 'Sim';
-																								} elseif($parcelasrec[$i]['Quitado'] == "N"){
-																									echo 'Não';
-																								}else{
-																									echo 'Não';
-																								}?>
-																					</span>
-																				<?php } ?>
+																				<?php }else{ ?>	
+																					<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+																						<div class="btn-group" data-toggle="buttons">
+																							<?php
+																							foreach ($select['Quitado'] as $key => $row) {
+																								if (!$parcelasrec[$i]['Quitado'])$parcelasrec[$i]['Quitado'] = 'N';
+																								($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																								if ($parcelasrec[$i]['Quitado'] == $key) {
+																									echo ''
+																									. '<label class="btn btn-warning active" name="Quitado' . $i . '_' . $hideshow . '">'
+																									. '<input type="radio" name="Quitado' . $i . '" id="' . $hideshow . '" '
+																									. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
+																									. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																									. '</label>'
+																									;
+																								} else {
+																									echo ''
+																									. '<label class="btn btn-default" name="Quitado' . $i . '_' . $hideshow . '">'
+																									. '<input type="radio" name="Quitado' . $i . '" id="' . $hideshow . '" '
+																									. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
+																									. 'autocomplete="off" value="' . $key . '" >' . $row
+																									. '</label>'
+																									;
+																								}
+																							}
+																							?>
+																						</div>
+																					<?php }else{ ?>
+																						<input type="hidden" name="Quitado<?php echo $i ?>" id="Quitado<?php echo $i ?>"  value="<?php echo $parcelasrec[$i]['Quitado']; ?>"/>
+																						<span><?php if($parcelasrec[$i]['Quitado'] == "S") {
+																										echo 'Sim';
+																									} elseif($parcelasrec[$i]['Quitado'] == "N"){
+																										echo 'Não';
+																									}else{
+																										echo 'Não';
+																									}?>
+																						</span>
+																					<?php } ?>
+																				<?php } ?>	
 																			</div>
 																			<div class="col-sm-3  col-md-3 col-lg-2">
 																				<div id="Quitado<?php echo $i ?>" <?php echo $div['Quitado' . $i]; ?>>
@@ -1621,43 +1627,31 @@
 																							<span class="glyphicon glyphicon-calendar"></span>
 																						</span>
 																						<input type="text" class="form-control Date" id="DataPago<?php echo $i ?>" maxlength="10" placeholder="DD/MM/AAAA" 
-																								<?php if ($_SESSION['Usuario']['Bx_Pag'] == "N") echo 'readonly=""' ?>
+																								<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>
+																									<?php if ($_SESSION['Usuario']['Bx_Pag'] == "N") echo 'readonly=""' ?>
+																								<?php } ?>	
 																							   name="DataPago<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['DataPago'] ?>">
 																						
 																					</div>
 																				</div>
 																			</div>
-																			<!--
-																			<div class="col-md-2">
-																				<label for="idSis_Usuario<?php echo $i ?>">Cobrador:</label>
-																				<?php if ($i == 1) { ?>
-																				<?php } ?>
-																				<select data-placeholder="Selecione uma opção..." class="form-control"
-																						 id="listadinamicac<?php echo $i ?>" name="idSis_Usuario<?php echo $i ?>">
-																					<option value="">-- Sel.Profis. --</option>
-																					<?php
-																					/*
-																					foreach ($select['idSis_Usuario'] as $key => $row) {
-																						(!$parcelasrec['idSis_Usuario']) ? $parcelasrec['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario']: FALSE;
-																						if ($parcelasrec[$i]['idSis_Usuario'] == $key) {
-																							echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-																						} else {
-																							echo '<option value="' . $key . '">' . $row . '</option>';
-																						}
-																					}
-																					*/
-																					?>
-																				</select>
-																			</div>
-																			-->
-																			<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+																			<?php if ($_SESSION['log']['idSis_Empresa'] == 5) { ?>
 																				<div class="col-sm-1 col-md-1 col-lg-1">
 																					<label><br></label><br>
 																					<button type="button" id="<?php echo $i ?>" class="remove_field21 btn btn-danger">
 																						<span class="glyphicon glyphicon-trash"></span>
 																					</button>
 																				</div>
-																			<?php } ?>
+																			<?php }else{ ?>
+																				<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+																					<div class="col-sm-1 col-md-1 col-lg-1">
+																						<label><br></label><br>
+																						<button type="button" id="<?php echo $i ?>" class="remove_field21 btn btn-danger">
+																							<span class="glyphicon glyphicon-trash"></span>
+																						</button>
+																					</div>
+																				<?php } ?>
+																			<?php } ?>	
 																		</div>
 																	</div>
 																</div>
@@ -1672,11 +1666,18 @@
 														<div class="row">
 															<div class="col-md-3 text-left">
 																<label></label>
-																<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>	
+																<?php if ($_SESSION['log']['idSis_Empresa'] == 5) { ?>	
 																	<button class="btn btn-warning" type="button" data-toggle="collapse" onclick="adicionaParcelas()"
 																			data-target="#Parcelas" aria-expanded="false" aria-controls="Parcelas">
 																		<span class="glyphicon glyphicon-plus"></span> Adic. Parcelas
 																	</button>
+																<?php }else{ ?>
+																	<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>	
+																		<button class="btn btn-warning" type="button" data-toggle="collapse" onclick="adicionaParcelas()"
+																				data-target="#Parcelas" aria-expanded="false" aria-controls="Parcelas">
+																			<span class="glyphicon glyphicon-plus"></span> Adic. Parcelas
+																		</button>
+																	<?php } ?>
 																<?php } ?>	
 															</div>
 														</div>
@@ -2292,13 +2293,21 @@
 														<div class="col-sm-6 col-md-4 text-center">
 															<label ></label>
 															<div class="btn-block">
-																<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>
+																<?php if ($_SESSION['log']['idSis_Empresa'] == 5 ) { ?>
 																	<span class="input-group-btn">
 																		<button  type="button" class="btn btn-lg btn-danger" name="submeter2" id="submeter2" onclick="DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 																			<span class="glyphicon glyphicon-trash"></span>Exc
 																		</button>
 																	</span>
-																<?php } ?>
+																<?php }else{ ?>
+																	<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>
+																		<span class="input-group-btn">
+																			<button  type="button" class="btn btn-lg btn-danger" name="submeter2" id="submeter2" onclick="DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
+																				<span class="glyphicon glyphicon-trash"></span>Exc
+																			</button>
+																		</span>
+																	<?php } ?>
+																<?php } ?>	
 																<span class="input-group-btn">
 																	<a class="btn btn-lg btn-info " name="submeter5" id="submeter5" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $orcatrata['idApp_OrcaTrata']; ?>">
 																		<span class="glyphicon glyphicon-print"></span>										
@@ -2331,18 +2340,26 @@
 																				<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
 																			</button>
 																		</div>
-																		<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>
-																			<?php if ($count_orca == 0 ) { ?>	
-																				<div class="col-md-6 text-right">
-																					<a class="btn btn-danger" name="submeter3" id="submeter3" onclick="DesabilitaBotaoExcluir(this.name)" href="<?php echo base_url() . 'orcatrata/excluir2/' . $orcatrata['idApp_OrcaTrata'] ?>" role="button">
-																						<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
-																					</a>
-																				</div>
-																			<?php }else{ ?>	
-																				<div class="col-md-6 text-left">
-																					<span class="glyphicon glyphicon-alert" name="submeter3" id="submeter3" ></span> Atenção! <br>Este Orçamento está vinculado a um agendamento e não pode ser apagado por aqui!
-																				</div>
-																			<?php } ?>	
+																		<?php if ($_SESSION['log']['idSis_Empresa'] == 5 ) { ?>	
+																			<div class="col-md-6 text-right">
+																				<a class="btn btn-danger" name="submeter3" id="submeter3" onclick="DesabilitaBotaoExcluir(this.name)" href="<?php echo base_url() . 'orcatrata/excluir2/' . $orcatrata['idApp_OrcaTrata'] ?>" role="button">
+																					<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
+																				</a>
+																			</div>
+																		<?php }else{ ?>
+																			<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>
+																				<?php if ($count_orca == 0 ) { ?>	
+																					<div class="col-md-6 text-right">
+																						<a class="btn btn-danger" name="submeter3" id="submeter3" onclick="DesabilitaBotaoExcluir(this.name)" href="<?php echo base_url() . 'orcatrata/excluir2/' . $orcatrata['idApp_OrcaTrata'] ?>" role="button">
+																							<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
+																						</a>
+																					</div>
+																				<?php }else{ ?>	
+																					<div class="col-md-6 text-left">
+																						<span class="glyphicon glyphicon-alert" name="submeter3" id="submeter3" ></span> Atenção! <br>Este Orçamento está vinculado a um agendamento e não pode ser apagado por aqui!
+																					</div>
+																				<?php } ?>	
+																			<?php } ?>
 																		<?php } ?>	
 																	</div>
 																</div>

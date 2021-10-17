@@ -118,8 +118,8 @@
 													</div>
 												</div>	
 												<div class="row">
-													<div class="col-md-6 text-left">
-														<label class="sr-only" for="Cadastrar">Funcao Encontrada?</label>
+													<div class="col-md-12 text-left">
+														<label class="" for="Cadastrar">Funcao Encontrada?</label>
 														<div class="btn-group" data-toggle="buttons">
 															<?php
 															foreach ($select['Cadastrar'] as $key => $row) {
@@ -146,6 +146,7 @@
 															?>
 
 														</div>
+														<?php echo form_error('Funcao'); ?>
 													</div>
 												</div>	
 												<div class="row">	
@@ -228,6 +229,7 @@
 												<div class="form-group">
 													<div class="btn-group" data-toggle="buttons">
 														<?php
+														/*
 														foreach ($select['CompAgenda'] as $key => $row) {
 															(!$query['CompAgenda']) ? $query['CompAgenda'] = 'N' : FALSE;
 
@@ -247,6 +249,7 @@
 																;
 															}
 														}
+														*/
 														?>
 													</div>
 												</div>
@@ -367,7 +370,9 @@
 					</div>
 					<div class="form-group">
 						<div class="row">
-							<input type="hidden" name="idSis_Usuario" value="<?php echo $query['idSis_Usuario']; ?>">
+							<?php if ($metodo > 1) { ?>
+								<input type="hidden" name="idSis_Usuario" value="<?php echo $query['idSis_Usuario']; ?>">
+							<?php } ?>
 							<?php if ($metodo == 2) { ?>
 
 								<div class="col-md-6">

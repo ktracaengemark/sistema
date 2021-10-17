@@ -9,7 +9,7 @@ class Login extends CI_Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->load->model(array('Login_model', 'Basico_model'));
+        $this->load->model(array('Login_model', 'Basico_model', 'Associado_model', 'Usuario_model', 'Cliente_model'));
         $this->load->helper(array('form', 'url'));
         $this->load->library(array('basico', 'form_validation', 'user_agent', 'email'));
         $this->load->driver('session');
@@ -34,7 +34,7 @@ class Login extends CI_Controller {
         }
     }
 
-    public function index() {
+    public function index_orig() {
 	
         $this->load->view('basico/logologin');
 		
@@ -211,6 +211,147 @@ class Login extends CI_Controller {
 						$this->load->view('form_login1');
 					} else {
 						redirect('acesso');
+						#redirect('agenda');
+						#redirect('cliente');
+					}
+				}
+            }
+        }
+
+        #load footer view
+        #$this->load->view('basico/footerlogin');
+        $this->load->view('basico/baselogin');
+        $this->load->view('basico/footer');
+    }	
+
+    public function index() {
+	
+        $this->load->view('basico/logologin');
+		
+		#$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
+        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
+        $_SESSION['log']['idTab_Modulo'] = 1;
+
+        #change error delimiter view
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+        #Get GET or POST data
+		$celular = $this->input->get_post('CelularUsuario');
+        $empresa = $this->input->get_post('idSis_Empresa');
+		$senha = md5($this->input->get_post('Senha'));
+
+        #set validation rules
+		$this->form_validation->set_rules('CelularUsuario', 'Celular do Usuário', 'required|trim');
+        $this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'required|trim');
+		$this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5');
+        
+		$data['select']['idSis_Empresa'] = $this->Login_model->select_empresa1();
+		
+		if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Sua sessão expirou. Faça o login novamente.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 4)
+            $data['msg'] = $this->basico->msg('<strong>Usuário ativado com sucesso! Faça o login para acessar o sistema.</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 5)
+            $data['msg'] = $this->basico->msg('<strong>Link expirado.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 6)
+            $data['msg'] = $this->basico->msg('<strong>Faça Login, para acessar o sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        #run form validation
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('login/form_login1', $data);
+        } else {
+
+            session_regenerate_id(true);
+
+			//$query = $this->Login_model->check_dados_empresa($empresa, $celular, $senha, TRUE);
+			$query = $this->Login_model->check_dados_associado($empresa, $celular, $senha, TRUE);
+
+            if ($query === FALSE) {
+
+				$data['msg'] = $this->basico->msg('<strong>Empresa, Celular ou Senha</strong> incorretos.', 'erro', FALSE, FALSE, FALSE);
+
+				$this->load->view('login/form_login1', $data);
+
+            } else {
+                
+				$valida_associado = $this->Login_model->check_associado($empresa, $celular, $senha);
+
+				if ($valida_associado == 1) {
+					$data['msg'] = $this->basico->msg('<strong>Associado</strong> não existe.', 'erro', FALSE, FALSE, FALSE);
+					$this->load->view('login/form_login1', $data);
+				} else if ($valida_associado == 2) {
+					$data['msg'] = $this->basico->msg('<strong>Associado</strong> inativo! Fale com o Administrador da sua Empresa!', 'erro', FALSE, FALSE, FALSE);
+					$this->load->view('login/form_login1', $data);
+				} else {
+				
+					$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao_associado($query['idSis_Associado']);
+					/*
+					echo "<pre>";
+					print_r($_SESSION['log']['Agenda']);
+					echo "</pre>";
+					exit();
+					*/					
+					#### Carrega os dados da Empresa nas vari?ves de sess?o ####
+
+					$query2 = $this->Login_model->check_documentos_log($empresa, TRUE);			
+					$_SESSION['log']['Icone'] = $query2['Icone'];
+						
+					$query3 = $this->Login_model->dados_empresa_log($empresa);			
+					$_SESSION['log']['NivelEmpresa'] = $query3['NivelEmpresa'];
+					$_SESSION['log']['TabelasEmpresa'] = $query3['TabelasEmpresa'];
+					$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
+					$_SESSION['log']['Site'] = $query3['Site'];
+					$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
+					
+					#initialize session
+					$this->load->driver('session');
+
+					#$_SESSION['log']['Usuario'] = $query[''];
+					//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
+					$_SESSION['log']['Usuario'] = (strlen($query['Associado']) > 13) ? substr($query['Associado'], 0, 13) : $query['Associado'];
+					$_SESSION['log']['Nome'] = $query['Nome'];
+					$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
+					$_SESSION['log']['CpfUsuario'] = $query['CpfAssociado'];
+					$_SESSION['log']['CelularUsuario'] = $query['CelularAssociado'];
+					$_SESSION['log']['idSis_Usuario'] = $query['idSis_Associado'];
+					$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
+					#$_SESSION['log']['NivelEmpresa'] = $query['NivelEmpresa'];
+					$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];
+					$_SESSION['log']['NomeEmpresa2'] = (strlen($query['NomeEmpresa']) > 6) ? substr($query['NomeEmpresa'], 0, 6) : $query['NomeEmpresa'];
+					//$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
+					$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
+					//$_SESSION['log']['Permissao'] = $query['Permissao'];
+					$_SESSION['log']['Arquivo'] = $query['Arquivo'];
+					//$_SESSION['log']['Cad_Orcam'] = $query['Cad_Orcam'];
+
+					
+					$this->load->database();
+					$_SESSION['db']['hostname'] = $this->db->hostname;
+					$_SESSION['db']['username'] = $this->db->username;
+					$_SESSION['db']['password'] = $this->db->password;
+					$_SESSION['db']['database'] = $this->db->database;
+
+					$set_acesso_associado = $this->Login_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'LOGIN');
+					/*
+					echo "<pre>";
+					print_r($set_acesso_associado);
+					echo "</pre>";
+					exit();	
+					*/
+					if ($set_acesso_associado === FALSE) {
+						$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
+
+						$this->basico->erro($msg);
+						$this->load->view('form_login1');
+					} else {
+						redirect('acesso_associado');
+						#redirect('acesso');
 						#redirect('agenda');
 						#redirect('cliente');
 					}
@@ -492,8 +633,14 @@ class Login extends CI_Controller {
 					$this->load->view('login/form_login2', $data);
 				} else {
 					
+					//$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
 					$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
-
+					/*
+					echo "<pre>";
+					print_r($_SESSION['log']['Agenda']);
+					echo "</pre>";
+					exit();
+					*/
 					#### Carrega os dados da Empresa nas vari?ves de sess?o ####
 					
 					$query2 = $this->Login_model->check_documentos_log($empresa, TRUE);
@@ -1707,6 +1854,226 @@ class Login extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Este Associado não possui Email para recuperação de Senha. Entre em contato com o administrador da Plataforma.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = $this->input->post(array(
+            'Associado',
+                ), TRUE);
+
+        if (isset($_GET['usuario']))
+            $data['query']['Associado'] = $_GET['usuario'];
+
+        $this->form_validation->set_error_delimiters('<h5 style="color: red;">', '</h5>');
+
+		$this->form_validation->set_rules('Associado', 'Celular/Login do Associado', 'required|trim');
+
+        #run form validation
+        if ($this->form_validation->run() === FALSE) {
+            #load login view
+            $this->load->view('login/form_recuperar', $data);
+        } else {
+
+            $associado = $this->Login_model->get_data_by_usuario($data['query']['Associado']);
+			/*  
+			echo "<br>";
+			echo "<pre>";
+			print_r($associado['idSis_Associado']);
+			echo "<br>";
+			print_r($associado['Email']);
+			echo "<br>";
+			print_r($associado['Codigo']);
+			echo "</pre>";
+			exit();
+			*/
+            if (isset($associado['Email']) && isset($associado['Codigo'])) {
+
+
+                #$this->load->library('email');
+
+                //DADOS PARA ENVIO DE E-MAIL DE CONFIRMAÇÃO DE INSCRIÇÃO
+                $config['protocol'] = 'smtp';
+                $config['mailpath'] = "/usr/sbin/sendmail";
+                $config['smtp_host'] = 'smtp.zoho.com';
+                $config['smtp_user'] = 'contato@ktracaengemark.com.br';
+                $config['smtp_pass'] = '20KtracaEngeMark17!';
+                $config['charset'] = 'iso-8859-1';
+                $config['mailtype'] = 'html';
+                $config['wrapchars'] = '50';
+                $config['smtp_port'] = '587';
+                $config['smtp_crypto'] = 'tls';
+                $config['newline'] = "\r\n";
+
+                $this->email->initialize($config);
+
+                $this->email->from('contato@ktracaengemark.com.br', 'KTRACA Engenharia & Marketing');
+                $this->email->to($associado['Email']);
+
+                $this->email->subject('[KTRACA] Alteração de Senha - Associado: ' . $data['query']['Associado']);
+                $this->email->message('Por favor, clique no link a seguir para alterar sua senha: '
+                        //. 'http://www.romati.com.br/app/login/trocar_senha/' . $associado['Codigo']);
+                    . base_url() . 'login/trocar_senha/' . $associado['Codigo']);
+
+                $this->email->send();
+				/*
+				echo "<br>";
+				echo "<pre>";                
+				echo ($this->email->send(FALSE)) ? "sim" : "não";
+				//echo $this->email->print_debugger(array('headers'));				
+				echo "</pre>";
+                */
+                $data['aviso'] = ''
+                        . '
+                    <div class="alert alert-success" role="alert">
+                        <h4>
+                            <p><b>Link enviado com sucesso!</b></p>
+                            <p>O link para alterar senha foi enviado para o e-mail <b>' . $associado['Email'] . '</b></p>
+                            <p>Caso o e-mail com o link não esteja na sua caixa de entrada <b>verifique também sua caixa de SPAM</b>.</p>
+                        </h4>
+                    </div> '
+                        . '';
+
+                #$data['msg'] = '?m=4';
+                $this->load->view('login/tela_msg', $data);
+            } else {
+                //$data['msg'] = '?m=5';
+                //redirect(base_url() . 'login/' . $data['msg']);
+                $data['msg'] = '?m=3';
+                redirect(base_url() . 'login/recuperar/' . $data['msg']);
+            }
+        }
+    }
+
+    public function trocar_senha($codigo = NULL) {
+
+        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
+        $_SESSION['log']['idTab_Modulo'] = 1;
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = $this->input->post(array(
+            'idSis_Associado',
+            'Email',
+            'Associado',
+            'Codigo',
+		), TRUE);
+
+        if ($codigo) {
+            $data['query'] = $this->Login_model->get_data_by_codigo($codigo);
+            $data['query']['Codigo'] = $codigo;
+        } else {
+            $data['query']['Codigo'] = $this->input->post('Codigo', TRUE);
+        }
+		/*
+		echo "<br>";
+		echo "<pre>";
+		print_r($codigo);
+		echo "<br>";
+		print_r($data['query']['idSis_Associado']);
+		echo "</pre>";
+		exit();		
+		*/
+        if (!$this->Login_model->get_data_by_codigo($data['query']['Codigo']))
+            exit("Link expirado. Tente recuperar a senha novamente.");
+
+        $data['query']['Senha'] = $this->input->post('Senha', TRUE);
+        $data['query']['Confirma'] = $this->input->post('Confirma', TRUE);
+
+        $this->form_validation->set_error_delimiters('<h5 style="color: red;">', '</h5>');
+
+        $this->form_validation->set_rules('Senha', 'Senha', 'required|trim');
+        $this->form_validation->set_rules('Confirma', 'Confirmar Senha', 'required|trim|matches[Senha]');
+        #$this->form_validation->set_rules('Codigo', 'Código', 'required|trim');
+        #run form validation
+        if ($this->form_validation->run() === FALSE) {
+            #load login view
+            $this->load->view('login/form_troca_senha', $data);
+        } else {
+
+            ###não está registrando a auditoria do trocar senha. tenho que ver isso
+            ###ver também o link para troca, quando expirado avisar
+            
+            $data['query']['Senha'] 	= md5($data['query']['Senha']);
+			$data['query']['Codigo'] 	= md5(uniqid(time() . rand()));	
+			unset($data['query']['Confirma']);
+
+			$data['anterior'] = $this->Associado_model->get_associado($data['query']['idSis_Associado']);
+			$data['campos'] = array_keys($data['query']);
+
+			$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idSis_Associado'], TRUE);
+
+			$data['update']['associado'] = $this->Associado_model->update_associado($data['query'], $data['query']['idSis_Associado']);
+			
+			if ($data['auditoriaitem'] && $data['update']['associado'] === FALSE) {
+				$this->load->view('login/form_troca_senha', $data);
+			} else {
+
+				if ($data['auditoriaitem'] === FALSE) {
+					$data['msg'] = '';
+				} else {
+					//$data['auditoria'] = $this->Basico_model->set_auditoriaempresa($data['auditoriaitem'], 'Sis_Associado', 'UPDATE', $data['auditoriaitem']);
+					$data['msg'] = '?m=1';
+				}
+				
+				#### App_Cliente ####
+				$data['update']['cliente']['alterar'] = $this->Cliente_model->get_cliente_associado($data['query']['idSis_Associado']);
+				if (isset($data['update']['cliente']['alterar'])){
+
+					$max = count($data['update']['cliente']['alterar']);
+					for($j=0;$j<$max;$j++) {
+					
+						$data['update']['cliente']['alterar'][$j]['senha'] 			= $data['query']['Senha'];
+						$data['update']['cliente']['alterar'][$j]['Codigo'] 		= $data['query']['Codigo'];
+
+						$data['update']['cliente']['bd'][$j] = $this->Cliente_model->update_cliente($data['update']['cliente']['alterar'][$j], $data['update']['cliente']['alterar'][$j]['idApp_Cliente']);
+					
+					}
+				}				
+				
+				#### Sis_Usuario ####
+				$data['update']['usuario']['alterar'] = $this->Usuario_model->get_usuario_associado($data['query']['idSis_Associado']);
+				
+				if (isset($data['update']['usuario']['alterar'])){
+
+					$max_usuario = count($data['update']['usuario']['alterar']);
+
+					for($j=0;$j<$max_usuario;$j++) {
+					
+						$data['update']['usuario']['alterar'][$j]['Senha'] 			= $data['query']['Senha'];
+						$data['update']['usuario']['alterar'][$j]['Codigo'] 		= $data['query']['Codigo'];
+
+						$data['update']['usuario']['bd'][$j] = $this->Usuario_model->update_usuario($data['update']['usuario']['alterar'][$j], $data['update']['usuario']['alterar'][$j]['idSis_Usuario']);
+							
+					}
+				}
+				
+                $data['msg'] = '?m=1';
+                redirect(base_url() . 'login' . $data['msg']);
+                exit();				
+			}
+			
+        }
+
+        $this->load->view('basico/footerlogin');
+        $this->load->view('basico/footer');
+    }
+
+    public function recuperar_original() {
+
+        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
+        $_SESSION['log']['idTab_Modulo'] = 1;
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
 
@@ -1720,6 +2087,7 @@ class Login extends CI_Controller {
         $this->form_validation->set_error_delimiters('<h5 style="color: red;">', '</h5>');
 
         $this->form_validation->set_rules('Usuario', 'Usuario', 'required|trim|callback_valid_usuario');
+		$this->form_validation->set_rules('CelularUsuario', 'Celular do Usuário', 'required|trim');
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
@@ -1795,7 +2163,7 @@ class Login extends CI_Controller {
         }
     }
 
-    public function trocar_senha($codigo = NULL) {
+    public function trocar_senha_original($codigo = NULL) {
 
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;

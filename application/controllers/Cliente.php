@@ -13,7 +13,7 @@ class Cliente extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation', 'pagination'));
-        $this->load->model(array('Basico_model', 'Cliente_model', 'Contatocliente_model', 'Clientedep_model', 'Clientepet_model'));
+        $this->load->model(array('Basico_model', 'Associado_model', 'Cliente_model', 'Contatocliente_model', 'Clientedep_model', 'Clientepet_model'));
         #$this->load->model(array('Basico_model', 'Cliente_model'));
         $this->load->driver('session');
 
@@ -229,40 +229,50 @@ class Cliente extends CI_Controller {
 			}
 			if($data['cadastrar']['Responsavel'] == 'S'){
 			
-				$_SESSION['Empresa5'] = $data['empresa5'] = $this->Cliente_model->get_empresa5($data['query']['CelularCliente']);
+				//$_SESSION['Empresa5'] = $data['empresa5'] = $this->Cliente_model->get_empresa5($data['query']['CelularCliente']);
+				$data['associado'] = $this->Cliente_model->get_associado($data['query']['CelularCliente']);
 				
-				if (!isset($_SESSION['Empresa5'])){
+				/*			
+				echo "<br>";
+				echo "<pre>";
+				echo "<br>";
+				print_r($data['associado']);
+				echo "</pre>";			
+				exit();
+				*/
+				
+				if (!isset($data['associado']) || $data['associado'] == FALSE){
 					
-					//$data['usuario']['Nome'] = trim(mb_strtoupper($data['query']['NomeCliente'], 'ISO-8859-1'));
-					$data['usuario']['Nome'] = trim(mb_strtoupper($cliente1, 'ISO-8859-1'));
-					$data['usuario']['idSis_Empresa'] = 5;
-					$data['usuario']['NomeEmpresa'] = "CONTA PESSOAL";
-					$data['usuario']['Permissao'] = 3;
-					$data['usuario']['idTab_Modulo'] = 1;
-					$data['usuario']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
-					$data['usuario']['DataCriacao'] = date('Y-m-d', time());
-					$data['usuario']['Codigo'] = md5(uniqid(time() . rand()));
-					$data['usuario']['Inativo'] = 0;
-					$data['usuario']['CelularUsuario'] = $data['query']['CelularCliente'];
-					$data['usuario']['Usuario'] = $data['query']['CelularCliente'];
-					$data['usuario']['Senha'] = md5($data['query']['CelularCliente']);
+					//$data['associado']['Nome'] = trim(mb_strtoupper($data['query']['NomeCliente'], 'ISO-8859-1'));
+					$data['associado']['Nome'] = trim(mb_strtoupper($cliente1, 'ISO-8859-1'));
+					$data['associado']['idSis_Empresa'] = 5;
+					$data['associado']['NomeEmpresa'] = "CONTA PESSOAL";
+					//$data['associado']['Permissao'] = 3;
+					$data['associado']['idTab_Modulo'] = 1;
+					$data['associado']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
+					$data['associado']['DataCriacao'] = date('Y-m-d', time());
+					$data['associado']['Codigo'] = md5(uniqid(time() . rand()));
+					$data['associado']['Inativo'] = 0;
+					$data['associado']['CelularAssociado'] = $data['query']['CelularCliente'];
+					$data['associado']['Associado'] = $data['query']['CelularCliente'];
+					$data['associado']['Senha'] = md5($data['query']['CelularCliente']);
 					
 					$data['anterior'] = array();
-					$data['campos'] = array_keys($data['usuario']);
+					$data['campos'] = array_keys($data['associado']);
 
-					$data['idSis_Usuario'] = $this->Cliente_model->set_usuario($data['usuario']);
+					$data['associado']['idSis_Associado'] = $this->Associado_model->set_associado($data['associado']);
 
-					if ($data['idSis_Usuario'] === FALSE) {
+					if ($data['associado']['idSis_Associado'] === FALSE) {
 						$data['msg'] = '?m=2';
 						$this->load->view('cliente/form_cliente', $data);
 					} else {
 						/*
-						$data['usuario']['Usuario'] = $data['idSis_Usuario'];
-						$data['usuario']['Senha'] = md5($data['idSis_Usuario']);
-						$data['update']['usuario']['bd'] = $this->Cliente_model->update_usuario($data['usuario'], $data['idSis_Usuario']);
+						$data['associado']['Usuario'] = $data['idSis_Usuario'];
+						$data['associado']['Senha'] = md5($data['idSis_Usuario']);
+						$data['update']['associado']['bd'] = $this->Cliente_model->update_associado($data['associado'], $data['idSis_Usuario']);
 						*/
-						$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['usuario'], $data['campos'], $data['idSis_Usuario']);
-						$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_Usuario', 'CREATE', $data['auditoriaitem'], $data['idSis_Usuario']);
+						$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['associado'], $data['campos'], $data['associado']['idSis_Associado']);
+						$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_Associado', 'CREATE', $data['auditoriaitem'], $data['associado']['idSis_Associado']);
 						/*
 						  echo $this->db->last_query();
 						  echo "<pre>";
@@ -271,8 +281,8 @@ class Cliente extends CI_Controller {
 						  exit();
 						 */
 						$data['agenda'] = array(
-							'NomeAgenda' => 'Cliente',
-							'idSis_Usuario' => $data['idSis_Usuario'],
+							'NomeAgenda' => 'Associado',
+							'idSis_Associado' => $data['associado']['idSis_Associado'],
 							'idSis_Empresa' => "5"
 						);
 						$data['campos'] = array_keys($data['agenda']);
@@ -301,11 +311,11 @@ class Cliente extends CI_Controller {
 						
 						//$data['query']['usuario'] = $data['idSis_Usuario'];
 						$data['query']['usuario'] = $data['query']['CelularCliente'];
-						$data['query']['senha'] = $data['usuario']['Senha'];
+						$data['query']['senha'] = $data['associado']['Senha'];
 						$data['query']['CodInterno'] = md5(uniqid(time() . rand()));
 						
-						$data['query']['idSis_Usuario_5'] = $data['idSis_Usuario'];
-						$data['query']['Codigo'] = $data['usuario']['Codigo'];
+						$data['query']['idSis_Associado'] = $data['associado']['idSis_Associado'];
+						$data['query']['Codigo'] = $data['associado']['Codigo'];
 						$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 						$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 						$data['query']['LocalCadastroCliente'] = "L";
@@ -334,13 +344,13 @@ class Cliente extends CI_Controller {
 					echo "<pre>";
 					print_r($data['query']['CelularCliente']);
 					echo "<br>";
-					print_r($_SESSION['Empresa5']);
+					print_r($data['associado']);
 					echo "<br>";
 					echo "</pre>";
 					exit();		
 					*/
 					$data['cadastrar']['Cadastrar'] = $data['cadastrar']['Cadastrar'];
-						
+					
 					$data['query']['idTab_Modulo'] = 1;
 					//$data['query']['NomeCliente'] = trim(mb_strtoupper($data['query']['NomeCliente'], 'ISO-8859-1'));
 					$data['query']['NomeCliente'] = trim(mb_strtoupper($cliente1, 'ISO-8859-1'));
@@ -360,12 +370,13 @@ class Cliente extends CI_Controller {
 					}
 					
 					//$data['query']['usuario'] = $data['query']['CelularCliente'];
-					$data['query']['usuario'] = $_SESSION['Empresa5']['Usuario'];
-					$data['query']['senha'] = $_SESSION['Empresa5']['Senha'];
+					$data['query']['usuario'] = $data['associado']['Usuario'];
+					$data['query']['senha'] = $data['associado']['Senha'];
 					$data['query']['CodInterno'] = md5(uniqid(time() . rand()));
 					
-					$data['query']['idSis_Usuario_5'] = $_SESSION['Empresa5']['idSis_Usuario'];
-					$data['query']['Codigo'] = $_SESSION['Empresa5']['Codigo'];
+					$data['query']['idSis_Associado'] = $data['associado']['idSis_Associado'];
+					//$data['query']['idSis_Usuario_5'] = $_SESSION['Empresa5']['idSis_Usuario'];
+					$data['query']['Codigo'] = $data['associado']['Codigo'];
 					$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 					$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 					$data['query']['LocalCadastroCliente'] = "L";
@@ -626,7 +637,7 @@ class Cliente extends CI_Controller {
 					  exit();
 					 */
 					$data['agenda'] = array(
-						'NomeAgenda' => 'Cliente',
+						'NomeAgenda' => 'Associado',
 						'idSis_Usuario' => $data['idSis_Usuario'],
 						'idSis_Empresa' => "5"
 					);
@@ -956,11 +967,11 @@ class Cliente extends CI_Controller {
 			echo "<pre>";
 			print_r('id_cliente = '.$data['query']['idApp_Cliente']);
 			echo "<br>";
-			print_r('id_empresa_5 = '.$_SESSION['Query']['idSis_Usuario_5']);
+			print_r('id_empresa_5 = '.$_SESSION['Query']['idSis_Associado']);
 			echo "</pre>";			
 			exit();	
 			*/	
-			if (!isset($_SESSION['Query']['idSis_Usuario_5']) || $_SESSION['Query']['idSis_Usuario_5'] == ''){
+			if (!isset($_SESSION['Query']['idSis_Associado']) || $_SESSION['Query']['idSis_Associado'] == ''){
 				/*
 				echo "<br>";
 				echo "<pre>";
@@ -968,40 +979,41 @@ class Cliente extends CI_Controller {
 				echo "</pre>";			
 				exit();
 				*/
-				$_SESSION['Empresa5'] = $data['empresa5'] = $this->Cliente_model->get_empresa5($data['query']['CelularCliente']);
+				//$_SESSION['Empresa5'] = $data['empresa5'] = $this->Cliente_model->get_empresa5($data['query']['CelularCliente']);
+				$data['associado'] = $this->Cliente_model->get_associado($data['query']['CelularCliente']);
 				
-				if (!isset($_SESSION['Empresa5'])){
+				if (!isset($data['associado']) || $data['associado'] == FALSE ){
 					
-					$data['usuario']['Nome'] = trim(mb_strtoupper($cliente1, 'ISO-8859-1'));
-					$data['usuario']['idSis_Empresa'] = 5;
-					$data['usuario']['NomeEmpresa'] = "CONTA PESSOAL";
-					$data['usuario']['Permissao'] = 3;
-					$data['usuario']['idTab_Modulo'] = 1;
-					$data['usuario']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
-					$data['usuario']['DataCriacao'] = date('Y-m-d', time());
-					$data['usuario']['Codigo'] = md5(uniqid(time() . rand()));
-					$data['usuario']['Inativo'] = 0;
-					$data['usuario']['CelularUsuario'] = $data['query']['CelularCliente'];
-					$data['usuario']['Usuario'] = $data['query']['CelularCliente'];
+					$data['associado']['Nome'] = trim(mb_strtoupper($cliente1, 'ISO-8859-1'));
+					$data['associado']['idSis_Empresa'] = 5;
+					$data['associado']['NomeEmpresa'] = "CONTA PESSOAL";
+					//$data['associado']['Permissao'] = 3;
+					$data['associado']['idTab_Modulo'] = 1;
+					$data['associado']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
+					$data['associado']['DataCriacao'] = date('Y-m-d', time());
+					$data['associado']['Codigo'] = md5(uniqid(time() . rand()));
+					$data['associado']['Inativo'] = 0;
+					$data['associado']['CelularAssociado'] = $data['query']['CelularCliente'];
+					$data['associado']['Associado'] = $data['query']['CelularCliente'];
 					if(!isset($data['query']['senha'])){
-						$data['usuario']['Senha'] = md5($data['query']['CelularCliente']);
-						$data['query']['senha'] = $data['usuario']['Senha'];
+						$data['associado']['Senha'] = md5($data['query']['CelularCliente']);
+						$data['query']['senha'] = $data['associado']['Senha'];
 						//$data['query']['CodInterno'] = md5(uniqid(time() . rand()));
 					}else{
-						$data['usuario']['Senha'] = $data['query']['senha'];
+						$data['associado']['Senha'] = $data['query']['senha'];
 					}
 					$data['anterior'] = array();
-					$data['campos'] = array_keys($data['usuario']);
+					$data['campos'] = array_keys($data['associado']);
 
-					$data['idSis_Usuario'] = $this->Cliente_model->set_usuario($data['usuario']);
+					$data['associado']['idSis_Associado'] = $this->Associado_model->set_associado($data['associado']);
 
-					if ($data['idSis_Usuario'] === FALSE) {
+					if ($data['associado']['idSis_Associado'] === FALSE) {
 						$data['msg'] = '?m=2';
 						$this->load->view('cliente/form_cliente', $data);
 					} else {
 
-						$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['usuario'], $data['campos'], $data['idSis_Usuario']);
-						$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_Usuario', 'CREATE', $data['auditoriaitem'], $data['idSis_Usuario']);
+						$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['associado'], $data['campos'], $data['associado']['idSis_Associado']);
+						$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_Associado', 'CREATE', $data['auditoriaitem'], $data['associado']['idSis_Associado']);
 						/*
 						  echo $this->db->last_query();
 						  echo "<pre>";
@@ -1010,8 +1022,8 @@ class Cliente extends CI_Controller {
 						  exit();
 						 */
 						$data['agenda'] = array(
-							'NomeAgenda' => 'Cliente',
-							'idSis_Usuario' => $data['idSis_Usuario'],
+							'NomeAgenda' => 'Associado',
+							'idSis_Associado' => $data['associado']['idSis_Associado'],
 							'idSis_Empresa' => "5"
 						);
 						$data['campos'] = array_keys($data['agenda']);
@@ -1063,8 +1075,8 @@ class Cliente extends CI_Controller {
 						if(!isset($data['query']['CodInterno'])){
 							$data['query']['CodInterno'] = md5(uniqid(time() . rand()));
 						}
-						$data['query']['idSis_Usuario_5'] = $data['idSis_Usuario'];
-						$data['query']['Codigo'] = $data['usuario']['Codigo'];
+						$data['query']['idSis_Associado'] = $data['associado']['idSis_Associado'];
+						$data['query']['Codigo'] = $data['associado']['Codigo'];
 									
 						$data['anterior'] = $this->Cliente_model->get_cliente($data['query']['idApp_Cliente']);
 						$data['campos'] = array_keys($data['query']);
@@ -1136,12 +1148,12 @@ class Cliente extends CI_Controller {
 					}
 					*/
 					$data['query']['usuario'] = $data['query']['CelularCliente'];
-					$data['query']['senha'] = $_SESSION['Empresa5']['Senha'];
+					$data['query']['senha'] = $data['associado']['Senha'];
 					if(!isset($data['query']['CodInterno'])){
 						$data['query']['CodInterno'] = md5(uniqid(time() . rand()));
 					}
-					$data['query']['idSis_Usuario_5'] = $_SESSION['Empresa5']['idSis_Usuario'];
-					$data['query']['Codigo'] = $_SESSION['Empresa5']['Codigo'];				
+					$data['query']['idSis_Associado'] = $data['associado']['idSis_Associado'];
+					$data['query']['Codigo'] = $data['associado']['Codigo'];				
 
 					$data['anterior'] = $this->Cliente_model->get_cliente($data['query']['idApp_Cliente']);
 					$data['campos'] = array_keys($data['query']);

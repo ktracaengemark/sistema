@@ -338,6 +338,43 @@ class Agenda_model extends CI_Model {
         foreach ($query->result() as $row) {
             $array[$row->idSis_Usuario] = $row->NomeUsuario;
         }
+		/*
+		echo '<br>';
+		echo "<pre>";
+		print_r($array[$row->idSis_Usuario]);
+		echo "</pre>";
+		*/
+        return $array;
+		
+    }
+	
+	public function select_associado() {
+		
+        $query = $this->db->query('
+            SELECT
+				U.idSis_Usuario,
+				U.CpfUsuario,
+				U.CelularUsuario,
+				ASS.idSis_Associado,
+				A.idApp_Agenda,
+				CONCAT(IFNULL(ASS.Nome,"")) AS NomeAssociado
+            FROM
+                Sis_Usuario AS U
+					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = U.Funcao
+					LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = U.idSis_Associado
+					LEFT JOIN App_Agenda AS A ON A.idSis_Associado = ASS.idSis_Associado
+            WHERE
+				U.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+			ORDER BY 
+				ASS.Nome ASC
+        ');
+
+        $array = array();
+        $array[0] = ':: Todos ::';
+        foreach ($query->result() as $row) {
+            //$array[$row->idSis_Usuario] = $row->NomeUsuario;
+            $array[$row->idSis_Associado] = $row->NomeAssociado;
+        }
 
         return $array;
     }

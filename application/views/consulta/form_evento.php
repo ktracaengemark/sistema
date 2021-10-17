@@ -276,12 +276,20 @@
 															<span class="glyphicon glyphicon-save"></span>Save
 														</button>
 													</span>
-													<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>
+													<?php if ($_SESSION['log']['idSis_Empresa'] == 5 ) { ?>
 														<span class="input-group-btn">
 															<button  type="button" class="btn btn-lg btn-danger" name="submeter2" id="submeter2" onclick="quais(),DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 																<span class="glyphicon glyphicon-trash"></span>Exc
 															</button>
 														</span>
+													<?php }else{ ?>	
+														<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>
+															<span class="input-group-btn">
+																<button  type="button" class="btn btn-lg btn-danger" name="submeter2" id="submeter2" onclick="quais(),DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
+																	<span class="glyphicon glyphicon-trash"></span>Exc
+																</button>
+															</span>
+														<?php } ?>	
 													<?php } ?>	
 												</div>
 												<div class="col-md-12 alert alert-warning aguardar" role="alert" >

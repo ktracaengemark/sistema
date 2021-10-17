@@ -199,8 +199,10 @@ class Agenda extends CI_Controller {
 		//$data['select']['idApp_ClienteDep'] = $this->Agenda_model->select_clientedep();
 		$data['select']['NomeEmpresa'] = $this->Agenda_model->select_empresarec();
 		$data['select']['NomeEmpresaCli'] = $this->Agenda_model->select_empresaenv();
-        $data['select']['NomeUsuario'] = $this->Agenda_model->select_usuario();
-        $data['select']['NomeProfissional'] = $this->Agenda_model->select_usuario();
+        //$data['select']['NomeUsuario'] = $this->Agenda_model->select_usuario();
+        $data['select']['NomeUsuario'] = $this->Agenda_model->select_associado();
+        //$data['select']['NomeProfissional'] = $this->Agenda_model->select_usuario();
+        $data['select']['NomeProfissional'] = $this->Agenda_model->select_associado();
 		$data['select']['Procedimento'] = $this->Agenda_model->select_tarefa();
 		$data['select']['Categoria'] = $this->Agenda_model->select_categoria();
 		$data['select']['Compartilhar'] = $this->Agenda_model->select_compartilhar();

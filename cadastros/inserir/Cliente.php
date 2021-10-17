@@ -93,16 +93,17 @@ $modulo 	= $_SESSION['log']['idTab_Modulo'];
 $datacad	= date('Y-m-d H:i:s', time());
 
 
-$result_usuario = "SELECT * FROM Sis_Usuario WHERE CelularUsuario='". $dados['CelularCliente'] ."' AND idSis_Empresa = '5'";
+//$result_usuario = "SELECT * FROM Sis_Usuario WHERE CelularUsuario='". $dados['CelularCliente'] ."' AND idSis_Empresa = '5'";
+$result_usuario = "SELECT * FROM Sis_Associado WHERE Associado='". $dados['CelularCliente'] ."'";
 $resultado_usuario = mysqli_query($conn, $result_usuario);
 $row_resultado_usuario = mysqli_fetch_array($resultado_usuario, MYSQLI_ASSOC);
 
-$result_cliente = "SELECT * FROM App_Cliente WHERE CelularCliente='". $dados['CelularCliente'] ."' AND idSis_Empresa = '" .$empresa. "'";
+$result_cliente = "SELECT * FROM App_Cliente WHERE usuario='". $dados['CelularCliente'] ."' AND idSis_Empresa = '" .$empresa. "'";
 $resultado_cliente = mysqli_query($conn, $result_cliente);
 $row_resultado_cliente = mysqli_fetch_array($resultado_cliente, MYSQLI_ASSOC);
 
 if(($resultado_usuario) AND ($resultado_usuario->num_rows != 0)){
-	//  Encontrou o Usuario da empresa 5
+	//  Encontrou o Associado da empresa 5
 	
 	if(($resultado_cliente) AND ($resultado_cliente->num_rows != 0)){
 		//  Encontrou o Cliente da empresa em questão
@@ -113,7 +114,7 @@ if(($resultado_usuario) AND ($resultado_usuario->num_rows != 0)){
 	}
 	
 } else {
-	//Não Encontoru o Usuario da Empresa 5
+	//Não Encontoru o Associado da Empresa 5
 	
 	if(($resultado_cliente) AND ($resultado_cliente->num_rows != 0)){
 		// Encontrou o Cliente da empresa em questão
@@ -126,11 +127,11 @@ if(($resultado_usuario) AND ($resultado_usuario->num_rows != 0)){
 }
 
 if($cadastrar == 1){
-	//Encontrou o Usuario da empresa 5 e Encontrou o Cliente da empresa em questão!! Não Cadastra Ninguém
+	//Encontrou o Associado da empresa 5 e Encontrou o Cliente da empresa em questão!! Não Cadastra Ninguém
 	echo '5';
 	
 }elseif($cadastrar == 2){
-	//Encontrou o Usuario da empresa 5 e Não Encontrou o  Cliente da empresa em questão!! Pega os Dados do Usuário e Cadastra o Cliente
+	//Encontrou o Associado da empresa 5 e Não Encontrou o  Cliente da empresa em questão!! Pega os Dados do Associado e Cadastra o Cliente
 
 	$CodInterno = md5(time() . rand());
 	$DataCadastroCliente = date('Y-m-d', time());
@@ -138,7 +139,7 @@ if($cadastrar == 1){
 	$result_cliente = "INSERT INTO App_Cliente (idSis_Empresa, 
 												idTab_Modulo, 
 												idSis_Usuario, 
-												idSis_Usuario_5, 
+												idSis_Associado, 
 												NomeCliente, 
 												CelularCliente,
 												DataNascimento,
@@ -161,9 +162,9 @@ if($cadastrar == 1){
 												'" .$empresa. "',
 												'1',
 												'" .$usuario. "',
-												'" .$row_resultado_usuario['idSis_Usuario']. "',
+												'" .$row_resultado_usuario['idSis_Associado']. "',
 												'" .$row_resultado_usuario['Nome']. "',
-												'" .$row_resultado_usuario['CelularUsuario']. "',
+												'" .$row_resultado_usuario['CelularAssociado']. "',
 												'" .$data. "',
 												'" .$sexo. "',
 												'" .$cep. "',
@@ -178,7 +179,7 @@ if($cadastrar == 1){
 												'" .$row_resultado_usuario['Codigo']. "',
 												'" .$DataCadastroCliente. "',
 												'L',
-												'" .$row_resultado_usuario['CelularUsuario']. "',
+												'" .$row_resultado_usuario['CelularAssociado']. "',
 												'" .$row_resultado_usuario['Senha']. "'
 												)";
 	$resultado_cliente = mysqli_query($conn, $result_cliente);
@@ -191,21 +192,21 @@ if($cadastrar == 1){
 	}
 	
 }elseif($cadastrar == 3){
-	// Não Encontrou o Usuario da empresa 5 e Encontrou o  Cliente!! Pega os Dados do Cliente e Cadastra o Usuario. Depois faço Update no cliente
+	// Não Encontrou o Associado da empresa 5 e Encontrou o  Cliente!! Pega os Dados do Cliente e Cadastra o Associado. Depois faço Update no cliente
 		
 	$Codigo = md5(time() . rand());
 	$DataCriacao = date('Y-m-d', time());
 	
-	$result_usuario = "INSERT INTO Sis_Usuario (idSis_Empresa, 
+	$result_usuario = "INSERT INTO Sis_Associado (idSis_Empresa, 
 												idTab_Modulo, 
 												NomeEmpresa, 
 												Nome, 
-												CelularUsuario, 
+												CelularAssociado, 
 												Codigo, 
 												DataCriacao, 
-												Usuario, 
+												Associado, 
 												Senha, 
-												Permissao, 
+												 
 												Inativo) 
 												VALUES (
 												'5',
@@ -217,7 +218,7 @@ if($cadastrar == 1){
 												'" .$DataCriacao. "',
 												'" .$row_resultado_cliente['CelularCliente']. "',
 												'" .$row_resultado_cliente['senha']. "',
-												'3',
+												
 												'0'
 												)";
 	$resultado_usuario = mysqli_query($conn, $result_usuario);		
@@ -226,12 +227,12 @@ if($cadastrar == 1){
 	if($id_usuario_5){
 	
 		$result_agenda = "INSERT INTO App_Agenda (idSis_Empresa, 
-												idSis_Usuario, 
+												idSis_Associado, 
 												NomeAgenda) 
 												VALUES (
 						'5',
 						'" .$id_usuario_5. "',
-						'Cliente'
+						'Associado'
 						)";
 		$resultado_agenda = mysqli_query($conn, $result_agenda);
 		$id_agenda = mysqli_insert_id($conn);		
@@ -239,7 +240,7 @@ if($cadastrar == 1){
 		$update_cliente = "UPDATE 
 								App_Cliente 
 							SET 
-								idSis_Usuario_5 = '".$id_usuario_5."',
+								idSis_Associado = '".$id_usuario_5."',
 								Codigo = '".$Codigo."'
 							WHERE 
 								idApp_Cliente = '".$row_resultado_cliente['idApp_Cliente']."'
@@ -257,7 +258,7 @@ if($cadastrar == 1){
 	}
 	
 }elseif($cadastrar == 4){
-	//Não Encontrou o Usuario e Não Encontrou o Cliente!!Então Cadastra os Dois
+	//Não Encontrou o Associado e Não Encontrou o Cliente!!Então Cadastra os Dois
 
 	$dados['NomeCliente'] = trim(mb_strtoupper($dados['NomeCliente'], 'ISO-8859-1'));
 	$senha = md5($dados['CelularCliente']);
@@ -265,16 +266,16 @@ if($cadastrar == 1){
 	$DataCadastroCliente = date('Y-m-d', time());
 	$Codigo = md5(time() . rand());
 	
-	$result_usuario = "INSERT INTO Sis_Usuario (idSis_Empresa, 
+	$result_usuario = "INSERT INTO Sis_Associado (idSis_Empresa, 
 												idTab_Modulo, 
 												NomeEmpresa, 
 												Nome, 
-												CelularUsuario, 
+												CelularAssociado, 
 												Codigo, 
 												DataCriacao, 
-												Usuario, 
+												Associado, 
 												Senha, 
-												Permissao, 
+												 
 												Inativo) 
 												VALUES (
 												'5',
@@ -286,7 +287,7 @@ if($cadastrar == 1){
 												'" .$DataCadastroCliente. "',
 												'" .$dados['CelularCliente']. "',
 												'" .$senha. "',
-												'3',
+												
 												'0'
 												)";
 	$resultado_usuario = mysqli_query($conn, $result_usuario);		
@@ -295,12 +296,12 @@ if($cadastrar == 1){
 	if($id_usuario_5){
 	
 		$result_agenda = "INSERT INTO App_Agenda (idSis_Empresa, 
-												idSis_Usuario, 
+												idSis_Associado, 
 												NomeAgenda) 
 												VALUES (
 												'5',
 												'" .$id_usuario_5. "',
-												'Cliente'
+												'Associado'
 												)";
 		$resultado_agenda = mysqli_query($conn, $result_agenda);
 		$id_agenda = mysqli_insert_id($conn);
@@ -308,7 +309,7 @@ if($cadastrar == 1){
 		$result_cliente = "INSERT INTO App_Cliente (idSis_Empresa, 
 													idTab_Modulo, 
 													idSis_Usuario, 
-													idSis_Usuario_5, 
+													idSis_Associado, 
 													NomeCliente, 
 													CelularCliente,
 													DataNascimento,

@@ -46,7 +46,7 @@ class Login_model extends CI_Model {
 
         $query = $this->db->query('SELECT * FROM Sis_Usuario WHERE '
                 . '(idSis_Empresa = "' . $empresa . '" AND '
-                . 'CelularUsuario = "' . $celular . '" AND '
+                . 'Usuario = "' . $celular . '" AND '
                 . 'Senha = "' . $senha . '")'
 
         );
@@ -72,12 +72,77 @@ class Login_model extends CI_Model {
         }
 
     }
+	
+	public function check_dados_associado($empresa, $celular, $senha, $retorna = FALSE) {
+
+        $query = $this->db->query('SELECT * FROM Sis_Associado WHERE '
+                . '(idSis_Empresa = "' . $empresa . '" AND '
+                . 'Associado = "' . $celular . '" AND '
+                . 'Senha = "' . $senha . '")'
+
+        );
+        #$query = $this->db->get_where('Sis_Associado', $data);
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+         */
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+            if ($retorna === FALSE) {
+                return TRUE;
+            } else {
+                $query = $query->result_array();
+                return $query[0];
+            }
+        }
+
+    }
+
+    public function check_associado($empresa, $celular, $senha) {
+
+        $query = $this->db->query('SELECT * FROM Sis_Associado WHERE '
+                . '(idSis_Empresa = "' . $empresa . '" AND '
+                . 'Associado = "' . $celular . '" AND '
+                . 'Senha = "' . $senha . '")'
+        );
+        /*
+		echo $this->db->last_query();
+		echo "<pre>";
+		print_r($query->num_rows());
+		echo "</pre>";
+		exit();
+		*/
+		if ($query->num_rows() === 0) {
+            return 1;
+        } else {
+            $query = $query->result_array();
+
+            if ($query[0]['Inativo'] == 1)
+                return 2;
+            else
+                return FALSE;
+        }
+
+        #$query = $this->db->get_where('Sis_Usuario', $data);
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+         */
+
+    }
 
     public function check_usuario($empresa, $celular, $senha) {
 
         $query = $this->db->query('SELECT * FROM Sis_Usuario WHERE '
                 . '(idSis_Empresa = "' . $empresa . '" AND '
-                . 'CelularUsuario = "' . $celular . '" AND '
+                . 'Usuario = "' . $celular . '" AND '
                 . 'Senha = "' . $senha . '")'
         );
         if ($query->num_rows() === 0) {
@@ -329,6 +394,14 @@ class Login_model extends CI_Model {
 
     public function get_data_by_usuario($data) {
 
+        $query = $this->db->query('SELECT idSis_Associado, Email, Codigo FROM Sis_Associado WHERE Associado = "' . $data . '"');
+        $query = $query->result_array();
+        return $query[0];
+
+    }
+
+    public function get_data_by_usuario_original($data) {
+
         $query = $this->db->query('SELECT idSis_Usuario, Usuario, Email FROM Sis_Usuario WHERE '
                 . 'Usuario = "' . $data . '" OR Email = "' . $data . '"');
         $query = $query->result_array();
@@ -349,6 +422,18 @@ class Login_model extends CI_Model {
 
     public function get_data_by_codigo($data) {
 
+        $query = $this->db->query('SELECT idSis_Associado, Associado, Email FROM Sis_Associado WHERE Codigo = "' . $data . '"');
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+            $query = $query->result_array();
+            return $query[0];
+        }
+
+    }
+
+    public function get_data_by_codigo_original($data) {
+
         $query = $this->db->query('SELECT idSis_Usuario, Usuario, Email FROM Sis_Usuario WHERE Codigo = "' . $data . '"');
         if ($query->num_rows() === 0) {
             return FALSE;
@@ -363,6 +448,17 @@ class Login_model extends CI_Model {
 
     public function troca_senha($id, $data) {
 
+        $query = $this->db->update('Sis_Associado', $data, array('idSis_Associado' => $id));
+
+        if ($this->db->affected_rows() === 0)
+            return TRUE;
+        else
+            return FALSE;
+
+    }
+
+    public function troca_senha_original($id, $data) {
+
         $query = $this->db->update('Sis_Usuario', $data, array('idSis_Usuario' => $id));
 
         if ($this->db->affected_rows() === 0)
@@ -372,9 +468,66 @@ class Login_model extends CI_Model {
 
     }
 
-    public function get_agenda_padrao($data) {
+    public function get_agenda_padrao_original($data) {
 
         $query = $this->db->query('SELECT idApp_Agenda FROM App_Agenda WHERE idSis_Usuario = ' . $data . ' ORDER BY idApp_Agenda ASC LIMIT 1');
+        $query = $query->result_array();
+        #return $query[0]['idSis_Usuario'];
+        return $query[0]['idApp_Agenda'];
+
+    }
+
+    public function get_agenda_padrao_associado($data) {
+
+        $query = $this->db->query(
+			'SELECT 
+				idApp_Agenda 
+			FROM 
+				App_Agenda 
+			WHERE 
+				idSis_Associado = ' . $data . ' 
+			ORDER BY 
+				idApp_Agenda ASC 
+			LIMIT 1'
+		);
+        $query = $query->result_array();
+        #return $query[0]['idSis_Usuario'];
+        return $query[0]['idApp_Agenda'];
+
+    }
+
+    public function get_agenda_padrao($data) {
+
+        $query = $this->db->query(
+			'SELECT 
+				A.idApp_Agenda 
+			FROM 
+				Sis_Usuario AS U
+					LEFT JOIN App_Agenda AS A ON A.idSis_Associado = U.idSis_Associado	
+			WHERE 
+				U.idSis_Usuario = ' . $data . ' 
+			ORDER BY 
+				A.idApp_Agenda ASC 
+			LIMIT 1'
+		);
+        $query = $query->result_array();
+        return $query[0]['idApp_Agenda'];
+
+    }
+
+    public function get_agenda_associado($data) {
+
+        $query = $this->db->query(
+			'SELECT 
+				idApp_Agenda 
+			FROM 
+				App_Agenda 
+			WHERE 
+				idSis_Associado = ' . $data . ' 
+			ORDER BY 
+				idApp_Agenda ASC 
+			LIMIT 1'
+		);
         $query = $query->result_array();
         #return $query[0]['idSis_Usuario'];
         return $query[0]['idApp_Agenda'];

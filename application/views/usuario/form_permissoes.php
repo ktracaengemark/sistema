@@ -58,14 +58,6 @@
 										<span class="glyphicon glyphicon-edit"></span> Editar Dados do Usuário
 									</a>
 								</a>
-							</li>
-							<li role="separator" class="divider"></li>
-							<li>
-								<a <?php if (preg_match("/usuario\/alterar2\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-									<a href="<?php echo base_url() . 'usuario/alterar2/' . $_SESSION['Usuario']['idSis_Usuario']; ?>">
-										<span class="glyphicon glyphicon-edit"></span> Alterar Senha do Usuário
-									</a>
-								</a>
 							</li>											
 						</ul>
 					</div>

@@ -9,7 +9,7 @@ class Loginempresa extends CI_Controller {
 	public function __construct() {
         parent::__construct();
 
-        $this->load->model(array('Loginempresa_model', 'Basico_model'));
+        $this->load->model(array('Loginempresa_model', 'Basico_model', 'Associado_model', 'Cliente_model', 'Usuario_model'));
         $this->load->helper(array('form', 'url'));
         $this->load->library(array('basico', 'form_validation', 'user_agent'));
         $this->load->driver('session');
@@ -236,6 +236,9 @@ class Loginempresa extends CI_Controller {
 		if (isset($data['query']['Site'])) {
 			$data['query']['Site'] = $this->basico->url_amigavel($data['query']['Site']);
 		}
+
+		$data['select']['NumUsuarios'] = $this->Basico_model->select_numusuarios();
+		$data['select']['Sexo'] = $this->Basico_model->select_sexo();		
 		
 		$this->form_validation->set_error_delimiters('<h5 style="color: red;">', '</h5>');
 		$this->form_validation->set_rules('Site', 'Nome do Site', 'required|trim|is_unique_site[Sis_Empresa.Site]');		
@@ -259,15 +262,12 @@ class Loginempresa extends CI_Controller {
         $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');			
 		#$this->form_validation->set_rules('NumUsuarios', 'Número de Usuários', 'required|trim');
 
-		$data['select']['NumUsuarios'] = $this->Basico_model->select_numusuarios();
-		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
-		
 		#run form validation
         if ($this->form_validation->run() === FALSE) {
             #load loginempresa view
             $this->load->view('loginempresa/form_registrar', $data);
-        } else {
-			
+			} else {
+			  
 			$data['query']['NomeEmpresa'] = trim(mb_strtoupper($data['query']['NomeEmpresa'], 'ISO-8859-1'));
 			$data['query']['EnderecoEmpresa'] = trim(mb_strtoupper($data['query']['EnderecoEmpresa'], 'ISO-8859-1'));
 			$data['query']['NumeroEmpresa'] = trim(mb_strtoupper($data['query']['NumeroEmpresa'], 'ISO-8859-1'));
@@ -284,400 +284,512 @@ class Loginempresa extends CI_Controller {
 			$data['query']['NivelEmpresa'] = 4;
 			$data['query']['idTab_Modulo'] = 1;
 			$data['query']['NumUsuarios'] = 1;
-            $data['query']['DataCriacao'] = $this->basico->mascara_data($data['query']['DataCriacao'], 'mysql');
+			$data['query']['DataCriacao'] = $this->basico->mascara_data($data['query']['DataCriacao'], 'mysql');
 			$data['query']['DataDeValidade'] = $this->basico->mascara_data($data['query']['DataDeValidade'], 'mysql');
 			$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');			
 			$data['query']['Senha'] = md5($data['query']['Senha']);
-            //$data['query']['Senha'] = password_hash($data['query']['Senha'], PASSWORD_DEFAULT);
+			//$data['query']['Senha'] = password_hash($data['query']['Senha'], PASSWORD_DEFAULT);
 			$data['query']['Codigo'] = md5(uniqid(time() . rand()));
 			#$data['query']['Site'] = "sitedaempresa";
-            #$data['query']['Inativo'] = 1;
-            //ACESSO LIBERADO PRA QUEM REALIZAR O CADASTRO
-            $data['query']['Inativo'] = 0;
-            unset($data['query']['Confirma']);
+			#$data['query']['Inativo'] = 1;
+			//ACESSO LIBERADO PRA QUEM REALIZAR O CADASTRO
+			$data['query']['Inativo'] = 0;
+			unset($data['query']['Confirma']);
 
-            $data['anterior'] = array();
-            $data['campos'] = array_keys($data['query']);
+			
+			$data['associado'] = $this->Loginempresa_model->get_associado($data['query']['CelularAdmin']);
+			/*
+			echo "<br>";
+			echo "<pre>";
+			echo "<br>";
+			print_r($data['associado']);
+			echo "</pre>";			
+			*/
+			if(!isset($data['associado']) || $data['associado'] === FALSE){
 
-            $data['idSis_Empresa'] = $this->Loginempresa_model->set_empresa($data['query']);
-            $_SESSION['log']['idSis_Empresa'] = 1;
+				$data['associado']['Nome'] = $data['query']['NomeAdmin'];
+				$data['associado']['Email'] = $data['query']['Email'];
+				$data['associado']['CpfAssociado'] = $data['query']['CpfAdmin'];
+				$data['associado']['idSis_Empresa'] = 5;
+				$data['associado']['idTab_Modulo'] = 1;
+				$data['associado']['DataNascimento'] = $data['query']['DataNascimento'];
+				$data['associado']['DataCriacao'] = $data['query']['DataCriacao'];
+				$data['associado']['Inativo'] = 0;
+				$data['associado']['CelularAssociado'] = $data['query']['CelularAdmin'];
+				$data['associado']['Associado'] = $data['query']['CelularAdmin'];
+				$data['associado']['Senha'] = $data['query']['Senha'];
+				$data['associado']['Codigo'] = $data['query']['Codigo'];
+				
+				$data['anterior'] = array();
+				$data['campos'] = array_keys($data['associado']);
 
-            if ($data['idSis_Empresa'] === FALSE) {
-                $data['msg'] = '?m=2';
-                $this->load->view('loginempresa/form_registrar', $data);
-			} else {
-				
-				$data['atendimento']['1']['Dia_Semana'] = "SEGUNDA";
-                $data['atendimento']['2']['Dia_Semana'] = "TERCA";
-                $data['atendimento']['3']['Dia_Semana'] = "QUARTA";
-                $data['atendimento']['4']['Dia_Semana'] = "QUINTA";
-                $data['atendimento']['5']['Dia_Semana'] = "SEXTA";
-                $data['atendimento']['6']['Dia_Semana'] = "SABADO";
-                $data['atendimento']['7']['Dia_Semana'] = "DOMINGO";
-				
-				for($j=1; $j<=7; $j++) {
-					$data['atendimento'][$j] = array(
-						'idSis_Empresa' => $data['idSis_Empresa'],
-						'id_Dia' => $j,
-						'Dia_Semana' => $data['atendimento'][$j]['Dia_Semana'],
-						'Aberto' => "S",
-						'Hora_Abre' => "00:00:00",
-						'Hora_Fecha' => "23:59:59"
-					);
-					$data['campos'] = array_keys($data['atendimento'][$j]);
-					$data['idApp_Atendimento'] = $this->Loginempresa_model->set_atendimento($data['atendimento'][$j]);
-				}
-				
-				$data['funcao'] = array(
-					'idSis_Empresa' => $data['idSis_Empresa'],
-					'idSis_Usuario' => "0",
-					'idTab_Modulo' => "1",
-					'Funcao' => "ADMINISTRADOR",
-					'Abrev' => "ADM"
-				);
-				$data['campos'] = array_keys($data['funcao']);
+				$data['associado']['idSis_Associado'] = $this->Associado_model->set_associado($data['associado']);
 
-				$data['idTab_Funcao'] = $this->Loginempresa_model->set_funcao($data['funcao']);
-				$_SESSION['log']['idSis_Empresa'] = 1;
-				
-				if ($data['idTab_Funcao'] === FALSE) {
+				if ($data['associado']['idSis_Associado'] === FALSE) {
 					$data['msg'] = '?m=2';
 					$this->load->view('loginempresa/form_registrar', $data);
-				} else {	
-					
-					$data['usuario'] = array(
-
-						'idSis_Empresa' => $data['idSis_Empresa'],
-						'Funcao' => $data['idTab_Funcao'],
-						'NomeEmpresa' => $data['query']['NomeEmpresa'],
-						'Nome' => $data['query']['NomeAdmin'],
-						'CelularUsuario' => $data['query']['CelularAdmin'],
-						'DataCriacao' => $data['query']['DataCriacao'],
-						'DataNascimento' => $data['query']['DataNascimento'],
-						'Sexo' => $data['query']['Sexo'],
-						'Senha' => $data['query']['Senha'],
-						'Codigo' => $data['query']['Codigo'],
-						'CpfUsuario' => $data['query']['CpfAdmin'],
-						'Inativo' => "0",
-						'idTab_Modulo' => "1",
-						'Permissao' => "3"
+				} else {				
+							
+					$data['agenda'] = array(
+						'NomeAgenda' => 'Associado',
+						'idSis_Associado' => $data['associado']['idSis_Associado']
 					);
-					$data['campos'] = array_keys($data['usuario']);
+					$data['campos'] = array_keys($data['agenda']);
 
-					$data['idSis_Usuario'] = $this->Loginempresa_model->set_usuario($data['usuario']);
+					$data['idApp_Agenda'] = $this->Loginempresa_model->set_agenda($data['agenda']);
+					/*
+					echo "<br>";
+					echo "<pre>";
+					echo "<br>";
+					print_r('Associado Cadastrado = '.$data['associado']['idSis_Associado']);
+					echo "</pre>";
+					*/
+				}
+				
+			}else{
+
+				#### Sis_Associado ####
+				$data['update']['associado']['alterar']['Senha'] = $data['query']['Senha'];
+				$data['update']['associado']['alterar']['Codigo'] = $data['query']['Codigo'];
+				
+				$data['update']['associado']['bd'] = $this->Associado_model->update_associado($data['update']['associado']['alterar'], $data['associado']['idSis_Associado']);
+
+				#### App_Cliente ####
+				$data['update']['cliente']['alterar'] = $this->Cliente_model->get_cliente_associado($data['associado']['idSis_Associado']);
+				
+				if (isset($data['update']['cliente']['alterar'])){
+
+					$max_cliente = count($data['update']['cliente']['alterar']);
+
+					for($j=0;$j<$max_cliente;$j++) {
+					
+						$data['update']['cliente']['alterar'][$j]['senha'] 	= $data['query']['Senha'];
+						$data['update']['cliente']['alterar'][$j]['Codigo'] = $data['query']['Codigo'];
+
+						$data['update']['cliente']['bd'][$j] = $this->Cliente_model->update_cliente($data['update']['cliente']['alterar'][$j], $data['update']['cliente']['alterar'][$j]['idApp_Cliente']);
+							
+					}
+				}				
+				
+				
+				#### Sis_Usuario ####
+				$data['update']['usuario']['alterar'] = $this->Usuario_model->get_usuario_associado($data['associado']['idSis_Associado']);
+				
+				if (isset($data['update']['usuario']['alterar'])){
+
+					$max_usuario = count($data['update']['usuario']['alterar']);
+
+					for($j=0;$j<$max_usuario;$j++) {
+					
+						$data['update']['usuario']['alterar'][$j]['Senha'] 	= $data['query']['Senha'];
+						$data['update']['usuario']['alterar'][$j]['Codigo'] = $data['query']['Codigo'];
+
+						$data['update']['usuario']['bd'][$j] = $this->Cliente_model->update_usuario($data['update']['usuario']['alterar'][$j], $data['update']['usuario']['alterar'][$j]['idSis_Usuario']);
+							
+					}
+				}
+			}
+
+			if(!isset($data['associado']['idSis_Associado']) || $data['associado']['idSis_Associado'] === FALSE){
+				$data['msg'] = '?m=2';
+				$this->load->view('loginempresa/form_registrar', $data);				
+			}else{
+				
+				$data['query']['idSis_Associado'] = $data['associado']['idSis_Associado'];
+				/*
+				echo "<br>";
+				echo "<pre>";
+				echo "<br>";
+				print_r('Associado Nº = '.$data['associado']['idSis_Associado']);
+				echo "</pre>";
+				*/
+			
+				$data['anterior'] = array();
+				$data['campos'] = array_keys($data['query']);
+
+				$data['idSis_Empresa'] = $this->Loginempresa_model->set_empresa($data['query']);
+				$_SESSION['log']['idSis_Empresa'] = 1;
+
+				if ($data['idSis_Empresa'] === FALSE) {
+					$data['msg'] = '?m=2';
+					$this->load->view('loginempresa/form_registrar', $data);
+				} else {
+					
+					$data['atendimento']['1']['Dia_Semana'] = "SEGUNDA";
+					$data['atendimento']['2']['Dia_Semana'] = "TERCA";
+					$data['atendimento']['3']['Dia_Semana'] = "QUARTA";
+					$data['atendimento']['4']['Dia_Semana'] = "QUINTA";
+					$data['atendimento']['5']['Dia_Semana'] = "SEXTA";
+					$data['atendimento']['6']['Dia_Semana'] = "SABADO";
+					$data['atendimento']['7']['Dia_Semana'] = "DOMINGO";
+					
+					for($j=1; $j<=7; $j++) {
+						$data['atendimento'][$j] = array(
+							'idSis_Empresa' => $data['idSis_Empresa'],
+							'id_Dia' => $j,
+							'Dia_Semana' => $data['atendimento'][$j]['Dia_Semana'],
+							'Aberto' => "S",
+							'Hora_Abre' => "00:00:00",
+							'Hora_Fecha' => "23:59:59"
+						);
+						$data['campos'] = array_keys($data['atendimento'][$j]);
+						$data['idApp_Atendimento'] = $this->Loginempresa_model->set_atendimento($data['atendimento'][$j]);
+					}
+					
+					$data['funcao'] = array(
+						'idSis_Empresa' => $data['idSis_Empresa'],
+						'idSis_Usuario' => "0",
+						'idTab_Modulo' => "1",
+						'Funcao' => "ADMINISTRADOR",
+						'Abrev' => "ADM"
+					);
+					$data['campos'] = array_keys($data['funcao']);
+
+					$data['idTab_Funcao'] = $this->Loginempresa_model->set_funcao($data['funcao']);
 					$_SESSION['log']['idSis_Empresa'] = 1;
-
-					if ($data['idSis_Usuario'] === FALSE) {
+					
+					if ($data['idTab_Funcao'] === FALSE) {
 						$data['msg'] = '?m=2';
 						$this->load->view('loginempresa/form_registrar', $data);
-					} else {
-
-						/*
-						  echo $this->db->last_query();
-						  echo "<pre>";
-						  print_r($data);
-						  echo "</pre>";
-						  exit();
-						 */
-						$data['agenda'] = array(
-							'NomeAgenda' => 'Usuario',
-							'idSis_Usuario' => $data['idSis_Usuario'],
-							'idSis_Empresa' => $data['idSis_Empresa']
-						);
-						$data['campos'] = array_keys($data['agenda']);
-
-						$data['idApp_Agenda'] = $this->Loginempresa_model->set_agenda($data['agenda']);
-
-						$data['cliente'] = array(
-							'NomeCliente' => 'CLIENTE DESCONHECIDO',
-							'DataCadastroCliente'=> date('Y-m-d', time()),
-							'idTab_Modulo' => "1",
-							'idSis_Usuario' => $data['idSis_Usuario'],
-							'idSis_Empresa' => $data['idSis_Empresa']
-						);
-						$data['campos'] = array_keys($data['cliente']);
-
-						$data['idApp_Cliente'] = $this->Loginempresa_model->set_cliente($data['cliente']);
-
-						$data['fornecedor'] = array(
-							'NomeFornecedor' => 'FORNECEDOR DESCONHECIDO',
-							'DataCadastroFornecedor'=> date('Y-m-d', time()),
-							'idTab_Modulo' => "1",
-							'idSis_Usuario' => $data['idSis_Usuario'],
-							'idSis_Empresa' => $data['idSis_Empresa']
-						);
-						$data['campos'] = array_keys($data['fornecedor']);
-
-						$data['idApp_Fornecedor'] = $this->Loginempresa_model->set_fornecedor($data['fornecedor']);
+					} else {	
 						
-						$data['slide'] = array(
-							'Slide1' => 'slide.jpg',
-							'idSis_Usuario' => $data['idSis_Usuario'],
-							'idSis_Empresa' => $data['idSis_Empresa']
-						);
-						$data['campos'] = array_keys($data['slide']);
-						$data['idApp_Slides'] = $this->Loginempresa_model->set_slide($data['slide']);					
-
-						
-						$data['documentos'] = array(
-							'idSis_Usuario' => $data['idSis_Usuario'],					
-							'idSis_Empresa' => $data['idSis_Empresa']
-						);
-						$data['campos'] = array_keys($data['documentos']);
-						$data['idApp_Documentos'] = $this->Loginempresa_model->set_documentos($data['documentos']);
-
-						$data['catprod'] = array(
-							'Catprod' => 'PRODUTOS DE TESTES',
+						$data['usuario'] = array(
+							'idSis_Associado' => $data['associado']['idSis_Associado'],
+							'idSis_Empresa' => $data['idSis_Empresa'],
+							'Funcao' => $data['idTab_Funcao'],
+							'NomeEmpresa' => $data['query']['NomeEmpresa'],
+							'Nome' => $data['query']['NomeAdmin'],
+							'CelularUsuario' => $data['query']['CelularAdmin'],
+							'Usuario' => $data['query']['CelularAdmin'],
+							'DataCriacao' => $data['query']['DataCriacao'],
+							'DataNascimento' => $data['query']['DataNascimento'],
+							'Sexo' => $data['query']['Sexo'],
+							'Senha' => $data['query']['Senha'],
+							'Codigo' => $data['query']['Codigo'],
+							'CpfUsuario' => $data['query']['CpfAdmin'],
+							'Inativo' => "0",
 							'idTab_Modulo' => "1",
-							'idSis_Usuario' => $data['idSis_Usuario'],
-							'idSis_Empresa' => $data['idSis_Empresa']
+							'Permissao' => "3"
 						);
-						$data['campos'] = array_keys($data['catprod']);
-						$data['idTab_Catprod'] = $this->Loginempresa_model->set_catprod($data['catprod']);					
+						$data['campos'] = array_keys($data['usuario']);
 
-						if ($data['idTab_Catprod'] === FALSE) {
+						$data['idSis_Usuario'] = $this->Loginempresa_model->set_usuario($data['usuario']);
+						$_SESSION['log']['idSis_Empresa'] = 1;
+
+						if ($data['idSis_Usuario'] === FALSE) {
 							$data['msg'] = '?m=2';
 							$this->load->view('loginempresa/form_registrar', $data);
 						} else {
-						
-							$data['produto'] = array(
-								'Produtos' => 'PRODUTO TESTE',
-								'idTab_Modulo' => "1",
-								'VendaSite' => "S",
-								'idTab_Catprod' => $data['idTab_Catprod'],
+
+							/*
+							  echo $this->db->last_query();
+							  echo "<pre>";
+							  print_r($data);
+							  echo "</pre>";
+							  exit();
+							 */
+							/* 
+							$data['agenda'] = array(
+								'NomeAgenda' => 'Usuario',
 								'idSis_Usuario' => $data['idSis_Usuario'],
 								'idSis_Empresa' => $data['idSis_Empresa']
 							);
-							$data['campos'] = array_keys($data['produto']);
-							$data['idTab_Produto'] = $this->Loginempresa_model->set_produto($data['produto']);					
+							$data['campos'] = array_keys($data['agenda']);
 
-							if ($data['idTab_Produto'] === FALSE) {
+							$data['idApp_Agenda'] = $this->Loginempresa_model->set_agenda($data['agenda']);
+							*/
+							
+							$data['cliente'] = array(
+								'NomeCliente' => 'CLIENTE DESCONHECIDO',
+								'DataCadastroCliente'=> date('Y-m-d', time()),
+								'idTab_Modulo' => "1",
+								'idSis_Usuario' => $data['idSis_Usuario'],
+								'idSis_Empresa' => $data['idSis_Empresa']
+							);
+							$data['campos'] = array_keys($data['cliente']);
+
+							$data['idApp_Cliente'] = $this->Loginempresa_model->set_cliente($data['cliente']);
+							
+							$data['fornecedor'] = array(
+								'NomeFornecedor' => 'FORNECEDOR DESCONHECIDO',
+								'DataCadastroFornecedor'=> date('Y-m-d', time()),
+								'idTab_Modulo' => "1",
+								'idSis_Usuario' => $data['idSis_Usuario'],
+								'idSis_Empresa' => $data['idSis_Empresa']
+							);
+							$data['campos'] = array_keys($data['fornecedor']);
+
+							$data['idApp_Fornecedor'] = $this->Loginempresa_model->set_fornecedor($data['fornecedor']);
+							
+							$data['slide'] = array(
+								'Slide1' => 'slide.jpg',
+								'idSis_Usuario' => $data['idSis_Usuario'],
+								'idSis_Empresa' => $data['idSis_Empresa']
+							);
+							$data['campos'] = array_keys($data['slide']);
+							$data['idApp_Slides'] = $this->Loginempresa_model->set_slide($data['slide']);					
+
+							
+							$data['documentos'] = array(
+								'idSis_Usuario' => $data['idSis_Usuario'],					
+								'idSis_Empresa' => $data['idSis_Empresa']
+							);
+							$data['campos'] = array_keys($data['documentos']);
+							$data['idApp_Documentos'] = $this->Loginempresa_model->set_documentos($data['documentos']);
+
+							$data['catprod'] = array(
+								'Catprod' => 'PRODUTOS DE TESTES',
+								'idTab_Modulo' => "1",
+								'idSis_Usuario' => $data['idSis_Usuario'],
+								'idSis_Empresa' => $data['idSis_Empresa']
+							);
+							$data['campos'] = array_keys($data['catprod']);
+							$data['idTab_Catprod'] = $this->Loginempresa_model->set_catprod($data['catprod']);					
+
+							if ($data['idTab_Catprod'] === FALSE) {
 								$data['msg'] = '?m=2';
 								$this->load->view('loginempresa/form_registrar', $data);
 							} else {
-									
-								$data['produtos'] = array(
-									'idSis_Usuario' => $data['idSis_Usuario'],
-									'idSis_Empresa' => $data['idSis_Empresa'],
+							
+								$data['produto'] = array(
+									'Produtos' => 'PRODUTO TESTE',
 									'idTab_Modulo' => "1",
+									'VendaSite' => "S",
 									'idTab_Catprod' => $data['idTab_Catprod'],
-									'idTab_Produto' => $data['idTab_Produto'],
-									'Opcao_Atributo_1' => "0",
-									'Opcao_Atributo_2' => "0",
-									'Nome_Prod' => $data['produto']['Produtos'],
-									'Cod_Prod' => $data['idTab_Catprod'] . ':' . $data['idTab_Produto'] . ':0:0',
-									'VendaSite' => "S"
+									'idSis_Usuario' => $data['idSis_Usuario'],
+									'idSis_Empresa' => $data['idSis_Empresa']
 								);
-								$data['campos'] = array_keys($data['produtos']);
-								$data['idTab_Produtos'] = $this->Loginempresa_model->set_produtos($data['produtos']);
+								$data['campos'] = array_keys($data['produto']);
+								$data['idTab_Produto'] = $this->Loginempresa_model->set_produto($data['produto']);					
 
-								if ($data['idTab_Produtos'] === FALSE) {
+								if ($data['idTab_Produto'] === FALSE) {
 									$data['msg'] = '?m=2';
 									$this->load->view('loginempresa/form_registrar', $data);
 								} else {
-								
-									$data['valor'] = array(
+										
+									$data['produtos'] = array(
 										'idSis_Usuario' => $data['idSis_Usuario'],
 										'idSis_Empresa' => $data['idSis_Empresa'],
 										'idTab_Modulo' => "1",
-										'idTab_Promocao' => "1",
-										'Item_Promocao' => "1",
-										'idTab_Produtos' => $data['idTab_Produtos'],
 										'idTab_Catprod' => $data['idTab_Catprod'],
 										'idTab_Produto' => $data['idTab_Produto'],
-										'ValorProduto' => '1.00',
-										'Desconto' => "1",
-										'QtdProdutoDesconto' => "1",
-										'QtdProdutoIncremento' => "1"
+										'Opcao_Atributo_1' => "0",
+										'Opcao_Atributo_2' => "0",
+										'Nome_Prod' => $data['produto']['Produtos'],
+										'Cod_Prod' => $data['idTab_Catprod'] . ':' . $data['idTab_Produto'] . ':0:0',
+										'VendaSite' => "S"
 									);
-									$data['campos'] = array_keys($data['valor']);
-									$data['idTab_Valor'] = $this->Loginempresa_model->set_valor($data['valor']);
-										
-									if ($data['idTab_Valor'] === FALSE) {
+									$data['campos'] = array_keys($data['produtos']);
+									$data['idTab_Produtos'] = $this->Loginempresa_model->set_produtos($data['produtos']);
+
+									if ($data['idTab_Produtos'] === FALSE) {
 										$data['msg'] = '?m=2';
 										$this->load->view('loginempresa/form_registrar', $data);
 									} else {
+									
+										$data['valor'] = array(
+											'idSis_Usuario' => $data['idSis_Usuario'],
+											'idSis_Empresa' => $data['idSis_Empresa'],
+											'idTab_Modulo' => "1",
+											'idTab_Promocao' => "1",
+											'Item_Promocao' => "1",
+											'idTab_Produtos' => $data['idTab_Produtos'],
+											'idTab_Catprod' => $data['idTab_Catprod'],
+											'idTab_Produto' => $data['idTab_Produto'],
+											'ValorProduto' => '1.00',
+											'Desconto' => "1",
+											'QtdProdutoDesconto' => "1",
+											'QtdProdutoIncremento' => "1"
+										);
+										$data['campos'] = array_keys($data['valor']);
+										$data['idTab_Valor'] = $this->Loginempresa_model->set_valor($data['valor']);
 											
-										//início da criação o site da Empresa///
-										//este é o NOME do site escolhido na hora da criação da empresa!!
-										
-										$pasta = '../' .$data['query']['Site']. '';
+										if ($data['idTab_Valor'] === FALSE) {
+											$data['msg'] = '?m=2';
+											$this->load->view('loginempresa/form_registrar', $data);
+										} else {
+												
+											//início da criação o site da Empresa///
+											//este é o NOME do site escolhido na hora da criação da empresa!!
+											
+											$pasta = '../' .$data['query']['Site']. '';
 
-										// checar se a pasta existe
-										if (!is_dir($pasta)){
-											//cria a pasta
-											mkdir($pasta, 0777);
-										
-											//este é o TAMPLATE do site escolhido na hora da criação da empresa!!
-											$tamplate = '../site2';				
-											if (is_dir($tamplate)){
-												foreach(scandir($tamplate) as $arquivo){
-													$caminho_arquivo = "$tamplate/$arquivo";
-													if(is_file($caminho_arquivo)){
-														//echo $caminho_arquivo . PHP_EOL;
-														/////copy($caminho_arquivo, "../nomedosite/$arquivo");
-														copy($caminho_arquivo, "../" .$data['query']['Site']. "/$arquivo");
+											// checar se a pasta existe
+											if (!is_dir($pasta)){
+												//cria a pasta
+												mkdir($pasta, 0777);
+											
+												//este é o TAMPLATE do site escolhido na hora da criação da empresa!!
+												$tamplate = '../site2';				
+												if (is_dir($tamplate)){
+													foreach(scandir($tamplate) as $arquivo){
+														$caminho_arquivo = "$tamplate/$arquivo";
+														if(is_file($caminho_arquivo)){
+															//echo $caminho_arquivo . PHP_EOL;
+															/////copy($caminho_arquivo, "../nomedosite/$arquivo");
+															copy($caminho_arquivo, "../" .$data['query']['Site']. "/$arquivo");
+														}
 													}
 												}
+
+												/////$nome_arquivo = "../nomedosite/configuracao.php";
+												$nome_arquivo = "../" .$data['query']['Site']. "/configuracao.php";
+												//echo $nome_arquivo;
+												$arquivo = fopen($nome_arquivo, 'r+');
+												fwrite($arquivo, '<?php' . PHP_EOL);
+												fwrite($arquivo, '//Dados da Empresa' . PHP_EOL);
+												fwrite($arquivo, '$idSis_Empresa = ' . $data['idSis_Empresa'] . ';'  . PHP_EOL);
+												fwrite($arquivo, 'define("IDSIS_EMPRESA", "'. $data['idSis_Empresa'] .'");');
+												fclose($arquivo);
 											}
+											//Fim da criação do site da empresa///
+									
+											$pasta1 = $_UP['pasta'] = '../'.$data['query']['Site'].'/'.$data['idSis_Empresa'].'/';
+											mkdir($pasta1, 0777);
+											
+											$pasta2 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/documentos/';
+											mkdir($pasta2, 0777);
+											
+											$pasta21 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/documentos/original/';
+											mkdir($pasta21, 0777);
+															
+											$pasta22 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/documentos/miniatura/';
+											mkdir($pasta22, 0777);				
+											
+											$arquivo_origem21 = 'arquivos/imagens/empresas/1/documentos/miniatura/SuaLogo.jpg';
+											$arquivo_destino21 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/documentos/miniatura/SuaLogo.jpg';
+											copy($arquivo_origem21, $arquivo_destino21);
+											
+											$arquivo_origem22 = 'arquivos/imagens/empresas/1/documentos/miniatura/icone.ico';
+											$arquivo_destino22 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/documentos/miniatura/icone.ico';
+											copy($arquivo_origem22, $arquivo_destino22);
+											
+											$arquivo_origem23 = 'arquivos/imagens/empresas/1/documentos/miniatura/logo_nav.png';
+											$arquivo_destino23 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/documentos/miniatura/logo_nav.png';
+											copy($arquivo_origem23, $arquivo_destino23);
+											
+											$arquivo_origem24 = 'arquivos/imagens/empresas/1/documentos/miniatura/slide.jpg';
+											$arquivo_destino24 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/documentos/miniatura/slide.jpg';
+											copy($arquivo_origem24, $arquivo_destino24);				
+											
+											$pasta3 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/usuarios/';
+											mkdir($pasta3, 0777);
+											
+											$pasta31 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/usuarios/original/';
+											mkdir($pasta31, 0777);
+											
+											$pasta32 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/usuarios/miniatura/';
+											mkdir($pasta32, 0777);				
 
-											/////$nome_arquivo = "../nomedosite/configuracao.php";
-											$nome_arquivo = "../" .$data['query']['Site']. "/configuracao.php";
-											//echo $nome_arquivo;
-											$arquivo = fopen($nome_arquivo, 'r+');
-											fwrite($arquivo, '<?php' . PHP_EOL);
-											fwrite($arquivo, '//Dados da Empresa' . PHP_EOL);
-											fwrite($arquivo, '$idSis_Empresa = ' . $data['idSis_Empresa'] . ';'  . PHP_EOL);
-											fwrite($arquivo, 'define("IDSIS_EMPRESA", "'. $data['idSis_Empresa'] .'");');
-											fclose($arquivo);
+											$arquivo_origem3 = 'arquivos/imagens/empresas/1/usuarios/miniatura/SuaFoto.jpg';
+											$arquivo_destino3 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/usuarios/miniatura/SuaFoto.jpg';
+											
+											copy($arquivo_origem3, $arquivo_destino3);				
+											
+											$pasta4 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/clientes/';
+											mkdir($pasta4, 0777);
+											
+											$pasta41 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/clientes/original/';
+											mkdir($pasta41, 0777);
+											
+											$pasta42 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/clientes/miniatura/';
+											mkdir($pasta42, 0777);				
+											
+											$arquivo_origem4 = 'arquivos/imagens/empresas/1/clientes/miniatura/Foto.jpg';
+											$arquivo_destino4 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/clientes/miniatura/Foto.jpg';
+											
+											copy($arquivo_origem4, $arquivo_destino4);
+											
+											$arquivo_origem4pet = 'arquivos/imagens/empresas/1/clientes/miniatura/pata.png';
+											$arquivo_destino4pet = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/clientes/miniatura/pata.png';
+											
+											copy($arquivo_origem4pet, $arquivo_destino4pet);
+											
+											$pasta5 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/produtos/';
+											mkdir($pasta5, 0777);
+											
+											$pasta51 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/produtos/original/';
+											mkdir($pasta51, 0777);
+											
+											$pasta52 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/produtos/miniatura/';
+											mkdir($pasta52, 0777);				
+											
+											$arquivo_origem5 = 'arquivos/imagens/empresas/1/produtos/miniatura/fotoproduto.jpg';
+											$arquivo_destino5 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/produtos/miniatura/fotoproduto.jpg';
+											
+											copy($arquivo_origem5, $arquivo_destino5);
+											
+											
+											$pasta6 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/promocao/';
+											mkdir($pasta6, 0777);
+											
+											$pasta61 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/promocao/original/';
+											mkdir($pasta61, 0777);
+											
+											$pasta62 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/promocao/miniatura/';
+											mkdir($pasta62, 0777);				
+											
+											$arquivo_origem6 = 'arquivos/imagens/empresas/1/promocao/miniatura/fotopromocao.jpg';
+											$arquivo_destino6 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/promocao/miniatura/fotopromocao.jpg';
+											
+											copy($arquivo_origem6, $arquivo_destino6);
+												
 										}
-										//Fim da criação do site da empresa///
-								
-										$pasta1 = $_UP['pasta'] = '../'.$data['query']['Site'].'/'.$data['idSis_Empresa'].'/';
-										mkdir($pasta1, 0777);
-										
-										$pasta2 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/documentos/';
-										mkdir($pasta2, 0777);
-										
-										$pasta21 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/documentos/original/';
-										mkdir($pasta21, 0777);
-														
-										$pasta22 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/documentos/miniatura/';
-										mkdir($pasta22, 0777);				
-										
-										$arquivo_origem21 = 'arquivos/imagens/empresas/1/documentos/miniatura/SuaLogo.jpg';
-										$arquivo_destino21 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/documentos/miniatura/SuaLogo.jpg';
-										copy($arquivo_origem21, $arquivo_destino21);
-										
-										$arquivo_origem22 = 'arquivos/imagens/empresas/1/documentos/miniatura/icone.ico';
-										$arquivo_destino22 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/documentos/miniatura/icone.ico';
-										copy($arquivo_origem22, $arquivo_destino22);
-										
-										$arquivo_origem23 = 'arquivos/imagens/empresas/1/documentos/miniatura/logo_nav.png';
-										$arquivo_destino23 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/documentos/miniatura/logo_nav.png';
-										copy($arquivo_origem23, $arquivo_destino23);
-										
-										$arquivo_origem24 = 'arquivos/imagens/empresas/1/documentos/miniatura/slide.jpg';
-										$arquivo_destino24 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/documentos/miniatura/slide.jpg';
-										copy($arquivo_origem24, $arquivo_destino24);				
-										
-										$pasta3 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/usuarios/';
-										mkdir($pasta3, 0777);
-										
-										$pasta31 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/usuarios/original/';
-										mkdir($pasta31, 0777);
-										
-										$pasta32 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/usuarios/miniatura/';
-										mkdir($pasta32, 0777);				
-
-										$arquivo_origem3 = 'arquivos/imagens/empresas/1/usuarios/miniatura/SuaFoto.jpg';
-										$arquivo_destino3 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/usuarios/miniatura/SuaFoto.jpg';
-										
-										copy($arquivo_origem3, $arquivo_destino3);				
-										
-										$pasta4 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/clientes/';
-										mkdir($pasta4, 0777);
-										
-										$pasta41 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/clientes/original/';
-										mkdir($pasta41, 0777);
-										
-										$pasta42 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/clientes/miniatura/';
-										mkdir($pasta42, 0777);				
-										
-										$arquivo_origem4 = 'arquivos/imagens/empresas/1/clientes/miniatura/Foto.jpg';
-										$arquivo_destino4 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/clientes/miniatura/Foto.jpg';
-										
-										copy($arquivo_origem4, $arquivo_destino4);
-										
-										$arquivo_origem4pet = 'arquivos/imagens/empresas/1/clientes/miniatura/pata.png';
-										$arquivo_destino4pet = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/clientes/miniatura/pata.png';
-										
-										copy($arquivo_origem4pet, $arquivo_destino4pet);
-										
-										$pasta5 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/produtos/';
-										mkdir($pasta5, 0777);
-										
-										$pasta51 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/produtos/original/';
-										mkdir($pasta51, 0777);
-										
-										$pasta52 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/produtos/miniatura/';
-										mkdir($pasta52, 0777);				
-										
-										$arquivo_origem5 = 'arquivos/imagens/empresas/1/produtos/miniatura/fotoproduto.jpg';
-										$arquivo_destino5 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/produtos/miniatura/fotoproduto.jpg';
-										
-										copy($arquivo_origem5, $arquivo_destino5);
-										
-										
-										$pasta6 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/promocao/';
-										mkdir($pasta6, 0777);
-										
-										$pasta61 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/promocao/original/';
-										mkdir($pasta61, 0777);
-										
-										$pasta62 = $_UP['pasta'] = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/promocao/miniatura/';
-										mkdir($pasta62, 0777);				
-										
-										$arquivo_origem6 = 'arquivos/imagens/empresas/1/promocao/miniatura/fotopromocao.jpg';
-										$arquivo_destino6 = '../'.$data['query']['Site'].'/' .$data['idSis_Empresa'].'/promocao/miniatura/fotopromocao.jpg';
-										
-										copy($arquivo_origem6, $arquivo_destino6);
 											
 									}
-										
-								}
-							}		
-						}			
+								}		
+							}			
+						}
+						#$this->load->library('email');
+
+						#$this->email->from('contato@ktracaengemark.com.br', 'KTRACA Engenharia & Marketing');
+						#$this->email->to($data['query']['Email']);
+
+						#$this->email->subject('[KTRACA] Confirmação de registro - Usuário: ' . $data['query']['UsuarioEmpresa']);
+						/*
+						  $this->email->message('Por favor, clique no link a seguir para confirmar seu registro: '
+						  . 'http://www.romati.com.br/app/loginempresa/confirmar/' . $data['query']['Codigo']);
+
+						  $this->email->send();
+
+						  $data['aviso'] = ''
+						  . '
+						  <div class="alert alert-success" role="alert">
+						  <h4>
+						  <p><b>Usuário cadastrado com sucesso!</b></p>
+						  <p>O link para ativação foi enviado para seu e-mail cadastrado.</p>
+						  <p>Caso o e-mail com o link não esteja na sua caixa de entrada <b>verifique também sua caixa de SPAM</b>.</p>
+						  </h4>
+						  </div> '
+						  . '';
+						 */
+
+						#$this->email->message('Sua conta foi ativada com sucesso! Aproveite e teste todas as funcionalidades do sistema.'
+								#. 'Qualquer sugestão ou crítica será bem vinda. ');
+
+						#$this->email->send();
+
+						$data['aviso'] = ''
+								. '
+						  <div class="alert alert-success" role="alert">
+						  <h4>
+						  <p><b>Empresa cadastrado com sucesso! "' . $data['query']['NomeEmpresa'] . '" Nº ' . $data['idSis_Empresa'] . '</b></p>
+						  <p>Clique no botão abaixo e retorne para a tela de Login do Usuário.<br>
+						  Para entrar no sistema, insira o número da empresa, informado acima,<br>
+						  o celular cadastrado como login e a senha cadastrada.</p>
+						  </h4>
+						  <br>
+						 
+						  </div> '
+								. '';
+
+						$this->load->view('loginempresa/tela_msg', $data);
+						#redirect(base_url() . 'loginempresa' . $data['msg']);
+						#exit();
 					}
-					#$this->load->library('email');
-
-					#$this->email->from('contato@ktracaengemark.com.br', 'KTRACA Engenharia & Marketing');
-					#$this->email->to($data['query']['Email']);
-
-					#$this->email->subject('[KTRACA] Confirmação de registro - Usuário: ' . $data['query']['UsuarioEmpresa']);
-					/*
-					  $this->email->message('Por favor, clique no link a seguir para confirmar seu registro: '
-					  . 'http://www.romati.com.br/app/loginempresa/confirmar/' . $data['query']['Codigo']);
-
-					  $this->email->send();
-
-					  $data['aviso'] = ''
-					  . '
-					  <div class="alert alert-success" role="alert">
-					  <h4>
-					  <p><b>Usuário cadastrado com sucesso!</b></p>
-					  <p>O link para ativação foi enviado para seu e-mail cadastrado.</p>
-					  <p>Caso o e-mail com o link não esteja na sua caixa de entrada <b>verifique também sua caixa de SPAM</b>.</p>
-					  </h4>
-					  </div> '
-					  . '';
-					 */
-
-					#$this->email->message('Sua conta foi ativada com sucesso! Aproveite e teste todas as funcionalidades do sistema.'
-							#. 'Qualquer sugestão ou crítica será bem vinda. ');
-
-					#$this->email->send();
-
-					$data['aviso'] = ''
-							. '
-					  <div class="alert alert-success" role="alert">
-					  <h4>
-					  <p><b>Empresa cadastrado com sucesso! "' . $data['query']['NomeEmpresa'] . '" Nº ' . $data['idSis_Empresa'] . '</b></p>
-					  <p>Clique no botão abaixo e retorne para a tela de Login do Usuário.<br>
-					  Para entrar no sistema, insira o número da empresa, informado acima,<br>
-					  o celular cadastrado como login e a senha cadastrada.</p>
-					  </h4>
-					  <br>
-					 
-					  </div> '
-							. '';
-
-					$this->load->view('loginempresa/tela_msg', $data);
-					#redirect(base_url() . 'loginempresa' . $data['msg']);
-					#exit();
 				}
-            }
-        }
+			}
+		}
 
         #$this->load->view('basico/footerloginempresa');
         $this->load->view('basico/baselogin');

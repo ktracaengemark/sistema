@@ -47,6 +47,22 @@
 			<?php if($paginacao == "N") { ?>					
 				<div class="row text-left">
 					<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>
+						<?php if ($_SESSION['log']['Permissao'] <= 2 ) { ?>
+							<div class="col-lg-3 col-md-5 col-sm-4 col-xs-9 text-left" >
+								<label class="" for="Ordenamento">Profissional:</label><br>
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()" id="NomeUsuario" name="NomeUsuario">
+									<?php
+									foreach ($select['NomeUsuario'] as $key => $row) {
+										if ($query['NomeUsuario'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>
+								</select>
+							</div>
+						<?php } ?>						
 						<div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 text-left">
 							<label  >Cliente:</label>
 							<div class="input-group">
@@ -82,22 +98,6 @@
 								</div>
 								<input type="hidden" id="Hidden_idApp_ClienteDep" name="Hidden_idApp_ClienteDep" value="<?php echo $query['idApp_ClienteDep']; ?>" />
 							<?php } ?>
-						<?php } ?>
-						<?php if ($_SESSION['log']['Permissao'] <= 2 ) { ?>
-							<div class="col-lg-3 col-md-5 col-sm-4 col-xs-9 text-left" >
-								<label class="" for="Ordenamento">Profissional:</label><br>
-								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()" id="NomeUsuario" name="NomeUsuario">
-									<?php
-									foreach ($select['NomeUsuario'] as $key => $row) {
-										if ($query['NomeUsuario'] == $key) {
-											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-										} else {
-											echo '<option value="' . $key . '">' . $row . '</option>';
-										}
-									}
-									?>
-								</select>
-							</div>
 						<?php } ?>
 						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-left">	
 							<label class="" for="Ordenamento">Cal.</label><br>

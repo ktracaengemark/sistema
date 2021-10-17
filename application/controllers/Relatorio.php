@@ -2992,11 +2992,15 @@ class Relatorio extends CI_Controller {
 		$data['TipoFinanceiro'] = 'Receitas';
 		$data['TipoRD'] = 2;
         $data['nome'] = 'Cliente';
-		if($_SESSION['Usuario']['Permissao_Comissao'] == 3){
+		if($_SESSION['log']['idSis_Empresa'] == 5){
 			$data['print'] = 1;
 		}else{
-			$data['print'] = 0;
-		}
+			if($_SESSION['Usuario']['Permissao_Comissao'] == 3){
+				$data['print'] = 1;
+			}else{
+				$data['print'] = 0;
+			}
+		}	
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'OrcatrataPrint/imprimircomissao_online/';
 		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';

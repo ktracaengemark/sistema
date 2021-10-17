@@ -496,6 +496,23 @@ class Loginempresa_model extends CI_Model {
             return FALSE;
 
     }
+	
+    public function get_associado($data) {
+        $query = $this->db->query('SELECT * FROM Sis_Associado WHERE idSis_Empresa = "5" AND CelularAssociado = ' . $data);
+        $count = $query->num_rows();
+		$query = $query->result_array();
+		
+		if(isset($count)){
+			if($count == 0){
+				return FALSE;
+			}else{
+				return $query[0];
+			}
+		}else{
+			return FALSE;
+		}
+
+    }
 
 	public function select_empresa($data = FALSE) {
 

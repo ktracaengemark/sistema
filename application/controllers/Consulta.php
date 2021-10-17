@@ -2912,31 +2912,7 @@ class Consulta extends CI_Controller {
 			echo "</pre>";
 			exit();		
 		*/
-		
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-		
-		$this->form_validation->set_rules('Prazo', 'Prazo', 'trim|valid_prazo');
-        $this->form_validation->set_rules('Data', 'Data Início', 'required|trim|valid_date');
-        $this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_date|valid_periodo_data[' . $data['query']['Data'] . ']');
-		$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
-        if(strtotime($data2) == strtotime($data1)){
-			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
-		}else{
-			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
-		}
-		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
-		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
-        
-		if ($data['cadastrar']['Repetir'] == 'S') {
-			$this->form_validation->set_rules('Intervalo', 'Intervalo', 'required|trim|valid_intervalo');
-			$this->form_validation->set_rules('Periodo', 'Período', 'required|trim|valid_periodo');
-			//$this->form_validation->set_rules('Periodo', 'Período', 'required|trim|valid_periodo|valid_periodo_intervalo[' . $data['query']['Intervalo'] . ']');
-			$this->form_validation->set_rules('Tempo', 'Tempo', 'required|trim');
-			$this->form_validation->set_rules('Tempo', 'Tempo2', 'required|trim');
-			$this->form_validation->set_rules('DataMinima', 'Data Mínima:', 'trim|valid_date');
-			$this->form_validation->set_rules('DataTermino', 'Termina em:', 'required|trim|valid_date|valid_data_termino[' . $data['cadastrar']['DataMinima'] . ']|valid_data_termino2[' . $data['query']['Data'] . ']');
-		}
-		
+
 		//$data['select']['idApp_Cliente'] = $this->Cliente_model->select_cliente();
 		#$data['select']['idSis_EmpresaFilial'] = $this->Empresafilial_model->select_empresafilial();
 		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
@@ -2974,7 +2950,31 @@ class Consulta extends CI_Controller {
             $data['div']['Repetir'] = '' : $data['div']['Repetir'] = 'style="display: none;"';
 			
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
-
+		
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+		
+		$this->form_validation->set_rules('Prazo', 'Prazo', 'trim|valid_prazo');
+        $this->form_validation->set_rules('Data', 'Data Início', 'required|trim|valid_date');
+        $this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_date|valid_periodo_data[' . $data['query']['Data'] . ']');
+		$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
+        if(strtotime($data2) == strtotime($data1)){
+			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
+		}else{
+			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
+		}
+		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
+        
+		if ($data['cadastrar']['Repetir'] == 'S') {
+			$this->form_validation->set_rules('Intervalo', 'Intervalo', 'required|trim|valid_intervalo');
+			$this->form_validation->set_rules('Periodo', 'Período', 'required|trim|valid_periodo');
+			//$this->form_validation->set_rules('Periodo', 'Período', 'required|trim|valid_periodo|valid_periodo_intervalo[' . $data['query']['Intervalo'] . ']');
+			$this->form_validation->set_rules('Tempo', 'Tempo', 'required|trim');
+			$this->form_validation->set_rules('Tempo', 'Tempo2', 'required|trim');
+			$this->form_validation->set_rules('DataMinima', 'Data Mínima:', 'trim|valid_date');
+			$this->form_validation->set_rules('DataTermino', 'Termina em:', 'required|trim|valid_date|valid_data_termino[' . $data['cadastrar']['DataMinima'] . ']|valid_data_termino2[' . $data['query']['Data'] . ']');
+		}
+		
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('consulta/form_evento', $data);
@@ -3161,19 +3161,6 @@ class Consulta extends CI_Controller {
 		$data1 = $data1->format('Y-m-d');       
 		$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
 		$data2 = $data2->format('Y-m-d');		
-		
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-        $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
-        $this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_date|valid_periodo_data[' . $data['query']['Data'] . ']');
-		$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
-        if(strtotime($data2) == strtotime($data1)){
-			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
-		}else{
-			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
-		}
-		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
-		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
 
 		//$data['select']['idApp_Cliente'] = $this->Cliente_model->select_cliente();
 		#$data['select']['idSis_EmpresaFilial'] = $this->Empresafilial_model->select_empresafilial();
@@ -3194,10 +3181,27 @@ class Consulta extends CI_Controller {
         $data['evento'] = 1;
 
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+		
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+        $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
+        $this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_date|valid_periodo_data[' . $data['query']['Data'] . ']');
+		$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
+        if(strtotime($data2) == strtotime($data1)){
+			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
+		}else{
+			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
+		}
+		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
+		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
-            $this->load->view('consulta/form_evento', $data);
+            if ($_SESSION['log']['idSis_Empresa'] == $_SESSION['Consulta']['idSis_Empresa']) {
+				$this->load->view('consulta/form_evento', $data);
+			} else {
+				$this->load->view('consulta/form_evento0', $data);
+			}			
         } else {
 
 			$data['query']['Tipo'] = 1;

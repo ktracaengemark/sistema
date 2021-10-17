@@ -22,7 +22,7 @@
 							</div>
 							<div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12 text-center">	
 								<label class="sr-only">Celular</label>
-								<input type="text" id="CelularUsuario" maxlength="11" class="form-control acabamento3" placeholder="Celular Pessoal (xx)999999999" autofocus name="CelularUsuario" value="<?php echo set_value('CelularUsuario'); ?>">	   
+								<input type="text" id="CelularUsuario" maxlength="11" class="form-control acabamento3" placeholder="Celular (xx)999999999" name="CelularUsuario" value="<?php echo set_value('CelularUsuario'); ?>">	   
 								<?php echo form_error('CelularUsuario'); ?>
 							</div>
 							<div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10  col-xs-12 text-center">	
@@ -64,6 +64,9 @@
 								<button class="btn btn-lg btn-info btn-block acabamento2" type="submit">
 									<span class="glyphicon glyphicon-log-in"></span> Acessar
 								</button>	
+							</div>
+							<div class=" col-md-12 col-sm-12 col-xs-12 center">	
+								<p><a href="<?php echo base_url(); ?>login/recuperar/?usuario=<?php echo set_value('CelularUsuario'); ?>">Esqueci usuário/senha!</a></p>
 							</div>
 						</div>
 					</div>

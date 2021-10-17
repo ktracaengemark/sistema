@@ -2159,6 +2159,58 @@ if (isset($data) && $data) {
     }	
 
 	public function select_agenda($data = FALSE) {
+		/*
+        $q = (($_SESSION['log']['idSis_Empresa'] == 5) || ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['log']['Permissao'] >= 3)) ?
+            ' U.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+		*/
+		if($_SESSION['log']['idSis_Empresa'] != 5){
+			$usuario = 'WHERE
+							U.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' ';
+		}else{
+			$usuario = 'WHERE
+							A.idSis_Associado = ' . $_SESSION['log']['idSis_Usuario'] . ' ';
+		}
+			
+		if ($data === TRUE) {
+            $array = $this->db->query('
+                SELECT
+                    A.idApp_Agenda,
+                    A.idSis_Associado,
+					ASS.Nome
+				FROM
+                    App_Agenda AS A
+						LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = A.idSis_Associado
+						LEFT JOIN Sis_Usuario AS U ON U.idSis_Associado = ASS.idSis_Associado
+				' . $usuario . '
+				ORDER BY
+					ASS.Nome ASC
+			');
+
+        } else {
+            $query = $this->db->query('
+				SELECT
+                    A.idApp_Agenda,
+                    A.idSis_Associado,
+					ASS.Nome
+				FROM
+                    App_Agenda AS A
+						LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = A.idSis_Associado
+						LEFT JOIN Sis_Usuario AS U ON U.idSis_Associado = ASS.idSis_Associado
+				' . $usuario . '
+				ORDER BY
+					ASS.Nome ASC
+			');
+
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->idApp_Agenda] = $row->Nome;
+            }
+        }
+
+        return $array;
+    }
+
+	public function select_agenda_original($data = FALSE) {
 
         $q = (($_SESSION['log']['idSis_Empresa'] == 5) || ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['log']['Permissao'] >= 3)) ?
             ' U.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;

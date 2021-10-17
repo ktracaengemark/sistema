@@ -65,13 +65,22 @@
 											<span class="glyphicon glyphicon-filter"></span>
 										</button>
 									</div>
-									<?php if ($_SESSION['Usuario']['Cad_Orcam'] == "S" ) { ?>	
+									<?php if($_SESSION['log']['idSis_Empresa'] == 5){ ?>
 										<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8 ">
 											<label>Cadastrar Pedido</label>	
 											<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>orcatrata/cadastrar3" role="button"> 
 												<span class="glyphicon glyphicon-plus"></span> Nova Venda / Receita
 											</a>
 										</div>
+									<?php }else{ ?>
+										<?php if ($_SESSION['Usuario']['Cad_Orcam'] == "S" ) { ?>
+											<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8 ">
+												<label>Cadastrar Pedido</label>	
+												<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>orcatrata/cadastrar3" role="button"> 
+													<span class="glyphicon glyphicon-plus"></span> Nova Venda / Receita
+												</a>
+											</div>
+										<?php } ?>
 									<?php } ?>
 								</div>
 							</div>
@@ -172,7 +181,7 @@
 							</div>
 						</div>
 					<?php } ?>
-					<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>	
+					<?php if($_SESSION['log']['idSis_Empresa'] == 5){ ?>	
 						<div class="row">			
 							<div class="col-md-12">
 								<div class="panel panel-warning">
@@ -189,6 +198,25 @@
 								</div>
 							</div>
 						</div>
+					<?php }else{ ?>	
+						<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>	
+							<div class="row">			
+								<div class="col-md-12">
+									<div class="panel panel-warning">
+										<div class="panel-heading">
+											<a class="text-center" style="color: #B8860B" data-toggle="collapse" data-target="#Pagamento" aria-expanded="false" aria-controls="Pagamento">
+												<h5 class="text-left">Aguardando <b>Pagamento</b></h5>
+											</a>
+										</div>
+										<div <?php echo $collapse; ?> id="Pagamento">
+											<div class="panel-body">
+												<?php echo (isset($list_pagamento)) ? $list_pagamento : FALSE ?>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						<?php } ?>
 					<?php } ?>
 					<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>
 						<div class="row">	

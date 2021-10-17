@@ -62,14 +62,16 @@
 													</a>
 												</a>
 											</li>
+											<!--
 											<li role="separator" class="divider"></li>
 											<li>
-												<a <?php if (preg_match("/usuario\/alterar2\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-													<a href="<?php echo base_url() . 'usuario/alterar2/' . $_SESSION['Usuario']['idSis_Usuario']; ?>">
+												<a <?php #if (preg_match("/usuario\/alterar2\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+													<a href="<?php #echo base_url() . 'usuario/alterar2/' . $_SESSION['Usuario']['idSis_Usuario']; ?>">
 														<span class="glyphicon glyphicon-edit"></span> Alterar Senha do Usuário
 													</a>
 												</a>
-											</li>											
+											</li>
+											-->
 										</ul>
 									</div>
 								</div>
@@ -83,13 +85,15 @@
 														<input type="text" class="form-control" id="Nome" maxlength="45" 
 																autofocus name="Nome"  value="<?php echo $query['Nome']; ?>">
 														<?php echo form_error('Nome'); ?>
-													</div>																		
+													</div>
+													<!--
 													<div class="col-md-3">
 														<label for="CelularUsuario">Tel.- Fixo ou Celular*</label>
-														<input type="text" class="form-control Celular CelularVariavel" id="CelularUsuario" maxlength="11" <?php echo $readonly; ?>
-															   name="CelularUsuario" placeholder="(XX)999999999" value="<?php echo $query['CelularUsuario']; ?>">
-														<?php echo form_error('CelularUsuario'); ?>
+														<input type="text" class="form-control Celular CelularVariavel" id="CelularUsuario" maxlength="11" <?php #echo $readonly; ?>
+															   name="CelularUsuario" placeholder="(XX)999999999" value="<?php #echo $query['CelularUsuario']; ?>">
+														<?php #echo form_error('CelularUsuario'); ?>
 													</div>
+													-->
 													<div class="col-md-3">
 														<label for="DataNascimento">Data de Nascimento:</label>
 														<input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>

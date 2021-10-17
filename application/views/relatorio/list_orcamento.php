@@ -8,7 +8,7 @@
 					<input type="text" class="form-control" disabled aria-label="Contagem" value="<?php echo $report->num_rows(); ?> / <?php echo $total_rows; ?>">
 				</div>
 			</div>
-			<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
+			<?php if($_SESSION['log']['idSis_Empresa'] == 5) {?>
 				<div class="col-md-2">
 					<label for="DataFim">Prod + Serv:</label>
 					<div class="input-group">
@@ -58,9 +58,61 @@
 						<input type="text" class="form-control" disabled aria-label="Total" value="<?php echo $report->soma->somafinal ?> / <?php echo $pesquisa_query->soma2->somafinal2 ?>">
 					</div>
 				</div>
-			<?php } ?>
+			<?php }else{ ?>
+				<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
+					<div class="col-md-2">
+						<label for="DataFim">Prod + Serv:</label>
+						<div class="input-group">
+							<span class="input-group-addon">R$</span>
+							<input type="text" class="form-control" disabled aria-label="Orcamento" value="<?php echo $report->soma->somarestante ?>">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<label for="DataFim">Frete:</label>
+						<div class="input-group">
+							<span class="input-group-addon">R$</span>
+							<input type="text" class="form-control" disabled aria-label="Frete" value="<?php echo $report->soma->somafrete ?>">
+						</div>
+					</div>	
+					<div class="col-md-2">
+						<label for="DataFim">Extra:</label>
+						<div class="input-group">
+							<span class="input-group-addon">R$</span>
+							<input type="text" class="form-control" disabled aria-label="Orcamento" value="<?php echo $report->soma->somaextra; ?>">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<label for="DataFim">Total:</label>
+						<div class="input-group">
+							<span class="input-group-addon">R$</span>
+							<input type="text" class="form-control" disabled aria-label="Total" value="<?php echo $report->soma->somatotal ?>">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<label for="DataFim">Desc:</label>
+						<div class="input-group">
+							<span class="input-group-addon">R$</span>
+							<input type="text" class="form-control" disabled aria-label="Total" value="<?php echo $report->soma->somadesc ?>">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<label for="DataFim">CashBack:</label>
+						<div class="input-group">
+							<span class="input-group-addon">R$</span>
+							<input type="text" class="form-control" disabled aria-label="Total" value="<?php echo $report->soma->somacashback ?>">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<label for="DataFim">Final: Parc / Total</label>
+						<div class="input-group">
+							<span class="input-group-addon">R$</span>
+							<input type="text" class="form-control" disabled aria-label="Total" value="<?php echo $report->soma->somafinal ?> / <?php echo $pesquisa_query->soma2->somafinal2 ?>">
+						</div>
+					</div>
+				<?php } ?>
+			<?php } ?>	
 			<?php if($metodo == 1 || $metodo == 2) { ?>
-				<?php if($_SESSION['Usuario']['Rel_Com'] == "S") {?>
+				<?php if($_SESSION['log']['idSis_Empresa'] == 5) {?>
 					<div class="col-md-2">
 						<label for="DataFim">Comissao: Parc / Total</label>
 						<div class="input-group">
@@ -68,6 +120,16 @@
 							<input type="text" class="form-control" disabled aria-label="Comissao" value="<?php echo $report->soma->somacomissao ?> / <?php echo $pesquisa_query->soma2->somacomissao2 ?>">
 						</div>
 					</div>
+				<?php }else{ ?>	
+					<?php if($_SESSION['Usuario']['Rel_Com'] == "S") {?>
+						<div class="col-md-2">
+							<label for="DataFim">Comissao: Parc / Total</label>
+							<div class="input-group">
+								<span class="input-group-addon">R$</span>
+								<input type="text" class="form-control" disabled aria-label="Comissao" value="<?php echo $report->soma->somacomissao ?> / <?php echo $pesquisa_query->soma2->somacomissao2 ?>">
+							</div>
+						</div>
+					<?php } ?>
 				<?php } ?>	
 			<?php } ?>
 			<div class="col-md-3 text-left">
@@ -90,36 +152,38 @@
 					</button>
 				</div>
 			<?php } ?>
-			<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") {?>
-				<?php if ($editar == 1) { ?>
+			<?php if($_SESSION['log']['idSis_Empresa'] != 5) {?>
+				<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") {?>
+					<?php if ($editar == 1) { ?>
+						<div class="col-md-1">
+							<label>Todas</label>
+							<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
+								<button class="btn btn-success btn-md btn-block" type="button">
+									<span class="glyphicon glyphicon-edit"></span>
+								</button>
+							</a>
+						</div>
+					<?php }elseif($editar == 2){ ?>
+						<div class="col-md-1">
+							<label>Baixa</label>
+							<a href="<?php echo base_url() . $alterar; ?>">
+								<button class="btn btn-danger btn-md btn-block" type="button">
+									<span class="glyphicon glyphicon-alert"></span>
+								</button>
+							</a>
+						</div>
+					<?php } ?>
+				<?php } ?>	
+				<?php if ($print == 1) { ?>	
 					<div class="col-md-1">
-						<label>Todas</label>
-						<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
-							<button class="btn btn-success btn-md btn-block" type="button">
-								<span class="glyphicon glyphicon-edit"></span>
-							</button>
-						</a>
-					</div>
-				<?php }elseif($editar == 2){ ?>
-					<div class="col-md-1">
-						<label>Baixa</label>
-						<a href="<?php echo base_url() . $alterar; ?>">
-							<button class="btn btn-danger btn-md btn-block" type="button">
-								<span class="glyphicon glyphicon-alert"></span>
+						<label>Imprimir</label>
+						<a href="<?php echo base_url() . $imprimirlista . $_SESSION['log']['idSis_Empresa']; ?>">
+							<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
+								<span class="glyphicon glyphicon-print"></span>
 							</button>
 						</a>
 					</div>
 				<?php } ?>
-			<?php } ?>	
-			<?php if ($print == 1) { ?>	
-				<div class="col-md-1">
-					<label>Imprimir</label>
-					<a href="<?php echo base_url() . $imprimirlista . $_SESSION['log']['idSis_Empresa']; ?>">
-						<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
-							<span class="glyphicon glyphicon-print"></span>
-						</button>
-					</a>
-				</div>
 			<?php } ?>
 		</div>
 	</div>
@@ -152,7 +216,7 @@
 						
 						<th class="active"><?php echo $nome ?></th>
 						<th class="active">Tipo</th>
-						<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
+						<?php if($_SESSION['log']['idSis_Empresa'] == 5) {?>
 							<th class="active">Prd/Srv</th>
 							<th class="active">Frete</th>
 							<th class="active">Extra</th>
@@ -160,6 +224,16 @@
 							<th class="active">Desc</th>
 							<th class="active">Cash</th>
 							<th class="active">Final</th>
+						<?php }else{ ?>	
+							<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
+								<th class="active">Prd/Srv</th>
+								<th class="active">Frete</th>
+								<th class="active">Extra</th>
+								<th class="active">Total</th>
+								<th class="active">Desc</th>
+								<th class="active">Cash</th>
+								<th class="active">Final</th>
+							<?php } ?>
 						<?php } ?>	
 						<th class="active"><?php echo $nomeusuario ?></th>
 						<th class="active">Comb.Ent</th>
@@ -244,7 +318,7 @@
 							
 							echo '<td>' . $row['Nome' . $nome] . '</td>';
 							echo '<td>' . $row['TipoFinanceiro'] . '</td>';
-							if($_SESSION['Usuario']['Rel_Pag'] == "S") {
+							if($_SESSION['log']['idSis_Empresa'] == 5) {
 								echo '<td>' . $row['ValorRestanteOrca'] . '</td>';
 								echo '<td>' . $row['ValorFrete'] . '</td>';
 								echo '<td>' . $row['ValorExtraOrca'] . '</td>';
@@ -252,7 +326,17 @@
 								echo '<td>' . $row['DescValorOrca'] . '</td>';
 								echo '<td>' . $row['CashBackOrca'] . '</td>';
 								echo '<td>' . $row['ValorFinalOrca'] . '</td>';
-							}	
+							}else{
+								if($_SESSION['Usuario']['Rel_Pag'] == "S") {
+									echo '<td>' . $row['ValorRestanteOrca'] . '</td>';
+									echo '<td>' . $row['ValorFrete'] . '</td>';
+									echo '<td>' . $row['ValorExtraOrca'] . '</td>';
+									echo '<td>' . $row['TotalOrca'] . '</td>';
+									echo '<td>' . $row['DescValorOrca'] . '</td>';
+									echo '<td>' . $row['CashBackOrca'] . '</td>';
+									echo '<td>' . $row['ValorFinalOrca'] . '</td>';
+								}
+							}
 							echo '<td>' . $row[$nomeusuario] . '</td>';
 							echo '<td>' . $row['CombinadoFrete'] . '</td>';
 							echo '<td>' . $row['AprovadoOrca'] . '</td>';
