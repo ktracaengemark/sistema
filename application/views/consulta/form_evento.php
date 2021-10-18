@@ -343,13 +343,21 @@
 								<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
 							</button>
 						</div>
-						<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>	
+						<?php if ($_SESSION['log']['idSis_Empresa'] == 5 ) { ?>
 							<div class="col-md-6 text-right">
 								<button type="submit" class="btn btn-md btn-danger" name="submeter3" id="submeter3" onclick="DesabilitaBotaoExcluir(this.name)" data-loading-text="Aguarde..." >
 									<span class="glyphicon glyphicon-trash"></span> Excluir
 								</button>
 							</div>	
-						<?php } ?>
+						<?php }else{ ?>
+							<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>	
+								<div class="col-md-6 text-right">
+									<button type="submit" class="btn btn-md btn-danger" name="submeter3" id="submeter3" onclick="DesabilitaBotaoExcluir(this.name)" data-loading-text="Aguarde..." >
+										<span class="glyphicon glyphicon-trash"></span> Excluir
+									</button>
+								</div>	
+							<?php } ?>
+						<?php } ?>	
 					</div>
 				</div>
 			</div>
