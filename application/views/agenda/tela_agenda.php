@@ -99,13 +99,15 @@
 								<input type="hidden" id="Hidden_idApp_ClienteDep" name="Hidden_idApp_ClienteDep" value="<?php echo $query['idApp_ClienteDep']; ?>" />
 							<?php } ?>
 						<?php } ?>
-						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-left">	
+					<?php } ?>
+					<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-left">	
+						<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>	
 							<label class="" for="Ordenamento">Cal.</label><br>
-							<div class=" btn btn-primary" type="button" data-toggle="collapse" data-target="#Calendario" aria-expanded="false" aria-controls="Calendario">
-								<span class="glyphicon glyphicon-calendar"></span>
-							</div>
+						<?php } ?>	
+						<div class=" btn btn-primary" type="button" data-toggle="collapse" data-target="#Calendario" aria-expanded="false" aria-controls="Calendario">
+							<span class="glyphicon glyphicon-calendar"></span>
 						</div>
-					<?php } ?>	
+					</div>	
 				</div>
 			<?php } ?>
 			<input type="hidden" id="AgendaI" value="<?php echo $_SESSION['Empresa']['AgendaI'];?>">
@@ -123,9 +125,9 @@
 				</div>	
 				<div class="row">	
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div  style="overflow:auto; height:auto; "> 
+						
 								<table id="calendar" class="table table-condensed table-striped "></table>
-						</div>
+						
 					</div>
 				</div>
 			
