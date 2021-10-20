@@ -25,7 +25,9 @@
 					
 					<tr>                       											
 						<th class="active">Nº</th>
-						<th class="active">Quem Fazer</th>
+						<?php if($_SESSION['log']['idSis_Empresa'] != 5) { ?>
+							<th class="active">Quem Fazer</th>
+						<?php } ?>
 						<th class="active">Categoria</th>
 						<!--<th class="active">Prior</th>
 						<th class="active">StatusTRF</th>-->
@@ -37,10 +39,10 @@
 						<th class="active">Ação Concl.?</th>
 						<th class="active">Inicio em:</th>
 						<th class="active">Fim em:</th>
-						<th class="active">Quem Cad</th>
-						
+						<?php if($_SESSION['log']['idSis_Empresa'] != 5) { ?>
+							<th class="active">Quem Cad</th>
+						<?php } ?>
 					</tr>
-					
 				</thead>
 
 				<tbody>
@@ -69,7 +71,9 @@
 						#echo '<tr>';
 						echo '<tr class="clickable-row" data-href="' . base_url() . 'tarefa/alterar/' . $row['idApp_Procedimento'] . '">';
 							echo '<td>' . $row['idApp_Procedimento'] . '</td>';
-							echo '<td>' . $row['Comp'] . '</td>';
+							if($_SESSION['log']['idSis_Empresa'] != 5) {	
+								echo '<td>' . $row['Comp'] . '</td>';
+							}
 							echo '<td>' . $row['Categoria'] . '</td>';
 							#echo '<td>' . $row['Prioridade'] . '</td>';
 							#echo '<td>' . $row['Statustarefa'] . '</td>';
@@ -81,8 +85,9 @@
 							echo '<td>' . $row['ConcluidoSubProcedimento'] . '</td>';
 							echo '<td>' . $row['DataSubProcedimento'] . '</td>';
 							echo '<td>' . $row['DataSubProcedimentoLimite'] . '</td>';
-							echo '<td>' . $row['NomeUsuario'] . '</td>';
-							
+							if($_SESSION['log']['idSis_Empresa'] != 5) {	
+								echo '<td>' . $row['NomeUsuario'] . '</td>';
+							}
 						echo '</tr>';
 						
 						$nomecliente = $row['Procedimento'];
