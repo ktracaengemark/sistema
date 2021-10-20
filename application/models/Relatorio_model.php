@@ -50,7 +50,9 @@ class Relatorio_model extends CI_Model {
 			$date_fim_orca 		= ($_SESSION['Agendamentos']['DataFim']) ? 'DataInicio <= "' . $date_fim . '" AND ' : FALSE;		
 				
 		}	
-
+		
+		$permissao_agenda = ($_SESSION['log']['idSis_Empresa'] == 5) ? 'CO.idApp_Agenda = ' . $_SESSION['log']['Agenda'] . ' AND ' : FALSE;
+		
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
@@ -71,6 +73,7 @@ class Relatorio_model extends CI_Model {
 				CONCAT(IFNULL(CD.idApp_ClienteDep,""), " - " ,IFNULL(CD.NomeClienteDep,"")) AS NomeClienteDep
             FROM
                 App_Consulta AS CO
+					LEFT JOIN App_Agenda AS A ON A.idApp_Agenda = CO.idApp_Agenda
 					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = CO.idApp_Cliente
 					LEFT JOIN App_ClientePet AS CP ON CP.idApp_ClientePet = CO.idApp_ClientePet
 					LEFT JOIN Tab_RacaPet AS RP ON RP.idTab_RacaPet = CP.RacaPet
@@ -78,6 +81,7 @@ class Relatorio_model extends CI_Model {
             WHERE
 				' . $date_inicio_orca . '
 				' . $date_fim_orca . '
+				' . $permissao_agenda . '
                 CO.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				' . $tipoevento . '
 				' . $cliente . '
@@ -5439,7 +5443,7 @@ exit();*/
 		$query = $this->db->query('
             SELECT
 				E.NomeEmpresa,
-				U.idSis_Usuario,
+				P.idSis_Usuario,
 				U.CpfUsuario,
 				U.Nome AS NomeUsuario,
 				AU.Nome AS Comp,
@@ -5475,7 +5479,7 @@ exit();*/
 				' . $filtro3 . '
 				' . $filtro8 . '
 				(' . $consulta . ') AND
-				(U.CelularUsuario = ' . $_SESSION['log']['CelularUsuario'] . ' OR
+				(
 				(P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				(P.Compartilhar = ' . $_SESSION['log']['idSis_Usuario'] . ' OR P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' ' . $permissao2 . '))) AND
 				P.idApp_OrcaTrata = "0" AND

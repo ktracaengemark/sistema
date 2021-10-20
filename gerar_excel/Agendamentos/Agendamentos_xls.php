@@ -40,6 +40,8 @@
 			$sub_cliente = 0;
 		}
 		
+		$permissao_agenda = ($_SESSION['log']['idSis_Empresa'] == 5) ? 'CO.idApp_Agenda = ' . $_SESSION['log']['Agenda'] . ' AND ' : FALSE;
+		
 		$result_msg_contatos = '
 								SELECT
 									CO.*,
@@ -70,6 +72,7 @@
 								WHERE
 									' . $date_inicio_orca . '
 									' . $date_fim_orca . '
+									' . $permissao_agenda . '
 									CO.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 									' . $tipoevento . '
 									' . $cliente . '
@@ -97,6 +100,11 @@
 		// Campos da Tabela
 		$html .= '<tr>';
 		$html .= '<td><b>Empresa</b></td>';
+		$html .= '<td><b>id</b></td>';
+		$html .= '<td><b>Data Ini</b></td>';
+		$html .= '<td><b>Data Fim</b></td>';
+		$html .= '<td><b>Hora Ini</b></td>';
+		$html .= '<td><b>Hora Fim</b></td>';
 		
 		if($tipo == 2){
 			
@@ -134,6 +142,11 @@
 			
 			$html .= '<tr>';
 			$html .= '<td>'.$row_msg_contatos["Empresa"].'</td>';
+			$html .= '<td>'.$row_msg_contatos["idApp_Consulta"].'</td>';
+			$html .= '<td>'.$row_msg_contatos["DataInicio"].'</td>';
+			$html .= '<td>'.$row_msg_contatos["DataFim"].'</td>';
+			$html .= '<td>'.$row_msg_contatos["HoraInicio"].'</td>';
+			$html .= '<td>'.$row_msg_contatos["HoraFim"].'</td>';
 			
 			if($tipo == 2){
 				

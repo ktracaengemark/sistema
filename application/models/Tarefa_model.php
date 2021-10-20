@@ -45,12 +45,12 @@ class Tarefa_model extends CI_Model {
 				CT.*,
 				CT.idTab_Categoria AS Categoria,
 				CT.Categoria AS NomeCategoria,
-				US.*,
+				
 				US.idSis_Usuario AS Compartilhar,
 				US.CelularUsuario AS CelularCompartilhou,
 				US.Nome AS NomeCompartilhar,
-				USC.*,
-				USC.idSis_Usuario AS idSis_Usuario,
+				
+				PC.idSis_Usuario AS idSis_Usuario,
 				USC.CelularUsuario AS CelularCadastrou,
 				USC.Nome AS NomeCadastrou
 			FROM 
@@ -176,11 +176,6 @@ class Tarefa_model extends CI_Model {
 		
 		$query = $this->db->query('
             SELECT
-				E.NomeEmpresa,
-				U.idSis_Usuario,
-				U.CpfUsuario,
-				U.Nome AS NomeUsuario,
-				AU.Nome AS Comp,
 				P.idSis_Empresa,
 				P.idApp_Procedimento,
                 P.Procedimento,
@@ -190,6 +185,11 @@ class Tarefa_model extends CI_Model {
 				P.Prioridade,
 				P.Statustarefa,
 				P.Compartilhar,
+				P.idSis_Usuario,
+				E.NomeEmpresa,
+				U.CpfUsuario,
+				U.Nome AS NomeUsuario,
+				AU.Nome AS Comp,
 				CT.Categoria,
 				SP.SubProcedimento,
 				SP.Statussubtarefa,

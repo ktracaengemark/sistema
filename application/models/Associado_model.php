@@ -420,6 +420,45 @@ class Associado_model extends CI_Model {
         return $array;
     }	
 
+	public function select_associado_tarefa($data = FALSE) {
+		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'P.idSis_Associado = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+        if ($data === TRUE) {
+            $array = $this->db->query('					
+            SELECT
+				P.idSis_Associado,
+				CONCAT(IFNULL(P.Nome,"")) AS Nome
+            FROM
+                Sis_Associado AS P
+            WHERE 
+				' . $permissao . '
+				P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '  
+			ORDER BY 
+				P.Nome ASC
+    ');
+					
+        } else {
+            $query = $this->db->query('
+            SELECT
+				P.idSis_Associado,
+				CONCAT(IFNULL(P.Nome,"")) AS Nome
+            FROM
+                Sis_Associado AS P
+            WHERE
+				' . $permissao . '
+				P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '  
+			ORDER BY 
+				P.Nome ASC
+    ');
+            
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->idSis_Associado] = $row->Nome;
+            }
+        }
+
+        return $array;
+    }	
+
 	public function select_associado_entregador($data = FALSE) {
 		/*		
 		//echo $this->db->last_query();

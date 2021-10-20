@@ -2633,12 +2633,12 @@ class Orcatrata_model extends CI_Model {
 		$query = $this->db->query('
 			SELECT
 				P.*,
-				US.*,
+				
 				US.idSis_Usuario AS Compartilhar,
 				US.CelularUsuario AS CelularCompartilhou,
 				US.Nome AS NomeCompartilhar,
-				USC.*,
-				USC.idSis_Usuario AS idSis_Usuario,
+				
+				P.idSis_Usuario AS idSis_Usuario,
 				USC.CelularUsuario AS CelularCadastrou,
 				USC.Nome AS NomeCadastrou
             FROM

@@ -33,7 +33,9 @@ class Consultaprint_model extends CI_Model {
 		}else{
 			$querylimit = '';
 		}
-				
+		
+		$permissao_agenda = ($_SESSION['log']['idSis_Empresa'] == 5) ? 'CO.idApp_Agenda = ' . $_SESSION['log']['Agenda'] . ' AND ' : FALSE;
+		
 		$query = $this->db->query('
             SELECT
 				CO.*,
@@ -54,6 +56,7 @@ class Consultaprint_model extends CI_Model {
             WHERE
 				' . $date_inicio_orca . '
 				' . $date_fim_orca . '
+				' . $permissao_agenda . '
                 CO.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				' . $tipoevento . '
 				' . $cliente . '
