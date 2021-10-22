@@ -6117,7 +6117,7 @@ class Orcatrata extends CI_Controller {
                     $data['update']['produto']['inserir'][$j]['idApp_Cliente'] = $data['orcatrata']['idApp_Cliente'];
 					$data['update']['produto']['inserir'][$j]['idTab_TipoRD'] = "2";
 
-					if($data['update']['produto']['inserir'][$j]['ValorProduto']){
+					if(empty($data['update']['produto']['inserir'][$j]['ValorProduto'])){
 						$data['update']['produto']['inserir'][$j]['ValorProduto'] = "0.00";
 					}else{
 						$data['update']['produto']['inserir'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['inserir'][$j]['ValorProduto']));
