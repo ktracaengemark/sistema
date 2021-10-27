@@ -13,7 +13,7 @@ class Associado extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Funcao_model', 'Cliente_model', 'Usuario_model', 'Associado_model', 'Associado_model'));
+        $this->load->model(array('Basico_model', 'Funcao_model', 'Cliente_model', 'Usuario_model', 'Associado_model', 'Empresa_model'));
         #$this->load->model(array('Basico_model', 'Associado_model'));
         $this->load->driver('session');
 
@@ -315,6 +315,25 @@ class Associado extends CI_Controller {
 							}
 						}
 						
+						#### Sis_Empresa ####
+						$data['update']['empresa']['alterar'] = $this->Empresa_model->get_empresa_associado($data['query']['idSis_Associado']);
+						
+						if (isset($data['update']['empresa']['alterar'])){
+
+							$max_empresa = count($data['update']['empresa']['alterar']);
+
+							for($j=0;$j<$max_empresa;$j++) {
+							
+								$data['update']['empresa']['alterar'][$j]['CelularAdmin'] 	= $data['query']['CelularAssociado'];
+								$data['update']['empresa']['alterar'][$j]['UsuarioEmpresa'] = $data['query']['CelularAssociado'];
+								$data['update']['empresa']['alterar'][$j]['Senha'] 			= $data['query']['Senha'];
+								$data['update']['empresa']['alterar'][$j]['Codigo'] 		= $data['query']['Codigo'];
+
+								$data['update']['empresa']['bd'][$j] = $this->Empresa_model->update_empresa($data['update']['empresa']['alterar'][$j], $data['update']['empresa']['alterar'][$j]['idSis_Empresa']);
+									
+							}
+						}
+												
 						redirect(base_url() . 'associado/prontuario/' . $data['query']['idSis_Associado'] . $data['msg']);
 						exit();
 					}				
@@ -380,6 +399,23 @@ class Associado extends CI_Controller {
 						}
 					}
 					
+					#### Sis_Empresa ####
+					$data['update']['empresa']['alterar'] = $this->Empresa_model->get_empresa_associado($data['query']['idSis_Associado']);
+
+					if (isset($data['update']['empresa']['alterar'])){
+
+						$max_empresa = count($data['update']['empresa']['alterar']);
+
+						for($j=0;$j<$max_empresa;$j++) {
+						
+							$data['update']['empresa']['alterar'][$j]['Senha'] 			= $data['query']['Senha'];
+							$data['update']['empresa']['alterar'][$j]['Codigo'] 		= $data['query']['Codigo'];
+
+							$data['update']['empresa']['bd'][$j] = $this->Empresa_model->update_empresa($data['update']['empresa']['alterar'][$j], $data['update']['empresa']['alterar'][$j]['idSis_Empresa']);
+								
+						}
+					}
+										
 					redirect(base_url() . 'associado/prontuario/' . $data['query']['idSis_Associado'] . $data['msg']);
 					exit();
 				}

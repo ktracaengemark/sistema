@@ -45,6 +45,14 @@ class Empresa_model extends CI_Model {
 
         return $query[0];
     }
+
+    public function get_empresa_associado($data) {
+        $query = $this->db->query('SELECT idSis_Empresa FROM Sis_Empresa WHERE idSis_Associado = ' . $data);
+
+        $query = $query->result_array();
+
+        return $query;
+    }
 	
     public function get_pagseguro($data) {
         $query = $this->db->query('SELECT * FROM App_Documentos WHERE idSis_Empresa = ' . $data);
@@ -88,7 +96,7 @@ class Empresa_model extends CI_Model {
 
     public function update_empresa($data, $id) {
 		
-		unset($data['idSis_Empresa']);
+		unset($data['Id']);
         $query = $this->db->update('Sis_Empresa', $data, array('idSis_Empresa' => $id));
         return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
 
