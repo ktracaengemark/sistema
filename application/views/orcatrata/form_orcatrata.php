@@ -1202,16 +1202,19 @@
 																		</button>
 																	</span>
 																</div>
+																<?php echo form_error('Cep'); ?>
 															</div>
 															<div class="col-sm-6 col-md-4 ">
 																<label class="" for="Logradouro">Endreço:</label>
 																<input type="text" class="form-control " id="Logradouro" maxlength="100" <?php echo $readonly; ?>
 																	   name="Logradouro" value="<?php echo $orcatrata['Logradouro']; ?>">
+																<?php echo form_error('Logradouro'); ?>
 															</div>
 															<div class="col-sm-4 col-md-4 ">
 																<label class="" for="Numero">Número:</label>
 																<input type="text" class="form-control " id="Numero" maxlength="100" <?php echo $readonly; ?>
 																	   name="Numero" value="<?php echo $orcatrata['Numero']; ?>">
+																<?php echo form_error('Numero'); ?>
 															</div>
 															<div class="col-sm-4 col-md-4 ">
 																<label class="" for="Complemento">Complemento:</label>
@@ -1222,16 +1225,19 @@
 																<label class="" for="Bairro">Bairro:</label>
 																<input type="text" class="form-control " id="Bairro" maxlength="100" <?php echo $readonly; ?>
 																	   name="Bairro" value="<?php echo $orcatrata['Bairro']; ?>">
+																<?php echo form_error('Bairro'); ?>
 															</div>
 															<div class="col-sm-4 col-md-4 ">
 																<label class="" for="Cidade">Cidade:</label>
 																<input type="text" class="form-control " id="Cidade" maxlength="100" <?php echo $readonly; ?>
 																	   name="Cidade" value="<?php echo $orcatrata['Cidade']; ?>">
+																<?php echo form_error('Cidade'); ?>
 															</div>
 															<div class="col-sm-4 col-md-4 ">
 																<label class="" for="Estado">Estado:</label>
 																<input type="text" class="form-control " id="Estado" maxlength="2" <?php echo $readonly; ?>
 																	   name="Estado" value="<?php echo $orcatrata['Estado']; ?>">
+																<?php echo form_error('Estado'); ?>
 															</div>
 															<div class="col-sm-4 col-md-4 ">
 																<label class="" for="Referencia">Referencia:</label>

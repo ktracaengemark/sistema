@@ -1074,16 +1074,19 @@
 																		</button>
 																	</span>
 																</div>
+																<?php echo form_error('Cep'); ?>
 															</div>
 															<div class="col-sm-6 col-md-4 ">
 																<label class="" for="Logradouro">Endreço:</label><br>
 																<input type="text" class="form-control " id="Logradouro" maxlength="100" <?php echo $readonly; ?>
 																	   name="Logradouro" value="<?php echo $orcatrata['Logradouro']; ?>">
+																<?php echo form_error('Logradouro'); ?>
 															</div>
 															<div class="col-sm-4 col-md-4 ">
 																<label class="" for="Numero">Número:</label>
 																<input type="text" class="form-control " id="Numero" maxlength="100" <?php echo $readonly; ?>
 																	   name="Numero" value="<?php echo $orcatrata['Numero']; ?>">
+																<?php echo form_error('Numero'); ?>
 															</div>
 															<div class="col-sm-4 col-md-4 ">
 																<label class="" for="Complemento">Complemento:</label>
@@ -1094,16 +1097,19 @@
 																<label class="" for="Bairro">Bairro:</label>
 																<input type="text" class="form-control " id="Bairro" maxlength="100" <?php echo $readonly; ?>
 																	   name="Bairro" value="<?php echo $orcatrata['Bairro']; ?>">
+																<?php echo form_error('Bairro'); ?>
 															</div>
 															<div class="col-sm-4 col-md-4 ">
 																<label class="" for="Cidade">Cidade:</label>
 																<input type="text" class="form-control " id="Cidade" maxlength="100" <?php echo $readonly; ?>
 																	   name="Cidade" value="<?php echo $orcatrata['Cidade']; ?>">
+																<?php echo form_error('Cidade'); ?>
 															</div>
 															<div class="col-sm-4 col-md-4 ">
 																<label class="" for="Estado">Estado:</label>
 																<input type="text" class="form-control " id="Estado" maxlength="2" <?php echo $readonly; ?>
 																	   name="Estado" value="<?php echo $orcatrata['Estado']; ?>">
+																<?php echo form_error('Estado'); ?>
 															</div>
 															<div class="col-sm-4 col-md-4 ">
 																<label class="" for="Referencia">Referencia:</label>
@@ -1740,7 +1746,7 @@
 																			</div>
 																			<div class="col-sm-3  col-md-2 col-lg-2">
 																				<label for="Quitado">Parc. Paga?</label><br>
-																				<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+																				<?php if ($_SESSION['log']['idSis_Empresa'] == 5) { ?>
 																					<div class="btn-group" data-toggle="buttons">
 																						<?php
 																						foreach ($select['Quitado'] as $key => $row) {
@@ -1767,16 +1773,44 @@
 																						?>
 																					</div>
 																				<?php }else{ ?>
-																					<input type="hidden" name="Quitado<?php echo $i ?>" id="Quitado<?php echo $i ?>"  value="<?php echo $parcelasrec[$i]['Quitado']; ?>"/>
-																					<span><?php if($parcelasrec[$i]['Quitado'] == "S") {
-																									echo 'Sim';
-																								} elseif($parcelasrec[$i]['Quitado'] == "N"){
-																									echo 'Não';
-																								}else{
-																									echo 'Não';
-																								}?>
-																					</span>
-																				<?php } ?>
+																					<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+																						<div class="btn-group" data-toggle="buttons">
+																							<?php
+																							foreach ($select['Quitado'] as $key => $row) {
+																								if (!$parcelasrec[$i]['Quitado'])$parcelasrec[$i]['Quitado'] = 'N';
+																								($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																								if ($parcelasrec[$i]['Quitado'] == $key) {
+																									echo ''
+																									. '<label class="btn btn-warning active" name="Quitado' . $i . '_' . $hideshow . '">'
+																									. '<input type="radio" name="Quitado' . $i . '" id="' . $hideshow . '" '
+																									. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
+																									. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																									. '</label>'
+																									;
+																								} else {
+																									echo ''
+																									. '<label class="btn btn-default" name="Quitado' . $i . '_' . $hideshow . '">'
+																									. '<input type="radio" name="Quitado' . $i . '" id="' . $hideshow . '" '
+																									. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
+																									. 'autocomplete="off" value="' . $key . '" >' . $row
+																									. '</label>'
+																									;
+																								}
+																							}
+																							?>
+																						</div>
+																					<?php }else{ ?>
+																						<input type="hidden" name="Quitado<?php echo $i ?>" id="Quitado<?php echo $i ?>"  value="<?php echo $parcelasrec[$i]['Quitado']; ?>"/>
+																						<span><?php if($parcelasrec[$i]['Quitado'] == "S") {
+																										echo 'Sim';
+																									} elseif($parcelasrec[$i]['Quitado'] == "N"){
+																										echo 'Não';
+																									}else{
+																										echo 'Não';
+																									}?>
+																						</span>
+																					<?php } ?>
+																				<?php } ?>	
 																			</div>
 																			<div class="col-sm-3  col-md-3 col-lg-2">
 																				<div id="Quitado<?php echo $i ?>" <?php echo $div['Quitado' . $i]; ?>>

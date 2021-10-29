@@ -1670,31 +1670,9 @@
 																				</div>
 																				<div class="col-sm-3  col-md-2 col-lg-2">
 																					<label for="Quitado">Parc. Paga?</label><br>
-																					<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+																					<?php if ($_SESSION['log']['idSis_Empresa'] == 5) { ?>
 																						<div class="btn-group" data-toggle="buttons">
 																							<?php
-																							/*
-																							foreach ($select['Quitado'] as $key => $row) {
-																								(!$parcelasrec[$i]['Quitado']) ? $parcelasrec[$i]['Quitado'] = 'N' : FALSE;
-																								if ($parcelasrec[$i]['Quitado'] == $key) {
-																									echo ''
-																									. '<label class="btn btn-warning active" name="radiobutton_Quitado' . $i . '" id="radiobutton_Quitado' . $i .  $key . '">'
-																									. '<input type="radio" name="Quitado' . $i . '" id="radiobuttondinamico" '
-																									. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
-																									. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																									. '</label>'
-																									;
-																								} else {
-																									echo ''
-																									. '<label class="btn btn-default" name="radiobutton_Quitado' . $i . '" id="radiobutton_Quitado' . $i .  $key . '">'
-																									. '<input type="radio" name="Quitado' . $i . '" id="radiobuttondinamico" '
-																									. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
-																									. 'autocomplete="off" value="' . $key . '" >' . $row
-																									. '</label>'
-																									;
-																								}
-																							}
-																							*/
 																							foreach ($select['Quitado'] as $key => $row) {
 																								if (!$parcelasrec[$i]['Quitado'])$parcelasrec[$i]['Quitado'] = 'N';
 																								($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
@@ -1719,15 +1697,43 @@
 																							?>
 																						</div>
 																					<?php }else{ ?>
-																						<input type="hidden" name="Quitado<?php echo $i ?>" id="Quitado<?php echo $i ?>"  value="<?php echo $parcelasrec[$i]['Quitado']; ?>"/>
-																						<span><?php if($parcelasrec[$i]['Quitado'] == "S") {
-																										echo 'Sim';
-																									} elseif($parcelasrec[$i]['Quitado'] == "N"){
-																										echo 'Não';
-																									}else{
-																										echo 'Não';
-																									}?>
-																						</span>
+																						<?php if ($_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+																							<div class="btn-group" data-toggle="buttons">
+																								<?php
+																								foreach ($select['Quitado'] as $key => $row) {
+																									if (!$parcelasrec[$i]['Quitado'])$parcelasrec[$i]['Quitado'] = 'N';
+																									($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																									if ($parcelasrec[$i]['Quitado'] == $key) {
+																										echo ''
+																										. '<label class="btn btn-warning active" name="Quitado' . $i . '_' . $hideshow . '">'
+																										. '<input type="radio" name="Quitado' . $i . '" id="' . $hideshow . '" '
+																										. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
+																										. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																										. '</label>'
+																										;
+																									} else {
+																										echo ''
+																										. '<label class="btn btn-default" name="Quitado' . $i . '_' . $hideshow . '">'
+																										. '<input type="radio" name="Quitado' . $i . '" id="' . $hideshow . '" '
+																										. 'onchange="carregaQuitado(this.value,this.name,'.$i.')" '
+																										. 'autocomplete="off" value="' . $key . '" >' . $row
+																										. '</label>'
+																										;
+																									}
+																								}
+																								?>
+																							</div>
+																						<?php }else{ ?>
+																							<input type="hidden" name="Quitado<?php echo $i ?>" id="Quitado<?php echo $i ?>"  value="<?php echo $parcelasrec[$i]['Quitado']; ?>"/>
+																							<span><?php if($parcelasrec[$i]['Quitado'] == "S") {
+																											echo 'Sim';
+																										} elseif($parcelasrec[$i]['Quitado'] == "N"){
+																											echo 'Não';
+																										}else{
+																											echo 'Não';
+																										}?>
+																							</span>
+																						<?php } ?>
 																					<?php } ?>
 																				</div>
 																				<div class="col-sm-3  col-md-3 col-lg-2">

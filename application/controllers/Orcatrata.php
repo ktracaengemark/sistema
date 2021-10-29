@@ -803,7 +803,16 @@ class Orcatrata extends CI_Controller {
 		$this->form_validation->set_rules('QtdParcelasOrca', 'Qtd de Parcelas', 'required|trim');
 		$this->form_validation->set_rules('DataVencimentoOrca', 'Data do 1ºVenc.', 'required|trim|valid_date');
 		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');	
-
+		
+		if($data['orcatrata']['TipoFrete'] !=1){
+			$this->form_validation->set_rules('Cep', 'Cep', 'required|trim');
+			$this->form_validation->set_rules('Logradouro', 'Endereço', 'required|trim');
+			$this->form_validation->set_rules('Numero', 'Numero', 'required|trim');
+			$this->form_validation->set_rules('Bairro', 'Bairro', 'required|trim');
+			$this->form_validation->set_rules('Cidade', 'Cidade', 'required|trim');
+			$this->form_validation->set_rules('Estado', 'Estado', 'required|trim');
+		}
+		
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             /*        
@@ -2625,6 +2634,15 @@ class Orcatrata extends CI_Controller {
 		$this->form_validation->set_rules('DataVencimentoOrca', 'Data do 1ºVenc.', 'required|trim|valid_date');
 		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');	
 		
+		if($data['orcatrata']['TipoFrete'] !=1){
+			$this->form_validation->set_rules('Cep', 'Cep', 'required|trim');
+			$this->form_validation->set_rules('Logradouro', 'Endereço', 'required|trim');
+			$this->form_validation->set_rules('Numero', 'Numero', 'required|trim');
+			$this->form_validation->set_rules('Bairro', 'Bairro', 'required|trim');
+			$this->form_validation->set_rules('Cidade', 'Cidade', 'required|trim');
+			$this->form_validation->set_rules('Estado', 'Estado', 'required|trim');
+		}
+				
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('orcatrata/form_orcatrata', $data);
@@ -4015,6 +4033,15 @@ class Orcatrata extends CI_Controller {
 		//$this->form_validation->set_rules('QtdParcelasOrca', 'Qtd de Parcelas Tem que ser maior que "0" ', 'required|trim|valid_qtdparcelas');
 		$this->form_validation->set_rules('QtdParcelasOrca', 'Qtd de Parcelas Tem que ser maior que "0" ', 'required|trim');
 		$this->form_validation->set_rules('DataVencimentoOrca', 'Data do 1ºVenc.', 'required|trim|valid_date');		
+		
+		if($data['orcatrata']['TipoFrete'] !=1){
+			$this->form_validation->set_rules('Cep', 'Cep', 'required|trim');
+			$this->form_validation->set_rules('Logradouro', 'Endereço', 'required|trim');
+			$this->form_validation->set_rules('Numero', 'Numero', 'required|trim');
+			$this->form_validation->set_rules('Bairro', 'Bairro', 'required|trim');
+			$this->form_validation->set_rules('Cidade', 'Cidade', 'required|trim');
+			$this->form_validation->set_rules('Estado', 'Estado', 'required|trim');
+		}
 		
 		#run form validation
 		
@@ -5627,6 +5654,15 @@ class Orcatrata extends CI_Controller {
 		//$this->form_validation->set_rules('DataVencimentoOrca', 'Data do 1ºVenc.', 'required|trim|valid_date');
 		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');	
 		
+		if($data['orcatrata']['TipoFrete'] !=1){
+			$this->form_validation->set_rules('Cep', 'Cep', 'required|trim');
+			$this->form_validation->set_rules('Logradouro', 'Endereço', 'required|trim');
+			$this->form_validation->set_rules('Numero', 'Numero', 'required|trim');
+			$this->form_validation->set_rules('Bairro', 'Bairro', 'required|trim');
+			$this->form_validation->set_rules('Cidade', 'Cidade', 'required|trim');
+			$this->form_validation->set_rules('Estado', 'Estado', 'required|trim');
+		}
+				
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('orcatrata/form_orcatrataalterar', $data);
@@ -7475,6 +7511,15 @@ class Orcatrata extends CI_Controller {
 		//$this->form_validation->set_rules('DataVencimentoOrca', 'Data do 1ºVenc.', 'required|trim|valid_date');
 		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');			
 		
+		if($data['orcatrata']['TipoFrete'] !=1){
+			$this->form_validation->set_rules('Cep', 'Cep', 'required|trim');
+			$this->form_validation->set_rules('Logradouro', 'Endereço', 'required|trim');
+			$this->form_validation->set_rules('Numero', 'Numero', 'required|trim');
+			$this->form_validation->set_rules('Bairro', 'Bairro', 'required|trim');
+			$this->form_validation->set_rules('Cidade', 'Cidade', 'required|trim');
+			$this->form_validation->set_rules('Estado', 'Estado', 'required|trim');
+		}
+				
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('orcatrata/form_orcatrataalterar2', $data);
