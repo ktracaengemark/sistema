@@ -370,7 +370,7 @@ class Cliente extends CI_Controller {
 					}
 					
 					//$data['query']['usuario'] = $data['query']['CelularCliente'];
-					$data['query']['usuario'] = $data['associado']['Usuario'];
+					$data['query']['usuario'] = $data['associado']['Associado'];
 					$data['query']['senha'] = $data['associado']['Senha'];
 					$data['query']['CodInterno'] = md5(uniqid(time() . rand()));
 					
@@ -1076,6 +1076,7 @@ class Cliente extends CI_Controller {
 							$data['query']['CodInterno'] = md5(uniqid(time() . rand()));
 						}
 						$data['query']['idSis_Associado'] = $data['associado']['idSis_Associado'];
+						$data['query']['usuario'] = $data['associado']['Associado'];
 						$data['query']['Codigo'] = $data['associado']['Codigo'];
 									
 						$data['anterior'] = $this->Cliente_model->get_cliente($data['query']['idApp_Cliente']);
@@ -1147,12 +1148,12 @@ class Cliente extends CI_Controller {
 						$data['query']['CodInterno'] = md5(uniqid(time() . rand()));
 					}
 					*/
-					$data['query']['usuario'] = $data['query']['CelularCliente'];
-					$data['query']['senha'] = $data['associado']['Senha'];
 					if(!isset($data['query']['CodInterno'])){
 						$data['query']['CodInterno'] = md5(uniqid(time() . rand()));
 					}
 					$data['query']['idSis_Associado'] = $data['associado']['idSis_Associado'];
+					$data['query']['usuario'] = $data['associado']['Associado'];
+					$data['query']['senha'] = $data['associado']['Senha'];
 					$data['query']['Codigo'] = $data['associado']['Codigo'];				
 
 					$data['anterior'] = $this->Cliente_model->get_cliente($data['query']['idApp_Cliente']);
