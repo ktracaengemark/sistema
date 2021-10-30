@@ -70,7 +70,7 @@
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
 												<label for="EstadoEmpresa" >Estado:</label>
-												<input type="text" class="form-control" id="EstadoEmpresa" maxlength="45" 
+												<input type="text" class="form-control" id="EstadoEmpresa" maxlength="2" 
 														name="EstadoEmpresa" value="<?php echo $query['EstadoEmpresa']; ?>">
 												<?php echo form_error('EstadoEmpresa'); ?>
 											</div>
@@ -200,11 +200,11 @@
 											<div class="modal-header bg-danger">
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 												<h4 class="modal-title">Ao "Confirmar Registro",<br>
-																		você terá 15 dias, GRÁTIS, para testar o nosso sistema!</h4>
+																		você terá 30 dias, GRÁTIS, para testar o nosso sistema!</h4>
 											</div>
 											
 											<div class="modal-body">
-												<p>15 dias Grátis!!</p>
+												<p>30 dias Grátis!!</p>
 											</div>
 											
 											<div class="modal-footer">

@@ -9,7 +9,7 @@ class Loginempresa extends CI_Controller {
 	public function __construct() {
         parent::__construct();
 
-        $this->load->model(array('Loginempresa_model', 'Basico_model', 'Associado_model', 'Cliente_model', 'Usuario_model'));
+        $this->load->model(array('Loginempresa_model', 'Basico_model', 'Associado_model', 'Cliente_model', 'Usuario_model', 'Empresa_model'));
         $this->load->helper(array('form', 'url'));
         $this->load->library(array('basico', 'form_validation', 'user_agent'));
         $this->load->driver('session');
@@ -257,7 +257,8 @@ class Loginempresa extends CI_Controller {
 		$this->form_validation->set_rules('NomeAdmin', 'Nome do Administrador', 'required|trim');
         $this->form_validation->set_rules('Senha', 'Senha', 'required|trim');
         $this->form_validation->set_rules('Confirma', 'Confirmar Senha', 'required|trim|matches[Senha]');
-		$this->form_validation->set_rules('CelularAdmin', 'Celular', 'required|trim|alpha_numeric_spaces|is_unique_duplo[Sis_Empresa.CelularAdmin.NomeEmpresa.' . $data['query']['NomeEmpresa'] . ']');
+		$this->form_validation->set_rules('CelularAdmin', 'Celular', 'required|trim|is_unique[Sis_Empresa.CelularAdmin]');
+		//$this->form_validation->set_rules('CelularAdmin', 'Celular', 'required|trim|alpha_numeric_spaces|is_unique_duplo[Sis_Empresa.CelularAdmin.NomeEmpresa.' . $data['query']['NomeEmpresa'] . ']');
 		#$this->form_validation->set_rules('CelularAdmin', 'CelularAdmin', 'required|trim');
         $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');			
 		#$this->form_validation->set_rules('NumUsuarios', 'Número de Usuários', 'required|trim');
@@ -284,6 +285,7 @@ class Loginempresa extends CI_Controller {
 			$data['query']['NivelEmpresa'] = 4;
 			$data['query']['idTab_Modulo'] = 1;
 			$data['query']['NumUsuarios'] = 1;
+			$data['query']['UsuarioEmpresa'] = $data['query']['CelularAdmin'];
 			$data['query']['DataCriacao'] = $this->basico->mascara_data($data['query']['DataCriacao'], 'mysql');
 			$data['query']['DataDeValidade'] = $this->basico->mascara_data($data['query']['DataDeValidade'], 'mysql');
 			$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');			
@@ -385,6 +387,24 @@ class Loginempresa extends CI_Controller {
 						$data['update']['usuario']['alterar'][$j]['Codigo'] = $data['query']['Codigo'];
 
 						$data['update']['usuario']['bd'][$j] = $this->Cliente_model->update_usuario($data['update']['usuario']['alterar'][$j], $data['update']['usuario']['alterar'][$j]['idSis_Usuario']);
+							
+					}
+				}
+				
+				
+				#### Sis_Empresa ####
+				$data['update']['empresa']['alterar'] = $this->Empresa_model->get_empresa_associado($data['associado']['idSis_Associado']);
+
+				if (isset($data['update']['empresa']['alterar'])){
+
+					$max_empresa = count($data['update']['empresa']['alterar']);
+
+					for($j=0;$j<$max_empresa;$j++) {
+					
+						$data['update']['empresa']['alterar'][$j]['Senha'] 	= $data['query']['Senha'];
+						$data['update']['empresa']['alterar'][$j]['Codigo'] = $data['query']['Codigo'];
+
+						$data['update']['empresa']['bd'][$j] = $this->Empresa_model->update_empresa($data['update']['empresa']['alterar'][$j], $data['update']['empresa']['alterar'][$j]['idSis_Empresa']);
 							
 					}
 				}
