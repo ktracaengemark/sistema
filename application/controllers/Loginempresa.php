@@ -169,7 +169,6 @@ class Loginempresa extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = $this->input->post(array(
-            'Email',
             #'UsuarioEmpresa',
 			'NomeEmpresa',
             'EnderecoEmpresa',
@@ -182,10 +181,13 @@ class Loginempresa extends CI_Controller {
             'NomeAdmin',
 			'DataNascimento',
 			'Sexo',
-            'CpfAdmin',
+            //'CpfAdmin',
+            'CelularAdmin',
+            'ConfirmaCelular',
+            'Email',
+            'ConfirmaEmail',
 			'Senha',
             'Confirma',
-            'CelularAdmin',
 			'DataCriacao',
 			'DataDeValidade',
 			'NumUsuarios',
@@ -245,7 +247,6 @@ class Loginempresa extends CI_Controller {
 		$this->form_validation->set_rules('NomeEmpresa', 'Nome da empresa', 'required|trim|is_unique[Sis_Empresa.NomeEmpresa]');
 		#$this->form_validation->set_rules('NomeEmpresa', 'Nome da empresa', 'required|trim');	
 		#$this->form_validation->set_rules('CpfAdmin', 'Cpf', 'required|trim|valid_cpf|alpha_numeric_spaces|is_unique_duplo[Sis_Empresa.CpfAdmin.NomeEmpresa.' . $data['query']['NomeEmpresa'] . ']');
-		$this->form_validation->set_rules('Email', 'E-mail', 'trim|valid_email');		
         #$this->form_validation->set_rules('UsuarioEmpresa', 'Usuário', 'required|trim|is_unique[Sis_Empresa.UsuarioEmpresa]');
 		$this->form_validation->set_rules('EnderecoEmpresa', 'Endereço', 'required|trim');
 		$this->form_validation->set_rules('NumeroEmpresa', 'Número', 'required|trim');
@@ -258,6 +259,9 @@ class Loginempresa extends CI_Controller {
         $this->form_validation->set_rules('Senha', 'Senha', 'required|trim');
         $this->form_validation->set_rules('Confirma', 'Confirmar Senha', 'required|trim|matches[Senha]');
 		$this->form_validation->set_rules('CelularAdmin', 'Celular', 'required|trim|is_unique[Sis_Empresa.CelularAdmin]');
+        $this->form_validation->set_rules('ConfirmaCelular', 'Confirmar Celular', 'required|trim|matches[CelularAdmin]');
+		$this->form_validation->set_rules('Email', 'E-mail', 'required|trim|valid_email');
+        $this->form_validation->set_rules('ConfirmaEmail', 'Confirmar Email', 'required|trim|matches[Email]');
 		//$this->form_validation->set_rules('CelularAdmin', 'Celular', 'required|trim|alpha_numeric_spaces|is_unique_duplo[Sis_Empresa.CelularAdmin.NomeEmpresa.' . $data['query']['NomeEmpresa'] . ']');
 		#$this->form_validation->set_rules('CelularAdmin', 'CelularAdmin', 'required|trim');
         $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');			
@@ -296,22 +300,27 @@ class Loginempresa extends CI_Controller {
 			#$data['query']['Inativo'] = 1;
 			//ACESSO LIBERADO PRA QUEM REALIZAR O CADASTRO
 			$data['query']['Inativo'] = 0;
-			unset($data['query']['Confirma']);
-
-			
-			$data['associado'] = $this->Loginempresa_model->get_associado($data['query']['CelularAdmin']);
 			/*
 			echo "<br>";
 			echo "<pre>";
 			echo "<br>";
-			print_r($data['associado']);
+			print_r($data['query']);
 			echo "</pre>";			
+			exit();
 			*/
+			unset($data['query']['Confirma']);
+			unset($data['query']['ConfirmaCelular']);
+			unset($data['query']['ConfirmaEmail']);
+
+		
+			$data['associado'] = $this->Loginempresa_model->get_associado($data['query']['CelularAdmin']);
+			
+
 			if(!isset($data['associado']) || $data['associado'] === FALSE){
 
 				$data['associado']['Nome'] = $data['query']['NomeAdmin'];
 				$data['associado']['Email'] = $data['query']['Email'];
-				$data['associado']['CpfAssociado'] = $data['query']['CpfAdmin'];
+				//$data['associado']['CpfAssociado'] = $data['query']['CpfAdmin'];
 				$data['associado']['idSis_Empresa'] = 5;
 				$data['associado']['idTab_Modulo'] = 1;
 				$data['associado']['DataNascimento'] = $data['query']['DataNascimento'];
@@ -486,7 +495,7 @@ class Loginempresa extends CI_Controller {
 							'Sexo' => $data['query']['Sexo'],
 							'Senha' => $data['query']['Senha'],
 							'Codigo' => $data['query']['Codigo'],
-							'CpfUsuario' => $data['query']['CpfAdmin'],
+							//'CpfUsuario' => $data['query']['CpfAdmin'],
 							'Inativo' => "0",
 							'idTab_Modulo' => "1",
 							'Permissao' => "3"

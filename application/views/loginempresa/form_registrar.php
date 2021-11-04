@@ -79,16 +79,6 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
-												<label class="text-" >E-mail:</label>
-												<input type="text" class="form-control" id="Email" maxlength="100"
-													   name="Email" value="<?php echo $query['Email']; ?>">
-												<?php echo form_error('Email'); ?>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="row">
-											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
 												<label for="NomeAdmin" >Nome do Admin.:</label>
 												<input type="text" class="form-control" id="NomeAdmin" maxlength="255"
 													   name="NomeAdmin" value="<?php echo $query['NomeAdmin']; ?>">
@@ -100,12 +90,30 @@
 													   name="DataNascimento" placeholder="DD/MM/AAAA" value="<?php echo $query['DataNascimento']; ?>">
 												<?php echo form_error('DataNascimento'); ?>
 											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">		
+											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+												<label for="Email" >E-mail:</label>
+												<input type="text" class="form-control" id="Email" maxlength="100"
+													   name="Email" value="<?php echo $query['Email']; ?>">
+												<?php echo form_error('Email'); ?>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+												<label for="ConfirmaEmail">Confirmar Email:</label>
+												<input type="text" class="form-control" id="ConfirmaEmail" maxlength="100"
+													   name="ConfirmaEmail" value="<?php echo $query['ConfirmaEmail']; ?>">
+												<?php echo form_error('ConfirmaEmail'); ?>
+											</div>
+											<!--
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
 												<label for="CpfAdmin" >CPF do Administrador:</label>
 												<input type="text" class="form-control " id="CpfAdmin" maxlength="11"
-													   name="CpfAdmin" placeholder="99999999999" value="<?php echo $query['CpfAdmin']; ?>">
-												<?php echo form_error('CpfAdmin'); ?>
+													   name="CpfAdmin" placeholder="99999999999" value="<?php #echo $query['CpfAdmin']; ?>">
+												<?php #echo form_error('CpfAdmin'); ?>
 											</div>
+											-->
 										</div>
 									</div>
 									<div class="form-group">
@@ -116,6 +124,16 @@
 													   name="CelularAdmin" placeholder="(XX)999999999" value="<?php echo $query['CelularAdmin']; ?>">
 												<?php echo form_error('CelularAdmin'); ?>
 											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+												<label for="ConfirmaCelular">Confirmar Celular:</label>
+												<input type="text" class="form-control Celular Celular" id="ConfirmaCelular" maxlength="11"
+													   name="ConfirmaCelular" placeholder="(XX)999999999" value="<?php echo $query['ConfirmaCelular']; ?>">
+												<?php echo form_error('ConfirmaCelular'); ?>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">		
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
 												<label  >Digite uma Senha</label>
 												<!--<input type="password" name="senha" placeholder="Digite a senha" class="form-control"><br>-->
@@ -134,7 +152,7 @@
 												<?php echo form_error('Senha'); ?>					
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
-												<label  >Digite a mesma Senha novamente</label>
+												<label  >Confirmar Senha</label>
 												<!--<input type="password" name="senha" placeholder="Digite a senha" class="form-control"><br>-->
 												<div class="input-group">
 													<input type="password" name="Confirma" id="Confirma" placeholder="Digite a senha novamente" class="form-control btn-sm " value="<?php echo $query['Confirma']; ?>"><br>
@@ -233,10 +251,11 @@
 										</div>
 									</div>
 								</div>
-							
+								<!--
 								<script type="text/javascript">
 									$('#ca-container').contentcarousel();
 								</script>
+								-->
 								<script>
 									function mostrarSenha(){
 										var tipo = document.getElementById("Senha");
