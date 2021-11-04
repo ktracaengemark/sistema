@@ -8,7 +8,7 @@
 				<span class="icon-bar"></span>
 			</button>
 			<?php if($_SESSION['log']['idSis_Empresa'] == "5") {?>
-				<a type="button" class="navbar-brand btn btn-sm" href="<?php echo base_url() ?>usuario2/prontuario/<?php echo $_SESSION['log']['idSis_Usuario']; ?>"> 
+				<a type="button" class="navbar-brand btn btn-sm" href="<?php echo base_url() ?>associado/prontuario/<?php echo $_SESSION['log']['idSis_Usuario']; ?>"> 
 					 <?php echo $_SESSION['log']['Nome2']; ?>./<?php echo $_SESSION['log']['NomeEmpresa2']; ?>.
 				</a>
 			<?php }else{?>	
