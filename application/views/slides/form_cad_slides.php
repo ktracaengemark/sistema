@@ -101,15 +101,15 @@
 					<div class="form-group">
 						<div class="row">
 							<input type="hidden" name="idSis_Empresa" value="<?php echo $file['idSis_Empresa']; ?>">
-							<input type="hidden" name="idApp_Slides" value="<?php echo $query['idApp_Slides']; ?>">
 							<?php if ($metodo == 2) { ?>
+								<input type="hidden" name="idApp_Slides" value="<?php echo $query['idApp_Slides']; ?>">
 								<div class="col-md-4">
 									<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
 										<span class="glyphicon glyphicon-save"></span> Salvar
 									</button>
 								</div>
 								<div class="col-md-4 text-right">
-										<a class="btn btn-lg btn-warning" href="<?php echo base_url() . 'relatorio/site/'?>">
+										<a class="btn btn-lg btn-warning" href="<?php echo base_url() . 'relatorio/slides/'?>">
 											<span class="glyphicon glyphicon-file"></span> Voltar
 										</a>
 								</div>								
@@ -144,10 +144,15 @@
 									</div>
 								</div>
 							<?php } else { ?>
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
 										<span class="glyphicon glyphicon-save"></span> Salvar
 									</button>
+								</div>
+								<div class="col-md-4 text-right">
+									<a class="btn btn-lg btn-warning" href="<?php echo base_url() . 'relatorio/slides/'?>">
+										<span class="glyphicon glyphicon-file"></span> Voltar
+									</a>
 								</div>
 							<?php } ?>
 						</div>
