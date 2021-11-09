@@ -16,12 +16,38 @@
 						<?php echo form_open_multipart($form_open_path); ?>
 							
 							<div class="row">
+								<div class="col-md-4 panel-body">
+									<label>Empresa:</label>
+									<div class="panel panel-warning">
+										<div class="panel-heading">
+											<div class="row">														
+												<div class="col-md-12">
+													<?php echo '<strong>' . $_SESSION['Consulta']['NomeEmpresa'] . '</strong>' ?>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 panel-body">
+									<label>Profissional:</label>
+									<div class="panel panel-warning">
+										<div class="panel-heading">
+											<div class="row">														
+												<div class="col-md-12">
+													<?php echo '<strong>' . $_SESSION['Agenda']['Nome'] . '</strong>' ?>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--
 								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 									<label class="sr-only" for="idApp_Agenda">Agenda do Profis.:*</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
 											id="idApp_Agenda" name="idApp_Agenda">
-										<?php echo $select['option']; ?>												
+										<?php #echo $select['option']; ?>												
 										<?php
+										/*
 										foreach ($select['idApp_Agenda'] as $key => $row) {
 											if ($query['idApp_Agenda'] == $key) {
 												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
@@ -29,10 +55,12 @@
 												echo '<option value="' . $key . '">' . $row . '</option>';
 											}
 										}
+										*/
 										?>
 									</select>
-									<?php echo form_error('idApp_Agenda'); ?>
+									<?php #echo form_error('idApp_Agenda'); ?>
 								</div>
+								-->
 							</div>
 							<br>
 							<div class="row">	

@@ -828,49 +828,50 @@
 												<input type="hidden" name="Evento" value="1">
 												-->
 												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-													<?php if ($metodo == 2) { ?>
-														<br>
-														<button  type="button" class="btn btn-md btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-salvar-modal-sm">
-															<span class="glyphicon glyphicon-save"></span> Salvar <span class="glyphicon glyphicon-pencil"></span> O.S.<?php echo $_SESSION['Consulta']['idApp_OrcaTrata'];?>
-														</button>
-														<!--
-														<button type="submit" class="btn btn-md btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." value="1" >
-															<span class="glyphicon glyphicon-save"></span>Salvar 
-														</button>
-														-->
-														<?php if ($_SESSION['Consulta']['idApp_OrcaTrata'] > 0) { ?>
-															<!--
-															<span class="input-group-btn">
-																<a class="btn btn-lg btn-info " name="submeter5" id="submeter5" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $query['idApp_OrcaTrata']; ?>">
-																	<span class="glyphicon glyphicon-print"></span>										
-																</a>
-															</span>
-															-->
-														<?php } ?>
-														<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>
+													<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) || ($_SESSION['log']['idSis_Empresa'] == 5))  { ?>
+														<?php if ($metodo == 2) { ?>
 															<br>
-															<button  type="button" class="btn btn-md btn-danger btn-block" name="submeter2" id="submeter2" onclick="quais(),DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
-																<span class="glyphicon glyphicon-trash"></span>Exc
+															<button  type="button" class="btn btn-md btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-salvar-modal-sm">
+																<span class="glyphicon glyphicon-save"></span> Salvar <span class="glyphicon glyphicon-pencil"></span> O.S.<?php echo $_SESSION['Consulta']['idApp_OrcaTrata'];?>
 															</button>
+															<!--
+															<button type="submit" class="btn btn-md btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." value="1" >
+																<span class="glyphicon glyphicon-save"></span>Salvar 
+															</button>
+															-->
+															<?php if ($_SESSION['Consulta']['idApp_OrcaTrata'] > 0) { ?>
+																<!--
+																<span class="input-group-btn">
+																	<a class="btn btn-lg btn-info " name="submeter5" id="submeter5" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $query['idApp_OrcaTrata']; ?>">
+																		<span class="glyphicon glyphicon-print"></span>										
+																	</a>
+																</span>
+																-->
+															<?php } ?>
+															<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>
+																<br>
+																<button  type="button" class="btn btn-md btn-danger btn-block" name="submeter2" id="submeter2" onclick="quais(),DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
+																	<span class="glyphicon glyphicon-trash"></span>Exc
+																</button>
+															<?php } ?>
+															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning aguardar" role="alert" >
+																Aguarde um instante! Estamos processando sua solicitação!
+															</div>
+														<?php } else { ?>
+															<br>
+															<button  type="button" class="btn btn-md btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-salvar-modal-sm">
+																<span class="glyphicon glyphicon-save"></span>Salvar
+															</button>
+															<!--
+															<button type="submit" class="btn btn-md btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." value="1" >
+																<span class="glyphicon glyphicon-save"></span> Salvar
+															</button>
+															-->
+															<div class="col-md-12 alert alert-warning aguardar" role="alert" >
+																Aguarde um instante! Estamos processando sua solicitação!
+															</div>
 														<?php } ?>
-														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning aguardar" role="alert" >
-															Aguarde um instante! Estamos processando sua solicitação!
-														</div>
-													<?php } else { ?>
-														<br>
-														<button  type="button" class="btn btn-md btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-salvar-modal-sm">
-															<span class="glyphicon glyphicon-save"></span>Salvar
-														</button>
-														<!--
-														<button type="submit" class="btn btn-md btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." value="1" >
-															<span class="glyphicon glyphicon-save"></span> Salvar
-														</button>
-														-->
-														<div class="col-md-12 alert alert-warning aguardar" role="alert" >
-															Aguarde um instante! Estamos processando sua solicitação!
-														</div>
 													<?php } ?>
-													
 													<div class="modal fade bs-salvar-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 														<div class="modal-dialog" role="document">
 															<div class="modal-content">

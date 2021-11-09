@@ -3140,8 +3140,7 @@ class Consulta extends CI_Controller {
             $data['query']['HoraFim'] = substr($datafim[1], 0, 5);
 			$_SESSION['Consulta']['DataInicio'] = $dataini[0];
             $_SESSION['Consulta']['DataFim'] = $datafim[0];
-        }
-		else {
+        } else {
             $data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
             $data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data2'], 'mysql') . ' ' . $data['query']['HoraFim'];
         }
@@ -3173,7 +3172,14 @@ class Consulta extends CI_Controller {
 			'3' => 'Este e os Posteriores',
 			'4' => 'Todas',
         );
-				
+
+
+		if ($_SESSION['log']['idSis_Empresa'] == 5) {
+			$data['resumo1'] = $this->Agenda_model->get_agenda($data['query']['idApp_Agenda']);
+			$_SESSION['Agenda']['Nome'] = (strlen($data['resumo1']['Nome']) > 30) ? substr($data['resumo1']['Nome'], 0, 30) : $data['resumo1']['Nome'];
+			$_SESSION['Agenda']['NomeEmpresa'] = (strlen($data['resumo1']['NomeEmpresa']) > 30) ? substr($data['resumo1']['NomeEmpresa'], 0, 30) : $data['resumo1']['NomeEmpresa'];
+		}
+		
         $data['titulo'] = 'Editar Evento';
         $data['form_open_path'] = 'consulta/alterar_evento';
         $data['panel'] = 'primary';

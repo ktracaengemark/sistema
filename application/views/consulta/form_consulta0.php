@@ -26,7 +26,7 @@
 												<div class="panel-heading">
 													<div class="row">														
 														<div class="col-md-12">
-															<?php echo '<strong>' . $_SESSION['Agenda']['NomeEmpresa'] . '</strong>' ?>
+															<?php echo '<strong>' . $_SESSION['Consulta']['NomeEmpresa'] . '</strong>' ?>
 														</div>
 													</div>
 												</div>

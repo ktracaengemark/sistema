@@ -268,52 +268,52 @@
 										<?php } ?>
 										<!--<input type="hidden" name="idApp_Agenda" value="<?php echo $_SESSION['log']['Agenda']; ?>">-->
 										<input type="hidden" name="Evento" value="1">
-										<?php if ($metodo == 2) { ?>
-											<div class="col-md-12">
-												<div class="col-md-12 btn-block">
-													<span class="input-group-btn">
-														<button type="submit" class="btn btn-lg btn-primary" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." value="1" >
-															<span class="glyphicon glyphicon-save"></span>Save
-														</button>
-													</span>
-													<?php if ($_SESSION['log']['idSis_Empresa'] == 5 ) { ?>
+										<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) || ($_SESSION['log']['idSis_Empresa'] == 5))  { ?>	
+											<?php if ($metodo == 2) { ?>
+												<div class="col-md-12">
+													<div class="col-md-12 btn-block">
 														<span class="input-group-btn">
-															<button  type="button" class="btn btn-lg btn-danger" name="submeter2" id="submeter2" onclick="quais(),DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
-																<span class="glyphicon glyphicon-trash"></span>Exc
+															<button type="submit" class="btn btn-lg btn-primary" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." value="1" >
+																<span class="glyphicon glyphicon-save"></span>Save
 															</button>
 														</span>
-													<?php }else{ ?>	
-														<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>
+														<?php if ($_SESSION['log']['idSis_Empresa'] == 5 ) { ?>
 															<span class="input-group-btn">
 																<button  type="button" class="btn btn-lg btn-danger" name="submeter2" id="submeter2" onclick="quais(),DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 																	<span class="glyphicon glyphicon-trash"></span>Exc
 																</button>
 															</span>
+														<?php }else{ ?>	
+															<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>
+																<span class="input-group-btn">
+																	<button  type="button" class="btn btn-lg btn-danger" name="submeter2" id="submeter2" onclick="quais(),DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
+																		<span class="glyphicon glyphicon-trash"></span>Exc
+																	</button>
+																</span>
+															<?php } ?>	
 														<?php } ?>	
-													<?php } ?>	
+													</div>
+													<div class="col-md-12 alert alert-warning aguardar" role="alert" >
+														Aguarde um instante! Estamos processando sua solicitação!
+													</div>
 												</div>
-												<div class="col-md-12 alert alert-warning aguardar" role="alert" >
-													Aguarde um instante! Estamos processando sua solicitação!
+											<?php } else { ?>
+												<div class="col-md-12">
+													<button type="submit" class="btn btn-lg btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." value="1" >
+														<span class="glyphicon glyphicon-save"></span> Salvar
+													</button>	
+													<div class="col-md-12 alert alert-warning aguardar" role="alert" >
+														Aguarde um instante! Estamos processando sua solicitação!
+													</div>
 												</div>
-											</div>
-										<?php } else { ?>
-											<div class="col-md-12">
-												<button type="submit" class="btn btn-lg btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." value="1" >
-													<span class="glyphicon glyphicon-save"></span> Salvar
-												</button>	
-												<div class="col-md-12 alert alert-warning aguardar" role="alert" >
-													Aguarde um instante! Estamos processando sua solicitação!
-												</div>
-											</div>
+											<?php } ?>
 										<?php } ?>
 									</div>
 								</div>
 							</div>
-							
 							</form>
 						</div>	
 					</div>
-					
 				</div>
 			</div>
 		</div>

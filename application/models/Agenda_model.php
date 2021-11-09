@@ -305,7 +305,7 @@ class Agenda_model extends CI_Model {
 				E.NomeEmpresa
 			FROM 
 				App_Agenda AS A
-					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = A.idSis_Usuario
+					LEFT JOIN Sis_Associado AS U ON U.idSis_Associado = A.idSis_Associado
 					LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = A.idSis_Empresa
 			WHERE 
 				A.idApp_Agenda = ' . $data);
