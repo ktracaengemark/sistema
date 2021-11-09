@@ -13,7 +13,7 @@
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right navbar-fonte">
 				<li class="nav-item">
-					<a class="nav-link" href="<?php echo base_url() . '../enkontraki/#banner';?>">Enkontraki</a>
+					<a class="nav-link" href="<?php echo base_url() . '../enkontraki/';?>">Enkontraki</a>
 				</li>
 				<!--
 				<li class="nav-item">
@@ -30,7 +30,7 @@
 				</li>
 				-->
 				<li class="nav-item">
-					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/#contact">Fale Conosco</a>
+					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/contact.php#contact">Fale Conosco</a>
 				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
