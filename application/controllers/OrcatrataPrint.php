@@ -1567,7 +1567,7 @@ class OrcatrataPrint extends CI_Controller {
 			  echo "</pre>";
 			  exit ();
 			 */
-
+			/*
             #### App_ProdutoVenda ####
             $data['produto'] = $this->Orcatrataprintcomissao_model->get_produto($id);
             if (count($data['produto']) > 0) {
@@ -1612,7 +1612,7 @@ class OrcatrataPrint extends CI_Controller {
 					}
                 }
             }
-
+			*/
         }
 
         $data['titulo'] = 'Comissao Colaborador';
