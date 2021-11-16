@@ -9,7 +9,7 @@ class Login extends CI_Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->load->model(array('Login_model', 'Basico_model', 'Associado_model', 'Usuario_model', 'Cliente_model'));
+        $this->load->model(array('Login_model', 'Basico_model', 'Associado_model', 'Usuario_model', 'Cliente_model', 'Empresa_model'));
         $this->load->helper(array('form', 'url'));
         $this->load->library(array('basico', 'form_validation', 'user_agent', 'email'));
         $this->load->driver('session');
@@ -1897,7 +1897,7 @@ class Login extends CI_Controller {
                 $config['protocol'] = 'smtp';
                 $config['mailpath'] = "/usr/sbin/sendmail";
                 $config['smtp_host'] = 'smtp.zoho.com';
-                $config['smtp_user'] = 'contato@ktracaengemark.com.br';
+                $config['smtp_user'] = 'contato@enkontraki.com.br';
                 $config['smtp_pass'] = '20KtracaEngeMark17!';
                 $config['charset'] = 'iso-8859-1';
                 $config['mailtype'] = 'html';
@@ -1908,7 +1908,7 @@ class Login extends CI_Controller {
 
                 $this->email->initialize($config);
 
-                $this->email->from('contato@ktracaengemark.com.br', 'KTRACA Engenharia & Marketing');
+                $this->email->from('contato@enkontraki.com.br', 'Enkontraki');
                 $this->email->to($associado['Email']);
 
                 $this->email->subject('[KTRACA] Alteração de Senha - Associado: ' . $data['query']['Associado']);
@@ -2050,6 +2050,23 @@ class Login extends CI_Controller {
 						$data['update']['usuario']['alterar'][$j]['Codigo'] 		= $data['query']['Codigo'];
 
 						$data['update']['usuario']['bd'][$j] = $this->Usuario_model->update_usuario($data['update']['usuario']['alterar'][$j], $data['update']['usuario']['alterar'][$j]['idSis_Usuario']);
+							
+					}
+				}
+					
+				#### Sis_Empresa ####
+				$data['update']['empresa']['alterar'] = $this->Empresa_model->get_empresa_associado($data['query']['idSis_Associado']);
+
+				if (isset($data['update']['empresa']['alterar'])){
+
+					$max_empresa = count($data['update']['empresa']['alterar']);
+
+					for($j=0;$j<$max_empresa;$j++) {
+					
+						$data['update']['empresa']['alterar'][$j]['Senha'] 			= $data['query']['Senha'];
+						$data['update']['empresa']['alterar'][$j]['Codigo'] 		= $data['query']['Codigo'];
+
+						$data['update']['empresa']['bd'][$j] = $this->Empresa_model->update_empresa($data['update']['empresa']['alterar'][$j], $data['update']['empresa']['alterar'][$j]['idSis_Empresa']);
 							
 					}
 				}
