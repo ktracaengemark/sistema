@@ -305,7 +305,8 @@ class Empresa extends CI_Controller {
         //$this->form_validation->set_rules('CelularAdmin', 'Celular do Admin', 'required|trim|is_unique_by_id_empresa[Sis_Empresa.CelularAdmin.' . $data['query']['idSis_Empresa'] . '.idSis_Empresa.' . $data['query']['idSis_Empresa'] . ']');
 		$this->form_validation->set_rules('Email', 'E-mail', 'trim|valid_email');
         #$this->form_validation->set_rules('Senha', 'Senha', 'required|trim');
-        #$this->form_validation->set_rules('Confirma', 'Confirmar Senha', 'required|trim|matches[Senha]');		
+        #$this->form_validation->set_rules('Confirma', 'Confirmar Senha', 'required|trim|matches[Senha]');
+        $this->form_validation->set_rules('CategoriaEmpresa', 'CategoriaEmpresa', 'required|trim');		
 		
         #run form validation
         if ($this->form_validation->run() === FALSE) {

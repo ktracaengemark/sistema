@@ -114,7 +114,8 @@
 														}
 													}
 													?>   
-												</select>          
+												</select>
+												<?php echo form_error('CategoriaEmpresa'); ?>          
 											</div>
 											<!--
 											<div class="col-md-3">
