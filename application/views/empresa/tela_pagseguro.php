@@ -154,6 +154,25 @@
 														';
 														}
 
+														if ($pagseguro['Prod_PagSeguro'] == "N") {
+
+														echo '
+														<tr>
+															<td class="col-md-3 col-lg-3"><span class="glyphicon glyphicon-thumbs-down"></span> Prod_PagSeguro:</td>
+															<td>NAO</td>
+														</tr>
+														';
+
+														} else if($pagseguro['Prod_PagSeguro'] == "S"){
+
+														echo '
+														<tr>
+															<td class="col-md-3 col-lg-3"><span class="glyphicon glyphicon-thumbs-up"></span> Prod_PagSeguro:</td>
+															<td>SIM</td>
+														</tr>
+														';
+														}
+														
 														if ($pagseguro['Token_Producao']) {
 
 														echo '

@@ -66,25 +66,80 @@
 									<h3 class="text-left">Dados do Pag Seguro</h3>
 									<div class="form-group">
 										<div class="row">
-											<div class="col-md-6">
+											<div class="col-md-3 text-left">
 												<label for="Ativo_Pagseguro">Ativo_Pagseguro?</label><br>
-												<div class="form-group">
+												<div class="btn-group" data-toggle="buttons">
+													<?php
+													foreach ($select['Ativo_Pagseguro'] as $key => $row) {
+														if (!$pagseguro['Ativo_Pagseguro'])$pagseguro['Ativo_Pagseguro'] = 'N';
+
+														($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+
+														if ($pagseguro['Ativo_Pagseguro'] == $key) {
+															echo ''
+															. '<label class="btn btn-warning active" name="Ativo_Pagseguro_' . $hideshow . '">'
+															. '<input type="radio" name="Ativo_Pagseguro" id="' . $hideshow . '" '
+															. 'autocomplete="off" value="' . $key . '" checked>' . $row
+															. '</label>'
+															;
+														} else {
+															echo ''
+															. '<label class="btn btn-default" name="Ativo_Pagseguro_' . $hideshow . '">'
+															. '<input type="radio" name="Ativo_Pagseguro" id="' . $hideshow . '" '
+															. 'autocomplete="off" value="' . $key . '" >' . $row
+															. '</label>'
+															;
+														}
+													}
+													?>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div id="Ativo_Pagseguro" <?php echo $div['Ativo_Pagseguro']; ?>>
+										<div class="form-group">
+											<div class="row">
+												<div class="col-md-6">
+													<label for="Email_Loja">E-mail da Loja:</label>
+													<input type="text" class="form-control" id="Email_Loja" maxlength="100" <?php echo $readonly; ?>
+														   name="Email_Loja" value="<?php echo $pagseguro['Email_Loja']; ?>">
+												</div>
+												<div class="col-md-6">
+													<label for="Email_Pagseguro">E-mail do PagSeguro:</label>
+													<input type="text" class="form-control" id="Email_Pagseguro" maxlength="100" <?php echo $readonly; ?>
+														   name="Email_Pagseguro" value="<?php echo $pagseguro['Email_Pagseguro']; ?>">
+												</div>
+											</div>
+										</div>	
+										<div class="form-group">	
+											<div class="row">	
+												<div class="col-md-6">
+													<label for="Token_Sandbox">Token Sandbox:</label>
+													<input type="text" class="form-control " id="Token_Sandbox" maxlength="200" <?php echo $readonly; ?>
+														   name="Token_Sandbox" value="<?php echo $pagseguro['Token_Sandbox']; ?>">
+												</div>
+											</div>	
+											<div class="row">
+												<div class="col-md-2 text-left">
+													<label for="Prod_PagSeguro">Prod_PagSeguro?</label><br>
 													<div class="btn-group" data-toggle="buttons">
 														<?php
-														foreach ($select['Ativo_Pagseguro'] as $key => $row) {
-															(!$pagseguro['Ativo_Pagseguro']) ? $pagseguro['Ativo_Pagseguro'] = 'N' : FALSE;
+														foreach ($select['Prod_PagSeguro'] as $key => $row) {
+															if (!$pagseguro['Prod_PagSeguro'])$pagseguro['Prod_PagSeguro'] = 'N';
 
-															if ($pagseguro['Ativo_Pagseguro'] == $key) {
+															($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+
+															if ($pagseguro['Prod_PagSeguro'] == $key) {
 																echo ''
-																. '<label class="btn btn-warning active" name="radiobutton_Ativo_Pagseguro" id="radiobutton_Ativo_Pagseguro' . $key . '">'
-																. '<input type="radio" name="Ativo_Pagseguro" id="radiobutton" '
+																. '<label class="btn btn-warning active" name="Prod_PagSeguro_' . $hideshow . '">'
+																. '<input type="radio" name="Prod_PagSeguro" id="' . $hideshow . '" '
 																. 'autocomplete="off" value="' . $key . '" checked>' . $row
 																. '</label>'
 																;
 															} else {
 																echo ''
-																. '<label class="btn btn-default" name="radiobutton_Ativo_Pagseguro" id="radiobutton_Ativo_Pagseguro' . $key . '">'
-																. '<input type="radio" name="Ativo_Pagseguro" id="radiobutton" '
+																. '<label class="btn btn-default" name="Prod_PagSeguro_' . $hideshow . '">'
+																. '<input type="radio" name="Prod_PagSeguro" id="' . $hideshow . '" '
 																. 'autocomplete="off" value="' . $key . '" >' . $row
 																. '</label>'
 																;
@@ -93,38 +148,18 @@
 														?>
 													</div>
 												</div>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="row">
-											
-											<div class="col-md-6">
-												<label for="Email_Loja">E-mail da Loja:</label>
-												<input type="text" class="form-control" id="Email_Loja" maxlength="100" <?php echo $readonly; ?>
-													   name="Email_Loja" value="<?php echo $pagseguro['Email_Loja']; ?>">
-											</div>
-											<div class="col-md-6">
-												<label for="Email_Pagseguro">E-mail do PagSeguro:</label>
-												<input type="text" class="form-control" id="Email_Pagseguro" maxlength="100" <?php echo $readonly; ?>
-													   name="Email_Pagseguro" value="<?php echo $pagseguro['Email_Pagseguro']; ?>">
+											</div>	
+											<div id="Prod_PagSeguro" <?php echo $div['Prod_PagSeguro']; ?>>
+												<div class="row">		
+													<div class="col-md-6">
+														<label for="Token_Producao">Token Producao:</label>
+														<input type="text" class="form-control " id="Token_Producao" maxlength="200" <?php echo $readonly; ?>
+															   name="Token_Producao" value="<?php echo $pagseguro['Token_Producao']; ?>">
+													</div>
+												</div>																			
 											</div>
 										</div>
 									</div>	
-									<div class="form-group">	
-										<div class="row">	
-											<div class="col-md-6">
-												<label for="Token_Sandbox">Token Sandbox:</label>
-												<input type="text" class="form-control " id="Token_Sandbox" maxlength="200" <?php echo $readonly; ?>
-													   name="Token_Sandbox" value="<?php echo $pagseguro['Token_Sandbox']; ?>">
-											</div>												
-											<div class="col-md-6">
-												<label for="Token_Producao">Token Producao:</label>
-												<input type="text" class="form-control " id="Token_Producao" maxlength="200" <?php echo $readonly; ?>
-													   name="Token_Producao" value="<?php echo $pagseguro['Token_Producao']; ?>">
-											</div>																				
-										</div>
-									</div>
 									<div class="row">
 										<div class="col-md-12">
 											<div class="panel panel-primary">

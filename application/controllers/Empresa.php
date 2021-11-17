@@ -2738,6 +2738,7 @@ class Empresa extends CI_Controller {
 			'Email_Pagseguro',
 			'Email_Loja',
 			'Ativo_Pagseguro',
+			'Prod_PagSeguro',
         ), TRUE);
 				
 
@@ -2745,15 +2746,23 @@ class Empresa extends CI_Controller {
             $_SESSION['PagSeguro'] = $data['pagseguro'] = $this->Empresa_model->get_pagseguro($id, TRUE);
         }
 
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-		$this->form_validation->set_rules('Email_Pagseguro', 'E-mail do PagSeguro', 'required|trim|valid_email');
-		$this->form_validation->set_rules('Email_Loja', 'E-mail da Loja', 'required|trim|valid_email');
-        $this->form_validation->set_rules('Token_Sandbox', 'Token_Sandbox', 'required|trim');
-        $this->form_validation->set_rules('Token_Producao', 'Token_Producao', 'required|trim');
-		
 		$data['select']['Ativo_Pagseguro'] = $this->Basico_model->select_status_sn();
+		$data['select']['Prod_PagSeguro'] = $this->Basico_model->select_status_sn();
 
+		(!$data['pagseguro']['Ativo_Pagseguro']) ? $data['pagseguro']['Ativo_Pagseguro'] = 'N' : FALSE;
+        $data['radio'] = array(
+            'Ativo_Pagseguro' => $this->basico->radio_checked($data['pagseguro']['Ativo_Pagseguro'], 'Ativo_Pagseguro', 'NS'),
+        );
+        ($data['pagseguro']['Ativo_Pagseguro'] == 'S') ?
+            $data['div']['Ativo_Pagseguro'] = '' : $data['div']['Ativo_Pagseguro'] = 'style="display: none;"';		
+	
+		(!$data['pagseguro']['Prod_PagSeguro']) ? $data['pagseguro']['Prod_PagSeguro'] = 'N' : FALSE;
+        $data['radio'] = array(
+            'Prod_PagSeguro' => $this->basico->radio_checked($data['pagseguro']['Prod_PagSeguro'], 'Prod. PagSeguro', 'NS'),
+        );
+        ($data['pagseguro']['Prod_PagSeguro'] == 'S') ?
+            $data['div']['Prod_PagSeguro'] = '' : $data['div']['Prod_PagSeguro'] = 'style="display: none;"';		
+		
         $data['titulo'] = 'Pag Seguro';
         $data['form_open_path'] = 'empresa/alterarpagseguro';
         $data['readonly'] = '';
@@ -2764,6 +2773,23 @@ class Empresa extends CI_Controller {
         $data['sidebar'] = 'col-sm-3 col-md-2 sidebar';
         $data['main'] = 'col-sm-7 col-sm-offset-3 col-md-8 col-md-offset-2 main';
 
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+		if($data['pagseguro']['Ativo_Pagseguro'] == "S"){
+			$this->form_validation->set_rules('Email_Pagseguro', 'E-mail do PagSeguro', 'required|trim|valid_email');
+			$this->form_validation->set_rules('Email_Loja', 'E-mail da Loja', 'required|trim|valid_email');
+			$this->form_validation->set_rules('Token_Sandbox', 'Token_Sandbox', 'required|trim');
+			if($data['pagseguro']['Prod_PagSeguro'] == "S"){
+				$this->form_validation->set_rules('Token_Producao', 'Token_Producao', 'required|trim');
+			}else{
+				$this->form_validation->set_rules('Token_Producao', 'Token_Producao', 'trim');
+			}
+		}else{
+			$this->form_validation->set_rules('Email_Pagseguro', 'E-mail do PagSeguro', 'trim|valid_email');
+			$this->form_validation->set_rules('Email_Loja', 'E-mail da Loja', 'trim|valid_email');
+			$this->form_validation->set_rules('Token_Sandbox', 'Token_Sandbox', 'trim');
+			$this->form_validation->set_rules('Token_Producao', 'Token_Producao', 'trim');
+		}
+		
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('empresa/form_pagseguro', $data);
