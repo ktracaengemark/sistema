@@ -1898,7 +1898,7 @@ class Login extends CI_Controller {
                 $config['mailpath'] = "/usr/sbin/sendmail";
                 $config['smtp_host'] = 'smtp.zoho.com';
                 $config['smtp_user'] = 'contato@enkontraki.com.br';
-                $config['smtp_pass'] = '20KtracaEngeMark17!';
+                $config['smtp_pass'] = '#20ContatoKtraca21!';
                 $config['charset'] = 'iso-8859-1';
                 $config['mailtype'] = 'html';
                 $config['wrapchars'] = '50';
@@ -1911,7 +1911,7 @@ class Login extends CI_Controller {
                 $this->email->from('contato@enkontraki.com.br', 'Enkontraki');
                 $this->email->to($associado['Email']);
 
-                $this->email->subject('[KTRACA] Alteração de Senha - Associado: ' . $data['query']['Associado']);
+                $this->email->subject('[Enkontraki] Alteração de Senha - Associado: ' . $data['query']['Associado']);
                 $this->email->message('Por favor, clique no link a seguir para alterar sua senha: '
                         //. 'http://www.romati.com.br/app/login/trocar_senha/' . $associado['Codigo']);
                     . base_url() . 'login/trocar_senha/' . $associado['Codigo']);
