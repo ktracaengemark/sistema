@@ -61,14 +61,16 @@
 								</a>
 							</li>
 							<li role="separator" class="divider"></li>
+							<!--
 							<li>
-								<a href="<?php echo base_url() ?>empresa/pagina/<?php echo $_SESSION['log']['idSis_Empresa']; ?>">
+								<a href="<?php #echo base_url() ?>empresa/pagina/<?php #echo $_SESSION['log']['idSis_Empresa']; ?>">
 									<span class="glyphicon glyphicon-user"></span> Página
 								</a>
 							</li>
-							<li role="separator" class="divider"></li>							
+							<li role="separator" class="divider"></li>
+							-->
 							<?php if ($_SESSION['log']['NivelEmpresa'] >= 4 ) { ?>
-							<li><a href="<?php echo base_url() ?>../enkontraki" target="_blank"><span class="glyphicon glyphicon-pencil"></span> Renovar Assinatura</a></li>
+							<li><a href="<?php echo base_url() ?>../enkontraki/login_cliente.php?id_empresa=<?php echo $_SESSION['log']['idSis_Empresa']; ?>" target="_blank"><span class="glyphicon glyphicon-pencil"></span> Renovar Assinatura</a></li>
 							<li role="separator" class="divider"></li>									
 							<?php } ?>
 							<li><a href="<?php echo base_url() ?>relatorioempresa/empresas"><span class="glyphicon glyphicon-home"></span> Empresas</a></li>
