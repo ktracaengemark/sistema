@@ -13637,7 +13637,7 @@ class Orcatrata extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = quotes_to_entities($this->input->post(array(
-			'idApp_Arquivos',
+			#'idApp_Arquivos',
             'Arquivos',
 			'Texto_Arquivos',
 			'Ativo_Arquivos',
