@@ -159,6 +159,33 @@ class Cliente_model extends CI_Model {
 		}
 		
     }
+	
+    public function get_profissional($data) {
+        $query = $this->db->query(
+			'SELECT 
+				ASS.Nome,
+				A.idApp_Agenda
+			FROM 
+				Sis_Associado AS ASS
+					LEFT JOIN App_Agenda AS A ON A.idSis_Associado = ASS.idSis_Associado
+			WHERE 
+				A.idApp_Agenda = ' . $data . ' 
+			LIMIT 1'
+		);
+        $count = $query->num_rows();
+		$query = $query->result_array();
+		
+		if(isset($count)){
+			if($count == 0){
+				return FALSE;
+			}else{
+				return $query[0];
+			}
+		}else{
+			return FALSE;
+		}
+		
+    }
 
 	public function get_alterarcashback($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 		

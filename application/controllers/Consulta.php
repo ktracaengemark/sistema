@@ -316,10 +316,15 @@ class Consulta extends CI_Controller {
             $this->load->view('consulta/form_consulta', $data);
         } else {
 
+			$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
+			
 			$_SESSION['bd']['NomeCliente'] 		= $_SESSION['Cliente']['NomeCliente'];
 			$_SESSION['bd']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
+			$_SESSION['bd']['Profissional'] 	= $data['Profissional']['Nome'];
 			$_SESSION['bd']['DataInicio'] 		= $data['query']['Data'];
 			$_SESSION['bd']['HoraInicio'] 		= $data['query']['HoraInicio'];
+			
+			unset($data['Profissional']);			
 
 			$dataini_cad 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
 			$datafim_cad 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
@@ -905,14 +910,16 @@ class Consulta extends CI_Controller {
 			$this->load->view('consulta/form_consulta', $data);
         } else {
 
-			$data['Cliente'] = $this->Cliente_model->get_cliente($data['query']['idApp_Cliente'], TRUE);
-
+			$data['Cliente'] 		= $this->Cliente_model->get_cliente($data['query']['idApp_Cliente'], TRUE);
+			$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
+			
 			$_SESSION['bd']['NomeCliente'] 		= $data['Cliente']['NomeCliente'];
 			$_SESSION['bd']['CelularCliente'] 	= $data['Cliente']['CelularCliente'];
+			$_SESSION['bd']['Profissional'] 	= $data['Profissional']['Nome'];
 			$_SESSION['bd']['DataInicio'] 		= $data['query']['Data'];
 			$_SESSION['bd']['HoraInicio'] 		= $data['query']['HoraInicio'];
 			
-			unset($data['Cliente']);
+			unset($data['Cliente'], $data['Profissional']);
 			
 			$dataini_cad 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
 			$datafim_cad 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');

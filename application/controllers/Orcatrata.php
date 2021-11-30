@@ -41,7 +41,7 @@ class Orcatrata extends CI_Controller {
     public function cadastrarrepet($idApp_Cliente = NULL, $idApp_Consulta = NULL) {
 
 		if(isset($_SESSION['bd'])){
-			echo "<script>window.open('https://api.whatsapp.com/send?phone=55".$_SESSION['bd']['CelularCliente']."&text=Ola ".$_SESSION['bd']['NomeCliente'].". Agendamento marcado para ".$_SESSION['bd']['DataInicio'].", as ".$_SESSION['bd']['HoraInicio'].".','_blank');</script>";
+			echo "<script>window.open('https://api.whatsapp.com/send?phone=55".$_SESSION['bd']['CelularCliente']."&text=Ola ".$_SESSION['bd']['NomeCliente'].". Agendamento marcado com ".$_SESSION['bd']['Profissional'].", dia ".$_SESSION['bd']['DataInicio'].", as ".$_SESSION['bd']['HoraInicio'].".','_blank');</script>";
 		}
 		
 		unset($_SESSION['bd']);
