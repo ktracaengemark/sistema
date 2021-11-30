@@ -316,6 +316,11 @@ class Consulta extends CI_Controller {
             $this->load->view('consulta/form_consulta', $data);
         } else {
 
+			$_SESSION['bd']['NomeCliente'] 		= $_SESSION['Cliente']['NomeCliente'];
+			$_SESSION['bd']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
+			$_SESSION['bd']['DataInicio'] 		= $data['query']['Data'];
+			$_SESSION['bd']['HoraInicio'] 		= $data['query']['HoraInicio'];
+
 			$dataini_cad 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
 			$datafim_cad 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
 			$horaini_cad 	= $data['query']['HoraInicio'];
@@ -431,17 +436,17 @@ class Consulta extends CI_Controller {
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
 
-            $data['idApp_Consulta'] = $this->Consulta_model->set_consulta($data['query']);
+            $data['query']['idApp_Consulta'] = $this->Consulta_model->set_consulta($data['query']);
 
             unset($_SESSION['Agenda']);
 
-            if ($data['idApp_Consulta'] === FALSE) {
+            if ($data['query']['idApp_Consulta'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
                 $this->basico->erro($msg);
                 $this->load->view('consulta/form_consulta', $data);
             } else {
-				$data['copiar']['Repeticao'] = $data['idApp_Consulta'];
+				$data['copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
 				if($data['cadastrar']['Repetir'] == 'S'){
 					$data['copiar']['DataTermino'] = $data['query']['DataTermino'];
 					$data['copiar']['Recorrencia'] = "1/" . $qtd;
@@ -450,7 +455,7 @@ class Consulta extends CI_Controller {
 					//$data['copiar']['DataTermino'] = $dataini_cad;
 				}
 				
-				$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['idApp_Consulta']);
+				$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['query']['idApp_Consulta']);
 				
 				if ($data['update']['copiar']['bd'] === FALSE) {
 					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
@@ -461,7 +466,7 @@ class Consulta extends CI_Controller {
 					if ($data['cadastrar']['Repetir'] == 'S') {
 						for($j=1; $j<$qtd; $j++) {
 							$data['repeticao'][$j] = array(
-								'Repeticao' 			=> $data['idApp_Consulta'],
+								'Repeticao' 			=> $data['query']['idApp_Consulta'],
 								'Intervalo' 			=> $data['query']['Intervalo'],
 								'Periodo' 				=> $data['query']['Periodo'],
 								'Tempo' 				=> $data['query']['Tempo'],
@@ -494,7 +499,7 @@ class Consulta extends CI_Controller {
 				
 					}
 				}	
-                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idApp_Consulta'], FALSE);
+                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], FALSE);
                 $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
@@ -506,14 +511,14 @@ class Consulta extends CI_Controller {
 					if($data['cadastrar']['NovaOS'] == 'S'){
 						if($data['cadastrar']['PorConsulta'] == 'S'){
 							//Gera O.S. Replicadas pelo número de ocorrências
-							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['idApp_Consulta'] . $data['msg']);
+							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
 						}else{
 							//Gera uma única O.S.
-							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['idApp_Consulta'] . $data['msg']);
+							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
 						}
 					}else{
 						//Busca na lista de O.S. do cliente 
-						//redirect(base_url() . 'orcatrata/listar/' . $data['query']['idApp_Cliente'] . '/' . $data['idApp_Consulta'] . $data['msg']);
+						//redirect(base_url() . 'orcatrata/listar/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
 						redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
 					}
 				}else{
@@ -525,12 +530,12 @@ class Consulta extends CI_Controller {
 				if($data['cadastrar']['Adicionar'] == "S"){
 					if($data['cadastrar']['PorConsulta'] == "S"){
 						//Gera O.S. Replicadas pelo número de ocorrências
-						redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['idApp_Consulta'] . $data['msg']);
+						redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
 					}else{
 						if($data['query']['Recorrencias'] > 1){
 							if($data['cadastrar']['NovaOS'] == "S"){
 								//Gera uma única O.S.
-								redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['idApp_Consulta'] . $data['msg']);
+								redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
 							}else{
 								//Não Gera O.S. 
 								redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
@@ -631,7 +636,7 @@ class Consulta extends CI_Controller {
             $data['query']['idApp_Cliente'] = $idApp_Cliente;
             $_SESSION['Cliente'] = $this->Cliente_model->get_cliente($idApp_Cliente, TRUE);
         }
-		*/
+		
 		if ($idApp_Cliente) {
             $data['query']['idApp_Cliente'] = $idApp_Cliente;
 			$_SESSION['Cliente'] = $this->Cliente_model->get_cliente($idApp_Cliente, TRUE);
@@ -643,7 +648,7 @@ class Consulta extends CI_Controller {
             $data['query']['idApp_ContatoCliente'] = $idApp_ContatoCliente;
             $data['query']['Paciente'] = 'D';
         }
-		
+		*/
 		/*
 		//// Uso esse método para cadastrar agendamentos escolhendo clientes no pesquisa clientes////
         if (isset($_SESSION['agenda']) && !$data['query']['HoraInicio'] && !$data['query']['HoraFim']) {
@@ -900,6 +905,15 @@ class Consulta extends CI_Controller {
 			$this->load->view('consulta/form_consulta', $data);
         } else {
 
+			$data['Cliente'] = $this->Cliente_model->get_cliente($data['query']['idApp_Cliente'], TRUE);
+
+			$_SESSION['bd']['NomeCliente'] 		= $data['Cliente']['NomeCliente'];
+			$_SESSION['bd']['CelularCliente'] 	= $data['Cliente']['CelularCliente'];
+			$_SESSION['bd']['DataInicio'] 		= $data['query']['Data'];
+			$_SESSION['bd']['HoraInicio'] 		= $data['query']['HoraInicio'];
+			
+			unset($data['Cliente']);
+			
 			$dataini_cad 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
 			$datafim_cad 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
 			$horaini_cad 	= $data['query']['HoraInicio'];
@@ -1009,26 +1023,29 @@ class Consulta extends CI_Controller {
 			}
 			
             $data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
-
+			
+			$dataini_whats 	= $data['query']['Data'];
+			$horaini_whats	= $data['query']['HoraInicio'];
+			
             #unset($data['query']['Data'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
 			unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
 			
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
 
-            $data['idApp_Consulta'] = $this->Consulta_model->set_consulta($data['query']);
+            $data['query']['idApp_Consulta'] = $this->Consulta_model->set_consulta($data['query']);
 
             unset($_SESSION['Agenda']);
 
-            if ($data['idApp_Consulta'] === FALSE) {
+            if ($data['query']['idApp_Consulta'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
                 $this->basico->erro($msg);
                 $this->load->view('consulta/form_consulta', $data);
             } else {
 				
-				$_SESSION['Copiar']['Repeticao'] = $data['idApp_Consulta'];
-				$data['copiar']['Repeticao'] = $data['idApp_Consulta'];
+				$_SESSION['Copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
+				$data['copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
 				
 				if($data['cadastrar']['Repetir'] == 'S'){
 					$data['copiar']['DataTermino'] = $data['query']['DataTermino'];
@@ -1038,7 +1055,7 @@ class Consulta extends CI_Controller {
 					//$data['copiar']['DataTermino'] = $dataini_cad;
 				}
 				
-				$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['idApp_Consulta']);
+				$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['query']['idApp_Consulta']);
 				
 				if ($data['update']['copiar']['bd'] === FALSE) {
 					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
@@ -1049,7 +1066,7 @@ class Consulta extends CI_Controller {
 					if ($data['cadastrar']['Repetir'] == 'S') {
 						for($j=1; $j<$qtd; $j++) {
 							$data['repeticao'][$j] = array(
-								'Repeticao' 			=> $data['idApp_Consulta'],
+								'Repeticao' 			=> $data['query']['idApp_Consulta'],
 								'Intervalo' 			=> $data['query']['Intervalo'],
 								'Periodo' 				=> $data['query']['Periodo'],
 								'Tempo' 				=> $data['query']['Tempo'],
@@ -1082,7 +1099,7 @@ class Consulta extends CI_Controller {
 				
 					}
 				}	
-                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idApp_Consulta'], FALSE);
+                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], FALSE);
                 $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
@@ -1093,14 +1110,14 @@ class Consulta extends CI_Controller {
 					if($data['cadastrar']['NovaOS'] == 'S'){
 						if($data['cadastrar']['PorConsulta'] == 'S'){
 							//Gera O.S. Replicadas pelo número de ocorrências
-							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['idApp_Consulta'] . $data['msg']);
+							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
 						}else{
 							//Gera uma única O.S.
-							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['idApp_Consulta'] . $data['msg']);
+							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
 						}
 					}else{
 						//Busca na lista de O.S. do cliente 
-						//redirect(base_url() . 'orcatrata/listar/' . $data['query']['idApp_Cliente'] . '/' . $data['idApp_Consulta'] . $data['msg']);
+						//redirect(base_url() . 'orcatrata/listar/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
 						redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
 					}
 				}else{
@@ -1108,29 +1125,34 @@ class Consulta extends CI_Controller {
 					redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
 				}
 				*/
+				
 				if($data['cadastrar']['Adicionar'] == "S"){	
 					if($data['cadastrar']['PorConsulta'] == "S"){
 						//Gera O.S. Replicadas pelo número de ocorrências
-						redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['idApp_Consulta'] . $data['msg']);
+						redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+						exit();
 					}else{
 						if($data['query']['Recorrencias'] > 1){
 							if($data['cadastrar']['NovaOS'] == "S"){
 								//Gera uma única O.S.
-								redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['idApp_Consulta'] . $data['msg']);
+								redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+								exit();
 							}else{
 								//Não Gera O.S. 
 								redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+								exit();
 							}
 						}else{
 							//Não Gera O.S. 
 							redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+							exit();
 						}
 					}
 				}else{
 					//Não Gera O.S. 
 					redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+					exit();
 				}
-				exit();
             }
         }
 
@@ -2417,31 +2439,26 @@ class Consulta extends CI_Controller {
 						unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
 						redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
 					}else{
-						
-							if($data['cadastrar']['NovaOS'] == "S"){
-								//Gera uma única O.S.
-								unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
-								redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-							}else{
-								//Busca na lista de O.S. do cliente
-								unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
-								redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-							}
-						
+						if($data['cadastrar']['NovaOS'] == "S"){
+							//Gera uma única O.S.
+							unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
+							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+						}else{
+							//Busca na lista de O.S. do cliente
+							unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
+							redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+						}
 					}
 				}else{
 					//Não Gera O.S.
 					unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
 					redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
 				}
-				
 			}else{
 				//Não Gera O.S.
 				unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
 				//redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
 				redirect(base_url() . 'orcatrata/alterarstatus/' . $data['query']['idApp_OrcaTrata'] . $data['msg']);
-				
-				
 			}
 				
 			exit();
@@ -3028,16 +3045,16 @@ class Consulta extends CI_Controller {
 			
             $data['campos'] = array_keys($data['query']);
             $data['anterior'] = array();
-            $data['idApp_Consulta'] = $this->Consulta_model->set_consulta($data['query']);
+            $data['query']['idApp_Consulta'] = $this->Consulta_model->set_consulta($data['query']);
 
-            if ($data['idApp_Consulta'] === FALSE) {
+            if ($data['query']['idApp_Consulta'] === FALSE) {
                 $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
                 $this->basico->erro($msg);
                 $this->load->view('consulta/form_evento', $data);
             } else {
 
-				$data['copiar']['Repeticao'] = $data['idApp_Consulta'];
+				$data['copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
 				if($data['cadastrar']['Repetir'] == 'S'){
 					//$data['copiar']['DataTermino'] = $ultimaocorrencia;
 					$data['copiar']['DataTermino'] = $data['query']['DataTermino'];
@@ -3047,7 +3064,7 @@ class Consulta extends CI_Controller {
 					//$data['copiar']['DataTermino'] = $dataini_cad;
 				}
 				
-				$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['idApp_Consulta']);
+				$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['query']['idApp_Consulta']);
 				
 				if ($data['update']['copiar']['bd'] === FALSE) {
 					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
@@ -3058,7 +3075,7 @@ class Consulta extends CI_Controller {
 					if ($data['cadastrar']['Repetir'] == 'S') {
 						for($j=1; $j<$qtd; $j++) {
 							$data['repeticao'][$j] = array(
-								'Repeticao' 			=> $data['idApp_Consulta'],
+								'Repeticao' 			=> $data['query']['idApp_Consulta'],
 								'Intervalo' 			=> $data['query']['Intervalo'],
 								'Periodo' 				=> $data['query']['Periodo'],
 								'Tempo' 				=> $data['query']['Tempo'],
@@ -3086,7 +3103,7 @@ class Consulta extends CI_Controller {
 				
 					}
 			
-					$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idApp_Consulta'], FALSE);
+					$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], FALSE);
 					$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'CREATE', $data['auditoriaitem']);
 					$data['msg'] = '?m=1';
 					

@@ -891,12 +891,12 @@
 																</div>
 																<div class="modal-footer">
 																	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">
-																		<button type="button" class="btn btn-warning"  name="submeter6" id="submeter6" onclick="DesabilitaBotaoExcluir()" data-dismiss="modal">
+																		<button type="button" class="btn btn-warning"  name="submeter7" id="submeter7" onclick="DesabilitaBotaoExcluir()" data-dismiss="modal">
 																			<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
 																		</button>
 																	</div>
 																	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
-																		<button type="submit" class="btn btn-md btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotaoExcluir(this.name)" data-loading-text="Aguarde..." value="1" >
+																		<button type="submit" class="btn btn-md btn-primary btn-block" name="submeter6" id="submeter6" onclick="DesabilitaBotaoExcluir(this.name)" data-loading-text="Aguarde..." value="1" >
 																			<span class="glyphicon glyphicon-save"></span> Salvar
 																		</button>
 																	</div>
@@ -999,13 +999,13 @@
 					<br>
 					<div class="row">
 						<div class="col-md-6 text-left">
-							<button type="button" class="btn btn-warning" name="submeter4" id="submeter4" onclick="DesabilitaBotaoExcluir()" data-dismiss="modal">
+							<button type="button" class="btn btn-warning" name="submeter3" id="submeter3" onclick="DesabilitaBotaoExcluir()" data-dismiss="modal">
 								<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
 							</button>
 						</div>
 						<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>	
 							<div class="col-md-6 text-right">
-								<button type="submit" class="btn btn-md btn-danger" name="submeter3" id="submeter3" onclick="DesabilitaBotaoExcluir(this.name)" data-loading-text="Aguarde..." >
+								<button type="submit" class="btn btn-md btn-danger" name="submeter4" id="submeter4" onclick="DesabilitaBotaoExcluir(this.name)" data-loading-text="Aguarde..." >
 									<span class="glyphicon glyphicon-trash"></span> Excluir
 								</button>
 							</div>	
