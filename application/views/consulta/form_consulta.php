@@ -890,12 +890,41 @@
 																	<span id="Horarios"></span>
 																</div>
 																<div class="modal-footer">
-																	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">
+																	<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left">
 																		<button type="button" class="btn btn-warning"  name="submeter7" id="submeter7" onclick="DesabilitaBotaoExcluir()" data-dismiss="modal">
 																			<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
 																		</button>
 																	</div>
-																	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
+																	<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left">
+																		<label for="Whatsapp">Whatsapp?</label><br>
+																		<div class="btn-larg-right btn-group" data-toggle="buttons">
+																			<?php
+																			foreach ($select['Whatsapp'] as $key => $row) {
+																				if (!$cadastrar['Whatsapp']) $cadastrar['Whatsapp'] = 'S';
+
+																				($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+
+																				if ($cadastrar['Whatsapp'] == $key) {
+																					echo ''
+																					. '<label class="btn btn-warning active" name="Whatsapp_' . $hideshow . '">'
+																					. '<input type="radio" name="Whatsapp" id="' . $hideshow . '" '
+																					. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																					. '</label>'
+																					;
+																				} else {
+																					echo ''
+																					. '<label class="btn btn-default" name="Whatsapp_' . $hideshow . '">'
+																					. '<input type="radio" name="Whatsapp" id="' . $hideshow . '" '
+																					. 'autocomplete="off" value="' . $key . '" >' . $row
+																					. '</label>'
+																					;
+																				}
+																			}
+																			?>
+
+																		</div>
+																	</div>
+																	<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-right">
 																		<button type="submit" class="btn btn-md btn-primary btn-block" name="submeter6" id="submeter6" onclick="DesabilitaBotaoExcluir(this.name)" data-loading-text="Aguarde..." value="1" >
 																			<span class="glyphicon glyphicon-save"></span> Salvar
 																		</button>

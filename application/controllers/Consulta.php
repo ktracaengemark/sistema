@@ -1909,6 +1909,7 @@ class Consulta extends CI_Controller {
 
 		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 			'Cadastrar',
+			'Whatsapp',
 			'Adicionar',
 			'PeloPet',
 			'PortePet',
@@ -2035,6 +2036,7 @@ class Consulta extends CI_Controller {
         );
 		$data['select']['RacaPet'] = $this->Cliente_model->select_racapet();	
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
+        $data['select']['Whatsapp'] = $this->Basico_model->select_status_sn();
         $data['select']['Adicionar'] = $this->Basico_model->select_status_sn();
 		$data['select']['DeletarOS'] = $this->Basico_model->select_status_sn();
 		$data['select']['Vincular'] = $this->Basico_model->select_status_sn();
@@ -2090,6 +2092,14 @@ class Consulta extends CI_Controller {
         );
         ($data['cadastrar']['Cadastrar'] == 'N') ?
             $data['div']['Cadastrar'] = '' : $data['div']['Cadastrar'] = 'style="display: none;"';
+		
+ 		(!$data['cadastrar']['Whatsapp']) ? $data['cadastrar']['Whatsapp'] = 'S' : FALSE;       
+		
+		$data['radio'] = array(
+            'Whatsapp' => $this->basico->radio_checked($data['cadastrar']['Whatsapp'], 'Whatsapp', 'NS'),
+        );
+        ($data['cadastrar']['Whatsapp'] == 'N') ?
+            $data['div']['Whatsapp'] = '' : $data['div']['Whatsapp'] = 'style="display: none;"';
 		
 		$data['radio'] = array(
             'Adicionar' => $this->basico->radio_checked($data['cadastrar']['Adicionar'], 'Adicionar', 'NS'),
@@ -2304,6 +2314,9 @@ class Consulta extends CI_Controller {
 				$data['cadastrar']['PorConsulta'] = "N";
 			}		
 			*/
+			
+			$dataini_whats 	= $data['query']['Data'];
+			$horaini_whats	= $data['query']['HoraInicio'];	
 		
 			unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
 			
@@ -2313,6 +2326,19 @@ class Consulta extends CI_Controller {
             $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], TRUE);
 
 			$data['update']['query']['bd'] = $this->Consulta_model->update_consulta($data['query'], $data['query']['idApp_Consulta']);
+			
+			if($data['cadastrar']['Whatsapp'] == 'S'){
+				#### Whatsapp ####
+				$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
+				
+				$_SESSION['bd']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
+				$_SESSION['bd']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
+				$_SESSION['bd']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
+				$_SESSION['bd']['DataInicio'] 		= $dataini_whats;
+				$_SESSION['bd']['HoraInicio'] 		= $horaini_whats;
+				
+				unset($data['Profissional'], $dataini_whats, $horaini_whats);				
+			}
 			
 			if($data['query']['idApp_OrcaTrata'] != 0){
 				$data['orca']['idApp_ClientePet']	= $data['query']['idApp_ClientePet'];
