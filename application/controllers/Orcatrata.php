@@ -2819,6 +2819,12 @@ class Orcatrata extends CI_Controller {
                 $this->load->view('orcatrata/form_orcatrata', $data);
 			} else {
 			
+				#### Whatsapp ####
+				$_SESSION['bd']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
+				$_SESSION['bd']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
+				$_SESSION['bd']['idApp_OrcaTrata'] 	= $data['orcatrata']['idApp_OrcaTrata'];
+				$_SESSION['bd']['Site'] 			= $_SESSION['Empresa']['Site'];
+						
 				#### APP_Cliente ####
 				if ($data['cadastrar']['AtualizaEndereco'] == 'S' && $data['orcatrata']['Cli_Forn_Orca'] == 'S' && $data['orcatrata']['Entrega_Orca'] == "S" && $data['orcatrata']['idApp_Cliente'] != 0){
 					$data['cliente']['CepCliente'] = $data['orcatrata']['Cep'];
@@ -4239,6 +4245,20 @@ class Orcatrata extends CI_Controller {
                 $this->load->view('orcatrata/form_orcatrata3', $data);
             } else {			
 			
+				if ($data['orcatrata']['Cli_Forn_Orca'] == 'S'){
+					if (isset($data['orcatrata']['idApp_Cliente']) && $data['orcatrata']['idApp_Cliente'] != 0){
+									
+						#### Whatsapp ####
+						$data['Cliente']	= $this->Orcatrata_model->get_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+						
+						$_SESSION['bd']['NomeCliente'] 		= utf8_encode($data['Cliente']['NomeCliente']);
+						$_SESSION['bd']['CelularCliente'] 	= $data['Cliente']['CelularCliente'];
+						$_SESSION['bd']['idApp_OrcaTrata'] 	= $data['orcatrata']['idApp_OrcaTrata'];
+						$_SESSION['bd']['Site'] 			= $_SESSION['Empresa']['Site'];
+						
+						unset($data['Cliente']);
+					}
+				}			
 			
 				#### APP_Cliente ####
 				if ($data['cadastrar']['AtualizaEndereco'] == 'S' && $data['orcatrata']['Cli_Forn_Orca'] == 'S' && $data['orcatrata']['Entrega_Orca'] == "S" && $data['orcatrata']['idApp_Cliente'] != 0){

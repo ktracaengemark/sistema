@@ -316,16 +316,6 @@ class Consulta extends CI_Controller {
             $this->load->view('consulta/form_consulta', $data);
         } else {
 
-			$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
-			
-			$_SESSION['bd']['NomeCliente'] 		= $_SESSION['Cliente']['NomeCliente'];
-			$_SESSION['bd']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
-			$_SESSION['bd']['Profissional'] 	= $data['Profissional']['Nome'];
-			$_SESSION['bd']['DataInicio'] 		= $data['query']['Data'];
-			$_SESSION['bd']['HoraInicio'] 		= $data['query']['HoraInicio'];
-			
-			unset($data['Profissional']);			
-
 			$dataini_cad 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
 			$datafim_cad 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
 			$horaini_cad 	= $data['query']['HoraInicio'];
@@ -432,8 +422,11 @@ class Consulta extends CI_Controller {
 					}
 				}
 			}			
-			
+					
             $data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
+			
+			$dataini_whats 	= $data['query']['Data'];
+			$horaini_whats	= $data['query']['HoraInicio'];	
 
             #unset($data['query']['Data'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
 			unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
@@ -451,6 +444,17 @@ class Consulta extends CI_Controller {
                 $this->basico->erro($msg);
                 $this->load->view('consulta/form_consulta', $data);
             } else {
+			
+				$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
+				
+				$_SESSION['bd']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
+				$_SESSION['bd']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
+				$_SESSION['bd']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
+				$_SESSION['bd']['DataInicio'] 		= $dataini_whats;
+				$_SESSION['bd']['HoraInicio'] 		= $horaini_whats;
+				
+				unset($data['Profissional'], $dataini_whats, $horaini_whats);			
+			
 				$data['copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
 				if($data['cadastrar']['Repetir'] == 'S'){
 					$data['copiar']['DataTermino'] = $data['query']['DataTermino'];
@@ -910,17 +914,6 @@ class Consulta extends CI_Controller {
 			$this->load->view('consulta/form_consulta', $data);
         } else {
 
-			$data['Cliente'] 		= $this->Cliente_model->get_cliente($data['query']['idApp_Cliente'], TRUE);
-			$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
-			
-			$_SESSION['bd']['NomeCliente'] 		= $data['Cliente']['NomeCliente'];
-			$_SESSION['bd']['CelularCliente'] 	= $data['Cliente']['CelularCliente'];
-			$_SESSION['bd']['Profissional'] 	= $data['Profissional']['Nome'];
-			$_SESSION['bd']['DataInicio'] 		= $data['query']['Data'];
-			$_SESSION['bd']['HoraInicio'] 		= $data['query']['HoraInicio'];
-			
-			unset($data['Cliente'], $data['Profissional']);
-			
 			$dataini_cad 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
 			$datafim_cad 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
 			$horaini_cad 	= $data['query']['HoraInicio'];
@@ -1051,6 +1044,17 @@ class Consulta extends CI_Controller {
                 $this->load->view('consulta/form_consulta', $data);
             } else {
 				
+				$data['Cliente'] 		= $this->Cliente_model->get_cliente($data['query']['idApp_Cliente'], TRUE);
+				$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
+				
+				$_SESSION['bd']['NomeCliente'] 		= utf8_encode($data['Cliente']['NomeCliente']);
+				$_SESSION['bd']['CelularCliente'] 	= $data['Cliente']['CelularCliente'];
+				$_SESSION['bd']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
+				$_SESSION['bd']['DataInicio'] 		= $dataini_whats;
+				$_SESSION['bd']['HoraInicio'] 		= $horaini_whats;
+				
+				unset($data['Cliente'], $data['Profissional'], $dataini_whats, $horaini_whats);
+
 				$_SESSION['Copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
 				$data['copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
 				
