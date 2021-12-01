@@ -1904,6 +1904,7 @@ class Orcatrata extends CI_Controller {
 			'ConcluidoProduto',
 			'QuitadoParcelas',
 			'Cadastrar',
+			'Whatsapp',
 			'AtualizaEndereco',
 			'StatusProdutos',
 			'StatusParcelas',
@@ -2147,6 +2148,7 @@ class Orcatrata extends CI_Controller {
  		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
  		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
  		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
+ 		(!$data['cadastrar']['Whatsapp']) ? $data['cadastrar']['Whatsapp'] = 'S' : FALSE;
 		
 		$j = 1;
         for ($i = 1; $i <= $data['count']['SCount']; $i++) {
@@ -2355,6 +2357,7 @@ class Orcatrata extends CI_Controller {
 		$data['select']['RelacaoDep'] = $this->Cliente_model->select_relacao();			
         $data['select']['UsarCashBack'] = $this->Basico_model->select_status_sn();
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
+        $data['select']['Whatsapp'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusProdutos'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusParcelas'] = $this->Basico_model->select_status_sn();
 		$data['select']['Cli_Forn_Orca'] = $this->Basico_model->select_status_sn();
@@ -2508,6 +2511,12 @@ class Orcatrata extends CI_Controller {
         );
         ($data['cadastrar']['Cadastrar'] == 'N') ?
             $data['div']['Cadastrar'] = '' : $data['div']['Cadastrar'] = 'style="display: none;"';		
+		
+		$data['radio'] = array(
+            'Whatsapp' => $this->basico->radio_checked($data['cadastrar']['Whatsapp'], 'Whatsapp', 'NS'),
+        );
+        ($data['cadastrar']['Whatsapp'] == 'N') ?
+            $data['div']['Whatsapp'] = '' : $data['div']['Whatsapp'] = 'style="display: none;"';		
 		
 		$data['radio'] = array(
             'StatusProdutos' => $this->basico->radio_checked($data['cadastrar']['StatusProdutos'], 'StatusProdutos', 'NS'),
@@ -2818,12 +2827,14 @@ class Orcatrata extends CI_Controller {
                 $this->basico->erro($msg);
                 $this->load->view('orcatrata/form_orcatrata', $data);
 			} else {
-			
-				#### Whatsapp ####
-				$_SESSION['bd']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
-				$_SESSION['bd']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
-				$_SESSION['bd']['idApp_OrcaTrata'] 	= $data['orcatrata']['idApp_OrcaTrata'];
-				$_SESSION['bd']['Site'] 			= $_SESSION['Empresa']['Site'];
+				
+				if($data['cadastrar']['Whatsapp'] == 'S'){
+					#### Whatsapp ####
+					$_SESSION['bd']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
+					$_SESSION['bd']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
+					$_SESSION['bd']['idApp_OrcaTrata'] 	= $data['orcatrata']['idApp_OrcaTrata'];
+					$_SESSION['bd']['Site'] 			= $_SESSION['Empresa']['Site'];
+				}
 						
 				#### APP_Cliente ####
 				if ($data['cadastrar']['AtualizaEndereco'] == 'S' && $data['orcatrata']['Cli_Forn_Orca'] == 'S' && $data['orcatrata']['Entrega_Orca'] == "S" && $data['orcatrata']['idApp_Cliente'] != 0){
@@ -3305,6 +3316,7 @@ class Orcatrata extends CI_Controller {
 			'ConcluidoProduto',
 			'QuitadoParcelas',
 			'Cadastrar',
+			'Whatsapp',
 			'AtualizaEndereco',
 			'StatusProdutos',
 			'StatusParcelas',
@@ -3503,6 +3515,7 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['Modalidade']) ? $data['orcatrata']['Modalidade'] = 'P' : FALSE;
 		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE; 
  		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
+ 		(!$data['cadastrar']['Whatsapp']) ? $data['cadastrar']['Whatsapp'] = 'S' : FALSE;
  		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
  		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
 		(!$data['orcatrata']['Entregador']) ? $data['orcatrata']['Entregador'] = '0' : FALSE;
@@ -3747,6 +3760,7 @@ class Orcatrata extends CI_Controller {
 		$data['select']['RelacaoDep'] = $this->Cliente_model->select_relacao();			
         $data['select']['UsarCashBack'] = $this->Basico_model->select_status_sn();
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
+        $data['select']['Whatsapp'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusProdutos'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusParcelas'] = $this->Basico_model->select_status_sn();
 		$data['select']['AtualizaEndereco'] = $this->Basico_model->select_status_sn();
@@ -3877,6 +3891,12 @@ class Orcatrata extends CI_Controller {
         ($data['cadastrar']['Cadastrar'] == 'N') ?
             $data['div']['Cadastrar'] = '' : $data['div']['Cadastrar'] = 'style="display: none;"';		
 		
+		$data['radio'] = array(
+            'Whatsapp' => $this->basico->radio_checked($data['cadastrar']['Whatsapp'], 'Whatsapp', 'NS'),
+        );
+        ($data['cadastrar']['Whatsapp'] == 'N') ?
+            $data['div']['Whatsapp'] = '' : $data['div']['Whatsapp'] = 'style="display: none;"';
+			
 		$data['radio'] = array(
             'StatusProdutos' => $this->basico->radio_checked($data['cadastrar']['StatusProdutos'], 'StatusProdutos', 'NS'),
         );
@@ -4245,7 +4265,7 @@ class Orcatrata extends CI_Controller {
                 $this->load->view('orcatrata/form_orcatrata3', $data);
             } else {			
 			
-				if ($data['orcatrata']['Cli_Forn_Orca'] == 'S'){
+				if ($data['orcatrata']['Cli_Forn_Orca'] == 'S' && $data['cadastrar']['Whatsapp'] == 'S'){
 					if (isset($data['orcatrata']['idApp_Cliente']) && $data['orcatrata']['idApp_Cliente'] != 0){
 									
 						#### Whatsapp ####
