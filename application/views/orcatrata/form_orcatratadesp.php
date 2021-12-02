@@ -22,6 +22,7 @@
 											<input type="hidden" name="Negocio" id="Negocio" value="2"/>
 											<input type="hidden" name="Empresa" id="Empresa" value="<?php echo $_SESSION['log']['idSis_Empresa']; ?>"/>
 											<input type="hidden" name="NivelEmpresa" id="NivelEmpresa" value="<?php echo $_SESSION['log']['NivelEmpresa']; ?>"/>
+											<input type="hidden" name="Bx_Pag" id="Bx_Pag" value="<?php echo $_SESSION['Usuario']['Bx_Pag']; ?>"/>
 											<h4 class="mb-3"><b>Despesa</b></h4>
 											<div class="form-group">	
 												<div class="row">

@@ -6492,6 +6492,15 @@ function calculaParcelas(mod) {
 	//var resta = $("#ValorTotalOrca").val();
     var parcelas = $("#QtdParcelasOrca").val();
     //console.log('QtdParcelasOrca = ' +parcelas);
+	var Bx_Pag = $("#Bx_Pag").val();
+	if(Bx_Pag == 'N'){
+		var baixa = 'none';
+	}else{
+		var baixa = '';
+	}
+	//console.log('Bx_Pag = ' + Bx_Pag);
+	//console.log('baixa = ' + baixa);
+	
 	if(parcelas){	
 		if(parcelas == 0){
 			parcelas = 1;
@@ -6579,7 +6588,7 @@ function calculaParcelas(mod) {
 										<option value="'+formapag+'"></option>\
 									</select>\
 								</div>\
-								<div class="col-sm-3  col-md-2 col-lg-2">\
+								<div class="col-sm-3  col-md-2 col-lg-2" style="display:'+baixa+'">\
 									<label for="Quitado">Parc.Quitada?</label><br>\
 									<div class="btn-group" data-toggle="buttons">\
 										<label class="btn btn-warning active" name="radio_Quitado'+i+'" id="radio_Quitado'+i+'N">\
@@ -6679,7 +6688,14 @@ function calculaParcelas(mod) {
 function adicionaParcelas() {
 	
 	var formapag = $("#FormaPagamento").val();
-	//console.log(formapag + ' - forma de pagamento');
+	var Bx_Pag = $("#Bx_Pag").val();
+	if(Bx_Pag == 'N'){
+		var baixa = 'none';
+	}else{
+		var baixa = '';
+	}
+	//console.log('Bx_Pag = ' + Bx_Pag);
+	//console.log('baixa = ' + baixa);
 	
 	var pr = $("#PRCount").val(); //initlal text box count
 	pr++; //text box increment
@@ -6731,7 +6747,7 @@ function adicionaParcelas() {
 								<option value="'+formapag+'"></option>\
 							</select>\
 						</div>\
-						<div class="col-sm-3  col-md-2 col-lg-2">\
+						<div class="col-sm-3  col-md-2 col-lg-2" style="display:'+baixa+'">\
 							<label for="Quitado">Parc.Quitado?</label><br>\
 							<div class="btn-group" data-toggle="buttons">\
 								<label class="btn btn-warning active" name="radio_Quitado'+pr+'" id="radio_Quitado'+pr+'N">\

@@ -22,6 +22,7 @@
 											<input type="hidden" name="Negocio" id="Negocio" value="1"/>
 											<input type="hidden" name="Empresa" id="Empresa" value="<?php echo $_SESSION['log']['idSis_Empresa']; ?>"/>
 											<input type="hidden" name="NivelEmpresa" id="NivelEmpresa" value="<?php echo $_SESSION['log']['NivelEmpresa']; ?>"/>
+											<input type="hidden" name="Bx_Pag" id="Bx_Pag" value="<?php echo $_SESSION['Usuario']['Bx_Pag']; ?>"/>
 											<h4 class="mb-3"><b>Receita</b></h4>
 											<div class="form-group">	
 												<div class="row">
@@ -2440,6 +2441,35 @@
 														<input type="hidden" name="idApp_ParcelasRec" value="<?php echo $parcelasrec['idApp_ParcelasRec']; ?>">-->
 														<?php } ?>
 														<?php if ($metodo == 2) { ?>
+															<div class="col-sm-4 col-md-4 text-left">
+																<label for="Whatsapp">Whatsapp?</label><br>
+																<div class="btn-larg-right btn-group" data-toggle="buttons">
+																	<?php
+																	foreach ($select['Whatsapp'] as $key => $row) {
+																		if (!$cadastrar['Whatsapp']) $cadastrar['Whatsapp'] = 'S';
+
+																		($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+
+																		if ($cadastrar['Whatsapp'] == $key) {
+																			echo ''
+																			. '<label class="btn btn-warning active" name="Whatsapp_' . $hideshow . '">'
+																			. '<input type="radio" name="Whatsapp" id="' . $hideshow . '" '
+																			. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																			. '</label>'
+																			;
+																		} else {
+																			echo ''
+																			. '<label class="btn btn-default" name="Whatsapp_' . $hideshow . '">'
+																			. '<input type="radio" name="Whatsapp" id="' . $hideshow . '" '
+																			. 'autocomplete="off" value="' . $key . '" >' . $row
+																			. '</label>'
+																			;
+																		}
+																	}
+																	?>
+
+																</div>
+															</div>
 															<div class="col-md-4">
 																<label></label>
 																<!--
@@ -2488,7 +2518,36 @@
 																</div>
 															</div>
 														<?php } else { ?>
-															<div class="col-sm-8 col-md-8 "></div>	
+															<div class="col-sm-4 col-md-4"></div>
+															<div class="col-sm-4 col-md-4 text-left">
+																<label for="Whatsapp">Whatsapp?</label><br>
+																<div class="btn-larg-right btn-group" data-toggle="buttons">
+																	<?php
+																	foreach ($select['Whatsapp'] as $key => $row) {
+																		if (!$cadastrar['Whatsapp']) $cadastrar['Whatsapp'] = 'S';
+
+																		($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+
+																		if ($cadastrar['Whatsapp'] == $key) {
+																			echo ''
+																			. '<label class="btn btn-warning active" name="Whatsapp_' . $hideshow . '">'
+																			. '<input type="radio" name="Whatsapp" id="' . $hideshow . '" '
+																			. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																			. '</label>'
+																			;
+																		} else {
+																			echo ''
+																			. '<label class="btn btn-default" name="Whatsapp_' . $hideshow . '">'
+																			. '<input type="radio" name="Whatsapp" id="' . $hideshow . '" '
+																			. 'autocomplete="off" value="' . $key . '" >' . $row
+																			. '</label>'
+																			;
+																		}
+																	}
+																	?>
+
+																</div>
+															</div>	
 															<div class="col-sm-4 col-md-4 text-left">
 																<!--
 																<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
