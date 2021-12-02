@@ -43,7 +43,7 @@
 		}
 	}else{
 		$corBotao	= 'danger';
-		$texto = 'Sua Fatura está atrasada a ';
+		$texto = 'Fatura atrasada a';
 		$exibirPost = 1;
 	}
 	/*
@@ -102,12 +102,17 @@
 					//content:    '<div align="center"><a onclick="Shadowbox.close()" target="_blank" href="../../enkontraki/login_cliente.php?id_empresa="><img src="arquivos/imagens/popup.jpg" width="250" height="220" alt="" border="0" style="margin-top: 30px;"/></a></div>',
 					content:    '<div align="center">\
 									<div class="form-group col-md-12 text-center" style="margin-top: 100px;">\
-										<span class="glyphicon glyphicon-alert"></span> '+texto+' '+tempo+'.\
+										<span class="glyphicon glyphicon-alert"></span> '+texto+' '+tempo+'.<br>Pagar agora?\
 									</div>\
-									<div class="form-group col-md-12 text-left">\
+									<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">\
 										<a type="button" class="btn btn-md btn-'+corBotao+' btn-block"  href="../../enkontraki/login_cliente.php?id_empresa='+id_empresa+'" target="_blank"  role="button" onclick="Shadowbox.close()">\
-											Pagar Agora\
+											<span class="glyphicon glyphicon-usd"></span> Sim\
 										</a>\
+									</div>\
+									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">\
+										<button type="button" class="btn btn-warning btn-block" onclick="Shadowbox.close()">\
+											<span class="glyphicon glyphicon-remove"></span> N\u00e3o\
+										</button>\
 									</div>\
 								</div>',
 					player:     "html",
