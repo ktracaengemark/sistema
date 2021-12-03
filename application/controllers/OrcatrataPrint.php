@@ -40,12 +40,6 @@ class OrcatrataPrint extends CI_Controller {
     }
 
     public function imprimir($id = FALSE) {
-
-		if(isset($_SESSION['bd'])){
-			echo "<script>window.open('https://api.whatsapp.com/send?phone=55".$_SESSION['bd']['CelularCliente']."&text=Ola ".$_SESSION['bd']['NomeCliente'].". Pedido *".$_SESSION['bd']['idApp_OrcaTrata']."* cadastrado. Acesse o link abaixo, faca login e acompanhe seu pedido pelo nosso site. https://enkontraki.com.br/".$_SESSION['bd']['Site']."','_blank');</script>";
-		}
-		unset($_SESSION['bd']);
-
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)

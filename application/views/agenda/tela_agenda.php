@@ -1,6 +1,14 @@
 <?php if ($_SESSION['log']['idSis_Empresa'] == 5) { ?>
 	<div class="col-lg-2 col-md-2 col-sm-2"></div>
-<?php } ?>	
+<?php } ?>
+<?php 
+	if ($_SESSION['log']['idSis_Empresa'] != 5){
+		if(isset($_SESSION['bd'])){
+			echo "<script>window.open('https://api.whatsapp.com/send?phone=55".$_SESSION['bd']['CelularCliente']."&text=Ola ".$_SESSION['bd']['NomeCliente'].". Agendamento marcado com ".$_SESSION['bd']['Profissional'].", dia ".$_SESSION['bd']['DataInicio'].", as ".$_SESSION['bd']['HoraInicio'].".','_blank');</script>";
+		}
+		unset($_SESSION['bd']);		
+	} 
+?>
 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 	<?php if($paginacao == "N") { ?>	
 		<div id="fluxo" class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="fluxo" aria-hidden="true">
