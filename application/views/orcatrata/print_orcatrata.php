@@ -1,7 +1,7 @@
 <?php 
 	if ($_SESSION['log']['idSis_Empresa'] != 5){
 		if(isset($_SESSION['bd'])){
-			echo "<script>window.open('https://api.whatsapp.com/send?phone=55".$_SESSION['bd']['CelularCliente']."&text=Ola ".$_SESSION['bd']['NomeCliente'].". Pedido *".$_SESSION['bd']['idApp_OrcaTrata']."* cadastrado. Acesse o link abaixo, faca login e acompanhe seu pedido pelo nosso site. https://enkontraki.com.br/".$_SESSION['bd']['Site']."','_blank');</script>";
+			echo "<script>window.open('https://api.whatsapp.com/send?phone=55".$_SESSION['bd']['CelularCliente']."&text=Ola ".$_SESSION['bd']['NomeCliente'].". Pedido *".$_SESSION['bd']['idApp_OrcaTrata']."* . Acesse o link abaixo, faca login e acompanhe seu pedido pelo nosso site. https://enkontraki.com.br/".$_SESSION['bd']['Site']."','_blank');</script>";
 		}
 		unset($_SESSION['bd']);	
 	} 

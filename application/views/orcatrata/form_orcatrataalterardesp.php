@@ -19,7 +19,11 @@
 											<input type="hidden" name="Negocio" id="Negocio" value="2"/>
 											<input type="hidden" name="Empresa" id="Empresa" value="<?php echo $_SESSION['log']['idSis_Empresa']; ?>"/>
 											<input type="hidden" name="NivelEmpresa" id="NivelEmpresa" value="<?php echo $_SESSION['log']['NivelEmpresa']; ?>"/>
-											<input type="hidden" name="Bx_Pag" id="Bx_Pag" value="<?php echo $_SESSION['Usuario']['Bx_Pag']; ?>"/>
+											<?php if($_SESSION['log']['idSis_Empresa'] != 5){?>	
+												<input type="hidden" name="Bx_Pag" id="Bx_Pag" value="<?php echo $_SESSION['Usuario']['Bx_Pag']; ?>"/>
+											<?php }else{?>	
+												<input type="hidden" name="Bx_Pag" id="Bx_Pag" value="S"/>
+											<?php } ?>
 											<div class="form-group">	
 												<div class="row">
 													<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
