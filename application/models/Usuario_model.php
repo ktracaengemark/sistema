@@ -446,10 +446,8 @@ class Usuario_model extends CI_Model {
 						LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
 				WHERE 
 					' . $permissao . '
-					P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-					' . $entregadar . '
-					(P.Inativo = "0" AND
-					P.Entregas = "S")  
+					(' . $entregadar . '
+					(P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND P.Inativo = "0" AND P.Entregas = "S"))  
 				ORDER BY 
 					F.Funcao ASC,
 					P.Nome ASC
@@ -465,10 +463,8 @@ class Usuario_model extends CI_Model {
 						LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
 				WHERE
 					' . $permissao . '
-					P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-					' . $entregadar . '
-					(P.Inativo = "0" AND
-					P.Entregas = "S")  
+					(' . $entregadar . '
+					(P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND P.Inativo = "0" AND P.Entregas = "S"))  
 				ORDER BY 
 					F.Funcao ASC,
 					P.Nome ASC
@@ -600,10 +596,8 @@ class Usuario_model extends CI_Model {
 					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
             WHERE 
 				' . $permissao . '
-				P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-				' . $procedimentos . '
-				P.Inativo = "0" AND
-				P.Procedimentos = "S"
+				(' . $procedimentos . '
+				(P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND P.Inativo = "0" AND P.Procedimentos = "S"))
 			ORDER BY 
 				F.Funcao ASC,
 				P.Nome ASC
@@ -619,10 +613,8 @@ class Usuario_model extends CI_Model {
 					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
             WHERE
 				' . $permissao . '
-				P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-				' . $procedimentos . '
-				P.Inativo = "0" AND
-				P.Procedimentos = "S"  
+				(' . $procedimentos . '
+				(P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND P.Inativo = "0" AND P.Procedimentos = "S"))  
 			ORDER BY 
 				F.Funcao ASC,
 				P.Nome ASC
