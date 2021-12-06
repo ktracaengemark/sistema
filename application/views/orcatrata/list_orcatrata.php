@@ -188,9 +188,9 @@
 								<!-- Nav tabs -->
 								<ul class="nav nav-tabs" role="tablist">
 									<!--<li role="presentation" class="active" ><a style="color:green" href="#combinado" aria-controls="combinado" role="tab" data-toggle="tab">Combinados <?php #echo $combinado->num_rows(); ?></a></li>-->
-									<li role="presentation" ><a style="color:red" href="#naocombinado" aria-controls="naocombinado" role="tab" data-toggle="tab">Não Combinados <?php echo $naocombinado->num_rows(); ?></a></li>
-									<li role="presentation" ><a style="color:red" href="#anterior" aria-controls="anterior" role="tab" data-toggle="tab">Não Aprovados <?php echo $naoaprovado->num_rows(); ?></a></li>
-									<li role="presentation" class="active" ><a style="color:green" href="#proxima" aria-controls="proxima" role="tab" data-toggle="tab">Aprovados <?php echo $aprovado->num_rows(); ?></a></li>
+									<li role="presentation" ><a style="color:red" href="#naocombinado" aria-controls="naocombinado" role="tab" data-toggle="tab">Não Comb Ent <?php echo $naocombinado->num_rows(); ?></a></li>
+									<li role="presentation" ><a style="color:red" href="#anterior" aria-controls="anterior" role="tab" data-toggle="tab">Não Comb Pag <?php echo $naoaprovado->num_rows(); ?></a></li>
+									<li role="presentation" class="active" ><a style="color:green" href="#proxima" aria-controls="proxima" role="tab" data-toggle="tab">Comb Pag <?php echo $aprovado->num_rows(); ?></a></li>
 									<li role="presentation" ><a style="color:green" href="#finalizado" aria-controls="finalizado" role="tab" data-toggle="tab">Finalizado <?php echo $finalizado->num_rows(); ?></a></li>
 									<!--<li role="presentation" ><a style="color:red" href="#naofinalizado" aria-controls="naofinalizado" role="tab" data-toggle="tab">Não Finalizado <?php #echo $naofinalizado->num_rows(); ?></a></li>-->
 									<li role="presentation" ><a style="color:black" href="#cancelado" aria-controls="cancelado" role="tab" data-toggle="tab">Cancelado <?php echo $cancelado->num_rows(); ?></a></li>
