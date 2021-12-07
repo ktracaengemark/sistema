@@ -2093,12 +2093,12 @@ class Consulta extends CI_Controller {
         ($data['cadastrar']['Cadastrar'] == 'N') ?
             $data['div']['Cadastrar'] = '' : $data['div']['Cadastrar'] = 'style="display: none;"';
 		
- 		(!$data['cadastrar']['Whatsapp']) ? $data['cadastrar']['Whatsapp'] = 'S' : FALSE;       
+ 		(!$data['cadastrar']['Whatsapp']) ? $data['cadastrar']['Whatsapp'] = 'N' : FALSE;       
 		
 		$data['radio'] = array(
             'Whatsapp' => $this->basico->radio_checked($data['cadastrar']['Whatsapp'], 'Whatsapp', 'NS'),
         );
-        ($data['cadastrar']['Whatsapp'] == 'N') ?
+        ($data['cadastrar']['Whatsapp'] == 'S') ?
             $data['div']['Whatsapp'] = '' : $data['div']['Whatsapp'] = 'style="display: none;"';
 		
 		$data['radio'] = array(

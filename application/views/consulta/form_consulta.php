@@ -904,9 +904,9 @@
 																			<div class="btn-group" data-toggle="buttons">
 																				<?php
 																				foreach ($select['Whatsapp'] as $key => $row) {
-																					if (!$cadastrar['Whatsapp']) $cadastrar['Whatsapp'] = 'S';
+																					if (!$cadastrar['Whatsapp']) $cadastrar['Whatsapp'] = 'N';
 
-																					($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																					($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
 
 																					if ($cadastrar['Whatsapp'] == $key) {
 																						echo ''

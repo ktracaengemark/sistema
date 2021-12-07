@@ -4966,7 +4966,7 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;	
  		
 		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE; 
-		(!$data['cadastrar']['Whatsapp']) ? $data['cadastrar']['Whatsapp'] = 'S' : FALSE;
+		(!$data['cadastrar']['Whatsapp']) ? $data['cadastrar']['Whatsapp'] = 'N' : FALSE;
 		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
  		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
  		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
@@ -5558,7 +5558,7 @@ class Orcatrata extends CI_Controller {
 		$data['radio'] = array(
             'Whatsapp' => $this->basico->radio_checked($data['cadastrar']['Whatsapp'], 'Whatsapp', 'NS'),
         );
-        ($data['cadastrar']['Whatsapp'] == 'N') ?
+        ($data['cadastrar']['Whatsapp'] == 'S') ?
             $data['div']['Whatsapp'] = '' : $data['div']['Whatsapp'] = 'style="display: none;"';		
 		
 		$data['radio'] = array(
@@ -8630,7 +8630,7 @@ class Orcatrata extends CI_Controller {
  		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
 		
 		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
-		(!$data['cadastrar']['Whatsapp']) ? $data['cadastrar']['Whatsapp'] = 'S' : FALSE;       
+		(!$data['cadastrar']['Whatsapp']) ? $data['cadastrar']['Whatsapp'] = 'N' : FALSE;       
 		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
  		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
  		(!$data['cadastrar']['StatusParcelas']) ? $data['cadastrar']['StatusParcelas'] = 'N' : FALSE;
@@ -9163,7 +9163,7 @@ class Orcatrata extends CI_Controller {
 		$data['radio'] = array(
             'Whatsapp' => $this->basico->radio_checked($data['cadastrar']['Whatsapp'], 'Whatsapp', 'NS'),
         );
-        ($data['cadastrar']['Whatsapp'] == 'N') ?
+        ($data['cadastrar']['Whatsapp'] == 'S') ?
             $data['div']['Whatsapp'] = '' : $data['div']['Whatsapp'] = 'style="display: none;"';		
 		
 		$data['radio'] = array(
