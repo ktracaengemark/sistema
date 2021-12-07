@@ -2515,7 +2515,7 @@ class Orcatrata extends CI_Controller {
 		$data['radio'] = array(
             'Whatsapp' => $this->basico->radio_checked($data['cadastrar']['Whatsapp'], 'Whatsapp', 'NS'),
         );
-        ($data['cadastrar']['Whatsapp'] == 'N') ?
+        ($data['cadastrar']['Whatsapp'] == 'S') ?
             $data['div']['Whatsapp'] = '' : $data['div']['Whatsapp'] = 'style="display: none;"';		
 		
 		$data['radio'] = array(
@@ -3894,7 +3894,7 @@ class Orcatrata extends CI_Controller {
 		$data['radio'] = array(
             'Whatsapp' => $this->basico->radio_checked($data['cadastrar']['Whatsapp'], 'Whatsapp', 'NS'),
         );
-        ($data['cadastrar']['Whatsapp'] == 'N') ?
+        ($data['cadastrar']['Whatsapp'] == 'S') ?
             $data['div']['Whatsapp'] = '' : $data['div']['Whatsapp'] = 'style="display: none;"';
 			
 		$data['radio'] = array(

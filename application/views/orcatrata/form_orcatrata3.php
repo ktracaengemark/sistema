@@ -2456,7 +2456,7 @@
 																		foreach ($select['Whatsapp'] as $key => $row) {
 																			if (!$cadastrar['Whatsapp']) $cadastrar['Whatsapp'] = 'S';
 
-																			($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																			($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
 
 																			if ($cadastrar['Whatsapp'] == $key) {
 																				echo ''
@@ -2539,7 +2539,7 @@
 																		foreach ($select['Whatsapp'] as $key => $row) {
 																			if (!$cadastrar['Whatsapp']) $cadastrar['Whatsapp'] = 'S';
 
-																			($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																			($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
 
 																			if ($cadastrar['Whatsapp'] == $key) {
 																				echo ''
@@ -2559,7 +2559,7 @@
 																		}
 																		?>
 
-</div>
+																	</div>
 																<?php } ?>	
 															</div>	
 															<div class="col-sm-4 col-md-4 text-left">
