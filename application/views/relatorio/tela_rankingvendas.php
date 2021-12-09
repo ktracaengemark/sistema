@@ -143,6 +143,26 @@
 							</div>
 						</div>
 					</div>
+				</div>	
+				<div class="form-group">	
+					<div class="row text-left">	
+						<div class="col-md-6">
+							<label for="Valor_cash_de">Valor Cash de:</label>
+							<div class="input-group ">
+								<span class="input-group-addon" disabled>R$</span>
+								<input type="text" class="form-control " maxlength="10" placeholder="Ex. 100.00"
+								name="Valor_cash_de" value="<?php echo set_value('Valor_cash_de', $query['Valor_cash_de']); ?>">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<label for="Valor_cash_ate">Valor Cash até:</label>
+							<div class="input-group ">
+								<span class="input-group-addon" disabled>R$</span>
+								<input type="text" class="form-control " maxlength="10" placeholder="Ex. 200.00"
+								name="Valor_cash_ate" value="<?php echo set_value('Valor_cash_ate', $query['Valor_cash_ate']); ?>">
+							</div>
+						</div>						
+					</div>
 				</div>
 				<div class="form-group">	
 					<div class="row text-left">

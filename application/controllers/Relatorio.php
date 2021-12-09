@@ -6165,11 +6165,14 @@ class Relatorio extends CI_Controller {
 			'Pedidos_ate',
 			'Valor_de',
 			'Valor_ate',
+			'Valor_cash_de',
+			'Valor_cash_ate',
 			'Ultimo',
 		), TRUE));
 
 		$data['select']['Campo'] = array(
-			'Valor' => 'Valor',
+			'Valor' => 'Valor Pedido',
+			'F.CashBackCliente' => 'Valor CashBach',
 			'ContPedidos' => 'Pedidos',
 			'F.NomeCliente' => 'Cliente',
 			'F.idApp_Cliente' => 'Id',
@@ -6200,6 +6203,8 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroRankingVendas']['Pedidos_ate'] = $data['query']['Pedidos_ate'];
 		$_SESSION['FiltroRankingVendas']['Valor_de'] = $data['query']['Valor_de'];
 		$_SESSION['FiltroRankingVendas']['Valor_ate'] = $data['query']['Valor_ate'];
+		$_SESSION['FiltroRankingVendas']['Valor_cash_de'] = $data['query']['Valor_cash_de'];
+		$_SESSION['FiltroRankingVendas']['Valor_cash_ate'] = $data['query']['Valor_cash_ate'];
 		$_SESSION['FiltroRankingVendas']['Ultimo'] = $data['query']['Ultimo'];
 			
 		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -6222,6 +6227,8 @@ class Relatorio extends CI_Controller {
 			$data['bd']['Campo'] = $data['query']['Campo'];
 			$data['bd']['Valor_de'] = $data['query']['Valor_de'];
 			$data['bd']['Valor_ate'] = $data['query']['Valor_ate'];
+			$data['bd']['Valor_cash_de'] = $data['query']['Valor_cash_de'];
+			$data['bd']['Valor_cash_ate'] = $data['query']['Valor_cash_ate'];
 			$data['bd']['Pedidos_de'] = $data['query']['Pedidos_de'];
 			$data['bd']['Pedidos_ate'] = $data['query']['Pedidos_ate'];
 			$data['bd']['Ultimo'] = $data['query']['Ultimo'];

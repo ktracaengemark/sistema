@@ -2978,7 +2978,10 @@ exit();
 			$data['Pedidos_ate'] = ($data['Pedidos_ate']) ? 'F.ContPedidos <= "' . $data['Pedidos_ate'] . '" AND ' : FALSE;	
 			
 			$data['Valor_de'] = ($data['Valor_de']) ? 'F.Valor >= "' . $data['Valor_de'] . '" AND ' : FALSE;
-			$data['Valor_ate'] = ($data['Valor_ate']) ? 'F.Valor <= "' . $data['Valor_ate'] . '" AND ' : FALSE;	
+			$data['Valor_ate'] = ($data['Valor_ate']) ? 'F.Valor <= "' . $data['Valor_ate'] . '" AND ' : FALSE;
+			
+			$data['Valor_cash_de'] = ($data['Valor_cash_de']) ? 'F.CashBackCliente >= "' . $data['Valor_cash_de'] . '" AND ' : FALSE;
+			$data['Valor_cash_ate'] = ($data['Valor_cash_ate']) ? 'F.CashBackCliente <= "' . $data['Valor_cash_ate'] . '" AND ' : FALSE;	
 
 			//$data['NomeCliente'] = ($data['NomeCliente']) ? ' AND TC.idApp_Cliente = ' . $data['NomeCliente'] : FALSE;
 			$data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND TC.idApp_Cliente = ' . $data['idApp_Cliente'] : FALSE;
@@ -3017,7 +3020,11 @@ exit();
 			$data['Pedidos_ate'] = ($_SESSION['FiltroRankingVendas']['Pedidos_ate']) ? 'F.ContPedidos <= "' . $_SESSION['FiltroRankingVendas']['Pedidos_ate'] . '" AND ' : FALSE;	
 			
 			$data['Valor_de'] = ($_SESSION['FiltroRankingVendas']['Valor_de']) ? 'F.Valor >= "' . $_SESSION['FiltroRankingVendas']['Valor_de'] . '" AND ' : FALSE;
-			$data['Valor_ate'] = ($_SESSION['FiltroRankingVendas']['Valor_ate']) ? 'F.Valor <= "' . $_SESSION['FiltroRankingVendas']['Valor_ate'] . '" AND ' : FALSE;	
+			$data['Valor_ate'] = ($_SESSION['FiltroRankingVendas']['Valor_ate']) ? 'F.Valor <= "' . $_SESSION['FiltroRankingVendas']['Valor_ate'] . '" AND ' : FALSE;
+			
+			$data['Valor_cash_de'] = ($_SESSION['FiltroRankingVendas']['Valor_cash_de']) ? 'F.CashBackCliente >= "' . $_SESSION['FiltroRankingVendas']['Valor_cash_de'] . '" AND ' : FALSE;
+			$data['Valor_cash_ate'] = ($_SESSION['FiltroRankingVendas']['Valor_cash_ate']) ? 'F.CashBackCliente <= "' . $_SESSION['FiltroRankingVendas']['Valor_cash_ate'] . '" AND ' : FALSE;	
+	
 
 			//$data['NomeCliente'] = ($_SESSION['FiltroRankingVendas']['NomeCliente']) ? ' AND TC.idApp_Cliente = ' . $_SESSION['FiltroRankingVendas']['NomeCliente'] : FALSE;
 			$data['idApp_Cliente'] = ($_SESSION['FiltroRankingVendas']['idApp_Cliente']) ? ' AND TC.idApp_Cliente = ' . $_SESSION['FiltroRankingVendas']['idApp_Cliente'] : FALSE;
@@ -3051,6 +3058,7 @@ exit();
 			SELECT
 				F.idApp_Cliente,
 				F.NomeCliente,
+				F.CelularCliente,
 				F.CashBackCliente,
 				F.ValidadeCashBack,
 				F.ContPedidos,
@@ -3059,6 +3067,7 @@ exit();
 				(SELECT
 					TC.idApp_Cliente,
 					TC.NomeCliente,
+					TC.CelularCliente,
 					TC.CashBackCliente,
 					TC.ValidadeCashBack,
 					TOT.DataOrca,
@@ -3086,6 +3095,8 @@ exit();
 				' . $data['Pedidos_ate'] . '
 				' . $data['Valor_de'] . '
 				' . $data['Valor_ate'] . '
+				' . $data['Valor_cash_de'] . '
+				' . $data['Valor_cash_ate'] . '
 				F.idApp_Cliente != 0
 			ORDER BY
 				' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
@@ -3106,6 +3117,7 @@ exit();
             $rankingvendas->{$row->idApp_Cliente} = new stdClass();
             $rankingvendas->{$row->idApp_Cliente}->idApp_Cliente = $row->idApp_Cliente;
             $rankingvendas->{$row->idApp_Cliente}->NomeCliente = $row->NomeCliente;
+            $rankingvendas->{$row->idApp_Cliente}->CelularCliente = $row->CelularCliente;
             $rankingvendas->{$row->idApp_Cliente}->CashBackCliente = $row->CashBackCliente;
             $rankingvendas->{$row->idApp_Cliente}->ValidadeCashBack = $row->ValidadeCashBack;
 			$rankingvendas->{$row->idApp_Cliente}->ContPedidos = $row->ContPedidos;

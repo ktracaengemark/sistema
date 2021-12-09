@@ -2037,6 +2037,8 @@ class Relatorio_pag extends CI_Controller {
 			'Pedidos_ate',
 			'Valor_de',
 			'Valor_ate',
+			'Valor_cash_de',
+			'Valor_cash_ate',
 			'Ultimo',
 		), TRUE));
 

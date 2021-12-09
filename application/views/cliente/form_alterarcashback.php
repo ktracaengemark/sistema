@@ -123,6 +123,32 @@
 								<div class="row">
 									<input type="hidden" name="idSis_Empresa" value="<?php echo $empresa['idSis_Empresa']; ?>">
 									<div class="col-md-2 text-left">
+										<label for="TipoAdd">Tipo de Add</label><br>
+										<div class="btn-group" data-toggle="buttons">
+											<?php
+											foreach ($select['TipoAdd'] as $key => $row) {
+												(!$query['TipoAdd']) ? $query['TipoAdd'] = 'V' : FALSE;
+
+												if ($query['TipoAdd'] == $key) {
+													echo ''
+													. '<label class="btn btn-warning active" name="radiobutton_TipoAdd" id="radiobutton_TipoAdd' . $key . '">'
+													. '<input type="radio" name="TipoAdd" id="radiobutton" '
+													. 'autocomplete="off" value="' . $key . '" checked>' . $row
+													. '</label>'
+													;
+												} else {
+													echo ''
+													. '<label class="btn btn-default" name="radiobutton_TipoAdd" id="radiobutton_TipoAdd' . $key . '">'
+													. '<input type="radio" name="TipoAdd" id="radiobutton" '
+													. 'autocomplete="off" value="' . $key . '" >' . $row
+													. '</label>'
+													;
+												}
+											}
+											?>
+										</div>
+									</div>
+									<div class="col-md-2 text-left">
 										<label for="AlterarTodos">Alterar Todos?</label><br>
 										<div class="btn-group" data-toggle="buttons">
 											<?php
@@ -150,32 +176,6 @@
 											?>
 										</div>
 										<?php echo form_error('AlterarTodos'); ?>
-									</div>
-									<div class="col-md-2 text-left">
-										<label for="TipoAdd">Tipo de Add</label><br>
-										<div class="btn-group" data-toggle="buttons">
-											<?php
-											foreach ($select['TipoAdd'] as $key => $row) {
-												(!$query['TipoAdd']) ? $query['TipoAdd'] = 'V' : FALSE;
-
-												if ($query['TipoAdd'] == $key) {
-													echo ''
-													. '<label class="btn btn-warning active" name="radiobutton_TipoAdd" id="radiobutton_TipoAdd' . $key . '">'
-													. '<input type="radio" name="TipoAdd" id="radiobutton" '
-													. 'autocomplete="off" value="' . $key . '" checked>' . $row
-													. '</label>'
-													;
-												} else {
-													echo ''
-													. '<label class="btn btn-default" name="radiobutton_TipoAdd" id="radiobutton_TipoAdd' . $key . '">'
-													. '<input type="radio" name="TipoAdd" id="radiobutton" '
-													. 'autocomplete="off" value="' . $key . '" >' . $row
-													. '</label>'
-													;
-												}
-											}
-											?>
-										</div>
 									</div>
 									<div id="AlterarTodos" <?php echo $div['AlterarTodos']; ?>>
 										<div class="col-md-2">
