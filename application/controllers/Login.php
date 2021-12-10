@@ -220,7 +220,7 @@ class Login extends CI_Controller {
 
         #load footer view
         #$this->load->view('basico/footerlogin');
-        $this->load->view('basico/baselogin');
+        #$this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }	
 
@@ -361,7 +361,7 @@ class Login extends CI_Controller {
 
         #load footer view
         #$this->load->view('basico/footerlogin');
-        $this->load->view('basico/baselogin');
+        #$this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }	
 
@@ -547,7 +547,7 @@ class Login extends CI_Controller {
 
         #load footer view
         #$this->load->view('basico/footerlogin');
-        $this->load->view('basico/baselogin');
+        #$this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }
 
@@ -697,7 +697,7 @@ class Login extends CI_Controller {
 
         #load footer view
         #$this->load->view('basico/footerlogin');
-        $this->load->view('basico/baselogin');
+        #$this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }
 	
@@ -886,7 +886,7 @@ class Login extends CI_Controller {
 
         #load footer view
         #$this->load->view('basico/footerlogin');
-        $this->load->view('basico/baselogin');
+        #$this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }	
 
@@ -1081,7 +1081,7 @@ class Login extends CI_Controller {
 
         #load footer view
         #$this->load->view('basico/footerlogin');
-        $this->load->view('basico/baselogin');
+        #$this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }
 	
@@ -1299,7 +1299,7 @@ class Login extends CI_Controller {
 		}
         #load footer view
         #$this->load->view('basico/footerlogin');
-        $this->load->view('basico/baselogin');
+        #$this->load->view('basico/baselogin');
         $this->load->view('basico/footer');
     }	
 	
