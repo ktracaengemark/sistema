@@ -38,7 +38,7 @@
 			$exibirPost = 1;
 		}else{
 			$corBotao	= 'default';
-			$texto = 'Sua Fatura vence no futuro, a ';
+			$texto = 'Sua Fatura vence em ';
 			$exibirPost = 0;
 		}
 	}else{

@@ -49,7 +49,7 @@
 </div>
 
 <div class="modal fade bs-excluir-modal2-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-	<div class="modal-dialog modal-md" role="document">
+	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header bg-danger">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -220,7 +220,50 @@
 						</div>
 					</div>	
 				</div>
-
+				<div class="form-group text-left">
+					<label class="text-left">Texto Whatsapp:</label>
+					<div class="row text-left">
+						<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-left" >
+							<div class="input-group">
+								<span class="input-group-addon" disabled>Tx1</span>
+								<textarea type="text" class="form-control" maxlength="200" placeholder="Ex. Olá" name="Texto1" id="Texto1" value="<?php echo set_value('Texto1', $query['Texto1']); ?>" rows="2"><?php echo set_value('Texto1', $query['Texto1']); ?></textarea>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-left" >
+							<div class="">
+								<textarea type="text" class="form-control" placeholder="Nome do Cliente" readonly="" rows="2"></textarea>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-left" >
+							<div class="input-group">
+								<span class="input-group-addon" disabled>Tx2</span>
+								<textarea type="text" class="form-control" maxlength="200" placeholder="Ex.. Você possui " name="Texto2" id="Texto2" value="<?php echo set_value('Texto2', $query['Texto2']); ?>" rows="2"><?php echo set_value('Texto2', $query['Texto2']); ?></textarea>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-left" >
+							<div class="">
+								<textarea type="text" class="form-control" placeholder="R$xxx,xx" readonly="" rows="2"></textarea>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-left" >
+							<div class="input-group">
+								<span class="input-group-addon" disabled>Tx3</span>
+								<textarea type="text" class="form-control" maxlength="200" placeholder="Ex. em desconto, válidos até" name="Texto3" id="Texto3" value="<?php echo set_value('Texto3', $query['Texto3']); ?>" rows="2"><?php echo set_value('Texto3', $query['Texto3']); ?></textarea>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-left" >
+							<div class="">
+								<textarea type="text" class="form-control" placeholder="dd/mm/aaaa" readonly="" rows="2"></textarea>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-left" >
+							<div class="input-group">
+								<span class="input-group-addon" disabled>Tx4</span>
+								<textarea type="text" class="form-control" maxlength="200" placeholder="Ex.. Aproveite e visite o nosso site https://enkontraki.com.br/seusite" name="Texto4" id="Texto4" value="<?php echo set_value('Texto4', $query['Texto4']); ?>" rows="2"><?php echo set_value('Texto4', $query['Texto4']); ?></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="row text-left">
 					<br>
 					<div class="form-group col-md-6">

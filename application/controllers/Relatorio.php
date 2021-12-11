@@ -6168,6 +6168,10 @@ class Relatorio extends CI_Controller {
 			'Valor_cash_de',
 			'Valor_cash_ate',
 			'Ultimo',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
 		), TRUE));
 
 		$data['select']['Campo'] = array(
@@ -6206,6 +6210,11 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroRankingVendas']['Valor_cash_de'] = $data['query']['Valor_cash_de'];
 		$_SESSION['FiltroRankingVendas']['Valor_cash_ate'] = $data['query']['Valor_cash_ate'];
 		$_SESSION['FiltroRankingVendas']['Ultimo'] = $data['query']['Ultimo'];
+		
+        $_SESSION['FiltroRankingVendas']['Texto1'] = utf8_encode($data['query']['Texto1']);
+        $_SESSION['FiltroRankingVendas']['Texto2'] = utf8_encode($data['query']['Texto2']);
+        $_SESSION['FiltroRankingVendas']['Texto3'] = utf8_encode($data['query']['Texto3']);
+        $_SESSION['FiltroRankingVendas']['Texto4'] = utf8_encode($data['query']['Texto4']);		
 			
 		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 		#$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
@@ -6649,6 +6658,10 @@ class Relatorio extends CI_Controller {
 			'Dia',
 			'Mesvenc',
 			'Ano',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
         ), TRUE));
 
         $data['select']['Ativo'] = array(
@@ -6702,6 +6715,11 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['Dia'] = $data['query']['Dia'];
 		$_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
 		$_SESSION['FiltroAlteraParcela']['Ano'] = $data['query']['Ano'];
+        
+		$_SESSION['FiltroAlteraParcela']['Texto1'] = utf8_encode($data['query']['Texto1']);
+        $_SESSION['FiltroAlteraParcela']['Texto2'] = utf8_encode($data['query']['Texto2']);
+        $_SESSION['FiltroAlteraParcela']['Texto3'] = utf8_encode($data['query']['Texto3']);
+        $_SESSION['FiltroAlteraParcela']['Texto4'] = utf8_encode($data['query']['Texto4']);
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
@@ -6778,8 +6796,6 @@ class Relatorio extends CI_Controller {
         $this->load->view('relatorio/tela_clientes', $data);
 
         $this->load->view('basico/footer');
-
-
 
     }
 

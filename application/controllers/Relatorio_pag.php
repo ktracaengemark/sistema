@@ -374,6 +374,10 @@ class Relatorio_pag extends CI_Controller {
 			'Dia',
 			'Mesvenc',
 			'Ano',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
         ), TRUE));
 
         $data['titulo'] = 'Clientes';
@@ -2040,6 +2044,10 @@ class Relatorio_pag extends CI_Controller {
 			'Valor_cash_de',
 			'Valor_cash_ate',
 			'Ultimo',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
 		), TRUE));
 
 		$data['titulo'] = 'Ranking de Vendas';

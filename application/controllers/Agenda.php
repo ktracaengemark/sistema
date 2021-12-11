@@ -60,6 +60,8 @@ class Agenda extends CI_Controller {
 			'Dia',
 			'Mesvenc',
 			'Ano',
+			'Texto1',
+			'Texto2',
 			'Diacli',
 			'Mesvenccli',
 			'Anocli',
@@ -89,6 +91,8 @@ class Agenda extends CI_Controller {
         $_SESSION['FiltroAlteraProcedimento']['Dia'] = $data['query']['Dia'];
         $_SESSION['FiltroAlteraProcedimento']['Mesvenc'] = $data['query']['Mesvenc'];
         $_SESSION['FiltroAlteraProcedimento']['Ano'] = $data['query']['Ano'];
+        $_SESSION['FiltroAlteraProcedimento']['Texto1'] = utf8_encode($data['query']['Texto1']);
+        $_SESSION['FiltroAlteraProcedimento']['Texto2'] = utf8_encode($data['query']['Texto2']);
 		$_SESSION['FiltroAlteraProcedimento']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
 		$_SESSION['FiltroAlteraProcedimento']['ConcluidoSubProcedimento'] = $data['query']['ConcluidoSubProcedimento'];
         $_SESSION['FiltroAlteraProcedimento']['Prioridade'] = $data['query']['Prioridade'];
@@ -211,7 +215,7 @@ class Agenda extends CI_Controller {
 		$data['form_open_path'] = 'agenda';
 		
 		$data['paginacao'] = 'N';
-		
+
 		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
 		
@@ -350,6 +354,8 @@ class Agenda extends CI_Controller {
 			'Dia',
 			'Mesvenc',
 			'Ano',
+			'Texto1',
+			'Texto2',
 			'Diacli',
 			'Mesvenccli',
 			'Anocli',
@@ -382,7 +388,7 @@ class Agenda extends CI_Controller {
 		$data['form_open_path'] = 'agenda/aniversariantes_pag';
 		
 		$data['caminho'] = 'agenda';
-		
+
 		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #run form validation

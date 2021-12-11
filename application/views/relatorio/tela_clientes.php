@@ -8,12 +8,6 @@
 			<div class="panel-heading">
 				<div class="btn-group " role="group" aria-label="...">
 					<div class="row text-left">
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
-							<label>Filtros</label>
-							<button  class="btn btn-md btn-warning btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
-								<span class="glyphicon glyphicon-filter"></span>
-							</button>
-						</div>
 						<!--
 						<div class="col-md-2 text-left">
 							<label></label><br>
@@ -33,15 +27,15 @@
 							</a>
 						</div>
 						-->
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
 							<label >Cliente:</label>
 							<div class="input-group">
-								<input type="text" autofocus name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php echo $cadastrar['id_Cliente_Auto']; ?>" class="form-control" placeholder="Pesquisar Cliente">
 								<span class="input-group-btn">
 									<button class="btn btn-info btn-md" type="submit">
 										<span class="glyphicon glyphicon-search"></span> 
 									</button>
 								</span>
+								<input type="text" autofocus name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php echo $cadastrar['id_Cliente_Auto']; ?>" class="form-control" placeholder="Pesquisar Cliente">
 							</div>
 							<span class="modal-title" id="NomeClienteAuto1"><?php echo $cadastrar['NomeClienteAuto']; ?></span>
 							<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php echo $cadastrar['NomeClienteAuto']; ?>" />
@@ -49,15 +43,15 @@
 							<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">
 						</div>
 						<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
-							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-left">
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-left">
 								<label >Pet:</label>
 								<div class="input-group">
-									<input type="text" name="id_ClientePet_Auto" id="id_ClientePet_Auto" value="<?php echo $cadastrar['id_ClientePet_Auto']; ?>" class="form-control" placeholder="Pesquisar ClientePet">
 									<span class="input-group-btn">
 										<button class="btn btn-info btn-md" type="submit">
 											<span class="glyphicon glyphicon-search"></span> 
 										</button>
 									</span>
+									<input type="text" name="id_ClientePet_Auto" id="id_ClientePet_Auto" value="<?php echo $cadastrar['id_ClientePet_Auto']; ?>" class="form-control" placeholder="Pesquisar ClientePet">
 								</div>
 								<span class="modal-title" id="NomeClientePetAuto1"><?php echo $cadastrar['NomeClientePetAuto']; ?></span>
 								<input type="hidden" id="NomeClientePetAuto" name="NomeClientePetAuto" value="<?php echo $cadastrar['NomeClientePetAuto']; ?>" />
@@ -66,15 +60,15 @@
 							</div>
 						<?php }else{ ?>
 							<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
-								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-left">
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-left">
 									<label >Dep:</label>
 									<div class="input-group">
-										<input type="text" name="id_ClienteDep_Auto" id="id_ClienteDep_Auto" value="<?php echo $cadastrar['id_ClienteDep_Auto']; ?>" class="form-control" placeholder="Pesquisar ClienteDep">
 										<span class="input-group-btn">
 											<button class="btn btn-info btn-md" type="submit">
 												<span class="glyphicon glyphicon-search"></span> 
 											</button>
 										</span>
+										<input type="text" name="id_ClienteDep_Auto" id="id_ClienteDep_Auto" value="<?php echo $cadastrar['id_ClienteDep_Auto']; ?>" class="form-control" placeholder="Pesquisar ClienteDep">
 									</div>
 									<span class="modal-title" id="NomeClienteDepAuto1"><?php echo $cadastrar['NomeClienteDepAuto']; ?></span>
 									<input type="hidden" id="NomeClienteDepAuto" name="NomeClienteDepAuto" value="<?php echo $cadastrar['NomeClienteDepAuto']; ?>" />
@@ -83,6 +77,12 @@
 								</div>
 							<?php } ?>
 						<?php } ?>
+						<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 text-left">
+							<label>Filtros</label>
+							<button  class="btn btn-md btn-warning btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
+								<span class="glyphicon glyphicon-filter"></span>
+							</button>
+						</div>
 						<!--
 						<button  class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 							<span class="glyphicon glyphicon-plus"></span> Novo Cliente
@@ -270,7 +270,28 @@
 						</div>
 					</div>	
 				</div>
-
+				<div class="form-group text-left">
+					<label class="text-left">Texto Whatsapp:</label>
+					<div class="row text-left">
+						<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 text-left" >
+							<div class="input-group">
+								<span class="input-group-addon" disabled>Tx1</span>
+								<textarea type="text" class="form-control" maxlength="200" placeholder="Ex. Olá" name="Texto1" id="Texto1" value="<?php echo set_value('Texto1', $query['Texto1']); ?>"><?php echo set_value('Texto1', $query['Texto1']); ?></textarea>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-left" >
+							<div class="">
+								<input type="text" class="form-control" placeholder="Nome do Cliente" readonly="">
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-left" >
+							<div class="input-group">
+								<span class="input-group-addon" disabled>Tx2</span>
+								<textarea type="text" class="form-control" maxlength="200" placeholder="Ex. Passando para te desejar feliz aniversário!" name="Texto2" id="Texto2" value="<?php echo set_value('Texto2', $query['Texto2']); ?>"><?php echo set_value('Texto2', $query['Texto2']); ?></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="row text-left">
 					<br>
 					<div class="form-group col-md-3">

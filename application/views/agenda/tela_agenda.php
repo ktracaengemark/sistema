@@ -1,6 +1,3 @@
-<?php if ($_SESSION['log']['idSis_Empresa'] == 5) { ?>
-	<div class="col-lg-2 col-md-2 col-sm-2"></div>
-<?php } ?>
 <?php 
 	if ($_SESSION['log']['idSis_Empresa'] != 5){
 		if(isset($_SESSION['bd'])){
@@ -9,7 +6,7 @@
 		unset($_SESSION['bd']);		
 	} 
 ?>
-<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	<?php if($paginacao == "N") { ?>	
 		<div id="fluxo" class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="fluxo" aria-hidden="true">
 			<div class="vertical-alignment-helper">
@@ -48,7 +45,6 @@
 		</div>
 	<?php } ?>	
 	<?php if (isset($msg)) echo $msg; ?>
-	<?php #echo form_open('agenda', 'role="form"'); ?>
 	<?php echo form_open($form_open_path, 'role="form"'); ?>
 	<div class="panel panel-info">
 		<div class="panel-heading">
@@ -142,77 +138,3 @@
 		</div>	
 	</div>	
 </div>
-
-<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>
-	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-		<?php #echo form_open('agenda', 'role="form"'); ?>
-		<?php echo form_open($form_open_path, 'role="form"'); ?>
-		<div class="panel panel-info">
-			<div class="panel-heading">
-				
-				<?php if($paginacao == "N") { ?>					
-					<div class="row text-left">
-						<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 text-left" >
-							<label for="Dia">Dia:</label>
-							<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
-									id="Dia" name="Dia">
-								<?php
-								foreach ($select['Dia'] as $key => $row) {
-									if ($query['Dia'] == $key) {
-										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-									} else {
-										echo '<option value="' . $key . '">' . $row . '</option>';
-									}
-								}
-								?>
-							</select>
-						</div>
-						<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 text-left" >
-							<label for="Mesvenc">Mês:</label>
-							<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
-									id="Mesvenc" name="Mesvenc">
-								<?php
-								foreach ($select['Mesvenc'] as $key => $row) {
-									if ($query['Mesvenc'] == $key) {
-										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-									} else {
-										echo '<option value="' . $key . '">' . $row . '</option>';
-									}
-								}
-								?>
-							</select>
-						</div>
-						<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 text-left" >
-							<label for="Ano">Ano:</label>
-							<!--<input type="text" class="form-control Numero" maxlength="4" placeholder="AAAA" name="Ano" id="Ano" value="<?php #echo set_value('Ano', $query['Ano']); ?>">-->
-							<div class="input-group">
-								<input type="text" class="form-control Numero" maxlength="4" placeholder="AAAA" name="Ano" id="Ano" value="<?php echo set_value('Ano', $query['Ano']); ?>">
-								<span class="input-group-btn">
-									<button class="btn btn-info btn-md" type="submit">
-										<span class="glyphicon glyphicon-search"></span> 
-									</button>
-								</span>
-							</div>
-						</div>
-					</div>
-				<?php } ?>
-				<!--
-				<div class=" btn btn-info" type="button" data-toggle="collapse" data-target="#Aniversariantes" aria-expanded="false" aria-controls="Aniversariantes">
-					<span class="glyphicon glyphicon-pencil"></span> Aniversariantes
-				</div>
-				
-				
-				<a class="btn btn-sm btn-info" href="<?php #echo base_url() ?>relatorio/alterarprocedimento" role="button">
-					<span class="glyphicon glyphicon-search"></span> Todas
-				</a>
-				<a class="btn btn-sm btn-danger" href="<?php echo base_url() ?>procedimento/cadastrar" role="button">
-					<span class="glyphicon glyphicon-plus"></span> Cad.
-				</a>
-				-->
-			</div>
-			<div <?php echo $collapse; ?> id="Aniversariantes">
-				<?php echo (isset($list)) ? $list : FALSE ?>
-			</div>
-		</div>
-	</div>
-<?php } ?>	
