@@ -3838,7 +3838,8 @@ exit();*/
 			$filtro10 = ($data['Ativo'] != '#') ? 'C.Ativo = "' . $data['Ativo'] . '" AND ' : FALSE;
 			$filtro20 = ($data['Motivo'] != '0') ? 'C.Motivo = "' . $data['Motivo'] . '" AND ' : FALSE;
 			#$q = ($_SESSION['log']['Permissao'] > 2) ? ' C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-	
+			$groupby = ($data['Agrupar'] != "0") ? 'GROUP BY C.' . $data['Agrupar'] . '' : FALSE;
+			
 		}else{
 			
 			$date_inicio_orca = ($_SESSION['FiltroAlteraParcela']['DataInicio']) ? 'C.DataCadastroCliente >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio'] . '" AND ' : FALSE;
@@ -3868,6 +3869,7 @@ exit();*/
 			$filtro10 = ($_SESSION['FiltroAlteraParcela']['Ativo'] != '#') ? 'C.Ativo = "' . $_SESSION['FiltroAlteraParcela']['Ativo'] . '" AND ' : FALSE;
 			$filtro20 = ($_SESSION['FiltroAlteraParcela']['Motivo'] != '0') ? 'C.Motivo = "' . $_SESSION['FiltroAlteraParcela']['Motivo'] . '" AND ' : FALSE;
 			#$q = ($_SESSION['log']['Permissao'] > 2) ? ' C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+			$groupby = ($_SESSION['FiltroAlteraParcela']['Agrupar'] != "0") ? 'GROUP BY C.' . $_SESSION['FiltroAlteraParcela']['Agrupar'] . '' : FALSE;
 	
 		}
 		
@@ -3945,6 +3947,7 @@ exit();*/
 				' . $data['Dia'] . ' 
 				' . $data['Mesvenc'] . '
 				' . $data['Ano'] . '
+			' . $groupby . '
             ORDER BY
                 ' . $data['Campo'] . '
 				' . $data['Ordenamento'] . '

@@ -233,11 +233,26 @@
 					</div>
 				</div>
 				<div class="form-group">	
-					<div class="row text-left">
-						<div class="col-md-12">
+					<div class="row text-left">	
+						<div class="col-md-3">
+							<label for="Agrupar">Agrupar Por:</label>
+							<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+									id="Agrupar" name="Agrupar">
+								<?php
+								foreach ($select['Agrupar'] as $key => $row) {
+									if ($query['Agrupar'] == $key) {
+										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+									} else {
+										echo '<option value="' . $key . '">' . $row . '</option>';
+									}
+								}
+								?>
+							</select>
+						</div>
+						<div class="col-md-9">
 							<label for="Ordenamento">Ordenamento:</label>
 							<div class="row">
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="Campo" name="Campo">
 										<?php
@@ -252,7 +267,7 @@
 									</select>
 								</div>
 
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="Ordenamento" name="Ordenamento">
 										<?php

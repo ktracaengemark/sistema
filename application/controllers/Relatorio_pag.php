@@ -378,6 +378,7 @@ class Relatorio_pag extends CI_Controller {
 			'Texto2',
 			'Texto3',
 			'Texto4',
+			'Agrupar',
         ), TRUE));
 
         $data['titulo'] = 'Clientes';

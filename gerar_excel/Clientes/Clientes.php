@@ -66,6 +66,7 @@
 		$data['Ordenamento'] = (!$_SESSION['FiltroAlteraParcela']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroAlteraParcela']['Ordenamento'];
 		$filtro10 = ($_SESSION['FiltroAlteraParcela']['Ativo'] != '#') ? 'C.Ativo = "' . $_SESSION['FiltroAlteraParcela']['Ativo'] . '" AND ' : FALSE;
 		$filtro20 = ($_SESSION['FiltroAlteraParcela']['Motivo'] != '0') ? 'C.Motivo = "' . $_SESSION['FiltroAlteraParcela']['Motivo'] . '" AND ' : FALSE;
+		$groupby = ($_SESSION['FiltroAlteraParcela']['Agrupar'] != "0") ? 'GROUP BY C.' . $_SESSION['FiltroAlteraParcela']['Agrupar'] . '' : FALSE;
 		
 		$result_msg_contatos = '
 								SELECT * 
@@ -81,6 +82,7 @@
 									' . $data['Dia'] . ' 
 									' . $data['Mesvenc'] . '
 									' . $data['Ano'] . '
+								' . $groupby . '
 								ORDER BY
 									' . $data['Campo'] . '
 									' . $data['Ordenamento'] . '

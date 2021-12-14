@@ -6662,6 +6662,7 @@ class Relatorio extends CI_Controller {
 			'Texto2',
 			'Texto3',
 			'Texto4',
+			'Agrupar',
         ), TRUE));
 
         $data['select']['Ativo'] = array(
@@ -6669,7 +6670,12 @@ class Relatorio extends CI_Controller {
             'N' => 'Não',
             'S' => 'Sim',
         );
-
+		
+        $data['select']['Agrupar'] = array(
+			'0' => 'Todos',
+			'idApp_Cliente' => 'Cliente',
+        );
+		
 		$data['select']['Campo'] = array(
             'C.idApp_Cliente' => 'nº Cliente',
 			'C.NomeCliente' => 'Nome do Cliente',
@@ -6715,6 +6721,7 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['Dia'] = $data['query']['Dia'];
 		$_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
 		$_SESSION['FiltroAlteraParcela']['Ano'] = $data['query']['Ano'];
+		$_SESSION['FiltroAlteraParcela']['Agrupar'] = $data['query']['Agrupar'];
         
 		$_SESSION['FiltroAlteraParcela']['Texto1'] = utf8_encode($data['query']['Texto1']);
         $_SESSION['FiltroAlteraParcela']['Texto2'] = utf8_encode($data['query']['Texto2']);
@@ -6742,6 +6749,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['Dia'] = $data['query']['Dia'];
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
+			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
 
 			//$this->load->library('pagination');
 			$config['per_page'] = 10;
