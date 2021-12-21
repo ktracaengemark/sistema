@@ -113,9 +113,9 @@
 								<th class="active">Baixa</th>
 							<?php } ?>
 						<?php } ?>	
-						<th class="active">Cont.</th>
+						<th class="active">Pdd|Tp|Ct</th>
 						<th class="active">Pc</th>
-						<th class="active">Pedido</th>
+						<!--<th class="active">Pedido</th>-->
 						<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 							<th class="col-md-2 active"><?php echo $nome; ?></th>
 							<th class="active">Comb.Ent</th>
@@ -202,9 +202,9 @@
 									}
 								}
 							}	
-							echo '<td>' . ($linha + $count) . '</td>';	
+							echo '<td>' . $row['idApp_OrcaTrata'] . ' - ' . $row['TipoFinanceiro'] . ' - ' . $row['Descricao'] . ' - ' . ($linha + $count) . '</td>';	
 							echo '<td>' . $row['Parcela'] . '</td>';
-							echo '<td>' . $row['idApp_OrcaTrata'] . '- ' . $row['TipoFinanceiro'] . ' - ' . $row['Descricao'] . '</td>';
+							//echo '<td>' . $row['idApp_OrcaTrata'] . '- ' . $row['TipoFinanceiro'] . ' - ' . $row['Descricao'] . '</td>';
 							if($_SESSION['log']['idSis_Empresa'] != "5"){
 							
 								if(isset($_SESSION['FiltroAlteraParcela']['nomedo' . $nome]) && $_SESSION['FiltroAlteraParcela']['nomedo' . $nome] == "S") {

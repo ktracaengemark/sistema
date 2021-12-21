@@ -207,15 +207,15 @@
 						<?php }elseif($editar == 2) {?>
 							<th class="active">Editar</th>
 						<?php } ?>
-						<th class="active">Cont.</th>
-						<th class="active">Pedido</th>
+						<th class="active">Pdd|Tp|Ct</th>
+						<!--<th class="active">Pedido</th>
 						
-						<!--<th class="active">Contagem</th>-->
-						
-						<th class="active">Empresa</th>
-						
+						<th class="active">Contagem</th>-->
+						<?php if($_SESSION['log']['idSis_Empresa'] == 5) {?>
+							<th class="active">Empresa</th>
+						<?php } ?>
 						<th class="active"><?php echo $nome ?></th>
-						<th class="active">Tipo</th>
+						<!--<th class="active">Tipo</th>-->
 						<?php if($_SESSION['log']['idSis_Empresa'] == 5) {?>
 							<th class="active">Prd/Srv</th>
 							<th class="active">Frete</th>
@@ -309,12 +309,13 @@
 										</a>
 									</td>';
 							}	
-							echo '<td>' . ($linha + $count) . '</td>';
-							echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
+							echo '<td>' . $row['idApp_OrcaTrata'] . ' - ' . $row['TipoFinanceiro'] . ' - ' . ($linha + $count) . '</td>';
 							
+							//echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
 							//echo '<td>' . $report->soma->contagem . '</td>';
-							
-							echo '<td>' . $row['NomeEmpresa'] . '</td>';
+							if($_SESSION['log']['idSis_Empresa'] == 5){
+								echo '<td>' . $row['NomeEmpresa'] . '</td>';
+							}
 							
 							if(isset($_SESSION['FiltroAlteraParcela']['nomedo' . $nome]) && $_SESSION['FiltroAlteraParcela']['nomedo' . $nome] == "S") {
 								$nomedo_ = $row[$nome];
@@ -337,7 +338,7 @@
 							}
 							
 							echo '<td>' . $row['Nome' . $nome] . ' '.$whatsapp.'</td>';
-							echo '<td>' . $row['TipoFinanceiro'] . '</td>';
+							//echo '<td>' . $row['TipoFinanceiro'] . '</td>';
 							if($_SESSION['log']['idSis_Empresa'] == 5) {
 								echo '<td>' . $row['ValorRestanteOrca'] . '</td>';
 								echo '<td>' . $row['ValorFrete'] . '</td>';
