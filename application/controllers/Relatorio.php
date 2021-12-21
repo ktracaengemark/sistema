@@ -587,6 +587,12 @@ class Relatorio extends CI_Controller {
 			'Agrupar',
 			'Ultimo',
 			'nome',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
+			'nomedoCliente',
+			'numerodopedido',
         ), TRUE));
 
 		/*		   
@@ -737,7 +743,6 @@ class Relatorio extends CI_Controller {
             'DESC' => 'Decrescente',
         );
 
-
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
 		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
 		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();		
@@ -752,6 +757,23 @@ class Relatorio extends CI_Controller {
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 		$data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresa();
 		
+        $data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
+        $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
+		
+ 		(!$data['query']['nomedoCliente']) ? $data['query']['nomedoCliente'] = 'S' : FALSE;
+		$data['radio'] = array(
+            'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
+        );
+        ($data['query']['nomedoCliente'] == 'S') ?
+            $data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
+
+ 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'S' : FALSE;
+		$data['radio'] = array(
+            'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
+        );
+        ($data['query']['numerodopedido'] == 'S') ?
+            $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
+
 		$data['query']['nome'] = 'Cliente';
         $data['titulo'] = 'Receitas';
 		$data['form_open_path'] = 'relatorio/receitas';
@@ -833,6 +855,14 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['NomeEmpresa'] = $data['query']['NomeEmpresa'];
 		$_SESSION['FiltroAlteraParcela']['metodo'] = $data['metodo'];
 		$_SESSION['FiltroAlteraParcela']['idTab_TipoRD'] = $data['TipoRD'];
+		
+		$_SESSION['FiltroAlteraParcela']['Texto1'] = utf8_encode($data['query']['Texto1']);
+        $_SESSION['FiltroAlteraParcela']['Texto2'] = utf8_encode($data['query']['Texto2']);
+        $_SESSION['FiltroAlteraParcela']['Texto3'] = utf8_encode($data['query']['Texto3']);
+        $_SESSION['FiltroAlteraParcela']['Texto4'] = utf8_encode($data['query']['Texto4']);
+        $_SESSION['FiltroAlteraParcela']['nomedoCliente'] = $data['query']['nomedoCliente'];
+        $_SESSION['FiltroAlteraParcela']['numerodopedido'] = $data['query']['numerodopedido'];
+		
 		$_SESSION['Imprimir']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -1041,6 +1071,12 @@ class Relatorio extends CI_Controller {
 			'Agrupar',
 			'Ultimo',
 			'nome',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
+			'nomedoFornecedor',
+			'numerodopedido',
         ), TRUE));
 
 /*		   
@@ -1174,7 +1210,6 @@ class Relatorio extends CI_Controller {
             'DESC' => 'Decrescente',
         );
 
-
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
 		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
 		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();		
@@ -1188,6 +1223,23 @@ class Relatorio extends CI_Controller {
 		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 		$data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresa();
+		
+        $data['select']['nomedoFornecedor'] = $this->Basico_model->select_status_sn();
+        $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
+		
+ 		(!$data['query']['nomedoFornecedor']) ? $data['query']['nomedoFornecedor'] = 'S' : FALSE;
+		$data['radio'] = array(
+            'nomedoFornecedor' => $this->basico->radio_checked($data['query']['nomedoFornecedor'], 'nomedoFornecedor', 'NS'),
+        );
+        ($data['query']['nomedoFornecedor'] == 'S') ?
+            $data['div']['nomedoFornecedor'] = '' : $data['div']['nomedoFornecedor'] = 'style="display: none;"';		
+
+ 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'S' : FALSE;
+		$data['radio'] = array(
+            'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
+        );
+        ($data['query']['numerodopedido'] == 'S') ?
+            $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
 		
 		$data['query']['nome'] = 'Fornecedor';
         $data['titulo'] = 'Despesas';
@@ -1270,6 +1322,14 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['Agrupar'] = $data['query']['Agrupar'];
 		$_SESSION['FiltroAlteraParcela']['Ultimo'] = $data['query']['Ultimo'];
 		$_SESSION['FiltroAlteraParcela']['nome'] = $data['query']['nome'];
+		
+		$_SESSION['FiltroAlteraParcela']['Texto1'] = utf8_encode($data['query']['Texto1']);
+        $_SESSION['FiltroAlteraParcela']['Texto2'] = utf8_encode($data['query']['Texto2']);
+        $_SESSION['FiltroAlteraParcela']['Texto3'] = utf8_encode($data['query']['Texto3']);
+        $_SESSION['FiltroAlteraParcela']['Texto4'] = utf8_encode($data['query']['Texto4']);
+        $_SESSION['FiltroAlteraParcela']['nomedoFornecedor'] = $data['query']['nomedoFornecedor'];
+        $_SESSION['FiltroAlteraParcela']['numerodopedido'] = $data['query']['numerodopedido'];
+		
 		$_SESSION['Imprimir']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];		
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -1490,6 +1550,12 @@ class Relatorio extends CI_Controller {
 			'Agrupar',
 			'Ultimo',
 			'nome',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
+			'nomedoCliente',
+			'numerodopedido',
         ), TRUE));
 
 /*		   
@@ -1623,7 +1689,6 @@ class Relatorio extends CI_Controller {
             'DESC' => 'Decrescente',
         );
 
-
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
 		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
 		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();		
@@ -1637,6 +1702,23 @@ class Relatorio extends CI_Controller {
 		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 		$data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresa();
+		
+        $data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
+        $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
+		
+ 		(!$data['query']['nomedoCliente']) ? $data['query']['nomedoCliente'] = 'S' : FALSE;
+		$data['radio'] = array(
+            'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
+        );
+        ($data['query']['nomedoCliente'] == 'S') ?
+            $data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
+
+ 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'S' : FALSE;
+		$data['radio'] = array(
+            'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
+        );
+        ($data['query']['numerodopedido'] == 'S') ?
+            $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
 		
 		$data['query']['nome'] = 'Cliente';
         $data['titulo'] = 'Baixa das Receitas';
@@ -1720,6 +1802,13 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['Ultimo'] = $data['query']['Ultimo'];
 		$_SESSION['FiltroAlteraParcela']['metodo'] = $data['metodo'];
 		$_SESSION['FiltroAlteraParcela']['idTab_TipoRD'] = $data['TipoRD'];
+		
+		$_SESSION['FiltroAlteraParcela']['Texto1'] = utf8_encode($data['query']['Texto1']);
+        $_SESSION['FiltroAlteraParcela']['Texto2'] = utf8_encode($data['query']['Texto2']);
+        $_SESSION['FiltroAlteraParcela']['Texto3'] = utf8_encode($data['query']['Texto3']);
+        $_SESSION['FiltroAlteraParcela']['Texto4'] = utf8_encode($data['query']['Texto4']);
+        $_SESSION['FiltroAlteraParcela']['nomedoCliente'] = $data['query']['nomedoCliente'];
+        $_SESSION['FiltroAlteraParcela']['numerodopedido'] = $data['query']['numerodopedido'];
 		
 		$_SESSION['Imprimir']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];		
 
@@ -1941,6 +2030,12 @@ class Relatorio extends CI_Controller {
 			'Agrupar',
 			'Ultimo',
 			'nome',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
+			'nomedoFornecedor',
+			'numerodopedido',
         ), TRUE));
 
 /*		   
@@ -2087,6 +2182,23 @@ class Relatorio extends CI_Controller {
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 		$data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresa();
 		
+        $data['select']['nomedoFornecedor'] = $this->Basico_model->select_status_sn();
+        $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
+		
+ 		(!$data['query']['nomedoFornecedor']) ? $data['query']['nomedoFornecedor'] = 'S' : FALSE;
+		$data['radio'] = array(
+            'nomedoFornecedor' => $this->basico->radio_checked($data['query']['nomedoFornecedor'], 'nomedoFornecedor', 'NS'),
+        );
+        ($data['query']['nomedoFornecedor'] == 'S') ?
+            $data['div']['nomedoFornecedor'] = '' : $data['div']['nomedoFornecedor'] = 'style="display: none;"';		
+
+ 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'S' : FALSE;
+		$data['radio'] = array(
+            'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
+        );
+        ($data['query']['numerodopedido'] == 'S') ?
+            $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
+				
 		$data['query']['nome'] = 'Fornecedor';
         $data['titulo'] = 'Baixa das Despesas';
 		$data['form_open_path'] = 'relatorio/alterardespesas';
@@ -2169,6 +2281,14 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['Ultimo'] = $data['query']['Ultimo'];
 		$_SESSION['FiltroAlteraParcela']['metodo'] = $data['metodo'];
 		$_SESSION['FiltroAlteraParcela']['idTab_TipoRD'] = $data['TipoRD'];
+
+		$_SESSION['FiltroAlteraParcela']['Texto1'] = utf8_encode($data['query']['Texto1']);
+        $_SESSION['FiltroAlteraParcela']['Texto2'] = utf8_encode($data['query']['Texto2']);
+        $_SESSION['FiltroAlteraParcela']['Texto3'] = utf8_encode($data['query']['Texto3']);
+        $_SESSION['FiltroAlteraParcela']['Texto4'] = utf8_encode($data['query']['Texto4']);
+        $_SESSION['FiltroAlteraParcela']['nomedoFornecedor'] = $data['query']['nomedoFornecedor'];
+        $_SESSION['FiltroAlteraParcela']['numerodopedido'] = $data['query']['numerodopedido'];
+				
 		$_SESSION['Imprimir']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];		
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -3267,6 +3387,12 @@ class Relatorio extends CI_Controller {
 			'Agrupar',
 			'Ultimo',
 			'nome',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
+			'nomedoCliente',
+			'numerodopedido',
         ), TRUE));
 		
 		/*
@@ -3418,6 +3544,23 @@ class Relatorio extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 		
+        $data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
+        $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
+		
+ 		(!$data['query']['nomedoCliente']) ? $data['query']['nomedoCliente'] = 'S' : FALSE;
+		$data['radio'] = array(
+            'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
+        );
+        ($data['query']['nomedoCliente'] == 'S') ?
+            $data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
+
+ 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'S' : FALSE;
+		$data['radio'] = array(
+            'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
+        );
+        ($data['query']['numerodopedido'] == 'S') ?
+            $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
+		
 		$data['query']['nome'] = 'Cliente';
         $data['titulo1'] = 'Parcelas das Receitas';
 		$data['metodo'] = 2;
@@ -3482,7 +3625,14 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['Agrupar'] = $data['query']['Agrupar'];
         $_SESSION['FiltroAlteraParcela']['Mespag'] = $data['query']['Mespag'];
         $_SESSION['FiltroAlteraParcela']['ObsOrca'] = $data['query']['ObsOrca'];
-
+		
+		$_SESSION['FiltroAlteraParcela']['Texto1'] = utf8_encode($data['query']['Texto1']);
+        $_SESSION['FiltroAlteraParcela']['Texto2'] = utf8_encode($data['query']['Texto2']);
+        $_SESSION['FiltroAlteraParcela']['Texto3'] = utf8_encode($data['query']['Texto3']);
+        $_SESSION['FiltroAlteraParcela']['Texto4'] = utf8_encode($data['query']['Texto4']);
+        $_SESSION['FiltroAlteraParcela']['nomedoCliente'] = $data['query']['nomedoCliente'];
+        $_SESSION['FiltroAlteraParcela']['numerodopedido'] = $data['query']['numerodopedido'];
+		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         $this->form_validation->set_rules('DataInicio', 'Data Início do Pedido', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim do Pedido', 'trim|valid_date');
@@ -3667,6 +3817,12 @@ class Relatorio extends CI_Controller {
 			'Agrupar',
 			'Ultimo',
 			'nome',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
+			'nomedoFornecedor',
+			'numerodopedido',
         ), TRUE));
 /*
 		if (!$data['query']['DataInicio2'])
@@ -3799,12 +3955,10 @@ class Relatorio extends CI_Controller {
 		
 		}
 		
-		
         $data['select']['Ordenamento'] = array(
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
-
 
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
 		$data['select']['Orcades'] = $this->Relatorio_model->select_orcades();
@@ -3817,7 +3971,24 @@ class Relatorio extends CI_Controller {
 		$data['select']['Ano'] = $this->Relatorio_model->select_ano();		
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
+
+        $data['select']['nomedoFornecedor'] = $this->Basico_model->select_status_sn();
+        $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
 		
+ 		(!$data['query']['nomedoFornecedor']) ? $data['query']['nomedoFornecedor'] = 'S' : FALSE;
+		$data['radio'] = array(
+            'nomedoFornecedor' => $this->basico->radio_checked($data['query']['nomedoFornecedor'], 'nomedoFornecedor', 'NS'),
+        );
+        ($data['query']['nomedoFornecedor'] == 'S') ?
+            $data['div']['nomedoFornecedor'] = '' : $data['div']['nomedoFornecedor'] = 'style="display: none;"';		
+
+ 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'S' : FALSE;
+		$data['radio'] = array(
+            'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
+        );
+        ($data['query']['numerodopedido'] == 'S') ?
+            $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
+				
 		$data['query']['nome'] = 'Fornecedor';
         $data['titulo1'] = 'Parcelas das Despesas';
 		$data['metodo'] = 1;
@@ -3880,7 +4051,14 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['Agrupar'] = $data['query']['Agrupar'];
         $_SESSION['FiltroAlteraParcela']['Mespag'] = $data['query']['Mespag'];
         $_SESSION['FiltroAlteraParcela']['ObsOrca'] = $data['query']['ObsOrca'];
-
+		
+		$_SESSION['FiltroAlteraParcela']['Texto1'] = utf8_encode($data['query']['Texto1']);
+        $_SESSION['FiltroAlteraParcela']['Texto2'] = utf8_encode($data['query']['Texto2']);
+        $_SESSION['FiltroAlteraParcela']['Texto3'] = utf8_encode($data['query']['Texto3']);
+        $_SESSION['FiltroAlteraParcela']['Texto4'] = utf8_encode($data['query']['Texto4']);
+        $_SESSION['FiltroAlteraParcela']['nomedoFornecedor'] = $data['query']['nomedoFornecedor'];
+        $_SESSION['FiltroAlteraParcela']['numerodopedido'] = $data['query']['numerodopedido'];
+		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         $this->form_validation->set_rules('DataInicio', 'Data Início do Pedido', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim do Pedido', 'trim|valid_date');

@@ -471,9 +471,12 @@ class Relatorio_model extends CI_Model {
 		$query = $this->db->query('
             SELECT
                 CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,""), " - " ,IFNULL(C.CelularCliente,"") ) AS NomeCliente,
-                CONCAT(IFNULL(F.idApp_Fornecedor,""), " - " ,IFNULL(F.NomeFornecedor,"")) AS NomeFornecedor,
+                CONCAT(IFNULL(C.NomeCliente,"")) AS Cliente,
 				C.CelularCliente,
 				C.DataCadastroCliente,
+                CONCAT(IFNULL(F.idApp_Fornecedor,""), " - " ,IFNULL(F.NomeFornecedor,"")) AS NomeFornecedor,
+                CONCAT(IFNULL(F.NomeFornecedor,"")) AS Fornecedor,
+				F.CelularFornecedor,
 				F.DataCadastroFornecedor,
 				OT.Descricao,
 				OT.idSis_Empresa,
@@ -674,6 +677,9 @@ class Relatorio_model extends CI_Model {
 				$row->StatusComissaoOrca_Online = $this->basico->mascara_palavra_completa($row->StatusComissaoOrca_Online, 'NS');
                 $row->DataPagoComissaoOrca = $this->basico->mascara_data($row->DataPagoComissaoOrca, 'barras');
 				
+				$row->Cliente = utf8_encode($row->Cliente);
+				$row->Fornecedor = utf8_encode($row->Fornecedor);
+
 				if($row->Tipo_Orca == "B"){
 					$row->Tipo_Orca = "Na Loja";
 				}elseif($row->Tipo_Orca == "O"){
@@ -1275,8 +1281,13 @@ class Relatorio_model extends CI_Model {
 		$query = $this->db->query('
             SELECT
 				CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,""), " - " ,IFNULL(C.CelularCliente,""), " - " ,IFNULL(C.Telefone,""), " - " ,IFNULL(C.Telefone2,""), " - " ,IFNULL(C.Telefone3,"") ) AS NomeCliente,
+                CONCAT(IFNULL(C.NomeCliente,"")) AS Cliente,
+                C.CelularCliente,
+				C.DataCadastroCliente,
 				CONCAT(IFNULL(F.idApp_Fornecedor,""), " - " ,IFNULL(F.NomeFornecedor,"")) AS NomeFornecedor,
-                C.DataCadastroCliente,
+                CONCAT(IFNULL(F.NomeFornecedor,"")) AS Fornecedor,
+				F.CelularFornecedor,
+				F.DataCadastroFornecedor,
 				OT.idApp_OrcaTrata,
 				OT.idApp_Cliente,
 				OT.idApp_Fornecedor,
@@ -1380,8 +1391,13 @@ class Relatorio_model extends CI_Model {
         $parcelasrecebidas = $this->db->query('
             SELECT
 				CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,""), " - " ,IFNULL(C.CelularCliente,""), " - " ,IFNULL(C.Telefone,""), " - " ,IFNULL(C.Telefone2,""), " - " ,IFNULL(C.Telefone3,"") ) AS NomeCliente,
+                CONCAT(IFNULL(C.NomeCliente,"")) AS Cliente,
+                C.CelularCliente,
+				C.DataCadastroCliente,
 				CONCAT(IFNULL(F.idApp_Fornecedor,""), " - " ,IFNULL(F.NomeFornecedor,"")) AS NomeFornecedor,
-                C.DataCadastroCliente,
+                CONCAT(IFNULL(F.NomeFornecedor,"")) AS Fornecedor,
+				F.CelularFornecedor,
+				F.DataCadastroFornecedor,
 				OT.idApp_OrcaTrata,
 				OT.idApp_Cliente,
 				OT.idApp_Fornecedor,
@@ -1508,6 +1524,9 @@ class Relatorio_model extends CI_Model {
 				$row->FinalizadoOrca = $this->basico->mascara_palavra_completa($row->FinalizadoOrca, 'NS');
 				$row->CanceladoOrca = $this->basico->mascara_palavra_completa($row->CanceladoOrca, 'NS');
                 $row->Quitado = $this->basico->mascara_palavra_completa($row->Quitado, 'NS');
+				
+				$row->Cliente = utf8_encode($row->Cliente);
+				$row->Fornecedor = utf8_encode($row->Fornecedor);
 
 				#esse trecho pode ser melhorado, serve para somar apenas uma vez
                 #o valor da entrada que pode aparecer mais de uma vez
