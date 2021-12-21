@@ -118,7 +118,7 @@ while ($row = mysql_fetch_assoc($result)) {
         /*
 			$title = ' - Evento: ' . mb_convert_encoding($row['Obs'], "UTF-8", "ISO-8859-1");
 		*/
-		$title = 'Prof: ' . mb_convert_encoding($row['NomeProfissional'], "UTF-8", "ISO-8859-1") . ' - Evento: ' . mb_convert_encoding($row['Obs'], "UTF-8", "ISO-8859-1");
+		$title = mb_convert_encoding($row['Obs'], "UTF-8", "ISO-8859-1") . ' - ' . mb_convert_encoding($row['NomeProfissional'], "UTF-8", "ISO-8859-1");
 		$titlecliente = mb_convert_encoding($row['NomeProfissional'], "UTF-8", "ISO-8859-1");
 		$subtitle = mb_convert_encoding($row['NomeProfissional'], "UTF-8", "ISO-8859-1");
 		$profissional = mb_convert_encoding($row['NomeProfissional'], "UTF-8", "ISO-8859-1");
@@ -180,7 +180,7 @@ while ($row = mysql_fetch_assoc($result)) {
 
         //$url = false;
         $textColor = 'grey';
-
+		/*
         if ($row['Evento'])
             $status = '#e6e6e6';
         else {
@@ -193,11 +193,21 @@ while ($row = mysql_fetch_assoc($result)) {
             else
                 $status = '#E4BEBD';
         }
+		*/
+		if ($row['idTab_Status'] == 1)
+			$status = '#EBCCA1';
+		elseif ($row['idTab_Status'] == 2)
+			$status = ' #95d095';
+		elseif ($row['idTab_Status'] == 3)
+			$status = '#99B6D0';
+		else
+			$status = '#E4BEBD';		
+		
     } else {
 
         //$url = 'consulta/alterar/'.$row['idApp_Paciente'].'/'.$row['idApp_Consulta'];
         $textColor = 'black';
-
+		/*
         if ($row['Evento'])
             $status = '#a6a6a6';
         else {
@@ -210,6 +220,18 @@ while ($row = mysql_fetch_assoc($result)) {
             else
                 $status = '#d9534f';
         }
+		*/
+       
+		if ($row['idTab_Status'] == 1)
+			$status = '#f0ad4e';
+		elseif ($row['idTab_Status'] == 2)
+			$status = '#5cb85c';
+		elseif ($row['idTab_Status'] == 3)
+			$status = 'darken(#428bca, 6.5%)';
+		else
+			$status = '#d9534f';
+        		
+		
     }
 
     $event_array[] = array(
