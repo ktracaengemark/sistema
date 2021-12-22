@@ -65,8 +65,20 @@ class OrcatrataPrint extends CI_Controller {
 				//$data['cliente'] = $this->Cliente_model->get_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
 				$_SESSION['Cliente'] = $data['cliente'] = $this->Cliente_model->get_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
 				$_SESSION['Cliente']['NomeCliente'] = (strlen($data['cliente']['NomeCliente']) > 12) ? substr($data['cliente']['NomeCliente'], 0, 12) : $data['cliente']['NomeCliente'];
+				
+				#### Carrega os dados do Pedido nas variáves de sessão do Whatsapp ####
+				if(isset($data['orcatrata']['CombinadoFrete']) && $data['orcatrata']['CombinadoFrete'] == "S"){
+					if(isset($data['orcatrata']['AprovadoOrca']) && $data['orcatrata']['AprovadoOrca'] == "S"){
+						if(isset($data['orcatrata']['ConcluidoOrca']) && $data['orcatrata']['ConcluidoOrca'] == "S"){
+							$data['whatsapp'] = utf8_encode('Olá '.$data['cliente']['NomeCliente'].'. Foi um prazer entregar o seu Pedido *' . $id . '* . Esperamos que fique totalmente satisfeito! Aproveite e visite o nosso site. https://enkontraki.com.br/'.$_SESSION['Empresa']['Site'].'');
+						}else{
+							$data['whatsapp'] = utf8_encode('Olá '.$data['cliente']['NomeCliente'].'. Estamos preparando o seu Pedido *' . $id . '* . Esperamos que fique totalmente satisfeito! Aproveite e visite o nosso site. https://enkontraki.com.br/'.$_SESSION['Empresa']['Site'].'');
+						}
+					}
+				}	
 			}
 			
+			#### Carrega os dados do Usuario ou Associado nas variáves de sessão ####
 			if(isset($data['orcatrata']['idSis_Usuario']) && $data['orcatrata']['idSis_Usuario'] != 0){
 				if($_SESSION['log']['idSis_Empresa'] == 5){
 					$data['usuario'] = $this->Associado_model->get_associado($data['orcatrata']['idSis_Usuario'], TRUE);
@@ -74,10 +86,10 @@ class OrcatrataPrint extends CI_Controller {
 					$data['usuario'] = $this->Usuario_model->get_usuario($data['orcatrata']['idSis_Usuario'], TRUE);
 				}
 			}
-				
+			
 			$data['query'] = $this->Orcatrataprint_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata'], TRUE);
 
-            
+
             #### App_ServicoVenda ####
             $data['servico'] = $this->Orcatrataprint_model->get_servico($id);
             if (count($data['servico']) > 0) {

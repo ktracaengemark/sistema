@@ -2828,12 +2828,9 @@ class Orcatrata extends CI_Controller {
                 $this->load->view('orcatrata/form_orcatrata', $data);
 			} else {
 				
+				#### Whatsapp ####
 				if($data['cadastrar']['Whatsapp'] == 'S'){
-					#### Whatsapp ####
-					$_SESSION['bd']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
-					$_SESSION['bd']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
-					$_SESSION['bd']['idApp_OrcaTrata'] 	= $data['orcatrata']['idApp_OrcaTrata'];
-					$_SESSION['bd']['Site'] 			= $_SESSION['Empresa']['Site'];
+					$_SESSION['bd']['Whatsapp'] = $data['cadastrar']['Whatsapp'];
 				}
 						
 				#### APP_Cliente ####
@@ -4264,19 +4261,11 @@ class Orcatrata extends CI_Controller {
                 $this->basico->erro($msg);
                 $this->load->view('orcatrata/form_orcatrata3', $data);
             } else {			
-			
+				
+				#### Whatsapp ####
 				if ($data['orcatrata']['Cli_Forn_Orca'] == 'S' && $data['cadastrar']['Whatsapp'] == 'S'){
 					if (isset($data['orcatrata']['idApp_Cliente']) && $data['orcatrata']['idApp_Cliente'] != 0){
-									
-						#### Whatsapp ####
-						$data['Cliente']	= $this->Orcatrata_model->get_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
-						
-						$_SESSION['bd']['NomeCliente'] 		= utf8_encode($data['Cliente']['NomeCliente']);
-						$_SESSION['bd']['CelularCliente'] 	= $data['Cliente']['CelularCliente'];
-						$_SESSION['bd']['idApp_OrcaTrata'] 	= $data['orcatrata']['idApp_OrcaTrata'];
-						$_SESSION['bd']['Site'] 			= $_SESSION['Empresa']['Site'];
-						
-						unset($data['Cliente']);
+						$_SESSION['bd']['Whatsapp'] = $data['cadastrar']['Whatsapp'];
 					}
 				}			
 			
@@ -4598,7 +4587,7 @@ class Orcatrata extends CI_Controller {
 					$max_produto = count($data['update']['produto']['posterior']);
 					if($max_produto == 0){
 						$data['orcatrata']['CombinadoFrete'] = "S";
-						$data['orcatrata']['AprovadoOrca'] = "S";
+						#$data['orcatrata']['AprovadoOrca'] = "S";
 						$data['orcatrata']['ProntoOrca'] = "S";
 						$data['orcatrata']['EnviadoOrca'] = "S";
 						$data['orcatrata']['ConcluidoOrca'] = "S";
@@ -4611,7 +4600,7 @@ class Orcatrata extends CI_Controller {
 				if (isset($data['update']['parcelasrec']['posterior'])){
 					$max_parcela = count($data['update']['parcelasrec']['posterior']);
 					if($max_parcela == 0){
-						$data['orcatrata']['CombinadoFrete'] = "S";
+						#$data['orcatrata']['CombinadoFrete'] = "S";
 						$data['orcatrata']['AprovadoOrca'] = "S";
 						$data['orcatrata']['QuitadoOrca'] = "S";				
 					}else{
@@ -6543,12 +6532,9 @@ class Orcatrata extends CI_Controller {
 				$data['orcatrata']['idApp_OrcaTrata'], TRUE);
 			$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['orcatrata']['idApp_OrcaTrata']);
 			
+			#### Whatsapp ####
 			if($data['cadastrar']['Whatsapp'] == 'S'){
-				#### Whatsapp ####
-				$_SESSION['bd']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
-				$_SESSION['bd']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
-				$_SESSION['bd']['idApp_OrcaTrata'] 	= $data['orcatrata']['idApp_OrcaTrata'];
-				$_SESSION['bd']['Site'] 			= $_SESSION['Empresa']['Site'];
+				$_SESSION['bd']['Whatsapp'] = $data['cadastrar']['Whatsapp'];
 			}
 						
 			#### Estoque_Produto_posterior ####
@@ -10071,13 +10057,10 @@ class Orcatrata extends CI_Controller {
 				$data['orcatrata']['idApp_OrcaTrata'], TRUE);
 			$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['orcatrata']['idApp_OrcaTrata']);			
 			
+			#### Whatsapp ####
 			if ($_SESSION['Orcatrata']['Cli_Forn_Orca'] == 'S' && $data['cadastrar']['Whatsapp'] == 'S'){
 				if (isset($_SESSION['Orcatrata']['idApp_Cliente']) && $_SESSION['Orcatrata']['idApp_Cliente'] != 0){
-					#### Whatsapp ####
-					$_SESSION['bd']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
-					$_SESSION['bd']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
-					$_SESSION['bd']['idApp_OrcaTrata'] 	= $data['orcatrata']['idApp_OrcaTrata'];
-					$_SESSION['bd']['Site'] 			= $_SESSION['Empresa']['Site'];
+					$_SESSION['bd']['Whatsapp'] = $data['cadastrar']['Whatsapp'];
 				}
 			}
 			
