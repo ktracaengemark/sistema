@@ -418,7 +418,7 @@
 							<input type="hidden" name="DataInicio3" id="DataInicio3" value=""/>
 							<input type="hidden" name="DataFim3" id="DataFim3" value=""/>
 							<div class="col-md-3">
-								<label for="DataInicio4">Vencimento.Inc.</label>
+								<label for="DataInicio4">Vencimento Inc.</label>
 								<div class="input-group DatePicker">
 									<span class="input-group-addon" disabled>
 										<span class="glyphicon glyphicon-calendar"></span>
@@ -428,7 +428,7 @@
 								</div>
 							</div>
 							<div class="col-md-3">
-								<label for="DataFim4">Vencimento.Fim</label>
+								<label for="DataFim4">Vencimento Fim</label>
 								<div class="input-group DatePicker">
 									<span class="input-group-addon" disabled>
 										<span class="glyphicon glyphicon-calendar"></span>
@@ -438,7 +438,7 @@
 								</div>
 							</div>
 							<div class="col-md-3">
-								<label for="DataInicio5">Pagamento.Inc.</label>
+								<label for="DataInicio5">Pagamento Inc.</label>
 								<div class="input-group DatePicker">
 									<span class="input-group-addon" disabled>
 										<span class="glyphicon glyphicon-calendar"></span>
@@ -448,7 +448,7 @@
 								</div>
 							</div>
 							<div class="col-md-3">
-								<label for="DataFim5">Pagamento.Fim</label>
+								<label for="DataFim5">Pagamento Fim</label>
 								<div class="input-group DatePicker">
 									<span class="input-group-addon" disabled>
 										<span class="glyphicon glyphicon-calendar"></span>
@@ -457,6 +457,28 @@
 											name="DataFim5" value="<?php echo set_value('DataFim5', $query['DataFim5']); ?>">
 								</div>
 							</div>
+							
+							<div class="col-md-3">
+								<label for="DataInicio8">Lancamento Inc.</label>
+								<div class="input-group DatePicker">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											name="DataInicio8" value="<?php echo set_value('DataInicio8', $query['DataInicio8']); ?>">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<label for="DataFim8">Lancamento Fim</label>
+								<div class="input-group DatePicker">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											name="DataFim8" value="<?php echo set_value('DataFim8', $query['DataFim8']); ?>">
+								</div>
+							</div>
+							
 						</div>
 					</div>
 				</div>

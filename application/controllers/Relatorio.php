@@ -3369,6 +3369,8 @@ class Relatorio extends CI_Controller {
             'DataFim6',
 			'DataInicio7',
             'DataFim7',
+			'DataInicio8',
+            'DataFim8',
 			'Ordenamento',
             'Campo',
 			'ObsOrca',
@@ -3503,6 +3505,8 @@ class Relatorio extends CI_Controller {
 				'OT.DataEntregaOrca' => 'Data da Entrega',
 				'PR.Quitado' => 'Parc.Quit.',
 				'PR.DataVencimento' => 'Data do Venc.',
+				'PR.DataPago' => 'Data do Pag.',
+				'PR.DataLanc' => 'Data do Lanc.',
 				'OT.Modalidade' => 'Modalidade',
 				'OT.ValorOrca' => 'Valor',
 				'OT.TipoFinanceiro' => 'Tipo',
@@ -3519,6 +3523,8 @@ class Relatorio extends CI_Controller {
 				'OT.DataEntregaOrca' => 'Data da Entrega',
 				'PR.Quitado' => 'Parc.Quit.',
 				'PR.DataVencimento' => 'Data do Venc.',
+				'PR.DataPago' => 'Data do Pag.',
+				'PR.DataLanc' => 'Data do Lanc.',
 				'OT.Modalidade' => 'Modalidade',
 				'OT.ValorOrca' => 'Valor',
 				'OT.TipoFinanceiro' => 'Tipo',
@@ -3591,7 +3597,9 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['DataInicio6'] = $this->basico->mascara_data($data['query']['DataInicio6'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
         $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');		
+		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+        $_SESSION['FiltroAlteraParcela']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
+		$_SESSION['FiltroAlteraParcela']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');		
 		$_SESSION['FiltroAlteraParcela']['Dia'] = $data['query']['Dia'];
         $_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
         $_SESSION['FiltroAlteraParcela']['Ano'] = $data['query']['Ano'];
@@ -3648,6 +3656,8 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataFim6', 'Data Fim do Cadastro', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio7', 'Data Pago Com. Início', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim7', 'Data Pago Com.Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio8', 'Data Lanc Com. Início', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim8', 'Data Lanc Com.Fim', 'trim|valid_date');
 		
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -3680,6 +3690,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
 			$data['bd']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
             $data['bd']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+			$data['bd']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
+            $data['bd']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
 			$data['bd']['Ultimo'] = $data['query']['Ultimo'];
 			$data['bd']['nome'] = $data['query']['nome'];
@@ -3795,10 +3807,8 @@ class Relatorio extends CI_Controller {
             'DataFim6',
 			'DataInicio7',
             'DataFim7',
-			'DataInicio5',
-            'DataFim5',
-			'DataInicio6',
-            'DataFim6',
+			'DataInicio8',
+            'DataFim8',
 			'Ordenamento',
             'Campo',
 			'ObsOrca',
@@ -4017,7 +4027,11 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['DataInicio5'] = $this->basico->mascara_data($data['query']['DataInicio5'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim5'] = $this->basico->mascara_data($data['query']['DataFim5'], 'mysql');
         $_SESSION['FiltroAlteraParcela']['DataInicio6'] = $this->basico->mascara_data($data['query']['DataInicio6'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');		
+		$_SESSION['FiltroAlteraParcela']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
+        $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
+		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+        $_SESSION['FiltroAlteraParcela']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
+		$_SESSION['FiltroAlteraParcela']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');		
 		$_SESSION['FiltroAlteraParcela']['Dia'] = $data['query']['Dia'];
         $_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
         $_SESSION['FiltroAlteraParcela']['Ano'] = $data['query']['Ano'];
@@ -4074,6 +4088,8 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataFim6', 'Data Fim do Cadastro', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio7', 'Data Pago Com. Início', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim7', 'Data Pago Com.Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio8', 'Data Lanc Com. Início', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim8', 'Data Lanc Com.Fim', 'trim|valid_date');
 		
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -4106,6 +4122,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
 			$data['bd']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
             $data['bd']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+			$data['bd']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
+            $data['bd']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
 			$data['bd']['Ultimo'] = $data['query']['Ultimo'];
 			$data['bd']['nome'] = $data['query']['nome'];

@@ -1263,8 +1263,10 @@ class Orcatrata extends CI_Controller {
 							} else {
 								$data['parcelasrec'][$j]['DataPago'] = $data['parcelasrec'][$j]['DataPago'];
 							}
+							$data['parcelasrec'][$j]['DataLanc'] = date('Y-m-d', time());
 						} else {
 							$data['parcelasrec'][$j]['DataPago'] = "0000-00-00";
+							$data['parcelasrec'][$j]['DataLanc'] = "0000-00-00";
 						}
 					}
 					$data['parcelasrec']['idApp_Parcelas'] = $this->Orcatrata_model->set_parcelas($data['parcelasrec']);
@@ -1482,15 +1484,18 @@ class Orcatrata extends CI_Controller {
 						$quitadoorca = "N";
 						$quitado = "N";
 						$datapago = "0000-00-00";
+						$datalanc = "0000-00-00";
 					}else{
 						$quitadoorca = "S";
 						$quitado = "S";
 						$datapago = $data['orcatrata']['DataOrca'];
+						$datalanc = date('Y-m-d', time());
 					}
 				}else{
 					$quitadoorca = "N";
 					$quitado = "N";
 					$datapago = "0000-00-00";
+					$datalanc = "0000-00-00";
 				}
 				
 				$combinadofrete = "N";
@@ -1739,6 +1744,7 @@ class Orcatrata extends CI_Controller {
 										//'ValorPago' 			=> $valorpago[$k],
 										'Quitado' 				=> $quitado,
 										'DataPago' 				=> $datapago,
+										'DataLanc' 				=> $datalanc,
 										'idApp_Fornecedor' 		=> $data['update']['parcelas']['baixa'][$k]['idApp_Fornecedor']
 									
 									);
@@ -3096,8 +3102,10 @@ class Orcatrata extends CI_Controller {
 							} else {
 								$data['parcelasrec'][$j]['DataPago'] = $data['parcelasrec'][$j]['DataPago'];
 							}
+							$data['parcelasrec'][$j]['DataLanc'] = date('Y-m-d', time());
 						} else {
 							$data['parcelasrec'][$j]['DataPago'] = "0000-00-00";
+							$data['parcelasrec'][$j]['DataLanc'] = "0000-00-00";
 						}
 					}
 					$data['parcelasrec']['idApp_Parcelas'] = $this->Orcatrata_model->set_parcelas($data['parcelasrec']);
@@ -4537,8 +4545,12 @@ class Orcatrata extends CI_Controller {
 							} else {
 								$data['parcelasrec'][$j]['DataPago'] = $data['parcelasrec'][$j]['DataPago'];
 							}
+							
+							$data['parcelasrec'][$j]['DataLanc'] = date('Y-m-d', time());
+							
 						} else {
 							$data['parcelasrec'][$j]['DataPago'] = "0000-00-00";
+							$data['parcelasrec'][$j]['DataLanc'] = "0000-00-00";
 						}
 					}
 					$data['parcelasrec']['idApp_Parcelas'] = $this->Orcatrata_model->set_parcelas($data['parcelasrec']);
@@ -6366,8 +6378,10 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['inserir'][$j]['DataPago'] = $data['update']['parcelasrec']['inserir'][$j]['DataPago'];
 						}
+						$data['update']['parcelasrec']['inserir'][$j]['DataLanc'] = date('Y-m-d', time());
 					} else {
 						$data['update']['parcelasrec']['inserir'][$j]['DataPago'] = "0000-00-00";
+						$data['update']['parcelasrec']['inserir'][$j]['DataLanc'] = "0000-00-00";
 					}
                 
 				}
@@ -6394,8 +6408,10 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update']['parcelasrec']['alterar'][$j]['DataPago'];
 						}
+						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
 					} else {
 						$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = "0000-00-00";
+						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = "0000-00-00";
 					}
 					if ($data['orcatrata']['idApp_Cliente']) $data['update']['parcelasrec']['alterar'][$j]['idApp_Cliente'] = $data['orcatrata']['idApp_Cliente'];					
 				}
@@ -8175,8 +8191,10 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['inserir'][$j]['DataPago'] = $data['update']['parcelasrec']['inserir'][$j]['DataPago'];
 						}
+						$data['update']['parcelasrec']['inserir'][$j]['DataLanc'] = date('Y-m-d', time());
 					} else {
 						$data['update']['parcelasrec']['inserir'][$j]['DataPago'] = "0000-00-00";
+						$data['update']['parcelasrec']['inserir'][$j]['DataLanc'] = "0000-00-00";
 					}
 					
 				}	
@@ -8203,8 +8221,10 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update']['parcelasrec']['alterar'][$j]['DataPago'];
 						}
+						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
 					} else {
 						$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = "0000-00-00";
+						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = "0000-00-00";
 					}
 					if ($data['orcatrata']['idApp_Cliente']) $data['update']['parcelasrec']['alterar'][$j]['idApp_Cliente'] = $data['orcatrata']['idApp_Cliente'];					
 				}
@@ -9892,8 +9912,10 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['inserir'][$j]['DataPago'] = $data['update']['parcelasrec']['inserir'][$j]['DataPago'];
 						}
+						$data['update']['parcelasrec']['inserir'][$j]['DataLanc'] = date('Y-m-d', time());
 					} else {
 						$data['update']['parcelasrec']['inserir'][$j]['DataPago'] = "0000-00-00";
+						$data['update']['parcelasrec']['inserir'][$j]['DataLanc'] = "0000-00-00";
 					}
 				}	
 
@@ -9919,8 +9941,10 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update']['parcelasrec']['alterar'][$j]['DataPago'];
 						}
+						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
 					} else {
 						$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = "0000-00-00";
+						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = "0000-00-00";
 					}
 					if ($data['orcatrata']['idApp_Cliente']) $data['update']['parcelasrec']['alterar'][$j]['idApp_Cliente'] = $data['orcatrata']['idApp_Cliente'];					
 				}
@@ -11414,8 +11438,10 @@ class Orcatrata extends CI_Controller {
 						} else {
 							$data['parcelasrec'][$j]['DataPago'] = $data['parcelasrec'][$j]['DataPago'];
 						}
+						$data['parcelasrec'][$j]['DataLanc'] = date('Y-m-d', time());
 					} else {
 						$data['parcelasrec'][$j]['DataPago'] = "0000-00-00";
+						$data['parcelasrec'][$j]['DataLanc'] = "0000-00-00";
 					}
                 }
                 $data['parcelasrec']['idApp_Parcelas'] = $this->Orcatrata_model->set_parcelas($data['parcelasrec']);
@@ -12992,8 +13018,10 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['inserir'][$j]['DataPago'] = $data['update']['parcelasrec']['inserir'][$j]['DataPago'];
 						}
+						$data['update']['parcelasrec']['inserir'][$j]['DataLanc'] = date('Y-m-d', time());
 					} else {
 						$data['update']['parcelasrec']['inserir'][$j]['DataPago'] = "0000-00-00";
+						$data['update']['parcelasrec']['inserir'][$j]['DataLanc'] = "0000-00-00";
 					}
                 }
 
@@ -13019,8 +13047,10 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update']['parcelasrec']['alterar'][$j]['DataPago'];
 						}
+						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
 					} else {
 						$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = "0000-00-00";
+						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = "0000-00-00";
 					}
 					if ($data['orcatrata']['idApp_Fornecedor']) $data['update']['parcelasrec']['alterar'][$j]['idApp_Fornecedor'] = $data['orcatrata']['idApp_Fornecedor'];					
 				}
@@ -14232,6 +14262,7 @@ class Orcatrata extends CI_Controller {
 				for($j=0;$j<$max;$j++) {
 					$data['update']['parcelasrec']['alterar'][$j]['Quitado'] = 'N';	
 					$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = "0000-00-00";
+					$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = "0000-00-00";
 				}
 				if (count($data['update']['parcelasrec']['alterar']))
 					$data['update']['parcelasrec']['bd']['alterar'] =  $this->Orcatrata_model->update_parcelas($data['update']['parcelasrec']['alterar']);
@@ -14491,14 +14522,16 @@ class Orcatrata extends CI_Controller {
 					
 					$data['update']['parcelasrec']['alterar'][$j]['Quitado'] = 'S';				
 					
-					if(!$data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] || empty($data['update']['parcelasrec']['alterar'][$j]['DataVencimento'])){
-						$data['update'][$j]['DataVencimento'] = "0000-00-00";
-					}else{
-						$data['update'][$j]['DataVencimento'] = $data['update']['parcelasrec']['alterar'][$j]['DataVencimento'];
+					if(!$data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] || empty($data['update']['parcelasrec']['alterar'][$j]['DataVencimento']) || $data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] == "0000-00-00"){
+						$data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] = $_SESSION['Orcatrata']['DataOrca'];
 					}
 					
-					if(!$data['update']['parcelasrec']['alterar'][$j]['DataPago'] || $data['update']['parcelasrec']['alterar'][$j]['DataPago'] == "0000-00-00"){
-						$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update'][$j]['DataVencimento'];
+					if(!$data['update']['parcelasrec']['alterar'][$j]['DataPago'] || empty($data['update']['parcelasrec']['alterar'][$j]['DataPago']) || $data['update']['parcelasrec']['alterar'][$j]['DataPago'] == "0000-00-00"){
+						$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update']['parcelasrec']['alterar'][$j]['DataVencimento'];
+					}
+					
+					if(!$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] || empty($data['update']['parcelasrec']['alterar'][$j]['DataLanc'])  || $data['update']['parcelasrec']['alterar'][$j]['DataLanc'] == "0000-00-00"){
+						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
 					}
 					
 				}
@@ -14692,14 +14725,16 @@ class Orcatrata extends CI_Controller {
 					
 					$data['update']['parcelasrec']['alterar'][$j]['Quitado'] = 'S';				
 					
-					if(!$data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] || empty($data['update']['parcelasrec']['alterar'][$j]['DataVencimento'])){
-						$data['update'][$j]['DataVencimento'] = "0000-00-00";
-					}else{
-						$data['update'][$j]['DataVencimento'] = $data['update']['parcelasrec']['alterar'][$j]['DataVencimento'];
+					if(!$data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] || empty($data['update']['parcelasrec']['alterar'][$j]['DataVencimento']) || $data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] == "0000-00-00"){
+						$data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] = $_SESSION['Orcatrata']['DataOrca'];
 					}
 					
-					if(!$data['update']['parcelasrec']['alterar'][$j]['DataPago'] || $data['update']['parcelasrec']['alterar'][$j]['DataPago'] == "0000-00-00"){
-						$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update'][$j]['DataVencimento'];
+					if(!$data['update']['parcelasrec']['alterar'][$j]['DataPago'] || empty($data['update']['parcelasrec']['alterar'][$j]['DataPago']) || $data['update']['parcelasrec']['alterar'][$j]['DataPago'] == "0000-00-00"){
+						$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update']['parcelasrec']['alterar'][$j]['DataVencimento'];
+					}
+					
+					if(!$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] || empty($data['update']['parcelasrec']['alterar'][$j]['DataLanc'])  || $data['update']['parcelasrec']['alterar'][$j]['DataLanc'] == "0000-00-00"){
+						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
 					}
 					
 				}
@@ -14827,7 +14862,7 @@ class Orcatrata extends CI_Controller {
 			}else{
 				$data['parcela']['DataPago'] = $data['update']['parcela']['anterior']['DataPago'];
 			}
-			
+			$data['parcela']['DataLanc'] = date('Y-m-d', time());
 			$data['parcela']['Quitado'] = "S";
 			
 			$data['update']['parcela']['campos'] = array_keys($data['parcela']);
@@ -15001,7 +15036,7 @@ class Orcatrata extends CI_Controller {
 			}else{
 				$data['parcela']['DataPago'] = $data['update']['parcela']['anterior']['DataPago'];
 			}
-			
+			$data['parcela']['DataLanc'] = date('Y-m-d', time());
 			$data['parcela']['Quitado'] = "S";			
 
 			$data['update']['parcela']['campos'] = array_keys($data['parcela']);
@@ -15402,9 +15437,14 @@ class Orcatrata extends CI_Controller {
 							for($k=0;$k<$max_parcela;$k++) {
 								
 								$data['update']['parcelasrec']['posterior'][$j][$k]['Quitado'] = 'S';
-								if(!$data['update']['parcelasrec']['posterior'][$j][$k]['DataPago'] || $data['update']['parcelasrec']['posterior'][$j][$k]['DataPago'] == "0000-00-00" ){
+								if(!$data['update']['parcelasrec']['posterior'][$j][$k]['DataPago'] || empty($data['update']['parcelasrec']['posterior'][$j][$k]['DataPago']) || $data['update']['parcelasrec']['posterior'][$j][$k]['DataPago'] == "0000-00-00" ){
 									$data['update']['parcelasrec']['posterior'][$j][$k]['DataPago'] = $data['update']['parcelasrec']['posterior'][$j][$k]['DataVencimento'];
 								}
+								
+								if(!$data['update']['parcelasrec']['posterior'][$j][$k]['DataLanc'] || empty($data['update']['parcelasrec']['posterior'][$j][$k]['DataLanc']) || $data['update']['parcelasrec']['posterior'][$j][$k]['DataLanc'] == "0000-00-00" ){
+									$data['update']['parcelasrec']['posterior'][$j][$k]['DataLanc'] = date('Y-m-d', time());
+								}
+								
 								$data['update']['parcelasrec']['bd'][$j] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelasrec']['posterior'][$j][$k], $data['update']['parcelasrec']['posterior'][$j][$k]['idApp_Parcelas']);
 							
 							}
@@ -15737,9 +15777,14 @@ class Orcatrata extends CI_Controller {
 							for($k=0;$k<$max_parcela;$k++) {
 								
 								$data['update']['parcelasrec']['posterior'][$j][$k]['Quitado'] = 'S';
-								if(!$data['update']['parcelasrec']['posterior'][$j][$k]['DataPago'] || $data['update']['parcelasrec']['posterior'][$j][$k]['DataPago'] == "0000-00-00" ){
+								if(!$data['update']['parcelasrec']['posterior'][$j][$k]['DataPago'] || empty($data['update']['parcelasrec']['posterior'][$j][$k]['DataPago']) || $data['update']['parcelasrec']['posterior'][$j][$k]['DataPago'] == "0000-00-00" ){
 									$data['update']['parcelasrec']['posterior'][$j][$k]['DataPago'] = $data['update']['parcelasrec']['posterior'][$j][$k]['DataVencimento'];
 								}
+								
+								if(!$data['update']['parcelasrec']['posterior'][$j][$k]['DataLanc'] || empty($data['update']['parcelasrec']['posterior'][$j][$k]['DataLanc']) || $data['update']['parcelasrec']['posterior'][$j][$k]['DataLanc'] == "0000-00-00" ){
+									$data['update']['parcelasrec']['posterior'][$j][$k]['DataLanc'] = date('Y-m-d', time());
+								}
+								
 								$data['update']['parcelasrec']['bd'][$j] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelasrec']['posterior'][$j][$k], $data['update']['parcelasrec']['posterior'][$j][$k]['idApp_Parcelas']);
 							
 							}
@@ -17110,8 +17155,10 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update']['parcelasrec']['alterar'][$j]['DataPago'];
 						}
+						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
 					} else {
 						$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = "0000-00-00";
+						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = "0000-00-00";
 					}
 
 					$data['update']['parcelasrec']['bd'] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelasrec']['alterar'][$j], $data['update']['parcelasrec']['alterar'][$j]['idApp_Parcelas']);
@@ -17557,8 +17604,10 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update']['parcelasrec']['alterar'][$j]['DataPago'];
 						}
+						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
 					} else {
 						$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = "0000-00-00";
+						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = "0000-00-00";
 					}
 					
 					$data['update']['parcelasrec']['bd'] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelasrec']['alterar'][$j], $data['update']['parcelasrec']['alterar'][$j]['idApp_Parcelas']);
@@ -17807,8 +17856,10 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['inserir'][$j]['DataPago'] = $data['update']['parcelasrec']['inserir'][$j]['DataPago'];
 						}
+						$data['update']['parcelasrec']['inserir'][$j]['DataLanc'] = date('Y-m-d', time());
 					} else {
 						$data['update']['parcelasrec']['inserir'][$j]['DataPago'] = "0000-00-00";
+						$data['update']['parcelasrec']['inserir'][$j]['DataLanc'] = "0000-00-00";
 					}
                 }
 
@@ -18059,8 +18110,10 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['inserir'][$j]['DataPago'] = $data['update']['parcelasrec']['inserir'][$j]['DataPago'];
 						}
+						$data['update']['parcelasrec']['inserir'][$j]['DataLanc'] = date('Y-m-d', time());
 					} else {
 						$data['update']['parcelasrec']['inserir'][$j]['DataPago'] = "0000-00-00";
+						$data['update']['parcelasrec']['inserir'][$j]['DataLanc'] = "0000-00-00";
 					}
                 }
 

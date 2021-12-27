@@ -137,6 +137,7 @@
 						<th class="active">Parc.R$</th>
 						<th class="active">Quitada</th>
 						<th class="active">Pagamento</th>
+						<th class="active">Lancamento</th>
 						<!--<th class="active">Dt.Pag</th>
 						<th class="active">Recebido</th>
 						<th class="active">Valor Recebido</th>
@@ -247,7 +248,7 @@
 							echo '<td class="text-left">' . $row['ValorParcela'] . '</td>';
 							echo '<td>' . $row['Quitado'] . '</td>';
 							echo '<td>' . $row['DataPago'] . '</td>';
-							#echo '<td>' . $row['DataPago'] . '</td>';
+							echo '<td>' . $row['DataLanc'] . '</td>';
 							#echo '<td class="text-left">' . $row['ValorPago'] . '</td>';
 							#echo '<td class="text-left">R$ ' . $row['ValorPago'] . '</td>';
 							#echo '<td>' . $row['DataOrca'] . '</td>';

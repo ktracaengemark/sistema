@@ -242,7 +242,13 @@ class Orcatrataprintcobranca_model extends CI_Model {
 		
 		$date_inicio_vnc_prc = ($_SESSION['FiltroAlteraParcela']['DataInicio4']) ? 'PR.DataVencimento >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio4'] . '" AND ' : FALSE;
 		$date_fim_vnc_prc = ($_SESSION['FiltroAlteraParcela']['DataFim4']) ? 'PR.DataVencimento <= "' . $_SESSION['FiltroAlteraParcela']['DataFim4'] . '" AND ' : FALSE;
+			
+		$date_inicio_pag_prc = ($_SESSION['FiltroAlteraParcela']['DataInicio5']) ? 'PR.DataPago >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio5'] . '" AND ' : FALSE;
+		$date_fim_pag_prc = ($_SESSION['FiltroAlteraParcela']['DataFim5']) ? 'PR.DataPago <= "' . $_SESSION['FiltroAlteraParcela']['DataFim5'] . '" AND ' : FALSE;
 		
+		$date_inicio_lan_prc = ($_SESSION['FiltroAlteraParcela']['DataInicio8']) ? 'PR.DataLanc >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio8'] . '" AND ' : FALSE;
+		$date_fim_lan_prc = ($_SESSION['FiltroAlteraParcela']['DataFim8']) ? 'PR.DataLanc <= "' . $_SESSION['FiltroAlteraParcela']['DataFim8'] . '" AND ' : FALSE;
+					
 		$permissao30 = ($_SESSION['FiltroAlteraParcela']['Orcamento'] != "" ) ? 'OT.idApp_OrcaTrata = "' . $_SESSION['FiltroAlteraParcela']['Orcamento'] . '" AND ' : FALSE;
 		$permissao31 = ($_SESSION['FiltroAlteraParcela']['Cliente'] != "" ) ? 'OT.idApp_Cliente = "' . $_SESSION['FiltroAlteraParcela']['Cliente'] . '" AND ' : FALSE;
 		$permissao36 = ($_SESSION['FiltroAlteraParcela']['Fornecedor'] != "" ) ? 'OT.idApp_Fornecedor = "' . $_SESSION['FiltroAlteraParcela']['Fornecedor'] . '" AND ' : FALSE;
@@ -335,7 +341,9 @@ class Orcatrataprintcobranca_model extends CI_Model {
 				TAV.AVAP,
 				TAV.Abrev2,
 				TP.TipoFinanceiro,
-                DATE_FORMAT(PR.DataVencimento, "%d/%m/%Y") AS DataVencimento
+                DATE_FORMAT(PR.DataVencimento, "%d/%m/%Y") AS DataVencimento,
+                DATE_FORMAT(PR.DataPago, "%d/%m/%Y") AS DataPagamento,
+                DATE_FORMAT(PR.DataLanc, "%d/%m/%Y") AS DataLancamento
             FROM 
 				App_OrcaTrata AS OT
 				LEFT JOIN Sis_Empresa AS EF ON EF.idSis_Empresa = OT.idSis_Empresa
@@ -374,6 +382,10 @@ class Orcatrataprintcobranca_model extends CI_Model {
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '
                 ' . $date_fim_vnc_prc . '
+                ' . $date_inicio_pag_prc . '
+                ' . $date_fim_pag_prc . '
+                ' . $date_inicio_lan_prc . '
+                ' . $date_fim_lan_prc . '
 				OT.idSis_Empresa = ' . $data . ' AND
 				PR.idSis_Empresa = ' . $data . '
 			' . $groupby . '
@@ -549,6 +561,7 @@ class Orcatrataprintcobranca_model extends CI_Model {
 				PR.ValorParcela,
 				PR.DataVencimento,
 				PR.DataPago,
+				PR.DataLanc,
 				PR.Quitado,
 				FP.FormaPag
 			FROM 

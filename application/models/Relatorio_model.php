@@ -1117,6 +1117,9 @@ class Relatorio_model extends CI_Model {
 			$date_inicio_pag_prc = ($data['DataInicio5']) ? 'PR.DataPago >= "' . $data['DataInicio5'] . '" AND ' : FALSE;
 			$date_fim_pag_prc = ($data['DataFim5']) ? 'PR.DataPago <= "' . $data['DataFim5'] . '" AND ' : FALSE;
 			
+			$date_inicio_lan_prc = ($data['DataInicio8']) ? 'PR.DataLanc >= "' . $data['DataInicio8'] . '" AND ' : FALSE;
+			$date_fim_lan_prc = ($data['DataFim8']) ? 'PR.DataLanc <= "' . $data['DataFim8'] . '" AND ' : FALSE;
+			
 			$date_inicio_cadastro = ($data['DataInicio6']) ? 'C.DataCadastroCliente >= "' . $data['DataInicio6'] . '" AND ' : FALSE;
 			$date_fim_cadastro = ($data['DataFim6']) ? 'C.DataCadastroCliente <= "' . $data['DataFim6'] . '" AND ' : FALSE;
 			
@@ -1203,6 +1206,9 @@ class Relatorio_model extends CI_Model {
 			$date_inicio_pag_prc = ($_SESSION['FiltroAlteraParcela']['DataInicio5']) ? 'PR.DataPago >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio5'] . '" AND ' : FALSE;
 			$date_fim_pag_prc = ($_SESSION['FiltroAlteraParcela']['DataFim5']) ? 'PR.DataPago <= "' . $_SESSION['FiltroAlteraParcela']['DataFim5'] . '" AND ' : FALSE;
 			
+			$date_inicio_lan_prc = ($_SESSION['FiltroAlteraParcela']['DataInicio8']) ? 'PR.DataLanc >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio8'] . '" AND ' : FALSE;
+			$date_fim_lan_prc = ($_SESSION['FiltroAlteraParcela']['DataFim8']) ? 'PR.DataLanc <= "' . $_SESSION['FiltroAlteraParcela']['DataFim8'] . '" AND ' : FALSE;
+						
 			$date_inicio_cadastro = ($_SESSION['FiltroAlteraParcela']['DataInicio6']) ? 'C.DataCadastroCliente >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio6'] . '" AND ' : FALSE;
 			$date_fim_cadastro = ($_SESSION['FiltroAlteraParcela']['DataFim6']) ? 'C.DataCadastroCliente <= "' . $_SESSION['FiltroAlteraParcela']['DataFim6'] . '" AND ' : FALSE;
 			
@@ -1319,6 +1325,7 @@ class Relatorio_model extends CI_Model {
                 PR.DataVencimento,
                 PR.ValorParcela,
                 PR.DataPago,
+                PR.DataLanc,
                 PR.ValorPago,
                 PR.Quitado,
 				PR.idTab_TipoRD,
@@ -1348,6 +1355,8 @@ class Relatorio_model extends CI_Model {
                 ' . $date_fim_vnc_prc . '
                 ' . $date_inicio_pag_prc . '
                 ' . $date_fim_pag_prc . '
+                ' . $date_inicio_lan_prc . '
+                ' . $date_fim_lan_prc . '
                 ' . $date_inicio_cadastro . '
                 ' . $date_fim_cadastro . '
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
@@ -1429,6 +1438,7 @@ class Relatorio_model extends CI_Model {
                 PR.DataVencimento,
                 PR.ValorParcela,
                 PR.DataPago,
+                PR.DataLanc,
                 PR.ValorPago,
                 PR.Quitado,
 				PR.idTab_TipoRD,
@@ -1458,6 +1468,8 @@ class Relatorio_model extends CI_Model {
                 ' . $date_fim_vnc_prc . '
                 ' . $date_inicio_pag_prc . '
                 ' . $date_fim_pag_prc . '
+                ' . $date_inicio_lan_prc . '
+                ' . $date_fim_lan_prc . '
                 ' . $date_inicio_cadastro . '
                 ' . $date_fim_cadastro . '
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
@@ -1517,6 +1529,7 @@ class Relatorio_model extends CI_Model {
                 $row->DataVencimentoOrca = $this->basico->mascara_data($row->DataVencimentoOrca, 'barras');
                 $row->DataVencimento = $this->basico->mascara_data($row->DataVencimento, 'barras');
                 $row->DataPago = $this->basico->mascara_data($row->DataPago, 'barras');
+                $row->DataLanc = $this->basico->mascara_data($row->DataLanc, 'barras');
                 $row->CombinadoFrete = $this->basico->mascara_palavra_completa($row->CombinadoFrete, 'NS');
                 $row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
 				$row->QuitadoOrca = $this->basico->mascara_palavra_completa($row->QuitadoOrca, 'NS');

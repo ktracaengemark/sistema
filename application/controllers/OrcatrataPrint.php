@@ -831,6 +831,7 @@ class OrcatrataPrint extends CI_Controller {
 								for($j=1; $j <= $data['count']['PRCount'][$i]; $j++) {
 									$data['parcelasrec'][$i][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataVencimento'], 'barras');
 									$data['parcelasrec'][$i][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataPago'], 'barras');
+									$data['parcelasrec'][$i][$j]['DataLanc'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataLanc'], 'barras');
 								}
 							}
 						}
@@ -1056,6 +1057,7 @@ class OrcatrataPrint extends CI_Controller {
                     for($j=1; $j <= $data['count']['PRCount']; $j++) {
                         $data['parcelasrec'][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimento'], 'barras');
                         $data['parcelasrec'][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPago'], 'barras');
+                        $data['parcelasrec'][$j]['DataLanc'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataLanc'], 'barras');
                     }
                 }
             }
@@ -1215,6 +1217,7 @@ class OrcatrataPrint extends CI_Controller {
 								for($j=1; $j <= $data['count']['PRCount'][$i]; $j++) {
 									$data['parcelasrec'][$i][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataVencimento'], 'barras');
 									$data['parcelasrec'][$i][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataPago'], 'barras');
+									$data['parcelasrec'][$i][$j]['DataLanc'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataLanc'], 'barras');
 								}
 							}
 						}
@@ -1436,6 +1439,7 @@ class OrcatrataPrint extends CI_Controller {
                     for($j=1; $j <= $data['count']['PRCount']; $j++) {
                         $data['parcelasrec'][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimento'], 'barras');
                         $data['parcelasrec'][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPago'], 'barras');
+                        $data['parcelasrec'][$j]['DataLanc'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataLanc'], 'barras');
                     }
                 }
             }
