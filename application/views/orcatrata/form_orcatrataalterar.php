@@ -1840,6 +1840,7 @@
 																							   name="DataVencimento<?php echo $i ?>" value="<?php echo $parcelasrec[$i]['DataVencimento'] ?>">																
 																					</div>
 																				</div>
+																				<input type="hidden" name="DataLanc<?php echo $i ?>" id="DataLanc<?php echo $i ?>"  value="<?php echo $parcelasrec[$i]['DataLanc']; ?>"/>
 																				<div class="col-sm-3 col-md-3 col-lg-2">
 																					<label for="FormaPagamentoParcela<?php echo $i ?>">FormaPagParcela</label>
 																					<?php if ($i == 1) { ?>

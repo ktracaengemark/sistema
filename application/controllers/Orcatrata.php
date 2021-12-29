@@ -5119,6 +5119,7 @@ class Orcatrata extends CI_Controller {
 					$data['parcelasrec'][$j]['DataVencimento'] = $this->input->post('DataVencimento' . $i);
 					//$data['parcelasrec'][$j]['ValorPago'] = $this->input->post('ValorPago' . $i);
 					$data['parcelasrec'][$j]['DataPago'] = $this->input->post('DataPago' . $i);
+					$data['parcelasrec'][$j]['DataLanc'] = $this->input->post('DataLanc' . $i);
 					$data['parcelasrec'][$j]['Quitado'] = $this->input->post('Quitado' . $i);
 					$data['parcelasrec'][$j]['FormaPagamentoParcela'] = $this->input->post('FormaPagamentoParcela' . $i);
 					//$data['parcelasrec'][$j]['idSis_Usuario'] = $this->input->post('idSis_Usuario' . $i);
@@ -5280,6 +5281,7 @@ class Orcatrata extends CI_Controller {
                     for($j=1; $j <= $data['count']['PRCount']; $j++) {
                         $data['parcelasrec'][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimento'], 'barras');
                         $data['parcelasrec'][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPago'], 'barras');
+                        $data['parcelasrec'][$j]['DataLanc'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataLanc'], 'barras');
                     
 						$data['radio'] = array(
 							'Quitado' . $j => $this->basico->radio_checked($data['parcelasrec'][$j]['Quitado'], 'Quitado' . $j, 'NS'),
@@ -6392,6 +6394,7 @@ class Orcatrata extends CI_Controller {
                     $data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataVencimento'], 'mysql');
                     //$data['update']['parcelasrec']['alterar'][$j]['ValorPago'] = str_replace(',', '.', str_replace('.', '', $data['update']['parcelasrec']['alterar'][$j]['ValorPago']));
                     $data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataPago'], 'mysql');
+                    $data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataLanc'], 'mysql');
 					if($data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela']){
 						$data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'] = $data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'];
 					}else{
@@ -6408,7 +6411,9 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update']['parcelasrec']['alterar'][$j]['DataPago'];
 						}
-						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
+						if(!$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] || empty($data['update']['parcelasrec']['alterar'][$j]['DataLanc']) || $data['update']['parcelasrec']['alterar'][$j]['DataPago'] == "0000-00-00"){
+							$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
+						}
 					} else {
 						$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = "0000-00-00";
 						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = "0000-00-00";
@@ -7140,6 +7145,7 @@ class Orcatrata extends CI_Controller {
 					$data['parcelasrec'][$j]['DataVencimento'] = $this->input->post('DataVencimento' . $i);
 					//$data['parcelasrec'][$j]['ValorPago'] = $this->input->post('ValorPago' . $i);
 					$data['parcelasrec'][$j]['DataPago'] = $this->input->post('DataPago' . $i);
+					$data['parcelasrec'][$j]['DataLanc'] = $this->input->post('DataLanc' . $i);
 					$data['parcelasrec'][$j]['Quitado'] = $this->input->post('Quitado' . $i);
 					$data['parcelasrec'][$j]['FormaPagamentoParcela'] = $this->input->post('FormaPagamentoParcela' . $i);
 					//$data['parcelasrec'][$j]['idSis_Usuario'] = $this->input->post('idSis_Usuario' . $i);
@@ -7260,6 +7266,7 @@ class Orcatrata extends CI_Controller {
                     for($j=1; $j <= $data['count']['PRCount']; $j++) {
                         $data['parcelasrec'][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimento'], 'barras');
                         $data['parcelasrec'][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPago'], 'barras');
+                        $data['parcelasrec'][$j]['DataLanc'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataLanc'], 'barras');
                     
 						$data['radio'] = array(
 							'Quitado' . $j => $this->basico->radio_checked($data['parcelasrec'][$j]['Quitado'], 'Quitado' . $j, 'NS'),
@@ -8205,6 +8212,7 @@ class Orcatrata extends CI_Controller {
                     $data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataVencimento'], 'mysql');
                     //$data['update']['parcelasrec']['alterar'][$j]['ValorPago'] = str_replace(',', '.', str_replace('.', '', $data['update']['parcelasrec']['alterar'][$j]['ValorPago']));
                     $data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataPago'], 'mysql');
+                    $data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataLanc'], 'mysql');
 					if($data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela']){
 						$data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'] = $data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'];
 					}else{
@@ -8221,7 +8229,9 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update']['parcelasrec']['alterar'][$j]['DataPago'];
 						}
-						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
+						if(!$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] || empty($data['update']['parcelasrec']['alterar'][$j]['DataLanc']) || $data['update']['parcelasrec']['alterar'][$j]['DataPago'] == "0000-00-00"){
+							$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
+						}
 					} else {
 						$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = "0000-00-00";
 						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = "0000-00-00";
@@ -8780,6 +8790,7 @@ class Orcatrata extends CI_Controller {
                 $data['parcelasrec'][$j]['DataVencimento'] = $this->input->post('DataVencimento' . $i);
                 //$data['parcelasrec'][$j]['ValorPago'] = $this->input->post('ValorPago' . $i);
                 $data['parcelasrec'][$j]['DataPago'] = $this->input->post('DataPago' . $i);
+                $data['parcelasrec'][$j]['DataLanc'] = $this->input->post('DataLanc' . $i);
                 $data['parcelasrec'][$j]['Quitado'] = $this->input->post('Quitado' . $i);
                 $data['parcelasrec'][$j]['FormaPagamentoParcela'] = $this->input->post('FormaPagamentoParcela' . $i);
 				//$data['parcelasrec'][$j]['idSis_Usuario'] = $this->input->post('idSis_Usuario' . $i);
@@ -8919,6 +8930,7 @@ class Orcatrata extends CI_Controller {
                     for($j=1; $j <= $data['count']['PRCount']; $j++) {
                         $data['parcelasrec'][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimento'], 'barras');
                         $data['parcelasrec'][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPago'], 'barras');
+                        $data['parcelasrec'][$j]['DataLanc'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataLanc'], 'barras');
                     
 						$data['radio'] = array(
 							'Quitado' . $j => $this->basico->radio_checked($data['parcelasrec'][$j]['Quitado'], 'Quitado' . $j, 'NS'),
@@ -8928,7 +8940,16 @@ class Orcatrata extends CI_Controller {
 
                 }
             }
-
+		/*
+		echo '<br>';
+		echo "<pre>";
+		echo '<br>';
+		//print_r(count($data['parcelasrec']);
+		echo '<br>';
+		print_r($data['parcelasrec']);
+		echo "</pre>";
+		exit();		
+		*/
             #### App_Procedimento ####
             $_SESSION['Procedimento'] = $data['procedimento'] = $this->Orcatrata_model->get_procedimento($id);
             if (count($data['procedimento']) > 0) {
@@ -9873,7 +9894,14 @@ class Orcatrata extends CI_Controller {
 			
             #### App_ParcelasRec ####
             $data['update']['parcelasrec']['anterior'] = $this->Orcatrata_model->get_parcelas($data['orcatrata']['idApp_OrcaTrata']);
-            if (isset($data['parcelasrec']) || (!isset($data['parcelasrec']) && isset($data['update']['parcelasrec']['anterior']) ) ) {
+			/*	
+			echo '<br>';
+			echo "<pre>";
+			echo '<br>';
+			print_r($data['update']['parcelasrec']['anterior']);
+			echo "</pre>";
+			*/	
+			if (isset($data['parcelasrec']) || (!isset($data['parcelasrec']) && isset($data['update']['parcelasrec']['anterior']) ) ) {
 
                 if (isset($data['parcelasrec']))
                     $data['parcelasrec'] = array_values($data['parcelasrec']);
@@ -9882,7 +9910,14 @@ class Orcatrata extends CI_Controller {
 
                 //faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
                 $data['update']['parcelasrec'] = $this->basico->tratamento_array_multidimensional($data['parcelasrec'], $data['update']['parcelasrec']['anterior'], 'idApp_Parcelas');
-
+				/*
+				echo '<br>';
+				echo "<pre>";
+				echo '<br>';
+				print_r($data['update']['parcelasrec']['alterar']);
+				echo "</pre>";
+				exit();	
+				*/
                 $max = count($data['update']['parcelasrec']['inserir']);
                 for($j=0;$j<$max;$j++) {
                     $data['update']['parcelasrec']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
@@ -9925,6 +9960,7 @@ class Orcatrata extends CI_Controller {
                     $data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataVencimento'], 'mysql');
                     //$data['update']['parcelasrec']['alterar'][$j]['ValorPago'] = str_replace(',', '.', str_replace('.', '', $data['update']['parcelasrec']['alterar'][$j]['ValorPago']));
                     $data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataPago'], 'mysql');
+                    $data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataLanc'], 'mysql');
 					if($data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela']){
 						$data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'] = $data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'];
 					}else{
@@ -9941,7 +9977,9 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update']['parcelasrec']['alterar'][$j]['DataPago'];
 						}
-						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
+						if(!$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] || empty($data['update']['parcelasrec']['alterar'][$j]['DataLanc']) || $data['update']['parcelasrec']['alterar'][$j]['DataPago'] == "0000-00-00"){
+							$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
+						}
 					} else {
 						$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = "0000-00-00";
 						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = "0000-00-00";
@@ -12002,6 +12040,7 @@ class Orcatrata extends CI_Controller {
 					$data['parcelasrec'][$j]['DataVencimento'] = $this->input->post('DataVencimento' . $i);
 					//$data['parcelasrec'][$j]['ValorPago'] = $this->input->post('ValorPago' . $i);
 					$data['parcelasrec'][$j]['DataPago'] = $this->input->post('DataPago' . $i);
+					$data['parcelasrec'][$j]['DataLanc'] = $this->input->post('DataLanc' . $i);
 					$data['parcelasrec'][$j]['Quitado'] = $this->input->post('Quitado' . $i);
 					$data['parcelasrec'][$j]['FormaPagamentoParcela'] = $this->input->post('FormaPagamentoParcela' . $i);
 					//$data['parcelasrec'][$j]['idSis_Usuario'] = $this->input->post('idSis_Usuario' . $i);
@@ -12121,6 +12160,7 @@ class Orcatrata extends CI_Controller {
                     for($j=1; $j <= $data['count']['PRCount']; $j++) {
                         $data['parcelasrec'][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimento'], 'barras');
                         $data['parcelasrec'][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPago'], 'barras');
+                        $data['parcelasrec'][$j]['DataLanc'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataLanc'], 'barras');
                     
 						$data['radio'] = array(
 							'Quitado' . $j => $this->basico->radio_checked($data['parcelasrec'][$j]['Quitado'], 'Quitado' . $j, 'NS'),
@@ -13031,6 +13071,7 @@ class Orcatrata extends CI_Controller {
                     $data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataVencimento'], 'mysql');
                     //$data['update']['parcelasrec']['alterar'][$j]['ValorPago'] = str_replace(',', '.', str_replace('.', '', $data['update']['parcelasrec']['alterar'][$j]['ValorPago']));
                     $data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataPago'], 'mysql');
+                    $data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataLanc'], 'mysql');
 					if($data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela']){
 						$data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'] = $data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'];
 					}else{
@@ -13047,7 +13088,9 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update']['parcelasrec']['alterar'][$j]['DataPago'];
 						}
-						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
+						if(!$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] || empty($data['update']['parcelasrec']['alterar'][$j]['DataLanc']) || $data['update']['parcelasrec']['alterar'][$j]['DataPago'] == "0000-00-00"){
+							$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
+						}
 					} else {
 						$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = "0000-00-00";
 						$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = "0000-00-00";
