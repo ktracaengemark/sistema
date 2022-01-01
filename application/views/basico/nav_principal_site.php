@@ -13,7 +13,7 @@
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right navbar-fonte">
 				<li class="nav-item">
-					<a class="nav-link" href="<?php echo base_url() . '../enkontraki/contact.php#banner';?>">Enkontraki</a>
+					<a class="nav-link" href="<?php echo base_url() . '../enkontraki/contact.php#banner';?>">Home</a>
 				</li>
 				<!--
 				<li class="nav-item">
@@ -41,10 +41,12 @@
 							<a class="dropdown-item" href="../../enkontraki/pesquisar.php">Pesquisar</a>
 						</li>
 						<li role="separator" class="divider"></li>
+						<!--
 						<li>
-							<a class="dropdown-item" href="<?php echo base_url() ?>loginempresa/registrar">Cadastrar</a>
+							<a class="dropdown-item" href="<?php #echo base_url() ?>loginempresa/registrar">Cadastrar</a>
 						</li>
 						<li role="separator" class="divider"></li>
+						-->
 						<li>
 							<a class="dropdown-item" href="<?php echo base_url() ?>login/index2">Acessar</a>
 						</li>
