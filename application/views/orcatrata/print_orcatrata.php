@@ -3,7 +3,14 @@
 		if(isset($_SESSION['bd']['Whatsapp']) && $_SESSION['bd']['Whatsapp'] == "S"){
 			if(isset($whatsapp)){
 				//echo "<script>window.open('https://api.whatsapp.com/send?phone=55".$_SESSION['bd']['CelularCliente']."&text=Ola ".$_SESSION['bd']['NomeCliente'].". Pedido *".$_SESSION['bd']['idApp_OrcaTrata']."* . Acesse o link abaixo, faca login e acompanhe seu pedido pelo nosso site. https://enkontraki.com.br/".$_SESSION['bd']['Site']."','_blank');</script>";
-				echo "<script>window.open('https://api.whatsapp.com/send?phone=55".$cliente['CelularCliente']."&text=".$whatsapp."','_blank');</script>";
+				echo "
+					<script>
+						var	win = window.open('https://api.whatsapp.com/send?phone=55".$cliente['CelularCliente']."&text=".$whatsapp."','1366002941508','width=500,height=200,left=375,top=300','_blank');
+						/*
+						setTimeout(function () { win.close();}, 300);
+						*/
+					</script>
+				";
 			}
 		}
 		unset($_SESSION['bd'], $whatsapp);	
