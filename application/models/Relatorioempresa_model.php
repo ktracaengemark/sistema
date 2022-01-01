@@ -2276,6 +2276,7 @@ class Relatorioempresa_model extends CI_Model {
                 E.idSis_Empresa,
                 E.NomeEmpresa,
 				E.Site,
+				E.Inativo,
                 E.EnderecoEmpresa,
                 E.BairroEmpresa,
 				CE.CategoriaEmpresa,
@@ -2293,7 +2294,8 @@ class Relatorioempresa_model extends CI_Model {
 				' . $data['NomeEmpresa'] . ' 
 				' . $data['CategoriaEmpresa'] . ' AND
 				E.idSis_Empresa != "1" AND
-				E.idSis_Empresa != "5" 
+				E.idSis_Empresa != "5"  AND
+				E.Inativo = 0
 			ORDER BY
                 ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
         ');

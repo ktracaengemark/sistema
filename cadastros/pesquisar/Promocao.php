@@ -76,6 +76,7 @@ if (isset($_GET['promocao'])) {
 				EP.idSis_Empresa,
 				EP.NomeEmpresa,
 				EP.Site,
+				EP.Inativo,
 				EP.Arquivo AS Arquivo_Empresa
 			FROM 
 				Tab_Promocao AS TPR
@@ -89,7 +90,10 @@ if (isset($_GET['promocao'])) {
 				TPR.DataFimProm >= "'.$dataatual.'" AND 
 				TD.id_Dia_Prom = "'.$dia_da_semana.'" AND
 				TD.Aberto_Prom = "S" AND
-				TPR.VendaSite = "S"
+				TPR.VendaSite = "S" AND
+				EP.idSis_Empresa != "1" AND
+				EP.idSis_Empresa != "5"  AND
+				EP.Inativo = 0
 			GROUP BY
 				TPR.idTab_Promocao
 			ORDER BY 

@@ -60,6 +60,7 @@ if (isset($_GET['empresa'])) {
 				EP.NomeEmpresa,
 				EP.Atuacao,
 				EP.Site,
+				EP.Inativo,
 				EP.Arquivo AS Arquivo_Empresa
 			FROM
 				Sis_Empresa AS EP 
@@ -67,7 +68,8 @@ if (isset($_GET['empresa'])) {
 			WHERE 
 				(' . $query0 . ' ' . $filtro1 . ' ' . $filtro2 . ') AND
 				EP.idSis_Empresa != "1" AND
-				EP.idSis_Empresa != "5"
+				EP.idSis_Empresa != "5"  AND
+				EP.Inativo = 0
 			ORDER BY 
 				EP.NomeEmpresa ASC
 			LIMIT 50

@@ -88,6 +88,7 @@ if (isset($_GET['produto'])) {
 				EP.idSis_Empresa,
 				EP.NomeEmpresa,
 				EP.Site,
+				EP.Inativo,
 				EP.Arquivo AS Arquivo_Empresa
 			FROM 
 				Tab_Valor AS TV
@@ -98,7 +99,10 @@ if (isset($_GET['produto'])) {
 				(' . $query0 . '' . $filtro1 . '' . $filtro2 . ') AND
 				TV.Desconto = "1" AND
 				TV.AtivoPreco = "S" AND
-				TV.VendaSitePreco = "S"
+				TV.VendaSitePreco = "S" AND
+				EP.idSis_Empresa != "1" AND
+				EP.idSis_Empresa != "5"  AND
+				EP.Inativo = 0
 			ORDER BY 
 				TPS.Nome_Prod ASC
 			LIMIT 50
