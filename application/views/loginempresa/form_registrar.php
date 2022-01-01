@@ -19,15 +19,21 @@
 												<?php echo form_error('NomeEmpresa'); ?>
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-												<label for="Site" >Site ( Não colocar ".com.br"):</label>
-												<input type="text" class="form-control" id="Site" maxlength="45" 
+												<label for="Site" >Site (Não colocar ".com.br"):</label>
+												<input type="text" class="form-control" id="Site" maxlength="45" placeholder="Ex: bolosdatitia"
 														name="Site" value="<?php echo $query['Site']; ?>">
 												<?php echo form_error('Site'); ?>
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-												<label for="CepEmpresa" >Cep da Empresa:</label>
-												<input type="text" class="form-control" id="CepEmpresa" maxlength="8" 
-														name="CepEmpresa" value="<?php echo $query['CepEmpresa']; ?>">
+												<label for="CepEmpresa">Cep:</label><br>
+												<div class="input-group">
+													<input type="text" class="form-control Cep" id="CepEmpresa" maxlength="8" name="CepEmpresa" value="<?php echo $query['CepEmpresa']; ?>">
+													<span class="input-group-btn">
+														<button class="btn btn-success btn-md" type="button" onclick="BuscaEndEmpresa()">
+															Buscar
+														</button>
+													</span>
+												</div>
 												<?php echo form_error('CepEmpresa'); ?>
 											</div>
 										</div>
@@ -119,7 +125,7 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
-												<label for="CelularAdmin" >Celular / (Login):</label>
+												<label for="CelularAdmin" >Celular(Login) com DDD:</label>
 												<input type="text" class="form-control Celular Celular" id="CelularAdmin" maxlength="11"
 													   name="CelularAdmin" placeholder="(XX)999999999" value="<?php echo $query['CelularAdmin']; ?>">
 												<?php echo form_error('CelularAdmin'); ?>

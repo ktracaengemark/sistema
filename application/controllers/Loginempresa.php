@@ -11,7 +11,7 @@ class Loginempresa extends CI_Controller {
 
         $this->load->model(array('Loginempresa_model', 'Basico_model', 'Associado_model', 'Cliente_model', 'Usuario_model', 'Empresa_model'));
         $this->load->helper(array('form', 'url'));
-        $this->load->library(array('basico', 'form_validation', 'user_agent'));
+        $this->load->library(array('basico', 'form_validation', 'user_agent', 'email'));
         $this->load->driver('session');
 
         #load header view
@@ -258,8 +258,8 @@ class Loginempresa extends CI_Controller {
 		$this->form_validation->set_rules('NomeAdmin', 'Nome do Administrador', 'required|trim');
         $this->form_validation->set_rules('Senha', 'Senha', 'required|trim');
         $this->form_validation->set_rules('Confirma', 'Confirmar Senha', 'required|trim|matches[Senha]');
-		$this->form_validation->set_rules('CelularAdmin', 'Celular', 'required|trim|is_unique[Sis_Empresa.CelularAdmin]');
-        $this->form_validation->set_rules('ConfirmaCelular', 'Confirmar Celular', 'required|trim|matches[CelularAdmin]');
+		$this->form_validation->set_rules('CelularAdmin', 'Celular', 'required|trim|is_unique[Sis_Empresa.CelularAdmin]|valid_celular');
+		$this->form_validation->set_rules('ConfirmaCelular', 'Confirmar Celular', 'required|trim|matches[CelularAdmin]');
 		$this->form_validation->set_rules('Email', 'E-mail', 'required|trim|valid_email');
         $this->form_validation->set_rules('ConfirmaEmail', 'Confirmar Email', 'required|trim|matches[Email]');
 		//$this->form_validation->set_rules('CelularAdmin', 'Celular', 'required|trim|alpha_numeric_spaces|is_unique_duplo[Sis_Empresa.CelularAdmin.NomeEmpresa.' . $data['query']['NomeEmpresa'] . ']');
@@ -270,9 +270,8 @@ class Loginempresa extends CI_Controller {
 		#run form validation
         if ($this->form_validation->run() === FALSE) {
             #load loginempresa view
-            $this->load->view('loginempresa/form_registrar', $data);
-			} else {
-			  
+			$this->load->view('loginempresa/form_registrar', $data);
+		} else {
 			$data['query']['NomeEmpresa'] = trim(mb_strtoupper($data['query']['NomeEmpresa'], 'ISO-8859-1'));
 			$data['query']['EnderecoEmpresa'] = trim(mb_strtoupper($data['query']['EnderecoEmpresa'], 'ISO-8859-1'));
 			$data['query']['NumeroEmpresa'] = trim(mb_strtoupper($data['query']['NumeroEmpresa'], 'ISO-8859-1'));
@@ -292,7 +291,10 @@ class Loginempresa extends CI_Controller {
 			$data['query']['UsuarioEmpresa'] = $data['query']['CelularAdmin'];
 			$data['query']['DataCriacao'] = $this->basico->mascara_data($data['query']['DataCriacao'], 'mysql');
 			$data['query']['DataDeValidade'] = $this->basico->mascara_data($data['query']['DataDeValidade'], 'mysql');
-			$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');			
+			$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
+            if(!isset($data['query']['DataNascimento']) || empty($data['query']['DataNascimento'])){
+				$data['query']['DataNascimento'] = "0000-00-00";
+			}
 			$data['query']['Senha'] = md5($data['query']['Senha']);
 			//$data['query']['Senha'] = password_hash($data['query']['Senha'], PASSWORD_DEFAULT);
 			$data['query']['Codigo'] = md5(uniqid(time() . rand()));
@@ -496,6 +498,31 @@ class Loginempresa extends CI_Controller {
 							'Senha' => $data['query']['Senha'],
 							'Codigo' => $data['query']['Codigo'],
 							//'CpfUsuario' => $data['query']['CpfAdmin'],
+							'Cad_Orcam' => "S",
+							'Ver_Orcam' => "S",
+							'Edit_Orcam' => "S",
+							'Delet_Orcam' => "S",
+							'Cad_Prd' => "S",
+							'Ver_Prd' => "S",
+							'Edit_Prd' => "S",
+							'Delet_Prd' => "S",
+							'Rel_Orc' => "S",
+							'Rel_Pag' => "S",
+							'Rel_Prd' => "S",
+							'Rel_Prc' => "S",
+							'Rel_Com' => "S",
+							'Rel_Est' => "S",
+							'Bx_Orc' => "S",
+							'Bx_Pag' => "S",
+							'Bx_Prd' => "S",
+							'Bx_Prc' => "S",
+							'Cad_Agend' => "S",
+							'Ver_Agend' => "S",
+							'Edit_Agend' => "S",
+							'Delet_Agend' => "S",
+							'Permissao_Agend' => "2",
+							'Permissao_Orcam' => "2",
+							'Permissao_Comissao' => "3",
 							'Inativo' => "0",
 							'idTab_Modulo' => "1",
 							'Permissao' => "3"
@@ -770,6 +797,30 @@ class Loginempresa extends CI_Controller {
 							}			
 						}
 						#$this->load->library('email');
+
+						
+						//DADOS PARA ENVIO DE E-MAIL DE CONFIRMAÇÃO DE INSCRIÇÃO
+						$config['protocol'] = 'smtp';
+						$config['mailpath'] = "/usr/sbin/sendmail";
+						$config['smtp_host'] = 'smtp.zoho.com';
+						$config['smtp_user'] = 'contato@enkontraki.com.br';
+						$config['smtp_pass'] = '#20ContatoKtraca21!';
+						$config['charset'] = 'iso-8859-1';
+						$config['mailtype'] = 'html';
+						$config['wrapchars'] = '50';
+						$config['smtp_port'] = '587';
+						$config['smtp_crypto'] = 'tls';
+						$config['newline'] = "\r\n";
+
+						$this->email->initialize($config);
+
+						$this->email->from('contato@enkontraki.com.br', 'Enkontraki');
+						$this->email->to($data['query']['Email']);
+
+						$this->email->subject('[Enkontraki] Criação da Empresa : ' . $data['query']['NomeEmpresa']);
+						$this->email->message('Olá ' . $data['query']['NomeAdmin'] . '! Seja muito bem vindo à Enkontraki!');
+
+						$this->email->send();						
 
 						#$this->email->from('contato@ktracaengemark.com.br', 'KTRACA Engenharia & Marketing');
 						#$this->email->to($data['query']['Email']);

@@ -4375,6 +4375,36 @@ function BuscaEndCliente() {
 	
 }
 
+function BuscaEndEmpresa() {
+	//alert('BuscaEndEmpresa - BuscaEndEmpresa');
+	var Dados=$(this).serialize();
+	var CepDestino=$('#CepEmpresa').val();
+	$.ajax({
+		url: 'https://viacep.com.br/ws/'+CepDestino+'/json/',
+		method:'get',
+		dataType:'json',
+		data: Dados,
+		success:function(Dados){
+			//console.log(Dados);
+			$('.ResultCep').html('').append('<div>'+Dados.logradouro+','+Dados.bairro+'-'+Dados.localidade+'-'+Dados.uf+'</div>');			
+			
+			$('#EnderecoEmpresa').val(Dados.logradouro);
+			$('#NumeroEmpresa').val('');
+			$('#ComplementoEmpresa').val('');
+			$('#BairroEmpresa').val(Dados.bairro);
+			$('#MunicipioEmpresa').val(Dados.localidade);
+			$('#EstadoEmpresa').val(Dados.uf);
+	
+		},
+		error:function(Dados){
+			//console.log('erro');
+			alert('Cep não encontrado. Confira o Cep e Tente Novamente');
+			$('#CepEmpresa').val(CepDestino);
+		}
+	});
+	
+}
+
 function Procuraendereco() {
 	//alert('Procuraendereco - funcionando');
 	

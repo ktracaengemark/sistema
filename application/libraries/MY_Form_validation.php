@@ -167,8 +167,9 @@ class MY_Form_validation extends CI_Form_validation {
 
 		$celular = strlen($data);
 
-		if ( $celular != 11) {
-
+		if ( $celular == 11) {
+			return TRUE;
+		}else{
 			return FALSE;
 		}
        
