@@ -98,6 +98,7 @@
 														<label for="DataNascimento">Data de Nascimento:</label>
 														<input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
 															   name="DataNascimento" placeholder="DD/MM/AAAA" value="<?php echo $query['DataNascimento']; ?>">
+														<?php echo form_error('DataNascimento'); ?>
 													</div>						
 												</div>
 											</div>
@@ -159,6 +160,7 @@
 															<label for="DataEmAssociado">Data de Emissão:</label>
 															<input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
 																   name="DataEmAssociado" placeholder="DD/MM/AAAA" value="<?php echo $query['DataEmAssociado']; ?>">
+															<?php echo form_error('DataEmAssociado'); ?>
 														</div>
 														<div class="col-md-1">
 															<label for="EstadoEmAssociado">Est.:</label>

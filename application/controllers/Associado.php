@@ -138,12 +138,31 @@ class Associado extends CI_Controller {
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('associado/form_associadoalterar', $data);
         } else {
-
+		
+		
             $data['query']['Nome'] = trim(mb_strtoupper($nomeassociado1, 'ISO-8859-1'));
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
 			$data['query']['DataEmAssociado'] = $this->basico->mascara_data($data['query']['DataEmAssociado'], 'mysql');
-            #$data['query']['Obs'] = nl2br($data['query']['Obs']);
-
+            if(!isset($data['query']['DataNascimento']) || empty($data['query']['DataNascimento'])){
+				$data['query']['DataNascimento'] = "0000-00-00";
+			}
+            if(!isset($data['query']['DataEmAssociado']) || empty($data['query']['DataEmAssociado'])){
+				$data['query']['DataEmAssociado'] = "0000-00-00";
+			}
+			
+			#$data['query']['Obs'] = nl2br($data['query']['Obs']);
+			/*
+			echo '<br>';
+			echo "<pre>";
+			print_r($data['query']);
+			echo '<br>';
+			print_r($data['query']['DataNascimento']);
+			echo '<br>';
+			print_r($data['query']['DataEmAssociado']);
+			echo '<br>';
+			echo "</pre>";
+			exit ();
+			*/
 
             $data['anterior'] = $this->Associado_model->get_associado($data['query']['idSis_Associado']);
             $data['campos'] = array_keys($data['query']);
