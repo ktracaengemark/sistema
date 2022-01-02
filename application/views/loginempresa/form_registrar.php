@@ -287,7 +287,7 @@
 											$('.Close').hide();
 										}
 									}
-									</script>
+								</script>
 								</form>
 							</div>
 						</div>

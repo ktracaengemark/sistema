@@ -5,7 +5,8 @@
 	<div class="row">
 		<div class="col-sm-offset-2 col-md-8">
 		<?php echo form_open_multipart($form_open_path); ?>
-	
+
+					
 			<div class="row">
 					
 				<div class="col-md-12">	
@@ -82,24 +83,22 @@
 									</div>
 									<div class="form-group">
 										<div class="row">
-											<div class="col-md-4">
-												<label for="Conta">Chave PIX / Conta:</label>
-												<input type="text" class="form-control" id="Conta" maxlength="100"
-														autofocus name="Conta"  value="<?php echo $query['Conta']; ?>">
-												<?php echo form_error('Conta'); ?>
+											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+												<label for="Nome">Celular(Login) cadastrado:</label>
+												<input type="text" class="form-control" readonly='' value="<?php echo $_SESSION['Query']['CelularAssociado']; ?>">
 											</div>
-											<div class="col-md-4">
-												<label for="Banco">Banco:</label>
-												<input type="text" class="form-control" id="Banco" maxlength="100"
-														 name="Banco"  value="<?php echo $query['Banco']; ?>">
-												<?php echo form_error('Banco'); ?>
+											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+												<label for="CelularAssociado">Novo Celular(Login) com DDD*</label>
+												<input type="text" class="form-control Celular CelularVariavel" id="CelularAssociado" maxlength="11"
+													   name="CelularAssociado" placeholder="(XX)999999999" value="<?php echo $confirma['CelularAssociado']; ?>">
+												<?php echo form_error('CelularAssociado'); ?>
 											</div>
-											<div class="col-md-4">
-												<label for="Agencia">Agencia:</label>
-												<input type="text" class="form-control" id="Agencia" maxlength="100" 
-														 name="Agencia"  value="<?php echo $query['Agencia']; ?>">
-												<?php echo form_error('Agencia'); ?>
-											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+												<label for="ConfirmaCelular">Confirmar Novo Celular:</label>
+												<input type="text" class="form-control Celular Celular" id="ConfirmaCelular" maxlength="11"
+													   name="ConfirmaCelular" placeholder="(XX)999999999" value="<?php echo $confirma['ConfirmaCelular']; ?>">
+												<?php echo form_error('ConfirmaCelular'); ?>
+											</div>	
 										</div>
 									</div>
 								</div>
@@ -118,8 +117,8 @@
 						</div>
 					</div>							
 				</div>	
-			</div>
-		</form>	
+			</div>				
+		</form>
 		</div>
 	</div>	
 </div>

@@ -307,7 +307,7 @@ class Usuario2 extends CI_Controller {
         $data['query'] = $this->input->post(array(
 			'idSis_Empresa',
 			'idSis_Usuario',
-            'Nome',
+            //'Nome',
             'Banco',
             'Agencia',
             'Conta',
@@ -328,7 +328,7 @@ class Usuario2 extends CI_Controller {
 			'a'=>'a', 'î'=>'i', 'â'=>'a', '?'=>'s', '?'=>'t', 'A'=>'A', 'Î'=>'I', 'Â'=>'A', '?'=>'S', '?'=>'T',
 		);
 
-		$nomeusuario1 = preg_replace("/[^a-zA-Z]/", " ", strtr($data['query']['Nome'], $caracteres_sem_acento));		
+		//$nomeusuario1 = preg_replace("/[^a-zA-Z]/", " ", strtr($data['query']['Nome'], $caracteres_sem_acento));		
 
         $data['titulo'] = 'Editar Conta';
         $data['form_open_path'] = 'usuario2/alterarconta';
@@ -349,7 +349,7 @@ class Usuario2 extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $this->form_validation->set_rules('Nome', 'Nome do Usuário', 'required|trim');
+        //$this->form_validation->set_rules('Nome', 'Nome do Usuário', 'required|trim');
         $this->form_validation->set_rules('Conta', 'Chave Pix / Conta', 'required|trim');
 
         #run form validation
@@ -357,7 +357,7 @@ class Usuario2 extends CI_Controller {
             $this->load->view('usuario/form_usuarioconta', $data);
         } else {
 
-            $data['query']['Nome'] = trim(mb_strtoupper($nomeusuario1, 'ISO-8859-1'));
+            //$data['query']['Nome'] = trim(mb_strtoupper($nomeusuario1, 'ISO-8859-1'));
 
 
             $data['anterior'] = $this->Usuario_model->get_usuario($data['query']['idSis_Usuario']);
@@ -367,6 +367,7 @@ class Usuario2 extends CI_Controller {
 
             if ($data['auditoriaitem'] && $this->Usuario_model->update_usuario($data['query'], $data['query']['idSis_Usuario']) === FALSE) {
                 $data['msg'] = '?m=1';
+				
                 redirect(base_url() . 'usuario2/prontuario/' . $data['query']['idSis_Usuario'] . $data['msg']);
                 exit();
             } else {
@@ -509,7 +510,7 @@ class Usuario2 extends CI_Controller {
 		), TRUE);
 
         if ($id) {
-            $_SESSION['Usuario'] = $data['query'] = $this->Usuario_model->get_usuario($id, TRUE);
+            $_SESSION['Query'] = $data['query'] = $this->Usuario_model->get_usuario($id, TRUE);
         }
 		
         if ($id)
@@ -638,7 +639,8 @@ class Usuario2 extends CI_Controller {
 							$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_Usuario', 'UPDATE', $data['auditoriaitem']);
 							$data['msg'] = '?m=1';
 						}
-
+						
+						unset($_SESSION['Query']);
 						redirect(base_url() . 'usuario2/prontuario/' . $data['file']['idSis_Usuario'] . $data['msg']);
 						exit();
 					}				
@@ -794,7 +796,7 @@ class Usuario2 extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $_SESSION['Usuario'] = $data['query'] = $this->Usuario_model->get_usuario($id, TRUE);
+        $data['query'] = $this->Usuario_model->get_usuario($id, TRUE);
         #$data['query'] = $this->Paciente_model->get_paciente($prontuario, TRUE);
         $data['titulo'] = 'Prontuário ' . $data['query']['Nome'];
         $data['panel'] = 'primary';

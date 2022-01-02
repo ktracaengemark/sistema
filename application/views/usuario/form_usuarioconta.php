@@ -26,6 +26,22 @@
 											</a>
 										</a>
 									</li>
+									<li role="separator" class="divider"></li>
+									<li>
+										<a <?php if (preg_match("/usuario2\/alterarconta\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+											<a href="<?php echo base_url() . 'usuario2/alterarconta/' . $_SESSION['Usuario']['idSis_Usuario']; ?>">
+												<span class="glyphicon glyphicon-edit"></span> Editar Conta Comissão
+											</a>
+										</a>
+									</li>
+									<li role="separator" class="divider"></li>
+									<li>
+										<a <?php if (preg_match("/usuario2\/alterarlogo\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+											<a href="<?php echo base_url() . 'usuario2/alterarlogo/' . $_SESSION['Usuario']['idSis_Usuario']; ?>">
+												<span class="glyphicon glyphicon-edit"></span> Alterar Foto
+											</a>
+										</a>
+									</li>
 								</ul>
 							</div>
 						</div>
@@ -35,10 +51,8 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-md-8">
-												<label for="Nome">Nome do Usuário:</label>
-												<input type="text" class="form-control" id="Nome" maxlength="45" readonly=''
-														 name="Nome"  value="<?php echo $query['Nome']; ?>">
-												<?php echo form_error('Nome'); ?>
+												<label for="Nome">Nome do Usuario:</label>
+												<input type="text" class="form-control" readonly='' value="<?php echo $_SESSION['Usuario']['Nome']; ?>">
 											</div>
 										</div>
 									</div>

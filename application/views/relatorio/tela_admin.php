@@ -618,7 +618,7 @@
 							<div class="row">
 								<div class="form-group col-md-12 text-left">	
 									<a class="container-img" href="<?php echo base_url() ?><?php echo $usuario; ?>/prontuario/<?php echo $_SESSION['log']['idSis_Usuario']; ?>" > 
-										<img class="img-circle img-responsive" width='200' height='200' alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Usuario']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Usuario']['Arquivo'] . ''; ?>">
+										<img class="img-circle img-responsive" width='200' height='200' alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Usuario']['idSis_Empresa'] . '/usuarios/miniatura/' . $query['Arquivo'] . ''; ?>">
 										<?php echo $_SESSION['log']['Nome']; ?>
 									</a>
 								</div>

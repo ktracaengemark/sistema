@@ -24,35 +24,31 @@
 											<li>
 												<a <?php if (preg_match("/associado\/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
 													<a href="<?php echo base_url() . 'associado/prontuario/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
-														<span class="glyphicon glyphicon-file"> </span>Ver Dados do Usuário
+														<span class="glyphicon glyphicon-file"> </span>Ver Dados do Associado
 													</a>
 												</a>
 											</li>
 											<li role="separator" class="divider"></li>
-											<?php if ($_SESSION['log']['idSis_Empresa'] == 5 ) { ?>
-												<li>
-													<a <?php if (preg_match("/associado\/associadoalterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-														<a href="<?php echo base_url() . 'associado/associadoalterar/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
-															<span class="glyphicon glyphicon-edit"></span> Editar Dados do Usuário
-														</a>
+											<li>
+												<a <?php if (preg_match("/associado\/associadoalterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+													<a href="<?php echo base_url() . 'associado/associadoalterar/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
+														<span class="glyphicon glyphicon-edit"></span> Alterar Dados do Associado
 													</a>
-												</li>
-												<li role="separator" class="divider"></li>
-												<!--
-												<li>
-													<a <?php #if (preg_match("/associado\/permissoes\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-														<a href="<?php #echo base_url() . 'associado/permissoes/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
-															<span class="glyphicon glyphicon-edit"></span> Editar Permissões do Usuário
-														</a>
-													</a>
-												</li>
-												<li role="separator" class="divider"></li>
-												-->
-											<?php } ?>
+												</a>
+											</li>
+											<li role="separator" class="divider"></li>
 											<li>
 												<a <?php if (preg_match("/associado\/alterarsenha\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
 													<a href="<?php echo base_url() . 'associado/alterarsenha/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
-														<span class="glyphicon glyphicon-edit"></span> Editar Senha
+														<span class="glyphicon glyphicon-edit"></span> Alterar Senha do Associado
+													</a>
+												</a>
+											</li>
+											<li role="separator" class="divider"></li>
+											<li>
+												<a <?php if (preg_match("/associado\/alterarcelular\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+													<a href="<?php echo base_url() . 'associado/alterarcelular/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
+														<span class="glyphicon glyphicon-edit"></span> Alterar Celular do Associado
 													</a>
 												</a>
 											</li>
@@ -60,7 +56,7 @@
 											<li>
 												<a <?php if (preg_match("/associado\/alterarconta\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
 													<a href="<?php echo base_url() . 'associado/alterarconta/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
-														<span class="glyphicon glyphicon-edit"></span> Editar Conta Comissão
+														<span class="glyphicon glyphicon-edit"></span> Alterar Conta Comissão
 													</a>
 												</a>
 											</li>
@@ -71,7 +67,7 @@
 														<span class="glyphicon glyphicon-edit"></span> Alterar Foto
 													</a>
 												</a>
-											</li>									
+											</li>
 										</ul>
 									</div>
 								</div>
@@ -86,14 +82,6 @@
 																autofocus name="Nome"  value="<?php echo $query['Nome']; ?>">
 														<?php echo form_error('Nome'); ?>
 													</div>
-													<!--
-													<div class="col-md-3">
-														<label for="CelularAssociado">Celular*</label>
-														<input type="text" class="form-control Celular CelularVariavel" id="CelularAssociado" maxlength="11" <?php #echo $readonly; ?>
-															   name="CelularAssociado" placeholder="(XX)999999999" value="<?php #echo $query['CelularAssociado']; ?>">
-														<?php #echo form_error('CelularAssociado'); ?>
-													</div>
-													-->
 													<div class="col-md-3">
 														<label for="DataNascimento">Data de Nascimento:</label>
 														<input type="text" class="form-control Date" maxlength="10" <?php echo $readonly; ?>
@@ -203,8 +191,8 @@
 									</div>
 									<div class="form-group">
 										<div class="row">
-											<input type="hidden" name="idSis_Associado" value="<?php echo $_SESSION['Query']['idSis_Associado']; ?>">
-											<input type="hidden" name="idSis_Empresa" value="<?php echo $_SESSION['Query']['idSis_Empresa']; ?>">
+											<input type="hidden" name="idSis_Associado" value="<?php echo $query['idSis_Associado']; ?>">
+											<input type="hidden" name="idSis_Empresa" value="<?php echo $query['idSis_Empresa']; ?>">
 											<?php if ($metodo == 2) { ?>
 
 												<div class="col-md-6">

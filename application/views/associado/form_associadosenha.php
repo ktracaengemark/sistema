@@ -10,7 +10,7 @@
 			<div class="row">
 					
 				<div class="col-md-12">	
-					<?php echo validation_errors(); ?>
+					<?php #echo validation_errors(); ?>
 
 					<div class="panel panel-<?php echo $panel; ?>">
 
@@ -31,7 +31,7 @@
 									<li>
 										<a <?php if (preg_match("/associado\/associadoalterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
 											<a href="<?php echo base_url() . 'associado/associadoalterar/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
-												<span class="glyphicon glyphicon-edit"></span> Editar Dados do Associado
+												<span class="glyphicon glyphicon-edit"></span> Alterar Dados do Associado
 											</a>
 										</a>
 									</li>
@@ -39,7 +39,15 @@
 									<li>
 										<a <?php if (preg_match("/associado\/alterarsenha\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
 											<a href="<?php echo base_url() . 'associado/alterarsenha/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
-												<span class="glyphicon glyphicon-edit"></span> Editar Senha do Associado
+												<span class="glyphicon glyphicon-edit"></span> Alterar Senha do Associado
+											</a>
+										</a>
+									</li>
+									<li role="separator" class="divider"></li>
+									<li>
+										<a <?php if (preg_match("/associado\/alterarcelular\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+											<a href="<?php echo base_url() . 'associado/alterarcelular/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
+												<span class="glyphicon glyphicon-edit"></span> Alterar Celular do Associado
 											</a>
 										</a>
 									</li>
@@ -47,7 +55,7 @@
 									<li>
 										<a <?php if (preg_match("/associado\/alterarconta\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
 											<a href="<?php echo base_url() . 'associado/alterarconta/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
-												<span class="glyphicon glyphicon-edit"></span> Editar Conta Comissão
+												<span class="glyphicon glyphicon-edit"></span> Alterar Conta Comissão
 											</a>
 										</a>
 									</li>
@@ -68,33 +76,45 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-md-8">
-												<label for="Nome">Nome do Usuário:</label>
-												<input type="text" class="form-control" id="Nome" maxlength="45" readonly=''
-														autofocus name="Nome"  value="<?php echo $query['Nome']; ?>">
-												<?php echo form_error('Nome'); ?>
+												<label for="Nome">Nome do Associado:</label>
+												<input type="text" class="form-control" readonly='' value="<?php echo $_SESSION['Usuario']['Nome']; ?>">
 											</div>
 										</div>
 									</div>
 									<div class="form-group">
-										<div class="row">
-											<div class="col-md-4">
-												<label for="CelularAssociado">Celular / (Login)*</label>
-												<input type="text" class="form-control Celular CelularVariavel" id="CelularAssociado" maxlength="11" <?php echo $readonly; ?>
-													   name="CelularAssociado" placeholder="(XX)999999999" value="<?php echo $query['CelularAssociado']; ?>">
-												<?php echo form_error('CelularAssociado'); ?>
-											</div>													
-											<div class="col-md-4">
-												<label for="Senha">Senha:</label>
-												<input type="password" class="form-control" id="Senha" maxlength="45"
-													   name="Senha" value="">
-												<?php echo form_error('Senha'); ?>
+										<div class="row">		
+											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+												<label  >Digite a Nova Senha</label>
+												<div class="input-group">
+													<input type="password" name="Senha" id="Senha" placeholder="Digite uma senha" class="form-control btn-sm " value="<?php echo $confirma['Senha']; ?>"><br>
+													<span class="input-group-btn">
+														<button class="btn btn-info btn-md " type="button" onclick="mostrarSenha()">
+															
+															<span class="Mostrar glyphicon glyphicon-eye-open"></span>
+															
+															<span class="NMostrar glyphicon glyphicon-eye-close"></span>
+															
+														</button>
+													</span>
+												</div>
+												<?php echo form_error('Senha'); ?>					
 											</div>
-											<div class="col-md-4">
-												<label for="Senha">Confirmar Senha:</label>
-												<input type="password" class="form-control" id="Confirma" maxlength="45"
-													   name="Confirma" value="">
-												<?php echo form_error('Confirma'); ?>
-											</div>													
+											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+												<label  >Confirmar Nova Senha</label>
+												<div class="input-group">
+													<input type="password" name="Confirma" id="Confirma" placeholder="Digite a senha novamente" class="form-control btn-sm " value="<?php echo $confirma['Confirma']; ?>"><br>
+													<span class="input-group-btn">
+														<button class="btn btn-info btn-md " type="button" onclick="confirmarSenha()">
+															
+															<span class="Open glyphicon glyphicon-eye-open"></span>
+															
+															<span class="Close glyphicon glyphicon-eye-close"></span>
+															
+														</button>
+													</span>
+												</div>
+												<?php echo form_error('Confirma'); ?>					
+											</div>	
 										</div>
 									</div>
 								</div>
@@ -114,7 +134,32 @@
 					</div>							
 				</div>	
 			</div>
-				
+			<script>
+				function mostrarSenha(){
+					var tipo = document.getElementById("Senha");
+					if(tipo.type == "password"){
+						tipo.type = "text";
+						$('.Mostrar').hide();
+						$('.NMostrar').show();
+					}else{
+						tipo.type = "password";
+						$('.Mostrar').show();
+						$('.NMostrar').hide();
+					}
+				}
+				function confirmarSenha(){
+					var tipo = document.getElementById("Confirma");
+					if(tipo.type == "password"){
+						tipo.type = "text";
+						$('.Open').hide();
+						$('.Close').show();
+					}else{
+						tipo.type = "password";
+						$('.Open').show();
+						$('.Close').hide();
+					}
+				}
+			</script>				
 		</form>
 		</div>
 	</div>	

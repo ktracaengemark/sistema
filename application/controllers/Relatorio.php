@@ -13,7 +13,7 @@ class Relatorio extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation', 'pagination'));
-        $this->load->model(array('Basico_model', 'Cliente_model', 'Relatorio_model', 'Empresa_model', 'Loginempresa_model'));
+        $this->load->model(array('Basico_model', 'Cliente_model', 'Relatorio_model', 'Empresa_model', 'Loginempresa_model', 'Associado_model', 'Usuario_model'));
         $this->load->driver('session');
 
         #load header view
@@ -60,16 +60,21 @@ class Relatorio extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
+        if($_SESSION['log']['idSis_Empresa'] == 5){
+			$data['query'] = $this->Associado_model->get_associado($_SESSION['log']['idSis_Usuario'], TRUE);
+		}else{
+			$data['query'] = $this->Usuario_model->get_usuario($_SESSION['log']['idSis_Usuario'], TRUE);
+		}
 
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-        $data['titulo1'] = 'Cadastrar';
+		$data['titulo1'] = 'Cadastrar';
 		$data['titulo2'] = 'Finanças & Estoque';
 		$data['titulo3'] = 'Relatório 3';
 		$data['titulo4'] = 'Comissão';
 		
 		$data['collapse'] = '';
 		$data['collapse1'] = 'class="collapse"';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 		
         #run form validation
         if ($this->form_validation->run() !== FALSE) {

@@ -24,7 +24,7 @@
 							<li>
 								<a <?php if (preg_match("/associado\/associadoalterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
 									<a href="<?php echo base_url() . 'associado/associadoalterar/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
-										<span class="glyphicon glyphicon-edit"></span> Editar Dados do Associado
+										<span class="glyphicon glyphicon-edit"></span> Alterar Dados do Associado
 									</a>
 								</a>
 							</li>
@@ -32,7 +32,15 @@
 							<li>
 								<a <?php if (preg_match("/associado\/alterarsenha\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
 									<a href="<?php echo base_url() . 'associado/alterarsenha/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
-										<span class="glyphicon glyphicon-edit"></span> Editar Senha do Associado
+										<span class="glyphicon glyphicon-edit"></span> Alterar Senha do Associado
+									</a>
+								</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li>
+								<a <?php if (preg_match("/associado\/alterarcelular\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+									<a href="<?php echo base_url() . 'associado/alterarcelular/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
+										<span class="glyphicon glyphicon-edit"></span> Alterar Celular do Associado
 									</a>
 								</a>
 							</li>
@@ -40,7 +48,7 @@
 							<li>
 								<a <?php if (preg_match("/associado\/alterarconta\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
 									<a href="<?php echo base_url() . 'associado/alterarconta/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
-										<span class="glyphicon glyphicon-edit"></span> Editar Conta Comissão
+										<span class="glyphicon glyphicon-edit"></span> Alterar Conta Comissão
 									</a>
 								</a>
 							</li>
@@ -65,7 +73,7 @@
 									<div class="row">	
 										<div class="col-sm-offset-2 col-md-10 " align="left"> 
 											<a href="<?php echo base_url() . 'associado/alterarlogo/' . $_SESSION['Usuario']['idSis_Associado']; ?>">
-												<img alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Usuario']['Arquivo'] . ''; ?>" 
+												<img alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/' . $query['Arquivo'] . ''; ?>" 
 												class="img-circle img-responsive" width='200'>
 											</a>	
 										</div>

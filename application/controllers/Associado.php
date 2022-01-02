@@ -57,7 +57,6 @@ class Associado extends CI_Controller {
 			'idSis_Associado',
             'Nome',
             'DataNascimento',
-            //'CelularAssociado',
             'Email',
 			'Sexo',
 			'Inativo',
@@ -74,7 +73,7 @@ class Associado extends CI_Controller {
         ), TRUE);
 
         if ($id) {
-            $_SESSION['Query'] = $data['query'] = $this->Associado_model->get_associado($id);
+            $data['query'] = $this->Associado_model->get_associado($id);
             $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'barras');
 			$data['query']['DataEmAssociado'] = $this->basico->mascara_data($data['query']['DataEmAssociado'], 'barras');
         }
@@ -126,12 +125,9 @@ class Associado extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        #$this->form_validation->set_rules('Nome', 'Nome do Responsável', 'required|trim|is_unique_duplo[Sis_Associado.Nome.DataNascimento.' . $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql') . ']');
         $this->form_validation->set_rules('Nome', 'Nome do Associado', 'required|trim');
         $this->form_validation->set_rules('DataNascimento', 'Data de Nascimento', 'trim|valid_date');
         $this->form_validation->set_rules('DataEmAssociado', 'Data de Emissão', 'trim|valid_date');
-		//$this->form_validation->set_rules('CelularAssociado', 'CelularAssociado', 'required|trim');
-		//$this->form_validation->set_rules('CelularAssociado', 'Celular do Associado', 'required|trim|is_unique_by_id_empresa[Sis_Associado.CelularAssociado.' . $data['query']['idSis_Associado'] . '.idSis_Empresa.' . $data['query']['idSis_Empresa'] . ']');
         $this->form_validation->set_rules('Email', 'E-mail', 'trim|valid_email');	
 
         #run form validation
@@ -171,7 +167,7 @@ class Associado extends CI_Controller {
 
             if ($data['auditoriaitem'] && $this->Associado_model->update_associado($data['query'], $data['query']['idSis_Associado']) === FALSE) {
                 $data['msg'] = '?m=1';
-				unset($_SESSION['Query']);
+				
 				redirect(base_url() . 'associado/prontuario/' . $data['query']['idSis_Associado'] . $data['msg']);
                 exit();
             } else {
@@ -182,7 +178,7 @@ class Associado extends CI_Controller {
                     $data['auditoria'] = $this->Basico_model->set_auditoriaempresa($data['auditoriaitem'], 'Sis_Associado', 'UPDATE', $data['auditoriaitem']);
                     $data['msg'] = '?m=1';
                 }
-				unset($_SESSION['Query']);
+				
                 redirect(base_url() . 'associado/prontuario/' . $data['query']['idSis_Associado'] . $data['msg']);
                 exit();
             }
@@ -191,7 +187,7 @@ class Associado extends CI_Controller {
         $this->load->view('basico/footer');
     }
 
-    public function alterarsenha($id = FALSE) {
+    public function alterarcelular($id = FALSE) {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -205,36 +201,25 @@ class Associado extends CI_Controller {
         $data['query'] = $this->input->post(array(
 			'idSis_Empresa',
 			'idSis_Associado',
-            'Nome',
-            'CelularAssociado',
-            'Senha',
         ), TRUE);
+		
+        $data['confirma'] = $this->input->post(array(
+            'CelularAssociado',
+            'ConfirmaCelular',
+        ), TRUE);		
 
         if ($id) {
 			$_SESSION['Query'] = $data['query'] = $this->Associado_model->get_associado($id);
 		}
 
-		$caracteres_sem_acento = array(
-			'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
-			'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
-			'Ï'=>'I', 'Ñ'=>'N', 'N'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U',
-			'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss','à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a',
-			'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i',
-			'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'n'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u',
-			'ú'=>'u', 'û'=>'u', 'ü'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', 'ƒ'=>'f',
-			'a'=>'a', 'î'=>'i', 'â'=>'a', '?'=>'s', '?'=>'t', 'A'=>'A', 'Î'=>'I', 'Â'=>'A', '?'=>'S', '?'=>'T',
-		);
-
-		$nomeassociado1 = preg_replace("/[^a-zA-Z]/", " ", strtr($data['query']['Nome'], $caracteres_sem_acento));		
-
-        $data['titulo'] = 'Editar Senha';
-        $data['form_open_path'] = 'associado/alterarsenha';
+        $data['titulo'] = 'Editar Celular';
+        $data['form_open_path'] = 'associado/alterarcelular';
         $data['readonly'] = '';
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
 
-        if ($data['query']['Nome'] || $data['query']['CelularAssociado'])
+        if ($data['confirma']['CelularAssociado'])
             $data['collapse'] = '';
         else
             $data['collapse'] = 'class="collapse"';
@@ -246,34 +231,31 @@ class Associado extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $this->form_validation->set_rules('Nome', 'Nome do Responsável', 'required|trim');
-        $this->form_validation->set_rules('CelularAssociado', 'Celular do Associado', 'required|trim|is_unique_by_id_empresa[Sis_Associado.CelularAssociado.' . $data['query']['idSis_Associado'] . '.idSis_Empresa.' . $data['query']['idSis_Empresa'] . ']');
-        $this->form_validation->set_rules('Senha', 'Senha', 'required|trim');
-        $this->form_validation->set_rules('Confirma', 'Confirmar Senha', 'required|trim|matches[Senha]');		
+        $this->form_validation->set_rules('CelularAssociado', 'Celular do Associado', 'required|trim|is_unique_by_id_empresa[Sis_Associado.CelularAssociado.' . $data['query']['idSis_Associado'] . '.idSis_Empresa.' . $data['query']['idSis_Empresa'] . ']|valid_celular');
+		$this->form_validation->set_rules('ConfirmaCelular', 'Confirmar Celular', 'required|trim|matches[CelularAssociado]');	
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
-            $this->load->view('associado/form_associadosenha', $data);
+            $this->load->view('associado/form_associadocelular', $data);
         } else {
 
-        
-			if($_SESSION['Query']['CelularAssociado'] != $data['query']['CelularAssociado']){
+			
+			if($_SESSION['Query']['CelularAssociado'] != $data['confirma']['CelularAssociado']){
 				//trocou o celular 
-				//pesquiso se existe algum associado neste número 
-				$data['associado'] = $this->Associado_model->get_associado_celular($data['query']['CelularAssociado']);
+				//pesquiso se existe algum associado cadastrado com o novo número informado 
+				$data['associado'] = $this->Associado_model->get_associado_celular($data['confirma']['CelularAssociado']);
 
 				if($data['associado'] != FALSE){
 					//existe um associado usando este login
 					$data['msg'] = '?m=3';	
-					redirect(base_url() . 'associado/alterarsenha/' . $data['query']['idSis_Associado'] . $data['msg']);
+					redirect(base_url() . 'associado/alterarcelular/' . $data['query']['idSis_Associado'] . $data['msg']);
 					exit();					
 					
 				}else{
 					//não existe associado usando este login
-					$data['query']['Nome'] 		= trim(mb_strtoupper($nomeassociado1, 'ISO-8859-1'));
-					$data['query']['Senha'] 	= md5($data['query']['Senha']);
+					$data['query']['CelularAssociado'] = $data['confirma']['CelularAssociado'];
+					$data['query']['Associado'] = $data['confirma']['CelularAssociado'];
 					$data['query']['Codigo'] 	= md5(uniqid(time() . rand()));	
-					$data['query']['Associado'] = $data['query']['CelularAssociado'];
 
 					$data['anterior'] = $this->Associado_model->get_associado($data['query']['idSis_Associado']);
 					$data['campos'] = array_keys($data['query']);
@@ -305,9 +287,8 @@ class Associado extends CI_Controller {
 							$max = count($data['update']['cliente']['alterar']);
 							for($j=0;$j<$max;$j++) {
 							
-								$data['update']['cliente']['alterar'][$j]['CelularCliente'] = $data['query']['CelularAssociado'];
-								$data['update']['cliente']['alterar'][$j]['usuario'] 		= $data['query']['CelularAssociado'];
-								$data['update']['cliente']['alterar'][$j]['senha'] 			= $data['query']['Senha'];
+								$data['update']['cliente']['alterar'][$j]['CelularCliente'] = $data['confirma']['CelularAssociado'];
+								$data['update']['cliente']['alterar'][$j]['usuario'] 		= $data['confirma']['CelularAssociado'];
 								$data['update']['cliente']['alterar'][$j]['Codigo'] 		= $data['query']['Codigo'];
 
 								$data['update']['cliente']['bd'][$j] = $this->Cliente_model->update_cliente($data['update']['cliente']['alterar'][$j], $data['update']['cliente']['alterar'][$j]['idApp_Cliente']);
@@ -324,9 +305,8 @@ class Associado extends CI_Controller {
 
 							for($j=0;$j<$max_usuario;$j++) {
 							
-								$data['update']['usuario']['alterar'][$j]['CelularUsuario'] = $data['query']['CelularAssociado'];
-								$data['update']['usuario']['alterar'][$j]['Usuario'] 		= $data['query']['CelularAssociado'];
-								$data['update']['usuario']['alterar'][$j]['Senha'] 			= $data['query']['Senha'];
+								$data['update']['usuario']['alterar'][$j]['CelularUsuario'] = $data['confirma']['CelularAssociado'];
+								$data['update']['usuario']['alterar'][$j]['Usuario'] 		= $data['confirma']['CelularAssociado'];
 								$data['update']['usuario']['alterar'][$j]['Codigo'] 		= $data['query']['Codigo'];
 
 								$data['update']['usuario']['bd'][$j] = $this->Usuario_model->update_usuario($data['update']['usuario']['alterar'][$j], $data['update']['usuario']['alterar'][$j]['idSis_Usuario']);
@@ -343,102 +323,166 @@ class Associado extends CI_Controller {
 
 							for($j=0;$j<$max_empresa;$j++) {
 							
-								$data['update']['empresa']['alterar'][$j]['CelularAdmin'] 	= $data['query']['CelularAssociado'];
-								$data['update']['empresa']['alterar'][$j]['UsuarioEmpresa'] = $data['query']['CelularAssociado'];
-								$data['update']['empresa']['alterar'][$j]['Senha'] 			= $data['query']['Senha'];
+								$data['update']['empresa']['alterar'][$j]['CelularAdmin'] 	= $data['confirma']['CelularAssociado'];
+								$data['update']['empresa']['alterar'][$j]['UsuarioEmpresa'] = $data['confirma']['CelularAssociado'];
 								$data['update']['empresa']['alterar'][$j]['Codigo'] 		= $data['query']['Codigo'];
 
 								$data['update']['empresa']['bd'][$j] = $this->Empresa_model->update_empresa($data['update']['empresa']['alterar'][$j], $data['update']['empresa']['alterar'][$j]['idSis_Empresa']);
 									
 							}
 						}
-												
+						unset($data['confirma']['CelularAssociado']);
+						unset($data['confirma']['ConfirmaCelular']);
+						unset($_SESSION['Query']);
 						redirect(base_url() . 'associado/prontuario/' . $data['query']['idSis_Associado'] . $data['msg']);
 						exit();
 					}				
 				
 				}
 			}else{
-
-				$data['query']['Nome'] = trim(mb_strtoupper($nomeassociado1, 'ISO-8859-1'));
-				$data['query']['Senha'] = md5($data['query']['Senha']);
-				$data['query']['Codigo'] = md5(uniqid(time() . rand()));	
-
-
-				$data['anterior'] = $this->Associado_model->get_associado($data['query']['idSis_Associado']);
-				$data['campos'] = array_keys($data['query']);
-
-				$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idSis_Associado'], TRUE);
-
-				$data['update']['associado'] = $this->Associado_model->update_associado($data['query'], $data['query']['idSis_Associado']);
-				
-				if ($data['auditoriaitem'] && $data['update']['associado'] === FALSE) {
-					$data['msg'] = '?m=1';				
-
-					redirect(base_url() . 'associado/prontuario/' . $data['query']['idSis_Associado'] . $data['msg']);
-					exit();
-				} else {
-
-					if ($data['auditoriaitem'] === FALSE) {
-						$data['msg'] = '';
-					} else {
-						$data['auditoria'] = $this->Basico_model->set_auditoriaempresa($data['auditoriaitem'], 'Sis_Associado', 'UPDATE', $data['auditoriaitem']);
-						$data['msg'] = '?m=1';
-					}
-					
-					#### App_Cliente ####
-					$data['update']['cliente']['alterar'] = $this->Cliente_model->get_cliente_associado($data['query']['idSis_Associado']);
-					if (isset($data['update']['cliente']['alterar'])){
-
-						$max = count($data['update']['cliente']['alterar']);
-						for($j=0;$j<$max;$j++) {
-						
-							$data['update']['cliente']['alterar'][$j]['senha'] 	= $data['query']['Senha'];
-							$data['update']['cliente']['alterar'][$j]['Codigo'] = $data['query']['Codigo'];
-
-							$data['update']['cliente']['bd'][$j] = $this->Cliente_model->update_cliente($data['update']['cliente']['alterar'][$j], $data['update']['cliente']['alterar'][$j]['idApp_Cliente']);
-						
-						}
-					}				
-					
-					#### Sis_Usuario ####
-					$data['update']['usuario']['alterar'] = $this->Usuario_model->get_usuario_associado($data['query']['idSis_Associado']);
-					
-					if (isset($data['update']['usuario']['alterar'])){
-
-						$max_usuario = count($data['update']['usuario']['alterar']);
-
-						for($j=0;$j<$max_usuario;$j++) {
-						
-							$data['update']['usuario']['alterar'][$j]['Senha'] 	= $data['query']['Senha'];
-							$data['update']['usuario']['alterar'][$j]['Codigo'] = $data['query']['Codigo'];
-
-							$data['update']['usuario']['bd'][$j] = $this->Usuario_model->update_usuario($data['update']['usuario']['alterar'][$j], $data['update']['usuario']['alterar'][$j]['idSis_Usuario']);
-								
-						}
-					}
-					
-					#### Sis_Empresa ####
-					$data['update']['empresa']['alterar'] = $this->Empresa_model->get_empresa_associado($data['query']['idSis_Associado']);
-
-					if (isset($data['update']['empresa']['alterar'])){
-
-						$max_empresa = count($data['update']['empresa']['alterar']);
-
-						for($j=0;$j<$max_empresa;$j++) {
-						
-							$data['update']['empresa']['alterar'][$j]['Senha'] 			= $data['query']['Senha'];
-							$data['update']['empresa']['alterar'][$j]['Codigo'] 		= $data['query']['Codigo'];
-
-							$data['update']['empresa']['bd'][$j] = $this->Empresa_model->update_empresa($data['update']['empresa']['alterar'][$j], $data['update']['empresa']['alterar'][$j]['idSis_Empresa']);
-								
-						}
-					}
-										
-					redirect(base_url() . 'associado/prontuario/' . $data['query']['idSis_Associado'] . $data['msg']);
-					exit();
-				}
+				unset($data['confirma']['CelularAssociado']);
+				unset($data['confirma']['ConfirmaCelular']);
+				unset($_SESSION['Query']);
+				redirect(base_url() . 'associado/prontuario/' . $data['query']['idSis_Associado'] . $data['msg']);
+				exit();	
 			}
+        }
+
+        $this->load->view('basico/footer');
+    }
+
+    public function alterarsenha($id = FALSE) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Este Celular já está sendo usado como Login.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = $this->input->post(array(
+			'idSis_Empresa',
+			'idSis_Associado',
+        ), TRUE);
+		
+        $data['confirma'] = $this->input->post(array(
+            'Senha',
+            'Confirma',
+        ), TRUE);		
+
+        if ($id) {
+			$data['query'] = $this->Associado_model->get_associado($id);
+		}
+
+        $data['titulo'] = 'Editar Senha';
+        $data['form_open_path'] = 'associado/alterarsenha';
+        $data['readonly'] = '';
+        $data['disabled'] = '';
+        $data['panel'] = 'primary';
+        $data['metodo'] = 2;
+
+        if ($data['confirma']['Senha'])
+            $data['collapse'] = '';
+        else
+            $data['collapse'] = 'class="collapse"';
+
+        $data['nav_secundario'] = $this->load->view('associado/nav_secundario', $data, TRUE);
+
+        $data['sidebar'] = 'col-sm-3 col-md-2 sidebar';
+        $data['main'] = 'col-sm-7 col-sm-offset-3 col-md-8 col-md-offset-2 main';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+        $this->form_validation->set_rules('Senha', 'Senha', 'required|trim');
+        $this->form_validation->set_rules('Confirma', 'Confirmar Senha', 'required|trim|matches[Senha]');		
+
+        #run form validation
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('associado/form_associadosenha', $data);
+        } else {
+
+			unset($data['confirma']['Confirma']);
+
+			$data['query']['Senha'] = md5($data['confirma']['Senha']);
+			$data['query']['Codigo'] = md5(uniqid(time() . rand()));	
+
+
+			$data['anterior'] = $this->Associado_model->get_associado($data['query']['idSis_Associado']);
+			$data['campos'] = array_keys($data['query']);
+
+			$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idSis_Associado'], TRUE);
+
+			$data['update']['associado'] = $this->Associado_model->update_associado($data['query'], $data['query']['idSis_Associado']);
+			
+			if ($data['auditoriaitem'] && $data['update']['associado'] === FALSE) {
+				$data['msg'] = '?m=1';
+				
+				redirect(base_url() . 'associado/prontuario/' . $data['query']['idSis_Associado'] . $data['msg']);
+				exit();
+			} else {
+
+				if ($data['auditoriaitem'] === FALSE) {
+					$data['msg'] = '';
+				} else {
+					$data['auditoria'] = $this->Basico_model->set_auditoriaempresa($data['auditoriaitem'], 'Sis_Associado', 'UPDATE', $data['auditoriaitem']);
+					$data['msg'] = '?m=1';
+				}
+				
+				#### App_Cliente ####
+				$data['update']['cliente']['alterar'] = $this->Cliente_model->get_cliente_associado($data['query']['idSis_Associado']);
+				if (isset($data['update']['cliente']['alterar'])){
+
+					$max = count($data['update']['cliente']['alterar']);
+					for($j=0;$j<$max;$j++) {
+					
+						$data['update']['cliente']['alterar'][$j]['senha'] 	= $data['query']['Senha'];
+						$data['update']['cliente']['alterar'][$j]['Codigo'] = $data['query']['Codigo'];
+
+						$data['update']['cliente']['bd'][$j] = $this->Cliente_model->update_cliente($data['update']['cliente']['alterar'][$j], $data['update']['cliente']['alterar'][$j]['idApp_Cliente']);
+					
+					}
+				}				
+				
+				#### Sis_Usuario ####
+				$data['update']['usuario']['alterar'] = $this->Usuario_model->get_usuario_associado($data['query']['idSis_Associado']);
+				
+				if (isset($data['update']['usuario']['alterar'])){
+
+					$max_usuario = count($data['update']['usuario']['alterar']);
+
+					for($j=0;$j<$max_usuario;$j++) {
+					
+						$data['update']['usuario']['alterar'][$j]['Senha'] 	= $data['query']['Senha'];
+						$data['update']['usuario']['alterar'][$j]['Codigo'] = $data['query']['Codigo'];
+
+						$data['update']['usuario']['bd'][$j] = $this->Usuario_model->update_usuario($data['update']['usuario']['alterar'][$j], $data['update']['usuario']['alterar'][$j]['idSis_Usuario']);
+							
+					}
+				}
+				
+				#### Sis_Empresa ####
+				$data['update']['empresa']['alterar'] = $this->Empresa_model->get_empresa_associado($data['query']['idSis_Associado']);
+
+				if (isset($data['update']['empresa']['alterar'])){
+
+					$max_empresa = count($data['update']['empresa']['alterar']);
+
+					for($j=0;$j<$max_empresa;$j++) {
+					
+						$data['update']['empresa']['alterar'][$j]['Senha'] 			= $data['query']['Senha'];
+						$data['update']['empresa']['alterar'][$j]['Codigo'] 		= $data['query']['Codigo'];
+
+						$data['update']['empresa']['bd'][$j] = $this->Empresa_model->update_empresa($data['update']['empresa']['alterar'][$j], $data['update']['empresa']['alterar'][$j]['idSis_Empresa']);
+							
+					}
+				}
+								
+				redirect(base_url() . 'associado/prontuario/' . $data['query']['idSis_Associado'] . $data['msg']);
+				exit();
+			}
+			
         }
 
         $this->load->view('basico/footer');
@@ -456,7 +500,6 @@ class Associado extends CI_Controller {
         $data['query'] = $this->input->post(array(
 			'idSis_Empresa',
 			'idSis_Associado',
-            'Nome',
             'Banco',
             'Agencia',
             'Conta',
@@ -465,19 +508,6 @@ class Associado extends CI_Controller {
         if ($id) {
             $data['query'] = $this->Associado_model->get_associado($id);
         }
-
-		$caracteres_sem_acento = array(
-			'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
-			'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
-			'Ï'=>'I', 'Ñ'=>'N', 'N'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U',
-			'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss','à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a',
-			'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i',
-			'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'n'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u',
-			'ú'=>'u', 'û'=>'u', 'ü'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', 'ƒ'=>'f',
-			'a'=>'a', 'î'=>'i', 'â'=>'a', '?'=>'s', '?'=>'t', 'A'=>'A', 'Î'=>'I', 'Â'=>'A', '?'=>'S', '?'=>'T',
-		);
-
-		$nomeassociado1 = preg_replace("/[^a-zA-Z]/", " ", strtr($data['query']['Nome'], $caracteres_sem_acento));		
 
         $data['titulo'] = 'Editar Conta';
         $data['form_open_path'] = 'associado/alterarconta';
@@ -498,16 +528,12 @@ class Associado extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $this->form_validation->set_rules('Nome', 'Nome do Usuário', 'required|trim');
         $this->form_validation->set_rules('Conta', 'Chave Pix / Conta', 'required|trim');
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('associado/form_associadoconta', $data);
         } else {
-
-            $data['query']['Nome'] = trim(mb_strtoupper($nomeassociado1, 'ISO-8859-1'));
-
 
 			$data['anterior'] = $this->Associado_model->get_associado($data['query']['idSis_Associado']);
             $data['campos'] = array_keys($data['query']);
@@ -516,6 +542,7 @@ class Associado extends CI_Controller {
 
             if ($data['auditoriaitem'] && $this->Associado_model->update_associado($data['query'], $data['query']['idSis_Associado']) === FALSE) {
                 $data['msg'] = '?m=1';
+				
                 redirect(base_url() . 'associado/prontuario/' . $data['query']['idSis_Associado'] . $data['msg']);
                 exit();
             } else {
@@ -526,7 +553,7 @@ class Associado extends CI_Controller {
                     $data['auditoria'] = $this->Basico_model->set_auditoriaempresa($data['auditoriaitem'], 'Sis_Associado', 'UPDATE', $data['auditoriaitem']);
                     $data['msg'] = '?m=1';
                 }
-
+				
                 redirect(base_url() . 'associado/prontuario/' . $data['query']['idSis_Associado'] . $data['msg']);
                 exit();
             }
@@ -658,21 +685,17 @@ class Associado extends CI_Controller {
 		), TRUE);
 
         if ($id) {
-            $_SESSION['Usuario'] = $data['query'] = $this->Associado_model->get_associado($id, TRUE);
+            $_SESSION['Query'] = $data['query'] = $this->Associado_model->get_associado($id, TRUE);
 			$data['file']['idSis_Associado'] = $id;
 		}
-		/*
-        if ($id)
-            $data['file']['idSis_Associado'] = $id;
-		*/
+
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         if (isset($_FILES['Arquivo']) && $_FILES['Arquivo']['name']) {
             
 			$data['file']['Arquivo'] = $this->basico->renomeiaassociado($_FILES['Arquivo']['name']);
             $this->form_validation->set_rules('Arquivo', 'Arquivo', 'file_allowed_type[jpg, jpeg, gif, png]|file_size_max[1000]');
-        }
-        else {
+        } else {
             $this->form_validation->set_rules('Arquivo', 'Arquivo', 'required');
         }
 
@@ -789,7 +812,8 @@ class Associado extends CI_Controller {
 							$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_Associado', 'UPDATE', $data['auditoriaitem']);
 							$data['msg'] = '?m=1';
 						}
-
+						
+						unset($_SESSION['Query']);
 						redirect(base_url() . 'associado/prontuario/' . $data['file']['idSis_Associado'] . $data['msg']);
 						exit();
 					}				
@@ -945,7 +969,7 @@ class Associado extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $_SESSION['Usuario'] = $data['query'] = $this->Associado_model->get_associado($id, TRUE);
+        $data['query'] = $this->Associado_model->get_associado($id, TRUE);
         /*
 		echo "<pre>";
 		print_r($data['query']);
