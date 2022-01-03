@@ -467,6 +467,13 @@
 										</a>
 									</div>	
 								</div>
+								<div class="row">
+									<div class="form-group col-md-12 text-left">										
+										<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>campanha" role="button">
+											<span class="glyphicon glyphicon-pencil"></span> Campanhas
+										</a>
+									</div>	
+								</div>
 								<?php if ($_SESSION['log']['idSis_Empresa'] == 2 ) { ?>	
 									<div class="row">
 										<div class="form-group col-md-12 text-left">																				
