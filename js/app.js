@@ -3329,26 +3329,30 @@ function clientePet(id = null){
 		*/
 		
 		$.getJSON(window.location.origin+ '/' + app + '/cadastros/pesquisar/ClientePet.php?search=',{idApp_Cliente: id_cliente, ajax: 'true'}, function(j){
-			//console.log(idApp_Cliente);
-			//console.log(j);
-			//console.log(j.length);
-		
-			var options = '<option value="">-- Sel. Pet --</option>';	
-			for (var i = 0; i < j.length; i++) {
-				if (j[i].id_ClientePet == $('#Hidden_idApp_ClientePet').val()) {
-					options += '<option value="' + j[i].id_ClientePet + '" selected="selected">' + j[i].nome_ClientePet + '</option>';
-					buscaPet();
-				} else {
-					options += '<option value="' + j[i].id_ClientePet + '">' + j[i].nome_ClientePet + '</option>';
-				}
-				//options += '<option value="' + j[i].id_ClientePet + '">' + j[i].nome_ClientePet + '</option>';
+			if(j != null){	
+				//console.log(idApp_Cliente);
+				//console.log(j);
+				//console.log(j.length);
+			
+				var options = '<option value="">-- Sel. Pet --</option>';	
+				for (var i = 0; i < j.length; i++) {
+					if (j[i].id_ClientePet == $('#Hidden_idApp_ClientePet').val()) {
+						options += '<option value="' + j[i].id_ClientePet + '" selected="selected">' + j[i].nome_ClientePet + '</option>';
+						buscaPet();
+					} else {
+						options += '<option value="' + j[i].id_ClientePet + '">' + j[i].nome_ClientePet + '</option>';
+					}
+					//options += '<option value="' + j[i].id_ClientePet + '">' + j[i].nome_ClientePet + '</option>';
+				}	
+				$('#idApp_ClientePet').html(options).show();
+				//$('.carregando').hide();
+				//console.log(options);
+			}else{
+				$('#idApp_ClientePet').html('<option value="">– Selecione um Pet –</option>');
 			}	
-			$('#idApp_ClientePet').html(options).show();
-			//$('.carregando').hide();
-			//console.log(options);
 		});
 			
-	} else {
+	}else{
 		$('#idApp_ClientePet').html('<option value="">– Selecione um Pet –</option>');
 		//console.log('Nenhum Cliente');
 	}
@@ -3399,36 +3403,40 @@ function clienteDep(id = null){
 		$('.carregando').show();
 		*/
 		$.getJSON(window.location.origin+ '/' + app + '/cadastros/pesquisar/ClienteDep.php?search=',{idApp_Cliente: id_cliente, ajax: 'true'}, function(j){
-			//console.log(idApp_Cliente);
-			//console.log(j.length);
-			
-			//console.log(j);
+			if(j != null){	
+				//console.log(idApp_Cliente);
+				//console.log(j.length);
+				
+				//console.log(j);
 
-			/*		
-			foreach ($select['idApp_ClientePet'] as $key => $row) {
-				if ($query['idApp_ClientePet'] == $key) {
-					echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-				} else {
-					echo '<option value="' . $key . '">' . $row . '</option>';
-				}
-			}			
-			*/			
-			var options = '<option value="">-- Sel. Dep --</option>';	
-			for (var i = 0; i < j.length; i++) {
-				if (j[i].id_ClienteDep == $('#Hidden_idApp_ClienteDep').val()) {
-					options += '<option value="' + j[i].id_ClienteDep + '" selected="selected">' + j[i].nome_ClienteDep + '</option>';
-					buscaDep();
-				} else {
-					options += '<option value="' + j[i].id_ClienteDep + '">' + j[i].nome_ClienteDep + '</option>';
-				}
-				//options += '<option value="' + j[i].id_ClienteDep + '">' + j[i].nome_ClienteDep + '</option>';
-			}	
-			$('#idApp_ClienteDep').html(options).show();
-			//$('.carregando').hide();
-			//console.log(options);
+				/*		
+				foreach ($select['idApp_ClientePet'] as $key => $row) {
+					if ($query['idApp_ClientePet'] == $key) {
+						echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+					} else {
+						echo '<option value="' . $key . '">' . $row . '</option>';
+					}
+				}			
+				*/			
+				var options = '<option value="">-- Sel. Dep --</option>';	
+				for (var i = 0; i < j.length; i++) {
+					if (j[i].id_ClienteDep == $('#Hidden_idApp_ClienteDep').val()) {
+						options += '<option value="' + j[i].id_ClienteDep + '" selected="selected">' + j[i].nome_ClienteDep + '</option>';
+						buscaDep();
+					} else {
+						options += '<option value="' + j[i].id_ClienteDep + '">' + j[i].nome_ClienteDep + '</option>';
+					}
+					//options += '<option value="' + j[i].id_ClienteDep + '">' + j[i].nome_ClienteDep + '</option>';
+				}	
+				$('#idApp_ClienteDep').html(options).show();
+				//$('.carregando').hide();
+				//console.log(options);
+			}else{
+				$('#idApp_ClienteDep').html('<option value="">– Selecione um Dep –</option>');
+			}				
 		});
 		
-	} else {
+	}else{
 		$('#idApp_ClienteDep').html('<option value="">– Selecione um Dep –</option>');
 	}
 
@@ -3511,22 +3519,25 @@ function clienteOT(id = null){
 		
 		//$('#idApp_OrcaTrata').hide();
 		$.getJSON(window.location.origin+ '/' + app + '/cadastros/pesquisar/OrcaTrata.php?search=',{idApp_Cliente: id_cliente, ajax: 'true'}, function(j){
-			
-			var options = '<option value="">-- Sel. O.S. --</option>';	
-			for (var i = 0; i < j.length; i++) {
-				if (j[i].id_OrcaTrata == $('#Hidden_idApp_OrcaTrata').val()) {
-					options += '<option value="' + j[i].id_OrcaTrata + '" selected="selected">' + j[i].id_OrcaTrata + ' | ' + j[i].descricao_OrcaTrata + '</option>';
-					buscaPet();
-				} else {
-					options += '<option value="' + j[i].id_OrcaTrata + '">' + j[i].id_OrcaTrata + ' | ' + j[i].descricao_OrcaTrata + '</option>';
-				}
-			}	
-			$('#idApp_OrcaTrata').html(options).show();
-			//$('.carregando').hide();
-			//console.log(options);
+			if(j != null){
+				var options = '<option value="">-- Sel. O.S. --</option>';	
+				for (var i = 0; i < j.length; i++) {
+					if (j[i].id_OrcaTrata == $('#Hidden_idApp_OrcaTrata').val()) {
+						options += '<option value="' + j[i].id_OrcaTrata + '" selected="selected">' + j[i].id_OrcaTrata + ' | ' + j[i].descricao_OrcaTrata + '</option>';
+						buscaPet();
+					} else {
+						options += '<option value="' + j[i].id_OrcaTrata + '">' + j[i].id_OrcaTrata + ' | ' + j[i].descricao_OrcaTrata + '</option>';
+					}
+				}	
+				$('#idApp_OrcaTrata').html(options).show();
+				//$('.carregando').hide();
+				//console.log(options);
+			}else{
+				$('#idApp_OrcaTrata').html('<option value="">– Selecione um Orcam. –</option>');
+			}				
 		});
 		
-	} else {
+	}else{
 		$('#idApp_OrcaTrata').html('<option value="">– Selecione um Orcam. –</option>');
 	}
 
@@ -3657,33 +3668,37 @@ function dataehora(datainicio = null, horainicio = null) {
 		//method:'get',
         // função para de sucesso
         success: function (data) {
-            //console.log('length = '+data.length);
-			//console.log('metodo = '+metodo);
-			if(metodo == 1){
-				var quantidade = data.length;
-				if(quantidade <= 0){
-					$("#Horarios").html('<span>Não Existem Agendamentos neste horário: ' + dataehora_orig + '</span>');
+			if(data != null){
+				//console.log('length = '+data.length);
+				//console.log('metodo = '+metodo);
+				if(metodo == 1){
+					var quantidade = data.length;
+					if(quantidade <= 0){
+						$("#Horarios").html('<span>Não Existem Agendamentos neste horário: ' + dataehora_orig + '</span>');
+					}else{
+						$("#Horarios").html('<span>Existe(m) <strong>" ' +quantidade+' " </strong> Agendamento(s) neste horário: ' + dataehora_orig + '</span>');
+					}
 				}else{
-					$("#Horarios").html('<span>Existe(m) <strong>" ' +quantidade+' " </strong> Agendamento(s) neste horário: ' + dataehora_orig + '</span>');
+					var quantidade = data.length - 1;
+					if(quantidade <= 0){
+						$("#Horarios").html('<span>Não Existem Agendamentos neste horário: ' + dataehora_orig + '</span>');
+					}else{
+						$("#Horarios").html('<span>Existe(m) <strong>" ' +quantidade+' " </strong> Agendamento(s) neste horário: ' + dataehora_orig + '</span>');
+					}
 				}
+				//console.log('quantidade = '+quantidade);
+				for (i = 0; i < data.length; i++) {
+
+					if (data[i].dataehora == dataehora) {
+						//console.log('id_Consulta = '+data[i].id);
+						//$('#Cep').val(data[i].cepcliente);
+						break;
+					}
+
+				}//fim do laço
 			}else{
-				var quantidade = data.length - 1;
-				if(quantidade <= 0){
-					$("#Horarios").html('<span>Não Existem Agendamentos neste horário: ' + dataehora_orig + '</span>');
-				}else{
-					$("#Horarios").html('<span>Existe(m) <strong>" ' +quantidade+' " </strong> Agendamento(s) neste horário: ' + dataehora_orig + '</span>');
-				}
-			}
-			//console.log('quantidade = '+quantidade);
-			for (i = 0; i < data.length; i++) {
-
-                if (data[i].dataehora == dataehora) {
-					//console.log('id_Consulta = '+data[i].id);
-					//$('#Cep').val(data[i].cepcliente);
-                    break;
-                }
-
-            }//fim do laço
+				$("#Horarios").html('<span>Não Existem Agendamentos neste horário: ' + dataehora_orig + '</span>');
+			}	
 		},
 		error:function(data){
 			//console.log('Nada encontrado');
@@ -6255,66 +6270,83 @@ function cupom(Cupom){
 		url: window.location.origin+ '/' + app + '/cadastros/pesquisar/Cupom.php?Cupom=' + Cupom,
 		dataType: "json",
 		success: function (data) {
-			var tipo	= data[0]['tipo'];
-			var tipodesc	= data[0]['tipodesc'];
-			var valorcupom	= data[0]['valorcupom'];
-			var valorminimo	= data[0]['valorminimo'];
-			var datacampanha	= data[0]['datacampanha'];
-			var datacampanhalimite	= data[0]['datacampanhalimite'];
-			var campanha	= data[0]['campanha'];
-			var desccampanha	= data[0]['desccampanha'];
+			if(data != null){
+				//console.log('diferente');
+				var tipo	= data[0]['tipo'];
+				var tipodesc	= data[0]['tipodesc'];
+				var valorcupom	= data[0]['valorcupom'];
+				var valorminimo	= data[0]['valorminimo'];
+				var datacampanha	= data[0]['datacampanha'];
+				var datacampanhalimite	= data[0]['datacampanhalimite'];
+				var campanha	= data[0]['campanha'];
+				var desccampanha	= data[0]['desccampanha'];
 
-			var partesData = datacampanha.split("-");
-			var dia = parseInt(partesData[2]);
-			var mes = parseInt(partesData[1]);
-			var ano = parseInt(partesData[0]);
-			var validade1 	= partesData[2]+'/'+partesData[1]+'/'+partesData[0];
-			var validade_1 	= new Date(ano, mes - 1, dia);
+				var partesData = datacampanha.split("-");
+				var dia = parseInt(partesData[2]);
+				var mes = parseInt(partesData[1]);
+				var ano = parseInt(partesData[0]);
+				var validade1 	= partesData[2]+'/'+partesData[1]+'/'+partesData[0];
+				var validade_1 	= new Date(ano, mes - 1, dia);
 
-			var partesData_2 = datacampanhalimite.split("-");
-			var dia_2 = parseInt(partesData_2[2]);
-			var mes_2 = parseInt(partesData_2[1]);
-			var ano_2 = parseInt(partesData_2[0]);
-			var validade2 	= partesData_2[2]+'/'+partesData_2[1]+'/'+partesData_2[0];
-			var validade_2 	= new Date(ano_2, mes_2 - 1, dia_2);
+				var partesData_2 = datacampanhalimite.split("-");
+				var dia_2 = parseInt(partesData_2[2]);
+				var mes_2 = parseInt(partesData_2[1]);
+				var ano_2 = parseInt(partesData_2[0]);
+				var validade2 	= partesData_2[2]+'/'+partesData_2[1]+'/'+partesData_2[0];
+				var validade_2 	= new Date(ano_2, mes_2 - 1, dia_2);
 
-			if(validade_2 >= data_hoje && data_hoje >= validade_1  ){
-				ValorCupom	= parseFloat(valorcupom);
-				ValorMinimo	= parseFloat(valorminimo);
-				if(valortotalorca >= ValorMinimo){
-					ValorCupom 	= mascaraValorReal(ValorCupom);
-					$('#UsarE').val(tipodesc);
-					$("#CodigoCupom").html('Valido!');
-					if(tipodesc == 'V'){
-						$('#UsarE1').val('R$');
-						$('#DescValorOrca').val(ValorCupom);
-						$('#DescPercOrca').val('');
-						$('#Hidden_TipoDescOrca').val(tipodesc);
-						descValorOrca();
+				if(validade_2 >= data_hoje && data_hoje >= validade_1  ){
+					ValorCupom	= parseFloat(valorcupom);
+					ValorMinimo	= parseFloat(valorminimo);
+					if(valortotalorca >= ValorMinimo){
+						ValorCupom 	= mascaraValorReal(ValorCupom);
+						$('#UsarE').val(tipodesc);
+						$("#CodigoCupom").html('Valido!');
+						if(tipodesc == 'V'){
+							$('#UsarE1').val('R$');
+							$('#DescValorOrca').val(ValorCupom);
+							$('#DescPercOrca').val('');
+							$('#Hidden_TipoDescOrca').val(tipodesc);
+							descValorOrca();
+						}else{
+							$('#UsarE1').val('%');
+							$('#DescPercOrca').val(ValorCupom);
+							$('#DescValorOrca').val('');
+							$('#Hidden_TipoDescOrca').val(tipodesc);
+							descPercOrca();
+						}
+						$("#Hidden_MensagemCupom").html(''+campanha+'<br>'+desccampanha);					
 					}else{
-						$('#UsarE1').val('%');
+						ValorMinimo 	= mascaraValorReal(ValorMinimo);
+						ValorCupom	= '0,00';
+						$('#DescValorOrca').val(ValorCupom);
 						$('#DescPercOrca').val(ValorCupom);
-						$('#DescValorOrca').val('');
-						$('#Hidden_TipoDescOrca').val(tipodesc);
-						descPercOrca();
+						$("#CodigoCupom").html('Atenção!');
+						$('#UsarE').val(tipodesc);
+						$('#UsarE1').val('');
+						if(tipodesc == "V"){
+							descValorOrca();
+						}else if(tipodesc == "P"){
+							descPercOrca();
+						}
+						$("#Hidden_MensagemCupom").html('Cupom Válido para compra Mínima de R$'+ValorMinimo);
 					}
-					$("#Hidden_MensagemCupom").html(''+campanha+'<br>'+desccampanha);					
 				}else{
-					ValorMinimo 	= mascaraValorReal(ValorMinimo);
 					ValorCupom	= '0,00';
 					$('#DescValorOrca').val(ValorCupom);
 					$('#DescPercOrca').val(ValorCupom);
-					$("#CodigoCupom").html('Atenção!');
-					$('#UsarE').val(tipodesc);
+					$("#CodigoCupom").html('Invalido!');
+					$('#UsarE').val(tipodescorca);
 					$('#UsarE1').val('');
-					if(tipodesc == "V"){
+					if(tipodescorca == "V"){
 						descValorOrca();
-					}else if(tipodesc == "P"){
+					}else if(tipodescorca == "P"){
 						descPercOrca();
 					}
-					$("#Hidden_MensagemCupom").html('Cupom Válido para compra Mínima de R$'+ValorMinimo);
+					$("#Hidden_MensagemCupom").html('Digite outro Cupom');
 				}
 			}else{
+				//console.log('igual');
 				ValorCupom	= '0,00';
 				$('#DescValorOrca').val(ValorCupom);
 				$('#DescPercOrca').val(ValorCupom);
