@@ -161,6 +161,7 @@ class Campanha extends CI_Controller {
 
 		//(!$data['campanha']['ValorDesconto']) ? $data['campanha']['ValorDesconto'] = '0.00' : FALSE;
 		//(!$data['campanha']['ValorMinimo']) ? $data['campanha']['ValorMinimo'] = '0.00' : FALSE;
+		(!$data['campanha']['Ganhador']) ? $data['campanha']['Ganhador'] = '0' : FALSE;
 
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
         $data['select']['AtivoCampanha'] = $this->Basico_model->select_status_sn();
@@ -333,6 +334,7 @@ class Campanha extends CI_Controller {
         //Data de hoje como default
 		//(!$data['campanha']['ValorDesconto']) ? $data['campanha']['ValorDesconto'] = '0.00' : FALSE;
 		//(!$data['campanha']['ValorMinimo']) ? $data['campanha']['ValorMinimo'] = '0.00' : FALSE;
+		(!$data['campanha']['Ganhador']) ? $data['campanha']['Ganhador'] = '0' : FALSE;
 		
         if ($id) {
             #### App_Campanha ####
