@@ -47,10 +47,26 @@ class Orcatrataprint_model extends CI_Model {
 		
 		//$date_inicio_vnc_prc = ($_SESSION['FiltroAlteraParcela']['DataInicio4']) ? 'PR.DataVencimento >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio4'] . '" AND ' : FALSE;
 		//$date_fim_vnc_prc = ($_SESSION['FiltroAlteraParcela']['DataFim4']) ? 'PR.DataVencimento <= "' . $_SESSION['FiltroAlteraParcela']['DataFim4'] . '" AND ' : FALSE;
-		
-		$date_inicio_cadastro = ($_SESSION['FiltroAlteraParcela']['DataInicio6']) ? 'C.DataCadastroCliente >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio6'] . '" AND ' : FALSE;
-		$date_fim_cadastro = ($_SESSION['FiltroAlteraParcela']['DataFim6']) ? 'C.DataCadastroCliente <= "' . $_SESSION['FiltroAlteraParcela']['DataFim6'] . '" AND ' : FALSE;
 			
+		if($_SESSION['FiltroAlteraParcela']['nome']){
+			if($_SESSION['FiltroAlteraParcela']['nome'] == "Cliente"){
+				$cadastro = "C.DataCadastroCliente";
+				$aniversario = "C.DataNascimento";
+			}elseif($_SESSION['FiltroAlteraParcela']['nome'] == "Fornecedor"){
+				$cadastro = "F.DataCadastroFornecedor";
+				$aniversario = "F.DataNascimento";
+			}
+		}else{
+			echo "Não existe data de cadastro";
+		}
+			
+		$date_inicio_cadastro = ($_SESSION['FiltroAlteraParcela']['DataInicio6']) ? '' . $cadastro . ' >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio6'] . '" AND ' : FALSE;
+		$date_fim_cadastro = ($_SESSION['FiltroAlteraParcela']['DataFim6']) ? '' . $cadastro . ' <= "' . $_SESSION['FiltroAlteraParcela']['DataFim6'] . '" AND ' : FALSE;
+			
+		$DiaAniv = ($_SESSION['FiltroAlteraParcela']['DiaAniv']) ? ' AND DAY(' . $aniversario . ') = ' . $_SESSION['FiltroAlteraParcela']['DiaAniv'] : FALSE;
+		$MesAniv = ($_SESSION['FiltroAlteraParcela']['MesAniv']) ? ' AND MONTH(' . $aniversario . ') = ' . $_SESSION['FiltroAlteraParcela']['MesAniv'] : FALSE;
+		$AnoAniv = ($_SESSION['FiltroAlteraParcela']['AnoAniv']) ? ' AND YEAR(' . $aniversario . ') = ' . $_SESSION['FiltroAlteraParcela']['AnoAniv'] : FALSE;			
+
 		if(isset($_SESSION['FiltroAlteraParcela']['Associado'])){
 			if($_SESSION['FiltroAlteraParcela']['Associado'] == 0){
 				$associado = ' AND OT.Associado = 0 ';
@@ -159,11 +175,14 @@ class Orcatrataprint_model extends CI_Model {
             'SELECT
 				C.NomeCliente,
 				C.DataCadastroCliente,
+				C.DataNascimento,
 				C.CelularCliente,
 				C.Telefone,
 				C.Telefone2,
 				C.Telefone3,
 				F.NomeFornecedor,
+				F.DataCadastroFornecedor,
+				F.DataNascimento,
 				OT.idSis_Empresa,
 				OT.idApp_OrcaTrata,
 				OT.CombinadoFrete,
@@ -220,7 +239,6 @@ class Orcatrataprint_model extends CI_Model {
 				' . $permissao1 . '
 				' . $permissao2 . '
 				' . $permissao3 . '
-				
 				' . $permissao6 . '
 				' . $permissao7 . '
 				' . $permissao10 . '
@@ -241,14 +259,15 @@ class Orcatrataprint_model extends CI_Model {
                 ' . $date_fim_entrega . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
-                
                 ' . $date_inicio_cadastro . '
                 ' . $date_fim_cadastro . '
 				OT.idSis_Empresa = ' . $data . ' 
-				
 				' . $ultimopedido2 . '
 				' . $associado . '
 				' . $vendedor . '
+				' . $DiaAniv . '
+				' . $MesAniv . '
+				' . $AnoAniv . '
 			' . $groupby . '
             ORDER BY
 				' . $permissao60 . '

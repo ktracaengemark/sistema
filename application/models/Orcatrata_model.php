@@ -1031,6 +1031,25 @@ class Orcatrata_model extends CI_Model {
 		//$date_inicio_vnc_prc = ($_SESSION['FiltroAlteraParcela']['DataInicio4']) ? 'PR.DataVencimento >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio4'] . '" AND ' : FALSE;
 		//$date_fim_vnc_prc = ($_SESSION['FiltroAlteraParcela']['DataFim4']) ? 'PR.DataVencimento <= "' . $_SESSION['FiltroAlteraParcela']['DataFim4'] . '" AND ' : FALSE;
 			
+		if($_SESSION['FiltroAlteraParcela']['nome']){
+			if($_SESSION['FiltroAlteraParcela']['nome'] == "Cliente"){
+				$cadastro = "C.DataCadastroCliente";
+				$aniversario = "C.DataNascimento";
+			}elseif($_SESSION['FiltroAlteraParcela']['nome'] == "Fornecedor"){
+				$cadastro = "F.DataCadastroFornecedor";
+				$aniversario = "F.DataNascimento";
+			}
+		}else{
+			echo "Não existe data de cadastro";
+		}
+			
+		$date_inicio_cadastro = ($_SESSION['FiltroAlteraParcela']['DataInicio6']) ? '' . $cadastro . ' >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio6'] . '" AND ' : FALSE;
+		$date_fim_cadastro = ($_SESSION['FiltroAlteraParcela']['DataFim6']) ? '' . $cadastro . ' <= "' . $_SESSION['FiltroAlteraParcela']['DataFim6'] . '" AND ' : FALSE;
+			
+		$DiaAniv = ($_SESSION['FiltroAlteraParcela']['DiaAniv']) ? ' AND DAY(' . $aniversario . ') = ' . $_SESSION['FiltroAlteraParcela']['DiaAniv'] : FALSE;
+		$MesAniv = ($_SESSION['FiltroAlteraParcela']['MesAniv']) ? ' AND MONTH(' . $aniversario . ') = ' . $_SESSION['FiltroAlteraParcela']['MesAniv'] : FALSE;
+		$AnoAniv = ($_SESSION['FiltroAlteraParcela']['AnoAniv']) ? ' AND YEAR(' . $aniversario . ') = ' . $_SESSION['FiltroAlteraParcela']['AnoAniv'] : FALSE;			
+			
 		if(isset($_SESSION['FiltroAlteraParcela']['Associado'])){
 			if($_SESSION['FiltroAlteraParcela']['Associado'] == 0){
 				$associado = ' AND OT.Associado = 0 ';
@@ -1098,8 +1117,12 @@ class Orcatrata_model extends CI_Model {
 			SELECT
 				C.idApp_Cliente,
 				C.NomeCliente,
+				C.DataCadastroCliente,
+				C.DataNascimento,
 				F.idApp_Fornecedor,
 				F.NomeFornecedor,
+				F.DataCadastroFornecedor,
+				F.DataNascimento,
 				OT.idSis_Empresa,
 				OT.idApp_OrcaTrata,
 				OT.CombinadoFrete,
@@ -1108,19 +1131,13 @@ class Orcatrata_model extends CI_Model {
 				OT.QuitadoOrca,
 				OT.CanceladoOrca,
 				OT.FinalizadoOrca,
-				
 				OT.DataOrca,
-
 				OT.idApp_Cliente,
 				OT.idApp_Fornecedor,
-				
 				OT.ValorFinalOrca,
-				
 				OT.DataEntregaOrca,
 				OT.HoraEntregaOrca,
-
 				OT.idSis_Usuario,
-				
 				OT.TipoFinanceiro,
 				OT.Tipo_Orca,
 				OT.FormaPagamento,
@@ -1133,7 +1150,6 @@ class Orcatrata_model extends CI_Model {
 				MO.Abrev2,
 				OT.Modalidade,
 				TP.TipoFinanceiro,
-				
 				US.Nome AS NomeColaborador,
 				USA.Nome AS NomeAssociado
 			FROM
@@ -1157,7 +1173,6 @@ class Orcatrata_model extends CI_Model {
 				' . $permissao1 . '
 				' . $permissao3 . '
 				' . $permissao2 . '
-				
 				' . $permissao10 . '
 				' . $permissao11 . '
 				' . $permissao12 . '
@@ -1180,12 +1195,16 @@ class Orcatrata_model extends CI_Model {
 				' . $date_fim_entrega . '
 				' . $date_inicio_vnc . '
 				' . $date_fim_vnc . '
-				
+                ' . $date_inicio_cadastro . '
+                ' . $date_fim_cadastro . '
 				OT.FinalizadoOrca = "N" AND 
 				OT.CanceladoOrca = "N" AND			
 				OT.idSis_Empresa = ' . $data . '
 				' . $associado . '
 				' . $vendedor . '
+				' . $DiaAniv . '
+				' . $MesAniv . '
+				' . $AnoAniv . '
 			GROUP BY
 				OT.idApp_OrcaTrata	
 			ORDER BY

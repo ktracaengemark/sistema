@@ -483,15 +483,17 @@
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
 									<?php 
+										/*
 										if(isset($_SESSION['DataInicio'])){
 											//$datainicio = $_SESSION['DataInicio'];
 											$datainicio = $this->basico->mascara_data($_SESSION['DataInicio'], 'barras');
 										}else{
 											$datainicio = $query['DataInicio'];
 										}
+										*/
 									?>
-									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $datainicio); ?>">
+									<!--<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA" autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $datainicio); ?>">-->
+									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA" autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
 								</div>
 							</div>
 							<div class="col-md-3">
@@ -561,7 +563,66 @@
 				<div class="panel panel-<?php echo $panel; ?>">
 					<div class="panel-heading text-left">
 						<?php if($metodo != 1 && $metodo != 2) { ?>
+							<label for="Aniversario">Aniversário:</label>					
+							<div class="row text-left">
+								<div class="col-md-3 text-left" >
+									<label for="DiaAniv">Dia:</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
+											id="DiaAniv" name="DiaAniv">
+										<?php
+										foreach ($select['DiaAniv'] as $key => $row) {
+											if ($query['DiaAniv'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
+								<div class="col-md-3 text-left" >
+									<label for="MesAniv">Mes:</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
+											id="MesAniv" name="MesAniv">
+										<?php
+										foreach ($select['MesAniv'] as $key => $row) {
+											if ($query['MesAniv'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
+								<div class="col-md-3 text-left" >
+									<label for="AnoAniv">Ano:</label>
+									<input type="text" class="form-control Numero" maxlength="4" placeholder="AAAA"
+											   name="AnoAniv" id="AnoAniv" value="<?php echo set_value('AnoAniv', $query['AnoAniv']); ?>">
+								</div>
+							</div>
+							<br>
 							<div class="row">	
+								<div class="col-md-3">
+									<label for="DataInicio6">Cad.Inicio</label>
+									<div class="input-group DatePicker">
+										<span class="input-group-addon" disabled>
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+												name="DataInicio6" value="<?php echo set_value('DataInicio6', $query['DataInicio6']); ?>">
+									</div>
+								</div>
+								<div class="col-md-3">
+									<label for="DataFim6">Cad.Fim</label>
+									<div class="input-group DatePicker">
+										<span class="input-group-addon" disabled>
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+												name="DataFim6" value="<?php echo set_value('DataFim6', $query['DataFim6']); ?>">
+									</div>
+								</div>	
 								<div class="col-md-3">
 									<label for="Agrupar">Agrupar Por:</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -593,26 +654,6 @@
 									</select>
 								</div>
 								<input type="hidden" name="nome" id="nome" value="<?php echo $nome;?>"/>
-								<div class="col-md-3">
-									<label for="DataInicio6">Cad.Inicio</label>
-									<div class="input-group DatePicker">
-										<span class="input-group-addon" disabled>
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-												name="DataInicio6" value="<?php echo set_value('DataInicio6', $query['DataInicio6']); ?>">
-									</div>
-								</div>
-								<div class="col-md-3">
-									<label for="DataFim6">Cad.Fim</label>
-									<div class="input-group DatePicker">
-										<span class="input-group-addon" disabled>
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-												name="DataFim6" value="<?php echo set_value('DataFim6', $query['DataFim6']); ?>">
-									</div>
-								</div>
 							</div>
 							<br>
 							<label class="text-left">Texto Whatsapp:</label>

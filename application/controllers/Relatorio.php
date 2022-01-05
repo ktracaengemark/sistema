@@ -544,6 +544,9 @@ class Relatorio extends CI_Controller {
 			'NomeUsuario',
 			'NomeEmpresa',
 			'NomeFornecedor',
+			'DiaAniv',
+			'MesAniv',
+			'AnoAniv',
 			'Dia',
 			'Ano',
 			'Mesvenc',
@@ -750,7 +753,9 @@ class Relatorio extends CI_Controller {
 
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
 		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
-		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();		
+		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();	
+		$data['select']['DiaAniv'] = $this->Relatorio_model->select_dia();
+		$data['select']['MesAniv'] = $this->Relatorio_model->select_mes();
 		$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
 		$data['select']['Mespag'] = $this->Relatorio_model->select_mes();
 		$data['select']['Dia'] = $this->Relatorio_model->select_dia();
@@ -821,7 +826,10 @@ class Relatorio extends CI_Controller {
 		//$_SESSION['FiltroAlteraParcela']['NomeCliente'] = $data['query']['NomeCliente'];
 		$_SESSION['FiltroAlteraParcela']['NomeUsuario'] = $data['query']['NomeUsuario'];
 		$_SESSION['FiltroAlteraParcela']['NomeAssociado'] = $data['query']['NomeAssociado'];
-		$_SESSION['FiltroAlteraParcela']['NomeFornecedor'] = $data['query']['NomeFornecedor'];		
+		$_SESSION['FiltroAlteraParcela']['NomeFornecedor'] = $data['query']['NomeFornecedor'];
+		$_SESSION['FiltroAlteraParcela']['DiaAniv'] = $data['query']['DiaAniv'];
+        $_SESSION['FiltroAlteraParcela']['MesAniv'] = $data['query']['MesAniv'];
+        $_SESSION['FiltroAlteraParcela']['AnoAniv'] = $data['query']['AnoAniv'];
 		$_SESSION['FiltroAlteraParcela']['Dia'] = $data['query']['Dia'];
         $_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
         $_SESSION['FiltroAlteraParcela']['Mespag'] = $data['query']['Mespag'];
@@ -900,6 +908,9 @@ class Relatorio extends CI_Controller {
             //$data['bd']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
             $data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
 			$data['bd']['NomeAssociado'] = $data['query']['NomeAssociado'];
+			$data['bd']['DiaAniv'] = $data['query']['DiaAniv'];
+			$data['bd']['MesAniv'] = $data['query']['MesAniv'];
+			$data['bd']['AnoAniv'] = $data['query']['AnoAniv'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
 			$data['bd']['Dia'] = $data['query']['Dia'];
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
@@ -1028,6 +1039,9 @@ class Relatorio extends CI_Controller {
 			'NomeUsuario',
 			'NomeEmpresa',
 			'NomeFornecedor',
+			'DiaAniv',
+			'MesAniv',
+			'AnoAniv',
 			'Dia',
 			'Ano',
 			'Mesvenc',
@@ -1217,7 +1231,9 @@ class Relatorio extends CI_Controller {
 
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
 		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
-		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();		
+		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();	
+		$data['select']['DiaAniv'] = $this->Relatorio_model->select_dia();
+		$data['select']['MesAniv'] = $this->Relatorio_model->select_mes();	
 		$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
 		$data['select']['Mespag'] = $this->Relatorio_model->select_mes();
 		$data['select']['Dia'] = $this->Relatorio_model->select_dia();
@@ -1288,7 +1304,10 @@ class Relatorio extends CI_Controller {
 		//$_SESSION['FiltroAlteraParcela']['NomeCliente'] = $data['query']['NomeCliente'];
 		$_SESSION['FiltroAlteraParcela']['NomeUsuario'] = $data['query']['NomeUsuario'];
 		$_SESSION['FiltroAlteraParcela']['NomeAssociado'] = $data['query']['NomeAssociado'];
-		$_SESSION['FiltroAlteraParcela']['NomeFornecedor'] = $data['query']['NomeFornecedor'];		
+		$_SESSION['FiltroAlteraParcela']['NomeFornecedor'] = $data['query']['NomeFornecedor'];
+		$_SESSION['FiltroAlteraParcela']['DiaAniv'] = $data['query']['DiaAniv'];
+        $_SESSION['FiltroAlteraParcela']['MesAniv'] = $data['query']['MesAniv'];
+        $_SESSION['FiltroAlteraParcela']['AnoAniv'] = $data['query']['AnoAniv'];
 		$_SESSION['FiltroAlteraParcela']['Dia'] = $data['query']['Dia'];
         $_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
         $_SESSION['FiltroAlteraParcela']['Mespag'] = $data['query']['Mespag'];
@@ -1366,6 +1385,9 @@ class Relatorio extends CI_Controller {
             //$data['bd']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
             $data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
 			$data['bd']['NomeAssociado'] = $data['query']['NomeAssociado'];
+			$data['bd']['DiaAniv'] = $data['query']['DiaAniv'];
+			$data['bd']['MesAniv'] = $data['query']['MesAniv'];
+			$data['bd']['AnoAniv'] = $data['query']['AnoAniv'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
 			$data['bd']['Dia'] = $data['query']['Dia'];
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
@@ -1507,6 +1529,9 @@ class Relatorio extends CI_Controller {
 			'NomeUsuario',
 			'NomeEmpresa',
 			'NomeFornecedor',
+			'DiaAniv',
+			'MesAniv',
+			'AnoAniv',
 			'Dia',
 			'Ano',
 			'Mesvenc',
@@ -1696,7 +1721,9 @@ class Relatorio extends CI_Controller {
 
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
 		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
-		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();		
+		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();	
+		$data['select']['DiaAniv'] = $this->Relatorio_model->select_dia();
+		$data['select']['MesAniv'] = $this->Relatorio_model->select_mes();	
 		$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
 		$data['select']['Mespag'] = $this->Relatorio_model->select_mes();
 		$data['select']['Dia'] = $this->Relatorio_model->select_dia();
@@ -1768,7 +1795,10 @@ class Relatorio extends CI_Controller {
 		//$_SESSION['FiltroAlteraParcela']['NomeCliente'] = $data['query']['NomeCliente'];
 		$_SESSION['FiltroAlteraParcela']['NomeUsuario'] = $data['query']['NomeUsuario'];
 		$_SESSION['FiltroAlteraParcela']['NomeAssociado'] = $data['query']['NomeAssociado'];
-		$_SESSION['FiltroAlteraParcela']['NomeFornecedor'] = $data['query']['NomeFornecedor'];		
+		$_SESSION['FiltroAlteraParcela']['NomeFornecedor'] = $data['query']['NomeFornecedor'];
+		$_SESSION['FiltroAlteraParcela']['DiaAniv'] = $data['query']['DiaAniv'];
+        $_SESSION['FiltroAlteraParcela']['MesAniv'] = $data['query']['MesAniv'];
+        $_SESSION['FiltroAlteraParcela']['AnoAniv'] = $data['query']['AnoAniv'];		
 		$_SESSION['FiltroAlteraParcela']['Dia'] = $data['query']['Dia'];
         $_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
         $_SESSION['FiltroAlteraParcela']['Mespag'] = $data['query']['Mespag'];
@@ -1846,6 +1876,9 @@ class Relatorio extends CI_Controller {
             //$data['bd']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
             $data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
 			$data['bd']['NomeAssociado'] = $data['query']['NomeAssociado'];
+			$data['bd']['DiaAniv'] = $data['query']['DiaAniv'];
+			$data['bd']['MesAniv'] = $data['query']['MesAniv'];
+			$data['bd']['AnoAniv'] = $data['query']['AnoAniv'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
 			$data['bd']['Dia'] = $data['query']['Dia'];
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
@@ -1987,6 +2020,9 @@ class Relatorio extends CI_Controller {
 			'NomeUsuario',
 			'NomeEmpresa',
 			'NomeFornecedor',
+			'DiaAniv',
+			'MesAniv',
+			'AnoAniv',
 			'Dia',
 			'Ano',
 			'Mesvenc',
@@ -2175,7 +2211,9 @@ class Relatorio extends CI_Controller {
 
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
 		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
-		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();		
+		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();
+		$data['select']['DiaAniv'] = $this->Relatorio_model->select_dia();
+		$data['select']['MesAniv'] = $this->Relatorio_model->select_mes();		
 		$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
 		$data['select']['Mespag'] = $this->Relatorio_model->select_mes();
 		$data['select']['Dia'] = $this->Relatorio_model->select_dia();
@@ -2247,7 +2285,10 @@ class Relatorio extends CI_Controller {
 		//$_SESSION['FiltroAlteraParcela']['NomeCliente'] = $data['query']['NomeCliente'];
 		$_SESSION['FiltroAlteraParcela']['NomeUsuario'] = $data['query']['NomeUsuario'];
 		$_SESSION['FiltroAlteraParcela']['NomeAssociado'] = $data['query']['NomeAssociado'];
-		$_SESSION['FiltroAlteraParcela']['NomeFornecedor'] = $data['query']['NomeFornecedor'];		
+		$_SESSION['FiltroAlteraParcela']['NomeFornecedor'] = $data['query']['NomeFornecedor'];
+		$_SESSION['FiltroAlteraParcela']['DiaAniv'] = $data['query']['DiaAniv'];
+        $_SESSION['FiltroAlteraParcela']['MesAniv'] = $data['query']['MesAniv'];
+        $_SESSION['FiltroAlteraParcela']['AnoAniv'] = $data['query']['AnoAniv'];		
 		$_SESSION['FiltroAlteraParcela']['Dia'] = $data['query']['Dia'];
         $_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
         $_SESSION['FiltroAlteraParcela']['Mespag'] = $data['query']['Mespag'];
@@ -2325,6 +2366,9 @@ class Relatorio extends CI_Controller {
             //$data['bd']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
             $data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
 			$data['bd']['NomeAssociado'] = $data['query']['NomeAssociado'];
+			$data['bd']['DiaAniv'] = $data['query']['DiaAniv'];
+			$data['bd']['MesAniv'] = $data['query']['MesAniv'];
+			$data['bd']['AnoAniv'] = $data['query']['AnoAniv'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
 			$data['bd']['Dia'] = $data['query']['Dia'];
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
@@ -2459,6 +2503,9 @@ class Relatorio extends CI_Controller {
 			'NomeUsuario',
 			'NomeEmpresa',
 			'NomeFornecedor',
+			'DiaAniv',
+			'MesAniv',
+			'AnoAniv',
 			'Dia',
 			'Ano',
 			'Mesvenc',
@@ -2645,7 +2692,9 @@ class Relatorio extends CI_Controller {
 		$data['select']['NomeFornecedor'] = $this->Relatorio_model->select_fornecedor();
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
 		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
-		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();			
+		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();
+		$data['select']['DiaAniv'] = $this->Relatorio_model->select_dia();
+		$data['select']['MesAniv'] = $this->Relatorio_model->select_mes();			
 		$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
 		$data['select']['Mespag'] = $this->Relatorio_model->select_mes();
 		$data['select']['Dia'] = $this->Relatorio_model->select_dia();
@@ -2704,7 +2753,10 @@ class Relatorio extends CI_Controller {
 		//$_SESSION['FiltroAlteraParcela']['NomeCliente'] = $data['query']['NomeCliente'];
 		$_SESSION['FiltroAlteraParcela']['NomeUsuario'] = $data['query']['NomeUsuario'];
 		$_SESSION['FiltroAlteraParcela']['NomeAssociado'] = $data['query']['NomeAssociado'];
-		$_SESSION['FiltroAlteraParcela']['NomeFornecedor'] = $data['query']['NomeFornecedor'];		
+		$_SESSION['FiltroAlteraParcela']['NomeFornecedor'] = $data['query']['NomeFornecedor'];
+		$_SESSION['FiltroAlteraParcela']['DiaAniv'] = $data['query']['DiaAniv'];
+        $_SESSION['FiltroAlteraParcela']['MesAniv'] = $data['query']['MesAniv'];
+        $_SESSION['FiltroAlteraParcela']['AnoAniv'] = $data['query']['AnoAniv'];		
 		$_SESSION['FiltroAlteraParcela']['Dia'] = $data['query']['Dia'];
         $_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
         $_SESSION['FiltroAlteraParcela']['Mespag'] = $data['query']['Mespag'];
@@ -2778,6 +2830,9 @@ class Relatorio extends CI_Controller {
             //$data['bd']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
             $data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
 			$data['bd']['NomeAssociado'] = $data['query']['NomeAssociado'];
+			$data['bd']['DiaAniv'] = $data['query']['DiaAniv'];
+			$data['bd']['MesAniv'] = $data['query']['MesAniv'];
+			$data['bd']['AnoAniv'] = $data['query']['AnoAniv'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
 			$data['bd']['Dia'] = $data['query']['Dia'];
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
@@ -2910,6 +2965,9 @@ class Relatorio extends CI_Controller {
 			//'NomeCliente',
 			'NomeUsuario',
 			'NomeFornecedor',
+			'DiaAniv',
+			'MesAniv',
+			'AnoAniv',
 			'Dia',
 			'Ano',
 			'Mesvenc',
@@ -3092,7 +3150,9 @@ class Relatorio extends CI_Controller {
 		$data['select']['NomeUsuario'] = $this->Relatorio_model->select_usuario();
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
 		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
-		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();		
+		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();
+		$data['select']['DiaAniv'] = $this->Relatorio_model->select_dia();
+		$data['select']['MesAniv'] = $this->Relatorio_model->select_mes();		
 		$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
 		$data['select']['Mespag'] = $this->Relatorio_model->select_mes();
 		$data['select']['Dia'] = $this->Relatorio_model->select_dia();
@@ -3155,7 +3215,10 @@ class Relatorio extends CI_Controller {
 		//$_SESSION['FiltroAlteraParcela']['NomeCliente'] = $data['query']['NomeCliente'];
 		$_SESSION['FiltroAlteraParcela']['NomeUsuario'] = $data['query']['NomeUsuario'];
 		$_SESSION['FiltroAlteraParcela']['NomeAssociado'] = $data['query']['NomeAssociado'];
-		$_SESSION['FiltroAlteraParcela']['NomeFornecedor'] = $data['query']['NomeFornecedor'];		
+		$_SESSION['FiltroAlteraParcela']['NomeFornecedor'] = $data['query']['NomeFornecedor'];
+		$_SESSION['FiltroAlteraParcela']['DiaAniv'] = $data['query']['DiaAniv'];
+        $_SESSION['FiltroAlteraParcela']['MesAniv'] = $data['query']['MesAniv'];
+        $_SESSION['FiltroAlteraParcela']['AnoAniv'] = $data['query']['AnoAniv'];		
 		$_SESSION['FiltroAlteraParcela']['Dia'] = $data['query']['Dia'];
         $_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
         $_SESSION['FiltroAlteraParcela']['Mespag'] = $data['query']['Mespag'];
@@ -3228,6 +3291,9 @@ class Relatorio extends CI_Controller {
             //$data['bd']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
             $data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
 			$data['bd']['NomeAssociado'] = $data['query']['NomeAssociado'];
+			$data['bd']['DiaAniv'] = $data['query']['DiaAniv'];
+			$data['bd']['MesAniv'] = $data['query']['MesAniv'];
+			$data['bd']['AnoAniv'] = $data['query']['AnoAniv'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
 			$data['bd']['Dia'] = $data['query']['Dia'];
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];

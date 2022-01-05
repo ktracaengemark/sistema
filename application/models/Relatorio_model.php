@@ -208,20 +208,29 @@ class Relatorio_model extends CI_Model {
 			
 			$date_inicio_vnc_prc = ($data['DataInicio4']) ? 'PR.DataVencimento >= "' . $data['DataInicio4'] . '" AND ' : FALSE;
 			$date_fim_vnc_prc = ($data['DataFim4']) ? 'PR.DataVencimento <= "' . $data['DataFim4'] . '" AND ' : FALSE;
+			
 			if($data['nome']){
 				if($data['nome'] == "Cliente"){
 					$cadastro = "C.DataCadastroCliente";
+					$aniversario = "C.DataNascimento";
 				}elseif($data['nome'] == "Fornecedor"){
 					$cadastro = "F.DataCadastroFornecedor";
+					$aniversario = "F.DataNascimento";
 				}
 			}else{
 				echo "Não existe data de cadastro";
 			}
+			
 			$date_inicio_cadastro = ($data['DataInicio6']) ? '' . $cadastro . ' >= "' . $data['DataInicio6'] . '" AND ' : FALSE;
 			$date_fim_cadastro = ($data['DataFim6']) ? '' . $cadastro . ' <= "' . $data['DataFim6'] . '" AND ' : FALSE;
-			
+
 			$date_inicio_pag_com = ($data['DataInicio7']) ? 'OT.DataPagoComissaoOrca >= "' . $data['DataInicio7'] . '" AND ' : FALSE;
 			$date_fim_pag_com = ($data['DataFim7']) ? 'OT.DataPagoComissaoOrca <= "' . $data['DataFim7'] . '" AND ' : FALSE;
+			
+		
+			$DiaAniv = ($data['DiaAniv']) ? ' AND DAY(' . $aniversario . ') = ' . $data['DiaAniv'] : FALSE;
+			$MesAniv = ($data['MesAniv']) ? ' AND MONTH(' . $aniversario . ') = ' . $data['MesAniv'] : FALSE;
+			$AnoAniv = ($data['AnoAniv']) ? ' AND YEAR(' . $aniversario . ') = ' . $data['AnoAniv'] : FALSE;
 			
 			$data['idSis_Empresa'] = ($_SESSION['log']['idSis_Empresa'] != 5) ? ' OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '  ': ' OT.Tipo_Orca = "O" ';
 
@@ -339,20 +348,29 @@ class Relatorio_model extends CI_Model {
 			
 			$date_inicio_vnc_prc = ($_SESSION['FiltroAlteraParcela']['DataInicio4']) ? 'PR.DataVencimento >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio4'] . '" AND ' : FALSE;
 			$date_fim_vnc_prc = ($_SESSION['FiltroAlteraParcela']['DataFim4']) ? 'PR.DataVencimento <= "' . $_SESSION['FiltroAlteraParcela']['DataFim4'] . '" AND ' : FALSE;
+			
 			if($_SESSION['FiltroAlteraParcela']['nome']){
 				if($_SESSION['FiltroAlteraParcela']['nome'] == "Cliente"){
 					$cadastro = "C.DataCadastroCliente";
+					$aniversario = "C.DataNascimento";
 				}elseif($_SESSION['FiltroAlteraParcela']['nome'] == "Fornecedor"){
 					$cadastro = "F.DataCadastroFornecedor";
+					$aniversario = "F.DataNascimento";
 				}
 			}else{
 				echo "Não existe data de cadastro";
 			}
+			
 			$date_inicio_cadastro = ($_SESSION['FiltroAlteraParcela']['DataInicio6']) ? '' . $cadastro . ' >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio6'] . '" AND ' : FALSE;
 			$date_fim_cadastro = ($_SESSION['FiltroAlteraParcela']['DataFim6']) ? '' . $cadastro . ' <= "' . $_SESSION['FiltroAlteraParcela']['DataFim6'] . '" AND ' : FALSE;
 			
+			$DiaAniv = ($_SESSION['FiltroAlteraParcela']['DiaAniv']) ? ' AND DAY(' . $aniversario . ') = ' . $_SESSION['FiltroAlteraParcela']['DiaAniv'] : FALSE;
+			$MesAniv = ($_SESSION['FiltroAlteraParcela']['MesAniv']) ? ' AND MONTH(' . $aniversario . ') = ' . $_SESSION['FiltroAlteraParcela']['MesAniv'] : FALSE;
+			$AnoAniv = ($_SESSION['FiltroAlteraParcela']['AnoAniv']) ? ' AND YEAR(' . $aniversario . ') = ' . $_SESSION['FiltroAlteraParcela']['AnoAniv'] : FALSE;			
+			
 			$date_inicio_pag_com = ($_SESSION['FiltroAlteraParcela']['DataInicio7']) ? 'OT.DataPagoComissaoOrca >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio7'] . '" AND ' : FALSE;
 			$date_fim_pag_com = ($_SESSION['FiltroAlteraParcela']['DataFim7']) ? 'OT.DataPagoComissaoOrca <= "' . $_SESSION['FiltroAlteraParcela']['DataFim7'] . '" AND ' : FALSE;
+
 			
 			$data['idSis_Empresa'] = ($_SESSION['log']['idSis_Empresa'] != 5) ? ' OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '  ': ' OT.Tipo_Orca = "O" ';
 			
@@ -474,10 +492,12 @@ class Relatorio_model extends CI_Model {
                 CONCAT(IFNULL(C.NomeCliente,"")) AS Cliente,
 				C.CelularCliente,
 				C.DataCadastroCliente,
+				C.DataNascimento,
                 CONCAT(IFNULL(F.idApp_Fornecedor,""), " - " ,IFNULL(F.NomeFornecedor,"")) AS NomeFornecedor,
                 CONCAT(IFNULL(F.NomeFornecedor,"")) AS Fornecedor,
 				F.CelularFornecedor,
 				F.DataCadastroFornecedor,
+				F.DataNascimento,
 				OT.Descricao,
 				OT.idSis_Empresa,
 				OT.idSis_Usuario,
@@ -596,6 +616,9 @@ class Relatorio_model extends CI_Model {
 				' . $comissao3 . '
 				' . $associado . '
 				' . $vendedor . '
+				' . $DiaAniv . '
+				' . $MesAniv . '
+				' . $AnoAniv . '
 			' . $groupby . '
             ORDER BY
 				' . $data['Campo'] . '
