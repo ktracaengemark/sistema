@@ -1382,7 +1382,11 @@
 																						   onkeyup="cupom()" value="<?php echo $orcatrata['Cupom'] ?>">
 																				</div>
 																			</div>
-																			<span class="modal-title" id="MensagemCupom"></span>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																			<h3 class="modal-title text-center" id="Hidden_MensagemCupom" ></h3>
 																		</div>
 																	</div>
 																</div>

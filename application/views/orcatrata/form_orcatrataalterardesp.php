@@ -1386,7 +1386,6 @@
 																						   onkeyup="cupom()" value="<?php echo $orcatrata['Cupom'] ?>">
 																				</div>
 																			</div>
-																			<span class="modal-title" id="MensagemCupom"></span>
 																		</div>
 																	<?php }else{ ?>
 																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6  text-left">
@@ -1400,6 +1399,11 @@
 																		<input type="hidden" name="UsarCupom" id="UsarCupom" value="<?php echo $orcatrata['UsarCupom'] ?>"/>
 																		<input type="hidden" name="Cupom" id="Cupom" value="<?php echo $orcatrata['Cupom'] ?>"/>
 																	<?php } ?>		
+																</div>
+																<div class="row">
+																	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																		<h3 class="modal-title text-center" id="Hidden_MensagemCupom" ></h3>
+																	</div>
 																</div>
 															</div>
 														</div>
