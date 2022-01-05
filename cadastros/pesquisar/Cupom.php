@@ -4,7 +4,7 @@ include_once '../../conexao.php';
 
 if ($_GET['Cupom']) {
 	//echo $_GET['Cupom'];
-
+	$cupom = addslashes($_GET['Cupom']);
 	$result = 'SELECT 
 					ValorDesconto,
 					ValorMinimo,
@@ -16,7 +16,7 @@ if ($_GET['Cupom']) {
 					App_Campanha 
 				WHERE
 					idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-					idApp_Campanha = "' . $_GET['Cupom'] . '" AND
+					idApp_Campanha = "' . $cupom . '" AND
 					TipoCampanha = 2
 				LIMIT 1
 			';
