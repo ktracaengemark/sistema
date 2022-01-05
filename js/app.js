@@ -35,6 +35,30 @@ qtd_ocorrencias();
 calculacashback();
 //calculaTotalOS();
 
+if($('#Hidden_UsarCupom').val()){
+	if($('#Hidden_UsarCupom').val() == 'S'){
+		$('#UsarC').val('none');
+		$('#UsarD1').css("display","");
+		$('#Hidden_UsarCupom').val('S');
+		$('#DescPercOrca').prop('readonly', true);
+		$('#DescValorOrca').prop('readonly', true);
+	}else{
+		$('#UsarC').val('');
+		$('#UsarC1').css("display","");
+		$('#UsarD').css('none');
+		$('#UsarD1').css("display","none");
+		$('#Hidden_UsarCupom').val('N');
+	}
+	//console.log($('#Hidden_UsarCupom').val());
+}else{
+	$('#UsarC').val('');
+	$('#UsarC1').css("display","");
+	$('#UsarD').css('none');
+	$('#UsarD1').css("display","none");
+	$('#Hidden_UsarCupom').val('N');
+	//console.log('vazio');
+}
+
 function logar_cliente(){
 	var id_empresa = $('#id_empresa').val();
 	//console.log(id_empresa);
@@ -5972,22 +5996,31 @@ function valorExtraOrca(){
 function tipoDescOrca(valor){
 	//alert('teste tipoDescOrca');
 	//console.log('valor = ' + valor);
+	
+	var UsarCupom = $('#Hidden_UsarCupom').val();
+	//console.log('UsarCupom = ' + UsarCupom);	
+
 	if(valor){
-		if(valor == 'P'){
-			$('#DescPercOrca').prop('readonly', false);
-			//$('#DescPercOrca').prop('onkeyup', true);
-			//$("#DescPercOrca").on("click");
-			$('#DescValorOrca').prop('readonly', true);
-			//$('#DescValorOrca').prop('onkeyup', false);
-			//$("#DescValorOrca").off("click");
-		}else if(valor == 'V'){
+		if(UsarCupom == 'N'){
+			if(valor == 'P'){
+				$('#DescPercOrca').prop('readonly', false);
+				//$('#DescPercOrca').prop('onkeyup', true);
+				//$("#DescPercOrca").on("click");
+				$('#DescValorOrca').prop('readonly', true);
+				//$('#DescValorOrca').prop('onkeyup', false);
+				//$("#DescValorOrca").off("click");
+			}else if(valor == 'V'){
+				$('#DescPercOrca').prop('readonly', true);
+				//$('#DescPercOrca').prop('onkeyup', false);
+				//$("#DescPercOrca").off("click");
+				$('#DescValorOrca').prop('readonly', false);
+				//$('#DescValorOrca').prop('onkeyup', true);
+				//$("#DescValorOrca").on("click");
+			}			
+		}else{
 			$('#DescPercOrca').prop('readonly', true);
-			//$('#DescPercOrca').prop('onkeyup', false);
-			//$("#DescPercOrca").off("click");
-			$('#DescValorOrca').prop('readonly', false);
-			//$('#DescValorOrca').prop('onkeyup', true);
-			//$("#DescValorOrca").on("click");
-		}
+			$('#DescValorOrca').prop('readonly', true);		
+		}	
 		$('#Hidden_TipoDescOrca').val(valor);
 		var tipodescorca = valor;
 		if(tipodescorca == 'P'){
@@ -6014,15 +6047,13 @@ function tipoDescOrca(valor){
 	//console.log('Tipo. desconto ='+desconto);
 }
 
-function descPercOrca(usarcash){
+function descPercOrca(){
 
 	var valortotalorca = $('#ValorTotalOrca').val();
 	valortotalorca 	= valortotalorca.replace(".","").replace(",",".");
 	valortotalorca	= parseFloat(valortotalorca);
 	//valortotalorca	= valortotalorca.toFixed(2);
 
-	//console.log('PercDesc - valortotalorca = ' + valortotalorca);	
-	
 	var descpercorca = $('#DescPercOrca').val();
 	if(descpercorca){
 		descpercorca 	= descpercorca.replace(".","").replace(",",".");
@@ -6070,7 +6101,7 @@ function descPercOrca(usarcash){
 		$('#SubValorFinal').val(subvalorfinal);
 		
 	}else{
-		$('#DescPercOrca').val('0,00');
+		//$('#DescPercOrca').val('0,00');
 		$('#DescValorOrca').val('0,00');
 		$('#SubValorFinal').val('0,00');
 	}
@@ -6078,13 +6109,13 @@ function descPercOrca(usarcash){
 
 }
 
-function descValorOrca(usarcash){
+function descValorOrca(){
 
 	var valortotalorca 	= $('#ValorTotalOrca').val();
 	valortotalorca 		= valortotalorca.replace(".","").replace(",",".");
 	valortotalorca		= parseFloat(valortotalorca);
 	//valortotalorca		= valortotalorca.toFixed(2);
-	
+
 	if($('#DescValorOrca').val() == ''){
 		var descvalororca = '0,00';
 	}else{
@@ -6108,11 +6139,13 @@ function descValorOrca(usarcash){
 			var descpercorca = (valortotalorca - subvalorfinal)*100/valortotalorca;
 		}else{
 			//console.log('valortotalorca >= descvalororca = NÃO');
+			/*
 			descvalororca = valortotalorca;
 			descvalororca	= parseFloat(descvalororca);
 			descvalororca	= descvalororca.toFixed(2);
 			descvalororca 	= descvalororca.replace('.',',');
 			$('#DescValorOrca').val(descvalororca);
+			*/
 			var subvalorfinal = 0.00;
 			subvalorfinal	= parseFloat(subvalorfinal);
 			var descpercorca = 100;
@@ -6135,10 +6168,140 @@ function descValorOrca(usarcash){
 		
 	}else{
 		$('#DescPercOrca').val('0,00');
-		$('#DescValorOrca').val('0,00');
+		//$('#DescValorOrca').val('0,00');
 		$('#SubValorFinal').val('0,00');
 	}	
 	usarcashback();
+}
+
+function usarcupom(usarcupom) {
+	//alert('usarcupom');
+	//console.log(usarcupom);
+	var tipodescorca = $('#Hidden_TipoDescOrca').val();
+	console.log(tipodescorca);
+	$('#Hidden_UsarCupom').val(usarcupom);
+	
+	if(usarcupom){
+		if(usarcupom == 'S'){
+			$('#UsarC').val('none');
+			$('#UsarC1').css("display","none");
+			$('#UsarD').val('');
+			$('#UsarD1').css("display","");
+			$('#Cupom').val('');
+			$('#DescPercOrca').val('0,00');
+			$('#DescValorOrca').val('0,00');
+			$('#DescPercOrca').prop('readonly', true);
+			$('#DescValorOrca').prop('readonly', true);
+			$("#MensagemCupom").html('');
+			if(tipodescorca == 'P'){
+				descPercOrca();
+			}else if(tipodescorca == 'V'){
+				descValorOrca();
+			}
+		}else if(usarcupom == 'N'){
+			$('#UsarC').val('');
+			$('#UsarC1').css("display","");
+			$('#UsarD').val('none');
+			$('#UsarD1').css("display","none");
+			$('#UsarE1').val('');
+			$('#Cupom').val('');
+			$('#DescPercOrca').val('0,00');
+			$('#DescValorOrca').val('0,00');
+			$("#MensagemCupom").html('');
+			tipoDescOrca(tipodescorca);
+		}
+	}else{
+		$('#UsarC').val('');
+		$('#UsarC1').css("display","");
+		$('#UsarD').val('none');
+		$('#UsarD1').css("display","none");
+		$('#UsarE1').val('');
+		tipoDescOrca(tipodescorca);
+	}
+}
+
+function cupom(){
+	//alert('cupom');
+	var tipodescorca = $('#Hidden_TipoDescOrca').val();
+	var valortotalorca 	= $('#ValorTotalOrca').val();
+	valortotalorca 		= valortotalorca.replace(".","").replace(",",".");
+	valortotalorca		= parseFloat(valortotalorca);
+	var Cupom = $('#Cupom').val();
+
+	$.ajax({
+		url: window.location.origin+ '/' + app + '/cadastros/pesquisar/Cupom.php?Cupom=' + Cupom,
+		dataType: "json",
+		success: function (data) {
+			var tipo	= data[0]['tipo'];
+			var tipodesc	= data[0]['tipodesc'];
+			var valorcupom	= data[0]['valorcupom'];
+			var valorminimo	= data[0]['valorminimo'];
+			var datacampanha	= data[0]['datacampanha'];
+			var datacampanhalimite	= data[0]['datacampanhalimite'];
+
+			var partesData = datacampanha.split("-");
+			var dia = parseInt(partesData[2]);
+			var mes = parseInt(partesData[1]);
+			var ano = parseInt(partesData[0]);
+			var validade1 	= partesData[2]+'/'+partesData[1]+'/'+partesData[0];
+			var validade_1 	= new Date(ano, mes - 1, dia);
+
+			var partesData_2 = datacampanhalimite.split("-");
+			var dia_2 = parseInt(partesData_2[2]);
+			var mes_2 = parseInt(partesData_2[1]);
+			var ano_2 = parseInt(partesData_2[0]);
+			var validade2 	= partesData_2[2]+'/'+partesData_2[1]+'/'+partesData_2[0];
+			var validade_2 	= new Date(ano_2, mes_2 - 1, dia_2);
+
+			if(validade_2 >= data_hoje && data_hoje >= validade_1  ){
+				ValorCupom	= parseFloat(valorcupom);
+				ValorCupom 	= mascaraValorReal(ValorCupom);
+				$("#CodigoCupom").html('Valido!');
+				$('#UsarE').val(tipodesc);
+				if(tipodesc == 'V'){
+					$('#UsarE1').val('R$');
+					$('#DescValorOrca').val(ValorCupom);
+					$('#DescPercOrca').val('');
+					$('#Hidden_TipoDescOrca').val(tipodesc);
+					descValorOrca();
+				}else{
+					$('#UsarE1').val('%');
+					$('#DescPercOrca').val(ValorCupom);
+					$('#DescValorOrca').val('');
+					$('#Hidden_TipoDescOrca').val(tipodesc);
+					descPercOrca();
+				}
+				$("#MensagemCupom").html('');
+			}else{
+				ValorCupom	= '0,00';
+				$('#DescValorOrca').val(ValorCupom);
+				$('#DescPercOrca').val(ValorCupom);
+				$("#CodigoCupom").html('Invalido!');
+				$('#UsarE').val(tipodescorca);
+				$('#UsarE1').val('');
+				if(tipodescorca == "V"){
+					descValorOrca();
+				}else if(tipodescorca == "P"){
+					descPercOrca();
+				}
+				$("#MensagemCupom").html('');
+			}
+		},
+		error:function(data){
+			//console.log('Nada encontrado');
+			$("#CodigoCupom").html('Invalido!');
+			$('#UsarE').val(tipodescorca);
+			$('#UsarE1').val('');
+			$('#DescPercOrca').val('0,00');
+			$('#DescValorOrca').val('0,00');
+			$("#MensagemCupom").html('');
+			if(tipodescorca == "V"){
+				descValorOrca();
+			}else if(tipodescorca == "P"){
+				descPercOrca();
+			}
+		}
+	});//termina o ajax	
 }
 
 function comcliente(valor2) {

@@ -63,6 +63,9 @@ class Orcatrata extends CI_Controller {
 			'StatusParcelas',
 			'Valor_S_Desc',
 			'Valor_C_Desc',
+			'UsarC',
+			'UsarD',
+			'UsarE',
         ), TRUE));
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,19 +78,14 @@ class Orcatrata extends CI_Controller {
 			'idApp_ClienteDep',
             'DataOrca',
 			'HoraOrca',
-			
 			'TipoFinanceiro',
 			'Descricao',
-            
             'AprovadoOrca',
             'ConcluidoOrca',
 			'BrindeOrca',
 			'DevolvidoOrca',
 			'ProntoOrca',
             'QuitadoOrca',
-            
-           
-			
             'ValorOrca',
 			'ValorComissao',
 			'ValorDev',
@@ -97,10 +95,8 @@ class Orcatrata extends CI_Controller {
 			'PrazoServicos',
 			'PrazoProdServ',
 			'PrazoCorreios',
-            
 			'ValorDinheiro',
 			'ValorTroco',
-            
             'ValorRestanteOrca',
             'FormaPagamento',
 			'Modalidade',
@@ -148,6 +144,8 @@ class Orcatrata extends CI_Controller {
 			'CashBackOrca',
             'ValidadeCashBackOrca',
 			'UsarCashBack',
+			'UsarCupom',
+			'Cupom',
 			'SubValorFinal',
 			'ValorFinalOrca',
 			//'RepeticaoOrca',
@@ -325,6 +323,7 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
 		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
 		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
+		(!$data['orcatrata']['UsarCupom']) ? $data['orcatrata']['UsarCupom'] = 'N' : FALSE;
 		(!$data['orcatrata']['TipoFrete']) ? $data['orcatrata']['TipoFrete'] = "1" : FALSE;
 		(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
 		(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
@@ -527,6 +526,7 @@ class Orcatrata extends CI_Controller {
             'V' => 'R$',
         );			
         $data['select']['UsarCashBack'] = $this->Basico_model->select_status_sn();
+        $data['select']['UsarCupom'] = $this->Basico_model->select_status_sn();
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusProdutos'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusParcelas'] = $this->Basico_model->select_status_sn();
@@ -757,7 +757,13 @@ class Orcatrata extends CI_Controller {
         );
         ($data['orcatrata']['UsarCashBack'] == 'S') ?
             $data['div']['UsarCashBack'] = '' : $data['div']['UsarCashBack'] = 'style="display: none;"';	
-
+		
+		$data['radio'] = array(
+            'UsarCupom' => $this->basico->radio_checked($data['orcatrata']['UsarCupom'], 'UsarCupom', 'NS'),
+        );
+        ($data['orcatrata']['UsarCupom'] == 'S') ?
+            $data['div']['UsarCupom'] = '' : $data['div']['UsarCupom'] = 'style="display: none;"';		
+		
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
@@ -985,6 +991,15 @@ class Orcatrata extends CI_Controller {
 			
 			if ($data['orcatrata']['Cli_Forn_Orca'] == 'S' && $data['orcatrata']['UsarCashBack'] == 'S' && $data['orcatrata']['idApp_Cliente'] != 0){
 				$data['orcatrata']['AtivoCashBack'] = 'N';
+			}
+						
+			if($data['orcatrata']['UsarCupom'] == "S"){
+				$data['orcatrata']['TipoDescOrca'] = $data['cadastrar']['UsarE'];
+				if(!$data['orcatrata']['Cupom'] || empty($data['orcatrata']['Cupom'])){
+					$data['orcatrata']['Cupom'] = 0;
+				}
+			}else{
+				$data['orcatrata']['Cupom'] = 0;
 			}
 			/*
 			echo '<br>';
@@ -1599,6 +1614,8 @@ class Orcatrata extends CI_Controller {
 							'TipoDescOrca' 			=> $data['orcatrata']['TipoDescOrca'],
 							'DescPercOrca' 			=> $data['orcatrata']['DescPercOrca'],
 							'DescValorOrca' 		=> $data['orcatrata']['DescValorOrca'],
+							'UsarCupom' 			=> $data['orcatrata']['UsarCupom'],
+							'Cupom' 				=> $data['orcatrata']['Cupom'],
 							'SubValorFinal' 		=> $data['orcatrata']['SubValorFinal'],
 							
 							'UsarCashBack' 			=> $usarcashback,
@@ -1921,6 +1938,9 @@ class Orcatrata extends CI_Controller {
 			'RelacaoDep',
 			'Valor_S_Desc',
 			'Valor_C_Desc',
+			'UsarC',
+			'UsarD',
+			'UsarE',
         ), TRUE));
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1933,19 +1953,14 @@ class Orcatrata extends CI_Controller {
 			'idApp_ClienteDep',
             'DataOrca',
 			'HoraOrca',
-			
 			'TipoFinanceiro',
 			'Descricao',
-            
             'AprovadoOrca',
             'ConcluidoOrca',
 			'BrindeOrca',
 			'DevolvidoOrca',
 			'ProntoOrca',
             'QuitadoOrca',
-            
-            
-			
             'ValorOrca',
 			'ValorComissao',
 			'ValorDev',
@@ -1955,10 +1970,8 @@ class Orcatrata extends CI_Controller {
 			'PrazoServicos',
 			'PrazoProdServ',
 			'PrazoCorreios',
-            
 			'ValorDinheiro',
 			'ValorTroco',
-            
             'ValorRestanteOrca',
             'FormaPagamento',
 			'Modalidade',
@@ -2006,6 +2019,8 @@ class Orcatrata extends CI_Controller {
 			'CashBackOrca',
             'ValidadeCashBackOrca',
 			'UsarCashBack',
+			'UsarCupom',
+			'Cupom',
 			'SubValorFinal',
 			'ValorFinalOrca',
         ), TRUE));
@@ -2138,6 +2153,7 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
 		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
 		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
+		(!$data['orcatrata']['UsarCupom']) ? $data['orcatrata']['UsarCupom'] = 'N' : FALSE;
 		(!$data['orcatrata']['TipoFrete']) ? $data['orcatrata']['TipoFrete'] = "1" : FALSE;
 		(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
 		(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
@@ -2362,6 +2378,7 @@ class Orcatrata extends CI_Controller {
 		$data['select']['RacaPet'] = $this->Cliente_model->select_racapet();
 		$data['select']['RelacaoDep'] = $this->Cliente_model->select_relacao();			
         $data['select']['UsarCashBack'] = $this->Basico_model->select_status_sn();
+        $data['select']['UsarCupom'] = $this->Basico_model->select_status_sn();
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
         $data['select']['Whatsapp'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusProdutos'] = $this->Basico_model->select_status_sn();
@@ -2596,7 +2613,19 @@ class Orcatrata extends CI_Controller {
         );
         ($data['orcatrata']['Entrega_Orca'] == 'S') ?
             $data['div']['Entrega_Orca'] = '' : $data['div']['Entrega_Orca'] = 'style="display: none;"';
-
+		
+		$data['radio'] = array(
+            'UsarCashBack' => $this->basico->radio_checked($data['orcatrata']['UsarCashBack'], 'UsarCashBack', 'NS'),
+        );
+        ($data['orcatrata']['UsarCashBack'] == 'S') ?
+            $data['div']['UsarCashBack'] = '' : $data['div']['UsarCashBack'] = 'style="display: none;"';		
+		
+		$data['radio'] = array(
+            'UsarCupom' => $this->basico->radio_checked($data['orcatrata']['UsarCupom'], 'UsarCupom', 'NS'),
+        );
+        ($data['orcatrata']['UsarCupom'] == 'S') ?
+            $data['div']['UsarCupom'] = '' : $data['div']['UsarCupom'] = 'style="display: none;"';		
+		
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
@@ -2821,6 +2850,15 @@ class Orcatrata extends CI_Controller {
 			if ($data['orcatrata']['Cli_Forn_Orca'] == 'S' && $data['orcatrata']['UsarCashBack'] == 'S' && $data['orcatrata']['idApp_Cliente'] != 0){
 				$data['orcatrata']['AtivoCashBack'] = 'N';
 			}			
+			
+			if($data['orcatrata']['UsarCupom'] == "S"){
+				$data['orcatrata']['TipoDescOrca'] = $data['cadastrar']['UsarE'];
+				if(!$data['orcatrata']['Cupom'] || empty($data['orcatrata']['Cupom'])){
+					$data['orcatrata']['Cupom'] = 0;
+				}
+			}else{
+				$data['orcatrata']['Cupom'] = 0;
+			}
 			
 			$data['redirect'] = '&gtd=' . $data['orcatrata']['DataEntregaOrca'];
 			
@@ -3335,8 +3373,11 @@ class Orcatrata extends CI_Controller {
 			'NomeClienteAuto',
 			'Valor_S_Desc',
 			'Valor_C_Desc',
+			'UsarC',
+			'UsarD',
+			'UsarE',
         ), TRUE));
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	
 		$data['orcatrata'] = quotes_to_entities($this->input->post(array(
             #### App_OrcaTrata ####
             //'idApp_OrcaTrata',
@@ -3346,19 +3387,14 @@ class Orcatrata extends CI_Controller {
             'idApp_ClienteDep',
             'DataOrca',
 			'HoraOrca',
-			
 			'TipoFinanceiro',
 			'Descricao',
-            
             'AprovadoOrca',
             'ConcluidoOrca',
             'BrindeOrca',
 			'DevolvidoOrca',
 			'ProntoOrca',
             'QuitadoOrca',
-            
-            
-			
             'ValorOrca',
 			'ValorComissao',
 			'ValorDev',
@@ -3368,10 +3404,8 @@ class Orcatrata extends CI_Controller {
 			'PrazoServicos',
 			'PrazoProdServ',
 			'PrazoCorreios',
-            
 			'ValorDinheiro',
 			'ValorTroco',
-            
             'ValorRestanteOrca',
             'FormaPagamento',
 			'Modalidade',
@@ -3419,6 +3453,8 @@ class Orcatrata extends CI_Controller {
 			'CashBackOrca',
             'ValidadeCashBackOrca',
 			'UsarCashBack',
+			'UsarCupom',
+			'Cupom',
 			'SubValorFinal',
 			'ValorFinalOrca',
         ), TRUE));
@@ -3476,7 +3512,8 @@ class Orcatrata extends CI_Controller {
 		$data['orcatrata']['Tipo_Orca'] = "B";
 		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
 		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
-		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;  
+		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
+		(!$data['orcatrata']['UsarCupom']) ? $data['orcatrata']['UsarCupom'] = 'N' : FALSE;
 		(!$data['orcatrata']['idApp_Cliente']) ? $data['orcatrata']['idApp_Cliente'] = '0' : FALSE;
 		if($_SESSION['log']['idSis_Empresa'] != 5){
 			(!$data['orcatrata']['Cli_Forn_Orca']) ? $data['orcatrata']['Cli_Forn_Orca'] = 'S' : FALSE;
@@ -3762,8 +3799,9 @@ class Orcatrata extends CI_Controller {
             'V' => 'R$',
         );
 		$data['select']['RacaPet'] = $this->Cliente_model->select_racapet();	
-		$data['select']['RelacaoDep'] = $this->Cliente_model->select_relacao();			
+		$data['select']['RelacaoDep'] = $this->Cliente_model->select_relacao();
         $data['select']['UsarCashBack'] = $this->Basico_model->select_status_sn();
+        $data['select']['UsarCupom'] = $this->Basico_model->select_status_sn();
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
         $data['select']['Whatsapp'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusProdutos'] = $this->Basico_model->select_status_sn();
@@ -4002,6 +4040,11 @@ class Orcatrata extends CI_Controller {
         ($data['orcatrata']['UsarCashBack'] == 'S') ?
             $data['div']['UsarCashBack'] = '' : $data['div']['UsarCashBack'] = 'style="display: none;"';		
 		
+		$data['radio'] = array(
+            'UsarCupom' => $this->basico->radio_checked($data['orcatrata']['UsarCupom'], 'UsarCupom', 'NS'),
+        );
+        ($data['orcatrata']['UsarCupom'] == 'S') ?
+            $data['div']['UsarCupom'] = '' : $data['div']['UsarCupom'] = 'style="display: none;"';		
 		
 		$data['radio'] = array(
             'CanceladoOrca' => $this->basico->radio_checked($data['orcatrata']['CanceladoOrca'], 'Orçamento Cancelado', 'NS'),
@@ -4242,6 +4285,26 @@ class Orcatrata extends CI_Controller {
 			}else{
 				$data['orcatrata']['AtivoCashBack'] = 'N';
 			}
+			
+			if($data['orcatrata']['UsarCupom'] == "S"){
+				$data['orcatrata']['TipoDescOrca'] = $data['cadastrar']['UsarE'];
+				if(!$data['orcatrata']['Cupom'] || empty($data['orcatrata']['Cupom'])){
+					$data['orcatrata']['Cupom'] = 0;
+				}
+			}else{
+				$data['orcatrata']['Cupom'] = 0;
+			}
+			/*
+			echo '<br>';
+			echo "<pre>";
+			print_r('UsarE = ' . $data['cadastrar']['UsarE']);
+			echo '<br>';
+			print_r('TipoDescOrca = ' . $data['orcatrata']['TipoDescOrca']);
+			echo '<br>';
+			print_r('Cupom = ' . $data['orcatrata']['Cupom']);
+			echo "</pre>";			
+			exit ();
+			*/
 			/*
 			//uso estas linhas apenas para testar a pesquisa do cashbak
 			if ($data['orcatrata']['Cli_Forn_Orca'] == 'S' && $data['orcatrata']['UsarCashBack'] == 'S' && $data['orcatrata']['idApp_Cliente'] != 0){
@@ -4791,6 +4854,9 @@ class Orcatrata extends CI_Controller {
 			'RelacaoDep',
 			'Valor_S_Desc',
 			'Valor_C_Desc',
+			'UsarC',
+			'UsarD',
+			'UsarE',
         ), TRUE));
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4803,9 +4869,7 @@ class Orcatrata extends CI_Controller {
 			'idApp_ClienteDep',
             'DataOrca',
 			'TipoFinanceiro',
-			
 			'Descricao',
-            
             'AprovadoOrca',
             'ConcluidoOrca',
 			'BrindeOrca',
@@ -4813,9 +4877,6 @@ class Orcatrata extends CI_Controller {
 			'ProntoOrca',
             'QuitadoOrca',
 			'FinalizadoOrca',
-            
-            
-			
             'ValorOrca',
 			'ValorComissao',
 			'QtdPrdOrca',
@@ -4825,10 +4886,8 @@ class Orcatrata extends CI_Controller {
 			'PrazoProdServ',
 			'PrazoCorreios',
 			'ValorDev',
-            
 			'ValorDinheiro',
 			'ValorTroco',
-            
             'ValorRestanteOrca',
             'FormaPagamento',
             //'QtdParcelasOrca',
@@ -4876,6 +4935,8 @@ class Orcatrata extends CI_Controller {
 			'CashBackOrca',
             'ValidadeCashBackOrca',
 			'UsarCashBack',
+			'UsarCupom',
+			'Cupom',
 			'SubValorFinal',
 			'ValorFinalOrca',
         ), TRUE));
@@ -4952,6 +5013,7 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
 		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
 		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
+		(!$data['orcatrata']['UsarCupom']) ? $data['orcatrata']['UsarCupom'] = 'N' : FALSE;
 		(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'N' : FALSE;
 		(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'N' : FALSE;
 		(!$data['orcatrata']['EnviadoOrca']) ? $data['orcatrata']['EnviadoOrca'] = 'N' : FALSE;
@@ -5350,6 +5412,7 @@ class Orcatrata extends CI_Controller {
 		$data['select']['RacaPet'] = $this->Cliente_model->select_racapet();
 		$data['select']['RelacaoDep'] = $this->Cliente_model->select_relacao();			
         $data['select']['UsarCashBack'] = $this->Basico_model->select_status_sn();
+        $data['select']['UsarCupom'] = $this->Basico_model->select_status_sn();
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
         $data['select']['Whatsapp'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusProdutos'] = $this->Basico_model->select_status_sn();
@@ -5670,7 +5733,18 @@ class Orcatrata extends CI_Controller {
         ($data['orcatrata']['Entrega_Orca'] == 'S') ?
             $data['div']['Entrega_Orca'] = '' : $data['div']['Entrega_Orca'] = 'style="display: none;"';
 		
+		$data['radio'] = array(
+            'UsarCashBack' => $this->basico->radio_checked($data['orcatrata']['UsarCashBack'], 'UsarCashBack', 'NS'),
+        );
+        ($data['orcatrata']['UsarCashBack'] == 'S') ?
+            $data['div']['UsarCashBack'] = '' : $data['div']['UsarCashBack'] = 'style="display: none;"';		
 		
+		$data['radio'] = array(
+            'UsarCupom' => $this->basico->radio_checked($data['orcatrata']['UsarCupom'], 'UsarCupom', 'NS'),
+        );
+        ($data['orcatrata']['UsarCupom'] == 'S') ?
+            $data['div']['UsarCupom'] = '' : $data['div']['UsarCupom'] = 'style="display: none;"';		
+				
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
@@ -5784,9 +5858,7 @@ class Orcatrata extends CI_Controller {
 				}
 				
 			}
-			
-			
-				
+
 			$data['busca']['cashback']['anterior'] = $this->Orcatrata_model->get_produto_cashback_pedido($data['orcatrata']['idApp_OrcaTrata']);
 			$max_cashback = count($data['busca']['cashback']['anterior']);				
 
@@ -5997,6 +6069,18 @@ class Orcatrata extends CI_Controller {
 			if ($data['orcatrata']['Cli_Forn_Orca'] == 'S' && $data['orcatrata']['UsarCashBack'] == 'S' && $data['orcatrata']['idApp_Cliente'] != 0){
 				$data['orcatrata']['AtivoCashBack'] = 'N';
 			}
+
+			if($_SESSION['Orcatrata']['UsarCupom'] == "N"){
+				if($data['orcatrata']['UsarCupom'] == "S"){
+					$data['orcatrata']['TipoDescOrca'] = $data['cadastrar']['UsarE'];
+					if(!$data['orcatrata']['Cupom'] || empty($data['orcatrata']['Cupom'])){
+						$data['orcatrata']['Cupom'] = 0;
+					}
+				}else{
+					$data['orcatrata']['Cupom'] = 0;
+				}
+			}	
+		
 			/*
             $data['update']['orcatrata']['anterior'] = $this->Orcatrata_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata']);
             $data['update']['orcatrata']['campos'] = array_keys($data['orcatrata']);
@@ -6184,7 +6268,7 @@ class Orcatrata extends CI_Controller {
 					} else {
 						$data['update']['servico']['alterar'][$j]['ConcluidoProduto'] = $data['update']['servico']['alterar'][$j]['ConcluidoProduto'];
 					}
-
+					
 					if ($data['orcatrata']['idApp_Cliente']) $data['update']['servico']['alterar'][$j]['idApp_Cliente'] = $data['orcatrata']['idApp_Cliente'];
 
 					unset($data['update']['servico']['alterar'][$j]['SubtotalProduto']);
@@ -6784,6 +6868,9 @@ class Orcatrata extends CI_Controller {
 			'StatusParcelas',
 			'Valor_S_Desc',
 			'Valor_C_Desc',
+			'UsarC',
+			'UsarD',
+			'UsarE',
         ), TRUE));
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -6794,9 +6881,7 @@ class Orcatrata extends CI_Controller {
             'idApp_Cliente',
             'DataOrca',
 			'TipoFinanceiro',
-			
 			'Descricao',
-            
             'AprovadoOrca',
             'ConcluidoOrca',
 			'BrindeOrca',
@@ -6804,9 +6889,6 @@ class Orcatrata extends CI_Controller {
 			'ProntoOrca',
             'QuitadoOrca',
 			'FinalizadoOrca',
-            
-            
-			
             'ValorOrca',
 			'ValorComissao',
 			'QtdPrdOrca',
@@ -6816,10 +6898,8 @@ class Orcatrata extends CI_Controller {
 			'PrazoProdServ',
 			'PrazoCorreios',
 			'ValorDev',
-            
 			'ValorDinheiro',
 			'ValorTroco',
-            
             'ValorRestanteOrca',
             'FormaPagamento',
             //'QtdParcelasOrca',
@@ -6867,6 +6947,8 @@ class Orcatrata extends CI_Controller {
 			'CashBackOrca',
             'ValidadeCashBackOrca',
 			'UsarCashBack',
+			'UsarCupom',
+			'Cupom',
 			'SubValorFinal',
 			'ValorFinalOrca',
         ), TRUE));
@@ -6948,6 +7030,7 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
 		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
 		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
+		(!$data['orcatrata']['UsarCupom']) ? $data['orcatrata']['UsarCupom'] = 'N' : FALSE;
 		if($_SESSION['log']['idSis_Empresa'] == 5){
 			(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'S' : FALSE;
 			(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'S' : FALSE;			
@@ -7323,6 +7406,7 @@ class Orcatrata extends CI_Controller {
             'V' => 'R$',
         );			
         $data['select']['UsarCashBack'] = $this->Basico_model->select_status_sn();
+        $data['select']['UsarCashBack'] = $this->Basico_model->select_status_sn();
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusProdutos'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusParcelas'] = $this->Basico_model->select_status_sn();
@@ -7537,7 +7621,18 @@ class Orcatrata extends CI_Controller {
         ($data['orcatrata']['Entrega_Orca'] == 'S') ?
             $data['div']['Entrega_Orca'] = '' : $data['div']['Entrega_Orca'] = 'style="display: none;"';
 		
-
+		$data['radio'] = array(
+            'UsarCashBack' => $this->basico->radio_checked($data['orcatrata']['UsarCashBack'], 'UsarCashBack', 'NS'),
+        );
+        ($data['orcatrata']['UsarCashBack'] == 'S') ?
+            $data['div']['UsarCashBack'] = '' : $data['div']['UsarCashBack'] = 'style="display: none;"';		
+		
+		$data['radio'] = array(
+            'UsarCupom' => $this->basico->radio_checked($data['orcatrata']['UsarCupom'], 'UsarCupom', 'NS'),
+        );
+        ($data['orcatrata']['UsarCupom'] == 'S') ?
+            $data['div']['UsarCupom'] = '' : $data['div']['UsarCupom'] = 'style="display: none;"';		
+			
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
@@ -7617,7 +7712,7 @@ class Orcatrata extends CI_Controller {
             $this->load->view('orcatrata/form_orcatrataalterar2', $data);
 		    	
 		} else {
-
+			
 			if ($_SESSION['Orcatrata']['CombinadoFrete'] == 'S' && $_SESSION['Orcatrata']['AprovadoOrca'] == 'S') {
 				
 				$data['busca']['estoque']['anterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
@@ -7795,6 +7890,18 @@ class Orcatrata extends CI_Controller {
 				$data['orcatrata']['ValorGateway'] = 0.00;
 			}
 			$data['orcatrata']['ValorEmpresa'] = $data['orcatrata']['ValorFatura'] - $data['orcatrata']['ValorComissao'] - $data['orcatrata']['ValorGateway'];
+			
+			if($_SESSION['Orcatrata']['UsarCupom'] == "N"){
+				if($data['orcatrata']['UsarCupom'] == "S"){
+					$data['orcatrata']['TipoDescOrca'] = $data['cadastrar']['UsarE'];
+					if(!$data['orcatrata']['Cupom'] || empty($data['orcatrata']['Cupom'])){
+						$data['orcatrata']['Cupom'] = 0;
+					}
+				}else{
+					$data['orcatrata']['Cupom'] = 0;
+				}
+			}	
+
 			/*
             $data['update']['orcatrata']['anterior'] = $this->Orcatrata_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata']);
             $data['update']['orcatrata']['campos'] = array_keys($data['orcatrata']);
@@ -8469,6 +8576,9 @@ class Orcatrata extends CI_Controller {
 			'StatusParcelas',
 			'Valor_S_Desc',
 			'Valor_C_Desc',
+			'UsarC',
+			'UsarD',
+			'UsarE',
         ), TRUE));
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -8481,18 +8591,13 @@ class Orcatrata extends CI_Controller {
 			'idApp_ClienteDep',
             'DataOrca',
 			'TipoFinanceiro',
-			
 			'Descricao',
-            
             'AprovadoOrca',
             'ConcluidoOrca',
 			'DevolvidoOrca',
 			'ProntoOrca',
             'QuitadoOrca',
 			'FinalizadoOrca',
-            
-            
-			
             'ValorOrca',
 			'ValorComissao',
 			'QtdPrdOrca',
@@ -8502,10 +8607,8 @@ class Orcatrata extends CI_Controller {
 			'PrazoProdServ',
 			'PrazoCorreios',
 			'ValorDev',
-            
 			'ValorDinheiro',
 			'ValorTroco',
-            
             'ValorRestanteOrca',
             'FormaPagamento',
             //'QtdParcelasOrca',
@@ -8553,6 +8656,8 @@ class Orcatrata extends CI_Controller {
 			'CashBackOrca',
             'ValidadeCashBackOrca',
 			//'UsarCashBack',
+			//'UsarCupom',
+			//'Cupom',
 			'SubValorFinal',
 			'ValorFinalOrca',
         ), TRUE));
@@ -8985,6 +9090,7 @@ class Orcatrata extends CI_Controller {
             'V' => 'R$',
         );			
         $data['select']['UsarCashBack'] = $this->Basico_model->select_status_sn();
+        $data['select']['UsarCupom'] = $this->Basico_model->select_status_sn();
 		$data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
 		$data['select']['Whatsapp'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusProdutos'] = $this->Basico_model->select_status_sn();
@@ -10361,6 +10467,9 @@ class Orcatrata extends CI_Controller {
 			'StatusParcelas',
 			'Valor_S_Desc',
 			'Valor_C_Desc',
+			'UsarC',
+			'UsarD',
+			'UsarE',
         ), TRUE));
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 		$data['orcatrata'] = quotes_to_entities($this->input->post(array(
@@ -10370,19 +10479,14 @@ class Orcatrata extends CI_Controller {
             'idApp_Fornecedor',
             'DataOrca',
 			'HoraOrca',
-			
 			'TipoFinanceiro',
 			'Descricao',
-            
             'AprovadoOrca',
             'ConcluidoOrca',
 			'BrindeOrca',
 			'DevolvidoOrca',
 			'ProntoOrca',
             'QuitadoOrca',
-            
-            
-			
             'ValorOrca',
 			//'ValorComissao',
 			'ValorDev',
@@ -10392,10 +10496,8 @@ class Orcatrata extends CI_Controller {
 			'PrazoServicos',
 			'PrazoProdServ',
 			'PrazoCorreios',
-            
 			'ValorDinheiro',
 			'ValorTroco',
-            
             'ValorRestanteOrca',
             'FormaPagamento',
 			'Modalidade',
@@ -10443,6 +10545,8 @@ class Orcatrata extends CI_Controller {
 			'CashBackOrca',
             'ValidadeCashBackOrca',
 			'UsarCashBack',
+			'UsarCupom',
+			'Cupom',
 			'SubValorFinal',
 			'ValorFinalOrca',
         ), TRUE));
@@ -10542,6 +10646,7 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
 		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
 		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
+		(!$data['orcatrata']['UsarCupom']) ? $data['orcatrata']['UsarCupom'] = 'N' : FALSE;
 		(!$data['orcatrata']['Modalidade']) ? $data['orcatrata']['Modalidade'] = 'P' : FALSE;
 		if($_SESSION['log']['idSis_Empresa'] == 5){
 			(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'S' : FALSE;
@@ -10770,6 +10875,7 @@ class Orcatrata extends CI_Controller {
             'V' => 'R$',
         );			
         $data['select']['UsarCashBack'] = $this->Basico_model->select_status_sn();
+        $data['select']['UsarCupom'] = $this->Basico_model->select_status_sn();
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusProdutos'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusParcelas'] = $this->Basico_model->select_status_sn();
@@ -10998,7 +11104,19 @@ class Orcatrata extends CI_Controller {
         ($data['orcatrata']['Entrega_Orca'] == 'S') ?
             $data['div']['Entrega_Orca'] = '' : $data['div']['Entrega_Orca'] = 'style="display: none;"';
 			
-			
+		
+		$data['radio'] = array(
+            'UsarCashBack' => $this->basico->radio_checked($data['orcatrata']['UsarCashBack'], 'UsarCashBack', 'NS'),
+        );
+        ($data['orcatrata']['UsarCashBack'] == 'S') ?
+            $data['div']['UsarCashBack'] = '' : $data['div']['UsarCashBack'] = 'style="display: none;"';		
+		
+		$data['radio'] = array(
+            'UsarCupom' => $this->basico->radio_checked($data['orcatrata']['UsarCupom'], 'UsarCupom', 'NS'),
+        );
+        ($data['orcatrata']['UsarCupom'] == 'S') ?
+            $data['div']['UsarCupom'] = '' : $data['div']['UsarCupom'] = 'style="display: none;"';		
+					
         #Ver uma solução melhor para este campo
         #(!$data['orcatrata']['TipoFinanceiro']) ? $data['orcatrata']['TipoFinanceiro'] = '1' : FALSE;
 /*
@@ -11210,7 +11328,15 @@ class Orcatrata extends CI_Controller {
 				$intervalo = strtotime($data2)-strtotime($data1); 
 				$dias = floor($intervalo / (60 * 60 * 24));
 				$data['orcatrata']['PrazoEntrega'] = $dias;
-			}	
+			}
+			if($data['orcatrata']['UsarCupom'] == "S"){
+				$data['orcatrata']['TipoDescOrca'] = $data['cadastrar']['UsarE'];
+				if(!$data['orcatrata']['Cupom'] || empty($data['orcatrata']['Cupom'])){
+					$data['orcatrata']['Cupom'] = 0;
+				}
+			}else{
+				$data['orcatrata']['Cupom'] = 0;
+			}			
             /*
 			echo "<pre>";
             echo '<br>';
@@ -11685,6 +11811,9 @@ class Orcatrata extends CI_Controller {
 			'StatusParcelas',
 			'Valor_S_Desc',
 			'Valor_C_Desc',
+			'UsarC',
+			'UsarD',
+			'UsarE',
         ), TRUE));
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11695,9 +11824,7 @@ class Orcatrata extends CI_Controller {
             'idApp_Fornecedor',
             'DataOrca',
 			'TipoFinanceiro',
-			
 			'Descricao',
-            
             'AprovadoOrca',
             'ConcluidoOrca',
 			'BrindeOrca',
@@ -11705,9 +11832,6 @@ class Orcatrata extends CI_Controller {
 			'ProntoOrca',
             'QuitadoOrca',
 			'FinalizadoOrca',
-            
-            
-			
             'ValorOrca',
 			//'ValorComissao',
 			'QtdPrdOrca',
@@ -11717,10 +11841,8 @@ class Orcatrata extends CI_Controller {
 			'PrazoProdServ',
 			'PrazoCorreios',
 			'ValorDev',
-            
 			'ValorDinheiro',
 			'ValorTroco',
-            
             'ValorRestanteOrca',
             'FormaPagamento',
             //'QtdParcelasOrca',
@@ -11768,6 +11890,8 @@ class Orcatrata extends CI_Controller {
 			'CashBackOrca',
             'ValidadeCashBackOrca',
 			'UsarCashBack',
+			'UsarCupom',
+			'Cupom',
 			'ValorFinalOrca',
 			'SubValorFinal',
         ), TRUE));
@@ -11843,6 +11967,7 @@ class Orcatrata extends CI_Controller {
 		(!$data['orcatrata']['TipoDescOrca']) ? $data['orcatrata']['TipoDescOrca'] = 'V' : FALSE;
 		(!$data['orcatrata']['TipoExtraOrca']) ? $data['orcatrata']['TipoExtraOrca'] = 'V' : FALSE; 
 		(!$data['orcatrata']['UsarCashBack']) ? $data['orcatrata']['UsarCashBack'] = 'N' : FALSE;
+		(!$data['orcatrata']['UsarCupom']) ? $data['orcatrata']['UsarCupom'] = 'N' : FALSE;
 		if($_SESSION['log']['idSis_Empresa'] == 5){
 			(!$data['orcatrata']['CombinadoFrete']) ? $data['orcatrata']['CombinadoFrete'] = 'S' : FALSE;
 			(!$data['orcatrata']['AprovadoOrca']) ? $data['orcatrata']['AprovadoOrca'] = 'S' : FALSE;			
@@ -12208,6 +12333,7 @@ class Orcatrata extends CI_Controller {
             'V' => 'R$',
         );			
         $data['select']['UsarCashBack'] = $this->Basico_model->select_status_sn();
+        $data['select']['UsarCupom'] = $this->Basico_model->select_status_sn();
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusProdutos'] = $this->Basico_model->select_status_sn();
         $data['select']['StatusParcelas'] = $this->Basico_model->select_status_sn();
@@ -12430,7 +12556,18 @@ class Orcatrata extends CI_Controller {
         );
         ($data['orcatrata']['QuitadoOrca'] == 'S') ?
             $data['div']['QuitadoOrca'] = '' : $data['div']['QuitadoOrca'] = 'style="display: none;"';
-
+		
+		$data['radio'] = array(
+            'UsarCashBack' => $this->basico->radio_checked($data['orcatrata']['UsarCashBack'], 'UsarCashBack', 'NS'),
+        );
+        ($data['orcatrata']['UsarCashBack'] == 'S') ?
+            $data['div']['UsarCashBack'] = '' : $data['div']['UsarCashBack'] = 'style="display: none;"';		
+		
+		$data['radio'] = array(
+            'UsarCupom' => $this->basico->radio_checked($data['orcatrata']['UsarCupom'], 'UsarCupom', 'NS'),
+        );
+        ($data['orcatrata']['UsarCupom'] == 'S') ?
+            $data['div']['UsarCupom'] = '' : $data['div']['UsarCupom'] = 'style="display: none;"';
 
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
@@ -12671,6 +12808,17 @@ class Orcatrata extends CI_Controller {
 				$dias = floor($intervalo / (60 * 60 * 24));
 				$data['orcatrata']['PrazoEntrega'] = $dias;
 			}
+			
+			if($_SESSION['Orcatrata']['UsarCupom'] == "N"){
+				if($data['orcatrata']['UsarCupom'] == "S"){
+					$data['orcatrata']['TipoDescOrca'] = $data['cadastrar']['UsarE'];
+					if(!$data['orcatrata']['Cupom'] || empty($data['orcatrata']['Cupom'])){
+						$data['orcatrata']['Cupom'] = 0;
+					}
+				}else{
+					$data['orcatrata']['Cupom'] = 0;
+				}
+			}			
 			/*
             $data['update']['orcatrata']['anterior'] = $this->Orcatrata_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata']);
             $data['update']['orcatrata']['campos'] = array_keys($data['orcatrata']);

@@ -1351,7 +1351,9 @@
 																				<input type="text" class="form-control Valor" name="ValorTotalOrca" id="ValorTotalOrca" value="<?php echo $orcatrata['ValorTotalOrca'] ?>" readonly=''/>
 																			</div>
 																		</div>
-																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-left">
+																		<input type="hidden" class="form-control" id="UsarE" name="UsarE" value="<?php echo $cadastrar['UsarE']; ?>"/>
+																		<input type="hidden" id="UsarC" name="UsarC" value="<?php echo $cadastrar['UsarC']; ?>"/>
+																		<div id="UsarC1" class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-left" style="display:<?php echo $cadastrar['UsarC']; ?>">
 																			<label for="TipoDescOrca">Tipo de Desc</label><br>
 																			<div class="btn-group" data-toggle="buttons">
 																				<?php
@@ -1379,6 +1381,24 @@
 																				?>
 																			</div>
 																		</div>
+																		<input type="hidden" id="UsarD" name="UsarD" value="<?php echo $cadastrar['UsarD']; ?>"/>
+																		<div id="UsarD1" class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-left" style="display:<?php echo $cadastrar['UsarD']; ?>">
+																			<label for="TipoDescOrca">Tipo de Desc</label><br>
+																			<?php 
+																				if($cadastrar['UsarE']){
+																					if($cadastrar['UsarE'] == 'V'){
+																						$UsarE = 'R$';
+																					}elseif($cadastrar['UsarE'] == 'P'){
+																						$UsarE = '%';
+																					}else{
+																						$UsarE = '';
+																					}
+																				}else{
+																					$UsarE = '';
+																				} 
+																			?>
+																			<input type="text" class="form-control"  id="UsarE1" value="<?php echo $UsarE; ?>" readonly=''/>
+																		</div>
 																	</div>
 																	<div class="row">
 																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
@@ -1398,6 +1418,47 @@
 																			</div>
 																		</div>	
 																	</div>
+																	<div class="row">
+																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-left">
+																			<label for="UsarCupom">Usar Cupom?</label><br>
+																			<div class="btn-group" data-toggle="buttons">
+																				<?php
+																				foreach ($select['UsarCupom'] as $key => $row) {
+																					if (!$orcatrata['UsarCupom'])$orcatrata['UsarCupom'] = 'N';
+																					($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																					if ($orcatrata['UsarCupom'] == $key) {
+																						echo ''
+																						. '<label class="btn btn-warning active" name="UsarCupom_' . $hideshow . '">'
+																						. '<input type="radio" name="UsarCupom" id="' . $hideshow . '" '
+																						. 'onchange="usarcupom(this.value)" '
+																						. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																						. '</label>'
+																						;
+																					} else {
+																						echo ''
+																						. '<label class="btn btn-default" name="UsarCupom_' . $hideshow . '">'
+																						. '<input type="radio" name="UsarCupom" id="' . $hideshow . '" '
+																						. 'onchange="usarcupom(this.value)" '
+																						. 'autocomplete="off" value="' . $key . '" >' . $row
+																						. '</label>'
+																						;
+																					}
+																				}
+																				?>
+																			</div>
+																		</div>
+																		<div id="UsarCupom" <?php echo $div['UsarCupom']; ?>>	
+																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+																				<label for="Cupom">Cupom <span class="modal-title" id="CodigoCupom"></span> </label><br>
+																				<div class="input-group" id="txtHint">
+																					<span class="input-group-addon" id="basic-addon1">Nº</span>
+																					<input type="text" class="form-control Numero" name="Cupom" id="Cupom" maxlength="11" placeholder="1234"
+																						   onkeyup="cupom()" value="<?php echo $orcatrata['Cupom'] ?>">
+																				</div>
+																			</div>
+																			<span class="modal-title" id="MensagemCupom"></span>
+																		</div>
+																	</div>
 																</div>
 															</div>
 														</div>
@@ -1408,6 +1469,7 @@
 														<input type="hidden" class="form-control Valor" name="ValorTotalOrca" id="ValorTotalOrca" value="<?php echo $orcatrata['ValorTotalOrca'] ?>">
 													<?php } ?>
 													<input type="hidden" id="Hidden_TipoDescOrca" value="<?php echo $orcatrata['TipoDescOrca'] ?>">
+													<input type="hidden" id="Hidden_UsarCupom" value="<?php echo $orcatrata['UsarCupom'] ?>">
 													<?php if ($_SESSION['log']['NivelEmpresa'] >= 4 ) { ?>
 														<div class="col-sm-4 col-md-4 col-lg-4">
 															<div class="panel panel-primary">
@@ -1599,7 +1661,7 @@
 													<div class="col-sm-4 col-md-4 col-lg-4">
 														<div class="panel panel-default">
 															<div class="panel-heading">
-																<div class="row">																
+																<div class="row">
 																	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
 																		<label for="QtdParcelasOrca">Parcelas</label><br>
 																		<input type="text" class="form-control Numero" id="QtdParcelasOrca" maxlength="3" placeholder="0"
