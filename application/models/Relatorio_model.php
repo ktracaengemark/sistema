@@ -546,6 +546,7 @@ class Relatorio_model extends CI_Model {
 				PR.DataVencimento,
 				PR.Quitado,
 				EMP.NomeEmpresa,
+				EMP.Site,
 				US.Nome,
 				CONCAT(IFNULL(US.idSis_Usuario,""), " - " ,IFNULL(US.Nome,"")) AS NomeColaborador,
 				USA.Nome,

@@ -600,7 +600,9 @@ class Relatorio extends CI_Controller {
 			'Texto3',
 			'Texto4',
 			'nomedoCliente',
+			'idCliente',
 			'numerodopedido',
+			'site',
         ), TRUE));
 
 		/*		   
@@ -768,7 +770,9 @@ class Relatorio extends CI_Controller {
 		$data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresa();
 		
         $data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
+        $data['select']['idCliente'] = $this->Basico_model->select_status_sn();
         $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
+        $data['select']['site'] = $this->Basico_model->select_status_sn();
 		
  		(!$data['query']['nomedoCliente']) ? $data['query']['nomedoCliente'] = 'S' : FALSE;
 		$data['radio'] = array(
@@ -783,6 +787,13 @@ class Relatorio extends CI_Controller {
         );
         ($data['query']['numerodopedido'] == 'S') ?
             $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
+
+ 		(!$data['query']['site']) ? $data['query']['site'] = 'S' : FALSE;
+		$data['radio'] = array(
+            'site' => $this->basico->radio_checked($data['query']['site'], 'site', 'NS'),
+        );
+        ($data['query']['site'] == 'S') ?
+            $data['div']['site'] = '' : $data['div']['site'] = 'style="display: none;"';		
 
 		$data['query']['nome'] = 'Cliente';
         $data['titulo'] = 'Receitas';
@@ -874,7 +885,9 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['Texto3'] = utf8_encode($data['query']['Texto3']);
         $_SESSION['FiltroAlteraParcela']['Texto4'] = utf8_encode($data['query']['Texto4']);
         $_SESSION['FiltroAlteraParcela']['nomedoCliente'] = $data['query']['nomedoCliente'];
+        $_SESSION['FiltroAlteraParcela']['idCliente'] = $data['query']['idCliente'];
         $_SESSION['FiltroAlteraParcela']['numerodopedido'] = $data['query']['numerodopedido'];
+        $_SESSION['FiltroAlteraParcela']['site'] = $data['query']['site'];
 		
 		$_SESSION['Imprimir']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
 		

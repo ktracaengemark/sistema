@@ -660,7 +660,7 @@
 							<div class="row text-left">
 								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-left" >
 									<div class="input-group">
-										<span class="input-group-addon" disabled>Tx1</span>
+										<span class="input-group-addon" disabled>Pt1</span>
 										<textarea type="text" class="form-control" maxlength="200" placeholder="Ex. Olá" name="Texto1" id="Texto1" value="<?php echo set_value('Texto1', $query['Texto1']); ?>"><?php echo set_value('Texto1', $query['Texto1']); ?></textarea>
 									</div>
 								</div>
@@ -690,23 +690,46 @@
 										?>
 									</div>
 								</div>
-								<!--
-								<div class="text-left" id="nomedoCliente" <?php #echo $div['nomedoCliente']; ?>>
-									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-left" >
-										<div class="">
-											<input type="text" class="form-control" placeholder="Nome do Cliente" readonly="">
-										</div>
-									</div>
-								</div>
-								-->
 								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-left" >
 									<div class="input-group">
-										<span class="input-group-addon" disabled>Tx2</span>
+										<span class="input-group-addon" disabled>Pt2</span>
 										<textarea type="text" class="form-control" maxlength="200" placeholder="Ex. tal tal tal tal!" name="Texto2" id="Texto2" value="<?php echo set_value('Texto2', $query['Texto2']); ?>"><?php echo set_value('Texto2', $query['Texto2']); ?></textarea>
 									</div>
 								</div>
 								<div class="col-xs-6 col-sm-3  col-md-3 col-lg-3 text-left">
-									<label for="numerodopedido">Numero do Pedido?</label><br>
+									<label for="id<?php echo $nome?>">Nº do <?php echo $nome?>?</label><br>
+									<div class="btn-larg-right btn-group" data-toggle="buttons">
+										<?php
+										foreach ($select['id' . $nome] as $key => $row) {
+											if (!$query['id' . $nome]) $query['id' . $nome] = 'S';
+											($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+											if ($query['id' . $nome] == $key) {
+												echo ''
+												. '<label class="btn btn-warning active" name="id' . $nome . '_' . $hideshow . '">'
+												. '<input type="radio" name="id' . $nome . '" id="' . $hideshow . '" '
+												. 'autocomplete="off" value="' . $key . '" checked>' . $row
+												. '</label>'
+												;
+											} else {
+												echo ''
+												. '<label class="btn btn-default" name="id' . $nome . '_' . $hideshow . '">'
+												. '<input type="radio" name="id' . $nome . '" id="' . $hideshow . '" '
+												. 'autocomplete="off" value="' . $key . '" >' . $row
+												. '</label>'
+												;
+											}
+										}
+										?>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-left" >
+									<div class="input-group">
+										<span class="input-group-addon" disabled>Pt3</span>
+										<textarea type="text" class="form-control" maxlength="200" placeholder="Ex. tal tal tal tal!" name="Texto3" id="Texto3" value="<?php echo set_value('Texto3', $query['Texto3']); ?>"><?php echo set_value('Texto3', $query['Texto3']); ?></textarea>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3  col-md-3 col-lg-3 text-left">
+									<label for="numerodopedido">Nº do Pedido?</label><br>
 									<div class="btn-larg-right btn-group" data-toggle="buttons">
 										<?php
 										foreach ($select['numerodopedido'] as $key => $row) {
@@ -733,8 +756,34 @@
 								</div>
 								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-left" >
 									<div class="input-group">
-										<span class="input-group-addon" disabled>Tx3</span>
-										<textarea type="text" class="form-control" maxlength="200" placeholder="Ex. tal tal tal tal!" name="Texto3" id="Texto3" value="<?php echo set_value('Texto3', $query['Texto3']); ?>"><?php echo set_value('Texto3', $query['Texto3']); ?></textarea>
+										<span class="input-group-addon" disabled>Pt4</span>
+										<textarea type="text" class="form-control" maxlength="200" placeholder="Ex. tal tal tal tal!" name="Texto4" id="Texto4" value="<?php echo set_value('Texto4', $query['Texto4']); ?>"><?php echo set_value('Texto4', $query['Texto4']); ?></textarea>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3  col-md-3 col-lg-3 text-left">
+									<label for="site">Site?</label><br>
+									<div class="btn-larg-right btn-group" data-toggle="buttons">
+										<?php
+										foreach ($select['site'] as $key => $row) {
+											if (!$query['site']) $query['site'] = 'S';
+											($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+											if ($query['site'] == $key) {
+												echo ''
+												. '<label class="btn btn-warning active" name="site_' . $hideshow . '">'
+												. '<input type="radio" name="site" id="' . $hideshow . '" '
+												. 'autocomplete="off" value="' . $key . '" checked>' . $row
+												. '</label>'
+												;
+											} else {
+												echo ''
+												. '<label class="btn btn-default" name="site_' . $hideshow . '">'
+												. '<input type="radio" name="site" id="' . $hideshow . '" '
+												. 'autocomplete="off" value="' . $key . '" >' . $row
+												. '</label>'
+												;
+											}
+										}
+										?>
 									</div>
 								</div>
 							</div>
