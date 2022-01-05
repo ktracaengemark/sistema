@@ -8,13 +8,13 @@
 			<div class="panel panel-<?php echo $panel; ?>">
 
 				<div class="panel-heading"><strong></strong>
-						<div class="text-left ">											
-							<span class="glyphicon glyphicon-pencil"></span> 
-							<?php echo $titulo; ?>
-							<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>campanha" role="button"> 
-								<span class="glyphicon glyphicon-list"></span> Campanhas
-							</a>
-						</div>					
+					<div class="text-left ">											
+						<span class="glyphicon glyphicon-pencil"></span> 
+						<?php echo $titulo; ?>
+						<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>campanha" role="button"> 
+							<span class="glyphicon glyphicon-list"></span> Campanhas
+						</a>
+					</div>					
 				</div>
 				<div class="panel-body">
 					<?php echo form_open_multipart($form_open_path); ?>
@@ -197,6 +197,16 @@
 											</div>
 										</div>
 									</div>
+									<?php if ($metodo > 1) { ?>
+										<?php if ($campanha['TipoCampanha'] == 1) { ?>
+											<div class="col-md-3">
+												<label  for="Ganhador">Ganhador: <?php echo $Cod_campanha; ?></label>
+												<input class="form-control Numero" id="Ganhador" <?php echo $readonly; ?> maxlength="11"
+														  name="Ganhador" value="<?php echo $campanha['Ganhador']; ?>">
+												<?php echo form_error('Ganhador'); ?>
+											</div>
+										<?php } ?>
+									<?php } ?>	
 								</div>
 							</div>	
 						</div>		

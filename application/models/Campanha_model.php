@@ -91,6 +91,7 @@ class Campanha_model extends CI_Model {
 				P.TipoDescCampanha,
 				P.ValorDesconto,
 				P.ValorMinimo,
+				P.Ganhador,
 				E.NomeEmpresa,
 				SN.StatusSN
             FROM

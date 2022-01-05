@@ -21,6 +21,7 @@
 						<th class="active">Inicia</th>
 						<th class="active">Termina</th>
 						<th class="active">Ativa?</th>
+						<th class="active">Ganhador</th>
 					</tr>
 				</thead>
 
@@ -46,6 +47,7 @@
 							echo '<td>' . $row['DataCampanha'] . '</td>';
 							echo '<td>' . $row['DataCampanhaLimite'] . '</td>';
 							echo '<td>' . $row['AtivoCampanha'] . '</td>';
+							echo '<td>' . $row['Ganhador'] . '</td>';
 						echo '</tr>';
 						$count++;
 					}

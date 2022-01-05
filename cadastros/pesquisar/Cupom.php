@@ -11,7 +11,9 @@ if ($_GET['Cupom']) {
 					DataCampanha,
 					DataCampanhaLimite,
 					TipoCampanha,
-					TipoDescCampanha
+					TipoDescCampanha,
+					Campanha,
+					DescCampanha
 				FROM 
 					App_Campanha 
 				WHERE
@@ -31,6 +33,8 @@ if ($_GET['Cupom']) {
 			'valorminimo' => $row['ValorMinimo'],
 			'datacampanha' => $row['DataCampanha'],
 			'datacampanhalimite' => $row['DataCampanhaLimite'],
+			'campanha' => utf8_encode ($row['Campanha']),
+			'desccampanha' => utf8_encode ($row['DescCampanha']),
 			//'nome' => utf8_encode($row['NomeCliente']),
 		);	
 	}

@@ -52,6 +52,7 @@ class Campanha extends CI_Controller {
 			'TipoDescCampanha',
             'ValorDesconto',
             'ValorMinimo',
+            'Ganhador',
         ), TRUE));
 
 		$_SESSION['FiltroAlteraCampanha']['AtivoCampanha'] = $data['query']['AtivoCampanha'];
@@ -154,8 +155,8 @@ class Campanha extends CI_Controller {
 			'TipoCampanha',
 			'TipoDescCampanha',
             'ValorDesconto',
-            'ValorMinimo',         
-            
+            'ValorMinimo',
+            'Ganhador',
         ), TRUE));
 
 		//(!$data['campanha']['ValorDesconto']) ? $data['campanha']['ValorDesconto'] = '0.00' : FALSE;
@@ -325,7 +326,8 @@ class Campanha extends CI_Controller {
 			'TipoCampanha',
 			'TipoDescCampanha',
             'ValorDesconto',
-            'ValorMinimo',           
+            'ValorMinimo',
+            'Ganhador',           
 		), TRUE));
 
         //Data de hoje como default

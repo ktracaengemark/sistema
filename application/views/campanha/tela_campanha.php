@@ -1,7 +1,4 @@
-
-<div class="col-md-1"></div>
-<div class="col-md-10">
-	
+<div class="col-md-12">
 	<?php echo validation_errors(); ?>
 	<div class="panel panel-primary">
 		<div class="panel-heading">
@@ -25,8 +22,7 @@
 					</div>	
 				</div>
 			</div>
-		</div>
-															
+		</div>											
 		<div class="modal fade bs-excluir-modal2-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
@@ -171,7 +167,6 @@
 				</div>
 			</div>
 		</div>
-	
 		</form>		
 		<?php if (isset($msg)) echo $msg; ?>
 		<div <?php echo $collapse; ?> id="Campanhas">	
@@ -181,5 +176,4 @@
 			</div>
 		</div>
 	</div>
-
 </div>
