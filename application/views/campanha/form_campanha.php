@@ -29,7 +29,7 @@
 					<div class="form-group">
 						<div class="panel panel-success">
 							<div class="panel-heading">
-								<div class="row">	
+								<div class="row">
 									<?php if ($metodo == 1) { ?>
 										<div class="col-md-3 form-inline">
 											<label for="TipoCampanha">Tipo</label><br>
@@ -67,13 +67,50 @@
 										</div>
 									<?php } ?>
 									<div id="TipoCampanha" <?php echo $div['TipoCampanha']; ?>>
+										<?php if ($metodo == 1) { ?>
+											<div class="col-md-3 form-inline">
+												<label for="TipoDescCampanha">Tipo Desc</label><br>
+												<div class="form-group">
+													<div class="btn-group" data-toggle="buttons">
+														<?php
+														foreach ($select['TipoDescCampanha'] as $key => $row) {
+															if (!$campanha['TipoDescCampanha']) $campanha['TipoDescCampanha'] = 'V';
+															($key == 'P') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+															if ($campanha['TipoDescCampanha'] == $key) {
+																echo ''
+																. '<label class="btn btn-warning active" name="TipoDescCampanha_' . $hideshow . '">'
+																. '<input type="radio" name="TipoDescCampanha" id="' . $hideshow . '" '
+																. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																. '</label>'
+																;
+															} else {
+																echo ''
+																. '<label class="btn btn-default" name="TipoDescCampanha_' . $hideshow . '">'
+																. '<input type="radio" name="TipoDescCampanha" id="' . $hideshow . '" '
+																. 'autocomplete="off" value="' . $key . '" >' . $row
+																. '</label>'
+																;
+															}
+														}
+														?>
+													</div>
+												</div>
+											</div>
+										<?php } elseif ($metodo == 2) { ?>
+											<div class="col-md-3">
+												<input type="hidden" name="TipoDescCampanha" id="TipoDescCampanha" value="<?php echo $campanha['TipoDescCampanha']; ?>"/>
+												<label for="TipoDescCampanha">Tipo Desc</label>
+												<input type="text" class="form-control" readonly="" value="<?php echo $TipoDesc; ?>"/>
+											</div>
+										<?php } ?>
 										<div class="col-md-3">	
 											<label for="ValorDesconto">Valor Desconto:</label><br>
 											<div class="input-group" id="txtHint">
-												<span class="input-group-addon" id="basic-addon1">R$</span>
+												<span class="input-group-addon" id="basic-addon1">??</span>
 												<input type="text" class="form-control text-left Valor" id="ValorDesconto" maxlength="10" placeholder="0,00" 
 													   name="ValorDesconto" value="<?php echo $campanha['ValorDesconto'] ?>">
 											</div>
+											<?php echo form_error('ValorDesconto'); ?>
 										</div>
 										<div class="col-md-3">	
 											<label for="ValorMinimo">Valor Minimo:</label><br>
@@ -82,6 +119,7 @@
 												<input type="text" class="form-control text-left Valor" id="ValorMinimo" maxlength="10" placeholder="0,00" 
 													   name="ValorMinimo" value="<?php echo $campanha['ValorMinimo'] ?>">
 											</div>
+											<?php echo form_error('ValorMinimo'); ?>
 										</div>
 									</div>
 								</div>	

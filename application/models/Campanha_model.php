@@ -88,6 +88,7 @@ class Campanha_model extends CI_Model {
 				P.AtivoCampanha,
 				P.idSis_Usuario,
 				P.TipoCampanha,
+				P.TipoDescCampanha,
 				P.ValorDesconto,
 				P.ValorMinimo,
 				E.NomeEmpresa,
@@ -135,16 +136,23 @@ class Campanha_model extends CI_Model {
 					$row->TipoCampanha = 'Sem Tipo';
 					$row->ValorDesconto = '';
 					$row->ValorMinimo = '';
+					$row->TipoDescCampanha = '';
 				}elseif($row->TipoCampanha == 1){
 					$row->TipoCampanha = 'Sorteio';
 					$row->ValorDesconto = '';
 					$row->ValorMinimo = '';
+					$row->TipoDescCampanha = '';
 				}elseif($row->TipoCampanha == 2){
 					$row->TipoCampanha = 'Cupom';
-					$row->ValorDesconto = number_format($row->ValorDesconto, 2, ',', '.');
-					$row->ValorMinimo = number_format($row->ValorMinimo, 2, ',', '.');
+					$row->ValorMinimo = 'R$' . number_format($row->ValorMinimo, 2, ',', '.');
+					if($row->TipoDescCampanha == 'V'){
+						$row->TipoDescCampanha = 'R$';
+						$row->ValorDesconto = $row->TipoDescCampanha . number_format($row->ValorDesconto, 2, ',', '.');
+					}elseif($row->TipoDescCampanha == 'P'){
+						$row->TipoDescCampanha = '%';
+						$row->ValorDesconto = number_format($row->ValorDesconto, 2, ',', '.') . $row->TipoDescCampanha;
+					}
 				}
-			
 			}
 
             return $query;

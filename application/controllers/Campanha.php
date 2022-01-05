@@ -49,12 +49,14 @@ class Campanha extends CI_Controller {
 			'Campanha',
 			'DescCampanha',
 			'TipoCampanha',
+			'TipoDescCampanha',
             'ValorDesconto',
             'ValorMinimo',
         ), TRUE));
 
 		$_SESSION['FiltroAlteraCampanha']['AtivoCampanha'] = $data['query']['AtivoCampanha'];
 		$_SESSION['FiltroAlteraCampanha']['TipoCampanha'] = $data['query']['TipoCampanha'];
+		$_SESSION['FiltroAlteraCampanha']['TipoDescCampanha'] = $data['query']['TipoDescCampanha'];
 		$_SESSION['FiltroAlteraCampanha']['Campanha'] = $data['query']['Campanha'];
 		$_SESSION['FiltroAlteraCampanha']['DescCampanha'] = $data['query']['DescCampanha'];		
         
@@ -83,6 +85,12 @@ class Campanha extends CI_Controller {
             '0' => '::Todos::',
 			'1' => 'Sorteio',
 			'2' => 'Cupom',
+        );
+		
+        $data['select']['TipoDescCampanha'] = array (
+            '0' => '::Todos::',
+			'V' => 'R$',
+			'P' => '.%',
         );		
 
         $data['titulo1'] = 'Campanhas';
@@ -97,6 +105,7 @@ class Campanha extends CI_Controller {
 			$data['bd']['Campanha'] = $data['query']['Campanha'];
 			$data['bd']['DescCampanha'] = $data['query']['DescCampanha'];
 			$data['bd']['TipoCampanha'] = $data['query']['TipoCampanha'];
+			$data['bd']['TipoDescCampanha'] = $data['query']['TipoDescCampanha'];
 			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
@@ -143,13 +152,14 @@ class Campanha extends CI_Controller {
 			'DataCampanhaLimite',
             'AtivoCampanha',
 			'TipoCampanha',
+			'TipoDescCampanha',
             'ValorDesconto',
             'ValorMinimo',         
             
         ), TRUE));
 
-		(!$data['campanha']['ValorDesconto']) ? $data['campanha']['ValorDesconto'] = '0.00' : FALSE;
-		(!$data['campanha']['ValorMinimo']) ? $data['campanha']['ValorMinimo'] = '0.00' : FALSE;
+		//(!$data['campanha']['ValorDesconto']) ? $data['campanha']['ValorDesconto'] = '0.00' : FALSE;
+		//(!$data['campanha']['ValorMinimo']) ? $data['campanha']['ValorMinimo'] = '0.00' : FALSE;
 
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
         $data['select']['AtivoCampanha'] = $this->Basico_model->select_status_sn();
@@ -159,6 +169,11 @@ class Campanha extends CI_Controller {
             '2' => 'Cupom',
         );
 		
+		$data['select']['TipoDescCampanha'] = array (
+            'V' => 'R$',
+            'P' => '.%',
+        );
+				
         $data['titulo'] = 'Cadastar Campanha';
         $data['form_open_path'] = 'campanha/cadastrar';
         $data['readonly'] = '';
@@ -184,10 +199,17 @@ class Campanha extends CI_Controller {
 
         (!$data['campanha']['TipoCampanha']) ? $data['campanha']['TipoCampanha'] = '1' : FALSE;
         $data['radio'] = array(
-            'TipoCampanha' => $this->basico->radio_checked($data['campanha']['TipoCampanha'], 'Tipo da Campanha Aprovado', '12'),
+            'TipoCampanha' => $this->basico->radio_checked($data['campanha']['TipoCampanha'], 'Tipo da Campanha', '12'),
         );
         ($data['campanha']['TipoCampanha'] == '2') ?
             $data['div']['TipoCampanha'] = '' : $data['div']['TipoCampanha'] = 'style="display: none;"';
+
+        (!$data['campanha']['TipoDescCampanha']) ? $data['campanha']['TipoDescCampanha'] = 'V' : FALSE;
+        $data['radio'] = array(
+            'TipoDescCampanha' => $this->basico->radio_checked($data['campanha']['TipoDescCampanha'], 'Tipo de Desc', 'VP'),
+        );
+        ($data['campanha']['TipoDescCampanha'] == 'P') ?
+            $data['div']['TipoDescCampanha'] = '' : $data['div']['TipoDescCampanha'] = 'style="display: none;"';
 
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
@@ -205,7 +227,12 @@ class Campanha extends CI_Controller {
         $this->form_validation->set_rules('DescCampanha', 'Premio/Regras', 'required|trim');
 		$this->form_validation->set_rules('DataCampanha', 'Inicia em', 'required|trim|valid_date');
         $this->form_validation->set_rules('DataCampanhaLimite', 'Termina em', 'required|trim|valid_date');
-        $this->form_validation->set_rules('TipoCampanha', 'TipoCampanha', 'required|trim');
+        $this->form_validation->set_rules('TipoCampanha', 'Tipo', 'required|trim');
+		if($data['campanha']['TipoCampanha'] == 2){
+			$this->form_validation->set_rules('TipoDescCampanha', 'Tipo de Desc', 'required|trim');
+			$this->form_validation->set_rules('ValorDesconto', 'Valor Desconto', 'required|trim');
+			$this->form_validation->set_rules('ValorMinimo', 'Valor Minimo', 'required|trim');
+		}
 		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');		
 		
         /*
@@ -296,13 +323,14 @@ class Campanha extends CI_Controller {
 			'DataCampanhaLimite',
 			'AtivoCampanha',
 			'TipoCampanha',
+			'TipoDescCampanha',
             'ValorDesconto',
             'ValorMinimo',           
 		), TRUE));
 
         //Data de hoje como default
-		(!$data['campanha']['ValorDesconto']) ? $data['campanha']['ValorDesconto'] = '0.00' : FALSE;
-		(!$data['campanha']['ValorMinimo']) ? $data['campanha']['ValorMinimo'] = '0.00' : FALSE;
+		//(!$data['campanha']['ValorDesconto']) ? $data['campanha']['ValorDesconto'] = '0.00' : FALSE;
+		//(!$data['campanha']['ValorMinimo']) ? $data['campanha']['ValorMinimo'] = '0.00' : FALSE;
 		
         if ($id) {
             #### App_Campanha ####
@@ -313,6 +341,11 @@ class Campanha extends CI_Controller {
 				$data['Tipo'] = 'Sorteio';
 			}else{
 				$data['Tipo'] = 'Cupom';
+			}
+			if($data['campanha']['TipoDescCampanha'] == 'V'){
+				$data['TipoDesc'] = 'R$';
+			}else{
+				$data['TipoDesc'] = '.%';
 			}
 		/*
 		echo '<br>';
@@ -340,12 +373,23 @@ class Campanha extends CI_Controller {
 			$data['Tipo'] = 'Cupom';
 		}
 		
+		if($data['campanha']['TipoDescCampanha'] == 'V'){
+			$data['TipoDesc'] = 'R$';
+		}else{
+			$data['TipoDesc'] = '.%';
+		}
+				
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
         $data['select']['AtivoCampanha'] = $this->Basico_model->select_status_sn();
 
         $data['select']['TipoCampanha'] = array (
 			'1' => 'Sorteio',
 			'2' => 'Cupom',
+        );		
+
+        $data['select']['TipoDescCampanha'] = array (
+			'V' => 'R$',
+			'P' => '.%',
         );		
 
         $data['titulo'] = 'Editar Campanha';
@@ -377,6 +421,13 @@ class Campanha extends CI_Controller {
         ($data['campanha']['TipoCampanha'] == '2') ?
             $data['div']['TipoCampanha'] = '' : $data['div']['TipoCampanha'] = 'style="display: none;"';
 
+        (!$data['campanha']['TipoDescCampanha']) ? $data['campanha']['TipoDescCampanha'] = 'V' : FALSE;
+        $data['radio'] = array(
+            'TipoDescCampanha' => $this->basico->radio_checked($data['campanha']['TipoDescCampanha'], 'Tipo de Desc', 'VP'),
+        );
+        ($data['campanha']['TipoDescCampanha'] == 'P') ?
+            $data['div']['TipoDescCampanha'] = '' : $data['div']['TipoDescCampanha'] = 'style="display: none;"';
+
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
@@ -393,7 +444,12 @@ class Campanha extends CI_Controller {
         $this->form_validation->set_rules('DescCampanha', 'Premio/Regras', 'required|trim');
 		$this->form_validation->set_rules('DataCampanha', 'Inicia em', 'required|trim|valid_date');        
 		$this->form_validation->set_rules('DataCampanhaLimite', 'Termina em', 'required|trim|valid_date');
-        $this->form_validation->set_rules('TipoCampanha', 'TipoCampanha', 'required|trim');
+        $this->form_validation->set_rules('TipoCampanha', 'Tipo', 'required|trim');
+		if($data['campanha']['TipoCampanha'] == 2){
+			$this->form_validation->set_rules('TipoDescCampanha', 'Tipo de Desc', 'required|trim');
+			$this->form_validation->set_rules('ValorDesconto', 'Valor Desconto', 'required|trim');
+			$this->form_validation->set_rules('ValorMinimo', 'Valor Minimo', 'required|trim');
+		}
 		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');		
         
         /*
