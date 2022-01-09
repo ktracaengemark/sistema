@@ -69,12 +69,12 @@ class Campanha_model extends CI_Model {
 		}else{
 			$query = $this->db->query('
 				SELECT
-					PC.*,
-					CONCAT(IFNULL(Campanha,""), "<br>", IFNULL(DescCampanha,"")) AS Campanha
+					CONCAT(IFNULL(Campanha,""), "<br>", IFNULL(DescCampanha,"")) AS Campanha,
+					CONCAT( "Cp", IFNULL(idApp_Campanha,""), ": ", IFNULL(Campanha,""), "<br>", IFNULL(DescCampanha,"")) AS Campanha2
 				FROM 
-					App_Campanha AS PC
+					App_Campanha
 				WHERE 
-					PC.idApp_Campanha = ' . $data . '
+					idApp_Campanha = ' . $data . '
 			');
 			$query = $query->result_array();
 			return $query[0];

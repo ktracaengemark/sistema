@@ -13,7 +13,11 @@ class OrcatrataPrint extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation', 'pagination'));
-        $this->load->model(array('Basico_model', 'Orcatrata_model', 'Orcatrataprint_model', 'Orcatrataprintcobranca_model', 'Orcatrataprintcomissao_model', 'Relatorio_model', 'Formapag_model' , 'Usuario_model' , 'Cliente_model' , 'Fornecedor_model', 'Associado_model'));
+        $this->load->model(array(
+									'Basico_model', 'Orcatrata_model', 'Orcatrataprint_model', 'Orcatrataprintcobranca_model', 
+									'Orcatrataprintcomissao_model', 'Relatorio_model', 'Formapag_model' , 'Usuario_model' , 
+									'Cliente_model' , 'Fornecedor_model', 'Associado_model', 'Campanha_model'
+								));
         $this->load->driver('session');
 
         #load header view
@@ -58,6 +62,11 @@ class OrcatrataPrint extends CI_Controller {
 			$data['orcatrata']['DataQuitado'] = $this->basico->mascara_data($data['orcatrata']['DataQuitado'], 'barras');
             $data['orcatrata']['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntradaOrca'], 'barras');
             $data['orcatrata']['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata']['DataVencimentoOrca'], 'barras');
+			
+			#### Carrega os dados da Campanha nas variáves de sessão ####
+			if(isset($data['orcatrata']['Cupom']) && $data['orcatrata']['Cupom'] != 0 && $data['orcatrata']['UsarCupom'] == "S"){
+				$data['Campanha'] = $this->Campanha_model->get_campanha_cupom($data['orcatrata']['Cupom']);				
+			}	
 
             #### Carrega os dados do cliente nas variáves de sessão ####
             $this->load->model('Cliente_model');

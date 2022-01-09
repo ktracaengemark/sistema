@@ -406,6 +406,8 @@ class Orcatrataprint_model extends CI_Model {
 				OT.DescPercOrca,
 				OT.DescValorOrca,
 				OT.UsarCashBack,
+				OT.UsarCupom,
+				OT.Cupom,
 				OT.CashBackOrca,
 				OT.ValorFinalOrca,
 				MO.Modalidade,
