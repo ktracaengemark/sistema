@@ -66,12 +66,7 @@
 									</div>
 									<h3 class="text-left">Dados da Empresa  </h3>									
 									<div class="form-group">
-										<div class="row">
-											<div class="col-md-3 "> 
-												<label>Logo Marca</label>
-												<img alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['AdminEmpresa']['idSis_Empresa'] . '/documentos/' . $_SESSION['AdminEmpresa']['Arquivo'] . ''; ?>" 
-												class="img-circle img-responsive">
-											</div>											
+										<div class="row">											
 											<div class="col-md-3">
 												<label for="NomeEmpresa">Nome da Empresa:</label>
 												<input type="text" class="form-control" id="NomeEmpresa" maxlength="45" 
@@ -99,6 +94,10 @@
 												<input type="text" class="form-control Celular CelularVariavel" id="Telefone" maxlength="11" <?php echo $readonly; ?>
 													   name="Telefone" placeholder="(XX)999999999" value="<?php echo $query['Telefone']; ?>">
 											</div>
+											<div class="col-md-3">
+												<label for="Site">Site:</label><br>
+												<span >enkontraki.com.br/<?php echo $_SESSION['Empresa']['Site']; ?></span>
+											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-3">
@@ -115,10 +114,6 @@
 												<label for="SobreNos">Sobre Nós:</label>
 												<textarea class="form-control" id="SobreNos" <?php echo $readonly; ?>
 														  name="SobreNos"><?php echo $query['SobreNos']; ?></textarea>
-											</div>
-											<div class="col-md-3">
-												<label for="Site">Site:</label><br>
-												<span >enkontraki.com.br/<?php echo $_SESSION['Empresa']['Site']; ?></span>
 											</div>
 										</div>
 									</div>
