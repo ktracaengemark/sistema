@@ -117,10 +117,8 @@
 														  name="SobreNos"><?php echo $query['SobreNos']; ?></textarea>
 											</div>
 											<div class="col-md-3">
-												<label for="Site">Site:</label>
-												<input type="text" class="form-control" maxlength="50" readonly=""
-													   name="Site" value="<?php echo $query['Site']; ?>">
-											<?php echo form_error('Site'); ?>
+												<label for="Site">Site:</label><br>
+												<span >enkontraki.com.br/<?php echo $_SESSION['Empresa']['Site']; ?></span>
 											</div>
 										</div>
 									</div>

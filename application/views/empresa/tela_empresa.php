@@ -199,7 +199,7 @@
 												echo '
 												<tr>
 													<td><span class="glyphicon glyphicon-envelope"></span> Site:</td>
-													<td>' . $query['Site'] . '</td>
+													<td>enkontraki.com.br/' . $query['Site'] . '</td>
 												</tr>
 												';
 
