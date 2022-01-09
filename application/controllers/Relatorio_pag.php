@@ -163,6 +163,7 @@ class Relatorio_pag extends CI_Controller {
         ), TRUE));	
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
+			'NomeUsuario',
             'idApp_Consulta',
 			'idApp_Cliente',
 			'idApp_ClientePet',
@@ -171,6 +172,14 @@ class Relatorio_pag extends CI_Controller {
             'DataFim',
 			'Ordenamento',
             'Campo',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
+			'nomedoCliente',
+			'idCliente',
+			'numerodopedido',
+			'site',
         ), TRUE));
 
 		$data['query']['nome'] = 'Cliente';
@@ -260,6 +269,7 @@ class Relatorio_pag extends CI_Controller {
         ), TRUE));	
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
+			'NomeUsuario',
             'idApp_Consulta',
 			'idApp_Cliente',
 			'idApp_ClientePet',

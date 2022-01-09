@@ -13,7 +13,10 @@ class Relatorio extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation', 'pagination'));
-        $this->load->model(array('Basico_model', 'Cliente_model', 'Relatorio_model', 'Empresa_model', 'Loginempresa_model', 'Associado_model', 'Usuario_model'));
+        $this->load->model(array(
+									'Basico_model', 'Cliente_model', 'Relatorio_model', 'Empresa_model', 
+									'Loginempresa_model', 'Associado_model', 'Usuario_model', 'Agenda_model'
+								));
         $this->load->driver('session');
 
         #load header view
@@ -114,6 +117,8 @@ class Relatorio extends CI_Controller {
 
 	public function evento_cli() {
 
+		unset($_SESSION['Agendamentos']);
+	
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
@@ -127,6 +132,7 @@ class Relatorio extends CI_Controller {
         ), TRUE));	
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
+			'NomeUsuario',
             'idApp_Consulta',
 			'idApp_Cliente',
 			'idApp_ClientePet',
@@ -135,6 +141,14 @@ class Relatorio extends CI_Controller {
             'DataFim',
 			'Ordenamento',
             'Campo',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
+			'nomedoCliente',
+			'idCliente',
+			'numerodopedido',
+			'site',
         ), TRUE));
 
 		$data['collapse'] = '';
@@ -150,10 +164,39 @@ class Relatorio extends CI_Controller {
             'DESC' => 'Decrescente',
         );
 
-		//$data['select']['idApp_Cliente'] = $this->Relatorio_model->select_cliente();
+        $data['select']['NomeUsuario'] = $this->Agenda_model->select_associado();
 		$data['select']['idApp_ClientePet'] = $this->Relatorio_model->select_clientepet();
 		$data['select']['idApp_ClienteDep'] = $this->Relatorio_model->select_clientedep();
-
+		
+        $data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
+        $data['select']['idCliente'] = $this->Basico_model->select_status_sn();
+        $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
+        $data['select']['site'] = $this->Basico_model->select_status_sn();
+		
+		$data['radio'] = array(
+            'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
+        );
+        ($data['query']['nomedoCliente'] == 'S') ?
+            $data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
+		
+		$data['radio'] = array(
+            'idCliente' => $this->basico->radio_checked($data['query']['idCliente'], 'idCliente', 'NS'),
+        );
+        ($data['query']['idCliente'] == 'S') ?
+            $data['div']['idCliente'] = '' : $data['div']['idCliente'] = 'style="display: none;"';		
+		
+		$data['radio'] = array(
+            'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
+        );
+        ($data['query']['numerodopedido'] == 'S') ?
+            $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
+		
+		$data['radio'] = array(
+            'site' => $this->basico->radio_checked($data['query']['site'], 'site', 'NS'),
+        );
+        ($data['query']['site'] == 'S') ?
+            $data['div']['site'] = '' : $data['div']['site'] = 'style="display: none;"';		
+							
 		$data['query']['nome'] = 'Cliente';
         $data['titulo1'] = 'Lista de Agendamentos';
 		$data['metodo'] = 2;
@@ -174,12 +217,22 @@ class Relatorio extends CI_Controller {
 
         $_SESSION['Agendamentos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
 		$_SESSION['Agendamentos']['DataFim'] 	= $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+		$_SESSION['Agendamentos']['NomeUsuario'] = $data['query']['NomeUsuario'];
 		$_SESSION['Agendamentos']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
 		$_SESSION['Agendamentos']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
 		$_SESSION['Agendamentos']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
 		$_SESSION['Agendamentos']['Campo'] = $data['query']['Campo'];
 		$_SESSION['Agendamentos']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['Agendamentos']['TipoEvento'] = $data['TipoEvento'];	
+		$_SESSION['Agendamentos']['TipoEvento'] = $data['TipoEvento'];
+		
+		$_SESSION['Agendamentos']['Texto1'] = utf8_encode($data['query']['Texto1']);
+        $_SESSION['Agendamentos']['Texto2'] = utf8_encode($data['query']['Texto2']);
+        $_SESSION['Agendamentos']['Texto3'] = utf8_encode($data['query']['Texto3']);
+        $_SESSION['Agendamentos']['Texto4'] = utf8_encode($data['query']['Texto4']);
+        $_SESSION['Agendamentos']['nomedoCliente'] = $data['query']['nomedoCliente'];
+        $_SESSION['Agendamentos']['idCliente'] = $data['query']['idCliente'];
+        $_SESSION['Agendamentos']['numerodopedido'] = $data['query']['numerodopedido'];
+        $_SESSION['Agendamentos']['site'] = $data['query']['site'];	
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'trim|valid_date');
@@ -190,6 +243,7 @@ class Relatorio extends CI_Controller {
 
 			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
 			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
 			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
 			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
@@ -249,6 +303,8 @@ class Relatorio extends CI_Controller {
 
 	public function evento() {
 
+		unset($_SESSION['Agendamentos']);
+	
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
@@ -262,6 +318,7 @@ class Relatorio extends CI_Controller {
         ), TRUE));	
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
+			'NomeUsuario',
             'idApp_Consulta',
 			'idApp_Cliente',
 			'idApp_ClientePet',
@@ -285,7 +342,7 @@ class Relatorio extends CI_Controller {
             'DESC' => 'Decrescente',
         );
 
-		//$data['select']['idApp_Cliente'] = $this->Relatorio_model->select_cliente();
+        $data['select']['NomeUsuario'] = $this->Agenda_model->select_associado();
 		$data['select']['idApp_ClientePet'] = $this->Relatorio_model->select_clientepet();
 		$data['select']['idApp_ClienteDep'] = $this->Relatorio_model->select_clientedep();
 
@@ -309,6 +366,7 @@ class Relatorio extends CI_Controller {
 
         $_SESSION['Agendamentos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
 		$_SESSION['Agendamentos']['DataFim'] 	= $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+		$_SESSION['Agendamentos']['NomeUsuario'] = $data['query']['NomeUsuario'];
 		$_SESSION['Agendamentos']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
 		$_SESSION['Agendamentos']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
 		$_SESSION['Agendamentos']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
@@ -325,6 +383,7 @@ class Relatorio extends CI_Controller {
 
 			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
 			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
 			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
 			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];

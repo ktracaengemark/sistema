@@ -70,12 +70,12 @@
 						<div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 text-left">
 							<label  >Cliente:</label>
 							<div class="input-group">
-								<input type="text" class="form-control" name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php echo $cadastrar['id_Cliente_Auto']; ?>"  placeholder="Pesquisar Cliente">
 								<span class="input-group-btn">
 									<button class="btn btn-primary btn-md" type="submit">
 										<span class="glyphicon glyphicon-search"></span> 
 									</button>
 								</span>
+								<input type="text" class="form-control" name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php echo $cadastrar['id_Cliente_Auto']; ?>"  placeholder="Pesquisar Cliente">
 							</div>
 							<span class="modal-title" id="NomeClienteAuto1"><?php echo $cadastrar['NomeClienteAuto']; ?></span>
 							<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php echo $cadastrar['NomeClienteAuto']; ?>" />

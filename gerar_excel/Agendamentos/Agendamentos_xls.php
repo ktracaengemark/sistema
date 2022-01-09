@@ -20,6 +20,8 @@
 		$clientepet = ($_SESSION['Empresa']['CadastrarPet'] == "S" && $_SESSION['Agendamentos']['idApp_ClientePet']) ? ' AND CO.idApp_ClientePet = ' . $_SESSION['Agendamentos']['idApp_ClientePet'] : FALSE;
 		$clientedep = ($_SESSION['Empresa']['CadastrarDep'] == "S" && $_SESSION['Agendamentos']['idApp_ClienteDep']) ? ' AND CO.idApp_ClienteDep = ' . $_SESSION['Agendamentos']['idApp_ClienteDep'] : FALSE;
 
+		$usuario 	= ($_SESSION['Agendamentos']['NomeUsuario']) ? ' AND ASS.idSis_Associado = ' . $_SESSION['Agendamentos']['NomeUsuario'] : FALSE;
+			
 		$campo 			= (!$_SESSION['Agendamentos']['Campo']) ? 'CO.DataInicio' : $_SESSION['Agendamentos']['Campo'];
 		$ordenamento 	= (!$_SESSION['Agendamentos']['Ordenamento']) ? 'ASC' : $_SESSION['Agendamentos']['Ordenamento'];
 
@@ -59,9 +61,12 @@
 									POP.PortePet,
 									EPP.EspeciePet,
 									CD.*,
-									CONCAT(IFNULL(CD.NomeClienteDep,"")) AS NomeClienteDep
+									CONCAT(IFNULL(CD.NomeClienteDep,"")) AS NomeClienteDep,
+									ASS.Nome
 								FROM
 									App_Consulta AS CO
+										LEFT JOIN App_Agenda AS A ON A.idApp_Agenda = CO.idApp_Agenda
+										LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = A.idSis_Associado
 										LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = CO.idApp_Cliente
 										LEFT JOIN App_ClientePet AS CP ON CP.idApp_ClientePet = CO.idApp_ClientePet
 										LEFT JOIN Tab_RacaPet AS RP ON RP.idTab_RacaPet = CP.RacaPet
@@ -78,6 +83,7 @@
 									' . $cliente . '
 									' . $clientepet . '
 									' . $clientedep . '
+									' . $usuario . '
 								ORDER BY
 									' . $campo . '
 									' . $ordenamento . '
@@ -101,6 +107,7 @@
 		$html .= '<tr>';
 		$html .= '<td><b>Empresa</b></td>';
 		$html .= '<td><b>id</b></td>';
+		$html .= '<td><b>Prof</b></td>';
 		$html .= '<td><b>Data Ini</b></td>';
 		$html .= '<td><b>Data Fim</b></td>';
 		$html .= '<td><b>Hora Ini</b></td>';
@@ -143,6 +150,7 @@
 			$html .= '<tr>';
 			$html .= '<td>'.$row_msg_contatos["Empresa"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["idApp_Consulta"].'</td>';
+			$html .= '<td>'.$row_msg_contatos["Nome"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["DataInicio"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["DataFim"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["HoraInicio"].'</td>';

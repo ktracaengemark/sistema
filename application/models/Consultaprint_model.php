@@ -18,7 +18,9 @@ class Consultaprint_model extends CI_Model {
 		$cliente 		= ($_SESSION['Agendamentos']['idApp_Cliente']) ? ' AND CO.idApp_Cliente = ' . $_SESSION['Agendamentos']['idApp_Cliente'] : FALSE;
 		$clientepet		= ($_SESSION['Empresa']['CadastrarPet'] == "S" && $_SESSION['Agendamentos']['idApp_ClientePet']) ? ' AND CO.idApp_ClientePet = ' . $_SESSION['Agendamentos']['idApp_ClientePet'] : FALSE;
 		$clientedep		= ($_SESSION['Empresa']['CadastrarDep'] == "S" && $_SESSION['Agendamentos']['idApp_ClienteDep']) ? ' AND CO.idApp_ClienteDep = ' . $_SESSION['Agendamentos']['idApp_ClienteDep'] : FALSE;			
-		
+
+		$usuario 	= ($_SESSION['Agendamentos']['NomeUsuario']) ? ' AND ASS.idSis_Associado = ' . $_SESSION['Agendamentos']['NomeUsuario'] : FALSE;
+			
 		$campo 			= (!$_SESSION['Agendamentos']['Campo']) ? 'CO.DataInicio' : $_SESSION['Agendamentos']['Campo'];
         $ordenamento 	= (!$_SESSION['Agendamentos']['Ordenamento']) ? 'ASC' : $_SESSION['Agendamentos']['Ordenamento'];
 
@@ -46,12 +48,17 @@ class Consultaprint_model extends CI_Model {
 				CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,"")) AS NomeCliente,
 				CP.*,
 				CONCAT(IFNULL(CP.idApp_ClientePet,""), " - " ,IFNULL(CP.NomeClientePet,"")) AS NomeClientePet,
+				RP.RacaPet,
 				CD.*,
-				CONCAT(IFNULL(CD.idApp_ClienteDep,""), " - " ,IFNULL(CD.NomeClienteDep,"")) AS NomeClienteDep
+				CONCAT(IFNULL(CD.idApp_ClienteDep,""), " - " ,IFNULL(CD.NomeClienteDep,"")) AS NomeClienteDep,
+				ASS.Nome
             FROM
                 App_Consulta AS CO
+					LEFT JOIN App_Agenda AS A ON A.idApp_Agenda = CO.idApp_Agenda
+					LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = A.idSis_Associado
 					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = CO.idApp_Cliente
 					LEFT JOIN App_ClientePet AS CP ON CP.idApp_ClientePet = CO.idApp_ClientePet
+					LEFT JOIN Tab_RacaPet AS RP ON RP.idTab_RacaPet = CP.RacaPet
 					LEFT JOIN App_ClienteDep AS CD ON CD.idApp_ClienteDep = CO.idApp_ClienteDep
             WHERE
 				' . $date_inicio_orca . '
@@ -62,6 +69,7 @@ class Consultaprint_model extends CI_Model {
 				' . $cliente . '
 				' . $clientepet . '
 				' . $clientepet . '
+				' . $usuario . '
 			ORDER BY
 				' . $campo . '
 				' . $ordenamento . '

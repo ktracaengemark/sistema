@@ -601,7 +601,7 @@
 											   name="AnoAniv" id="AnoAniv" value="<?php echo set_value('AnoAniv', $query['AnoAniv']); ?>">
 								</div>
 							</div>
-							<br>
+							
 							<div class="row">	
 								<div class="col-md-3">
 									<label for="DataInicio6">Cad.Inicio</label>
@@ -655,7 +655,8 @@
 								</div>
 								<input type="hidden" name="nome" id="nome" value="<?php echo $nome;?>"/>
 							</div>
-							<br>
+							
+
 							<label class="text-left">Texto Whatsapp:</label>
 							<div class="row text-left">
 								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-left" >
@@ -794,6 +795,10 @@
 							<input type="hidden" name="DataInicio6" id="DataInicio6" value=""/>
 							<input type="hidden" name="DataFim6" id="DataFim6" value=""/>
 						<?php } ?>
+					</div>
+				</div>
+				<div class="panel panel-<?php echo $panel; ?>">
+					<div class="panel-heading text-left">		
 						<div class="row">				
 							<div class="col-md-6 text-left">
 								<label for="Ordenamento">Ordenamento:</label>
@@ -829,9 +834,7 @@
 										</div>
 									</div>
 								</div>
-							</div>	
-						</div>
-						<div class="row">			
+							</div>
 							<div class="form-footer col-md-3">
 								<label></label><br>
 								<button class="btn btn-warning btn-block" name="pesquisar" value="0" type="submit">

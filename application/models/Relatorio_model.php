@@ -14,7 +14,13 @@ class Relatorio_model extends CI_Model {
     }
 
 	public function list_agendamentos($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
-
+			  
+			  /*
+			  echo "<pre>";
+			  print_r($data['NomeUsuario']);
+			  echo "</pre>";
+			  exit();
+			  */
 		if($data != FALSE){
 			
 			$tipoevento = 'CO.Tipo = ' . $data['TipoEvento'];
@@ -22,7 +28,11 @@ class Relatorio_model extends CI_Model {
 			$cliente 	= ($data['idApp_Cliente']) ? ' AND CO.idApp_Cliente = ' . $data['idApp_Cliente'] : FALSE;
 			$clientepet = ($_SESSION['Empresa']['CadastrarPet'] == "S" && $data['idApp_ClientePet']) ? ' AND CO.idApp_ClientePet = ' . $data['idApp_ClientePet'] : FALSE;
 			$clientedep = ($_SESSION['Empresa']['CadastrarDep'] == "S" && $data['idApp_ClienteDep']) ? ' AND CO.idApp_ClienteDep = ' . $data['idApp_ClienteDep'] : FALSE;
+			
+			$usuario 	= ($data['NomeUsuario']) ? ' AND ASS.idSis_Associado = ' . $data['NomeUsuario'] : FALSE;
 
+			
+			
 			$campo 			= (!$data['Campo']) ? 'CO.DataInicio' : $data['Campo'];
 			$ordenamento 	= (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 
@@ -40,6 +50,8 @@ class Relatorio_model extends CI_Model {
 			$clientepet = ($_SESSION['Empresa']['CadastrarPet'] == "S" && $_SESSION['Agendamentos']['idApp_ClientePet']) ? ' AND CO.idApp_ClientePet = ' . $_SESSION['Agendamentos']['idApp_ClientePet'] : FALSE;
 			$clientedep = ($_SESSION['Empresa']['CadastrarDep'] == "S" && $_SESSION['Agendamentos']['idApp_ClienteDep']) ? ' AND CO.idApp_ClienteDep = ' . $_SESSION['Agendamentos']['idApp_ClienteDep'] : FALSE;
 
+			$usuario 	= ($_SESSION['Agendamentos']['NomeUsuario']) ? ' AND ASS.idSis_Associado = ' . $_SESSION['Agendamentos']['NomeUsuario'] : FALSE;
+			
 			$campo 			= (!$_SESSION['Agendamentos']['Campo']) ? 'CO.DataInicio' : $_SESSION['Agendamentos']['Campo'];
 			$ordenamento 	= (!$_SESSION['Agendamentos']['Ordenamento']) ? 'ASC' : $_SESSION['Agendamentos']['Ordenamento'];
 
@@ -65,15 +77,19 @@ class Relatorio_model extends CI_Model {
 				DATE_FORMAT(CO.DataFim, "%Y-%m-%d") AS DataFim,
 				DATE_FORMAT(CO.DataFim, "%H:%i") AS HoraFim,
 				C.idApp_Cliente AS id_Cliente,
+				C.CelularCliente,
 				CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,"")) AS NomeCliente,
+				CONCAT(IFNULL(C.NomeCliente,"")) AS NomeCliente2,
 				CP.*,
 				CONCAT(IFNULL(CP.idApp_ClientePet,""), " - " ,IFNULL(CP.NomeClientePet,"")) AS NomeClientePet,
 				RP.RacaPet,
 				CD.*,
-				CONCAT(IFNULL(CD.idApp_ClienteDep,""), " - " ,IFNULL(CD.NomeClienteDep,"")) AS NomeClienteDep
+				CONCAT(IFNULL(CD.idApp_ClienteDep,""), " - " ,IFNULL(CD.NomeClienteDep,"")) AS NomeClienteDep,
+				ASS.Nome
             FROM
                 App_Consulta AS CO
 					LEFT JOIN App_Agenda AS A ON A.idApp_Agenda = CO.idApp_Agenda
+					LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = A.idSis_Associado
 					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = CO.idApp_Cliente
 					LEFT JOIN App_ClientePet AS CP ON CP.idApp_ClientePet = CO.idApp_ClientePet
 					LEFT JOIN Tab_RacaPet AS RP ON RP.idTab_RacaPet = CP.RacaPet
@@ -87,6 +103,7 @@ class Relatorio_model extends CI_Model {
 				' . $cliente . '
 				' . $clientepet . '
 				' . $clientedep . '
+				' . $usuario . '
 			ORDER BY
 				' . $campo . '
 				' . $ordenamento . '

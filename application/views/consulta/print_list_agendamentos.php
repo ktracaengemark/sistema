@@ -59,6 +59,7 @@
 				<thead>
 					<tr>
 						<th class="col-md-1" scope="col"><?php echo $total_rows;?> Eventos</th>
+						<th class="col-md-2" scope="col">Prof</th>
 						<th class="col-md-2" scope="col">Cliente</th>
 						<th class="col-md-1" scope="col">Data</th>
 						<th class="col-md-1" scope="col">Hora</th>
@@ -79,6 +80,7 @@
 						?>
 						<tr>
 							<td class="col-md-1" scope="col"><?php echo $contagem ?> - <?php echo $consulta[$i]['idApp_Consulta'] ?></td>
+							<td class="col-md-1" scope="col"><?php echo $consulta[$i]['Nome'] ?></td>
 							<td class="col-md-2" scope="col"><?php echo $consulta[$i]['NomeCliente'] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $consulta[$i]['DataInicio'] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $consulta[$i]['HoraInicio'] ?> / <?php echo $consulta[$i]['HoraFim'] ?></td>
