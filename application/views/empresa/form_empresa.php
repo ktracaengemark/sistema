@@ -64,29 +64,6 @@
 											</div>	
 										</div>
 									</div>
-									<!--
-									<div class="form-group">
-										<div class="row">											
-											<div class="col-md-3">
-												<label for="CelularAdmin">Celular /(Login)</label>
-												<input type="text" class="form-control Celular CelularVariavel" id="CelularAdmin" maxlength="11" <?php echo $readonly; ?>
-													   name="CelularAdmin" placeholder="(XX)999999999" value="<?php echo $query['CelularAdmin']; ?>">
-											</div>
-											<div class="col-md-3">
-												<label for="Senha">Senha:</label>
-												<input type="password" class="form-control" id="Senha" maxlength="45"
-													   name="Senha" value="<?php #echo $query['Senha']; ?>">
-												<?php echo form_error('Senha'); ?>
-											</div>
-											<div class="col-md-3">
-												<label for="Senha">Confirmar Senha:</label>
-												<input type="password" class="form-control" id="Confirma" maxlength="45"
-													   name="Confirma" value="<?php #echo $query['Senha']; ?>">
-												<?php echo form_error('Confirma'); ?>
-											</div>											
-										</div>
-									</div>
-									-->
 									<h3 class="text-left">Dados da Empresa  </h3>									
 									<div class="form-group">
 										<div class="row">
@@ -117,14 +94,11 @@
 												</select>
 												<?php echo form_error('CategoriaEmpresa'); ?>          
 											</div>
-											<!--
 											<div class="col-md-3">
-												<label for="Site">Site:</label>
-												<input type="text" class="form-control" maxlength="50" <?php echo $readonly; ?>
-													   name="Site" value="<?php echo $query['Site']; ?>">
-											<?php echo form_error('Site'); ?>
+												<label for="Telefone">Whatsapp Empresa:</label>
+												<input type="text" class="form-control Celular CelularVariavel" id="Telefone" maxlength="11" <?php echo $readonly; ?>
+													   name="Telefone" placeholder="(XX)999999999" value="<?php echo $query['Telefone']; ?>">
 											</div>
-											-->
 										</div>
 										<div class="row">
 											<div class="col-md-3">
@@ -141,6 +115,12 @@
 												<label for="SobreNos">Sobre Nós:</label>
 												<textarea class="form-control" id="SobreNos" <?php echo $readonly; ?>
 														  name="SobreNos"><?php echo $query['SobreNos']; ?></textarea>
+											</div>
+											<div class="col-md-3">
+												<label for="Site">Site:</label>
+												<input type="text" class="form-control" maxlength="50" readonly=""
+													   name="Site" value="<?php echo $query['Site']; ?>">
+											<?php echo form_error('Site'); ?>
 											</div>
 										</div>
 									</div>
@@ -172,11 +152,6 @@
 													<label for="InscEstadual">Insc.Estadual:</label>
 													<input type="text" class="form-control" maxlength="11" <?php echo $readonly; ?>
 														   name="InscEstadual" value="<?php echo $query['InscEstadual']; ?>">
-												</div>
-												<div class="col-md-3">
-													<label for="Telefone">Tel.Empresa:</label>
-													<input type="text" class="form-control Celular CelularVariavel" id="Telefone" maxlength="11" <?php echo $readonly; ?>
-														   name="Telefone" placeholder="(XX)999999999" value="<?php echo $query['Telefone']; ?>">
 												</div>																				
 											</div>
 										</div>

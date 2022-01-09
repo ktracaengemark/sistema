@@ -288,6 +288,7 @@ class Loginempresa extends CI_Controller {
 			$data['query']['NivelEmpresa'] = 4;
 			$data['query']['idTab_Modulo'] = 1;
 			$data['query']['NumUsuarios'] = 1;
+			$data['query']['Telefone'] = $data['query']['CelularAdmin'];
 			$data['query']['UsuarioEmpresa'] = $data['query']['CelularAdmin'];
 			$data['query']['DataCriacao'] = $this->basico->mascara_data($data['query']['DataCriacao'], 'mysql');
 			$data['query']['DataDeValidade'] = $this->basico->mascara_data($data['query']['DataDeValidade'], 'mysql');
