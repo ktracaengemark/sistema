@@ -31,7 +31,8 @@ class Campanha_model extends CI_Model {
 				PC.*
 			FROM 
 				App_Campanha AS PC
-			WHERE 
+			WHERE
+				PC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				PC.idApp_Campanha = ' . $data . '
 		');
 		
@@ -49,15 +50,103 @@ class Campanha_model extends CI_Model {
         echo "<pre>";
         print_r($row);
         echo '<br>';
-        print_r($row['Compartilhar']);
+        print_r($row['idApp_Campanha']);
         echo '<br>';
-        print_r($row['NomeCompartilhar']);
+        print_r($row['Campanha']);
+        echo '<br>';
+        print_r($row['DescCampanha']);
         echo "</pre>";
         exit ();
        */
 
 		return $row;
         //return $query[0];
+    }
+
+    public function get_campanha_cupom($data) {
+		if ($data == 0) {
+			return FALSE;
+		}else{
+			$query = $this->db->query('
+				SELECT
+					PC.*,
+					CONCAT(IFNULL(Campanha,""), "<br>", IFNULL(DescCampanha,"")) AS Campanha
+				FROM 
+					App_Campanha AS PC
+				WHERE 
+					PC.idApp_Campanha = ' . $data . '
+			');
+			$query = $query->result_array();
+			return $query[0];
+		}	
+    }
+
+    public function get_campanha_original($data) {
+        $query = $this->db->query('
+			SELECT
+				PC.*,
+				CONCAT(IFNULL(Campanha,""), "<br>", IFNULL(DescCampanha,"")) AS Campanha
+			FROM 
+				App_Campanha AS PC
+			WHERE 
+				PC.idApp_Campanha = ' . $data . '
+		');
+		/*
+		foreach ($query->result_array() as $row) {
+			//$row->DataCampanha = $this->basico->mascara_data($row->DataCampanha, 'barras');
+			//$row->DataCampanhaLimite = $this->basico->mascara_data($row->DataCampanhaLimite, 'barras');
+			//$row->AtivoCampanha = $this->basico->mascara_palavra_completa($row->AtivoCampanha, 'NS');
+		}
+		*/
+		$query = $query->result_array();
+		/*
+        echo $this->db->last_query();
+        echo '<br>';
+        echo "<pre>";
+        print_r($row);
+        echo '<br>';
+        print_r($row['idApp_Campanha']);
+        echo '<br>';
+        print_r($row['Campanha']);
+        echo '<br>';
+        print_r($row['DescCampanha']);
+        echo "</pre>";
+        exit ();
+		*/
+
+		//return $row;
+        return $query[0];
+    }
+
+    public function get_contagem_orc($data) {
+        $query = $this->db->query('
+			SELECT 
+				idApp_OrcaTrata,
+				idSis_Empresa,
+				Cupom
+			FROM 
+				App_OrcaTrata
+			WHERE 
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				Cupom = ' . $data . ' 
+				
+		');
+        $query = $query->result_array();
+        $contagem = count($query);
+		/*
+		echo $this->db->last_query();
+        echo '<br>';
+        echo "<pre>";
+        print_r($contagem);
+        echo '<br>';
+        print_r($query);
+        echo "</pre>";
+        */
+        if(isset($contagem) && $contagem > 0){
+			return TRUE;
+		}else{
+			return FALSE;
+		}
     }
 	
 	public function list1_campanha($data, $completo) {
@@ -171,12 +260,6 @@ class Campanha_model extends CI_Model {
 
     public function delete_campanha($id) {
 
-        /*
-        $tables = array('App_ServicoVenda', 'App_ProdutoVenda', 'App_ParcelasRecebiveis', 'App_SubCampanha', 'App_Campanha');
-        $this->db->where('idApp_Campanha', $id);
-        $this->db->delete($tables);
-        */
-
         $query = $this->db->delete('App_Campanha', array('idApp_Campanha' => $id));
 
         if ($this->db->affected_rows() === 0) {
@@ -247,8 +330,45 @@ class Campanha_model extends CI_Model {
 
         return $array;
     }	
+	
+	public function select_campanha($data = FALSE) {
 
-	public function select_campanha() {
+        if ($data === TRUE) {
+            $array = $this->db->query(					
+				'SELECT                
+					idApp_Campanha,
+					CONCAT(IFNULL(idApp_Campanha,""), " - ", IFNULL(Campanha,""), " - ", IFNULL(DescCampanha,"")) AS Campanha
+				FROM
+					App_Campanha					
+				WHERE
+					idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
+				ORDER BY 
+					idApp_Campanha DESC'
+			);
+					
+        } else {
+            $query = $this->db->query(
+				'SELECT                
+					idApp_Campanha,
+					CONCAT(IFNULL(idApp_Campanha,""), " - ", IFNULL(Campanha,""), " - ", IFNULL(DescCampanha,"")) AS Campanha
+				FROM
+					App_Campanha					
+				WHERE
+					idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
+				ORDER BY 
+					idApp_Campanha DESC'
+			);
+            
+            $array = array();
+            foreach ($query->result() as $row) {
+                $array[$row->idApp_Campanha] = $row->Campanha;
+            }
+        }
+
+        return $array;
+    }
+	
+	public function select_campanha0() {
 
 		$permissao1 = (($_SESSION['FiltroAlteraCampanha']['TipoCampanha'] != "0" ) && ($_SESSION['FiltroAlteraCampanha']['TipoCampanha'] != '' )) ? 'P.TipoCampanha = "' . $_SESSION['FiltroAlteraCampanha']['TipoCampanha'] . '" AND ' : FALSE;
 		$permissao2 = (($_SESSION['FiltroAlteraCampanha']['AtivoCampanha'] != "0" ) && ($_SESSION['FiltroAlteraCampanha']['AtivoCampanha'] != '' )) ? 'P.AtivoCampanha = "' . $_SESSION['FiltroAlteraCampanha']['AtivoCampanha'] . '" AND ' : FALSE;	

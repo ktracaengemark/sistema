@@ -313,8 +313,6 @@ class Campanha extends CI_Controller {
 		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 			'Cadastrar',
         ), TRUE));
-		
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		$data['campanha'] = quotes_to_entities($this->input->post(array(
 			#### App_Campanha ####
@@ -351,26 +349,17 @@ class Campanha extends CI_Controller {
 			}else{
 				$data['TipoDesc'] = '.%';
 			}
-		/*
-		echo '<br>';
-        echo "<pre>";
-        echo '<br>';
-        print_r($data['campanha']);
-        echo '<br>';
-        print_r($data['campanha']['idCompartilhar']);
-        echo '<br>';
-        print_r($data['campanha']['NomeCompartilhar']);
-        echo '<br>';
-        print_r($_SESSION['Campanha']['idCompartilhar']);
-        echo '<br>';
-        print_r($_SESSION['Campanha']['NomeCompartilhar']);
-        echo "</pre>";
-        exit ();            
-		*/
 
-			
         }
 		
+		$data['contagem_orc'] = $this->Campanha_model->get_contagem_orc($data['campanha']['idApp_Campanha']);
+			/*
+			echo '<br>';
+			echo "<pre>";
+			print_r($data['contagem_orc']);
+			echo "</pre>";
+			exit ();
+			*/
 		if($data['campanha']['TipoCampanha'] == 1){
 			$data['Tipo'] = 'Sorteio';
 		}else{
@@ -398,12 +387,15 @@ class Campanha extends CI_Controller {
 
         $data['titulo'] = 'Editar Campanha';
         $data['form_open_path'] = 'campanha/alterar';
-        //$data['readonly'] = 'readonly=""';
-        $data['readonly'] = '';
 		$data['disabled'] = '';
 		$data['panel'] = 'primary';
         $data['metodo'] = 2;
-
+		
+        if(isset($data['contagem_orc']) && $data['contagem_orc'] == 1){
+			$data['readonly'] = 'readonly=""';
+		}else{
+			$data['readonly'] = '';
+		}
  		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
 		$data['radio'] = array(
             'Cadastrar' => $this->basico->radio_checked($data['cadastrar']['Cadastrar'], 'Cadastrar', 'NS'),
@@ -455,14 +447,6 @@ class Campanha extends CI_Controller {
 			$this->form_validation->set_rules('ValorMinimo', 'Valor Minimo', 'required|trim');
 		}
 		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');		
-        
-        /*
-          echo '<br>';
-          echo "<pre>";
-          print_r($data);
-          echo "</pre>";
-          exit ();
-          */
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
@@ -526,14 +510,12 @@ class Campanha extends CI_Controller {
         else
             $data['msg'] = '';
         
-                $this->Campanha_model->delete_campanha($id);
+			$this->Campanha_model->delete_campanha($id);
 
-                $data['msg'] = '?m=1';
+			$data['msg'] = '?m=1';
 
-				redirect(base_url() . 'campanha/' . $data['msg']);
-                exit();
-            //}
-        //}
+			redirect(base_url() . 'campanha/' . $data['msg']);
+			exit();
 
         $this->load->view('basico/footer');
     }

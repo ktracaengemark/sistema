@@ -6108,6 +6108,7 @@ function usarcupom(usarcupom) {
 	$('#Hidden_UsarCupom').val(usarcupom);
 	$('#Cupom').val('0');
 	$("#Hidden_MensagemCupom").html('');
+	$("#MensagemCupom").html('');
 	if(usarcupom){
 		if(usarcupom == 'S'){
 			$('#UsarC').val('none');
@@ -6136,7 +6137,9 @@ function usarcupom(usarcupom) {
 			//$('#Cupom').val('');
 			$('#DescPercOrca').val('0,00');
 			$('#DescValorOrca').val('0,00');
-			$("#CodigoCupom").html('');
+			$("#Hidden_CodigoCupom").html('');
+			$("#CodigoCupom").val('');
+			$('#ValidaCupom').val(0);
 			tipoDescOrca(tipodescorca);	
 		}
 	}else{
@@ -6145,7 +6148,9 @@ function usarcupom(usarcupom) {
 		$('#UsarD').val('none');
 		$('#UsarD1').css("display","none");
 		$('#UsarE1').val('');
-		$("#CodigoCupom").html('');
+		$("#Hidden_CodigoCupom").html('');
+		$("#CodigoCupom").val('');
+		$('#ValidaCupom').val(0);
 		tipoDescOrca(tipodescorca);
 	}
 }
@@ -6163,7 +6168,10 @@ function cupom(Cupom){
 	}
 
 	$("#Hidden_MensagemCupom").html('');
-	$("#CodigoCupom").html('');
+	$("#MensagemCupom").html('');
+	$("#Hidden_CodigoCupom").html('');
+	$("#CodigoCupom").val('');
+	$('#ValidaCupom').val(0);
 
 	$.ajax({
 		url: window.location.origin+ '/' + app + '/cadastros/pesquisar/Cupom.php?Cupom=' + Cupom,
@@ -6200,7 +6208,11 @@ function cupom(Cupom){
 					if(valortotalorca >= ValorMinimo){
 						ValorCupom 	= mascaraValorReal(ValorCupom);
 						$('#UsarE').val(tipodesc);
-						$("#CodigoCupom").html('Valido!');
+						$("#Hidden_CodigoCupom").html('<span style="color: #0000FF">Válido!</span>');
+						$("#CodigoCupom").val('<span style="color: #0000FF">Válido!</span>');
+						$('#ValidaCupom').val(1);
+						$("#Hidden_MensagemCupom").html('<span style="color: #0000FF">'+campanha+'<br>'+desccampanha+'</span>');
+						$("#MensagemCupom").val('<span style="color: #0000FF">'+campanha+'<br>'+desccampanha+'</span>');
 						if(tipodesc == 'V'){
 							$('#UsarE1').val('R$');
 							$('#DescValorOrca').val(ValorCupom);
@@ -6213,61 +6225,72 @@ function cupom(Cupom){
 							$('#DescValorOrca').val('');
 							//$('#Hidden_TipoDescOrca').val(tipodesc);
 							descPercOrca();
-						}
-						$("#Hidden_MensagemCupom").html(''+campanha+'<br>'+desccampanha);					
+						}					
 					}else{
 						ValorMinimo 	= mascaraValorReal(ValorMinimo);
 						ValorCupom	= '0,00';
 						$('#DescValorOrca').val(ValorCupom);
 						$('#DescPercOrca').val(ValorCupom);
-						$("#CodigoCupom").html('Atenção!');
+						$("#Hidden_CodigoCupom").html('<span style="color: #FFD700">Válido! Atenção!</span>');
+						$("#CodigoCupom").val('<span style="color: #FFD700">Válido! Atenção!</span>');
+						$('#ValidaCupom').val(0);
 						$('#UsarE').val(tipodesc);
 						$('#UsarE1').val('');
+						$("#Hidden_MensagemCupom").html('<span style="color: #FFD700">Cupom Válido para compra Mínima de R$'+ValorMinimo+'</span>');
+						$("#MensagemCupom").val('<span style="color: #FFD700">Cupom Válido para compra Mínima de R$'+ValorMinimo+'</span>');
 						if(tipodesc == "V"){
 							descValorOrca();
 						}else if(tipodesc == "P"){
 							descPercOrca();
 						}
-						$("#Hidden_MensagemCupom").html('Cupom Válido para compra Mínima de R$'+ValorMinimo);
 					}
 				}else{
 					ValorCupom	= '0,00';
 					$('#DescValorOrca').val(ValorCupom);
 					$('#DescPercOrca').val(ValorCupom);
-					$("#CodigoCupom").html('Invalido!');
+					$("#Hidden_CodigoCupom").html('<span style="color: #FF0000">Inválido!</span>');
+					$("#CodigoCupom").val('<span style="color: #FF0000">Inválido!</span>');
+					$('#ValidaCupom').val(0);
 					$('#UsarE').val(tipodescorca);
 					$('#UsarE1').val('');
+					$("#Hidden_MensagemCupom").html('Digite outro Cupom');
+					$("#MensagemCupom").val('Digite outro Cupom');
 					if(tipodescorca == "V"){
 						descValorOrca();
 					}else if(tipodescorca == "P"){
 						descPercOrca();
 					}
-					$("#Hidden_MensagemCupom").html('Digite outro Cupom');
 				}
 			}else{
 				//console.log('igual');
 				ValorCupom	= '0,00';
 				$('#DescValorOrca').val(ValorCupom);
 				$('#DescPercOrca').val(ValorCupom);
-				$("#CodigoCupom").html('Invalido!');
+				$("#Hidden_CodigoCupom").html('<span style="color: #FF0000">Inválido!</span>');
+				$("#CodigoCupom").val('<span style="color: #FF0000">Inválido!</span>');
+				$('#ValidaCupom').val(0);
 				$('#UsarE').val(tipodescorca);
 				$('#UsarE1').val('');
+				$("#Hidden_MensagemCupom").html('Digite outro Cupom');
+				$("#MensagemCupom").val('Digite outro Cupom');
 				if(tipodescorca == "V"){
 					descValorOrca();
 				}else if(tipodescorca == "P"){
 					descPercOrca();
 				}
-				$("#Hidden_MensagemCupom").html('Digite outro Cupom');
 			}
 		},
 		error:function(data){
 			//console.log('Nada encontrado');
-			$("#CodigoCupom").html('Invalido!');
+			$("#Hidden_CodigoCupom").html('<span style="color: #FF0000">Inválido!</span>');
+			$("#CodigoCupom").val('<span style="color: #FF0000">Inválido!</span>');
+			$('#ValidaCupom').val(0);
 			$('#UsarE').val(tipodescorca);
 			$('#UsarE1').val('');
 			$('#DescPercOrca').val('0,00');
 			$('#DescValorOrca').val('0,00');
 			$("#Hidden_MensagemCupom").html('Digite outro Cupom');
+			$("#MensagemCupom").val('Digite outro Cupom');
 			if(tipodescorca == "V"){
 				descValorOrca();
 			}else if(tipodescorca == "P"){

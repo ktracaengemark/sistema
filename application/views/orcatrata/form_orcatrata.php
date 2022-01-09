@@ -1582,7 +1582,7 @@
 																		</div>
 																		<div id="UsarCupom" <?php echo $div['UsarCupom']; ?>>	
 																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-																				<label for="Cupom">Cupom <span class="modal-title" id="CodigoCupom"></span> </label><br>
+																				<label for="Cupom">Cupom <span class="modal-title" id="Hidden_CodigoCupom"><?php echo $cadastrar['CodigoCupom'];?></span> </label><br>
 																				<div class="input-group" id="txtHint">
 																					<span class="input-group-addon" id="basic-addon1">Nº</span>
 																					<input type="text" class="form-control Numero" name="Cupom" id="Cupom" maxlength="11" placeholder="1234"
@@ -1593,8 +1593,10 @@
 																	</div>
 																	<div class="row">
 																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-																			<h3 class="modal-title text-center" id="Hidden_MensagemCupom" ></h3>
+																			<h3 class="modal-title text-center" id="Hidden_MensagemCupom"><?php echo $cadastrar['MensagemCupom'];?></h3>
 																		</div>
+																		<input type="hidden" id="CodigoCupom" name="CodigoCupom" value="<?php echo $cadastrar['CodigoCupom'];?>"/>
+																		<input type="hidden" id="MensagemCupom" name="MensagemCupom" value="<?php echo $cadastrar['MensagemCupom'];?>"/>
 																	</div>
 																</div>
 															</div>
@@ -1605,6 +1607,7 @@
 														<input type="hidden" class="form-control Valor" name="DescPercOrca" id="DescPercOrca" value="<?php echo $orcatrata['DescPercOrca'] ?>"/>
 														<input type="text" class="form-control Valor" name="ValorTotalOrca" id="ValorTotalOrca" value="<?php echo $orcatrata['ValorTotalOrca'] ?>">
 													<?php } ?>
+													<input type="hidden" name="ValidaCupom" id="ValidaCupom" value="<?php echo $cadastrar['ValidaCupom'] ?>">
 													<input type="hidden" id="Hidden_TipoDescOrca" value="<?php echo $orcatrata['TipoDescOrca'] ?>">
 													<input type="hidden" id="Hidden_UsarCupom" value="<?php echo $orcatrata['UsarCupom'] ?>">
 													<?php if ($_SESSION['log']['NivelEmpresa'] >= 4 ) { ?>

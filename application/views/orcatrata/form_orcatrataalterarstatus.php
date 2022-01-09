@@ -1308,6 +1308,13 @@
 																		</div>
 																	<?php } ?>	
 																</div>
+																<div class="row">
+																	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																		<h3 class="modal-title text-center" id="Hidden_MensagemCupom"><?php echo $_SESSION['Campanha']['Campanha']; ?></h3>
+																	</div>
+																	<input type="hidden" id="CodigoCupom" name="CodigoCupom" value="<?php echo $cadastrar['CodigoCupom'];?>"/>
+																	<input type="hidden" id="MensagemCupom" name="MensagemCupom" value="<?php echo $cadastrar['MensagemCupom'];?>"/>
+																</div>
 															</div>
 														</div>
 													</div>
@@ -1317,6 +1324,7 @@
 													<input type="hidden" class="form-control Valor" name="ValorTotalOrca" id="ValorTotalOrca" value="<?php echo $orcatrata['ValorTotalOrca'] ?>"readonly=''/>
 													<input type="hidden" class="form-control Numero" name="Cupom" id="Cupom" value="<?php echo $orcatrata['Cupom'] ?>"/>
 												<?php } ?>
+												<input type="hidden" name="ValidaCupom" id="ValidaCupom" value="<?php echo $cadastrar['ValidaCupom'] ?>">
 												<input type="hidden" name="TipoDescOrca" id="TipoDescOrca" value="<?php echo $_SESSION['Orcatrata']['TipoDescOrca']; ?>"/>
 												<input type="hidden" id="Hidden_TipoDescOrca" value="<?php echo $_SESSION['Orcatrata']['TipoDescOrca'] ?>">
 												<input type="hidden" id="Hidden_UsarCupom" value="<?php echo $_SESSION['Orcatrata']['UsarCupom'] ?>">

@@ -31,7 +31,7 @@
 								<div class="row">
 									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">	
 										<div class="row">
-											<?php if ($metodo == 1) { ?>
+											<?php if (!isset($contagem_orc) || $contagem_orc != 1) { ?>
 												<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 form-inline">
 													<label for="TipoCampanha">Tipo</label><br>
 													<div class="form-group">
@@ -60,11 +60,11 @@
 														</div>
 													</div>
 												</div>
-											<?php } elseif ($metodo == 2) { ?>
+											<?php } else { ?>
 												<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 													<input type="hidden" name="TipoCampanha" id="TipoCampanha" value="<?php echo $campanha['TipoCampanha']; ?>"/>
 													<label for="TipoCampanha">Tipo</label>
-													<input type="text" class="form-control" readonly="" value="<?php echo $Tipo; ?>"/>
+													<input type="text" class="form-control" <?php echo $readonly; ?> value="<?php echo $Tipo; ?>"/>
 												</div>
 											<?php } ?>
 											<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -158,7 +158,7 @@
 									</div>	
 									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" id="TipoCampanha" <?php echo $div['TipoCampanha']; ?>>
 										<div class="row">	
-											<?php if ($metodo == 1) { ?>
+											<?php if (!isset($contagem_orc) || $contagem_orc != 1) { ?>
 												<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-inline">
 													<label for="TipoDescCampanha">Tipo Desc</label><br>
 													<div class="form-group">
@@ -187,11 +187,11 @@
 														</div>
 													</div>
 												</div>
-											<?php } elseif ($metodo == 2) { ?>
+											<?php } else { ?>
 												<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 													<input type="hidden" name="TipoDescCampanha" id="TipoDescCampanha" value="<?php echo $campanha['TipoDescCampanha']; ?>"/>
 													<label for="TipoDescCampanha">Tipo Desc</label>
-													<input type="text" class="form-control" readonly="" value="<?php echo $TipoDesc; ?>"/>
+													<input type="text" class="form-control" <?php echo $readonly; ?> value="<?php echo $TipoDesc; ?>"/>
 												</div>
 											<?php } ?>
 											<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">	
@@ -199,7 +199,7 @@
 												<div class="input-group" id="txtHint">
 													<span class="input-group-addon" id="basic-addon1">??</span>
 													<input type="text" class="form-control text-left Valor" id="ValorDesconto" maxlength="10" placeholder="0,00" 
-														   name="ValorDesconto" value="<?php echo $campanha['ValorDesconto'] ?>">
+														   name="ValorDesconto" <?php echo $readonly; ?> value="<?php echo $campanha['ValorDesconto'] ?>">
 												</div>
 												<?php echo form_error('ValorDesconto'); ?>
 											</div>
@@ -208,7 +208,7 @@
 												<div class="input-group" id="txtHint">
 													<span class="input-group-addon" id="basic-addon1">R$</span>
 													<input type="text" class="form-control text-left Valor" id="ValorMinimo" maxlength="10" placeholder="0,00" 
-														   name="ValorMinimo" value="<?php echo $campanha['ValorMinimo'] ?>">
+														   name="ValorMinimo" <?php echo $readonly; ?> value="<?php echo $campanha['ValorMinimo'] ?>">
 												</div>
 												<?php echo form_error('ValorMinimo'); ?>
 											</div>
@@ -223,11 +223,53 @@
 					<?php } ?>
 					<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) || ($_SESSION['log']['idSis_Empresa'] == 5))  { ?>
 						<div class="row">
-							<div class="col-md-6">
-								<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
-									<span class="glyphicon glyphicon-save"></span> Salvar
-								</button>
-							</div>
+							<?php if ($metodo == 2) { ?>
+								<div class="col-md-6">
+									<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
+										<span class="glyphicon glyphicon-save"></span> Salvar
+									</button>
+								</div>
+								<?php if (isset($contagem_orc) && $contagem_orc == 1) { ?>
+									
+								<?php } else { ?>
+									<div class="col-md-6 text-right">
+										<button  type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
+											<span class="glyphicon glyphicon-trash"></span> Excluir
+										</button>
+									</div>
+									<div class="modal fade bs-excluir-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header bg-danger">
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+													<h4 class="modal-title">Tem certeza que deseja excluir?</h4>
+												</div>
+												<div class="modal-body">
+													<p>Ao confirmar a exclusão todos os dados serão excluídos do banco de dados. Esta operação é irreversível.</p>
+												</div>
+												<div class="modal-footer">
+													<div class="col-md-6 text-left">
+														<button type="button" class="btn btn-warning" data-dismiss="modal">
+															<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
+														</button>
+													</div>
+													<div class="col-md-6 text-right">
+														<a class="btn btn-danger" href="<?php echo base_url() . 'campanha/excluir/' . $campanha['idApp_Campanha'] ?>" role="button">
+															<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
+														</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								<?php } ?>
+							<?php } else { ?>
+								<div class="col-md-6">
+									<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
+										<span class="glyphicon glyphicon-save"></span> Salvar
+									</button>
+								</div>
+							<?php } ?>
 						</div>
 					<?php } ?>
 					</form>

@@ -19,7 +19,8 @@ if ($_GET['Cupom']) {
 				WHERE
 					idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 					idApp_Campanha = "' . $cupom . '" AND
-					TipoCampanha = 2
+					TipoCampanha = 2 AND
+					AtivoCampanha = "S"
 				LIMIT 1
 			';
 
