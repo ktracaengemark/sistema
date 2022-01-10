@@ -2741,145 +2741,212 @@
 													<input type="hidden" name="idApp_ParcelasRec" value="<?php echo $parcelasrec['idApp_ParcelasRec']; ?>">-->
 													<?php } ?>
 													<?php if ($metodo == 2) { ?>
-														<div class="col-sm-4 col-md-4 text-center">
-															<label for="Whatsapp">
-																Enviar <svg enable-background="new 0 0 512 512" width="20" height="20" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><path d="M256.064,0h-0.128l0,0C114.784,0,0,114.816,0,256c0,56,18.048,107.904,48.736,150.048l-31.904,95.104  l98.4-31.456C155.712,496.512,204,512,256.064,512C397.216,512,512,397.152,512,256S397.216,0,256.064,0z" fill="#4CAF50"/><path d="m405.02 361.5c-6.176 17.44-30.688 31.904-50.24 36.128-13.376 2.848-30.848 5.12-89.664-19.264-75.232-31.168-123.68-107.62-127.46-112.58-3.616-4.96-30.4-40.48-30.4-77.216s18.656-54.624 26.176-62.304c6.176-6.304 16.384-9.184 26.176-9.184 3.168 0 6.016 0.16 8.576 0.288 7.52 0.32 11.296 0.768 16.256 12.64 6.176 14.88 21.216 51.616 23.008 55.392 1.824 3.776 3.648 8.896 1.088 13.856-2.4 5.12-4.512 7.392-8.288 11.744s-7.36 7.68-11.136 12.352c-3.456 4.064-7.36 8.416-3.008 15.936 4.352 7.36 19.392 31.904 41.536 51.616 28.576 25.44 51.744 33.568 60.032 37.024 6.176 2.56 13.536 1.952 18.048-2.848 5.728-6.176 12.8-16.416 20-26.496 5.12-7.232 11.584-8.128 18.368-5.568 6.912 2.4 43.488 20.48 51.008 24.224 7.52 3.776 12.48 5.568 14.304 8.736 1.792 3.168 1.792 18.048-4.384 35.52z" fill="#FAFAFA"/></svg>
-															</label>
-															<br>
-															<div class="btn-larg-right btn-group" data-toggle="buttons">
-																<?php
-																foreach ($select['Whatsapp'] as $key => $row) {
-																	if (!$cadastrar['Whatsapp']) $cadastrar['Whatsapp'] = 'N';
-
-																	($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-
-																	if ($cadastrar['Whatsapp'] == $key) {
-																		echo ''
-																		. '<label class="btn btn-warning active" name="Whatsapp_' . $hideshow . '">'
-																		. '<input type="radio" name="Whatsapp" id="' . $hideshow . '" '
-																		. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																		. '</label>'
-																		;
-																	} else {
-																		echo ''
-																		. '<label class="btn btn-default" name="Whatsapp_' . $hideshow . '">'
-																		. '<input type="radio" name="Whatsapp" id="' . $hideshow . '" '
-																		. 'autocomplete="off" value="' . $key . '" >' . $row
-																		. '</label>'
-																		;
-																	}
-																}
-																?>
-
-															</div>
-														</div>
-														<div class="col-sm-6 col-md-4 text-center">
-															<label ></label>
-															<div class="btn-group">
-																<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>
+														<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left"></div>
+														<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left">
+															<?php if($_SESSION['log']['idSis_Empresa'] != 5){?>
+																<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">
+																	<label for="Whatsapp">
+																		Enviar <svg enable-background="new 0 0 512 512" width="15" height="15" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><path d="M256.064,0h-0.128l0,0C114.784,0,0,114.816,0,256c0,56,18.048,107.904,48.736,150.048l-31.904,95.104  l98.4-31.456C155.712,496.512,204,512,256.064,512C397.216,512,512,397.152,512,256S397.216,0,256.064,0z" fill="#4CAF50"/><path d="m405.02 361.5c-6.176 17.44-30.688 31.904-50.24 36.128-13.376 2.848-30.848 5.12-89.664-19.264-75.232-31.168-123.68-107.62-127.46-112.58-3.616-4.96-30.4-40.48-30.4-77.216s18.656-54.624 26.176-62.304c6.176-6.304 16.384-9.184 26.176-9.184 3.168 0 6.016 0.16 8.576 0.288 7.52 0.32 11.296 0.768 16.256 12.64 6.176 14.88 21.216 51.616 23.008 55.392 1.824 3.776 3.648 8.896 1.088 13.856-2.4 5.12-4.512 7.392-8.288 11.744s-7.36 7.68-11.136 12.352c-3.456 4.064-7.36 8.416-3.008 15.936 4.352 7.36 19.392 31.904 41.536 51.616 28.576 25.44 51.744 33.568 60.032 37.024 6.176 2.56 13.536 1.952 18.048-2.848 5.728-6.176 12.8-16.416 20-26.496 5.12-7.232 11.584-8.128 18.368-5.568 6.912 2.4 43.488 20.48 51.008 24.224 7.52 3.776 12.48 5.568 14.304 8.736 1.792 3.168 1.792 18.048-4.384 35.52z" fill="#FAFAFA"/></svg>
+																	</label>
+																	<br>
+																	<div class="btn-larg-right btn-group" data-toggle="buttons">
+																		<?php
+																		foreach ($select['Whatsapp'] as $key => $row) {
+																			if (!$cadastrar['Whatsapp']) $cadastrar['Whatsapp'] = 'S';
+																			($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																			if ($cadastrar['Whatsapp'] == $key) {
+																				echo ''
+																				. '<label class="btn btn-warning active" name="Whatsapp_' . $hideshow . '">'
+																				. '<input type="radio" name="Whatsapp" id="' . $hideshow . '" '
+																				. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																				. '</label>'
+																				;
+																			} else {
+																				echo ''
+																				. '<label class="btn btn-default" name="Whatsapp_' . $hideshow . '">'
+																				. '<input type="radio" name="Whatsapp" id="' . $hideshow . '" '
+																				. 'autocomplete="off" value="' . $key . '" >' . $row
+																				. '</label>'
+																				;
+																			}
+																		}
+																		?>
+																	</div>
+																</div>
+																<div id="Whatsapp" <?php echo $div['Whatsapp']; ?>>
+																	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">
+																		<label for="Whatsapp_Site">Enviar C/Site</label>
+																		<br>
+																		<div class="btn-larg-right btn-group" data-toggle="buttons">
+																			<?php
+																			foreach ($select['Whatsapp_Site'] as $key => $row) {
+																				if (!$cadastrar['Whatsapp_Site']) $cadastrar['Whatsapp_Site'] = 'N';
+																				($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																				if ($cadastrar['Whatsapp_Site'] == $key) {
+																					echo ''
+																					. '<label class="btn btn-warning active" name="Whatsapp_Site_' . $hideshow . '">'
+																					. '<input type="radio" name="Whatsapp_Site" id="' . $hideshow . '" '
+																					. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																					. '</label>'
+																					;
+																				} else {
+																					echo ''
+																					. '<label class="btn btn-default" name="Whatsapp_Site_' . $hideshow . '">'
+																					. '<input type="radio" name="Whatsapp_Site" id="' . $hideshow . '" '
+																					. 'autocomplete="off" value="' . $key . '" >' . $row
+																					. '</label>'
+																					;
+																				}
+																			}
+																			?>
+																		</div>
+																	</div>
+																</div>
+															<?php } ?>
+															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">
+																<label ></label>
+																<div class="btn-group">
+																	<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>
+																		<span class="input-group-btn">
+																			<button  type="button" class="btn btn-lg btn-danger" name="submeter2" id="submeter2" onclick="DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
+																				<span class="glyphicon glyphicon-trash"></span>Exc
+																			</button>
+																		</span>
+																	<?php } ?>
 																	<span class="input-group-btn">
-																		<button  type="button" class="btn btn-lg btn-danger" name="submeter2" id="submeter2" onclick="DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
-																			<span class="glyphicon glyphicon-trash"></span>Exc
+																		<a class="btn btn-lg btn-info " name="submeter5" id="submeter5" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $orcatrata['idApp_OrcaTrata']; ?>">
+																			<span class="glyphicon glyphicon-print"></span>										
+																		</a>
+																	</span>	
+																	<span class="input-group-btn">
+																		<!--
+																		<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
+																			<span class="glyphicon glyphicon-save"></span> Salvar
 																		</button>
-																	</span>
-																<?php } ?>
-																<span class="input-group-btn">
-																	<a class="btn btn-lg btn-info " name="submeter5" id="submeter5" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $orcatrata['idApp_OrcaTrata']; ?>">
-																		<span class="glyphicon glyphicon-print"></span>										
-																	</a>
-																</span>	
-																<span class="input-group-btn">
-																	<!--
-																	<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
-																		<span class="glyphicon glyphicon-save"></span> Salvar
-																	</button>
-																	-->
-																	<button type="submit" class="btn btn-lg btn-primary" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." value="1" >
-																		<span class="glyphicon glyphicon-save"></span>Save
-																	</button>
-																</span>	
-																<div class="alert alert-warning aguardar" role="alert" >
-																	Aguarde um instante! Estamos processando sua solicitação!
+																		-->
+																		<button type="submit" class="btn btn-lg btn-primary" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." value="1" >
+																			<span class="glyphicon glyphicon-save"></span>Save
+																		</button>
+																	</span>	
+																	<div class="alert alert-warning aguardar" role="alert" >
+																		Aguarde um instante! Estamos processando sua solicitação!
+																	</div>
 																</div>
 															</div>
-														</div>
-														<div class="modal fade bs-excluir-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-															<div class="modal-dialog" role="document">
-																<div class="modal-content">
-																	<div class="modal-header bg-danger">
-																		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-																		<h4 class="modal-title">Tem certeza que deseja excluir?</h4>
-																	</div>
-																	<div class="modal-body">
-																		<p>Ao confirmar esta operação todos os dados serão excluídos permanentemente do sistema.
-																			Esta operação é irreversível.</p>
-																	</div>
-																	<div class="modal-footer">
-																		<div class="col-md-6 text-left">
-																			<button type="button" class="btn btn-warning" name="submeter4" id="submeter4" onclick="DesabilitaBotaoExcluir()" data-dismiss="modal">
-																				<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
-																			</button>
+															<div class="modal fade bs-excluir-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+																<div class="modal-dialog" role="document">
+																	<div class="modal-content">
+																		<div class="modal-header bg-danger">
+																			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+																			<h4 class="modal-title">Tem certeza que deseja excluir?</h4>
 																		</div>
-																		<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>
-																			<?php if ($count_orca == 0 ) { ?>	
-																				<div class="col-md-6 text-right">
-																					<a class="btn btn-danger" name="submeter3" id="submeter3" onclick="DesabilitaBotaoExcluir(this.name)" href="<?php echo base_url() . 'orcatrata/excluir/' . $orcatrata['idApp_OrcaTrata'] ?>" role="button">
-																						<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
-																					</a>
-																				</div>
-																			<?php }else{ ?>	
-																				<div class="col-md-6 text-left">
-																					<span class="glyphicon glyphicon-alert" name="submeter3" id="submeter3" ></span> Atenção! <br>Este Orçamento está vinculado a um agendamento e não pode ser apagado por aqui!
-																				</div>
+																		<div class="modal-body">
+																			<p>Ao confirmar esta operação todos os dados serão excluídos permanentemente do sistema.
+																				Esta operação é irreversível.</p>
+																		</div>
+																		<div class="modal-footer">
+																			<div class="col-md-6 text-left">
+																				<button type="button" class="btn btn-warning" name="submeter4" id="submeter4" onclick="DesabilitaBotaoExcluir()" data-dismiss="modal">
+																					<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
+																				</button>
+																			</div>
+																			<?php if ($_SESSION['Usuario']['Delet_Orcam'] == "S" ) { ?>
+																				<?php if ($count_orca == 0 ) { ?>	
+																					<div class="col-md-6 text-right">
+																						<a class="btn btn-danger" name="submeter3" id="submeter3" onclick="DesabilitaBotaoExcluir(this.name)" href="<?php echo base_url() . 'orcatrata/excluir/' . $orcatrata['idApp_OrcaTrata'] ?>" role="button">
+																							<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
+																						</a>
+																					</div>
+																				<?php }else{ ?>	
+																					<div class="col-md-6 text-left">
+																						<span class="glyphicon glyphicon-alert" name="submeter3" id="submeter3" ></span> Atenção! <br>Este Orçamento está vinculado a um agendamento e não pode ser apagado por aqui!
+																					</div>
+																				<?php } ?>	
 																			<?php } ?>	
-																		<?php } ?>	
+																		</div>
 																	</div>
 																</div>
 															</div>
 														</div>
 													<?php } else { ?>
-														<div class="col-sm-4 col-md-4 text-center">
-															<label for="Whatsapp">
-																Enviar <svg enable-background="new 0 0 512 512" width="20" height="20" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><path d="M256.064,0h-0.128l0,0C114.784,0,0,114.816,0,256c0,56,18.048,107.904,48.736,150.048l-31.904,95.104  l98.4-31.456C155.712,496.512,204,512,256.064,512C397.216,512,512,397.152,512,256S397.216,0,256.064,0z" fill="#4CAF50"/><path d="m405.02 361.5c-6.176 17.44-30.688 31.904-50.24 36.128-13.376 2.848-30.848 5.12-89.664-19.264-75.232-31.168-123.68-107.62-127.46-112.58-3.616-4.96-30.4-40.48-30.4-77.216s18.656-54.624 26.176-62.304c6.176-6.304 16.384-9.184 26.176-9.184 3.168 0 6.016 0.16 8.576 0.288 7.52 0.32 11.296 0.768 16.256 12.64 6.176 14.88 21.216 51.616 23.008 55.392 1.824 3.776 3.648 8.896 1.088 13.856-2.4 5.12-4.512 7.392-8.288 11.744s-7.36 7.68-11.136 12.352c-3.456 4.064-7.36 8.416-3.008 15.936 4.352 7.36 19.392 31.904 41.536 51.616 28.576 25.44 51.744 33.568 60.032 37.024 6.176 2.56 13.536 1.952 18.048-2.848 5.728-6.176 12.8-16.416 20-26.496 5.12-7.232 11.584-8.128 18.368-5.568 6.912 2.4 43.488 20.48 51.008 24.224 7.52 3.776 12.48 5.568 14.304 8.736 1.792 3.168 1.792 18.048-4.384 35.52z" fill="#FAFAFA"/></svg>
-															</label>
-															<br>
-															<div class="btn-larg-right btn-group" data-toggle="buttons">
-																<?php
-																foreach ($select['Whatsapp'] as $key => $row) {
-																	if (!$cadastrar['Whatsapp']) $cadastrar['Whatsapp'] = 'N';
-
-																	($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-
-																	if ($cadastrar['Whatsapp'] == $key) {
-																		echo ''
-																		. '<label class="btn btn-warning active" name="Whatsapp_' . $hideshow . '">'
-																		. '<input type="radio" name="Whatsapp" id="' . $hideshow . '" '
-																		. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																		. '</label>'
-																		;
-																	} else {
-																		echo ''
-																		. '<label class="btn btn-default" name="Whatsapp_' . $hideshow . '">'
-																		. '<input type="radio" name="Whatsapp" id="' . $hideshow . '" '
-																		. 'autocomplete="off" value="' . $key . '" >' . $row
-																		. '</label>'
-																		;
-																	}
-																}
-																?>
-
-															</div>
-														</div>
-														<div class="col-sm-4 col-md-4 text-left">
-															<label></label>
-															<!--
-															<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
-																<span class="glyphicon glyphicon-save"></span> Salvar
-															</button>
-															-->
-															<button type="submit" class="btn btn-lg btn-primary" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name),calculaQtdSoma('QtdProduto','QtdSoma','ProdutoSoma',0,0,'CountMax',1,0)" data-loading-text="Aguarde..." value="1" >
-																<span class="glyphicon glyphicon-save"></span> Salvar
-															</button>														
+														<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left"></div>
+														<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left">
+															<div class="row">
+																<?php if($_SESSION['log']['idSis_Empresa'] != 5){?>
+																	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">
+																		<label for="Whatsapp">
+																			Enviar <svg enable-background="new 0 0 512 512" width="15" height="15" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><path d="M256.064,0h-0.128l0,0C114.784,0,0,114.816,0,256c0,56,18.048,107.904,48.736,150.048l-31.904,95.104  l98.4-31.456C155.712,496.512,204,512,256.064,512C397.216,512,512,397.152,512,256S397.216,0,256.064,0z" fill="#4CAF50"/><path d="m405.02 361.5c-6.176 17.44-30.688 31.904-50.24 36.128-13.376 2.848-30.848 5.12-89.664-19.264-75.232-31.168-123.68-107.62-127.46-112.58-3.616-4.96-30.4-40.48-30.4-77.216s18.656-54.624 26.176-62.304c6.176-6.304 16.384-9.184 26.176-9.184 3.168 0 6.016 0.16 8.576 0.288 7.52 0.32 11.296 0.768 16.256 12.64 6.176 14.88 21.216 51.616 23.008 55.392 1.824 3.776 3.648 8.896 1.088 13.856-2.4 5.12-4.512 7.392-8.288 11.744s-7.36 7.68-11.136 12.352c-3.456 4.064-7.36 8.416-3.008 15.936 4.352 7.36 19.392 31.904 41.536 51.616 28.576 25.44 51.744 33.568 60.032 37.024 6.176 2.56 13.536 1.952 18.048-2.848 5.728-6.176 12.8-16.416 20-26.496 5.12-7.232 11.584-8.128 18.368-5.568 6.912 2.4 43.488 20.48 51.008 24.224 7.52 3.776 12.48 5.568 14.304 8.736 1.792 3.168 1.792 18.048-4.384 35.52z" fill="#FAFAFA"/></svg>
+																		</label>
+																		<br>
+																		<div class="btn-larg-right btn-group" data-toggle="buttons">
+																			<?php
+																			foreach ($select['Whatsapp'] as $key => $row) {
+																				if (!$cadastrar['Whatsapp']) $cadastrar['Whatsapp'] = 'S';
+																				($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																				if ($cadastrar['Whatsapp'] == $key) {
+																					echo ''
+																					. '<label class="btn btn-warning active" name="Whatsapp_' . $hideshow . '">'
+																					. '<input type="radio" name="Whatsapp" id="' . $hideshow . '" '
+																					. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																					. '</label>'
+																					;
+																				} else {
+																					echo ''
+																					. '<label class="btn btn-default" name="Whatsapp_' . $hideshow . '">'
+																					. '<input type="radio" name="Whatsapp" id="' . $hideshow . '" '
+																					. 'autocomplete="off" value="' . $key . '" >' . $row
+																					. '</label>'
+																					;
+																				}
+																			}
+																			?>
+																		</div>
+																	</div>
+																	<div id="Whatsapp" <?php echo $div['Whatsapp']; ?>>
+																		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">
+																			<label for="Whatsapp_Site">Enviar C/Site</label>
+																			<br>
+																			<div class="btn-larg-right btn-group" data-toggle="buttons">
+																				<?php
+																				foreach ($select['Whatsapp_Site'] as $key => $row) {
+																					if (!$cadastrar['Whatsapp_Site']) $cadastrar['Whatsapp_Site'] = 'N';
+																					($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																					if ($cadastrar['Whatsapp_Site'] == $key) {
+																						echo ''
+																						. '<label class="btn btn-warning active" name="Whatsapp_Site_' . $hideshow . '">'
+																						. '<input type="radio" name="Whatsapp_Site" id="' . $hideshow . '" '
+																						. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																						. '</label>'
+																						;
+																					} else {
+																						echo ''
+																						. '<label class="btn btn-default" name="Whatsapp_Site_' . $hideshow . '">'
+																						. '<input type="radio" name="Whatsapp_Site" id="' . $hideshow . '" '
+																						. 'autocomplete="off" value="' . $key . '" >' . $row
+																						. '</label>'
+																						;
+																					}
+																				}
+																				?>
+																			</div>
+																		</div>
+																	</div>
+																<?php } ?>	
+																<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">
+																	<br>
+																	<!--
+																	<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
+																		<span class="glyphicon glyphicon-save"></span> Salvar
+																	</button>
+																	-->
+																	<button type="submit" class="btn btn-lg btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name),calculaQtdSoma('QtdProduto','QtdSoma','ProdutoSoma',0,0,'CountMax',1,0)" data-loading-text="Aguarde..." value="1" >
+																		<span class="glyphicon glyphicon-save"></span> Salvar
+																	</button>
+																	<div class="alert alert-warning aguardar" role="alert" >
+																		Aguarde um instante! Estamos processando sua solicitação!
+																	</div>														
+																</div>
+															</div>	
 														</div>
 													<?php } ?>
 												<?php } ?>

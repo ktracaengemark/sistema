@@ -3,9 +3,18 @@
 		if(isset($_SESSION['bd']['Whatsapp']) && $_SESSION['bd']['Whatsapp'] == "S"){
 			if(isset($whatsapp)){
 				//echo "<script>window.open('https://api.whatsapp.com/send?phone=55".$_SESSION['bd']['CelularCliente']."&text=Ola ".$_SESSION['bd']['NomeCliente'].". Pedido *".$_SESSION['bd']['idApp_OrcaTrata']."* . Acesse o link abaixo, faca login e acompanhe seu pedido pelo nosso site. https://enkontraki.com.br/".$_SESSION['bd']['Site']."','_blank');</script>";
+				if(isset($_SESSION['bd']['Whatsapp_Site']) && $_SESSION['bd']['Whatsapp_Site'] == "S"){
+					if(isset($whatsapp_site)){
+						$c_site = $whatsapp_site;					
+					}else{
+						$c_site = False;	
+					}
+				}else{
+					$c_site = False;	
+				}
 				echo "
 					<script>
-						var	win = window.open('https://api.whatsapp.com/send?phone=55".$cliente['CelularCliente']."&text=".$whatsapp."','1366002941508','width=500,height=200,left=375,top=300','_blank');
+						var	win = window.open('https://api.whatsapp.com/send?phone=55".$cliente['CelularCliente']."&text=" . $whatsapp . $c_site . "','1366002941508','width=500,height=200,left=375,top=300','_blank');
 						/*
 						setTimeout(function () { win.close();}, 300);
 						*/
@@ -13,8 +22,8 @@
 				";
 			}
 		}
-		unset($_SESSION['bd'], $whatsapp);	
-	} 
+		unset($_SESSION['bd'], $whatsapp, $whatsapp_site);	
+	}
 ?>
 <div class="container-fluid">
 	<div class="row">

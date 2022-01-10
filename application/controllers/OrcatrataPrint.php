@@ -79,9 +79,13 @@ class OrcatrataPrint extends CI_Controller {
 				if(isset($data['orcatrata']['CombinadoFrete']) && $data['orcatrata']['CombinadoFrete'] == "S"){
 					if(isset($data['orcatrata']['AprovadoOrca']) && $data['orcatrata']['AprovadoOrca'] == "S"){
 						if(isset($data['orcatrata']['ConcluidoOrca']) && $data['orcatrata']['ConcluidoOrca'] == "S"){
-							$data['whatsapp'] = utf8_encode('Olá '.$data['cliente']['NomeCliente'].'. Foi um prazer entregar o seu Pedido *' . $id . '* . Esperamos que fique totalmente satisfeito! Aproveite e visite o nosso site. https://enkontraki.com.br/'.$_SESSION['Empresa']['Site'].'');
+							$data['whatsapp_site'] = utf8_encode(' Aproveite e visite o nosso site. https://enkontraki.com.br/'.$_SESSION['Empresa']['Site'].'');
+							//$data['whatsapp'] = utf8_encode('Olá '.$data['cliente']['NomeCliente'].'. Foi um prazer entregar o seu Pedido *' . $id . '* . Esperamos que fique totalmente satisfeito! Aproveite e visite o nosso site. https://enkontraki.com.br/'.$_SESSION['Empresa']['Site'].'');
+							$data['whatsapp'] = utf8_encode('Olá '.$data['cliente']['NomeCliente'].'. Foi um prazer entregar o seu Pedido *' . $id . '* . Esperamos que fique totalmente satisfeito!');
 						}else{
-							$data['whatsapp'] = utf8_encode('Olá '.$data['cliente']['NomeCliente'].'. Estamos preparando o seu Pedido *' . $id . '* . Esperamos que fique totalmente satisfeito! Aproveite e visite o nosso site. https://enkontraki.com.br/'.$_SESSION['Empresa']['Site'].'');
+							$data['whatsapp_site'] = utf8_encode(' Aproveite e visite o nosso site. https://enkontraki.com.br/'.$_SESSION['Empresa']['Site'].'');
+							//$data['whatsapp'] = utf8_encode('Olá '.$data['cliente']['NomeCliente'].'. Estamos preparando o seu Pedido *' . $id . '* . Esperamos que fique totalmente satisfeito! Aproveite e visite o nosso site. https://enkontraki.com.br/'.$_SESSION['Empresa']['Site'].'');
+							$data['whatsapp'] = utf8_encode('Olá '.$data['cliente']['NomeCliente'].'. Estamos preparando o seu Pedido *' . $id . '* . Esperamos que fique totalmente satisfeito!');
 						}
 					}
 				}	
