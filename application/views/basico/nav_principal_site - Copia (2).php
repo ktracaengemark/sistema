@@ -33,7 +33,24 @@
 					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/contact.php#contact">Fale Conosco</a>
 				</li>
 				<li class="nav-item dropdown">
-					<a class="nav-link " href="../../enkontraki/pesquisar.php" >Empresas</a>
+					<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Empresas <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" aria-labelledby="dropdown01">
+						<li>
+							<a class="dropdown-item" href="../../enkontraki/pesquisar.php">Pesquisar</a>
+						</li>
+						<li role="separator" class="divider"></li>
+						<!--
+						<li>
+							<a class="dropdown-item" href="<?php #echo base_url() ?>loginempresa/registrar">Cadastrar</a>
+						</li>
+						<li role="separator" class="divider"></li>
+						-->
+						<li>
+							<a class="dropdown-item" href="<?php echo base_url() ?>login/index2">Acessar</a>
+						</li>
+					</ul>
 				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
