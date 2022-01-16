@@ -340,6 +340,7 @@
 									<?php if($_SESSION['Usuario']['Rel_Prd'] == "S") {?>
 										<div class="col-md-12">
 											<label for=""><h4><b>Produtos & Serviços</b></h4></label>
+											<!--
 											<div class="form-group col-md-12 text-left">
 												<div class="row">										
 													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/comprados" role="button">
@@ -347,7 +348,7 @@
 													</a>
 												</div>	
 											</div>
-											<!--
+											
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
 													<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/estoque" role="button"> 

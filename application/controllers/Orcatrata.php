@@ -45,12 +45,6 @@ class Orcatrata extends CI_Controller {
 
     public function cadastrarrepet($idApp_Cliente = NULL, $idApp_Consulta = NULL) {
 
-		if(isset($_SESSION['bd'])){
-			echo "<script>window.open('https://api.whatsapp.com/send?phone=55".$_SESSION['bd']['CelularCliente']."&text=Ola ".$_SESSION['bd']['NomeCliente'].". Agendamento marcado com ".$_SESSION['bd']['Profissional'].", dia ".$_SESSION['bd']['DataInicio'].", as ".$_SESSION['bd']['HoraInicio'].".','_blank');</script>";
-		}
-		
-		unset($_SESSION['bd']);
-		
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
@@ -1522,19 +1516,19 @@ class Orcatrata extends CI_Controller {
 					$datalanc = "0000-00-00";
 				}
 				
-				$combinadofrete = "N";
-				$aprovadoorca = "N";
+				//$combinadofrete = "N";
+				//$aprovadoorca = "N";
 				$prontooorca = "N";
 				$enviadooorca = "N";
 				$finalizadoorca = "N";
 				
 				if($concluidoorca == "S"){
-					$combinadofrete = "S";
+					//$combinadofrete = "S";
 					//$aprovadoorca = "S";
 					$prontooorca = "S";
 					$enviadooorca = "S";
 					if($quitadoorca == "S"){
-						$aprovadoorca = "S";
+						//$aprovadoorca = "S";
 						$finalizadoorca = "S";
 					}else{
 						$finalizadoorca = "N";
@@ -1543,7 +1537,7 @@ class Orcatrata extends CI_Controller {
 					if($quitadoorca == "S"){
 						$finalizadoorca = "N";
 						//$combinadofrete = "S";
-						$aprovadoorca = "S";
+						//$aprovadoorca = "S";
 						//$prontooorca = "N";
 						//$enviadooorca = "N";
 					}else{
@@ -1576,9 +1570,11 @@ class Orcatrata extends CI_Controller {
 							'RepeticaoCons' 		=> $data['orcatrata']['RepeticaoCons'],
 							'RecorrenciasOrca' 		=> $data['orcatrata']['RecorrenciasOrca'],
 							'RecorrenciaOrca' 		=> ($j + 1) .  '/' . $qtd,
-							'CombinadoFrete' 		=> $combinadofrete,
+							//'CombinadoFrete' 		=> $combinadofrete,
+							//'AprovadoOrca' 		=> $aprovadoorca,
+							'CombinadoFrete' 		=> $data['orcatrata']['CombinadoFrete'],
+							'AprovadoOrca' 			=> $data['orcatrata']['AprovadoOrca'],
 							'FinalizadoOrca' 		=> $finalizadoorca,
-							'AprovadoOrca' 			=> $aprovadoorca,
 							'ProntoOrca' 			=> $prontooorca,
 							'EnviadoOrca' 			=> $enviadooorca,
 							'ConcluidoOrca' 		=> $concluidoorca,
@@ -2910,8 +2906,8 @@ class Orcatrata extends CI_Controller {
 				
 				#### Whatsapp ####
 				if($data['cadastrar']['Whatsapp'] == 'S'){
-					$_SESSION['bd']['Whatsapp'] = $data['cadastrar']['Whatsapp'];
-					$_SESSION['bd']['Whatsapp_Site'] = $data['cadastrar']['Whatsapp_Site'];
+					$_SESSION['bd_orcamento']['Whatsapp'] = $data['cadastrar']['Whatsapp'];
+					$_SESSION['bd_orcamento']['Whatsapp_Site'] = $data['cadastrar']['Whatsapp_Site'];
 				}
 						
 				#### APP_Cliente ####
@@ -4390,8 +4386,8 @@ class Orcatrata extends CI_Controller {
 				#### Whatsapp ####
 				if ($data['orcatrata']['Cli_Forn_Orca'] == 'S' && $data['cadastrar']['Whatsapp'] == 'S'){
 					if (isset($data['orcatrata']['idApp_Cliente']) && $data['orcatrata']['idApp_Cliente'] != 0){
-						$_SESSION['bd']['Whatsapp'] = $data['cadastrar']['Whatsapp'];
-						$_SESSION['bd']['Whatsapp_Site'] = $data['cadastrar']['Whatsapp_Site'];
+						$_SESSION['bd_orcamento']['Whatsapp'] = $data['cadastrar']['Whatsapp'];
+						$_SESSION['bd_orcamento']['Whatsapp_Site'] = $data['cadastrar']['Whatsapp_Site'];
 					}
 				}			
 			
@@ -6710,8 +6706,8 @@ class Orcatrata extends CI_Controller {
 			
 			#### Whatsapp ####
 			if($data['cadastrar']['Whatsapp'] == 'S'){
-				$_SESSION['bd']['Whatsapp'] = $data['cadastrar']['Whatsapp'];
-				$_SESSION['bd']['Whatsapp_Site'] = $data['cadastrar']['Whatsapp_Site'];
+				$_SESSION['bd_orcamento']['Whatsapp'] = $data['cadastrar']['Whatsapp'];
+				$_SESSION['bd_orcamento']['Whatsapp_Site'] = $data['cadastrar']['Whatsapp_Site'];
 			}
 						
 			#### Estoque_Produto_posterior ####
@@ -10321,8 +10317,8 @@ class Orcatrata extends CI_Controller {
 			#### Whatsapp ####
 			if ($_SESSION['Orcatrata']['Cli_Forn_Orca'] == 'S' && $data['cadastrar']['Whatsapp'] == 'S'){
 				if (isset($_SESSION['Orcatrata']['idApp_Cliente']) && $_SESSION['Orcatrata']['idApp_Cliente'] != 0){
-					$_SESSION['bd']['Whatsapp'] = $data['cadastrar']['Whatsapp'];
-					$_SESSION['bd']['Whatsapp_Site'] = $data['cadastrar']['Whatsapp_Site'];
+					$_SESSION['bd_orcamento']['Whatsapp'] = $data['cadastrar']['Whatsapp'];
+					$_SESSION['bd_orcamento']['Whatsapp_Site'] = $data['cadastrar']['Whatsapp_Site'];
 				}
 			}
 			

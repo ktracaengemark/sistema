@@ -155,8 +155,9 @@
 									</div>
 								</li>
 								<li class="botoesnav" role="toolbar" aria-label="...">
-									<div class="btn-group">		
-										<a href="https://api.whatsapp.com/send?phone=55<?php echo $_SESSION['Cliente']['CelularCliente'];?>&text=" target="_blank" style="">
+									<div class="btn-group">
+										<!--<a href="https://api.whatsapp.com/send?phone=55<?php #echo $_SESSION['Cliente']['CelularCliente'];?>&text=" target="_blank" style="">-->
+										<a href="javascript:window.open('https://api.whatsapp.com/send?phone=55<?php echo $_SESSION['Cliente']['CelularCliente'];?>&text=','1366002941508','width=700,height=250,top=300')">
 											<svg enable-background="new 0 0 512 512" width="30" height="30" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><path d="M256.064,0h-0.128l0,0C114.784,0,0,114.816,0,256c0,56,18.048,107.904,48.736,150.048l-31.904,95.104  l98.4-31.456C155.712,496.512,204,512,256.064,512C397.216,512,512,397.152,512,256S397.216,0,256.064,0z" fill="#4CAF50"/><path d="m405.02 361.5c-6.176 17.44-30.688 31.904-50.24 36.128-13.376 2.848-30.848 5.12-89.664-19.264-75.232-31.168-123.68-107.62-127.46-112.58-3.616-4.96-30.4-40.48-30.4-77.216s18.656-54.624 26.176-62.304c6.176-6.304 16.384-9.184 26.176-9.184 3.168 0 6.016 0.16 8.576 0.288 7.52 0.32 11.296 0.768 16.256 12.64 6.176 14.88 21.216 51.616 23.008 55.392 1.824 3.776 3.648 8.896 1.088 13.856-2.4 5.12-4.512 7.392-8.288 11.744s-7.36 7.68-11.136 12.352c-3.456 4.064-7.36 8.416-3.008 15.936 4.352 7.36 19.392 31.904 41.536 51.616 28.576 25.44 51.744 33.568 60.032 37.024 6.176 2.56 13.536 1.952 18.048-2.848 5.728-6.176 12.8-16.416 20-26.496 5.12-7.232 11.584-8.128 18.368-5.568 6.912 2.4 43.488 20.48 51.008 24.224 7.52 3.776 12.48 5.568 14.304 8.736 1.792 3.168 1.792 18.048-4.384 35.52z" fill="#FAFAFA"/></svg>
 										</a>
 									</div>
@@ -477,7 +478,36 @@
 								</div>
 								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
 									<div class="panel panel-warning">
-										<div class="panel-heading">
+										<div class="panel-heading">	
+											<div class="row">
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">
+													<label for="idTab_Status">Status:</label><br>
+													<div class=" " data-toggle="buttons">
+														<?php
+														foreach ($select['Status'] as $key => $row) {
+															if (!$query['idTab_Status'])
+																$query['idTab_Status'] = 1;
+
+															if ($query['idTab_Status'] == $key) {
+																echo ''
+																. '<label class="btn btn-' . $this->basico->tipo_status_cor($key) . ' active" name="radio" id="radio' . $key . '">'
+																. '<input type="radio" name="idTab_Status" id="radio" '
+																	. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																. '</label>'
+																;
+															} else {
+																echo ''
+																. '<label class="btn btn-default " name="radio" id="radio' . $key . '">'
+																. '<input type="radio" name="idTab_Status" id="radio" class="idTab_Status" '
+																	. 'autocomplete="off" value="' . $key . '" >' . $row
+																. '</label>'
+																;
+															}
+														}
+														?>
+													</div>
+												</div>
+											</div>
 											<?php if ($metodo == 1) { ?>			
 												<div class="row text-left">
 													<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
@@ -612,36 +642,7 @@
 														<?php echo form_error('Quais'); ?>
 													</div>
 												</div>
-											<?php } ?>	
-											<div class="row">
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">
-													<label for="idTab_Status">Status:</label><br>
-													<div class=" " data-toggle="buttons">
-														<?php
-														foreach ($select['Status'] as $key => $row) {
-															if (!$query['idTab_Status'])
-																$query['idTab_Status'] = 1;
-
-															if ($query['idTab_Status'] == $key) {
-																echo ''
-																. '<label class="btn btn-' . $this->basico->tipo_status_cor($key) . ' active" name="radio" id="radio' . $key . '">'
-																. '<input type="radio" name="idTab_Status" id="radio" '
-																	. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																. '</label>'
-																;
-															} else {
-																echo ''
-																. '<label class="btn btn-default " name="radio" id="radio' . $key . '">'
-																. '<input type="radio" name="idTab_Status" id="radio" class="idTab_Status" '
-																	. 'autocomplete="off" value="' . $key . '" >' . $row
-																. '</label>'
-																;
-															}
-														}
-														?>
-													</div>
-												</div>
-											</div>
+											<?php } ?>
 										</div>
 									</div>
 								</div>
@@ -891,12 +892,13 @@
 																</div>
 																<div class="modal-footer">
 																	<div class="row">
-																		<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 text-left">
+																		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left">
+																			<label ></label><br>
 																			<button type="button" class="btn btn-warning btn-block"  name="submeter7" id="submeter7" onclick="DesabilitaBotaoExcluir()" data-dismiss="modal">
 																				<span class="glyphicon glyphicon-ban-circle"></span>Canc.
 																			</button>
 																		</div>
-																		<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 text-center">
+																		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-center">
 																			<label for="Whatsapp">
 																				Enviar <svg enable-background="new 0 0 512 512" width="20" height="20" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><path d="M256.064,0h-0.128l0,0C114.784,0,0,114.816,0,256c0,56,18.048,107.904,48.736,150.048l-31.904,95.104  l98.4-31.456C155.712,496.512,204,512,256.064,512C397.216,512,512,397.152,512,256S397.216,0,256.064,0z" fill="#4CAF50"/><path d="m405.02 361.5c-6.176 17.44-30.688 31.904-50.24 36.128-13.376 2.848-30.848 5.12-89.664-19.264-75.232-31.168-123.68-107.62-127.46-112.58-3.616-4.96-30.4-40.48-30.4-77.216s18.656-54.624 26.176-62.304c6.176-6.304 16.384-9.184 26.176-9.184 3.168 0 6.016 0.16 8.576 0.288 7.52 0.32 11.296 0.768 16.256 12.64 6.176 14.88 21.216 51.616 23.008 55.392 1.824 3.776 3.648 8.896 1.088 13.856-2.4 5.12-4.512 7.392-8.288 11.744s-7.36 7.68-11.136 12.352c-3.456 4.064-7.36 8.416-3.008 15.936 4.352 7.36 19.392 31.904 41.536 51.616 28.576 25.44 51.744 33.568 60.032 37.024 6.176 2.56 13.536 1.952 18.048-2.848 5.728-6.176 12.8-16.416 20-26.496 5.12-7.232 11.584-8.128 18.368-5.568 6.912 2.4 43.488 20.48 51.008 24.224 7.52 3.776 12.48 5.568 14.304 8.736 1.792 3.168 1.792 18.048-4.384 35.52z" fill="#FAFAFA"/></svg>
 																			</label>
@@ -928,7 +930,8 @@
 
 																			</div>
 																		</div>
-																		<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 text-right">
+																		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-right">
+																			<label ></label><br>
 																			<button type="submit" class="btn btn-md btn-primary btn-block" name="submeter6" id="submeter6" onclick="DesabilitaBotaoExcluir(this.name)" data-loading-text="Aguarde..." value="1" >
 																				<span class="glyphicon glyphicon-save"></span>Salvar
 																			</button>

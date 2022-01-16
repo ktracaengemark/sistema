@@ -1,9 +1,9 @@
 <?php 
 	if ($_SESSION['log']['idSis_Empresa'] != 5){
-		if(isset($_SESSION['bd'])){
-			echo "<script>window.open('https://api.whatsapp.com/send?phone=55".$_SESSION['bd']['CelularCliente']."&text=Ola ".$_SESSION['bd']['NomeCliente'].". Agendamento marcado com ".$_SESSION['bd']['Profissional'].", dia ".$_SESSION['bd']['DataInicio'].", as ".$_SESSION['bd']['HoraInicio'].".','_blank');</script>";
+		if(isset($_SESSION['bd_consulta'])){
+			echo "<script>window.open('https://api.whatsapp.com/send?phone=55".$_SESSION['bd_consulta']['CelularCliente']."&text=Ola ".$_SESSION['bd_consulta']['NomeCliente'].". Agendamento marcado com ".$_SESSION['bd_consulta']['Profissional'].", dia ".$_SESSION['bd_consulta']['DataInicio'].", as ".$_SESSION['bd_consulta']['HoraInicio'].".','1366002941508','width=700,height=350,left=375,right=375,top=300');</script>";
 		}
-		unset($_SESSION['bd']);		
+		unset($_SESSION['bd_consulta']);		
 	} 
 ?>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

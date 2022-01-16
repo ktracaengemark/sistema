@@ -1,6 +1,7 @@
 <div class="panel panel-<?php echo $panel; ?>">
 	<div class="panel-heading">
 		<div class="row">	
+			<!--
 			<div class="col-md-4">
 				<label for="DataFim">
 					<?php if($metodo == 2) {?>
@@ -27,26 +28,57 @@
 					<input type="text" class="form-control" disabled aria-label="Total a Receber" value="<?php echo $report->soma->diferenca ?>">
 				</div>
 			</div>
-			<div class="col-md-4">
-				<label for="DataFim">Total <?php echo $titulo1; ?></label>
+			-->
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+				<label></label><br>
 				<div class="input-group">
 					<span class="input-group-addon">Prds</span>
-					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->soma->somaentregar ?>">
+					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->num_rows() ?>">
 				</div>
-			</div>				
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+				<label></label><br>
+				<a href="<?php echo base_url() . 'gerar_excel/Orcamentos/Produtos_xls.php'; ?>">
+					<button type='button' class='btn btn-md btn-success btn-block'>
+						Gerar Excel
+					</button>
+				</a>
+			</div>
+			<div class="col-md-4 text-left">
+				<?php echo $pagination; ?>
+			</div>			
+			<?php if($paginacao == "S") { ?>
+				<div class="col-md-1">
+					<label>Filtros</label>
+					<a href="<?php echo base_url() . $caminho; ?>">
+						<button class="btn btn-warning btn-md btn-block" type="button">
+							<span class="glyphicon glyphicon-filter"></span>
+						</button>
+					</a>
+				</div>
+			<?php }else{ ?>
+				<div class="col-md-1">
+					<label>Filtros</label>
+					<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
+						<span class="glyphicon glyphicon-filter"></span>
+					</button>
+				</div>
+			<?php } ?>
 		</div>	
 	</div>
 </div>	
 <div class="container-fluid">
 	<div class="row">
-		<div>
+		<div style="overflow: auto; height: 550px; ">
+			<!--
 			<table class="table table-bordered table-condensed table-striped">	
 				<tfoot>
 					<tr>
-						<th colspan="3" class="active"><?php echo $report->num_rows(); ?> resultado(s)</th>
+						<th colspan="3" class="active"><?php #echo $report->num_rows(); ?> resultado(s)</th>
 					</tr>
 				</tfoot>
-			</table>            
+			</table>
+            -->
 			<table class="table table-bordered table-condensed table-striped">
 				<thead>
 					<tr>
@@ -56,6 +88,13 @@
 						<th class="active">Pedido</th>
 						<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 							<th class="col-md-2 active"><?php echo $nome; ?></th>
+							<?php if($_SESSION['Empresa']['CadastrarPet'] == "S") {?>
+								<th class="col-md-2 active">Pet</th>
+							<?php }else{ ?>
+								<?php if($_SESSION['Empresa']['CadastrarDep'] == "S") {?>
+									<th class="col-md-2 active">Dep</th>
+								<?php } ?>							
+							<?php } ?>
 							<th class="active">Comb.</th>
 							<th class="active">Apro.</th>
 							<th class="active">Entr.</th>
@@ -125,6 +164,13 @@
 							echo '<td>' . $row['idApp_OrcaTrata'] . '- ' . $row['TipoFinanceiro'] . ' - ' . $row['Descricao'] . '</td>';
 							if($_SESSION['log']['idSis_Empresa'] != "5"){
 								echo '<td>' . $row['Nome' . $nome] . '</td>';
+								if($_SESSION['Empresa']['CadastrarPet'] == "S"){
+									echo '<td>' . $row['NomeClientePet'] . '</td>';
+								}else{
+									if($_SESSION['Empresa']['CadastrarDep'] == "S"){
+										echo '<td>' . $row['NomeClienteDep'] . '</td>';
+									}
+								}
 								echo '<td>' . $row['CombinadoFrete'] . '</td>';
 								echo '<td>' . $row['AprovadoOrca'] . '</td>';
 								echo '<td>' . $row['ConcluidoOrca'] . '</td>';

@@ -458,11 +458,11 @@ class Consulta extends CI_Controller {
 					#### Whatsapp ####
 					$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
 					
-					$_SESSION['bd']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
-					$_SESSION['bd']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
-					$_SESSION['bd']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
-					$_SESSION['bd']['DataInicio'] 		= $dataini_whats;
-					$_SESSION['bd']['HoraInicio'] 		= $horaini_whats;
+					$_SESSION['bd_consulta']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
+					$_SESSION['bd_consulta']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
+					$_SESSION['bd_consulta']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
+					$_SESSION['bd_consulta']['DataInicio'] 		= $dataini_whats;
+					$_SESSION['bd_consulta']['HoraInicio'] 		= $horaini_whats;
 					
 					unset($data['Profissional'], $dataini_whats, $horaini_whats);
 				}
@@ -1070,11 +1070,11 @@ class Consulta extends CI_Controller {
 					$data['Cliente'] 		= $this->Cliente_model->get_cliente($data['query']['idApp_Cliente'], TRUE);
 					$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
 					
-					$_SESSION['bd']['NomeCliente'] 		= utf8_encode($data['Cliente']['NomeCliente']);
-					$_SESSION['bd']['CelularCliente'] 	= $data['Cliente']['CelularCliente'];
-					$_SESSION['bd']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
-					$_SESSION['bd']['DataInicio'] 		= $dataini_whats;
-					$_SESSION['bd']['HoraInicio'] 		= $horaini_whats;
+					$_SESSION['bd_consulta']['NomeCliente'] 		= utf8_encode($data['Cliente']['NomeCliente']);
+					$_SESSION['bd_consulta']['CelularCliente'] 	= $data['Cliente']['CelularCliente'];
+					$_SESSION['bd_consulta']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
+					$_SESSION['bd_consulta']['DataInicio'] 		= $dataini_whats;
+					$_SESSION['bd_consulta']['HoraInicio'] 		= $horaini_whats;
 					
 					unset($data['Cliente'], $data['Profissional'], $dataini_whats, $horaini_whats);
 				}
@@ -2331,11 +2331,11 @@ class Consulta extends CI_Controller {
 				#### Whatsapp ####
 				$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
 				
-				$_SESSION['bd']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
-				$_SESSION['bd']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
-				$_SESSION['bd']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
-				$_SESSION['bd']['DataInicio'] 		= $dataini_whats;
-				$_SESSION['bd']['HoraInicio'] 		= $horaini_whats;
+				$_SESSION['bd_consulta']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
+				$_SESSION['bd_consulta']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
+				$_SESSION['bd_consulta']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
+				$_SESSION['bd_consulta']['DataInicio'] 		= $dataini_whats;
+				$_SESSION['bd_consulta']['HoraInicio'] 		= $horaini_whats;
 				
 				unset($data['Profissional'], $dataini_whats, $horaini_whats);				
 			}
@@ -2519,7 +2519,8 @@ class Consulta extends CI_Controller {
 				//Não Gera O.S.
 				unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
 				//redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-				redirect(base_url() . 'orcatrata/alterarstatus/' . $data['query']['idApp_OrcaTrata'] . $data['msg']);
+				//redirect(base_url() . 'orcatrata/alterarstatus/' . $data['query']['idApp_OrcaTrata'] . $data['msg']);
+				redirect(base_url() . 'orcatrata/alterar/' . $data['query']['idApp_OrcaTrata'] . $data['msg']);
 			}
 				
 			exit();
