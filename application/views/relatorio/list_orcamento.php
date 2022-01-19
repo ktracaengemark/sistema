@@ -269,143 +269,128 @@
 					$linha =  $per_page*$pagina;
 					$count = 1;
 					foreach ($report->result_array() as $row) {
-						echo '<tr>';
-							echo '<td class="notclickable">
-									<a class="btn btn-md btn-' . $panel . ' notclickable" href="' . base_url() . $imprimir . $row['idApp_OrcaTrata'] . '">
-										<span class="glyphicon glyphicon-print notclickable"></span>
-									</a>
-									
-								</td>';
-							if($editar == 1){
-								if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") {
-									if($metodo == 3){
-										if($row['CanceladoOrca'] == "Não"){	
-											if($row['QuitadoOrca'] == "Sim" && $row['ConcluidoOrca'] == "Sim"){
-												echo '<td class="notclickable">
-														<a class="btn btn-md btn-danger notclickable">
-															<span class="glyphicon glyphicon-ok notclickable"></span>
-														</a>
-													</td>';
-											}else{
-												echo '<td class="notclickable">
-														<a class="btn btn-md btn-success notclickable" href="' . base_url() . $baixa . $row['idApp_OrcaTrata'] . '">
-															<span class="glyphicon glyphicon-ok notclickable"></span>
-														</a>
-													</td>';
-											}
-										}else{
-											echo '<td class="notclickable">
-														<a class="btn btn-md btn-danger notclickable">
-															<span class="glyphicon glyphicon-ok notclickable"></span>
-														</a>
-													</td>';
-										}
-									}
-								}	
-							}else if($editar == 2){
-								echo '<td class="notclickable">
-										<a class="btn btn-md btn-warning notclickable" href="' . base_url() . $edit . $row['idApp_OrcaTrata'] . '">
-											<span class="glyphicon glyphicon-edit notclickable"></span>
-										</a>
-									</td>';
-							}	
-							echo '<td>' . $row['idApp_OrcaTrata'] . ' - ' . $row['TipoFinanceiro'] . ' - ' . ($linha + $count) . '</td>';
-							
-							//echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
-							//echo '<td>' . $report->soma->contagem . '</td>';
-							if($_SESSION['log']['idSis_Empresa'] == 5){
-								echo '<td>' . $row['NomeEmpresa'] . '</td>';
-							}
-							
-							if(isset($_SESSION['FiltroAlteraParcela']['nomedo' . $nome]) && $_SESSION['FiltroAlteraParcela']['nomedo' . $nome] == "S") {
-								$nomedo_ = '*'.$row[$nome].'*';
-							}else{
-								$nomedo_ = FALSE;
-							}
-														
-							if(isset($_SESSION['FiltroAlteraParcela']['id' . $nome]) && $_SESSION['FiltroAlteraParcela']['id' . $nome] == "S") {
-								$id_ = '*'.$row['idApp_'.$nome].'*';
-							}else{
-								$id_ = FALSE;
-							}
-							
-							if(isset($_SESSION['FiltroAlteraParcela']['numerodopedido']) && $_SESSION['FiltroAlteraParcela']['numerodopedido'] == "S") {
-								$numerodopedido = '*'.$row['idApp_OrcaTrata'].'*';
-							}else{
-								$numerodopedido = FALSE;
-							}
-														
-							if(isset($_SESSION['FiltroAlteraParcela']['site']) && $_SESSION['FiltroAlteraParcela']['site'] == "S") {
-								$site = ' https://enkontraki.com.br/'.$row['Site'];
-							}else{
-								$site = FALSE;
-							}
-							
-							if($metodo != 1 && $metodo != 2) {
-								$whatsapp = '<a class="notclickable" href="https://api.whatsapp.com/send?phone=55'.$row['Celular' . $nome].'&text='.$_SESSION['FiltroAlteraParcela']['Texto1'].' '.$nomedo_.' '.$_SESSION['FiltroAlteraParcela']['Texto2'].' '.$id_.' '.$_SESSION['FiltroAlteraParcela']['Texto3'].' '.$numerodopedido.' '.$_SESSION['FiltroAlteraParcela']['Texto4'].' '.$site.'  " target="_blank">
-												<svg enable-background="new 0 0 512 512" width="20" height="20" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><path d="M256.064,0h-0.128l0,0C114.784,0,0,114.816,0,256c0,56,18.048,107.904,48.736,150.048l-31.904,95.104  l98.4-31.456C155.712,496.512,204,512,256.064,512C397.216,512,512,397.152,512,256S397.216,0,256.064,0z" fill="#4CAF50"/><path d="m405.02 361.5c-6.176 17.44-30.688 31.904-50.24 36.128-13.376 2.848-30.848 5.12-89.664-19.264-75.232-31.168-123.68-107.62-127.46-112.58-3.616-4.96-30.4-40.48-30.4-77.216s18.656-54.624 26.176-62.304c6.176-6.304 16.384-9.184 26.176-9.184 3.168 0 6.016 0.16 8.576 0.288 7.52 0.32 11.296 0.768 16.256 12.64 6.176 14.88 21.216 51.616 23.008 55.392 1.824 3.776 3.648 8.896 1.088 13.856-2.4 5.12-4.512 7.392-8.288 11.744s-7.36 7.68-11.136 12.352c-3.456 4.064-7.36 8.416-3.008 15.936 4.352 7.36 19.392 31.904 41.536 51.616 28.576 25.44 51.744 33.568 60.032 37.024 6.176 2.56 13.536 1.952 18.048-2.848 5.728-6.176 12.8-16.416 20-26.496 5.12-7.232 11.584-8.128 18.368-5.568 6.912 2.4 43.488 20.48 51.008 24.224 7.52 3.776 12.48 5.568 14.304 8.736 1.792 3.168 1.792 18.048-4.384 35.52z" fill="#FAFAFA"/></svg>
-											</a>';
-							}else{
-								$whatsapp = FALSE;
-							}
-							
-							echo '<td>' . $row['Nome' . $nome] . ' '.$whatsapp.'</td>';
-							//echo '<td>' . $row['TipoFinanceiro'] . '</td>';
-							if($_SESSION['log']['idSis_Empresa'] == 5) {
-								echo '<td>' . $row['ValorRestanteOrca'] . '</td>';
-								echo '<td>' . $row['ValorFrete'] . '</td>';
-								echo '<td>' . $row['ValorExtraOrca'] . '</td>';
-								echo '<td>' . $row['TotalOrca'] . '</td>';
-								echo '<td>' . $row['DescValorOrca'] . '</td>';
-								echo '<td>' . $row['CashBackOrca'] . '</td>';
-								echo '<td>' . $row['ValorFinalOrca'] . '</td>';
-							}else{
-								if($_SESSION['Usuario']['Rel_Pag'] == "S") {
-									echo '<td>' . $row['ValorRestanteOrca'] . '</td>';
-									echo '<td>' . $row['ValorFrete'] . '</td>';
-									echo '<td>' . $row['ValorExtraOrca'] . '</td>';
-									echo '<td>' . $row['TotalOrca'] . '</td>';
-									echo '<td>' . $row['DescValorOrca'] . '</td>';
-									echo '<td>' . $row['CashBackOrca'] . '</td>';
-									echo '<td>' . $row['ValorFinalOrca'] . '</td>';
-								}
-							}
-							echo '<td>' . $row[$nomeusuario] . '</td>';
-							echo '<td>' . $row['CombinadoFrete'] . '</td>';
-							echo '<td>' . $row['AprovadoOrca'] . '</td>';
-							echo '<td>' . $row['ConcluidoOrca'] . '</td>';
-							echo '<td>' . $row['QuitadoOrca'] . '</td>';
-							echo '<td>' . $row['FinalizadoOrca'] . '</td>';
-							echo '<td>' . $row['CanceladoOrca'] . '</td>';
-							echo '<td>' . $row['Tipo_Orca'] . '</td>';
-							echo '<td>' . $row['TipoFrete'] . '</td>';
-							echo '<td>' . $row['AVAP'] . '</td>';
-							echo '<td>' . $row['FormaPag'] . '</td>';
-							echo '<td>' . $row['DataOrca'] . '</td>';
-							echo '<td>' . $row['DataEntregaOrca'] . '</td>';
-							#echo '<td>' . $row['DataVencimentoOrca'] . '</td>';
-							#echo '<td>' . $row['DataVencimento'] . '</td>';
-							if($metodo == 1 || $metodo == 2){	
-								echo '<td>' . $row['ValorComissao'] . '</td>';
-								echo '<td>' . $row[$status] . '</td>';
-								echo '<td>' . $row['DataPagoComissaoOrca'] . '</td>';
-							}
-							//echo '<td>' . $row['QtdProduto'] . '</td>';	
-							//echo '<td>' . $row['Produtos'] . '</td>';
-							//echo '<td class="text-right">' . $row['ValorProduto'] . '</td>';
-							//echo '<td class="text-right">' . $row['SubTotal'] . '</td>';
-							//echo '<td class="text-right">' . $row['ComissaoProduto'] . '</td>';
-							//echo '<td class="text-right">' . $row['SubComissao'] . '</td>';
-							//echo '<td>' . $row['StatusComissao'] . '</td>';
+					
+						if(isset($_SESSION['FiltroAlteraParcela']['nomedo' . $nome]) && $_SESSION['FiltroAlteraParcela']['nomedo' . $nome] == "S") {
+							$nomedo_ = '*'.$row[$nome].'*';
+						}else{
+							$nomedo_ = FALSE;
+						}
+													
+						if(isset($_SESSION['FiltroAlteraParcela']['id' . $nome]) && $_SESSION['FiltroAlteraParcela']['id' . $nome] == "S") {
+							$id_ = '*'.$row['idApp_'.$nome].'*';
+						}else{
+							$id_ = FALSE;
+						}
+						
+						if(isset($_SESSION['FiltroAlteraParcela']['numerodopedido']) && $_SESSION['FiltroAlteraParcela']['numerodopedido'] == "S") {
+							$numerodopedido = '*'.$row['idApp_OrcaTrata'].'*';
+						}else{
+							$numerodopedido = FALSE;
+						}
+													
+						if(isset($_SESSION['FiltroAlteraParcela']['site']) && $_SESSION['FiltroAlteraParcela']['site'] == "S") {
+							$site = "https://enkontraki.com.br/".$row['Site'];
+						}else{
+							$site = FALSE;
+						}
 
-							/*
-							echo '<td class="notclickable">
-									<a class="btn btn-md btn-info notclickable" href="' . base_url() . 'orcatrata/excluir2/' . $row['idApp_OrcaTrata'] . '">
-										<span class="glyphicon glyphicon-trash notclickable"></span>
+						if($metodo != 1 && $metodo != 2) {
+							$whatsapp = TRUE;				
+						}else{
+							$whatsapp = FALSE;
+						}
+					?>
+						<tr>
+							<td class="notclickable">
+								<a class="btn btn-md btn-<?php echo $panel;?> notclickable" href="<?php echo base_url() . $imprimir . $row['idApp_OrcaTrata']; ?>">
+									<span class="glyphicon glyphicon-print notclickable"></span>
+								</a>
+							</td>
+							<?php if($editar == 1){ ?>
+								<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+									<?php if($metodo == 3){ ?>
+										<?php if($row['CanceladoOrca'] == "NÃ£o"){ ?>	
+											<?php if($row['QuitadoOrca'] == "Sim" && $row['ConcluidoOrca'] == "Sim"){ ?>
+												<td class="notclickable">
+													<a class="btn btn-md btn-danger notclickable">
+														<span class="glyphicon glyphicon-ok notclickable"></span>
+													</a>
+												</td>
+											<?php }else{ ?>
+												<td class="notclickable">
+													<a class="btn btn-md btn-success notclickable" href="<?php echo base_url() . $baixa . $row['idApp_OrcaTrata'];?>">
+														<span class="glyphicon glyphicon-ok notclickable"></span>
+													</a>
+												</td>
+											<?php } ?>
+										<?php }else{ ?>
+											<td class="notclickable">
+												<a class="btn btn-md btn-danger notclickable">
+													<span class="glyphicon glyphicon-ok notclickable"></span>
+												</a>
+											</td>
+										<?php } ?>
+									<?php } ?>
+								<?php } ?>
+							<?php }else if($editar == 2){ ?>
+								<td class="notclickable">
+									<a class="btn btn-md btn-warning notclickable" href="<?php echo base_url() . $edit . $row['idApp_OrcaTrata'];?>">
+										<span class="glyphicon glyphicon-edit notclickable"></span>
 									</a>
-								</td>';	
-							*/	
-						echo '</tr>';
+								</td>
+							<?php } ?>
+							<td><?php echo $row['idApp_OrcaTrata'];?> - <?php echo $row['TipoFinanceiro'];?> - <?php echo ($linha + $count);?></td>
+							<?php if($_SESSION['log']['idSis_Empresa'] == 5){ ?>
+								<td><?php echo $row['NomeEmpresa'];?></td>
+							<?php } ?>
+							<td class="notclickable">
+								<?php echo $row['Nome'.$nome]; ?>
+								<?php if($whatsapp){ ?>
+									<a href="javascript:window.open('https://api.whatsapp.com/send?phone=55<?php echo $row["Celular".$nome];?>&text=<?php echo $_SESSION['FiltroAlteraParcela']['Texto1'];?> <?php echo $nomedo_;?> <?php echo $_SESSION['FiltroAlteraParcela']['Texto2'];?> <?php echo $id_;?> <?php echo $_SESSION['FiltroAlteraParcela']['Texto3'];?> <?php echo $numerodopedido;?> <?php echo $_SESSION['FiltroAlteraParcela']['Texto4'];?> <?php echo $site;?>','1366002941508','width=700,height=250,top=300')">
+										<svg enable-background="new 0 0 512 512" width="20" height="20" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><path d="M256.064,0h-0.128l0,0C114.784,0,0,114.816,0,256c0,56,18.048,107.904,48.736,150.048l-31.904,95.104  l98.4-31.456C155.712,496.512,204,512,256.064,512C397.216,512,512,397.152,512,256S397.216,0,256.064,0z" fill="#4CAF50"/><path d="m405.02 361.5c-6.176 17.44-30.688 31.904-50.24 36.128-13.376 2.848-30.848 5.12-89.664-19.264-75.232-31.168-123.68-107.62-127.46-112.58-3.616-4.96-30.4-40.48-30.4-77.216s18.656-54.624 26.176-62.304c6.176-6.304 16.384-9.184 26.176-9.184 3.168 0 6.016 0.16 8.576 0.288 7.52 0.32 11.296 0.768 16.256 12.64 6.176 14.88 21.216 51.616 23.008 55.392 1.824 3.776 3.648 8.896 1.088 13.856-2.4 5.12-4.512 7.392-8.288 11.744s-7.36 7.68-11.136 12.352c-3.456 4.064-7.36 8.416-3.008 15.936 4.352 7.36 19.392 31.904 41.536 51.616 28.576 25.44 51.744 33.568 60.032 37.024 6.176 2.56 13.536 1.952 18.048-2.848 5.728-6.176 12.8-16.416 20-26.496 5.12-7.232 11.584-8.128 18.368-5.568 6.912 2.4 43.488 20.48 51.008 24.224 7.52 3.776 12.48 5.568 14.304 8.736 1.792 3.168 1.792 18.048-4.384 35.52z" fill="#FAFAFA"/></svg>
+									</a>
+								<?php } ?>
+							</td>
+							<?php if($_SESSION['log']['idSis_Empresa'] == 5) { ?>
+								<td><?php echo $row['ValorRestanteOrca'] ?></td>
+								<td><?php echo $row['ValorFrete'] ?></td>
+								<td><?php echo $row['ValorExtraOrca'] ?></td>
+								<td><?php echo $row['TotalOrca'] ?></td>
+								<td><?php echo $row['DescValorOrca'] ?></td>
+								<td><?php echo $row['CashBackOrca'] ?></td>
+								<td><?php echo $row['ValorFinalOrca'] ?></td>
+							<?php }else{ ?>
+								<?php if($_SESSION['Usuario']['Rel_Pag'] == 'S') { ?>
+									<td><?php echo $row['ValorRestanteOrca'] ?></td>
+									<td><?php echo $row['ValorFrete'] ?></td>
+									<td><?php echo $row['ValorExtraOrca'] ?></td>
+									<td><?php echo $row['TotalOrca'] ?></td>
+									<td><?php echo $row['DescValorOrca'] ?></td>
+									<td><?php echo $row['CashBackOrca'] ?></td>
+									<td><?php echo $row['ValorFinalOrca'] ?></td>
+								<?php } ?>
+							<?php }	 ?>	
+							
+							<?php echo '<td>' . $row[$nomeusuario] . '</td>';?>	
+							<?php echo '<td>' . $row['CombinadoFrete'] . '</td>';?>	
+							<?php echo '<td>' . $row['AprovadoOrca'] . '</td>';?>	
+							<?php echo '<td>' . $row['ConcluidoOrca'] . '</td>';?>	
+							<?php echo '<td>' . $row['QuitadoOrca'] . '</td>';?>	
+							<?php echo '<td>' . $row['FinalizadoOrca'] . '</td>';?>	
+							<?php echo '<td>' . $row['CanceladoOrca'] . '</td>';?>	
+							<?php echo '<td>' . $row['Tipo_Orca'] . '</td>';?>	
+							<?php echo '<td>' . $row['TipoFrete'] . '</td>';?>	
+							<?php echo '<td>' . $row['AVAP'] . '</td>';?>	
+							<?php echo '<td>' . $row['FormaPag'] . '</td>';?>	
+							<?php echo '<td>' . $row['DataOrca'] . '</td>';?>	
+							<?php echo '<td>' . $row['DataEntregaOrca'] . '</td>';?>	
+							<?php if($metodo == 1 || $metodo == 2){ ?>	
+								<?php echo '<td>' . $row['ValorComissao'] . '</td>';?>
+								<?php echo '<td>' . $row[$status] . '</td>';?>
+								<?php echo '<td>' . $row['DataPagoComissaoOrca'] . '</td>';?>
+							<?php } ?>							
+						</tr>
+					<?php	
 						$count++;
 					}
 					?>

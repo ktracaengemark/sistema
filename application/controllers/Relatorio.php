@@ -587,6 +587,7 @@ class Relatorio extends CI_Controller {
 		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 			'id_Cliente_Auto',
 			'NomeClienteAuto',
+			'Whatsapp',
         ), TRUE));	
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
@@ -685,13 +686,9 @@ class Relatorio extends CI_Controller {
 			if($_SESSION['DataInicio']){
 			$data['query']['DataInicio'] = $_SESSION['DataInicio'];
 		} 
-		
-		echo "<br>";
-		echo "<pre>";
-		print_r($_SESSION['DataInicio']);
-		echo "</pre>";
-		exit();		
 		*/
+	
+		
 
 		$data['collapse'] = '';	
 
@@ -833,21 +830,28 @@ class Relatorio extends CI_Controller {
         $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
         $data['select']['site'] = $this->Basico_model->select_status_sn();
 		
- 		(!$data['query']['nomedoCliente']) ? $data['query']['nomedoCliente'] = 'S' : FALSE;
+ 		(!$data['query']['nomedoCliente']) ? $data['query']['nomedoCliente'] = 'N' : FALSE;
 		$data['radio'] = array(
             'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
         );
         ($data['query']['nomedoCliente'] == 'S') ?
             $data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
 
- 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'S' : FALSE;
+ 		(!$data['query']['idCliente']) ? $data['query']['idCliente'] = 'N' : FALSE;
+		$data['radio'] = array(
+            'idCliente' => $this->basico->radio_checked($data['query']['idCliente'], 'idCliente', 'NS'),
+        );
+        ($data['query']['idCliente'] == 'S') ?
+            $data['div']['idCliente'] = '' : $data['div']['idCliente'] = 'style="display: none;"';
+			
+ 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'N' : FALSE;
 		$data['radio'] = array(
             'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
         );
         ($data['query']['numerodopedido'] == 'S') ?
             $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
 
- 		(!$data['query']['site']) ? $data['query']['site'] = 'S' : FALSE;
+ 		(!$data['query']['site']) ? $data['query']['site'] = 'N' : FALSE;
 		$data['radio'] = array(
             'site' => $this->basico->radio_checked($data['query']['site'], 'site', 'NS'),
         );
@@ -969,7 +973,7 @@ class Relatorio extends CI_Controller {
 				
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
-
+		
 			#$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
             $data['bd']['Orcamento'] = $data['query']['Orcamento'];
             $data['bd']['Cliente'] = $data['query']['Cliente'];
@@ -1167,7 +1171,9 @@ class Relatorio extends CI_Controller {
 			'Texto3',
 			'Texto4',
 			'nomedoFornecedor',
+			'idFornecedor',
 			'numerodopedido',
+			'site',
         ), TRUE));
 
 /*		   
@@ -1318,21 +1324,37 @@ class Relatorio extends CI_Controller {
 		$data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresa();
 		
         $data['select']['nomedoFornecedor'] = $this->Basico_model->select_status_sn();
+        $data['select']['idFornecedor'] = $this->Basico_model->select_status_sn();
         $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
+        $data['select']['site'] = $this->Basico_model->select_status_sn();
 		
- 		(!$data['query']['nomedoFornecedor']) ? $data['query']['nomedoFornecedor'] = 'S' : FALSE;
+ 		(!$data['query']['nomedoFornecedor']) ? $data['query']['nomedoFornecedor'] = 'N' : FALSE;
 		$data['radio'] = array(
             'nomedoFornecedor' => $this->basico->radio_checked($data['query']['nomedoFornecedor'], 'nomedoFornecedor', 'NS'),
         );
         ($data['query']['nomedoFornecedor'] == 'S') ?
             $data['div']['nomedoFornecedor'] = '' : $data['div']['nomedoFornecedor'] = 'style="display: none;"';		
 
- 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'S' : FALSE;
+ 		(!$data['query']['idFornecedor']) ? $data['query']['idFornecedor'] = 'N' : FALSE;
+		$data['radio'] = array(
+            'idFornecedor' => $this->basico->radio_checked($data['query']['idFornecedor'], 'idFornecedor', 'NS'),
+        );
+        ($data['query']['idFornecedor'] == 'S') ?
+            $data['div']['idFornecedor'] = '' : $data['div']['idFornecedor'] = 'style="display: none;"';
+			
+ 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'N' : FALSE;
 		$data['radio'] = array(
             'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
         );
         ($data['query']['numerodopedido'] == 'S') ?
             $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
+					
+ 		(!$data['query']['site']) ? $data['query']['site'] = 'N' : FALSE;
+		$data['radio'] = array(
+            'site' => $this->basico->radio_checked($data['query']['site'], 'site', 'NS'),
+        );
+        ($data['query']['site'] == 'S') ?
+            $data['div']['site'] = '' : $data['div']['site'] = 'style="display: none;"';		
 		
 		$data['query']['nome'] = 'Fornecedor';
         $data['titulo'] = 'Despesas';
@@ -1424,7 +1446,9 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['Texto3'] = utf8_encode($data['query']['Texto3']);
         $_SESSION['FiltroAlteraParcela']['Texto4'] = utf8_encode($data['query']['Texto4']);
         $_SESSION['FiltroAlteraParcela']['nomedoFornecedor'] = $data['query']['nomedoFornecedor'];
+        $_SESSION['FiltroAlteraParcela']['idFornecedor'] = $data['query']['idFornecedor'];
         $_SESSION['FiltroAlteraParcela']['numerodopedido'] = $data['query']['numerodopedido'];
+        $_SESSION['FiltroAlteraParcela']['site'] = $data['query']['site'];
 		
 		$_SESSION['Imprimir']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];		
 		
@@ -3696,14 +3720,14 @@ class Relatorio extends CI_Controller {
         $data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
         $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
 		
- 		(!$data['query']['nomedoCliente']) ? $data['query']['nomedoCliente'] = 'S' : FALSE;
+ 		(!$data['query']['nomedoCliente']) ? $data['query']['nomedoCliente'] = 'N' : FALSE;
 		$data['radio'] = array(
             'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
         );
         ($data['query']['nomedoCliente'] == 'S') ?
             $data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
 
- 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'S' : FALSE;
+ 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'N' : FALSE;
 		$data['radio'] = array(
             'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
         );

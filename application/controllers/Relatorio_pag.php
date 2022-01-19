@@ -463,6 +463,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 			'id_Cliente_Auto',
 			'NomeClienteAuto',
+			'Whatsapp',
         ), TRUE));	
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
@@ -566,8 +567,9 @@ class Relatorio_pag extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 		
         #run form validation
-        if ($this->form_validation->run() !== TRUE) {
-			
+        
+		if ($this->form_validation->run() !== TRUE) {
+
 			//$this->load->library('pagination');
 			$data['pesquisa_query'] = $this->Relatorio_model->list_orcamento(FALSE,TRUE, TRUE);
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
@@ -704,7 +706,9 @@ class Relatorio_pag extends CI_Controller {
 			'Texto3',
 			'Texto4',
 			'nomedoFornecedor',
+			'idFornecedor',
 			'numerodopedido',
+			'site',
         ), TRUE));
 
         $data['titulo'] = 'Despesas';

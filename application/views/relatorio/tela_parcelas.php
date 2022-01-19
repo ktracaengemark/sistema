@@ -551,7 +551,7 @@
 									<div class="btn-larg-right btn-group" data-toggle="buttons">
 										<?php
 										foreach ($select['nomedo' . $nome] as $key => $row) {
-											if (!$query['nomedo' . $nome]) $query['nomedo' . $nome] = 'S';
+											if (!$query['nomedo' . $nome]) $query['nomedo' . $nome] = 'N';
 											($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
 											if ($query['nomedo' . $nome] == $key) {
 												echo ''
@@ -592,7 +592,7 @@
 									<div class="btn-larg-right btn-group" data-toggle="buttons">
 										<?php
 										foreach ($select['numerodopedido'] as $key => $row) {
-											if (!$query['numerodopedido']) $query['numerodopedido'] = 'S';
+											if (!$query['numerodopedido']) $query['numerodopedido'] = 'N';
 											($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
 											if ($query['numerodopedido'] == $key) {
 												echo ''

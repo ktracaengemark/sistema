@@ -658,6 +658,11 @@
 							
 
 							<label class="text-left">Texto Whatsapp:</label>
+								<!--
+								<input type="text" class="form-control" id="Whatsapp2" name="Whatsapp2" value="<?php #echo $cadastrar['Whatsapp']; ?>" >
+								<span class="modal-title" id="Whatsapp1"><?php #echo $cadastrar['Whatsapp']; ?></span>
+								<input type="hidden" id="Whatsapp" name="Whatsapp" value="<?php #echo $cadastrar['Whatsapp']; ?>">
+								-->
 							<div class="row text-left">
 								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-left" >
 									<div class="input-group">
@@ -670,7 +675,7 @@
 									<div class="btn-larg-right btn-group" data-toggle="buttons">
 										<?php
 										foreach ($select['nomedo' . $nome] as $key => $row) {
-											if (!$query['nomedo' . $nome]) $query['nomedo' . $nome] = 'S';
+											if (!$query['nomedo' . $nome]) $query['nomedo' . $nome] = 'N';
 											($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
 											if ($query['nomedo' . $nome] == $key) {
 												echo ''
@@ -702,7 +707,7 @@
 									<div class="btn-larg-right btn-group" data-toggle="buttons">
 										<?php
 										foreach ($select['id' . $nome] as $key => $row) {
-											if (!$query['id' . $nome]) $query['id' . $nome] = 'S';
+											if (!$query['id' . $nome]) $query['id' . $nome] = 'N';
 											($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
 											if ($query['id' . $nome] == $key) {
 												echo ''
@@ -734,7 +739,7 @@
 									<div class="btn-larg-right btn-group" data-toggle="buttons">
 										<?php
 										foreach ($select['numerodopedido'] as $key => $row) {
-											if (!$query['numerodopedido']) $query['numerodopedido'] = 'S';
+											if (!$query['numerodopedido']) $query['numerodopedido'] = 'N';
 											($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
 											if ($query['numerodopedido'] == $key) {
 												echo ''
@@ -766,7 +771,7 @@
 									<div class="btn-larg-right btn-group" data-toggle="buttons">
 										<?php
 										foreach ($select['site'] as $key => $row) {
-											if (!$query['site']) $query['site'] = 'S';
+											if (!$query['site']) $query['site'] = 'N';
 											($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
 											if ($query['site'] == $key) {
 												echo ''
@@ -837,7 +842,7 @@
 							</div>
 							<div class="form-footer col-md-3">
 								<label></label><br>
-								<button class="btn btn-warning btn-block" name="pesquisar" value="0" type="submit">
+								<button class="btn btn-warning btn-block" name="pesquisar" value="0" type="submit" >
 									<span class="glyphicon glyphicon-filter"></span> Filtrar
 								</button>
 							</div>
