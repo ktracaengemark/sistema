@@ -183,15 +183,15 @@
 							</button>
 						</a>
 					</div>
-					<div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 text-left">
-						<label>Excel</label><br>
-						<a href="<?php echo base_url() . 'gerar_excel/Orcamentos/Orcamentos_xls.php'; ?>">
-							<button type='button' class='btn btn-md btn-success btn-block'>
-								Excel
-							</button>
-						</a>
-					</div>
 				<?php } ?>
+				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 text-left">
+					<label>Excel</label><br>
+					<a href="<?php echo base_url() . 'gerar_excel/Orcamentos/Orcamentos_xls.php'; ?>">
+						<button type='button' class='btn btn-md btn-success btn-block'>
+							Excel
+						</button>
+					</a>
+				</div>
 			<?php } ?>
 		</div>
 	</div>

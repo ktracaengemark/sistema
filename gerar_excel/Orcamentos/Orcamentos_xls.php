@@ -179,10 +179,8 @@
 									OT.ValorEntradaOrca,
 									OT.ValorRestanteOrca,
 									OT.ValorTotalOrca,
-									
 									OT.DescValorOrca,
 									OT.ValorFinalOrca,
-									
 									OT.ValorFrete,
 									OT.ValorExtraOrca,
 									(OT.ValorExtraOrca + OT.ValorRestanteOrca) AS OrcamentoOrca,
@@ -204,6 +202,9 @@
 									OT.StatusComissaoOrca,
 									OT.StatusComissaoOrca_Online,
 									OT.DataPagoComissaoOrca,
+									OT.NomeRec,
+									OT.TelefoneRec,
+									OT.ParentescoRec,
 									PR.DataVencimento,
 									PR.Quitado,
 									EMP.NomeEmpresa,
@@ -296,7 +297,27 @@
 		*/
 		// Definimos o nome do arquivo que será exportado
 
-		$arquivo = 'Orcamentos' . date('d-m-Y') . '.xls';
+		if(isset($_SESSION['FiltroAlteraParcela']['idTab_TipoRD']) ){
+			if($_SESSION['FiltroAlteraParcela']['idTab_TipoRD'] == 1){
+				$nome = 'Fornecedor';
+				$tipo = 'Despesas';
+			}else{
+				$nome = 'Cliente';
+				$tipo = 'Receitas';
+			}
+		}else{
+			$nome = 'Cliente';
+				$tipo = 'Receitas';
+		}
+		/*
+		echo "<pre>";
+		print_r($_SESSION['FiltroAlteraParcela']['idTab_TipoRD']);
+		echo "<br>";
+		print_r($nome);
+		echo "</pre>";
+		exit();	
+		*/
+		$arquivo = $tipo .'_'. date('d-m-Y') . '.xls';
 
 		// Título da Tabela
 		$html = '';
@@ -309,8 +330,11 @@
 		// Campos da Tabela
 		$html .= '<tr>';
 		$html .= '<td><b>id_O.S.</b></td>';
-		$html .= '<td><b>id_Cliente</b></td>';
-		$html .= '<td><b>Cliente</b></td>';
+		$html .= '<td><b>id_'.$nome.'</b></td>';
+		$html .= '<td><b>'.$nome.'</b></td>';
+		$html .= '<td><b>Recebedor</b></td>';
+		$html .= '<td><b>TelRec</b></td>';
+		$html .= '<td><b>Relacao</b></td>';
 		
 		$html .= '<td><b>Prd/Srv</b></td>';
 		$html .= '<td><b>Frete</b></td>';
@@ -387,8 +411,11 @@
 			
 			$html .= '<tr>';
 			$html .= '<td>'.$row_msg_contatos["idApp_OrcaTrata"].'</td>';
-			$html .= '<td>'.$row_msg_contatos["idApp_Cliente"].'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["Cliente"]).'</td>';
+			$html .= '<td>'.$row_msg_contatos["idApp_".$nome].'</td>';
+			$html .= '<td>'.utf8_encode($row_msg_contatos[$nome]).'</td>';
+			$html .= '<td>'.utf8_encode($row_msg_contatos["NomeRec"]).'</td>';
+			$html .= '<td>'.$row_msg_contatos["TelefoneRec"].'</td>';
+			$html .= '<td>'.utf8_encode($row_msg_contatos["ParentescoRec"]).'</td>';
 			
 			$html .= '<td>'.$row_msg_contatos["ValorRestanteOrca"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["ValorFrete"].'</td>';
