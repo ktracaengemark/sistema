@@ -792,7 +792,7 @@ class Relatorio extends CI_Controller {
 		
         $data['select']['Ultimo'] = array(
 			'0' => '::Nenhum::',			
-			'1' => 'Último Pedido',
+			#'1' => 'Último Pedido',
         );		
 
         $data['select']['Campo'] = array(
@@ -1291,7 +1291,7 @@ class Relatorio extends CI_Controller {
 		
         $data['select']['Ultimo'] = array(
 			'0' => '::Nenhum::',			
-			'1' => 'Último Pedido',
+			#'1' => 'Último Pedido',
         );
 		
         $data['select']['Campo'] = array(
@@ -1799,7 +1799,7 @@ class Relatorio extends CI_Controller {
 		
         $data['select']['Ultimo'] = array(
 			'0' => '::Nenhum::',			
-			'1' => 'Último Pedido',
+			#'1' => 'Último Pedido',
         );			
 
         $data['select']['Campo'] = array(
@@ -2289,7 +2289,7 @@ class Relatorio extends CI_Controller {
 		
         $data['select']['Ultimo'] = array(
 			'0' => '::Nenhum::',			
-			'1' => 'Último Pedido',
+			#'1' => 'Último Pedido',
         );			
 
         $data['select']['Campo'] = array(
@@ -2767,8 +2767,8 @@ class Relatorio extends CI_Controller {
 		
         $data['select']['Ultimo'] = array(
 			'0' => '::Nenhum::',			
-			'1' => 'Último Pedido',			
-			'2' => 'Última Parcela',
+			#'1' => 'Último Pedido',			
+			#'2' => 'Última Parcela',
         );	
 
         $data['select']['Campo'] = array(
@@ -3229,8 +3229,8 @@ class Relatorio extends CI_Controller {
 		
         $data['select']['Ultimo'] = array(
 			'0' => '::Nenhum::',			
-			'1' => 'Último Pedido',			
-			'2' => 'Última Parcela',
+			#'1' => 'Último Pedido',			
+			#'2' => 'Última Parcela',
         );	
 
         $data['select']['Campo'] = array(
@@ -3661,8 +3661,8 @@ class Relatorio extends CI_Controller {
 		
         $data['select']['Ultimo'] = array(
 			'0' => '::Nenhum::',			
-			'1' => 'Último Pedido',			
-			'2' => 'Última Parcela',
+			#'1' => 'Último Pedido',			
+			#'2' => 'Última Parcela',
         );
 
 		if($_SESSION['log']['idSis_Empresa'] != 5){
@@ -4097,8 +4097,8 @@ class Relatorio extends CI_Controller {
 		
         $data['select']['Ultimo'] = array(
 			'0' => '::Nenhum::',			
-			'1' => 'Último Pedido',			
-			'2' => 'Última Parcela',
+			#'1' => 'Último Pedido',			
+			#'2' => 'Última Parcela',
         );
 		
 		if($_SESSION['log']['idSis_Empresa'] != 5){
@@ -4535,8 +4535,8 @@ class Relatorio extends CI_Controller {
 		
         $data['select']['Ultimo'] = array(
 			'0' => '::Nenhum::',			
-			'1' => 'Último Pedido',			
-			'2' => 'Última Parcela',
+			#'1' => 'Último Pedido',			
+			#'2' => 'Última Parcela',
         );
 
 		$data['select']['Campo'] = array(
@@ -4902,8 +4902,8 @@ class Relatorio extends CI_Controller {
 		
         $data['select']['Ultimo'] = array(
 			'0' => '::Nenhum::',			
-			'1' => 'Último Pedido',			
-			'2' => 'Última Parcela',
+			#'1' => 'Último Pedido',			
+			#'2' => 'Última Parcela',
         );	
 
 		$data['select']['Campo'] = array(
@@ -6556,7 +6556,7 @@ class Relatorio extends CI_Controller {
 		
         $data['select']['Ultimo'] = array(
 			'0' => '::Nenhum::',			
-			'1' => 'Último Pedido',
+			#'1' => 'Último Pedido',
         );		
 
 		$data['titulo'] = 'Ranking de Vendas';
