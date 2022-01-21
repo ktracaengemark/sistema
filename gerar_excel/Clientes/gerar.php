@@ -1,9 +1,17 @@
-<?php 
- 
-// Load the database configuration file  
+<?php
+	
 include_once '../../conexao.php';
  
-// Fetch records from database 
+//CSV
+//fonte: https://www.php.net/manual/pt_BR/function.fputcsv.php
+//criando o conjunto de valores a ser gravado
+/*
+$lista = array (
+    array('Nome', 'Telefone', 'Endereço'),
+    array('Pessoa1', '456', 'Rua XXX'),
+    array('Pessoa2', '789', 'Rua yyy')
+);
+*/
 
 	$date_inicio_orca = ($_SESSION['FiltroAlteraParcela']['DataInicio']) ? 'C.DataCadastroCliente >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio'] . '" AND ' : FALSE;
 	$date_fim_orca = ($_SESSION['FiltroAlteraParcela']['DataFim']) ? 'C.DataCadastroCliente <= "' . $_SESSION['FiltroAlteraParcela']['DataFim'] . '" AND ' : FALSE;		
@@ -19,9 +27,8 @@ include_once '../../conexao.php';
 	$filtro10 = ($_SESSION['FiltroAlteraParcela']['Ativo'] != '#') ? 'C.Ativo = "' . $_SESSION['FiltroAlteraParcela']['Ativo'] . '" AND ' : FALSE;
 	$filtro20 = ($_SESSION['FiltroAlteraParcela']['Motivo'] != '0') ? 'C.Motivo = "' . $_SESSION['FiltroAlteraParcela']['Motivo'] . '" AND ' : FALSE;
 	$groupby = ($_SESSION['FiltroAlteraParcela']['Agrupar'] != "0") ? 'GROUP BY C.' . $_SESSION['FiltroAlteraParcela']['Agrupar'] . '' : FALSE;
-		
-		
-	$result_query = '
+	
+	$result_lista = '
 					SELECT 
 						C.*,
 						DATE_FORMAT(C.DataNascimento, "%d/%m/%Y") AS Aniversario,
@@ -44,72 +51,59 @@ include_once '../../conexao.php';
 					ORDER BY
 						' . $data['Campo'] . '
 						' . $data['Ordenamento'] . '
-					';
-		
+					';		
+//$result_lista = "SELECT * FROM App_Cliente WHERE idSis_Empresa = " . $_SESSION['log']['idSis_Empresa'] . "";
 
-	/*
-	$result_query = "SELECT * FROM App_Cliente WHERE idSis_Empresa = " . $_SESSION['log']['idSis_Empresa'] . "";
-	*/
-	$query = mysqli_query($conn , $result_query);
-	/*	
-	echo "<pre>";
-	print_r($query);
-	echo "</pre>";
-	exit();
-	*/	
-if($query->num_rows > 0){ 
-    $delimiter = ","; 
-    $filename = "Clientes_" . date('d-m-Y') . ".csv"; 
-     
-    // Create a file pointer 
-    $f = fopen('php://memory', 'w'); 
-     
-    // Set column headers 
-    $fields = array('Group Membership',
-					'Name',
-					'Notes',
-					'Birthday',
-					'Phone 1 - Value',
-					'Phone 2 - Value',
-					'Organization 1 - Name'
-					); 
-    fputcsv($f, $fields, $delimiter); 
+$lista = mysqli_query($conn , $result_lista);
+
+$delimiter = ","; 
+$filename = "Clientes_" . date('d-m-Y') . ".csv";
+//definindo o nome do arquivo e abrindo o mesmo para escrita (write)
+$fp = fopen("contatos.csv", 'w');
+//percorrendo o conjunto de valores e gravando no arquivo
+
+$fields = array('Group Membership',
+				'Name',
+				'Notes',
+				'Birthday',
+				'Event 1 - Value',
+				'Phone 1 - Value',
+				'Phone 2 - Value',
+				'Organization 1 - Name'
+				); 
+fputcsv($fp, $fields, $delimiter); 
 	 
-    // Output each row of the data, format line as csv and write to file pointer 
-    while($row = $query->fetch_assoc()){ 
-        //$status = ($row['status'] == 1)?'Active':'Inactive'; 
-		/*
+
+foreach ($lista as $linha) {
+
+		
 		echo "<pre>";
-		print_r($row["NomeEmpresa"].' - '.$row["NomeCliente"].' - '.$row["Aniversario"].' - '.$row["CelularCliente"].' - '.$row["Telefone"]);
+		print_r($linha["NomeEmpresa"].' - '.$linha["NomeCliente"].' - '.$linha["Aniversario"].' - '.$linha["CelularCliente"].' - '.$linha["Telefone"]);
 		echo "</pre>";
-		*/
-		
-		//$row["NomeCliente"] = utf8_encode($row["NomeCliente"]);
-		//$row["NomeEmpresa"] = utf8_encode($row["NomeEmpresa"]);
-		
         $lineData = array(	'* myContacts',
-							$row["NomeCliente"],
-							$row["idApp_Cliente"],
-							$row["Aniversario"],
-							$row["CelularCliente"],
-							$row["Telefone"],
-							$row["NomeEmpresa"]
+							$linha["NomeCliente"],
+							$linha["idApp_Cliente"],
+							$linha["Aniversario"],
+							$linha["Cadastro"],
+							$linha["CelularCliente"],
+							$linha["Telefone"],
+							$linha["NomeEmpresa"]
 						); 
-        fputcsv($f, $lineData, $delimiter); 
-    } 
-	//exit();
-    // Move back to beginning of file 
-    fseek($f, 0); 
+        fputcsv($fp, $lineData, $delimiter); 		
+	
+    //fputcsv($fp, $linha,";");
+}
+    /*
+	fseek($fp, 0); 
      
     // Set headers to download file rather than displayed 
     header('Content-Type: text/csv'); 
     header('Content-Disposition: attachment; filename="' . $filename . '";'); 
      
     //output all remaining data on a file pointer 
-    fpassthru($f);
-	fclose($f);
-} 
+    fpassthru($fp);
+	*/
+//fechando o arquivo
+fclose($fp);
 mysqli_close($conn);
-exit; 
- 
 ?>

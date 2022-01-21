@@ -7048,6 +7048,7 @@ class Relatorio extends CI_Controller {
 			'C.NomeCliente' => 'Nome do Cliente',
 			'C.Ativo' => 'Ativo',
             'C.DataNascimento' => 'Data de Nascimento',
+            'C.DataCadastroCliente' => 'Data do Cadastro',
             'C.Sexo' => 'Sexo',
             'C.BairroCliente' => 'Bairro',
             'C.MunicipioCliente' => 'Município',

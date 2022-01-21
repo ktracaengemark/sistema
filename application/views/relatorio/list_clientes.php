@@ -18,6 +18,14 @@
 				</button>
 			</a>
 		</div>
+		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+			<label></label><br>
+			<a href="<?php echo base_url() . 'gerar_excel/Clientes/Clientes_csv.php'; ?>">
+				<button type='button' class='btn btn-md btn-success btn-block'>
+					Gmail
+				</button>
+			</a>
+		</div>
 		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
 			<label></label><br>
 			<div class="input-group">
