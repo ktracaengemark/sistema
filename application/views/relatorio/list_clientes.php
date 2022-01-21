@@ -22,7 +22,7 @@
 			<label></label><br>
 			<a href="<?php echo base_url() . 'gerar_excel/Clientes/Clientes_csv.php'; ?>">
 				<button type='button' class='btn btn-md btn-success btn-block'>
-					Gmail
+					G-mail
 				</button>
 			</a>
 		</div>
