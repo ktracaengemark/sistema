@@ -1276,7 +1276,7 @@
 								</div>
 								<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 text-left">
 									<label for="RacaPet">Raca:</label>
-									<select data-placeholder="Selecione uma opção..." class="form-control"
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="RacaPet" name="RacaPet">
 										<option value="">-- Raca --</option>
 										<?php
