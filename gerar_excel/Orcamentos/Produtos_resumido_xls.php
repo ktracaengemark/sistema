@@ -43,6 +43,7 @@
 		$filtro2 = ($_SESSION['FiltroAlteraParcela']['QuitadoOrca']) ? 'OT.QuitadoOrca = "' . $_SESSION['FiltroAlteraParcela']['QuitadoOrca'] . '" AND ' : FALSE;
 		$filtro3 = ($_SESSION['FiltroAlteraParcela']['ConcluidoOrca']) ? 'OT.ConcluidoOrca = "' . $_SESSION['FiltroAlteraParcela']['ConcluidoOrca'] . '" AND ' : FALSE;
 		$filtro17 = ($_SESSION['FiltroAlteraParcela']['ConcluidoProduto']) ? 'PRDS.ConcluidoProduto = "' . $_SESSION['FiltroAlteraParcela']['ConcluidoProduto'] . '" AND ' : FALSE;
+		$filtro18 = ($_SESSION['FiltroAlteraParcela']['Prod_Serv_Produto']) ? 'PRDS.Prod_Serv_Produto = "' . $_SESSION['FiltroAlteraParcela']['Prod_Serv_Produto'] . '" AND ' : FALSE;
 		$filtro5 = ($_SESSION['FiltroAlteraParcela']['Modalidade']) ? 'OT.Modalidade = "' . $_SESSION['FiltroAlteraParcela']['Modalidade'] . '" AND ' : FALSE;
 		$filtro6 = ($_SESSION['FiltroAlteraParcela']['FormaPagamento']) ? 'OT.FormaPagamento = "' . $_SESSION['FiltroAlteraParcela']['FormaPagamento'] . '" AND ' : FALSE;
 		$filtro7 = ($_SESSION['FiltroAlteraParcela']['Tipo_Orca']) ? 'OT.Tipo_Orca = "' . $_SESSION['FiltroAlteraParcela']['Tipo_Orca'] . '" AND ' : FALSE;
@@ -78,6 +79,7 @@
 									OT.FinalizadoOrca,
 									OT.CanceladoOrca,
 									OT.Modalidade,
+									OT.RecorrenciaOrca,
 									CPT.NomeClientePet,
 									CDP.NomeClienteDep,
 									TR.TipoFinanceiro,
@@ -141,6 +143,7 @@
 									' . $filtro11 . '
 									' . $filtro13 . '
 									' . $filtro17 . '
+									' . $filtro18 . '
 									OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 									PRDS.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
 									' . $data['Orcamento'] . '
@@ -180,6 +183,7 @@
 		// Campos da Tabela
 		$html .= '<tr>';
 		$html .= '<td><b>id_O.S.</b></td>';
+		$html .= '<td><b>Recor</b></td>';
 		$html .= '<td><b>Categoria</b></td>';
 		$html .= '<td><b>Data</b></td>';
 		$html .= '<td><b>Hora</b></td>';
@@ -192,6 +196,10 @@
 			}
 		}		
 		$html .= '<td><b>ProdServ</b></td>';
+		$html .= '<td><b>Obs</b></td>';
+		$html .= '<td><b>Valor</b></td>';
+		
+		
 		/*
 		$html .= '<td><b>Data Ini</b></td>';
 		$html .= '<td><b>Data Fim</b></td>';
@@ -234,6 +242,7 @@
 			*/
 			$html .= '<tr>';
 			$html .= '<td>'.$row_msg_contatos["idApp_OrcaTrata"].'</td>';
+			$html .= '<td>'.$row_msg_contatos["RecorrenciaOrca"].'.</td>';
 			$html .= '<td>'.$row_msg_contatos["Catprod"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["DataConcluidoProduto"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["HoraInicio"].'</td>';
@@ -245,7 +254,9 @@
 					$html .= '<td>'.utf8_encode($row_msg_contatos["NomeClienteDep"]).'</td>';
 				}
 			}
-			$html .= '<td>'.utf8_encode($row_msg_contatos["NomeProduto"]). ' - ' . utf8_encode($row_msg_contatos["ObsProduto"]).'</td>';
+			$html .= '<td>'.utf8_encode($row_msg_contatos["NomeProduto"]).'</td>';
+			$html .= '<td>'.utf8_encode($row_msg_contatos["ObsProduto"]).'</td>';
+			$html .= '<td>'.number_format($row_msg_contatos["ValorProduto"], 2, ',', '.'). '</td>';
 			/*
 			$html .= '<td>'.$row_msg_contatos["DataInicio"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["DataFim"].'</td>';
