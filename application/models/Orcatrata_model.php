@@ -929,6 +929,20 @@ class Orcatrata_model extends CI_Model {
         return $query;
     }	
 
+    public function get_parcelas_alterar($data) {
+		$query = $this->db->query('
+			SELECT 
+				TAP.idApp_Parcelas
+			FROM 
+				App_Parcelas AS TAP
+			WHERE 
+				TAP.idApp_OrcaTrata = ' . $data . ' 
+		');
+        $query = $query->result_array();
+
+        return $query;
+    }	
+
     public function get_parcelas($data) {
 		$query = $this->db->query('SELECT * FROM App_Parcelas WHERE idApp_OrcaTrata = ' . $data);
         $query = $query->result_array();

@@ -2342,6 +2342,8 @@ class Consulta extends CI_Controller {
 			
 			if($data['query']['idApp_OrcaTrata'] != 0){
 				$data['orca']['idApp_ClientePet']	= $data['query']['idApp_ClientePet'];
+				$data['orca']['DataOrca']			= $dataini_alt;
+				$data['orca']['DataVencimentoOrca']	= $dataini_alt;
 				$data['orca']['DataEntregaOrca']	= $dataini_alt;
 				$data['orca']['HoraEntregaOrca']	= $horaini_alt;
 
@@ -2360,6 +2362,19 @@ class Consulta extends CI_Controller {
 					
 					}
 				}
+
+				#### App_Parcelas ####
+				$data['update']['parcelas']['alterar'] = $this->Orcatrata_model->get_parcelas_alterar($data['query']['idApp_OrcaTrata']);
+				if (isset($data['update']['parcelas']['alterar'])){
+
+					$max = count($data['update']['parcelas']['alterar']);
+					for($j=0;$j<$max;$j++) {
+						$data['update']['parcelas']['alterar'][$j]['DataVencimento'] = $dataini_alt;
+
+						$data['update']['parcelas']['bd'][$j] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelas']['alterar'][$j], $data['update']['parcelas']['alterar'][$j]['idApp_Parcelas']);
+					
+					}
+				}				
 			}
 			/*
 			echo '<br>';
@@ -2410,6 +2425,8 @@ class Consulta extends CI_Controller {
 						if($data['repeticao'][$j]['idApp_OrcaTrata'] != 0 && $data['repeticao'][$j]['idApp_OrcaTrata'] != $data['query']['idApp_OrcaTrata']){
 							
 							$data['orca'][$j]['idApp_ClientePet'] 	= $data['query']['idApp_ClientePet'];
+							$data['orca'][$j]['DataOrca'] 			= $dataatualinicio[$j];
+							$data['orca'][$j]['DataVencimentoOrca'] 	= $dataatualinicio[$j];
 							$data['orca'][$j]['DataEntregaOrca'] 	= $dataatualinicio[$j];
 							$data['orca'][$j]['HoraEntregaOrca'] 	= $horaini_alt;
 							
@@ -2431,7 +2448,23 @@ class Consulta extends CI_Controller {
 								}
 								
 							}							
-							
+
+							#### App_Parcelas ####
+							$data['update']['parcelas']['posterior'][$j] = $this->Orcatrata_model->get_parcelas_alterar($data['repeticao'][$j]['idApp_OrcaTrata']);
+							if (isset($data['update']['parcelas']['posterior'][$j])){
+								
+								$max_parcelas = count($data['update']['parcelas']['posterior'][$j]);
+								
+								for($k=0;$k<$max_parcelas;$k++) {
+									
+									$data['update']['parcelas']['posterior'][$j][$k]['DataVencimento'] = $dataatualinicio[$j];
+									
+									$data['update']['parcelas']['bd']['posterior'][$j][$k] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelas']['posterior'][$j][$k], $data['update']['parcelas']['posterior'][$j][$k]['idApp_Parcelas']);
+
+								}
+								
+							}							
+														
 						}
 						
 					}
