@@ -517,7 +517,7 @@ class Orcatrata_model extends CI_Model {
 		*/
         return $query[0];
     }
-
+	/*
     public function get_ult_pdd() {
         $query = $this->db->query('
 			SELECT
@@ -526,7 +526,7 @@ class Orcatrata_model extends CI_Model {
 			FROM 
 				App_OrcaTrata  OT
 			WHERE 
-				OT.idSis_Empresa = 96 AND
+				OT.idSis_Empresa = 42 AND
 				OT.idApp_Cliente != 0 AND
 				OT.DataOrca = (	SELECT MAX(OT2.DataOrca)
 								FROM App_OrcaTrata OT2
@@ -538,17 +538,17 @@ class Orcatrata_model extends CI_Model {
 		');
 
         $query = $query->result_array();
-        /*
+        
 		//echo $this->db->last_query();
         echo '<br>';
         echo "<pre>";
         print_r($query);
         echo "</pre>";
         exit ();
-		*/
+		
         return $query;
     }
-
+	*/
     public function get_pri_pdd_cliente($data) {
         $query = $this->db->query('SELECT CashBackCliente FROM App_Cliente WHERE idApp_Cliente = ' . $data);
 

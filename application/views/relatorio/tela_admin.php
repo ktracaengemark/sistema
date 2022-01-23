@@ -271,20 +271,24 @@
 													</a>
 												</div>	
 											</div>
-											<div class="form-group col-md-12 text-left">
-												<div class="row">										
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/ultimopedido" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Ultimo pedido
-													</a>
-												</div>	
-											</div>
-											<div class="form-group col-md-12 text-left">
-												<div class="row">										
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>orcatrata/ultimopedido" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Cadastrar Ultimo pedido
-													</a>
-												</div>	
-											</div>									
+											<?php if($_SESSION['log']['idSis_Empresa'] == "2") {?>
+												<!--
+												<div class="form-group col-md-12 text-left">
+													<div class="row">										
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php #echo base_url() ?>relatorio/ultimopedido" role="button"> 
+															<span class="glyphicon glyphicon-usd"></span> Ultimo pedido
+														</a>
+													</div>	
+												</div>
+												<div class="form-group col-md-12 text-left">
+													<div class="row">										
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php #echo base_url() ?>orcatrata/ultimopedido" role="button"> 
+															<span class="glyphicon glyphicon-usd"></span> Cadastrar Ultimo pedido
+														</a>
+													</div>	
+												</div>
+												-->
+											<?php }?>
 										</div>
 									<?php }?>
 								<?php }?>	
