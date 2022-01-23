@@ -210,6 +210,146 @@ class Relatorio_model extends CI_Model {
 
     }
 
+    public function list_ultimopedido($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+
+		if($data != FALSE){
+
+			$data['idSis_Empresa'] = ($_SESSION['log']['idSis_Empresa'] != 5) ? ' OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '  ': ' OT.Tipo_Orca = "O" ';
+			$data['Orcamento'] = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
+			$data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;
+			$data['idTab_TipoRD'] = ($data['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $data['idTab_TipoRD'] : FALSE;
+
+			/*
+			echo "<pre>";
+			print_r($_SESSION['FiltroAlteraParcela']);
+			echo "<br>";
+			print_r($data);
+			echo "</pre>";
+			*/
+		}else{
+
+			$data['idSis_Empresa'] = ($_SESSION['log']['idSis_Empresa'] != 5) ? ' OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '  ': ' OT.Tipo_Orca = "O" ';
+			$data['Orcamento'] = ($_SESSION['FiltroAlteraParcela']['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $_SESSION['FiltroAlteraParcela']['Orcamento'] . '  ': FALSE;
+			$data['idApp_Cliente'] = ($_SESSION['FiltroAlteraParcela']['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $_SESSION['FiltroAlteraParcela']['idApp_Cliente'] . '' : FALSE;
+			$data['idTab_TipoRD'] = ($_SESSION['FiltroAlteraParcela']['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $_SESSION['FiltroAlteraParcela']['idTab_TipoRD'] : FALSE;
+			/*
+			echo "<pre>";
+			print_r($_SESSION['FiltroAlteraParcela']);
+			echo "<br>";
+			print_r($data);
+			echo "</pre>";
+			*/
+		}    
+		//echo $this->db->last_query();
+
+		//exit();		
+		
+		$querylimit = '';
+        if ($limit)
+            $querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		/*
+		$query = $this->db->query('
+            SELECT
+                CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,"")) AS NomeCliente,
+				OT.idSis_Empresa,
+				OT.idApp_OrcaTrata,
+				OT.idApp_Cliente,
+                OT.DataOrca,
+				OT.DataEntregaOrca,
+				OT.idTab_TipoRD
+            FROM
+                App_OrcaTrata AS OT
+				LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
+            WHERE
+				' . $data['idSis_Empresa'] . '
+                ' . $data['Orcamento'] . '
+                ' . $data['idApp_Cliente'] . '
+                ' . $data['idTab_TipoRD'] . '	
+			' . $querylimit . '
+        ');
+		*/
+		$query = $this->db->query('
+			SELECT 
+				C.NomeCliente, 
+				OT.idApp_OrcaTrata, 
+				OT.idApp_Cliente, 
+				OT.DataOrca
+			FROM 
+				App_OrcaTrata  OT
+					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
+			WHERE 
+				OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND 
+				OT.idApp_Cliente != 0 AND
+				OT.idApp_Cliente = 178017 AND
+				OT.DataOrca = (	SELECT MAX(OT2.DataOrca)
+								FROM App_OrcaTrata OT2
+								WHERE  OT2.idApp_Cliente = OT.idApp_Cliente) 
+								
+			 GROUP BY 
+				OT.idApp_Cliente
+			 ORDER BY 
+				OT.DataOrca
+			' . $querylimit . '
+		');
+		#echo $this->db->last_query();
+		
+		if($total == TRUE) {
+			//return $query->num_rows();
+			
+			if ($completo === FALSE) {
+				return TRUE;
+			} else {
+
+				
+				foreach ($query->result() as $row) {
+
+				}
+				
+				$query->soma2 = new stdClass();
+
+
+				return $query;
+			}
+			
+		}
+		
+        /*
+		echo $this->db->last_query();
+		echo "<pre>";
+		print_r($query);
+		echo "</pre>";
+		exit();
+		*/
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+			//$somaextra=0;
+			
+            foreach ($query->result() as $row) {
+				
+				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
+				//$row->DataEntregaOrca = $this->basico->mascara_data($row->DataEntregaOrca, 'barras');
+
+				//$contagem = count($row->idApp_OrcaTrata);
+				/*
+				echo "<pre>";
+				print_r($contagem);
+				echo "</pre>";
+				exit();
+				*/
+
+            }
+            
+			$query->soma = new stdClass();
+			//$query->soma->somaextra = number_format($somaextra, 2, ',', '.');
+
+            return $query;
+        }
+
+    }
+
     public function list_orcamento($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		if($data != FALSE){

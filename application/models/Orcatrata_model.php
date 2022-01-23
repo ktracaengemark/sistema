@@ -488,6 +488,75 @@ class Orcatrata_model extends CI_Model {
         return $query[0];
     }
 
+    public function get_ult_pdd_cliente($data) {
+        $query = $this->db->query('
+			SELECT
+				OT.DataOrca
+			FROM 
+				App_OrcaTrata  OT
+			WHERE 
+				OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND 
+				OT.idApp_Cliente = '.$data.' AND
+				OT.DataOrca = (	SELECT MAX(OT2.DataOrca)
+								FROM App_OrcaTrata OT2
+								WHERE  OT2.idApp_Cliente = OT.idApp_Cliente)
+			 GROUP BY 
+				OT.idApp_Cliente
+			 ORDER BY 
+				OT.DataOrca
+		');
+
+        $query = $query->result_array();
+        /*
+		//echo $this->db->last_query();
+        echo '<br>';
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit ();
+		*/
+        return $query[0];
+    }
+
+    public function get_ult_pdd() {
+        $query = $this->db->query('
+			SELECT
+				OT.idApp_Cliente,
+				OT.DataOrca
+			FROM 
+				App_OrcaTrata  OT
+			WHERE 
+				OT.idSis_Empresa = 96 AND
+				OT.idApp_Cliente != 0 AND
+				OT.DataOrca = (	SELECT MAX(OT2.DataOrca)
+								FROM App_OrcaTrata OT2
+								WHERE  OT2.idApp_Cliente = OT.idApp_Cliente)
+			 GROUP BY 
+				OT.idApp_Cliente
+			 ORDER BY 
+				OT.DataOrca
+		');
+
+        $query = $query->result_array();
+        /*
+		//echo $this->db->last_query();
+        echo '<br>';
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit ();
+		*/
+        return $query;
+    }
+
+    public function get_pri_pdd_cliente($data) {
+        $query = $this->db->query('SELECT CashBackCliente FROM App_Cliente WHERE idApp_Cliente = ' . $data);
+
+        $query = $query->result_array();
+
+        return $query[0];
+    }
+		
     public function get_pet($data) {
         $query = $this->db->query('SELECT * FROM App_ClientePet WHERE idApp_ClientePet = ' . $data);
 
@@ -3514,7 +3583,6 @@ class Orcatrata_model extends CI_Model {
 						//não muda o cashback
 					}
 				}
-				
 
 			}else{
 				//não existe cliente - não faz nada		
@@ -3532,6 +3600,15 @@ class Orcatrata_model extends CI_Model {
 			$query = $this->db->delete('App_Parcelas', array('idApp_Orcatrata' => $id));
 			$query = $this->db->delete('App_Procedimento', array('idApp_Orcatrata' => $id));
 			$query = $this->db->delete('App_OrcaTrata', array('idApp_Orcatrata' => $id));			
+			
+			if(isset($data['orcatrata']['idApp_Cliente']) && $data['orcatrata']['idApp_Cliente'] != 0 && $data['orcatrata']['idApp_Cliente'] != ''){
+					
+				$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+				$data['cliente_ult_pdd']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
+
+				$data['update']['cliente_ult_pdd']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_ult_pdd'], $data['orcatrata']['idApp_Cliente']);					
+			}
+		
 		}
 
         if ($this->db->affected_rows() === 0) {

@@ -42,7 +42,27 @@ class Orcatrata extends CI_Controller {
         #load footer view
         $this->load->view('basico/footer');
     }
+    
+	public function ultimopedido() {
 
+		$data['get_ult_pdd'] = $this->Orcatrata_model->get_ult_pdd();
+		
+		$max = count($data['get_ult_pdd']);
+		
+		for($j=0; $j<$max; $j++) {
+
+			$data['update_cashback']['id_cliente'][$j]['UltimoPedido'] = $data['get_ult_pdd'][$j]['DataOrca'];
+
+			$data['update_cashback']['id_cliente']['bd'][$j] = $this->Cliente_model->update_cliente($data['update_cashback']['id_cliente'][$j], $data['get_ult_pdd'][$j]['idApp_Cliente']);		
+
+		}
+
+		redirect(base_url() . 'relatorio/admin/');				
+               	
+		exit ();
+			
+	}
+	
     public function cadastrarrepet($idApp_Cliente = NULL, $idApp_Consulta = NULL) {
 
         if ($this->input->get('m') == 1)
@@ -1900,7 +1920,10 @@ class Orcatrata extends CI_Controller {
 						
 					}
 					//faço o update no cliente
-		
+
+					$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+					$data['cliente_cashback']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
+							
 					$data['update']['cliente_cashback']['anterior'] = $this->Orcatrata_model->get_cliente($data['orcatrata']['idApp_Cliente']);
 					$data['update']['cliente_cashback']['campos'] = array_keys($data['cliente_cashback']);
 	
@@ -3288,7 +3311,10 @@ class Orcatrata extends CI_Controller {
 						}
 					}
 					//faço o update no cliente
-		
+
+					$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+					$data['cliente_cashback']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
+							
 					$data['update']['cliente_cashback']['anterior'] = $this->Orcatrata_model->get_cliente($data['orcatrata']['idApp_Cliente']);
 					$data['update']['cliente_cashback']['campos'] = array_keys($data['cliente_cashback']);
 	
@@ -4180,13 +4206,13 @@ class Orcatrata extends CI_Controller {
 				}
 			}
 		}
-		
+
 		#run form validation
 		
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('orcatrata/form_orcatrata3', $data);
         } else {
-		
+
 			////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
             #### App_OrcaTrata ####
 			if ($data['orcatrata']['Entrega_Orca'] == "S") {	
@@ -4382,6 +4408,8 @@ class Orcatrata extends CI_Controller {
                 $this->basico->erro($msg);
                 $this->load->view('orcatrata/form_orcatrata3', $data);
             } else {			
+				
+				
 				
 				#### Whatsapp ####
 				if ($data['orcatrata']['Cli_Forn_Orca'] == 'S' && $data['cadastrar']['Whatsapp'] == 'S'){
@@ -4789,7 +4817,18 @@ class Orcatrata extends CI_Controller {
 						}
 					}
 					//faço o update no cliente
-		
+
+
+					$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+					$data['cliente_cashback']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
+					
+					/*
+					echo '<br>';
+					echo "<pre>";
+					print_r($data['get_ult_pdd_cliente']['DataOrca']);
+					echo "</pre>";
+					*/
+					
 					$data['update']['cliente_cashback']['anterior'] = $this->Orcatrata_model->get_cliente($data['orcatrata']['idApp_Cliente']);
 					$data['update']['cliente_cashback']['campos'] = array_keys($data['cliente_cashback']);
 	
@@ -6847,6 +6886,14 @@ class Orcatrata extends CI_Controller {
 				
 			}			
 			
+			if(isset($data['orcatrata']['idApp_Cliente']) && $data['orcatrata']['idApp_Cliente'] != 0 && $data['orcatrata']['idApp_Cliente'] != ''){
+					
+				$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+				$data['cliente_ult_pdd']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
+
+				$data['update']['cliente_ult_pdd']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_ult_pdd'], $data['orcatrata']['idApp_Cliente']);					
+			}			
+
 			if($data['count_orcatratas'] > 0){
 			
 				if($data['orcatrata']['QuitadoOrca'] == "S"){	
