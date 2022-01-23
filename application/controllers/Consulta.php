@@ -2349,6 +2349,15 @@ class Consulta extends CI_Controller {
 
 				$data['update']['orca']['bd'] 	= $this->Orcatrata_model->update_orcatrata($data['orca'], $data['query']['idApp_OrcaTrata']);
 
+				if(isset($data['query']['idApp_Cliente']) && $data['query']['idApp_Cliente'] !=0){
+					
+					$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['query']['idApp_Cliente'], TRUE);
+					$data['cliente_cashback']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
+
+					$data['update']['cliente_cashback']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_cashback'], $data['query']['idApp_Cliente']);
+					
+				}					
+
 				#### App_Produto ####
 				$data['update']['produto']['alterar'] = $this->Orcatrata_model->get_produto_alterar($data['query']['idApp_OrcaTrata']);
 				if (isset($data['update']['produto']['alterar'])){
@@ -2432,6 +2441,15 @@ class Consulta extends CI_Controller {
 							
 							$data['update']['orca']['bd'][$j] 		= $this->Orcatrata_model->update_orcatrata($data['orca'][$j], $data['repeticao'][$j]['idApp_OrcaTrata']);
 
+							if(isset($data['query']['idApp_Cliente']) && $data['query']['idApp_Cliente'] !=0){
+								
+								$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['query']['idApp_Cliente'], TRUE);
+								$data['cliente_cashback']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
+
+								$data['update']['cliente_cashback']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_cashback'], $data['query']['idApp_Cliente']);
+								
+							}							
+							
 							#### App_Produto ####
 							$data['update']['produto']['posterior'][$j] = $this->Orcatrata_model->get_produto_alterar($data['repeticao'][$j]['idApp_OrcaTrata']);
 							if (isset($data['update']['produto']['posterior'][$j])){
@@ -2466,10 +2484,10 @@ class Consulta extends CI_Controller {
 							}							
 														
 						}
-						
 					}
-				}
+				}				
 			}
+			
 			
 			if($_SESSION['Consulta']['idApp_OrcaTrata'] == 0 || $_SESSION['Consulta']['idApp_OrcaTrata'] == ""){
 			
