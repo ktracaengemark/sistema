@@ -97,7 +97,9 @@ elseif ($_GET['q'] == 30) {
     $result = mysql_query('
             SELECT
 				AF.idApp_Funcao,
-				CONCAT(IFNULL(TF.Abrev,""), " || ", IFNULL(U.Nome,""), " ||| ", IFNULL(AF.Comissao_Funcao,"")) AS Nome
+				CONCAT(IFNULL(TF.Abrev,"")) AS Abrev,
+				CONCAT(IFNULL(U.Nome,"")) AS Nome,
+				CONCAT(IFNULL(AF.Comissao_Funcao,"")) AS Comissao_Funcao
             FROM
                 App_Funcao AS AF
 					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = AF.idSis_Usuario
@@ -114,8 +116,8 @@ elseif ($_GET['q'] == 30) {
     ');
 
     while ($row = mysql_fetch_assoc($result)) {
-
-        $event_array2[] = array(
+        $row['Nome'] = $row['Abrev']." | ".substr($row['Nome'], 0, 10)." | ".$row['Comissao_Funcao'];
+		$event_array2[] = array(
             'id' => $row['idApp_Funcao'],
             'name' => utf8_encode($row['Nome']),
         );

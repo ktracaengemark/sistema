@@ -4575,7 +4575,7 @@ class Relatorio extends CI_Controller {
 		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistarec/';
 		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
 		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
-		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		$data['alterarprod'] = 'Orcatrata/alterarprodutorec/';
 		$data['paginacao'] = 'N';
 
         $_SESSION['FiltroAlteraParcela']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');

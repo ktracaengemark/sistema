@@ -486,7 +486,10 @@ class Usuario_model extends CI_Model {
             $array = $this->db->query('					
 				SELECT
 					AF.idApp_Funcao,
-					CONCAT(IFNULL(TF.Abrev,""), " || ", IFNULL(U.Nome,""), " ||| ", IFNULL(AF.Comissao_Funcao,"")) AS Nome
+					CONCAT(IFNULL(TF.Abrev,"")) AS Abrev,
+					CONCAT(IFNULL(U.Nome,"")) AS Nome,
+					CONCAT(IFNULL(AF.Comissao_Funcao,"")) AS Comissao_Funcao
+				
 				FROM
 					App_Funcao AS AF
 						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = AF.idSis_Usuario
@@ -507,7 +510,9 @@ class Usuario_model extends CI_Model {
             $query = $this->db->query('
 				SELECT
 					AF.idApp_Funcao,
-					CONCAT(IFNULL(TF.Abrev,""), " || ", IFNULL(U.Nome,""), " ||| ", IFNULL(AF.Comissao_Funcao,"")) AS Nome
+					CONCAT(IFNULL(TF.Abrev,"")) AS Abrev,
+					CONCAT(IFNULL(U.Nome,"")) AS Nome,
+					CONCAT(IFNULL(AF.Comissao_Funcao,"")) AS Comissao_Funcao
 				FROM
 					App_Funcao AS AF
 						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = AF.idSis_Usuario
@@ -526,7 +531,8 @@ class Usuario_model extends CI_Model {
             
             $array = array();
             foreach ($query->result() as $row) {
-                $array[$row->idApp_Funcao] = $row->Nome;
+                $row->Nome = $row->Abrev." | ".substr($row->Nome, 0, 10)." | ".$row->Comissao_Funcao;
+				$array[$row->idApp_Funcao] = $row->Nome;		
             }
         }
 
