@@ -42,15 +42,9 @@ class Orcatrata extends CI_Controller {
         #load footer view
         $this->load->view('basico/footer');
     }
-    
+    /*
 	public function ultimopedido() {
-		/*	
-			echo '<br>';
-			echo "<pre>";
-			print_r('olá mundo');
-			echo "</pre>";
-			exit ();		
-		*/
+
 		$data['get_ult_pdd'] = $this->Orcatrata_model->get_ult_pdd();
 		
 		$max = count($data['get_ult_pdd']);
@@ -69,7 +63,7 @@ class Orcatrata extends CI_Controller {
 		exit ();
 			
 	}
-	
+	*/
     public function cadastrarrepet($idApp_Cliente = NULL, $idApp_Consulta = NULL) {
 
         if ($this->input->get('m') == 1)
