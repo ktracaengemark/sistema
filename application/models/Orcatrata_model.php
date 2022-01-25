@@ -491,19 +491,17 @@ class Orcatrata_model extends CI_Model {
     public function get_ult_pdd_cliente($data) {
         $query = $this->db->query('
 			SELECT
+				OT.idApp_OrcaTrata,
 				OT.DataOrca
 			FROM 
-				App_OrcaTrata  OT
+				App_OrcaTrata AS OT
 			WHERE 
 				OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND 
-				OT.idApp_Cliente = '.$data.' AND
-				OT.DataOrca = (	SELECT MAX(OT2.DataOrca)
-								FROM App_OrcaTrata OT2
-								WHERE  OT2.idApp_Cliente = OT.idApp_Cliente)
-			 GROUP BY 
-				OT.idApp_Cliente
+				OT.idApp_Cliente = '.$data.'
 			 ORDER BY 
-				OT.DataOrca
+				OT.DataOrca DESC,
+				OT.idApp_OrcaTrata DESC
+			LIMIT 1
 		');
 
         $query = $query->result_array();
@@ -516,39 +514,43 @@ class Orcatrata_model extends CI_Model {
         exit ();
 		*/
         return $query[0];
+        //return $query;
     }
-	/*
+	
     public function get_ult_pdd() {
-        $query = $this->db->query('
+        
+		$query = $this->db->query('
 			SELECT
 				OT.idApp_Cliente,
-				OT.DataOrca
+				OT.DataOrca,
+				OT.idApp_OrcaTrata
 			FROM 
-				App_OrcaTrata  OT
+				App_OrcaTrata AS OT
 			WHERE 
 				OT.idSis_Empresa = 42 AND
+				OT.idTab_TipoRD = 2 AND
 				OT.idApp_Cliente != 0 AND
 				OT.DataOrca = (	SELECT MAX(OT2.DataOrca)
-								FROM App_OrcaTrata OT2
-								WHERE  OT2.idApp_Cliente = OT.idApp_Cliente)
-			 GROUP BY 
+								FROM App_OrcaTrata AS OT2
+								WHERE  OT2.idApp_Cliente = OT.idApp_Cliente)			
+			GROUP BY 
 				OT.idApp_Cliente
 			 ORDER BY 
-				OT.DataOrca
+				OT.idApp_Cliente
 		');
 
         $query = $query->result_array();
-        
+        /*
 		//echo $this->db->last_query();
         echo '<br>';
         echo "<pre>";
         print_r($query);
         echo "</pre>";
         exit ();
-		
+		*/
         return $query;
     }
-	*/
+	
     public function get_pri_pdd_cliente($data) {
         $query = $this->db->query('SELECT CashBackCliente FROM App_Cliente WHERE idApp_Cliente = ' . $data);
 
@@ -3604,7 +3606,9 @@ class Orcatrata_model extends CI_Model {
 			if(isset($data['orcatrata']['idApp_Cliente']) && $data['orcatrata']['idApp_Cliente'] != 0 && $data['orcatrata']['idApp_Cliente'] != ''){
 					
 				$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
-				$data['cliente_ult_pdd']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
+				
+				$data['cliente_ult_pdd']['id_UltimoPedido'] = $data['get_ult_pdd_cliente']['idApp_OrcaTrata'];
+				$data['cliente_ult_pdd']['UltimoPedido'] 	= $data['get_ult_pdd_cliente']['DataOrca'];
 
 				$data['update']['cliente_ult_pdd']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_ult_pdd'], $data['orcatrata']['idApp_Cliente']);					
 			}

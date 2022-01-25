@@ -42,16 +42,23 @@ class Orcatrata extends CI_Controller {
         #load footer view
         $this->load->view('basico/footer');
     }
-    /*
+    
 	public function ultimopedido() {
-
+		/*	
+			echo '<br>';
+			echo "<pre>";
+			print_r('olá mundo');
+			echo "</pre>";
+			exit ();		
+		*/
 		$data['get_ult_pdd'] = $this->Orcatrata_model->get_ult_pdd();
 		
 		$max = count($data['get_ult_pdd']);
 		
 		for($j=0; $j<$max; $j++) {
 
-			$data['update_cashback']['id_cliente'][$j]['UltimoPedido'] = $data['get_ult_pdd'][$j]['DataOrca'];
+			$data['update_cashback']['id_cliente'][$j]['id_UltimoPedido'] 	= $data['get_ult_pdd'][$j]['idApp_OrcaTrata'];
+			$data['update_cashback']['id_cliente'][$j]['UltimoPedido'] 		= $data['get_ult_pdd'][$j]['DataOrca'];
 
 			$data['update_cashback']['id_cliente']['bd'][$j] = $this->Cliente_model->update_cliente($data['update_cashback']['id_cliente'][$j], $data['get_ult_pdd'][$j]['idApp_Cliente']);		
 
@@ -62,7 +69,7 @@ class Orcatrata extends CI_Controller {
 		exit ();
 			
 	}
-	*/
+	
     public function cadastrarrepet($idApp_Cliente = NULL, $idApp_Consulta = NULL) {
 
         if ($this->input->get('m') == 1)
@@ -1418,6 +1425,38 @@ class Orcatrata extends CI_Controller {
 					$data['orcatrata']['idApp_OrcaTrata'], TRUE);
 				$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['orcatrata']['idApp_OrcaTrata']);
 
+				#### Verificação do UltimoPedido ####
+				$data['update']['cliente_repeticao']['anterior'] = $this->Orcatrata_model->get_cliente($data['orcatrata']['idApp_Cliente']);
+						
+				if(strtotime($data['update']['cliente_repeticao']['anterior']['UltimoPedido']) < strtotime($data['orcatrata']['DataOrca'])){
+				
+					$data['cliente_repeticao']['UltimoPedido'] 		= $data['orcatrata']['DataOrca'];
+					$data['cliente_repeticao']['id_UltimoPedido'] 	= $data['orcatrata']['idApp_OrcaTrata'];
+					$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['orcatrata']['idApp_Cliente']);
+					
+				}else if(strtotime($data['update']['cliente_repeticao']['anterior']['UltimoPedido']) == strtotime($data['orcatrata']['DataOrca'])){
+					
+					if($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido'] < $data['orcatrata']['idApp_OrcaTrata']){
+						
+						$data['cliente_repeticao']['id_UltimoPedido'] = $data['orcatrata']['idApp_OrcaTrata'];
+						$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['orcatrata']['idApp_Cliente']);
+					
+					}
+					
+				}else{
+					
+					if($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido'] == $data['orcatrata']['idApp_OrcaTrata']){
+
+						$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+						
+						$data['cliente_repeticao']['UltimoPedido'] 		= $data['get_ult_pdd_cliente']['DataOrca'];
+						$data['cliente_repeticao']['id_UltimoPedido'] 	= $data['get_ult_pdd_cliente']['idApp_OrcaTrata'];
+						
+						$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['orcatrata']['idApp_Cliente']);
+					}
+					
+				}				
+				
 				#### Estoque_Produto_posterior ####
 				if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
 					
@@ -1461,7 +1500,6 @@ class Orcatrata extends CI_Controller {
 					}
 					
 				}
-				
 				
 				////Inicio da Criação das Repetições///////
 				$tipointervalo = 1;
@@ -1827,8 +1865,9 @@ class Orcatrata extends CI_Controller {
 						$hora[$k]	 	= $dataini[$k][1];
 					}
 				}
-				
+		
 				if ($cont_orcamentos > 0) {
+					
 					for($j=0;$j<$cont_orcamentos;$j++) {
 						if($cont_consultas == $cont_orcamentos){
 							$data['update']['orcamentos'][$j]['DataOrca'] = $dia[$j];
@@ -1842,6 +1881,39 @@ class Orcatrata extends CI_Controller {
 							$data['update']['orcamentos'][$j]['HoraEntregaOrca'] = $hora['0'];
 						}
 						$data['update']['orcamentos']['bd'][$j] = $this->Orcatrata_model->update_orcatrata($data['update']['orcamentos'][$j], $data['update']['orcamentos'][$j]['idApp_OrcaTrata']);
+						
+						#### Verificação do UltimoPedido ####
+						if(strtotime($data['update']['cliente_repeticao']['anterior']['UltimoPedido']) < strtotime($data['update']['orcamentos'][$j]['DataOrca'])){
+						
+							$data['cliente_repeticao']['UltimoPedido'] 		= $data['update']['orcamentos'][$j]['DataOrca'];
+							$data['cliente_repeticao']['id_UltimoPedido'] 	= $data['update']['orcamentos'][$j]['idApp_OrcaTrata'];
+							
+							$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['orcatrata']['idApp_Cliente']);
+							
+						}else if(strtotime($data['update']['cliente_repeticao']['anterior']['UltimoPedido']) == strtotime($data['update']['orcamentos'][$j]['DataOrca'])){
+							
+							if($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido'] < $data['update']['orcamentos'][$j]['idApp_OrcaTrata']){
+								
+								$data['cliente_repeticao']['id_UltimoPedido'] = $data['update']['orcamentos'][$j]['idApp_OrcaTrata'];
+								
+								$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['orcatrata']['idApp_Cliente']);
+							
+							}
+							
+						}else{
+							
+							if($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido'] == $data['update']['orcamentos'][$j]['idApp_OrcaTrata']){
+
+								$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+								
+								$data['cliente_repeticao']['UltimoPedido'] 		= $data['get_ult_pdd_cliente']['DataOrca'];
+								$data['cliente_repeticao']['id_UltimoPedido'] 	= $data['get_ult_pdd_cliente']['idApp_OrcaTrata'];
+								
+								$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['orcatrata']['idApp_Cliente']);
+							}
+							
+						}
+
 					}				
 				}
 				
@@ -1921,8 +1993,8 @@ class Orcatrata extends CI_Controller {
 					}
 					//faço o update no cliente
 
-					$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
-					$data['cliente_cashback']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
+					//$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+					//$data['cliente_cashback']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
 							
 					$data['update']['cliente_cashback']['anterior'] = $this->Orcatrata_model->get_cliente($data['orcatrata']['idApp_Cliente']);
 					$data['update']['cliente_cashback']['campos'] = array_keys($data['cliente_cashback']);
@@ -3311,13 +3383,34 @@ class Orcatrata extends CI_Controller {
 						}
 					}
 					//faço o update no cliente
-
-					$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
-					$data['cliente_cashback']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
-							
+		
 					$data['update']['cliente_cashback']['anterior'] = $this->Orcatrata_model->get_cliente($data['orcatrata']['idApp_Cliente']);
 					$data['update']['cliente_cashback']['campos'] = array_keys($data['cliente_cashback']);
 	
+					if(strtotime($data['update']['cliente_cashback']['anterior']['UltimoPedido']) < strtotime($data['orcatrata']['DataOrca'])){
+					
+						$data['cliente_cashback']['UltimoPedido'] 		= $data['orcatrata']['DataOrca'];
+						$data['cliente_cashback']['id_UltimoPedido'] 	= $data['orcatrata']['idApp_OrcaTrata'];
+						
+					}else if(strtotime($data['update']['cliente_cashback']['anterior']['UltimoPedido']) == strtotime($data['orcatrata']['DataOrca'])){
+						
+						if($data['update']['cliente_cashback']['anterior']['id_UltimoPedido'] < $data['orcatrata']['idApp_OrcaTrata']){
+							
+							$data['cliente_cashback']['id_UltimoPedido'] = $data['orcatrata']['idApp_OrcaTrata'];
+						
+						}
+						
+					}else{
+						
+						if($data['update']['cliente_cashback']['anterior']['id_UltimoPedido'] == $data['orcatrata']['idApp_OrcaTrata']){
+
+							$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+							$data['cliente_cashback']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
+							$data['cliente_cashback']['id_UltimoPedido'] = $data['get_ult_pdd_cliente']['idApp_OrcaTrata'];						
+						}
+						
+					}
+
 					$data['update']['cliente_cashback']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_cashback'], $data['orcatrata']['idApp_Cliente']);					
 				
 				}
@@ -4817,21 +4910,35 @@ class Orcatrata extends CI_Controller {
 						}
 					}
 					//faço o update no cliente
-
-
-					$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
-					$data['cliente_cashback']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
-					
-					/*
-					echo '<br>';
-					echo "<pre>";
-					print_r($data['get_ult_pdd_cliente']['DataOrca']);
-					echo "</pre>";
-					*/
 					
 					$data['update']['cliente_cashback']['anterior'] = $this->Orcatrata_model->get_cliente($data['orcatrata']['idApp_Cliente']);
+					
 					$data['update']['cliente_cashback']['campos'] = array_keys($data['cliente_cashback']);
 	
+					if(strtotime($data['update']['cliente_cashback']['anterior']['UltimoPedido']) < strtotime($data['orcatrata']['DataOrca'])){
+					
+						$data['cliente_cashback']['UltimoPedido'] 		= $data['orcatrata']['DataOrca'];
+						$data['cliente_cashback']['id_UltimoPedido'] 	= $data['orcatrata']['idApp_OrcaTrata'];
+						
+					}else if(strtotime($data['update']['cliente_cashback']['anterior']['UltimoPedido']) == strtotime($data['orcatrata']['DataOrca'])){
+						
+						if($data['update']['cliente_cashback']['anterior']['id_UltimoPedido'] < $data['orcatrata']['idApp_OrcaTrata']){
+							
+							$data['cliente_cashback']['id_UltimoPedido'] = $data['orcatrata']['idApp_OrcaTrata'];
+						
+						}
+						
+					}else{
+						
+						if($data['update']['cliente_cashback']['anterior']['id_UltimoPedido'] == $data['orcatrata']['idApp_OrcaTrata']){
+
+							$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+							$data['cliente_cashback']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
+							$data['cliente_cashback']['id_UltimoPedido'] = $data['get_ult_pdd_cliente']['idApp_OrcaTrata'];						
+						}
+						
+					}
+
 					$data['update']['cliente_cashback']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_cashback'], $data['orcatrata']['idApp_Cliente']);					
 				
 				}
@@ -6887,11 +6994,35 @@ class Orcatrata extends CI_Controller {
 			}			
 			
 			if(isset($data['orcatrata']['idApp_Cliente']) && $data['orcatrata']['idApp_Cliente'] != 0 && $data['orcatrata']['idApp_Cliente'] != ''){
-					
-				$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
-				$data['cliente_ult_pdd']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
 
-				$data['update']['cliente_ult_pdd']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_ult_pdd'], $data['orcatrata']['idApp_Cliente']);					
+				$data['update']['cliente_ult_pdd']['anterior'] = $this->Orcatrata_model->get_cliente($data['orcatrata']['idApp_Cliente']);
+
+				if(strtotime($data['update']['cliente_ult_pdd']['anterior']['UltimoPedido']) < strtotime($data['orcatrata']['DataOrca'])){
+				
+					$data['cliente_ult_pdd']['UltimoPedido'] 		= $data['orcatrata']['DataOrca'];
+					$data['cliente_ult_pdd']['id_UltimoPedido'] 	= $data['orcatrata']['idApp_OrcaTrata'];
+					$data['update']['cliente_ult_pdd']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_ult_pdd'], $data['orcatrata']['idApp_Cliente']);
+				
+				}else if(strtotime($data['update']['cliente_ult_pdd']['anterior']['UltimoPedido']) == strtotime($data['orcatrata']['DataOrca'])){
+					
+					if($data['update']['cliente_ult_pdd']['anterior']['id_UltimoPedido'] < $data['orcatrata']['idApp_OrcaTrata']){
+						
+						$data['cliente_ult_pdd']['id_UltimoPedido'] = $data['orcatrata']['idApp_OrcaTrata'];
+						$data['update']['cliente_ult_pdd']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_ult_pdd'], $data['orcatrata']['idApp_Cliente']);
+					}
+					
+				}else{
+					
+					if($data['update']['cliente_ult_pdd']['anterior']['id_UltimoPedido'] == $data['orcatrata']['idApp_OrcaTrata']){
+
+						$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+						$data['cliente_ult_pdd']['UltimoPedido'] 	= $data['get_ult_pdd_cliente']['DataOrca'];
+						$data['cliente_ult_pdd']['id_UltimoPedido'] = $data['get_ult_pdd_cliente']['idApp_OrcaTrata'];						
+						$data['update']['cliente_ult_pdd']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_ult_pdd'], $data['orcatrata']['idApp_Cliente']);
+					}
+					
+				}
+									
 			}			
 
 			if($data['count_orcatratas'] > 0){
