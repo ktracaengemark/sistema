@@ -7037,6 +7037,8 @@ class Relatorio extends CI_Controller {
 			'DataFim',
 			'DataInicio2',
 			'DataFim2',
+			'DataInicio3',
+			'DataFim3',
 			'Ordenamento',
 			'Campo',
 			'Pedidos_de',
@@ -7050,7 +7052,44 @@ class Relatorio extends CI_Controller {
 			'Texto2',
 			'Texto3',
 			'Texto4',
+			'nomedoCliente',
+			'idCliente',
+			'numerodopedido',
+			'site',
 		), TRUE));
+		
+        $data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
+        $data['select']['idCliente'] = $this->Basico_model->select_status_sn();
+        $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
+        $data['select']['site'] = $this->Basico_model->select_status_sn();
+		
+ 		(!$data['query']['nomedoCliente']) ? $data['query']['nomedoCliente'] = 'N' : FALSE;
+		$data['radio'] = array(
+            'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
+        );
+        ($data['query']['nomedoCliente'] == 'S') ?
+            $data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
+
+ 		(!$data['query']['idCliente']) ? $data['query']['idCliente'] = 'N' : FALSE;
+		$data['radio'] = array(
+            'idCliente' => $this->basico->radio_checked($data['query']['idCliente'], 'idCliente', 'NS'),
+        );
+        ($data['query']['idCliente'] == 'S') ?
+            $data['div']['idCliente'] = '' : $data['div']['idCliente'] = 'style="display: none;"';
+			
+ 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'N' : FALSE;
+		$data['radio'] = array(
+            'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
+        );
+        ($data['query']['numerodopedido'] == 'S') ?
+            $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
+
+ 		(!$data['query']['site']) ? $data['query']['site'] = 'N' : FALSE;
+		$data['radio'] = array(
+            'site' => $this->basico->radio_checked($data['query']['site'], 'site', 'NS'),
+        );
+        ($data['query']['site'] == 'S') ?
+            $data['div']['site'] = '' : $data['div']['site'] = 'style="display: none;"';		
 
 		$data['select']['Campo'] = array(
 			'Valor' => 'Valor Pedido',
@@ -7058,6 +7097,7 @@ class Relatorio extends CI_Controller {
 			'ContPedidos' => 'Pedidos',
 			'F.NomeCliente' => 'Cliente',
 			'F.idApp_Cliente' => 'Id',
+			'F.UltimoPedido' => 'Ultimo Pedido',
 		);
 
 		$data['select']['Ordenamento'] = array(
@@ -7073,12 +7113,15 @@ class Relatorio extends CI_Controller {
 		$data['titulo'] = 'Ranking de Vendas';
 		$data['form_open_path'] = 'relatorio/rankingvendas';	
 		$data['paginacao'] = 'N';
+        $data['nome'] = 'Cliente';
 		
 		$_SESSION['FiltroRankingVendas']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
 		$_SESSION['FiltroRankingVendas']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
 		$_SESSION['FiltroRankingVendas']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 		$_SESSION['FiltroRankingVendas']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
 		$_SESSION['FiltroRankingVendas']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+		$_SESSION['FiltroRankingVendas']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+		$_SESSION['FiltroRankingVendas']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
 		$_SESSION['FiltroRankingVendas']['Ordenamento'] = $data['query']['Ordenamento'];
 		$_SESSION['FiltroRankingVendas']['Campo'] = $data['query']['Campo'];
 		$_SESSION['FiltroRankingVendas']['Pedidos_de'] = $data['query']['Pedidos_de'];
@@ -7092,7 +7135,11 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroRankingVendas']['Texto1'] = utf8_encode($data['query']['Texto1']);
         $_SESSION['FiltroRankingVendas']['Texto2'] = utf8_encode($data['query']['Texto2']);
         $_SESSION['FiltroRankingVendas']['Texto3'] = utf8_encode($data['query']['Texto3']);
-        $_SESSION['FiltroRankingVendas']['Texto4'] = utf8_encode($data['query']['Texto4']);		
+        $_SESSION['FiltroRankingVendas']['Texto4'] = utf8_encode($data['query']['Texto4']);	
+        $_SESSION['FiltroRankingVendas']['nomedoCliente'] = $data['query']['nomedoCliente'];
+        $_SESSION['FiltroRankingVendas']['idCliente'] = $data['query']['idCliente'];
+        $_SESSION['FiltroRankingVendas']['numerodopedido'] = $data['query']['numerodopedido'];
+        $_SESSION['FiltroRankingVendas']['site'] = $data['query']['site'];	
 			
 		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 		#$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
@@ -7100,6 +7147,8 @@ class Relatorio extends CI_Controller {
 		$this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio2', 'Data Inicio', 'trim|valid_date');
 		$this->form_validation->set_rules('DataFim2', 'Data Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio3', 'Data Inicio', 'trim|valid_date');
+		$this->form_validation->set_rules('DataFim3', 'Data Fim', 'trim|valid_date');
 
 		#run form validation
 		if ($this->form_validation->run() !== FALSE) {
@@ -7108,6 +7157,8 @@ class Relatorio extends CI_Controller {
 			$data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
 			$data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+			$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+			$data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
 			$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
 			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];

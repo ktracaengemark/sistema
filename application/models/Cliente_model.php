@@ -196,7 +196,10 @@ class Cliente_model extends CI_Model {
 
 		$date_inicio_cash = ($_SESSION['FiltroRankingVendas']['DataInicio2']) ? 'TC.ValidadeCashBack >= "' . $_SESSION['FiltroRankingVendas']['DataInicio2'] . '" AND ' : FALSE;
 		$date_fim_cash = ($_SESSION['FiltroRankingVendas']['DataFim2']) ? 'TC.ValidadeCashBack <= "' . $_SESSION['FiltroRankingVendas']['DataFim2'] . '" AND ' : FALSE;
-		
+
+		$date_inicio_ultimo = ($_SESSION['FiltroRankingVendas']['DataInicio3']) ? 'TC.UltimoPedido >= "' . $_SESSION['FiltroRankingVendas']['DataInicio3'] . '" AND ' : FALSE;
+		$date_fim_ultimo = ($_SESSION['FiltroRankingVendas']['DataFim3']) ? 'TC.UltimoPedido <= "' . $_SESSION['FiltroRankingVendas']['DataFim3'] . '" AND ' : FALSE;
+						
 		$pedidos_de = ($_SESSION['FiltroRankingVendas']['Pedidos_de']) ? 'F.ContPedidos >= "' . $_SESSION['FiltroRankingVendas']['Pedidos_de'] . '" AND ' : FALSE;
 		$pedidos_ate = ($_SESSION['FiltroRankingVendas']['Pedidos_ate']) ? 'F.ContPedidos <= "' . $_SESSION['FiltroRankingVendas']['Pedidos_ate'] . '" AND ' : FALSE;	
 		
@@ -243,6 +246,8 @@ class Cliente_model extends CI_Model {
 				F.addCashBackCliente,
 				F.PrazoCashBack,
 				F.ValidadeCashBack,
+				F.id_UltimoPedido,
+				F.UltimoPedido,
 				F.ContPedidos,
 				F.Valor
 			FROM
@@ -253,23 +258,25 @@ class Cliente_model extends CI_Model {
 					TC.addCashBackCliente,
 					TC.PrazoCashBack,
 					TC.ValidadeCashBack,
+					TC.id_UltimoPedido,
+					TC.UltimoPedido,
 					TOT.DataOrca,
 					COUNT(TOT.idApp_OrcaTrata) AS ContPedidos,
 					SUM(TOT.ValorFinalOrca) AS Valor
 				FROM
 					App_Cliente AS TC
 						INNER JOIN App_OrcaTrata AS TOT ON TOT.idApp_Cliente = TC.idApp_Cliente
-						' . $ultimopedido1 . '
 				WHERE
 					' . $permissao_orcam . '
 					' . $date_inicio_orca . '
 					' . $date_fim_orca . '
 					' . $date_inicio_cash . '
 					' . $date_fim_cash . '
+					' . $date_inicio_ultimo . '
+					' . $date_fim_ultimo . '
 					TOT.CanceladoOrca = "N" AND
 					TC.idSis_Empresa = ' . $data . ' 
 					' . $idapp_cliente . '
-					' . $ultimopedido2 . '
 				GROUP BY
 					TC.idApp_Cliente
 				) AS F

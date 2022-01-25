@@ -36,7 +36,7 @@
 								
 								<div class="panel panel-primary">
 
-									<div  style="overflow: auto; height: 456px; ">
+									<div  style="overflow: auto; height: auto; ">
 									
 										<div class="panel-body">
 											<!--App_parcelasRec-->

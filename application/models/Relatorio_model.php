@@ -87,7 +87,7 @@ class Relatorio_model extends CI_Model {
 				CONCAT(IFNULL(CD.idApp_ClienteDep,""), " - " ,IFNULL(CD.NomeClienteDep,"")) AS NomeClienteDep,
 				ASS.Nome
             FROM
-                App_Consulta AS CO
+			App_Consulta AS CO
 					LEFT JOIN App_Agenda AS A ON A.idApp_Agenda = CO.idApp_Agenda
 					LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = A.idSis_Associado
 					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = CO.idApp_Cliente
@@ -3553,7 +3553,10 @@ exit();
 
 			$date_inicio_cash = ($data['DataInicio2']) ? 'TC.ValidadeCashBack >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_cash = ($data['DataFim2']) ? 'TC.ValidadeCashBack <= "' . $data['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$date_inicio_ultimo = ($data['DataInicio3']) ? 'TC.UltimoPedido >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
+			$date_fim_ultimo = ($data['DataFim3']) ? 'TC.UltimoPedido <= "' . $data['DataFim3'] . '" AND ' : FALSE;
+							
 			$data['Pedidos_de'] = ($data['Pedidos_de']) ? 'F.ContPedidos >= "' . $data['Pedidos_de'] . '" AND ' : FALSE;
 			$data['Pedidos_ate'] = ($data['Pedidos_ate']) ? 'F.ContPedidos <= "' . $data['Pedidos_ate'] . '" AND ' : FALSE;	
 			
@@ -3595,7 +3598,10 @@ exit();
 
 			$date_inicio_cash = ($_SESSION['FiltroRankingVendas']['DataInicio2']) ? 'TC.ValidadeCashBack >= "' . $_SESSION['FiltroRankingVendas']['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_cash = ($_SESSION['FiltroRankingVendas']['DataFim2']) ? 'TC.ValidadeCashBack <= "' . $_SESSION['FiltroRankingVendas']['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$date_inicio_ultimo = ($_SESSION['FiltroRankingVendas']['DataInicio3']) ? 'TC.UltimoPedido >= "' . $_SESSION['FiltroRankingVendas']['DataInicio3'] . '" AND ' : FALSE;
+			$date_fim_ultimo = ($_SESSION['FiltroRankingVendas']['DataFim3']) ? 'TC.UltimoPedido <= "' . $_SESSION['FiltroRankingVendas']['DataFim3'] . '" AND ' : FALSE;
+						
 			$data['Pedidos_de'] = ($_SESSION['FiltroRankingVendas']['Pedidos_de']) ? 'F.ContPedidos >= "' . $_SESSION['FiltroRankingVendas']['Pedidos_de'] . '" AND ' : FALSE;
 			$data['Pedidos_ate'] = ($_SESSION['FiltroRankingVendas']['Pedidos_ate']) ? 'F.ContPedidos <= "' . $_SESSION['FiltroRankingVendas']['Pedidos_ate'] . '" AND ' : FALSE;	
 			
@@ -3641,6 +3647,8 @@ exit();
 				F.CelularCliente,
 				F.CashBackCliente,
 				F.ValidadeCashBack,
+				F.id_UltimoPedido,
+				F.UltimoPedido,
 				F.ContPedidos,
 				F.Valor
 			FROM
@@ -3650,23 +3658,25 @@ exit();
 					TC.CelularCliente,
 					TC.CashBackCliente,
 					TC.ValidadeCashBack,
+					TC.id_UltimoPedido,
+					TC.UltimoPedido,
 					TOT.DataOrca,
 					COUNT(TOT.idApp_OrcaTrata) AS ContPedidos,
 					SUM(TOT.ValorFinalOrca) AS Valor
 				FROM
 					App_Cliente AS TC
 						INNER JOIN App_OrcaTrata AS TOT ON TOT.idApp_Cliente = TC.idApp_Cliente
-						' . $ultimopedido1 . '
 				WHERE
 					' . $permissao_orcam . '
 					' . $date_inicio_orca . '
 					' . $date_fim_orca . '
 					' . $date_inicio_cash . '
 					' . $date_fim_cash . '
+					' . $date_inicio_ultimo . '
+					' . $date_fim_ultimo . '
 					TOT.CanceladoOrca = "N" AND
 					TC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
 					' . $data['idApp_Cliente'] . '
-					' . $ultimopedido2 . '
 				GROUP BY
 					TC.idApp_Cliente
 				) AS F
@@ -3700,6 +3710,7 @@ exit();
             $rankingvendas->{$row->idApp_Cliente}->CelularCliente = $row->CelularCliente;
             $rankingvendas->{$row->idApp_Cliente}->CashBackCliente = $row->CashBackCliente;
             $rankingvendas->{$row->idApp_Cliente}->ValidadeCashBack = $row->ValidadeCashBack;
+            $rankingvendas->{$row->idApp_Cliente}->UltimoPedido = $row->UltimoPedido;
 			$rankingvendas->{$row->idApp_Cliente}->ContPedidos = $row->ContPedidos;
 			$rankingvendas->{$row->idApp_Cliente}->Valor = $row->Valor;
 			$data['contagem']++;
@@ -3716,6 +3727,7 @@ exit();
 			$row->CashBackCliente = (!isset($row->CashBackCliente)) ? 0 : $row->CashBackCliente;
 			
 			$row->ValidadeCashBack = (!isset($row->ValidadeCashBack)) ? "0000-00-00" : $row->ValidadeCashBack;
+			$row->UltimoPedido = (!isset($row->UltimoPedido)) ? "0000-00-00" : $row->UltimoPedido;
 			
 			$somaqtdpedidos += $row->ContPedidos;
 			$somaqtdparc += $row->Valor;
@@ -3723,6 +3735,7 @@ exit();
 			$row->CashBackCliente = number_format($row->CashBackCliente, 2, ',', '.');																
 			
 			$row->ValidadeCashBack = $this->basico->mascara_data($row->ValidadeCashBack, 'barras');
+			$row->UltimoPedido = $this->basico->mascara_data($row->UltimoPedido, 'barras');
 			
 		}
 		$rankingvendas->soma->somaqtdclientes = $data['contagem'];

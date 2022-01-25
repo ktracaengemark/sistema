@@ -2503,6 +2503,8 @@ class Relatorio_pag extends CI_Controller {
 			'DataFim',
 			'DataInicio2',
 			'DataFim2',
+			'DataInicio3',
+			'DataFim3',
 			'Ordenamento',
 			'Campo',
 			'Pedidos_de',
@@ -2516,12 +2518,17 @@ class Relatorio_pag extends CI_Controller {
 			'Texto2',
 			'Texto3',
 			'Texto4',
+			'nomedoCliente',
+			'idCliente',
+			'numerodopedido',
+			'site',
 		), TRUE));
 
 		$data['titulo'] = 'Ranking de Vendas';
 		$data['form_open_path'] = 'relatorio_pag/rankingvendas_pag';	
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'relatorio/rankingvendas/';
+        $data['nome'] = 'Cliente';
 		
 		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
