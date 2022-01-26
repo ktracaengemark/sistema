@@ -1760,7 +1760,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistarec/';
 		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
-		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
+		$data['edit'] = 'Orcatrata/baixadaprodutorec/';
 		$data['alterarprod'] = 'Orcatrata/alterarprodutorec/';
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'relatorio/vendidos/';

@@ -46,16 +46,16 @@
 
 										<?php
 										$QtdSoma = $ProdutoSoma = 0;
+										$linha =  $per_page*$pagina;
 										for ($i=1; $i <= $count['PCount']; $i++) {
+											$contagem = ($linha + $i);
 										?>
 
-											<?php if ($metodo > 1) { ?>
 											<input type="hidden" name="idApp_Produto<?php echo $i ?>" value="<?php echo $produto[$i]['idApp_Produto']; ?>"/>
-											<?php } ?>
 
 											<input type="hidden" name="ProdutoHidden" id="ProdutoHidden<?php echo $i ?>" value="<?php echo $i ?>">
 											<?php 
-												if ($produto[$i]['Prod_Serv_Produto'] == "S") {
+												if ($_SESSION['Produto'][$i]['Prod_Serv_Produto'] == "S") {
 													$cor = 'danger';
 												}else{
 													$cor = 'warning';
@@ -65,152 +65,128 @@
 												<div class="panel panel-<?php echo $cor ?>">
 													<div class="panel-heading">
 														<div class="row">
+															<input type="hidden" name="idApp_OrcaTrata<?php echo $i ?>" id="idApp_OrcaTrata<?php echo $i ?>" value="<?php echo $produto[$i]['idApp_OrcaTrata']; ?>"/>
 															<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+																<div class="row">
+																	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+																		<label for="NomeCliente">Cont | O.S.| Cliente</label><br>
+																		<input type="text" class="form-control" readonly=""
+																				value="<?php echo $contagem ?> | <?php echo $_SESSION['Produto'][$i]['idApp_OrcaTrata'] ?> | <?php echo $_SESSION['Produto'][$i]['NomeCliente'] ?> | <?php echo $_SESSION['Produto'][$i]['NomeClientePet'] ?> | <?php echo $_SESSION['Produto'][$i]['NomeClienteDep'] ?>">
+																	</div>
+																	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+																		<label for="NomeProduto">Item</label><br>
+																		<input type="text" class="form-control" readonly="" value="<?php echo $_SESSION['Produto'][$i]['NomeProduto'] ?>">
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+																		<label for="QtdProduto">Qtd</label>
+																		<input type="text" class="form-control Numero" readonly="" value="<?php echo $_SESSION['Produto'][$i]['QtdProduto'] ?>">
+																	</div>
+																	<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+																		<label for="QtdIncrementoProduto">Embl</label>
+																		<input type="text" class="form-control Numero" readonly="" value="<?php echo $_SESSION['Produto'][$i]['QtdIncrementoProduto'] ?>">
+																	</div>
+																	<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+																		<label for="SubtotalQtdProduto">Total</label>
+																		<input type="text" class="form-control Numero" readonly="" value="<?php echo $_SESSION['Produto'][$i]['SubtotalQtdProduto'] ?>">
+																	</div>
+																	<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+																		<label for="ValorProduto">ValorEmbl</label>
+																		<div class="input-group">
+																			<span class="input-group-addon" id="basic-addon1">R$</span>
+																			<input type="text" class="form-control Valor" readonly="" value="<?php echo $_SESSION['Produto'][$i]['ValorProduto'] ?>">
+																		</div>
+																	</div>
+																	<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+																		<label for="SubtotalProduto">Valortotal</label>
+																		<div class="input-group">
+																			<span class="input-group-addon" id="basic-addon1">R$</span>
+																			<input type="text" class="form-control Valor" readonly="" value="<?php echo $_SESSION['Produto'][$i]['SubtotalProduto'] ?>">
+																		</div>
+																	</div>
+																</div>
+																<?php if ($produto[$i]['Prod_Serv_Produto'] == "S") { ?>
 																	<div class="row">
-																		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-																			<label for="NomeCliente">O.S.</label><br>
-																			<input type="text" class="form-control" readonly=""
-																				    value="<?php echo $produto[$i]['idApp_OrcaTrata'] ?> | <?php echo $_SESSION['Produto'][$i]['NomeCliente'] ?> | <?php echo $produto[$i]['NomeClientePet'] ?> | <?php echo $produto[$i]['NomeClienteDep'] ?>">
+																		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+																			<label for="ProfissionalProduto_1<?php echo $i ?>">Profissional 1</label>
+																			<?php if ($i == 1) { ?>
+																			<?php } ?>
+																			<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+																					 id="listadinamica_prof_1<?php echo $i ?>" name="ProfissionalProduto_1<?php echo $i ?>">
+																				<option value="">-- Sel.Profis. --</option>
+																				<?php
+																				foreach ($select[$i]['ProfissionalProduto_1'] as $key => $row) {
+																					if ($produto[$i]['ProfissionalProduto_1'] == $key) {
+																						echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+																					} else {
+																						echo '<option value="' . $key . '">' . $row . '</option>';
+																					}
+																				}
+																				?>
+																			</select>
 																		</div>
-																		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-																			<label for="NomeProduto">Item</label><br>
-																			<input type="text" class="form-control" readonly=""
-																				    value="<?php echo $produto[$i]['NomeProduto'] ?>">
+																		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+																			<label for="ProfissionalProduto_2<?php echo $i ?>">Profissional 2</label>
+																			<?php if ($i == 1) { ?>
+																			<?php } ?>
+																			<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+																					 id="listadinamica_prof_2<?php echo $i ?>" name="ProfissionalProduto_2<?php echo $i ?>">
+																				<option value="">-- Sel.Profis. --</option>
+																				<?php
+																				foreach ($select[$i]['ProfissionalProduto_2'] as $key => $row) {
+																					if ($produto[$i]['ProfissionalProduto_2'] == $key) {
+																						echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+																					} else {
+																						echo '<option value="' . $key . '">' . $row . '</option>';
+																					}
+																				}
+																				?>
+																			</select>
+																		</div>
+																		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+																			<label for="ProfissionalProduto_3<?php echo $i ?>">Profissional 3</label>
+																			<?php if ($i == 1) { ?>
+																			<?php } ?>
+																			<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+																					 id="listadinamica_prof_3<?php echo $i ?>" name="ProfissionalProduto_3<?php echo $i ?>">
+																				<option value="">-- Sel.Profis. --</option>
+																				<?php
+																				foreach ($select[$i]['ProfissionalProduto_3'] as $key => $row) {
+																					if ($produto[$i]['ProfissionalProduto_3'] == $key) {
+																						echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+																					} else {
+																						echo '<option value="' . $key . '">' . $row . '</option>';
+																					}
+																				}
+																				?>
+																			</select>
+																		</div>
+																		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+																			<label for="ProfissionalProduto_4<?php echo $i ?>">Profissional 4</label>
+																			<?php if ($i == 1) { ?>
+																			<?php } ?>
+																			<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+																					 id="listadinamica_prof_4<?php echo $i ?>" name="ProfissionalProduto_4<?php echo $i ?>">
+																				<option value="">-- Sel.Profis. --</option>
+																				<?php
+																				foreach ($select[$i]['ProfissionalProduto_4'] as $key => $row) {
+																					if ($produto[$i]['ProfissionalProduto_4'] == $key) {
+																						echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+																					} else {
+																						echo '<option value="' . $key . '">' . $row . '</option>';
+																					}
+																				}
+																				?>
+																			</select>
 																		</div>
 																	</div>
-																	<div class="row">	
-																		<!--
-																		<div class="col-md-5">
-																			<label for="Produtos">Produto <?php echo $i ?>:</label><br>
-																			<input type="text" class="form-control" maxlength="6" readonly=""
-																				   name="Produtos<?php echo $i ?>" value="<?php #echo $produto[$i]['Produtos'] ?>">
-																		</div>
-																		-->	
-																		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-																			<label for="QtdProduto">Qtd</label>
-																			<input type="text" class="form-control Numero" maxlength="10" id="QtdProduto<?php echo $i ?>" readonly=""
-																					name="QtdProduto<?php echo $i ?>" value="<?php echo $produto[$i]['QtdProduto'] ?>">
-																		</div>
-																		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-																			<label for="QtdIncrementoProduto">Embl</label>
-																			<input type="text" class="form-control Numero" maxlength="10" id="QtdIncrementoProduto<?php echo $i ?>" readonly=""
-																					name="QtdIncrementoProduto<?php echo $i ?>" value="<?php echo $produto[$i]['QtdIncrementoProduto'] ?>">
-																		</div>
-																		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-																			<label for="SubtotalQtdProduto">Total</label>
-																			<input type="text" class="form-control Numero" maxlength="10" id="SubtotalQtdProduto<?php echo $i ?>" readonly=""
-																					name="SubtotalQtdProduto<?php echo $i ?>" value="<?php echo $produto[$i]['SubtotalQtdProduto'] ?>">
-																		</div>
-																		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-																			<label for="ValorProduto">ValorEmbl</label>
-																			<div class="input-group">
-																				<span class="input-group-addon" id="basic-addon1">R$</span>
-																				<input type="text" class="form-control Valor" id="ValorProduto<?php echo $i ?>" readonly=""
-																					onkeyup="calculaSubtotal(this.value,this.name,'<?php echo $i ?>','VP','Produto')"
-																					name="ValorProduto<?php echo $i ?>" value="<?php echo $produto[$i]['ValorProduto'] ?>">
-																			</div>
-																		</div>
-																		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-																			<label for="SubtotalProduto">Valortotal</label>
-																			<div class="input-group">
-																				<span class="input-group-addon" id="basic-addon1">R$</span>
-																				<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00" readonly="" id="SubtotalProduto<?php echo $i ?>"
-																					   name="SubtotalProduto<?php echo $i ?>" value="<?php echo $produto[$i]['SubtotalProduto'] ?>">
-																			</div>
-																		</div>
-																		<!--
-																		<div class="col-md-2">
-																			<label for="Produto">Orcamento <?php echo $i ?>:</label><br>
-																			<input type="text" class="form-control" maxlength="6" readonly=""
-																				   name="Produto<?php echo $i ?>" value="<?php echo $produto[$i]['Produto'] ?>">
-																		</div>
-																		-->
-																	</div>
-																	<?php if ($produto[$i]['Prod_Serv_Produto'] == "S") { ?>
-																		<div class="row">
-																			<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-																				<label for="ProfissionalProduto_1<?php echo $i ?>">Profissional 1</label>
-																				<?php if ($i == 1) { ?>
-																				<?php } ?>
-																				<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-																						 id="listadinamica_prof_1<?php echo $i ?>" name="ProfissionalProduto_1<?php echo $i ?>">
-																					<option value="">-- Sel.Profis. --</option>
-																					<?php
-																					foreach ($select[$i]['ProfissionalProduto_1'] as $key => $row) {
-																						//(!$produto['ProfissionalProduto_1']) ? $produto['ProfissionalProduto_1'] = $_SESSION['log']['ProfissionalProduto_1']: FALSE;
-																						if ($produto[$i]['ProfissionalProduto_1'] == $key) {
-																							echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-																						} else {
-																							echo '<option value="' . $key . '">' . $row . '</option>';
-																						}
-																					}
-																					?>
-																				</select>
-																			</div>
-																			<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-																				<label for="ProfissionalProduto_2<?php echo $i ?>">Profissional 2</label>
-																				<?php if ($i == 1) { ?>
-																				<?php } ?>
-																				<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-																						 id="listadinamica_prof_2<?php echo $i ?>" name="ProfissionalProduto_2<?php echo $i ?>">
-																					<option value="">-- Sel.Profis. --</option>
-																					<?php
-																					foreach ($select[$i]['ProfissionalProduto_2'] as $key => $row) {
-																						//(!$produto['ProfissionalProduto_2']) ? $produto['ProfissionalProduto_2'] = $_SESSION['log']['ProfissionalProduto_1']: FALSE;
-																						if ($produto[$i]['ProfissionalProduto_2'] == $key) {
-																							echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-																						} else {
-																							echo '<option value="' . $key . '">' . $row . '</option>';
-																						}
-																					}
-																					?>
-																				</select>
-																			</div>
-																			<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-																				<label for="ProfissionalProduto_3<?php echo $i ?>">Profissional 3</label>
-																				<?php if ($i == 1) { ?>
-																				<?php } ?>
-																				<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-																						 id="listadinamica_prof_3<?php echo $i ?>" name="ProfissionalProduto_3<?php echo $i ?>">
-																					<option value="">-- Sel.Profis. --</option>
-																					<?php
-																					foreach ($select[$i]['ProfissionalProduto_3'] as $key => $row) {
-																						//(!$produto['ProfissionalProduto_3']) ? $produto['ProfissionalProduto_3'] = $_SESSION['log']['ProfissionalProduto_1']: FALSE;
-																						if ($produto[$i]['ProfissionalProduto_3'] == $key) {
-																							echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-																						} else {
-																							echo '<option value="' . $key . '">' . $row . '</option>';
-																						}
-																					}
-																					?>
-																				</select>
-																			</div>
-																			<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-																				<label for="ProfissionalProduto_4<?php echo $i ?>">Profissional 4</label>
-																				<?php if ($i == 1) { ?>
-																				<?php } ?>
-																				<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-																						 id="listadinamica_prof_4<?php echo $i ?>" name="ProfissionalProduto_4<?php echo $i ?>">
-																					<option value="">-- Sel.Profis. --</option>
-																					<?php
-																					foreach ($select[$i]['ProfissionalProduto_4'] as $key => $row) {
-																						//(!$produto['ProfissionalProduto_3']) ? $produto['ProfissionalProduto_4'] = $_SESSION['log']['ProfissionalProduto_1']: FALSE;
-																						if ($produto[$i]['ProfissionalProduto_4'] == $key) {
-																							echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-																						} else {
-																							echo '<option value="' . $key . '">' . $row . '</option>';
-																						}
-																					}
-																					?>
-																				</select>
-																			</div>
-																		</div>
-																	<?php }else{ ?>
-																		<input type="hidden" name="ProfissionalProduto_1<?php echo $i ?>" id="ProfissionalProduto_1<?php echo $i ?>" value="0">
-																		<input type="hidden" name="ProfissionalProduto_2<?php echo $i ?>" id="ProfissionalProduto_2<?php echo $i ?>" value="0">
-																		<input type="hidden" name="ProfissionalProduto_3<?php echo $i ?>" id="ProfissionalProduto_3<?php echo $i ?>" value="0">
-																		<input type="hidden" name="ProfissionalProduto_4<?php echo $i ?>" id="ProfissionalProduto_4<?php echo $i ?>" value="0">
-																	<?php } ?>
+																<?php }else{ ?>
+																	<input type="hidden" name="ProfissionalProduto_1<?php echo $i ?>" id="ProfissionalProduto_1<?php echo $i ?>" value="0">
+																	<input type="hidden" name="ProfissionalProduto_2<?php echo $i ?>" id="ProfissionalProduto_2<?php echo $i ?>" value="0">
+																	<input type="hidden" name="ProfissionalProduto_3<?php echo $i ?>" id="ProfissionalProduto_3<?php echo $i ?>" value="0">
+																	<input type="hidden" name="ProfissionalProduto_4<?php echo $i ?>" id="ProfissionalProduto_4<?php echo $i ?>" value="0">
+																<?php } ?>
 																	
 															</div>
 															<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">																
@@ -229,7 +205,7 @@
 																				<span class="glyphicon glyphicon-calendar"></span>
 																			</span>
 																			<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA" readonly=""
-																				   name="DataConcluidoProduto<?php echo $i ?>" value="<?php echo $produto[$i]['DataConcluidoProduto']; ?>">
+																				   name="DataConcluidoProduto<?php echo $i ?>" value="<?php echo $_SESSION['Produto'][$i]['DataConcluidoProduto']; ?>">
 																			
 																		</div>
 																	</div>
@@ -240,7 +216,7 @@
 																				<span class="glyphicon glyphicon-time"></span>
 																			</span>
 																			<input type="text" class="form-control Time" <?php echo $readonly; ?> readonly=""
-																				   name="HoraConcluidoProduto<?php echo $i ?>" id="HoraConcluidoProduto<?php echo $i ?>" value="<?php echo $produto[$i]['HoraConcluidoProduto']; ?>">
+																				   name="HoraConcluidoProduto<?php echo $i ?>" id="HoraConcluidoProduto<?php echo $i ?>" value="<?php echo $_SESSION['Produto'][$i]['HoraConcluidoProduto']; ?>">
 																		</div>
 																	</div>
 																</div>
@@ -291,6 +267,7 @@
 						</div>	
 					</div>
 					<div class="row">	
+						<!--
 						<div class="panel panel-success">
 							<div class="panel-heading text-left">
 								<div class="row">
@@ -304,6 +281,7 @@
 								</div>
 							</div>
 						</div>
+						-->
 						<input type="hidden" name="CountMax" id="CountMax" value="<?php echo $ProdutoSoma ?>">									
 						<div class="col-md-3">
 							<label for="Entregues">Todos Entregues?</label><br>

@@ -33,7 +33,7 @@
 				<label></label><br>
 				<div class="input-group">
 					<span class="input-group-addon">Prds</span>
-					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->num_rows() ?>">
+					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->num_rows() ?> / <?php echo $total_rows ?>">
 				</div>
 			</div>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
@@ -64,7 +64,6 @@
 					</button>
 				</div>
 			<?php } ?>
-			<!--
 			<div class="col-md-1">
 				<label>Baixa</label>
 				<a href="<?php echo base_url() . $alterarprod . $_SESSION['log']['idSis_Empresa']; ?>">
@@ -73,7 +72,6 @@
 					</button>
 				</a>
 			</div>
-			-->
 		</div>	
 	</div>
 </div>	
@@ -93,7 +91,7 @@
 				<thead>
 					<tr>
 						<th class="active">Imp.</th>
-						<!--<th class="active">Baixa</th>-->
+						<th class="active">Baixa</th>
 						<th class="active">Cont.</th>
 						<th class="active">Pedido</th>
 						<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
@@ -132,6 +130,7 @@
 				</thead>
 				<tbody>
 					<?php
+					$linha =  $per_page*$pagina;
 					$count = 1;
 					foreach ($report->result_array() as $row) {
 						echo '<tr>';
@@ -170,7 +169,24 @@
 									</td>';
 							}
 							*/
-							echo '<td>' . $count . '</td>';
+							
+							if ($_SESSION['Usuario']['Bx_Prd'] == "S") {
+								if($row['CanceladoOrca'] == "Não" && $row['ConcluidoProduto'] == "Não"){	
+									echo '<td class="notclickable">
+											<a class="btn btn-md btn-success notclickable" href="' . base_url() . $edit . $row['idApp_Produto'] . '">
+												<span class="glyphicon glyphicon-ok notclickable"></span>
+											</a>
+										</td>';
+								}else{
+									echo '<td class="notclickable">
+											<a class="btn btn-md btn-danger notclickable">
+												<span class="glyphicon glyphicon-ok notclickable"></span>
+											</a>
+										</td>';
+								}
+							}
+							
+							echo '<td>' . ($linha + $count) . '</td>';
 							echo '<td>' . $row['idApp_OrcaTrata'] . '- ' . $row['TipoFinanceiro'] . ' - ' . $row['Descricao'] . '</td>';
 							if($_SESSION['log']['idSis_Empresa'] != "5"){
 								echo '<td>' . $row['Nome' . $nome] . '</td>';

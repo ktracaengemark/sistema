@@ -42,25 +42,6 @@
 										<input type="hidden" name="Cliente" id="Cliente" value="">
 									<?php } ?>
 								</div>
-								<!--
-								<div class="col-md-2 text-left">	
-									<label><?php #echo $nome; ?></label>
-									<div class="input-group">
-										<span class="input-group-btn">
-											<button class="btn btn-<?php #echo $panel; ?> btn-md" type="submit">
-												<span class="glyphicon glyphicon-search"></span> 
-											</button>
-										</span>
-										<?php if($metodo == 2) {?>	
-											<input type="text" placeholder="Pesquisar <?php #echo $nome; ?>" class="form-control Numero btn-sm" name="<?php #echo $nome; ?>" id="<?php #echo $nome; ?>" value="<?php #echo set_value($nome, $query[$nome]); ?>">
-											<input type="hidden" name="Fornecedor" id="Fornecedor" value="">
-										<?php }elseif($metodo == 1){ ?>	
-											<input type="text" placeholder="Pesquisar <?php #echo $nome; ?>" class="form-control Numero btn-sm" name="<?php #echo $nome; ?>" id="<?php #echo $nome; ?>" value="<?php #echo set_value($nome, $query[$nome]); ?>">
-											<input type="hidden" name="Cliente" id="Cliente" value="">
-										<?php } ?>
-									</div>
-								</div>
-								-->
 							<?php }else{ ?>
 								<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value=""/>
 								<input type="hidden" name="idApp_Fornecedor" id="idApp_Fornecedor" value=""/>
@@ -111,35 +92,35 @@
 									</select>
 								</div>	
 							</div>
+						</div>
+						<div class="row">
 							<div class="col-md-2">
-								<div class="col-md-6">
-									<label>Filtros</label>
-									<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
-										<span class="glyphicon glyphicon-filter"></span>
-									</button>
-								</div>
-								<?php if ($editar == 1) { ?>
-									<?php if ($print == 1) { ?>	
-										<div class="col-md-4">
-											<label>Imprimir</label>
-											<a href="<?php echo base_url() . $imprimirlista . $_SESSION['log']['idSis_Empresa']; ?>">
-												<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
-													<span class="glyphicon glyphicon-print"></span>
-												</button>
-											</a>
-										</div>
-									<?php } ?>	
-									<div class="col-md-4">
-										<label>Baixa</label>
-										<a href="<?php echo base_url() . $alterarparc . $_SESSION['log']['idSis_Empresa']; ?>">
-											<button class="btn btn-success btn-md btn-block" type="button">
-												<span class="glyphicon glyphicon-edit"></span>
+								<label>Filtros</label>
+								<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
+									<span class="glyphicon glyphicon-filter"></span>
+								</button>
+							</div>
+							<?php if ($editar == 1) { ?>
+								<?php if ($print == 1) { ?>	
+									<div class="col-md-2">
+										<label>Imprimir</label>
+										<a href="<?php echo base_url() . $imprimirlista . $_SESSION['log']['idSis_Empresa']; ?>">
+											<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
+												<span class="glyphicon glyphicon-print"></span>
 											</button>
 										</a>
-									</div>	
+									</div>
 								<?php } ?>	
-							</div>
-						</div>	
+								<div class="col-md-2">
+									<label>Baixa</label>
+									<a href="<?php echo base_url() . $alterarparc . $_SESSION['log']['idSis_Empresa']; ?>">
+										<button class="btn btn-success btn-md btn-block" type="button">
+											<span class="glyphicon glyphicon-edit"></span>
+										</button>
+									</a>
+								</div>	
+							<?php } ?>	
+						</div>
 					</div>
 				</div>
 			</div>	
