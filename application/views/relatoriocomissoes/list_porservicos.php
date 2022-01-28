@@ -128,15 +128,15 @@
 							<th class="active">Produto</th>
 							<th class="active">ValorR$</th>
 							<th class="active">Prof1.</th>
-							<th class="active">Com1.</th>
+							<!--<th class="active">Com1.</th>-->
 							<th class="active">Prof2.</th>
-							<th class="active">Com2.</th>
+							<!--<th class="active">Com2.</th>-->
 							<th class="active">Prof3.</th>
-							<th class="active">Com3.</th>
+							<!--<th class="active">Com3.</th>-->
 							<th class="active">Prof4.</th>
-							<th class="active">Com4.</th>
-							<th class="active">ComTotal.</th>
-							<th class="active">ComProf.</th>
+							<!--<th class="active">Com4.</th>-->
+							<th class="active">ValorTotal.</th>
+							<th class="active">ValorProf.</th>
 							<!--<th class="active">NºProf.</th>-->
 							<th class="active">StatusCom</th>
 							<th class="active">DataPago.</th>
@@ -174,14 +174,10 @@
 								echo '<td class="text-left">' . $row['QtdProduto'] . '</td>';
 								echo '<td class="text-left">' . $row['NomeProduto'] . '</td>';
 								echo '<td class="text-left">R$' . $row['ValorTotalProduto'] . '</td>';
-								echo '<td>' . $row['NomeProf1'] . ' ||| ' . $row['ComProf1'] . '%</td>';
-								echo '<td>R$' . $row['valor_com_Prof_1'] . '</td>';
-								echo '<td>' . $row['NomeProf2'] . ' ||| ' . $row['ComProf2'] . '%</td>';
-								echo '<td>R$' . $row['valor_com_Prof_2'] . '</td>';
-								echo '<td>' . $row['NomeProf3'] . ' ||| ' . $row['ComProf3'] . '%</td>';
-								echo '<td>R$' . $row['valor_com_Prof_3'] . '</td>';
-								echo '<td>' . $row['NomeProf4'] . ' ||| ' . $row['ComProf4'] . '%</td>';
-								echo '<td>R$' . $row['valor_com_Prof_4'] . '</td>';
+								echo '<td>' . $row['NomeProf1'] . ' | ' . $row['ComProf1'] . '% | R$' . $row['valor_com_Prof_1'] . '</td>';
+								echo '<td>' . $row['NomeProf2'] . ' | ' . $row['ComProf2'] . '% | R$' . $row['valor_com_Prof_2'] . '</td>';
+								echo '<td>' . $row['NomeProf3'] . ' | ' . $row['ComProf3'] . '% | R$' . $row['valor_com_Prof_3'] . '</td>';
+								echo '<td>' . $row['NomeProf4'] . ' | ' . $row['ComProf4'] . '% | R$' . $row['valor_com_Prof_4'] . '</td>';
 								echo '<td>R$' . $row['Valor_Com_Total'] . '</td>';
 								echo '<td>R$' . $row['Valor_Com_Total_Prof'] . '</td>';
 								//echo '<td class="text-left">/ ' . $row['Contagem'] . '</td>';
