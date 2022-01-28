@@ -4974,7 +4974,7 @@ function calculaQtdSomaDev(campo, soma, somaproduto, excluir, produtonum, countm
  */
  
  /*Carrega os Profissionais do Servico i */
-function carregaHidden_Prof(value = 0, name, i, PR = 0) {
+function carregaHidden_Prof(value = 0, name, i, PR = 0, cont_PR = 4) {
 
 	if (value != 0) {
 	
@@ -4989,7 +4989,7 @@ function carregaHidden_Prof(value = 0, name, i, PR = 0) {
 				$("#idTFProf_Servico_"+PR+i).val(data[0]['id_TF']);
 				$("#ComFunProf_Servico_"+PR+i).val(data[0]['Com_Fun']);
 
-				carregaValores_Prof(i);
+				carregaValores_Prof(i, cont_PR);
             },
             error: function () {
                 //console.log('erro');
@@ -4997,7 +4997,7 @@ function carregaHidden_Prof(value = 0, name, i, PR = 0) {
 				$("#idTFProf_Servico_"+PR+i).val(0);
 				$("#ComFunProf_Servico_"+PR+i).val(0);
 				$("#ValorComProf_Servico_"+PR+i).val(0);
-				carregaValores_Prof(i);
+				carregaValores_Prof(i, cont_PR);
             }
 			
         });
@@ -5009,154 +5009,58 @@ function carregaHidden_Prof(value = 0, name, i, PR = 0) {
 		$("#ComFunProf_Servico_"+PR+i).val(0);
 		$("#ValorComProf_Servico_"+PR+i).val(0);
 
-		carregaValores_Prof(i);
+		carregaValores_Prof(i, cont_PR);
 	}
 }
 
-function carregaValores_Prof(i) {
+function carregaValores_Prof(i, cont_PR) {
 	//console.log('i = '+i);
+	//console.log('cont_PR = '+cont_PR);
 	valor = $("#SubtotalServico"+i).val();
 	valor = valor.replace(".","").replace(",",".");
 	valor = parseFloat(valor);
 	//console.log('valor = '+valor);
-	cont_id_Fun_1=0;
-	if($("#idTFProf_Servico_1"+i).val()){
-		for (k = 1; k <= 4; k++) {
-			p = $("#idTFProf_Servico_"+k+i).val();
-			if(p == $("#idTFProf_Servico_1"+i).val()){
-				cont_id_Fun_1++;
+	somacomissao = 0;
+	for (j = 1; j <= cont_PR; j++) {
+		cont_id_Fun=0;
+		if($("#idTFProf_Servico_"+j+i).val()){
+			for (k = 1; k <= cont_PR; k++) {
+				p = $("#idTFProf_Servico_"+k+i).val();
+				if(p == $("#idTFProf_Servico_"+j+i).val()){
+					cont_id_Fun++;
+				}
+			}	
+			for (k = 1; k <= cont_PR; k++) {
+				p = $("#idTFProf_Servico_"+k+i).val();
+				if(p == $("#idTFProf_Servico_"+j+i).val()){
+					valordoprof = valor*$("#ComFunProf_Servico_"+k+i).val()/cont_id_Fun/100
+					valordoprof = parseFloat(valordoprof);
+					valordoprof_m = mascaraValorReal(valordoprof);
+					$("#ValorComProf_Servico_"+k+i).val(valordoprof_m);
+				}
 			}
-		}	
-		for (k = 1; k <= 4; k++) {
-			p = $("#idTFProf_Servico_"+k+i).val();
-			if(p == $("#idTFProf_Servico_1"+i).val()){
-				valordoprof_1 = valor*$("#ComFunProf_Servico_"+k+i).val()/cont_id_Fun_1/100
-				valordoprof_1 = parseFloat(valordoprof_1);
-				valordoprof_1_m = mascaraValorReal(valordoprof_1);
-				$("#ValorComProf_Servico_"+k+i).val(valordoprof_1_m);
-			}
+		}else{
+			$("#ProfissionalServico_"+j+i).val(0);
+			$("#idTFProf_Servico_"+j+i).val(0);
+			$("#ComFunProf_Servico_"+j+i).val(0);
+			$("#ValorComProf_Servico_"+j+i).val(0);				
 		}
-	}else{
-		$("#ProfissionalServico_1"+i).val(0);
-		$("#idTFProf_Servico_1"+i).val(0);
-		$("#ComFunProf_Servico_1"+i).val(0);
-		$("#ValorComProf_Servico_1"+i).val(0);				
+		
+		if($("#ValorComProf_Servico_"+j+i).val()){
+			valordoprof = $("#ValorComProf_Servico_"+j+i).val();
+			valordoprof = valordoprof.replace(".","").replace(",",".");	
+		}else{
+			valordoprof = 0;
+		}
+		valordoprof = parseFloat(valordoprof);
+
+		somacomissao += valordoprof;
+		somacomissao = parseFloat(somacomissao);
+		somacomissao_m = mascaraValorReal(somacomissao);
+		$("#ValorComissaoServico"+i).val(somacomissao_m);
+		//console.log(somacomissao_m);	
 	}
 
-	cont_id_Fun_2=0;
-	if($("#idTFProf_Servico_2"+i).val()){
-		for (k = 1; k <= 4; k++) {
-			p = $("#idTFProf_Servico_"+k+i).val();
-			if(p == $("#idTFProf_Servico_2"+i).val()){
-				cont_id_Fun_2++;
-			}
-		}
-		for (k = 1; k <= 4; k++) {
-			p = $("#idTFProf_Servico_"+k+i).val();
-			if(p == $("#idTFProf_Servico_2"+i).val()){
-				valordoprof_2 = valor*$("#ComFunProf_Servico_"+k+i).val()/cont_id_Fun_2/100
-				valordoprof_2 = parseFloat(valordoprof_2);
-				valordoprof_2_m = mascaraValorReal(valordoprof_2);
-				$("#ValorComProf_Servico_"+k+i).val(valordoprof_2_m);
-			}
-		}
-	}else{
-		$("#ProfissionalServico_2"+i).val(0);
-		$("#idTFProf_Servico_2"+i).val(0);
-		$("#ComFunProf_Servico_2"+i).val(0);
-		$("#ValorComProf_Servico_2"+i).val(0);				
-	}
-
-	cont_id_Fun_3=0;
-	if($("#idTFProf_Servico_3"+i).val()){
-		for (k = 1; k <= 4; k++) {
-			p = $("#idTFProf_Servico_"+k+i).val();
-			if(p == $("#idTFProf_Servico_3"+i).val()){
-				cont_id_Fun_3++;
-			}
-		}
-		for (k = 1; k <= 4; k++) {
-			p = $("#idTFProf_Servico_"+k+i).val();
-			if(p == $("#idTFProf_Servico_3"+i).val()){
-				valordoprof_3 = valor*$("#ComFunProf_Servico_"+k+i).val()/cont_id_Fun_3/100
-				valordoprof_3 = parseFloat(valordoprof_3);
-				valordoprof_3_m = mascaraValorReal(valordoprof_3);
-				$("#ValorComProf_Servico_"+k+i).val(valordoprof_3_m);
-			}
-		}
-	}else{
-		$("#ProfissionalServico_3"+i).val(0);
-		$("#idTFProf_Servico_3"+i).val(0);
-		$("#ComFunProf_Servico_3"+i).val(0);
-		$("#ValorComProf_Servico_3"+i).val(0);				
-	}
-	
-	cont_id_Fun_4=0;
-	if($("#idTFProf_Servico_4"+i).val()){
-		for (k = 1; k <= 4; k++) {
-			p = $("#idTFProf_Servico_"+k+i).val();
-			if(p == $("#idTFProf_Servico_4"+i).val()){
-				cont_id_Fun_4++;
-			}
-		}
-		for (k = 1; k <= 4; k++) {
-			p = $("#idTFProf_Servico_"+k+i).val();
-			if(p == $("#idTFProf_Servico_4"+i).val()){
-				valordoprof_4 = valor*$("#ComFunProf_Servico_"+k+i).val()/cont_id_Fun_4/100
-				valordoprof_4 = parseFloat(valordoprof_4);
-				valordoprof_4_m = mascaraValorReal(valordoprof_4);
-				$("#ValorComProf_Servico_"+k+i).val(valordoprof_4_m);
-			}
-		}
-	}else{
-		$("#ProfissionalServico_4"+i).val(0);
-		$("#idTFProf_Servico_4"+i).val(0);
-		$("#ComFunProf_Servico_4"+i).val(0);
-		$("#ValorComProf_Servico_4"+i).val(0);				
-	}
-	
-	if($("#ValorComProf_Servico_1"+i).val()){
-		valordoprof_1 = $("#ValorComProf_Servico_1"+i).val();
-		valordoprof_1 = valordoprof_1.replace(".","").replace(",",".");
-		
-	}else{
-		valordoprof_1 = 0;
-	}
-	valordoprof_1 = parseFloat(valordoprof_1);
-	
-	if($("#ValorComProf_Servico_2"+i).val()){
-		valordoprof_2 = $("#ValorComProf_Servico_2"+i).val();
-		valordoprof_2 = valordoprof_2.replace(".","").replace(",",".");
-		
-	}else{
-		valordoprof_2 = 0;
-	}
-	valordoprof_2 = parseFloat(valordoprof_2);
-	
-	if($("#ValorComProf_Servico_3"+i).val()){
-		valordoprof_3 = $("#ValorComProf_Servico_3"+i).val();
-		valordoprof_3 = valordoprof_3.replace(".","").replace(",",".");
-		
-	}else{
-		valordoprof_3 = 0;
-	}
-	valordoprof_3 = parseFloat(valordoprof_3);
-	
-	if($("#ValorComProf_Servico_4"+i).val()){
-		valordoprof_4 = $("#ValorComProf_Servico_4"+i).val();
-		valordoprof_4 = valordoprof_4.replace(".","").replace(",",".");
-		
-	}else{
-		valordoprof_4 = 0;
-	}
-	valordoprof_4 = parseFloat(valordoprof_4);
-	
-	totalcomissao = (valordoprof_1 +  valordoprof_2 +  valordoprof_3 +  valordoprof_4);
-	totalcomissao = parseFloat(totalcomissao);
-	totalcomissao_m = mascaraValorReal(totalcomissao);
-	$("#ValorComissaoServico"+i).val(totalcomissao_m);
-	//console.log(totalcomissao_m);
-	
  }
  
  /*Carrega a Data do Dia do lançamento*/
@@ -5441,13 +5345,13 @@ function buscaValor1Tabelas(id, campo, tabela, num, campo2, recorrencias) {
 						//if (tabela == area && $("#Qtd"+tabela+num).val()) {
 						if ($("#Qtd"+campo2+num).val()) {
 							calculaSubtotal($("#idTab_"+campo2+num).val(),$("#Qtd"+campo2+num).val(),num,'OUTRO',campo2,$("#QtdIncremento"+campo2+num).val(),$("#Comissao"+campo2+num).val(),$("#ComissaoServico"+campo2+num).val(),$("#ComissaoCashBack"+campo2+num).val());
-							carregaValores_Prof(num);
+							carregaValores_Prof(num, cont_PR = 4);
 							break;
 						}
 
 						//para cada valor carregado o orçamento é calculado/atualizado
 						//através da chamada de sua função
-						carregaValores_Prof(num);
+						carregaValores_Prof(num, cont_PR = 4);
 						calculaOrcamento();
 						break;
 					}
@@ -5475,13 +5379,13 @@ function buscaValor1Tabelas(id, campo, tabela, num, campo2, recorrencias) {
 					//if (tabela == area && $("#Qtd"+tabela+num).val()) {
 					if ($("#Qtd"+campo2+num).val()) {
 						calculaSubtotal($("#idTab_"+campo2+num).val(),$("#Qtd"+campo2+num).val(),num,'OUTRO',campo2,$("#QtdIncremento"+campo2+num).val(),$("#Comissao"+campo2+num).val(),$("#ComissaoServico"+campo2+num).val(),$("#ComissaoCashBack"+campo2+num).val());
-						carregaValores_Prof(num);
+						carregaValores_Prof(num, cont_PR = 4);
 						break;
 					}
 				
 					//para cada valor carregado o orçamento é calculado/atualizado
 					//através da chamada de sua função
-					carregaValores_Prof(num);
+					carregaValores_Prof(num, cont_PR = 4);
 					calculaOrcamento();
 					break;
 				}
@@ -5531,7 +5435,7 @@ function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
 
 						//para cada valor carregado o orçamento é calculado/atualizado
 						//através da chamada de sua função
-						carregaValores_Prof(num);
+						carregaValores_Prof(num, cont_PR = 4);
 						calculaOrcamento();
 						break;
 					}
@@ -5562,7 +5466,7 @@ function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
 				
 					//para cada valor carregado o orçamento é calculado/atualizado
 					//através da chamada de sua função
-					carregaValores_Prof(num);
+					carregaValores_Prof(num, cont_PR = 4);
 					calculaOrcamento();
 					break;
 				}
@@ -5695,7 +5599,7 @@ function calculaSubtotal(valor, campo, num, tipo, tabela, qtdinc, comissao, comi
 
     //para cada vez que o subtotal for calculado o orçamento e o total restante
     //também serão atualizados
-	carregaValores_Prof(num);
+	carregaValores_Prof(num, cont_PR = 4);
     calculaOrcamento();
 
 }
