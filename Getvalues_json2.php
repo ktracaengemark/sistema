@@ -125,6 +125,31 @@ elseif ($_GET['q'] == 30) {
 
 }
 
+elseif ($_GET['q'] == 31) {
+
+    $result = mysql_query('
+            SELECT
+				AF.idApp_Funcao,
+				AF.idTab_Funcao,
+				CONCAT(IFNULL(AF.Comissao_Funcao,"")) AS Comissao_Funcao
+            FROM
+                App_Funcao AS AF
+					LEFT JOIN Tab_Funcao AS TF ON TF.idTab_Funcao = AF.idTab_Funcao
+            WHERE
+				AF.idApp_Funcao = ' . $_GET['f'] . '
+			LIMIT 1	
+    ');
+
+    while ($row = mysql_fetch_assoc($result)) {
+		$event_array2[0] = array(
+            'id' => $row['idApp_Funcao'],
+            'id_TF' => $row['idTab_Funcao'],
+            'Com_Fun' => $row['Comissao_Funcao'],
+        );
+    }
+
+}
+
 elseif ($_GET['q'] == 300) {
 
     $result = mysql_query('

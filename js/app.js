@@ -4972,7 +4972,193 @@ function calculaQtdSomaDev(campo, soma, somaproduto, excluir, produtonum, countm
  * @param {int} num
  * @returns {decimal}
  */
+ 
+ /*Carrega os Profissionais do Servico i */
+function carregaHidden_Prof(value = 0, name, i, PR = 0) {
 
+	if (value != 0) {
+	
+		$("#ProfissionalServico_"+PR+i).val(value);
+
+		$.ajax({
+            url: window.location.origin+ '/' + app + '/Getvalues_json2.php?q=31&f='+value,
+            dataType: 'JSON',
+            type: "GET",
+            success: function (data) {
+
+				$("#idTFProf_Servico_"+PR+i).val(data[0]['id_TF']);
+				$("#ComFunProf_Servico_"+PR+i).val(data[0]['Com_Fun']);
+
+				carregaValores_Prof(i);
+            },
+            error: function () {
+                //console.log('erro');
+				$("#ProfissionalServico_"+PR+i).val(0);
+				$("#idTFProf_Servico_"+PR+i).val(0);
+				$("#ComFunProf_Servico_"+PR+i).val(0);
+				$("#ValorComProf_Servico_"+PR+i).val(0);
+				carregaValores_Prof(i);
+            }
+			
+        });
+
+    }else{
+		//console.log('Prof_1 = Vazio'+value);
+		$("#ProfissionalServico_"+PR+i).val(0);
+		$("#idTFProf_Servico_"+PR+i).val(0);
+		$("#ComFunProf_Servico_"+PR+i).val(0);
+		$("#ValorComProf_Servico_"+PR+i).val(0);
+
+		carregaValores_Prof(i);
+	}
+}
+
+function carregaValores_Prof(i) {
+	//console.log('i = '+i);
+	valor = $("#SubtotalServico"+i).val();
+	valor = valor.replace(".","").replace(",",".");
+	valor = parseFloat(valor);
+	//console.log('valor = '+valor);
+	cont_id_Fun_1=0;
+	if($("#idTFProf_Servico_1"+i).val()){
+		for (k = 1; k <= 4; k++) {
+			p = $("#idTFProf_Servico_"+k+i).val();
+			if(p == $("#idTFProf_Servico_1"+i).val()){
+				cont_id_Fun_1++;
+			}
+		}	
+		for (k = 1; k <= 4; k++) {
+			p = $("#idTFProf_Servico_"+k+i).val();
+			if(p == $("#idTFProf_Servico_1"+i).val()){
+				valordoprof_1 = valor*$("#ComFunProf_Servico_"+k+i).val()/cont_id_Fun_1/100
+				valordoprof_1 = parseFloat(valordoprof_1);
+				valordoprof_1_m = mascaraValorReal(valordoprof_1);
+				$("#ValorComProf_Servico_"+k+i).val(valordoprof_1_m);
+			}
+		}
+	}else{
+		$("#ProfissionalServico_1"+i).val(0);
+		$("#idTFProf_Servico_1"+i).val(0);
+		$("#ComFunProf_Servico_1"+i).val(0);
+		$("#ValorComProf_Servico_1"+i).val(0);				
+	}
+
+	cont_id_Fun_2=0;
+	if($("#idTFProf_Servico_2"+i).val()){
+		for (k = 1; k <= 4; k++) {
+			p = $("#idTFProf_Servico_"+k+i).val();
+			if(p == $("#idTFProf_Servico_2"+i).val()){
+				cont_id_Fun_2++;
+			}
+		}
+		for (k = 1; k <= 4; k++) {
+			p = $("#idTFProf_Servico_"+k+i).val();
+			if(p == $("#idTFProf_Servico_2"+i).val()){
+				valordoprof_2 = valor*$("#ComFunProf_Servico_"+k+i).val()/cont_id_Fun_2/100
+				valordoprof_2 = parseFloat(valordoprof_2);
+				valordoprof_2_m = mascaraValorReal(valordoprof_2);
+				$("#ValorComProf_Servico_"+k+i).val(valordoprof_2_m);
+			}
+		}
+	}else{
+		$("#ProfissionalServico_2"+i).val(0);
+		$("#idTFProf_Servico_2"+i).val(0);
+		$("#ComFunProf_Servico_2"+i).val(0);
+		$("#ValorComProf_Servico_2"+i).val(0);				
+	}
+
+	cont_id_Fun_3=0;
+	if($("#idTFProf_Servico_3"+i).val()){
+		for (k = 1; k <= 4; k++) {
+			p = $("#idTFProf_Servico_"+k+i).val();
+			if(p == $("#idTFProf_Servico_3"+i).val()){
+				cont_id_Fun_3++;
+			}
+		}
+		for (k = 1; k <= 4; k++) {
+			p = $("#idTFProf_Servico_"+k+i).val();
+			if(p == $("#idTFProf_Servico_3"+i).val()){
+				valordoprof_3 = valor*$("#ComFunProf_Servico_"+k+i).val()/cont_id_Fun_3/100
+				valordoprof_3 = parseFloat(valordoprof_3);
+				valordoprof_3_m = mascaraValorReal(valordoprof_3);
+				$("#ValorComProf_Servico_"+k+i).val(valordoprof_3_m);
+			}
+		}
+	}else{
+		$("#ProfissionalServico_3"+i).val(0);
+		$("#idTFProf_Servico_3"+i).val(0);
+		$("#ComFunProf_Servico_3"+i).val(0);
+		$("#ValorComProf_Servico_3"+i).val(0);				
+	}
+	
+	cont_id_Fun_4=0;
+	if($("#idTFProf_Servico_4"+i).val()){
+		for (k = 1; k <= 4; k++) {
+			p = $("#idTFProf_Servico_"+k+i).val();
+			if(p == $("#idTFProf_Servico_4"+i).val()){
+				cont_id_Fun_4++;
+			}
+		}
+		for (k = 1; k <= 4; k++) {
+			p = $("#idTFProf_Servico_"+k+i).val();
+			if(p == $("#idTFProf_Servico_4"+i).val()){
+				valordoprof_4 = valor*$("#ComFunProf_Servico_"+k+i).val()/cont_id_Fun_4/100
+				valordoprof_4 = parseFloat(valordoprof_4);
+				valordoprof_4_m = mascaraValorReal(valordoprof_4);
+				$("#ValorComProf_Servico_"+k+i).val(valordoprof_4_m);
+			}
+		}
+	}else{
+		$("#ProfissionalServico_4"+i).val(0);
+		$("#idTFProf_Servico_4"+i).val(0);
+		$("#ComFunProf_Servico_4"+i).val(0);
+		$("#ValorComProf_Servico_4"+i).val(0);				
+	}
+	
+	if($("#ValorComProf_Servico_1"+i).val()){
+		valordoprof_1 = $("#ValorComProf_Servico_1"+i).val();
+		valordoprof_1 = valordoprof_1.replace(".","").replace(",",".");
+		
+	}else{
+		valordoprof_1 = 0;
+	}
+	valordoprof_1 = parseFloat(valordoprof_1);
+	
+	if($("#ValorComProf_Servico_2"+i).val()){
+		valordoprof_2 = $("#ValorComProf_Servico_2"+i).val();
+		valordoprof_2 = valordoprof_2.replace(".","").replace(",",".");
+		
+	}else{
+		valordoprof_2 = 0;
+	}
+	valordoprof_2 = parseFloat(valordoprof_2);
+	
+	if($("#ValorComProf_Servico_3"+i).val()){
+		valordoprof_3 = $("#ValorComProf_Servico_3"+i).val();
+		valordoprof_3 = valordoprof_3.replace(".","").replace(",",".");
+		
+	}else{
+		valordoprof_3 = 0;
+	}
+	valordoprof_3 = parseFloat(valordoprof_3);
+	
+	if($("#ValorComProf_Servico_4"+i).val()){
+		valordoprof_4 = $("#ValorComProf_Servico_4"+i).val();
+		valordoprof_4 = valordoprof_4.replace(".","").replace(",",".");
+		
+	}else{
+		valordoprof_4 = 0;
+	}
+	valordoprof_4 = parseFloat(valordoprof_4);
+	
+	totalcomissao = (valordoprof_1 +  valordoprof_2 +  valordoprof_3 +  valordoprof_4);
+	totalcomissao = parseFloat(totalcomissao);
+	totalcomissao_m = mascaraValorReal(totalcomissao);
+	$("#ValorComissaoServico"+i).val(totalcomissao_m);
+	//console.log(totalcomissao_m);
+	
+ }
+ 
  /*Carrega a Data do Dia do lançamento*/
  function carregaQuitado3(value, name, i, cadastrar = 0) {
 
@@ -5255,11 +5441,13 @@ function buscaValor1Tabelas(id, campo, tabela, num, campo2, recorrencias) {
 						//if (tabela == area && $("#Qtd"+tabela+num).val()) {
 						if ($("#Qtd"+campo2+num).val()) {
 							calculaSubtotal($("#idTab_"+campo2+num).val(),$("#Qtd"+campo2+num).val(),num,'OUTRO',campo2,$("#QtdIncremento"+campo2+num).val(),$("#Comissao"+campo2+num).val(),$("#ComissaoServico"+campo2+num).val(),$("#ComissaoCashBack"+campo2+num).val());
+							carregaValores_Prof(num);
 							break;
 						}
 
 						//para cada valor carregado o orçamento é calculado/atualizado
 						//através da chamada de sua função
+						carregaValores_Prof(num);
 						calculaOrcamento();
 						break;
 					}
@@ -5287,11 +5475,13 @@ function buscaValor1Tabelas(id, campo, tabela, num, campo2, recorrencias) {
 					//if (tabela == area && $("#Qtd"+tabela+num).val()) {
 					if ($("#Qtd"+campo2+num).val()) {
 						calculaSubtotal($("#idTab_"+campo2+num).val(),$("#Qtd"+campo2+num).val(),num,'OUTRO',campo2,$("#QtdIncremento"+campo2+num).val(),$("#Comissao"+campo2+num).val(),$("#ComissaoServico"+campo2+num).val(),$("#ComissaoCashBack"+campo2+num).val());
+						carregaValores_Prof(num);
 						break;
 					}
 				
 					//para cada valor carregado o orçamento é calculado/atualizado
 					//através da chamada de sua função
+					carregaValores_Prof(num);
 					calculaOrcamento();
 					break;
 				}
@@ -5341,6 +5531,7 @@ function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
 
 						//para cada valor carregado o orçamento é calculado/atualizado
 						//através da chamada de sua função
+						carregaValores_Prof(num);
 						calculaOrcamento();
 						break;
 					}
@@ -5371,6 +5562,7 @@ function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
 				
 					//para cada valor carregado o orçamento é calculado/atualizado
 					//através da chamada de sua função
+					carregaValores_Prof(num);
 					calculaOrcamento();
 					break;
 				}
@@ -5503,6 +5695,7 @@ function calculaSubtotal(valor, campo, num, tipo, tabela, qtdinc, comissao, comi
 
     //para cada vez que o subtotal for calculado o orçamento e o total restante
     //também serão atualizados
+	carregaValores_Prof(num);
     calculaOrcamento();
 
 }
@@ -9827,33 +10020,78 @@ $(document).ready(function () {
 									</div>\
 									<div class="row">\
 										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
-											<label for="ProfissionalServico_1'+ps+'">Profissional 1</label>\
-											<select data-placeholder="Selecione uma opção..." class="form-control Chosen_1"\
-													 id="listadinamica_prof_1'+ps+'" name="ProfissionalServico_1'+ps+'">\
-												<option value=""></option>\
-											</select>\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_1'+ps+'">Profissional 1</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_1"\
+															 id="listadinamica_prof_1'+ps+'" name="ProfissionalServico_1'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',1)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_1'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_1'+ps+'" name="idTFProf_Servico_1'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_1'+ps+'" name="ComFunProf_Servico_1'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_1'+ps+'" name="ValorComProf_Servico_1'+ps+'" value="" readonly="">\
+												</div>\
+											</div>\
 										</div>\
 										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
-											<label for="ProfissionalServico_2'+ps+'">Profissional 2</label>\
-											<select data-placeholder="Selecione uma opção..." class="form-control Chosen_2"\
-													 id="listadinamica_prof_2'+ps+'" name="ProfissionalServico_2'+ps+'">\
-												<option value=""></option>\
-											</select>\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_2'+ps+'">Profissional 2</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_2"\
+															 id="listadinamica_prof_2'+ps+'" name="ProfissionalServico_2'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',2)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_2'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_2'+ps+'" name="idTFProf_Servico_2'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_2'+ps+'" name="ComFunProf_Servico_2'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_2'+ps+'" name="ValorComProf_Servico_2'+ps+'" value="" readonly="">\
+												</div>\
+											</div>\
 										</div>\
 										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
-											<label for="ProfissionalServico_3'+ps+'">Profissional 3</label>\
-											<select data-placeholder="Selecione uma opção..." class="form-control Chosen_3"\
-													 id="listadinamica_prof_3'+ps+'" name="ProfissionalServico_3'+ps+'">\
-												<option value=""></option>\
-											</select>\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_3'+ps+'">Profissional 3</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_3"\
+															 id="listadinamica_prof_3'+ps+'" name="ProfissionalServico_3'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',3)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_3'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_3'+ps+'" name="idTFProf_Servico_3'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_3'+ps+'" name="ComFunProf_Servico_3'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_3'+ps+'" name="ValorComProf_Servico_3'+ps+'" value="" readonly="">\
+												</div>\
+											</div>\
 										</div>\
 										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
-											<label for="ProfissionalServico_4'+ps+'">Profissional 4</label>\
-											<select data-placeholder="Selecione uma opção..." class="form-control Chosen_4"\
-													 id="listadinamica_prof_4'+ps+'" name="ProfissionalServico_4'+ps+'">\
-												<option value=""></option>\
-											</select>\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_4'+ps+'">Profissional 4</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_4"\
+															 id="listadinamica_prof_4'+ps+'" name="ProfissionalServico_4'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',4)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_4'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_4'+ps+'" name="idTFProf_Servico_4'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_4'+ps+'" name="ComFunProf_Servico_4'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_4'+ps+'" name="ValorComProf_Servico_4'+ps+'" value="" readonly="">\
+												</div>\
+											</div>\
 										</div>\
+										<input type="hidden" class="form-control Valor" id="ValorComissaoServico'+ps+'" name="ValorComissaoServico'+ps+'" value="" readonly="">\
 									</div>\
 								</div>\
 							</div>\
@@ -9986,6 +10224,7 @@ $(document).ready(function () {
                     no_results_text: "Nenhum resultado para",
                     width: "100%"
                 });
+				
             },
             error: function () {
                 //alert('erro listadinamicaB');

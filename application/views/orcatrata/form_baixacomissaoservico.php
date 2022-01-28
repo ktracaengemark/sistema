@@ -55,7 +55,7 @@
 								
 								<div class="panel panel-primary">
 
-									<div  style="overflow: auto; height: 456px; ">
+									<div  style="overflow: auto; height: auto; ">
 										
 											<div class="panel-body">
 												<!--App_parcelasRec-->
@@ -81,16 +81,19 @@
 																		<label ><?php echo $contagem ?> </label> -
 																		<span><?php echo $_SESSION['Produto'][$i]['Receita']; ?></span>
 																	</div>
-																	<div class="col-md-2">
-																		<label for="Valor">Comissão:</label><br>
-																		<input type="text" class="form-control" readonly="" value="<?php echo $_SESSION['Produto'][$i]['Valor'] ?>">
+																	<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+																		<label for="SubtotalServico<?php echo $i ?>">Valor</label>
+																		<div class="input-group">
+																			<span class="input-group-addon" id="basic-addon1">R$</span>
+																			<input type="text" class="form-control Valor" id="SubtotalServico<?php echo $i ?>" readonly="" value="<?php echo $_SESSION['Produto'][$i]['SubtotalProduto'] ?>">
+																		</div>
 																	</div>
 																	<div class="col-md-2">
 																		<label for="ValorComissaoServico">Valor Comissao </label><br>
 																		<div class="input-group" id="txtHint">
 																			<span class="input-group-addon" id="basic-addon1">R$</span>
 																			<input type="text" class="form-control Valor"  id="ValorComissaoServico<?php echo $i ?>" readonly=""
-																				   name="ValorComissaoServico<?php echo $i ?>"  value="<?php echo $_SESSION['Produto'][$i]['Valor_Com_Total'] ?>">
+																				   name="ValorComissaoServico<?php echo $i ?>"  value="<?php echo $produto[$i]['ValorComissaoServico'] ?>">
 																		</div>
 																	</div>
 																	<div class="col-md-2">
@@ -145,6 +148,118 @@
 																			</div>
 																		</div>
 																	</div>	
+																</div>																	
+																<div class="row">
+																	<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+																		<div class="row">
+																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																				<label for="ProfissionalProduto_1<?php echo $i ?>">Profissional 1</label>
+																				<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+																						 id="listadinamica_prof_1<?php echo $i ?>" name="ProfissionalProduto_1<?php echo $i ?>" 
+																							onchange="carregaHidden_Prof(this.value,this.name,'<?php echo $i ?>',1)">
+																					<option value="">-- Sel.Profis. --</option>
+																					<?php
+																					foreach ($select[$i]['ProfissionalProduto_1'] as $key => $row) {
+																						if ($produto[$i]['ProfissionalProduto_1'] == $key) {
+																							echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+																						} else {
+																							echo '<option value="' . $key . '">' . $row . '</option>';
+																						}
+																					}
+																					?>
+																				</select>
+																			</div>
+																			<input type="hidden" class="form-control " id="ProfissionalServico_1<?php echo $i ?>" value="<?php echo $produto[$i]['ProfissionalProduto_1'] ?>" readonly="">
+																			<input type="hidden" class="form-control " id="idTFProf_Servico_1<?php echo $i ?>" name="idTFProf_Servico_1<?php echo $i ?>" value="<?php echo $produto[$i]['idTFProf_1'] ?>" readonly="">
+																			<input type="hidden" class="form-control " id="ComFunProf_Servico_1<?php echo $i ?>" name="ComFunProf_Servico_1<?php echo $i ?>" value="<?php echo $produto[$i]['ComFunProf_1'] ?>" readonly="">
+																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																				<input type="text" class="form-control Valor" id="ValorComProf_Servico_1<?php echo $i ?>" name="ValorComProf_Servico_1<?php echo $i ?>" value="<?php echo $produto[$i]['ValorComProf_1'] ?>" readonly="">
+																			</div>
+																		</div>	
+																	</div>
+																	<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+																		<div class="row">
+																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																				<label for="ProfissionalProduto_2<?php echo $i ?>">Profissional 2</label>
+																				<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+																						 id="listadinamica_prof_2<?php echo $i ?>" name="ProfissionalProduto_2<?php echo $i ?>"
+																							onchange="carregaHidden_Prof(this.value,this.name,'<?php echo $i ?>',2)">
+																					<option value="">-- Sel.Profis. --</option>
+																					<?php
+																					foreach ($select[$i]['ProfissionalProduto_2'] as $key => $row) {
+																						if ($produto[$i]['ProfissionalProduto_2'] == $key) {
+																							echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+																						} else {
+																							echo '<option value="' . $key . '">' . $row . '</option>';
+																						}
+																					}
+																					?>
+																				</select>
+																			</div>
+																			<input type="hidden" class="form-control " id="ProfissionalServico_2<?php echo $i ?>" value="<?php echo $produto[$i]['ProfissionalProduto_2'] ?>" readonly="">
+																			<input type="hidden" class="form-control " id="idTFProf_Servico_2<?php echo $i ?>" name="idTFProf_Servico_2<?php echo $i ?>" value="<?php echo $produto[$i]['idTFProf_2'] ?>" readonly="">
+																			<input type="hidden" class="form-control " id="ComFunProf_Servico_2<?php echo $i ?>" name="ComFunProf_Servico_2<?php echo $i ?>" value="<?php echo $produto[$i]['ComFunProf_2'] ?>" readonly="">
+																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																				<input type="text" class="form-control Valor" id="ValorComProf_Servico_2<?php echo $i ?>" name="ValorComProf_Servico_2<?php echo $i ?>" value="<?php echo $produto[$i]['ValorComProf_2'] ?>" readonly="">
+																			</div>
+																		</div>	
+																	</div>
+																	<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+																		<div class="row">
+																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																				<label for="ProfissionalProduto_3<?php echo $i ?>">Profissional 3</label>
+																				<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+																						 id="listadinamica_prof_3<?php echo $i ?>" name="ProfissionalProduto_3<?php echo $i ?>"
+																							onchange="carregaHidden_Prof(this.value,this.name,'<?php echo $i ?>',3)">
+																					<option value="">-- Sel.Profis. --</option>
+																					<?php
+																					foreach ($select[$i]['ProfissionalProduto_3'] as $key => $row) {
+																						if ($produto[$i]['ProfissionalProduto_3'] == $key) {
+																							echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+																						} else {
+																							echo '<option value="' . $key . '">' . $row . '</option>';
+																						}
+																					}
+																					?>
+																				</select>
+																			</div>
+																			<input type="hidden" class="form-control " id="ProfissionalServico_3<?php echo $i ?>" value="<?php echo $produto[$i]['ProfissionalProduto_3'] ?>" readonly="">
+																			<input type="hidden" class="form-control " id="idTFProf_Servico_3<?php echo $i ?>" name="idTFProf_Servico_3<?php echo $i ?>" value="<?php echo $produto[$i]['idTFProf_3'] ?>" readonly="">
+																			<input type="hidden" class="form-control " id="ComFunProf_Servico_3<?php echo $i ?>" name="ComFunProf_Servico_3<?php echo $i ?>" value="<?php echo $produto[$i]['ComFunProf_3'] ?>" readonly="">
+																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																				<input type="text" class="form-control Valor" id="ValorComProf_Servico_3<?php echo $i ?>" name="ValorComProf_Servico_3<?php echo $i ?>" value="<?php echo $produto[$i]['ValorComProf_3'] ?>" readonly="">
+																			</div>
+																		</div>	
+																	</div>
+																	<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+																		<div class="row">
+																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																				<label for="ProfissionalProduto_4<?php echo $i ?>">Profissional 4</label>
+																				<?php if ($i == 1) { ?>
+																				<?php } ?>
+																				<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+																						 id="listadinamica_prof_4<?php echo $i ?>" name="ProfissionalProduto_4<?php echo $i ?>"
+																							onchange="carregaHidden_Prof(this.value,this.name,'<?php echo $i ?>',4)">
+																					<option value="">-- Sel.Profis. --</option>
+																					<?php
+																					foreach ($select[$i]['ProfissionalProduto_4'] as $key => $row) {
+																						if ($produto[$i]['ProfissionalProduto_4'] == $key) {
+																							echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+																						} else {
+																							echo '<option value="' . $key . '">' . $row . '</option>';
+																						}
+																					}
+																					?>
+																				</select>
+																			</div>
+																			<input type="hidden" class="form-control " id="ProfissionalServico_4<?php echo $i ?>" value="<?php echo $produto[$i]['ProfissionalProduto_4'] ?>" readonly="">
+																			<input type="hidden" class="form-control " id="idTFProf_Servico_4<?php echo $i ?>" name="idTFProf_Servico_4<?php echo $i ?>" value="<?php echo $produto[$i]['idTFProf_4'] ?>" readonly="">
+																			<input type="hidden" class="form-control " id="ComFunProf_Servico_4<?php echo $i ?>" name="ComFunProf_Servico_4<?php echo $i ?>" value="<?php echo $produto[$i]['ComFunProf_4'] ?>" readonly="">
+																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																				<input type="text" class="form-control Valor" id="ValorComProf_Servico_4<?php echo $i ?>" name="ValorComProf_Servico_4<?php echo $i ?>" value="<?php echo $produto[$i]['ValorComProf_4'] ?>" readonly="">
+																			</div>
+																		</div>	
+																	</div>
 																</div>
 															</div>
 														</div>
