@@ -1670,8 +1670,12 @@ class Orcatrata_model extends CI_Model {
 
 		$query = $this->db->query(
             'SELECT
-				CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,""), " - " ,IFNULL(C.CelularCliente,""), " - " ,IFNULL(C.Telefone,""), " - " ,IFNULL(C.Telefone2,""), " - " ,IFNULL(C.Telefone3,"") ) AS NomeCliente,
-                OT.idApp_OrcaTrata,
+				CONCAT(IFNULL(C.NomeCliente,"")) AS NomeCliente,
+                C.idApp_Cliente,
+				C.CelularCliente,
+				CONCAT(IFNULL(CPT.NomeClientePet,"")) AS NomeClientePet,
+				CONCAT(IFNULL(CDP.NomeClienteDep,"")) AS NomeClienteDep,
+				OT.idApp_OrcaTrata,
 				OT.Tipo_Orca,
 				OT.idSis_Usuario,
 				OT.idTab_TipoRD,
@@ -1714,7 +1718,7 @@ class Orcatrata_model extends CI_Model {
 				CONCAT(IFNULL(TF3.Abrev,""), " || " ,IFNULL(UP3.Nome,"")) AS NomeProf3,				
 				CONCAT(IFNULL(TF4.Abrev,""), " || " ,IFNULL(UP4.Nome,"")) AS NomeProf4,
 				
-				CONCAT(IFNULL(PRDS.idApp_OrcaTrata,""), "--", IFNULL(PRDS.NomeProduto,"")) AS Receita,
+				CONCAT(IFNULL(PRDS.NomeProduto,"")) AS Receita,
 				CONCAT(IFNULL(PRDS.QtdProduto,"")," x ", IFNULL(PRDS.ValorProduto,"")," x ", IFNULL(PRDS.ComissaoServicoProduto,""),"%") AS Valor,
 				
 				TPRDS.idTab_Produtos,
@@ -1727,6 +1731,8 @@ class Orcatrata_model extends CI_Model {
             FROM
                 App_OrcaTrata AS OT
 					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
+					LEFT JOIN App_ClientePet AS CPT ON CPT.idApp_ClientePet = OT.idApp_ClientePet
+					LEFT JOIN App_ClienteDep AS CDP ON CDP.idApp_ClienteDep = OT.idApp_ClienteDep
 					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = OT.idSis_Usuario
 					LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
 					
@@ -1800,9 +1806,14 @@ class Orcatrata_model extends CI_Model {
 		if($total == TRUE) {
 			return $query->num_rows();
 		}	
-			
-        $query = $query->result_array();
 
+		foreach ($query->result() as $row) {
+			$row->NomeCliente = (strlen($row->NomeCliente) > 12) ? substr($row->NomeCliente, 0, 12) : $row->NomeCliente;
+			$row->NomeClientePet = (strlen($row->NomeClientePet) > 12) ? substr($row->NomeClientePet, 0, 12) : $row->NomeClientePet;
+			$row->NomeClienteDep = (strlen($row->NomeClienteDep) > 12) ? substr($row->NomeClienteDep, 0, 12) : $row->NomeClienteDep;
+		}
+		
+		$query = $query->result_array();
         return $query;
     }	
 	
@@ -2602,7 +2613,13 @@ class Orcatrata_model extends CI_Model {
 		if($total == TRUE) {
 			return $query->num_rows();
 		}
-				
+
+		foreach ($query->result() as $row) {
+			$row->NomeCliente = (strlen($row->NomeCliente) > 12) ? substr($row->NomeCliente, 0, 12) : $row->NomeCliente;
+			$row->NomeClientePet = (strlen($row->NomeClientePet) > 12) ? substr($row->NomeClientePet, 0, 12) : $row->NomeClientePet;
+			$row->NomeClienteDep = (strlen($row->NomeClienteDep) > 12) ? substr($row->NomeClienteDep, 0, 12) : $row->NomeClienteDep;
+		}
+						
         $query = $query->result_array();
 
         return $query;

@@ -69,13 +69,23 @@
 															<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 																<div class="row">
 																	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-																		<label for="NomeCliente<?php echo $i ?>">Cont | O.S.| Cliente</label><br>
-																		<input type="text" class="form-control" readonly=""
-																				value="<?php echo $contagem ?> | <?php echo $_SESSION['Produto'][$i]['idApp_OrcaTrata'] ?> | <?php echo $_SESSION['Produto'][$i]['NomeCliente'] ?> | <?php echo $_SESSION['Produto'][$i]['NomeClientePet'] ?> | <?php echo $_SESSION['Produto'][$i]['NomeClienteDep'] ?>">
+																		<label >
+																			<?php echo $contagem ?> |
+																			<a class="notclickable" href="<?php echo base_url() . 'cliente/prontuario/' . $_SESSION['Produto'][$i]['idApp_Cliente']; ?>">
+																				<span class="glyphicon glyphicon-edit notclickable"></span> <?php echo $_SESSION['Produto'][$i]['idApp_Cliente']; ?>
+																			</a>
+																			| Cliente 
+																		</label>
+																		<input type="text" class="form-control " readonly="" value="<?php echo $_SESSION['Produto'][$i]['NomeCliente']; ?> | <?php echo $_SESSION['Produto'][$i]['NomeClientePet']; ?><?php echo $_SESSION['Produto'][$i]['NomeClienteDep']; ?>">
 																	</div>
 																	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-																		<label for="NomeProduto<?php echo $i ?>">Item</label><br>
-																		<input type="text" class="form-control" readonly="" value="<?php echo $_SESSION['Produto'][$i]['NomeProduto'] ?>">
+																		<label >
+																			<a class="notclickable" href="<?php echo base_url() . 'orcatrata/alterarstatus/' . $_SESSION['Produto'][$i]['idApp_OrcaTrata']; ?>">
+																				<span class="glyphicon glyphicon-edit notclickable"></span> <?php echo $_SESSION['Produto'][$i]['idApp_OrcaTrata']; ?>
+																			</a>
+																			| Item 
+																		</label>
+																		<input type="text" class="form-control " readonly="" value="<?php echo $_SESSION['Produto'][$i]['NomeProduto']; ?>">
 																	</div>
 																</div>
 																<div class="row">

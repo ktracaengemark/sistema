@@ -133,19 +133,11 @@
 							</div>
 						</div>	
 						<div class="row">	
-							<div class="col-md-1">
+							<div class="col-md-2">
 								<label>Filtros</label>
 								<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
 									<span class="glyphicon glyphicon-filter"></span>
 								</button>
-							</div>	
-							<div class="col-md-1">
-								<label>Baixa</label>
-								<a href="<?php echo base_url() . $baixacomissao . $_SESSION['log']['idSis_Empresa']; ?>">
-									<button class="btn btn-success btn-md btn-block" type="button">
-										<span class="glyphicon glyphicon-edit"></span>
-									</button>
-								</a>
 							</div>
 							<?php if ($editar == 1) { ?>
 								<?php if ($print == 1) { ?>	
