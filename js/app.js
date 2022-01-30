@@ -4989,7 +4989,7 @@ function carregaHidden_Prof(value = 0, name, i, PR = 0, cont_PR = 4) {
 				$("#idTFProf_Servico_"+PR+i).val(data[0]['id_TF']);
 				$("#ComFunProf_Servico_"+PR+i).val(data[0]['Com_Fun']);
 
-				carregaValores_Prof(i, cont_PR);
+				carregaValores_Prof(i, cont_PR,1);
             },
             error: function () {
                 //console.log('erro');
@@ -4997,7 +4997,7 @@ function carregaHidden_Prof(value = 0, name, i, PR = 0, cont_PR = 4) {
 				$("#idTFProf_Servico_"+PR+i).val(0);
 				$("#ComFunProf_Servico_"+PR+i).val(0);
 				$("#ValorComProf_Servico_"+PR+i).val(0);
-				carregaValores_Prof(i, cont_PR);
+				carregaValores_Prof(i, cont_PR,1);
             }
 			
         });
@@ -5009,11 +5009,11 @@ function carregaHidden_Prof(value = 0, name, i, PR = 0, cont_PR = 4) {
 		$("#ComFunProf_Servico_"+PR+i).val(0);
 		$("#ValorComProf_Servico_"+PR+i).val(0);
 
-		carregaValores_Prof(i, cont_PR);
+		carregaValores_Prof(i, cont_PR,1);
 	}
 }
 
-function carregaValores_Prof(i, cont_PR) {
+function carregaValores_Prof(i, cont_PR, tipo) {
 	//console.log('i = '+i);
 	//console.log('cont_PR = '+cont_PR);
 	valor = $("#SubtotalServico"+i).val();
@@ -5029,23 +5029,55 @@ function carregaValores_Prof(i, cont_PR) {
 				if(p == $("#idTFProf_Servico_"+j+i).val()){
 					cont_id_Fun++;
 				}
-			}	
+			}
+			
 			for (k = 1; k <= cont_PR; k++) {
 				p = $("#idTFProf_Servico_"+k+i).val();
 				if(p == $("#idTFProf_Servico_"+j+i).val()){
-					valordoprof = valor*$("#ComFunProf_Servico_"+k+i).val()/cont_id_Fun/100
-					valordoprof = parseFloat(valordoprof);
-					valordoprof_m = mascaraValorReal(valordoprof);
-					$("#ValorComProf_Servico_"+k+i).val(valordoprof_m);
+					if(tipo == 1){
+						if($("#ComFunProf_Servico_"+j+i).val()){
+							valordoprof = valor*$("#ComFunProf_Servico_"+k+i).val()/cont_id_Fun/100
+							valordoprof = parseFloat(valordoprof);
+							valordoprof_m = mascaraValorReal(valordoprof);
+							$("#ValorComProf_Servico_"+k+i).val(valordoprof_m);
+						}else{
+							$("#ValorComProf_Servico_"+k+i).val(0);
+						}
+					}else if(tipo == 2){
+						if($("#ValorComProf_Servico_"+j+i).val()){
+							valordoprof = $("#ValorComProf_Servico_"+j+i).val();
+							valordoprof = valordoprof.replace(".","").replace(",",".");
+							valordoprof = parseFloat(valordoprof);
+							//console.log('valorDigitado = '+valordoprof);
+							comissao 	= valordoprof*cont_id_Fun*100/valor;
+							comissao 	= parseFloat(comissao);
+							comissao 	= comissao.toFixed(2);
+							//console.log(comissao);
+							$("#ComFunProf_Servico_"+j+i).val(comissao);
+						}else{
+							$("#ComFunProf_Servico_"+j+i).val(0);
+						}						
+					}	
 				}
 			}
+			
 		}else{
 			$("#ProfissionalServico_"+j+i).val(0);
 			$("#idTFProf_Servico_"+j+i).val(0);
 			$("#ComFunProf_Servico_"+j+i).val(0);
 			$("#ValorComProf_Servico_"+j+i).val(0);				
 		}
-		
+
+	}
+	SomaComissaoServico(i, cont_PR);
+
+}
+
+function SomaComissaoServico(i, cont_PR) {
+
+	somacomissao = 0;
+	for (j = 1; j <= cont_PR; j++) {
+
 		if($("#ValorComProf_Servico_"+j+i).val()){
 			valordoprof = $("#ValorComProf_Servico_"+j+i).val();
 			valordoprof = valordoprof.replace(".","").replace(",",".");	
@@ -5062,7 +5094,7 @@ function carregaValores_Prof(i, cont_PR) {
 	}
 
  }
- 
+  
  /*Carrega a Data do Dia do lançamento*/
  function carregaQuitado3(value, name, i, cadastrar = 0) {
 
@@ -5345,13 +5377,13 @@ function buscaValor1Tabelas(id, campo, tabela, num, campo2, recorrencias) {
 						//if (tabela == area && $("#Qtd"+tabela+num).val()) {
 						if ($("#Qtd"+campo2+num).val()) {
 							calculaSubtotal($("#idTab_"+campo2+num).val(),$("#Qtd"+campo2+num).val(),num,'OUTRO',campo2,$("#QtdIncremento"+campo2+num).val(),$("#Comissao"+campo2+num).val(),$("#ComissaoServico"+campo2+num).val(),$("#ComissaoCashBack"+campo2+num).val());
-							carregaValores_Prof(num, cont_PR = 4);
+							//carregaValores_Prof(num, cont_PR = 4,1);
 							break;
 						}
 
 						//para cada valor carregado o orçamento é calculado/atualizado
 						//através da chamada de sua função
-						carregaValores_Prof(num, cont_PR = 4);
+						//carregaValores_Prof(num, cont_PR = 4,1);
 						calculaOrcamento();
 						break;
 					}
@@ -5379,13 +5411,13 @@ function buscaValor1Tabelas(id, campo, tabela, num, campo2, recorrencias) {
 					//if (tabela == area && $("#Qtd"+tabela+num).val()) {
 					if ($("#Qtd"+campo2+num).val()) {
 						calculaSubtotal($("#idTab_"+campo2+num).val(),$("#Qtd"+campo2+num).val(),num,'OUTRO',campo2,$("#QtdIncremento"+campo2+num).val(),$("#Comissao"+campo2+num).val(),$("#ComissaoServico"+campo2+num).val(),$("#ComissaoCashBack"+campo2+num).val());
-						carregaValores_Prof(num, cont_PR = 4);
+						//carregaValores_Prof(num, cont_PR = 4,1);
 						break;
 					}
 				
 					//para cada valor carregado o orçamento é calculado/atualizado
 					//através da chamada de sua função
-					carregaValores_Prof(num, cont_PR = 4);
+					//carregaValores_Prof(num, cont_PR = 4,1);
 					calculaOrcamento();
 					break;
 				}
@@ -5435,7 +5467,7 @@ function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
 
 						//para cada valor carregado o orçamento é calculado/atualizado
 						//através da chamada de sua função
-						carregaValores_Prof(num, cont_PR = 4);
+						//carregaValores_Prof(num, cont_PR = 4,1);
 						calculaOrcamento();
 						break;
 					}
@@ -5466,7 +5498,7 @@ function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
 				
 					//para cada valor carregado o orçamento é calculado/atualizado
 					//através da chamada de sua função
-					carregaValores_Prof(num, cont_PR = 4);
+					//carregaValores_Prof(num, cont_PR = 4,1);
 					calculaOrcamento();
 					break;
 				}
@@ -5599,8 +5631,8 @@ function calculaSubtotal(valor, campo, num, tipo, tabela, qtdinc, comissao, comi
 
     //para cada vez que o subtotal for calculado o orçamento e o total restante
     //também serão atualizados
-	carregaValores_Prof(num, cont_PR = 4);
     calculaOrcamento();
+	carregaValores_Prof(num, cont_PR = 4,1);
 
 }
 
@@ -9937,7 +9969,8 @@ $(document).ready(function () {
 												<input type="hidden" class="form-control " id="idTFProf_Servico_1'+ps+'" name="idTFProf_Servico_1'+ps+'" value="" readonly="">\
 												<input type="hidden" class="form-control " id="ComFunProf_Servico_1'+ps+'" name="ComFunProf_Servico_1'+ps+'" value="" readonly="">\
 												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<input type="text" class="form-control Valor" id="ValorComProf_Servico_1'+ps+'" name="ValorComProf_Servico_1'+ps+'" value="" readonly="">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_1'+ps+'" name="ValorComProf_Servico_1'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 4, 2)" readonly="">\
 												</div>\
 											</div>\
 										</div>\
@@ -9955,7 +9988,8 @@ $(document).ready(function () {
 												<input type="hidden" class="form-control " id="idTFProf_Servico_2'+ps+'" name="idTFProf_Servico_2'+ps+'" value="" readonly="">\
 												<input type="hidden" class="form-control " id="ComFunProf_Servico_2'+ps+'" name="ComFunProf_Servico_2'+ps+'" value="" readonly="">\
 												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<input type="text" class="form-control Valor" id="ValorComProf_Servico_2'+ps+'" name="ValorComProf_Servico_2'+ps+'" value="" readonly="">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_2'+ps+'" name="ValorComProf_Servico_2'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 4, 2)" readonly="">\
 												</div>\
 											</div>\
 										</div>\
@@ -9973,7 +10007,8 @@ $(document).ready(function () {
 												<input type="hidden" class="form-control " id="idTFProf_Servico_3'+ps+'" name="idTFProf_Servico_3'+ps+'" value="" readonly="">\
 												<input type="hidden" class="form-control " id="ComFunProf_Servico_3'+ps+'" name="ComFunProf_Servico_3'+ps+'" value="" readonly="">\
 												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<input type="text" class="form-control Valor" id="ValorComProf_Servico_3'+ps+'" name="ValorComProf_Servico_3'+ps+'" value="" readonly="">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_3'+ps+'" name="ValorComProf_Servico_3'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 4, 2)" readonly="">\
 												</div>\
 											</div>\
 										</div>\
@@ -9991,7 +10026,8 @@ $(document).ready(function () {
 												<input type="hidden" class="form-control " id="idTFProf_Servico_4'+ps+'" name="idTFProf_Servico_4'+ps+'" value="" readonly="">\
 												<input type="hidden" class="form-control " id="ComFunProf_Servico_4'+ps+'" name="ComFunProf_Servico_4'+ps+'" value="" readonly="">\
 												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<input type="text" class="form-control Valor" id="ValorComProf_Servico_4'+ps+'" name="ValorComProf_Servico_4'+ps+'" value="" readonly="">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_4'+ps+'" name="ValorComProf_Servico_4'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 4, 2)" readonly="">\
 												</div>\
 											</div>\
 										</div>\
