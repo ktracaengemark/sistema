@@ -3722,6 +3722,52 @@ function dataehora(datainicio = null, horainicio = null) {
 	
 }
 
+$(document).ready(function () {
+	if($('#Hidden_status').val()){
+		status = $('#Hidden_status').val();
+		if(status == 1){
+			cor = 'warning';
+		}else if(status == 2){
+			cor = 'success';
+		}else if(status == 3){
+			cor = 'primary';
+		}else if(status == 4){
+			cor = 'danger';
+		}else {
+			cor = 'default';
+		}
+		$("#botao_status").html('\
+									<button type="button" class="btn btn-'+cor+' btn-block">\
+									</button>\
+								');	
+	}
+	
+});
+
+function hidden_status(status = null){
+	if(status){
+		$('#Hidden_status').val(status);
+		if(status == 1){
+			cor = 'warning';
+		}else if(status == 2){
+			cor = 'success';
+		}else if(status == 3){
+			cor = 'primary';
+		}else if(status == 4){
+			cor = 'danger';
+		}else {
+			cor = 'default';
+		}
+		$("#botao_status").html('\
+									<button type="button" class="btn btn-'+cor+' btn-block">\
+									</button>\
+								');	
+	}else{
+		$('#Hidden_status').val(0);
+		$("#botao_status").html('');
+	}
+}
+
 function qtd_ocorrencias(status_PorConsulta) {
 	if(status_PorConsulta){
 		var novo_status_PorConsulta = status_PorConsulta;
@@ -11157,7 +11203,7 @@ $('#calendar').fullCalendar({
     firstDay: '0',
     scrollTime: '06:00',
 	//eventLimit: false,
-	eventLimit: 6,
+	eventLimit: 7,
 
 	minTime: $('#AgendaI').val(),
     maxTime: $('#AgendaF').val(),	

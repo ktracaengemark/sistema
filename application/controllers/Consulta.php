@@ -60,6 +60,7 @@ class Consulta extends CI_Controller {
 			'NovaOS',
 			'PorConsulta',
 			'id_Cliente_Auto',
+			'Hidden_status',
         ), TRUE));
 
         $data['query'] = quotes_to_entities($this->input->post(array(
@@ -304,10 +305,11 @@ class Consulta extends CI_Controller {
 		
         $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
         $this->form_validation->set_rules('Data2', 'Data do Fim', 'required|trim|valid_date');
-		$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
+		//$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
         #$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
-		$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
-        #$this->form_validation->set_rules('idTab_TipoConsulta', 'Tipo de Consulta', 'required|trim');
+		//$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
+
+		#$this->form_validation->set_rules('idTab_TipoConsulta', 'Tipo de Consulta', 'required|trim');
         $this->form_validation->set_rules('idApp_Cliente', 'Cliente', 'required|trim');
 		$this->form_validation->set_rules('idApp_Agenda', 'Profissional', 'required|trim');
 		#$this->form_validation->set_rules('idSis_EmpresaFilial', 'Unidade', 'required|trim');
@@ -323,95 +325,126 @@ class Consulta extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('consulta/form_consulta', $data);
-        } else {
+        
+		} else {
 
-			$dataini_cad 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
-			$datafim_cad 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
-			$horaini_cad 	= $data['query']['HoraInicio'];
-			$horafim_cad 	= $data['query']['HoraFim'];
-			
-			if ($data['cadastrar']['Repetir'] == 'N') {
-				$data['query']['Intervalo'] = 0;
-				$data['query']['Periodo'] = 0;
-				$data['query']['Tempo'] = 0;
-				$data['query']['Tempo2'] = 0;
-				$data['query']['DataTermino'] = $dataini_cad;
-			}else{
-				
-				$tipointervalo = $data['query']['Tempo'];
-				if($tipointervalo == 1){
-					$semana = 1;
-					$ref = "day";
-				}elseif($tipointervalo == 2){
-					$semana = 7;
-					$ref = "day";
-				}elseif($tipointervalo == 3){
-					$semana = 1;
-					$ref = "month";
-				}elseif($tipointervalo == 4){
-					$semana = 1;
-					$ref = "Year";
-				}
+			$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
+			$data1 = $data1->format('Y-m-d');       
+			$data1 = strtotime($data1);
+			$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
+			$data2 = $data2->format('Y-m-d');    
+			$data2 = strtotime($data2);	
 
-				$n = $data['query']['Intervalo']; //intervalo - a cada tantos dias
-				$qtd = $data['query']['Recorrencias'];
-				$data['query']['DataTermino'] = $this->basico->mascara_data($data['query']['DataTermino'], 'mysql');				
+			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');
+			$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
+			if($data2 == $data1){
+				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
+			}else{
+				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
+			}			
+			
+			if ($this->form_validation->run() === FALSE) {
+				$this->load->view('consulta/form_consulta', $data);
+			
+			
+			} else {		
+		
+				$dataini_cad 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
+				$datafim_cad 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
+				$horaini_cad 	= $data['query']['HoraInicio'];
+				$horafim_cad 	= $data['query']['HoraFim'];
 				
-			}
-			if($_SESSION['Empresa']['CadastrarDep'] == "N"){
-				$data['query']['idApp_ClienteDep'] = 0;
-			}else{
-				if($data['query']['idApp_ClienteDep'] == ''){
-					$data['query']['idApp_ClienteDep'] = 0;
-				}
-			}
-			if($_SESSION['Empresa']['CadastrarPet'] == "N"){
-				$data['query']['idApp_ClientePet'] = 0;
-			}else{
-				if($data['query']['idApp_ClientePet'] == ''){
-					$data['query']['idApp_ClientePet'] = 0;
-				}
-			}
-			$data['query']['Tipo'] = 2;
-            $data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
-            #$data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraFim'];
-            $data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data2'], 'mysql') . ' ' . $data['query']['HoraFim'];
-            //$data['query']['idTab_Status'] = 1;
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-			$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
-			$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-			
-			/*
-			if($data['cadastrar']['Vincular'] == "N"){
-				$data['query']['OS'] = "0";
-				$data['query']['idApp_OrcaTrata'] = "0";
-			}else{
-			
-				if($data['cadastrar']['NovaOS'] == "N"){
-					$data['query']['OS'] = "1";
-					$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
+				if ($data['cadastrar']['Repetir'] == 'N') {
+					$data['query']['Intervalo'] = 0;
+					$data['query']['Periodo'] = 0;
+					$data['query']['Tempo'] = 0;
+					$data['query']['Tempo2'] = 0;
+					$data['query']['DataTermino'] = $dataini_cad;
 				}else{
-					$data['query']['idApp_OrcaTrata'] = "0";
-					if($data['cadastrar']['PorConsulta'] == "N"){
-						//$data['query']['idApp_OrcaTrata'] = "0";
-						$data['query']['OS'] = "1";
-					}else{
-						//$data['query']['idApp_OrcaTrata'] = "0";
-						$data['query']['OS'] = $data['query']['Recorrencias'];
+					
+					$tipointervalo = $data['query']['Tempo'];
+					if($tipointervalo == 1){
+						$semana = 1;
+						$ref = "day";
+					}elseif($tipointervalo == 2){
+						$semana = 7;
+						$ref = "day";
+					}elseif($tipointervalo == 3){
+						$semana = 1;
+						$ref = "month";
+					}elseif($tipointervalo == 4){
+						$semana = 1;
+						$ref = "Year";
+					}
+
+					$n = $data['query']['Intervalo']; //intervalo - a cada tantos dias
+					$qtd = $data['query']['Recorrencias'];
+					$data['query']['DataTermino'] = $this->basico->mascara_data($data['query']['DataTermino'], 'mysql');				
+					
+				}
+				if($_SESSION['Empresa']['CadastrarDep'] == "N"){
+					$data['query']['idApp_ClienteDep'] = 0;
+				}else{
+					if($data['query']['idApp_ClienteDep'] == ''){
+						$data['query']['idApp_ClienteDep'] = 0;
 					}
 				}
-			}
-			*/
-			
-			
-			if($data['cadastrar']['PorConsulta'] == "S"){
-				$data['query']['OS'] = $data['query']['Recorrencias'];
-				$data['query']['idApp_OrcaTrata'] = "0";
-			}else{
-				if($data['query']['Recorrencias'] > 1){
-					if($data['cadastrar']['NovaOS'] == "S"){
+				if($_SESSION['Empresa']['CadastrarPet'] == "N"){
+					$data['query']['idApp_ClientePet'] = 0;
+					}else{
+					if($data['query']['idApp_ClientePet'] == ''){
+						$data['query']['idApp_ClientePet'] = 0;
+					}
+				}
+				$data['query']['Tipo'] = 2;
+				$data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
+				#$data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraFim'];
+				$data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data2'], 'mysql') . ' ' . $data['query']['HoraFim'];
+				//$data['query']['idTab_Status'] = 1;
+				$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+				$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
+				$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+				
+				/*
+				if($data['cadastrar']['Vincular'] == "N"){
+					$data['query']['OS'] = "0";
+					$data['query']['idApp_OrcaTrata'] = "0";
+				}else{
+				
+					if($data['cadastrar']['NovaOS'] == "N"){
 						$data['query']['OS'] = "1";
+						$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
+					}else{
 						$data['query']['idApp_OrcaTrata'] = "0";
+						if($data['cadastrar']['PorConsulta'] == "N"){
+							//$data['query']['idApp_OrcaTrata'] = "0";
+							$data['query']['OS'] = "1";
+						}else{
+							//$data['query']['idApp_OrcaTrata'] = "0";
+							$data['query']['OS'] = $data['query']['Recorrencias'];
+						}
+					}
+				}
+				*/
+				
+				
+				if($data['cadastrar']['PorConsulta'] == "S"){
+					$data['query']['OS'] = $data['query']['Recorrencias'];
+					$data['query']['idApp_OrcaTrata'] = "0";
+				}else{
+					if($data['query']['Recorrencias'] > 1){
+						if($data['cadastrar']['NovaOS'] == "S"){
+							$data['query']['OS'] = "1";
+							$data['query']['idApp_OrcaTrata'] = "0";
+						}else{
+							if($data['cadastrar']['Vincular'] == "S"){
+								$data['query']['OS'] = "1";
+								$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
+							}else{
+								$data['query']['OS'] = "0";
+								$data['query']['idApp_OrcaTrata'] = "0";
+							}
+						}
 					}else{
 						if($data['cadastrar']['Vincular'] == "S"){
 							$data['query']['OS'] = "1";
@@ -421,159 +454,151 @@ class Consulta extends CI_Controller {
 							$data['query']['idApp_OrcaTrata'] = "0";
 						}
 					}
-				}else{
-					if($data['cadastrar']['Vincular'] == "S"){
-						$data['query']['OS'] = "1";
-						$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
-					}else{
-						$data['query']['OS'] = "0";
-						$data['query']['idApp_OrcaTrata'] = "0";
-					}
-				}
-			}			
-					
-            $data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
-			
-			$dataini_whats 	= $data['query']['Data'];
-			$horaini_whats	= $data['query']['HoraInicio'];	
-
-            #unset($data['query']['Data'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
-			unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
-			
-            $data['campos'] = array_keys($data['query']);
-            $data['anterior'] = array();
-
-            $data['query']['idApp_Consulta'] = $this->Consulta_model->set_consulta($data['query']);
-
-            unset($_SESSION['Agenda']);
-
-            if ($data['query']['idApp_Consulta'] === FALSE) {
-                $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-
-                $this->basico->erro($msg);
-                $this->load->view('consulta/form_consulta', $data);
-            } else {
+				}			
+						
+				$data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
 				
-				if($data['cadastrar']['Whatsapp'] == 'S'){
-					#### Whatsapp ####
-					$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
-					
-					$_SESSION['bd_consulta']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
-					$_SESSION['bd_consulta']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
-					$_SESSION['bd_consulta']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
-					$_SESSION['bd_consulta']['DataInicio'] 		= $dataini_whats;
-					$_SESSION['bd_consulta']['HoraInicio'] 		= $horaini_whats;
-					
-					unset($data['Profissional'], $dataini_whats, $horaini_whats);
-				}
+				$dataini_whats 	= $data['query']['Data'];
+				$horaini_whats	= $data['query']['HoraInicio'];	
 
-				$data['copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
-				if($data['cadastrar']['Repetir'] == 'S'){
-					$data['copiar']['DataTermino'] = $data['query']['DataTermino'];
-					$data['copiar']['Recorrencia'] = "1/" . $qtd;
-				}else{
-					$data['copiar']['Recorrencia'] = "1/1";
-					//$data['copiar']['DataTermino'] = $dataini_cad;
-				}
+				#unset($data['query']['Data'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
+				unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
 				
-				$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['query']['idApp_Consulta']);
-				
-				if ($data['update']['copiar']['bd'] === FALSE) {
+				$data['campos'] = array_keys($data['query']);
+				$data['anterior'] = array();
+
+				$data['query']['idApp_Consulta'] = $this->Consulta_model->set_consulta($data['query']);
+
+				unset($_SESSION['Agenda']);
+
+				if ($data['query']['idApp_Consulta'] === FALSE) {
 					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 					$this->basico->erro($msg);
 					$this->load->view('consulta/form_consulta', $data);
 				} else {
-					if ($data['cadastrar']['Repetir'] == 'S') {
-						for($j=1; $j<$qtd; $j++) {
-							$data['repeticao'][$j] = array(
-								'Repeticao' 			=> $data['query']['idApp_Consulta'],
-								'Intervalo' 			=> $data['query']['Intervalo'],
-								'Periodo' 				=> $data['query']['Periodo'],
-								'Tempo' 				=> $data['query']['Tempo'],
-								'Tempo2' 				=> $data['query']['Tempo2'],
-								'DataTermino' 			=> $data['query']['DataTermino'],
-								'Recorrencias' 			=> $data['query']['Recorrencias'],
-								'Recorrencia' 			=> ($j + 1) .  '/' . $data['query']['Recorrencias'],
-								'idApp_Agenda' 			=> $data['query']['idApp_Agenda'],
-								'idApp_Cliente' 		=> $data['query']['idApp_Cliente'],
-								'idApp_ClienteDep' 		=> $data['query']['idApp_ClienteDep'],
-								'idApp_ClientePet' 		=> $data['query']['idApp_ClientePet'],
-								'idApp_OrcaTrata' 		=> $data['query']['idApp_OrcaTrata'],
-								//'Evento' 				=> $data['query']['Evento'],
-								'Obs' 					=> $data['query']['Obs'],
-								//'idApp_Profissional' 	=> $data['query']['idApp_Profissional'],
-								'idTab_Status' 			=> $data['query']['idTab_Status'],
-								'Tipo' 					=> $data['query']['Tipo'],
-								'idTab_TipoConsulta' 	=> $data['query']['idTab_TipoConsulta'],
-								'Paciente' 				=> $data['query']['Paciente'],
-								'DataInicio' 			=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) .  $ref,strtotime($dataini_cad))) . ' ' . $horaini_cad,
-								'DataFim' 				=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) . $ref,strtotime($datafim_cad))) . ' ' . $horafim_cad,
-								'idSis_Usuario' 		=> $_SESSION['log']['idSis_Usuario'],
-								'idSis_Empresa' 		=> $_SESSION['log']['idSis_Empresa'],
-								'idTab_Modulo' 			=> $_SESSION['log']['idTab_Modulo']
-
-							);
-							$data['campos'] = array_keys($data['repeticao'][$j]);
-							$data['id_Repeticao'] = $this->Consulta_model->set_consulta($data['repeticao'][$j]);
-						}
-				
+					
+					if($data['cadastrar']['Whatsapp'] == 'S'){
+						#### Whatsapp ####
+						$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
+						
+						$_SESSION['bd_consulta']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
+						$_SESSION['bd_consulta']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
+						$_SESSION['bd_consulta']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
+						$_SESSION['bd_consulta']['DataInicio'] 		= $dataini_whats;
+						$_SESSION['bd_consulta']['HoraInicio'] 		= $horaini_whats;
+						
+						unset($data['Profissional'], $dataini_whats, $horaini_whats);
 					}
-				}	
-                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], FALSE);
-                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'CREATE', $data['auditoriaitem']);
-                $data['msg'] = '?m=1';
 
-                //redirect(base_url() . 'cliente/prontuario/' . $data['query']['idApp_Cliente'] . $data['msg'] . $data['redirect']);
-                //redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-				//redirect(base_url() . 'cliente/prontuario/' . $data['query']['idApp_Cliente'] . $data['msg'] . $data['redirect']);
-				/*
-				if($data['cadastrar']['Vincular'] == 'S'){	
-					if($data['cadastrar']['NovaOS'] == 'S'){
-						if($data['cadastrar']['PorConsulta'] == 'S'){
+					$data['copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
+					if($data['cadastrar']['Repetir'] == 'S'){
+						$data['copiar']['DataTermino'] = $data['query']['DataTermino'];
+						$data['copiar']['Recorrencia'] = "1/" . $qtd;
+					}else{
+						$data['copiar']['Recorrencia'] = "1/1";
+						//$data['copiar']['DataTermino'] = $dataini_cad;
+					}
+					
+					$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['query']['idApp_Consulta']);
+					
+					if ($data['update']['copiar']['bd'] === FALSE) {
+						$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+						$this->basico->erro($msg);
+						$this->load->view('consulta/form_consulta', $data);
+					} else {
+						if ($data['cadastrar']['Repetir'] == 'S') {
+							for($j=1; $j<$qtd; $j++) {
+								$data['repeticao'][$j] = array(
+									'Repeticao' 			=> $data['query']['idApp_Consulta'],
+									'Intervalo' 			=> $data['query']['Intervalo'],
+									'Periodo' 				=> $data['query']['Periodo'],
+									'Tempo' 				=> $data['query']['Tempo'],
+									'Tempo2' 				=> $data['query']['Tempo2'],
+									'DataTermino' 			=> $data['query']['DataTermino'],
+									'Recorrencias' 			=> $data['query']['Recorrencias'],
+									'Recorrencia' 			=> ($j + 1) .  '/' . $data['query']['Recorrencias'],
+									'idApp_Agenda' 			=> $data['query']['idApp_Agenda'],
+									'idApp_Cliente' 		=> $data['query']['idApp_Cliente'],
+									'idApp_ClienteDep' 		=> $data['query']['idApp_ClienteDep'],
+									'idApp_ClientePet' 		=> $data['query']['idApp_ClientePet'],
+									'idApp_OrcaTrata' 		=> $data['query']['idApp_OrcaTrata'],
+									//'Evento' 				=> $data['query']['Evento'],
+									'Obs' 					=> $data['query']['Obs'],
+									//'idApp_Profissional' 	=> $data['query']['idApp_Profissional'],
+									'idTab_Status' 			=> $data['query']['idTab_Status'],
+									'Tipo' 					=> $data['query']['Tipo'],
+									'idTab_TipoConsulta' 	=> $data['query']['idTab_TipoConsulta'],
+									'Paciente' 				=> $data['query']['Paciente'],
+									'DataInicio' 			=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) .  $ref,strtotime($dataini_cad))) . ' ' . $horaini_cad,
+									'DataFim' 				=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) . $ref,strtotime($datafim_cad))) . ' ' . $horafim_cad,
+									'idSis_Usuario' 		=> $_SESSION['log']['idSis_Usuario'],
+									'idSis_Empresa' 		=> $_SESSION['log']['idSis_Empresa'],
+									'idTab_Modulo' 			=> $_SESSION['log']['idTab_Modulo']
+
+								);
+								$data['campos'] = array_keys($data['repeticao'][$j]);
+								$data['id_Repeticao'] = $this->Consulta_model->set_consulta($data['repeticao'][$j]);
+							}
+					
+						}
+					}	
+					$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], FALSE);
+					$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'CREATE', $data['auditoriaitem']);
+					$data['msg'] = '?m=1';
+
+					//redirect(base_url() . 'cliente/prontuario/' . $data['query']['idApp_Cliente'] . $data['msg'] . $data['redirect']);
+					//redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+					//redirect(base_url() . 'cliente/prontuario/' . $data['query']['idApp_Cliente'] . $data['msg'] . $data['redirect']);
+					/*
+					if($data['cadastrar']['Vincular'] == 'S'){	
+						if($data['cadastrar']['NovaOS'] == 'S'){
+							if($data['cadastrar']['PorConsulta'] == 'S'){
+								//Gera O.S. Replicadas pelo número de ocorrências
+								redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+							}else{
+								//Gera uma única O.S.
+								redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+							}
+						}else{
+							//Busca na lista de O.S. do cliente 
+							//redirect(base_url() . 'orcatrata/listar/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+							redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+						}
+					}else{
+						//Não Gera O.S. 
+						redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+					}
+					*/
+					
+					if($data['cadastrar']['Adicionar'] == "S"){
+						if($data['cadastrar']['PorConsulta'] == "S"){
 							//Gera O.S. Replicadas pelo número de ocorrências
 							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
 						}else{
-							//Gera uma única O.S.
-							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-						}
-					}else{
-						//Busca na lista de O.S. do cliente 
-						//redirect(base_url() . 'orcatrata/listar/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-						redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-					}
-				}else{
-					//Não Gera O.S. 
-					redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-				}
-				*/
-				
-				if($data['cadastrar']['Adicionar'] == "S"){
-					if($data['cadastrar']['PorConsulta'] == "S"){
-						//Gera O.S. Replicadas pelo número de ocorrências
-						redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-					}else{
-						if($data['query']['Recorrencias'] > 1){
-							if($data['cadastrar']['NovaOS'] == "S"){
-								//Gera uma única O.S.
-								redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+							if($data['query']['Recorrencias'] > 1){
+								if($data['cadastrar']['NovaOS'] == "S"){
+									//Gera uma única O.S.
+									redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+								}else{
+									//Não Gera O.S. 
+									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+								}
 							}else{
 								//Não Gera O.S. 
 								redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
 							}
-						}else{
-							//Não Gera O.S. 
-							redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
 						}
+					}else{
+						//Não Gera O.S. 
+						redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
 					}
-				}else{
-					//Não Gera O.S. 
-					redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+						
+					exit();
 				}
-					
-                exit();
-            }
-        }
+			}
+		}
 
         $this->load->view('basico/footer');
     }
@@ -604,6 +629,7 @@ class Consulta extends CI_Controller {
 			'RacaPet',
 			'id_Cliente_Auto',
 			'NomeClienteAuto',
+			'Hidden_status',
         ), TRUE));
 
         $data['query'] = quotes_to_entities($this->input->post(array(
@@ -896,7 +922,20 @@ class Consulta extends CI_Controller {
 		
 		$data['q3'] = $this->Clientepet_model->list_racapet(TRUE);
 		$data['list3'] = $this->load->view('clientepet/list_racapet', $data, TRUE);		
-		
+		/*
+		$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
+		$data1 = $data1->format('Y-m-d');       
+		$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
+		$data2 = $data2->format('Y-m-d');		
+        
+		echo '<br>';
+        echo "<pre>";
+        print_r($data1);
+		echo '<br>';
+        print_r($data2);
+        echo "</pre>";
+        exit();	
+		*/		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
 		if ($data['cadastrar']['Repetir'] == 'S') {
@@ -914,9 +953,16 @@ class Consulta extends CI_Controller {
 		}
         $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
         $this->form_validation->set_rules('Data2', 'Data do Fim', 'required|trim|valid_date');
+		/*
 		$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
         #$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
-		$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
+		//$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
+        if(strtotime($data2) == strtotime($data1)){
+			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
+		}else{
+			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
+		}
+		*/
         #$this->form_validation->set_rules('idTab_TipoConsulta', 'Tipo de Consulta', 'required|trim');
         $this->form_validation->set_rules('idApp_Cliente', 'Cliente', 'required|trim|valid_cliente');
 		$this->form_validation->set_rules('idApp_Agenda', 'Profissional', 'required|trim');
@@ -933,96 +979,126 @@ class Consulta extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() === FALSE) {
 			$this->load->view('consulta/form_consulta', $data);
-        } else {
 
-			$dataini_cad 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
-			$datafim_cad 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
-			$horaini_cad 	= $data['query']['HoraInicio'];
-			$horafim_cad 	= $data['query']['HoraFim'];
-			
-			if ($data['cadastrar']['Repetir'] == 'N') {
-				$data['query']['Intervalo'] = 0;
-				$data['query']['Periodo'] = 0;
-				$data['query']['Tempo'] = 0;
-				$data['query']['Tempo2'] = 0;
-				$data['query']['DataTermino'] = $dataini_cad;
-			}else{
-				
-				$tipointervalo = $data['query']['Tempo'];
-				if($tipointervalo == 1){
-					$semana = 1;
-					$ref = "day";
-				}elseif($tipointervalo == 2){
-					$semana = 7;
-					$ref = "day";
-				}elseif($tipointervalo == 3){
-					$semana = 1;
-					$ref = "month";
-				}elseif($tipointervalo == 4){
-					$semana = 1;
-					$ref = "Year";
-				}
+		} else {
+		
+			$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
+			$data1 = $data1->format('Y-m-d');       
+			$data1 = strtotime($data1);
+			$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
+			$data2 = $data2->format('Y-m-d');    
+			$data2 = strtotime($data2);
 
-				$n = $data['query']['Intervalo']; //intervalo - a cada tantos dias
-				$qtd = $data['query']['Recorrencias'];
-				$data['query']['DataTermino'] = $this->basico->mascara_data($data['query']['DataTermino'], 'mysql');
+			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');	
+			$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
+			if($data2 == $data1){
+				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
+			}else{
+				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
+			}			
+			
+			if ($this->form_validation->run() === FALSE) {
+				$this->load->view('consulta/form_consulta', $data);
+
+			} else {
+			
+				$dataini_cad 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
+				$datafim_cad 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
+				$horaini_cad 	= $data['query']['HoraInicio'];
+				$horafim_cad 	= $data['query']['HoraFim'];
 				
-			}
-			if($_SESSION['Empresa']['CadastrarDep'] == "N"){
-				$data['query']['idApp_ClienteDep'] = 0;
-			}else{
-				if($data['query']['idApp_ClienteDep'] == ''){
-					$data['query']['idApp_ClienteDep'] = 0;
-				}
-			}
-			if($_SESSION['Empresa']['CadastrarPet'] == "N"){
-				$data['query']['idApp_ClientePet'] = 0;
-			}else{
-				if($data['query']['idApp_ClientePet'] == ''){
-					$data['query']['idApp_ClientePet'] = 0;
-				}
-			}
-			$data['query']['Tipo'] = 2;
-            $data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
-            #$data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraFim'];
-            $data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data2'], 'mysql') . ' ' . $data['query']['HoraFim'];
-            //$data['query']['idTab_Status'] = 1;
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-			$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
-			$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-			
-			
-			
-			/*
-			if($data['cadastrar']['Vincular'] == "N"){
-				$data['query']['OS'] = "0";
-				$data['query']['idApp_OrcaTrata'] = "0";
-			}else{
-			
-				if($data['cadastrar']['NovaOS'] == "N"){
-					$data['query']['OS'] = "1";
-					$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
+				if ($data['cadastrar']['Repetir'] == 'N') {
+					$data['query']['Intervalo'] = 0;
+					$data['query']['Periodo'] = 0;
+					$data['query']['Tempo'] = 0;
+					$data['query']['Tempo2'] = 0;
+					$data['query']['DataTermino'] = $dataini_cad;
 				}else{
-					$data['query']['idApp_OrcaTrata'] = "0";
-					if($data['cadastrar']['PorConsulta'] == "N"){
-						//$data['query']['idApp_OrcaTrata'] = "0";
-						$data['query']['OS'] = "1";
-					}else{
-						//$data['query']['idApp_OrcaTrata'] = "0";
-						$data['query']['OS'] = $data['query']['Recorrencias'];
+					
+					$tipointervalo = $data['query']['Tempo'];
+					if($tipointervalo == 1){
+						$semana = 1;
+						$ref = "day";
+					}elseif($tipointervalo == 2){
+						$semana = 7;
+						$ref = "day";
+					}elseif($tipointervalo == 3){
+						$semana = 1;
+						$ref = "month";
+					}elseif($tipointervalo == 4){
+						$semana = 1;
+						$ref = "Year";
+					}
+
+					$n = $data['query']['Intervalo']; //intervalo - a cada tantos dias
+					$qtd = $data['query']['Recorrencias'];
+					$data['query']['DataTermino'] = $this->basico->mascara_data($data['query']['DataTermino'], 'mysql');
+					
+				}
+				if($_SESSION['Empresa']['CadastrarDep'] == "N"){
+					$data['query']['idApp_ClienteDep'] = 0;
+				}else{
+					if($data['query']['idApp_ClienteDep'] == ''){
+						$data['query']['idApp_ClienteDep'] = 0;
 					}
 				}
-			}
-			*/
-			
-			if($data['cadastrar']['PorConsulta'] == "S"){
-				$data['query']['OS'] = $data['query']['Recorrencias'];
-				$data['query']['idApp_OrcaTrata'] = "0";
-			}else{
-				if($data['query']['Recorrencias'] > 1){
-					if($data['cadastrar']['NovaOS'] == "S"){
+				if($_SESSION['Empresa']['CadastrarPet'] == "N"){
+					$data['query']['idApp_ClientePet'] = 0;
+				}else{
+					if($data['query']['idApp_ClientePet'] == ''){
+						$data['query']['idApp_ClientePet'] = 0;
+					}
+				}
+				$data['query']['Tipo'] = 2;
+				$data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
+				#$data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraFim'];
+				$data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data2'], 'mysql') . ' ' . $data['query']['HoraFim'];
+				//$data['query']['idTab_Status'] = 1;
+				$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+				$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
+				$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+				
+				
+				
+				/*
+				if($data['cadastrar']['Vincular'] == "N"){
+					$data['query']['OS'] = "0";
+					$data['query']['idApp_OrcaTrata'] = "0";
+				}else{
+				
+					if($data['cadastrar']['NovaOS'] == "N"){
 						$data['query']['OS'] = "1";
+						$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
+					}else{
 						$data['query']['idApp_OrcaTrata'] = "0";
+						if($data['cadastrar']['PorConsulta'] == "N"){
+							//$data['query']['idApp_OrcaTrata'] = "0";
+							$data['query']['OS'] = "1";
+						}else{
+							//$data['query']['idApp_OrcaTrata'] = "0";
+							$data['query']['OS'] = $data['query']['Recorrencias'];
+						}
+					}
+				}
+				*/
+				
+				if($data['cadastrar']['PorConsulta'] == "S"){
+					$data['query']['OS'] = $data['query']['Recorrencias'];
+					$data['query']['idApp_OrcaTrata'] = "0";
+				}else{
+					if($data['query']['Recorrencias'] > 1){
+						if($data['cadastrar']['NovaOS'] == "S"){
+							$data['query']['OS'] = "1";
+							$data['query']['idApp_OrcaTrata'] = "0";
+						}else{
+							if($data['cadastrar']['Vincular'] == "S"){
+								$data['query']['OS'] = "1";
+								$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
+							}else{
+								$data['query']['OS'] = "0";
+								$data['query']['idApp_OrcaTrata'] = "0";
+							}
+						}
 					}else{
 						if($data['cadastrar']['Vincular'] == "S"){
 							$data['query']['OS'] = "1";
@@ -1032,163 +1108,155 @@ class Consulta extends CI_Controller {
 							$data['query']['idApp_OrcaTrata'] = "0";
 						}
 					}
-				}else{
-					if($data['cadastrar']['Vincular'] == "S"){
-						$data['query']['OS'] = "1";
-						$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
-					}else{
-						$data['query']['OS'] = "0";
-						$data['query']['idApp_OrcaTrata'] = "0";
-					}
-				}
-			}
-			
-            $data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
-			
-			$dataini_whats 	= $data['query']['Data'];
-			$horaini_whats	= $data['query']['HoraInicio'];
-			
-            #unset($data['query']['Data'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
-			unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
-			
-            $data['campos'] = array_keys($data['query']);
-            $data['anterior'] = array();
-
-            $data['query']['idApp_Consulta'] = $this->Consulta_model->set_consulta($data['query']);
-
-            unset($_SESSION['Agenda']);
-
-            if ($data['query']['idApp_Consulta'] === FALSE) {
-                $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-
-                $this->basico->erro($msg);
-                $this->load->view('consulta/form_consulta', $data);
-            } else {
-				
-				if($data['cadastrar']['Whatsapp'] == 'S'){
-					#### Whatsapp ####
-					$data['Cliente'] 		= $this->Cliente_model->get_cliente($data['query']['idApp_Cliente'], TRUE);
-					$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
-					
-					$_SESSION['bd_consulta']['NomeCliente'] 		= utf8_encode($data['Cliente']['NomeCliente']);
-					$_SESSION['bd_consulta']['CelularCliente'] 	= $data['Cliente']['CelularCliente'];
-					$_SESSION['bd_consulta']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
-					$_SESSION['bd_consulta']['DataInicio'] 		= $dataini_whats;
-					$_SESSION['bd_consulta']['HoraInicio'] 		= $horaini_whats;
-					
-					unset($data['Cliente'], $data['Profissional'], $dataini_whats, $horaini_whats);
-				}
-
-				$_SESSION['Copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
-				$data['copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
-				
-				if($data['cadastrar']['Repetir'] == 'S'){
-					$data['copiar']['DataTermino'] = $data['query']['DataTermino'];
-					$data['copiar']['Recorrencia'] = "1/" . $qtd;
-				}else{
-					$data['copiar']['Recorrencia'] = "1/1";
-					//$data['copiar']['DataTermino'] = $dataini_cad;
 				}
 				
-				$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['query']['idApp_Consulta']);
+				$data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
 				
-				if ($data['update']['copiar']['bd'] === FALSE) {
+				$dataini_whats 	= $data['query']['Data'];
+				$horaini_whats	= $data['query']['HoraInicio'];
+				
+				#unset($data['query']['Data'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
+				unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
+				
+				$data['campos'] = array_keys($data['query']);
+				$data['anterior'] = array();
+
+				$data['query']['idApp_Consulta'] = $this->Consulta_model->set_consulta($data['query']);
+
+				unset($_SESSION['Agenda']);
+
+				if ($data['query']['idApp_Consulta'] === FALSE) {
 					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 					$this->basico->erro($msg);
 					$this->load->view('consulta/form_consulta', $data);
 				} else {
-					if ($data['cadastrar']['Repetir'] == 'S') {
-						for($j=1; $j<$qtd; $j++) {
-							$data['repeticao'][$j] = array(
-								'Repeticao' 			=> $data['query']['idApp_Consulta'],
-								'Intervalo' 			=> $data['query']['Intervalo'],
-								'Periodo' 				=> $data['query']['Periodo'],
-								'Tempo' 				=> $data['query']['Tempo'],
-								'Tempo2' 				=> $data['query']['Tempo2'],
-								'DataTermino' 			=> $data['query']['DataTermino'],
-								'Recorrencias' 			=> $data['query']['Recorrencias'],
-								'Recorrencia' 			=> ($j + 1) .  '/' . $data['query']['Recorrencias'],
-								//'OS' 					=> $data['query']['OS'],
-								'idApp_Agenda' 			=> $data['query']['idApp_Agenda'],
-								'idApp_Cliente' 		=> $data['query']['idApp_Cliente'],
-								'idApp_ClienteDep' 		=> $data['query']['idApp_ClienteDep'],
-								'idApp_ClientePet' 		=> $data['query']['idApp_ClientePet'],
-								'idApp_OrcaTrata' 		=> $data['query']['idApp_OrcaTrata'],
-								//'Evento' 				=> $data['query']['Evento'],
-								'Obs' 					=> $data['query']['Obs'],
-								//'idApp_Profissional' 	=> $data['query']['idApp_Profissional'],
-								'idTab_Status' 			=> $data['query']['idTab_Status'],
-								'Tipo' 					=> $data['query']['Tipo'],
-								'idTab_TipoConsulta' 	=> $data['query']['idTab_TipoConsulta'],
-								'Paciente' 				=> $data['query']['Paciente'],
-								'DataInicio' 			=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) .  $ref,strtotime($dataini_cad))) . ' ' . $horaini_cad,
-								'DataFim' 				=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) . $ref,strtotime($datafim_cad))) . ' ' . $horafim_cad,
-								'idSis_Usuario' 		=> $_SESSION['log']['idSis_Usuario'],
-								'idSis_Empresa' 		=> $_SESSION['log']['idSis_Empresa'],
-								'idTab_Modulo' 			=> $_SESSION['log']['idTab_Modulo']
-							);
-							$data['campos'] = array_keys($data['repeticao'][$j]);
-							$data['id_Repeticao'] = $this->Consulta_model->set_consulta($data['repeticao'][$j]);
-						}
-				
+					
+					if($data['cadastrar']['Whatsapp'] == 'S'){
+						#### Whatsapp ####
+						$data['Cliente'] 		= $this->Cliente_model->get_cliente($data['query']['idApp_Cliente'], TRUE);
+						$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
+						
+						$_SESSION['bd_consulta']['NomeCliente'] 		= utf8_encode($data['Cliente']['NomeCliente']);
+						$_SESSION['bd_consulta']['CelularCliente'] 	= $data['Cliente']['CelularCliente'];
+						$_SESSION['bd_consulta']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
+						$_SESSION['bd_consulta']['DataInicio'] 		= $dataini_whats;
+						$_SESSION['bd_consulta']['HoraInicio'] 		= $horaini_whats;
+						
+						unset($data['Cliente'], $data['Profissional'], $dataini_whats, $horaini_whats);
 					}
-				}	
-                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], FALSE);
-                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'CREATE', $data['auditoriaitem']);
-                $data['msg'] = '?m=1';
 
-                //redirect(base_url() . 'cliente/prontuario/' . $data['query']['idApp_Cliente'] . $data['msg'] . $data['redirect']);
-				
-				/*
-				if($data['cadastrar']['Vincular'] == 'S'){	
-					if($data['cadastrar']['NovaOS'] == 'S'){
-						if($data['cadastrar']['PorConsulta'] == 'S'){
-							//Gera O.S. Replicadas pelo número de ocorrências
-							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-						}else{
-							//Gera uma única O.S.
-							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-						}
+					$_SESSION['Copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
+					$data['copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
+					
+					if($data['cadastrar']['Repetir'] == 'S'){
+						$data['copiar']['DataTermino'] = $data['query']['DataTermino'];
+						$data['copiar']['Recorrencia'] = "1/" . $qtd;
 					}else{
-						//Busca na lista de O.S. do cliente 
-						//redirect(base_url() . 'orcatrata/listar/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-						redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+						$data['copiar']['Recorrencia'] = "1/1";
+						//$data['copiar']['DataTermino'] = $dataini_cad;
 					}
-				}else{
-					//Não Gera O.S. 
-					redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-				}
-				*/
-				
-				if($data['cadastrar']['Adicionar'] == "S"){	
-					if($data['cadastrar']['PorConsulta'] == "S"){
-						//Gera O.S. Replicadas pelo número de ocorrências
-						redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-						exit();
-					}else{
-						if($data['query']['Recorrencias'] > 1){
-							if($data['cadastrar']['NovaOS'] == "S"){
+					
+					$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['query']['idApp_Consulta']);
+					
+					if ($data['update']['copiar']['bd'] === FALSE) {
+						$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+						$this->basico->erro($msg);
+						$this->load->view('consulta/form_consulta', $data);
+					} else {
+						if ($data['cadastrar']['Repetir'] == 'S') {
+							for($j=1; $j<$qtd; $j++) {
+								$data['repeticao'][$j] = array(
+									'Repeticao' 			=> $data['query']['idApp_Consulta'],
+									'Intervalo' 			=> $data['query']['Intervalo'],
+									'Periodo' 				=> $data['query']['Periodo'],
+									'Tempo' 				=> $data['query']['Tempo'],
+									'Tempo2' 				=> $data['query']['Tempo2'],
+									'DataTermino' 			=> $data['query']['DataTermino'],
+									'Recorrencias' 			=> $data['query']['Recorrencias'],
+									'Recorrencia' 			=> ($j + 1) .  '/' . $data['query']['Recorrencias'],
+									//'OS' 					=> $data['query']['OS'],
+									'idApp_Agenda' 			=> $data['query']['idApp_Agenda'],
+									'idApp_Cliente' 		=> $data['query']['idApp_Cliente'],
+									'idApp_ClienteDep' 		=> $data['query']['idApp_ClienteDep'],
+									'idApp_ClientePet' 		=> $data['query']['idApp_ClientePet'],
+									'idApp_OrcaTrata' 		=> $data['query']['idApp_OrcaTrata'],
+									//'Evento' 				=> $data['query']['Evento'],
+									'Obs' 					=> $data['query']['Obs'],
+									//'idApp_Profissional' 	=> $data['query']['idApp_Profissional'],
+									'idTab_Status' 			=> $data['query']['idTab_Status'],
+									'Tipo' 					=> $data['query']['Tipo'],
+									'idTab_TipoConsulta' 	=> $data['query']['idTab_TipoConsulta'],
+									'Paciente' 				=> $data['query']['Paciente'],
+									'DataInicio' 			=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) .  $ref,strtotime($dataini_cad))) . ' ' . $horaini_cad,
+									'DataFim' 				=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) . $ref,strtotime($datafim_cad))) . ' ' . $horafim_cad,
+									'idSis_Usuario' 		=> $_SESSION['log']['idSis_Usuario'],
+									'idSis_Empresa' 		=> $_SESSION['log']['idSis_Empresa'],
+									'idTab_Modulo' 			=> $_SESSION['log']['idTab_Modulo']
+								);
+								$data['campos'] = array_keys($data['repeticao'][$j]);
+								$data['id_Repeticao'] = $this->Consulta_model->set_consulta($data['repeticao'][$j]);
+							}
+					
+						}
+					}	
+					$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], FALSE);
+					$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'CREATE', $data['auditoriaitem']);
+					$data['msg'] = '?m=1';
+
+					//redirect(base_url() . 'cliente/prontuario/' . $data['query']['idApp_Cliente'] . $data['msg'] . $data['redirect']);
+					
+					/*
+					if($data['cadastrar']['Vincular'] == 'S'){	
+						if($data['cadastrar']['NovaOS'] == 'S'){
+							if($data['cadastrar']['PorConsulta'] == 'S'){
+								//Gera O.S. Replicadas pelo número de ocorrências
+								redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+							}else{
 								//Gera uma única O.S.
 								redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-								exit();
+							}
+						}else{
+							//Busca na lista de O.S. do cliente 
+							//redirect(base_url() . 'orcatrata/listar/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+							redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+						}
+					}else{
+						//Não Gera O.S. 
+						redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+					}
+					*/
+					
+					if($data['cadastrar']['Adicionar'] == "S"){	
+						if($data['cadastrar']['PorConsulta'] == "S"){
+							//Gera O.S. Replicadas pelo número de ocorrências
+							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+							exit();
+						}else{
+							if($data['query']['Recorrencias'] > 1){
+								if($data['cadastrar']['NovaOS'] == "S"){
+									//Gera uma única O.S.
+									redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+									exit();
+								}else{
+									//Não Gera O.S. 
+									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+									exit();
+								}
 							}else{
 								//Não Gera O.S. 
 								redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
 								exit();
 							}
-						}else{
-							//Não Gera O.S. 
-							redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-							exit();
 						}
+					}else{
+						//Não Gera O.S. 
+						redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+						exit();
 					}
-				}else{
-					//Não Gera O.S. 
-					redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-					exit();
 				}
-            }
+			}
         }
 
         $this->load->view('basico/footer');
@@ -1918,6 +1986,7 @@ class Consulta extends CI_Controller {
 			'NovaOS',
 			'PorConsulta',
 			'EspeciePet',
+			'Hidden_status',
         ), TRUE));
 		
 		$data['alterar'] = quotes_to_entities($this->input->post(array(
@@ -1997,12 +2066,12 @@ class Consulta extends CI_Controller {
             $data['datepicker'] = 'DatePicker';
             $data['timepicker'] = 'TimePicker';
         }
-
+		/*
 		$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
 		$data1 = $data1->format('Y-m-d');       
 		$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
 		$data2 = $data2->format('Y-m-d');	
-		
+		*/
         #Ver uma solução melhor para este campo
         (!$data['query']['Paciente']) ? $data['query']['Paciente'] = 'R' : FALSE;
 
@@ -2137,14 +2206,17 @@ class Consulta extends CI_Controller {
 		$data['list3'] = $this->load->view('clientepet/list_racapet', $data, TRUE);
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
-        $this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_date|valid_periodo_data[' . $data['query']['Data'] . ']');
+        $this->form_validation->set_rules('Data', 'Data Inicio', 'required|trim|valid_date');
+        $this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_date');
+        //$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_date|valid_periodo_data[' . $data['query']['Data'] . ']');
+		/*
 		$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
         if(strtotime($data2) == strtotime($data1)){
 			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
 		}else{
 			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
 		}
+		*/
 		$this->form_validation->set_rules('idApp_Cliente', 'Cliente', 'required|trim');
 		$this->form_validation->set_rules('idApp_Agenda', 'Profissional', 'required|trim');
 		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');	
@@ -2161,96 +2233,126 @@ class Consulta extends CI_Controller {
 				$this->load->view('consulta/form_consulta0', $data);
 			} else {
 				$this->load->view('consulta/form_consulta', $data);
-			}	
+			}
+			
         } else {
 		
-			if($_SESSION['Consulta']['idApp_Cliente'] != $data['query']['idApp_Cliente']){
-				$data['query']['Repeticao'] = $data['query']['idApp_Consulta'];
-			}else{
-				$data['query']['Repeticao'] = $_SESSION['Consulta']['Repeticao'];
-			}
-			if($_SESSION['Empresa']['CadastrarDep'] == "N"){
-				$data['query']['idApp_ClienteDep'] = 0;
-			}else{
-				if($data['query']['idApp_ClienteDep'] == ''){
-					$data['query']['idApp_ClienteDep'] = 0;
-				}
-			}
-			if($_SESSION['Empresa']['CadastrarPet'] == "N"){
-				$data['query']['idApp_ClientePet'] = 0;
-			}else{
-				if($data['query']['idApp_ClientePet'] == ''){
-					$data['query']['idApp_ClientePet'] = 0;
-				}
-			}			
-            $data['query']['Tipo'] = 2;
-			$data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
-			$data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data2'], 'mysql') . ' ' . $data['query']['HoraFim'];
-			#$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-            $data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
-            //exit();
-            
-			$dataanteriorinicio = strtotime($_SESSION['Consulta']['DataInicio']);
-			$dataanteriorfim = strtotime($_SESSION['Consulta']['DataFim']);
-			
-			$dataposteriorinicio = strtotime($data1);
-			$dataposteriorfim = strtotime($data2);
-			
-			$diferencainicio = ($dataposteriorinicio - $dataanteriorinicio)/86400;
-			$diferencafim = ($dataposteriorfim - $dataanteriorfim)/86400;
-			
-			if($diferencainicio < 0){
-				$difinicio = $diferencainicio;
-			}else{
-				$difinicio = '+' . $diferencainicio;
-			}
-			
-			if($diferencafim < 0){
-				$diffim = $diferencafim;
-			}else{
-				$diffim = '+' . $diferencafim;
-			}
-			
-			$dataini_alt 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
-			$datafim_alt 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
-			$horaini_alt 	= $data['query']['HoraInicio'];
-			$horafim_alt 	= $data['query']['HoraFim'];
+			$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
+			$data1 = $data1->format('Y-m-d');       
+			$data1 = strtotime($data1);
+			$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
+			$data2 = $data2->format('Y-m-d');    
+			$data2 = strtotime($data2);	
 
-			/*
-			if($data['cadastrar']['Vincular'] == "N"){
-				$data['query']['OS'] = "0";
+			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');			
+			$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
+			if($data2 == $data1){
+				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
 			}else{
-				if($data['cadastrar']['NovaOS'] == "N"){
-					$data['query']['OS'] = "1";
+				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
+			}			
+			
+			if ($this->form_validation->run() === FALSE) {
+				$this->load->view('consulta/form_consulta', $data);
+
+			} else {
+			
+				if($_SESSION['Consulta']['idApp_Cliente'] != $data['query']['idApp_Cliente']){
+					$data['query']['Repeticao'] = $data['query']['idApp_Consulta'];
 				}else{
-					if($data['cadastrar']['PorConsulta'] == "N"){
-						$data['query']['OS'] = "1";
-					}else{
-						$data['query']['OS'] = $_SESSION['Consulta']['Recorrencias'];
+					$data['query']['Repeticao'] = $_SESSION['Consulta']['Repeticao'];
+				}
+				if($_SESSION['Empresa']['CadastrarDep'] == "N"){
+					$data['query']['idApp_ClienteDep'] = 0;
+				}else{
+					if($data['query']['idApp_ClienteDep'] == ''){
+						$data['query']['idApp_ClienteDep'] = 0;
 					}
 				}
-			}
-			*/
-        
-		/*
-        echo '<br>';
-        echo "<pre>";
-        print_r($_SESSION['Consulta']['OS']);
-        echo '<br>';
-        print_r($data['query']['idApp_OrcaTrata']);
-        echo "</pre>";
-        exit();
-       	*/		
-			if($_SESSION['Consulta']['idApp_OrcaTrata'] == 0 || $_SESSION['Consulta']['idApp_OrcaTrata'] == ""){						
-				if($data['cadastrar']['PorConsulta'] == "S"){
-					//$data['query']['OS'] = $data['query']['Recorrencias'];
-					$data['query']['OS'] = $data['count_repet'];
-					$data['query']['idApp_OrcaTrata'] = "0";
+				if($_SESSION['Empresa']['CadastrarPet'] == "N"){
+					$data['query']['idApp_ClientePet'] = 0;
 				}else{
-					if($data['count_repet'] > 1){
-						if($data['cadastrar']['NovaOS'] == "S"){
+					if($data['query']['idApp_ClientePet'] == ''){
+						$data['query']['idApp_ClientePet'] = 0;
+					}
+				}			
+				$data['query']['Tipo'] = 2;
+				$data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
+				$data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data2'], 'mysql') . ' ' . $data['query']['HoraFim'];
+				#$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+				$data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
+				//exit();
+				
+				$dataanteriorinicio = strtotime($_SESSION['Consulta']['DataInicio']);
+				$dataanteriorfim = strtotime($_SESSION['Consulta']['DataFim']);
+				
+				$dataposteriorinicio = strtotime($data1);
+				$dataposteriorfim = strtotime($data2);
+				
+				$diferencainicio = ($dataposteriorinicio - $dataanteriorinicio)/86400;
+				$diferencafim = ($dataposteriorfim - $dataanteriorfim)/86400;
+				
+				if($diferencainicio < 0){
+					$difinicio = $diferencainicio;
+				}else{
+					$difinicio = '+' . $diferencainicio;
+				}
+				
+				if($diferencafim < 0){
+					$diffim = $diferencafim;
+				}else{
+					$diffim = '+' . $diferencafim;
+				}
+				
+				$dataini_alt 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
+				$datafim_alt 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
+				$horaini_alt 	= $data['query']['HoraInicio'];
+				$horafim_alt 	= $data['query']['HoraFim'];
+
+				/*
+				if($data['cadastrar']['Vincular'] == "N"){
+					$data['query']['OS'] = "0";
+				}else{
+					if($data['cadastrar']['NovaOS'] == "N"){
+						$data['query']['OS'] = "1";
+					}else{
+						if($data['cadastrar']['PorConsulta'] == "N"){
 							$data['query']['OS'] = "1";
-							$data['query']['idApp_OrcaTrata'] = "0";
+						}else{
+							$data['query']['OS'] = $_SESSION['Consulta']['Recorrencias'];
+						}
+					}
+				}
+				*/
+			
+				/*
+				echo '<br>';
+				echo "<pre>";
+				print_r($_SESSION['Consulta']['OS']);
+				echo '<br>';
+				print_r($data['query']['idApp_OrcaTrata']);
+				echo "</pre>";
+				exit();
+				*/		
+				if($_SESSION['Consulta']['idApp_OrcaTrata'] == 0 || $_SESSION['Consulta']['idApp_OrcaTrata'] == ""){						
+					if($data['cadastrar']['PorConsulta'] == "S"){
+						//$data['query']['OS'] = $data['query']['Recorrencias'];
+						$data['query']['OS'] = $data['count_repet'];
+						$data['query']['idApp_OrcaTrata'] = "0";
+					}else{
+						if($data['count_repet'] > 1){
+							if($data['cadastrar']['NovaOS'] == "S"){
+								$data['query']['OS'] = "1";
+								$data['query']['idApp_OrcaTrata'] = "0";
+							}else{
+								if($data['cadastrar']['Vincular'] == "S"){
+									$data['query']['OS'] = "1";
+									$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
+								}else{
+									$data['query']['OS'] = "0";
+									$data['query']['idApp_OrcaTrata'] = "0";
+								}
+							}
 						}else{
 							if($data['cadastrar']['Vincular'] == "S"){
 								$data['query']['OS'] = "1";
@@ -2260,488 +2362,354 @@ class Consulta extends CI_Controller {
 								$data['query']['idApp_OrcaTrata'] = "0";
 							}
 						}
-					}else{
-						if($data['cadastrar']['Vincular'] == "S"){
-							$data['query']['OS'] = "1";
-							$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
-						}else{
-							$data['query']['OS'] = "0";
-							$data['query']['idApp_OrcaTrata'] = "0";
-						}
-					}
-				}	
-			}else{
-				$data['query']['idApp_OrcaTrata'] = $_SESSION['Consulta']['idApp_OrcaTrata'];
-				$data['query']['OS'] = $_SESSION['Consulta']['OS'];
-			}			
-
-			/*
-			if($_SESSION['Consulta']['idApp_OrcaTrata'] == 0 || $_SESSION['Consulta']['idApp_OrcaTrata'] == ""){
-				
-				$data['vincular'] = 'S';
-				
-				if($data['count_repet'] == 0){
-					$data['porconsulta'] = 'N';
+					}	
 				}else{
-					$data['porconsulta'] = 'N';
-					$data['cadastrar']['PorConsulta'] = "N";
-				}
-				
-				if($data['cadastrar']['Vincular'] == "N"){
-					$data['query']['idApp_OrcaTrata'] = "0";
-				}else{
-					
-					if($data['cadastrar']['NovaOS'] == "N"){
-						$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
-					
-					}else{
-					
-						$data['query']['idApp_OrcaTrata'] = "0";
-						if($data['cadastrar']['PorConsulta'] == "N"){
-							$data['query']['idApp_OrcaTrata'] = "0";
-						}else{
-							$data['query']['idApp_OrcaTrata'] = "0";
-						}
-					}
-				}
+					$data['query']['idApp_OrcaTrata'] = $_SESSION['Consulta']['idApp_OrcaTrata'];
+					$data['query']['OS'] = $_SESSION['Consulta']['OS'];
+				}			
 
-			}else{
-				$data['query']['idApp_OrcaTrata'] = $_SESSION['Consulta']['idApp_OrcaTrata'];
-				$data['vincular'] = 'N';
-				$data['porconsulta'] = 'N';
-				$data['cadastrar']['Vincular'] = "N";
-				$data['cadastrar']['NovaOS'] = "N";
-				$data['cadastrar']['PorConsulta'] = "N";
-			}		
-			*/
-			
-			$dataini_whats 	= $data['query']['Data'];
-			$horaini_whats	= $data['query']['HoraInicio'];	
-		
-			unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
-			
-            $data['anterior'] = $this->Consulta_model->get_consulta($data['query']['idApp_Consulta']);
-            $data['campos'] = array_keys($data['query']);
-
-            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], TRUE);
-
-			$data['update']['query']['bd'] = $this->Consulta_model->update_consulta($data['query'], $data['query']['idApp_Consulta']);
-			
-			if($data['cadastrar']['Whatsapp'] == 'S'){
-				#### Whatsapp ####
-				$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
-				
-				$_SESSION['bd_consulta']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
-				$_SESSION['bd_consulta']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
-				$_SESSION['bd_consulta']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
-				$_SESSION['bd_consulta']['DataInicio'] 		= $dataini_whats;
-				$_SESSION['bd_consulta']['HoraInicio'] 		= $horaini_whats;
-				
-				unset($data['Profissional'], $dataini_whats, $horaini_whats);				
-			}
-			
-			$data['update']['cliente_repeticao']['anterior'] = $this->Orcatrata_model->get_cliente($data['query']['idApp_Cliente']);
-			
-			if($data['query']['idApp_OrcaTrata'] != 0){
-				$data['orca']['idApp_ClientePet']	= $data['query']['idApp_ClientePet'];
-				$data['orca']['DataOrca']			= $dataini_alt;
-				$data['orca']['DataVencimentoOrca']	= $dataini_alt;
-				$data['orca']['DataEntregaOrca']	= $dataini_alt;
-				$data['orca']['HoraEntregaOrca']	= $horaini_alt;
-
-				$data['update']['orca']['bd'] 	= $this->Orcatrata_model->update_orcatrata($data['orca'], $data['query']['idApp_OrcaTrata']);
-
-				if(isset($data['query']['idApp_Cliente']) && $data['query']['idApp_Cliente'] !=0){
-
-					#### Verificação do UltimoPedido ####
-					if(strtotime($data['update']['cliente_repeticao']['anterior']['UltimoPedido']) < strtotime($data['orca']['DataOrca'])){
-					
-						$data['cliente_repeticao']['UltimoPedido'] 		= $data['orca']['DataOrca'];
-						$data['cliente_repeticao']['id_UltimoPedido'] 	= $data['query']['idApp_OrcaTrata'];
-						$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['query']['idApp_Cliente']);
-						
-					}else if(strtotime($data['update']['cliente_repeticao']['anterior']['UltimoPedido']) == strtotime($data['orca']['DataOrca'])){
-						
-						if($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido'] < $data['query']['idApp_OrcaTrata']){
-							
-							$data['cliente_repeticao']['id_UltimoPedido'] = $data['query']['idApp_OrcaTrata'];
-							$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['query']['idApp_Cliente']);
-						
-						}
-						
-					}else{
-						
-						if($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido'] == $data['query']['idApp_OrcaTrata']){
-
-							$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['query']['idApp_Cliente'], TRUE);
-							$data['cliente_repeticao']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
-							$data['cliente_repeticao']['id_UltimoPedido'] = $data['get_ult_pdd_cliente']['idApp_OrcaTrata'];
-							$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['query']['idApp_Cliente']);
-						}
-						
-					}				
-
-				}					
-
-				#### App_Produto ####
-				$data['update']['produto']['alterar'] = $this->Orcatrata_model->get_produto_alterar($data['query']['idApp_OrcaTrata']);
-				if (isset($data['update']['produto']['alterar'])){
-
-					$max = count($data['update']['produto']['alterar']);
-					for($j=0;$j<$max;$j++) {
-						$data['update']['produto']['alterar'][$j]['DataConcluidoProduto'] = $dataini_alt;
-						$data['update']['produto']['alterar'][$j]['HoraConcluidoProduto'] = $horaini_alt;
-
-						$data['update']['produto']['bd'][$j] = $this->Orcatrata_model->update_produto_id($data['update']['produto']['alterar'][$j], $data['update']['produto']['alterar'][$j]['idApp_Produto']);
-					
-					}
-				}
-
-				#### App_Parcelas ####
-				$data['update']['parcelas']['alterar'] = $this->Orcatrata_model->get_parcelas_alterar($data['query']['idApp_OrcaTrata']);
-				if (isset($data['update']['parcelas']['alterar'])){
-
-					$max = count($data['update']['parcelas']['alterar']);
-					for($j=0;$j<$max;$j++) {
-						$data['update']['parcelas']['alterar'][$j]['DataVencimento'] = $dataini_alt;
-
-						$data['update']['parcelas']['bd'][$j] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelas']['alterar'][$j], $data['update']['parcelas']['alterar'][$j]['idApp_Parcelas']);
-					
-					}
-				}				
-			}
-			/*
-			echo '<br>';
-			echo "<pre>";
-			print_r($data['query']['idApp_OrcaTrata']);
-			echo '<br>';
-			print_r($dataini_alt);
-			echo '<br>';
-			//print_r($data['update']['orca']['bd']);
-			echo '<br>';
-			print_r('Contagem = '.$max);
-			echo '<br>';
-			print_r($data['update']['produto']['alterar']);
-			echo '<br>';
-			echo "</pre>";			
-			exit();
-			*/
-			$_SESSION['Repeticao'] = $data['repeticao'] = $this->Consulta_model->get_consulta_posterior($data['query']['idApp_Consulta'], $_SESSION['Consulta']['Repeticao'], $data['alterar']['Quais'], $dataini_alt);
-			
-			if (count($data['repeticao']) > 0) {
-				$data['repeticao'] = array_combine(range(1, count($data['repeticao'])), array_values($data['repeticao']));
-                $max = count($data['repeticao']);
-				if (isset($data['repeticao'])) {
-					for($j=1; $j <= $max; $j++) {
-						
-						echo '<br>';
-						echo "<pre>";
-						echo '<br>';
-						print_r('0');
-						echo '<br>';
-						print_r($data['repeticao'][$j]['idApp_OrcaTrata']);
-						echo '<br>';
-						print_r('Contagem = '.$j);
-						echo '<br>';
-						print_r($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido']);
-						echo '<br>';
-						print_r($data['update']['cliente_repeticao']['anterior']['UltimoPedido']);
-						echo '<br>';
-						echo '<br>';
-						echo "</pre>";						
-						
-						
-						if($data['repeticao'][$j]['idApp_Consulta'] != $data['query']['idApp_Consulta']){
-							//pego a data original, de cada linha, e somo a diferença
-							$datainicial[$j] 								= explode(' ', $data['repeticao'][$j]['DataInicio']);
-							$datafinal[$j] 									= explode(' ', $data['repeticao'][$j]['DataFim']);
-							$dataoriginalinicio[$j] 						= $datainicial[$j][0];
-							$dataoriginalfim[$j] 							= $datafinal[$j][0];
-							$dataatualinicio[$j] 							= date('Y-m-d', strtotime($difinicio  .  'day',strtotime($dataoriginalinicio[$j])));
-							$dataatualfim[$j] 								= date('Y-m-d', strtotime($diffim  .  'day',strtotime($dataoriginalfim[$j])));
-							
-								$data['repeticao'][$j]['DataInicio'] 		= $dataatualinicio[$j] . ' ' . $horaini_alt;
-								$data['repeticao'][$j]['DataFim'] 			= $dataatualfim[$j] . ' ' . $horafim_alt;
-							
-							$data['repeticao'][$j]['Repeticao'] 			= $data['query']['Repeticao'];
-							$data['repeticao'][$j]['idApp_Agenda'] 			= $data['query']['idApp_Agenda'];
-							$data['repeticao'][$j]['idApp_Cliente'] 		= $data['query']['idApp_Cliente'];
-							$data['repeticao'][$j]['idApp_ClienteDep'] 		= $data['query']['idApp_ClienteDep'];
-							$data['repeticao'][$j]['idApp_ClientePet'] 		= $data['query']['idApp_ClientePet'];
-							$data['repeticao'][$j]['Obs'] 					= $data['query']['Obs'];
-							//$data['repeticao'][$j]['idApp_Profissional'] 	= $data['query']['idApp_Profissional'];
-							$data['repeticao'][$j]['idTab_Status'] 			= $data['query']['idTab_Status'];
-							$data['repeticao'][$j]['idTab_TipoConsulta'] 	= $data['query']['idTab_TipoConsulta'];
-							
-							$data['update']['repeticao'][$j]['bd'] 			= $this->Consulta_model->update_consulta($data['repeticao'][$j], $data['repeticao'][$j]['idApp_Consulta']);
-							
-							if($data['repeticao'][$j]['idApp_OrcaTrata'] != 0 && $data['repeticao'][$j]['idApp_OrcaTrata'] != $data['query']['idApp_OrcaTrata']){
-								
-								$data['orca']['idApp_ClientePet'] 	= $data['query']['idApp_ClientePet'];
-								$data['orca']['DataOrca'] 			= $dataatualinicio[$j];
-								$data['orca']['DataVencimentoOrca'] = $dataatualinicio[$j];
-								$data['orca']['DataEntregaOrca'] 	= $dataatualinicio[$j];
-								$data['orca']['HoraEntregaOrca'] 	= $horaini_alt;
-								
-								echo '<br>';
-								echo "<pre>";
-								echo '<br>';
-								print_r('0');
-								echo '<br>';
-								print_r($data['repeticao'][$j]['idApp_OrcaTrata']);
-								echo '<br>';
-								print_r($data['orca']['DataOrca']);
-								echo '<br>';
-								print_r('Contagem = '.$j);
-								echo '<br>';
-								print_r($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido']);
-								echo '<br>';
-								print_r($data['update']['cliente_repeticao']['anterior']['UltimoPedido']);
-								echo '<br>';
-								echo '<br>';
-								echo "</pre>";								
-								
-								$data['update']['orca']['bd'][$j] 		= $this->Orcatrata_model->update_orcatrata($data['orca'], $data['repeticao'][$j]['idApp_OrcaTrata']);
-
-
-									
-									//$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['query']['idApp_Cliente'], TRUE);
-									//$data['cliente_cashback']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
-									//$data['update']['cliente_cashback']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_cashback'], $data['query']['idApp_Cliente']);
-									
-								#### Verificação do UltimoPedido ####
-								
-								if(strtotime($data['update']['cliente_repeticao']['anterior']['UltimoPedido']) < strtotime($data['orca']['DataOrca'])){
-									echo '<br>';
-									echo "<pre>";
-									echo '<br>';
-									print_r('1');
-									/*
-									echo '<br>';
-									print_r($data['repeticao'][$j]['idApp_OrcaTrata']);
-									echo '<br>';
-									print_r($data['orca']['DataOrca']);
-									echo '<br>';
-									print_r('Contagem = '.$j);
-									echo '<br>';
-									print_r($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido']);
-									echo '<br>';
-									print_r($data['update']['cliente_repeticao']['anterior']['UltimoPedido']);
-									echo '<br>';
-									echo '<br>';
-									*/
-									echo "</pre>";	
-									$data['cliente_repeticao']['UltimoPedido'] 		= $data['orca']['DataOrca'];
-									$data['cliente_repeticao']['id_UltimoPedido'] 	= $data['repeticao'][$j]['idApp_OrcaTrata'];
-									$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['query']['idApp_Cliente']);
-									
-								}else if(strtotime($data['update']['cliente_repeticao']['anterior']['UltimoPedido']) == strtotime($data['orca']['DataOrca'])){
-									echo '<br>';
-									echo "<pre>";
-									echo '<br>';
-									print_r('2');
-									/*
-									echo '<br>';
-									print_r($data['repeticao'][$j]['idApp_OrcaTrata']);
-									echo '<br>';
-									print_r($data['orca']['DataOrca']);
-									echo '<br>';
-									print_r('Contagem = '.$j);
-									echo '<br>';
-									print_r($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido']);
-									echo '<br>';
-									print_r($data['update']['cliente_repeticao']['anterior']['UltimoPedido']);
-									echo '<br>';
-									echo '<br>';
-									*/								
-									echo "</pre>";								
-									if($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido'] < $data['repeticao'][$j]['idApp_OrcaTrata']){
-										echo '<br>';
-										echo "<pre>";
-										echo '<br>';
-										print_r('Sim');								
-										echo "</pre>";
-										$data['cliente_repeticao']['id_UltimoPedido'] = $data['repeticao'][$j]['idApp_OrcaTrata'];
-										$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['query']['idApp_Cliente']);
-									
-									}else{
-										echo '<br>';
-										echo "<pre>";
-										echo '<br>';
-										print_r('Não');								
-										echo "</pre>";								
-									}
-									
-								}else{
-										echo '<br>';
-										echo "<pre>";
-										echo '<br>';
-										print_r('3');
-										/*
-										echo '<br>';
-										print_r($data['repeticao'][$j]['idApp_OrcaTrata']);
-										echo '<br>';
-										print_r($data['orca']['DataOrca']);
-										echo '<br>';
-										print_r('Contagem = '.$j);
-										echo '<br>';
-										print_r($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido']);
-										echo '<br>';
-										print_r($data['update']['cliente_repeticao']['anterior']['UltimoPedido']);
-										echo '<br>';
-										echo '<br>';
-										*/
-										echo "</pre>";								
-									if($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido'] == $data['repeticao'][$j]['idApp_OrcaTrata']){
-										echo '<br>';
-										echo "<pre>";
-										echo '<br>';
-										print_r('Sim');								
-										echo "</pre>";
-										$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['query']['idApp_Cliente'], TRUE);
-										$data['cliente_repeticao']['UltimoPedido'] 		= $data['get_ult_pdd_cliente']['DataOrca'];
-										$data['cliente_repeticao']['id_UltimoPedido'] 	= $data['get_ult_pdd_cliente']['idApp_OrcaTrata'];
-										$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['query']['idApp_Cliente']);
-									}else{
-										echo '<br>';
-										echo "<pre>";
-										echo '<br>';
-										print_r('Não');								
-										echo "</pre>";								
-									}
-									
-								}
-
-								#### App_Produto ####
-								$data['update']['produto']['posterior'][$j] = $this->Orcatrata_model->get_produto_alterar($data['repeticao'][$j]['idApp_OrcaTrata']);
-								if (isset($data['update']['produto']['posterior'][$j])){
-									
-									$max_produto = count($data['update']['produto']['posterior'][$j]);
-									
-									for($k=0;$k<$max_produto;$k++) {
-										
-										$data['update']['produto']['posterior'][$j][$k]['DataConcluidoProduto'] = $dataatualinicio[$j];
-										$data['update']['produto']['posterior'][$j][$k]['HoraConcluidoProduto'] = $horaini_alt;
-										
-										$data['update']['produto']['bd']['posterior'][$j][$k] = $this->Orcatrata_model->update_produto_id($data['update']['produto']['posterior'][$j][$k], $data['update']['produto']['posterior'][$j][$k]['idApp_Produto']);
-
-									}
-									
-								}							
-
-								#### App_Parcelas ####
-								$data['update']['parcelas']['posterior'][$j] = $this->Orcatrata_model->get_parcelas_alterar($data['repeticao'][$j]['idApp_OrcaTrata']);
-								if (isset($data['update']['parcelas']['posterior'][$j])){
-									
-									$max_parcelas = count($data['update']['parcelas']['posterior'][$j]);
-									
-									for($k=0;$k<$max_parcelas;$k++) {
-										
-										$data['update']['parcelas']['posterior'][$j][$k]['DataVencimento'] = $dataatualinicio[$j];
-										
-										$data['update']['parcelas']['bd']['posterior'][$j][$k] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelas']['posterior'][$j][$k], $data['update']['parcelas']['posterior'][$j][$k]['idApp_Parcelas']);
-
-									}
-									
-								}							
-															
-							}
-						}
-					}
-					//exit();
-				}				
-			}
-				
-			
-			if($_SESSION['Consulta']['idApp_OrcaTrata'] == 0 || $_SESSION['Consulta']['idApp_OrcaTrata'] == ""){
-			
-				if($data['cadastrar']['Vincular'] == "S" && $data['cadastrar']['NovaOS'] == "N"){
-					
-					$_SESSION['OrcaTrata'] = $data['orcatrata'] = $this->Consulta_model->get_consulta_posterior($data['query']['idApp_Consulta'], $_SESSION['Consulta']['Repeticao'], 4, $dataini_alt);
-					
-					if (count($data['orcatrata']) > 0) {
-						$data['orcatrata'] = array_combine(range(1, count($data['orcatrata'])), array_values($data['orcatrata']));
-						$max_orcatrata = count($data['orcatrata']);
-						if (isset($data['orcatrata'])) {
-							for($j=1; $j <= $max_orcatrata; $j++) {
-								
-								$data['orcatrata'][$j]['idApp_OrcaTrata'] 		= $data['query']['idApp_OrcaTrata'];
-								
-								$data['update']['orcatrata'][$j]['bd'] 			= $this->Consulta_model->update_consulta($data['orcatrata'][$j], $data['orcatrata'][$j]['idApp_Consulta']);
-							}
-						}
-					}
-				
-				}
-
-			}			
-
-
-			if ($data['auditoriaitem'] === FALSE) {
-				$data['msg'] = '';
-			} else {
-				$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'UPDATE', $data['auditoriaitem']);
-				$data['msg'] = '?m=1';
-			}
-
-			if(isset($data['query']['idApp_OrcaTrata']) && ($data['query']['idApp_OrcaTrata'] == 0 || $data['query']['idApp_OrcaTrata'] == "")){
 				/*
-				if($data['cadastrar']['Vincular'] == 'S'){	
-					if($data['cadastrar']['NovaOS'] == 'S'){
-						if($data['cadastrar']['PorConsulta'] == 'S'){
+				if($_SESSION['Consulta']['idApp_OrcaTrata'] == 0 || $_SESSION['Consulta']['idApp_OrcaTrata'] == ""){
+					
+					$data['vincular'] = 'S';
+					
+					if($data['count_repet'] == 0){
+						$data['porconsulta'] = 'N';
+					}else{
+						$data['porconsulta'] = 'N';
+						$data['cadastrar']['PorConsulta'] = "N";
+					}
+					
+					if($data['cadastrar']['Vincular'] == "N"){
+						$data['query']['idApp_OrcaTrata'] = "0";
+					}else{
+						
+						if($data['cadastrar']['NovaOS'] == "N"){
+							$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
+						
+						}else{
+						
+							$data['query']['idApp_OrcaTrata'] = "0";
+							if($data['cadastrar']['PorConsulta'] == "N"){
+								$data['query']['idApp_OrcaTrata'] = "0";
+							}else{
+								$data['query']['idApp_OrcaTrata'] = "0";
+							}
+						}
+					}
+
+				}else{
+					$data['query']['idApp_OrcaTrata'] = $_SESSION['Consulta']['idApp_OrcaTrata'];
+					$data['vincular'] = 'N';
+					$data['porconsulta'] = 'N';
+					$data['cadastrar']['Vincular'] = "N";
+					$data['cadastrar']['NovaOS'] = "N";
+					$data['cadastrar']['PorConsulta'] = "N";
+				}		
+				*/
+				
+				$dataini_whats 	= $data['query']['Data'];
+				$horaini_whats	= $data['query']['HoraInicio'];	
+			
+				unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
+				
+				$data['anterior'] = $this->Consulta_model->get_consulta($data['query']['idApp_Consulta']);
+				$data['campos'] = array_keys($data['query']);
+
+				$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], TRUE);
+
+				$data['update']['query']['bd'] = $this->Consulta_model->update_consulta($data['query'], $data['query']['idApp_Consulta']);
+				
+				if($data['cadastrar']['Whatsapp'] == 'S'){
+					#### Whatsapp ####
+					$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
+					
+					$_SESSION['bd_consulta']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
+					$_SESSION['bd_consulta']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
+					$_SESSION['bd_consulta']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
+					$_SESSION['bd_consulta']['DataInicio'] 		= $dataini_whats;
+					$_SESSION['bd_consulta']['HoraInicio'] 		= $horaini_whats;
+					
+					unset($data['Profissional'], $dataini_whats, $horaini_whats);				
+				}
+				
+				$data['update']['cliente_repeticao']['anterior'] = $this->Orcatrata_model->get_cliente($data['query']['idApp_Cliente']);
+				
+				if($data['query']['idApp_OrcaTrata'] != 0){
+					$data['orca']['idApp_ClientePet']	= $data['query']['idApp_ClientePet'];
+					$data['orca']['DataOrca']			= $dataini_alt;
+					$data['orca']['DataVencimentoOrca']	= $dataini_alt;
+					$data['orca']['DataEntregaOrca']	= $dataini_alt;
+					$data['orca']['HoraEntregaOrca']	= $horaini_alt;
+
+					$data['update']['orca']['bd'] 	= $this->Orcatrata_model->update_orcatrata($data['orca'], $data['query']['idApp_OrcaTrata']);
+
+					if(isset($data['query']['idApp_Cliente']) && $data['query']['idApp_Cliente'] !=0){
+
+						#### Verificação do UltimoPedido ####
+						if(strtotime($data['update']['cliente_repeticao']['anterior']['UltimoPedido']) < strtotime($data['orca']['DataOrca'])){
+						
+							$data['cliente_repeticao']['UltimoPedido'] 		= $data['orca']['DataOrca'];
+							$data['cliente_repeticao']['id_UltimoPedido'] 	= $data['query']['idApp_OrcaTrata'];
+							$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['query']['idApp_Cliente']);
+							
+						}else if(strtotime($data['update']['cliente_repeticao']['anterior']['UltimoPedido']) == strtotime($data['orca']['DataOrca'])){
+							
+							if($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido'] < $data['query']['idApp_OrcaTrata']){
+								
+								$data['cliente_repeticao']['id_UltimoPedido'] = $data['query']['idApp_OrcaTrata'];
+								$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['query']['idApp_Cliente']);
+							
+							}
+							
+						}else{
+							
+							if($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido'] == $data['query']['idApp_OrcaTrata']){
+
+								$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['query']['idApp_Cliente'], TRUE);
+								$data['cliente_repeticao']['UltimoPedido'] = $data['get_ult_pdd_cliente']['DataOrca'];
+								$data['cliente_repeticao']['id_UltimoPedido'] = $data['get_ult_pdd_cliente']['idApp_OrcaTrata'];
+								$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['query']['idApp_Cliente']);
+							}
+							
+						}				
+
+					}					
+
+					#### App_Produto ####
+					$data['update']['produto']['alterar'] = $this->Orcatrata_model->get_produto_alterar($data['query']['idApp_OrcaTrata']);
+					if (isset($data['update']['produto']['alterar'])){
+
+						$max = count($data['update']['produto']['alterar']);
+						for($j=0;$j<$max;$j++) {
+							$data['update']['produto']['alterar'][$j]['DataConcluidoProduto'] = $dataini_alt;
+							$data['update']['produto']['alterar'][$j]['HoraConcluidoProduto'] = $horaini_alt;
+
+							$data['update']['produto']['bd'][$j] = $this->Orcatrata_model->update_produto_id($data['update']['produto']['alterar'][$j], $data['update']['produto']['alterar'][$j]['idApp_Produto']);
+						
+						}
+					}
+
+					#### App_Parcelas ####
+					$data['update']['parcelas']['alterar'] = $this->Orcatrata_model->get_parcelas_alterar($data['query']['idApp_OrcaTrata']);
+					if (isset($data['update']['parcelas']['alterar'])){
+
+						$max = count($data['update']['parcelas']['alterar']);
+						for($j=0;$j<$max;$j++) {
+							$data['update']['parcelas']['alterar'][$j]['DataVencimento'] = $dataini_alt;
+
+							$data['update']['parcelas']['bd'][$j] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelas']['alterar'][$j], $data['update']['parcelas']['alterar'][$j]['idApp_Parcelas']);
+						
+						}
+					}				
+				}
+
+				$_SESSION['Repeticao'] = $data['repeticao'] = $this->Consulta_model->get_consulta_posterior($data['query']['idApp_Consulta'], $_SESSION['Consulta']['Repeticao'], $data['alterar']['Quais'], $dataini_alt);
+				
+				if (count($data['repeticao']) > 0) {
+					$data['repeticao'] = array_combine(range(1, count($data['repeticao'])), array_values($data['repeticao']));
+					$max = count($data['repeticao']);
+					if (isset($data['repeticao'])) {
+						for($j=1; $j <= $max; $j++) {
+
+							if($data['repeticao'][$j]['idApp_Consulta'] != $data['query']['idApp_Consulta']){
+								//pego a data original, de cada linha, e somo a diferença
+								$datainicial[$j] 								= explode(' ', $data['repeticao'][$j]['DataInicio']);
+								$datafinal[$j] 									= explode(' ', $data['repeticao'][$j]['DataFim']);
+								$dataoriginalinicio[$j] 						= $datainicial[$j][0];
+								$dataoriginalfim[$j] 							= $datafinal[$j][0];
+								$dataatualinicio[$j] 							= date('Y-m-d', strtotime($difinicio  .  'day',strtotime($dataoriginalinicio[$j])));
+								$dataatualfim[$j] 								= date('Y-m-d', strtotime($diffim  .  'day',strtotime($dataoriginalfim[$j])));
+								
+									$data['repeticao'][$j]['DataInicio'] 		= $dataatualinicio[$j] . ' ' . $horaini_alt;
+									$data['repeticao'][$j]['DataFim'] 			= $dataatualfim[$j] . ' ' . $horafim_alt;
+								
+								$data['repeticao'][$j]['Repeticao'] 			= $data['query']['Repeticao'];
+								$data['repeticao'][$j]['idApp_Agenda'] 			= $data['query']['idApp_Agenda'];
+								$data['repeticao'][$j]['idApp_Cliente'] 		= $data['query']['idApp_Cliente'];
+								$data['repeticao'][$j]['idApp_ClienteDep'] 		= $data['query']['idApp_ClienteDep'];
+								$data['repeticao'][$j]['idApp_ClientePet'] 		= $data['query']['idApp_ClientePet'];
+								$data['repeticao'][$j]['Obs'] 					= $data['query']['Obs'];
+								//$data['repeticao'][$j]['idApp_Profissional'] 	= $data['query']['idApp_Profissional'];
+								$data['repeticao'][$j]['idTab_Status'] 			= $data['query']['idTab_Status'];
+								$data['repeticao'][$j]['idTab_TipoConsulta'] 	= $data['query']['idTab_TipoConsulta'];
+								
+								$data['update']['repeticao'][$j]['bd'] 			= $this->Consulta_model->update_consulta($data['repeticao'][$j], $data['repeticao'][$j]['idApp_Consulta']);
+								
+								if($data['repeticao'][$j]['idApp_OrcaTrata'] != 0 && $data['repeticao'][$j]['idApp_OrcaTrata'] != $data['query']['idApp_OrcaTrata']){
+									
+									$data['orca']['idApp_ClientePet'] 	= $data['query']['idApp_ClientePet'];
+									$data['orca']['DataOrca'] 			= $dataatualinicio[$j];
+									$data['orca']['DataVencimentoOrca'] = $dataatualinicio[$j];
+									$data['orca']['DataEntregaOrca'] 	= $dataatualinicio[$j];
+									$data['orca']['HoraEntregaOrca'] 	= $horaini_alt;
+
+									$data['update']['orca']['bd'][$j] 		= $this->Orcatrata_model->update_orcatrata($data['orca'], $data['repeticao'][$j]['idApp_OrcaTrata']);
+
+									#### Verificação do UltimoPedido ####
+									
+									if(strtotime($data['update']['cliente_repeticao']['anterior']['UltimoPedido']) < strtotime($data['orca']['DataOrca'])){
+
+										$data['cliente_repeticao']['UltimoPedido'] 		= $data['orca']['DataOrca'];
+										$data['cliente_repeticao']['id_UltimoPedido'] 	= $data['repeticao'][$j]['idApp_OrcaTrata'];
+										$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['query']['idApp_Cliente']);
+										
+									}else if(strtotime($data['update']['cliente_repeticao']['anterior']['UltimoPedido']) == strtotime($data['orca']['DataOrca'])){
+
+										if($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido'] < $data['repeticao'][$j]['idApp_OrcaTrata']){
+											
+											$data['cliente_repeticao']['id_UltimoPedido'] = $data['repeticao'][$j]['idApp_OrcaTrata'];
+											$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['query']['idApp_Cliente']);
+										
+										}else{
+											
+										}
+										
+									}else{
+											
+											
+										if($data['update']['cliente_repeticao']['anterior']['id_UltimoPedido'] == $data['repeticao'][$j]['idApp_OrcaTrata']){
+											
+											$data['get_ult_pdd_cliente'] = $this->Orcatrata_model->get_ult_pdd_cliente($data['query']['idApp_Cliente'], TRUE);
+											$data['cliente_repeticao']['UltimoPedido'] 		= $data['get_ult_pdd_cliente']['DataOrca'];
+											$data['cliente_repeticao']['id_UltimoPedido'] 	= $data['get_ult_pdd_cliente']['idApp_OrcaTrata'];
+											$data['update']['cliente_repeticao']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_repeticao'], $data['query']['idApp_Cliente']);
+										}else{
+											
+										}
+										
+									}
+
+									#### App_Produto ####
+									$data['update']['produto']['posterior'][$j] = $this->Orcatrata_model->get_produto_alterar($data['repeticao'][$j]['idApp_OrcaTrata']);
+									if (isset($data['update']['produto']['posterior'][$j])){
+										
+										$max_produto = count($data['update']['produto']['posterior'][$j]);
+										
+										for($k=0;$k<$max_produto;$k++) {
+											
+											$data['update']['produto']['posterior'][$j][$k]['DataConcluidoProduto'] = $dataatualinicio[$j];
+											$data['update']['produto']['posterior'][$j][$k]['HoraConcluidoProduto'] = $horaini_alt;
+											
+											$data['update']['produto']['bd']['posterior'][$j][$k] = $this->Orcatrata_model->update_produto_id($data['update']['produto']['posterior'][$j][$k], $data['update']['produto']['posterior'][$j][$k]['idApp_Produto']);
+
+										}
+										
+									}							
+
+									#### App_Parcelas ####
+									$data['update']['parcelas']['posterior'][$j] = $this->Orcatrata_model->get_parcelas_alterar($data['repeticao'][$j]['idApp_OrcaTrata']);
+									if (isset($data['update']['parcelas']['posterior'][$j])){
+										
+										$max_parcelas = count($data['update']['parcelas']['posterior'][$j]);
+										
+										for($k=0;$k<$max_parcelas;$k++) {
+											
+											$data['update']['parcelas']['posterior'][$j][$k]['DataVencimento'] = $dataatualinicio[$j];
+											
+											$data['update']['parcelas']['bd']['posterior'][$j][$k] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelas']['posterior'][$j][$k], $data['update']['parcelas']['posterior'][$j][$k]['idApp_Parcelas']);
+
+										}
+										
+									}							
+																
+								}
+							}
+						}
+						//exit();
+					}				
+				}
+					
+				
+				if($_SESSION['Consulta']['idApp_OrcaTrata'] == 0 || $_SESSION['Consulta']['idApp_OrcaTrata'] == ""){
+				
+					if($data['cadastrar']['Vincular'] == "S" && $data['cadastrar']['NovaOS'] == "N"){
+						
+						$_SESSION['OrcaTrata'] = $data['orcatrata'] = $this->Consulta_model->get_consulta_posterior($data['query']['idApp_Consulta'], $_SESSION['Consulta']['Repeticao'], 4, $dataini_alt);
+						
+						if (count($data['orcatrata']) > 0) {
+							$data['orcatrata'] = array_combine(range(1, count($data['orcatrata'])), array_values($data['orcatrata']));
+							$max_orcatrata = count($data['orcatrata']);
+							if (isset($data['orcatrata'])) {
+								for($j=1; $j <= $max_orcatrata; $j++) {
+									
+									$data['orcatrata'][$j]['idApp_OrcaTrata'] 		= $data['query']['idApp_OrcaTrata'];
+									
+									$data['update']['orcatrata'][$j]['bd'] 			= $this->Consulta_model->update_consulta($data['orcatrata'][$j], $data['orcatrata'][$j]['idApp_Consulta']);
+								}
+							}
+						}
+					
+					}
+
+				}			
+
+
+				if ($data['auditoriaitem'] === FALSE) {
+					$data['msg'] = '';
+				} else {
+					$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'UPDATE', $data['auditoriaitem']);
+					$data['msg'] = '?m=1';
+				}
+
+				if(isset($data['query']['idApp_OrcaTrata']) && ($data['query']['idApp_OrcaTrata'] == 0 || $data['query']['idApp_OrcaTrata'] == "")){
+					/*
+					if($data['cadastrar']['Vincular'] == 'S'){	
+						if($data['cadastrar']['NovaOS'] == 'S'){
+							if($data['cadastrar']['PorConsulta'] == 'S'){
+								//Gera O.S. Replicadas pelo número de ocorrências
+								unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
+								redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+							}else{
+								//Gera uma única O.S.
+								unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
+								redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+							}
+						}else{
+							//Busca na lista de O.S. do cliente
+							unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
+							//redirect(base_url() . 'orcatrata/listar/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+							redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+						}
+					}else{
+						//Não Gera O.S.
+						unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
+						redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+					}
+					*/
+					if($data['cadastrar']['Adicionar'] == "S"){
+						if($data['cadastrar']['PorConsulta'] == "S"){
 							//Gera O.S. Replicadas pelo número de ocorrências
 							unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
 							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
 						}else{
-							//Gera uma única O.S.
-							unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
-							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+							if($data['cadastrar']['NovaOS'] == "S"){
+								//Gera uma única O.S.
+								unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
+								redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+							}else{
+								//Busca na lista de O.S. do cliente
+								unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
+								redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+							}
 						}
 					}else{
-						//Busca na lista de O.S. do cliente
+						//Não Gera O.S.
 						unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
-						//redirect(base_url() . 'orcatrata/listar/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
 						redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
 					}
 				}else{
 					//Não Gera O.S.
 					unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
-					redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+					//redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+					//redirect(base_url() . 'orcatrata/alterarstatus/' . $data['query']['idApp_OrcaTrata'] . $data['msg']);
+					redirect(base_url() . 'orcatrata/alterar/' . $data['query']['idApp_OrcaTrata'] . $data['msg']);
 				}
-				*/
-				if($data['cadastrar']['Adicionar'] == "S"){
-					if($data['cadastrar']['PorConsulta'] == "S"){
-						//Gera O.S. Replicadas pelo número de ocorrências
-						unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
-						redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-					}else{
-						if($data['cadastrar']['NovaOS'] == "S"){
-							//Gera uma única O.S.
-							unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
-							redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-						}else{
-							//Busca na lista de O.S. do cliente
-							unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
-							redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-						}
-					}
-				}else{
-					//Não Gera O.S.
-					unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
-					redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-				}
-			}else{
-				//Não Gera O.S.
-				unset($_SESSION['Agenda'], $_SESSION['Cliente'], $_SESSION['Consulta'], $_SESSION['Consultas_Repet'], $_SESSION['Repeticao']);
-				//redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-				//redirect(base_url() . 'orcatrata/alterarstatus/' . $data['query']['idApp_OrcaTrata'] . $data['msg']);
-				redirect(base_url() . 'orcatrata/alterar/' . $data['query']['idApp_OrcaTrata'] . $data['msg']);
+					
+				exit();
+			   
 			}
-				
-			exit();
-           
-        }
-
+		}
         $this->load->view('basico/footer');
     }
 
@@ -3153,6 +3121,7 @@ class Consulta extends CI_Controller {
 			'Repetir',
 			'Prazo',
 			'DataMinima',
+			'Hidden_status',
         ), TRUE));
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
@@ -3192,20 +3161,6 @@ class Consulta extends CI_Controller {
 			$data['query']['HoraInicio'] = date('H:i', substr($this->input->get('start'), 0, -3));
             $data['query']['HoraFim'] = date('H:i', substr($this->input->get('end'), 0, -3));
         }
-
-		$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
-		$data1 = $data1->format('Y-m-d');       
-		$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
-		$data2 = $data2->format('Y-m-d');		
-		/*
-			echo '<br>';
-			echo "<pre>";
-			print_r($data1);
-			echo '<br>';
-			print_r($data2);
-			echo "</pre>";
-			exit();		
-		*/
 
 		//$data['select']['idApp_Cliente'] = $this->Cliente_model->select_cliente();
 		#$data['select']['idSis_EmpresaFilial'] = $this->Empresafilial_model->select_empresafilial();
@@ -3250,12 +3205,7 @@ class Consulta extends CI_Controller {
 		$this->form_validation->set_rules('Prazo', 'Prazo', 'trim|valid_prazo');
         $this->form_validation->set_rules('Data', 'Data Início', 'required|trim|valid_date');
         $this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_date|valid_periodo_data[' . $data['query']['Data'] . ']');
-		$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
-        if(strtotime($data2) == strtotime($data1)){
-			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
-		}else{
-			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
-		}
+
 		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
 		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
         
@@ -3274,122 +3224,141 @@ class Consulta extends CI_Controller {
             $this->load->view('consulta/form_evento', $data);
         } else {
 		
-			$dataini_cad 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
-			$datafim_cad 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
-			$horaini_cad 	= $data['query']['HoraInicio'];
-			$horafim_cad 	= $data['query']['HoraFim'];
-			
-			if ($data['cadastrar']['Repetir'] == 'N') {
-				$data['query']['Intervalo'] = 0;
-				$data['query']['Periodo'] = 0;
-				$data['query']['Tempo'] = 0;
-				$data['query']['Tempo2'] = 0;
-				$data['query']['DataTermino'] = $dataini_cad;
+			$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
+			$data1 = $data1->format('Y-m-d');       
+			$data1 = strtotime($data1);
+			$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
+			$data2 = $data2->format('Y-m-d');    
+			$data2 = strtotime($data2);
+
+			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');	
+			$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
+			if($data2 == $data1){
+				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
 			}else{
-				
-				$tipointervalo = $data['query']['Tempo'];
-				if($tipointervalo == 1){
-					$semana = 1;
-					$ref = "day";
-				}elseif($tipointervalo == 2){
-					$semana = 7;
-					$ref = "day";
-				}elseif($tipointervalo == 3){
-					$semana = 1;
-					$ref = "month";
-				}elseif($tipointervalo == 4){
-					$semana = 1;
-					$ref = "Year";
-				}
-				
-				$n = $data['query']['Intervalo']; //intervalo - a cada tantos dias
-				$qtd = $data['query']['Recorrencias'];
-				$data['query']['DataTermino'] = $this->basico->mascara_data($data['query']['DataTermino'], 'mysql');				
-				
-			}
-
-			$data['query']['Tipo'] = 1;
-            $data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
-            $data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data2'], 'mysql') . ' ' . $data['query']['HoraFim'];
-			//$data['query']['idTab_Status'] = 1;
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-			$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
-			$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-
-            $data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
+				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
+			}			
 			
-			unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
-			
-            $data['campos'] = array_keys($data['query']);
-            $data['anterior'] = array();
-            $data['query']['idApp_Consulta'] = $this->Consulta_model->set_consulta($data['query']);
-
-            if ($data['query']['idApp_Consulta'] === FALSE) {
-                $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-
-                $this->basico->erro($msg);
-                $this->load->view('consulta/form_evento', $data);
-            } else {
-
-				$data['copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
-				if($data['cadastrar']['Repetir'] == 'S'){
-					//$data['copiar']['DataTermino'] = $ultimaocorrencia;
-					$data['copiar']['DataTermino'] = $data['query']['DataTermino'];
-					$data['copiar']['Recorrencia'] = "1/" . $qtd;
+			if ($this->form_validation->run() === FALSE) {
+				$this->load->view('consulta/form_evento', $data);
+			} else {
+		
+				$dataini_cad 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
+				$datafim_cad 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
+				$horaini_cad 	= $data['query']['HoraInicio'];
+				$horafim_cad 	= $data['query']['HoraFim'];
+				
+				if ($data['cadastrar']['Repetir'] == 'N') {
+					$data['query']['Intervalo'] = 0;
+					$data['query']['Periodo'] = 0;
+					$data['query']['Tempo'] = 0;
+					$data['query']['Tempo2'] = 0;
+					$data['query']['DataTermino'] = $dataini_cad;
 				}else{
-					$data['copiar']['Recorrencia'] = "1/1";
-					//$data['copiar']['DataTermino'] = $dataini_cad;
+					
+					$tipointervalo = $data['query']['Tempo'];
+					if($tipointervalo == 1){
+						$semana = 1;
+						$ref = "day";
+					}elseif($tipointervalo == 2){
+						$semana = 7;
+						$ref = "day";
+					}elseif($tipointervalo == 3){
+						$semana = 1;
+						$ref = "month";
+					}elseif($tipointervalo == 4){
+						$semana = 1;
+						$ref = "Year";
+					}
+					
+					$n = $data['query']['Intervalo']; //intervalo - a cada tantos dias
+					$qtd = $data['query']['Recorrencias'];
+					$data['query']['DataTermino'] = $this->basico->mascara_data($data['query']['DataTermino'], 'mysql');				
+					
 				}
+
+				$data['query']['Tipo'] = 1;
+				$data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
+				$data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data2'], 'mysql') . ' ' . $data['query']['HoraFim'];
+				//$data['query']['idTab_Status'] = 1;
+				$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+				$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
+				$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+
+				$data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
 				
-				$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['query']['idApp_Consulta']);
+				unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
 				
-				if ($data['update']['copiar']['bd'] === FALSE) {
+				$data['campos'] = array_keys($data['query']);
+				$data['anterior'] = array();
+				$data['query']['idApp_Consulta'] = $this->Consulta_model->set_consulta($data['query']);
+
+				if ($data['query']['idApp_Consulta'] === FALSE) {
 					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 					$this->basico->erro($msg);
 					$this->load->view('consulta/form_evento', $data);
 				} else {
-					if ($data['cadastrar']['Repetir'] == 'S') {
-						for($j=1; $j<$qtd; $j++) {
-							$data['repeticao'][$j] = array(
-								'Repeticao' 			=> $data['query']['idApp_Consulta'],
-								'Intervalo' 			=> $data['query']['Intervalo'],
-								'Periodo' 				=> $data['query']['Periodo'],
-								'Tempo' 				=> $data['query']['Tempo'],
-								'Tempo2' 				=> $data['query']['Tempo2'],
-								//'DataTermino' 			=> $ultimaocorrencia,
-								'DataTermino' 			=> $data['query']['DataTermino'],
-								'Recorrencias' 			=> $data['query']['Recorrencias'],
-								'Recorrencia' 			=> ($j + 1) .  '/' . $data['query']['Recorrencias'],
-								'idApp_Agenda' 			=> $data['query']['idApp_Agenda'],
-								//'idApp_Cliente' 		=> $data['query']['idApp_Cliente'],
-								'Evento' 				=> $data['query']['Evento'],
-								'Obs' 					=> $data['query']['Obs'],
-								//'idApp_Profissional' 	=> $data['query']['idApp_Profissional'],
-								'idTab_Status' 			=> $data['query']['idTab_Status'],
-								'Tipo' 					=> $data['query']['Tipo'],
-								'DataInicio' 			=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) .  $ref,strtotime($dataini_cad))) . ' ' . $horaini_cad,
-								'DataFim' 				=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) . $ref,strtotime($datafim_cad))) . ' ' . $horafim_cad,
-								'idSis_Usuario' 		=> $_SESSION['log']['idSis_Usuario'],
-								'idSis_Empresa' 		=> $_SESSION['log']['idSis_Empresa'],
-								'idTab_Modulo' 			=> $_SESSION['log']['idTab_Modulo']
-							);
-							$data['campos'] = array_keys($data['repeticao'][$j]);
-							$data['id_Repeticao'] = $this->Consulta_model->set_consulta($data['repeticao'][$j]);
+
+					$data['copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
+					if($data['cadastrar']['Repetir'] == 'S'){
+						//$data['copiar']['DataTermino'] = $ultimaocorrencia;
+						$data['copiar']['DataTermino'] = $data['query']['DataTermino'];
+						$data['copiar']['Recorrencia'] = "1/" . $qtd;
+					}else{
+						$data['copiar']['Recorrencia'] = "1/1";
+						//$data['copiar']['DataTermino'] = $dataini_cad;
+					}
+					
+					$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['query']['idApp_Consulta']);
+					
+					if ($data['update']['copiar']['bd'] === FALSE) {
+						$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+						$this->basico->erro($msg);
+						$this->load->view('consulta/form_evento', $data);
+					} else {
+						if ($data['cadastrar']['Repetir'] == 'S') {
+							for($j=1; $j<$qtd; $j++) {
+								$data['repeticao'][$j] = array(
+									'Repeticao' 			=> $data['query']['idApp_Consulta'],
+									'Intervalo' 			=> $data['query']['Intervalo'],
+									'Periodo' 				=> $data['query']['Periodo'],
+									'Tempo' 				=> $data['query']['Tempo'],
+									'Tempo2' 				=> $data['query']['Tempo2'],
+									//'DataTermino' 			=> $ultimaocorrencia,
+									'DataTermino' 			=> $data['query']['DataTermino'],
+									'Recorrencias' 			=> $data['query']['Recorrencias'],
+									'Recorrencia' 			=> ($j + 1) .  '/' . $data['query']['Recorrencias'],
+									'idApp_Agenda' 			=> $data['query']['idApp_Agenda'],
+									//'idApp_Cliente' 		=> $data['query']['idApp_Cliente'],
+									'Evento' 				=> $data['query']['Evento'],
+									'Obs' 					=> $data['query']['Obs'],
+									//'idApp_Profissional' 	=> $data['query']['idApp_Profissional'],
+									'idTab_Status' 			=> $data['query']['idTab_Status'],
+									'Tipo' 					=> $data['query']['Tipo'],
+									'DataInicio' 			=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) .  $ref,strtotime($dataini_cad))) . ' ' . $horaini_cad,
+									'DataFim' 				=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) . $ref,strtotime($datafim_cad))) . ' ' . $horafim_cad,
+									'idSis_Usuario' 		=> $_SESSION['log']['idSis_Usuario'],
+									'idSis_Empresa' 		=> $_SESSION['log']['idSis_Empresa'],
+									'idTab_Modulo' 			=> $_SESSION['log']['idTab_Modulo']
+								);
+								$data['campos'] = array_keys($data['repeticao'][$j]);
+								$data['id_Repeticao'] = $this->Consulta_model->set_consulta($data['repeticao'][$j]);
+							}
+					
 						}
 				
-					}
-			
-					$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], FALSE);
-					$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'CREATE', $data['auditoriaitem']);
-					$data['msg'] = '?m=1';
-					
-					redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-					exit();
-				}	
-            }
-        }
-
+						$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], FALSE);
+						$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'CREATE', $data['auditoriaitem']);
+						$data['msg'] = '?m=1';
+						
+						redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+						exit();
+					}	
+				}
+			}
+		}
         $this->load->view('basico/footer');
     }
 
@@ -3402,6 +3371,11 @@ class Consulta extends CI_Controller {
         else
             $data['msg'] = '';
 		
+		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+			'Cadastrar',
+			'Hidden_status',
+        ), TRUE));
+				
 		$data['alterar'] = quotes_to_entities($this->input->post(array(
 			'Quais',
         ), TRUE));
@@ -3419,7 +3393,7 @@ class Consulta extends CI_Controller {
             'Obs',
 			//'idApp_Profissional',
 			'idTab_Status',
-                ), TRUE);
+		), TRUE);
 
  		(!$data['alterar']['Quais']) ? $data['alterar']['Quais'] = 1 : FALSE;
 		
@@ -3449,11 +3423,6 @@ class Consulta extends CI_Controller {
             $data['datepicker'] = 'DatePicker';
             $data['timepicker'] = 'TimePicker';
         }
-
-		$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
-		$data1 = $data1->format('Y-m-d');       
-		$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
-		$data2 = $data2->format('Y-m-d');		
 
 		//$data['select']['idApp_Cliente'] = $this->Cliente_model->select_cliente();
 		#$data['select']['idSis_EmpresaFilial'] = $this->Empresafilial_model->select_empresafilial();
@@ -3486,12 +3455,7 @@ class Consulta extends CI_Controller {
 
         $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
         $this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_date|valid_periodo_data[' . $data['query']['Data'] . ']');
-		$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
-        if(strtotime($data2) == strtotime($data1)){
-			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
-		}else{
-			$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
-		}
+
 		#$this->form_validation->set_rules('idApp_Profissional', 'Profissional', 'required|trim');
 		$this->form_validation->set_rules('idApp_Agenda', 'Agenda do Profissional', 'required|trim');
 
@@ -3503,93 +3467,112 @@ class Consulta extends CI_Controller {
 				$this->load->view('consulta/form_evento0', $data);
 			}			
         } else {
+		
+			$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
+			$data1 = $data1->format('Y-m-d');       
+			$data1 = strtotime($data1);
+			$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
+			$data2 = $data2->format('Y-m-d');    
+			$data2 = strtotime($data2);
 
-			$data['query']['Tipo'] = 1;
-            $data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
-            $data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data2'], 'mysql') . ' ' . $data['query']['HoraFim'];
-			#$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-            $data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
-            
-			$dataanteriorinicio = strtotime($_SESSION['Consulta']['DataInicio']);
-			$dataanteriorfim = strtotime($_SESSION['Consulta']['DataFim']);
-			
-			$dataposteriorinicio = strtotime($data1);
-			$dataposteriorfim = strtotime($data2);
-			
-			$diferencainicio = ($dataposteriorinicio - $dataanteriorinicio)/86400;
-			$diferencafim = ($dataposteriorfim - $dataanteriorfim)/86400;
-			
-			if($diferencainicio < 0){
-				$difinicio = $diferencainicio;
+			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');	
+			$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
+			if($data2 == $data1){
+				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
 			}else{
-				$difinicio = '+' . $diferencainicio;
-			}
+				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
+			}			
 			
-			if($diferencafim < 0){
-				$diffim = $diferencafim;
-			}else{
-				$diffim = '+' . $diferencafim;
-			}
-			
-			$dataini_alt 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
-			$datafim_alt 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
-			$horaini_alt 	= $data['query']['HoraInicio'];
-			$horafim_alt 	= $data['query']['HoraFim'];			
+			if ($this->form_validation->run() === FALSE) {
+				$this->load->view('consulta/form_evento', $data);
 
-			unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
-			
-            $data['anterior'] = $this->Consulta_model->get_consulta($data['query']['idApp_Consulta']);
-            $data['campos'] = array_keys($data['query']);
+			} else {
+				$data['query']['Tipo'] = 1;
+				$data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
+				$data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data2'], 'mysql') . ' ' . $data['query']['HoraFim'];
+				#$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+				$data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
+				
+				$dataanteriorinicio = strtotime($_SESSION['Consulta']['DataInicio']);
+				$dataanteriorfim = strtotime($_SESSION['Consulta']['DataFim']);
+				
+				$dataposteriorinicio = strtotime($data1);
+				$dataposteriorfim = strtotime($data2);
+				
+				$diferencainicio = ($dataposteriorinicio - $dataanteriorinicio)/86400;
+				$diferencafim = ($dataposteriorfim - $dataanteriorfim)/86400;
+				
+				if($diferencainicio < 0){
+					$difinicio = $diferencainicio;
+				}else{
+					$difinicio = '+' . $diferencainicio;
+				}
+				
+				if($diferencafim < 0){
+					$diffim = $diferencafim;
+				}else{
+					$diffim = '+' . $diferencafim;
+				}
+				
+				$dataini_alt 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
+				$datafim_alt 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
+				$horaini_alt 	= $data['query']['HoraInicio'];
+				$horafim_alt 	= $data['query']['HoraFim'];			
 
-            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], TRUE);
-			$data['update']['query']['bd'] = $this->Consulta_model->update_consulta($data['query'], $data['query']['idApp_Consulta']);	
+				unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
+				
+				$data['anterior'] = $this->Consulta_model->get_consulta($data['query']['idApp_Consulta']);
+				$data['campos'] = array_keys($data['query']);
 
-			$_SESSION['Repeticao'] = $data['repeticao'] = $this->Consulta_model->get_consulta_posterior($data['query']['idApp_Consulta'], $_SESSION['Consulta']['Repeticao'], $data['alterar']['Quais'], $dataini_alt);
-			if (count($data['repeticao']) > 0) {
-				$data['repeticao'] = array_combine(range(1, count($data['repeticao'])), array_values($data['repeticao']));
-                $max = count($data['repeticao']);
-				if (isset($data['repeticao'])) {
-					for($j=1; $j <= $max; $j++) {
-						//pego a data original, de cada linha, e somo a diferença
-						$datainicial[$j] 								= explode(' ', $data['repeticao'][$j]['DataInicio']);
-						$datafinal[$j] 									= explode(' ', $data['repeticao'][$j]['DataFim']);
-						$dataoriginalinicio[$j] 						= $datainicial[$j][0];
-						$dataoriginalfim[$j] 							= $datafinal[$j][0];
-						$dataatualinicio[$j] 							= date('Y-m-d', strtotime($difinicio  .  'day',strtotime($dataoriginalinicio[$j])));
-						$dataatualfim[$j] 								= date('Y-m-d', strtotime($diffim  .  'day',strtotime($dataoriginalfim[$j])));
-						if($data['repeticao'][$j]['idApp_Consulta'] != $data['query']['idApp_Consulta']){
-							$data['repeticao'][$j]['DataInicio'] 		= $dataatualinicio[$j] . ' ' . $horaini_alt;
-							$data['repeticao'][$j]['DataFim'] 			= $dataatualfim[$j] . ' ' . $horafim_alt;
+				$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], TRUE);
+				$data['update']['query']['bd'] = $this->Consulta_model->update_consulta($data['query'], $data['query']['idApp_Consulta']);	
+
+				$_SESSION['Repeticao'] = $data['repeticao'] = $this->Consulta_model->get_consulta_posterior($data['query']['idApp_Consulta'], $_SESSION['Consulta']['Repeticao'], $data['alterar']['Quais'], $dataini_alt);
+				if (count($data['repeticao']) > 0) {
+					$data['repeticao'] = array_combine(range(1, count($data['repeticao'])), array_values($data['repeticao']));
+					$max = count($data['repeticao']);
+					if (isset($data['repeticao'])) {
+						for($j=1; $j <= $max; $j++) {
+							//pego a data original, de cada linha, e somo a diferença
+							$datainicial[$j] 								= explode(' ', $data['repeticao'][$j]['DataInicio']);
+							$datafinal[$j] 									= explode(' ', $data['repeticao'][$j]['DataFim']);
+							$dataoriginalinicio[$j] 						= $datainicial[$j][0];
+							$dataoriginalfim[$j] 							= $datafinal[$j][0];
+							$dataatualinicio[$j] 							= date('Y-m-d', strtotime($difinicio  .  'day',strtotime($dataoriginalinicio[$j])));
+							$dataatualfim[$j] 								= date('Y-m-d', strtotime($diffim  .  'day',strtotime($dataoriginalfim[$j])));
+							if($data['repeticao'][$j]['idApp_Consulta'] != $data['query']['idApp_Consulta']){
+								$data['repeticao'][$j]['DataInicio'] 		= $dataatualinicio[$j] . ' ' . $horaini_alt;
+								$data['repeticao'][$j]['DataFim'] 			= $dataatualfim[$j] . ' ' . $horafim_alt;
+							}
+							$data['repeticao'][$j]['idApp_Agenda'] 			= $data['query']['idApp_Agenda'];
+							//$data['repeticao'][$j]['idApp_Cliente'] 		= $data['query']['idApp_Cliente'];
+							$data['repeticao'][$j]['Obs'] 					= $data['query']['Obs'];
+							//$data['repeticao'][$j]['idApp_Profissional'] 	= $data['query']['idApp_Profissional'];
+							$data['repeticao'][$j]['idTab_Status'] 			= $data['query']['idTab_Status'];
+							
+							$data['update']['repeticao'][$j]['bd'] 			= $this->Consulta_model->update_consulta($data['repeticao'][$j], $data['repeticao'][$j]['idApp_Consulta']);
 						}
-						$data['repeticao'][$j]['idApp_Agenda'] 			= $data['query']['idApp_Agenda'];
-						//$data['repeticao'][$j]['idApp_Cliente'] 		= $data['query']['idApp_Cliente'];
-						$data['repeticao'][$j]['Obs'] 					= $data['query']['Obs'];
-						//$data['repeticao'][$j]['idApp_Profissional'] 	= $data['query']['idApp_Profissional'];
-						$data['repeticao'][$j]['idTab_Status'] 			= $data['query']['idTab_Status'];
-						
-						$data['update']['repeticao'][$j]['bd'] 			= $this->Consulta_model->update_consulta($data['repeticao'][$j], $data['repeticao'][$j]['idApp_Consulta']);
 					}
 				}
+				
+				if ($data['auditoriaitem'] && $data['update']['query']['bd'] === FALSE) {
+					$data['msg'] = '?m=1';
+					redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+					exit();
+				} else {
+
+					if ($data['auditoriaitem'] === FALSE) {
+						$data['msg'] = '';
+					} else {
+						$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'UPDATE', $data['auditoriaitem']);
+						$data['msg'] = '?m=1';
+					}
+
+					//redirect(base_url() . 'consulta/listar/' . $data['query']['idApp_Cliente'] . $data['msg'] . $data['redirect']);
+					redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+					exit();
+				}
 			}
-			
-            if ($data['auditoriaitem'] && $data['update']['query']['bd'] === FALSE) {
-                $data['msg'] = '?m=1';
-                redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-                exit();
-            } else {
-
-                if ($data['auditoriaitem'] === FALSE) {
-                    $data['msg'] = '';
-                } else {
-                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'UPDATE', $data['auditoriaitem']);
-                    $data['msg'] = '?m=1';
-                }
-
-                //redirect(base_url() . 'consulta/listar/' . $data['query']['idApp_Cliente'] . $data['msg'] . $data['redirect']);
-                redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-                exit();
-            }
-			
         }
 
         $this->load->view('basico/footer');

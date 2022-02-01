@@ -91,11 +91,11 @@
 								
 								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
 									<div class="panel panel-warning">
-										<div class="panel-heading">
+										<div class="panel-heading">	
 											<div class="row">
-												<div class="col-md-12 text-left">
+												<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 text-left">
 													<label for="idTab_Status">Status:</label><br>
-													<div class="btn-block" data-toggle="buttons">
+													<div class=" " data-toggle="buttons">
 														<?php
 														foreach ($select['Status'] as $key => $row) {
 															if (!$query['idTab_Status'])
@@ -105,14 +105,16 @@
 																echo ''
 																. '<label class="btn btn-' . $this->basico->tipo_status_cor($key) . ' active" name="radio" id="radio' . $key . '">'
 																. '<input type="radio" name="idTab_Status" id="radio" '
-																	. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																. 'onchange="hidden_status(this.value)" '
+																. 'autocomplete="off" value="' . $key . '" checked>' . $row
 																. '</label>'
 																;
 															} else {
 																echo ''
-																. '<label class="btn btn-default" name="radio" id="radio' . $key . '">'
+																. '<label class="btn btn-' . $this->basico->tipo_status_cor($key) . ' " name="radio" id="radio' . $key . '">'
 																. '<input type="radio" name="idTab_Status" id="radio" class="idTab_Status" '
-																	. 'autocomplete="off" value="' . $key . '" >' . $row
+																. 'onchange="hidden_status(this.value)" '
+																. 'autocomplete="off" value="' . $key . '" >' . $row
 																. '</label>'
 																;
 															}
@@ -120,7 +122,12 @@
 														?>
 													</div>
 												</div>
+												<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 text-left">
+													<label for="status">Stt</label><br>
+													<span id="botao_status"></span>
+												</div>	
 											</div>
+											<input type="hidden" id="Hidden_status" name="Hidden_status" value="<?php echo $query['idTab_Status']; ?>">
 											<?php if ($metodo == 1) { ?>
 												<div class="row text-left">
 													<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
