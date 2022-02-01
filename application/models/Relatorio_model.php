@@ -2316,7 +2316,7 @@ class Relatorio_model extends CI_Model {
 			$dataref = 'PR.DataVencimento';
 		}
 		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-		$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+		$permissao_orcam = (isset($_SESSION['Usuario']['Permissao_Orcam']) && $_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 		####################################################################
         #SOMATÓRIO DAS RECEITAS Pago DO ANO
         $somareceitas='';

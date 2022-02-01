@@ -2192,7 +2192,9 @@ class Relatorio extends CI_Controller {
 			'Texto3',
 			'Texto4',
 			'nomedoCliente',
+			'idCliente',
 			'numerodopedido',
+			'site',
         ), TRUE));
 
 /*		   
@@ -2343,22 +2345,38 @@ class Relatorio extends CI_Controller {
 		$data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresa();
 		
         $data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
+        $data['select']['idCliente'] = $this->Basico_model->select_status_sn();
         $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
+        $data['select']['site'] = $this->Basico_model->select_status_sn();
 		
- 		(!$data['query']['nomedoCliente']) ? $data['query']['nomedoCliente'] = 'S' : FALSE;
+ 		(!$data['query']['nomedoCliente']) ? $data['query']['nomedoCliente'] = 'N' : FALSE;
 		$data['radio'] = array(
             'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
         );
         ($data['query']['nomedoCliente'] == 'S') ?
             $data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
 
- 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'S' : FALSE;
+ 		(!$data['query']['idCliente']) ? $data['query']['idCliente'] = 'N' : FALSE;
+		$data['radio'] = array(
+            'idCliente' => $this->basico->radio_checked($data['query']['idCliente'], 'idCliente', 'NS'),
+        );
+        ($data['query']['idCliente'] == 'S') ?
+            $data['div']['idCliente'] = '' : $data['div']['idCliente'] = 'style="display: none;"';
+			
+ 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'N' : FALSE;
 		$data['radio'] = array(
             'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
         );
         ($data['query']['numerodopedido'] == 'S') ?
             $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
-		
+
+ 		(!$data['query']['site']) ? $data['query']['site'] = 'N' : FALSE;
+		$data['radio'] = array(
+            'site' => $this->basico->radio_checked($data['query']['site'], 'site', 'NS'),
+        );
+        ($data['query']['site'] == 'S') ?
+            $data['div']['site'] = '' : $data['div']['site'] = 'style="display: none;"';		
+
 		$data['query']['nome'] = 'Cliente';
         $data['titulo'] = 'Baixa das Receitas';
 		$data['form_open_path'] = 'relatorio/alterarreceitas';
@@ -2450,7 +2468,9 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['Texto3'] = utf8_encode($data['query']['Texto3']);
         $_SESSION['FiltroAlteraParcela']['Texto4'] = utf8_encode($data['query']['Texto4']);
         $_SESSION['FiltroAlteraParcela']['nomedoCliente'] = $data['query']['nomedoCliente'];
+        $_SESSION['FiltroAlteraParcela']['idCliente'] = $data['query']['idCliente'];
         $_SESSION['FiltroAlteraParcela']['numerodopedido'] = $data['query']['numerodopedido'];
+        $_SESSION['FiltroAlteraParcela']['site'] = $data['query']['site'];
 		
 		$_SESSION['Imprimir']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];		
 
@@ -2683,7 +2703,9 @@ class Relatorio extends CI_Controller {
 			'Texto3',
 			'Texto4',
 			'nomedoFornecedor',
+			'idFornecedor',
 			'numerodopedido',
+			'site',
         ), TRUE));
 
 /*		   
@@ -2833,22 +2855,38 @@ class Relatorio extends CI_Controller {
 		$data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresa();
 		
         $data['select']['nomedoFornecedor'] = $this->Basico_model->select_status_sn();
+        $data['select']['idFornecedor'] = $this->Basico_model->select_status_sn();
         $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
+        $data['select']['site'] = $this->Basico_model->select_status_sn();
 		
- 		(!$data['query']['nomedoFornecedor']) ? $data['query']['nomedoFornecedor'] = 'S' : FALSE;
+ 		(!$data['query']['nomedoFornecedor']) ? $data['query']['nomedoFornecedor'] = 'N' : FALSE;
 		$data['radio'] = array(
             'nomedoFornecedor' => $this->basico->radio_checked($data['query']['nomedoFornecedor'], 'nomedoFornecedor', 'NS'),
         );
         ($data['query']['nomedoFornecedor'] == 'S') ?
             $data['div']['nomedoFornecedor'] = '' : $data['div']['nomedoFornecedor'] = 'style="display: none;"';		
 
- 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'S' : FALSE;
+ 		(!$data['query']['idFornecedor']) ? $data['query']['idFornecedor'] = 'N' : FALSE;
+		$data['radio'] = array(
+            'idFornecedor' => $this->basico->radio_checked($data['query']['idFornecedor'], 'idFornecedor', 'NS'),
+        );
+        ($data['query']['idFornecedor'] == 'S') ?
+            $data['div']['idFornecedor'] = '' : $data['div']['idFornecedor'] = 'style="display: none;"';
+			
+ 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'N' : FALSE;
 		$data['radio'] = array(
             'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
         );
         ($data['query']['numerodopedido'] == 'S') ?
             $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
-				
+					
+ 		(!$data['query']['site']) ? $data['query']['site'] = 'N' : FALSE;
+		$data['radio'] = array(
+            'site' => $this->basico->radio_checked($data['query']['site'], 'site', 'NS'),
+        );
+        ($data['query']['site'] == 'S') ?
+            $data['div']['site'] = '' : $data['div']['site'] = 'style="display: none;"';		
+			
 		$data['query']['nome'] = 'Fornecedor';
         $data['titulo'] = 'Baixa das Despesas';
 		$data['form_open_path'] = 'relatorio/alterardespesas';
@@ -2940,8 +2978,10 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['Texto3'] = utf8_encode($data['query']['Texto3']);
         $_SESSION['FiltroAlteraParcela']['Texto4'] = utf8_encode($data['query']['Texto4']);
         $_SESSION['FiltroAlteraParcela']['nomedoFornecedor'] = $data['query']['nomedoFornecedor'];
+        $_SESSION['FiltroAlteraParcela']['idFornecedor'] = $data['query']['idFornecedor'];
         $_SESSION['FiltroAlteraParcela']['numerodopedido'] = $data['query']['numerodopedido'];
-				
+        $_SESSION['FiltroAlteraParcela']['site'] = $data['query']['site'];
+		
 		$_SESSION['Imprimir']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];		
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
