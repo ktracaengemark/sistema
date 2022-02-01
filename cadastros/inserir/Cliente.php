@@ -98,7 +98,7 @@ $result_usuario = "SELECT * FROM Sis_Associado WHERE Associado='". $dados['Celul
 $resultado_usuario = mysqli_query($conn, $result_usuario);
 $row_resultado_usuario = mysqli_fetch_array($resultado_usuario, MYSQLI_ASSOC);
 
-$result_cliente = "SELECT * FROM App_Cliente WHERE usuario='". $dados['CelularCliente'] ."' AND idSis_Empresa = '" .$empresa. "'";
+$result_cliente = "SELECT * FROM App_Cliente WHERE  idSis_Empresa = '" .$empresa. "' AND (usuario='". $dados['CelularCliente'] ."' OR CelularCliente='". $dados['CelularCliente'] ."')";
 $resultado_cliente = mysqli_query($conn, $result_cliente);
 $row_resultado_cliente = mysqli_fetch_array($resultado_cliente, MYSQLI_ASSOC);
 
@@ -195,7 +195,9 @@ if($cadastrar == 1){
 	// Não Encontrou o Associado da empresa 5 e Encontrou o  Cliente!! Pega os Dados do Cliente e Cadastra o Associado. Depois faço Update no cliente
 		
 	$Codigo = md5(time() . rand());
-	$DataCriacao = date('Y-m-d', time());
+	$DataCriacao = date('Y-m-d', time());	
+	$senha = md5($dados['CelularCliente']);
+	$CodInterno = md5(time() . rand());
 	
 	$result_usuario = "INSERT INTO Sis_Associado (idSis_Empresa, 
 												idTab_Modulo, 
@@ -205,7 +207,7 @@ if($cadastrar == 1){
 												Codigo, 
 												DataCriacao, 
 												Associado, 
-												Senha, 
+												Senha,
 												 
 												Inativo) 
 												VALUES (
@@ -217,7 +219,7 @@ if($cadastrar == 1){
 												'" .$Codigo. "',
 												'" .$DataCriacao. "',
 												'" .$row_resultado_cliente['CelularCliente']. "',
-												'" .$row_resultado_cliente['senha']. "',
+												'" .$senha. "',
 												
 												'0'
 												)";
@@ -241,6 +243,9 @@ if($cadastrar == 1){
 								App_Cliente 
 							SET 
 								idSis_Associado = '".$id_usuario_5."',
+								usuario = '".$row_resultado_cliente['CelularCliente']."',
+								senha = '".$senha."',
+								CodInterno = '".$CodInterno."',
 								Codigo = '".$Codigo."'
 							WHERE 
 								idApp_Cliente = '".$row_resultado_cliente['idApp_Cliente']."'
