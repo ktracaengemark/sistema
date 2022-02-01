@@ -109,6 +109,8 @@
 			<input type="hidden" id="AgendaI" value="<?php echo $_SESSION['Empresa']['AgendaI'];?>">
 			<input type="hidden" id="AgendaF" value="<?php echo $_SESSION['Empresa']['AgendaF'];?>">	
 		</div>
+	</div>
+		
 		<div <?php echo $collapse; ?> id="Agenda">
 			
 				<div <?php echo $collapse1; ?> id="Calendario">
@@ -127,8 +129,7 @@
 					</div>
 				</div>
 			
-		</div>	
-	</div>	
+		</div>		
 </div>
 <?php 
 	if ($_SESSION['log']['idSis_Empresa'] != 5){
