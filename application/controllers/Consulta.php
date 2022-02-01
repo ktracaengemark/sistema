@@ -105,6 +105,10 @@ class Consulta extends CI_Controller {
 		(!$data['query']['Tempo']) ? $data['query']['Tempo'] = '1' : FALSE;
 		(!$data['query']['Tempo']) ? $data['query']['Tempo2'] = '1' : FALSE;		
 		
+		if($_SESSION['log']['idSis_Empresa'] != 5){
+			(!$data['query']['idApp_Agenda']) ? $data['query']['idApp_Agenda'] = $_SESSION['Usuario']['idApp_Agenda'] : FALSE;
+		}
+				
 		/*
         if ($idApp_Cliente) {
             $data['query']['idApp_Cliente'] = $idApp_Cliente;
@@ -328,16 +332,17 @@ class Consulta extends CI_Controller {
         
 		} else {
 
+		
 			$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
 			$data1 = $data1->format('Y-m-d');       
-			$data1 = strtotime($data1);
+			
 			$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
 			$data2 = $data2->format('Y-m-d');    
-			$data2 = strtotime($data2);	
 
-			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');
+			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');			
 			$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
-			if($data2 == $data1){
+			
+			if(strtotime($data2) == strtotime($data1)){
 				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
 			}else{
 				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
@@ -675,6 +680,10 @@ class Consulta extends CI_Controller {
 		(!$data['query']['Tempo']) ? $data['query']['Tempo'] = '1' : FALSE;
 		(!$data['query']['Tempo']) ? $data['query']['Tempo2'] = '1' : FALSE;		
 		
+		if($_SESSION['log']['idSis_Empresa'] != 5){
+			(!$data['query']['idApp_Agenda']) ? $data['query']['idApp_Agenda'] = $_SESSION['Usuario']['idApp_Agenda'] : FALSE;
+		}
+				
 		/*
         if ($idApp_Cliente) {
             $data['query']['idApp_Cliente'] = $idApp_Cliente;
@@ -922,20 +931,7 @@ class Consulta extends CI_Controller {
 		
 		$data['q3'] = $this->Clientepet_model->list_racapet(TRUE);
 		$data['list3'] = $this->load->view('clientepet/list_racapet', $data, TRUE);		
-		/*
-		$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
-		$data1 = $data1->format('Y-m-d');       
-		$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
-		$data2 = $data2->format('Y-m-d');		
-        
-		echo '<br>';
-        echo "<pre>";
-        print_r($data1);
-		echo '<br>';
-        print_r($data2);
-        echo "</pre>";
-        exit();	
-		*/		
+		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
 		if ($data['cadastrar']['Repetir'] == 'S') {
@@ -984,14 +980,15 @@ class Consulta extends CI_Controller {
 		
 			$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
 			$data1 = $data1->format('Y-m-d');       
-			$data1 = strtotime($data1);
+			
 			$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
 			$data2 = $data2->format('Y-m-d');    
-			$data2 = strtotime($data2);
+				
 
-			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');	
+			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');			
 			$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
-			if($data2 == $data1){
+			
+			if(strtotime($data2) == strtotime($data1)){
 				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
 			}else{
 				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
@@ -2066,12 +2063,7 @@ class Consulta extends CI_Controller {
             $data['datepicker'] = 'DatePicker';
             $data['timepicker'] = 'TimePicker';
         }
-		/*
-		$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
-		$data1 = $data1->format('Y-m-d');       
-		$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
-		$data2 = $data2->format('Y-m-d');	
-		*/
+
         #Ver uma solução melhor para este campo
         (!$data['query']['Paciente']) ? $data['query']['Paciente'] = 'R' : FALSE;
 
@@ -2239,14 +2231,14 @@ class Consulta extends CI_Controller {
 		
 			$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
 			$data1 = $data1->format('Y-m-d');       
-			$data1 = strtotime($data1);
+			
 			$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
 			$data2 = $data2->format('Y-m-d');    
-			$data2 = strtotime($data2);	
 
 			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');			
 			$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
-			if($data2 == $data1){
+			
+			if(strtotime($data2) == strtotime($data1)){
 				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
 			}else{
 				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
@@ -2292,7 +2284,7 @@ class Consulta extends CI_Controller {
 				$diferencainicio = ($dataposteriorinicio - $dataanteriorinicio)/86400;
 				$diferencafim = ($dataposteriorfim - $dataanteriorfim)/86400;
 				
-				if($diferencainicio < 0){
+				if($diferencainicio <= 0){
 					$difinicio = $diferencainicio;
 				}else{
 					$difinicio = '+' . $diferencainicio;
@@ -2505,7 +2497,7 @@ class Consulta extends CI_Controller {
 				}
 
 				$_SESSION['Repeticao'] = $data['repeticao'] = $this->Consulta_model->get_consulta_posterior($data['query']['idApp_Consulta'], $_SESSION['Consulta']['Repeticao'], $data['alterar']['Quais'], $dataini_alt);
-				
+
 				if (count($data['repeticao']) > 0) {
 					$data['repeticao'] = array_combine(range(1, count($data['repeticao'])), array_values($data['repeticao']));
 					$max = count($data['repeticao']);
@@ -2521,8 +2513,8 @@ class Consulta extends CI_Controller {
 								$dataatualinicio[$j] 							= date('Y-m-d', strtotime($difinicio  .  'day',strtotime($dataoriginalinicio[$j])));
 								$dataatualfim[$j] 								= date('Y-m-d', strtotime($diffim  .  'day',strtotime($dataoriginalfim[$j])));
 								
-									$data['repeticao'][$j]['DataInicio'] 		= $dataatualinicio[$j] . ' ' . $horaini_alt;
-									$data['repeticao'][$j]['DataFim'] 			= $dataatualfim[$j] . ' ' . $horafim_alt;
+								$data['repeticao'][$j]['DataInicio'] 			= $dataatualinicio[$j] . ' ' . $horaini_alt;
+								$data['repeticao'][$j]['DataFim'] 				= $dataatualfim[$j] . ' ' . $horafim_alt;
 								
 								$data['repeticao'][$j]['Repeticao'] 			= $data['query']['Repeticao'];
 								$data['repeticao'][$j]['idApp_Agenda'] 			= $data['query']['idApp_Agenda'];
@@ -2616,7 +2608,6 @@ class Consulta extends CI_Controller {
 								}
 							}
 						}
-						//exit();
 					}				
 				}
 					
@@ -3154,7 +3145,11 @@ class Consulta extends CI_Controller {
 		(!$data['query']['Recorrencias']) ? $data['query']['Recorrencias'] = '1' : FALSE;
 		(!$data['query']['Tempo']) ? $data['query']['Tempo'] = '1' : FALSE;
 		(!$data['query']['Tempo']) ? $data['query']['Tempo2'] = '1' : FALSE;
-
+		
+		if($_SESSION['log']['idSis_Empresa'] != 5){
+			(!$data['query']['idApp_Agenda']) ? $data['query']['idApp_Agenda'] = $_SESSION['Usuario']['idApp_Agenda'] : FALSE;
+		}
+		
         if ($this->input->get('start') && $this->input->get('end')) {
             $data['query']['Data'] = date('d/m/Y', substr($this->input->get('start'), 0, -3));
             $data['query']['Data2'] = date('d/m/Y', substr($this->input->get('end'), 0, -3));
@@ -3226,14 +3221,15 @@ class Consulta extends CI_Controller {
 		
 			$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
 			$data1 = $data1->format('Y-m-d');       
-			$data1 = strtotime($data1);
+			
 			$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
 			$data2 = $data2->format('Y-m-d');    
-			$data2 = strtotime($data2);
+				
 
-			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');	
+			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');			
 			$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
-			if($data2 == $data1){
+			
+			if(strtotime($data2) == strtotime($data1)){
 				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
 			}else{
 				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
@@ -3470,14 +3466,15 @@ class Consulta extends CI_Controller {
 		
 			$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
 			$data1 = $data1->format('Y-m-d');       
-			$data1 = strtotime($data1);
+			
 			$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
 			$data2 = $data2->format('Y-m-d');    
-			$data2 = strtotime($data2);
+				
 
-			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');	
+			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');			
 			$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
-			if($data2 == $data1){
+			
+			if(strtotime($data2) == strtotime($data1)){
 				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
 			}else{
 				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
