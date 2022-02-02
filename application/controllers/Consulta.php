@@ -3152,7 +3152,8 @@ class Consulta extends CI_Controller {
 		}
 		
         if ($this->input->get('start') && $this->input->get('end')) {
-            $data['query']['Data'] = date('d/m/Y', substr($this->input->get('start'), 0, -3));
+            //$data['query']['Data'] = date('d/m/Y', substr($this->input->get('start'), 0, -3));
+            $data['query']['Data'] = date('d/m/Y', substr($this->input->get('end'), 0, -3));
             $data['query']['Data2'] = date('d/m/Y', substr($this->input->get('end'), 0, -3));
 			$data['query']['HoraInicio'] = date('H:i', substr($this->input->get('start'), 0, -3));
             $data['query']['HoraFim'] = date('H:i', substr($this->input->get('end'), 0, -3));
