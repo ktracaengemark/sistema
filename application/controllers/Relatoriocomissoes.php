@@ -108,6 +108,7 @@ class Relatoriocomissoes extends CI_Controller {
 			'Agrupar',
 			'Ultimo',
 			'nome',
+			'RecorrenciaOrca',
         ), TRUE));
 /*
 		if (!$data['query']['DataInicio2'])
@@ -216,8 +217,8 @@ class Relatoriocomissoes extends CI_Controller {
         );
 
 		$data['select']['Campo'] = array(
-			'PRDS.DataConcluidoProduto' => 'Dta Entrega Serviço',
             'OT.idApp_OrcaTrata' => 'Nº Pedido',
+			'PRDS.DataConcluidoProduto' => 'Dta Entrega Serviço',
 			'OT.Modalidade' => 'Modalidade',
 			'OT.TipoFinanceiro' => 'Tipo',
 			'OT.Tipo_Orca' => 'Compra',
@@ -299,6 +300,7 @@ class Relatoriocomissoes extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['Ultimo'] = $data['query']['Ultimo'];
 		$_SESSION['FiltroAlteraParcela']['metodo'] = $data['metodo'];
 		$_SESSION['FiltroAlteraParcela']['idTab_TipoRD'] = $data['TipoRD'];
+		$_SESSION['FiltroAlteraParcela']['RecorrenciaOrca'] = $data['query']['RecorrenciaOrca'];
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         $this->form_validation->set_rules('DataInicio', 'Data Início do Pedido', 'trim|valid_date');
@@ -354,6 +356,7 @@ class Relatoriocomissoes extends CI_Controller {
             $data['bd']['Funcionario'] = $data['query']['Funcionario'];
 			$data['bd']['metodo'] = $data['metodo'];
             $data['bd']['idTab_TipoRD'] = $data['TipoRD'];
+			$data['bd']['RecorrenciaOrca'] = $data['query']['RecorrenciaOrca'];
 			
 			//$data['report'] = $this->Relatoriocomissoes_model->list_porservicos($data['bd'],TRUE);
 			$data['pesquisa_query'] = $this->Relatoriocomissoes_model->list_porservicos($data['bd'],TRUE, TRUE);

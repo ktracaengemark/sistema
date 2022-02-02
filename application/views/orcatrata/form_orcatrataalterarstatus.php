@@ -238,7 +238,7 @@
 																</a>
 															-->
 															<a class="btn btn-md btn-info btn-block"  name="submeter6" id="submeter6" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." href="<?php echo base_url() ?>agenda" role="button">
-																<span class="glyphicon glyphicon-calendar"></span> 
+																<span class="glyphicon glyphicon-calendar"></span> <b><?php echo $_SESSION['Orcatrata']['RecorrenciaOrca'];?></b> 
 															</a>
 															<div class="col-md-12 alert alert-warning aguardar" role="alert" >
 																Aguarde um instante! Estamos processando sua solicitação!

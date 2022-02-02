@@ -65,6 +65,19 @@
 								<input type="hidden" name="Cliente" id="Cliente" value=""/>
 								<input type="hidden" name="Fornecedor" id="Fornecedor" value=""/>
 							<?php } ?>
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">	
+								<label for="RecorrenciaOrca">Recor.</label>
+								<div class="input-group">
+									<span class="input-group-btn">
+										<button class="btn btn-primary btn-md" type="submit">
+											<span class="glyphicon glyphicon-search"></span> 
+										</button>
+									</span>
+									<input type="text" class="form-control " maxlength="7" placeholder="Ex: 4/4, 2/2" name="RecorrenciaOrca" id="RecorrenciaOrca" value="<?php echo set_value('RecorrenciaOrca', $query['RecorrenciaOrca']); ?>">
+								</div>
+							</div>
+						</div>
+						<div class="row">	
 							<div class="col-md-2 text-left">
 								<label for="Categoria">Categoria:</label>
 								<div class="input-group">

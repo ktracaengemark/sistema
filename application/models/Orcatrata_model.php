@@ -1657,9 +1657,10 @@ class Orcatrata_model extends CI_Model {
 		$FinalizadoOrca 		= ($_SESSION['FiltroAlteraParcela']['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $_SESSION['FiltroAlteraParcela']['FinalizadoOrca'] . '" AND ' : FALSE;
 		$CanceladoOrca 			= ($_SESSION['FiltroAlteraParcela']['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $_SESSION['FiltroAlteraParcela']['CanceladoOrca'] . '" AND ' : FALSE;
 		$CombinadoFrete 		= ($_SESSION['FiltroAlteraParcela']['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $_SESSION['FiltroAlteraParcela']['CombinadoFrete'] . '" AND ' : FALSE;
+		$RecorrenciaOrca 		= ($_SESSION['FiltroAlteraParcela']['RecorrenciaOrca']) ? 'OT.RecorrenciaOrca = "' . $_SESSION['FiltroAlteraParcela']['RecorrenciaOrca'] . '" AND ' : FALSE;
 		$permissao 				= ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 		$groupby 				= (1 == 1) ? 'GROUP BY PRDS.idApp_Produto' : FALSE;
-		$Campo 					= (!$_SESSION['FiltroAlteraParcela']['Campo']) ? 'OT.DataOrca' : $_SESSION['FiltroAlteraParcela']['Campo'];
+		$Campo 					= (!$_SESSION['FiltroAlteraParcela']['Campo']) ? 'OT.idApp_OrcaTrata' : $_SESSION['FiltroAlteraParcela']['Campo'];
         $Ordenamento 			= (!$_SESSION['FiltroAlteraParcela']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroAlteraParcela']['Ordenamento'];        
 
         if ($limit){
@@ -1693,6 +1694,7 @@ class Orcatrata_model extends CI_Model {
 				OT.FinalizadoOrca,
 				OT.CanceladoOrca,
 				OT.Modalidade,
+				OT.RecorrenciaOrca,
 				TR.TipoFinanceiro,
 				MD.Modalidade,
 				PRDS.*,
@@ -1781,6 +1783,7 @@ class Orcatrata_model extends CI_Model {
 				' . $FinalizadoOrca . '
 				' . $CanceladoOrca . '
 				' . $CombinadoFrete . '
+				' . $RecorrenciaOrca . '
 				' . $ConcluidoProduto . '
 				' . $StatusComissaoServico . '
                 OT.idSis_Empresa = ' . $data . ' AND

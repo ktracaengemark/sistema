@@ -53,9 +53,10 @@ class Relatoriocomissoes_model extends CI_Model {
 			$FinalizadoOrca 		= ($data['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $data['FinalizadoOrca'] . '" AND ' : FALSE;
 			$CanceladoOrca 			= ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 			$CombinadoFrete 		= ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
+			$RecorrenciaOrca 		= ($data['RecorrenciaOrca']) ? 'OT.RecorrenciaOrca = "' . $data['RecorrenciaOrca'] . '" AND ' : FALSE;
 			$permissao 				= ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 			$groupby 				= (1 == 1) ? 'GROUP BY PRDS.idApp_Produto' : FALSE;
-			$Campo 					= (!$data['Campo']) ? 'PRDS.DataConcluidoProduto' : $data['Campo'];
+			$Campo 					= (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
 			$Ordenamento 			= (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];        
 		
 		}else{
@@ -96,9 +97,10 @@ class Relatoriocomissoes_model extends CI_Model {
 			$FinalizadoOrca 		= ($_SESSION['FiltroAlteraParcela']['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $_SESSION['FiltroAlteraParcela']['FinalizadoOrca'] . '" AND ' : FALSE;
 			$CanceladoOrca 			= ($_SESSION['FiltroAlteraParcela']['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $_SESSION['FiltroAlteraParcela']['CanceladoOrca'] . '" AND ' : FALSE;
 			$CombinadoFrete 		= ($_SESSION['FiltroAlteraParcela']['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $_SESSION['FiltroAlteraParcela']['CombinadoFrete'] . '" AND ' : FALSE;
+			$RecorrenciaOrca 		= ($_SESSION['FiltroAlteraParcela']['RecorrenciaOrca']) ? 'OT.RecorrenciaOrca = "' . $_SESSION['FiltroAlteraParcela']['RecorrenciaOrca'] . '" AND ' : FALSE;
 			$permissao 				= ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 			$groupby 				= (1 == 1) ? 'GROUP BY PRDS.idApp_Produto' : FALSE;
-			$Campo 					= (!$_SESSION['FiltroAlteraParcela']['Campo']) ? 'PRDS.DataConcluidoProduto' : $_SESSION['FiltroAlteraParcela']['Campo'];
+			$Campo 					= (!$_SESSION['FiltroAlteraParcela']['Campo']) ? 'OT.idApp_OrcaTrata' : $_SESSION['FiltroAlteraParcela']['Campo'];
 			$Ordenamento 			= (!$_SESSION['FiltroAlteraParcela']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroAlteraParcela']['Ordenamento'];        
 				
 		}
@@ -130,6 +132,7 @@ class Relatoriocomissoes_model extends CI_Model {
 				OT.FinalizadoOrca,
 				OT.CanceladoOrca,
 				OT.Modalidade,
+				OT.RecorrenciaOrca,
 				TR.TipoFinanceiro,
 				MD.Modalidade,
 				PRDS.*,
@@ -150,10 +153,15 @@ class Relatoriocomissoes_model extends CI_Model {
 				AF3.Comissao_Funcao AS ComProf3,
 				AF4.Comissao_Funcao AS ComProf4,
 				
-				CONCAT(IFNULL(TF1.Abrev,""), " || " ,IFNULL(UP1.Nome,"")) AS NomeProf1,				
-				CONCAT(IFNULL(TF2.Abrev,""), " || " ,IFNULL(UP2.Nome,"")) AS NomeProf2,				
-				CONCAT(IFNULL(TF3.Abrev,""), " || " ,IFNULL(UP3.Nome,"")) AS NomeProf3,				
-				CONCAT(IFNULL(TF4.Abrev,""), " || " ,IFNULL(UP4.Nome,"")) AS NomeProf4,
+				CONCAT(IFNULL(UP1.Nome,"")) AS Nome1,				
+				CONCAT(IFNULL(UP2.Nome,"")) AS Nome2,				
+				CONCAT(IFNULL(UP3.Nome,"")) AS Nome3,				
+				CONCAT(IFNULL(UP4.Nome,"")) AS Nome4,
+
+				CONCAT(IFNULL(TF1.Abrev,"")) AS Abrev1,				
+				CONCAT(IFNULL(TF2.Abrev,"")) AS Abrev2,				
+				CONCAT(IFNULL(TF3.Abrev,"")) AS Abrev3,				
+				CONCAT(IFNULL(TF4.Abrev,"")) AS Abrev4,
 				
 				TPRDS.idTab_Produtos,
 				TPRDS.Nome_Prod,
@@ -165,8 +173,8 @@ class Relatoriocomissoes_model extends CI_Model {
             FROM
                 App_OrcaTrata AS OT
 					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
-					LEFT JOIN App_ClientePet AS CP ON CP.idApp_Cliente = C.idApp_Cliente
-					LEFT JOIN App_ClienteDep AS CD ON CD.idApp_Cliente = C.idApp_Cliente
+					LEFT JOIN App_ClientePet AS CP ON CP.idApp_ClientePet = OT.idApp_ClientePet
+					LEFT JOIN App_ClienteDep AS CD ON CD.idApp_ClienteDep = OT.idApp_ClienteDep
 					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = OT.idSis_Usuario
 					LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
 
@@ -219,6 +227,7 @@ class Relatoriocomissoes_model extends CI_Model {
 				' . $FinalizadoOrca . '
 				' . $CanceladoOrca . '
 				' . $CombinadoFrete . '
+				' . $RecorrenciaOrca . '
 				' . $ConcluidoProduto . '
 				' . $StatusComissaoServico . '
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
@@ -248,15 +257,73 @@ class Relatoriocomissoes_model extends CI_Model {
 				return TRUE;
 			} else {
 
-				//$somafinal2=0;
-				//$somacomissao2=0;
+				$somafinal2=0;
+				$somacomissao2=0;
+				$Soma_Valor_Com_Total2=0;
+				$Soma_Valor_Com_Total_Prof2=0;
 				
 				foreach ($query->result() as $row) {
 					
+					$valortotalproduto2 = $row->QtdProduto*$row->ValorProduto;
+					$somafinal2 += $valortotalproduto2;					
+				
+					$Valor_Com_Total2 = $row->ValorComissaoServico;
+					$Soma_Valor_Com_Total2 += $Valor_Com_Total2;					
+					//$somacomissao2 += $row->ValorComissao;
+				
+					$valor_com_Prof_1 = $row->ValorComProf_1;
+					$valor_com_Prof_2 = $row->ValorComProf_2;
+					$valor_com_Prof_3 = $row->ValorComProf_3;
+					$valor_com_Prof_4 = $row->ValorComProf_4;
+				
+					if(isset($data['Funcionario']) && $data['Funcionario'] !=0){
+		
+						if($row->id_Usu_Prof_1 == $data['Funcionario']){
+							$valor_com_filtro_Prof_1 = $valor_com_Prof_1;	
+						}else{
+							$valor_com_filtro_Prof_1 = 0.00;	
+						}
+						if($row->id_Usu_Prof_2 == $data['Funcionario']){
+							$valor_com_filtro_Prof_2 = $valor_com_Prof_2;	
+						}else{
+							$valor_com_filtro_Prof_2 = 0.00;	
+						}
+						if($row->id_Usu_Prof_3 == $data['Funcionario']){
+							$valor_com_filtro_Prof_3 = $valor_com_Prof_3;	
+						}else{
+							$valor_com_filtro_Prof_3 = 0.00;	
+						}
+						if($row->id_Usu_Prof_4 == $data['Funcionario']){
+							$valor_com_filtro_Prof_4 = $valor_com_Prof_4;	
+						}else{
+							$valor_com_filtro_Prof_4 = 0.00;	
+						}
+					}else{
+						$valor_com_filtro_Prof_1 = $valor_com_Prof_1;
+						$valor_com_filtro_Prof_2 = $valor_com_Prof_2;
+						$valor_com_filtro_Prof_3 = $valor_com_Prof_3;
+						$valor_com_filtro_Prof_4 = $valor_com_Prof_4;	
+					}
+					
+					$Valor_Com_Total_Prof2 = ($valor_com_filtro_Prof_1 + $valor_com_filtro_Prof_2 + $valor_com_filtro_Prof_3 + $valor_com_filtro_Prof_4);
+					$Soma_Valor_Com_Total_Prof2 += $Valor_Com_Total_Prof2;
+					
+					$row->valor_com_Prof_1 = number_format($valor_com_Prof_1, 2, ',', '.');
+					$row->valor_com_Prof_2 = number_format($valor_com_Prof_2, 2, ',', '.');
+					$row->valor_com_Prof_3 = number_format($valor_com_Prof_3, 2, ',', '.');
+					$row->valor_com_Prof_4 = number_format($valor_com_Prof_4, 2, ',', '.');
+					$row->Valor_Com_Total2 = number_format($Valor_Com_Total2, 2, ',', '.');	
+					$row->Valor_Com_Total_Prof2 = number_format($Valor_Com_Total_Prof2, 2, ',', '.');					
+						
+	
 				}
 				
 				$query->soma2 = new stdClass();
-				
+				$query->soma2->somafinal2 = number_format($somafinal2, 2, ',', '.');
+				//$query->soma2->somacomissao2 = number_format($somacomissao2, 2, ',', '.');
+				$query->soma2->Soma_Valor_Com_Total2 = number_format($Soma_Valor_Com_Total2, 2, ',', '.');
+				$query->soma2->Soma_Valor_Com_Total_Prof2 = number_format($Soma_Valor_Com_Total_Prof2, 2, ',', '.');
+
 				return $query;
 			}
 			
@@ -285,10 +352,15 @@ class Relatoriocomissoes_model extends CI_Model {
 				AF3.Comissao_Funcao AS ComProf3,
 				AF4.Comissao_Funcao AS ComProf4,
 				
-				CONCAT(IFNULL(TF1.Abrev,""), " || " ,IFNULL(UP1.Nome,"")) AS NomeProf1,				
-				CONCAT(IFNULL(TF2.Abrev,""), " || " ,IFNULL(UP2.Nome,"")) AS NomeProf2,				
-				CONCAT(IFNULL(TF3.Abrev,""), " || " ,IFNULL(UP3.Nome,"")) AS NomeProf3,				
-				CONCAT(IFNULL(TF4.Abrev,""), " || " ,IFNULL(UP4.Nome,"")) AS NomeProf4,
+				CONCAT(IFNULL(UP1.Nome,"")) AS Nome1,				
+				CONCAT(IFNULL(UP2.Nome,"")) AS Nome2,				
+				CONCAT(IFNULL(UP3.Nome,"")) AS Nome3,				
+				CONCAT(IFNULL(UP4.Nome,"")) AS Nome4,
+				
+				CONCAT(IFNULL(TF1.Abrev,"")) AS Abrev1,				
+				CONCAT(IFNULL(TF2.Abrev,"")) AS Abrev2,				
+				CONCAT(IFNULL(TF3.Abrev,"")) AS Abrev3,				
+				CONCAT(IFNULL(TF4.Abrev,"")) AS Abrev4,
 				
 				TPRDS.idTab_Produtos,
 				TPRDS.Nome_Prod,
@@ -297,8 +369,8 @@ class Relatoriocomissoes_model extends CI_Model {
             FROM
                 App_OrcaTrata AS OT
 					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
-					LEFT JOIN App_ClientePet AS CP ON CP.idApp_Cliente = C.idApp_Cliente
-					LEFT JOIN App_ClienteDep AS CD ON CD.idApp_Cliente = C.idApp_Cliente
+					LEFT JOIN App_ClientePet AS CP ON CP.idApp_ClientePet = OT.idApp_ClientePet
+					LEFT JOIN App_ClienteDep AS CD ON CD.idApp_ClienteDep = OT.idApp_ClienteDep
 					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = OT.idSis_Usuario
 					LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
 					
@@ -344,6 +416,7 @@ class Relatoriocomissoes_model extends CI_Model {
 				' . $FinalizadoOrca . '
 				' . $CanceladoOrca . '
 				' . $CombinadoFrete . '
+				' . $RecorrenciaOrca . '
 				' . $ConcluidoProduto . '
 				' . $StatusComissaoServico . '
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
@@ -382,6 +455,10 @@ class Relatoriocomissoes_model extends CI_Model {
 
              $Soma_valor_Total_Servicos=$Soma_Valor_Com_Total=$Soma_Valor_Com_Total_Prof=$somacomissaoprof=$somacomissaototal=$diferenca=$somaentregar=$somaentregue=$somaentrada=$balanco=$ant=0;
             foreach ($query->result() as $row) {
+				$row->Nome1 = (strlen($row->Nome1) > 8) ? substr($row->Nome1, 0, 8) : $row->Nome1;
+				$row->Nome2 = (strlen($row->Nome2) > 8) ? substr($row->Nome2, 0, 8) : $row->Nome2;
+				$row->Nome3 = (strlen($row->Nome3) > 8) ? substr($row->Nome3, 0, 8) : $row->Nome3;
+				$row->Nome4 = (strlen($row->Nome4) > 8) ? substr($row->Nome4, 0, 8) : $row->Nome4;
 				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
                 $row->DataEntradaOrca = $this->basico->mascara_data($row->DataEntradaOrca, 'barras');
                 $row->DataEntregaOrca = $this->basico->mascara_data($row->DataEntregaOrca, 'barras');
@@ -409,7 +486,7 @@ class Relatoriocomissoes_model extends CI_Model {
                     $row->ValorEntradaOrca = FALSE;
                     $row->DataEntradaOrca = FALSE;
                 }
-				
+				/*
 				$cont_id_Fun_1=0;
 				if(isset($row->id_Fun_Prof_1)){
 					for ($i = 1; $i <= 4; $i++) {
@@ -469,11 +546,11 @@ class Relatoriocomissoes_model extends CI_Model {
 				}else{
 					$divisor = $contagem;
 				}
-				
+				*/
 				$valortotalproduto = $row->QtdProduto*$row->ValorProduto;
 				$Soma_valor_Total_Servicos += $valortotalproduto;
 				//$comissao_total = $valortotalproduto*$row->ComissaoProduto/100;
-				
+				/*
 				if(isset($row->ComProf1)){
 					$com_Prof_1 = $row->ComProf1;
 					if($cont_id_Fun_1 != 0){
@@ -517,13 +594,15 @@ class Relatoriocomissoes_model extends CI_Model {
 				}else{
 					$valor_com_Prof_4 = 0.00;
 				}
-				/*
+				*/
 				$valor_com_Prof_1 = $row->ValorComProf_1;
 				$valor_com_Prof_2 = $row->ValorComProf_2;
 				$valor_com_Prof_3 = $row->ValorComProf_3;
 				$valor_com_Prof_4 = $row->ValorComProf_4;
-				*/
-				$Valor_Com_Total = ($valor_com_Prof_1 + $valor_com_Prof_2 + $valor_com_Prof_3 + $valor_com_Prof_4);
+				
+				//$Valor_Com_Total = ($valor_com_Prof_1 + $valor_com_Prof_2 + $valor_com_Prof_3 + $valor_com_Prof_4);
+				//$Soma_Valor_Com_Total += $Valor_Com_Total;
+				$Valor_Com_Total = $row->ValorComissaoServico;
 				$Soma_Valor_Com_Total += $Valor_Com_Total;				
 				
 				if(isset($data['Funcionario']) && $data['Funcionario'] !=0){
@@ -564,20 +643,23 @@ class Relatoriocomissoes_model extends CI_Model {
 				$row->valor_com_Prof_4 = number_format($valor_com_Prof_4, 2, ',', '.');
 				$row->Valor_Com_Total = number_format($Valor_Com_Total, 2, ',', '.');	
 				$row->Valor_Com_Total_Prof = number_format($Valor_Com_Total_Prof, 2, ',', '.');						
-				
+				/*
 				$comissao_total = $row->ValorComissaoServico;
 				$pro_prof = $comissao_total/$divisor;
 				$somacomissaototal 	+= $comissao_total;
 				$somacomissaoprof	+= $pro_prof;
+				*/
+				
 				
 				$row->ValorTotalProduto = number_format($valortotalproduto, 2, ',', '.');
 				$row->ValorProduto = number_format($row->ValorProduto, 2, ',', '.');
+				/*
 				$row->ComissaoServicoProduto = number_format($row->ComissaoServicoProduto, 2, ',', '.');
 				$row->ComissaoTotal = number_format($comissao_total, 2, ',', '.');
 				$row->ComissaoProf = number_format($pro_prof, 2, ',', '.');
-                
+                */
 				
-				$row->ValorEntradaOrca = number_format($row->ValorEntradaOrca, 2, ',', '.');			
+				//$row->ValorEntradaOrca = number_format($row->ValorEntradaOrca, 2, ',', '.');			
 				
 				if($row->Tipo_Orca == "B"){
 					$row->Tipo_Orca = "Na Loja";
@@ -611,8 +693,8 @@ class Relatoriocomissoes_model extends CI_Model {
 			
             $query->soma = new stdClass();
 			//$query->soma->contagem = $contagem;
-            $query->soma->somacomissaototal = number_format($somacomissaototal, 2, ',', '.');
-            $query->soma->somacomissaoprof = number_format($somacomissaoprof, 2, ',', '.');
+            //$query->soma->somacomissaototal = number_format($somacomissaototal, 2, ',', '.');
+            //$query->soma->somacomissaoprof = number_format($somacomissaoprof, 2, ',', '.');
             $query->soma->diferenca = $diferenca;
             $query->soma->somaentregar = $somaentregar;
             $query->soma->somaentregue = $somaentregue;

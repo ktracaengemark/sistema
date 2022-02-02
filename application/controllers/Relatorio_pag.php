@@ -1341,6 +1341,7 @@ class Relatorio_pag extends CI_Controller {
 			'Agrupar',
 			'Ultimo',
 			'nome',
+			'RecorrenciaOrca',
         ), TRUE));
 		
 		$data['query']['nome'] = 'Cliente';

@@ -1,6 +1,7 @@
 <div class="panel panel-<?php echo $panel; ?>">
 	<div class="panel-heading">
 		<div class="row">	
+			<!--
 			<div class="col-md-2">
 				<label for="DataFim">
 					<?php if($metodo == 2) {?>
@@ -27,32 +28,33 @@
 					<span class="input-group-addon">Srvs</span>
 				</div>
 			</div>
+			-->
 			<div class="col-md-2">
-				<label for="DataFim">Total <?php echo $titulo1; ?></label>
+				<label for="DataFim">SubTotal/Total</label>
 				<div class="input-group">
-					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->soma->somaentregar ?>">
+					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->num_rows(); ?> / <?php echo $total_rows ?>">
 					<span class="input-group-addon">Srvs</span>
 				</div>
 			</div>
 			<div class="col-md-2">
-				<label for="DataFim">Total</label>
+				<label for="DataFim">SubTotal/Total</label>
 				<div class="input-group">
 					<span class="input-group-addon">R$</span>
-					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->soma->Soma_valor_Total_Servicos ?>">
+					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->soma->Soma_valor_Total_Servicos ?> / <?php echo $pesquisa_query->soma2->somafinal2 ?>">
 				</div>
 			</div>
 			<div class="col-md-2">
 				<label for="DataFim">Comissão Total</label>
 				<div class="input-group">
 					<span class="input-group-addon">R$</span>
-					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->soma->Soma_Valor_Com_Total ?>">
+					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->soma->Soma_Valor_Com_Total ?> / <?php echo $pesquisa_query->soma2->Soma_Valor_Com_Total2 ?>">
 				</div>
 			</div>
 			<div class="col-md-2">
 				<label for="DataFim">Comissão Profis</label>
 				<div class="input-group">
 					<span class="input-group-addon">R$</span>
-					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->soma->Soma_Valor_Com_Total_Prof ?>">
+					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->soma->Soma_Valor_Com_Total_Prof ?> / <?php echo $pesquisa_query->soma2->Soma_Valor_Com_Total_Prof2 ?>">
 				</div>
 			</div>				
 		</div>
@@ -123,6 +125,7 @@
 							<!--<th class="active">DtPedido</th>-->
 							<th class="active">DataEntr.</th>
 							<th class="active">Entregue</th>
+							<th class="col-md-2 active"><?php echo $nome; ?></th>
 							<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
 								<th class="active">Pet</th>
 							<?php }else{ ?>
@@ -130,17 +133,17 @@
 									<th class="active">Dep</th>
 								<?php } ?>
 							<?php } ?>
-							<th class="col-md-2 active"><?php echo $nome; ?></th>
 							<th class="active">Qtd</th>
+							<th class="active">Recor</th>
 							<th class="active">Produto</th>
 							<th class="active">ValorR$</th>
-							<th class="active">Prof1.</th>
+							<th class="active">Profissional_1.</th>
 							<!--<th class="active">Com1.</th>-->
-							<th class="active">Prof2.</th>
+							<th class="active">Profissional_2.</th>
 							<!--<th class="active">Com2.</th>-->
-							<th class="active">Prof3.</th>
+							<th class="active">Profissional_3.</th>
 							<!--<th class="active">Com3.</th>-->
-							<th class="active">Prof4.</th>
+							<th class="active">Profissional_4.</th>
 							<!--<th class="active">Com4.</th>-->
 							<th class="active">ValorTotal.</th>
 							<th class="active">ValorProf.</th>
@@ -166,10 +169,11 @@
 									</td>';
 
 								echo '<td>' . ($linha + $count) . '/' . $total_rows . '</td>';
-								echo '<td>' . $row['idApp_OrcaTrata'] . '- ' . $row['TipoFinanceiro'] . ' - ' . $row['Descricao'] . '</td>';
+								echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
 								#echo '<td>' . $row['DataOrca'] . '</td>';
 								echo '<td>' . $row['DataConcluidoProduto'] . '</td>';
 								echo '<td>' . $row['ConcluidoProduto'] . '</td>';
+								echo '<td>' . $row['Nome' . $nome] . '</td>';
 								if($_SESSION['Empresa']['CadastrarPet'] == "S"){
 									echo '<td>' . $row['NomeClientePet'] . '</td>';
 								}else{
@@ -177,14 +181,14 @@
 										echo '<td>' . $row['NomeClienteDep'] . '</td>';
 									}
 								}
-								echo '<td>' . $row['Nome' . $nome] . '</td>';
 								echo '<td class="text-left">' . $row['QtdProduto'] . '</td>';
+								echo '<td>' . $row['RecorrenciaOrca'] . '</td>';
 								echo '<td class="text-left">' . $row['NomeProduto'] . '</td>';
 								echo '<td class="text-left">R$' . $row['ValorTotalProduto'] . '</td>';
-								echo '<td>' . $row['NomeProf1'] . ' | ' . $row['ComProf1'] . '% | R$' . $row['valor_com_Prof_1'] . '</td>';
-								echo '<td>' . $row['NomeProf2'] . ' | ' . $row['ComProf2'] . '% | R$' . $row['valor_com_Prof_2'] . '</td>';
-								echo '<td>' . $row['NomeProf3'] . ' | ' . $row['ComProf3'] . '% | R$' . $row['valor_com_Prof_3'] . '</td>';
-								echo '<td>' . $row['NomeProf4'] . ' | ' . $row['ComProf4'] . '% | R$' . $row['valor_com_Prof_4'] . '</td>';
+								echo '<td>' . $row['Abrev1'] . ' | ' . $row['Nome1'] . ' | ' . $row['ComFunProf_1'] . '% | R$' . $row['ValorComProf_1'] . '</td>';
+								echo '<td>' . $row['Abrev2'] . ' | ' . $row['Nome2'] . ' | ' . $row['ComFunProf_2'] . '% | R$' . $row['ValorComProf_2'] . '</td>';
+								echo '<td>' . $row['Abrev3'] . ' | ' . $row['Nome3'] . ' | ' . $row['ComFunProf_3'] . '% | R$' . $row['ValorComProf_3'] . '</td>';
+								echo '<td>' . $row['Abrev4'] . ' | ' . $row['Nome4'] . ' | ' . $row['ComFunProf_4'] . '% | R$' . $row['ValorComProf_4'] . '</td>';
 								echo '<td>R$' . $row['Valor_Com_Total'] . '</td>';
 								echo '<td>R$' . $row['Valor_Com_Total_Prof'] . '</td>';
 								//echo '<td class="text-left">/ ' . $row['Contagem'] . '</td>';

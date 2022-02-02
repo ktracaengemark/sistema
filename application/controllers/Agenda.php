@@ -81,6 +81,7 @@ class Agenda extends CI_Controller {
 			'Compartilhar',
 			'Categoria',
 			'SubPrioridade',
+			'Recorrencia',
 			
         ), TRUE));
 		/*
@@ -118,6 +119,7 @@ class Agenda extends CI_Controller {
 		$_SESSION['FiltroAlteraProcedimento']['NomeEmpresa'] = $data['query']['NomeEmpresa'];
 		$_SESSION['FiltroAlteraProcedimento']['NomeEmpresaCli'] = $data['query']['NomeEmpresaCli'];
 		$_SESSION['FiltroAlteraProcedimento']['NomeUsuario'] = $data['query']['NomeUsuario'];
+		$_SESSION['FiltroAlteraProcedimento']['Recorrencia'] = $data['query']['Recorrencia'];
         //$_SESSION['log']['NomeUsuario'] = ($data['query']['NomeUsuario']) ? $data['query']['NomeUsuario'] : FALSE;
         $_SESSION['log']['NomeProfissional'] = ($data['query']['NomeProfissional']) ? $data['query']['NomeProfissional'] : FALSE;
         $_SESSION['log']['Compartilhar'] = ($data['query']['Compartilhar']) ? $data['query']['Compartilhar'] : FALSE;

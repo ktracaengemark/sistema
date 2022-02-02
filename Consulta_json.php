@@ -23,6 +23,7 @@ $query = ($_SESSION['FiltroAlteraProcedimento']['NomeUsuario'] && isset($_SESSIO
 $query3 = ($_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'] && isset($_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'])) ? 'AND C.idApp_Cliente = ' . $_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'] . '  ' : FALSE;
 $query4 = ($_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet'] && isset($_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet'])) ? 'AND C.idApp_ClientePet = ' . $_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet'] . '  ' : FALSE;
 $query5 = ($_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep'] && isset($_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep'])) ? 'AND C.idApp_ClienteDep = ' . $_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep'] . '  ' : FALSE;
+$query6 = ($_SESSION['FiltroAlteraProcedimento']['Recorrencia'] && isset($_SESSION['FiltroAlteraProcedimento']['Recorrencia'])) ? 'AND C.Recorrencia = "' . $_SESSION['FiltroAlteraProcedimento']['Recorrencia'] . '"  ' : FALSE;
 #$query2 = ($_SESSION['log']['NomeUsuario'] && isset($_SESSION['log']['NomeUsuario'])) ? 'C.idApp_Cliente = ' . $_SESSION['log']['NomeUsuario'] . ' AND ' : FALSE;
 
 if($_SESSION['log']['idSis_Empresa'] != 5){
@@ -93,6 +94,7 @@ $result = mysql_query(
 				' . $query3 . '
 				' . $query4 . '
 				' . $query5 . '
+				' . $query6 . '
 				' . $permissao . '
 				' . $permissao3 . '
 				' . $permissao5 . '
