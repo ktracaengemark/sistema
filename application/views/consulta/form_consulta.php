@@ -623,15 +623,17 @@
 												</div>
 											<?php } else { ?>
 												<div class="row text-left">	
-													<div class="col-xs-5 col-sm-6 col-md-6 col-lg-3">
+													<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 														<label>Vez(es)</label>
 														<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['Consulta']['Recorrencia']; ?>">
-													</div>	
+													</div>
+													<!--
 													<div class="col-xs-7 col-sm-6 col-md-6 col-lg-4">
 														<label>Término</label>
-														<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['Consulta']['DataTermino']; ?>">
+														<input class="form-control"<?php #echo $readonly; ?> readonly="" value="<?php #echo $_SESSION['Consulta']['DataTermino']; ?>">
 													</div>
-													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+													-->
+													<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 														<label for="Quais">Alterar Quais?</label>
 														<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 																id="Quais" name="Quais">
