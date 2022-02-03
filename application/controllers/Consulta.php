@@ -106,7 +106,7 @@ class Consulta extends CI_Controller {
 		(!$data['query']['Tempo']) ? $data['query']['Tempo2'] = '1' : FALSE;		
 		
 		if($_SESSION['log']['idSis_Empresa'] != 5){
-			(!$data['query']['idApp_Agenda']) ? $data['query']['idApp_Agenda'] = $_SESSION['Usuario']['idApp_Agenda'] : FALSE;
+			(!$data['query']['idApp_Agenda']) ? $data['query']['idApp_Agenda'] = $_SESSION['log']['Agenda'] : FALSE;
 		}
 				
 		/*
@@ -681,7 +681,7 @@ class Consulta extends CI_Controller {
 		(!$data['query']['Tempo']) ? $data['query']['Tempo2'] = '1' : FALSE;		
 		
 		if($_SESSION['log']['idSis_Empresa'] != 5){
-			(!$data['query']['idApp_Agenda']) ? $data['query']['idApp_Agenda'] = $_SESSION['Usuario']['idApp_Agenda'] : FALSE;
+			(!$data['query']['idApp_Agenda']) ? $data['query']['idApp_Agenda'] = $_SESSION['log']['Agenda'] : FALSE;
 		}
 				
 		/*
@@ -3148,7 +3148,7 @@ class Consulta extends CI_Controller {
 		(!$data['query']['Tempo']) ? $data['query']['Tempo2'] = '1' : FALSE;
 		
 		if($_SESSION['log']['idSis_Empresa'] != 5){
-			(!$data['query']['idApp_Agenda']) ? $data['query']['idApp_Agenda'] = $_SESSION['Usuario']['idApp_Agenda'] : FALSE;
+			(!$data['query']['idApp_Agenda']) ? $data['query']['idApp_Agenda'] = $_SESSION['log']['Agenda'] : FALSE;
 		}
 		
         if ($this->input->get('start') && $this->input->get('end')) {
