@@ -61,6 +61,38 @@ class Empresa_model extends CI_Model {
 
         return $query[0];
     }	
+	
+    public function get_saudacao($data) {
+        $query = $this->db->query('
+			SELECT
+				idSis_Empresa,
+				idApp_Documentos, 
+				TextoPedido_1,
+				TextoPedido_2,
+				TextoPedido_3,
+				TextoPedido_4,
+				ClientePedido,
+				idClientePedido,
+				idPedido,
+				SitePedido,
+				TextoAgenda_1,
+				TextoAgenda_2,
+				TextoAgenda_3,
+				TextoAgenda_4,
+				ClienteAgenda,
+				ProfAgenda,
+				DataAgenda,
+				SiteAgenda
+			FROM 
+				App_Documentos 
+			WHERE 
+				idSis_Empresa = ' . $data . '
+		');
+
+        $query = $query->result_array();
+
+        return $query[0];
+    }	
 
     public function get_pagina($data) {
         $query = $this->db->query('SELECT * FROM App_Documentos WHERE idSis_Empresa = ' . $data);
@@ -94,6 +126,22 @@ class Empresa_model extends CI_Model {
         return $query[0];
     }
 
+    public function get_atendimento($data) {
+		
+		$query = $this->db->query('
+            SELECT *
+            FROM
+				App_Atendimento
+            WHERE
+				idSis_Empresa = ' . $data . '	
+            ORDER BY
+				idApp_Atendimento 
+		');
+        $query = $query->result_array();
+          
+        return $query;
+    }
+
     public function update_empresa($data, $id) {
 		
 		unset($data['Id']);
@@ -103,6 +151,14 @@ class Empresa_model extends CI_Model {
     }	
 
     public function update_pagseguro($data, $id) {
+		
+		unset($data['idSis_Empresa']);
+        $query = $this->db->update('App_Documentos', $data, array('idSis_Empresa' => $id));
+        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
+
+    }
+
+    public function update_saudacao($data, $id) {
 		
 		unset($data['idSis_Empresa']);
         $query = $this->db->update('App_Documentos', $data, array('idSis_Empresa' => $id));
@@ -146,6 +202,13 @@ class Empresa_model extends CI_Model {
         } else {
             return TRUE;
         }
+    }	
+
+    public function update_atendimento($data) {
+		
+        $query = $this->db->update_batch('App_Atendimento', $data, 'idApp_Atendimento');
+        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
+
     }	
 
     public function delete_empresa($data) {
@@ -427,28 +490,5 @@ class Empresa_model extends CI_Model {
             }
         }
     }
-
-    public function get_atendimento($data) {
-		
-		$query = $this->db->query('
-            SELECT *
-            FROM
-				App_Atendimento
-            WHERE
-				idSis_Empresa = ' . $data . '	
-            ORDER BY
-				idApp_Atendimento 
-		');
-        $query = $query->result_array();
-          
-        return $query;
-    }
-
-    public function update_atendimento($data) {
-		
-        $query = $this->db->update_batch('App_Atendimento', $data, 'idApp_Atendimento');
-        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
-
-    }	
 	
 }

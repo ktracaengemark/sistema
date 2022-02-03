@@ -2826,5 +2826,175 @@ class Empresa extends CI_Controller {
 
         $this->load->view('basico/footer');
     }
+
+    public function saudacao($id) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $_SESSION['Saudacao'] = $data['saudacao'] = $this->Empresa_model->get_saudacao($id, TRUE);
+        $data['titulo'] = 'Saudacao ' ;
+        $data['panel'] = 'primary';
+        $data['metodo'] = 4;
+
+        $this->load->view('empresa/tela_saudacao', $data);
+
+        $this->load->view('basico/footer');
+    }
+
+    public function alterarsaudacao($id = FALSE) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['saudacao'] = $this->input->post(array(
+			'idSis_Empresa',
+			'idApp_Documentos',
+			'TextoPedido_1',
+			'TextoPedido_2',
+			'TextoPedido_3',
+			'TextoPedido_4',
+			'ClientePedido',
+			'idClientePedido',
+			'idPedido',
+			'SitePedido',
+			'TextoAgenda_1',
+			'TextoAgenda_2',
+			'TextoAgenda_3',
+			'TextoAgenda_4',
+			'ClienteAgenda',
+			'ProfAgenda',
+			'DataAgenda',
+			'SiteAgenda',
+        ), TRUE);
+				
+
+        if ($id) {
+            $_SESSION['Saudacao'] = $data['saudacao'] = $this->Empresa_model->get_saudacao($id, TRUE);
+        }
+
+		$data['select']['ClientePedido'] = $this->Basico_model->select_status_sn();
+		$data['select']['idClientePedido'] = $this->Basico_model->select_status_sn();
+		$data['select']['idPedido'] = $this->Basico_model->select_status_sn();
+		$data['select']['SitePedido'] = $this->Basico_model->select_status_sn();
+		$data['select']['ClienteAgenda'] = $this->Basico_model->select_status_sn();
+		$data['select']['ProfAgenda'] = $this->Basico_model->select_status_sn();
+		$data['select']['DataAgenda'] = $this->Basico_model->select_status_sn();
+		$data['select']['SiteAgenda'] = $this->Basico_model->select_status_sn();
+
+		(!$data['saudacao']['ClientePedido']) ? $data['saudacao']['ClientePedido'] = 'N' : FALSE;
+        $data['radio'] = array(
+            'ClientePedido' => $this->basico->radio_checked($data['saudacao']['ClientePedido'], 'ClientePedido', 'NS'),
+        );
+        ($data['saudacao']['ClientePedido'] == 'S') ?
+            $data['div']['ClientePedido'] = '' : $data['div']['ClientePedido'] = 'style="display: none;"';		
+	
+		(!$data['saudacao']['idClientePedido']) ? $data['saudacao']['idClientePedido'] = 'N' : FALSE;
+        $data['radio'] = array(
+            'idClientePedido' => $this->basico->radio_checked($data['saudacao']['idClientePedido'], 'idClientePedido', 'NS'),
+        );
+        ($data['saudacao']['idClientePedido'] == 'S') ?
+            $data['div']['idClientePedido'] = '' : $data['div']['idClientePedido'] = 'style="display: none;"';		
+	
+		(!$data['saudacao']['idPedido']) ? $data['saudacao']['idPedido'] = 'N' : FALSE;
+        $data['radio'] = array(
+            'idPedido' => $this->basico->radio_checked($data['saudacao']['idPedido'], 'idPedido', 'NS'),
+        );
+        ($data['saudacao']['idPedido'] == 'S') ?
+            $data['div']['idPedido'] = '' : $data['div']['idPedido'] = 'style="display: none;"';		
+	
+		(!$data['saudacao']['SitePedido']) ? $data['saudacao']['SitePedido'] = 'N' : FALSE;
+        $data['radio'] = array(
+            'SitePedido' => $this->basico->radio_checked($data['saudacao']['SitePedido'], 'SitePedido', 'NS'),
+        );
+        ($data['saudacao']['SitePedido'] == 'S') ?
+            $data['div']['SitePedido'] = '' : $data['div']['SitePedido'] = 'style="display: none;"';		
+	
+		(!$data['saudacao']['ClienteAgenda']) ? $data['saudacao']['ClienteAgenda'] = 'N' : FALSE;
+        $data['radio'] = array(
+            'ClienteAgenda' => $this->basico->radio_checked($data['saudacao']['ClienteAgenda'], 'ClienteAgenda', 'NS'),
+        );
+        ($data['saudacao']['ClienteAgenda'] == 'S') ?
+            $data['div']['ClienteAgenda'] = '' : $data['div']['ClienteAgenda'] = 'style="display: none;"';		
+	
+		(!$data['saudacao']['ProfAgenda']) ? $data['saudacao']['ProfAgenda'] = 'N' : FALSE;
+        $data['radio'] = array(
+            'ProfAgenda' => $this->basico->radio_checked($data['saudacao']['ProfAgenda'], 'ProfAgenda', 'NS'),
+        );
+        ($data['saudacao']['ProfAgenda'] == 'S') ?
+            $data['div']['ProfAgenda'] = '' : $data['div']['ProfAgenda'] = 'style="display: none;"';		
+	
+		(!$data['saudacao']['DataAgenda']) ? $data['saudacao']['DataAgenda'] = 'N' : FALSE;
+        $data['radio'] = array(
+            'DataAgenda' => $this->basico->radio_checked($data['saudacao']['DataAgenda'], 'DataAgenda', 'NS'),
+        );
+        ($data['saudacao']['DataAgenda'] == 'S') ?
+            $data['div']['DataAgenda'] = '' : $data['div']['DataAgenda'] = 'style="display: none;"';		
+	
+		(!$data['saudacao']['SiteAgenda']) ? $data['saudacao']['SiteAgenda'] = 'N' : FALSE;
+        $data['radio'] = array(
+            'SiteAgenda' => $this->basico->radio_checked($data['saudacao']['SiteAgenda'], 'SiteAgenda', 'NS'),
+        );
+        ($data['saudacao']['SiteAgenda'] == 'S') ?
+            $data['div']['SiteAgenda'] = '' : $data['div']['SiteAgenda'] = 'style="display: none;"';		
+															
+        $data['titulo'] = 'Saudacao';
+        $data['form_open_path'] = 'empresa/alterarsaudacao';
+        $data['readonly'] = '';
+        $data['disabled'] = '';
+        $data['panel'] = 'primary';
+        $data['metodo'] = 2;
+
+        $data['sidebar'] = 'col-sm-3 col-md-2 sidebar';
+        $data['main'] = 'col-sm-7 col-sm-offset-3 col-md-8 col-md-offset-2 main';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+		$this->form_validation->set_rules('TextoPedido_1', 'TextoPedido_1', 'trim');
+		$this->form_validation->set_rules('TextoPedido_2', 'TextoPedido_2', 'trim');
+		$this->form_validation->set_rules('TextoAgenda_1', 'TextoAgenda_1', 'trim');
+		$this->form_validation->set_rules('TextoAgenda_2', 'TextoAgenda_2', 'trim');
+
+        #run form validation
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('empresa/form_saudacao', $data);
+        } else {
+
+			//$data['saudacao']['TextoPedido_1'] = trim(mb_strtoupper($data['saudacao']['TextoPedido_1'], 'ISO-8859-1'));
+            //$data['saudacao']['TextoPedido_2'] = trim(mb_strtoupper($data['saudacao']['TextoPedido_2'], 'ISO-8859-1'));
+
+            $data['anterior'] = $this->Empresa_model->get_saudacao($data['saudacao']['idSis_Empresa']);
+            $data['campos'] = array_keys($data['saudacao']);
+
+            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['saudacao'], $data['campos'], $data['saudacao']['idSis_Empresa'], TRUE);
+
+            if ($data['auditoriaitem'] && $this->Empresa_model->update_saudacao($data['saudacao'], $data['saudacao']['idSis_Empresa']) === FALSE) {
+                $data['msg'] = '?m=2';
+                redirect(base_url() . 'empresa/form_saudacao/' . $data['saudacao']['idSis_Empresa'] . $data['msg']);
+                exit();
+            } else {
+
+                if ($data['auditoriaitem'] === FALSE) {
+                    $data['msg'] = '';
+                } else {
+                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_Empresa', 'UPDATE', $data['auditoriaitem']);
+                    $data['msg'] = '?m=1';
+                }
+
+				redirect(base_url() . 'empresa/saudacao/' . $data['saudacao']['idSis_Empresa'] . $data['msg']);
+                exit();
+            }
+        }
+
+        $this->load->view('basico/footer');
+    }
 	
 }
