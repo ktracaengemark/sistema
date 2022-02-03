@@ -71,24 +71,35 @@ class OrcatrataPrint extends CI_Controller {
             #### Carrega os dados do cliente nas variáves de sessão ####
             $this->load->model('Cliente_model');
 			if($data['orcatrata']['idApp_Cliente'] != 0 && $data['orcatrata']['idApp_Cliente'] != 1){
+				
 				//$data['cliente'] = $this->Cliente_model->get_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
 				$_SESSION['Cliente'] = $data['cliente'] = $this->Cliente_model->get_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
 				$_SESSION['Cliente']['NomeCliente'] = (strlen($data['cliente']['NomeCliente']) > 12) ? substr($data['cliente']['NomeCliente'], 0, 12) : $data['cliente']['NomeCliente'];
 				
-				#### Carrega os dados do Pedido nas variáves de sessão do Whatsapp ####
-				if(isset($data['orcatrata']['CombinadoFrete']) && $data['orcatrata']['CombinadoFrete'] == "S"){
-					if(isset($data['orcatrata']['AprovadoOrca']) && $data['orcatrata']['AprovadoOrca'] == "S"){
-						if(isset($data['orcatrata']['ConcluidoOrca']) && $data['orcatrata']['ConcluidoOrca'] == "S"){
-							$data['whatsapp_site'] = utf8_encode(' Aproveite e visite o nosso site. https://enkontraki.com.br/'.$_SESSION['Empresa']['Site'].'');
-							//$data['whatsapp'] = utf8_encode('Olá '.$data['cliente']['NomeCliente'].'. Foi um prazer entregar o seu Pedido *' . $id . '* . Esperamos que fique totalmente satisfeito! Aproveite e visite o nosso site. https://enkontraki.com.br/'.$_SESSION['Empresa']['Site'].'');
-							$data['whatsapp'] = utf8_encode('Olá '.$data['cliente']['NomeCliente'].'. Foi um prazer entregar o seu Pedido *' . $id . '* . Esperamos que fique totalmente satisfeito!');
-						}else{
-							$data['whatsapp_site'] = utf8_encode(' Aproveite e visite o nosso site. https://enkontraki.com.br/'.$_SESSION['Empresa']['Site'].'');
-							//$data['whatsapp'] = utf8_encode('Olá '.$data['cliente']['NomeCliente'].'. Estamos preparando o seu Pedido *' . $id . '* . Esperamos que fique totalmente satisfeito! Aproveite e visite o nosso site. https://enkontraki.com.br/'.$_SESSION['Empresa']['Site'].'');
-							$data['whatsapp'] = utf8_encode('Olá '.$data['cliente']['NomeCliente'].'. Estamos preparando o seu Pedido *' . $id . '* . Esperamos que fique totalmente satisfeito!');
-						}
+				#### Carrega os dados do Pedido nas variáves de sessão do Whatsapp ####	
+				if(isset($_SESSION['bd_orcamento']['Whatsapp']) && $_SESSION['bd_orcamento']['Whatsapp'] == "S"){
+					if(isset($_SESSION['Empresa']['ClientePedido']) && $_SESSION['Empresa']['ClientePedido'] == "S") {
+						$nomecliente = '*'.$data['cliente']['NomeCliente'].'*';
+					}else{
+						$nomecliente = FALSE;
+					}						
+					if(isset($_SESSION['Empresa']['idClientePedido']) && $_SESSION['Empresa']['idClientePedido'] == "S") {
+						$idcliente = '*'.$data['orcatrata']['idApp_Cliente'].'*';
+					}else{
+						$idcliente = FALSE;
 					}
-				}	
+					if(isset($_SESSION['Empresa']['idPedido']) && $_SESSION['Empresa']['idPedido'] == "S") {
+						$idpedido = '*'.$id.'*';
+					}else{
+						$idpedido = FALSE;
+					}											
+					if(isset($_SESSION['Empresa']['SitePedido']) && $_SESSION['Empresa']['SitePedido'] == "S") {
+						$sitepedido = "https://enkontraki.com.br/".$_SESSION['Empresa']['Site'];
+					}else{
+						$sitepedido = FALSE;
+					}
+					$data['whatsapp'] = utf8_encode($_SESSION['Empresa']['TextoPedido_1'].' '.$nomecliente. ' ' .$_SESSION['Empresa']['TextoPedido_2']. ' ' . $idcliente . ' ' .$_SESSION['Empresa']['TextoPedido_3']. ' ' . $idpedido . ' ' .$_SESSION['Empresa']['TextoPedido_4']. ' ' . $sitepedido);
+				}
 			}
 			
 			#### Carrega os dados do Usuario ou Associado nas variáves de sessão ####

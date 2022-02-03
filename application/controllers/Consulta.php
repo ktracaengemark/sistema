@@ -483,11 +483,12 @@ class Consulta extends CI_Controller {
 					$this->load->view('consulta/form_consulta', $data);
 				} else {
 					
+					#### Whatsapp ####
 					if($data['cadastrar']['Whatsapp'] == 'S'){
-						#### Whatsapp ####
 						$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
 						
-						$_SESSION['bd_consulta']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
+						$_SESSION['bd_consulta']['Whatsapp'] 		= $data['cadastrar']['Whatsapp'];
+						$_SESSION['bd_consulta']['NomeCliente'] 	= utf8_encode($_SESSION['Cliente']['NomeCliente']);
 						$_SESSION['bd_consulta']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
 						$_SESSION['bd_consulta']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
 						$_SESSION['bd_consulta']['DataInicio'] 		= $dataini_whats;
@@ -1130,12 +1131,13 @@ class Consulta extends CI_Controller {
 					$this->load->view('consulta/form_consulta', $data);
 				} else {
 					
+					#### Whatsapp ####
 					if($data['cadastrar']['Whatsapp'] == 'S'){
-						#### Whatsapp ####
 						$data['Cliente'] 		= $this->Cliente_model->get_cliente($data['query']['idApp_Cliente'], TRUE);
 						$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
 						
-						$_SESSION['bd_consulta']['NomeCliente'] 		= utf8_encode($data['Cliente']['NomeCliente']);
+						$_SESSION['bd_consulta']['Whatsapp'] 		= $data['cadastrar']['Whatsapp'];
+						$_SESSION['bd_consulta']['NomeCliente'] 	= utf8_encode($data['Cliente']['NomeCliente']);
 						$_SESSION['bd_consulta']['CelularCliente'] 	= $data['Cliente']['CelularCliente'];
 						$_SESSION['bd_consulta']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
 						$_SESSION['bd_consulta']['DataInicio'] 		= $dataini_whats;
@@ -2413,11 +2415,12 @@ class Consulta extends CI_Controller {
 
 				$data['update']['query']['bd'] = $this->Consulta_model->update_consulta($data['query'], $data['query']['idApp_Consulta']);
 				
+				#### Whatsapp ####
 				if($data['cadastrar']['Whatsapp'] == 'S'){
-					#### Whatsapp ####
 					$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
 					
-					$_SESSION['bd_consulta']['NomeCliente'] 		= utf8_encode($_SESSION['Cliente']['NomeCliente']);
+					$_SESSION['bd_consulta']['Whatsapp'] 		= $data['cadastrar']['Whatsapp'];
+					$_SESSION['bd_consulta']['NomeCliente'] 	= utf8_encode($_SESSION['Cliente']['NomeCliente']);
 					$_SESSION['bd_consulta']['CelularCliente'] 	= $_SESSION['Cliente']['CelularCliente'];
 					$_SESSION['bd_consulta']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
 					$_SESSION['bd_consulta']['DataInicio'] 		= $dataini_whats;

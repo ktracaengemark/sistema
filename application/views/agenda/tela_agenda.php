@@ -144,9 +144,11 @@
 </div>
 <?php 
 	if ($_SESSION['log']['idSis_Empresa'] != 5){
-		if(isset($_SESSION['bd_consulta'])){
-			echo "<script>window.open('https://api.whatsapp.com/send?phone=55".$_SESSION['bd_consulta']['CelularCliente']."&text=Ola ".$_SESSION['bd_consulta']['NomeCliente'].". Agendamento marcado com ".$_SESSION['bd_consulta']['Profissional'].", dia ".$_SESSION['bd_consulta']['DataInicio'].", as ".$_SESSION['bd_consulta']['HoraInicio'].".','1366002941508','width=700,height=350,left=375,right=375,top=300');</script>";
+		if(isset($_SESSION['bd_consulta']['Whatsapp']) && $_SESSION['bd_consulta']['Whatsapp'] == "S"){
+			if(isset($whatsapp_agenda)){
+				echo "<script>window.open('https://api.whatsapp.com/send?phone=55".$_SESSION['bd_consulta']['CelularCliente']."&text=".$whatsapp_agenda."','1366002941508','width=700,height=350,left=375,right=375,top=300');</script>";
+			}
 		}
-		unset($_SESSION['bd_consulta']);		
+		unset($_SESSION['bd_consulta'], $whatsapp_agenda);		
 	} 
 ?>

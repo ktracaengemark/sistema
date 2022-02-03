@@ -72,7 +72,34 @@ class Orcatrata extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-
+		
+		#### Carrega os dados da Agenda nas variáves de sessão do Whatsapp ####
+		if ($_SESSION['log']['idSis_Empresa'] != 5){
+			if(isset($_SESSION['bd_consulta']['Whatsapp']) && $_SESSION['bd_consulta']['Whatsapp'] == "S"){
+				if(isset($_SESSION['Empresa']['ClienteAgenda']) && $_SESSION['Empresa']['ClienteAgenda'] == "S") {
+					$nomecliente = '*'.$_SESSION['bd_consulta']['NomeCliente'].'*';
+				}else{
+					$nomecliente = FALSE;
+				}
+				if(isset($_SESSION['Empresa']['ProfAgenda']) && $_SESSION['Empresa']['ProfAgenda'] == "S") {
+					$nomeprof = '*'.$_SESSION['bd_consulta']['Profissional'].'*';
+				}else{
+					$nomeprof = FALSE;
+				}
+				if(isset($_SESSION['Empresa']['DataAgenda']) && $_SESSION['Empresa']['DataAgenda'] == "S") {
+					$dataagenda = '*'.$_SESSION['bd_consulta']['DataInicio'].' as '.$_SESSION['bd_consulta']['HoraInicio'].'*';
+				}else{
+					$dataagenda = FALSE;
+				}
+				if(isset($_SESSION['Empresa']['SiteAgenda']) && $_SESSION['Empresa']['SiteAgenda'] == "S") {
+					$siteagenda = "https://enkontraki.com.br/".$_SESSION['Empresa']['Site'];
+				}else{
+					$siteagenda = FALSE;
+				}
+				$data['whatsapp_agenda'] = utf8_encode($_SESSION['Empresa']['TextoAgenda_1'].' '.$nomecliente. ' ' .$_SESSION['Empresa']['TextoAgenda_2']. ' ' . $nomeprof . ' ' .$_SESSION['Empresa']['TextoAgenda_3']. ' ' . $dataagenda . ' ' .$_SESSION['Empresa']['TextoAgenda_4']. ' ' . $siteagenda);
+			}
+		}
+		
 		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 			'ConcluidoProduto',
 			'QuitadoParcelas',
@@ -5182,7 +5209,34 @@ class Orcatrata extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-
+		
+		#### Carrega os dados da Agenda nas variáves de sessão do Whatsapp ####	
+		if ($_SESSION['log']['idSis_Empresa'] != 5){
+			if(isset($_SESSION['bd_consulta']['Whatsapp']) && $_SESSION['bd_consulta']['Whatsapp'] == "S"){
+				if(isset($_SESSION['Empresa']['ClienteAgenda']) && $_SESSION['Empresa']['ClienteAgenda'] == "S") {
+					$nomecliente = '*'.$_SESSION['bd_consulta']['NomeCliente'].'*';
+				}else{
+					$nomecliente = FALSE;
+				}
+				if(isset($_SESSION['Empresa']['ProfAgenda']) && $_SESSION['Empresa']['ProfAgenda'] == "S") {
+					$nomeprof = '*'.$_SESSION['bd_consulta']['Profissional'].'*';
+				}else{
+					$nomeprof = FALSE;
+				}
+				if(isset($_SESSION['Empresa']['DataAgenda']) && $_SESSION['Empresa']['DataAgenda'] == "S") {
+					$dataagenda = '*'.$_SESSION['bd_consulta']['DataInicio'].' as '.$_SESSION['bd_consulta']['HoraInicio'].'*';
+				}else{
+					$dataagenda = FALSE;
+				}
+				if(isset($_SESSION['Empresa']['SiteAgenda']) && $_SESSION['Empresa']['SiteAgenda'] == "S") {
+					$siteagenda = "https://enkontraki.com.br/".$_SESSION['Empresa']['Site'];
+				}else{
+					$siteagenda = FALSE;
+				}
+				$data['whatsapp_agenda'] = utf8_encode($_SESSION['Empresa']['TextoAgenda_1'].' '.$nomecliente. ' ' .$_SESSION['Empresa']['TextoAgenda_2']. ' ' . $nomeprof . ' ' .$_SESSION['Empresa']['TextoAgenda_3']. ' ' . $dataagenda . ' ' .$_SESSION['Empresa']['TextoAgenda_4']. ' ' . $siteagenda);
+			}
+		}
+		
 		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 			'ConcluidoProduto',
 			'QuitadoParcelas',

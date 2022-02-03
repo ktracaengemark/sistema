@@ -39,7 +39,32 @@ class Empresa_model extends CI_Model {
     }
 
     public function get_empresa($data) {
-        $query = $this->db->query('SELECT * FROM Sis_Empresa WHERE idSis_Empresa = ' . $data);
+        $query = $this->db->query('
+			SELECT 
+				E.*,
+				D.TextoPedido_1,
+				D.TextoPedido_2,
+				D.TextoPedido_3,
+				D.TextoPedido_4,
+				D.ClientePedido,
+				D.idClientePedido,
+				D.idPedido,
+				D.SitePedido,
+				D.TextoAgenda_1,
+				D.TextoAgenda_2,
+				D.TextoAgenda_3,
+				D.TextoAgenda_4,
+				D.ClienteAgenda,
+				D.ProfAgenda,
+				D.DataAgenda,
+				D.SiteAgenda
+				
+			FROM 
+				Sis_Empresa AS E
+					LEFT JOIN App_Documentos AS D ON D.idSis_Empresa = E.idSis_Empresa
+			WHERE 
+				E.idSis_Empresa = ' . $data . '
+		');
 
         $query = $query->result_array();
 
