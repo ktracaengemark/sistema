@@ -71,8 +71,8 @@
 					<div <?php echo $collapse1; ?> id="Receitas">
 						<div class="panel-body">
 							<div class="row">
-								<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
-									<?php if($_SESSION['Usuario']['Rel_Orc'] == "S") {?>	
+								<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>	
+									<?php if((isset($_SESSION['Usuario']['Rel_Orc']) && $_SESSION['Usuario']['Rel_Orc'] == "S")) {?>
 										<div class="col-md-12">											
 											<label for=""><h4><b>Receitas</b></h4></label>
 											<div class="form-group col-md-12 text-left">
@@ -91,6 +91,25 @@
 											</div>
 										</div>
 									<?php } ?>
+									
+								<?php }else{ ?>
+									<div class="col-md-12">											
+										<label for=""><h4><b>Receitas</b></h4></label>
+										<div class="form-group col-md-12 text-left">
+											<div class="row">		
+												<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>orcatrata/pedidos" role="button"> 
+													<span class="glyphicon glyphicon-pencil"></span> Gestor de Receitas Estático
+												</a>											
+											</div>	
+										</div>
+										<div class="form-group col-md-12 text-left">
+											<div class="row">		
+												<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>relatorio/receitas" role="button"> 
+													<span class="glyphicon glyphicon-pencil"></span> Receitas
+												</a>											
+											</div>	
+										</div>
+									</div>
 								<?php } ?>
 								<?php if($_SESSION['log']['idSis_Empresa'] == "5") {?>
 									<div class="col-md-12">	
@@ -239,10 +258,11 @@
 										</div>
 									<?php }?>								
 								<?php } ?>	
-								<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>	
-									<?php if($_SESSION['Usuario']['Rel_Est'] == "S") {?>	
-										<div class="col-md-12">											
-											<label for=""><h4><b>Estatísticas</b></h4></label>
+									
+								<div class="col-md-12">											
+									<label for=""><h4><b>Estatísticas</b></h4></label>
+									<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>	
+										<?php if(isset($_SESSION['Usuario']['Rel_Est']) && $_SESSION['Usuario']['Rel_Est'] == "S") {?>		
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
 													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/balanco" role="button"> 
@@ -250,49 +270,61 @@
 													</a>
 												</div>	
 											</div>
+										<?php }?>
+									<?php }else{?>	
 											<div class="form-group col-md-12 text-left">
-												<div class="row">										
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/rankingvendas" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Ranking de Vendas
+												<div class="row">		
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/balanco" role="button"> 
+														<span class="glyphicon glyphicon-usd"></span> Balanço
 													</a>
 												</div>	
-											</div>
-											<div class="form-group col-md-12 text-left">
-												<div class="row">										
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/rankingformapag" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Forma de Pag.
-													</a>
-												</div>	
-											</div>
-											<div class="form-group col-md-12 text-left">
-												<div class="row">										
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/rankingformaentrega" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Entrega
-													</a>
-												</div>	
-											</div>
-											<?php if($_SESSION['log']['idSis_Empresa'] == "2") {?>
-												<!--
-												<div class="form-group col-md-12 text-left">
-													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/ultimopedido" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span> Ultimo pedido
-														</a>
-													</div>	
-												</div>
-												
-												<div class="form-group col-md-12 text-left">
-													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>orcatrata/ultimopedido" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span> Cadastrar Ultimo pedido
-														</a>
-													</div>	
-												</div>
-												-->
-											<?php }?>
-										</div>
+											</div>											
 									<?php }?>
-								<?php }?>	
+									<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>	
+										<div class="form-group col-md-12 text-left">
+											<div class="row">										
+												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/rankingvendas" role="button"> 
+													<span class="glyphicon glyphicon-usd"></span> Ranking de Vendas
+												</a>
+											</div>	
+										</div>
+										<div class="form-group col-md-12 text-left">
+											<div class="row">										
+												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/rankingformapag" role="button"> 
+													<span class="glyphicon glyphicon-usd"></span> Forma de Pag.
+												</a>
+											</div>	
+										</div>
+										<div class="form-group col-md-12 text-left">
+											<div class="row">										
+												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/rankingformaentrega" role="button"> 
+													<span class="glyphicon glyphicon-usd"></span> Entrega
+												</a>
+											</div>	
+										</div>
+										<?php if($_SESSION['log']['idSis_Empresa'] == "2") {?>
+											<!--
+											<div class="form-group col-md-12 text-left">
+												<div class="row">										
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/ultimopedido" role="button"> 
+														<span class="glyphicon glyphicon-usd"></span> Ultimo pedido
+													</a>
+												</div>	
+											</div>
+											
+											<div class="form-group col-md-12 text-left">
+												<div class="row">										
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>orcatrata/ultimopedido" role="button"> 
+														<span class="glyphicon glyphicon-usd"></span> Cadastrar Ultimo pedido
+													</a>
+												</div>	
+											</div>
+											-->
+										<?php }?>
+									<?php }?>	
+											
+								</div>
+									
 							</div>
 						</div>
 					</div>
@@ -308,9 +340,9 @@
 					</div>
 					<div <?php echo $collapse1; ?> id="Despesas">
 						<div class="panel-body">
-							<div class="row">								
-								<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
-									<?php if($_SESSION['Usuario']['Rel_Orc'] == "S") {?>
+							<div class="row">
+								<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>								
+									<?php if(isset($_SESSION['Usuario']['Rel_Orc']) && $_SESSION['Usuario']['Rel_Orc'] == "S") {?>
 										<div class="col-md-12">											
 											<label for=""><h4><b>Despesas</b></h4></label>
 											<div class="form-group col-md-12 text-left">
@@ -329,6 +361,24 @@
 											</div>
 										</div>
 									<?php } ?>
+								<?php }else{ ?>
+									<div class="col-md-12">											
+										<label for=""><h4><b>Despesas</b></h4></label>
+										<div class="form-group col-md-12 text-left">
+											<div class="row">		
+												<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>despesas/despesas" role="button"> 
+													<span class="glyphicon glyphicon-pencil"></span> Gestor de Despesas Estático
+												</a>											
+											</div>	
+										</div>
+										<div class="form-group col-md-12 text-left">
+											<div class="row">		
+												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/despesas" role="button"> 
+													<span class="glyphicon glyphicon-pencil"></span> Despesas
+												</a>											
+											</div>	
+										</div>
+									</div>
 								<?php } ?>
 								<?php if($_SESSION['log']['idSis_Empresa'] == "5") {?>
 									<div class="col-md-12">		
@@ -428,8 +478,8 @@
 										</div>
 									<?php } ?>
 								<?php } ?>
-								<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>	
-									<?php if($_SESSION['Usuario']['Rel_Est'] == "S") {?>	
+								<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
+									<?php if(isset($_SESSION['Usuario']['Rel_Est']) && $_SESSION['Usuario']['Rel_Est'] == "S") {?>	
 										<div class="col-md-12">											
 											<label for=""><h4><b>Estatísticas</b></h4></label>
 											<div class="form-group col-md-12 text-left">
@@ -441,6 +491,17 @@
 											</div>									
 										</div>
 									<?php }?>
+								<?php }else{?>
+									<div class="col-md-12">											
+										<label for=""><h4><b>Estatísticas</b></h4></label>
+										<div class="form-group col-md-12 text-left">
+											<div class="row">		
+												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/balanco" role="button"> 
+													<span class="glyphicon glyphicon-usd"></span> Balanço
+												</a>
+											</div>	
+										</div>									
+									</div>	
 								<?php }?>
 							</div>
 						</div>

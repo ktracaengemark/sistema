@@ -20,45 +20,52 @@
 									<input type="text" placeholder="Nº Pedido" class="form-control Numero btn-sm" name="Orcamento" id="Orcamento" value="<?php echo set_value('Orcamento', $query['Orcamento']); ?>">
 								</div>
 							</div>
-							<div class="col-md-4 text-left">
-								<!--<label><?php #echo $nome; ?></label>-->
-								<label  ><?php echo $nome; ?>: </label>
-								<div class="input-group">
-									<span class="input-group-btn">
-										<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
-											<span class="glyphicon glyphicon-search"></span> 
-										</button>
-									</span>
-									<input type="text" name="id_<?php echo $nome; ?>_Auto" id="id_<?php echo $nome; ?>_Auto" value="<?php echo $cadastrar['id_'.$nome.'_Auto']; ?>" class="form-control" placeholder="Pesquisar <?php echo $nome; ?>">
+							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
+								<div class="col-md-4 text-left">
+									<!--<label><?php #echo $nome; ?></label>-->
+									<label  ><?php echo $nome; ?>: </label>
+									<div class="input-group">
+										<span class="input-group-btn">
+											<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
+												<span class="glyphicon glyphicon-search"></span> 
+											</button>
+										</span>
+										<input type="text" name="id_<?php echo $nome; ?>_Auto" id="id_<?php echo $nome; ?>_Auto" value="<?php echo $cadastrar['id_'.$nome.'_Auto']; ?>" class="form-control" placeholder="Pesquisar <?php echo $nome; ?>">
+									</div>
+									<span class="modal-title" id="Nome<?php echo $nome; ?>Auto1"><?php echo $cadastrar['Nome'.$nome.'Auto']; ?></span>
+									<input type="hidden" id="Nome<?php echo $nome; ?>Auto" name="Nome<?php echo $nome; ?>Auto" value="<?php echo $cadastrar['Nome'.$nome.'Auto']; ?>" />
+									<input type="hidden" id="Hidden_id_<?php echo $nome; ?>_Auto" name="Hidden_id_<?php echo $nome; ?>_Auto" value="<?php echo $query['idApp_'.$nome]; ?>" />
+									<input type="hidden" name="idApp_<?php echo $nome; ?>" id="idApp_<?php echo $nome; ?>" value="<?php echo $query['idApp_'.$nome]; ?>" class="form-control" readonly= "">
+									<?php if($TipoRD == 2) {?>
+										<input type="hidden" placeholder="Pesquisar <?php echo $nome; ?>" class="form-control Numero btn-sm" name="<?php echo $nome; ?>" id="<?php echo $nome; ?>" value="<?php echo set_value($nome, $query[$nome]); ?>">
+										<input type="hidden" name="Fornecedor" id="Fornecedor" value="">
+									<?php }elseif($TipoRD == 1){ ?>	
+										<input type="hidden" placeholder="Pesquisar <?php echo $nome; ?>" class="form-control Numero btn-sm" name="<?php echo $nome; ?>" id="<?php echo $nome; ?>" value="<?php echo set_value($nome, $query[$nome]); ?>">
+										<input type="hidden" name="Cliente" id="Cliente" value="">
+									<?php } ?>
 								</div>
-								<span class="modal-title" id="Nome<?php echo $nome; ?>Auto1"><?php echo $cadastrar['Nome'.$nome.'Auto']; ?></span>
-								<input type="hidden" id="Nome<?php echo $nome; ?>Auto" name="Nome<?php echo $nome; ?>Auto" value="<?php echo $cadastrar['Nome'.$nome.'Auto']; ?>" />
-								<input type="hidden" id="Hidden_id_<?php echo $nome; ?>_Auto" name="Hidden_id_<?php echo $nome; ?>_Auto" value="<?php echo $query['idApp_'.$nome]; ?>" />
-								<input type="hidden" name="idApp_<?php echo $nome; ?>" id="idApp_<?php echo $nome; ?>" value="<?php echo $query['idApp_'.$nome]; ?>" class="form-control" readonly= "">
-								<?php if($TipoRD == 2) {?>
-									<input type="hidden" placeholder="Pesquisar <?php echo $nome; ?>" class="form-control Numero btn-sm" name="<?php echo $nome; ?>" id="<?php echo $nome; ?>" value="<?php echo set_value($nome, $query[$nome]); ?>">
-									<input type="hidden" name="Fornecedor" id="Fornecedor" value="">
-								<?php }elseif($TipoRD == 1){ ?>	
-									<input type="hidden" placeholder="Pesquisar <?php echo $nome; ?>" class="form-control Numero btn-sm" name="<?php echo $nome; ?>" id="<?php echo $nome; ?>" value="<?php echo set_value($nome, $query[$nome]); ?>">
-									<input type="hidden" name="Cliente" id="Cliente" value="">
-								<?php } ?>
-							</div>
-							<!--
-							<div class="col-md-3 text-left">
-								<label  id="NomeClienteAuto1">Cliente: <?php echo $cadastrar['NomeClienteAuto']; ?></label>
-								<div class="input-group">
-									<span class="input-group-btn">
-										<button class="btn btn-info btn-md" type="submit">
-											<span class="glyphicon glyphicon-search"></span> 
-										</button>
-									</span>
-									<input type="text" name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php #echo $cadastrar['id_Cliente_Auto']; ?>" class="form-control" placeholder="Pesquisar Cliente">
-									<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php #echo $cadastrar['NomeClienteAuto']; ?>" />
-									<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php #echo $query['idApp_Cliente']; ?>" />
-									<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php #echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">
+								<!--
+								<div class="col-md-3 text-left">
+									<label  id="NomeClienteAuto1">Cliente: <?php echo $cadastrar['NomeClienteAuto']; ?></label>
+									<div class="input-group">
+										<span class="input-group-btn">
+											<button class="btn btn-info btn-md" type="submit">
+												<span class="glyphicon glyphicon-search"></span> 
+											</button>
+										</span>
+										<input type="text" name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php #echo $cadastrar['id_Cliente_Auto']; ?>" class="form-control" placeholder="Pesquisar Cliente">
+										<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php #echo $cadastrar['NomeClienteAuto']; ?>" />
+										<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php #echo $query['idApp_Cliente']; ?>" />
+										<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php #echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">
+									</div>
 								</div>
-							</div>
-							-->
+								-->
+							<?php }else{ ?>
+								<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value=""/>
+								<input type="hidden" name="idApp_Fornecedor" id="idApp_Fornecedor" value=""/>
+								<input type="hidden" name="Cliente" id="Cliente" value=""/>
+								<input type="hidden" name="Fornecedor" id="Fornecedor" value=""/>
+							<?php } ?>
 							<?php if ($_SESSION['log']['idSis_Empresa'] == 5) { ?>
 								<div class="col-md-3 text-left">
 									<label for="NomeEmpresa">Empresa:</label>
