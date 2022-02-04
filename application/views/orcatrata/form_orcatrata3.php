@@ -2780,38 +2780,45 @@
 			<div class="modal-body">
 				<span id="msg-error-cliente"></span>
 				<form method="post" id="insert_cliente_form">
-					
 					<div class="form-group">
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<label for="NomeCliente">Nome do Cliente: *</label>
 								<input name="NomeCliente" type="text" class="form-control" id="NomeCliente" maxlength="255" placeholder="Nome do Cliente">
 							</div>
-							<div class="col-md-3">
+							<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
 								<label for="CelularCliente">Celular: *</label>
 								<input type="text" class="form-control Celular" id="CelularCliente" maxlength="11" name="CelularCliente" placeholder="(XX)999999999">
 							</div>
-							<div class="col-md-3">
+							<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
 								<label for="DataNascimento">Data do Aniversário:</label>
 								<input type="text" class="form-control Date" maxlength="10" id="DataNascimento" name="DataNascimento" placeholder="DD/MM/AAAA">
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-6 ">
+							<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+								<label for="Telefone">Telefone:</label>
+								<input type="text" class="form-control Celular CelularVariavel" id="Telefone" maxlength="11" name="Telefone" placeholder="(XX)999999999">
+							</div>							
+							<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+								<label for="Email">E-mail:</label>
+								<input type="text" class="form-control" id="Email" name="Email" maxlength="100"  >
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<h4 class="mb-3">Sexo</h4>
-								<div class="col-md-3 mb-3 ">	
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mb-3 ">		
 									<div class="custom-control custom-radio">
 										<input type="radio" name="Sexo" class="custom-control-input "  id="Retirada" value="M">
 										<label class="custom-control-label" for="Masculino">Mas</label>
 									</div>
 								</div>
-								<div class="col-md-3 mb-3 ">	
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mb-3 ">		
 									<div class="custom-control custom-radio">
 										<input type="radio" name="Sexo" class="custom-control-input " id="Combinar" value="F">
 										<label class="custom-control-label" for="Feminino">Fem </label>
 									</div>
 								</div>
-								<div class="col-md-3 mb-3 ">
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mb-3 ">	
 									<div class="custom-control custom-radio">
 										<input type="radio" name="Sexo" class="custom-control-input " id="Correios" value="O" checked>
 										<label class="custom-control-label" for="Outros">Outros</label>

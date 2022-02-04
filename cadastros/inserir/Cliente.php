@@ -14,6 +14,8 @@ $bairro0 = filter_var($dados['BairroCliente'], FILTER_SANITIZE_STRING);
 $cidade0 = filter_var($dados['CidadeCliente'], FILTER_SANITIZE_STRING);
 $estado0 = filter_var($dados['EstadoCliente'], FILTER_SANITIZE_STRING);
 $referencia0 = filter_var($dados['ReferenciaCliente'], FILTER_SANITIZE_STRING);
+$telefone0 = filter_var($dados['Telefone'], FILTER_SANITIZE_STRING);
+$email0 = filter_var($dados['Email'], FILTER_SANITIZE_STRING);
 
 if(empty($dados['DataNascimento'])){
 	$data = "0000-00-00";
@@ -45,7 +47,6 @@ if(empty($dados['DataNascimento'])){
 //$celular = filter_var($dados['CelularCliente'], FILTER_VALIDATE_INT);
 
 $celular = $dados['CelularCliente'];
-
 
 $caracteres_sem_acento = array(
     'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
@@ -84,6 +85,10 @@ $estado = trim(mb_strtoupper($estado1, 'ISO-8859-1'));
 
 $referencia1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($referencia0, $caracteres_sem_acento));
 $referencia = trim(mb_strtoupper($referencia1, 'ISO-8859-1'));
+
+$email = trim(mb_strtoupper($email0, 'ISO-8859-1'));
+
+$telefone = trim(mb_strtoupper($telefone0, 'ISO-8859-1'));
 
 $sexo = trim(mb_strtoupper($sexo0, 'ISO-8859-1'));
 
@@ -142,6 +147,8 @@ if($cadastrar == 1){
 												idSis_Associado, 
 												NomeCliente, 
 												CelularCliente,
+												Telefone,
+												Email,
 												DataNascimento,
 												Sexo,
 												CepCliente,
@@ -165,6 +172,8 @@ if($cadastrar == 1){
 												'" .$row_resultado_usuario['idSis_Associado']. "',
 												'" .$row_resultado_usuario['Nome']. "',
 												'" .$row_resultado_usuario['CelularAssociado']. "',
+												'" .$telefone. "',
+												'" .$email. "',
 												'" .$data. "',
 												'" .$sexo. "',
 												'" .$cep. "',
@@ -317,6 +326,8 @@ if($cadastrar == 1){
 													idSis_Associado, 
 													NomeCliente, 
 													CelularCliente,
+													Telefone,
+													Email,
 													DataNascimento,
 													Sexo,
 													CepCliente,
@@ -340,6 +351,8 @@ if($cadastrar == 1){
 													'" .$id_usuario_5. "',
 													'" .$cliente. "',
 													'" .$dados['CelularCliente']. "',
+													'" .$telefone. "',
+													'" .$email. "',
 													'" .$data. "',
 													'" .$sexo. "',
 													'" .$cep. "',
