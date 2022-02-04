@@ -9,7 +9,7 @@ if (isset($clientex[2]) && $clientex[2] != ''){
 	$cliente2 = $clientex[2];
 	if (isset($cliente2)){	
 		
-			$query2 = '(CD.NomeClienteDep like "%' . $cliente2 . '%" )';
+			$query2 = '(CD.NomeClienteDep like "%' . $cliente2 . '%" OR C.NomeCliente like "%' . $cliente2 . '%" )';
 		
 	}	
 	$filtro2 = ' AND ' . $query2 ;
@@ -23,7 +23,7 @@ if (isset($clientex[1]) && $clientex[1] != ''){
 	
 	if (isset($cliente1)){
 	
-			$query1 = '(CD.NomeClienteDep like "%' . $cliente1 . '%" )';
+			$query1 = '(CD.NomeClienteDep like "%' . $cliente1 . '%" OR C.NomeCliente like "%' . $cliente1 . '%" )';
 		
 	}	
 	$filtro1 = ' AND ' . $query1 ;
@@ -34,7 +34,7 @@ if (isset($clientex[1]) && $clientex[1] != ''){
 }
 
 
-	$query0 = '(CD.NomeClienteDep like "%' . $cliente0 . '%" )';
+	$query0 = '(CD.NomeClienteDep like "%' . $cliente0 . '%" OR C.NomeCliente like "%' . $cliente0 . '%" )';
 
 
 //SQL para selecionar os registros

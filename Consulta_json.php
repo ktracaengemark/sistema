@@ -22,7 +22,9 @@ $query = ($_SESSION['FiltroAlteraProcedimento']['NomeUsuario'] && isset($_SESSIO
 //$query3 = ($_SESSION['FiltroAlteraProcedimento']['NomeCliente'] && isset($_SESSION['FiltroAlteraProcedimento']['NomeCliente'])) ? 'AND C.idApp_Cliente = ' . $_SESSION['FiltroAlteraProcedimento']['NomeCliente'] . '  ' : FALSE;	
 $query3 = ($_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'] && isset($_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'])) ? 'AND C.idApp_Cliente = ' . $_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'] . '  ' : FALSE;
 $query4 = ($_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet'] && isset($_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet'])) ? 'AND C.idApp_ClientePet = ' . $_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet'] . '  ' : FALSE;
+$query42 = ($_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet2'] && isset($_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet2'])) ? 'AND C.idApp_ClientePet = ' . $_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet2'] . '  ' : FALSE;
 $query5 = ($_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep'] && isset($_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep'])) ? 'AND C.idApp_ClienteDep = ' . $_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep'] . '  ' : FALSE;
+$query52 = ($_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep2'] && isset($_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep2'])) ? 'AND C.idApp_ClienteDep = ' . $_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep2'] . '  ' : FALSE;
 $query6 = ($_SESSION['FiltroAlteraProcedimento']['Recorrencia'] && isset($_SESSION['FiltroAlteraProcedimento']['Recorrencia'])) ? 'AND C.Recorrencia = "' . $_SESSION['FiltroAlteraProcedimento']['Recorrencia'] . '"  ' : FALSE;
 #$query2 = ($_SESSION['log']['NomeUsuario'] && isset($_SESSION['log']['NomeUsuario'])) ? 'C.idApp_Cliente = ' . $_SESSION['log']['NomeUsuario'] . ' AND ' : FALSE;
 
@@ -93,7 +95,9 @@ $result = mysql_query(
 				' . $query . '
 				' . $query3 . '
 				' . $query4 . '
+				' . $query42 . '
 				' . $query5 . '
+				' . $query52 . '
 				' . $query6 . '
 				' . $permissao . '
 				' . $permissao3 . '

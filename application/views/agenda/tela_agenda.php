@@ -42,25 +42,9 @@
 		<div class="panel-heading">
 			<?php if($paginacao == "N") { ?>					
 				<div class="row text-left">
-					<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>
-						<?php if ($_SESSION['log']['Permissao'] <= 2 ) { ?>
-							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
-								<label class="" for="Ordenamento">Profissional:</label><br>
-								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()" id="NomeUsuario" name="NomeUsuario">
-									<?php
-									foreach ($select['NomeUsuario'] as $key => $row) {
-										if ($query['NomeUsuario'] == $key) {
-											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-										} else {
-											echo '<option value="' . $key . '">' . $row . '</option>';
-										}
-									}
-									?>
-								</select>
-							</div>
-						<?php } ?>						
+					<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>						
 						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-left">
-							<label  >Cliente:</label>
+							<label>Busca Cliente:</label>
 							<div class="input-group">
 								<span class="input-group-btn">
 									<button class="btn btn-primary btn-md" type="submit">
@@ -74,8 +58,9 @@
 							<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php echo $query['idApp_Cliente']; ?>" />
 							<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">
 						</div>
+
 						<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-left" >
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
 								<label  for="idApp_ClientePet">Pet</label>
 								<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClientePet" name="idApp_ClientePet" onchange="this.form.submit()">
 									<option value=""></option>
@@ -83,9 +68,26 @@
 								<span class="modal-title" id="Pet"></span>
 							</div>
 							<input type="hidden" id="Hidden_idApp_ClientePet" name="Hidden_idApp_ClientePet" value="<?php echo $query['idApp_ClientePet']; ?>" />
+							
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
+								<label>Busca Pet:</label>
+								<div class="input-group">
+									<span class="input-group-btn">
+										<button class="btn btn-primary btn-md" type="submit">
+											<span class="glyphicon glyphicon-search"></span> 
+										</button>
+									</span>
+									<input type="text" class="form-control" name="id_ClientePet_Auto" id="id_ClientePet_Auto" value="<?php echo $cadastrar['id_ClientePet_Auto']; ?>"  placeholder="Pesquisar Pet">
+								</div>
+								<span class="modal-title" id="NomeClientePetAuto1"><?php echo $cadastrar['NomeClientePetAuto']; ?></span>
+								<input type="hidden" id="NomeClientePetAuto" name="NomeClientePetAuto" value="<?php echo $cadastrar['NomeClientePetAuto']; ?>" />
+								<input type="hidden" id="Hidden_id_ClientePet_Auto" name="Hidden_id_ClientePet_Auto" value="<?php echo $query['idApp_ClientePet2']; ?>" />
+								<input type="hidden" name="idApp_ClientePet2" id="idApp_ClientePet2" value="<?php echo $query['idApp_ClientePet2']; ?>" class="form-control" readonly= "">
+							</div>
+							
 						<?php } else { ?>
 							<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
-								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-left" >
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
 									<label  for="idApp_ClienteDep">Dep</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClienteDep" name="idApp_ClienteDep" onchange="this.form.submit()">
 										<option value=""></option>
@@ -93,6 +95,23 @@
 									<span class="modal-title" id="Dep"></span>
 								</div>
 								<input type="hidden" id="Hidden_idApp_ClienteDep" name="Hidden_idApp_ClienteDep" value="<?php echo $query['idApp_ClienteDep']; ?>" />
+								
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
+									<label>Busca Dep:</label>
+									<div class="input-group">
+										<span class="input-group-btn">
+											<button class="btn btn-primary btn-md" type="submit">
+												<span class="glyphicon glyphicon-search"></span> 
+											</button>
+										</span>
+										<input type="text" class="form-control" name="id_ClienteDep_Auto" id="id_ClienteDep_Auto" value="<?php echo $cadastrar['id_ClienteDep_Auto']; ?>"  placeholder="Pesquisar Dep">
+									</div>
+									<span class="modal-title" id="NomeClienteDepAuto1"><?php echo $cadastrar['NomeClienteDepAuto']; ?></span>
+									<input type="hidden" id="NomeClienteDepAuto" name="NomeClienteDepAuto" value="<?php echo $cadastrar['NomeClienteDepAuto']; ?>" />
+									<input type="hidden" id="Hidden_id_ClienteDep_Auto" name="Hidden_id_ClienteDep_Auto" value="<?php echo $query['idApp_ClienteDep2']; ?>" />
+									<input type="hidden" name="idApp_ClienteDep2" id="idApp_ClienteDep2" value="<?php echo $query['idApp_ClienteDep2']; ?>" class="form-control" readonly= "">
+								</div>
+
 							<?php } ?>
 						<?php } ?>
 					<?php } ?>
@@ -107,6 +126,26 @@
 							<input type="text" class="form-control " maxlength="7" placeholder="Ex: 4/4, 2/2" name="Recorrencia" id="Recorrencia" value="<?php echo set_value('Recorrencia', $query['Recorrencia']); ?>">
 						</div>
 					</div>
+				</div>	
+				<div class="row text-left">	
+					<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>	
+						<?php if ($_SESSION['log']['Permissao'] <= 2 ) { ?>
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-left" >
+								<label class="" for="Ordenamento">Profissional:</label><br>
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()" id="NomeUsuario" name="NomeUsuario">
+									<?php
+									foreach ($select['NomeUsuario'] as $key => $row) {
+										if ($query['NomeUsuario'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>
+								</select>
+							</div>
+						<?php } ?>
+					<?php } ?>	
 					<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-left">	
 						<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>	
 							<label class="" for="Ordenamento">Cal.</label><br>

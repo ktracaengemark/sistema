@@ -1325,6 +1325,8 @@
 									<label for="CorPet">Cor: *</label>
 									<input name="CorPet" type="text" class="form-control" id="CorPet" maxlength="45" placeholder="Cor do Pet">
 								</div>
+							</div>
+							<div class="row">
 								<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 text-left">
 									<label for="PortePet">Porte?</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control"
@@ -1367,26 +1369,26 @@
 								</div>
 								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
 									<label for="ObsPet">Obs:</label>
-									<textarea name="ObsPet" type="text" class="form-control" id="ObsPet" maxlength="255" placeholder="Observacao"></textarea>
+									<textarea name="ObsPet" type="text" class="form-control" id="ObsPet" maxlength="255" placeholder="Observacao" rows="1"></textarea>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 text-left">	
-									<label >Raca</label><br>
+								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 text-left">	
+									<label >Cadastrar Raca</label><br>
 									<button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#addRacaPetModal">
 										Cad/Edit/Excl
 									</button>
 								</div>
-							</div>								
+							</div>
 						</div>
 						<div class="form-group row">
-							<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">	
 								<br>
 								<button type="button" class="btn btn-primary btn-block" data-dismiss="modal" name="botaoFechar" id="botaoFechar">
 									<span class="glyphicon glyphicon-remove"></span> Fechar
 								</button>
 							</div>	
-							<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">	
 								<br>
 								<button type="submit" class="btn btn-success btn-block" name="botaoCad" id="botaoCad" >
 									<span class="glyphicon glyphicon-plus"></span> Cadastrar
@@ -1570,13 +1572,13 @@
 								</div>								
 							</div>
 							<div class="form-group row">
-								<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									<br>
 									<button type="button" class="btn btn-primary btn-block" data-dismiss="modal" name="botaoFechar" id="botaoFechar">
 										<span class="glyphicon glyphicon-remove"></span> Fechar
 									</button>
 								</div>	
-								<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									<br>
 									<button type="submit" class="btn btn-success btn-block" name="botaoCad" id="botaoCad" >
 										<span class="glyphicon glyphicon-plus"></span> Cadastrar

@@ -200,7 +200,7 @@
 
 <div class="container-fluid">
 	<div class="row">
-		<div style="overflow: auto; height: 550px; ">
+		<div style="overflow: auto; height: auto; ">
 			<table class="table table-bordered table-condensed table-striped">
 				<thead>						
 					<tr>

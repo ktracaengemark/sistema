@@ -102,7 +102,7 @@
 		</div>
 	</div>
 </div>
-<div style="overflow: auto; height: 550px; ">
+<div style="overflow: auto; height: auto; ">
 	<div class="container-fluid">
 		<div class="row">
 			<div>

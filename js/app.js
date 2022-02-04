@@ -450,12 +450,19 @@ $("#id_Cliente_Auto").autocomplete({
 			
 		});
 
+
 		$('#idApp_Cliente').val(id_Cliente);
 		clienteDep(id_Cliente);
 		clientePet(id_Cliente);
 		calculacashback(id_Cliente);
 		buscaEnderecoCliente(id_Cliente);
 		clienteOT(id_Cliente);
+		
+		$('#id_ClientePet_Auto').val('');
+		limpaCampos_ClientePet();
+		$('#id_ClienteDep_Auto').val('');
+		limpaCampos_ClienteDep();
+		
 	}
 	
 });
@@ -527,7 +534,9 @@ $("#id_ClientePet_Auto").autocomplete({
 		});
 
 		$('#idApp_ClientePet').val(id_ClientePet);
-
+		$('#idApp_ClientePet2').val(id_ClientePet);
+		$('#id_Cliente_Auto').val('');
+		limpaCampos_Cliente();
 	}
 	
 });
@@ -538,6 +547,7 @@ function limpaCampos_ClientePet(){
    if(busca == ""){
 		
 		$('#idApp_ClientePet').val('');
+		$('#idApp_ClientePet2').val('');
 
 		$("#NomeClientePetAuto1").html('<label>Nenhum ClientePet Selecionado!</label>');
 		$("#NomeClientePetAuto").val('Nenhum ClientePet Selecionado!');
@@ -580,6 +590,9 @@ $("#id_ClienteDep_Auto").autocomplete({
 		});
 
 		$('#idApp_ClienteDep').val(id_ClienteDep);
+		$('#idApp_ClienteDep2').val(id_ClienteDep);
+		$('#id_Cliente_Auto').val('');
+		limpaCampos_Cliente();
 
 	}
 	
@@ -591,6 +604,7 @@ function limpaCampos_ClienteDep(){
    if(busca == ""){
 		
 		$('#idApp_ClienteDep').val('');
+		$('#idApp_ClienteDep2').val('');
 
 		$("#NomeClienteDepAuto1").html('<label>Nenhum ClienteDep Selecionado!</label>');
 		$("#NomeClienteDepAuto").val('Nenhum ClienteDep Selecionado!');

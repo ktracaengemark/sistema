@@ -67,6 +67,10 @@ class Agenda extends CI_Controller {
 		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 			'id_Cliente_Auto',
 			'NomeClienteAuto',
+			'id_ClientePet_Auto',
+			'NomeClientePetAuto',
+			'id_ClienteDep_Auto',
+			'NomeClienteDepAuto',
         ), TRUE));		
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
@@ -77,7 +81,9 @@ class Agenda extends CI_Controller {
 			'NomeClienteDep',
 			'idApp_Cliente',
 			'idApp_ClientePet',
+			'idApp_ClientePet2',
 			'idApp_ClienteDep',
+			'idApp_ClienteDep2',
 			'NomeEmpresa',
 			'NomeEmpresaCli',
             'DataInicio',
@@ -135,10 +141,12 @@ class Agenda extends CI_Controller {
 		$_SESSION['FiltroAlteraProcedimento']['Concluidocli'] = $data['query']['Concluidocli'];
 		$_SESSION['FiltroAlteraProcedimento']['NomeCliente'] = $data['query']['NomeCliente'];
 		$_SESSION['FiltroAlteraProcedimento']['NomeClientePet'] = $data['query']['NomeClientePet'];
-		$_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'] = $data['query']['NomeClienteDep'];
+		$_SESSION['FiltroAlteraProcedimento']['NomeClienteDep'] = $data['query']['NomeClienteDep'];
 		$_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
 		$_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-		$_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];			
+		$_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
+		$_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+		$_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];				
         $_SESSION['FiltroAlteraProcedimento']['Diaemp'] = $data['query']['Diaemp'];
         $_SESSION['FiltroAlteraProcedimento']['Mesvencemp'] = $data['query']['Mesvencemp'];
         $_SESSION['FiltroAlteraProcedimento']['Anoemp'] = $data['query']['Anoemp'];		
@@ -268,8 +276,10 @@ class Agenda extends CI_Controller {
 			//$data['bd']['NomeClienteDep'] = $data['query']['NomeClienteDep'];
 			//$data['bd']['NomeClientePet'] = $data['query']['NomeClientePet'];
 			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
 			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+			$data['bd']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
+			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+			$data['bd']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
 			$data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
 			$data['bd']['NomeProfissional'] = $data['query']['NomeProfissional'];
 			$data['bd']['Categoria'] = $data['query']['Categoria'];
