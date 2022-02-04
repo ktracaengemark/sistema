@@ -9,7 +9,7 @@ if (isset($clientex[2]) && $clientex[2] != ''){
 	$cliente2 = $clientex[2];
 	if (isset($cliente2)){	
 		
-			$query2 = '(CP.NomeClientePet like "%' . $cliente2 . '%" OR C.NomeCliente like "%' . $cliente2 . '%")';
+			$query2 = '(CP.NomeClientePet like "%' . $cliente2 . '%" OR C.NomeCliente like "' . $cliente2 . '%")';
 		
 	}	
 	$filtro2 = ' AND ' . $query2 ;
@@ -23,7 +23,7 @@ if (isset($clientex[1]) && $clientex[1] != ''){
 	
 	if (isset($cliente1)){
 	
-			$query1 = '(CP.NomeClientePet like "%' . $cliente1 . '%" OR C.NomeCliente like "%' . $cliente1 . '%" )';
+			$query1 = '(CP.NomeClientePet like "%' . $cliente1 . '%" OR C.NomeCliente like "' . $cliente1 . '%" )';
 		
 	}	
 	$filtro1 = ' AND ' . $query1 ;
@@ -34,7 +34,7 @@ if (isset($clientex[1]) && $clientex[1] != ''){
 }
 
 
-	$query0 = '(CP.NomeClientePet like "%' . $cliente0 . '%" OR C.NomeCliente like "%' . $cliente0 . '%" )';
+	$query0 = '(CP.NomeClientePet like "%' . $cliente0 . '%" OR C.NomeCliente like "' . $cliente0 . '%" )';
 
 
 //SQL para selecionar os registros
@@ -52,8 +52,9 @@ $result_msg_cont = '
 						CP.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 						(' . $query0 . ' ' . $filtro1 . ' ' . $filtro2 . ')
 					ORDER BY 
-						CP.NomeClientePet ASC 
-					LIMIT 7
+						CP.NomeClientePet ASC,
+						C.NomeCliente ASC
+					LIMIT 10
 				';
 
 //Seleciona os registros
