@@ -2559,11 +2559,13 @@
 																		</div>
 																	</div>
 																	<div id="Whatsapp" <?php echo $div['Whatsapp']; ?>>
+																		<!--
 																		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">
 																			<label for="Whatsapp_Site">Enviar C/Site</label>
 																			<br>
 																			<div class="btn-larg-right btn-group" data-toggle="buttons">
 																				<?php
+																				/*
 																				foreach ($select['Whatsapp_Site'] as $key => $row) {
 																					if (!$cadastrar['Whatsapp_Site']) $cadastrar['Whatsapp_Site'] = 'N';
 																					($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
@@ -2584,9 +2586,11 @@
 																						;
 																					}
 																				}
+																				*/
 																				?>
 																			</div>
 																		</div>
+																		-->
 																	</div>
 																<?php } ?>
 															<div class="col-md-4">
@@ -2671,11 +2675,13 @@
 																			</div>
 																		</div>
 																		<div id="Whatsapp" <?php echo $div['Whatsapp']; ?>>
+																			<!--
 																			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">
 																				<label for="Whatsapp_Site">Enviar C/Site</label>
 																				<br>
 																				<div class="btn-larg-right btn-group" data-toggle="buttons">
 																					<?php
+																					/*
 																					foreach ($select['Whatsapp_Site'] as $key => $row) {
 																						if (!$cadastrar['Whatsapp_Site']) $cadastrar['Whatsapp_Site'] = 'N';
 																						($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
@@ -2695,9 +2701,11 @@
 																							;
 																						}
 																					}
+																					*/
 																					?>
 																				</div>
 																			</div>
+																			-->
 																		</div>
 																	<?php } ?>	
 																	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">
