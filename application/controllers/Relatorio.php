@@ -9924,6 +9924,8 @@ class Relatorio extends CI_Controller {
                 #initialize session
                 $this->load->driver('session');
 
+				$_SESSION['AdminEmpresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
+		
                 #$_SESSION['log']['UsuarioEmpresa'] = $query['UsuarioEmpresa'];
                 //se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
 				$_SESSION['log']['UsuarioEmpresa'] = (strlen($query['UsuarioEmpresa']) > 13) ? substr($query['UsuarioEmpresa'], 0, 13) : $query['UsuarioEmpresa'];

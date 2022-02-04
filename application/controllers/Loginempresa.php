@@ -58,9 +58,14 @@ class Loginempresa extends CI_Controller {
         $senha = md5($this->input->get_post('Senha'));
 
         #set validation rules
-        $this->form_validation->set_rules('CelularAdmin', 'Celular do Admin', 'required|trim|callback_valid_celular');
+        /*
+		$this->form_validation->set_rules('CelularAdmin', 'Celular do Admin', 'required|trim|callback_valid_celular');
 		$this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'required|trim|callback_valid_empresa[' . $celular . ']');
         $this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5|callback_valid_senha[' . $celular . ']');
+		*/
+		$this->form_validation->set_rules('CelularAdmin', 'Celular do Admin', 'required|trim');
+        $this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'required|trim');
+		$this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5');
 
 		$data['select']['idSis_Empresa'] = $this->Loginempresa_model->select_empresa();
 		
@@ -89,23 +94,20 @@ class Loginempresa extends CI_Controller {
             #$usuario = $this->input->get_post('UsuarioEmpresa');
             #$senha = md5($this->input->get_post('Senha'));
             /*
-              echo "<pre>";
-              print_r($query);
-              echo "</pre>";
-              exit();
+             
              */
-            $query = $this->Loginempresa_model->check_dados_celular($senha, $celular, TRUE);
-			$query = $this->Loginempresa_model->check_dados_empresa($empresa, $celular, TRUE);
+            //$query = $this->Loginempresa_model->check_dados_celular($senha, $celular, TRUE);
+			//$query = $this->Loginempresa_model->check_dados_empresa($empresa, $celular, TRUE);
+			$query = $this->Loginempresa_model->check_dados_empresa($empresa, $celular, $senha, TRUE);
 			#$_SESSION['log']['Agenda'] = $this->Loginempresa_model->get_agenda_padrao($query['idSis_Empresa']);
-			
-			
+
             #echo "<pre>".print_r($query)."</pre>";
             #exit();
 
             if ($query === FALSE) {
                 #$msg = "<strong>Senha</strong> incorreta ou <strong>usuário</strong> inexistente.";
                 #$this->basico->erro($msg);
-                $data['msg'] = $this->basico->msg('<strong>Senha</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
+				$data['msg'] = $this->basico->msg('<strong>Empresa, Celular ou Senha</strong> incorretos.', 'erro', FALSE, FALSE, FALSE);
 				#$data['msg'] = $this->basico->msg('<strong>NomeEmpresa</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
                 $this->load->view('form_loginempresa', $data);
 
@@ -113,6 +115,8 @@ class Loginempresa extends CI_Controller {
                 #initialize session
                 $this->load->driver('session');
 
+				$_SESSION['AdminEmpresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
+		
                 #$_SESSION['log']['UsuarioEmpresa'] = $query['UsuarioEmpresa'];
                 //se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
 				$_SESSION['log']['UsuarioEmpresa'] = (strlen($query['UsuarioEmpresa']) > 13) ? substr($query['UsuarioEmpresa'], 0, 13) : $query['UsuarioEmpresa'];

@@ -33,7 +33,7 @@ class Acessoempresa extends CI_Controller {
         else
             $data['msg'] = '';
 
-		$_SESSION['AdminEmpresa']  = $this->Empresa_model->get_empresa($_SESSION['log']['idSis_Empresa'], TRUE);
+		//$_SESSION['AdminEmpresa']  = $this->Empresa_model->get_empresa($_SESSION['log']['idSis_Empresa'], TRUE);
 		
 		$this->load->view('acessoempresa/tela_acessoempresa', $data);
 

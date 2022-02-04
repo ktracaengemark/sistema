@@ -33,8 +33,8 @@ class Acesso extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($_SESSION['log']['idSis_Empresa'], TRUE);
-		$_SESSION['Usuario']  = $this->Usuario_model->get_usuario($_SESSION['log']['idSis_Usuario'], TRUE);
+		//$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($_SESSION['log']['idSis_Empresa'], TRUE);
+		//$_SESSION['Usuario']  = $this->Usuario_model->get_usuario($_SESSION['log']['idSis_Usuario'], TRUE);
 		
 		$this->load->view('acesso/tela_acesso', $data);
 

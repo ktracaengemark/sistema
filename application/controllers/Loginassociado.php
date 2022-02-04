@@ -38,7 +38,7 @@ class Loginassociado extends CI_Controller {
         #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'ktraca';
         $_SESSION['log']['idTab_Modulo'] = 1;
-
+		/*
         ###################################################
         #só pra eu saber quando estou no banco de testes ou de produção
         #$CI = & get_instance();
@@ -47,7 +47,8 @@ class Loginassociado extends CI_Controller {
         #echo $CI->db->database;
         ###################################################
         #change error delimiter view
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        */
+		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #Get GET or POST data
         $usuario = $this->input->get_post('Usuario');

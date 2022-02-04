@@ -161,6 +161,9 @@ class Login extends CI_Controller {
 					$data['msg'] = $this->basico->msg('<strong>Usuario</strong> inativo! Fale com o Administrador da sua Empresa!', 'erro', FALSE, FALSE, FALSE);
 					$this->load->view('login/form_login1', $data);
 				} else {
+					
+					#initialize session
+					$this->load->driver('session');
 				
 					$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
 					
@@ -176,8 +179,6 @@ class Login extends CI_Controller {
 					$_SESSION['log']['Site'] = $query3['Site'];
 					$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
 					
-					#initialize session
-					$this->load->driver('session');
 
 					#$_SESSION['log']['Usuario'] = $query['Usuario'];
 					//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
@@ -289,7 +290,13 @@ class Login extends CI_Controller {
 					$data['msg'] = $this->basico->msg('<strong>Associado</strong> inativo! Fale com o Administrador da sua Empresa!', 'erro', FALSE, FALSE, FALSE);
 					$this->load->view('login/form_login1', $data);
 				} else {
-				
+					
+					#initialize session
+					$this->load->driver('session');
+
+					$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
+					$_SESSION['Usuario']  = $this->Associado_model->get_associado($query['idSis_Associado'], TRUE);
+			
 					$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao_associado($query['idSis_Associado']);
 					/*
 					echo "<pre>";
@@ -308,9 +315,6 @@ class Login extends CI_Controller {
 					$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
 					$_SESSION['log']['Site'] = $query3['Site'];
 					$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
-					
-					#initialize session
-					$this->load->driver('session');
 
 					#$_SESSION['log']['Usuario'] = $query[''];
 					//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
@@ -489,6 +493,12 @@ class Login extends CI_Controller {
 					$this->load->view('login/form_login1', $data);
 				} else {
 				
+					#initialize session
+					$this->load->driver('session');
+
+					$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
+					$_SESSION['Usuario']  = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);					
+									
 					$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
 
 					#### Carrega os dados da Empresa nas vari?ves de sess?o ####
@@ -502,9 +512,6 @@ class Login extends CI_Controller {
 					$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
 					$_SESSION['log']['Site'] = $query3['Site'];
 					$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
-				
-					#initialize session
-					$this->load->driver('session');
 
 					#$_SESSION['log']['Usuario'] = $query['Usuario'];
 					//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
@@ -633,8 +640,15 @@ class Login extends CI_Controller {
 					$this->load->view('login/form_login2', $data);
 				} else {
 					
+					#initialize session
+					$this->load->driver('session');
+					
+					$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
+					$_SESSION['Usuario']  = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);					
+					
 					//$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
 					$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
+
 					/*
 					echo "<pre>";
 					print_r($_SESSION['log']['Agenda']);
@@ -653,8 +667,7 @@ class Login extends CI_Controller {
 					$_SESSION['log']['Site'] = $query3['Site'];
 					$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];			
 				
-					#initialize session
-					$this->load->driver('session');
+
 
 					#$_SESSION['log']['Usuario'] = $query['Usuario'];
 					//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
@@ -828,6 +841,12 @@ class Login extends CI_Controller {
 					$this->load->view('login/form_login3', $data);
 				} else {
 				
+					#initialize session
+					$this->load->driver('session');
+
+					$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
+					$_SESSION['Usuario']  = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);					
+									
 					$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
 
 					#### Carrega os dados da Empresa nas vari?ves de sess?o ####
@@ -841,9 +860,6 @@ class Login extends CI_Controller {
 					$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
 					$_SESSION['log']['Site'] = $query3['Site'];
 					$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
-				
-					#initialize session
-					$this->load->driver('session');
 
 					#$_SESSION['log']['Usuario'] = $query['Usuario'];
 					//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
@@ -1021,7 +1037,12 @@ class Login extends CI_Controller {
 					$data['msg'] = $this->basico->msg('<strong>Usuario</strong> inativo! Fale com o Administrador da sua Empresa!', 'erro', FALSE, FALSE, FALSE);
 					$this->load->view('login/form_login4', $data);
 				} else {
-			
+					#initialize session
+					$this->load->driver('session');
+					
+					$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
+					$_SESSION['Usuario']  = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);					
+								
 					$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
 
 					#### Carrega os dados da Empresa nas vari?ves de sess?o ####
@@ -1037,8 +1058,7 @@ class Login extends CI_Controller {
 					$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
 					$_SESSION['log']['Empresa'] = $query3['idSis_Empresa'];
 				
-					#initialize session
-					$this->load->driver('session');
+
 
 					#$_SESSION['log']['Usuario'] = $query['Usuario'];
 					//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
@@ -1233,7 +1253,12 @@ class Login extends CI_Controller {
 							$this->load->view('login/form_login2', $data);
 						}
 					} else {
+						#initialize session
+						$this->load->driver('session');
 						
+						$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
+						$_SESSION['Usuario']  = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);					
+											
 						$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
 
 						#### Carrega os dados da Empresa nas vari?ves de sess?o ####
@@ -1249,8 +1274,7 @@ class Login extends CI_Controller {
 						$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
 						$_SESSION['log']['Empresa'] = $query3['idSis_Empresa'];
 					
-						#initialize session
-						$this->load->driver('session');
+
 
 						#$_SESSION['log']['Usuario'] = $query['Usuario'];
 						//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email

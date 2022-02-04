@@ -13,7 +13,7 @@ class Relatorioempresa extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Cliente_model', 'Relatorioempresa_model', 'Login_model'));
+        $this->load->model(array('Basico_model', 'Cliente_model', 'Relatorioempresa_model', 'Login_model', 'Empresa_model', 'Usuario_model'));
         $this->load->driver('session');
 
         #load header view
@@ -725,7 +725,12 @@ $this->load->view('relatorioempresa/tela_empresafilial', $data);
 					$data['msg'] = $this->basico->msg('<strong>Usuario</strong> inativo! Fale com o Administrador da sua Empresa!', 'erro', FALSE, FALSE, FALSE);
 					$this->load->view('relatorioempresa/form_login', $data);
 				} else {
-				
+					#initialize session
+					$this->load->driver('session');
+
+					$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
+					$_SESSION['Usuario']  = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);					
+										
 					$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
 
 					#### Carrega os dados da Empresa nas vari?ves de sess?o ####
@@ -733,8 +738,6 @@ $this->load->view('relatorioempresa/tela_empresafilial', $data);
 					$_SESSION['log']['NivelEmpresa'] = $this->Login_model->get_empresa($query['idSis_Usuario']);
 					$_SESSION['log']['DataDeValidade'] = $this->Login_model->get_empresa2($query['idSis_Usuario']);			
 								
-					#initialize session
-					$this->load->driver('session');
 
 					#$_SESSION['log']['Usuario'] = $query['Usuario'];
 					//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email

@@ -33,8 +33,8 @@ class Acesso_associado extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($_SESSION['log']['idSis_Empresa'], TRUE);
-		$_SESSION['Usuario']  = $this->Associado_model->get_associado($_SESSION['log']['idSis_Usuario'], TRUE);
+		//$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($_SESSION['log']['idSis_Empresa'], TRUE);
+		//$_SESSION['Usuario']  = $this->Associado_model->get_associado($_SESSION['log']['idSis_Usuario'], TRUE);
 		
 		$this->load->view('acesso_associado/tela_acesso', $data);
 
