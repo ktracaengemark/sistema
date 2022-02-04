@@ -2432,6 +2432,7 @@ class Consulta extends CI_Controller {
 				$data['update']['cliente_repeticao']['anterior'] = $this->Orcatrata_model->get_cliente($data['query']['idApp_Cliente']);
 				
 				if($data['query']['idApp_OrcaTrata'] != 0){
+					$data['orca']['idApp_ClienteDep']	= $data['query']['idApp_ClienteDep'];
 					$data['orca']['idApp_ClientePet']	= $data['query']['idApp_ClientePet'];
 					$data['orca']['DataOrca']			= $dataini_alt;
 					$data['orca']['DataVencimentoOrca']	= $dataini_alt;
@@ -2534,6 +2535,7 @@ class Consulta extends CI_Controller {
 								
 								if($data['repeticao'][$j]['idApp_OrcaTrata'] != 0 && $data['repeticao'][$j]['idApp_OrcaTrata'] != $data['query']['idApp_OrcaTrata']){
 									
+									$data['orca']['idApp_ClienteDep'] 	= $data['query']['idApp_ClienteDep'];
 									$data['orca']['idApp_ClientePet'] 	= $data['query']['idApp_ClientePet'];
 									$data['orca']['DataOrca'] 			= $dataatualinicio[$j];
 									$data['orca']['DataVencimentoOrca'] = $dataatualinicio[$j];
