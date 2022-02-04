@@ -43,7 +43,7 @@
 			<?php if($paginacao == "N") { ?>					
 				<div class="row text-left">
 					<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>						
-						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-left">
+						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
 							<label>Busca Cliente:</label>
 							<div class="input-group">
 								<span class="input-group-btn">
@@ -126,11 +126,17 @@
 							<input type="text" class="form-control " maxlength="7" placeholder="Ex: 4/4, 2/2" name="Recorrencia" id="Recorrencia" value="<?php echo set_value('Recorrencia', $query['Recorrencia']); ?>">
 						</div>
 					</div>
+					<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-left">	
+						<label class="" for="Ordenamento">Cal.</label><br>	
+						<div class=" btn btn-primary" type="button" data-toggle="collapse" data-target="#Calendario" aria-expanded="false" aria-controls="Calendario">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</div>
+					</div>
 				</div>	
 				<div class="row text-left">	
 					<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>	
 						<?php if ($_SESSION['log']['Permissao'] <= 2 ) { ?>
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-left" >
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
 								<label class="" for="Ordenamento">Profissional:</label><br>
 								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()" id="NomeUsuario" name="NomeUsuario">
 									<?php
@@ -145,15 +151,7 @@
 								</select>
 							</div>
 						<?php } ?>
-					<?php } ?>	
-					<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-left">	
-						<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>	
-							<label class="" for="Ordenamento">Cal.</label><br>
-						<?php } ?>	
-						<div class=" btn btn-primary" type="button" data-toggle="collapse" data-target="#Calendario" aria-expanded="false" aria-controls="Calendario">
-							<span class="glyphicon glyphicon-calendar"></span>
-						</div>
-					</div>	
+					<?php } ?>		
 				</div>
 			<?php } ?>
 			<input type="hidden" id="AgendaI" value="<?php echo $_SESSION['Empresa']['AgendaI'];?>">
