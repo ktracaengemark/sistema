@@ -136,7 +136,7 @@
 				<div class="row text-left">	
 					<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>	
 						<?php if ($_SESSION['log']['Permissao'] <= 2 ) { ?>
-							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-left" >
 								<label class="" for="Ordenamento">Profissional:</label><br>
 								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()" id="NomeUsuario" name="NomeUsuario">
 									<?php
@@ -151,6 +151,14 @@
 								</select>
 							</div>
 						<?php } ?>
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+							<label>Backup</label><br>
+							<a href="<?php echo base_url() . 'gerar_excel/Agendamentos/Agendamentos_total_xls.php'; ?>">
+								<button type='button' class='btn btn-md btn-success btn-block'>
+									Excel Total
+								</button>
+							</a>
+						</div>
 					<?php } ?>		
 				</div>
 			<?php } ?>
