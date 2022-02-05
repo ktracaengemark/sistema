@@ -123,7 +123,66 @@ class Consulta_model extends CI_Model {
 
         return $query;
     }
+	
+    public function get_repeticao_cos($data) {
+        $query = $this->db->query('
+			SELECT
+				CO.idApp_Consulta,
+				CO.idApp_Cliente,
+				CO.Recorrencia,
+				CO.idApp_OrcaTrata,
+				OT.DataEntregaOrca,
+				OT.HoraEntregaOrca
+			FROM 
+				App_Consulta AS CO
+					LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = CO.idApp_OrcaTrata
+			WHERE 
+				CO.Repeticao = ' . $data . ' AND
+				CO.idApp_OrcaTrata != 0
+			ORDER BY
+				OT.DataEntregaOrca ASC
+		');
+		
+        $query = $query->result_array();
 
+        return $query;
+    }
+    public function get_produto($data) {
+		$query = $this->db->query('
+			SELECT  
+				OT.idApp_OrcaTrata,
+				OT.DataEntregaOrca,
+				PV.idApp_Produto,
+				PV.QtdProduto,
+				PV.QtdIncrementoProduto,
+				(PV.QtdProduto * PV.QtdIncrementoProduto) AS Qtd_Prod,
+				PV.DataConcluidoProduto,
+				PV.ConcluidoProduto,
+				PV.ValorProduto,
+				PV.NomeProduto,
+				TPS.Nome_Prod
+			FROM 				
+				App_OrcaTrata AS OT
+					LEFT JOIN App_Produto AS PV ON PV.idApp_OrcaTrata = OT.idApp_OrcaTrata
+					LEFT JOIN Tab_Produtos AS TPS ON TPS.idTab_Produtos = PV.idTab_Produtos_Produto
+			WHERE 
+				OT.idApp_OrcaTrata = ' . $data . ' 
+            ORDER BY
+            	OT.DataEntregaOrca ASC				
+		
+		');
+        $query = $query->result_array();
+		
+		/*
+        echo '<br>';
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        */		
+		
+        return $query;
+    }
+	
     public function get_consultas_repet($data) {
         $query = $this->db->query('
 			SELECT * 

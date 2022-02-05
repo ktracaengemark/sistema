@@ -480,7 +480,7 @@
 									<div class="panel panel-warning">
 										<div class="panel-heading">	
 											<div class="row">
-												<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 text-left">
+												<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 text-left">
 													<label for="idTab_Status">Status:</label><br>
 													<div class=" " data-toggle="buttons">
 														<?php
@@ -509,7 +509,7 @@
 														?>
 													</div>
 												</div>
-												<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 text-left">
+												<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 text-left">
 													<label for="status">Stt</label><br>
 													<span id="botao_status"></span>
 												</div>	
@@ -649,6 +649,59 @@
 															?>
 														</select>
 														<?php echo form_error('Quais'); ?>
+													</div>
+												</div>
+												<br>
+												<div class="row text-left">	
+													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+														<div style="overflow: auto; height: 350px; ">
+															<?php if( isset($count['POCount']) ) { ?>	
+																<?php for ($i=1; $i <= $count['POCount']; $i++) { ?>
+																	<table class="table table-bordered table-condensed table-striped">
+																		<thead>
+																			<tr>
+																				
+																				<td class="notclickable">
+																					<a class="btn btn-xs btn-info notclickable" href="<?php echo base_url() . 'consulta/alterar/'. $repeticao_cons[$i]['idApp_Cliente'] .'/' . $repeticao_cons[$i]['idApp_Consulta']; ?>">
+																						<span class="glyphicon glyphicon-edit"></span> <?php echo '' . $repeticao_cons[$i]['Recorrencia'] . ''?>
+																					</a>
+																				</td>
+																				<td class="col-md-3 text-center" scope="col"><?php echo '' . $repeticao_cons[$i]['DataEntregaOrca'] . ''?></td>
+																				<td class="col-md-1 text-center" scope="col"><?php echo '' . $repeticao_cons[$i]['HoraEntregaOrca'] . ''?></td>
+																			</tr>
+																		</thead>
+																		<!--
+																		<thead>
+																			<tr>
+																				<th class="col-md-1" scope="col">Qtd</th>
+																				<th class="col-md-3" scope="col">Produto</th>							
+																				<th class="col-md-1" scope="col">R$</th>
+																			</tr>
+																		</thead>
+																		-->
+																		<tbody>
+																			<?php if( isset($count['PCount'][$i]) ) { ?>
+																				<?php for ($k=1; $k <= $count['PCount'][$i]; $k++) { ?>
+																						<tr>
+																							<td class="col-md-1" scope="col"><?php echo $produto[$i][$k]['Qtd_Prod'] ?></td>
+																							<td class="col-md-3" scope="col"><?php echo $produto[$i][$k]['NomeProduto'] ?></td>
+																							<td class="col-md-1" scope="col"><?php echo $produto[$i][$k]['SubtotalProduto'] ?></td>										
+																						</tr>
+																				<?php } ?>					
+																			<?php } else { ?>
+																				<tr>
+																					<td class="col-md-1" scope="col"></td>
+																					<td class="col-md-3" scope="col"></td>
+																					<td class="col-md-1" scope="col"></td>										
+																				</tr>
+																			<?php } ?>
+																		</tbody>
+																	</table>
+																<?php } ?>
+															<?php } else {?>
+																<h3 class="text-center">Nenhum Orçamento!</h3>
+															<?php } ?>
+														</div>
 													</div>
 												</div>
 											<?php } ?>
@@ -849,7 +902,7 @@
 														<?php if ($metodo == 2) { ?>
 															<br>
 															<button  type="button" class="btn btn-md btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-salvar-modal-sm">
-																<span class="glyphicon glyphicon-save"></span> Salvar <span class="glyphicon glyphicon-pencil"></span> O.S.<?php echo $_SESSION['Consulta']['idApp_OrcaTrata'];?>
+																<span class="glyphicon glyphicon-save"></span> Salvar e acessar O.S. <b><?php echo $_SESSION['Consulta']['idApp_OrcaTrata'];?></b>
 															</button>
 															<!--
 															<button type="submit" class="btn btn-md btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-loading-text="Aguarde..." value="1" >

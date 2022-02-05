@@ -2047,14 +2047,52 @@ class Consulta extends CI_Controller {
 			$_SESSION['Consultas_zero'] = $data['consultas_zero'] = $this->Consulta_model->get_consultas_zero($_SESSION['Consulta']['idApp_OrcaTrata'], TRUE);
             $_SESSION['Consultas_Repet'] = $data['consultas_repet'] = $this->Consulta_model->get_consultas_repet($_SESSION['Consulta']['Repeticao']);
 			
-		}
-        else {
+			$_SESSION['Repeticao_Cons'] = $this->Consulta_model->get_repeticao_cos($_SESSION['Consulta']['Repeticao']);			
+
+		} else {
             $data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
             $data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraFim'];
         }
 		
 		$data['count_zero'] = count($_SESSION['Consultas_zero']);
 		$data['count_repet'] = count($_SESSION['Consultas_Repet']);
+
+		if (isset($_SESSION['Repeticao_Cons']) && count($_SESSION['Repeticao_Cons']) > 0) {
+			$data['repeticao_cons'] = $_SESSION['Repeticao_Cons'];
+			$data['repeticao_cons'] = array_combine(range(1, count($data['repeticao_cons'])), array_values($data['repeticao_cons']));
+			$data['count']['POCount'] = count($data['repeticao_cons']);           
+			
+			if (isset($data['repeticao_cons'])) {
+
+				for($i=1;$i<=$data['count']['POCount'];$i++) {
+
+					$data['repeticao_cons'][$i]['DataEntregaOrca'] = $this->basico->mascara_data($data['repeticao_cons'][$i]['DataEntregaOrca'], 'barras');
+					
+					#### App_ProdutoVenda ####
+					$data['produto'][$i] = $this->Consulta_model->get_produto($data['repeticao_cons'][$i]['idApp_OrcaTrata']);
+					if (count($data['produto'][$i]) > 0) {
+						$data['produto'][$i] = array_combine(range(1, count($data['produto'][$i])), array_values($data['produto'][$i]));
+						$data['count']['PCount'][$i] = count($data['produto'][$i]);
+
+						if (isset($data['produto'][$i])) {
+
+							for($k=1;$k<=$data['count']['PCount'][$i];$k++) {
+								$data['produto'][$i][$k]['SubtotalProduto'] = number_format(($data['produto'][$i][$k]['ValorProduto'] * $data['produto'][$i][$k]['QtdProduto']), 2, ',', '.');
+								$data['produto'][$i][$k]['ValorProduto'] = number_format(($data['produto'][$i][$k]['ValorProduto']), 2, ',', '.');
+								$data['produto'][$i][$k]['DataConcluidoProduto'] = $this->basico->mascara_data($data['produto'][$i][$k]['DataConcluidoProduto'], 'barras');
+								$data['produto'][$i][$k]['ConcluidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$i][$k]['ConcluidoProduto'], 'NS');
+								/*
+								echo '<br>';
+								echo "<pre>";
+								print_r($data['produto'][$i][$k]);
+								echo "</pre>";
+								*/
+							}
+						}
+					}
+				}
+			}
+		}		
 
         if ($data['query']['DataFim'] < date('Y-m-d H:i:s', time())) {
             #$data['readonly'] = 'readonly';
@@ -2324,6 +2362,8 @@ class Consulta extends CI_Controller {
 				echo '<br>';
 				echo "<pre>";
 				print_r($_SESSION['Consulta']['OS']);
+				echo '<br>';
+				print_r($_SESSION['Consulta']['idApp_OrcaTrata']);
 				echo '<br>';
 				print_r($data['query']['idApp_OrcaTrata']);
 				echo "</pre>";
