@@ -499,7 +499,7 @@
 																								 name="QtdServico<?php echo $i ?>" value="<?php echo $servico[$i]['QtdProduto'] ?>">
 																					</div>
 																					<div class="col-md-2">
-																						<label for="QtdIncrementoServico">Qtd.na Embl</label>
+																						<label for="QtdIncrementoServico">Qtd.Embl</label>
 																						<input type="text" class="form-control Numero" id="QtdIncrementoServico<?php echo $i ?>" name="QtdIncrementoServico<?php echo $i ?>" value="<?php echo $servico[$i]['QtdIncrementoProduto'] ?>" readonly="">
 																					</div>
 																					<div class="col-md-2">
@@ -613,8 +613,8 @@
 																				</div>
 																			</div>
 																		</div>
-																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-																			<div id="FechaProfServico<?php echo $i ?>">
+																		<div id="FechaProfServico<?php echo $i ?>">
+																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" <?php echo $div['Prof_comissao']; ?>>
 																				<div class="row">
 																					<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">
 																						<div class="row">

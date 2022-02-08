@@ -371,11 +371,18 @@
 														<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
 															<label for="idApp_ClientePet">Pet</label>
 															<?php if (isset($_SESSION['Orcatrata']['RepeticaoCons']) && $_SESSION['Orcatrata']['RepeticaoCons'] != 0){ ?>
-																<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['ClientePet']['NomeClientePet']; ?>">
+																<?php 
+																	if (isset($_SESSION['Orcatrata']['idApp_ClientePet']) && $_SESSION['Orcatrata']['idApp_ClientePet'] != 0){
+																		$clientepet = $_SESSION['ClienteDep']['NomeClientePet'];
+																	}else{
+																		$clientepet = '';
+																	}
+																?>
+																<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $clientepet; ?>">
 															<?php }else{ ?>
 																<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClientePet" name="idApp_ClientePet">
 																	<option value=""></option>
-																</select>															
+																</select>
 															<?php } ?>
 															<span class="modal-title" id="Pet"></span>
 														</div>
@@ -385,7 +392,14 @@
 															<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left">
 																<label  for="idApp_ClienteDep">Dependente</label>
 																<?php if (isset($_SESSION['Orcatrata']['RepeticaoCons']) && $_SESSION['Orcatrata']['RepeticaoCons'] != 0){ ?>
-																	<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['ClienteDep']['NomeClienteDep']; ?>">
+																	<?php 
+																		if (isset($_SESSION['Orcatrata']['idApp_ClienteDep']) && $_SESSION['Orcatrata']['idApp_ClienteDep'] != 0){ 
+																			$clientedep = $_SESSION['ClienteDep']['NomeClienteDep'];
+																		}else{
+																			$clientedep = '';
+																		}
+																	?>
+																	<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $clientedep; ?>">
 																<?php }else{ ?>																	
 																	<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClienteDep" name="idApp_ClienteDep">
 																		<option value=""></option>
@@ -802,7 +816,7 @@
 																						</div>
 																					</div>
 																				</div>
-																				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" <?php echo $div['Prof_comissao']; ?>>
 																					<div class="row">
 																						<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">
 																							<div class="row">

@@ -660,7 +660,7 @@
 																			</div>
 																		</div>
 																	</div>
-																	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"  <?php echo $div['Prof_comissao']; ?>>
 																		<div class="row">
 																			<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">
 																				<div class="row">

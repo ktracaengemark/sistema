@@ -9986,6 +9986,18 @@ $(document).ready(function () {
 			readonly_cons = '';
 		}
 		
+		if($('#Bx_Pag').val()){
+			if($('#Bx_Pag').val() == "N"){
+				Prof_comissao = 'style="display: none;"';
+			}else{
+				Prof_comissao = '';
+			}
+		}else{
+			Prof_comissao = '';
+		}
+		console.log('Prof_comissao = '+Prof_comissao);
+		console.log('Bx_Pag = '+$('#Bx_Pag').val());
+		
 		e.preventDefault();
     
 		ps++; //text box increment
@@ -10112,7 +10124,7 @@ $(document).ready(function () {
 								</div>\
 							</div>\
 							<div id="FechaProfServico'+ps+'" style="display:none">\
-								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" '+Prof_comissao+'>\
 									<div class="row">\
 										<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">\
 											<div class="row">\

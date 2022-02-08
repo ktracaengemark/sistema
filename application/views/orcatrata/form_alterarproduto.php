@@ -117,7 +117,7 @@
 																	</div>
 																</div>
 																<?php if ($_SESSION['Produto'][$i]['Prod_Serv_Produto'] == "S") { ?>
-																	<div class="row">
+																	<div class="row" style="display: none;">
 																		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 																			<div class="row">
 																				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
