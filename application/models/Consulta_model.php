@@ -131,6 +131,10 @@ class Consulta_model extends CI_Model {
 				CO.idApp_Cliente,
 				CO.Recorrencia,
 				CO.idApp_OrcaTrata,
+				DATE_FORMAT(CO.DataInicio, "%d/%m/%Y") AS DataInicio,
+				DATE_FORMAT(CO.DataInicio, "%H:%i") AS HoraInicio,
+				DATE_FORMAT(CO.DataFim, "%Y-%m-%d") AS DataFim,
+				DATE_FORMAT(CO.DataFim, "%H:%i") AS HoraFim,
 				OT.DataEntregaOrca,
 				OT.HoraEntregaOrca
 			FROM 
@@ -140,13 +144,14 @@ class Consulta_model extends CI_Model {
 				CO.Repeticao = ' . $data . ' AND
 				CO.idApp_OrcaTrata != 0
 			ORDER BY
-				OT.DataEntregaOrca ASC
+				CO.DataInicio ASC
 		');
 		
         $query = $query->result_array();
 
         return $query;
     }
+	
     public function get_produto($data) {
 		$query = $this->db->query('
 			SELECT  
@@ -157,6 +162,7 @@ class Consulta_model extends CI_Model {
 				PV.QtdIncrementoProduto,
 				(PV.QtdProduto * PV.QtdIncrementoProduto) AS Qtd_Prod,
 				PV.DataConcluidoProduto,
+				PV.HoraConcluidoProduto,
 				PV.ConcluidoProduto,
 				PV.ValorProduto,
 				PV.NomeProduto,
@@ -167,7 +173,7 @@ class Consulta_model extends CI_Model {
 					LEFT JOIN Tab_Produtos AS TPS ON TPS.idTab_Produtos = PV.idTab_Produtos_Produto
 			WHERE 
 				OT.idApp_OrcaTrata = ' . $data . ' 
-            ORDER BY
+			ORDER BY
             	OT.DataEntregaOrca ASC				
 		
 		');

@@ -290,6 +290,58 @@ class Orcatrata_model extends CI_Model {
         return $query;
     }
 	
+    public function get_repeticaoorca($data) {
+        $query = $this->db->query('
+			SELECT 
+				idApp_OrcaTrata
+			FROM 
+				App_OrcaTrata
+			WHERE 
+				RepeticaoCons = ' . $data . ' AND
+				RepeticaoCons != 0 
+			ORDER BY
+				idApp_OrcaTrata ASC
+		');
+        $query = $query->result_array();
+		
+        /*
+        //echo $this->db->last_query();
+        echo '<br>';
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit ();
+        */
+
+        return $query;
+    }
+	
+    public function get_repeticaocons($data) {
+        $query = $this->db->query('
+			SELECT 
+				idApp_Consulta
+			FROM 
+				App_Consulta
+			WHERE 
+				Repeticao = ' . $data . ' AND
+				Repeticao != 0 
+			ORDER BY
+				idApp_Consulta ASC
+		');
+        $query = $query->result_array();
+		
+        /*
+        //echo $this->db->last_query();
+        echo '<br>';
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit ();
+        */
+
+        return $query;
+    }
+	
     public function get_orcatratas_repet_n_pago($data, $data2) {
         $query = $this->db->query('
 			SELECT

@@ -41,6 +41,8 @@
 									P.QtdProduto,
 									P.ValorProduto,
 									(P.QtdProduto*P.ValorProduto) AS SubTotalProduto,
+									DATE_FORMAT(P.DataConcluidoProduto, "%Y-%m-%d") AS DataProduto,
+									DATE_FORMAT(P.HoraConcluidoProduto, "%H:%i") AS HoraProduto,
 									C.idApp_Cliente AS id_Cliente,
 									CONCAT(IFNULL(C.NomeCliente,"")) AS NomeCliente,
 									CP.*,
@@ -88,6 +90,7 @@
 		// Campos da Tabela
 		$html .= '<tr>';
 		$html .= '<td><b>Empresa</b></td>';
+		$html .= '<td><b>Tipo</b></td>';
 		$html .= '<td><b>id_Agenda</b></td>';
 		$html .= '<td><b>id_Cliente</b></td>';
 		if($sub_cliente == 1){
@@ -124,6 +127,8 @@
 		$html .= '<td><b>Evento</b></td>';
 		$html .= '<td><b>Produto</b></td>';
 		$html .= '<td><b>Valor</b></td>';
+		$html .= '<td><b>DataProduto</b></td>';
+		$html .= '<td><b>HoraProduto</b></td>';
 		
 		$html .= '</tr>';
 		
@@ -132,6 +137,7 @@
 			
 			$html .= '<tr>';
 			$html .= '<td>'.$row_msg_contatos["Empresa"].'</td>';
+			$html .= '<td>'.$row_msg_contatos["Tipo"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["idApp_Consulta"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["id_Cliente"].'</td>';
 			if($sub_cliente == 1){
@@ -168,6 +174,8 @@
 			$html .= '<td>'.utf8_encode($row_msg_contatos["Obs"]).'</td>';
 			$html .= '<td>'.utf8_encode($row_msg_contatos["NomeProduto"]).'</td>';
 			$html .= '<td>'.number_format($row_msg_contatos["SubTotalProduto"], 2, ',', '.'). '</td>';
+			$html .= '<td>'.$row_msg_contatos["DataProduto"].'</td>';
+			$html .= '<td>'.$row_msg_contatos["HoraProduto"].'</td>';
 			
 			$html .= '</tr>';
 		}

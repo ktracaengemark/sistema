@@ -1146,9 +1146,28 @@ class Consulta extends CI_Controller {
 						unset($data['Cliente'], $data['Profissional'], $dataini_whats, $horaini_whats);
 					}
 
-					$_SESSION['Copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
-					$data['copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
-					
+					if($data['query']['idApp_OrcaTrata'] !=0){
+						$data['orcatrata'] = $this->Consulta_model->get_orcatrata($data['query']['idApp_OrcaTrata']);
+						if(isset($data['orcatrata'])){
+							if($data['orcatrata']['RepeticaoCons'] != 0){
+								$_SESSION['Copiar']['Repeticao'] 	= $data['orcatrata']['RepeticaoCons'];
+								$data['copiar']['Repeticao'] 		= $data['orcatrata']['RepeticaoCons'];
+								$data['copiar']['idApp_ClientePet'] = $data['orcatrata']['idApp_ClientePet'];
+								$data['copiar']['idApp_ClienteDep'] = $data['orcatrata']['idApp_ClienteDep'];
+							}else{
+								$_SESSION['Copiar']['Repeticao'] 	= $data['query']['idApp_Consulta'];
+								$data['copiar']['Repeticao'] 		= $data['query']['idApp_Consulta'];
+								$data['copiar']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+								$data['copiar']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+							}
+						}						
+					}else{
+						$_SESSION['Copiar']['Repeticao'] 	= $data['query']['idApp_Consulta'];
+						$data['copiar']['Repeticao'] 		= $data['query']['idApp_Consulta'];
+						$data['copiar']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+						$data['copiar']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+					}
+
 					if($data['cadastrar']['Repetir'] == 'S'){
 						$data['copiar']['DataTermino'] = $data['query']['DataTermino'];
 						$data['copiar']['Recorrencia'] = "1/" . $qtd;
@@ -1168,7 +1187,8 @@ class Consulta extends CI_Controller {
 						if ($data['cadastrar']['Repetir'] == 'S') {
 							for($j=1; $j<$qtd; $j++) {
 								$data['repeticao'][$j] = array(
-									'Repeticao' 			=> $data['query']['idApp_Consulta'],
+									//'Repeticao' 			=> $data['query']['idApp_Consulta'],
+									'Repeticao' 			=> $data['copiar']['Repeticao'],
 									'Intervalo' 			=> $data['query']['Intervalo'],
 									'Periodo' 				=> $data['query']['Periodo'],
 									'Tempo' 				=> $data['query']['Tempo'],
@@ -1179,8 +1199,10 @@ class Consulta extends CI_Controller {
 									//'OS' 					=> $data['query']['OS'],
 									'idApp_Agenda' 			=> $data['query']['idApp_Agenda'],
 									'idApp_Cliente' 		=> $data['query']['idApp_Cliente'],
-									'idApp_ClienteDep' 		=> $data['query']['idApp_ClienteDep'],
-									'idApp_ClientePet' 		=> $data['query']['idApp_ClientePet'],
+									//'idApp_ClienteDep' 		=> $data['query']['idApp_ClienteDep'],
+									//'idApp_ClientePet' 		=> $data['query']['idApp_ClientePet'],
+									'idApp_ClienteDep' 		=> $data['copiar']['idApp_ClienteDep'],
+									'idApp_ClientePet' 		=> $data['copiar']['idApp_ClientePet'],
 									'idApp_OrcaTrata' 		=> $data['query']['idApp_OrcaTrata'],
 									//'Evento' 				=> $data['query']['Evento'],
 									'Obs' 					=> $data['query']['Obs'],
@@ -2048,7 +2070,10 @@ class Consulta extends CI_Controller {
             $_SESSION['Consultas_Repet'] = $data['consultas_repet'] = $this->Consulta_model->get_consultas_repet($_SESSION['Consulta']['Repeticao']);
 			
 			$_SESSION['Repeticao_Cons'] = $this->Consulta_model->get_repeticao_cos($_SESSION['Consulta']['Repeticao']);			
-
+			
+			$_SESSION['RepeticaoCons'] = $this->Orcatrata_model->get_repeticaocons($_SESSION['Consulta']['Repeticao']);
+			$_SESSION['RepeticaoOrca'] = $this->Orcatrata_model->get_repeticaoorca($_SESSION['Consulta']['Repeticao']);
+				
 		} else {
             $data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
             $data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraFim'];
@@ -2056,7 +2081,10 @@ class Consulta extends CI_Controller {
 		
 		$data['count_zero'] = count($_SESSION['Consultas_zero']);
 		$data['count_repet'] = count($_SESSION['Consultas_Repet']);
-
+		
+		$data['repeticaocons'] = count($_SESSION['RepeticaoCons']);// conto quantas Consultas tem essa repetição
+		$data['repeticaoorca'] = count($_SESSION['RepeticaoOrca']);// conto quantas OS tem essa repetição
+		
 		if (isset($_SESSION['Repeticao_Cons']) && count($_SESSION['Repeticao_Cons']) > 0) {
 			$data['repeticao_cons'] = $_SESSION['Repeticao_Cons'];
 			$data['repeticao_cons'] = array_combine(range(1, count($data['repeticao_cons'])), array_values($data['repeticao_cons']));
@@ -2474,10 +2502,13 @@ class Consulta extends CI_Controller {
 				if($data['query']['idApp_OrcaTrata'] != 0){
 					$data['orca']['idApp_ClienteDep']	= $data['query']['idApp_ClienteDep'];
 					$data['orca']['idApp_ClientePet']	= $data['query']['idApp_ClientePet'];
-					$data['orca']['DataOrca']			= $dataini_alt;
-					$data['orca']['DataVencimentoOrca']	= $dataini_alt;
-					$data['orca']['DataEntregaOrca']	= $dataini_alt;
-					$data['orca']['HoraEntregaOrca']	= $horaini_alt;
+					################################ Comparo as OS ##################################################################################################	
+					if( $data['repeticaocons'] == $data['repeticaoorca']){
+						$data['orca']['DataOrca']			= $dataini_alt;
+						$data['orca']['DataVencimentoOrca']	= $dataini_alt;
+						$data['orca']['DataEntregaOrca']	= $dataini_alt;
+						$data['orca']['HoraEntregaOrca']	= $horaini_alt;
+					}
 
 					$data['update']['orca']['bd'] 	= $this->Orcatrata_model->update_orcatrata($data['orca'], $data['query']['idApp_OrcaTrata']);
 
@@ -2512,33 +2543,35 @@ class Consulta extends CI_Controller {
 						}				
 
 					}					
+					############################################### Comparo as OS. Seforem iguais, não altero as datas doas produtos e das parcelas ##########################
+					if( $data['repeticaocons'] == $data['repeticaoorca']){	
+						#### App_Produto ####
+						$data['update']['produto']['alterar'] = $this->Orcatrata_model->get_produto_alterar($data['query']['idApp_OrcaTrata']);
+						if (isset($data['update']['produto']['alterar'])){
 
-					#### App_Produto ####
-					$data['update']['produto']['alterar'] = $this->Orcatrata_model->get_produto_alterar($data['query']['idApp_OrcaTrata']);
-					if (isset($data['update']['produto']['alterar'])){
+							$max = count($data['update']['produto']['alterar']);
+							for($j=0;$j<$max;$j++) {
+								$data['update']['produto']['alterar'][$j]['DataConcluidoProduto'] = $dataini_alt;
+								$data['update']['produto']['alterar'][$j]['HoraConcluidoProduto'] = $horaini_alt;
 
-						$max = count($data['update']['produto']['alterar']);
-						for($j=0;$j<$max;$j++) {
-							$data['update']['produto']['alterar'][$j]['DataConcluidoProduto'] = $dataini_alt;
-							$data['update']['produto']['alterar'][$j]['HoraConcluidoProduto'] = $horaini_alt;
-
-							$data['update']['produto']['bd'][$j] = $this->Orcatrata_model->update_produto_id($data['update']['produto']['alterar'][$j], $data['update']['produto']['alterar'][$j]['idApp_Produto']);
-						
+								$data['update']['produto']['bd'][$j] = $this->Orcatrata_model->update_produto_id($data['update']['produto']['alterar'][$j], $data['update']['produto']['alterar'][$j]['idApp_Produto']);
+							
+							}
 						}
-					}
 
-					#### App_Parcelas ####
-					$data['update']['parcelas']['alterar'] = $this->Orcatrata_model->get_parcelas_alterar($data['query']['idApp_OrcaTrata']);
-					if (isset($data['update']['parcelas']['alterar'])){
+						#### App_Parcelas ####
+						$data['update']['parcelas']['alterar'] = $this->Orcatrata_model->get_parcelas_alterar($data['query']['idApp_OrcaTrata']);
+						if (isset($data['update']['parcelas']['alterar'])){
 
-						$max = count($data['update']['parcelas']['alterar']);
-						for($j=0;$j<$max;$j++) {
-							$data['update']['parcelas']['alterar'][$j]['DataVencimento'] = $dataini_alt;
+							$max = count($data['update']['parcelas']['alterar']);
+							for($j=0;$j<$max;$j++) {
+								$data['update']['parcelas']['alterar'][$j]['DataVencimento'] = $dataini_alt;
 
-							$data['update']['parcelas']['bd'][$j] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelas']['alterar'][$j], $data['update']['parcelas']['alterar'][$j]['idApp_Parcelas']);
-						
+								$data['update']['parcelas']['bd'][$j] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelas']['alterar'][$j], $data['update']['parcelas']['alterar'][$j]['idApp_Parcelas']);
+							
+							}
 						}
-					}				
+					}	
 				}
 
 				$_SESSION['Repeticao'] = $data['repeticao'] = $this->Consulta_model->get_consulta_posterior($data['query']['idApp_Consulta'], $_SESSION['Consulta']['Repeticao'], $data['alterar']['Quais'], $dataini_alt);
@@ -2577,11 +2610,13 @@ class Consulta extends CI_Controller {
 									
 									$data['orca']['idApp_ClienteDep'] 	= $data['query']['idApp_ClienteDep'];
 									$data['orca']['idApp_ClientePet'] 	= $data['query']['idApp_ClientePet'];
-									$data['orca']['DataOrca'] 			= $dataatualinicio[$j];
-									$data['orca']['DataVencimentoOrca'] = $dataatualinicio[$j];
-									$data['orca']['DataEntregaOrca'] 	= $dataatualinicio[$j];
-									$data['orca']['HoraEntregaOrca'] 	= $horaini_alt;
-
+									##################################  compara as OS. SeForem iguais, não altero as datas dos produtos e das parcelas ##########################
+									if( $data['repeticaocons'] == $data['repeticaoorca']){
+										$data['orca']['DataOrca'] 			= $dataatualinicio[$j];
+										$data['orca']['DataVencimentoOrca'] = $dataatualinicio[$j];
+										$data['orca']['DataEntregaOrca'] 	= $dataatualinicio[$j];
+										$data['orca']['HoraEntregaOrca'] 	= $horaini_alt;
+									}
 									$data['update']['orca']['bd'][$j] 		= $this->Orcatrata_model->update_orcatrata($data['orca'], $data['repeticao'][$j]['idApp_OrcaTrata']);
 
 									#### Verificação do UltimoPedido ####
@@ -2617,40 +2652,41 @@ class Consulta extends CI_Controller {
 										}
 										
 									}
-
-									#### App_Produto ####
-									$data['update']['produto']['posterior'][$j] = $this->Orcatrata_model->get_produto_alterar($data['repeticao'][$j]['idApp_OrcaTrata']);
-									if (isset($data['update']['produto']['posterior'][$j])){
-										
-										$max_produto = count($data['update']['produto']['posterior'][$j]);
-										
-										for($k=0;$k<$max_produto;$k++) {
+									##################################  compara as OS. SeForem iguais, não altero as datas dos produtos e das parcelas ##########################
+									if( $data['repeticaocons'] == $data['repeticaoorca']){	
+										#### App_Produto ####
+										$data['update']['produto']['posterior'][$j] = $this->Orcatrata_model->get_produto_alterar($data['repeticao'][$j]['idApp_OrcaTrata']);
+										if (isset($data['update']['produto']['posterior'][$j])){
 											
-											$data['update']['produto']['posterior'][$j][$k]['DataConcluidoProduto'] = $dataatualinicio[$j];
-											$data['update']['produto']['posterior'][$j][$k]['HoraConcluidoProduto'] = $horaini_alt;
+											$max_produto = count($data['update']['produto']['posterior'][$j]);
 											
-											$data['update']['produto']['bd']['posterior'][$j][$k] = $this->Orcatrata_model->update_produto_id($data['update']['produto']['posterior'][$j][$k], $data['update']['produto']['posterior'][$j][$k]['idApp_Produto']);
+											for($k=0;$k<$max_produto;$k++) {
+												
+												$data['update']['produto']['posterior'][$j][$k]['DataConcluidoProduto'] = $dataatualinicio[$j];
+												$data['update']['produto']['posterior'][$j][$k]['HoraConcluidoProduto'] = $horaini_alt;
+												
+												$data['update']['produto']['bd']['posterior'][$j][$k] = $this->Orcatrata_model->update_produto_id($data['update']['produto']['posterior'][$j][$k], $data['update']['produto']['posterior'][$j][$k]['idApp_Produto']);
 
-										}
-										
+											}
+											
+										}							
+
+										#### App_Parcelas ####
+										$data['update']['parcelas']['posterior'][$j] = $this->Orcatrata_model->get_parcelas_alterar($data['repeticao'][$j]['idApp_OrcaTrata']);
+										if (isset($data['update']['parcelas']['posterior'][$j])){
+											
+											$max_parcelas = count($data['update']['parcelas']['posterior'][$j]);
+											
+											for($k=0;$k<$max_parcelas;$k++) {
+												
+												$data['update']['parcelas']['posterior'][$j][$k]['DataVencimento'] = $dataatualinicio[$j];
+												
+												$data['update']['parcelas']['bd']['posterior'][$j][$k] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelas']['posterior'][$j][$k], $data['update']['parcelas']['posterior'][$j][$k]['idApp_Parcelas']);
+
+											}
+											
+										}							
 									}							
-
-									#### App_Parcelas ####
-									$data['update']['parcelas']['posterior'][$j] = $this->Orcatrata_model->get_parcelas_alterar($data['repeticao'][$j]['idApp_OrcaTrata']);
-									if (isset($data['update']['parcelas']['posterior'][$j])){
-										
-										$max_parcelas = count($data['update']['parcelas']['posterior'][$j]);
-										
-										for($k=0;$k<$max_parcelas;$k++) {
-											
-											$data['update']['parcelas']['posterior'][$j][$k]['DataVencimento'] = $dataatualinicio[$j];
-											
-											$data['update']['parcelas']['bd']['posterior'][$j][$k] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelas']['posterior'][$j][$k], $data['update']['parcelas']['posterior'][$j][$k]['idApp_Parcelas']);
-
-										}
-										
-									}							
-																
 								}
 							}
 						}

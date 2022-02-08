@@ -272,15 +272,29 @@
 										<div class="panel-body">
 											<div class="row">
 												<?php if($orcatrata['idApp_Cliente'] != 0) { ?>								
-													<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">	
+													<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">	
 														<h3 class="text-left">
 															<b>Cliente</b>: <?php echo '' . $cliente['NomeCliente'] . '' ?>
 														</h3>
 														<h5 class="text-left"><b>Tel</b>: <?php echo '' . $cliente['CelularCliente'] . '' ?> - <b>ID</b>: <?php echo '' . $cliente['idApp_Cliente'] . '' ?> </h5>
 													</div>
 												<?php }?>
+												<?php if($orcatrata['idApp_ClientePet'] != 0) { ?>								
+													<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">	
+														<h3 class="text-left">
+															<b>Pet</b>: <?php echo '' . $clientepet['NomeClientePet'] . '' ?>
+														</h3>
+													</div>
+												<?php } ?>
+												<?php if($orcatrata['idApp_ClienteDep'] != 0) { ?>								
+													<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">	
+														<h3 class="text-left">
+															<b>Dep</b>: <?php echo '' . $clientedep['NomeClienteDep'] . '' ?>
+														</h3>
+													</div>
+												<?php } ?>	
 												<?php if(isset($Campanha)) { ?>	
-													<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+													<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 														<h3 class="text-left" style="color:#FF0000"><?php echo $Campanha['Campanha2'];?></h3>
 													</div>
 												<?php }?>

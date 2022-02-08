@@ -3741,19 +3741,21 @@ $(document).ready(function () {
 		status = $('#Hidden_status').val();
 		if(status == 1){
 			cor = 'warning';
+			titulo = 'Am';
 		}else if(status == 2){
 			cor = 'success';
+			titulo = 'Vd';
 		}else if(status == 3){
 			cor = 'primary';
+			titulo = 'Az';
 		}else if(status == 4){
 			cor = 'danger';
+			titulo = 'Vm';
 		}else {
 			cor = 'default';
+			titulo = 'Br';
 		}
-		$("#botao_status").html('\
-									<button type="button" class="btn btn-'+cor+' btn-block">\
-									</button>\
-								');	
+		$("#botao_status").html('<button type="button" class="btn btn-'+cor+' btn-block">'+titulo+'</button>');	
 	}
 	
 });
@@ -3763,19 +3765,21 @@ function hidden_status(status = null){
 		$('#Hidden_status').val(status);
 		if(status == 1){
 			cor = 'warning';
+			titulo = 'Am';
 		}else if(status == 2){
 			cor = 'success';
+			titulo = 'Vd';
 		}else if(status == 3){
 			cor = 'primary';
+			titulo = 'Az';
 		}else if(status == 4){
 			cor = 'danger';
+			titulo = 'Vm';
 		}else {
 			cor = 'default';
+			titulo = 'Br';
 		}
-		$("#botao_status").html('\
-									<button type="button" class="btn btn-'+cor+' btn-block">\
-									</button>\
-								');	
+		$("#botao_status").html('<button type="button" class="btn btn-'+cor+' btn-block">'+titulo+'</button>');	
 	}else{
 		$('#Hidden_status').val(0);
 		$("#botao_status").html('');
@@ -5037,7 +5041,7 @@ function calculaQtdSomaDev(campo, soma, somaproduto, excluir, produtonum, countm
 function carregaHidden_Prof(value = 0, name, i, PR = 0, cont_PR = 4) {
 
 	if (value != 0) {
-	
+		$("#ValorComProf_Servico_"+PR+i).prop('readonly', false);
 		$("#ProfissionalServico_"+PR+i).val(value);
 
 		$.ajax({
@@ -5064,6 +5068,7 @@ function carregaHidden_Prof(value = 0, name, i, PR = 0, cont_PR = 4) {
 
     }else{
 		//console.log('Prof_1 = Vazio'+value);
+		$("#ValorComProf_Servico_"+PR+i).prop('readonly', true);
 		$("#ProfissionalServico_"+PR+i).val(0);
 		$("#idTFProf_Servico_"+PR+i).val(0);
 		$("#ComFunProf_Servico_"+PR+i).val(0);
@@ -5117,11 +5122,12 @@ function carregaValores_Prof(i, cont_PR, tipo) {
 						}else{
 							$("#ComFunProf_Servico_"+j+i).val(0);
 						}						
-					}	
+					}
 				}
 			}
 			
 		}else{
+			$("#ValorComProf_Servico_"+j+i).prop('readonly', true);
 			$("#ProfissionalServico_"+j+i).val(0);
 			$("#idTFProf_Servico_"+j+i).val(0);
 			$("#ComFunProf_Servico_"+j+i).val(0);
@@ -5413,6 +5419,8 @@ function buscaValor1Tabelas(id, campo, tabela, num, campo2, recorrencias) {
 					if (data[i].id == id) {
 						$('#Escrever'+campo2+num).css("display","");
 						$('#Entregue'+campo2+num).css("display","");
+						$('#FechaObs'+campo2+num).css("display","");
+						$('#FechaProf'+campo2+num).css("display","");
 						//""ou posso usar assim, passando diretamente o qtdinc do id ""
 						$('#Nome'+campo2+num).val(data[i].nomeprod);
 						$('#Comissao'+campo2+num).val(data[i].comissaoprod);
@@ -5450,6 +5458,8 @@ function buscaValor1Tabelas(id, campo, tabela, num, campo2, recorrencias) {
 				}else{
 					$('#Escrever'+campo2+num).css("display","none");
 					$('#Entregue'+campo2+num).css("display","none");
+					$('#FechaObs'+campo2+num).css("display","none");
+					$('#FechaProf'+campo2+num).css("display","none");
 					//""ou posso usar assim, passando diretamente o qtdinc do id ""
 					$('#Nome'+campo2+num).val("");
 					$('#Comissao'+campo2+num).val("0");
@@ -5505,6 +5515,8 @@ function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
 					if (data[i].id == id) {
 						$('#Escrever'+campo2+num).css("display","");
 						$('#Entregue'+campo2+num).css("display","");
+						$('#FechaObs'+campo2+num).css("display","");
+						$('#FechaProf'+campo2+num).css("display","");
 						//""ou posso usar assim, passando diretamente o qtdinc do id ""
 						$('#Nome'+campo2+num).val(data[i].nomeprod);
 						$('#idTab_Produtos_'+campo2+num).val(data[i].id_produto);
@@ -5534,6 +5546,8 @@ function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
 				}else{
 					$('#Escrever'+campo2+num).css("display","none");
 					$('#Entregue'+campo2+num).css("display","none");
+					$('#FechaObs'+campo2+num).css("display","none");
+					$('#FechaProf'+campo2+num).css("display","none");
 					//""ou posso usar assim, passando diretamente o qtdinc do id ""
 					$('#Nome'+campo2+num).val("");
 					$('#Comissao'+campo2+num).val("0");
@@ -5692,7 +5706,9 @@ function calculaSubtotal(valor, campo, num, tipo, tabela, qtdinc, comissao, comi
     //para cada vez que o subtotal for calculado o orçamento e o total restante
     //também serão atualizados
     calculaOrcamento();
-	carregaValores_Prof(num, cont_PR = 4,1);
+	if(tabela == "Servico"){
+		carregaValores_Prof(num, cont_PR = 4,1);
+	}
 
 }
 
@@ -9693,7 +9709,19 @@ $(document).ready(function () {
 		if(empresa == 2) {
 			$('.campos').hide();
 		}
-
+		
+		if($('#Readonly_Cons').val()){
+			if($('#Readonly_Cons').val() == 1){
+				readonly_cons = '';
+				//console.log('');
+			}else{
+				readonly_cons = 'readonly=""';
+				//console.log('readonly_cons=""');
+			}		
+		}else{
+			readonly_cons = '';
+		}
+		
 		e.preventDefault();
 		
         pc++; //text box increment
@@ -9713,11 +9741,18 @@ $(document).ready(function () {
 						<div class="row">\
 							<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">\
 								<div class="row">\
-									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+									<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">\
 										<label for="idTab_Produto">Produto '+pc+':</label><br>\
 										<select class="form-control Chosen" id="listadinamicab'+pc+'" name="idTab_Produto'+pc+'" onchange="'+buscavalor+'(this.value,this.name,\''+tblbusca+'\','+pc+',\'Produto\','+recorrencias+'),calculaQtdSoma(\'QtdProduto\',\'QtdSoma\',\'ProdutoSoma\',0,0,\'CountMax\',0,\'ProdutoHidden\')">\
 											<option value="">-- Selecione uma opção --</option>\
 										</select>\
+									</div>\
+									<div id="FechaObsProduto'+pc+'" style="display:none">\
+										<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">\
+											<label for="ObsProduto">Obs</label><br>\
+											<textarea type="text" class="form-control" maxlength="200" placeholder="Observacao:" id="ObsProduto'+pc+'"\
+											   name="ObsProduto'+pc+'" value=""  rows="1"></textarea>\
+										</div>\
 									</div>\
 								</div>\
 								<div id="EscreverProduto'+pc+'" style="display:none">\
@@ -9767,42 +9802,28 @@ $(document).ready(function () {
 							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">\
 								<div class="row">\
 									<div id="EntregueProduto'+pc+'" style="display:none">\
-										<div class="col-md-12 col-md-12 col-md-12 col-lg-12">\
-											<div class="row">\
-												<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">\
-													<label for="ObsProduto">Obs</label><br>\
-													<textarea type="text" class="form-control" maxlength="200" placeholder="Observacao:" id="ObsProduto'+pc+'"\
-													   name="ObsProduto'+pc+'" value=""  rows="1"></textarea>\
-												</div>\
-												<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">\
-													<label for="PrazoProduto">Prazo</label><br>\
-													<input type="text" class="form-control Numero" maxlength="3" placeholder="0" id="PrazoProduto'+pc+'"\
-														onkeyup="calculaPrazoProdutos(\'PrazoProduto\',\'QtdSoma\',\'ProdutoSoma\',0,0,\'CountMax\',0,\'ProdutoHidden\')"\
-														name="PrazoProduto'+pc+'" value="0" >\
-												</div>\
-											</div>\
-										</div>\
-										<div class="col-xs-12 col-sm-4 col-md-6 col-lg-6">\
+										<div class="col-xs-6 col-sm-4 col-md-6 col-lg-6">\
 											<label for="DataConcluidoProduto">Data Entrega</label>\
 											<div class="input-group DatePicker">\
 												<span class="input-group-addon" disabled>\
 													<span class="glyphicon glyphicon-calendar"></span>\
 												</span>\
 												<input type="text" class="form-control Date" id="DataConcluidoProduto'+pc+'" maxlength="10" placeholder="DD/MM/AAAA"\
-													   name="DataConcluidoProduto'+pc+'" value="">\
+													   name="DataConcluidoProduto'+pc+'" value="" '+readonly_cons+'>\
 											</div>\
 										</div>\
-										<div class="col-xs-12 col-sm-4 col-md-6 col-lg-6">\
-											<label for="HoraConcluidoProduto">Hora Entrega</label>\
-											<div class="input-group TimePicker">\
-												<span class="input-group-addon" disabled>\
-													<span class="glyphicon glyphicon-time"></span>\
-												</span>\
-												<input type="text" class="form-control Time" id="HoraConcluidoProduto'+pc+'" maxlength="5" placeholder="HH:MM"\
-													   name="HoraConcluidoProduto'+pc+'" value="">\
-											</div>\
+										<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">\
+											<label for="HoraConcluidoProduto">Hora </label>\
+											<input type="text" class="form-control Time" id="HoraConcluidoProduto'+pc+'" maxlength="5" placeholder="HH:MM"\
+													   name="HoraConcluidoProduto'+pc+'" value="" '+readonly_cons+'>\
 										</div>\
-										<div class="col-xs-8 col-sm-3 col-md-9  col-lg-9">\
+										<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">\
+											<label for="PrazoProduto">Prazo</label><br>\
+											<input type="text" class="form-control Numero" maxlength="3" placeholder="0" id="PrazoProduto'+pc+'"\
+												onkeyup="calculaPrazoProdutos(\'PrazoProduto\',\'QtdSoma\',\'ProdutoSoma\',0,0,\'CountMax\',0,\'ProdutoHidden\')"\
+												name="PrazoProduto'+pc+'" value="0" '+readonly_cons+'>\
+										</div>\
+										<div class="col-xs-6 col-sm-4 col-md-6  col-lg-6">\
 											<label for="ConcluidoProduto">Entregue? </label><br>\
 											<div class="btn-group" data-toggle="buttons">\
 												<label class="btn btn-warning active" name="radio_ConcluidoProduto'+pc+'" id="radio_ConcluidoProduto'+pc+'N">\
@@ -9817,10 +9838,12 @@ $(document).ready(function () {
 										</div>\
 										<div id="ConcluidoProduto'+pc+'" style="display:none">\
 										</div>\
+										<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">\
+										</div>\
 									</div>\
-									<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right">\
-										<label>Excl</label><br>\
-										<button type="button" id="'+pc+'" class="remove_field9 btn btn-danger"\
+									<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">\
+										<label>Excluir</label><br>\
+										<button type="button" id="'+pc+'" class="remove_field9 btn btn-danger btn-block"\
 												onclick="calculaQtdSoma(\'QtdProduto\',\'QtdSoma\',\'ProdutoSoma\',1,'+pc+',\'CountMax\',0,\'ProdutoHidden\')">\
 											<span class="glyphicon glyphicon-trash"></span>\
 										</button>\
@@ -9951,6 +9974,18 @@ $(document).ready(function () {
 			var tblbusca_serv = 'Produtos';
 		}
 		
+		if($('#Readonly_Cons').val()){
+			if($('#Readonly_Cons').val() == 1){
+				readonly_cons = '';
+				//console.log('');
+			}else{
+				readonly_cons = 'readonly=""';
+				//console.log('readonly_cons=""');
+			}		
+		}else{
+			readonly_cons = '';
+		}
+		
 		e.preventDefault();
     
 		ps++; //text box increment
@@ -9970,11 +10005,18 @@ $(document).ready(function () {
 						<div class="row">\
 							<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">\
 								<div class="row">\
-									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+									<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">\
 										<label for="idTab_Servico">Servico '+ps+':</label><br>\
 										<select class="form-control Chosen4" id="listadinamica'+ps+'"  name="idTab_Servico'+ps+'" onchange="'+buscavalor_serv+'(this.value,this.name,\''+tblbusca_serv+'\','+ps+',\'Servico\','+recorrencias+'),calculaQtdSomaDev(\'QtdServico\',\'QtdSomaDev\',\'ServicoSoma\',0,0,\'CountMax2\',0,\'ServicoHidden\')">\
 											<option value="">-- Selecione uma opção --</option>\
 										</select>\
+									</div>\
+									<div id="FechaObsServico'+ps+'" style="display:none">\
+										<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">\
+											<label for="ObsServico">Obs</label><br>\
+											<textarea type="text" class="form-control " maxlength="200" id="ObsServico'+ps+'" placeholder="Observacao"\
+												name="ObsServico'+ps+'" value=""  rows="1"></textarea>\
+										</div>\
 									</div>\
 								</div>\
 								<div id="EscreverServico'+ps+'" style="display:none">\
@@ -10014,126 +10056,33 @@ $(document).ready(function () {
 											</div>\
 										</div>\
 									</div>\
-									<div class="row">\
-										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
-											<div class="row">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<label for="ProfissionalServico_1'+ps+'">Profissional 1</label>\
-													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_1"\
-															 id="listadinamica_prof_1'+ps+'" name="ProfissionalServico_1'+ps+'"\
-															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',1)">\
-														<option value=""></option>\
-													</select>\
-												</div>\
-												<input type="hidden" class="form-control " id="ProfissionalServico_1'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="idTFProf_Servico_1'+ps+'" name="idTFProf_Servico_1'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="ComFunProf_Servico_1'+ps+'" name="ComFunProf_Servico_1'+ps+'" value="" readonly="">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<input type="text" class="form-control Valor" id="ValorComProf_Servico_1'+ps+'" name="ValorComProf_Servico_1'+ps+'" value=""\
-														onkeyup="carregaValores_Prof('+ps+', 4, 2)" readonly="">\
-												</div>\
-											</div>\
-										</div>\
-										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
-											<div class="row">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<label for="ProfissionalServico_2'+ps+'">Profissional 2</label>\
-													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_2"\
-															 id="listadinamica_prof_2'+ps+'" name="ProfissionalServico_2'+ps+'"\
-															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',2)">\
-														<option value=""></option>\
-													</select>\
-												</div>\
-												<input type="hidden" class="form-control " id="ProfissionalServico_2'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="idTFProf_Servico_2'+ps+'" name="idTFProf_Servico_2'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="ComFunProf_Servico_2'+ps+'" name="ComFunProf_Servico_2'+ps+'" value="" readonly="">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<input type="text" class="form-control Valor" id="ValorComProf_Servico_2'+ps+'" name="ValorComProf_Servico_2'+ps+'" value=""\
-														onkeyup="carregaValores_Prof('+ps+', 4, 2)" readonly="">\
-												</div>\
-											</div>\
-										</div>\
-										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
-											<div class="row">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<label for="ProfissionalServico_3'+ps+'">Profissional 3</label>\
-													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_3"\
-															 id="listadinamica_prof_3'+ps+'" name="ProfissionalServico_3'+ps+'"\
-															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',3)">\
-														<option value=""></option>\
-													</select>\
-												</div>\
-												<input type="hidden" class="form-control " id="ProfissionalServico_3'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="idTFProf_Servico_3'+ps+'" name="idTFProf_Servico_3'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="ComFunProf_Servico_3'+ps+'" name="ComFunProf_Servico_3'+ps+'" value="" readonly="">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<input type="text" class="form-control Valor" id="ValorComProf_Servico_3'+ps+'" name="ValorComProf_Servico_3'+ps+'" value=""\
-														onkeyup="carregaValores_Prof('+ps+', 4, 2)" readonly="">\
-												</div>\
-											</div>\
-										</div>\
-										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
-											<div class="row">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<label for="ProfissionalServico_4'+ps+'">Profissional 4</label>\
-													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_4"\
-															 id="listadinamica_prof_4'+ps+'" name="ProfissionalServico_4'+ps+'"\
-															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',4)">\
-														<option value=""></option>\
-													</select>\
-												</div>\
-												<input type="hidden" class="form-control " id="ProfissionalServico_4'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="idTFProf_Servico_4'+ps+'" name="idTFProf_Servico_4'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="ComFunProf_Servico_4'+ps+'" name="ComFunProf_Servico_4'+ps+'" value="" readonly="">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<input type="text" class="form-control Valor" id="ValorComProf_Servico_4'+ps+'" name="ValorComProf_Servico_4'+ps+'" value=""\
-														onkeyup="carregaValores_Prof('+ps+', 4, 2)" readonly="">\
-												</div>\
-											</div>\
-										</div>\
-										<input type="hidden" class="form-control Valor" id="ValorComissaoServico'+ps+'" name="ValorComissaoServico'+ps+'" value="" readonly="">\
-									</div>\
 								</div>\
 							</div>\
 							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">\
 								<div class="row">\
 									<div id="EntregueServico'+ps+'" style="display:none">\
-										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-											<div class="row">\
-												<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">\
-													<label for="ObsServico">Obs</label><br>\
-													<textarea type="text" class="form-control " maxlength="200" id="ObsServico'+ps+'" placeholder="Observacao"\
-														name="ObsServico'+ps+'" value=""  rows="1"></textarea>\
-												</div>\
-												<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">\
-													<label for="PrazoServico">Prazo</label><br>\
-													<input type="text" class="form-control Numero" maxlength="3" placeholder="0" id="PrazoServico'+ps+'"\
-														onkeyup="calculaPrazoServicos(\'PrazoServico\',\'QtdSomaDev\',\'ServicoSoma\',0,0,\'CountMax2\',0,\'ServicoHidden\')"\
-														name="PrazoServico'+ps+'" value="0" >\
-												</div>\
-											</div>\
-										</div>\
-										<div class="col-xs-12 col-sm-4 col-md-6 col-lg-6">\
+										<div class="col-xs-6 col-sm-4 col-md-6 col-lg-6">\
 											<label for="DataConcluidoServico">Data Entrega</label>\
 											<div class="input-group DatePicker">\
 												<span class="input-group-addon" disabled>\
 													<span class="glyphicon glyphicon-calendar"></span>\
 												</span>\
 												<input type="text" class="form-control Date" id="DataConcluidoServico'+ps+'" maxlength="10" placeholder="DD/MM/AAAA"\
-													   name="DataConcluidoServico'+ps+'" value="">\
+													   name="DataConcluidoServico'+ps+'" value="" '+readonly_cons+'>\
 											</div>\
 										</div>\
-										<div class="col-xs-12 col-sm-4 col-md-6 col-lg-6">\
-											<label for="HoraConcluidoServico">Hora Entrega</label>\
-											<div class="input-group TimePicker">\
-												<span class="input-group-addon" disabled>\
-													<span class="glyphicon glyphicon-time"></span>\
-												</span>\
-												<input type="text" class="form-control Time" id="HoraConcluidoServico'+ps+'" maxlength="5" placeholder="HH:MM"\
-													   name="HoraConcluidoServico'+ps+'" value="">\
-											</div>\
+										<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">\
+											<label for="HoraConcluidoServico">Hora </label>\
+											<input type="text" class="form-control Time" id="HoraConcluidoServico'+ps+'" maxlength="5" placeholder="HH:MM"\
+													   name="HoraConcluidoServico'+ps+'" value="" '+readonly_cons+'>\
 										</div>\
-										<div class="col-xs-8 col-sm-3 col-md-9  col-lg-9">\
+										<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">\
+											<label for="PrazoServico">Prazo</label><br>\
+											<input type="text" class="form-control Numero" maxlength="3" placeholder="0" id="PrazoServico'+ps+'"\
+												onkeyup="calculaPrazoServicos(\'PrazoServico\',\'QtdSomaDev\',\'ServicoSoma\',0,0,\'CountMax2\',0,\'ServicoHidden\')"\
+												name="PrazoServico'+ps+'" value="0" '+readonly_cons+'>\
+										</div>\
+										<div class="col-xs-6 col-sm-4 col-md-6  col-lg-6">\
 											<label for="ConcluidoServico">Entregue? </label><br>\
 											<div class="btn-group" data-toggle="buttons">\
 												<label class="btn btn-warning active" name="radio_ConcluidoServico'+ps+'" id="radio_ConcluidoServico'+ps+'N">\
@@ -10148,13 +10097,99 @@ $(document).ready(function () {
 										</div>\
 										<div id="ConcluidoServico'+ps+'" style="display:none">\
 										</div>\
+										<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">\
+											<label for="ValorComissaoServico">Comissao</label><br>\
+											<input type="text" class="form-control Valor" id="ValorComissaoServico'+ps+'" name="ValorComissaoServico'+ps+'" value="" readonly="">\
+										</div>\
 									</div>\
-									<div class="col-xs-1 col-sm-1 col-md-1  col-lg-1 text-right">\
-										<label><br></label><br>\
-										<button type="button" id="'+ps+'" class="remove_field10 btn btn-danger"\
+									<div class="col-xs-6 col-sm-4 col-md-3  col-lg-3">\
+										<label>Excluir</label><br>\
+										<button type="button" id="'+ps+'" class="remove_field10 btn btn-danger btn-block"\
 											onclick="calculaQtdSomaDev(\'QtdServico\',\'QtdSomaDev\',\'ServicoSoma\',1,'+ps+',\'CountMax2\',0,\'ServicoHidden\')">\
 											<span class="glyphicon glyphicon-trash"></span>\
 										</button>\
+									</div>\
+								</div>\
+							</div>\
+							<div id="FechaProfServico'+ps+'" style="display:none">\
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+									<div class="row">\
+										<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_1'+ps+'">Profissional 1</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_1"\
+															 id="listadinamica_prof_1'+ps+'" name="ProfissionalServico_1'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',1)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_1'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_1'+ps+'" name="idTFProf_Servico_1'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_1'+ps+'" name="ComFunProf_Servico_1'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_1'+ps+'" name="ValorComProf_Servico_1'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 4, 2)">\
+												</div>\
+											</div>\
+										</div>\
+										<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_2'+ps+'">Profissional 2</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_2"\
+															 id="listadinamica_prof_2'+ps+'" name="ProfissionalServico_2'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',2)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_2'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_2'+ps+'" name="idTFProf_Servico_2'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_2'+ps+'" name="ComFunProf_Servico_2'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_2'+ps+'" name="ValorComProf_Servico_2'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 4, 2)">\
+												</div>\
+											</div>\
+										</div>\
+										<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_3'+ps+'">Profissional 3</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_3"\
+															 id="listadinamica_prof_3'+ps+'" name="ProfissionalServico_3'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',3)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_3'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_3'+ps+'" name="idTFProf_Servico_3'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_3'+ps+'" name="ComFunProf_Servico_3'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_3'+ps+'" name="ValorComProf_Servico_3'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 4, 2)">\
+												</div>\
+											</div>\
+										</div>\
+										<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_4'+ps+'">Profissional 4</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_4"\
+															 id="listadinamica_prof_4'+ps+'" name="ProfissionalServico_4'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',4)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_4'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_4'+ps+'" name="idTFProf_Servico_4'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_4'+ps+'" name="ComFunProf_Servico_4'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_4'+ps+'" name="ValorComProf_Servico_4'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 4, 2)">\
+												</div>\
+											</div>\
+										</div>\
 									</div>\
 								</div>\
 							</div>\

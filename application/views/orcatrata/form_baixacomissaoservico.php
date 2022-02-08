@@ -86,10 +86,10 @@
 												<input type="text" class="form-control " readonly="" value="<?php echo $_SESSION['Produto'][$i]['Receita']; ?>">
 											</div>
 											<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-												<label >
-													Obs 
-												</label>
-												<input type="text" class="form-control " readonly="" value="<?php echo $_SESSION['Produto'][$i]['ObsProduto']; ?>">
+												<label for="ObsProduto<?php echo $i ?>">Obs</label>
+												<textarea class="form-control" id="ObsProduto<?php echo $i ?>"
+														  name="ObsProduto<?php echo $i ?>" rows="1"><?php echo $produto[$i]['ObsProduto']; ?>
+												</textarea>
 											</div>
 										</div>
 										<div class="row">
@@ -184,7 +184,7 @@
 													<input type="hidden" class="form-control " id="ComFunProf_Servico_1<?php echo $i ?>" name="ComFunProf_Servico_1<?php echo $i ?>" value="<?php echo $produto[$i]['ComFunProf_1'] ?>" readonly="">
 													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 														<input type="text" class="form-control Valor" id="ValorComProf_Servico_1<?php echo $i ?>" name="ValorComProf_Servico_1<?php echo $i ?>"
-															value="<?php echo $produto[$i]['ValorComProf_1'] ?>" onkeyup="carregaValores_Prof(<?php echo $i ?>,4,2)">
+															value="<?php echo $produto[$i]['ValorComProf_1'] ?>" onkeyup="carregaValores_Prof(<?php echo $i ?>,4,2)"<?php echo $cadastrar_servico[$i]['Hidden_readonly_1'];?>>
 													</div>
 												</div>	
 											</div>
@@ -212,7 +212,7 @@
 													<input type="hidden" class="form-control " id="ComFunProf_Servico_2<?php echo $i ?>" name="ComFunProf_Servico_2<?php echo $i ?>" value="<?php echo $produto[$i]['ComFunProf_2'] ?>" readonly="">
 													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 														<input type="text" class="form-control Valor" id="ValorComProf_Servico_2<?php echo $i ?>" name="ValorComProf_Servico_2<?php echo $i ?>"
-															value="<?php echo $produto[$i]['ValorComProf_2'] ?>" onkeyup="carregaValores_Prof(<?php echo $i ?>,4,2)">
+															value="<?php echo $produto[$i]['ValorComProf_2'] ?>" onkeyup="carregaValores_Prof(<?php echo $i ?>,4,2)"<?php echo $cadastrar_servico[$i]['Hidden_readonly_2'];?>>
 													</div>
 												</div>	
 											</div>
@@ -240,7 +240,7 @@
 													<input type="hidden" class="form-control " id="ComFunProf_Servico_3<?php echo $i ?>" name="ComFunProf_Servico_3<?php echo $i ?>" value="<?php echo $produto[$i]['ComFunProf_3'] ?>" readonly="">
 													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 														<input type="text" class="form-control Valor" id="ValorComProf_Servico_3<?php echo $i ?>" name="ValorComProf_Servico_3<?php echo $i ?>"
-															value="<?php echo $produto[$i]['ValorComProf_3'] ?>" onkeyup="carregaValores_Prof(<?php echo $i ?>,4,2)">
+															value="<?php echo $produto[$i]['ValorComProf_3'] ?>" onkeyup="carregaValores_Prof(<?php echo $i ?>,4,2)"<?php echo $cadastrar_servico[$i]['Hidden_readonly_3'];?>>
 													</div>
 												</div>	
 											</div>
@@ -270,7 +270,7 @@
 													<input type="hidden" class="form-control " id="ComFunProf_Servico_4<?php echo $i ?>" name="ComFunProf_Servico_4<?php echo $i ?>" value="<?php echo $produto[$i]['ComFunProf_4'] ?>" readonly="">
 													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 														<input type="text" class="form-control Valor" id="ValorComProf_Servico_4<?php echo $i ?>" name="ValorComProf_Servico_4<?php echo $i ?>"
-															value="<?php echo $produto[$i]['ValorComProf_4'] ?>" onkeyup="carregaValores_Prof(<?php echo $i ?>,4,2)">
+															value="<?php echo $produto[$i]['ValorComProf_4'] ?>" onkeyup="carregaValores_Prof(<?php echo $i ?>,4,2)"<?php echo $cadastrar_servico[$i]['Hidden_readonly_4'];?>>
 													</div>
 												</div>	
 											</div>

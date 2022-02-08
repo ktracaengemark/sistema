@@ -16,7 +16,7 @@ class OrcatrataPrint extends CI_Controller {
         $this->load->model(array(
 									'Basico_model', 'Orcatrata_model', 'Orcatrataprint_model', 'Orcatrataprintcobranca_model', 
 									'Orcatrataprintcomissao_model', 'Relatorio_model', 'Formapag_model' , 'Usuario_model' , 
-									'Cliente_model' , 'Fornecedor_model', 'Associado_model', 'Campanha_model'
+									'Cliente_model' , 'Clientepet_model', 'Clientedep_model', 'Fornecedor_model', 'Associado_model', 'Campanha_model'
 								));
         $this->load->driver('session');
 
@@ -75,7 +75,19 @@ class OrcatrataPrint extends CI_Controller {
 				//$data['cliente'] = $this->Cliente_model->get_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
 				$_SESSION['Cliente'] = $data['cliente'] = $this->Cliente_model->get_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
 				$_SESSION['Cliente']['NomeCliente'] = (strlen($data['cliente']['NomeCliente']) > 12) ? substr($data['cliente']['NomeCliente'], 0, 12) : $data['cliente']['NomeCliente'];
-				
+	
+				if(!empty($data['orcatrata']['idApp_ClientePet']) && $data['orcatrata']['idApp_ClientePet'] != 0){
+					//$this->load->model('Clientepet_model');
+					$_SESSION['ClientePet'] = $data['clientepet'] = $this->Clientepet_model->get_clientepet($data['orcatrata']['idApp_ClientePet'], TRUE);
+					$_SESSION['ClientePet']['NomeClientePet'] = (strlen($data['clientepet']['NomeClientePet']) > 20) ? substr($data['clientepet']['NomeClientePet'], 0, 20) : $data['clientepet']['NomeClientePet'];
+				}
+
+				if(!empty($data['orcatrata']['idApp_ClienteDep']) && $data['orcatrata']['idApp_ClienteDep'] != 0){
+					//$this->load->model('Clientedep_model');
+					$_SESSION['ClienteDep'] = $data['clientedep'] = $this->Clientedep_model->get_clientedep($data['orcatrata']['idApp_ClienteDep'], TRUE);
+					$_SESSION['ClienteDep']['NomeClienteDep'] = (strlen($data['clientedep']['NomeClienteDep']) > 20) ? substr($data['clientedep']['NomeClienteDep'], 0, 20) : $data['clientedep']['NomeClienteDep'];
+				}
+
 				#### Carrega os dados do Pedido nas variáves de sessão do Whatsapp ####	
 				if(isset($_SESSION['bd_orcamento']['Whatsapp']) && $_SESSION['bd_orcamento']['Whatsapp'] == "S"){
 					if(isset($_SESSION['Empresa']['ClientePedido']) && $_SESSION['Empresa']['ClientePedido'] == "S") {
