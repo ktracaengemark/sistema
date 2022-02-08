@@ -373,7 +373,7 @@
 															<?php if (isset($_SESSION['Orcatrata']['RepeticaoCons']) && $_SESSION['Orcatrata']['RepeticaoCons'] != 0){ ?>
 																<?php 
 																	if (isset($_SESSION['Orcatrata']['idApp_ClientePet']) && $_SESSION['Orcatrata']['idApp_ClientePet'] != 0){
-																		$clientepet = $_SESSION['ClienteDep']['NomeClientePet'];
+																		$clientepet = $_SESSION['ClientePet']['NomeClientePet'];
 																	}else{
 																		$clientepet = '';
 																	}
