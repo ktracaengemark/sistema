@@ -9995,8 +9995,8 @@ $(document).ready(function () {
 		}else{
 			Prof_comissao = '';
 		}
-		console.log('Prof_comissao = '+Prof_comissao);
-		console.log('Bx_Pag = '+$('#Bx_Pag').val());
+		//console.log('Prof_comissao = '+Prof_comissao);
+		//console.log('Bx_Pag = '+$('#Bx_Pag').val());
 		
 		e.preventDefault();
     
