@@ -53,11 +53,14 @@
 					<tr>
 						<th class="col-md-1" scope="col"><?php echo $total_rows;?> - Pedido</th>
 						<th class="col-md-1" scope="col">DtPedido</th>
-						<th class="col-md-1" scope="col">id</th>
+						<th class="col-md-1" scope="col">id_Cliente</th>
 						<th class="col-md-2" scope="col">Cliente</th>
-						<th class="col-md-2" scope="col">Cadastro</th>
 						<th class="col-md-2" scope="col">Tel</th>
+						<th class="col-md-2" scope="col">Cadastro</th>
 						<th class="col-md-1" scope="col">Lc/Fr.Pag.</th>
+						<th class="col-md-2" scope="col">Recebedor</th>
+						<th class="col-md-2" scope="col">Relação</th>
+						<th class="col-md-2" scope="col">Tel_Rec</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -71,13 +74,16 @@
 							<td class="col-md-1" scope="col"><?php echo $orcatrata[$i]['DataOrca'] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $orcatrata[$i]['idApp_Cliente'] ?></td>
 							<td class="col-md-2" scope="col"><?php echo $orcatrata[$i]['NomeCliente'] ?></td>
-							<td class="col-md-2" scope="col"><?php echo $orcatrata[$i]['DataCadastroCliente'] ?></td>
 							<td class="col-md-2" scope="col"><?php echo $orcatrata[$i]['CelularCliente'] ?>
 								- <?php echo $orcatrata[$i]['Telefone'] ?>
 								- <?php echo $orcatrata[$i]['Telefone2'] ?>
 								- <?php echo $orcatrata[$i]['Telefone3'] ?>
 							</td>
+							<td class="col-md-2" scope="col"><?php echo $orcatrata[$i]['DataCadastroCliente'] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $orcatrata[$i]['AVAP'] ?>/<?php echo $orcatrata[$i]['FormaPag'] ?></td>
+							<td class="col-md-2" scope="col"><?php echo $orcatrata[$i]['NomeRec'] ?></td>
+							<td class="col-md-2" scope="col"><?php echo $orcatrata[$i]['ParentescoRec'] ?></td>
+							<td class="col-md-2" scope="col"><?php echo $orcatrata[$i]['TelefoneRec'] ?>
 						</tr>
 						
 						<?php
