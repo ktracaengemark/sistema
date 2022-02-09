@@ -155,11 +155,40 @@
 							<label>Backup</label><br>
 							<a href="<?php echo base_url() . 'gerar_excel/Agendamentos/Agendamentos_total_xls.php'; ?>">
 								<button type='button' class='btn btn-md btn-success btn-block'>
-									Excel Total
+									Agendamentos
 								</button>
 							</a>
 						</div>
-					<?php } ?>		
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+							<label>Backup</label><br>
+							<a href="<?php echo base_url() . 'gerar_excel/Clientes/Clientes_total.php'; ?>">
+								<button type='button' class='btn btn-md btn-success btn-block'>
+									Clientes
+								</button>
+							</a>
+						</div>
+						<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+								<label>Backup</label><br>
+								<a href="<?php echo base_url() . 'gerar_excel/Clientes/ClientesPet_total.php'; ?>">
+									<button type='button' class='btn btn-md btn-success btn-block'>
+										Pets
+									</button>
+								</a>
+							</div>
+						<?php }else{ ?>
+							<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+									<label>Backup</label><br>
+									<a href="<?php echo base_url() . 'gerar_excel/Clientes/ClientesDep_total.php'; ?>">
+										<button type='button' class='btn btn-md btn-success btn-block'>
+											Deps
+										</button>
+									</a>
+								</div>
+							<?php } ?>
+						<?php } ?>
+					<?php } ?>
 				</div>
 			<?php } ?>
 			<input type="hidden" id="AgendaI" value="<?php echo $_SESSION['Empresa']['AgendaI'];?>">
