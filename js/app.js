@@ -5038,12 +5038,13 @@ function calculaQtdSomaDev(campo, soma, somaproduto, excluir, produtonum, countm
  */
  
  /*Carrega os Profissionais do Servico i */
-function carregaHidden_Prof(value = 0, name, i, PR = 0, cont_PR = 4) {
-
+function carregaHidden_Prof(value = 0, name, i, PR = 0, cont_PR = 6) {
+	//console.log(value);
+	//console.log(PR);
 	if (value != 0) {
 		$("#ValorComProf_Servico_"+PR+i).prop('readonly', false);
 		$("#ProfissionalServico_"+PR+i).val(value);
-
+		//console.log($("#ProfissionalServico_"+PR+i).val());
 		$.ajax({
             url: window.location.origin+ '/' + app + '/Getvalues_json2.php?q=31&f='+value,
             dataType: 'JSON',
@@ -5140,7 +5141,8 @@ function carregaValores_Prof(i, cont_PR, tipo) {
 }
 
 function SomaComissaoServico(i, cont_PR) {
-
+	
+	//console.log(cont_PR);
 	somacomissao = 0;
 	for (j = 1; j <= cont_PR; j++) {
 
@@ -5445,13 +5447,13 @@ function buscaValor1Tabelas(id, campo, tabela, num, campo2, recorrencias) {
 						//if (tabela == area && $("#Qtd"+tabela+num).val()) {
 						if ($("#Qtd"+campo2+num).val()) {
 							calculaSubtotal($("#idTab_"+campo2+num).val(),$("#Qtd"+campo2+num).val(),num,'OUTRO',campo2,$("#QtdIncremento"+campo2+num).val(),$("#Comissao"+campo2+num).val(),$("#ComissaoServico"+campo2+num).val(),$("#ComissaoCashBack"+campo2+num).val());
-							//carregaValores_Prof(num, cont_PR = 4,1);
+							//carregaValores_Prof(num, cont_PR = 6,1);
 							break;
 						}
 
 						//para cada valor carregado o orçamento é calculado/atualizado
 						//através da chamada de sua função
-						//carregaValores_Prof(num, cont_PR = 4,1);
+						//carregaValores_Prof(num, cont_PR = 6,1);
 						calculaOrcamento();
 						break;
 					}
@@ -5481,13 +5483,13 @@ function buscaValor1Tabelas(id, campo, tabela, num, campo2, recorrencias) {
 					//if (tabela == area && $("#Qtd"+tabela+num).val()) {
 					if ($("#Qtd"+campo2+num).val()) {
 						calculaSubtotal($("#idTab_"+campo2+num).val(),$("#Qtd"+campo2+num).val(),num,'OUTRO',campo2,$("#QtdIncremento"+campo2+num).val(),$("#Comissao"+campo2+num).val(),$("#ComissaoServico"+campo2+num).val(),$("#ComissaoCashBack"+campo2+num).val());
-						//carregaValores_Prof(num, cont_PR = 4,1);
+						//carregaValores_Prof(num, cont_PR = 6,1);
 						break;
 					}
 				
 					//para cada valor carregado o orçamento é calculado/atualizado
 					//através da chamada de sua função
-					//carregaValores_Prof(num, cont_PR = 4,1);
+					//carregaValores_Prof(num, cont_PR = 6,1);
 					calculaOrcamento();
 					break;
 				}
@@ -5539,7 +5541,7 @@ function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
 
 						//para cada valor carregado o orçamento é calculado/atualizado
 						//através da chamada de sua função
-						//carregaValores_Prof(num, cont_PR = 4,1);
+						//carregaValores_Prof(num, cont_PR = 6,1);
 						calculaOrcamento();
 						break;
 					}
@@ -5572,7 +5574,7 @@ function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
 				
 					//para cada valor carregado o orçamento é calculado/atualizado
 					//através da chamada de sua função
-					//carregaValores_Prof(num, cont_PR = 4,1);
+					//carregaValores_Prof(num, cont_PR = 6,1);
 					calculaOrcamento();
 					break;
 				}
@@ -5707,7 +5709,7 @@ function calculaSubtotal(valor, campo, num, tipo, tabela, qtdinc, comissao, comi
     //também serão atualizados
     calculaOrcamento();
 	if(tabela == "Servico"){
-		carregaValores_Prof(num, cont_PR = 4,1);
+		carregaValores_Prof(num, cont_PR = 6,1);
 	}
 
 }
@@ -10141,7 +10143,7 @@ $(document).ready(function () {
 												<input type="hidden" class="form-control " id="ComFunProf_Servico_1'+ps+'" name="ComFunProf_Servico_1'+ps+'" value="" readonly="">\
 												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
 													<input type="text" class="form-control Valor" id="ValorComProf_Servico_1'+ps+'" name="ValorComProf_Servico_1'+ps+'" value=""\
-														onkeyup="carregaValores_Prof('+ps+', 4, 2)">\
+														onkeyup="carregaValores_Prof('+ps+', 6, 2)">\
 												</div>\
 											</div>\
 										</div>\
@@ -10160,7 +10162,7 @@ $(document).ready(function () {
 												<input type="hidden" class="form-control " id="ComFunProf_Servico_2'+ps+'" name="ComFunProf_Servico_2'+ps+'" value="" readonly="">\
 												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
 													<input type="text" class="form-control Valor" id="ValorComProf_Servico_2'+ps+'" name="ValorComProf_Servico_2'+ps+'" value=""\
-														onkeyup="carregaValores_Prof('+ps+', 4, 2)">\
+														onkeyup="carregaValores_Prof('+ps+', 6, 2)">\
 												</div>\
 											</div>\
 										</div>\
@@ -10179,7 +10181,7 @@ $(document).ready(function () {
 												<input type="hidden" class="form-control " id="ComFunProf_Servico_3'+ps+'" name="ComFunProf_Servico_3'+ps+'" value="" readonly="">\
 												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
 													<input type="text" class="form-control Valor" id="ValorComProf_Servico_3'+ps+'" name="ValorComProf_Servico_3'+ps+'" value=""\
-														onkeyup="carregaValores_Prof('+ps+', 4, 2)">\
+														onkeyup="carregaValores_Prof('+ps+', 6, 2)">\
 												</div>\
 											</div>\
 										</div>\
@@ -10198,7 +10200,45 @@ $(document).ready(function () {
 												<input type="hidden" class="form-control " id="ComFunProf_Servico_4'+ps+'" name="ComFunProf_Servico_4'+ps+'" value="" readonly="">\
 												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
 													<input type="text" class="form-control Valor" id="ValorComProf_Servico_4'+ps+'" name="ValorComProf_Servico_4'+ps+'" value=""\
-														onkeyup="carregaValores_Prof('+ps+', 4, 2)">\
+														onkeyup="carregaValores_Prof('+ps+', 6, 2)">\
+												</div>\
+											</div>\
+										</div>\
+										<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_5'+ps+'">Profissional 5</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_5"\
+															 id="listadinamica_prof_5'+ps+'" name="ProfissionalServico_5'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',5)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_5'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_5'+ps+'" name="idTFProf_Servico_5'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_5'+ps+'" name="ComFunProf_Servico_5'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_5'+ps+'" name="ValorComProf_Servico_5'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 6, 2)">\
+												</div>\
+											</div>\
+										</div>\
+										<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_6'+ps+'">Profissional 6</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_6"\
+															 id="listadinamica_prof_6'+ps+'" name="ProfissionalServico_6'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',6)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_6'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_6'+ps+'" name="idTFProf_Servico_6'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_6'+ps+'" name="ComFunProf_Servico_6'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_6'+ps+'" name="ValorComProf_Servico_6'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 6, 2)">\
 												</div>\
 											</div>\
 										</div>\
@@ -10376,6 +10416,72 @@ $(document).ready(function () {
                 //alert('erro listadinamicaB');
                 //if there is an error append a 'none available' option
                 $select_4.html('<option id="-1">ERRO</option>');
+            }
+
+        });		
+		
+		//get a reference to the select element
+        $select_5 = $('#listadinamica_prof_5'+ps);
+
+        //request the JSON data and parse into the select element
+        $.ajax({
+            url: window.location.origin+ '/' + app + '/Getvalues_json2.php?q=30',
+            dataType: 'JSON',
+            type: "GET",
+            success: function (data) {
+                //clear the current content of the select
+                $select_5.html('');
+                //iterate over the data and append a select option
+                $select_5.append('<option value="">-- Sel. Profis. --</option>');
+                $.each(data, function (key, val) {
+                    //alert(val.id);
+                    $select_5.append('<option value="' + val.id + '">' + val.name + '</option>');
+                })
+                $('.Chosen_5').chosen({
+                    disable_search_threshold: 10,
+                    multiple_text: "Selecione uma ou mais opções",
+                    single_text: "Selecione uma opção",
+                    no_results_text: "Nenhum resultado para",
+                    width: "100%"
+                });
+            },
+            error: function () {
+                //alert('erro listadinamicaB');
+                //if there is an error append a 'none available' option
+                $select_5.html('<option id="-1">ERRO</option>');
+            }
+
+        });		
+		
+		//get a reference to the select element
+        $select_6 = $('#listadinamica_prof_6'+ps);
+
+        //request the JSON data and parse into the select element
+        $.ajax({
+            url: window.location.origin+ '/' + app + '/Getvalues_json2.php?q=30',
+            dataType: 'JSON',
+            type: "GET",
+            success: function (data) {
+                //clear the current content of the select
+                $select_6.html('');
+                //iterate over the data and append a select option
+                $select_6.append('<option value="">-- Sel. Profis. --</option>');
+                $.each(data, function (key, val) {
+                    //alert(val.id);
+                    $select_6.append('<option value="' + val.id + '">' + val.name + '</option>');
+                })
+                $('.Chosen_6').chosen({
+                    disable_search_threshold: 10,
+                    multiple_text: "Selecione uma ou mais opções",
+                    single_text: "Selecione uma opção",
+                    no_results_text: "Nenhum resultado para",
+                    width: "100%"
+                });
+            },
+            error: function () {
+                //alert('erro listadinamicaB');
+                //if there is an error append a 'none available' option
+                $select_6.html('<option id="-1">ERRO</option>');
             }
 
         });		

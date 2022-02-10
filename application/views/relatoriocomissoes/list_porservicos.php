@@ -145,6 +145,10 @@
 							<!--<th class="active">Com3.</th>-->
 							<th class="active">Profissional_4.</th>
 							<!--<th class="active">Com4.</th>-->
+							<th class="active">Profissional_5.</th>
+							<!--<th class="active">Com4.</th>-->
+							<th class="active">Profissional_6.</th>
+							<!--<th class="active">Com4.</th>-->
 							<th class="active">ValorTotal.</th>
 							<th class="active">ValorProf.</th>
 							<!--<th class="active">NºProf.</th>-->
@@ -189,6 +193,8 @@
 								echo '<td>' . $row['Abrev2'] . ' | ' . $row['Nome2'] . ' | ' . $row['ComFunProf_2'] . '% | R$' . $row['ValorComProf_2'] . '</td>';
 								echo '<td>' . $row['Abrev3'] . ' | ' . $row['Nome3'] . ' | ' . $row['ComFunProf_3'] . '% | R$' . $row['ValorComProf_3'] . '</td>';
 								echo '<td>' . $row['Abrev4'] . ' | ' . $row['Nome4'] . ' | ' . $row['ComFunProf_4'] . '% | R$' . $row['ValorComProf_4'] . '</td>';
+								echo '<td>' . $row['Abrev5'] . ' | ' . $row['Nome5'] . ' | ' . $row['ComFunProf_5'] . '% | R$' . $row['ValorComProf_5'] . '</td>';
+								echo '<td>' . $row['Abrev6'] . ' | ' . $row['Nome6'] . ' | ' . $row['ComFunProf_6'] . '% | R$' . $row['ValorComProf_6'] . '</td>';
 								echo '<td>R$' . $row['Valor_Com_Total'] . '</td>';
 								echo '<td>R$' . $row['Valor_Com_Total_Prof'] . '</td>';
 								//echo '<td class="text-left">/ ' . $row['Contagem'] . '</td>';

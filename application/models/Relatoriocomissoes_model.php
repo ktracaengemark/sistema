@@ -141,27 +141,37 @@ class Relatoriocomissoes_model extends CI_Model {
 				UP1.idSis_Usuario AS id_Usu_Prof_1,
 				UP2.idSis_Usuario AS id_Usu_Prof_2,
 				UP3.idSis_Usuario AS id_Usu_Prof_3,
-				UP4.idSis_Usuario AS id_Usu_Prof_4,				
+				UP4.idSis_Usuario AS id_Usu_Prof_4,
+				UP5.idSis_Usuario AS id_Usu_Prof_5,
+				UP6.idSis_Usuario AS id_Usu_Prof_6,
 				
 				AF1.idTab_Funcao AS id_Fun_Prof_1,
 				AF2.idTab_Funcao AS id_Fun_Prof_2,
 				AF3.idTab_Funcao AS id_Fun_Prof_3,
-				AF4.idTab_Funcao AS id_Fun_Prof_4,				
+				AF4.idTab_Funcao AS id_Fun_Prof_4,
+				AF5.idTab_Funcao AS id_Fun_Prof_5,
+				AF6.idTab_Funcao AS id_Fun_Prof_6,				
 				
 				AF1.Comissao_Funcao AS ComProf1,
 				AF2.Comissao_Funcao AS ComProf2,
 				AF3.Comissao_Funcao AS ComProf3,
 				AF4.Comissao_Funcao AS ComProf4,
+				AF5.Comissao_Funcao AS ComProf5,
+				AF6.Comissao_Funcao AS ComProf6,
 				
 				CONCAT(IFNULL(UP1.Nome,"")) AS Nome1,				
 				CONCAT(IFNULL(UP2.Nome,"")) AS Nome2,				
-				CONCAT(IFNULL(UP3.Nome,"")) AS Nome3,				
+				CONCAT(IFNULL(UP3.Nome,"")) AS Nome3,
 				CONCAT(IFNULL(UP4.Nome,"")) AS Nome4,
+				CONCAT(IFNULL(UP5.Nome,"")) AS Nome5,
+				CONCAT(IFNULL(UP6.Nome,"")) AS Nome6,
 
 				CONCAT(IFNULL(TF1.Abrev,"")) AS Abrev1,				
 				CONCAT(IFNULL(TF2.Abrev,"")) AS Abrev2,				
-				CONCAT(IFNULL(TF3.Abrev,"")) AS Abrev3,				
+				CONCAT(IFNULL(TF3.Abrev,"")) AS Abrev3,
 				CONCAT(IFNULL(TF4.Abrev,"")) AS Abrev4,
+				CONCAT(IFNULL(TF5.Abrev,"")) AS Abrev5,
+				CONCAT(IFNULL(TF6.Abrev,"")) AS Abrev6,
 				
 				TPRDS.idTab_Produtos,
 				TPRDS.Nome_Prod,
@@ -182,17 +192,23 @@ class Relatoriocomissoes_model extends CI_Model {
 					LEFT JOIN App_Funcao AS AF2 ON AF2.idApp_Funcao = PRDS.ProfissionalProduto_2
 					LEFT JOIN App_Funcao AS AF3 ON AF3.idApp_Funcao = PRDS.ProfissionalProduto_3
 					LEFT JOIN App_Funcao AS AF4 ON AF4.idApp_Funcao = PRDS.ProfissionalProduto_4
+					LEFT JOIN App_Funcao AS AF5 ON AF5.idApp_Funcao = PRDS.ProfissionalProduto_5
+					LEFT JOIN App_Funcao AS AF6 ON AF6.idApp_Funcao = PRDS.ProfissionalProduto_6
 					
 					LEFT JOIN Tab_Funcao AS TF1 ON TF1.idTab_Funcao = AF1.idTab_Funcao
 					LEFT JOIN Tab_Funcao AS TF2 ON TF2.idTab_Funcao = AF2.idTab_Funcao
 					LEFT JOIN Tab_Funcao AS TF3 ON TF3.idTab_Funcao = AF3.idTab_Funcao
-					LEFT JOIN Tab_Funcao AS TF4 ON TF4.idTab_Funcao = AF4.idTab_Funcao					
+					LEFT JOIN Tab_Funcao AS TF4 ON TF4.idTab_Funcao = AF4.idTab_Funcao
+					LEFT JOIN Tab_Funcao AS TF5 ON TF5.idTab_Funcao = AF5.idTab_Funcao
+					LEFT JOIN Tab_Funcao AS TF6 ON TF6.idTab_Funcao = AF6.idTab_Funcao					
 					
 					
 					LEFT JOIN Sis_Usuario AS UP1 ON UP1.idSis_Usuario = AF1.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS UP2 ON UP2.idSis_Usuario = AF2.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS UP3 ON UP3.idSis_Usuario = AF3.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS UP4 ON UP4.idSis_Usuario = AF4.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS UP5 ON UP5.idSis_Usuario = AF5.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS UP6 ON UP6.idSis_Usuario = AF6.idSis_Usuario
 					
 					LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = PRDS.idTab_Produtos_Produto
 					LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto
@@ -275,6 +291,8 @@ class Relatoriocomissoes_model extends CI_Model {
 					$valor_com_Prof_2 = $row->ValorComProf_2;
 					$valor_com_Prof_3 = $row->ValorComProf_3;
 					$valor_com_Prof_4 = $row->ValorComProf_4;
+					$valor_com_Prof_5 = $row->ValorComProf_5;
+					$valor_com_Prof_6 = $row->ValorComProf_6;
 				
 					if(isset($data['Funcionario']) && $data['Funcionario'] !=0){
 		
@@ -298,20 +316,34 @@ class Relatoriocomissoes_model extends CI_Model {
 						}else{
 							$valor_com_filtro_Prof_4 = 0.00;	
 						}
+						if($row->id_Usu_Prof_5 == $data['Funcionario']){
+							$valor_com_filtro_Prof_5 = $valor_com_Prof_5;	
+						}else{
+							$valor_com_filtro_Prof_5 = 0.00;	
+						}
+						if($row->id_Usu_Prof_6 == $data['Funcionario']){
+							$valor_com_filtro_Prof_6 = $valor_com_Prof_6;	
+						}else{
+							$valor_com_filtro_Prof_6 = 0.00;	
+						}
 					}else{
 						$valor_com_filtro_Prof_1 = $valor_com_Prof_1;
 						$valor_com_filtro_Prof_2 = $valor_com_Prof_2;
 						$valor_com_filtro_Prof_3 = $valor_com_Prof_3;
-						$valor_com_filtro_Prof_4 = $valor_com_Prof_4;	
+						$valor_com_filtro_Prof_4 = $valor_com_Prof_4;
+						$valor_com_filtro_Prof_5 = $valor_com_Prof_5;
+						$valor_com_filtro_Prof_6 = $valor_com_Prof_6;
 					}
 					
-					$Valor_Com_Total_Prof2 = ($valor_com_filtro_Prof_1 + $valor_com_filtro_Prof_2 + $valor_com_filtro_Prof_3 + $valor_com_filtro_Prof_4);
+					$Valor_Com_Total_Prof2 = ($valor_com_filtro_Prof_1 + $valor_com_filtro_Prof_2 + $valor_com_filtro_Prof_3 + $valor_com_filtro_Prof_4 + $valor_com_filtro_Prof_6 + $valor_com_filtro_Prof_6);
 					$Soma_Valor_Com_Total_Prof2 += $Valor_Com_Total_Prof2;
 					
 					$row->valor_com_Prof_1 = number_format($valor_com_Prof_1, 2, ',', '.');
 					$row->valor_com_Prof_2 = number_format($valor_com_Prof_2, 2, ',', '.');
 					$row->valor_com_Prof_3 = number_format($valor_com_Prof_3, 2, ',', '.');
 					$row->valor_com_Prof_4 = number_format($valor_com_Prof_4, 2, ',', '.');
+					$row->valor_com_Prof_5 = number_format($valor_com_Prof_5, 2, ',', '.');
+					$row->valor_com_Prof_6 = number_format($valor_com_Prof_6, 2, ',', '.');
 					$row->Valor_Com_Total2 = number_format($Valor_Com_Total2, 2, ',', '.');	
 					$row->Valor_Com_Total_Prof2 = number_format($Valor_Com_Total_Prof2, 2, ',', '.');					
 						
@@ -340,22 +372,30 @@ class Relatoriocomissoes_model extends CI_Model {
 				UP1.idSis_Usuario AS id_Usu_Prof_1,
 				UP2.idSis_Usuario AS id_Usu_Prof_2,
 				UP3.idSis_Usuario AS id_Usu_Prof_3,
-				UP4.idSis_Usuario AS id_Usu_Prof_4,					
+				UP4.idSis_Usuario AS id_Usu_Prof_4,
+				UP5.idSis_Usuario AS id_Usu_Prof_5,
+				UP6.idSis_Usuario AS id_Usu_Prof_6,
 				
 				AF1.idTab_Funcao AS id_Fun_Prof_1,
 				AF2.idTab_Funcao AS id_Fun_Prof_2,
 				AF3.idTab_Funcao AS id_Fun_Prof_3,
 				AF4.idTab_Funcao AS id_Fun_Prof_4,
+				AF5.idTab_Funcao AS id_Fun_Prof_5,
+				AF6.idTab_Funcao AS id_Fun_Prof_6,
 				
 				AF1.Comissao_Funcao AS ComProf1,
 				AF2.Comissao_Funcao AS ComProf2,
 				AF3.Comissao_Funcao AS ComProf3,
 				AF4.Comissao_Funcao AS ComProf4,
+				AF5.Comissao_Funcao AS ComProf5,
+				AF6.Comissao_Funcao AS ComProf6,
 				
 				CONCAT(IFNULL(UP1.Nome,"")) AS Nome1,				
 				CONCAT(IFNULL(UP2.Nome,"")) AS Nome2,				
 				CONCAT(IFNULL(UP3.Nome,"")) AS Nome3,				
 				CONCAT(IFNULL(UP4.Nome,"")) AS Nome4,
+				CONCAT(IFNULL(UP5.Nome,"")) AS Nome5,
+				CONCAT(IFNULL(UP6.Nome,"")) AS Nome6,
 				
 				CONCAT(IFNULL(TF1.Abrev,"")) AS Abrev1,				
 				CONCAT(IFNULL(TF2.Abrev,"")) AS Abrev2,				
@@ -378,16 +418,22 @@ class Relatoriocomissoes_model extends CI_Model {
 					LEFT JOIN App_Funcao AS AF2 ON AF2.idApp_Funcao = PRDS.ProfissionalProduto_2
 					LEFT JOIN App_Funcao AS AF3 ON AF3.idApp_Funcao = PRDS.ProfissionalProduto_3
 					LEFT JOIN App_Funcao AS AF4 ON AF4.idApp_Funcao = PRDS.ProfissionalProduto_4
+					LEFT JOIN App_Funcao AS AF5 ON AF5.idApp_Funcao = PRDS.ProfissionalProduto_5
+					LEFT JOIN App_Funcao AS AF6 ON AF6.idApp_Funcao = PRDS.ProfissionalProduto_6
 					
 					LEFT JOIN Tab_Funcao AS TF1 ON TF1.idTab_Funcao = AF1.idTab_Funcao
 					LEFT JOIN Tab_Funcao AS TF2 ON TF2.idTab_Funcao = AF2.idTab_Funcao
 					LEFT JOIN Tab_Funcao AS TF3 ON TF3.idTab_Funcao = AF3.idTab_Funcao
 					LEFT JOIN Tab_Funcao AS TF4 ON TF4.idTab_Funcao = AF4.idTab_Funcao
+					LEFT JOIN Tab_Funcao AS TF5 ON TF5.idTab_Funcao = AF5.idTab_Funcao
+					LEFT JOIN Tab_Funcao AS TF6 ON TF6.idTab_Funcao = AF6.idTab_Funcao
 					
 					LEFT JOIN Sis_Usuario AS UP1 ON UP1.idSis_Usuario = AF1.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS UP2 ON UP2.idSis_Usuario = AF2.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS UP3 ON UP3.idSis_Usuario = AF3.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS UP4 ON UP4.idSis_Usuario = AF4.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS UP5 ON UP5.idSis_Usuario = AF5.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS UP6 ON UP6.idSis_Usuario = AF6.idSis_Usuario
 					
 					LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = PRDS.idTab_Produtos_Produto
 					LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto
@@ -459,6 +505,8 @@ class Relatoriocomissoes_model extends CI_Model {
 				$row->Nome2 = (strlen($row->Nome2) > 8) ? substr($row->Nome2, 0, 8) : $row->Nome2;
 				$row->Nome3 = (strlen($row->Nome3) > 8) ? substr($row->Nome3, 0, 8) : $row->Nome3;
 				$row->Nome4 = (strlen($row->Nome4) > 8) ? substr($row->Nome4, 0, 8) : $row->Nome4;
+				$row->Nome5 = (strlen($row->Nome5) > 8) ? substr($row->Nome5, 0, 8) : $row->Nome5;
+				$row->Nome6 = (strlen($row->Nome6) > 8) ? substr($row->Nome6, 0, 8) : $row->Nome6;
 				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
                 $row->DataEntradaOrca = $this->basico->mascara_data($row->DataEntradaOrca, 'barras');
                 $row->DataEntregaOrca = $this->basico->mascara_data($row->DataEntregaOrca, 'barras');
@@ -599,6 +647,8 @@ class Relatoriocomissoes_model extends CI_Model {
 				$valor_com_Prof_2 = $row->ValorComProf_2;
 				$valor_com_Prof_3 = $row->ValorComProf_3;
 				$valor_com_Prof_4 = $row->ValorComProf_4;
+				$valor_com_Prof_5 = $row->ValorComProf_5;
+				$valor_com_Prof_6 = $row->ValorComProf_6;
 				
 				//$Valor_Com_Total = ($valor_com_Prof_1 + $valor_com_Prof_2 + $valor_com_Prof_3 + $valor_com_Prof_4);
 				//$Soma_Valor_Com_Total += $Valor_Com_Total;
@@ -627,20 +677,34 @@ class Relatoriocomissoes_model extends CI_Model {
 					}else{
 						$valor_com_filtro_Prof_4 = 0.00;	
 					}
+					if($row->id_Usu_Prof_5 == $data['Funcionario']){
+						$valor_com_filtro_Prof_5 = $valor_com_Prof_5;	
+					}else{
+						$valor_com_filtro_Prof_5 = 0.00;	
+					}
+					if($row->id_Usu_Prof_6 == $data['Funcionario']){
+						$valor_com_filtro_Prof_6 = $valor_com_Prof_6;	
+					}else{
+						$valor_com_filtro_Prof_6 = 0.00;	
+					}
 				}else{
 					$valor_com_filtro_Prof_1 = $valor_com_Prof_1;
 					$valor_com_filtro_Prof_2 = $valor_com_Prof_2;
 					$valor_com_filtro_Prof_3 = $valor_com_Prof_3;
-					$valor_com_filtro_Prof_4 = $valor_com_Prof_4;	
+					$valor_com_filtro_Prof_4 = $valor_com_Prof_4;
+					$valor_com_filtro_Prof_5 = $valor_com_Prof_5;
+					$valor_com_filtro_Prof_6 = $valor_com_Prof_6;	
 				}
 				
-				$Valor_Com_Total_Prof = ($valor_com_filtro_Prof_1 + $valor_com_filtro_Prof_2 + $valor_com_filtro_Prof_3 + $valor_com_filtro_Prof_4);
+				$Valor_Com_Total_Prof = ($valor_com_filtro_Prof_1 + $valor_com_filtro_Prof_2 + $valor_com_filtro_Prof_3 + $valor_com_filtro_Prof_4 + $valor_com_filtro_Prof_5 + $valor_com_filtro_Prof_6);
 				$Soma_Valor_Com_Total_Prof += $Valor_Com_Total_Prof;
 				
 				$row->valor_com_Prof_1 = number_format($valor_com_Prof_1, 2, ',', '.');
 				$row->valor_com_Prof_2 = number_format($valor_com_Prof_2, 2, ',', '.');
 				$row->valor_com_Prof_3 = number_format($valor_com_Prof_3, 2, ',', '.');
 				$row->valor_com_Prof_4 = number_format($valor_com_Prof_4, 2, ',', '.');
+				$row->valor_com_Prof_5 = number_format($valor_com_Prof_5, 2, ',', '.');
+				$row->valor_com_Prof_6 = number_format($valor_com_Prof_6, 2, ',', '.');
 				$row->Valor_Com_Total = number_format($Valor_Com_Total, 2, ',', '.');	
 				$row->Valor_Com_Total_Prof = number_format($Valor_Com_Total_Prof, 2, ',', '.');						
 				/*
@@ -857,17 +921,23 @@ class Relatoriocomissoes_model extends CI_Model {
 				UP1.idSis_Usuario AS id_Usu_Prof_1,
 				UP2.idSis_Usuario AS id_Usu_Prof_2,
 				UP3.idSis_Usuario AS id_Usu_Prof_3,
-				UP4.idSis_Usuario AS id_Usu_Prof_4,				
+				UP4.idSis_Usuario AS id_Usu_Prof_4,
+				UP5.idSis_Usuario AS id_Usu_Prof_5,
+				UP6.idSis_Usuario AS id_Usu_Prof_6,
 				
 				AF1.idTab_Funcao AS id_Fun_Prof_1,
 				AF2.idTab_Funcao AS id_Fun_Prof_2,
 				AF3.idTab_Funcao AS id_Fun_Prof_3,
-				AF4.idTab_Funcao AS id_Fun_Prof_4,				
+				AF4.idTab_Funcao AS id_Fun_Prof_4,
+				AF5.idTab_Funcao AS id_Fun_Prof_5,
+				AF6.idTab_Funcao AS id_Fun_Prof_6,
 				
 				AF1.Comissao_Funcao AS ComProf1,
 				AF2.Comissao_Funcao AS ComProf2,
 				AF3.Comissao_Funcao AS ComProf3,
 				AF4.Comissao_Funcao AS ComProf4,
+				AF5.Comissao_Funcao AS ComProf5,
+				AF6.Comissao_Funcao AS ComProf6,
 				
 				CONCAT(IFNULL(TF1.Abrev,""), " || " ,IFNULL(UP1.Nome,"")) AS NomeProf1,				
 				CONCAT(IFNULL(TF2.Abrev,""), " || " ,IFNULL(UP2.Nome,"")) AS NomeProf2,				
@@ -893,17 +963,23 @@ class Relatoriocomissoes_model extends CI_Model {
 					LEFT JOIN App_Funcao AS AF2 ON AF2.idApp_Funcao = PRDS.ProfissionalProduto_2
 					LEFT JOIN App_Funcao AS AF3 ON AF3.idApp_Funcao = PRDS.ProfissionalProduto_3
 					LEFT JOIN App_Funcao AS AF4 ON AF4.idApp_Funcao = PRDS.ProfissionalProduto_4
+					LEFT JOIN App_Funcao AS AF5 ON AF5.idApp_Funcao = PRDS.ProfissionalProduto_5
+					LEFT JOIN App_Funcao AS AF6 ON AF6.idApp_Funcao = PRDS.ProfissionalProduto_6
 					
 					LEFT JOIN Tab_Funcao AS TF1 ON TF1.idTab_Funcao = AF1.idTab_Funcao
 					LEFT JOIN Tab_Funcao AS TF2 ON TF2.idTab_Funcao = AF2.idTab_Funcao
 					LEFT JOIN Tab_Funcao AS TF3 ON TF3.idTab_Funcao = AF3.idTab_Funcao
-					LEFT JOIN Tab_Funcao AS TF4 ON TF4.idTab_Funcao = AF4.idTab_Funcao					
+					LEFT JOIN Tab_Funcao AS TF4 ON TF4.idTab_Funcao = AF4.idTab_Funcao	
+					LEFT JOIN Tab_Funcao AS TF5 ON TF5.idTab_Funcao = AF5.idTab_Funcao
+					LEFT JOIN Tab_Funcao AS TF6 ON TF6.idTab_Funcao = AF6.idTab_Funcao				
 					
 					
 					LEFT JOIN Sis_Usuario AS UP1 ON UP1.idSis_Usuario = AF1.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS UP2 ON UP2.idSis_Usuario = AF2.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS UP3 ON UP3.idSis_Usuario = AF3.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS UP4 ON UP4.idSis_Usuario = AF4.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS UP5 ON UP5.idSis_Usuario = AF5.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS UP6 ON UP6.idSis_Usuario = AF6.idSis_Usuario
 					
 					LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = PRDS.idTab_Produtos_Produto
 					LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto
@@ -1017,17 +1093,23 @@ class Relatoriocomissoes_model extends CI_Model {
 				UP1.idSis_Usuario AS id_Usu_Prof_1,
 				UP2.idSis_Usuario AS id_Usu_Prof_2,
 				UP3.idSis_Usuario AS id_Usu_Prof_3,
-				UP4.idSis_Usuario AS id_Usu_Prof_4,					
+				UP4.idSis_Usuario AS id_Usu_Prof_4,
+				UP5.idSis_Usuario AS id_Usu_Prof_5,
+				UP6.idSis_Usuario AS id_Usu_Prof_6,
 				
 				AF1.idTab_Funcao AS id_Fun_Prof_1,
 				AF2.idTab_Funcao AS id_Fun_Prof_2,
 				AF3.idTab_Funcao AS id_Fun_Prof_3,
 				AF4.idTab_Funcao AS id_Fun_Prof_4,
+				AF5.idTab_Funcao AS id_Fun_Prof_5,
+				AF6.idTab_Funcao AS id_Fun_Prof_6,
 				
 				AF1.Comissao_Funcao AS ComProf1,
 				AF2.Comissao_Funcao AS ComProf2,
 				AF3.Comissao_Funcao AS ComProf3,
 				AF4.Comissao_Funcao AS ComProf4,
+				AF5.Comissao_Funcao AS ComProf5,
+				AF6.Comissao_Funcao AS ComProf6,
 				
 				CONCAT(IFNULL(TF1.Abrev,""), " || " ,IFNULL(UP1.Nome,"")) AS NomeProf1,				
 				CONCAT(IFNULL(TF2.Abrev,""), " || " ,IFNULL(UP2.Nome,"")) AS NomeProf2,				
@@ -1050,16 +1132,22 @@ class Relatoriocomissoes_model extends CI_Model {
 					LEFT JOIN App_Funcao AS AF2 ON AF2.idApp_Funcao = PRDS.ProfissionalProduto_2
 					LEFT JOIN App_Funcao AS AF3 ON AF3.idApp_Funcao = PRDS.ProfissionalProduto_3
 					LEFT JOIN App_Funcao AS AF4 ON AF4.idApp_Funcao = PRDS.ProfissionalProduto_4
+					LEFT JOIN App_Funcao AS AF5 ON AF5.idApp_Funcao = PRDS.ProfissionalProduto_5
+					LEFT JOIN App_Funcao AS AF6 ON AF6.idApp_Funcao = PRDS.ProfissionalProduto_6
 					
 					LEFT JOIN Tab_Funcao AS TF1 ON TF1.idTab_Funcao = AF1.idTab_Funcao
 					LEFT JOIN Tab_Funcao AS TF2 ON TF2.idTab_Funcao = AF2.idTab_Funcao
 					LEFT JOIN Tab_Funcao AS TF3 ON TF3.idTab_Funcao = AF3.idTab_Funcao
 					LEFT JOIN Tab_Funcao AS TF4 ON TF4.idTab_Funcao = AF4.idTab_Funcao
+					LEFT JOIN Tab_Funcao AS TF5 ON TF5.idTab_Funcao = AF5.idTab_Funcao
+					LEFT JOIN Tab_Funcao AS TF6 ON TF6.idTab_Funcao = AF6.idTab_Funcao
 					
 					LEFT JOIN Sis_Usuario AS UP1 ON UP1.idSis_Usuario = AF1.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS UP2 ON UP2.idSis_Usuario = AF2.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS UP3 ON UP3.idSis_Usuario = AF3.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS UP4 ON UP4.idSis_Usuario = AF4.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS UP5 ON UP5.idSis_Usuario = AF5.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS UP6 ON UP6.idSis_Usuario = AF6.idSis_Usuario
 					
 					LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = PRDS.idTab_Produtos_Produto
 					LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto

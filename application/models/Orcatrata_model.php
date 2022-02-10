@@ -760,6 +760,8 @@ class Orcatrata_model extends CI_Model {
 				TAP.ProfissionalProduto_2,
 				TAP.ProfissionalProduto_3,
 				TAP.ProfissionalProduto_4,
+				TAP.ProfissionalProduto_5,
+				TAP.ProfissionalProduto_6,
 				TAP.ValorComProf_1,
 				TAP.idTFProf_1,
 				TAP.ComFunProf_1,
@@ -772,18 +774,25 @@ class Orcatrata_model extends CI_Model {
 				TAP.ValorComProf_4,
 				TAP.idTFProf_4,
 				TAP.ComFunProf_4,
+				TAP.ValorComProf_5,
+				TAP.idTFProf_5,
+				TAP.ComFunProf_5,
+				TAP.ValorComProf_6,
+				TAP.idTFProf_6,
+				TAP.ComFunProf_6,
 				P.Nome_Prod,
 				TOP2.Opcao,
 				TOP1.Opcao,
-				SU.Nome,
-				CONCAT(IFNULL(P.Nome_Prod,""), " - ", IFNULL(TOP2.Opcao,""), " - ", IFNULL(TOP1.Opcao,""), " - ", IFNULL(TDS.Desconto,""), " - ", IFNULL(TPM.Promocao,""), " - ", IFNULL(SU.Nome,"")) AS Produto,
+				CONCAT(IFNULL(P.Nome_Prod,""), " - ", IFNULL(TOP2.Opcao,""), " - ", IFNULL(TOP1.Opcao,""), " - ", IFNULL(TDS.Desconto,""), " - ", IFNULL(TPM.Promocao,"")) AS Produto,
 				(TAP.QtdProduto * TAP.ValorProduto) AS Subtotal_Produto
 			FROM 
 				App_Produto AS TAP
-					LEFT JOIN Sis_Usuario AS SU ON SU.idSis_Usuario = TAP.ProfissionalProduto_1
-					LEFT JOIN Sis_Usuario AS SU3 ON SU3.idSis_Usuario = TAP.ProfissionalProduto_2
-					LEFT JOIN Sis_Usuario AS SU4 ON SU4.idSis_Usuario = TAP.ProfissionalProduto_3
-					LEFT JOIN Sis_Usuario AS SU5 ON SU5.idSis_Usuario = TAP.ProfissionalProduto_4
+					LEFT JOIN Sis_Usuario AS SU1 ON SU1.idSis_Usuario = TAP.ProfissionalProduto_1
+					LEFT JOIN Sis_Usuario AS SU2 ON SU2.idSis_Usuario = TAP.ProfissionalProduto_2
+					LEFT JOIN Sis_Usuario AS SU3 ON SU3.idSis_Usuario = TAP.ProfissionalProduto_3
+					LEFT JOIN Sis_Usuario AS SU4 ON SU4.idSis_Usuario = TAP.ProfissionalProduto_4
+					LEFT JOIN Sis_Usuario AS SU5 ON SU5.idSis_Usuario = TAP.ProfissionalProduto_5
+					LEFT JOIN Sis_Usuario AS SU6 ON SU6.idSis_Usuario = TAP.ProfissionalProduto_6
 					LEFT JOIN Tab_Valor AS V ON V.idTab_Valor = TAP.idTab_Produto
 					LEFT JOIN Tab_Promocao AS TPM ON TPM.idTab_Promocao = V.idTab_Promocao
 					LEFT JOIN Tab_Desconto AS TDS ON TDS.idTab_Desconto = V.Desconto
@@ -1755,22 +1764,30 @@ class Orcatrata_model extends CI_Model {
 				UP1.idSis_Usuario AS id_Usu_Prof_1,
 				UP2.idSis_Usuario AS id_Usu_Prof_2,
 				UP3.idSis_Usuario AS id_Usu_Prof_3,
-				UP4.idSis_Usuario AS id_Usu_Prof_4,				
+				UP4.idSis_Usuario AS id_Usu_Prof_4,
+				UP5.idSis_Usuario AS id_Usu_Prof_5,
+				UP6.idSis_Usuario AS id_Usu_Prof_6,				
 				
 				AF1.idTab_Funcao AS id_Fun_Prof_1,
 				AF2.idTab_Funcao AS id_Fun_Prof_2,
 				AF3.idTab_Funcao AS id_Fun_Prof_3,
-				AF4.idTab_Funcao AS id_Fun_Prof_4,				
+				AF4.idTab_Funcao AS id_Fun_Prof_4,
+				AF5.idTab_Funcao AS id_Fun_Prof_5,
+				AF6.idTab_Funcao AS id_Fun_Prof_6,				
 				
 				AF1.Comissao_Funcao AS ComProf1,
 				AF2.Comissao_Funcao AS ComProf2,
 				AF3.Comissao_Funcao AS ComProf3,
 				AF4.Comissao_Funcao AS ComProf4,
+				AF5.Comissao_Funcao AS ComProf5,
+				AF6.Comissao_Funcao AS ComProf6,
 				
 				CONCAT(IFNULL(TF1.Abrev,""), " || " ,IFNULL(UP1.Nome,"")) AS NomeProf1,				
 				CONCAT(IFNULL(TF2.Abrev,""), " || " ,IFNULL(UP2.Nome,"")) AS NomeProf2,				
-				CONCAT(IFNULL(TF3.Abrev,""), " || " ,IFNULL(UP3.Nome,"")) AS NomeProf3,				
+				CONCAT(IFNULL(TF3.Abrev,""), " || " ,IFNULL(UP3.Nome,"")) AS NomeProf3,
 				CONCAT(IFNULL(TF4.Abrev,""), " || " ,IFNULL(UP4.Nome,"")) AS NomeProf4,
+				CONCAT(IFNULL(TF5.Abrev,""), " || " ,IFNULL(UP5.Nome,"")) AS NomeProf5,
+				CONCAT(IFNULL(TF6.Abrev,""), " || " ,IFNULL(UP6.Nome,"")) AS NomeProf6,
 				
 				CONCAT(IFNULL(PRDS.NomeProduto,"")) AS Receita,
 				CONCAT(IFNULL(PRDS.QtdProduto,"")," x ", IFNULL(PRDS.ValorProduto,"")," x ", IFNULL(PRDS.ComissaoServicoProduto,""),"%") AS Valor,
@@ -1794,17 +1811,23 @@ class Orcatrata_model extends CI_Model {
 					LEFT JOIN App_Funcao AS AF2 ON AF2.idApp_Funcao = PRDS.ProfissionalProduto_2
 					LEFT JOIN App_Funcao AS AF3 ON AF3.idApp_Funcao = PRDS.ProfissionalProduto_3
 					LEFT JOIN App_Funcao AS AF4 ON AF4.idApp_Funcao = PRDS.ProfissionalProduto_4
+					LEFT JOIN App_Funcao AS AF5 ON AF5.idApp_Funcao = PRDS.ProfissionalProduto_5
+					LEFT JOIN App_Funcao AS AF6 ON AF6.idApp_Funcao = PRDS.ProfissionalProduto_6
 					
 					LEFT JOIN Tab_Funcao AS TF1 ON TF1.idTab_Funcao = AF1.idTab_Funcao
 					LEFT JOIN Tab_Funcao AS TF2 ON TF2.idTab_Funcao = AF2.idTab_Funcao
 					LEFT JOIN Tab_Funcao AS TF3 ON TF3.idTab_Funcao = AF3.idTab_Funcao
-					LEFT JOIN Tab_Funcao AS TF4 ON TF4.idTab_Funcao = AF4.idTab_Funcao					
+					LEFT JOIN Tab_Funcao AS TF4 ON TF4.idTab_Funcao = AF4.idTab_Funcao
+					LEFT JOIN Tab_Funcao AS TF5 ON TF5.idTab_Funcao = AF5.idTab_Funcao
+					LEFT JOIN Tab_Funcao AS TF6 ON TF6.idTab_Funcao = AF6.idTab_Funcao
 					
 					
 					LEFT JOIN Sis_Usuario AS UP1 ON UP1.idSis_Usuario = AF1.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS UP2 ON UP2.idSis_Usuario = AF2.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS UP3 ON UP3.idSis_Usuario = AF3.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS UP4 ON UP4.idSis_Usuario = AF4.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS UP5 ON UP5.idSis_Usuario = AF5.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS UP6 ON UP6.idSis_Usuario = AF6.idSis_Usuario
 					
 					LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = PRDS.idTab_Produtos_Produto
 					LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto

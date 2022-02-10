@@ -464,6 +464,18 @@ class Orcatrata extends CI_Controller {
 				}else{
 					$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
 				}
+				$data['servico'][$j]['ProfissionalProduto_5'] = $this->input->post('ProfissionalServico_5' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_5'] || $data['servico'][$j]['ProfissionalProduto_5'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+				}
+				$data['servico'][$j]['ProfissionalProduto_6'] = $this->input->post('ProfissionalServico_6' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_6'] || $data['servico'][$j]['ProfissionalProduto_6'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
+				}
 				
 				$data['servico'][$j]['idTFProf_1'] = $this->input->post('idTFProf_Servico_1' . $i);
 				$data['servico'][$j]['ComFunProf_1'] = $this->input->post('ComFunProf_Servico_1' . $i);
@@ -480,6 +492,14 @@ class Orcatrata extends CI_Controller {
 				$data['servico'][$j]['idTFProf_4'] = $this->input->post('idTFProf_Servico_4' . $i);
 				$data['servico'][$j]['ComFunProf_4'] = $this->input->post('ComFunProf_Servico_4' . $i);
 				$data['servico'][$j]['ValorComProf_4'] = $this->input->post('ValorComProf_Servico_4' . $i);
+				
+				$data['servico'][$j]['idTFProf_5'] = $this->input->post('idTFProf_Servico_5' . $i);
+				$data['servico'][$j]['ComFunProf_5'] = $this->input->post('ComFunProf_Servico_5' . $i);
+				$data['servico'][$j]['ValorComProf_5'] = $this->input->post('ValorComProf_Servico_5' . $i);
+				
+				$data['servico'][$j]['idTFProf_6'] = $this->input->post('idTFProf_Servico_6' . $i);
+				$data['servico'][$j]['ComFunProf_6'] = $this->input->post('ComFunProf_Servico_6' . $i);
+				$data['servico'][$j]['ValorComProf_6'] = $this->input->post('ValorComProf_Servico_6' . $i);
 				
 				(!$data['servico'][$j]['ConcluidoProduto']) ? $data['servico'][$j]['ConcluidoProduto'] = 'N' : FALSE;
 				$data['radio'] = array(
@@ -668,6 +688,8 @@ class Orcatrata extends CI_Controller {
 		$data['select']['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos();
 		$data['select']['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos();
 		$data['select']['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos();
+		$data['select']['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos();
+		$data['select']['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalProduto_1'] = $this->Usuario_model->select_usuario();
 		$data['select']['idSis_Usuario'] = $this->Usuario_model->select_usuario();
 		$data['select']['Compartilhar'] = $this->Usuario_model->select_usuario_procedimentos();
@@ -1212,6 +1234,12 @@ class Orcatrata extends CI_Controller {
 						if(!$data['servico'][$j]['ProfissionalProduto_4']){
 							$data['servico'][$j]['ProfissionalProduto_4'] = 0;
 						}
+						if(!$data['servico'][$j]['ProfissionalProduto_5']){
+							$data['servico'][$j]['ProfissionalProduto_5'] = 0;
+						}
+						if(!$data['servico'][$j]['ProfissionalProduto_6']){
+							$data['servico'][$j]['ProfissionalProduto_6'] = 0;
+						}
 						
 						if(empty($data['servico'][$j]['ValorProduto'])){
 							$data['servico'][$j]['ValorProduto'] = "0.00";
@@ -1241,6 +1269,18 @@ class Orcatrata extends CI_Controller {
 							$data['servico'][$j]['ValorComProf_4'] = "0.00";
 						}else{
 							$data['servico'][$j]['ValorComProf_4'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorComProf_4']));
+						}
+						
+						if(empty($data['servico'][$j]['ValorComProf_5'])){
+							$data['servico'][$j]['ValorComProf_5'] = "0.00";
+						}else{
+							$data['servico'][$j]['ValorComProf_5'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorComProf_5']));
+						}
+						
+						if(empty($data['servico'][$j]['ValorComProf_6'])){
+							$data['servico'][$j]['ValorComProf_6'] = "0.00";
+						}else{
+							$data['servico'][$j]['ValorComProf_6'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorComProf_6']));
 						}
 						
 						if(empty($data['servico'][$j]['ValorComissaoServico'])){
@@ -1877,6 +1917,8 @@ class Orcatrata extends CI_Controller {
 										'ProfissionalProduto_2' => $data['update']['produto']['baixa'][$k]['ProfissionalProduto_2'],
 										'ProfissionalProduto_3' => $data['update']['produto']['baixa'][$k]['ProfissionalProduto_3'],
 										'ProfissionalProduto_4' => $data['update']['produto']['baixa'][$k]['ProfissionalProduto_4'],
+										'ProfissionalProduto_5' => $data['update']['produto']['baixa'][$k]['ProfissionalProduto_5'],
+										'ProfissionalProduto_6' => $data['update']['produto']['baixa'][$k]['ProfissionalProduto_6'],
 										'ValorComProf_1' 		=> $data['update']['produto']['baixa'][$k]['ValorComProf_1'],
 										'idTFProf_1' 			=> $data['update']['produto']['baixa'][$k]['idTFProf_1'],
 										'ComFunProf_1' 			=> $data['update']['produto']['baixa'][$k]['ComFunProf_1'],
@@ -1889,6 +1931,12 @@ class Orcatrata extends CI_Controller {
 										'ValorComProf_4' 		=> $data['update']['produto']['baixa'][$k]['ValorComProf_4'],
 										'idTFProf_4' 			=> $data['update']['produto']['baixa'][$k]['idTFProf_4'],
 										'ComFunProf_4' 			=> $data['update']['produto']['baixa'][$k]['ComFunProf_4'],
+										'ValorComProf_5' 		=> $data['update']['produto']['baixa'][$k]['ValorComProf_5'],
+										'idTFProf_5' 			=> $data['update']['produto']['baixa'][$k]['idTFProf_5'],
+										'ComFunProf_5' 			=> $data['update']['produto']['baixa'][$k]['ComFunProf_5'],
+										'ValorComProf_6' 		=> $data['update']['produto']['baixa'][$k]['ValorComProf_6'],
+										'idTFProf_6' 			=> $data['update']['produto']['baixa'][$k]['idTFProf_6'],
+										'ComFunProf_6' 			=> $data['update']['produto']['baixa'][$k]['ComFunProf_6'],
 										'QtdProduto' 			=> $data['update']['produto']['baixa'][$k]['QtdProduto'],
 										'QtdIncrementoProduto' 	=> $data['update']['produto']['baixa'][$k]['QtdIncrementoProduto'],
 										'ObsProduto' 			=> $data['update']['produto']['baixa'][$k]['ObsProduto'],
@@ -2456,6 +2504,18 @@ class Orcatrata extends CI_Controller {
 				}else{
 					$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
 				}
+				$data['servico'][$j]['ProfissionalProduto_5'] = $this->input->post('ProfissionalServico_5' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_5'] || $data['servico'][$j]['ProfissionalProduto_5'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+				}
+				$data['servico'][$j]['ProfissionalProduto_6'] = $this->input->post('ProfissionalServico_6' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_6'] || $data['servico'][$j]['ProfissionalProduto_6'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
+				}
 				
 				$data['servico'][$j]['idTFProf_1'] = $this->input->post('idTFProf_Servico_1' . $i);
 				$data['servico'][$j]['ComFunProf_1'] = $this->input->post('ComFunProf_Servico_1' . $i);
@@ -2472,6 +2532,14 @@ class Orcatrata extends CI_Controller {
 				$data['servico'][$j]['idTFProf_4'] = $this->input->post('idTFProf_Servico_4' . $i);
 				$data['servico'][$j]['ComFunProf_4'] = $this->input->post('ComFunProf_Servico_4' . $i);
 				$data['servico'][$j]['ValorComProf_4'] = $this->input->post('ValorComProf_Servico_4' . $i);
+				
+				$data['servico'][$j]['idTFProf_5'] = $this->input->post('idTFProf_Servico_5' . $i);
+				$data['servico'][$j]['ComFunProf_5'] = $this->input->post('ComFunProf_Servico_5' . $i);
+				$data['servico'][$j]['ValorComProf_5'] = $this->input->post('ValorComProf_Servico_5' . $i);
+				
+				$data['servico'][$j]['idTFProf_6'] = $this->input->post('idTFProf_Servico_6' . $i);
+				$data['servico'][$j]['ComFunProf_6'] = $this->input->post('ComFunProf_Servico_6' . $i);
+				$data['servico'][$j]['ValorComProf_6'] = $this->input->post('ValorComProf_Servico_6' . $i);
 				
 				(!$data['servico'][$j]['ConcluidoProduto']) ? $data['servico'][$j]['ConcluidoProduto'] = 'N' : FALSE;
 				$data['radio'] = array(
@@ -2683,6 +2751,8 @@ class Orcatrata extends CI_Controller {
 		$data['select']['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos();
 		$data['select']['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos();
 		$data['select']['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos();
+		$data['select']['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos();
+		$data['select']['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalProduto_1'] = $this->Usuario_model->select_usuario();
 		$data['select']['idSis_Usuario'] = $this->Usuario_model->select_usuario();
 		$data['select']['Compartilhar'] = $this->Usuario_model->select_usuario_procedimentos();
@@ -3257,6 +3327,12 @@ class Orcatrata extends CI_Controller {
 						if(!$data['servico'][$j]['ProfissionalProduto_4']){
 							$data['servico'][$j]['ProfissionalProduto_4'] = 0;
 						}
+						if(!$data['servico'][$j]['ProfissionalProduto_5']){
+							$data['servico'][$j]['ProfissionalProduto_5'] = 0;
+						}
+						if(!$data['servico'][$j]['ProfissionalProduto_6']){
+							$data['servico'][$j]['ProfissionalProduto_6'] = 0;
+						}
 						
 						if(empty($data['servico'][$j]['ValorProduto'])){
 							$data['servico'][$j]['ValorProduto'] = "0.00";
@@ -3286,6 +3362,18 @@ class Orcatrata extends CI_Controller {
 							$data['servico'][$j]['ValorComProf_4'] = "0.00";
 						}else{
 							$data['servico'][$j]['ValorComProf_4'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorComProf_4']));
+						}
+						
+						if(empty($data['servico'][$j]['ValorComProf_5'])){
+							$data['servico'][$j]['ValorComProf_5'] = "0.00";
+						}else{
+							$data['servico'][$j]['ValorComProf_5'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorComProf_5']));
+						}
+						
+						if(empty($data['servico'][$j]['ValorComProf_6'])){
+							$data['servico'][$j]['ValorComProf_6'] = "0.00";
+						}else{
+							$data['servico'][$j]['ValorComProf_6'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorComProf_6']));
 						}
 						
 						if(empty($data['servico'][$j]['ValorComissaoServico'])){
@@ -4013,6 +4101,18 @@ class Orcatrata extends CI_Controller {
 				}else{
 					$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
 				}
+				$data['servico'][$j]['ProfissionalProduto_5'] = $this->input->post('ProfissionalServico_5' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_5'] || $data['servico'][$j]['ProfissionalProduto_5'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+				}
+				$data['servico'][$j]['ProfissionalProduto_6'] = $this->input->post('ProfissionalServico_6' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_6'] || $data['servico'][$j]['ProfissionalProduto_6'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
+				}
 				
 				$data['servico'][$j]['idTFProf_1'] = $this->input->post('idTFProf_Servico_1' . $i);
 				$data['servico'][$j]['ComFunProf_1'] = $this->input->post('ComFunProf_Servico_1' . $i);
@@ -4029,6 +4129,14 @@ class Orcatrata extends CI_Controller {
 				$data['servico'][$j]['idTFProf_4'] = $this->input->post('idTFProf_Servico_4' . $i);
 				$data['servico'][$j]['ComFunProf_4'] = $this->input->post('ComFunProf_Servico_4' . $i);
 				$data['servico'][$j]['ValorComProf_4'] = $this->input->post('ValorComProf_Servico_4' . $i);
+				
+				$data['servico'][$j]['idTFProf_5'] = $this->input->post('idTFProf_Servico_5' . $i);
+				$data['servico'][$j]['ComFunProf_5'] = $this->input->post('ComFunProf_Servico_5' . $i);
+				$data['servico'][$j]['ValorComProf_5'] = $this->input->post('ValorComProf_Servico_5' . $i);
+				
+				$data['servico'][$j]['idTFProf_6'] = $this->input->post('idTFProf_Servico_6' . $i);
+				$data['servico'][$j]['ComFunProf_6'] = $this->input->post('ComFunProf_Servico_6' . $i);
+				$data['servico'][$j]['ValorComProf_6'] = $this->input->post('ValorComProf_Servico_6' . $i);
 				
 				(!$data['servico'][$j]['ConcluidoProduto']) ? $data['servico'][$j]['ConcluidoProduto'] = 'N' : FALSE;
 				$data['radio'] = array(
@@ -4232,6 +4340,8 @@ class Orcatrata extends CI_Controller {
 		$data['select']['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos();
 		$data['select']['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos();
 		$data['select']['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos();
+		$data['select']['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos();
+		$data['select']['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalProduto_1'] = $this->Usuario_model->select_usuario();
 		$data['select']['idSis_Usuario'] = $this->Usuario_model->select_usuario();
 		$data['select']['Compartilhar'] = $this->Usuario_model->select_usuario_procedimentos();
@@ -4826,6 +4936,12 @@ class Orcatrata extends CI_Controller {
 						if(!$data['servico'][$j]['ProfissionalProduto_4']){
 							$data['servico'][$j]['ProfissionalProduto_4'] = 0;
 						}
+						if(!$data['servico'][$j]['ProfissionalProduto_5']){
+							$data['servico'][$j]['ProfissionalProduto_5'] = 0;
+						}
+						if(!$data['servico'][$j]['ProfissionalProduto_6']){
+							$data['servico'][$j]['ProfissionalProduto_6'] = 0;
+						}
 						
 						if(empty($data['servico'][$j]['ValorProduto'])){
 							$data['servico'][$j]['ValorProduto'] = "0.00";
@@ -4855,6 +4971,18 @@ class Orcatrata extends CI_Controller {
 							$data['servico'][$j]['ValorComProf_4'] = "0.00";
 						}else{
 							$data['servico'][$j]['ValorComProf_4'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorComProf_4']));
+						}
+						
+						if(empty($data['servico'][$j]['ValorComProf_5'])){
+							$data['servico'][$j]['ValorComProf_5'] = "0.00";
+						}else{
+							$data['servico'][$j]['ValorComProf_5'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorComProf_5']));
+						}
+						
+						if(empty($data['servico'][$j]['ValorComProf_6'])){
+							$data['servico'][$j]['ValorComProf_6'] = "0.00";
+						}else{
+							$data['servico'][$j]['ValorComProf_6'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorComProf_6']));
 						}
 						
 						if(empty($data['servico'][$j]['ValorComissaoServico'])){
@@ -5583,6 +5711,18 @@ class Orcatrata extends CI_Controller {
 				}else{
 					$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
 				}
+				$data['servico'][$j]['ProfissionalProduto_5'] = $this->input->post('ProfissionalServico_5' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_5'] || $data['servico'][$j]['ProfissionalProduto_5'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+				}
+				$data['servico'][$j]['ProfissionalProduto_6'] = $this->input->post('ProfissionalServico_6' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_6'] || $data['servico'][$j]['ProfissionalProduto_6'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
+				}
 				
 				$data['servico'][$j]['idTFProf_1'] = $this->input->post('idTFProf_Servico_1' . $i);
 				$data['servico'][$j]['ComFunProf_1'] = $this->input->post('ComFunProf_Servico_1' . $i);
@@ -5600,6 +5740,14 @@ class Orcatrata extends CI_Controller {
 				$data['servico'][$j]['ComFunProf_4'] = $this->input->post('ComFunProf_Servico_4' . $i);
 				$data['servico'][$j]['ValorComProf_4'] = $this->input->post('ValorComProf_Servico_4' . $i);
 				
+				$data['servico'][$j]['idTFProf_5'] = $this->input->post('idTFProf_Servico_5' . $i);
+				$data['servico'][$j]['ComFunProf_5'] = $this->input->post('ComFunProf_Servico_5' . $i);
+				$data['servico'][$j]['ValorComProf_5'] = $this->input->post('ValorComProf_Servico_5' . $i);
+				
+				$data['servico'][$j]['idTFProf_6'] = $this->input->post('idTFProf_Servico_6' . $i);
+				$data['servico'][$j]['ComFunProf_6'] = $this->input->post('ComFunProf_Servico_6' . $i);
+				$data['servico'][$j]['ValorComProf_6'] = $this->input->post('ValorComProf_Servico_6' . $i);
+				
 				(!$data['servico'][$j]['ConcluidoProduto']) ? $data['servico'][$j]['ConcluidoProduto'] = 'N' : FALSE;
 				$data['radio'] = array(
 					'ConcluidoServico' . $j => $this->basico->radio_checked($data['servico'][$j]['ConcluidoProduto'], 'ConcluidoServico' . $j, 'NS'),
@@ -5610,6 +5758,8 @@ class Orcatrata extends CI_Controller {
 				$data['select'][$j]['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_2']);
 				$data['select'][$j]['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_3']);
 				$data['select'][$j]['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_4']);
+				$data['select'][$j]['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_5']);
+				$data['select'][$j]['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_6']);
 				
                 $j++;
             }
@@ -5826,6 +5976,8 @@ class Orcatrata extends CI_Controller {
                         $data['servico'][$j]['ValorComProf_2'] = number_format(($data['servico'][$j]['ValorComProf_2']), 2, ',', '.');
                         $data['servico'][$j]['ValorComProf_3'] = number_format(($data['servico'][$j]['ValorComProf_3']), 2, ',', '.');
                         $data['servico'][$j]['ValorComProf_4'] = number_format(($data['servico'][$j]['ValorComProf_4']), 2, ',', '.');
+                        $data['servico'][$j]['ValorComProf_5'] = number_format(($data['servico'][$j]['ValorComProf_5']), 2, ',', '.');
+                        $data['servico'][$j]['ValorComProf_6'] = number_format(($data['servico'][$j]['ValorComProf_6']), 2, ',', '.');
 						
 						(!$data['servico'][$j]['ConcluidoProduto']) ? $data['servico'][$j]['ConcluidoProduto'] = 'N' : FALSE;
 						$data['radio'] = array(
@@ -5837,11 +5989,15 @@ class Orcatrata extends CI_Controller {
 						$_SESSION['Servico'][$j]['ProfissionalServico_2'] = $data['servico'][$j]['ProfissionalProduto_2'];
 						$_SESSION['Servico'][$j]['ProfissionalServico_3'] = $data['servico'][$j]['ProfissionalProduto_3'];
 						$_SESSION['Servico'][$j]['ProfissionalServico_4'] = $data['servico'][$j]['ProfissionalProduto_4'];
+						$_SESSION['Servico'][$j]['ProfissionalServico_5'] = $data['servico'][$j]['ProfissionalProduto_5'];
+						$_SESSION['Servico'][$j]['ProfissionalServico_6'] = $data['servico'][$j]['ProfissionalProduto_6'];
 						
 						$data['select'][$j]['ProfissionalServico_1'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos();
+						$data['select'][$j]['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos();
+						$data['select'][$j]['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos();
 						
 						if(!$data['servico'][$j]['ProfissionalProduto_1'] || $data['servico'][$j]['ProfissionalProduto_1'] == 0){
 							$data['cadastrar_servico'][$j]['Hidden_readonly_1'] = 'readonly=""';
@@ -5862,6 +6018,16 @@ class Orcatrata extends CI_Controller {
 							$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = 'readonly=""';
 						}else{
 							$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
+						}
+						if(!$data['servico'][$j]['ProfissionalProduto_5'] || $data['servico'][$j]['ProfissionalProduto_5'] == 0){
+							$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+						}else{
+							$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+						}
+						if(!$data['servico'][$j]['ProfissionalProduto_6'] || $data['servico'][$j]['ProfissionalProduto_6'] == 0){
+							$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+						}else{
+							$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
 						}						
 					}
                 }
@@ -6046,6 +6212,8 @@ class Orcatrata extends CI_Controller {
 		//$data['select']['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos();
+		//$data['select']['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos();
+		//$data['select']['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalProduto_1'] = $this->Usuario_model->select_usuario();
 		$data['select']['idSis_Usuario'] = $this->Usuario_model->select_usuario();
 		//$data['select']['Compartilhar'] = $this->Usuario_model->select_usuario_procedimentos();
@@ -6764,6 +6932,12 @@ class Orcatrata extends CI_Controller {
 					}
 					if(!$data['update']['servico']['inserir'][$j]['ProfissionalProduto_4']){
 						$data['update']['servico']['inserir'][$j]['ProfissionalProduto_4'] = 0;
+					}
+					if(!$data['update']['servico']['inserir'][$j]['ProfissionalProduto_5']){
+						$data['update']['servico']['inserir'][$j]['ProfissionalProduto_5'] = 0;
+					}
+					if(!$data['update']['servico']['inserir'][$j]['ProfissionalProduto_6']){
+						$data['update']['servico']['inserir'][$j]['ProfissionalProduto_6'] = 0;
 					}					
 
                     $data['update']['servico']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
@@ -6801,6 +6975,18 @@ class Orcatrata extends CI_Controller {
 						$data['update']['servico']['inserir'][$j]['ValorComProf_4'] = "0.00";
 					}else{
 						$data['update']['servico']['inserir'][$j]['ValorComProf_4'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['inserir'][$j]['ValorComProf_4']));
+					}
+
+					if(empty($data['update']['servico']['inserir'][$j]['ValorComProf_5'])){
+						$data['update']['servico']['inserir'][$j]['ValorComProf_5'] = "0.00";
+					}else{
+						$data['update']['servico']['inserir'][$j]['ValorComProf_5'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['inserir'][$j]['ValorComProf_5']));
+					}
+
+					if(empty($data['update']['servico']['inserir'][$j]['ValorComProf_6'])){
+						$data['update']['servico']['inserir'][$j]['ValorComProf_6'] = "0.00";
+					}else{
+						$data['update']['servico']['inserir'][$j]['ValorComProf_6'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['inserir'][$j]['ValorComProf_6']));
 					}
 
 					if(empty($data['update']['servico']['inserir'][$j]['ValorComissaoServico'])){
@@ -6861,6 +7047,12 @@ class Orcatrata extends CI_Controller {
 					if(!$data['update']['servico']['alterar'][$j]['ProfissionalProduto_4']){
 						$data['update']['servico']['alterar'][$j]['ProfissionalProduto_4'] = 0;
 					}
+					if(!$data['update']['servico']['alterar'][$j]['ProfissionalProduto_5']){
+						$data['update']['servico']['alterar'][$j]['ProfissionalProduto_5'] = 0;
+					}
+					if(!$data['update']['servico']['alterar'][$j]['ProfissionalProduto_6']){
+						$data['update']['servico']['alterar'][$j]['ProfissionalProduto_6'] = 0;
+					}
 					
 					$data['update']['servico']['alterar'][$j]['idTab_Valor_Produto'] = $data['update']['servico']['alterar'][$j]['idTab_Valor_Produto'];
 					
@@ -6894,6 +7086,18 @@ class Orcatrata extends CI_Controller {
 						$data['update']['servico']['alterar'][$j]['ValorComProf_4'] = "0.00";
 					}else{
 						$data['update']['servico']['alterar'][$j]['ValorComProf_4'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['alterar'][$j]['ValorComProf_4']));
+					}
+
+					if(empty($data['update']['servico']['alterar'][$j]['ValorComProf_5'])){
+						$data['update']['servico']['alterar'][$j]['ValorComProf_5'] = "0.00";
+					}else{
+						$data['update']['servico']['alterar'][$j]['ValorComProf_5'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['alterar'][$j]['ValorComProf_5']));
+					}
+
+					if(empty($data['update']['servico']['alterar'][$j]['ValorComProf_6'])){
+						$data['update']['servico']['alterar'][$j]['ValorComProf_6'] = "0.00";
+					}else{
+						$data['update']['servico']['alterar'][$j]['ValorComProf_6'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['alterar'][$j]['ValorComProf_6']));
 					}
 
 					if(empty($data['update']['servico']['alterar'][$j]['ValorComissaoServico'])){
@@ -7837,6 +8041,18 @@ class Orcatrata extends CI_Controller {
 				}else{
 					$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
 				}
+				$data['servico'][$j]['ProfissionalProduto_5'] = $this->input->post('ProfissionalServico_5' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_5'] || $data['servico'][$j]['ProfissionalProduto_5'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+				}
+				$data['servico'][$j]['ProfissionalProduto_6'] = $this->input->post('ProfissionalServico_6' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_6'] || $data['servico'][$j]['ProfissionalProduto_6'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
+				}
 				
 				$data['servico'][$j]['idTFProf_1'] = $this->input->post('idTFProf_Servico_1' . $i);
 				$data['servico'][$j]['ComFunProf_1'] = $this->input->post('ComFunProf_Servico_1' . $i);
@@ -7854,6 +8070,14 @@ class Orcatrata extends CI_Controller {
 				$data['servico'][$j]['ComFunProf_4'] = $this->input->post('ComFunProf_Servico_4' . $i);
 				$data['servico'][$j]['ValorComProf_4'] = $this->input->post('ValorComProf_Servico_4' . $i);
 				
+				$data['servico'][$j]['idTFProf_5'] = $this->input->post('idTFProf_Servico_5' . $i);
+				$data['servico'][$j]['ComFunProf_5'] = $this->input->post('ComFunProf_Servico_5' . $i);
+				$data['servico'][$j]['ValorComProf_5'] = $this->input->post('ValorComProf_Servico_5' . $i);
+				
+				$data['servico'][$j]['idTFProf_6'] = $this->input->post('idTFProf_Servico_6' . $i);
+				$data['servico'][$j]['ComFunProf_6'] = $this->input->post('ComFunProf_Servico_6' . $i);
+				$data['servico'][$j]['ValorComProf_6'] = $this->input->post('ValorComProf_Servico_6' . $i);
+				
 				(!$data['servico'][$j]['ConcluidoProduto']) ? $data['servico'][$j]['ConcluidoProduto'] = 'N' : FALSE;
 				$data['radio'] = array(
 					'ConcluidoServico' . $j => $this->basico->radio_checked($data['servico'][$j]['ConcluidoProduto'], 'ConcluidoServico' . $j, 'NS'),
@@ -7864,6 +8088,8 @@ class Orcatrata extends CI_Controller {
 				$data['select'][$j]['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_2']);
 				$data['select'][$j]['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_3']);
 				$data['select'][$j]['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_4']);
+				$data['select'][$j]['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_5']);
+				$data['select'][$j]['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_6']);
 				
                 $j++;
             }
@@ -8035,6 +8261,8 @@ class Orcatrata extends CI_Controller {
                         $data['servico'][$j]['ValorComProf_2'] = number_format(($data['servico'][$j]['ValorComProf_2']), 2, ',', '.');
                         $data['servico'][$j]['ValorComProf_3'] = number_format(($data['servico'][$j]['ValorComProf_3']), 2, ',', '.');
                         $data['servico'][$j]['ValorComProf_4'] = number_format(($data['servico'][$j]['ValorComProf_4']), 2, ',', '.');
+                        $data['servico'][$j]['ValorComProf_5'] = number_format(($data['servico'][$j]['ValorComProf_5']), 2, ',', '.');
+                        $data['servico'][$j]['ValorComProf_6'] = number_format(($data['servico'][$j]['ValorComProf_6']), 2, ',', '.');
 										
 						(!$data['servico'][$j]['ConcluidoProduto']) ? $data['servico'][$j]['ConcluidoProduto'] = 'N' : FALSE;
 						$data['radio'] = array(
@@ -8046,11 +8274,15 @@ class Orcatrata extends CI_Controller {
 						$_SESSION['Servico'][$j]['ProfissionalServico_2'] = $data['servico'][$j]['ProfissionalProduto_2'];
 						$_SESSION['Servico'][$j]['ProfissionalServico_3'] = $data['servico'][$j]['ProfissionalProduto_3'];
 						$_SESSION['Servico'][$j]['ProfissionalServico_4'] = $data['servico'][$j]['ProfissionalProduto_4'];
+						$_SESSION['Servico'][$j]['ProfissionalServico_5'] = $data['servico'][$j]['ProfissionalProduto_5'];
+						$_SESSION['Servico'][$j]['ProfissionalServico_6'] = $data['servico'][$j]['ProfissionalProduto_6'];
 						
 						$data['select'][$j]['ProfissionalServico_1'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos();
+						$data['select'][$j]['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos();
+						$data['select'][$j]['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos();
 						
 						if(!$data['servico'][$j]['ProfissionalProduto_1'] || $data['servico'][$j]['ProfissionalProduto_1'] == 0){
 							$data['cadastrar_servico'][$j]['Hidden_readonly_1'] = 'readonly=""';
@@ -8071,6 +8303,16 @@ class Orcatrata extends CI_Controller {
 							$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = 'readonly=""';
 						}else{
 							$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
+						}
+						if(!$data['servico'][$j]['ProfissionalProduto_5'] || $data['servico'][$j]['ProfissionalProduto_5'] == 0){
+							$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+						}else{
+							$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+						}
+						if(!$data['servico'][$j]['ProfissionalProduto_6'] || $data['servico'][$j]['ProfissionalProduto_6'] == 0){
+							$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+						}else{
+							$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
 						}						
 					}
                 }
@@ -8211,6 +8453,8 @@ class Orcatrata extends CI_Controller {
 		//$data['select']['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos();
+		//$data['select']['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos();
+		//$data['select']['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalProduto_1'] = $this->Usuario_model->select_usuario();
 		$data['select']['idSis_Usuario'] = $this->Usuario_model->select_usuario();
 		//$data['select']['Compartilhar'] = $this->Usuario_model->select_usuario_procedimentos();
@@ -8761,6 +9005,12 @@ class Orcatrata extends CI_Controller {
 					}
 					if(!$data['update']['servico']['inserir'][$j]['ProfissionalProduto_4']){
 						$data['update']['servico']['inserir'][$j]['ProfissionalProduto_4'] = 0;
+					}
+					if(!$data['update']['servico']['inserir'][$j]['ProfissionalProduto_5']){
+						$data['update']['servico']['inserir'][$j]['ProfissionalProduto_5'] = 0;
+					}
+					if(!$data['update']['servico']['inserir'][$j]['ProfissionalProduto_6']){
+						$data['update']['servico']['inserir'][$j]['ProfissionalProduto_6'] = 0;
 					}					
 
                     $data['update']['servico']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
@@ -8798,6 +9048,18 @@ class Orcatrata extends CI_Controller {
 						$data['update']['servico']['inserir'][$j]['ValorComProf_4'] = "0.00";
 					}else{
 						$data['update']['servico']['inserir'][$j]['ValorComProf_4'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['inserir'][$j]['ValorComProf_4']));
+					}
+
+					if(empty($data['update']['servico']['inserir'][$j]['ValorComProf_5'])){
+						$data['update']['servico']['inserir'][$j]['ValorComProf_5'] = "0.00";
+					}else{
+						$data['update']['servico']['inserir'][$j]['ValorComProf_5'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['inserir'][$j]['ValorComProf_5']));
+					}
+
+					if(empty($data['update']['servico']['inserir'][$j]['ValorComProf_6'])){
+						$data['update']['servico']['inserir'][$j]['ValorComProf_6'] = "0.00";
+					}else{
+						$data['update']['servico']['inserir'][$j]['ValorComProf_6'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['inserir'][$j]['ValorComProf_6']));
 					}
 
 					if(empty($data['update']['servico']['inserir'][$j]['ValorComissaoServico'])){
@@ -8858,6 +9120,12 @@ class Orcatrata extends CI_Controller {
 					if(!$data['update']['servico']['alterar'][$j]['ProfissionalProduto_4']){
 						$data['update']['servico']['alterar'][$j]['ProfissionalProduto_4'] = 0;
 					}
+					if(!$data['update']['servico']['alterar'][$j]['ProfissionalProduto_5']){
+						$data['update']['servico']['alterar'][$j]['ProfissionalProduto_5'] = 0;
+					}
+					if(!$data['update']['servico']['alterar'][$j]['ProfissionalProduto_6']){
+						$data['update']['servico']['alterar'][$j]['ProfissionalProduto_6'] = 0;
+					}
 					
 					$data['update']['servico']['alterar'][$j]['idTab_Valor_Produto'] = $data['update']['servico']['alterar'][$j]['idTab_Valor_Produto'];
 					$data['update']['servico']['alterar'][$j]['idTab_Produtos_Produto'] = $data['update']['servico']['alterar'][$j]['idTab_Produtos_Produto'];
@@ -8890,6 +9158,18 @@ class Orcatrata extends CI_Controller {
 						$data['update']['servico']['alterar'][$j]['ValorComProf_4'] = "0.00";
 					}else{
 						$data['update']['servico']['alterar'][$j]['ValorComProf_4'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['alterar'][$j]['ValorComProf_4']));
+					}
+
+					if(empty($data['update']['servico']['alterar'][$j]['ValorComProf_5'])){
+						$data['update']['servico']['alterar'][$j]['ValorComProf_5'] = "0.00";
+					}else{
+						$data['update']['servico']['alterar'][$j]['ValorComProf_5'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['alterar'][$j]['ValorComProf_5']));
+					}
+
+					if(empty($data['update']['servico']['alterar'][$j]['ValorComProf_6'])){
+						$data['update']['servico']['alterar'][$j]['ValorComProf_6'] = "0.00";
+					}else{
+						$data['update']['servico']['alterar'][$j]['ValorComProf_6'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['alterar'][$j]['ValorComProf_6']));
 					}
 
 					if(empty($data['update']['servico']['alterar'][$j]['ValorComissaoServico'])){
@@ -9646,6 +9926,18 @@ class Orcatrata extends CI_Controller {
 				}else{
 					$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
 				}
+				$data['servico'][$j]['ProfissionalProduto_5'] = $this->input->post('ProfissionalServico_5' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_5'] || $data['servico'][$j]['ProfissionalProduto_5'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+				}
+				$data['servico'][$j]['ProfissionalProduto_6'] = $this->input->post('ProfissionalServico_6' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_6'] || $data['servico'][$j]['ProfissionalProduto_6'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
+				}
 								
 				$data['servico'][$j]['idTFProf_1'] = $this->input->post('idTFProf_Servico_1' . $i);
 				$data['servico'][$j]['ComFunProf_1'] = $this->input->post('ComFunProf_Servico_1' . $i);
@@ -9663,6 +9955,14 @@ class Orcatrata extends CI_Controller {
 				$data['servico'][$j]['ComFunProf_4'] = $this->input->post('ComFunProf_Servico_4' . $i);
 				$data['servico'][$j]['ValorComProf_4'] = $this->input->post('ValorComProf_Servico_4' . $i);
 				
+				$data['servico'][$j]['idTFProf_5'] = $this->input->post('idTFProf_Servico_5' . $i);
+				$data['servico'][$j]['ComFunProf_5'] = $this->input->post('ComFunProf_Servico_5' . $i);
+				$data['servico'][$j]['ValorComProf_5'] = $this->input->post('ValorComProf_Servico_5' . $i);
+				
+				$data['servico'][$j]['idTFProf_6'] = $this->input->post('idTFProf_Servico_6' . $i);
+				$data['servico'][$j]['ComFunProf_6'] = $this->input->post('ComFunProf_Servico_6' . $i);
+				$data['servico'][$j]['ValorComProf_6'] = $this->input->post('ValorComProf_Servico_6' . $i);
+				
 				(!$data['servico'][$j]['ConcluidoProduto']) ? $data['servico'][$j]['ConcluidoProduto'] = 'N' : FALSE;
 				$data['radio'] = array(
 					'ConcluidoServico' . $j => $this->basico->radio_checked($data['servico'][$j]['ConcluidoProduto'], 'ConcluidoServico' . $j, 'NS'),
@@ -9673,6 +9973,8 @@ class Orcatrata extends CI_Controller {
 				$data['select'][$j]['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_2']);
 				$data['select'][$j]['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_3']);
 				$data['select'][$j]['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_4']);
+				$data['select'][$j]['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_5']);
+				$data['select'][$j]['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_6']);
 				
                 $j++;
             }
@@ -9855,6 +10157,8 @@ class Orcatrata extends CI_Controller {
                         $data['servico'][$j]['ValorComProf_2'] = number_format(($data['servico'][$j]['ValorComProf_2']), 2, ',', '.');
                         $data['servico'][$j]['ValorComProf_3'] = number_format(($data['servico'][$j]['ValorComProf_3']), 2, ',', '.');
                         $data['servico'][$j]['ValorComProf_4'] = number_format(($data['servico'][$j]['ValorComProf_4']), 2, ',', '.');
+                        $data['servico'][$j]['ValorComProf_5'] = number_format(($data['servico'][$j]['ValorComProf_5']), 2, ',', '.');
+                        $data['servico'][$j]['ValorComProf_6'] = number_format(($data['servico'][$j]['ValorComProf_6']), 2, ',', '.');
 										
 						(!$data['servico'][$j]['ConcluidoProduto']) ? $data['servico'][$j]['ConcluidoProduto'] = 'N' : FALSE;
 						$data['radio'] = array(
@@ -9866,11 +10170,15 @@ class Orcatrata extends CI_Controller {
 						$_SESSION['Servico'][$j]['ProfissionalServico_2'] = $data['servico'][$j]['ProfissionalProduto_2'];
 						$_SESSION['Servico'][$j]['ProfissionalServico_3'] = $data['servico'][$j]['ProfissionalProduto_3'];
 						$_SESSION['Servico'][$j]['ProfissionalServico_4'] = $data['servico'][$j]['ProfissionalProduto_4'];
+						$_SESSION['Servico'][$j]['ProfissionalServico_5'] = $data['servico'][$j]['ProfissionalProduto_5'];
+						$_SESSION['Servico'][$j]['ProfissionalServico_6'] = $data['servico'][$j]['ProfissionalProduto_6'];
 						
 						$data['select'][$j]['ProfissionalServico_1'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos();
+						$data['select'][$j]['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos();
+						$data['select'][$j]['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos();
 						
 						if(!$data['servico'][$j]['ProfissionalProduto_1'] || $data['servico'][$j]['ProfissionalProduto_1'] == 0){
 							$data['cadastrar_servico'][$j]['Hidden_readonly_1'] = 'readonly=""';
@@ -9891,6 +10199,16 @@ class Orcatrata extends CI_Controller {
 							$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = 'readonly=""';
 						}else{
 							$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
+						}
+						if(!$data['servico'][$j]['ProfissionalProduto_5'] || $data['servico'][$j]['ProfissionalProduto_5'] == 0){
+							$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+						}else{
+							$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+						}
+						if(!$data['servico'][$j]['ProfissionalProduto_6'] || $data['servico'][$j]['ProfissionalProduto_6'] == 0){
+							$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+						}else{
+							$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
 						}
 					}
                 }
@@ -10026,6 +10344,8 @@ class Orcatrata extends CI_Controller {
 		//$data['select']['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos();
+		//$data['select']['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos();
+		//$data['select']['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalProduto_1'] = $this->Usuario_model->select_usuario();
 		$data['select']['idSis_Usuario'] = $this->Usuario_model->select_usuario();
 		//$data['select']['Compartilhar'] = $this->Usuario_model->select_usuario_procedimentos();
@@ -10652,6 +10972,12 @@ class Orcatrata extends CI_Controller {
 					if(!$data['update']['servico']['inserir'][$j]['ProfissionalProduto_4']){
 						$data['update']['servico']['inserir'][$j]['ProfissionalProduto_4'] = 0;
 					}
+					if(!$data['update']['servico']['inserir'][$j]['ProfissionalProduto_5']){
+						$data['update']['servico']['inserir'][$j]['ProfissionalProduto_5'] = 0;
+					}
+					if(!$data['update']['servico']['inserir'][$j]['ProfissionalProduto_6']){
+						$data['update']['servico']['inserir'][$j]['ProfissionalProduto_6'] = 0;
+					}
 
                     $data['update']['servico']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
                     $data['update']['servico']['inserir'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
@@ -10688,6 +11014,18 @@ class Orcatrata extends CI_Controller {
 						$data['update']['servico']['inserir'][$j]['ValorComProf_4'] = "0.00";
 					}else{
 						$data['update']['servico']['inserir'][$j]['ValorComProf_4'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['inserir'][$j]['ValorComProf_4']));
+					}
+
+					if(empty($data['update']['servico']['inserir'][$j]['ValorComProf_5'])){
+						$data['update']['servico']['inserir'][$j]['ValorComProf_5'] = "0.00";
+					}else{
+						$data['update']['servico']['inserir'][$j]['ValorComProf_5'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['inserir'][$j]['ValorComProf_5']));
+					}
+
+					if(empty($data['update']['servico']['inserir'][$j]['ValorComProf_6'])){
+						$data['update']['servico']['inserir'][$j]['ValorComProf_6'] = "0.00";
+					}else{
+						$data['update']['servico']['inserir'][$j]['ValorComProf_6'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['inserir'][$j]['ValorComProf_6']));
 					}
 
 					if(empty($data['update']['servico']['inserir'][$j]['ValorComissaoServico'])){
@@ -10748,6 +11086,12 @@ class Orcatrata extends CI_Controller {
 					if(!$data['update']['servico']['alterar'][$j]['ProfissionalProduto_4']){
 						$data['update']['servico']['alterar'][$j]['ProfissionalProduto_4'] = 0;
 					}
+					if(!$data['update']['servico']['alterar'][$j]['ProfissionalProduto_5']){
+						$data['update']['servico']['alterar'][$j]['ProfissionalProduto_5'] = 0;
+					}
+					if(!$data['update']['servico']['alterar'][$j]['ProfissionalProduto_6']){
+						$data['update']['servico']['alterar'][$j]['ProfissionalProduto_6'] = 0;
+					}
 
 					$data['update']['servico']['alterar'][$j]['idTab_Valor_Produto'] = $data['update']['servico']['alterar'][$j]['idTab_Valor_Produto'];
 					$data['update']['servico']['alterar'][$j]['idTab_Produtos_Produto'] = $data['update']['servico']['alterar'][$j]['idTab_Produtos_Produto'];
@@ -10780,6 +11124,18 @@ class Orcatrata extends CI_Controller {
 						$data['update']['servico']['alterar'][$j]['ValorComProf_4'] = "0.00";
 					}else{
 						$data['update']['servico']['alterar'][$j]['ValorComProf_4'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['alterar'][$j]['ValorComProf_4']));
+					}
+
+					if(empty($data['update']['servico']['alterar'][$j]['ValorComProf_5'])){
+						$data['update']['servico']['alterar'][$j]['ValorComProf_5'] = "0.00";
+					}else{
+						$data['update']['servico']['alterar'][$j]['ValorComProf_5'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['alterar'][$j]['ValorComProf_5']));
+					}
+
+					if(empty($data['update']['servico']['alterar'][$j]['ValorComProf_6'])){
+						$data['update']['servico']['alterar'][$j]['ValorComProf_6'] = "0.00";
+					}else{
+						$data['update']['servico']['alterar'][$j]['ValorComProf_6'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['alterar'][$j]['ValorComProf_6']));
 					}
 
 					if(empty($data['update']['servico']['alterar'][$j]['ValorComissaoServico'])){
@@ -11736,6 +12092,18 @@ class Orcatrata extends CI_Controller {
 				}else{
 					$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
 				}
+				$data['servico'][$j]['ProfissionalProduto_5'] = $this->input->post('ProfissionalServico_5' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_5'] || $data['servico'][$j]['ProfissionalProduto_5'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+				}
+				$data['servico'][$j]['ProfissionalProduto_6'] = $this->input->post('ProfissionalServico_6' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_6'] || $data['servico'][$j]['ProfissionalProduto_6'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
+				}
 
 				$data['servico'][$j]['idTFProf_1'] = $this->input->post('idTFProf_Servico_1' . $i);
 				$data['servico'][$j]['ComFunProf_1'] = $this->input->post('ComFunProf_Servico_1' . $i);
@@ -11752,6 +12120,14 @@ class Orcatrata extends CI_Controller {
 				$data['servico'][$j]['idTFProf_4'] = $this->input->post('idTFProf_Servico_4' . $i);
 				$data['servico'][$j]['ComFunProf_4'] = $this->input->post('ComFunProf_Servico_4' . $i);
 				$data['servico'][$j]['ValorComProf_4'] = $this->input->post('ValorComProf_Servico_4' . $i);
+				
+				$data['servico'][$j]['idTFProf_5'] = $this->input->post('idTFProf_Servico_5' . $i);
+				$data['servico'][$j]['ComFunProf_5'] = $this->input->post('ComFunProf_Servico_5' . $i);
+				$data['servico'][$j]['ValorComProf_5'] = $this->input->post('ValorComProf_Servico_5' . $i);
+				
+				$data['servico'][$j]['idTFProf_6'] = $this->input->post('idTFProf_Servico_6' . $i);
+				$data['servico'][$j]['ComFunProf_6'] = $this->input->post('ComFunProf_Servico_6' . $i);
+				$data['servico'][$j]['ValorComProf_6'] = $this->input->post('ValorComProf_Servico_6' . $i);
 				
 				(!$data['servico'][$j]['ConcluidoProduto']) ? $data['servico'][$j]['ConcluidoProduto'] = 'N' : FALSE;
 				$data['radio'] = array(
@@ -11939,6 +12315,8 @@ class Orcatrata extends CI_Controller {
 		$data['select']['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos();
 		$data['select']['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos();
 		$data['select']['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos();
+		$data['select']['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos();
+		$data['select']['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalProduto_1'] = $this->Usuario_model->select_usuario();
 		$data['select']['idSis_Usuario'] = $this->Usuario_model->select_usuario();
 		$data['select']['Compartilhar'] = $this->Usuario_model->select_usuario_procedimentos();
@@ -12440,6 +12818,12 @@ class Orcatrata extends CI_Controller {
 					if(!$data['servico'][$j]['ProfissionalProduto_4']){
 						$data['servico'][$j]['ProfissionalProduto_4'] = 0;
 					}
+					if(!$data['servico'][$j]['ProfissionalProduto_5']){
+						$data['servico'][$j]['ProfissionalProduto_5'] = 0;
+					}
+					if(!$data['servico'][$j]['ProfissionalProduto_6']){
+						$data['servico'][$j]['ProfissionalProduto_6'] = 0;
+					}
 					
 					if(empty($data['servico'][$j]['ValorProduto'])){
 						$data['servico'][$j]['ValorProduto'] = "0.00";
@@ -12469,6 +12853,18 @@ class Orcatrata extends CI_Controller {
 						$data['servico'][$j]['ValorComProf_4'] = "0.00";
 					}else{
 						$data['servico'][$j]['ValorComProf_4'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorComProf_4']));
+					}
+						
+					if(empty($data['servico'][$j]['ValorComProf_5'])){
+						$data['servico'][$j]['ValorComProf_5'] = "0.00";
+					}else{
+						$data['servico'][$j]['ValorComProf_5'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorComProf_5']));
+					}
+					
+					if(empty($data['servico'][$j]['ValorComProf_6'])){
+						$data['servico'][$j]['ValorComProf_6'] = "0.00";
+					}else{
+						$data['servico'][$j]['ValorComProf_6'] = str_replace(',', '.', str_replace('.', '', $data['servico'][$j]['ValorComProf_6']));
 					}
 						
 					if(empty($data['servico'][$j]['ValorComissaoServico'])){
@@ -13133,6 +13529,18 @@ class Orcatrata extends CI_Controller {
 				}else{
 					$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
 				}
+				$data['servico'][$j]['ProfissionalProduto_5'] = $this->input->post('ProfissionalServico_5' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_5'] || $data['servico'][$j]['ProfissionalProduto_5'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+				}
+				$data['servico'][$j]['ProfissionalProduto_6'] = $this->input->post('ProfissionalServico_6' . $i);
+				if(!$data['servico'][$j]['ProfissionalProduto_6'] || $data['servico'][$j]['ProfissionalProduto_6'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
+				}
 
 				$data['servico'][$j]['idTFProf_1'] = $this->input->post('idTFProf_Servico_1' . $i);
 				$data['servico'][$j]['ComFunProf_1'] = $this->input->post('ComFunProf_Servico_1' . $i);
@@ -13150,6 +13558,14 @@ class Orcatrata extends CI_Controller {
 				$data['servico'][$j]['ComFunProf_4'] = $this->input->post('ComFunProf_Servico_4' . $i);
 				$data['servico'][$j]['ValorComProf_4'] = $this->input->post('ValorComProf_Servico_4' . $i);
 				
+				$data['servico'][$j]['idTFProf_5'] = $this->input->post('idTFProf_Servico_5' . $i);
+				$data['servico'][$j]['ComFunProf_5'] = $this->input->post('ComFunProf_Servico_5' . $i);
+				$data['servico'][$j]['ValorComProf_5'] = $this->input->post('ValorComProf_Servico_5' . $i);
+				
+				$data['servico'][$j]['idTFProf_6'] = $this->input->post('idTFProf_Servico_6' . $i);
+				$data['servico'][$j]['ComFunProf_6'] = $this->input->post('ComFunProf_Servico_6' . $i);
+				$data['servico'][$j]['ValorComProf_6'] = $this->input->post('ValorComProf_Servico_6' . $i);
+				
 				(!$data['servico'][$j]['ConcluidoProduto']) ? $data['servico'][$j]['ConcluidoProduto'] = 'N' : FALSE;
 				$data['radio'] = array(
 					'ConcluidoServico' . $j => $this->basico->radio_checked($data['servico'][$j]['ConcluidoProduto'], 'ConcluidoServico' . $j, 'NS'),
@@ -13160,6 +13576,8 @@ class Orcatrata extends CI_Controller {
 				$data['select'][$j]['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_2']);
 				$data['select'][$j]['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_3']);
 				$data['select'][$j]['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_4']);
+				$data['select'][$j]['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_5']);
+				$data['select'][$j]['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos($data['servico'][$j]['ProfissionalProduto_6']);
 				
                 $j++;
             }
@@ -13328,6 +13746,8 @@ class Orcatrata extends CI_Controller {
                         $data['servico'][$j]['ValorComProf_2'] = number_format(($data['servico'][$j]['ValorComProf_2']), 2, ',', '.');
                         $data['servico'][$j]['ValorComProf_3'] = number_format(($data['servico'][$j]['ValorComProf_3']), 2, ',', '.');
                         $data['servico'][$j]['ValorComProf_4'] = number_format(($data['servico'][$j]['ValorComProf_4']), 2, ',', '.');
+                        $data['servico'][$j]['ValorComProf_5'] = number_format(($data['servico'][$j]['ValorComProf_5']), 2, ',', '.');
+                        $data['servico'][$j]['ValorComProf_6'] = number_format(($data['servico'][$j]['ValorComProf_6']), 2, ',', '.');
 										
 						(!$data['servico'][$j]['ConcluidoProduto']) ? $data['servico'][$j]['ConcluidoProduto'] = 'N' : FALSE;
 						$data['radio'] = array(
@@ -13339,11 +13759,15 @@ class Orcatrata extends CI_Controller {
 						$_SESSION['Servico'][$j]['ProfissionalServico_2'] = $data['servico'][$j]['ProfissionalProduto_2'];
 						$_SESSION['Servico'][$j]['ProfissionalServico_3'] = $data['servico'][$j]['ProfissionalProduto_3'];
 						$_SESSION['Servico'][$j]['ProfissionalServico_4'] = $data['servico'][$j]['ProfissionalProduto_4'];
+						$_SESSION['Servico'][$j]['ProfissionalServico_5'] = $data['servico'][$j]['ProfissionalProduto_5'];
+						$_SESSION['Servico'][$j]['ProfissionalServico_6'] = $data['servico'][$j]['ProfissionalProduto_6'];
 						
 						$data['select'][$j]['ProfissionalServico_1'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos();
+						$data['select'][$j]['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos();
+						$data['select'][$j]['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos();
 						
 						if(!$data['servico'][$j]['ProfissionalProduto_1'] || $data['servico'][$j]['ProfissionalProduto_1'] == 0){
 							$data['cadastrar_servico'][$j]['Hidden_readonly_1'] = 'readonly=""';
@@ -13364,6 +13788,16 @@ class Orcatrata extends CI_Controller {
 							$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = 'readonly=""';
 						}else{
 							$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
+						}
+						if(!$data['servico'][$j]['ProfissionalProduto_5'] || $data['servico'][$j]['ProfissionalProduto_5'] == 0){
+							$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+						}else{
+							$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+						}
+						if(!$data['servico'][$j]['ProfissionalProduto_6'] || $data['servico'][$j]['ProfissionalProduto_6'] == 0){
+							$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+						}else{
+							$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
 						}						
 					}
                 }
@@ -13495,6 +13929,8 @@ class Orcatrata extends CI_Controller {
 		//$data['select']['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalServico_3'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalServico_4'] = $this->Usuario_model->select_usuario_servicos();
+		//$data['select']['ProfissionalServico_5'] = $this->Usuario_model->select_usuario_servicos();
+		//$data['select']['ProfissionalServico_6'] = $this->Usuario_model->select_usuario_servicos();
 		//$data['select']['ProfissionalProduto_1'] = $this->Usuario_model->select_usuario();
 		$data['select']['idSis_Usuario'] = $this->Usuario_model->select_usuario();
 		//$data['select']['Compartilhar'] = $this->Usuario_model->select_usuario_procedimentos();
@@ -14028,6 +14464,12 @@ class Orcatrata extends CI_Controller {
 					if(!$data['update']['servico']['inserir'][$j]['ProfissionalProduto_4']){
 						$data['update']['servico']['inserir'][$j]['ProfissionalProduto_4'] = 0;
 					}
+					if(!$data['update']['servico']['inserir'][$j]['ProfissionalProduto_5']){
+						$data['update']['servico']['inserir'][$j]['ProfissionalProduto_5'] = 0;
+					}
+					if(!$data['update']['servico']['inserir'][$j]['ProfissionalProduto_6']){
+						$data['update']['servico']['inserir'][$j]['ProfissionalProduto_6'] = 0;
+					}
 					
                     $data['update']['servico']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
                     $data['update']['servico']['inserir'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
@@ -14064,6 +14506,18 @@ class Orcatrata extends CI_Controller {
 						$data['update']['servico']['inserir'][$j]['ValorComProf_4'] = "0.00";
 					}else{
 						$data['update']['servico']['inserir'][$j]['ValorComProf_4'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['inserir'][$j]['ValorComProf_4']));
+					}
+
+					if(empty($data['update']['servico']['inserir'][$j]['ValorComProf_5'])){
+						$data['update']['servico']['inserir'][$j]['ValorComProf_5'] = "0.00";
+					}else{
+						$data['update']['servico']['inserir'][$j]['ValorComProf_5'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['inserir'][$j]['ValorComProf_5']));
+					}
+
+					if(empty($data['update']['servico']['inserir'][$j]['ValorComProf_6'])){
+						$data['update']['servico']['inserir'][$j]['ValorComProf_6'] = "0.00";
+					}else{
+						$data['update']['servico']['inserir'][$j]['ValorComProf_6'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['inserir'][$j]['ValorComProf_6']));
 					}
 					
 					if(empty($data['update']['servico']['inserir'][$j]['ValorComissaoServico'])){
@@ -14122,6 +14576,12 @@ class Orcatrata extends CI_Controller {
 					if(!$data['update']['servico']['alterar'][$j]['ProfissionalProduto_4']){
 						$data['update']['servico']['alterar'][$j]['ProfissionalProduto_4'] = 0;
 					}
+					if(!$data['update']['servico']['alterar'][$j]['ProfissionalProduto_5']){
+						$data['update']['servico']['alterar'][$j]['ProfissionalProduto_5'] = 0;
+					}
+					if(!$data['update']['servico']['alterar'][$j]['ProfissionalProduto_6']){
+						$data['update']['servico']['alterar'][$j]['ProfissionalProduto_6'] = 0;
+					}
 					
 					//$data['update']['servico']['alterar'][$j]['idTab_Valor_Produto'] = $data['update']['servico']['alterar'][$j]['idTab_Valor_Produto'];
 					$data['update']['servico']['alterar'][$j]['idTab_Produtos_Produto'] = $data['update']['servico']['alterar'][$j]['idTab_Produtos_Produto'];
@@ -14154,6 +14614,18 @@ class Orcatrata extends CI_Controller {
 						$data['update']['servico']['alterar'][$j]['ValorComProf_4'] = "0.00";
 					}else{
 						$data['update']['servico']['alterar'][$j]['ValorComProf_4'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['alterar'][$j]['ValorComProf_4']));
+					}
+
+					if(empty($data['update']['servico']['alterar'][$j]['ValorComProf_5'])){
+						$data['update']['servico']['alterar'][$j]['ValorComProf_5'] = "0.00";
+					}else{
+						$data['update']['servico']['alterar'][$j]['ValorComProf_5'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['alterar'][$j]['ValorComProf_5']));
+					}
+
+					if(empty($data['update']['servico']['alterar'][$j]['ValorComProf_6'])){
+						$data['update']['servico']['alterar'][$j]['ValorComProf_6'] = "0.00";
+					}else{
+						$data['update']['servico']['alterar'][$j]['ValorComProf_6'] = str_replace(',', '.', str_replace('.', '', $data['update']['servico']['alterar'][$j]['ValorComProf_6']));
 					}
 
 					if(empty($data['update']['servico']['alterar'][$j]['ValorComissaoServico'])){
@@ -18060,11 +18532,15 @@ class Orcatrata extends CI_Controller {
 				$data['produto'][$j]['ProfissionalProduto_2'] = $this->input->post('ProfissionalProduto_2' . $i);
 				$data['produto'][$j]['ProfissionalProduto_3'] = $this->input->post('ProfissionalProduto_3' . $i);
 				$data['produto'][$j]['ProfissionalProduto_4'] = $this->input->post('ProfissionalProduto_4' . $i);
+				$data['produto'][$j]['ProfissionalProduto_5'] = $this->input->post('ProfissionalProduto_5' . $i);
+				$data['produto'][$j]['ProfissionalProduto_6'] = $this->input->post('ProfissionalProduto_6' . $i);
 	
 				$data['select'][$j]['ProfissionalProduto_1'] = $this->Usuario_model->select_usuario_servicos($data['produto'][$j]['ProfissionalProduto_1']);
 				$data['select'][$j]['ProfissionalProduto_2'] = $this->Usuario_model->select_usuario_servicos($data['produto'][$j]['ProfissionalProduto_2']);
 				$data['select'][$j]['ProfissionalProduto_3'] = $this->Usuario_model->select_usuario_servicos($data['produto'][$j]['ProfissionalProduto_3']);
 				$data['select'][$j]['ProfissionalProduto_4'] = $this->Usuario_model->select_usuario_servicos($data['produto'][$j]['ProfissionalProduto_4']);
+				$data['select'][$j]['ProfissionalProduto_5'] = $this->Usuario_model->select_usuario_servicos($data['produto'][$j]['ProfissionalProduto_5']);
+				$data['select'][$j]['ProfissionalProduto_6'] = $this->Usuario_model->select_usuario_servicos($data['produto'][$j]['ProfissionalProduto_6']);
 				
 				if(!$data['produto'][$j]['ProfissionalProduto_1'] || $data['produto'][$j]['ProfissionalProduto_1'] == 0){
 					$data['cadastrar_servico'][$j]['Hidden_readonly_1'] = 'readonly=""';
@@ -18086,6 +18562,16 @@ class Orcatrata extends CI_Controller {
 				}else{
 					$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
 				}
+				if(!$data['produto'][$j]['ProfissionalProduto_5'] || $data['produto'][$j]['ProfissionalProduto_5'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+				}
+				if(!$data['produto'][$j]['ProfissionalProduto_6'] || $data['produto'][$j]['ProfissionalProduto_6'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
+				}
 								
 				$data['produto'][$j]['idTFProf_1'] = $this->input->post('idTFProf_Servico_1' . $i);
 				$data['produto'][$j]['ComFunProf_1'] = $this->input->post('ComFunProf_Servico_1' . $i);
@@ -18102,6 +18588,14 @@ class Orcatrata extends CI_Controller {
 				$data['produto'][$j]['idTFProf_4'] = $this->input->post('idTFProf_Servico_4' . $i);
 				$data['produto'][$j]['ComFunProf_4'] = $this->input->post('ComFunProf_Servico_4' . $i);
 				$data['produto'][$j]['ValorComProf_4'] = $this->input->post('ValorComProf_Servico_4' . $i);
+				
+				$data['produto'][$j]['idTFProf_5'] = $this->input->post('idTFProf_Servico_5' . $i);
+				$data['produto'][$j]['ComFunProf_5'] = $this->input->post('ComFunProf_Servico_5' . $i);
+				$data['produto'][$j]['ValorComProf_5'] = $this->input->post('ValorComProf_Servico_5' . $i);
+				
+				$data['produto'][$j]['idTFProf_6'] = $this->input->post('idTFProf_Servico_6' . $i);
+				$data['produto'][$j]['ComFunProf_6'] = $this->input->post('ComFunProf_Servico_6' . $i);
+				$data['produto'][$j]['ValorComProf_6'] = $this->input->post('ValorComProf_Servico_6' . $i);
 				
 				$j++;
             }
@@ -18164,7 +18658,7 @@ class Orcatrata extends CI_Controller {
                     for($j=1; $j <= $data['count']['PRCount']; $j++) {
                         
 						$_SESSION['Produto'][$j]['SubtotalProduto'] = number_format(($data['produto'][$j]['ValorProduto'] * $data['produto'][$j]['QtdProduto']), 2, ',', '.');
-						$data['produto'][$j]['ValorComissaoServico'] = number_format(($data['produto'][$j]['ValorComissaoServico']), 2, ',', '.');						
+						$data['produto'][$j]['ValorComissaoServico'] = number_format(($data['produto'][$j]['ValorComissaoServico']), 2, ',', '.');
 						$data['produto'][$j]['DataConcluidoProduto'] = $this->basico->mascara_data($data['produto'][$j]['DataConcluidoProduto'], 'barras');
                         
 						$data['produto'][$j]['DataPagoComissaoServico'] = $this->basico->mascara_data($data['produto'][$j]['DataPagoComissaoServico'], 'barras');
@@ -18181,11 +18675,15 @@ class Orcatrata extends CI_Controller {
                         $data['produto'][$j]['ValorComProf_2'] = number_format(($data['produto'][$j]['ValorComProf_2']), 2, ',', '.');
                         $data['produto'][$j]['ValorComProf_3'] = number_format(($data['produto'][$j]['ValorComProf_3']), 2, ',', '.');
 						$data['produto'][$j]['ValorComProf_4'] = number_format(($data['produto'][$j]['ValorComProf_4']), 2, ',', '.');
+						$data['produto'][$j]['ValorComProf_5'] = number_format(($data['produto'][$j]['ValorComProf_5']), 2, ',', '.');
+						$data['produto'][$j]['ValorComProf_6'] = number_format(($data['produto'][$j]['ValorComProf_6']), 2, ',', '.');
 											
 						$data['select'][$j]['ProfissionalProduto_1'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalProduto_2'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalProduto_3'] = $this->Usuario_model->select_usuario_servicos();
-						$data['select'][$j]['ProfissionalProduto_4'] = $this->Usuario_model->select_usuario_servicos();						
+						$data['select'][$j]['ProfissionalProduto_4'] = $this->Usuario_model->select_usuario_servicos();
+						$data['select'][$j]['ProfissionalProduto_5'] = $this->Usuario_model->select_usuario_servicos();	
+						$data['select'][$j]['ProfissionalProduto_6'] = $this->Usuario_model->select_usuario_servicos();	
 						
 						if(!$data['produto'][$j]['ProfissionalProduto_1'] || $data['produto'][$j]['ProfissionalProduto_1'] == 0){
 							$data['cadastrar_servico'][$j]['Hidden_readonly_1'] = 'readonly=""';
@@ -18206,6 +18704,16 @@ class Orcatrata extends CI_Controller {
 							$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = 'readonly=""';
 						}else{
 							$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
+						}
+						if(!$data['produto'][$j]['ProfissionalProduto_5'] || $data['produto'][$j]['ProfissionalProduto_5'] == 0){
+							$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+						}else{
+							$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+						}
+						if(!$data['produto'][$j]['ProfissionalProduto_6'] || $data['produto'][$j]['ProfissionalProduto_6'] == 0){
+							$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+						}else{
+							$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
 						}						
 						/*
 						$cont_id_Fun_1[$j]=0;
@@ -18451,6 +18959,12 @@ class Orcatrata extends CI_Controller {
 					if(!$data['update']['produto']['alterar'][$j]['ProfissionalProduto_4']){
 						$data['update']['produto']['alterar'][$j]['ProfissionalProduto_4'] = 0;
 					}
+					if(!$data['update']['produto']['alterar'][$j]['ProfissionalProduto_5']){
+						$data['update']['produto']['alterar'][$j]['ProfissionalProduto_5'] = 0;
+					}
+					if(!$data['update']['produto']['alterar'][$j]['ProfissionalProduto_6']){
+						$data['update']['produto']['alterar'][$j]['ProfissionalProduto_6'] = 0;
+					}
 
 					if(empty($data['update']['produto']['alterar'][$j]['ValorComProf_1'])){
 						$data['update']['produto']['alterar'][$j]['ValorComProf_1'] = "0.00";
@@ -18474,6 +18988,18 @@ class Orcatrata extends CI_Controller {
 						$data['update']['produto']['alterar'][$j]['ValorComProf_4'] = "0.00";
 					}else{
 						$data['update']['produto']['alterar'][$j]['ValorComProf_4'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['alterar'][$j]['ValorComProf_4']));
+					}
+
+					if(empty($data['update']['produto']['alterar'][$j]['ValorComProf_5'])){
+						$data['update']['produto']['alterar'][$j]['ValorComProf_5'] = "0.00";
+					}else{
+						$data['update']['produto']['alterar'][$j]['ValorComProf_5'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['alterar'][$j]['ValorComProf_5']));
+					}
+
+					if(empty($data['update']['produto']['alterar'][$j]['ValorComProf_6'])){
+						$data['update']['produto']['alterar'][$j]['ValorComProf_6'] = "0.00";
+					}else{
+						$data['update']['produto']['alterar'][$j]['ValorComProf_6'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['alterar'][$j]['ValorComProf_6']));
 					}
 
 					if ($data['query']['QuitadoParcelas'] == 'S') $data['update']['produto']['alterar'][$j]['StatusComissaoServico'] = 'S';
@@ -20289,12 +20815,15 @@ class Orcatrata extends CI_Controller {
                 $data['produto'][$j]['idApp_OrcaTrata'] = $this->input->post('idApp_OrcaTrata' . $i);
 				$data['produto'][$j]['ObsProduto'] = $this->input->post('ObsProduto' . $i);
                 $data['produto'][$j]['ConcluidoProduto'] = $this->input->post('ConcluidoProduto' . $i);
-                $data['produto'][$j]['ValorComissaoServico'] = $this->input->post('ValorComissaoServico' . $i);
+                /*
+				$data['produto'][$j]['ValorComissaoServico'] = $this->input->post('ValorComissaoServico' . $i);
 				
 				$data['produto'][$j]['ProfissionalProduto_1'] = $this->input->post('ProfissionalProduto_1' . $i);
 				$data['produto'][$j]['ProfissionalProduto_2'] = $this->input->post('ProfissionalProduto_2' . $i);
 				$data['produto'][$j]['ProfissionalProduto_3'] = $this->input->post('ProfissionalProduto_3' . $i);
 				$data['produto'][$j]['ProfissionalProduto_4'] = $this->input->post('ProfissionalProduto_4' . $i);
+				$data['produto'][$j]['ProfissionalProduto_5'] = $this->input->post('ProfissionalProduto_5' . $i);
+				$data['produto'][$j]['ProfissionalProduto_6'] = $this->input->post('ProfissionalProduto_6' . $i);
 				
 				if(!$data['produto'][$j]['ProfissionalProduto_1'] || $data['produto'][$j]['ProfissionalProduto_1'] == 0){
 					$data['cadastrar_servico'][$j]['Hidden_readonly_1'] = 'readonly=""';
@@ -20316,6 +20845,16 @@ class Orcatrata extends CI_Controller {
 				}else{
 					$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
 				}
+				if(!$data['produto'][$j]['ProfissionalProduto_5'] || $data['produto'][$j]['ProfissionalProduto_5'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+				}
+				if(!$data['produto'][$j]['ProfissionalProduto_6'] || $data['produto'][$j]['ProfissionalProduto_6'] == 0){
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+				}else{
+					$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
+				}
 								
 				$data['produto'][$j]['idTFProf_1'] = $this->input->post('idTFProf_Servico_1' . $i);
 				$data['produto'][$j]['ComFunProf_1'] = $this->input->post('ComFunProf_Servico_1' . $i);
@@ -20333,11 +20872,21 @@ class Orcatrata extends CI_Controller {
 				$data['produto'][$j]['ComFunProf_4'] = $this->input->post('ComFunProf_Servico_4' . $i);
 				$data['produto'][$j]['ValorComProf_4'] = $this->input->post('ValorComProf_Servico_4' . $i);
 				
+				$data['produto'][$j]['idTFProf_5'] = $this->input->post('idTFProf_Servico_5' . $i);
+				$data['produto'][$j]['ComFunProf_5'] = $this->input->post('ComFunProf_Servico_5' . $i);
+				$data['produto'][$j]['ValorComProf_5'] = $this->input->post('ValorComProf_Servico_5' . $i);
+				
+				$data['produto'][$j]['idTFProf_6'] = $this->input->post('idTFProf_Servico_6' . $i);
+				$data['produto'][$j]['ComFunProf_6'] = $this->input->post('ComFunProf_Servico_6' . $i);
+				$data['produto'][$j]['ValorComProf_6'] = $this->input->post('ValorComProf_Servico_6' . $i);
+				
 				$data['select'][$j]['ProfissionalProduto_1'] = $this->Usuario_model->select_usuario_servicos($data['produto'][$j]['ProfissionalProduto_1']);
 				$data['select'][$j]['ProfissionalProduto_2'] = $this->Usuario_model->select_usuario_servicos($data['produto'][$j]['ProfissionalProduto_2']);
 				$data['select'][$j]['ProfissionalProduto_3'] = $this->Usuario_model->select_usuario_servicos($data['produto'][$j]['ProfissionalProduto_3']);
 				$data['select'][$j]['ProfissionalProduto_4'] = $this->Usuario_model->select_usuario_servicos($data['produto'][$j]['ProfissionalProduto_4']);
-				
+				$data['select'][$j]['ProfissionalProduto_5'] = $this->Usuario_model->select_usuario_servicos($data['produto'][$j]['ProfissionalProduto_5']);
+				$data['select'][$j]['ProfissionalProduto_6'] = $this->Usuario_model->select_usuario_servicos($data['produto'][$j]['ProfissionalProduto_6']);
+				*/
 				(!$data['produto'][$j]['ConcluidoProduto']) ? $data['produto'][$j]['ConcluidoProduto'] = 'N' : FALSE;
 				$data['radio'] = array(
 					'ConcluidoProduto' . $j => $this->basico->radio_checked($data['produto'][$j]['ConcluidoProduto'], 'ConcluidoProduto' . $j, 'NS'),
@@ -20405,24 +20954,28 @@ class Orcatrata extends CI_Controller {
 						$_SESSION['Produto'][$j]['SubtotalQtdProduto'] = ($data['produto'][$j]['QtdIncrementoProduto'] * $data['produto'][$j]['QtdProduto']);
 						$_SESSION['Produto'][$j]['DataConcluidoProduto'] = $this->basico->mascara_data($data['produto'][$j]['DataConcluidoProduto'], 'barras');
 						$_SESSION['Produto'][$j]['NomeCliente'] = (strlen($data['produto'][$j]['NomeCliente']) > 12) ? substr($data['produto'][$j]['NomeCliente'], 0, 12) : $data['produto'][$j]['NomeCliente'];
-
+						/*
 						$data['produto'][$j]['ValorComissaoServico'] = number_format(($data['produto'][$j]['ValorComissaoServico']), 2, ',', '.');
 						
                         $data['produto'][$j]['ValorComProf_1'] = number_format(($data['produto'][$j]['ValorComProf_1']), 2, ',', '.');
                         $data['produto'][$j]['ValorComProf_2'] = number_format(($data['produto'][$j]['ValorComProf_2']), 2, ',', '.');
                         $data['produto'][$j]['ValorComProf_3'] = number_format(($data['produto'][$j]['ValorComProf_3']), 2, ',', '.');
 						$data['produto'][$j]['ValorComProf_4'] = number_format(($data['produto'][$j]['ValorComProf_4']), 2, ',', '.');
-						
+						$data['produto'][$j]['ValorComProf_5'] = number_format(($data['produto'][$j]['ValorComProf_5']), 2, ',', '.');
+						$data['produto'][$j]['ValorComProf_6'] = number_format(($data['produto'][$j]['ValorComProf_6']), 2, ',', '.');
+						*/
 						(!$data['produto'][$j]['ConcluidoProduto']) ? $data['produto'][$j]['ConcluidoProduto'] = 'N' : FALSE;
 						$data['radio'] = array(
 							'ConcluidoProduto' . $j => $this->basico->radio_checked($data['produto'][$j]['ConcluidoProduto'], 'ConcluidoProduto' . $j, 'NS'),
 						);
 						($data['produto'][$j]['ConcluidoProduto'] == 'S') ? $data['div']['ConcluidoProduto' . $j] = '' : $data['div']['ConcluidoProduto' . $j] = 'style="display: none;"';
-
+						/*
 						$data['select'][$j]['ProfissionalProduto_1'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalProduto_2'] = $this->Usuario_model->select_usuario_servicos();
 						$data['select'][$j]['ProfissionalProduto_3'] = $this->Usuario_model->select_usuario_servicos();
-						$data['select'][$j]['ProfissionalProduto_4'] = $this->Usuario_model->select_usuario_servicos();						
+						$data['select'][$j]['ProfissionalProduto_4'] = $this->Usuario_model->select_usuario_servicos();
+						$data['select'][$j]['ProfissionalProduto_5'] = $this->Usuario_model->select_usuario_servicos();	
+						$data['select'][$j]['ProfissionalProduto_6'] = $this->Usuario_model->select_usuario_servicos();	
 						
 						if(!$data['produto'][$j]['ProfissionalProduto_1'] || $data['produto'][$j]['ProfissionalProduto_1'] == 0){
 							$data['cadastrar_servico'][$j]['Hidden_readonly_1'] = 'readonly=""';
@@ -20443,12 +20996,21 @@ class Orcatrata extends CI_Controller {
 							$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = 'readonly=""';
 						}else{
 							$data['cadastrar_servico'][$j]['Hidden_readonly_4'] = '';
-						}						
+						}
+						if(!$data['produto'][$j]['ProfissionalProduto_5'] || $data['produto'][$j]['ProfissionalProduto_5'] == 0){
+							$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = 'readonly=""';
+						}else{
+							$data['cadastrar_servico'][$j]['Hidden_readonly_5'] = '';
+						}
+						if(!$data['produto'][$j]['ProfissionalProduto_6'] || $data['produto'][$j]['ProfissionalProduto_6'] == 0){
+							$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
+						}else{
+							$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
+						}
+						*/
 					}
-
                 }
             }
-
         }
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -20536,9 +21098,9 @@ class Orcatrata extends CI_Controller {
 					//$data['update']['produto']['alterar'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['alterar'][$j]['ValorProduto']));
                     
 					$data['update']['produto']['alterar'][$j]['ObsProduto'] = trim(mb_strtoupper($data['update']['produto']['alterar'][$j]['ObsProduto'], 'ISO-8859-1'));
-									
+					/*				
 					$data['update']['produto']['alterar'][$j]['ValorComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['alterar'][$j]['ValorComissaoServico']));
-					
+
 					if(!$data['update']['produto']['alterar'][$j]['ProfissionalProduto_1']){
 						$data['update']['produto']['alterar'][$j]['ProfissionalProduto_1'] = 0;
 					}
@@ -20550,6 +21112,12 @@ class Orcatrata extends CI_Controller {
 					}
 					if(!$data['update']['produto']['alterar'][$j]['ProfissionalProduto_4']){
 						$data['update']['produto']['alterar'][$j]['ProfissionalProduto_4'] = 0;
+					}
+					if(!$data['update']['produto']['alterar'][$j]['ProfissionalProduto_5']){
+						$data['update']['produto']['alterar'][$j]['ProfissionalProduto_5'] = 0;
+					}
+					if(!$data['update']['produto']['alterar'][$j]['ProfissionalProduto_6']){
+						$data['update']['produto']['alterar'][$j]['ProfissionalProduto_6'] = 0;
 					}
 
 					if(empty($data['update']['produto']['alterar'][$j]['ValorComProf_1'])){
@@ -20576,6 +21144,18 @@ class Orcatrata extends CI_Controller {
 						$data['update']['produto']['alterar'][$j]['ValorComProf_4'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['alterar'][$j]['ValorComProf_4']));
 					}
 
+					if(empty($data['update']['produto']['alterar'][$j]['ValorComProf_5'])){
+						$data['update']['produto']['alterar'][$j]['ValorComProf_5'] = "0.00";
+					}else{
+						$data['update']['produto']['alterar'][$j]['ValorComProf_5'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['alterar'][$j]['ValorComProf_5']));
+					}
+
+					if(empty($data['update']['produto']['alterar'][$j]['ValorComProf_6'])){
+						$data['update']['produto']['alterar'][$j]['ValorComProf_6'] = "0.00";
+					}else{
+						$data['update']['produto']['alterar'][$j]['ValorComProf_6'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['alterar'][$j]['ValorComProf_6']));
+					}
+					*/
 					if ($data['query']['Entregues'] == 'S') $data['update']['produto']['alterar'][$j]['ConcluidoProduto'] = 'S';
 					//if ($data['query']['Devolvidos'] == 'S') $data['update']['produto']['alterar'][$j]['DevolvidoServico'] = 'S';
 					
