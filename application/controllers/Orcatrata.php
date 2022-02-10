@@ -5649,7 +5649,13 @@ class Orcatrata extends CI_Controller {
  		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
 		(!$data['orcatrata']['TipoFrete']) ? $data['orcatrata']['TipoFrete'] = "1" : FALSE;	
 		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;	
- 		
+		
+		(!$data['orcatrata']['ValorFrete']) ? $data['orcatrata']['ValorFrete'] = 0 : FALSE;
+		(!$data['orcatrata']['ValorExtraOrca']) ? $data['orcatrata']['ValorExtraOrca'] = 0 : FALSE;
+		(!$data['orcatrata']['PercExtraOrca']) ? $data['orcatrata']['PercExtraOrca'] = 0 : FALSE;
+		(!$data['orcatrata']['DescPercOrca']) ? $data['orcatrata']['DescPercOrca'] = 0 : FALSE;
+		(!$data['orcatrata']['DescValorOrca']) ? $data['orcatrata']['DescValorOrca'] = 0 : FALSE;
+		
 		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE; 
 		(!$data['cadastrar']['Whatsapp']) ? $data['cadastrar']['Whatsapp'] = 'N' : FALSE;
  		(!$data['cadastrar']['Whatsapp_Site']) ? $data['cadastrar']['Whatsapp_Site'] = 'N' : FALSE;
@@ -5924,7 +5930,7 @@ class Orcatrata extends CI_Controller {
 			//$data['orcatrata']['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntradaOrca'], 'barras');
             //$data['orcatrata']['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata']['DataVencimentoOrca'], 'barras');
 			//$data['valortotalorca'] = ($data['orcatrata']['ValorRestanteOrca'] + $data['orcatrata']['ValorExtraOrca'] + $data['orcatrata']['ValorFrete']) ;
-			$_SESSION['Orcatrata']['valortotalorca'] = ($data['orcatrata']['ValorRestanteOrca'] + $data['orcatrata']['ValorExtraOrca'] + $data['orcatrata']['ValorFrete']) ;
+			//$_SESSION['Orcatrata']['valortotalorca'] = ($data['orcatrata']['ValorRestanteOrca'] + $data['orcatrata']['ValorExtraOrca'] + $data['orcatrata']['ValorFrete']) ;
 			
 			#### Carrega os dados da Campanha nas variáves de sessão ####
 			$_SESSION['Campanha'] = $this->Campanha_model->get_campanha_cupom($_SESSION['Orcatrata']['Cupom']);
@@ -6790,14 +6796,44 @@ class Orcatrata extends CI_Controller {
 				$data['orcatrata']['ValorTroco'] = 0.00;
 			}
             //$data['orcatrata']['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntradaOrca'], 'mysql');		
-			$data['orcatrata']['ValorFrete'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFrete']));
+			
+			/*
 			$data['orcatrata']['ValorExtraOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorExtraOrca']));
 			$data['orcatrata']['PercExtraOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['PercExtraOrca']));
-			
-		
 			$data['orcatrata']['DescPercOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['DescPercOrca']));
 			$data['orcatrata']['DescValorOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['DescValorOrca']));
+			*/
 			
+			if(!$data['orcatrata']['ValorFrete']){
+				$data['orcatrata']['ValorFrete'] = 0;
+			}else{
+				$data['orcatrata']['ValorFrete'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFrete']));
+			}
+			
+			if(!$data['orcatrata']['ValorExtraOrca']){
+				$data['orcatrata']['ValorExtraOrca'] = 0;
+			}else{
+				$data['orcatrata']['ValorExtraOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorExtraOrca']));
+			}			
+						
+			if(!$data['orcatrata']['PercExtraOrca']){
+				$data['orcatrata']['PercExtraOrca'] = 0;
+			}else{
+				$data['orcatrata']['PercExtraOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['PercExtraOrca']));
+			}			
+
+			if(!$data['orcatrata']['DescPercOrca']){
+				$data['orcatrata']['DescPercOrca'] = 0;
+			}else{
+				$data['orcatrata']['DescPercOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['DescPercOrca']));
+			}			
+			
+			if(!$data['orcatrata']['DescValorOrca']){
+				$data['orcatrata']['DescValorOrca'] = 0;
+			}else{
+				$data['orcatrata']['DescValorOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['DescValorOrca']));
+			}
+
 			$data['orcatrata']['CashBackOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['CashBackOrca']));
 			$data['orcatrata']['ValidadeCashBackOrca'] = $this->basico->mascara_data($data['orcatrata']['ValidadeCashBackOrca'], 'mysql');
 			if(isset($data['orcatrata']['ValidadeCashBackOrca']) && $data['orcatrata']['ValidadeCashBackOrca'] != "0000-00-00" && $data['orcatrata']['ValidadeCashBackOrca'] != ""){
@@ -6850,8 +6886,15 @@ class Orcatrata extends CI_Controller {
 				}else{
 					$data['orcatrata']['Cupom'] = 0;
 				}
-			}	
-		
+			}
+			/*
+			echo '<br>';
+			echo "<pre>";
+			echo '<br>';
+			print_r($data['orcatrata']['ValorFrete']);
+			echo "</pre>";
+			exit();
+			*/
 			/*
             $data['update']['orcatrata']['anterior'] = $this->Orcatrata_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata']);
             $data['update']['orcatrata']['campos'] = array_keys($data['orcatrata']);
@@ -7956,6 +7999,12 @@ class Orcatrata extends CI_Controller {
  		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
 		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;
 		
+		(!$data['orcatrata']['ValorFrete']) ? $data['orcatrata']['ValorFrete'] = 0 : FALSE;
+		(!$data['orcatrata']['ValorExtraOrca']) ? $data['orcatrata']['ValorExtraOrca'] = 0 : FALSE;
+		(!$data['orcatrata']['PercExtraOrca']) ? $data['orcatrata']['PercExtraOrca'] = 0 : FALSE;
+		(!$data['orcatrata']['DescPercOrca']) ? $data['orcatrata']['DescPercOrca'] = 0 : FALSE;
+		(!$data['orcatrata']['DescValorOrca']) ? $data['orcatrata']['DescValorOrca'] = 0 : FALSE;
+			
 		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
 		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
  		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
@@ -8230,7 +8279,7 @@ class Orcatrata extends CI_Controller {
 			//$data['orcatrata']['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntradaOrca'], 'barras');
             //$data['orcatrata']['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata']['DataVencimentoOrca'], 'barras');
 			//$data['valortotalorca'] = ($data['orcatrata']['ValorRestanteOrca'] + $data['orcatrata']['ValorExtraOrca'] + $data['orcatrata']['ValorFrete']) ;
-			$_SESSION['Orcatrata']['valortotalorca'] = ($data['orcatrata']['ValorRestanteOrca'] + $data['orcatrata']['ValorExtraOrca'] + $data['orcatrata']['ValorFrete']) ;
+			//$_SESSION['Orcatrata']['valortotalorca'] = ($data['orcatrata']['ValorRestanteOrca'] + $data['orcatrata']['ValorExtraOrca'] + $data['orcatrata']['ValorFrete']) ;
 
 			#### Carrega os dados da Campanha nas variáves de sessão ####
 			$_SESSION['Campanha'] = $this->Campanha_model->get_campanha_cupom($_SESSION['Orcatrata']['Cupom']);
@@ -8859,12 +8908,43 @@ class Orcatrata extends CI_Controller {
 				$data['orcatrata']['ValorTroco'] = 0.00;
 			}
             //$data['orcatrata']['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntradaOrca'], 'mysql');
+			/*
 			$data['orcatrata']['ValorFrete'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFrete']));
 			$data['orcatrata']['ValorExtraOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorExtraOrca']));
 			$data['orcatrata']['PercExtraOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['PercExtraOrca']));
-			
 			$data['orcatrata']['DescPercOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['DescPercOrca']));
 			$data['orcatrata']['DescValorOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['DescValorOrca']));
+			*/
+			
+			if(!$data['orcatrata']['ValorFrete']){
+				$data['orcatrata']['ValorFrete'] = 0;
+			}else{
+				$data['orcatrata']['ValorFrete'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFrete']));
+			}
+			
+			if(!$data['orcatrata']['ValorExtraOrca']){
+				$data['orcatrata']['ValorExtraOrca'] = 0;
+			}else{
+				$data['orcatrata']['ValorExtraOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorExtraOrca']));
+			}			
+						
+			if(!$data['orcatrata']['PercExtraOrca']){
+				$data['orcatrata']['PercExtraOrca'] = 0;
+			}else{
+				$data['orcatrata']['PercExtraOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['PercExtraOrca']));
+			}			
+
+			if(!$data['orcatrata']['DescPercOrca']){
+				$data['orcatrata']['DescPercOrca'] = 0;
+			}else{
+				$data['orcatrata']['DescPercOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['DescPercOrca']));
+			}			
+			
+			if(!$data['orcatrata']['DescValorOrca']){
+				$data['orcatrata']['DescValorOrca'] = 0;
+			}else{
+				$data['orcatrata']['DescValorOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['DescValorOrca']));
+			}
 			
 			$data['orcatrata']['CashBackOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['CashBackOrca']));
 			$data['orcatrata']['ValidadeCashBackOrca'] = $this->basico->mascara_data($data['orcatrata']['ValidadeCashBackOrca'], 'mysql');
@@ -13444,6 +13524,12 @@ class Orcatrata extends CI_Controller {
  		(!$data['orcatrata']['DetalhadaEntrega']) ? $data['orcatrata']['DetalhadaEntrega'] = 'N' : FALSE;
 		(!$data['orcatrata']['BrindeOrca']) ? $data['orcatrata']['BrindeOrca'] = 'N' : FALSE;
 		
+		(!$data['orcatrata']['ValorFrete']) ? $data['orcatrata']['ValorFrete'] = 0 : FALSE;
+		(!$data['orcatrata']['ValorExtraOrca']) ? $data['orcatrata']['ValorExtraOrca'] = 0 : FALSE;
+		(!$data['orcatrata']['PercExtraOrca']) ? $data['orcatrata']['PercExtraOrca'] = 0 : FALSE;
+		(!$data['orcatrata']['DescPercOrca']) ? $data['orcatrata']['DescPercOrca'] = 0 : FALSE;
+		(!$data['orcatrata']['DescValorOrca']) ? $data['orcatrata']['DescValorOrca'] = 0 : FALSE;
+				
 		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
 		(!$data['cadastrar']['AtualizaEndereco']) ? $data['cadastrar']['AtualizaEndereco'] = 'N' : FALSE;
  		(!$data['cadastrar']['StatusProdutos']) ? $data['cadastrar']['StatusProdutos'] = 'N' : FALSE;
@@ -13718,7 +13804,7 @@ class Orcatrata extends CI_Controller {
 			//$data['orcatrata']['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntradaOrca'], 'barras');
             //$data['orcatrata']['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata']['DataVencimentoOrca'], 'barras');
 			$data['valortotalorca'] = ($data['orcatrata']['ValorRestanteOrca'] + $data['orcatrata']['ValorExtraOrca'] + $data['orcatrata']['ValorFrete']) ;
-			$_SESSION['Orcatrata']['valortotalorca'] = ($data['orcatrata']['ValorRestanteOrca'] + $data['orcatrata']['ValorExtraOrca'] + $data['orcatrata']['ValorFrete']) ;
+			//$_SESSION['Orcatrata']['valortotalorca'] = ($data['orcatrata']['ValorRestanteOrca'] + $data['orcatrata']['ValorExtraOrca'] + $data['orcatrata']['ValorFrete']) ;
 
 			#### Carrega os dados das consultas nas variáves de sessão ####
 			$_SESSION['Consultas_orca'] = $data['consultas_orca'] = $this->Consulta_model->get_consultas_orca($id, TRUE);
@@ -14324,15 +14410,45 @@ class Orcatrata extends CI_Controller {
 			}
             //$data['orcatrata']['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntradaOrca'], 'mysql');
             $data['orcatrata']['ValorRestanteOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorRestanteOrca']));
+			/*
 			$data['orcatrata']['ValorFrete'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFrete']));
 			$data['orcatrata']['ValorExtraOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorExtraOrca']));
 			$data['orcatrata']['PercExtraOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['PercExtraOrca']));
+			$data['orcatrata']['DescPercOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['DescPercOrca']));
+			$data['orcatrata']['DescValorOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['DescValorOrca']));
+			*/
+			if(!$data['orcatrata']['ValorFrete']){
+				$data['orcatrata']['ValorFrete'] = 0;
+			}else{
+				$data['orcatrata']['ValorFrete'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFrete']));
+			}
 			
+			if(!$data['orcatrata']['ValorExtraOrca']){
+				$data['orcatrata']['ValorExtraOrca'] = 0;
+			}else{
+				$data['orcatrata']['ValorExtraOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorExtraOrca']));
+			}			
+						
+			if(!$data['orcatrata']['PercExtraOrca']){
+				$data['orcatrata']['PercExtraOrca'] = 0;
+			}else{
+				$data['orcatrata']['PercExtraOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['PercExtraOrca']));
+			}			
+
+			if(!$data['orcatrata']['DescPercOrca']){
+				$data['orcatrata']['DescPercOrca'] = 0;
+			}else{
+				$data['orcatrata']['DescPercOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['DescPercOrca']));
+			}			
+			
+			if(!$data['orcatrata']['DescValorOrca']){
+				$data['orcatrata']['DescValorOrca'] = 0;
+			}else{
+				$data['orcatrata']['DescValorOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['DescValorOrca']));
+			}
 			
 			$data['orcatrata']['ValorSomaOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorSomaOrca']));
 			$data['orcatrata']['ValorTotalOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorTotalOrca']));
-			$data['orcatrata']['DescPercOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['DescPercOrca']));
-			$data['orcatrata']['DescValorOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['DescValorOrca']));
 			$data['orcatrata']['CashBackOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['CashBackOrca']));
 			$data['orcatrata']['ValidadeCashBackOrca'] = $this->basico->mascara_data($data['orcatrata']['ValidadeCashBackOrca'], 'mysql');
 			if(isset($data['orcatrata']['ValidadeCashBackOrca']) && $data['orcatrata']['ValidadeCashBackOrca'] != "0000-00-00" && $data['orcatrata']['ValidadeCashBackOrca'] != ""){
