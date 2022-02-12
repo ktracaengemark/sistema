@@ -1496,7 +1496,8 @@ class Relatorio_model extends CI_Model {
 			$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
 			$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-			$groupby = (1 == 1) ? 'GROUP BY PRDS.idApp_Produto' : FALSE;
+			//$groupby = (1 == 1) ? 'GROUP BY PRDS.idApp_Produto' : FALSE;
+			$groupby = ($data['Agrupar'] != "0") ? 'GROUP BY ' . $data['Agrupar'] . '' : FALSE;
 				
 		}else{
 
@@ -1539,8 +1540,9 @@ class Relatorio_model extends CI_Model {
 			$filtro11 = ($_SESSION['FiltroAlteraParcela']['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $_SESSION['FiltroAlteraParcela']['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($_SESSION['FiltroAlteraParcela']['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $_SESSION['FiltroAlteraParcela']['CombinadoFrete'] . '" AND ' : FALSE;
 			$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-			$groupby = (1 == 1) ? 'GROUP BY PRDS.idApp_Produto' : FALSE;		
-		
+			//$groupby = (1 == 1) ? 'GROUP BY PRDS.idApp_Produto' : FALSE;		
+			$groupby = ($_SESSION['FiltroAlteraParcela']['Agrupar'] != "0") ? 'GROUP BY ' . $_SESSION['FiltroAlteraParcela']['Agrupar'] . '' : FALSE;
+
 		}
 				
 		$querylimit = '';
@@ -1642,7 +1644,7 @@ class Relatorio_model extends CI_Model {
 				' . $data['idTab_TipoRD'] . '
                 ' . $data['Produtos'] . '
                 ' . $data['Categoria'] . '
-                ' . $groupby . '
+			' . $groupby . '
 			ORDER BY
 				' . $data['Campo'] . '
 				' . $data['Ordenamento'] . '

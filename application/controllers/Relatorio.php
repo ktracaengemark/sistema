@@ -5077,25 +5077,63 @@ class Relatorio extends CI_Controller {
 			'P' => 'Produtos',
 			'S' => 'Servicos',
         );
-				
-        $data['select']['Agrupar'] = array(
-			'0' => '::Nenhum::',			
-			'idApp_OrcaTrata' => 'Orçamento',
-			'idApp_Cliente' => 'Cliente',
-        );
 		
         $data['select']['Ultimo'] = array(
 			'0' => '::Nenhum::',			
 			#'1' => 'Último Pedido',			
 			#'2' => 'Última Parcela',
         );
-
-		$data['select']['Campo'] = array(
-			'TCAT.Catprod' => 'Categoria',
-			'OT.DataOrca' => 'Data do Pedido',
-			'OT.DataEntregaOrca' => 'Data da Entrega',
-            'OT.idApp_OrcaTrata' => 'Orçamento',
-        );
+		
+		if($_SESSION['Empresa']['CadastrarPet'] == "S"){
+			$data['select']['Agrupar'] = array(
+				'PRDS.idApp_Produto' => 'Produto',
+				'OT.idApp_OrcaTrata' => 'Orçamento',
+				'OT.idApp_Cliente' => 'Cliente',
+				'OT.idApp_ClientePet' => 'Animal',
+			);
+			
+			$data['select']['Campo'] = array(
+				'TCAT.Catprod' => 'Categoria',
+				'PRDS.DataConcluidoProduto' => 'Data da Entr Prd',
+				'PRDS.HoraConcluidoProduto' => 'Hora da Entr Prd',
+				'PRDS.idApp_Produto' => 'Produto',
+				'OT.idApp_OrcaTrata' => 'Orçamento',
+				'OT.idApp_Cliente' => 'Cliente',
+				'OT.idApp_ClientePet' => 'Animal',
+			);
+		}elseif($_SESSION['Empresa']['CadastrarDep'] == "S"){
+			$data['select']['Agrupar'] = array(
+				'PRDS.idApp_Produto' => 'Produto',
+				'OT.idApp_OrcaTrata' => 'Orçamento',
+				'OT.idApp_Cliente' => 'Cliente',
+				'OT.idApp_ClienteDep' => 'Dependente',
+			);
+			
+			$data['select']['Campo'] = array(
+				'TCAT.Catprod' => 'Categoria',
+				'PRDS.DataConcluidoProduto' => 'Data da Entr Prd',
+				'PRDS.HoraConcluidoProduto' => 'Hora da Entr Prd',
+				'PRDS.idApp_Produto' => 'Produto',
+				'OT.idApp_OrcaTrata' => 'Orçamento',
+				'OT.idApp_Cliente' => 'Cliente',
+				'OT.idApp_ClienteDep' => 'Dependente',
+			);
+		}else{
+			$data['select']['Agrupar'] = array(			
+				'PRDS.idApp_Produto' => 'Produto',
+				'OT.idApp_OrcaTrata' => 'Orçamento',
+				'OT.idApp_Cliente' => 'Cliente',
+			);
+			
+			$data['select']['Campo'] = array(
+				'TCAT.Catprod' => 'Categoria',
+				'PRDS.DataConcluidoProduto' => 'Data da Entr Prd',
+				'PRDS.HoraConcluidoProduto' => 'Hora da Entr Prd',
+				'PRDS.idApp_Produto' => 'Produto',
+				'OT.idApp_OrcaTrata' => 'Orçamento',
+				'OT.idApp_Cliente' => 'Cliente',
+			);
+		}
 
         $data['select']['Ordenamento'] = array(
             'ASC' => 'Crescente',
@@ -5169,6 +5207,7 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['Ordenamento'] = $data['query']['Ordenamento'];
 		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
 		$_SESSION['FiltroAlteraParcela']['Categoria'] = $data['query']['Categoria'];
+		$_SESSION['FiltroAlteraParcela']['Agrupar'] = $data['query']['Agrupar'];
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         $this->form_validation->set_rules('DataInicio', 'Data Início do Pedido', 'trim|valid_date');
