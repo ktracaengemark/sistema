@@ -1,4 +1,46 @@
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	<div id="buscaModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-warning">
+					<div class="row">
+						<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+							<h3 class="modal-title" id="buscaModalLabel">Pesquisar na Empresa</h3>
+							<div class="row">
+								<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 mb-3 ">	
+									<div class="custom-control custom-radio">
+										<input type="radio" name="SetBusca" class="custom-control-input "  id="SetProduto_Empresa" value="PD" checked>
+										<label class="custom-control-label" for="Produto_Empresa">Produtos</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="limpaBuscaProduto_Empresa()">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<input class="form-control input-produto_empresa" type="text" name="Produto_Empresa" id="Produto_Empresa" maxlength="255" placeholder="Busca Produto">
+						</div>
+					</div>	
+				</div>
+				<div class="modal-body">
+					<div class="input_fields_produtos_empresa"></div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+							<button type="button" class="btn btn-primary" data-dismiss="modal" name="botaoFecharBusca" id="botaoFecharBusca" onclick="limpaBuscaProduto_Empresa()">
+								<span class="glyphicon glyphicon-remove"></span> Fechar
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<?php if($paginacao == "N") { ?>	
 		<div id="fluxo" class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="fluxo" aria-hidden="true">
 			<div class="vertical-alignment-helper">
@@ -188,6 +230,12 @@
 								</div>
 							<?php } ?>
 						<?php } ?>
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+							<label>Busca</label><br>
+							<a type="button" class="btn  btn-info btn-block" data-toggle="modal" data-target="#buscaModal">
+								Produtos & Serviços
+							</a>
+						</div>
 					<?php } ?>
 				</div>
 			<?php } ?>

@@ -79,6 +79,102 @@ function exibir_confirmar(){
 	$('.Close').hide();
 }
 
+$('.input-produto_empresa').show();
+
+$('#SetProduto_Empresa').on('click', function () {
+	//alert('Copiando');
+	$('.input-produto_empresa').show();
+	$(".input_fields_produtos_empresa").empty();
+	$('#Produto_Empresa').val('');
+});
+// função que LIMPA busca de Produto da empresa
+function limpaBuscaProduto_Empresa(){
+	$(".input_fields_produtos_empresa").empty();
+	$('#Produto_Empresa').val('');
+}
+
+// função que busca Produtos da empresa
+$('#Produto_Empresa').on('keyup', function () {
+	//alert('produto');
+	var produto = $('#Produto_Empresa').val();
+	//console.log('id_empresa = '+id_empresa);
+	//console.log('produto = '+produto);
+	$.ajax({
+		url: window.location.origin+ '/' + app + '/cadastros/pesquisar/Produto_Empresa.php?produto='+produto,
+		dataType: "json",
+		success: function (data) {
+			//console.log(data);
+			//console.log(data.length);
+			
+			$(".input_fields_produtos_empresa").empty();
+            // executo este laço para acessar os itens do objeto javaScript
+            for (i = 0; i < data.length; i++) {
+				
+				data[i].ver 		= 'href="../../'+data[i].site+'/produto.php?id='+data[i].id_valor+'" target="_blank"';
+				
+				//console.log( data[i].contarestoque +' - '+ data[i].estoque);	
+				
+				if(data[i].contarestoque == "S"){
+					data[i].contar = "S";
+					if(data[i].estoque > 0){
+						data[i].liberar = 'href="meu_carrinho.php?carrinho=produto&id='+data[i].id_valor+'"';
+						data[i].carrinho = "carrinho_inserir.png";
+						data[i].texto = "";
+					}else{
+						data[i].liberar = '';
+						data[i].carrinho = "carrinho_indisp.png";
+						data[i].texto = " | indisp. no momento";
+					}
+				}else{
+					data[i].contar = "N";
+					data[i].liberar = 'href="meu_carrinho.php?carrinho=produto&id='+data[i].id_valor+'"';
+					data[i].carrinho = "carrinho_inserir.png";
+					data[i].texto = "";
+				}
+				
+				$(".input_fields_produtos_empresa").append('\
+					<div class="form-group">\
+						<div class="row">\
+							<div class="container-2">\
+								<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">\
+										<img class="team-img img-responsive" src="../../'+data[i].site+'/'+data[i].id_empresa+'/documentos/miniatura/'+data[i].arquivo_empresa+'" alt="" width="50" >\
+								</div>\
+								<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">\
+										<img class="team-img img-responsive" src="../../'+data[i].site+'/'+data[i].id_empresa+'/produtos/miniatura/'+data[i].arquivo_produto+'" alt="" width="50" >\
+								</div>\
+								<div class="col-xs-8 col-sm-10 col-md-10 col-lg-10 ">\
+										<div class="row">\
+											<span class="card-title" style="color: #000000">\
+												'+data[i].nomeprod+'\
+											</span>\
+										</div>\
+										<div class="row">\
+											<span class="card-title" style="color: #000000">\
+												'+data[i].descprod+'\
+											</span>\
+										</div>\
+										<div class="row">\
+											<span class="card-title" style="color: #000000">\
+												'+data[i].qtdinc+' Unid | R$ '+data[i].valor+'\
+											</span>\
+										</div>\
+								</div>\
+							</div>\
+						</div>\
+					</div>\
+					<hr>'
+				);						
+
+            }//fim do laço		
+			
+		},
+		error:function(data){
+			//console.log('erro');
+			$(".input_fields_produtos_empresa").empty();
+		}
+	});	
+});
+
 $('.input-produto').show();
 $('.input-promocao').hide();
 $('.input-empresa').hide();
