@@ -82,6 +82,7 @@
 									OT.Modalidade,
 									OT.RecorrenciaOrca,
 									CPT.NomeClientePet,
+									RP.RacaPet,
 									CDP.NomeClienteDep,
 									TR.TipoFinanceiro,
 									MD.Modalidade,
@@ -110,6 +111,7 @@
 									App_OrcaTrata AS OT
 										LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 										LEFT JOIN App_ClientePet AS CPT ON CPT.idApp_ClientePet = OT.idApp_ClientePet
+										LEFT JOIN Tab_RacaPet AS RP ON RP.idTab_RacaPet = CPT.RacaPet
 										LEFT JOIN App_ClienteDep AS CDP ON CDP.idApp_ClienteDep = OT.idApp_ClienteDep
 										LEFT JOIN App_Fornecedor AS F ON F.idApp_Fornecedor = OT.idApp_Fornecedor
 										LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = OT.idSis_Usuario
@@ -191,6 +193,7 @@
 		$html .= '<td><b>Cliente</b></td>';
 		if($_SESSION['Empresa']['CadastrarPet'] == "S"){
 			$html .= '<td><b>Pet</b></td>';
+			$html .= '<td><b>Raca</b></td>';
 		}else{
 			if($_SESSION['Empresa']['CadastrarDep'] == "S"){
 				$html .= '<td><b>Dep</b></td>';
@@ -250,6 +253,7 @@
 			$html .= '<td>'.utf8_encode($row_msg_contatos["Cliente"]).'</td>';
 			if($_SESSION['Empresa']['CadastrarPet'] == "S"){
 				$html .= '<td>'.utf8_encode($row_msg_contatos["NomeClientePet"]).'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["RacaPet"]).'</td>';
 			}else{
 				if($_SESSION['Empresa']['CadastrarDep'] == "S"){
 					$html .= '<td>'.utf8_encode($row_msg_contatos["NomeClienteDep"]).'</td>';
