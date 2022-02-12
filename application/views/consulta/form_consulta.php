@@ -953,7 +953,7 @@
 																						<?php for ($k=1; $k <= $count['PCount'][$i]; $k++) { ?>
 																								<tr>
 																									<td class="col-md-2" scope="col"><?php echo $produto[$i][$k]['Qtd_Prod'] ?></td>
-																									<td class="col-md-3" scope="col"><?php echo $produto[$i][$k]['NomeProduto'] ?></td>
+																									<td class="col-md-3" scope="col"><?php echo $produto[$i][$k]['NomeProduto'] ?> | <?php echo $produto[$i][$k]['ObsProduto'] ?></td>
 																									<td class="col-md-1" scope="col">R$ <?php echo $produto[$i][$k]['SubtotalProduto'] ?></td>
 																									<td class="col-md-2" scope="col"><?php echo $produto[$i][$k]['DataConcluidoProduto'] ?> | <?php echo $produto[$i][$k]['HoraConcluidoProduto'] ?></td>										
 																								</tr>

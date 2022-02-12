@@ -166,6 +166,7 @@ class Consulta_model extends CI_Model {
 				PV.ConcluidoProduto,
 				PV.ValorProduto,
 				PV.NomeProduto,
+				PV.ObsProduto,
 				TPS.Nome_Prod
 			FROM 				
 				App_OrcaTrata AS OT
