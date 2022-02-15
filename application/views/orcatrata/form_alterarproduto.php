@@ -26,11 +26,11 @@
 							<div class="col-md-2 text-left">	
 								<br>
 								<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-									<?php echo $_SESSION['Total_Rows'];?> Resultados
+									<?php echo $_SESSION['Filtro_Vendidos']['Total_Rows'];?> Resultados
 								</a>
 							</div>
 							<div class="col-md-6 text-left">
-								<?php echo $_SESSION['Pagination']; ?>
+								<?php echo $_SESSION['Filtro_Vendidos']['Pagination']; ?>
 							</div>
 						</div>
 					</div>
@@ -70,7 +70,7 @@
 																<div class="row">
 																	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 																		<label >
-																			<?php echo $contagem ?> |
+																			<?php echo $contagem ?>/<?php echo $_SESSION['Filtro_Vendidos']['Total_Rows'];?> |
 																			<a class="notclickable" href="<?php echo base_url() . 'cliente/prontuario/' . $_SESSION['Produto'][$i]['idApp_Cliente']; ?>">
 																				<span class="glyphicon glyphicon-edit notclickable"></span> <?php echo $_SESSION['Produto'][$i]['idApp_Cliente']; ?>
 																			</a>

@@ -1288,7 +1288,16 @@ class Relatorio_pag extends CI_Controller {
     }
 
 	public function porservicos_pag() {
-
+		/*				
+		echo '<br>';
+		echo "<pre>";
+		if(isset($_SESSION['Filtro_Porservicos'])){
+			print_r($_SESSION['Filtro_Porservicos']);
+		}else{
+			print_r('limpo');
+		}
+		echo "</pre>";
+		*/
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
@@ -1299,12 +1308,20 @@ class Relatorio_pag extends CI_Controller {
 		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 			'id_Cliente_Auto',
 			'NomeClienteAuto',
+			'id_ClientePet_Auto',
+			'NomeClientePetAuto',
+			'id_ClienteDep_Auto',
+			'NomeClienteDepAuto',
         ), TRUE));	
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
             'Orcamento',
             'Cliente',
 			'idApp_Cliente',
+			'idApp_ClientePet',
+			'idApp_ClientePet2',
+			'idApp_ClienteDep',
+			'idApp_ClienteDep2',
 			'Fornecedor',
 			'idApp_Fornecedor',
 			'Funcionario',
@@ -1699,12 +1716,23 @@ class Relatorio_pag extends CI_Controller {
 		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 			'id_Cliente_Auto',
 			'NomeClienteAuto',
+			'id_ClientePet_Auto',
+			'NomeClientePetAuto',
+			'id_ClienteDep_Auto',
+			'NomeClienteDepAuto',
         ), TRUE));	
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
             'Orcamento',
             'Cliente',
 			'idApp_Cliente',
+			'NomeClientePet',
+			'NomeClienteDep',
+			'idApp_Cliente',
+			'idApp_ClientePet',
+			'idApp_ClientePet2',
+			'idApp_ClienteDep',
+			'idApp_ClienteDep2',
 			'Fornecedor',
 			'idApp_Fornecedor',
 			'Produtos',

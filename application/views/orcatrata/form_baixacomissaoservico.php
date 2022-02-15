@@ -19,7 +19,7 @@
 							<div class="col-md-2 text-left">	
 								<br>
 								<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-									<?php echo $_SESSION['Total_Rows'];?> Resultados
+									<?php echo $_SESSION['Filtro_Porservicos']['Total_Rows'];?> Resultados
 								</a>
 							</div>
 							<!--
@@ -37,7 +37,7 @@
 							</div>
 							-->
 							<div class="col-md-4 text-left">
-								<?php echo $_SESSION['Pagination']; ?>
+								<?php echo $_SESSION['Filtro_Porservicos']['Pagination']; ?>
 							</div>
 						</div>
 					</div>
@@ -54,7 +54,7 @@
 						<input type="hidden" name="PRCount" id="PRCount" value="<?php echo $count['PRCount']; ?>"/>
 
 						<?php
-						$linha =  $_SESSION['Per_Page']*$_SESSION['Pagina'];
+						$linha =  $_SESSION['Filtro_Porservicos']['Per_Page']*$_SESSION['Filtro_Porservicos']['Pagina'];
 						for ($i=1; $i <= $count['PRCount']; $i++) {
 							$contagem = ($linha + $i);
 						?>
@@ -67,7 +67,7 @@
 										<div class="row">
 											<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 												<label >
-													<?php echo $contagem ?> |
+													<?php echo $contagem ?>/<?php echo $_SESSION['Filtro_Porservicos']['Total_Rows'];?> |
 													<a class="notclickable" href="<?php echo base_url() . 'cliente/prontuario/' . $_SESSION['Produto'][$i]['idApp_Cliente']; ?>">
 														<span class="glyphicon glyphicon-edit notclickable"></span> <?php echo $_SESSION['Produto'][$i]['idApp_Cliente']; ?>
 													</a>

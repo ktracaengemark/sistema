@@ -77,7 +77,7 @@
 </div>	
 <div class="container-fluid">
 	<div class="row">
-		<div style="overflow: auto; height: 550px; ">
+		<div style="overflow: auto; height: auto; ">
 			<!--
 			<table class="table table-bordered table-condensed table-striped">	
 				<tfoot>
@@ -186,7 +186,7 @@
 								}
 							}
 							
-							echo '<td>' . ($linha + $count) . '</td>';
+							echo '<td>' . ($linha + $count) . '/' . $total_rows . '</td>';
 							echo '<td>' . $row['idApp_OrcaTrata'] . '- ' . $row['TipoFinanceiro'] . ' - ' . $row['Descricao'] . '</td>';
 							if($_SESSION['log']['idSis_Empresa'] != "5"){
 								echo '<td>' . $row['Nome' . $nome] . '</td>';

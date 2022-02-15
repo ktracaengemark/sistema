@@ -18588,7 +18588,16 @@ class Orcatrata extends CI_Controller {
     }
 	
     public function baixadacomissaoservico($id = FALSE) {
-
+		/*
+		echo '<br>';
+		echo "<pre>";
+		if(isset($_SESSION['Filtro_Porservicos'])){
+			print_r($_SESSION['Filtro_Porservicos']);
+		}else{
+			print_r('limpo');
+		}
+		echo "</pre>";
+		*/
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
@@ -18746,24 +18755,24 @@ class Orcatrata extends CI_Controller {
 			$config['total_rows'] = $this->Orcatrata_model->get_baixadacomissaoservico($id, TRUE);
 		   
 			if($config['total_rows'] >= 1){
-				$_SESSION['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
+				$_SESSION['Filtro_Porservicos']['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
 			}else{
-				$_SESSION['Total_Rows'] = $data['total_rows'] = 0;
+				$_SESSION['Filtro_Porservicos']['Total_Rows'] = $data['total_rows'] = 0;
 			}
 			
 			$this->pagination->initialize($config);
 			
-			$_SESSION['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-			$_SESSION['Per_Page'] = $data['per_page'] = $config['per_page'];
+			$_SESSION['Filtro_Porservicos']['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+			$_SESSION['Filtro_Porservicos']['Per_Page'] = $data['per_page'] = $config['per_page'];
 			
-			$_SESSION['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
+			$_SESSION['Filtro_Porservicos']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 		     	
 			#### Sis_Empresa ####
             $data['empresa'] = $this->Orcatrata_model->get_orcatrataalterar($id);
 			
             #### App_Produto ####
             
-			$_SESSION['Produto'] = $data['produto'] = $this->Orcatrata_model->get_baixadacomissaoservico($id, FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
+			$_SESSION['Produto'] = $data['produto'] = $this->Orcatrata_model->get_baixadacomissaoservico($id, FALSE, $_SESSION['Filtro_Porservicos']['Per_Page'], ($_SESSION['Filtro_Porservicos']['Pagina'] * $_SESSION['Filtro_Porservicos']['Per_Page']));
 			
 			if (count($data['produto']) > 0) {
                 $_SESSION['Produto'] = $data['produto'] = array_combine(range(1, count($data['produto'])), array_values($data['produto']));
@@ -19038,7 +19047,7 @@ class Orcatrata extends CI_Controller {
 			$data['query']['DataPagamento'] = $this->basico->mascara_data($data['query']['DataPagamento'], 'mysql');  
 
             #### App_Produto ####
-            $data['update']['produto']['anterior'] = $this->Orcatrata_model->get_baixadacomissaoservico($data['empresa']['idSis_Empresa'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
+            $data['update']['produto']['anterior'] = $this->Orcatrata_model->get_baixadacomissaoservico($data['empresa']['idSis_Empresa'], FALSE, $_SESSION['Filtro_Porservicos']['Per_Page'], ($_SESSION['Filtro_Porservicos']['Pagina'] * $_SESSION['Filtro_Porservicos']['Per_Page']));
 			if (isset($data['produto']) || (!isset($data['produto']) && isset($data['update']['produto']['anterior']) ) ) {
 
                 if (isset($data['produto']))
@@ -21041,23 +21050,23 @@ class Orcatrata extends CI_Controller {
 			$config['last_tagl_close'] = "</li>";		   
 			
 			if($config['total_rows'] >= 1){
-				$_SESSION['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
+				$_SESSION['Filtro_Vendidos']['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
 			}else{
-				$_SESSION['Total_Rows'] = $data['total_rows'] = 0;
+				$_SESSION['Filtro_Vendidos']['Total_Rows'] = $data['total_rows'] = 0;
 			}
 			
 			$this->pagination->initialize($config);
 			
-			$_SESSION['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-			$_SESSION['Per_Page'] = $data['per_page'] = $config['per_page'];
+			$_SESSION['Filtro_Vendidos']['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+			$_SESSION['Filtro_Vendidos']['Per_Page'] = $data['per_page'] = $config['per_page'];
 			
-			$_SESSION['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
+			$_SESSION['Filtro_Vendidos']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 
             #### Sis_Empresa ####
             $data['empresa'] = $this->Orcatrata_model->get_orcatrataalterar($id);
 
             #### App_Produto ####
-            $_SESSION['Produto'] = $data['produto'] = $this->Orcatrata_model->get_alterarproduto($id, FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
+            $_SESSION['Produto'] = $data['produto'] = $this->Orcatrata_model->get_alterarproduto($id, FALSE, $_SESSION['Filtro_Vendidos']['Per_Page'], ($_SESSION['Filtro_Vendidos']['Pagina'] * $_SESSION['Filtro_Vendidos']['Per_Page']));
 
             if (count($data['produto']) > 0) {
                 $_SESSION['Produto'] = $data['produto'] = array_combine(range(1, count($data['produto'])), array_values($data['produto']));
@@ -21190,7 +21199,7 @@ class Orcatrata extends CI_Controller {
 			*/
 			
             #### App_Produto ####
-            $data['update']['produto']['anterior'] = $this->Orcatrata_model->get_alterarproduto($data['empresa']['idSis_Empresa'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
+            $data['update']['produto']['anterior'] = $this->Orcatrata_model->get_alterarproduto($data['empresa']['idSis_Empresa'], FALSE, $_SESSION['Filtro_Vendidos']['Per_Page'], ($_SESSION['Filtro_Vendidos']['Pagina'] * $_SESSION['Filtro_Vendidos']['Per_Page']));
 
 			if (isset($data['produto']) || (!isset($data['produto']) && isset($data['update']['produto']['anterior']) ) ) {
 

@@ -17,15 +17,15 @@ if (!$db) {
 #echo 'Conexão bem sucedida';
 
 //Acho que as próximas linhas são redundantes, verificar
-$query = ($_SESSION['FiltroAlteraProcedimento']['NomeUsuario'] && isset($_SESSION['FiltroAlteraProcedimento']['NomeUsuario'])) ? 'AND A.idSis_Associado = ' . $_SESSION['FiltroAlteraProcedimento']['NomeUsuario'] . '  ' : FALSE;
-//$query = ($_SESSION['FiltroAlteraProcedimento']['NomeUsuario'] && isset($_SESSION['FiltroAlteraProcedimento']['NomeUsuario'])) ? 'AND A.idSis_Usuario = ' . $_SESSION['FiltroAlteraProcedimento']['NomeUsuario'] . '  ' : FALSE;	
-//$query3 = ($_SESSION['FiltroAlteraProcedimento']['NomeCliente'] && isset($_SESSION['FiltroAlteraProcedimento']['NomeCliente'])) ? 'AND C.idApp_Cliente = ' . $_SESSION['FiltroAlteraProcedimento']['NomeCliente'] . '  ' : FALSE;	
-$query3 = ($_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'] && isset($_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'])) ? 'AND C.idApp_Cliente = ' . $_SESSION['FiltroAlteraProcedimento']['idApp_Cliente'] . '  ' : FALSE;
-$query4 = ($_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet'] && isset($_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet'])) ? 'AND C.idApp_ClientePet = ' . $_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet'] . '  ' : FALSE;
-$query42 = ($_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet2'] && isset($_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet2'])) ? 'AND C.idApp_ClientePet = ' . $_SESSION['FiltroAlteraProcedimento']['idApp_ClientePet2'] . '  ' : FALSE;
-$query5 = ($_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep'] && isset($_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep'])) ? 'AND C.idApp_ClienteDep = ' . $_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep'] . '  ' : FALSE;
-$query52 = ($_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep2'] && isset($_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep2'])) ? 'AND C.idApp_ClienteDep = ' . $_SESSION['FiltroAlteraProcedimento']['idApp_ClienteDep2'] . '  ' : FALSE;
-$query6 = ($_SESSION['FiltroAlteraProcedimento']['Recorrencia'] && isset($_SESSION['FiltroAlteraProcedimento']['Recorrencia'])) ? 'AND C.Recorrencia = "' . $_SESSION['FiltroAlteraProcedimento']['Recorrencia'] . '"  ' : FALSE;
+$query = ($_SESSION['Filtro_Agenda']['NomeUsuario'] && isset($_SESSION['Filtro_Agenda']['NomeUsuario'])) ? 'AND A.idSis_Associado = ' . $_SESSION['Filtro_Agenda']['NomeUsuario'] . '  ' : FALSE;
+//$query = ($_SESSION['Filtro_Agenda']['NomeUsuario'] && isset($_SESSION['Filtro_Agenda']['NomeUsuario'])) ? 'AND A.idSis_Usuario = ' . $_SESSION['Filtro_Agenda']['NomeUsuario'] . '  ' : FALSE;	
+//$query3 = ($_SESSION['Filtro_Agenda']['NomeCliente'] && isset($_SESSION['Filtro_Agenda']['NomeCliente'])) ? 'AND C.idApp_Cliente = ' . $_SESSION['Filtro_Agenda']['NomeCliente'] . '  ' : FALSE;	
+$query3 = ($_SESSION['Filtro_Agenda']['idApp_Cliente'] && isset($_SESSION['Filtro_Agenda']['idApp_Cliente'])) ? 'AND C.idApp_Cliente = ' . $_SESSION['Filtro_Agenda']['idApp_Cliente'] . '  ' : FALSE;
+$query4 = ($_SESSION['Filtro_Agenda']['idApp_ClientePet'] && isset($_SESSION['Filtro_Agenda']['idApp_ClientePet'])) ? 'AND C.idApp_ClientePet = ' . $_SESSION['Filtro_Agenda']['idApp_ClientePet'] . '  ' : FALSE;
+$query42 = ($_SESSION['Filtro_Agenda']['idApp_ClientePet2'] && isset($_SESSION['Filtro_Agenda']['idApp_ClientePet2'])) ? 'AND C.idApp_ClientePet = ' . $_SESSION['Filtro_Agenda']['idApp_ClientePet2'] . '  ' : FALSE;
+$query5 = ($_SESSION['Filtro_Agenda']['idApp_ClienteDep'] && isset($_SESSION['Filtro_Agenda']['idApp_ClienteDep'])) ? 'AND C.idApp_ClienteDep = ' . $_SESSION['Filtro_Agenda']['idApp_ClienteDep'] . '  ' : FALSE;
+$query52 = ($_SESSION['Filtro_Agenda']['idApp_ClienteDep2'] && isset($_SESSION['Filtro_Agenda']['idApp_ClienteDep2'])) ? 'AND C.idApp_ClienteDep = ' . $_SESSION['Filtro_Agenda']['idApp_ClienteDep2'] . '  ' : FALSE;
+$query6 = ($_SESSION['Filtro_Agenda']['Recorrencia'] && isset($_SESSION['Filtro_Agenda']['Recorrencia'])) ? 'AND C.Recorrencia = "' . $_SESSION['Filtro_Agenda']['Recorrencia'] . '"  ' : FALSE;
 #$query2 = ($_SESSION['log']['NomeUsuario'] && isset($_SESSION['log']['NomeUsuario'])) ? 'C.idApp_Cliente = ' . $_SESSION['log']['NomeUsuario'] . ' AND ' : FALSE;
 
 if($_SESSION['log']['idSis_Empresa'] != 5){

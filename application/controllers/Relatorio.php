@@ -4923,9 +4923,9 @@ class Relatorio extends CI_Controller {
 
     }
 
-	public function vendidos() {
+	public function vendidos() {	
 		
-		unset($_SESSION['FiltroAlteraParcela']);
+		unset($_SESSION['Filtro_Vendidos']);
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -4937,12 +4937,23 @@ class Relatorio extends CI_Controller {
 		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 			'id_Cliente_Auto',
 			'NomeClienteAuto',
+			'id_ClientePet_Auto',
+			'NomeClientePetAuto',
+			'id_ClienteDep_Auto',
+			'NomeClienteDepAuto',
         ), TRUE));	
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
             'Orcamento',
             'Cliente',
 			'idApp_Cliente',
+			'NomeClientePet',
+			'NomeClienteDep',
+			'idApp_Cliente',
+			'idApp_ClientePet',
+			'idApp_ClientePet2',
+			'idApp_ClienteDep',
+			'idApp_ClienteDep2',
 			'Fornecedor',
 			'idApp_Fornecedor',
 			'Produtos',
@@ -5167,47 +5178,51 @@ class Relatorio extends CI_Controller {
 		$data['alterarprod'] = 'Orcatrata/alterarprodutorec/';
 		$data['paginacao'] = 'N';
 
-        $_SESSION['FiltroAlteraParcela']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-        $_SESSION['FiltroAlteraParcela']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
-        $_SESSION['FiltroAlteraParcela']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');	
-        $_SESSION['FiltroAlteraParcela']['DataInicio5'] = $this->basico->mascara_data($data['query']['DataInicio5'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim5'] = $this->basico->mascara_data($data['query']['DataFim5'], 'mysql');
-        $_SESSION['FiltroAlteraParcela']['DataInicio6'] = $this->basico->mascara_data($data['query']['DataInicio6'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
-        $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
-        $_SESSION['FiltroAlteraParcela']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
-		$_SESSION['FiltroAlteraParcela']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
-		$_SESSION['FiltroAlteraParcela']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
-		$_SESSION['FiltroAlteraParcela']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
-		$_SESSION['FiltroAlteraParcela']['FinalizadoOrca'] = $data['query']['FinalizadoOrca'];
-		$_SESSION['FiltroAlteraParcela']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
-		$_SESSION['FiltroAlteraParcela']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
-		$_SESSION['FiltroAlteraParcela']['Orcarec'] = $data['query']['Orcarec'];
-		$_SESSION['FiltroAlteraParcela']['Orcades'] = $data['query']['Orcades'];
-		$_SESSION['FiltroAlteraParcela']['FormaPagamento'] = $data['query']['FormaPagamento'];
-		$_SESSION['FiltroAlteraParcela']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
-		$_SESSION['FiltroAlteraParcela']['AVAP'] = $data['query']['AVAP'];
-		$_SESSION['FiltroAlteraParcela']['TipoFrete'] = $data['query']['TipoFrete'];
-		$_SESSION['FiltroAlteraParcela']['Prod_Serv_Produto'] = $data['query']['Prod_Serv_Produto'];
-		$_SESSION['FiltroAlteraParcela']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
-		$_SESSION['FiltroAlteraParcela']['TipoFinanceiro'] = $data['query']['TipoFinanceiro'];
-		$_SESSION['FiltroAlteraParcela']['Orcamento'] = $data['query']['Orcamento'];
-		$_SESSION['FiltroAlteraParcela']['Cliente'] = $data['query']['Cliente'];
-		$_SESSION['FiltroAlteraParcela']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-		$_SESSION['FiltroAlteraParcela']['Fornecedor'] = $data['query']['Fornecedor'];
-		$_SESSION['FiltroAlteraParcela']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
-		$_SESSION['FiltroAlteraParcela']['Modalidade'] = $data['query']['Modalidade'];
-		$_SESSION['FiltroAlteraParcela']['Campo'] = $data['query']['Campo'];
-		$_SESSION['FiltroAlteraParcela']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
-		$_SESSION['FiltroAlteraParcela']['Categoria'] = $data['query']['Categoria'];
-		$_SESSION['FiltroAlteraParcela']['Agrupar'] = $data['query']['Agrupar'];
+        $_SESSION['Filtro_Vendidos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+		$_SESSION['Filtro_Vendidos']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+        $_SESSION['Filtro_Vendidos']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+		$_SESSION['Filtro_Vendidos']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+        $_SESSION['Filtro_Vendidos']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+		$_SESSION['Filtro_Vendidos']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');	
+        $_SESSION['Filtro_Vendidos']['DataInicio5'] = $this->basico->mascara_data($data['query']['DataInicio5'], 'mysql');
+		$_SESSION['Filtro_Vendidos']['DataFim5'] = $this->basico->mascara_data($data['query']['DataFim5'], 'mysql');
+        $_SESSION['Filtro_Vendidos']['DataInicio6'] = $this->basico->mascara_data($data['query']['DataInicio6'], 'mysql');
+		$_SESSION['Filtro_Vendidos']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
+        $_SESSION['Filtro_Vendidos']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
+		$_SESSION['Filtro_Vendidos']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+        $_SESSION['Filtro_Vendidos']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
+		$_SESSION['Filtro_Vendidos']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');
+		$_SESSION['Filtro_Vendidos']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
+		$_SESSION['Filtro_Vendidos']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+		$_SESSION['Filtro_Vendidos']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
+		$_SESSION['Filtro_Vendidos']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
+		$_SESSION['Filtro_Vendidos']['FinalizadoOrca'] = $data['query']['FinalizadoOrca'];
+		$_SESSION['Filtro_Vendidos']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
+		$_SESSION['Filtro_Vendidos']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
+		$_SESSION['Filtro_Vendidos']['Orcarec'] = $data['query']['Orcarec'];
+		$_SESSION['Filtro_Vendidos']['Orcades'] = $data['query']['Orcades'];
+		$_SESSION['Filtro_Vendidos']['FormaPagamento'] = $data['query']['FormaPagamento'];
+		$_SESSION['Filtro_Vendidos']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
+		$_SESSION['Filtro_Vendidos']['AVAP'] = $data['query']['AVAP'];
+		$_SESSION['Filtro_Vendidos']['TipoFrete'] = $data['query']['TipoFrete'];
+		$_SESSION['Filtro_Vendidos']['Prod_Serv_Produto'] = $data['query']['Prod_Serv_Produto'];
+		$_SESSION['Filtro_Vendidos']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
+		$_SESSION['Filtro_Vendidos']['TipoFinanceiro'] = $data['query']['TipoFinanceiro'];
+		$_SESSION['Filtro_Vendidos']['Orcamento'] = $data['query']['Orcamento'];
+		$_SESSION['Filtro_Vendidos']['Cliente'] = $data['query']['Cliente'];
+		$_SESSION['Filtro_Vendidos']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+		$_SESSION['Filtro_Vendidos']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+		$_SESSION['Filtro_Vendidos']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
+		$_SESSION['Filtro_Vendidos']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+		$_SESSION['Filtro_Vendidos']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
+		$_SESSION['Filtro_Vendidos']['Fornecedor'] = $data['query']['Fornecedor'];
+		$_SESSION['Filtro_Vendidos']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
+		$_SESSION['Filtro_Vendidos']['Modalidade'] = $data['query']['Modalidade'];
+		$_SESSION['Filtro_Vendidos']['Campo'] = $data['query']['Campo'];
+		$_SESSION['Filtro_Vendidos']['Ordenamento'] = $data['query']['Ordenamento'];
+		$_SESSION['Filtro_Vendidos']['Produtos'] = $data['query']['Produtos'];
+		$_SESSION['Filtro_Vendidos']['Categoria'] = $data['query']['Categoria'];
+		$_SESSION['Filtro_Vendidos']['Agrupar'] = $data['query']['Agrupar'];
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         $this->form_validation->set_rules('DataInicio', 'Data Início do Pedido', 'trim|valid_date');
@@ -5232,6 +5247,10 @@ class Relatorio extends CI_Controller {
             $data['bd']['Orcamento'] = $data['query']['Orcamento'];
             $data['bd']['Cliente'] = $data['query']['Cliente'];
             $data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+			$data['bd']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
+			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+			$data['bd']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
             $data['bd']['Fornecedor'] = $data['query']['Fornecedor'];
             $data['bd']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
