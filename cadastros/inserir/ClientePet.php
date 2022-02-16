@@ -15,6 +15,7 @@ $portepet0 = filter_var($dados['PortePet'], FILTER_SANITIZE_STRING);
 $obspet0 = filter_var($dados['ObsPet'], FILTER_SANITIZE_STRING);
 
 $alergicopet0 = filter_var($dados['AlergicoPet'], FILTER_SANITIZE_STRING);
+$castradopet0 = filter_var($dados['CastradoPet'], FILTER_SANITIZE_STRING);
 $pesopet0 = filter_var($dados['PesoPet'], FILTER_SANITIZE_STRING);
 
 //$pesopet1 = str_replace(',', '.', str_replace('.', '', $pesopet0));	
@@ -75,6 +76,7 @@ $clientepet = trim(mb_strtoupper($clientepet1, 'ISO-8859-1'));
 $obspet = trim(mb_strtoupper($obspet0, 'ISO-8859-1'));
 $corpet = trim(mb_strtoupper($corpet0, 'ISO-8859-1'));
 $alergicopet = trim(mb_strtoupper($alergicopet0, 'ISO-8859-1'));
+$castradopet = trim(mb_strtoupper($castradopet0, 'ISO-8859-1'));
 
 if(empty($pesopet0)){
 	$pesopet = "0.000";
@@ -129,6 +131,7 @@ $result_clientepet = "INSERT INTO App_ClientePet (
 													PortePet,
 													ObsPet,
 													AlergicoPet,
+													CastradoPet,
 													PesoPet
 												) 
 												VALUES (
@@ -146,6 +149,7 @@ $result_clientepet = "INSERT INTO App_ClientePet (
 													'" .$portepet. "',
 													'" .$obspet. "',
 													'" .$alergicopet. "',
+													'" .$castradopet. "',
 													'" .$pesopet. "'
 												)";
 $resultado_clientepet = mysqli_query($conn, $result_clientepet);

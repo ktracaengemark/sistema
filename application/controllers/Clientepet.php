@@ -67,6 +67,7 @@ class Clientepet extends CI_Controller {
             'PortePet',
             'ObsPet',
             'AlergicoPet',
+            'CastradoPet',
             'PesoPet',
 		), TRUE));
 
@@ -92,6 +93,7 @@ class Clientepet extends CI_Controller {
         $data['select']['StatusVidaPet'] = $this->Clientepet_model->select_status_vida();
 		$data['select']['AtivoPet'] = $this->Basico_model->select_status_sn();
 		$data['select']['AlergicoPet'] = $this->Basico_model->select_status_sn();
+		$data['select']['CastradoPet'] = $this->Basico_model->select_status_sn();
 		$data['select']['RacaPet'] = $this->Cliente_model->select_racapet();
 		$data['select']['EspeciePet'] = array (
             //'0' => '',
@@ -246,6 +248,7 @@ class Clientepet extends CI_Controller {
             'ObsPet',
 			'AtivoPet',
             'AlergicoPet',
+            'CastradoPet',
             'PesoPet',
 		), TRUE);
 
@@ -271,8 +274,9 @@ class Clientepet extends CI_Controller {
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
 		//$data['select']['SexoPet'] = $this->Basico_model->select_sexo();
         $data['select']['StatusVidaPet'] = $this->Clientepet_model->select_status_vida();      
-		$data['select']['AtivoPet'] = $this->Basico_model->select_status_sn();    
+		$data['select']['AtivoPet'] = $this->Basico_model->select_status_sn();
 		$data['select']['AlergicoPet'] = $this->Basico_model->select_status_sn();
+		$data['select']['CastradoPet'] = $this->Basico_model->select_status_sn();
 		$data['select']['RacaPet'] = $this->Cliente_model->select_racapet();
 		$data['select']['EspeciePet'] = array (
             //'0' => '',

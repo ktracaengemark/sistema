@@ -375,6 +375,38 @@
 										</div>
 									</div>
 									<div class="col-md-2">
+										<label for="CastradoPet">Castrado?</label><br>
+										<div class="form-group">
+											<div class="btn-group" data-toggle="buttons">
+												<?php
+												foreach ($select['CastradoPet'] as $key => $row) {
+													(!$query['CastradoPet']) ? $query['CastradoPet'] = 'N' : FALSE;
+													if ($query['CastradoPet'] == $key) {
+														echo ''
+														. '<label class="btn btn-warning active" name="radiobutton_CastradoPet" id="radiobutton_CastradoPet' . $key . '">'
+														. '<input type="radio" name="CastradoPet" id="radiobutton" '
+														. 'autocomplete="off" value="' . $key . '" checked>' . $row
+														. '</label>'
+														;
+													} else {
+														echo ''
+														. '<label class="btn btn-default" name="radiobutton_CastradoPet" id="radiobutton_CastradoPet' . $key . '">'
+														. '<input type="radio" name="CastradoPet" id="radiobutton" '
+														. 'autocomplete="off" value="' . $key . '" >' . $row
+														. '</label>'
+														;
+													}
+												}
+												?>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<label for="ObsPet">OBS:</label>
+										<textarea class="form-control" id="ObsPet" <?php echo $readonly; ?>
+												  name="ObsPet"><?php echo $query['ObsPet']; ?></textarea>
+									</div>
+									<div class="col-md-2">
 										<label for="AtivoPet">AtivoPet?</label><br>
 										<div class="form-group">
 											<div class="btn-group" data-toggle="buttons">
@@ -400,11 +432,6 @@
 												?>
 											</div>
 										</div>
-									</div>
-									<div class="col-md-4">
-										<label for="ObsPet">OBS:</label>
-										<textarea class="form-control" id="ObsPet" <?php echo $readonly; ?>
-												  name="ObsPet"><?php echo $query['ObsPet']; ?></textarea>
 									</div>
 									<div class="col-md-2 text-left">
 										<label for="Cadastrar">Raca Encontrada?</label><br>
@@ -460,6 +487,7 @@
 										<div class="form-group">
 											<div class="btn-group" data-toggle="buttons">
 												<?php
+												/*
 												foreach ($select['StatusVidaPet'] as $key => $row) {
 													if (!$query['StatusVidaPet'])
 														$query['StatusVidaPet'] = 'V';
@@ -480,6 +508,7 @@
 														;
 													}
 												}
+												*/
 												?>  
 											</div>
 										</div>

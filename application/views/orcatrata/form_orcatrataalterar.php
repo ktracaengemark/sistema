@@ -3164,7 +3164,7 @@
 								</div>
 								<div class="col-md-3 text-left">
 									<label for="RacaPet">Raca:</label>
-									<select data-placeholder="Selecione uma opção..." class="form-control"
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="RacaPet" name="RacaPet">
 										<option value="">-- Selecione uma opção --</option>
 										<?php
@@ -3246,12 +3246,29 @@
 										</div>
 									</div>
 								</div>
+								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 ">
+									<h4 class="mb-3">Castrado</h4>
+									<div class="row">
+										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-3 ">	
+											<div class="custom-control custom-radio">
+												<input type="radio" name="CastradoPet" class="custom-control-input "  id="CastradoPet_Nao" value="N" checked>
+												<label class="custom-control-label" for="Nao">Não</label>
+											</div>
+										</div>
+										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-3 ">	
+											<div class="custom-control custom-radio">
+												<input type="radio" name="CastradoPet" class="custom-control-input " id="CastradoPet_Sim" value="S">
+												<label class="custom-control-label" for="Sim">Sim</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
 								<div class="col-md-3">
 									<label for="ObsPet">Obs: *</label>
 									<textarea name="ObsPet" type="text" class="form-control" id="ObsPet" maxlength="255" placeholder="Observacao"></textarea>
 								</div>
-							</div>
-							<div class="row">
 								<div class="col-md-3 text-left">	
 									<label >Raca</label><br>
 									<button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#addRacaPetModal">
