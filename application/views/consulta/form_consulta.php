@@ -214,8 +214,7 @@
 										</div>
 										<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php echo $cadastrar['NomeClienteAuto']; ?>" />
 										<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php echo $query['idApp_Cliente']; ?>" />
-										<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">	
-
+										<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">
 										<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
 											<input type="hidden" id="Hidden_idApp_ClienteDep" name="Hidden_idApp_ClienteDep" value="<?php echo $query['idApp_ClienteDep']; ?>" />
 											<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
@@ -267,7 +266,7 @@
 							</div>	
 							<div class="row">
 								<div class="col-xs-6 col-sm-3 col-md-2 col-lg-2 text-left">
-									<label for="Cadastrar">Encontrou?</label><br>
+									<label for="Cadastrar">Encontrou Cli/Pet/Dep?</label><br>
 									<div class="btn-larg-right btn-group" data-toggle="buttons">
 										<?php
 										foreach ($select['Cadastrar'] as $key => $row) {
@@ -302,14 +301,32 @@
 												<span class="glyphicon glyphicon-refresh"></span>Recar
 										</button>
 									</div>
-									<div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 text-left">	
+									<?php if($alterarcliente == 1){?>
+										<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
+											<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-left">
+												<label>Pesquisar Dep/Cliente:</label>
+												<input type="text" class="form-control" name="id_ClienteDep_Auto" id="id_ClienteDep_Auto" value="<?php echo $cadastrar['id_ClienteDep_Auto']; ?>"  placeholder="Pesquisar Dep">
+												<span class="modal-title" id="NomeClienteDepAuto1"><?php echo $cadastrar['NomeClienteDepAuto']; ?></span>
+												<input type="hidden" id="NomeClienteDepAuto" name="NomeClienteDepAuto" value="<?php echo $cadastrar['NomeClienteDepAuto']; ?>" />
+											</div>
+										<?php } ?>
+										<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
+											<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-left">
+												<label>Pesquisar Pet/Cliente:</label>
+												<input type="text" class="form-control" name="id_ClientePet_Auto" id="id_ClientePet_Auto" value="<?php echo $cadastrar['id_ClientePet_Auto']; ?>"  placeholder="Pesquisar Pet">
+												<span class="modal-title" id="NomeClientePetAuto1"><?php echo $cadastrar['NomeClientePetAuto']; ?></span>
+												<input type="hidden" id="NomeClientePetAuto" name="NomeClientePetAuto" value="<?php echo $cadastrar['NomeClientePetAuto']; ?>" />
+											</div>
+										<?php } ?>
+									<?php } ?>
+									<div class="col-xs-6 col-sm-2 col-md-2 col-lg-2 text-left">	
 										<label for="Cadastrar">Cliente</label><br>
 										<button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#addClienteModal">
 											<span class="glyphicon glyphicon-plus"></span>Cad
 										</button>
 									</div>
 									<?php if ($_SESSION['Empresa']['CadastrarPet'] == "S") { ?>
-										<div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 text-left">
+										<div class="col-xs-6 col-sm-2 col-md-2 col-lg-2 text-left">
 											<label >Pet</label><br>
 											<button type="button" class="btn btn-success btn-block" id="addPet" data-toggle="modal" data-target="#addClientePetModal">
 												<span class="glyphicon glyphicon-plus"></span>Cad
@@ -317,7 +334,7 @@
 										</div>
 									<?php }else{ ?>	
 										<?php if ($_SESSION['Empresa']['CadastrarDep'] == "S") { ?>
-											<div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 text-left">
+											<div class="col-xs-6 col-sm-2 col-md-2 col-lg-2 text-left">
 												<label >Dependente</label><br>
 												<button type="button" class="btn btn-success btn-block" id="addDep"  data-toggle="modal" data-target="#addClienteDepModal">
 													<span class="glyphicon glyphicon-plus"></span>Cad

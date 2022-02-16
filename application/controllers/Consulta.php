@@ -61,6 +61,10 @@ class Consulta extends CI_Controller {
 			'PorConsulta',
 			'id_Cliente_Auto',
 			'Hidden_status',
+			'id_ClientePet_Auto',
+			'NomeClientePetAuto',
+			'id_ClienteDep_Auto',
+			'NomeClienteDepAuto',
         ), TRUE));
 
         $data['query'] = quotes_to_entities($this->input->post(array(
@@ -68,8 +72,8 @@ class Consulta extends CI_Controller {
 			//'idApp_Consulta',
             'idApp_Agenda',
             'idApp_Cliente',
-            'idApp_ClienteDep',
             'idApp_ClientePet',
+            'idApp_ClienteDep',
 			'idApp_OrcaTrata',
 			//'idSis_EmpresaFilial',
             'Data2',
@@ -635,6 +639,10 @@ class Consulta extends CI_Controller {
 			'RacaPet',
 			'id_Cliente_Auto',
 			'NomeClienteAuto',
+			'id_ClientePet_Auto',
+			'NomeClientePetAuto',
+			'id_ClienteDep_Auto',
+			'NomeClienteDepAuto',
 			'Hidden_status',
         ), TRUE));
 
@@ -643,8 +651,8 @@ class Consulta extends CI_Controller {
 			//'idApp_Consulta',
             'idApp_Agenda',
             'idApp_Cliente',
-            'idApp_ClienteDep',
             'idApp_ClientePet',
+            'idApp_ClienteDep',
             'idApp_OrcaTrata',
 			//'idSis_EmpresaFilial',
             'Data2',
