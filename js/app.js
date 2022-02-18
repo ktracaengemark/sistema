@@ -1181,10 +1181,12 @@ $('#idApp_ClientePet').on('change', function(event){
 				var pelopet = 'N.I.';
 			}
 			
+			$('#Pet').show();
 			$("#Pet").html('<p>' + especiepet + '/ ' + raca + '/ ' + sexopet + '/ ' + portepet + '/ ' + peso + '/ Pelo: ' + pelopet + '/ Aler: ' + alergicopet + '/ Obs: ' + obs + '</p>');
 			
 		},
 		error:function(data){
+			$('#Pet').show();
 			$("#Pet").html('<p >Nenhum Pet Selecionado!</p>');
 		}
 		
@@ -1212,10 +1214,12 @@ $('#idApp_ClienteDep').on('change', function(event){
 			var sexo 		= data[0]['sexo'];
 			var obs 		= data[0]['obs'];
 
+			$('#Dep').show();
 			$("#Dep").html('<p>' + obs + '</p>');
 			
 		},
 		error:function(data){
+			$('#Dep').show();
 			$("#Dep").html('<p >Nenhum Dependente Selecionado!</p>');
 		}
 		
