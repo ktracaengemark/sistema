@@ -84,7 +84,23 @@
 		<div class="panel-heading">
 			<?php if($paginacao == "N") { ?>					
 				<div class="row text-left">
-					<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>						
+					<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>
+						<?php if ($_SESSION['log']['Permissao'] <= 2 ) { ?>
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
+								<label class="" for="Ordenamento">Profissional:</label><br>
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()" id="NomeUsuario" name="NomeUsuario">
+									<?php
+									foreach ($select['NomeUsuario'] as $key => $row) {
+										if ($query['NomeUsuario'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>
+								</select>
+							</div>
+						<?php } ?>						
 						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
 							<label>Busca Cliente:</label>
 							<div class="input-group">
@@ -102,6 +118,7 @@
 						</div>
 
 						<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
+							<!--
 							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
 								<label  for="idApp_ClientePet">Pet</label>
 								<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClientePet" name="idApp_ClientePet" onchange="this.form.submit()">
@@ -109,8 +126,8 @@
 								</select>
 								<span class="modal-title" id="Pet"></span>
 							</div>
-							<input type="hidden" id="Hidden_idApp_ClientePet" name="Hidden_idApp_ClientePet" value="<?php echo $query['idApp_ClientePet']; ?>" />
-							
+							<input type="hidden" id="Hidden_idApp_ClientePet" name="Hidden_idApp_ClientePet" value="<?php #echo $query['idApp_ClientePet']; ?>" />
+							-->
 							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
 								<label>Busca Pet:</label>
 								<div class="input-group">
@@ -129,6 +146,7 @@
 							
 						<?php } else { ?>
 							<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
+								<!--
 								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
 									<label  for="idApp_ClienteDep">Dep</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClienteDep" name="idApp_ClienteDep" onchange="this.form.submit()">
@@ -136,8 +154,8 @@
 									</select>
 									<span class="modal-title" id="Dep"></span>
 								</div>
-								<input type="hidden" id="Hidden_idApp_ClienteDep" name="Hidden_idApp_ClienteDep" value="<?php echo $query['idApp_ClienteDep']; ?>" />
-								
+								<input type="hidden" id="Hidden_idApp_ClienteDep" name="Hidden_idApp_ClienteDep" value="<?php #echo $query['idApp_ClienteDep']; ?>" />
+								-->
 								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
 									<label>Busca Dep:</label>
 									<div class="input-group">
@@ -177,22 +195,6 @@
 				</div>	
 				<div class="row text-left">	
 					<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>	
-						<?php if ($_SESSION['log']['Permissao'] <= 2 ) { ?>
-							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-left" >
-								<label class="" for="Ordenamento">Profissional:</label><br>
-								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()" id="NomeUsuario" name="NomeUsuario">
-									<?php
-									foreach ($select['NomeUsuario'] as $key => $row) {
-										if ($query['NomeUsuario'] == $key) {
-											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-										} else {
-											echo '<option value="' . $key . '">' . $row . '</option>';
-										}
-									}
-									?>
-								</select>
-							</div>
-						<?php } ?>
 						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
 							<label>Backup</label><br>
 							<a href="<?php echo base_url() . 'gerar_excel/Agendamentos/Agendamentos_total_xls.php'; ?>">
