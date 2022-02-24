@@ -2058,7 +2058,7 @@ class Consulta extends CI_Controller {
 			$_SESSION['Cliente'] = $this->Cliente_model->get_cliente($idApp_Cliente, TRUE);
 			$data['resumo'] = $this->Cliente_model->get_cliente($data['query']['idApp_Cliente']);
 			#$data['resumo'] = $this->Cliente_model->get_cliente($idApp_Cliente);
-			$_SESSION['Cliente']['NomeCliente'] = (strlen($data['resumo']['NomeCliente']) > 12) ? substr($data['resumo']['NomeCliente'], 0, 12) : $data['resumo']['NomeCliente'];
+			//$_SESSION['Cliente']['NomeCliente'] = (strlen($data['resumo']['NomeCliente']) > 12) ? substr($data['resumo']['NomeCliente'], 0, 12) : $data['resumo']['NomeCliente'];
 		}
 		
         if ($idApp_Consulta) {
