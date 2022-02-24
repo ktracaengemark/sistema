@@ -192,6 +192,14 @@
 						</button>
 					</a>
 				</div>
+				<?php if($_SESSION['log']['idSis_Empresa'] == 2) {?>
+					<div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 text-left">
+						<label>Whatsapp</label><br>
+						<button type='button' class='btn btn-md btn-success btn-block' id="Whatsapp">
+							Whatsapp
+						</button>
+					</div>
+				<?php } ?>
 			<?php } ?>
 		</div>
 	</div>

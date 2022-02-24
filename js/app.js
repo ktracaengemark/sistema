@@ -39,6 +39,32 @@ function whatsapp(celular){
 	window.open('https://api.whatsapp.com/send?phone=55'+celular+'&text=','1366002941508','width=700,height=350,left=375,right=375,top=300');
 }
 
+// função que busca Empresa
+$('#Whatsapp').on('click', function () {
+	$.ajax({
+		url: window.location.origin+ '/' + app + '/whatsapp/Orcamentos/Receitas.php',
+		dataType: "json",
+		success: function (data) {
+			//console.log(data);
+			//console.log(data.length);
+			for(var i = 0; i < data.length; i++){
+				(function(i){
+				  setTimeout(function(){
+					//console.log(data[i].nomecliente);
+					window.open('https://web.whatsapp.com/send?phone=55'+data[i].celularcliente+'&text=Ola '+data[i].nomecliente+'','1366002941508','');
+					//window.open('https://api.whatsapp.com/send?phone=55'+data[i].celularcliente+'&text=Ola '+data[i].nomecliente+'','1366002941508','');
+					//window.open('https://api.whatsapp.com/send?phone=55'+data[i].celularcliente+'&text=Ola '+data[i].nomecliente+'','1366002941508','width=700,height=350,left=375,right=375,top=300');
+					//whatsapp(data[i].celularcliente);
+				  }, (i)*10000); // 1000 = 1 segundo
+			   }(i));
+			}
+		},
+		error:function(data){
+			console.log('erro');
+		}
+	});
+});
+
 if($('#Hidden_UsarCupom').val()){
 	if($('#Hidden_UsarCupom').val() == 'S'){
 		$('#UsarC').val('none');

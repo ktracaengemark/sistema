@@ -627,18 +627,12 @@ class Relatorio_model extends CI_Model {
 			$comissao2 = ($_SESSION['FiltroAlteraParcela']['metodo'] == 2 && $_SESSION['log']['idSis_Empresa'] == 5 ) ? 'AND OT.Associado = ' . $_SESSION['log']['idSis_Usuario'] . '  ' : FALSE;
 			$comissao3 = ($_SESSION['FiltroAlteraParcela']['metodo'] == 2 && $_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['Usuario']['Permissao_Comissao'] < 2 ) ? 'AND OT.Associado = ' . $_SESSION['log']['idSis_Usuario'] . '  ' : FALSE;
 				
-			/*
-			echo "<pre>";
-			print_r($_SESSION['FiltroAlteraParcela']);
-			echo "<br>";
-			print_r($data);
-			echo "</pre>";
-			*/
-		}    
-		//echo $this->db->last_query();
 
-		//exit();		
+		}			
 		
+		$_SESSION['FiltroAlteraParcela']['Start'] = $start;
+		$_SESSION['FiltroAlteraParcela']['Limit'] = $limit;
+
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
@@ -821,7 +815,6 @@ class Relatorio_model extends CI_Model {
         if ($completo === FALSE) {
             return TRUE;
         } else {
-
             $somasubtotal=0;
 			$subtotal=0;
 			$quantidade=0;
