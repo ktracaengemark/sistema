@@ -633,8 +633,10 @@ $("#id_ClientePet_Auto").autocomplete({
 		//console.log('pegar = '+pegar);
 		var pegarSplit = pegar.split('#');
 		var id_ClientePet = pegarSplit[0];
+		var nomeCliente = pegarSplit[2];
 		
 		//console.log('id cliente Autocomplete = '+id_ClientePet);
+		//console.log('nome cliente Autocomplete = '+nomeCliente);
 		
 		$.ajax({
 			url: window.location.origin+ '/' + app + '/cadastros/pesquisar/Pet.php?id=' + id_ClientePet,
@@ -654,11 +656,11 @@ $("#id_ClientePet_Auto").autocomplete({
 			}
 			
 		});
-
 		$('#idApp_ClientePet').val(id_ClientePet);
 		$('#idApp_ClientePet2').val(id_ClientePet);
 		$('#id_Cliente_Auto').val('');
 		limpaCampos_Cliente();
+		$('#id_Cliente_Auto').val(nomeCliente);
 	}
 	
 });
