@@ -691,8 +691,10 @@ $("#id_ClienteDep_Auto").autocomplete({
 		//console.log('pegar = '+pegar);
 		var pegarSplit = pegar.split('#');
 		var id_ClienteDep = pegarSplit[0];
+		var nomeCliente = pegarSplit[2];
 		
 		//console.log('id cliente Autocomplete = '+id_ClienteDep);
+		//console.log('nome cliente Autocomplete = '+nomeCliente);
 		
 		$.ajax({
 			url: window.location.origin+ '/' + app + '/cadastros/pesquisar/Dep.php?id=' + id_ClienteDep,
@@ -717,6 +719,7 @@ $("#id_ClienteDep_Auto").autocomplete({
 		$('#idApp_ClienteDep2').val(id_ClienteDep);
 		$('#id_Cliente_Auto').val('');
 		limpaCampos_Cliente();
+		$('#id_Cliente_Auto').val(nomeCliente);
 
 	}
 	

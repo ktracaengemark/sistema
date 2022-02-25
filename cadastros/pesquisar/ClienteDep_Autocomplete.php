@@ -65,7 +65,7 @@ while($row_msg_cont = $resultado_msg_cont->fetch(PDO::FETCH_ASSOC)){
 	
     //$data[] = $row_msg_cont['NomeClienteDep'];
 	
-	$data[$row_msg_cont['idApp_ClienteDep']] = $row_msg_cont['idApp_ClienteDep'] . '#' . $row_msg_cont['NomeClienteDep'] . ' | ' . $row_msg_cont['NomeCliente'];
+	$data[$row_msg_cont['idApp_ClienteDep']] = $row_msg_cont['idApp_ClienteDep'] . '#' . $row_msg_cont['NomeClienteDep'] . ' | #' . $row_msg_cont['NomeCliente'] . '#';
 	//$data[$row_msg_cont['NomeClienteDep']] = $row_msg_cont['idApp_ClienteDep'];
 }
 
