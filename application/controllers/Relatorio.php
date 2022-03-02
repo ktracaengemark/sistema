@@ -4455,7 +4455,11 @@ class Relatorio extends CI_Controller {
 			$data['Pesquisa'] = '';
 			
 			$config['base_url'] = base_url() . 'relatorio_pag/cobrancas_pag/';
-			$config['total_rows'] = $this->Relatorio_model->list_parcelas($data['bd'],TRUE, TRUE);
+
+			$data['pesquisa_query'] = $this->Relatorio_model->list_parcelas($data['bd'],TRUE, TRUE);
+			$config['total_rows'] = $data['pesquisa_query']->num_rows();
+			
+			//$config['total_rows'] = $this->Relatorio_model->list_parcelas($data['bd'],TRUE, TRUE);
            
 			if($config['total_rows'] >= 1){
 				$data['total_rows'] = $config['total_rows'];
@@ -4888,7 +4892,11 @@ class Relatorio extends CI_Controller {
 			$data['Pesquisa'] = '';
 			
 			$config['base_url'] = base_url() . 'relatorio_pag/debitos_pag/';
-			$config['total_rows'] = $this->Relatorio_model->list_parcelas($data['bd'],TRUE, TRUE);
+
+			$data['pesquisa_query'] = $this->Relatorio_model->list_parcelas($data['bd'],TRUE, TRUE);
+			$config['total_rows'] = $data['pesquisa_query']->num_rows();
+						
+			//$config['total_rows'] = $this->Relatorio_model->list_parcelas($data['bd'],TRUE, TRUE);
            
 			if($config['total_rows'] >= 1){
 				$data['total_rows'] = $config['total_rows'];

@@ -1236,7 +1236,19 @@ class Relatorio_model extends CI_Model {
 		');
 
 		if($total == TRUE) {
-			return $query->num_rows();
+			//return $query->num_rows();
+			if ($completo === FALSE) {
+				return TRUE;
+			} else {
+				$somaparcelas2=0;
+				foreach ($query->result() as $row) {
+					$somaparcelas2 += $row->ValorParcela;
+				}
+				$query->soma2 = new stdClass();
+				$query->soma2->somaparcelas2 = number_format($somaparcelas2, 2, ',', '.');
+
+				return $query;
+			}
 		}
 				
         ####################################################################

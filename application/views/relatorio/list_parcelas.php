@@ -38,7 +38,7 @@
 				<label for="DataFim"><?php #echo $titulo1; ?> Total:</label>
 				<div class="input-group">
 					<span class="input-group-addon">R$</span>
-					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->soma->somareceber ?>">
+					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->soma->somareceber ?> / <?php echo $pesquisa_query->soma2->somaparcelas2 ?>">
 				</div>
 			</div>	
 		</div>	
