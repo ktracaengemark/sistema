@@ -26,6 +26,7 @@ Aguardar();
 clientePet();
 clienteDep();
 clienteOT();
+repeticao();
 fechaBuscaOS();
 exibirTroco();
 exibirExtraOrca();
@@ -579,6 +580,7 @@ $("#id_Cliente_Auto").autocomplete({
 		calculacashback(id_Cliente);
 		buscaEnderecoCliente(id_Cliente);
 		clienteOT(id_Cliente);
+		repeticao(id_Cliente);
 		
 		$('#id_ClientePet_Auto').val('');
 		limpaCampos_ClientePet();
@@ -618,6 +620,8 @@ function limpaCampos_Cliente(){
 		$('#Cidade').val('');
 		$('#Estado').val('');
 		$('#Referencia').val('');
+		clienteOT();
+		repeticao();
    }
 }	
 
@@ -3650,37 +3654,53 @@ function quais(){
 }
 
 //Função que busca O.S. do cliente.
-function clienteOT(id = null){
+function clienteOT(id = null, status_extra = null){
 	
 	if(id && id!= 'null'){
 		var id_cliente = id;
 	}else{
 		var id_cliente = $('#idApp_Cliente').val();
 	}
-	
 	//var id_cliente = $('#idApp_Cliente').val();
 	
 	var caminho2 = $('#Caminho2').val();
 	//console.log(caminho2);
 	//var caminho2 = '../../';
-	//console.log(id_cliente);
+	//console.log('id_cliente = '+id_cliente);
 	//console.log(id);
 	
 	//console.log(' <br>OrcaTrata<br> ');
 		
 	//console.log('<br> Hidden_idApp_OrcaTrata = '+ $('#Hidden_idApp_OrcaTrata').val());
 	
+	//console.log('status_extra = '+ status_extra);
+	
+	if(status_extra && status_extra!= 'null'){
+		$('#Hidden_Extra').val(status_extra);	
+		var extra = status_extra;
+	}else{
+		if($('#Hidden_Extra').val()){
+			var extra = $('#Hidden_Extra').val();
+		}else{
+			$('#Hidden_Extra').val('N');	
+			var extra = 'N';
+		}
+	}
+
+	//console.log('Hidden_Extra = '+ $('#Hidden_Extra').val());
+	//console.log('Extra = '+ extra);
+
 	if(id_cliente) {
 		//console.log(id);
 		
 		//$('#idApp_OrcaTrata').hide();
-		$.getJSON(window.location.origin+ '/' + app + '/cadastros/pesquisar/OrcaTrata.php?search=',{idApp_Cliente: id_cliente, ajax: 'true'}, function(j){
+		$.getJSON(window.location.origin+ '/' + app + '/cadastros/pesquisar/OrcaTrata.php?search=',{idApp_Cliente: id_cliente, extra: extra, ajax: 'true'}, function(j){
 			if(j != null){
 				var options = '<option value="">-- Sel. O.S. --</option>';	
 				for (var i = 0; i < j.length; i++) {
 					if (j[i].id_OrcaTrata == $('#Hidden_idApp_OrcaTrata').val()) {
 						options += '<option value="' + j[i].id_OrcaTrata + '" selected="selected">' + j[i].id_OrcaTrata + ' | ' + j[i].descricao_OrcaTrata + '</option>';
-						buscaPet();
+						//buscaPet();
 					} else {
 						options += '<option value="' + j[i].id_OrcaTrata + '">' + j[i].id_OrcaTrata + ' | ' + j[i].descricao_OrcaTrata + '</option>';
 					}
@@ -3697,6 +3717,169 @@ function clienteOT(id = null){
 		$('#idApp_OrcaTrata').html('<option value="">– Selecione um Orcam. –</option>');
 	}
 
+}
+
+//Função que busca Repetiçao do cliente.
+function repeticao(id = null){
+	
+	if(id && id!= 'null'){
+		var id_cliente = id;
+	}else{
+		var id_cliente = $('#idApp_Cliente').val();
+	}
+	//var id_cliente = $('#idApp_Cliente').val();
+
+	//console.log(id_cliente);
+	//console.log(id);
+	
+	//console.log(' <br>OrcaTrata<br> ');
+		
+	//console.log('<br> Hidden_Repeticao = '+ $('#Hidden_Repeticao').val());
+
+	$('#Repeticao').html('<option value="">– Sel. Repeticao –</option>');
+	$('#Hidden_Repeticao').val('');
+	$('#Hidden_RepeticaoCons').val(0);
+	$('#Hidden_RepeticaoOrca').val(0);
+	
+	if(id_cliente) {
+		//console.log(id);
+		
+		//$('#Repeticao').hide();
+		$.getJSON(window.location.origin+ '/' + app + '/cadastros/pesquisar/Repeticao.php?search=',{idApp_Cliente: id_cliente, ajax: 'true'}, function(j){
+			if(j != null){
+				var options = '<option value="">-- Sel. Repeticao --</option>';	
+				for (var i = 0; i < j.length; i++) {
+					if (j[i].id_Repeticao == $('#Hidden_Repeticao').val()) {
+						options += '<option value="' + j[i].id_Repeticao + '" selected="selected">' + j[i].id_Repeticao + '</option>';
+					} else {
+						options += '<option value="' + j[i].id_Repeticao + '">' + j[i].id_Repeticao + '</option>';
+					}
+				}	
+				$('#Repeticao').html(options).show();
+				//$('.carregando').hide();
+				//console.log(options);
+			}else{
+				$('#Repeticao').html('<option value="">– Sel. Repeticao –</option>');
+			}				
+		});
+		
+	}else{
+		$('#Repeticao').html('<option value="">– Sel. Repeticao –</option>');
+	}
+	repeticaoSelecionada();
+}
+
+//função que passa a repetição selecionada
+function repeticaoSelecionada (repeticaoselecionada = null) {
+	
+	if(repeticaoselecionada && repeticaoselecionada != null){
+		var repeticao = repeticaoselecionada;
+		$('#Hidden_Repeticao').val(repeticaoselecionada);
+	}else{
+		var repeticao = null;
+		$('#Hidden_Repeticao').val(repeticao);
+	}
+	if(repeticao && repeticao != null) {
+		repeticaoCons(repeticao);
+	}else{
+		$('#Hidden_RepeticaoCons').val(0);
+		$('#Hidden_RepeticaoOrca').val(0);
+		repeticaoCons();
+	}
+}
+
+//função que conta repetições de consulta
+function repeticaoCons (repeticao = null) {
+
+	if(repeticao && repeticao != null) {
+
+		$.ajax({
+			url: window.location.origin+ '/' + app + '/cadastros/pesquisar/RepeticaoCons.php?id_cons=' + repeticao,
+			dataType: "json",
+			success: function (j) {
+				//console.log(j.length);
+				//console.log(j);
+				//console.log('sucesso');
+				$('#Hidden_RepeticaoCons').val(j.length);
+				repeticaoOrca(repeticao);
+			},
+			error:function(j){
+				//console.log('erro');
+				$('#Hidden_RepeticaoCons').val(0);
+				repeticaoOrca(repeticao);
+			}
+		});
+
+	}else{
+		//console.log('erro de pesquisa');
+		$('#Hidden_RepeticaoCons').val(0);
+		repeticaoOrca(repeticao);
+	}
+	//compararRepetioes();
+}
+
+//função que conta repetições de OS
+function repeticaoOrca (repeticao = null) {
+
+	if(repeticao && repeticao != null) {
+
+		$.ajax({
+			url: window.location.origin+ '/' + app + '/cadastros/pesquisar/RepeticaoOrca.php?id_orca=' + repeticao,
+			dataType: "json",
+			success: function (k) {
+				//console.log(k.length);
+				//console.log(k);
+				//console.log('sucesso');
+				$('#Hidden_RepeticaoOrca').val(k.length);
+				compararRepetioes();
+			},
+			error:function(k){
+				//console.log('erro');
+				$('#Hidden_RepeticaoOrca').val(0);
+				compararRepetioes();
+			}
+		});
+		
+	}else{
+		//console.log('erro de pesquisa');
+		$('#Hidden_RepeticaoOrca').val(0);
+		compararRepetioes();
+	}
+}
+
+//Função que compara as repetições
+function compararRepetioes () {
+	if($('#Hidden_RepeticaoCons').val()){
+		qtdcons = $('#Hidden_RepeticaoCons').val();
+	}else{
+		qtdcons = 0;
+	}
+	if($('#Hidden_RepeticaoOrca').val()){
+		qtdorca = $('#Hidden_RepeticaoOrca').val();
+	}else{
+		qtdorca = 0;
+	}		
+	if($('#Hidden_Repeticao').val()){
+		var repet = $('#Hidden_Repeticao').val();
+	}else{
+		var repet = 'Vazio';
+	}
+	console.log('Repeticao = '+repet);
+	console.log('qtdCons = '+qtdcons);
+	console.log('qtdOrca = '+qtdorca);
+	
+	if(qtdcons == 1 && qtdorca == 0){
+		console.log('Caso1: N-1, Permito criar 1 OS Nova');
+	}else if(qtdcons == 1 && qtdorca == 1){
+		console.log('Caso2: N-1, Uso a OS Existente');
+	}else if(qtdcons > 1 && qtdorca == 0){
+		console.log('Caso3: N-1 ou N-N, Permito Criar 1 OS Nova ou N OSs novas ');
+	}else if(qtdcons > 1 && qtdorca == 1){
+		console.log('Caso4: N-1, Uso a OS Existente');
+	}else if(qtdcons > 1 && qtdorca > 1){
+		qtd_Os = qtdcons - qtdorca;
+		console.log('Caso5: N-N, Crio a qtd da diferenca de OS');
+	}
 }
 
 //Função que desabilita o botão fechar após 1 click, evitando mais de um envio de formulário.

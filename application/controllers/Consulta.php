@@ -48,6 +48,7 @@ class Consulta extends CI_Controller {
 			'Cadastrar',
 			'Whatsapp',
 			'Repetir',
+			'Extra',
 			'Adicionar',
 			'Prazo',
 			'DataMinima',
@@ -75,6 +76,7 @@ class Consulta extends CI_Controller {
             'idApp_ClientePet',
             'idApp_ClienteDep',
 			'idApp_OrcaTrata',
+            'Repeticao',
 			//'idSis_EmpresaFilial',
             'Data2',
 			'Data',
@@ -99,6 +101,7 @@ class Consulta extends CI_Controller {
  		//(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
  		(!$data['cadastrar']['Whatsapp']) ? $data['cadastrar']['Whatsapp'] = 'S' : FALSE;
  		(!$data['cadastrar']['Repetir']) ? $data['cadastrar']['Repetir'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['Extra']) ? $data['cadastrar']['Extra'] = 'N' : FALSE;
  		(!$data['cadastrar']['Adicionar']) ? $data['cadastrar']['Adicionar'] = 'N' : FALSE;
  		(!$data['cadastrar']['Vincular']) ? $data['cadastrar']['Vincular'] = 'S' : FALSE;
  		(!$data['cadastrar']['NovaOS']) ? $data['cadastrar']['NovaOS'] = 'S' : FALSE;
@@ -189,6 +192,7 @@ class Consulta extends CI_Controller {
 		$data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
 		$data['select']['Whatsapp'] = $this->Basico_model->select_status_sn();
 		$data['select']['Repetir'] = $this->Basico_model->select_status_sn();
+		$data['select']['Extra'] = $this->Basico_model->select_status_sn();
 		$data['select']['Adicionar'] = $this->Basico_model->select_status_sn();
 		$data['select']['Vincular'] = $this->Basico_model->select_status_sn();
 		$data['select']['NovaOS'] = $this->Basico_model->select_status_sn();
@@ -264,6 +268,12 @@ class Consulta extends CI_Controller {
             $data['div']['Repetir'] = '' : $data['div']['Repetir'] = 'style="display: none;"';
 		
 		$data['radio'] = array(
+            'Extra' => $this->basico->radio_checked($data['cadastrar']['Extra'], 'Extra', 'NS'),
+        );
+        ($data['cadastrar']['Extra'] == 'S') ?
+            $data['div']['Extra'] = '' : $data['div']['Extra'] = 'style="display: none;"';
+						
+		$data['radio'] = array(
             'Adicionar' => $this->basico->radio_checked($data['cadastrar']['Adicionar'], 'Adicionar', 'NS'),
         );
         ($data['cadastrar']['Adicionar'] == 'S') ?
@@ -297,6 +307,9 @@ class Consulta extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
+		if ($data['cadastrar']['Extra'] == 'S') {
+			$this->form_validation->set_rules('Repeticao', 'Repeticao', 'required|trim');
+		}
 		if ($data['cadastrar']['Repetir'] == 'S') {
 			$this->form_validation->set_rules('Intervalo', 'Intervalo', 'required|trim|valid_intervalo');
 			$this->form_validation->set_rules('Periodo', 'Período', 'required|trim|valid_periodo');
@@ -464,7 +477,11 @@ class Consulta extends CI_Controller {
 						}
 					}
 				}			
-						
+				
+				if($data['cadastrar']['Extra'] == "N"){
+					$data['query']['Repeticao'] = "0";
+				}
+										
 				$data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
 				
 				$dataini_whats 	= $data['query']['Data'];
@@ -501,13 +518,51 @@ class Consulta extends CI_Controller {
 						unset($data['Profissional'], $dataini_whats, $horaini_whats);
 					}
 
-					$data['copiar']['Repeticao'] = $data['query']['idApp_Consulta'];
+					if($data['query']['idApp_OrcaTrata'] !=0){
+						$data['orcatrata'] = $this->Consulta_model->get_orcatrata($data['query']['idApp_OrcaTrata']);
+						if(isset($data['orcatrata'])){
+							if($data['orcatrata']['RepeticaoCons'] != 0){
+								$_SESSION['Copiar']['Repeticao'] 	= $data['orcatrata']['RepeticaoCons'];
+								$data['copiar']['Repeticao'] 		= $data['orcatrata']['RepeticaoCons'];
+								$data['copiar']['idApp_ClientePet'] = $data['orcatrata']['idApp_ClientePet'];
+								$data['copiar']['idApp_ClienteDep'] = $data['orcatrata']['idApp_ClienteDep'];
+							}else{
+								$_SESSION['Copiar']['Repeticao'] 	= $data['query']['idApp_Consulta'];
+								$data['copiar']['Repeticao'] 		= $data['query']['idApp_Consulta'];
+								$data['copiar']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+								$data['copiar']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+							}
+						}						
+					}else{
+						if($data['cadastrar']['Extra'] == 'S'){
+							$data['consulta'] = $this->Consulta_model->get_consulta($data['query']['Repeticao']);
+							if(isset($data['consulta'])){
+								$data['copiar']['idApp_ClientePet'] = $data['consulta']['idApp_ClientePet'];
+								$data['copiar']['idApp_ClienteDep'] = $data['consulta']['idApp_ClienteDep'];
+							}else{
+								$data['copiar']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+								$data['copiar']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+							}
+							$_SESSION['Copiar']['Repeticao'] 	= $data['query']['Repeticao'];
+							$data['copiar']['Repeticao'] 		= $data['query']['Repeticao'];
+						}else{
+							$data['copiar']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+							$data['copiar']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+							$_SESSION['Copiar']['Repeticao'] 	= $data['query']['idApp_Consulta'];
+							$data['copiar']['Repeticao'] 		= $data['query']['idApp_Consulta'];
+						}
+					}
+
 					if($data['cadastrar']['Repetir'] == 'S'){
 						$data['copiar']['DataTermino'] = $data['query']['DataTermino'];
 						$data['copiar']['Recorrencia'] = "1/" . $qtd;
 					}else{
-						$data['copiar']['Recorrencia'] = "1/1";
-						//$data['copiar']['DataTermino'] = $dataini_cad;
+						if($data['cadastrar']['Extra'] == 'S'){
+							$data['copiar']['Recorrencia'] = "Ext";
+						}else{
+							$data['copiar']['Recorrencia'] = "1/1";
+							//$data['copiar']['DataTermino'] = $dataini_cad;
+						}
 					}
 					
 					$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['query']['idApp_Consulta']);
@@ -521,7 +576,8 @@ class Consulta extends CI_Controller {
 						if ($data['cadastrar']['Repetir'] == 'S') {
 							for($j=1; $j<$qtd; $j++) {
 								$data['repeticao'][$j] = array(
-									'Repeticao' 			=> $data['query']['idApp_Consulta'],
+									//'Repeticao' 			=> $data['query']['idApp_Consulta'],
+									'Repeticao' 			=> $data['copiar']['Repeticao'],
 									'Intervalo' 			=> $data['query']['Intervalo'],
 									'Periodo' 				=> $data['query']['Periodo'],
 									'Tempo' 				=> $data['query']['Tempo'],
@@ -626,6 +682,7 @@ class Consulta extends CI_Controller {
 			'Cadastrar',
 			'Whatsapp',
 			'Repetir',
+			'Extra',
 			'Adicionar',
 			'Vincular',
 			'NovaOS',
@@ -654,6 +711,7 @@ class Consulta extends CI_Controller {
             'idApp_ClientePet',
             'idApp_ClienteDep',
             'idApp_OrcaTrata',
+            'Repeticao',
 			//'idSis_EmpresaFilial',
             'Data2',
 			'Data',
@@ -679,6 +737,7 @@ class Consulta extends CI_Controller {
  		//(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;
  		(!$data['cadastrar']['Whatsapp']) ? $data['cadastrar']['Whatsapp'] = 'S' : FALSE;
  		(!$data['cadastrar']['Repetir']) ? $data['cadastrar']['Repetir'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['Extra']) ? $data['cadastrar']['Extra'] = 'N' : FALSE;
  		(!$data['cadastrar']['Adicionar']) ? $data['cadastrar']['Adicionar'] = 'N' : FALSE;
  		(!$data['cadastrar']['Vincular']) ? $data['cadastrar']['Vincular'] = 'S' : FALSE;
  		(!$data['cadastrar']['NovaOS']) ? $data['cadastrar']['NovaOS'] = 'S' : FALSE;
@@ -805,6 +864,7 @@ class Consulta extends CI_Controller {
 		$data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
 		$data['select']['Whatsapp'] = $this->Basico_model->select_status_sn();
 		$data['select']['Repetir'] = $this->Basico_model->select_status_sn();
+		$data['select']['Extra'] = $this->Basico_model->select_status_sn();
 		$data['select']['Adicionar'] = $this->Basico_model->select_status_sn();  
 		$data['select']['Vincular'] = $this->Basico_model->select_status_sn();
 		$data['select']['NovaOS'] = $this->Basico_model->select_status_sn();
@@ -878,6 +938,12 @@ class Consulta extends CI_Controller {
             $data['div']['Repetir'] = '' : $data['div']['Repetir'] = 'style="display: none;"';
 		
 		$data['radio'] = array(
+            'Extra' => $this->basico->radio_checked($data['cadastrar']['Extra'], 'Extra', 'NS'),
+        );
+        ($data['cadastrar']['Extra'] == 'S') ?
+            $data['div']['Extra'] = '' : $data['div']['Extra'] = 'style="display: none;"';
+				
+		$data['radio'] = array(
             'Adicionar' => $this->basico->radio_checked($data['cadastrar']['Adicionar'], 'Adicionar', 'NS'),
         );
         ($data['cadastrar']['Adicionar'] == 'S') ?
@@ -944,6 +1010,9 @@ class Consulta extends CI_Controller {
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
+		if ($data['cadastrar']['Extra'] == 'S') {
+			$this->form_validation->set_rules('Repeticao', 'Repeticao', 'required|trim');
+		}
 		if ($data['cadastrar']['Repetir'] == 'S') {
 			$this->form_validation->set_rules('Intervalo', 'Intervalo', 'required|trim|valid_intervalo');
 			$this->form_validation->set_rules('Periodo', 'Período', 'required|trim|valid_periodo');
@@ -1117,6 +1186,12 @@ class Consulta extends CI_Controller {
 					}
 				}
 				
+				if($data['cadastrar']['Extra'] == "N"){
+					$data['query']['Repeticao'] = "0";
+				}else{
+				
+				}
+				
 				$data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
 				
 				$dataini_whats 	= $data['query']['Data'];
@@ -1170,18 +1245,35 @@ class Consulta extends CI_Controller {
 							}
 						}						
 					}else{
-						$_SESSION['Copiar']['Repeticao'] 	= $data['query']['idApp_Consulta'];
-						$data['copiar']['Repeticao'] 		= $data['query']['idApp_Consulta'];
-						$data['copiar']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-						$data['copiar']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+						if($data['cadastrar']['Extra'] == 'S'){
+							$data['consulta'] = $this->Consulta_model->get_consulta($data['query']['Repeticao']);
+							if(isset($data['consulta'])){
+								$data['copiar']['idApp_ClientePet'] = $data['consulta']['idApp_ClientePet'];
+								$data['copiar']['idApp_ClienteDep'] = $data['consulta']['idApp_ClienteDep'];
+							}else{
+								$data['copiar']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+								$data['copiar']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+							}
+							$_SESSION['Copiar']['Repeticao'] 	= $data['query']['Repeticao'];
+							$data['copiar']['Repeticao'] 		= $data['query']['Repeticao'];
+						}else{
+							$data['copiar']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+							$data['copiar']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+							$_SESSION['Copiar']['Repeticao'] 	= $data['query']['idApp_Consulta'];
+							$data['copiar']['Repeticao'] 		= $data['query']['idApp_Consulta'];
+						}
 					}
 
 					if($data['cadastrar']['Repetir'] == 'S'){
 						$data['copiar']['DataTermino'] = $data['query']['DataTermino'];
 						$data['copiar']['Recorrencia'] = "1/" . $qtd;
 					}else{
-						$data['copiar']['Recorrencia'] = "1/1";
-						//$data['copiar']['DataTermino'] = $dataini_cad;
+						if($data['cadastrar']['Extra'] == 'S'){
+							$data['copiar']['Recorrencia'] = "Ext";
+						}else{
+							$data['copiar']['Recorrencia'] = "1/1";
+							//$data['copiar']['DataTermino'] = $dataini_cad;
+						}
 					}
 					
 					$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['query']['idApp_Consulta']);

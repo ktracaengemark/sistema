@@ -2,9 +2,27 @@
 	
 include_once '../../conexao.php';
 
-$id_categoria = $_REQUEST['idApp_Cliente'];
-
-$result_sub_cat = "SELECT * FROM App_OrcaTrata WHERE idApp_Cliente=$id_categoria AND ConcluidoOrca='N' AND CanceladoOrca='N' ORDER BY idApp_OrcaTrata";
+$id_cliente = $_REQUEST['idApp_Cliente'];
+$extra = $_REQUEST['extra'];
+//$extra = 'N';
+$repeticaoCons 	= ($extra == 'S') ? 'RepeticaoCons = 0 AND' : FALSE;
+$result_sub_cat = "
+					SELECT 
+						idApp_OrcaTrata,
+						ObsOrca,
+						Descricao,
+						RepeticaoCons,
+						RepeticaoOrca
+					FROM 
+						App_OrcaTrata 
+					WHERE 
+						idApp_Cliente=" . $id_cliente . " AND
+						" . $repeticaoCons . "
+						ConcluidoOrca='N' AND 
+						CanceladoOrca='N' 
+					ORDER BY 
+						idApp_OrcaTrata
+				";
 
 $resultado_sub_cat = mysqli_query($conn, $result_sub_cat);
 

@@ -397,7 +397,7 @@
 													
 													<?php echo form_error('HoraFim'); ?>
 												</div>	
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  form-inline text-left">
+												<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6  form-inline text-left">
 													<label for="idTab_TipoConsulta">Tipo:</label><br>
 													<div class="btn-block" data-toggle="buttons">
 														<?php
@@ -423,6 +423,55 @@
 														?>
 													</div>
 												</div>
+												<?php if ($metodo == 1) { ?>
+													<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+														<label for="Extra">Extra?</label><br>
+														<div class="btn-larg-right btn-group" data-toggle="buttons">
+															<?php
+															foreach ($select['Extra'] as $key => $row) {
+																//if (!$cadastrar['Extra']) $cadastrar['Extra'] = 'N';
+																($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																if ($cadastrar['Extra'] == $key) {
+																	echo ''
+																	. '<label class="btn btn-warning active" name="Extra_' . $hideshow . '">'
+																	. '<input type="radio" name="Extra" id="' . $hideshow . '" '
+																	. 'onchange="clienteOT(null, this.value)" '
+																	. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																	. '</label>'
+																	;
+																} else {
+																	echo ''
+																	. '<label class="btn btn-default" name="Extra_' . $hideshow . '">'
+																	. '<input type="radio" name="Extra" id="' . $hideshow . '" '
+																	. 'onchange="clienteOT(null, this.value)" '
+																	. 'autocomplete="off" value="' . $key . '" >' . $row
+																	. '</label>'
+																	;
+																}
+															}
+															?>
+														</div>
+														<?php echo form_error('Extra'); ?>
+													</div>
+													<input type="hidden" id="Hidden_Extra" name="Hidden_Extra" value="<?php echo $cadastrar['Extra']; ?>" />
+													<div id="Extra" <?php echo $div['Extra']; ?>>
+														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left ">
+															<label  for="Repeticao">Repeticao</label>
+															<select data-placeholder="Selecione uma opção..." class="form-control" id="Repeticao" name="Repeticao" onchange="repeticaoSelecionada(this.value)">
+																<option value=""></option>
+															</select>
+															<?php echo form_error('Repeticao'); ?>
+														</div>
+													</div>
+												<?php  } elseif($metodo == 2) { ?>
+													<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+														<label>Repeticao</label>
+														<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['Consulta']['Repeticao']; ?>">
+													</div>
+												<?php  } ?>
+												<input type="hidden" id="Hidden_Repeticao" name="Hidden_Repeticao" value="<?php echo $query['Repeticao']; ?>" />
+												<input type="hidden" id="Hidden_RepeticaoCons"/>
+												<input type="hidden" id="Hidden_RepeticaoOrca"/>
 											</div>
 										</div>
 									</div>

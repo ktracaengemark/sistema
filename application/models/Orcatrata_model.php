@@ -315,7 +315,35 @@ class Orcatrata_model extends CI_Model {
 
         return $query;
     }
-	
+
+    public function get_repeticao($data) {
+        $query = $this->db->query('
+			SELECT 
+				idApp_OrcaTrata,
+				RepeticaoOrca
+			FROM 
+				App_OrcaTrata
+			WHERE 
+				RepeticaoCons = ' . $data . ' AND
+				RepeticaoCons != 0 
+			ORDER BY
+				idApp_OrcaTrata ASC
+			LIMIT 1
+		');
+        $query = $query->result_array();
+		
+        /*
+        //echo $this->db->last_query();
+        echo '<br>';
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit ();
+        */
+
+        return $query;
+    }
+		
     public function get_repeticaocons($data) {
         $query = $this->db->query('
 			SELECT 

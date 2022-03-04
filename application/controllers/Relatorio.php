@@ -4957,7 +4957,6 @@ class Relatorio extends CI_Controller {
 			'idApp_Cliente',
 			'NomeClientePet',
 			'NomeClienteDep',
-			'idApp_Cliente',
 			'idApp_ClientePet',
 			'idApp_ClientePet2',
 			'idApp_ClienteDep',
