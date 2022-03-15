@@ -477,12 +477,10 @@
 												<?php  } elseif($metodo == 2) { ?>
 													<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 														<label>Repeticao</label><br>
-														
 														<a type="button" class="btn btn-md btn-info btn-block" data-loading-text="Aguarde..." href="<?php echo base_url() . 'Consulta/cadastrar_extra/' . $query['idApp_Cliente'] . '/' . $query['Repeticao']; ?>">
 															<?php echo $_SESSION['Consulta']['Repeticao']; ?> / Cad Extra 										
 														</a>
-															
-														<!--<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php #echo $_SESSION['Consulta']['Repeticao']; ?>">-->
+														<input type="hidden" id="Repeticao" name="Repeticao" readonly="" value="<?php echo $_SESSION['Consulta']['Repeticao']; ?>">
 													</div>
 													<input type="hidden" id="Hidden_StatusExtra" value="<?php echo $cadastrar['Extra']; ?>" readonly="" />
 													<input type="hidden" id="Hidden_Repeticao" name="Hidden_Repeticao" value="<?php echo $_SESSION['Consulta']['Repeticao']; ?>" readonly="" />

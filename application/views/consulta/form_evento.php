@@ -90,7 +90,7 @@
 													<?php if (isset($extra) && $extra == "S") { ?>	
 														<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 															<label>Repeticao</label>
-															<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['Consulta']['Repeticao'];?> - Term: <?php echo $_SESSION['Consulta']['DataTermino'];?>">
+															<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['Consulta']['Repeticao'];?> - <?php echo $_SESSION['Consulta']['DataTermino'];?>">
 															<?php echo form_error('Repeticao'); ?>
 														</div>
 													<?php  } ?>
@@ -100,6 +100,7 @@
 														<a type="button" class="btn btn-md btn-info btn-block" data-loading-text="Aguarde..." href="<?php echo base_url() . 'Consulta/cadastrar_evento_extra/' . $query['Repeticao']; ?>">
 															Cad Extra <?php echo $_SESSION['Consulta']['Repeticao']; ?>										
 														</a>
+														<input type="hidden" id="Repeticao" name="Repeticao" readonly="" value="<?php echo $_SESSION['Consulta']['Repeticao']; ?>">
 													</div>
 												<?php  } ?>
 											</div>
