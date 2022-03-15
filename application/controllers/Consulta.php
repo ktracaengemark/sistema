@@ -4266,20 +4266,45 @@ class Consulta extends CI_Controller {
 							}
 						}
 					}
-					  
-					$data['msg'] = '?m=1';
-					redirect(base_url() . 'agenda' . $data['msg']);
-					exit();
-				}else{
-					$data['msg'] = '?m=1';
-					redirect(base_url() . 'agenda' . $data['msg']);
-					exit();
+
+					$data['update']['orcamentos'] = $this->Orcatrata_model->get_repeticaoorca($repeticao);// pega as OS que tem essa repeticao
+					$cont_orcamentos = count($data['update']['orcamentos']);// conta quantas OS tem essa repeticao					
+					if(isset($cont_orcamentos) && $cont_orcamentos > 0){
+					
+						for($j=0;$j<$cont_orcamentos;$j++) {
+							$k = (1 + $j);
+							$data['update']['orcamentos'][$j]['RecorrenciasOrca'] = $cont_orcamentos;
+							$data['update']['orcamentos'][$j]['RecorrenciaOrca'] = $k . "/" . $cont_orcamentos;
+
+							$data['update']['orcamentos']['bd'][$j] = $this->Orcatrata_model->update_orcatrata($data['update']['orcamentos'][$j], $data['update']['orcamentos'][$j]['idApp_OrcaTrata']);
+						}
+					}
 				}
-			}else{
-				$data['msg'] = '?m=1';
-				redirect(base_url() . 'agenda' . $data['msg']);
-				exit();
 			}
+	
+			$data['cons_datatermino'] = $this->Consulta_model->get_consulta_datatermino($repeticao);
+			if(isset($data['cons_datatermino'])){
+				$data['data_termino'] = $data['cons_datatermino']['DataInicio'];
+			}else{
+				$data['data_termino'] = "0000-00-00";
+			}
+			$data['update']['cons_posts'] = $this->Consulta_model->get_consultas($repeticao);
+			$cont_cons_posts = count($data['update']['cons_posts']);
+			
+			if(isset($cont_cons_posts) && $cont_cons_posts > 0){
+				
+				for($j=0;$j<$cont_cons_posts;$j++) {
+					$k = (1 + $j);
+					$data['update']['cons_posts'][$j]['DataTermino'] = $data['data_termino'];
+					$data['update']['cons_posts'][$j]['Recorrencias'] = $cont_cons_posts;
+					$data['update']['cons_posts'][$j]['Recorrencia'] = $k . "/" . $cont_cons_posts;
+					$data['update']['cons_posts']['bd'][$j] = $this->Consulta_model->update_consulta($data['update']['cons_posts'][$j], $data['update']['cons_posts'][$j]['idApp_Consulta']);
+				}
+			}	
+
+			$data['msg'] = '?m=1';
+			redirect(base_url() . 'agenda' . $data['msg']);
+			exit();
         }
 
         $this->load->view('basico/footer');
