@@ -1074,7 +1074,7 @@ class Consulta extends CI_Controller {
 
 				for($i=1;$i<=$data['count']['POCount'];$i++) {
 
-					$data['repeticao_cons'][$i]['DataEntregaOrca'] = $this->basico->mascara_data($data['repeticao_cons'][$i]['DataEntregaOrca'], 'barras');
+					//$data['repeticao_cons'][$i]['DataEntregaOrca'] = $this->basico->mascara_data($data['repeticao_cons'][$i]['DataEntregaOrca'], 'barras');
 					
 					#### App_ProdutoVenda ####
 					$data['produto'][$i] = $this->Consulta_model->get_produto($data['repeticao_cons'][$i]['idApp_OrcaTrata']);
@@ -2927,7 +2927,7 @@ class Consulta extends CI_Controller {
 
 				for($i=1;$i<=$data['count']['POCount'];$i++) {
 
-					$data['repeticao_cons'][$i]['DataEntregaOrca'] = $this->basico->mascara_data($data['repeticao_cons'][$i]['DataEntregaOrca'], 'barras');
+					//$data['repeticao_cons'][$i]['DataEntregaOrca'] = $this->basico->mascara_data($data['repeticao_cons'][$i]['DataEntregaOrca'], 'barras');
 					
 					#### App_ProdutoVenda ####
 					$data['produto'][$i] = $this->Consulta_model->get_produto($data['repeticao_cons'][$i]['idApp_OrcaTrata']);

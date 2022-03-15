@@ -153,15 +153,11 @@ class Consulta_model extends CI_Model {
 				DATE_FORMAT(CO.DataInicio, "%d/%m/%Y") AS DataInicio,
 				DATE_FORMAT(CO.DataInicio, "%H:%i") AS HoraInicio,
 				DATE_FORMAT(CO.DataFim, "%Y-%m-%d") AS DataFim,
-				DATE_FORMAT(CO.DataFim, "%H:%i") AS HoraFim,
-				OT.DataEntregaOrca,
-				OT.HoraEntregaOrca
+				DATE_FORMAT(CO.DataFim, "%H:%i") AS HoraFim
 			FROM 
 				App_Consulta AS CO
-					LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = CO.idApp_OrcaTrata
 			WHERE 
-				CO.Repeticao = ' . $data . ' AND
-				CO.idApp_OrcaTrata != 0
+				CO.Repeticao = ' . $data . ' 
 			ORDER BY
 				CO.DataInicio ASC
 		');

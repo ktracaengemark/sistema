@@ -1025,6 +1025,7 @@
 																				</thead>
 																				-->
 																				<tbody>
+																				
 																					<?php if( isset($count['PCount'][$i]) ) { ?>
 																						<?php for ($k=1; $k <= $count['PCount'][$i]; $k++) { ?>
 																								<tr>
@@ -1042,6 +1043,7 @@
 																							<td class="col-md-2" scope="col"></td>										
 																						</tr>
 																					<?php } ?>
+																					
 																				</tbody>
 																			</table>
 																		<?php } ?>
