@@ -644,7 +644,7 @@ function limpaCampos_Cliente(){
 		$('#Hidden_idApp_OrcaTrata').val('');
 		$('#Hidden_Repeticao').val('');
 
-		console.log('Hidden_Repeticao = '+ $('#Hidden_Repeticao').val());		
+		//console.log('Hidden_Repeticao = '+ $('#Hidden_Repeticao').val());		
 		
 		clienteOT(null);
 		repeticao(null);
