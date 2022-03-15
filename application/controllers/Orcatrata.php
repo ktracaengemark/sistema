@@ -315,7 +315,7 @@ class Orcatrata extends CI_Controller {
 		
 		$data['repeticaocons'] = count($_SESSION['RepeticaoCons']);// conto quantas Consultas tem essa repetição
 		$data['repeticaoorca'] = count($_SESSION['RepeticaoOrca']);// conto quantas OS tem essa repetição			
-		
+		/*
 		echo '<br>';
 		echo "<pre>";
 		echo '<br>';
@@ -325,7 +325,7 @@ class Orcatrata extends CI_Controller {
 		echo '<br>';
 		print_r($_SESSION['Consulta']['OS']);
 		echo "</pre>"; 
-		
+		*/
 		
 		/////////////// Conferir a parte de poder ou não alterar os campos/////////////////////////////////
 		if(isset($_SESSION['Consulta']['OS'])){
@@ -362,20 +362,20 @@ class Orcatrata extends CI_Controller {
 		}
 
 		$data['orcatrata']['RepeticaoCons'] 	= 	$_SESSION['Consulta']['Repeticao'];
-		
+		/*
 		echo '<br>';
 		echo "<pre>";
 		print_r($data['orcatrata']['RecorrenciasOrca']);
 		echo '<br>';
 		print_r($data['orcatrata']['RepeticaoCons']);
 		echo '<br>';
-		/*
+		
 		print_r($idApp_Consulta);
 		echo '<br>';
 		print_r($_SESSION['Consulta']);
-		*/
-		echo "</pre>";		
 		
+		echo "</pre>";		
+		*/
 		$data['orcatrata']['idApp_ClientePet'] 	= 	$_SESSION['Consulta']['idApp_ClientePet'];
 		$data['orcatrata']['idApp_ClienteDep'] 	= 	$_SESSION['Consulta']['idApp_ClienteDep'];
 		
@@ -2053,10 +2053,10 @@ class Orcatrata extends CI_Controller {
 				
 				$data['update']['consultas'] = $_SESSION['Consultas'];
 				//$data['update']['orcamentos'] = $this->Orcatrata_model->get_orcatratas($data['orcatrata']['idApp_OrcaTrata']);
-				$data['update']['orcamentos'] = $this->Orcatrata_model->get_orcatratas($data['orcatrata']['RepeticaoOrca']);
+				$data['update']['orcamentos'] = $this->Orcatrata_model->get_orcatratas($data['orcatrata']['RepeticaoOrca']);// pega as OS que tem essa repeticao
 				
 				$cont_consultas = count($data['update']['consultas']);
-				$cont_orcamentos = count($data['update']['orcamentos']);
+				$cont_orcamentos = count($data['update']['orcamentos']);// conta quantas OS tem essa repeticao
 				
 				if ($cont_orcamentos > 0) {
 					for($j=0;$j<$cont_orcamentos;$j++) {
@@ -2081,6 +2081,7 @@ class Orcatrata extends CI_Controller {
 						$hora[$k]	 	= $dataini[$k][1];
 					}
 				}
+				
 				if($data['orcatrata']['RecorrenciasOrca'] >1){
 					if ($cont_orcamentos > 0) {
 						
@@ -2160,6 +2161,21 @@ class Orcatrata extends CI_Controller {
 
 				}					
 				////Fim da Criação das Repetições///////				
+
+				
+				////////// Ajustar o Valor da RecorrenciasOrca e as RecorrenciaOrca
+				 /// pego a quantidade(N) de repetições, e refaço a sequencia 1/N
+				if(isset($cont_orcamentos) && $cont_orcamentos > 0){
+					
+					for($j=0;$j<$cont_orcamentos;$j++) {
+						$k = (1 + $j);
+						$data['update']['orcamentos'][$j]['RecorrenciasOrca'] = $cont_orcamentos;
+						$data['update']['orcamentos'][$j]['RecorrenciaOrca'] = $k . "/" . $cont_orcamentos;
+
+						$data['update']['orcamentos']['bd'][$j] = $this->Orcatrata_model->update_orcatrata($data['update']['orcamentos'][$j], $data['update']['orcamentos'][$j]['idApp_OrcaTrata']);
+					}
+				}				
+				//////////////////////////////////////////////////////////////////
 
 				$data['CashBackNovo'] = $data['CashBackServicos'] + $data['CashBackProdutos'];
 

@@ -3,9 +3,9 @@
 include_once '../../conexao.php';
 
 $id_cliente = $_REQUEST['idApp_Cliente'];
-$extra = $_REQUEST['extra'];
+//$extra = $_REQUEST['extra'];
 //$extra = 'N';
-$repeticaoCons 	= ($extra == 'S') ? 'RepeticaoCons = 0 AND' : FALSE;
+//$repeticaoCons 	= ($extra == 'S') ? 'RepeticaoCons = 0 AND' : FALSE;
 $result_sub_cat = "
 					SELECT 
 						idApp_OrcaTrata,
@@ -17,7 +17,7 @@ $result_sub_cat = "
 						App_OrcaTrata 
 					WHERE 
 						idApp_Cliente=" . $id_cliente . " AND
-						" . $repeticaoCons . "
+						RepeticaoCons = 0 AND
 						ConcluidoOrca='N' AND 
 						CanceladoOrca='N' 
 					ORDER BY 

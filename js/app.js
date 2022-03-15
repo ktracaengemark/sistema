@@ -27,7 +27,7 @@ clientePet();
 clienteDep();
 clienteOT();
 repeticao();
-fechaBuscaOS();
+//fechaBuscaOS();
 exibirTroco();
 exibirExtraOrca();
 exibirDescOrca();
@@ -565,10 +565,23 @@ $("#id_Cliente_Auto").autocomplete({
 											');
 				$("#NomeClienteAuto").val(''+idcliente+ ' | ' + nomecliente + ' | Cel: ' + celularcliente + '');
 				
+				$('#Hidden_idApp_OrcaTrata').val(null);
+				$('#Hidden_Repeticao').val(null);
+
+				//console.log('Hidden_Repeticao = '+ $('#Hidden_Repeticao').val());		
+		
+				clienteOT(null);
+				repeticao(null);
+				
 			},
 			error:function(data){
 				$("#NomeClienteAuto1").html('<label>Nenhum Cliente Selecionado!</label>');
 				$("#NomeClienteAuto").val('Nenhum Cliente Selecionado!');
+				
+				$('#Hidden_idApp_OrcaTrata').val('');
+				$('#Hidden_Repeticao').val('');
+
+				console.log('Hidden_Repeticao = '+ $('#Hidden_Repeticao').val());
 			}
 			
 		});
@@ -587,6 +600,13 @@ $("#id_Cliente_Auto").autocomplete({
 		$('#id_ClienteDep_Auto').val('');
 		limpaCampos_ClienteDep();
 		
+		$('#Hidden_idApp_OrcaTrata').val('');
+		$('#Hidden_Repeticao').val('');
+
+		//console.log('Hidden_Repeticao = '+ $('#Hidden_Repeticao').val());		
+		
+		clienteOT(null);
+		repeticao(null);
 	}
 	
 });
@@ -620,8 +640,14 @@ function limpaCampos_Cliente(){
 		$('#Cidade').val('');
 		$('#Estado').val('');
 		$('#Referencia').val('');
-		clienteOT();
-		repeticao();
+		
+		$('#Hidden_idApp_OrcaTrata').val('');
+		$('#Hidden_Repeticao').val('');
+
+		console.log('Hidden_Repeticao = '+ $('#Hidden_Repeticao').val());		
+		
+		clienteOT(null);
+		repeticao(null);
    }
 }	
 
@@ -3603,6 +3629,7 @@ function clienteDep(id = null){
 }
 
 function fechaBuscaOS(novaos){
+	/*
 	//alert('fechaBuscaOS');
 	//console.log('novaos = '+novaos);
 	//console.log('Hidden_NovaOS = '+$('#Hidden_NovaOS').val());
@@ -3620,12 +3647,11 @@ function fechaBuscaOS(novaos){
 		$('.vincular').show();
 		$('.hnovaos').show();
 	}
-	
-	
+	*/
 }
 
 function mudaBuscaOS(novaos){
-	
+	/*
 	var hnovaos = $('#Hidden_NovaOS').val();
 	//console.log(hnovaos);
 	
@@ -3634,7 +3660,7 @@ function mudaBuscaOS(novaos){
 	}else{
 		$('.hnovaos').show();
 	}
-	
+	*/
 }
 
 function quais(){
@@ -3653,48 +3679,130 @@ function quais(){
 	$("#Texto_Excluir").html('<div class="col-md-7 text-left alert alert-warning" role="alert">Você vai excluir ' + quais_texto + ' agendamento(s) vinculado(s) a esse!</div>');
 }
 
+function extra(status_extra = null){
+	
+	if(status_extra && status_extra!= 'null'){
+		$('#Hidden_StatusExtra').val(status_extra);	
+		var extra = status_extra;
+	}else{
+		if($('#Hidden_StatusExtra').val()){
+			var extra = $('#Hidden_StatusExtra').val();
+		}else{
+			$('#Hidden_StatusExtra').val('N');	
+			var extra = 'N';
+		}
+	}
+
+	//console.log('Hidden_StatusExtra = '+ $('#Hidden_StatusExtra').val());
+	//console.log('Extra = '+ extra);
+	
+	$('#Repeticao').html('<option value="">– Sel. Repeticao –</option>');
+	$('#Hidden_Repeticao').val('');
+	
+	repeticao();
+}
+
+function statusAdicionar(status_adicionar = null){
+	
+	if(status_adicionar && status_adicionar!= 'null'){
+		$('#Hidden_Status_Adicionar').val(status_adicionar);	
+		var adicionar = status_adicionar;
+	}else{
+		if($('#Hidden_Status_Adicionar').val()){
+			var adicionar = $('#Hidden_Status_Adicionar').val();
+		}else{
+			$('#Hidden_Status_Adicionar').val('N');	
+			var adicionar = 'N';
+		}
+	}
+	//console.log('Hidden_Status_Adicionar = '+ $('#Hidden_Status_Adicionar').val());
+	//console.log('Adicionar = '+ adicionar);
+
+	//repeticao();
+	qtd_ocorrencias();
+}
+
+function statusPorConsulta(status_porconsulta = null){
+	
+	if(status_porconsulta && status_porconsulta!= 'null'){
+		$('#Hidden_Status_PorConsulta').val(status_porconsulta);	
+		var porconsulta = status_porconsulta;
+	}else{
+		if($('#Hidden_Status_PorConsulta').val()){
+			var porconsulta = $('#Hidden_Status_PorConsulta').val();
+		}else{
+			$('#Hidden_Status_PorConsulta').val('N');	
+			var porconsulta = 'N';
+		}
+	}
+	//console.log('Hidden_Status_PorConsulta = '+ $('#Hidden_Status_PorConsulta').val());
+	//console.log('PorConsulta = '+ porconsulta);
+
+	//qtd_ocorrencias(porconsulta);
+	qtd_ocorrencias();
+}
+
+function statusNovaOs(status_novaos = null){
+	
+	if(status_novaos && status_novaos!= 'null'){
+		$('#Hidden_NovaOS').val(status_novaos);	
+		var novaos = status_novaos;
+	}else{
+		if($('#Hidden_NovaOS').val()){
+			var novaos = $('#Hidden_NovaOS').val();
+		}else{
+			$('#Hidden_NovaOS').val('N');	
+			var novaos = 'N';
+		}
+	}
+	//console.log('Hidden_NovaOS = '+ $('#Hidden_NovaOS').val());
+	//console.log('NovaOS = '+ novaos);
+
+	//fechaBuscaOS(novaos);
+	qtd_ocorrencias();
+}
+
+function statusVincular(status_vincular = null){
+	
+	if(status_vincular && status_vincular!= 'null'){
+		$('#Hidden_Status_Vincular').val(status_vincular);	
+		var vincular = status_vincular;
+	}else{
+		if($('#Hidden_Status_Vincular').val()){
+			var vincular = $('#Hidden_Status_Vincular').val();
+		}else{
+			$('#Hidden_Status_Vincular').val('N');	
+			var vincular = 'N';
+		}
+	}
+	//console.log('Hidden_Status_Vincular = '+ $('#Hidden_Status_Vincular').val());
+	//console.log('vincular = '+ vincular);
+	
+	$('#idApp_OrcaTrata').html('<option value="">– Sel. OS –</option>');						
+	/*
+	$('#idApp_OrcaTrata').html('\
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" name="idApp_OrcaTrata" onchange="osSelecionada(this.value)">\
+									<option value="">– Selecione um Orcam. –</option>\
+								</select>\
+							');
+	*/	
+	$('#Hidden_idApp_OrcaTrata').val('');
+
+	clienteOT();
+}
+
 //Função que busca O.S. do cliente.
-function clienteOT(id = null, status_extra = null){
+function clienteOT(id = null){
 	
 	if(id && id!= 'null'){
 		var id_cliente = id;
 	}else{
 		var id_cliente = $('#idApp_Cliente').val();
 	}
-	//var id_cliente = $('#idApp_Cliente').val();
-	
-	var caminho2 = $('#Caminho2').val();
-	//console.log(caminho2);
-	//var caminho2 = '../../';
-	//console.log('id_cliente = '+id_cliente);
-	//console.log(id);
-	
-	//console.log(' <br>OrcaTrata<br> ');
-		
-	//console.log('<br> Hidden_idApp_OrcaTrata = '+ $('#Hidden_idApp_OrcaTrata').val());
-	
-	//console.log('status_extra = '+ status_extra);
-	
-	if(status_extra && status_extra!= 'null'){
-		$('#Hidden_Extra').val(status_extra);	
-		var extra = status_extra;
-	}else{
-		if($('#Hidden_Extra').val()){
-			var extra = $('#Hidden_Extra').val();
-		}else{
-			$('#Hidden_Extra').val('N');	
-			var extra = 'N';
-		}
-	}
-
-	//console.log('Hidden_Extra = '+ $('#Hidden_Extra').val());
-	//console.log('Extra = '+ extra);
 
 	if(id_cliente) {
-		//console.log(id);
 		
-		//$('#idApp_OrcaTrata').hide();
-		$.getJSON(window.location.origin+ '/' + app + '/cadastros/pesquisar/OrcaTrata.php?search=',{idApp_Cliente: id_cliente, extra: extra, ajax: 'true'}, function(j){
+		$.getJSON(window.location.origin+ '/' + app + '/cadastros/pesquisar/OrcaTrata.php?search=',{idApp_Cliente: id_cliente, ajax: 'true'}, function(j){
 			if(j != null){
 				var options = '<option value="">-- Sel. O.S. --</option>';	
 				for (var i = 0; i < j.length; i++) {
@@ -3706,17 +3814,58 @@ function clienteOT(id = null, status_extra = null){
 					}
 				}	
 				$('#idApp_OrcaTrata').html(options).show();
+				/*
+				$('#idApp_OrcaTrata').html('\
+											<select data-placeholder="Selecione uma opção..." class="form-control Chosen" name="idApp_OrcaTrata" onchange="osSelecionada(this.value)">\
+												'+options+'\
+											</select>\
+										');	
+				*/						
 				//$('.carregando').hide();
 				//console.log(options);
 			}else{
-				$('#idApp_OrcaTrata').html('<option value="">– Selecione um Orcam. –</option>');
+				$('#idApp_OrcaTrata').html('<option value="">– Sel. OS –</option>');
+				/*
+				$('#idApp_OrcaTrata').html('\
+											<select data-placeholder="Selecione uma opção..." class="form-control Chosen" name="idApp_OrcaTrata" onchange="osSelecionada(this.value)">\
+												<option value="">– Selecione um Orcam. –</option>\
+											</select>\
+										');
+				*/						
 			}				
 		});
 		
 	}else{
-		$('#idApp_OrcaTrata').html('<option value="">– Selecione um Orcam. –</option>');
+		$('#idApp_OrcaTrata').html('<option value="">– Sel. OS –</option>');
+		/*
+		$('#idApp_OrcaTrata').html('\
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen" name="idApp_OrcaTrata" onchange="osSelecionada(this.value)">\
+										<option value="">– Selecione um Orcam. –</option>\
+									</select>\
+								');
+		*/						
 	}
+	if($('#Hidden_idApp_OrcaTrata').val()){
+		osSelecionada($('#Hidden_idApp_OrcaTrata').val());
+	}else{
+		osSelecionada();
+	}
+}
 
+//função que passa a OS selecionada
+function osSelecionada (osselecionada = null) {
+	
+	if(osselecionada && osselecionada != null){
+		var os = osselecionada;
+	}else{
+		var os = null;
+	}
+		
+	//console.log('os = '+os);
+	
+	$('#Hidden_idApp_OrcaTrata').val(os);
+	
+	qtd_ocorrencias();
 }
 
 //Função que busca Repetiçao do cliente.
@@ -3727,37 +3876,21 @@ function repeticao(id = null){
 	}else{
 		var id_cliente = $('#idApp_Cliente').val();
 	}
-	//var id_cliente = $('#idApp_Cliente').val();
 
-	//console.log(id_cliente);
-	//console.log(id);
-	
-	//console.log(' <br>OrcaTrata<br> ');
-		
-	//console.log('<br> Hidden_Repeticao = '+ $('#Hidden_Repeticao').val());
-
-	$('#Repeticao').html('<option value="">– Sel. Repeticao –</option>');
-	$('#Hidden_Repeticao').val('');
-	$('#Hidden_RepeticaoCons').val(0);
-	$('#Hidden_RepeticaoOrca').val(0);
-	
 	if(id_cliente) {
-		//console.log(id);
-		
-		//$('#Repeticao').hide();
+
 		$.getJSON(window.location.origin+ '/' + app + '/cadastros/pesquisar/Repeticao.php?search=',{idApp_Cliente: id_cliente, ajax: 'true'}, function(j){
 			if(j != null){
 				var options = '<option value="">-- Sel. Repeticao --</option>';	
 				for (var i = 0; i < j.length; i++) {
 					if (j[i].id_Repeticao == $('#Hidden_Repeticao').val()) {
-						options += '<option value="' + j[i].id_Repeticao + '" selected="selected">' + j[i].id_Repeticao + '</option>';
+						options += '<option value="' + j[i].id_Repeticao + '" selected="selected">' + j[i].id_Repeticao +  ' | ' + j[i].dt_Term + '</option>';
 					} else {
-						options += '<option value="' + j[i].id_Repeticao + '">' + j[i].id_Repeticao + '</option>';
+						options += '<option value="' + j[i].id_Repeticao + '">' + j[i].id_Repeticao +  ' | ' + j[i].dt_Term + '</option>';
 					}
 				}	
 				$('#Repeticao').html(options).show();
-				//$('.carregando').hide();
-				//console.log(options);
+
 			}else{
 				$('#Repeticao').html('<option value="">– Sel. Repeticao –</option>');
 			}				
@@ -3766,7 +3899,11 @@ function repeticao(id = null){
 	}else{
 		$('#Repeticao').html('<option value="">– Sel. Repeticao –</option>');
 	}
-	repeticaoSelecionada();
+	if($('#Hidden_Repeticao').val()){
+		repeticaoSelecionada($('#Hidden_Repeticao').val());
+	}else{
+		repeticaoSelecionada();
+	}
 }
 
 //função que passa a repetição selecionada
@@ -3774,23 +3911,30 @@ function repeticaoSelecionada (repeticaoselecionada = null) {
 	
 	if(repeticaoselecionada && repeticaoselecionada != null){
 		var repeticao = repeticaoselecionada;
-		$('#Hidden_Repeticao').val(repeticaoselecionada);
 	}else{
 		var repeticao = null;
-		$('#Hidden_Repeticao').val(repeticao);
 	}
-	if(repeticao && repeticao != null) {
-		repeticaoCons(repeticao);
-	}else{
+		
+	//console.log('repeticao = '+repeticao);
+	
+	$('#Hidden_Repeticao').val(repeticao);
+	
+	if(!repeticao) {
 		$('#Hidden_RepeticaoCons').val(0);
 		$('#Hidden_RepeticaoOrca').val(0);
-		repeticaoCons();
 	}
+	repeticaoCons();
 }
 
 //função que conta repetições de consulta
-function repeticaoCons (repeticao = null) {
-
+function repeticaoCons () {
+	if($('#Hidden_Repeticao').val()){
+		var repeticao = $('#Hidden_Repeticao').val();
+	}else{
+		var repeticao = null;
+	}
+	//console.log('Repeticao = '+repeticao);
+	
 	if(repeticao && repeticao != null) {
 
 		$.ajax({
@@ -3801,26 +3945,32 @@ function repeticaoCons (repeticao = null) {
 				//console.log(j);
 				//console.log('sucesso');
 				$('#Hidden_RepeticaoCons').val(j.length);
-				repeticaoOrca(repeticao);
+				repeticaoOrca();
 			},
 			error:function(j){
 				//console.log('erro');
 				$('#Hidden_RepeticaoCons').val(0);
-				repeticaoOrca(repeticao);
+				repeticaoOrca();
 			}
 		});
 
 	}else{
 		//console.log('erro de pesquisa');
 		$('#Hidden_RepeticaoCons').val(0);
-		repeticaoOrca(repeticao);
+		repeticaoOrca();
 	}
-	//compararRepetioes();
 }
 
 //função que conta repetições de OS
-function repeticaoOrca (repeticao = null) {
-
+function repeticaoOrca () {
+	
+	if($('#Hidden_Repeticao').val()){
+		var repeticao = $('#Hidden_Repeticao').val();
+	}else{
+		var repeticao = null;
+	}
+	//console.log('Repeticao = '+repeticao);
+	
 	if(repeticao && repeticao != null) {
 
 		$.ajax({
@@ -3847,39 +3997,81 @@ function repeticaoOrca (repeticao = null) {
 	}
 }
 
-//Função que compara as repetições
-function compararRepetioes () {
-	if($('#Hidden_RepeticaoCons').val()){
-		qtdcons = $('#Hidden_RepeticaoCons').val();
-	}else{
-		qtdcons = 0;
-	}
-	if($('#Hidden_RepeticaoOrca').val()){
-		qtdorca = $('#Hidden_RepeticaoOrca').val();
-	}else{
-		qtdorca = 0;
-	}		
+//Função que compara as repetições e determina o caso
+function compararRepetioes() {
+	
 	if($('#Hidden_Repeticao').val()){
-		var repet = $('#Hidden_Repeticao').val();
+		var repeticao = $('#Hidden_Repeticao').val();
+	}else{
+		var repeticao = null;
+	}
+	
+	//console.log('Repeticao = '+repeticao);
+	
+	if(repeticao && repeticao != null){
+		if($('#Hidden_RepeticaoCons').val()){
+			qtdcons = $('#Hidden_RepeticaoCons').val();
+		}else{
+			qtdcons = 0;
+		}
+		if($('#Hidden_RepeticaoOrca').val()){
+			qtdorca = $('#Hidden_RepeticaoOrca').val();
+		}else{
+			qtdorca = 0;
+		}	
+	}else{
+		$('#Hidden_RepeticaoCons').val(0);
+		$('#Hidden_RepeticaoOrca').val(0);
+		qtdcons = 0;
+		qtdorca = 0;
+	}
+
+	if(repeticao){
+		var repet = repeticao;
 	}else{
 		var repet = 'Vazio';
 	}
-	console.log('Repeticao = '+repet);
-	console.log('qtdCons = '+qtdcons);
-	console.log('qtdOrca = '+qtdorca);
+	//console.log('Repeticao = '+repet);
+	//console.log('qtdCons = '+qtdcons);
+	//console.log('qtdOrca = '+qtdorca);
 	
 	if(qtdcons == 1 && qtdorca == 0){
-		console.log('Caso1: N-1, Permito criar 1 OS Nova');
+		var hidden_caso = 1;
+		var caso = 'N-1 ou N-N, Permito criar  N OS Nova, ou 1 OS Nova, ou Selecionar 1 OS Existente';
+		//$('.adicionar').show();
 	}else if(qtdcons == 1 && qtdorca == 1){
-		console.log('Caso2: N-1, Uso a OS Existente');
+		var hidden_caso = 2;
+		var caso = 'N-1 ou N-N, Uso a OS da Repetição, ou Crio a Qtd da diferença de OS novas';
+		//$('.adicionar').show();
 	}else if(qtdcons > 1 && qtdorca == 0){
-		console.log('Caso3: N-1 ou N-N, Permito Criar 1 OS Nova ou N OSs novas ');
+		var hidden_caso = 3;
+		var caso = 'N-1 ou N-N, Permito Criar N OSs novas, ou 1 OS Nova, ou Selecionar 1 OS Existente ';
+		//$('.adicionar').show();
 	}else if(qtdcons > 1 && qtdorca == 1){
-		console.log('Caso4: N-1, Uso a OS Existente');
+		var hidden_caso = 4;
+		var caso = 'N-1, Uso a OS da Repetição';
+		//$('.adicionar').hide();
 	}else if(qtdcons > 1 && qtdorca > 1){
-		qtd_Os = qtdcons - qtdorca;
-		console.log('Caso5: N-N, Crio a qtd da diferenca de OS');
+		var hidden_caso = 5;
+		var caso = 'N-N, Crio a qtd da diferenca de OS novas';
+		//$('.adicionar').hide();
+	}else{
+		var hidden_caso = 0;
+		var caso = 'Nenhum dos Casos';
+		//$('.adicionar').show();
 	}
+	
+	//console.log('Caso '+hidden_caso+' = '+caso);
+	$('#Hidden_Caso').val(hidden_caso);
+	
+	if($('#Hidden_Status_PorConsulta').val()){
+		var status_PorConsulta = $('#Hidden_Status_PorConsulta').val();
+	}else{
+		var status_PorConsulta = null;
+	}
+	
+	//qtd_ocorrencias(status_PorConsulta);
+	qtd_ocorrencias();
 }
 
 //Função que desabilita o botão fechar após 1 click, evitando mais de um envio de formulário.
@@ -4100,61 +4292,22 @@ function hidden_status(status = null){
 	}
 }
 
-function qtd_ocorrencias(status_PorConsulta) {
-	if(status_PorConsulta){
-		var novo_status_PorConsulta = status_PorConsulta;
-		$('#Hidden_Status_PorConsulta').val(novo_status_PorConsulta);
-		var Hidden_Status_Vincular = $('#Hidden_Status_Vincular').val();
+function statusRepetir(status_repetir = null){
+	
+	if(status_repetir && status_repetir!= 'null'){
+		$('#Hidden_Status_Repetir').val(status_repetir);	
+		var repetir = status_repetir;
 	}else{
-		var novo_status_PorConsulta = $('#Hidden_Status_PorConsulta').val();
-		
+		if($('#Hidden_Status_Repetir').val()){
+			var repetir = $('#Hidden_Status_Repetir').val();
+		}else{
+			$('#Hidden_Status_Repetir').val('N');	
+			var repetir = 'N';
+		}
 	}
-	//$("#Ocorrencias").html('<span>'+ocorrencias+ '</span>');
-		
-		//console.log('Hidden_Status_Vincular = '+Hidden_Status_Vincular);
-	
-	
-		var count_repet = $('#count_repet').val();
-						//console.log('count_repet = '+count_repet);
-		var metodo = $('#metodo').val();
-						//console.log('metodo = '+metodo);
-		//var ocorrencias = $('#Recorrencias').val();
-						
-		
-		if(metodo == 1){
-			var ocorrencias = $('#Recorrencias').val();
-			$("#Ocorrencias").html('<span>'+ocorrencias+'</span>');
-			
-		}else{
-			if(count_repet == 0){
-				var ocorrencias = 1;
-				$("#Ocorrencias").html('<span>1</span>');
-			}else{
-				var ocorrencias = count_repet;
-				$("#Ocorrencias").html('<span>'+count_repet+'</span>');
-			}
-		}
-			
-		//console.log('status_PorConsulta = '+novo_status_PorConsulta);
-	
-		if(ocorrencias == 1){
-			if(novo_status_PorConsulta == "N"){
-				$('.novaos').hide();
-				$('.vincular').show();
-				$('.hnovaos').show();
-				
-			}else{
-				$('.novaos').hide();
-				$('.hnovaos').hide();
-			}
-		}else{
-			$('.novaos').show();
-			$('.vincular').hide();
-			$('.hnovaos').hide();
-		}
-		//console.log('ocorrencias = '+ocorrencias);
-		
-	
+	console.log('Hidden_Status_Repetir = '+ $('#Hidden_Status_Repetir').val());	
+	ocorrencias(repetir);
+	qtd_ocorrencias();
 }
 
 function ocorrencias(repetir = null) {
@@ -4174,7 +4327,7 @@ function ocorrencias(repetir = null) {
 			$('#Recorrencias').val('1');
 		}
 	}
-	
+
 	var ocorrencias = $('#Recorrencias').val();
 	$("#Ocorrencias").html('<span>'+ocorrencias+ '</span>');
 
@@ -4411,6 +4564,287 @@ function dateTermina() {
 	//console.log('DataTermino : ' + dataterminoedit);
 	$('#DataTermino').val(dataterminoedit);	
 	
+}
+
+function qtd_ocorrencias() {
+	/*
+	if(status_PorConsulta){
+		var novo_status_PorConsulta = status_PorConsulta;
+		$('#Hidden_Status_PorConsulta').val(novo_status_PorConsulta);
+		var Hidden_Status_Vincular = $('#Hidden_Status_Vincular').val();
+	}else{
+		var novo_status_PorConsulta = $('#Hidden_Status_PorConsulta').val();
+	}
+	*/
+	var status_extra = $('#Hidden_StatusExtra').val();
+	var status_caso = $('#Hidden_Caso').val();
+	var status_adicionar = $('#Hidden_Status_Adicionar').val();
+	var status_porconsulta = $('#Hidden_Status_PorConsulta').val();
+	var status_novaos = $('#Hidden_NovaOS').val();
+	var status_vincular = $('#Hidden_Status_Vincular').val();
+	
+	//console.log('Hidden_Caso = '+status_caso);
+		
+	var qtd_cons = $('#Hidden_RepeticaoCons').val();
+	//console.log('qtd_cons = '+qtd_cons);	
+	
+	var qtd_orca = $('#Hidden_RepeticaoOrca').val();
+	//console.log('qtd_orca = '+qtd_orca);		
+
+	var qtd_recor = $('#Recorrencias').val();
+	//console.log('qtd_recor = '+qtd_recor);
+	
+	var count_repet = $('#count_repet').val();
+	//console.log('count_repet = '+count_repet);
+	var metodo = $('#metodo').val();
+	//console.log('metodo = '+metodo);
+
+	if(metodo == 1){//estou CADASTRANDO
+		if(status_extra == "N"){
+			var ocorrencias = qtd_recor;
+		}else{
+			if(qtd_orca == 0){
+				var ocorrencias = -( -qtd_recor -qtd_cons);
+			}else if(qtd_orca == 1){
+				var ocorrencias = qtd_recor;
+			}else{
+				var ocorrencias = qtd_recor;
+			}			
+		}	
+	}else{//Estou ALTERANDO
+		if(count_repet == 0){
+			var ocorrencias = 1;
+		}else{
+			var ocorrencias = count_repet;
+		}
+	}
+
+	//console.log('ocorrencias = '+ocorrencias);
+	
+	$("#Ocorrencias").html('<span>'+ocorrencias+'</span>');	
+	
+	$("#OS").val(ocorrencias);	
+
+	
+	if(status_extra == "N"){
+		//$('.adicionar').show();
+		if(status_adicionar == "N"){
+			$('.porconsulta').hide();
+			$('.novaos').hide();
+			$('.vincular').hide();
+			$('.hnovaos').hide();
+		}else{
+			$('.porconsulta').show();
+			if(ocorrencias > 1){
+				if(status_porconsulta == "N"){
+					$('.novaos').show();
+					if(status_novaos == "N"){
+						$('.vincular').show();
+						if(status_vincular == "N"){
+							$('.hnovaos').hide();
+						}else{
+							$('.hnovaos').show();
+						}
+					}else{
+						$('.vincular').hide();
+						$('.hnovaos').hide();
+					}
+				}else{
+					$('.novaos').hide();
+					$('.vincular').hide();
+					$('.hnovaos').hide();
+				}	
+			}else{
+				$('.novaos').hide();
+				if(status_porconsulta == "N"){
+					$('.vincular').show();
+					if(status_vincular == "N"){
+						$('.hnovaos').hide();
+					}else{
+						$('.hnovaos').show();
+					}
+				}else{
+					$('.novaos').hide();
+					$('.vincular').hide();
+					$('.hnovaos').hide();
+				}
+			}
+		}
+	}else{
+		if(status_caso == 0){
+			if(status_adicionar == "N"){
+				$('.porconsulta').hide();
+				$('.novaos').hide();
+				$('.vincular').hide();
+				$('.hnovaos').hide();
+			}else{
+				$('.porconsulta').show();
+				if(ocorrencias > 1){
+					if(status_porconsulta == "N"){
+						$('.novaos').show();
+						if(status_novaos == "N"){
+							$('.vincular').show();
+							if(status_vincular == "N"){
+								$('.hnovaos').hide();
+							}else{
+								$('.hnovaos').show();
+							}
+						}else{
+							$('.vincular').hide();
+							$('.hnovaos').hide();
+						}
+					}else{
+						$('.novaos').hide();
+						$('.vincular').hide();
+						$('.hnovaos').hide();
+					}	
+				}else{
+					$('.novaos').hide();
+					if(status_porconsulta == "N"){
+						$('.vincular').show();
+						if(status_vincular == "N"){
+							$('.hnovaos').hide();
+						}else{
+							$('.hnovaos').show();
+						}
+					}else{
+						$('.novaos').hide();
+						$('.vincular').hide();
+						$('.hnovaos').hide();
+					}
+				}
+			}			
+		}else if(status_caso == 1){
+			if(status_adicionar == "N"){
+				$('.porconsulta').hide();
+				$('.novaos').hide();
+				$('.vincular').hide();
+				$('.hnovaos').hide();
+			}else{
+				$('.porconsulta').show();
+				if(ocorrencias > 1){
+					if(status_porconsulta == "N"){
+						$('.novaos').show();
+						if(status_novaos == "N"){
+							$('.vincular').show();
+							if(status_vincular == "N"){
+								$('.hnovaos').hide();
+							}else{
+								$('.hnovaos').show();
+							}
+						}else{
+							$('.vincular').hide();
+							$('.hnovaos').hide();
+						}
+					}else{
+						$('.novaos').hide();
+						$('.vincular').hide();
+						$('.hnovaos').hide();
+					}	
+				}else{
+					$('.novaos').hide();
+					if(status_porconsulta == "N"){
+						$('.vincular').show();
+						if(status_vincular == "N"){
+							$('.hnovaos').hide();
+						}else{
+							$('.hnovaos').show();
+						}
+					}else{
+						$('.novaos').hide();
+						$('.vincular').hide();
+						$('.hnovaos').hide();
+					}
+				}
+			}			
+		}else if(status_caso == 2){
+			$('.novaos').hide();
+			$('.vincular').hide();
+			$('.hnovaos').hide();
+			if(status_adicionar == "N"){
+				$('.porconsulta').hide();
+				//Não cadastro nenhuma OS
+			}else{
+				$('.porconsulta').show();
+				if(status_porconsulta == "N"){
+					//1-N Uso a OS da Repetição para todas as consultas
+				}else{
+					//N-N Cadastro N OS novas
+				}				
+			}			
+		}else if(status_caso == 3){
+			if(status_adicionar == "N"){
+				//Não Cadastro nenhuma OS
+				$('.porconsulta').hide();
+				$('.novaos').hide();
+				$('.vincular').hide();
+				$('.hnovaos').hide();
+			}else{
+				$('.porconsulta').show();
+				if(ocorrencias > 1){
+					if(status_porconsulta == "N"){
+						$('.novaos').show();
+						if(status_novaos == "N"){
+							$('.vincular').show();
+							if(status_vincular == "N"){
+								//Não Cadastro nenhuma OS
+								$('.hnovaos').hide();
+							}else{
+								//Pego uma OS existente
+								$('.hnovaos').show();
+							}
+						}else{
+							//Cadastro 1 OS
+							$('.vincular').hide();
+							$('.hnovaos').hide();
+						}
+					}else{
+						//Cadastro N OS
+						$('.novaos').hide();
+						$('.vincular').hide();
+						$('.hnovaos').hide();
+					}	
+				}else{
+					$('.novaos').hide();
+					if(status_porconsulta == "N"){
+						$('.vincular').show();
+						if(status_vincular == "N"){
+							$('.hnovaos').hide();
+							//Não Cadastro nenhuma OS
+						}else{
+							//Pego uma OS existente
+							$('.hnovaos').show();
+						}
+					}else{
+						//Cadastro N OS
+						$('.novaos').hide();
+						$('.vincular').hide();
+						$('.hnovaos').hide();
+					}
+				}
+			}		
+		}else if(status_caso == 4){
+				$('.porconsulta').hide();
+				$('.novaos').hide();
+				$('.vincular').hide();
+				$('.hnovaos').hide();
+			if(status_adicionar == "N"){
+				//Não cadastro OS
+			}else{
+				//Pego a OS da Repetição
+			}				
+		}else if(status_caso == 5){
+			$('.novaos').hide();
+			$('.vincular').hide();
+			$('.hnovaos').hide();
+			$('.porconsulta').hide();
+			if(status_adicionar == "N"){
+				//Não cadastro nenhuma OS
+			}else{
+				//N-N Cadastro N OS novas				
+			}		
+		}
+	}
 }
 
 function exibirentrega() {

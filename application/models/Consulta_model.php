@@ -124,6 +124,25 @@ class Consulta_model extends CI_Model {
         return $query;
     }
 	
+    public function get_consulta_datatermino($data) {
+        $query = $this->db->query('
+			SELECT 
+				idApp_Consulta,
+				DataInicio
+			FROM 
+				App_Consulta
+			WHERE 
+				Repeticao = ' . $data . '
+			ORDER BY
+				DataInicio DESC
+			LIMIT 1
+		');
+		
+        $query = $query->result_array();
+
+        return $query[0];
+    }
+	
     public function get_repeticao_cos($data) {
         $query = $this->db->query('
 			SELECT

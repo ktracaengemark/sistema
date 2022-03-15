@@ -424,54 +424,72 @@
 													</div>
 												</div>
 												<?php if ($metodo == 1) { ?>
-													<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-														<label for="Extra">Extra?</label><br>
-														<div class="btn-larg-right btn-group" data-toggle="buttons">
-															<?php
-															foreach ($select['Extra'] as $key => $row) {
-																//if (!$cadastrar['Extra']) $cadastrar['Extra'] = 'N';
-																($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-																if ($cadastrar['Extra'] == $key) {
-																	echo ''
-																	. '<label class="btn btn-warning active" name="Extra_' . $hideshow . '">'
-																	. '<input type="radio" name="Extra" id="' . $hideshow . '" '
-																	. 'onchange="clienteOT(null, this.value)" '
-																	. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																	. '</label>'
-																	;
-																} else {
-																	echo ''
-																	. '<label class="btn btn-default" name="Extra_' . $hideshow . '">'
-																	. '<input type="radio" name="Extra" id="' . $hideshow . '" '
-																	. 'onchange="clienteOT(null, this.value)" '
-																	. 'autocomplete="off" value="' . $key . '" >' . $row
-																	. '</label>'
-																	;
-																}
-															}
-															?>
-														</div>
-														<?php echo form_error('Extra'); ?>
-													</div>
-													<input type="hidden" id="Hidden_Extra" name="Hidden_Extra" value="<?php echo $cadastrar['Extra']; ?>" />
-													<div id="Extra" <?php echo $div['Extra']; ?>>
-														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left ">
-															<label  for="Repeticao">Repeticao</label>
-															<select data-placeholder="Selecione uma opção..." class="form-control" id="Repeticao" name="Repeticao" onchange="repeticaoSelecionada(this.value)">
-																<option value=""></option>
-															</select>
+													<?php if (isset($extra) && $extra == "S") { ?>	
+														<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+															<label>Repeticao</label>
+															<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['Consulta']['Repeticao'];?> - <?php echo $_SESSION['Consulta']['DataTermino'];?>">
 															<?php echo form_error('Repeticao'); ?>
 														</div>
-													</div>
+													<?php  } else { ?>
+														<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+															<label for="Extra">Extra?</label><br>
+															<div class="btn-larg-right btn-group" data-toggle="buttons">
+																<?php
+																foreach ($select['Extra'] as $key => $row) {
+																	//if (!$cadastrar['Extra']) $cadastrar['Extra'] = 'N';
+																	($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																	if ($cadastrar['Extra'] == $key) {
+																		echo ''
+																		. '<label class="btn btn-warning active" name="Extra_' . $hideshow . '">'
+																		. '<input type="radio" name="Extra" id="' . $hideshow . '" '
+																		//. 'onchange="clienteOT(null, this.value)" '
+																		. 'onchange="extra(this.value)" '
+																		. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																		. '</label>'
+																		;
+																	} else {
+																		echo ''
+																		. '<label class="btn btn-default" name="Extra_' . $hideshow . '">'
+																		. '<input type="radio" name="Extra" id="' . $hideshow . '" '
+																		//. 'onchange="clienteOT(null, this.value)" '
+																		. 'onchange="extra(this.value)" '
+																		. 'autocomplete="off" value="' . $key . '" >' . $row
+																		. '</label>'
+																		;
+																	}
+																}
+																?>
+															</div>
+															<?php echo form_error('Extra'); ?>
+														</div>
+														<div id="Extra" <?php echo $div['Extra']; ?>>
+															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left ">
+																<label  for="Repeticao">Repeticao</label>
+																<select data-placeholder="Selecione uma opção..." class="form-control" id="Repeticao" name="Repeticao" onchange="repeticaoSelecionada(this.value)">
+																	<option value=""></option>
+																</select>
+																<?php echo form_error('Repeticao'); ?>
+															</div>
+														</div>
+													<?php  } ?>
+													<input type="hidden" id="Hidden_StatusExtra" value="<?php echo $cadastrar['Extra']; ?>" readonly="" />
+													<input type="hidden" id="Hidden_Repeticao" name="Hidden_Repeticao" value="<?php echo $query['Repeticao']; ?>" readonly="" />
 												<?php  } elseif($metodo == 2) { ?>
 													<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-														<label>Repeticao</label>
-														<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['Consulta']['Repeticao']; ?>">
+														<label>Repeticao</label><br>
+														
+														<a type="button" class="btn btn-md btn-info btn-block" data-loading-text="Aguarde..." href="<?php echo base_url() . 'Consulta/cadastrar_extra/' . $query['idApp_Cliente'] . '/' . $query['Repeticao']; ?>">
+															<?php echo $_SESSION['Consulta']['Repeticao']; ?> / Cad Extra 										
+														</a>
+															
+														<!--<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php #echo $_SESSION['Consulta']['Repeticao']; ?>">-->
 													</div>
+													<input type="hidden" id="Hidden_StatusExtra" value="<?php echo $cadastrar['Extra']; ?>" readonly="" />
+													<input type="hidden" id="Hidden_Repeticao" name="Hidden_Repeticao" value="<?php echo $_SESSION['Consulta']['Repeticao']; ?>" readonly="" />
 												<?php  } ?>
-												<input type="hidden" id="Hidden_Repeticao" name="Hidden_Repeticao" value="<?php echo $query['Repeticao']; ?>" />
-												<input type="hidden" id="Hidden_RepeticaoCons"/>
-												<input type="hidden" id="Hidden_RepeticaoOrca"/>
+												<input type="hidden" id="Hidden_Caso" name="Hidden_Caso" value="<?php echo $cadastrar['Hidden_Caso']; ?>" readonly="" />
+												<input type="hidden" id="Hidden_RepeticaoCons" readonly="" />
+												<input type="hidden" id="Hidden_RepeticaoOrca" readonly="" />
 											</div>
 										</div>
 									</div>
@@ -531,7 +549,8 @@
 																			echo ''
 																			. '<label class="btn btn-warning active" name="Repetir_' . $hideshow . '">'
 																			. '<input type="radio" name="Repetir" id="' . $hideshow . '" '
-																			. 'onchange="ocorrencias(this.value)" '
+																			. 'onchange="statusRepetir(this.value)" '
+																			//. 'onchange="ocorrencias(this.value)" '
 																			. 'autocomplete="off" value="' . $key . '" checked>' . $row
 																			. '</label>'
 																			;
@@ -539,7 +558,8 @@
 																			echo ''
 																			. '<label class="btn btn-default" name="Repetir_' . $hideshow . '">'
 																			. '<input type="radio" name="Repetir" id="' . $hideshow . '" '
-																			. 'onchange="ocorrencias(this.value)" '
+																			. 'onchange="statusRepetir(this.value)" '
+																			//. 'onchange="ocorrencias(this.value)" '
 																			. 'autocomplete="off" value="' . $key . '" >' . $row
 																			. '</label>'
 																			;
@@ -554,7 +574,7 @@
 															<div id="Repetir" <?php echo $div['Repetir']; ?>>
 																<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">	
 																	<label for="Recorrencias">Vez(es)</label>
-																		<input type="text" class="form-control" name="Recorrencias" id="Recorrencias" value="<?php echo $query['Recorrencias']; ?>" onkeyup="ocorrencias(), qtd_ocorrencias(), fechaBuscaOS()">
+																		<input type="text" class="form-control Numero" name="Recorrencias" id="Recorrencias" value="<?php echo $query['Recorrencias']; ?>" onkeyup="ocorrencias(), qtd_ocorrencias(), fechaBuscaOS()">
 																	<?php echo form_error('Recorrencias'); ?>	
 																</div>
 																<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -660,39 +680,43 @@
 										<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left">
 											<div class="panel panel-warning">
 												<div class="panel-heading">
-													<div class="row">
+													<div class="row adicionar">
 														<?php if ($vincular == "S") { ?>
-																<div class="col-xs-12 col-sm-3 col-md-6 col-lg-6">
-																	<label for="Adicionar">Adicionar O.S.?</label><br>
-																	<div class="btn-group" data-toggle="buttons">
-																		<?php
-																		foreach ($select['Adicionar'] as $key => $row) {
-																			if (!$cadastrar['Adicionar']) $cadastrar['Adicionar'] = 'N';
-																			($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-																			if ($cadastrar['Adicionar'] == $key) {
-																				echo ''
-																				. '<label class="btn btn-warning active" name="Adicionar_' . $hideshow . '">'
-																				. '<input type="radio" name="Adicionar" id="' . $hideshow . '" '
-																				. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																				. '</label>'
-																				;
-																			} else {
-																				echo ''
-																				. '<label class="btn btn-default" name="Adicionar_' . $hideshow . '">'
-																				. '<input type="radio" name="Adicionar" id="' . $hideshow . '" '
-																				. 'autocomplete="off" value="' . $key . '" >' . $row
-																				. '</label>'
-																				;
-																			}
+															<div class="col-xs-12 col-sm-3 col-md-6 col-lg-6">
+																<label for="Adicionar">Adicionar O.S.?</label><br>
+																<div class="btn-group" data-toggle="buttons">
+																	<?php
+																	foreach ($select['Adicionar'] as $key => $row) {
+																		if (!$cadastrar['Adicionar']) $cadastrar['Adicionar'] = 'N';
+																		($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																		if ($cadastrar['Adicionar'] == $key) {
+																			echo ''
+																			. '<label class="btn btn-warning active" name="Adicionar_' . $hideshow . '">'
+																			. '<input type="radio" name="Adicionar" id="' . $hideshow . '" '
+																			//. 'onchange="extra()" '
+																			. 'onchange="statusAdicionar(this.value)" '
+																			. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																			. '</label>'
+																			;
+																		} else {
+																			echo ''
+																			. '<label class="btn btn-default" name="Adicionar_' . $hideshow . '">'
+																			. '<input type="radio" name="Adicionar" id="' . $hideshow . '" '
+																			//. 'onchange="extra()" '
+																			. 'onchange="statusAdicionar(this.value)" '
+																			. 'autocomplete="off" value="' . $key . '" >' . $row
+																			. '</label>'
+																			;
 																		}
-																		?>
-																	</div>
-																	<?php echo form_error('Adicionar'); ?>
+																	}
+																	?>
 																</div>
+																<?php echo form_error('Adicionar'); ?>
+															</div>
 															<div id="Adicionar" <?php echo $div['Adicionar']; ?>>
 																<div class="col-xs-12 col-sm-3 col-md-6 col-lg-6">
-																	<label for="PorConsulta">Gerar " <span id="Ocorrencias"></span> " O.S.</label><br>
-																	<div class="btn-group" data-toggle="buttons">
+																	<label class="porconsulta" for="PorConsulta">Gerar " <span id="Ocorrencias"></span> " O.S.</label><br>
+																	<div class="btn-group porconsulta" data-toggle="buttons">
 																		<?php
 																		foreach ($select['PorConsulta'] as $key => $row) {
 																			if (!$cadastrar['PorConsulta']) $cadastrar['PorConsulta'] = 'S';
@@ -703,7 +727,8 @@
 																				echo ''
 																				. '<label class="btn btn-warning active" name="PorConsulta_' . $hideshow . '">'
 																				. '<input type="radio" name="PorConsulta" id="' . $hideshow . '" '
-																				. 'onchange="qtd_ocorrencias(this.value)" '
+																				//. 'onchange="qtd_ocorrencias(this.value)" '
+																				. 'onchange="statusPorConsulta(this.value)" '
 																				. 'autocomplete="off" value="' . $key . '" checked>' . $row
 																				. '</label>'
 																				;
@@ -711,7 +736,8 @@
 																				echo ''
 																				. '<label class="btn btn-default" name="PorConsulta_' . $hideshow . '">'
 																				. '<input type="radio" name="PorConsulta" id="' . $hideshow . '" '
-																				. 'onchange="qtd_ocorrencias(this.value)" '
+																				//. 'onchange="qtd_ocorrencias(this.value)" '
+																				. 'onchange="statusPorConsulta(this.value)" '
 																				. 'autocomplete="off" value="' . $key . '" >' . $row
 																				. '</label>'
 																				;
@@ -734,7 +760,8 @@
 																					echo ''
 																					. '<label class="btn btn-warning active" name="NovaOS_' . $hideshow . '">'
 																					. '<input type="radio" name="NovaOS" id="' . $hideshow . '" '
-																					. 'onchange="fechaBuscaOS(this.value)" '
+																					//. 'onchange="fechaBuscaOS(this.value)" '
+																					. 'onchange="statusNovaOs(this.value)" '
 																					. 'autocomplete="off" value="' . $key . '" checked>' . $row
 																					. '</label>'
 																					;
@@ -742,7 +769,8 @@
 																					echo ''
 																					. '<label class="btn btn-default" name="NovaOS_' . $hideshow . '">'
 																					. '<input type="radio" name="NovaOS" id="' . $hideshow . '" '
-																					. 'onchange="fechaBuscaOS(this.value)" '
+																					//. 'onchange="fechaBuscaOS(this.value)" '
+																					. 'onchange="statusNovaOs(this.value)" '
 																					. 'autocomplete="off" value="' . $key . '" >' . $row
 																					. '</label>'
 																					;
@@ -752,8 +780,8 @@
 																		</div>
 																	</div>
 																	<div class="col-xs-12 col-sm-3 col-md-6 col-lg-6">
-																		<label class="vincular" for="Vincular">Buscar O.S.?</label><br>
-																		<div class="btn-group vincular" data-toggle="buttons">
+																		<label class="vincular " for="Vincular">Buscar O.S.?</label><br>
+																		<div class="btn-group vincular " data-toggle="buttons">
 																			<?php
 																			foreach ($select['Vincular'] as $key => $row) {
 																				if (!$cadastrar['Vincular']) $cadastrar['Vincular'] = 'S';
@@ -764,7 +792,7 @@
 																					echo ''
 																					. '<label class="btn btn-warning active" name="Vincular_' . $hideshow . '">'
 																					. '<input type="radio" name="Vincular" id="' . $hideshow . '" '
-																					
+																					. 'onchange="statusVincular(this.value)" '
 																					. 'autocomplete="off" value="' . $key . '" checked>' . $row
 																					. '</label>'
 																					;
@@ -772,7 +800,7 @@
 																					echo ''
 																					. '<label class="btn btn-default" name="Vincular_' . $hideshow . '">'
 																					. '<input type="radio" name="Vincular" id="' . $hideshow . '" '
-																					
+																					. 'onchange="statusVincular(this.value)" '
 																					. 'autocomplete="off" value="' . $key . '" >' . $row
 																					. '</label>'
 																					;
@@ -783,59 +811,41 @@
 																	</div>
 																	<?php if($alterarcliente == 1){?>
 																		<div id="Vincular" <?php echo $div['Vincular']; ?>>
-																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left hnovaos"><?php //retirei essa classe "" desta div?>
+																			<div class="hnovaos col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left ">
 																				<label  for="idApp_OrcaTrata">O.S.</label>
-																				<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_OrcaTrata" name="idApp_OrcaTrata">
+																				<!--<span id="idApp_OrcaTrata"></span>-->
+																				
+																				<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_OrcaTrata" name="idApp_OrcaTrata" onchange="osSelecionada(this.value)">
 																					<option value=""></option>
 																				</select>
+																				
+																				<?php echo form_error('idApp_OrcaTrata'); ?>
 																			</div>
 																		</div>
 																	<?php } elseif($alterarcliente == 2){?>	
 																		<div id="Vincular" <?php echo $div['Vincular']; ?>>
-																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left hnovaos"><?php //retirei essa classe "" desta div?>
+																			<div class="hnovaos col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left ">
 																				<label  for="idApp_OrcaTrata">O.S.</label>
-																				<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_OrcaTrata" name="idApp_OrcaTrata">
+																				<!--<span id="idApp_OrcaTrata"></span>-->
+																				
+																				<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_OrcaTrata" name="idApp_OrcaTrata" onchange="osSelecionada(this.value)">
 																					<option value=""></option>
 																				</select>
+																				
+																				<?php echo form_error('idApp_OrcaTrata'); ?>
 																			</div>
-																			<!--
-																			<div class="col-md-12 text-left hnovaos"><?php //retirei essa classe "" desta div?>	
-																				<label  for="idApp_OrcaTrata">O.S.:</label>
-																				<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php #echo $readonly; ?>
-																						id="idApp_OrcaTrata" name="idApp_OrcaTrata">
-																					<option value="">-- Sel. Orcamento --</option>
-																					<?php
-																					/*
-																					foreach ($select['idApp_OrcaTrata'] as $key => $row) {
-																						if ($query['idApp_OrcaTrata'] == $key) {
-																							echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-																						} else {
-																							echo '<option value="' . $key . '">' . $row . '</option>';
-																						}
-																					}
-																					*/
-																					?>
-																				</select>
-																				<?php #echo form_error('idApp_OrcaTrata'); ?>
-																			</div>
-																			-->
 																		</div>	
 																	<?php } ?>
 																</div>
-																<?php if ($metodo == 1) { ?>	
-																	<input type="hidden" id="Hidden_Status_PorConsulta" value="<?php echo $cadastrar['PorConsulta']; ?>" />
-																	<input type="hidden" id="Hidden_NovaOS" value="<?php echo $cadastrar['NovaOS']; ?>" />
-																	<input type="hidden" id="Hidden_Status_Vincular" value="<?php echo $cadastrar['Vincular']; ?>" />
-																	<input type="hidden" id="Hidden_idApp_OrcaTrata" name="Hidden_idApp_OrcaTrata" value="<?php echo $query['idApp_OrcaTrata']; ?>" />
-																<?php }else{ ?>
-																	<input type="hidden" id="Hidden_Status_PorConsulta" value="<?php echo $cadastrar['PorConsulta']; ?>" />
-																	<input type="hidden" id="Hidden_NovaOS" value="<?php echo $cadastrar['NovaOS']; ?>" />
-																	<input type="hidden" id="Hidden_Status_Vincular" value="<?php echo $cadastrar['Vincular']; ?>" />
-																	<input type="hidden" id="Hidden_idApp_OrcaTrata" name="Hidden_idApp_OrcaTrata" value="<?php echo $query['idApp_OrcaTrata']; ?>" />
-																<?php } ?>
 															</div>
 														<?php } ?>
 													</div>
+													<input type="hidden" id="Hidden_Status_Adicionar" value="<?php echo $cadastrar['Adicionar']; ?>" readonly="" />
+													<input type="hidden" id="Hidden_Status_PorConsulta" value="<?php echo $cadastrar['PorConsulta']; ?>" readonly="" />
+													<input type="hidden" id="Hidden_NovaOS" value="<?php echo $cadastrar['NovaOS']; ?>" readonly="" />
+													<input type="hidden" id="Hidden_Status_Vincular" value="<?php echo $cadastrar['Vincular']; ?>" readonly="" />
+													<input type="hidden" id="Hidden_idApp_OrcaTrata" name="Hidden_idApp_OrcaTrata" value="<?php echo $query['idApp_OrcaTrata']; ?>" readonly="" />
+													<input type="hidden" id="OS" name="OS" value="<?php echo $query['OS']; ?>" readonly="" />
 													<div class="row">
 														<?php if ($metodo > 1) { ?>
 															<input type="hidden" name="idApp_Consulta" value="<?php echo $query['idApp_Consulta']; ?>">
@@ -983,7 +993,7 @@
 									</div>
 									<div class="row">
 										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">
-											<?php if ($metodo == 2) { ?>
+											<?php if (isset($extra) && $extra == "S") { ?>
 												<div class="panel panel-warning">
 													<div class="panel-heading">									
 														<div class="row text-left">	

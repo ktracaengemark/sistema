@@ -85,6 +85,24 @@
 												<?php echo form_error('HoraFim'); ?>
 												</div>
 											</div>
+											<div class="row">
+												<?php if ($metodo == 1) { ?>
+													<?php if (isset($extra) && $extra == "S") { ?>	
+														<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+															<label>Repeticao</label>
+															<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['Consulta']['Repeticao'];?> - Term: <?php echo $_SESSION['Consulta']['DataTermino'];?>">
+															<?php echo form_error('Repeticao'); ?>
+														</div>
+													<?php  } ?>
+												<?php  } elseif($metodo == 2) { ?>
+													<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+														<label>Repeticao</label><br>
+														<a type="button" class="btn btn-md btn-info btn-block" data-loading-text="Aguarde..." href="<?php echo base_url() . 'Consulta/cadastrar_evento_extra/' . $query['Repeticao']; ?>">
+															Cad Extra <?php echo $_SESSION['Consulta']['Repeticao']; ?>										
+														</a>
+													</div>
+												<?php  } ?>
+											</div>
 										</div>
 									</div>
 								</div>
