@@ -4093,7 +4093,13 @@ exit();*/
 		if($data != FALSE){
 				
 			$date_inicio_orca = ($data['DataInicio']) ? 'C.DataCadastroCliente >= "' . $data['DataInicio'] . '" AND ' : FALSE;
-			$date_fim_orca = ($data['DataFim']) ? 'C.DataCadastroCliente <= "' . $data['DataFim'] . '" AND ' : FALSE;		
+			$date_fim_orca = ($data['DataFim']) ? 'C.DataCadastroCliente <= "' . $data['DataFim'] . '" AND ' : FALSE;
+
+			$date_inicio_cash = ($data['DataInicio2']) ? 'C.ValidadeCashBack >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
+			$date_fim_cash = ($data['DataFim2']) ? 'C.ValidadeCashBack <= "' . $data['DataFim2'] . '" AND ' : FALSE;
+
+			$date_inicio_ultimo = ($data['DataInicio3']) ? 'C.UltimoPedido >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
+			$date_fim_ultimo = ($data['DataFim3']) ? 'C.UltimoPedido <= "' . $data['DataFim3'] . '" AND ' : FALSE;		
 			
 			$data['Dia'] = ($data['Dia']) ? ' AND DAY(C.DataNascimento) = ' . $data['Dia'] : FALSE;
 			$data['Mesvenc'] = ($data['Mesvenc']) ? ' AND MONTH(C.DataNascimento) = ' . $data['Mesvenc'] : FALSE;
@@ -4113,18 +4119,47 @@ exit();*/
 					$data['idApp_ClienteDep'] = FALSE;
 				}
 			}
-			
+			if(isset($data['Sexo'])){
+				if($data['Sexo'] == 0){
+					$sexo = FALSE;
+				}elseif($data['Sexo'] == 1){
+					$sexo = 'C.Sexo = "M" AND ';
+				}elseif($data['Sexo'] == 2){
+					$sexo = 'C.Sexo = "F" AND ';
+				}elseif($data['Sexo'] == 3){
+					$sexo = 'C.Sexo = "O" AND ';
+				}
+			}else{
+				$sexo = FALSE;
+			}
+			if(isset($data['Pedidos'])){
+				if($data['Pedidos'] == 0){
+					$pedidos = FALSE;
+				}elseif($data['Pedidos'] == 1){
+					$pedidos = 'C.UltimoPedido = "0000-00-00" AND ';
+				}elseif($data['Pedidos'] == 2){
+					$pedidos = 'C.UltimoPedido != "0000-00-00" AND ';
+				}
+			}else{
+				$pedidos = FALSE;
+			}			
 			$data['Campo'] = (!$data['Campo']) ? 'C.NomeCliente' : $data['Campo'];
 			$data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 			$filtro10 = ($data['Ativo'] != '#') ? 'C.Ativo = "' . $data['Ativo'] . '" AND ' : FALSE;
 			$filtro20 = ($data['Motivo'] != '0') ? 'C.Motivo = "' . $data['Motivo'] . '" AND ' : FALSE;
 			#$q = ($_SESSION['log']['Permissao'] > 2) ? ' C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 			$groupby = ($data['Agrupar'] != "0") ? 'GROUP BY C.' . $data['Agrupar'] . '' : FALSE;
-			
+
 		}else{
 			
 			$date_inicio_orca = ($_SESSION['FiltroAlteraParcela']['DataInicio']) ? 'C.DataCadastroCliente >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio'] . '" AND ' : FALSE;
-			$date_fim_orca = ($_SESSION['FiltroAlteraParcela']['DataFim']) ? 'C.DataCadastroCliente <= "' . $_SESSION['FiltroAlteraParcela']['DataFim'] . '" AND ' : FALSE;		
+			$date_fim_orca = ($_SESSION['FiltroAlteraParcela']['DataFim']) ? 'C.DataCadastroCliente <= "' . $_SESSION['FiltroAlteraParcela']['DataFim'] . '" AND ' : FALSE;
+
+			$date_inicio_cash = ($_SESSION['FiltroAlteraParcela']['DataInicio2']) ? 'C.ValidadeCashBack >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio2'] . '" AND ' : FALSE;
+			$date_fim_cash = ($_SESSION['FiltroAlteraParcela']['DataFim2']) ? 'C.ValidadeCashBack <= "' . $_SESSION['FiltroAlteraParcela']['DataFim2'] . '" AND ' : FALSE;
+
+			$date_inicio_ultimo = ($_SESSION['FiltroAlteraParcela']['DataInicio3']) ? 'C.UltimoPedido >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio3'] . '" AND ' : FALSE;
+			$date_fim_ultimo = ($_SESSION['FiltroAlteraParcela']['DataFim3']) ? 'C.UltimoPedido <= "' . $_SESSION['FiltroAlteraParcela']['DataFim3'] . '" AND ' : FALSE;		
 			
 			$data['Dia'] = ($_SESSION['FiltroAlteraParcela']['Dia']) ? ' AND DAY(C.DataNascimento) = ' . $_SESSION['FiltroAlteraParcela']['Dia'] : FALSE;
 			$data['Mesvenc'] = ($_SESSION['FiltroAlteraParcela']['Mesvenc']) ? ' AND MONTH(C.DataNascimento) = ' . $_SESSION['FiltroAlteraParcela']['Mesvenc'] : FALSE;
@@ -4144,7 +4179,30 @@ exit();*/
 					$data['idApp_ClienteDep'] = FALSE;
 				}
 			}
-			
+			if(isset($_SESSION['FiltroAlteraParcela']['Sexo'])){
+				if($_SESSION['FiltroAlteraParcela']['Sexo'] == 0){
+					$sexo = FALSE;
+				}elseif($_SESSION['FiltroAlteraParcela']['Sexo'] == 1){
+					$sexo = 'C.Sexo = "M" AND ';
+				}elseif($_SESSION['FiltroAlteraParcela']['Sexo'] == 2){
+					$sexo = 'C.Sexo = "F" AND ';
+				}elseif($_SESSION['FiltroAlteraParcela']['Sexo'] == 3){
+					$sexo = 'C.Sexo = "O" AND ';
+				}
+			}else{
+				$sexo = FALSE;
+			}
+			if(isset($_SESSION['FiltroAlteraParcela']['Pedidos'])){
+				if($_SESSION['FiltroAlteraParcela']['Pedidos'] == 0){
+					$pedidos = FALSE;
+				}elseif($_SESSION['FiltroAlteraParcela']['Pedidos'] == 1){
+					$pedidos = 'C.UltimoPedido = "0000-00-00" AND ';
+				}elseif($_SESSION['FiltroAlteraParcela']['Pedidos'] == 2){
+					$pedidos = 'C.UltimoPedido != "0000-00-00" AND ';
+				}
+			}else{
+				$pedidos = FALSE;
+			}			
 			$data['Campo'] = (!$_SESSION['FiltroAlteraParcela']['Campo']) ? 'C.NomeCliente' : $_SESSION['FiltroAlteraParcela']['Campo'];
 			$data['Ordenamento'] = (!$_SESSION['FiltroAlteraParcela']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroAlteraParcela']['Ordenamento'];
 			$filtro10 = ($_SESSION['FiltroAlteraParcela']['Ativo'] != '#') ? 'C.Ativo = "' . $_SESSION['FiltroAlteraParcela']['Ativo'] . '" AND ' : FALSE;
@@ -4209,6 +4267,10 @@ exit();*/
 				C.usuario,
 				C.senha,
 				C.CodInterno,
+				C.CashBackCliente,
+				C.ValidadeCashBack,
+				C.id_UltimoPedido,
+				C.UltimoPedido,
 				MT.Motivo
             FROM
 				App_Cliente AS C
@@ -4219,8 +4281,14 @@ exit();*/
 			WHERE
 				' . $date_inicio_orca . '
 				' . $date_fim_orca . '
+				' . $date_inicio_cash . '
+				' . $date_fim_cash . '
+				' . $date_inicio_ultimo . '
+				' . $date_fim_ultimo . '
 				' . $filtro10 . '
 				' . $filtro20 . '
+				' . $pedidos . '
+				' . $sexo . '
 				C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
 				' . $data['idApp_Cliente'] . ' 
 				' . $data['idApp_ClientePet'] . '
@@ -4246,6 +4314,8 @@ exit();*/
             foreach ($query->result() as $row) {
 				$row->DataNascimento = $this->basico->mascara_data($row->DataNascimento, 'barras');
 				$row->DataCadastroCliente = $this->basico->mascara_data($row->DataCadastroCliente, 'barras');
+				$row->UltimoPedido = $this->basico->mascara_data($row->UltimoPedido, 'barras');
+				$row->ValidadeCashBack = $this->basico->mascara_data($row->ValidadeCashBack, 'barras');
 				$row->Ativo = $this->basico->mascara_palavra_completa($row->Ativo, 'NS');
                 #$row->Sexo = $this->basico->get_sexo($row->Sexo);
                 #$row->Sexo = ($row->Sexo == 2) ? 'F' : 'M';

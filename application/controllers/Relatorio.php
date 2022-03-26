@@ -7689,6 +7689,10 @@ class Relatorio extends CI_Controller {
             'Campo',
 			'DataInicio',
             'DataFim',
+			'DataInicio2',
+			'DataFim2',
+			'DataInicio3',
+			'DataFim3',
 			'Dia',
 			'Mesvenc',
 			'Ano',
@@ -7697,6 +7701,8 @@ class Relatorio extends CI_Controller {
 			'Texto3',
 			'Texto4',
 			'Agrupar',
+			'Pedidos',
+			'Sexo',
         ), TRUE));
 
         $data['select']['Ativo'] = array(
@@ -7705,11 +7711,24 @@ class Relatorio extends CI_Controller {
             'S' => 'Sim',
         );
 		
+        $data['select']['Sexo'] = array(
+			'0' => 'Todos',
+			'1' => 'Masculino',
+			'2' => 'Feminino',
+			'3' => 'Outros',
+        );
+		
         $data['select']['Agrupar'] = array(
 			'0' => 'Todos',
 			'idApp_Cliente' => 'Cliente',
         );
 		
+        $data['select']['Pedidos'] = array(
+			'0' => 'Todos',
+			'1' => 'Clientes S/Pedidos',
+			'2' => 'Clientes C/Pedidos',
+        );
+				
 		$data['select']['Campo'] = array(
             'C.idApp_Cliente' => 'nº Cliente',
 			'C.NomeCliente' => 'Nome do Cliente',
@@ -7724,6 +7743,8 @@ class Relatorio extends CI_Controller {
 			'TCC.RelaPes' => 'Rel. Pes.',
 			'TCC.RelaCom' => 'Rel. Com.',
 			'CC.Sexo' => 'Sexo',
+			'C.UltimoPedido' => 'Ultimo Pedido',
+			'C.ValidadeCashBack' => 'Validade CashBack',
 
         );
 
@@ -7745,7 +7766,11 @@ class Relatorio extends CI_Controller {
 		$data['paginacao'] = 'N';
 
         $_SESSION['FiltroAlteraParcela']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');        
+		$_SESSION['FiltroAlteraParcela']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+		$_SESSION['FiltroAlteraParcela']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+		$_SESSION['FiltroAlteraParcela']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+		$_SESSION['FiltroAlteraParcela']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+		$_SESSION['FiltroAlteraParcela']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');        
 		$_SESSION['FiltroAlteraParcela']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
 		$_SESSION['FiltroAlteraParcela']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
 		$_SESSION['FiltroAlteraParcela']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
@@ -7757,6 +7782,8 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
 		$_SESSION['FiltroAlteraParcela']['Ano'] = $data['query']['Ano'];
 		$_SESSION['FiltroAlteraParcela']['Agrupar'] = $data['query']['Agrupar'];
+		$_SESSION['FiltroAlteraParcela']['Pedidos'] = $data['query']['Pedidos'];
+		$_SESSION['FiltroAlteraParcela']['Sexo'] = $data['query']['Sexo'];
         
 		$_SESSION['FiltroAlteraParcela']['Texto1'] = utf8_encode($data['query']['Texto1']);
         $_SESSION['FiltroAlteraParcela']['Texto2'] = utf8_encode($data['query']['Texto2']);
@@ -7767,12 +7794,20 @@ class Relatorio extends CI_Controller {
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início do Cadastro', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim do Cadastro', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio2', 'Data Inicio', 'trim|valid_date');
+		$this->form_validation->set_rules('DataFim2', 'Data Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio3', 'Data Inicio', 'trim|valid_date');
+		$this->form_validation->set_rules('DataFim3', 'Data Fim', 'trim|valid_date');
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
 
 			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+			$data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+			$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+			$data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
             //$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
 			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
 			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
@@ -7785,6 +7820,8 @@ class Relatorio extends CI_Controller {
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
+			$data['bd']['Pedidos'] = $data['query']['Pedidos'];
+			$data['bd']['Sexo'] = $data['query']['Sexo'];
 
 			//$this->load->library('pagination');
 			$config['per_page'] = 10;

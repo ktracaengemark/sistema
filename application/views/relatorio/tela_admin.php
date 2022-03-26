@@ -280,14 +280,7 @@
 												</div>	
 											</div>											
 									<?php }?>
-									<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>	
-										<div class="form-group col-md-12 text-left">
-											<div class="row">										
-												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/rankingvendas" role="button"> 
-													<span class="glyphicon glyphicon-usd"></span> Ranking de Vendas
-												</a>
-											</div>	
-										</div>
+									<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 										<div class="form-group col-md-12 text-left">
 											<div class="row">										
 												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/rankingformapag" role="button"> 
@@ -526,6 +519,13 @@
 											<span class="glyphicon glyphicon-user"></span> Clientes/ Dep/ Pet
 										</a>
 									</div>
+								</div>
+								<div class="form-group col-md-12 text-left">
+									<div class="row">										
+										<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/rankingvendas" role="button"> 
+											<span class="glyphicon glyphicon-usd"></span> Ranking & CashBack
+										</a>
+									</div>	
 								</div>
 								<div class="row">
 									<div class="form-group col-md-12 text-left">

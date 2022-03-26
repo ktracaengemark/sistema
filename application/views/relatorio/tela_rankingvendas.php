@@ -1,51 +1,40 @@
 <?php if ($msg) echo $msg; ?>
-<!--<?php #echo form_open('relatorio/rankingvendas', 'role="form"'); ?>-->
-<?php echo form_open($form_open_path, 'role="form"'); ?>
-<div class="col-md-12 ">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<!--<?php #echo form_open('relatorio/rankingvendas', 'role="form"'); ?>-->
+	<?php echo form_open($form_open_path, 'role="form"'); ?>
 	<?php echo validation_errors(); ?>
 	<div class="panel panel-primary">
-		<div class="panel-heading">
-			<?php if($paginacao == "N") { ?>
+		<?php if($paginacao == "N") { ?>
+			<div class="panel-heading">
 				<div class="btn-group " role="group" aria-label="...">
 					<div class="row text-left">	
-						<div class="col-md-12">
-							<div class="col-md-8 text-left">
-								<label  >Cliente:</label>
-								<div class="input-group">
-									<span class="input-group-btn">
-										<button class="btn btn-info btn-md" type="submit">
-											<span class="glyphicon glyphicon-search"></span> 
-										</button>
-									</span>
-									<input type="text" autofocus name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php echo $cadastrar['id_Cliente_Auto']; ?>" class="form-control" placeholder="Pesquisar Cliente">
-								</div>
-								<span class="modal-title" id="NomeClienteAuto1"><?php echo $cadastrar['NomeClienteAuto']; ?></span>
-								<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php echo $cadastrar['NomeClienteAuto']; ?>" />
-								<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php echo $query['idApp_Cliente']; ?>" />
-								<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">
-							</div>
-							<div class="col-md-2 text-left">
-								<label>Filtros</label><br>
-								<button  class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
-									<span class="glyphicon glyphicon-filter"></span>
-								</button>
-							</div>
-							<div class="col-md-2">
-								<label>CashBack</label><br>
-								<a href="<?php echo base_url() . 'cliente/alterarcashback/' . $_SESSION['log']['idSis_Empresa']; ?>">
-									<button class="btn btn-success btn-md btn-block" type="button">
-										<span class="glyphicon glyphicon-pencil"></span>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left">
+							<label  >Cliente:</label>
+							<div class="input-group">
+								<span class="input-group-btn">
+									<button class="btn btn-info btn-md" type="submit">
+										<span class="glyphicon glyphicon-search"></span> 
 									</button>
-								</a>
+								</span>
+								<input type="text" autofocus name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php echo $cadastrar['id_Cliente_Auto']; ?>" class="form-control" placeholder="Pesquisar Cliente">
 							</div>
+							<span class="modal-title" id="NomeClienteAuto1"><?php echo $cadastrar['NomeClienteAuto']; ?></span>
+							<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php echo $cadastrar['NomeClienteAuto']; ?>" />
+							<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php echo $query['idApp_Cliente']; ?>" />
+							<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">
+						</div>
+						<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
+							<label>Filtros</label><br>
+							<button  class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
+								<span class="glyphicon glyphicon-filter"></span>
+							</button>
 						</div>
 					</div>	
-				</div>
-			<?php } ?>	
-		</div>		
+				</div>	
+			</div>	
+		<?php } ?>	
 		<?php echo (isset($list)) ? $list : FALSE ?>	
 	</div>
-
 </div>
 
 <div class="modal fade bs-excluir-modal2-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -58,36 +47,32 @@
 			<div class="modal-footer">
 				<div class="form-group">
 					<div class="row text-left">
-						<div class="col-md-6">
-							<label for="Pedidos_de">Pedidos de:</label>
+						<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+							<label for="Pedidos_de">Pdds. de:</label>
 							<div class="input-group ">
 								<span class="input-group-addon" disabled>Qtd</span>
 								<input type="text" class="form-control Numero" maxlength="10" placeholder="Ex. 1"
 								name="Pedidos_de" value="<?php echo set_value('Pedidos_de', $query['Pedidos_de']); ?>">
 							</div>
 						</div>
-						<div class="col-md-6">
-							<label for="Pedidos_ate">Pedidos até:</label>
+						<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+							<label for="Pedidos_ate">Pdds. até:</label>
 							<div class="input-group ">
 								<span class="input-group-addon" disabled>Qtd</span>
 								<input type="text" class="form-control Numero" maxlength="10" placeholder="Ex. 5"
 								name="Pedidos_ate" value="<?php echo set_value('Pedidos_ate', $query['Pedidos_ate']); ?>">
 							</div>
 						</div>
-					</div>	
-				</div>	
-				<div class="form-group">	
-					<div class="row text-left">	
-						<div class="col-md-6">
-							<label for="Valor_de">Valor de:</label>
+						<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+							<label for="Valor_de">Valor Total de:</label>
 							<div class="input-group ">
 								<span class="input-group-addon" disabled>R$</span>
 								<input type="text" class="form-control " maxlength="10" placeholder="Ex. 100.00"
 								name="Valor_de" value="<?php echo set_value('Valor_de', $query['Valor_de']); ?>">
 							</div>
 						</div>
-						<div class="col-md-6">
-							<label for="Valor_ate">Valor até:</label>
+						<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+							<label for="Valor_ate">Valor Total até:</label>
 							<div class="input-group ">
 								<span class="input-group-addon" disabled>R$</span>
 								<input type="text" class="form-control " maxlength="10" placeholder="Ex. 200.00"
@@ -98,8 +83,8 @@
 				</div>	
 				<div class="form-group">	
 					<div class="row text-left">
-						<div class="col-md-6">
-							<label for="DataInicio">Data Pedido Início:</label>
+						<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+							<label for="DataInicio">Dt.Pdd Iní:</label>
 							<div class="input-group DatePicker">
 								<span class="input-group-addon" disabled>
 									<span class="glyphicon glyphicon-calendar"></span>
@@ -108,8 +93,8 @@
 								name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
 							</div>
 						</div>
-						<div class="col-md-6">
-							<label for="DataFim">Data Pedido Fim:</label>
+						<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+							<label for="DataFim">Dt.Pdd Fim:</label>
 							<div class="input-group DatePicker">
 								<span class="input-group-addon" disabled>
 									<span class="glyphicon glyphicon-calendar"></span>
@@ -117,13 +102,9 @@
 								<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 							   name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
 							</div>
-						</div>								
-					</div>
-				</div>
-				<div class="form-group">	
-					<div class="row text-left">
-						<div class="col-md-6">
-							<label for="DataInicio3">Data Ult. Ped. Ini: </label>
+						</div>
+						<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+							<label for="DataInicio3">Dt.Ult.Pdd.Ini: </label>
 							<div class="input-group DatePicker">
 								<span class="input-group-addon" disabled>
 									<span class="glyphicon glyphicon-calendar"></span>
@@ -132,8 +113,8 @@
 								name="DataInicio3" value="<?php echo set_value('DataInicio3', $query['DataInicio3']); ?>">
 							</div>
 						</div>
-						<div class="col-md-6">
-							<label for="DataFim3">Data Ult. Ped. Fim:</label>
+						<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+							<label for="DataFim3">Dt.Ult.Pdd.Fim:</label>
 							<div class="input-group DatePicker">
 								<span class="input-group-addon" disabled>
 									<span class="glyphicon glyphicon-calendar"></span>
@@ -146,8 +127,8 @@
 				</div>
 				<div class="form-group">	
 					<div class="row text-left">
-						<div class="col-md-6">
-							<label for="DataInicio2">Data Cash Início: </label>
+						<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+							<label for="DataInicio2">Dt.Cash.Iní: </label>
 							<div class="input-group DatePicker">
 								<span class="input-group-addon" disabled>
 									<span class="glyphicon glyphicon-calendar"></span>
@@ -156,8 +137,8 @@
 								name="DataInicio2" value="<?php echo set_value('DataInicio2', $query['DataInicio2']); ?>">
 							</div>
 						</div>
-						<div class="col-md-6">
-							<label for="DataFim2">Data Cash Fim:</label>
+						<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+							<label for="DataFim2">Dt.Cash.Fim:</label>
 							<div class="input-group DatePicker">
 								<span class="input-group-addon" disabled>
 									<span class="glyphicon glyphicon-calendar"></span>
@@ -165,12 +146,8 @@
 								<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 							   name="DataFim2" value="<?php echo set_value('DataFim2', $query['DataFim2']); ?>">
 							</div>
-						</div>
-					</div>
-				</div>	
-				<div class="form-group">	
-					<div class="row text-left">	
-						<div class="col-md-6">
+						</div>	
+						<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
 							<label for="Valor_cash_de">Valor Cash de:</label>
 							<div class="input-group ">
 								<span class="input-group-addon" disabled>R$</span>
@@ -178,7 +155,7 @@
 								name="Valor_cash_de" value="<?php echo set_value('Valor_cash_de', $query['Valor_cash_de']); ?>">
 							</div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
 							<label for="Valor_cash_ate">Valor Cash até:</label>
 							<div class="input-group ">
 								<span class="input-group-addon" disabled>R$</span>

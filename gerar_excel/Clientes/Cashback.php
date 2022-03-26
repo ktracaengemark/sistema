@@ -1,25 +1,23 @@
 <?php
-	//session_start();
-	//include_once('conexao.php');
 	include_once '../../conexao.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
 		<meta charset="utf-8">
-		<title>Clientes</title>
+		<title>CashBack</title>
 	<head>
 	<body>
 		<?php
 		// Definimos o nome do arquivo que será exportado
 		//$arquivo = 'clientes.xls';
-		$arquivo = 'Clientes_' . date('d-m-Y') . '.xls';
+		$arquivo = 'CashBack_' . date('d-m-Y') . '.xls';
 		
 		// Título da Tabela
 		$html = '';
 		$html .= '<table border="1">';
 		$html .= '<tr>';
-		$html .= '<td colspan="3">Planilha de Clientes</tr>';
+		$html .= '<td colspan="3">Planilha de CashBack</tr>';
 		$html .= '</tr>';
 		
 		// Campos da Tabela
@@ -47,87 +45,72 @@
 		$html .= '<td><b>Ativo</b></td>';
 		$html .= '<td><b>Motivo</b></td>';
 		$html .= '<td><b>Cadast.</b></td>';
+		$html .= '<td><b>Qtd.Pedidos</b></td>';
+		$html .= '<td><b>Total</b></td>';
 		$html .= '<td><b>Ult.Pdd.</b></td>';
 		$html .= '<td><b>ValorCash</b></td>';
 		$html .= '<td><b>Valid.Cash</b></td>';
 		$html .= '</tr>';
 		
 		//Selecionar os itens da Tabela
-		
-		$date_inicio_orca = ($_SESSION['FiltroAlteraParcela']['DataInicio']) ? 'C.DataCadastroCliente >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio'] . '" AND ' : FALSE;
-		$date_fim_orca = ($_SESSION['FiltroAlteraParcela']['DataFim']) ? 'C.DataCadastroCliente <= "' . $_SESSION['FiltroAlteraParcela']['DataFim'] . '" AND ' : FALSE;
+		$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'TOT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+		$date_inicio_orca = ($_SESSION['FiltroRankingVendas']['DataInicio']) ? 'TOT.DataOrca >= "' . $_SESSION['FiltroRankingVendas']['DataInicio'] . '" AND ' : FALSE;
+		$date_fim_orca = ($_SESSION['FiltroRankingVendas']['DataFim']) ? 'TOT.DataOrca <= "' . $_SESSION['FiltroRankingVendas']['DataFim'] . '" AND ' : FALSE;
+		$date_inicio_cash = ($_SESSION['FiltroRankingVendas']['DataInicio2']) ? 'TC.ValidadeCashBack >= "' . $_SESSION['FiltroRankingVendas']['DataInicio2'] . '" AND ' : FALSE;
+		$date_fim_cash = ($_SESSION['FiltroRankingVendas']['DataFim2']) ? 'TC.ValidadeCashBack <= "' . $_SESSION['FiltroRankingVendas']['DataFim2'] . '" AND ' : FALSE;
+		$date_inicio_ultimo = ($_SESSION['FiltroRankingVendas']['DataInicio3']) ? 'TC.UltimoPedido >= "' . $_SESSION['FiltroRankingVendas']['DataInicio3'] . '" AND ' : FALSE;
+		$date_fim_ultimo = ($_SESSION['FiltroRankingVendas']['DataFim3']) ? 'TC.UltimoPedido <= "' . $_SESSION['FiltroRankingVendas']['DataFim3'] . '" AND ' : FALSE;
+		$pedidos_de = ($_SESSION['FiltroRankingVendas']['Pedidos_de']) ? 'F.ContPedidos >= "' . $_SESSION['FiltroRankingVendas']['Pedidos_de'] . '" AND ' : FALSE;
+		$pedidos_ate = ($_SESSION['FiltroRankingVendas']['Pedidos_ate']) ? 'F.ContPedidos <= "' . $_SESSION['FiltroRankingVendas']['Pedidos_ate'] . '" AND ' : FALSE;
+		$valor_de = ($_SESSION['FiltroRankingVendas']['Valor_de']) ? 'F.Valor >= "' . $_SESSION['FiltroRankingVendas']['Valor_de'] . '" AND ' : FALSE;
+		$valor_ate = ($_SESSION['FiltroRankingVendas']['Valor_ate']) ? 'F.Valor <= "' . $_SESSION['FiltroRankingVendas']['Valor_ate'] . '" AND ' : FALSE;
+		$valor_cash_de = ($_SESSION['FiltroRankingVendas']['Valor_cash_de']) ? 'F.CashBackCliente >= "' . $_SESSION['FiltroRankingVendas']['Valor_cash_de'] . '" AND ' : FALSE;
+		$valor_cash_ate = ($_SESSION['FiltroRankingVendas']['Valor_cash_ate']) ? 'F.CashBackCliente <= "' . $_SESSION['FiltroRankingVendas']['Valor_cash_ate'] . '" AND ' : FALSE;
+        $idapp_cliente = ($_SESSION['FiltroRankingVendas']['idApp_Cliente']) ? ' AND TC.idApp_Cliente = ' . $_SESSION['FiltroRankingVendas']['idApp_Cliente'] : FALSE;
+        $campo = (!$_SESSION['FiltroRankingVendas']['Campo']) ? 'F.Valor' : $_SESSION['FiltroRankingVendas']['Campo'];
+        $ordenamento = (!$_SESSION['FiltroRankingVendas']['Ordenamento']) ? 'DESC' : $_SESSION['FiltroRankingVendas']['Ordenamento'];
 
-		$date_inicio_cash = ($_SESSION['FiltroAlteraParcela']['DataInicio2']) ? 'C.ValidadeCashBack >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio2'] . '" AND ' : FALSE;
-		$date_fim_cash = ($_SESSION['FiltroAlteraParcela']['DataFim2']) ? 'C.ValidadeCashBack <= "' . $_SESSION['FiltroAlteraParcela']['DataFim2'] . '" AND ' : FALSE;
+        $result_msg_contatos = '
+			SELECT
+				F.*
+			FROM
+				(SELECT
+					TC.*,
+					TOT.DataOrca,
+					COUNT(TOT.idApp_OrcaTrata) AS ContPedidos,
+					SUM(TOT.ValorFinalOrca) AS Valor
+				FROM
+					App_Cliente AS TC
+						INNER JOIN App_OrcaTrata AS TOT ON TOT.idApp_Cliente = TC.idApp_Cliente
+				WHERE
+					' . $permissao_orcam . '
+					' . $date_inicio_orca . '
+					' . $date_fim_orca . '
+					' . $date_inicio_cash . '
+					' . $date_fim_cash . '
+					' . $date_inicio_ultimo . '
+					' . $date_fim_ultimo . '
+					TOT.CanceladoOrca = "N" AND
+					TC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
+					' . $idapp_cliente . '
+				GROUP BY
+					TC.idApp_Cliente
+				) AS F
+			WHERE
+				' . $pedidos_de . '
+				' . $pedidos_ate . '
+				' . $valor_de . '
+				' . $valor_ate . '
+				' . $valor_cash_de . '
+				' . $valor_cash_ate . '
+				F.idApp_Cliente != 0
+			ORDER BY
+				' . $campo . '
+				' . $ordenamento . '
+        ';
 
-		$date_inicio_ultimo = ($_SESSION['FiltroAlteraParcela']['DataInicio3']) ? 'C.UltimoPedido >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio3'] . '" AND ' : FALSE;
-		$date_fim_ultimo = ($_SESSION['FiltroAlteraParcela']['DataFim3']) ? 'C.UltimoPedido <= "' . $_SESSION['FiltroAlteraParcela']['DataFim3'] . '" AND ' : FALSE;		
-
-		$data['Dia'] = ($_SESSION['FiltroAlteraParcela']['Dia']) ? ' AND DAY(C.DataNascimento) = ' . $_SESSION['FiltroAlteraParcela']['Dia'] : FALSE;
-		$data['Mesvenc'] = ($_SESSION['FiltroAlteraParcela']['Mesvenc']) ? ' AND MONTH(C.DataNascimento) = ' . $_SESSION['FiltroAlteraParcela']['Mesvenc'] : FALSE;
-		$data['Ano'] = ($_SESSION['FiltroAlteraParcela']['Ano']) ? ' AND YEAR(C.DataNascimento) = ' . $_SESSION['FiltroAlteraParcela']['Ano'] : FALSE;
-
-		if(isset($_SESSION['FiltroAlteraParcela']['Sexo'])){
-			if($_SESSION['FiltroAlteraParcela']['Sexo'] == 0){
-				$sexo = FALSE;
-			}elseif($_SESSION['FiltroAlteraParcela']['Sexo'] == 1){
-				$sexo = 'C.Sexo = "M" AND ';
-			}elseif($_SESSION['FiltroAlteraParcela']['Sexo'] == 2){
-				$sexo = 'C.Sexo = "F" AND ';
-			}elseif($_SESSION['FiltroAlteraParcela']['Sexo'] == 3){
-				$sexo = 'C.Sexo = "O" AND ';
-			}
-		}else{
-			$sexo = FALSE;
-		}
-		
-		if(isset($_SESSION['FiltroAlteraParcela']['Pedidos'])){
-			if($_SESSION['FiltroAlteraParcela']['Pedidos'] == 0){
-				$pedidos = FALSE;
-			}elseif($_SESSION['FiltroAlteraParcela']['Pedidos'] == 1){
-				$pedidos = 'C.UltimoPedido = "0000-00-00" AND ';
-			}elseif($_SESSION['FiltroAlteraParcela']['Pedidos'] == 2){
-				$pedidos = 'C.UltimoPedido != "0000-00-00" AND ';
-			}
-		}else{
-			$pedidos = FALSE;
-		}
-		
-		//$data['NomeCliente'] = ($_SESSION['FiltroAlteraParcela']['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $_SESSION['FiltroAlteraParcela']['NomeCliente'] : FALSE;
-		$data['idApp_Cliente'] = ($_SESSION['FiltroAlteraParcela']['idApp_Cliente']) ? ' AND C.idApp_Cliente = ' . $_SESSION['FiltroAlteraParcela']['idApp_Cliente'] : FALSE;
-		$data['Campo'] = (!$_SESSION['FiltroAlteraParcela']['Campo']) ? 'C.NomeCliente' : $_SESSION['FiltroAlteraParcela']['Campo'];
-		$data['Ordenamento'] = (!$_SESSION['FiltroAlteraParcela']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroAlteraParcela']['Ordenamento'];
-		$filtro10 = ($_SESSION['FiltroAlteraParcela']['Ativo'] != '#') ? 'C.Ativo = "' . $_SESSION['FiltroAlteraParcela']['Ativo'] . '" AND ' : FALSE;
-		$filtro20 = ($_SESSION['FiltroAlteraParcela']['Motivo'] != '0') ? 'C.Motivo = "' . $_SESSION['FiltroAlteraParcela']['Motivo'] . '" AND ' : FALSE;
-		$groupby = ($_SESSION['FiltroAlteraParcela']['Agrupar'] != "0") ? 'GROUP BY C.' . $_SESSION['FiltroAlteraParcela']['Agrupar'] . '' : FALSE;
-		
-		$result_msg_contatos = '
-								SELECT * 
-								FROM 
-									App_Cliente AS C
-								WHERE
-									' . $date_inicio_orca . '
-									' . $date_fim_orca . '
-									' . $date_inicio_cash . '
-									' . $date_fim_cash . '
-									' . $date_inicio_ultimo . '
-									' . $date_fim_ultimo . '
-									' . $filtro10 . '
-									' . $filtro20 . '
-									' . $pedidos . '
-									' . $sexo . '
-									C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
-									' . $data['idApp_Cliente'] . ' 
-									' . $data['Dia'] . ' 
-									' . $data['Mesvenc'] . '
-									' . $data['Ano'] . '
-								' . $groupby . '
-								ORDER BY
-									' . $data['Campo'] . '
-									' . $data['Ordenamento'] . '
-								';
 		$resultado_msg_contatos = mysqli_query($conn , $result_msg_contatos);
-		
+
 		while($row_msg_contatos = mysqli_fetch_assoc($resultado_msg_contatos)){
 			$html .= '<tr>';
 			$html .= '<td>'.$row_msg_contatos["idSis_Empresa"].'</td>';
@@ -155,6 +138,8 @@
 			$html .= '<td>'.$row_msg_contatos["Motivo"].'</td>';
 			$data_cad = date('d/m/Y',strtotime($row_msg_contatos["DataCadastroCliente"]));
 			$html .= '<td>'.$data_cad.'</td>';
+			$html .= '<td>'.$row_msg_contatos["ContPedidos"].'</td>';
+			$html .= '<td>'.$row_msg_contatos["Valor"].'</td>';
 			if(!isset($row_msg_contatos["UltimoPedido"]) || $row_msg_contatos["UltimoPedido"] == "0000-00-00"){
 				$dt_ult_pdd = NULL;
 			}else{

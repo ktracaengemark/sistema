@@ -204,6 +204,8 @@
 								<li role="separator" class="divider"></li>-->
 								<li><a href="<?php echo base_url() ?>relatorio/clientes"><span class="glyphicon glyphicon-user"></span> Clientes/ Dep/ Pet</a></li>
 								<li role="separator" class="divider"></li>
+								<li><a href="<?php echo base_url() ?>relatorio/rankingvendas"><span class="glyphicon glyphicon-user"></span> Ranking & CashBack</a></li>
+								<li role="separator" class="divider"></li>
 							<?php } ?>
 							<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>
 							<li role="separator" class="divider"></li>

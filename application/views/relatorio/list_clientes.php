@@ -1,24 +1,39 @@
 <div class="container-fluid">
 	<div class="row">
-		<?php if($paginacao == "S") { ?>
-			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-left">
+			<?php echo $pagination; ?>
+		</div>
+		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+			<label></label><br>
+			<input type="text" class="form-control" disabled aria-label="Contagem" value="<?php echo $report->num_rows(); ?> / <?php echo $total_rows; ?>">
+		</div>
+		<?php if(isset($paginacao) && $paginacao == "S") { ?>
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
 				<label></label><br>
 				<a href="<?php echo base_url() . $caminho; ?>">
 					<button class="btn btn-warning btn-md btn-block" type="button">
-						<span class="glyphicon glyphicon-filter"></span>Filtros
+						<span class="glyphicon glyphicon-filter"></span>
 					</button>
 				</a>
 			</div>
-		<?php } ?>
-		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+		<?php }elseif(isset($paginacao) && $paginacao == "N"){ ?>
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
+				<label></label><br>
+				<button  class="btn btn-md btn-warning btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
+					<span class="glyphicon glyphicon-filter"></span>
+				</button>
+			</div>
+		<?php } ?>		
+		
+		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
 			<label></label><br>
 			<a href="<?php echo base_url() . 'gerar_excel/Clientes/Clientes.php'; ?>">
 				<button type='button' class='btn btn-md btn-success btn-block'>
-					Gerar Excel
+					Excel
 				</button>
 			</a>
 		</div>
-		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
 			<label></label><br>
 			<a href="<?php echo base_url() . 'gerar_excel/Clientes/Clientes_csv.php'; ?>">
 				<button type='button' class='btn btn-md btn-success btn-block'>
@@ -26,20 +41,10 @@
 				</button>
 			</a>
 		</div>
-		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-			<label></label><br>
-			<div class="input-group">
-				<span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
-				<input type="text" class="form-control" disabled aria-label="Contagem" value="<?php echo $report->num_rows(); ?> / <?php echo $total_rows; ?>">
-			</div>
-		</div>
-		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-left">
-			<?php echo $pagination; ?>
-		</div>
 	</div>
 	<div class="row">	
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">
-			<div style="overflow: auto; height: 550px; ">
+			<div style="overflow: auto; height: auto; ">
 				<!--
 				<table class="table table-bordered table-condensed table-striped">	
 					<tfoot>
@@ -55,7 +60,7 @@
 							<th class="active">cont</th>
 							<th class=" col-md-1" scope="col">Foto</th>
 							<!--<th class="active">id</th>-->
-							<th class="active">Cliente</th>
+							<th class="active">Clientes</th>
 							<th class="active">Celular</th>
 							<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
 								<th class="active">Pet</th>
@@ -77,9 +82,9 @@
 							<th class="active">Motivo</th>
 							<th class="active">Cadastrado</th>
 							<th class="active">Login</th>
-							<!--<th class="active">Sexo</th>
-							<th class="active">Rel. Com.</th>
-							<th class="active">Rel. Pes.</th>-->
+							<th class="active">Ult.Pedido</th>
+							<th class="active">CashBack</th>
+							<th class="active">Val.Cash.</th>
 
 						</tr>
 					</thead>
@@ -134,6 +139,9 @@
 							<td><?php echo $row['Motivo'] ?></td>
 							<td><?php echo $row['DataCadastroCliente'] ?></td>
 							<td><?php echo $row['usuario'] ?></td>
+							<td><?php echo $row['UltimoPedido'] ?></td>
+							<td><?php echo $row['CashBackCliente'] ?></td>
+							<td><?php echo $row['ValidadeCashBack'] ?></td>
 						</tr>						
 						<?php
 							$count++;

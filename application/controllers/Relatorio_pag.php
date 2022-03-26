@@ -381,6 +381,10 @@ class Relatorio_pag extends CI_Controller {
             'Campo',
 			'DataInicio',
             'DataFim',
+			'DataInicio2',
+			'DataFim2',
+			'DataInicio3',
+			'DataFim3',
 			'Dia',
 			'Mesvenc',
 			'Ano',
@@ -389,6 +393,8 @@ class Relatorio_pag extends CI_Controller {
 			'Texto3',
 			'Texto4',
 			'Agrupar',
+			'Pedidos',
+			'Sexo',
         ), TRUE));
 
         $data['titulo'] = 'Clientes';
