@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <!--<link rel="icon" href="arquivos/imagens/empresas/profile-5.png">-->
-		<link rel="icon" href="<?php echo base_url() . 'arquivos/imagens/empresas/profile-5.png'; ?>">
+		<link rel="icon" href="<?php echo base_url() . 'arquivos/imagens/empresas/icone.jpg'; ?>">
 		
         <!-- <title>ROMATI - Agenda online de pacientes</title>-->
         <title>enkontraki</title>

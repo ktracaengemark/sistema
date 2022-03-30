@@ -15,25 +15,14 @@
 				<li class="nav-item">
 					<a class="nav-link" href="<?php echo base_url() . '../enkontraki/index.php';?>">Home</a>
 				</li>
-				<!--
-				<li class="nav-item">
-					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/#about">A Plataforma</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/#cta-1">Planos</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/#testimonial">Depoimentos</a>
-				</li>
-				-->
 				<li class="nav-item">
 					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/dicas.php">Dicas</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/contact.php">Fale Conosco</a>
-				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link " href="../../enkontraki/pesquisar.php" >Empresas</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/contact.php">Fale Conosco</a>
 				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
