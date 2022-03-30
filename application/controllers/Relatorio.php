@@ -9848,6 +9848,150 @@ class Relatorio extends CI_Controller {
 
     }
 
+	public function depoimento() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contatofornec com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'idApp_Depoimento',
+			'Arquivo_Depoimento',
+			'Texto_Depoimento',
+			'Ativo_Depoimento',
+
+        ), TRUE));
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+
+        $data['titulo'] = 'Depoimento';
+
+        #run form validation
+        if ($this->form_validation->run() !== TRUE) {
+			$data['bd']['idApp_Depoimento'] = $data['query']['idApp_Depoimento'];
+			$data['bd']['Arquivo_Depoimento'] = $data['query']['Arquivo_Depoimento'];
+			$data['bd']['Texto_Depoimento'] = $data['query']['Texto_Depoimento'];
+			$data['bd']['Ativo_Depoimento'] = $data['query']['Ativo_Depoimento'];
+
+            $data['report'] = $this->Relatorio_model->list_depoimento($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_depoimento', $data, TRUE);
+
+        }
+
+        $this->load->view('relatorio/tela_depoimento', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+	public function atuacao() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contatofornec com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'idApp_Atuacao',
+			'Arquivo_Atuacao',
+			'Texto_Atuacao',
+			'Ativo_Atuacao',
+
+        ), TRUE));
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+
+        $data['titulo'] = 'Atuacao';
+
+        #run form validation
+        if ($this->form_validation->run() !== TRUE) {
+			$data['bd']['idApp_Atuacao'] = $data['query']['idApp_Atuacao'];
+			$data['bd']['Arquivo_Atuacao'] = $data['query']['Arquivo_Atuacao'];
+			$data['bd']['Texto_Atuacao'] = $data['query']['Texto_Atuacao'];
+			$data['bd']['Ativo_Atuacao'] = $data['query']['Ativo_Atuacao'];
+
+            $data['report'] = $this->Relatorio_model->list_atuacao($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_atuacao', $data, TRUE);
+
+        }
+
+        $this->load->view('relatorio/tela_atuacao', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+	public function colaborador() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contatofornec com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'idApp_Colaborador',
+			'Arquivo_Colaborador',
+			'Texto_Colaborador',
+			'Ativo_Colaborador',
+
+        ), TRUE));
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+
+        $data['titulo'] = 'Colaborador';
+
+        #run form validation
+        if ($this->form_validation->run() !== TRUE) {
+			$data['bd']['idApp_Colaborador'] = $data['query']['idApp_Colaborador'];
+			$data['bd']['Arquivo_Colaborador'] = $data['query']['Arquivo_Colaborador'];
+			$data['bd']['Texto_Colaborador'] = $data['query']['Texto_Colaborador'];
+			$data['bd']['Ativo_Colaborador'] = $data['query']['Ativo_Colaborador'];
+
+            $data['report'] = $this->Relatorio_model->list_colaborador($data['bd'],TRUE);
+
+            /*
+              echo "<pre>";
+              print_r($data['report']);
+              echo "</pre>";
+              exit();
+              */
+
+            $data['list'] = $this->load->view('relatorio/list_colaborador', $data, TRUE);
+
+        }
+
+        $this->load->view('relatorio/tela_colaborador', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
 	public function slides() {
 
         if ($this->input->get('m') == 1)
@@ -9917,11 +10061,17 @@ class Relatorio extends CI_Controller {
 		$data['prod'] = $this->Relatorio_model->list1_produtos(TRUE);
 		$data['slides'] = $this->Relatorio_model->list2_slides(TRUE);
 		$data['doc'] = $this->Relatorio_model->list3_documentos(TRUE);
+		$data['colab'] = $this->Relatorio_model->list5_colaboradores(TRUE);
+		$data['depoim'] = $this->Relatorio_model->list6_depoimentos(TRUE);
+		$data['atuacao'] = $this->Relatorio_model->list7_atuacao(TRUE);
 		
 		$data['list1'] = $this->load->view('relatorio/list1_produtos', $data, TRUE);
 		$data['list2'] = $this->load->view('relatorio/list2_slides', $data, TRUE);		
 		$data['list3'] = $this->load->view('relatorio/list3_logo_nav', $data, TRUE);
-		$data['list4'] = $this->load->view('relatorio/list4_icone', $data, TRUE);		
+		$data['list4'] = $this->load->view('relatorio/list4_icone', $data, TRUE);
+		$data['list5'] = $this->load->view('relatorio/list5_colaboradores', $data, TRUE);
+		$data['list6'] = $this->load->view('relatorio/list6_depoimentos', $data, TRUE);
+		$data['list7'] = $this->load->view('relatorio/list7_atuacao', $data, TRUE);
 		
         $_SESSION['log']['idSis_Empresa'] = $data['resumo']['idSis_Empresa'] = $data['documentos']['idSis_Empresa'] = $data['query']['idSis_Empresa'];
 

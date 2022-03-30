@@ -681,7 +681,28 @@
 								<div class="row">
 									<div class="form-group col-md-12 text-left">
 										<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/slides" role="button"> 
-											<span class="glyphicon glyphicon-barcode"></span> Slides do Site
+											<span class="glyphicon glyphicon-barcode"></span> Slides
+										</a>
+									</div>	
+								</div>
+								<div class="row">
+									<div class="form-group col-md-12 text-left">
+										<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/atuacao" role="button"> 
+											<span class="glyphicon glyphicon-barcode"></span> Atuação
+										</a>
+									</div>	
+								</div>
+								<div class="row">
+									<div class="form-group col-md-12 text-left">
+										<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/colaborador" role="button"> 
+											<span class="glyphicon glyphicon-barcode"></span> Colaboradores
+										</a>
+									</div>	
+								</div>
+								<div class="row">
+									<div class="form-group col-md-12 text-left">
+										<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/depoimento" role="button"> 
+											<span class="glyphicon glyphicon-barcode"></span> Depoimentos
 										</a>
 									</div>	
 								</div>

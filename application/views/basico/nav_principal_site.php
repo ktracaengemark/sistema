@@ -13,7 +13,7 @@
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right navbar-fonte">
 				<li class="nav-item">
-					<a class="nav-link" href="<?php echo base_url() . '../enkontraki/contact.php#banner';?>">Home</a>
+					<a class="nav-link" href="<?php echo base_url() . '../enkontraki/index.php';?>">Home</a>
 				</li>
 				<!--
 				<li class="nav-item">
@@ -25,12 +25,12 @@
 				<li class="nav-item">
 					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/#testimonial">Depoimentos</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/#dicas">Dicas</a>
-				</li>
 				-->
 				<li class="nav-item">
-					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/contact.php#contact">Fale Conosco</a>
+					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/dicas.php">Dicas</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/contact.php">Fale Conosco</a>
 				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link " href="../../enkontraki/pesquisar.php" >Empresas</a>

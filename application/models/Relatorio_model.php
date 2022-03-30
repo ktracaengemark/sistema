@@ -6185,6 +6185,112 @@ exit();*/
 
     }
 
+	public function list_depoimento($data, $completo) {
+
+        $query = $this->db->query('
+            SELECT
+                idApp_Depoimento,
+				Nome_Depoimento,
+				Texto_Depoimento,
+				Arquivo_Depoimento,
+				Ativo_Depoimento
+            FROM
+                App_Depoimento
+            WHERE
+                idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
+			ORDER BY
+				idApp_Depoimento		
+        ');
+
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+
+            }
+
+            return $query;
+        }
+
+    }
+
+	public function list_atuacao($data, $completo) {
+
+        $query = $this->db->query('
+            SELECT
+                idApp_Atuacao,
+				Nome_Atuacao,
+				Texto_Atuacao,
+				Arquivo_Atuacao,
+				Ativo_Atuacao
+            FROM
+                App_Atuacao
+            WHERE
+                idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
+			ORDER BY
+				idApp_Atuacao		
+        ');
+		
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+
+            }
+
+            return $query;
+        }
+
+    }
+
+	public function list_colaborador($data, $completo) {
+
+        $query = $this->db->query('
+            SELECT
+                idApp_Colaborador,
+				Nome_Colaborador,
+				Texto_Colaborador,
+				Arquivo_Colaborador,
+				Ativo_Colaborador
+            FROM
+                App_Colaborador
+            WHERE
+                idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
+			ORDER BY
+				idApp_Colaborador		
+        ');
+
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+
+            }
+
+            return $query;
+        }
+
+    }
+
 	public function list_slides($data, $completo) {
 
         $query = $this->db->query('
@@ -6311,6 +6417,96 @@ exit();*/
 				TD.idSis_Empresa = ' . $_SESSION['Empresa']['idSis_Empresa'] . '
 			ORDER BY 
 				TD.idApp_Documentos ASC 
+		');
+
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+            if ($x === FALSE) {
+                return TRUE;
+            } else {
+                $query = $query->result_array();
+                return $query;
+            }
+        }
+    }
+
+    public function list5_colaboradores($x) {
+
+        $query = $this->db->query('
+			SELECT 
+				idApp_Colaborador,
+				Nome_Colaborador,
+				Texto_Colaborador,
+				Arquivo_Colaborador,
+				Ativo_Colaborador
+			FROM 
+				App_Colaborador
+			WHERE
+				idSis_Empresa = ' . $_SESSION['Empresa']['idSis_Empresa'] . ' AND
+				Ativo_Colaborador = "S"
+			ORDER BY 
+				idApp_Colaborador ASC 
+		');
+
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+            if ($x === FALSE) {
+                return TRUE;
+            } else {
+                $query = $query->result_array();
+                return $query;
+            }
+        }
+    }
+
+    public function list6_depoimentos($x) {
+
+        $query = $this->db->query('
+			SELECT 
+				idApp_Depoimento,
+				Nome_Depoimento,
+				Texto_Depoimento,
+				Arquivo_Depoimento,
+				Ativo_Depoimento
+			FROM 
+				App_Depoimento
+			WHERE
+				idSis_Empresa = ' . $_SESSION['Empresa']['idSis_Empresa'] . ' AND
+				Ativo_Depoimento = "S"
+			ORDER BY 
+				idApp_Depoimento ASC 
+		');
+
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+            if ($x === FALSE) {
+                return TRUE;
+            } else {
+                $query = $query->result_array();
+                return $query;
+            }
+        }
+    }
+
+    public function list7_atuacao($x) {
+
+        $query = $this->db->query('
+			SELECT 
+				idApp_Atuacao,
+				Nome_Atuacao,
+				Texto_Atuacao,
+				Arquivo_Atuacao,
+				Ativo_Atuacao
+			FROM 
+				App_Atuacao
+			WHERE
+				idSis_Empresa = ' . $_SESSION['Empresa']['idSis_Empresa'] . ' AND
+				Ativo_Atuacao = "S"
+			ORDER BY 
+				idApp_Atuacao ASC 
 		');
 
         if ($query->num_rows() === 0) {

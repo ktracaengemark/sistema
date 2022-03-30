@@ -516,11 +516,59 @@ class Basico {
 		return $data;
     }	
 
+    function renomeiadepoimento($data) {
+		$extensao	= explode('.', $data);
+		$extensao	= end($extensao);
+		$extensao	= '.' . $extensao;
+		$data = rand() . '_' . 'depoimento' . '_' . $_SESSION['Depoimento']['idApp_Depoimento'] . '_' . $_SESSION['Empresa']['idSis_Empresa'] . $extensao;
+		return $data;
+    }
+
+    function renomeiaatuacao($data) {
+		$extensao	= explode('.', $data);
+		$extensao	= end($extensao);
+		$extensao	= '.' . $extensao;
+		$data = rand() . '_' . 'atuacao' . '_' . $_SESSION['Atuacao']['idApp_Atuacao'] . '_' . $_SESSION['Empresa']['idSis_Empresa'] . $extensao;
+		return $data;
+    }
+
+    function renomeiacolaborador($data) {
+		$extensao	= explode('.', $data);
+		$extensao	= end($extensao);
+		$extensao	= '.' . $extensao;
+		$data = rand() . '_' . 'colaborador' . '_' . $_SESSION['Colaborador']['idApp_Colaborador'] . '_' . $_SESSION['Empresa']['idSis_Empresa'] . $extensao;
+		return $data;
+    }
+
     function renomeiaslides($data) {
 		$extensao	= explode('.', $data);
 		$extensao	= end($extensao);
 		$extensao	= '.' . $extensao;
 		$data = rand() . '_' . 'slides' . '_' . $_SESSION['Slides']['idApp_Slides'] . '_' . $_SESSION['Empresa']['idSis_Empresa'] . $extensao;
+		return $data;
+    }
+
+    function nomeia_depoimento($data) {
+		$extensao	= explode('.', $data);
+		$extensao	= end($extensao);
+		$extensao	= '.' . $extensao;
+		$data = rand() . '_' . 'depoimento' . '_' . $_SESSION['log']['idSis_Empresa'] . $extensao;
+		return $data;
+    }
+
+    function nomeia_atuacao($data) {
+		$extensao	= explode('.', $data);
+		$extensao	= end($extensao);
+		$extensao	= '.' . $extensao;
+		$data = rand() . '_' . 'atuacao' . '_' . $_SESSION['log']['idSis_Empresa'] . $extensao;
+		return $data;
+    }
+
+    function nomeia_colaborador($data) {
+		$extensao	= explode('.', $data);
+		$extensao	= end($extensao);
+		$extensao	= '.' . $extensao;
+		$data = rand() . '_' . 'colaborador' . '_' . $_SESSION['log']['idSis_Empresa'] . $extensao;
 		return $data;
     }
 

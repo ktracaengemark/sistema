@@ -3,7 +3,7 @@
 			if($slides){
 				foreach ($slides as $row){
 				?>		
-				<div class="col-lg-12 col-md-6 mb-4">
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-4">
 					<div class="card h-100">
 						<!--<img class="img-responsive" width='800' src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/miniatura/' . $row['Slide1'] . ''; ?>">-->
 						<!--<a href="produto.php?id=<?php echo $row['idApp_Slides'];?>"><img class="team-img" src="../'.$_SESSION['log']['Site'].'/<?php echo $_SESSION['Empresa']['idSis_Empresa']; ?>/documentos/miniatura/<?php echo $row['Slide1']; ?>" alt="" ></a>					 
