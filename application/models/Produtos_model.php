@@ -147,6 +147,21 @@ class Produtos_model extends CI_Model {
         }
     }
 
+    public function get_catprod($data) {
+		$query = $this->db->query('
+			SELECT
+				TP.*
+			FROM 
+				Tab_Catprod AS TP
+			WHERE 
+				idTab_Catprod = ' . $data . '
+		');
+        $query = $query->result_array();
+
+        //return $query;
+		return $query[0];
+		}
+
     public function get_produto($data) {
 		$query = $this->db->query('
 			SELECT
@@ -166,7 +181,9 @@ class Produtos_model extends CI_Model {
         $query = $this->db->query('
 			SELECT  
 				TPS.*,
+				TPS.Arquivo AS ArquivoDerivado,
 				TCP.*,
+				TCP.Arquivo AS ArquivoCatprod,
 				TP.idTab_Produto,
 				TP.Produtos,
 				TP.VendaSite AS VendaSite_Produto,
@@ -987,6 +1004,14 @@ class Produtos_model extends CI_Model {
                 return $query;
             }
         }
+    }
+	
+    public function update_catprod($data, $id) {
+
+        unset($data['idTab_Catprod']);
+        $query = $this->db->update('Tab_Catprod', $data, array('idTab_Catprod' => $id));
+        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
+
     }
 	
     public function update_produto($data, $id) {

@@ -695,7 +695,7 @@
 								<div class="row">
 									<div class="form-group col-md-12 text-left">
 										<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/colaborador" role="button"> 
-											<span class="glyphicon glyphicon-barcode"></span> Colaboradores
+											<span class="glyphicon glyphicon-barcode"></span> Equipe
 										</a>
 									</div>	
 								</div>

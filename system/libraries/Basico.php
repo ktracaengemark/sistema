@@ -480,6 +480,14 @@ class Basico {
 		return $data;
     }
 
+    function renomeiacatprod($data) {
+		$extensao	= explode('.', $data);
+		$extensao	= end($extensao);
+		$extensao	= '.' . $extensao;
+		$data = rand() . '_' . 'catprod' . '_' . $_SESSION['Catprod']['idTab_Catprod'] . '_' . $_SESSION['Empresa']['idSis_Empresa'] . $extensao;
+		return $data;
+    }	
+
     function renomeiaprodutos($data) {
 		$extensao	= explode('.', $data);
 		$extensao	= end($extensao);

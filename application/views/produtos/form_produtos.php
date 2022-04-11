@@ -172,7 +172,7 @@
 												<div class="row">
 													<div class="col-md-1 text-center" >
 														<a class="notclickable" href="<?php echo base_url() . 'produtos/alterarlogoderivado/' . $_SESSION['Produtos']['idTab_Produtos'] . ''; ?>">
-															<img alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Produtos']['Arquivo'] . ''; ?> "class="img-circle img-responsive" width='100'>
+															<img alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Produtos']['ArquivoDerivado'] . ''; ?> "class="img-circle img-responsive" width='100'>
 														</a>
 													</div>		
 													<div class="col-md-5">

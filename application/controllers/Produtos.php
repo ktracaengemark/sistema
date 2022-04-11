@@ -1397,6 +1397,167 @@ class Produtos extends CI_Controller {
 
     }
 	
+    public function alterarlogocatprod($id = FALSE) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['catprod'] = $this->input->post(array(
+			'idTab_Catprod',
+        ), TRUE);
+		
+        $data['file'] = $this->input->post(array(
+            'idTab_Catprod',
+			'idSis_Empresa',
+            'Arquivo',
+		), TRUE);
+
+        if ($id) {
+            $_SESSION['Catprod'] = $data['catprod'] = $this->Produtos_model->get_catprod($id, TRUE);
+        }
+		
+        if ($id)
+            $data['file']['idTab_Catprod'] = $id;
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+        if (isset($_FILES['Arquivo']) && $_FILES['Arquivo']['name']) {
+            
+			$data['file']['Arquivo'] = $this->basico->renomeiacatprod($_FILES['Arquivo']['name']);
+            $this->form_validation->set_rules('Arquivo', 'Arquivo', 'file_allowed_type[jpg, jpeg, gif, png]|file_size_max[1000]');
+        }
+        else {
+            $this->form_validation->set_rules('Arquivo', 'Arquivo', 'required');
+        }
+
+        $data['titulo'] = 'Alterar Foto';
+        $data['form_open_path'] = 'produtos/alterarlogocatprod';
+        $data['readonly'] = 'readonly';
+        $data['panel'] = 'primary';
+        $data['metodo'] = 2;
+
+        #run form validation
+        if ($this->form_validation->run() === FALSE) {
+            #load login view
+            $this->load->view('produtos/form_catprod', $data);
+        }
+        else {
+
+            $config['upload_path'] = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/';
+            $config['max_size'] = 1000;
+            $config['allowed_types'] = ['jpg','jpeg','pjpeg','png','x-png'];
+            $config['file_name'] = $data['file']['Arquivo'];
+
+            $this->load->library('upload', $config);
+            if (!$this->upload->do_upload('Arquivo')) {
+                $data['msg'] = $this->basico->msg($this->upload->display_errors(), 'erro', FALSE, FALSE, FALSE);
+                $this->load->view('produtos/form_catprod', $data);
+            }
+            else {
+			
+				$dir = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/';		
+				$foto = $data['file']['Arquivo'];
+				$diretorio = $dir.$foto;					
+				$dir2 = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/';
+
+				switch($_FILES['Arquivo']['type']):
+					case 'image/jpg';
+					case 'image/jpeg';
+					case 'image/pjpeg';
+				
+						list($largura, $altura, $tipo) = getimagesize($diretorio);
+						
+						$img = imagecreatefromjpeg($diretorio);
+
+						$thumb = imagecreatetruecolor(200, 200);
+						
+						imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
+						
+						imagejpeg($thumb, $dir2 . $foto);
+						imagedestroy($img);
+						imagedestroy($thumb);				      
+					
+					break;					
+
+					case 'image/png';
+					case 'image/x-png';
+
+						list($width, $height) = getimagesize($diretorio);
+						$newwidth = 200;
+						$newheight = 200;
+
+						$thumb = imagecreatetruecolor($newwidth, $newheight);
+						imagealphablending($thumb, false);
+						imagesavealpha($thumb, true);
+						$source = imagecreatefrompng($diretorio);
+						imagealphablending($source, true);
+						imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+						imagepng($thumb, $dir2 . $foto);
+						imagedestroy($thumb);
+						imagedestroy($source);						
+						
+					break;
+					
+				endswitch;			
+
+                $data['camposfile'] = array_keys($data['file']);
+				$data['file']['idSis_Empresa'] = $_SESSION['Empresa']['idSis_Empresa'];
+				$data['idSis_Arquivo'] = $this->Produtos_model->set_arquivo($data['file']);
+
+                if ($data['idSis_Arquivo'] === FALSE) {
+                    $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+                    $this->basico->erro($msg);
+                    $this->load->view('produtos/form_catprod', $data);
+                }
+				else {
+
+					$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['file'], $data['camposfile'], $data['idSis_Arquivo'], FALSE);
+					$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'idSis_Arquivo', 'CREATE', $data['auditoriaitem']);
+					
+					$data['catprod']['Arquivo'] = $data['file']['Arquivo'];
+					$data['anterior'] = $this->Produtos_model->get_catprod($data['catprod']['idTab_Catprod']);
+					$data['campos'] = array_keys($data['catprod']);
+
+					$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['catprod'], $data['campos'], $data['catprod']['idTab_Catprod'], TRUE);
+
+					if ($data['auditoriaitem'] && $this->Produtos_model->update_catprod($data['catprod'], $data['catprod']['idTab_Catprod']) === FALSE) {
+						$data['msg'] = '?m=2';
+						redirect(base_url() . 'produtos/alterarlogocatprod/' . $data['catprod']['idTab_Catprod'] . $data['msg']);
+						exit();
+					} else {
+
+						if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Catprod']['Arquivo'] . ''))
+							&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Catprod']['Arquivo'] . '')
+							!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/fotoproduto.jpg'))){
+							unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Catprod']['Arquivo'] . '');						
+						}
+						if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Catprod']['Arquivo'] . ''))
+							&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Catprod']['Arquivo'] . '')
+							!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/fotoproduto.jpg'))){
+							unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Catprod']['Arquivo'] . '');						
+						}						
+						
+						if ($data['auditoriaitem'] === FALSE) {
+							$data['msg'] = '';
+						} else {
+							$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Catprod', 'UPDATE', $data['auditoriaitem']);
+							$data['msg'] = '?m=1';
+						}
+
+						redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
+						exit();
+					}				
+				}
+            }
+        }
+
+        $this->load->view('basico/footer');
+    }
+	
     public function alterarlogo($id = FALSE) {
 
         if ($this->input->get('m') == 1)

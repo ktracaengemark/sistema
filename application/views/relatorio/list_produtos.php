@@ -15,6 +15,8 @@
 						<tr> 
 							<?php if($query['Agrupar'] != 4) { ?>
 								<!--<th class="active">Id.Imagem</th>-->
+								<th class="active" scope="col">Im.CT</th>
+								<th class="active">Id.CT</th>
 								<th class="active" scope="col">Im.PB</th>
 								<th class="active">Id.PB</th>
 								<th class="active" scope="col">Im.PD</th>
@@ -60,9 +62,16 @@
 						<?php
 						foreach ($report->result_array() as $row) {?>
 
-							<!--<tr class="clickable-row" data-href="<?php echo base_url() . 'produtos/alterarlogo/' . $row['idTab_Produto'] . ''; ?>">-->
+							<!--<tr class="clickable-row" data-href="<?php #echo base_url() . 'produtos/alterarlogo/' . $row['idTab_Produto'] . ''; ?>">-->
 							<tr>	
 								<?php if($query['Agrupar'] != 4) { ?>
+								
+									<td class="notclickable">
+										<a class="notclickable" href="<?php echo base_url() . 'produtos/alterarlogocatprod/' . $row['idTab_Catprod'] . ''; ?>">
+											<img  alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $row['ArquivoCatprod'] . ''; ?> "class="img-circle img-responsive" width='50'>
+										</a>
+									</td>
+									<td><?php echo $row['idTab_Catprod'] ?></td>
 									<td class="notclickable">
 										<a class="notclickable" href="<?php echo base_url() . 'produtos/alterarlogo/' . $row['idTab_Produto'] . ''; ?>">
 											<img  alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $row['ArquivoProduto'] . ''; ?> "class="img-circle img-responsive" width='50'>
