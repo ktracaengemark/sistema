@@ -116,7 +116,7 @@ class Consulta_model extends CI_Model {
 			WHERE 
 				Repeticao = ' . $data . '
 			ORDER BY
-				idApp_Consulta ASC
+				DataInicio ASC
 		');
 		
         $query = $query->result_array();
@@ -135,6 +135,24 @@ class Consulta_model extends CI_Model {
 				Repeticao = ' . $data . '
 			ORDER BY
 				DataInicio DESC
+			LIMIT 1
+		');
+		
+        $query = $query->result_array();
+
+        return $query[0];
+    }
+	
+    public function get_repeticao($data) {
+        $query = $this->db->query('
+			SELECT *
+			FROM 
+				App_Consulta AS C
+					LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = C.idSis_Empresa
+			WHERE 
+				C.Repeticao = ' . $data . '
+			ORDER BY
+				C.DataInicio DESC
 			LIMIT 1
 		');
 		

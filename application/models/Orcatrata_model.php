@@ -249,7 +249,7 @@ class Orcatrata_model extends CI_Model {
 			WHERE 
 				RepeticaoOrca = ' . $data . '
 			ORDER BY
-				idApp_OrcaTrata ASC
+				DataOrca ASC
 		');
         $query = $query->result_array();
 		

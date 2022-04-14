@@ -1054,7 +1054,7 @@ class Consulta extends CI_Controller {
 		}		
 		
         if ($repeticao_extra) {
-            $_SESSION['Consulta'] = $this->Consulta_model->get_consulta($repeticao_extra); //pego a consulta original dessa repetição
+            $_SESSION['Consulta'] = $this->Consulta_model->get_repeticao($repeticao_extra); //pego a consulta original dessa repetição
 			$_SESSION['Consulta']['DataTermino'] = $this->basico->mascara_data($_SESSION['Consulta']['DataTermino'], 'barras');
 			
 			$_SESSION['Repeticao_Cons'] = $this->Consulta_model->get_repeticao_cos($_SESSION['Consulta']['Repeticao']);			
@@ -1368,7 +1368,7 @@ class Consulta extends CI_Controller {
 
 				if($data['cadastrar']['Extra'] == 'S'){
 					
-					$data['consulta'] = $this->Consulta_model->get_consulta($data['query']['Repeticao']);
+					$data['consulta'] = $this->Consulta_model->get_repeticao($data['query']['Repeticao']);
 					$data['update']['cons_anters'] = $this->Consulta_model->get_consultas($data['query']['Repeticao']);
 					$cont_cons_anters = count($data['update']['cons_anters']);
 					
@@ -2910,12 +2910,15 @@ class Consulta extends CI_Controller {
         }
 
 		$data['count_zero'] = count($_SESSION['Consultas_zero']);//conta quantas Consultas tem esse idApp_OrcaTrata
-		$data['count_repet'] = count($_SESSION['Consultas_Repet']);//conta quantas Consultas tem essa repetição e "idApp_OrcaTrata = 0"
+		if(isset($_SESSION['Consultas_Repet'])){
+			$data['count_repet'] = count($_SESSION['Consultas_Repet']);//conta quantas Consultas tem essa repetição e "idApp_OrcaTrata = 0"	
+		}else{
+			$data['count_repet'] = 0;
+		}
 		
 		$data['repeticaocons'] = count($_SESSION['RepeticaoCons']);// conto quantas Consultas tem essa repetição
 		$data['repeticaoorca'] = count($_SESSION['RepeticaoOrca']);// conto quantas OS tem essa repetição
-		
-		
+
 		/////////////// pego as informçãoes das OS para colocar no visor das consultas///////////////////////
 		
 		if (isset($_SESSION['Repeticao_Cons']) && count($_SESSION['Repeticao_Cons']) > 0) {
@@ -3209,7 +3212,11 @@ class Consulta extends CI_Controller {
 
 				if($_SESSION['Consulta']['idApp_OrcaTrata'] == 0 || $_SESSION['Consulta']['idApp_OrcaTrata'] == ""){
 					
-					$data['consulta'] = $this->Consulta_model->get_consulta($_SESSION['Consulta']['Repeticao']); //pego a consulta original dessa repetição
+					//$data['consulta'] = $this->Consulta_model->get_repeticao($_SESSION['Consulta']['Repeticao']); //pego a consulta original dessa repetição
+					
+					if($data['repeticaoorca'] == 1){
+						$data['consulta']['idApp_OrcaTrata'] = $_SESSION['RepeticaoOrca'][0]['idApp_OrcaTrata'];
+					}
 					
 					//$data['consultas'] = $this->Consulta_model->get_consulta_posterior($data['query']['idApp_Consulta'], $_SESSION['Consulta']['Repeticao'], $data['alterar']['Quais'], $dataini_alt);// Pego "QUAIS" Consultas da repetição eu quero usar
 					$data['consultas'] = $this->Consulta_model->get_consultas($_SESSION['Consulta']['Repeticao']); //pego todas as consultas que pertencem a essa repetição
@@ -3533,7 +3540,7 @@ class Consulta extends CI_Controller {
 					
 					################################ Comparo a quantidade de OS ##################################################################################################	
 					############ antes eu comparava se as quantidades de connsultas e OS eram iguais "$data['repeticaocons'] == $data['repeticaoorca']". Agora verifico se a quandidade de OS é maior que 1 #########################
-					if($data['repeticaoorca'] > 1){
+					if($data['repeticaocons'] == $data['repeticaoorca']){
 						
 						$data['orca']['DataOrca']			= $dataini_alt;
 						$data['orca']['DataVencimentoOrca']	= $dataini_alt;
@@ -4661,7 +4668,7 @@ class Consulta extends CI_Controller {
 		}
 		
         if ($repeticao_extra) {
-            $_SESSION['Consulta'] = $this->Consulta_model->get_consulta($repeticao_extra); //pego a consulta original dessa repetição
+            $_SESSION['Consulta'] = $this->Consulta_model->get_repeticao($repeticao_extra); //pego a consulta original dessa repetição
 			$_SESSION['Consulta']['DataTermino'] = $this->basico->mascara_data($_SESSION['Consulta']['DataTermino'], 'barras');
 		}
 		
@@ -5182,8 +5189,29 @@ class Consulta extends CI_Controller {
 
             $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], NULL, $data['campos'], $data['anterior']['idApp_Consulta'], FALSE, TRUE);
             $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'DELETE', $data['auditoriaitem']);
-            $this->Consulta_model->delete_consulta($id, $repeticao, $quais, $dataini);	
-            $data['msg'] = '?m=1';
+            $data['delete']['consulta'] = $this->Consulta_model->delete_consulta($id, $repeticao, $quais, $dataini);	
+			
+			$data['cons_datatermino'] = $this->Consulta_model->get_consulta_datatermino($repeticao);
+			if(isset($data['cons_datatermino'])){
+				$data['data_termino'] = $data['cons_datatermino']['DataInicio'];
+			}else{
+				$data['data_termino'] = "0000-00-00";
+			}
+			$data['update']['cons_posts'] = $this->Consulta_model->get_consultas($repeticao);
+			$cont_cons_posts = count($data['update']['cons_posts']);
+			
+			if(isset($cont_cons_posts) && $cont_cons_posts > 0){
+				
+				for($j=0;$j<$cont_cons_posts;$j++) {
+					$k = (1 + $j);
+					$data['update']['cons_posts'][$j]['DataTermino'] = $data['data_termino'];
+					$data['update']['cons_posts'][$j]['Recorrencias'] = $cont_cons_posts;
+					$data['update']['cons_posts'][$j]['Recorrencia'] = $k . "/" . $cont_cons_posts;
+					$data['update']['cons_posts']['bd'][$j] = $this->Consulta_model->update_consulta($data['update']['cons_posts'][$j], $data['update']['cons_posts'][$j]['idApp_Consulta']);
+				}
+			}            
+			
+			$data['msg'] = '?m=1';
 
             redirect(base_url() . 'agenda' . $data['msg']);
             exit();
