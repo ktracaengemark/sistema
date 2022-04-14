@@ -653,6 +653,7 @@ class Documentos extends CI_Controller {
 			'Top2',
 			'Texto_Top1',
 			'Texto_Top2',
+			'Video_Empresa',
         ), TRUE);
 				
 

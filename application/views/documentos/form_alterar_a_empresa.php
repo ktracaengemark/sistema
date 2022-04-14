@@ -30,6 +30,20 @@
 							<div class="col-md-6">
 								<label for="Texto_Top2">Texto Tópico2</label><br>
 								<textarea type="text" class="form-control" maxlength="100" name="Texto_Top2" value="<?php echo $empresa['Texto_Top2'];?>"><?php echo $empresa['Texto_Top2'];?></textarea>
+							</div>
+							<div class="col-md-6">
+								<label for="Video_Empresa">Link do Video</label><br>
+								<input type="text" class="form-control" maxlength="100" name="Video_Empresa" value="<?php echo $empresa['Video_Empresa'] ?>">
+							</div>
+							<div class="col-md-6">
+								<label>Video</label><br>
+								<?php if(isset($empresa['Video_Empresa']) && $empresa['Video_Empresa'] != "") { ?>
+									<figure >
+										<div class="boxVideo">
+											<iframe  class="img-responsive thumbnail" src="https://www.youtube.com/embed/<?php echo $empresa['Video_Empresa'];?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+										</div>
+									</figure>
+								<?php } ?>
 							</div>							
 						</div>
 					</div>	
