@@ -28,51 +28,35 @@
 	
 	if($resultInvert == 0){
 		if($resultDias == 0){
-			$corBotao	= 'warning';
+			$corBotao	= 'success';
 			$texto = 'Sua Fatura vence hoje';
+			$imagem = 'Alerta.png';
 			$exibirPost = 1;
 			
 		}elseif($resultDias == 1 || $resultDias == 2){
 			$corBotao	= 'success';
 			$texto = 'Sua Fatura vence em ';
+			$imagem = 'aprovado.png';
 			$exibirPost = 1;
 		}else{
 			$corBotao	= 'default';
 			$texto = 'Sua Fatura vence em ';
+			$imagem = 'aprovado.png';
 			$exibirPost = 0;
 		}
 	}else{
-		$corBotao	= 'danger';
+		$corBotao	= 'success';
 		$texto = 'Fatura atrasada a';
+		$imagem = 'cancelado.png';
 		$exibirPost = 1;
 	}
-	/*
-	echo'<br>';
-	echo'<pre>';
-	print_r($dateNow);
-	echo'<br>';
-	print_r($dateStart);
-	echo'<br>';
-	print_r('status = '.$resultInvert);
-	echo'<br>';
-	print_r($resultDias);
-	echo'<br>';
-	print_r($corBotao);
-	echo'<br>';
-	print_r($exibirPost);
-	echo'<br>';
-	echo'</pre>';
-	echo base_url();
-	//exit();	
-	*/
 ?>
 	<input type="hidden" id="id_empresa" value="<?php echo $_SESSION['Empresa']['idSis_Empresa'];?>">
 	<input type="hidden" id="intervalo" value="<?php echo $intervalo;?>">
 	<input type="hidden" id="corBotao" value="<?php echo $corBotao;?>">
 	<input type="hidden" id="texto" value="<?php echo $texto;?>">
+	<input type="hidden" id="imagem" value="<?php echo $imagem;?>">
 	<input type="hidden" id="exibirPost" value="<?php echo $exibirPost;?>">
-	
-	<!--<img src="arquivos/imagens/popup.jpg" width="200" height="200" alt="" border="0" style="margin-top: 10px;"/>\-->
 	
 	<script type="text/javascript">
 		Shadowbox.init({
@@ -81,44 +65,42 @@
 		window.onload = function() {
 			var id_empresa 	= $('#id_empresa').val();
 			var intervalo 	= $('#intervalo').val();
-			var corBotao 		= $('#corBotao').val();
+			var corBotao 	= $('#corBotao').val();
 			var texto 		= $('#texto').val();
+			var imagem 		= $('#imagem').val();
 			var exibirPost 	= $('#exibirPost').val();
 			if(intervalo == 0){
 				var tempo = '';
 			}else{
 				var tempo = intervalo+' dia(s)';
 			}
-				
-			//console.log(id_empresa);
-			//console.log(intervalo);
-			//console.log(exibirPost);
-			//console.log(corBotao);
-			//console.log(tempo);
-			
+
 			// Abre uma mensagem, quando essa janela é selecionada
 			if(exibirPost == 1 && id_empresa != 5 && id_empresa != 1){
 				Shadowbox.open({
-					//content:    '<div align="center"><a onclick="Shadowbox.close()" target="_blank" href="../../enkontraki/login_cliente.php?id_empresa="><img src="arquivos/imagens/popup.jpg" width="250" height="220" alt="" border="0" style="margin-top: 30px;"/></a></div>',
-					content:    '<div align="center">\
-									<div class="form-group col-md-12 text-center" style="margin-top: 100px;">\
-										<span class="glyphicon glyphicon-alert"></span> '+texto+' '+tempo+'.<br>Pagar agora?\
-									</div>\
-									<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">\
-										<a type="button" class="btn btn-md btn-'+corBotao+' btn-block"  href="../../enkontraki/login_cliente.php?id_empresa='+id_empresa+'" target="_blank"  role="button" onclick="Shadowbox.close()">\
-											<span class="glyphicon glyphicon-usd"></span> Sim\
-										</a>\
-									</div>\
-									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">\
-										<button type="button" class="btn btn-warning btn-block" onclick="Shadowbox.close()">\
-											<span class="glyphicon glyphicon-remove"></span> N\u00e3o\
-										</button>\
-									</div>\
-								</div>',
+				content: '\
+							<div style="text-align: center;">\
+								<img src="arquivos/imagens/'+imagem+'" width="100" height="100" alt="" border="0" style="margin-top: 10px; margin-bottom: -100px;"/>\
+								<div class="form-group col-md-12 text-center" style="margin-top: 100px;">\
+									<h3> '+texto+' '+tempo+'.</h3>\
+									<h4>Deseja Pagar agora?</h4>\
+								</div>\
+								<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">\
+									<a type="button" class="btn btn-md btn-'+corBotao+' btn-block"  href="../../enkontraki/login_cliente.php?id_empresa='+id_empresa+'" target="_blank"  role="button" onclick="Shadowbox.close()">\
+										<span class="glyphicon glyphicon-usd"></span> Sim\
+									</a>\
+								</div>\
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">\
+									<button type="button" class="btn btn-warning btn-block" onclick="Shadowbox.close()">\
+										<span class="glyphicon glyphicon-remove"></span> N\u00e3o\
+									</button>\
+								</div>\
+							</div>\
+						',
 					player:     "html",
 					//title:      "hjhjhjh",
-					height:     350,
-					width:      350
+					height:     500,
+					width:      500
 				});
 			}
 		};

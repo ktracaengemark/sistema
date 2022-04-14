@@ -2502,7 +2502,7 @@
 												<h4 class="mb-3"><b>Despesa</b></h4>
 												<div class="row">	
 													
-													<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) || ($_SESSION['log']['idSis_Empresa'] == 5))  { ?>
+													<?php if($this->Basico_model->get_dt_validade()) { ?>
 													
 														<?php if ($metodo > 1) { ?>
 														<!--<input type="hidden" name="idApp_Procedimento" value="<?php echo $procedimento['idApp_Procedimento']; ?>">

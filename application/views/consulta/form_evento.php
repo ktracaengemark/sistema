@@ -295,7 +295,7 @@
 										<?php } ?>
 										<!--<input type="hidden" name="idApp_Agenda" value="<?php echo $_SESSION['log']['Agenda']; ?>">-->
 										<input type="hidden" name="Evento" value="1">
-										<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) || ($_SESSION['log']['idSis_Empresa'] == 5))  { ?>	
+										<?php if($this->Basico_model->get_dt_validade()) { ?>
 											<?php if ($metodo == 2) { ?>
 												<div class="col-md-12">
 													<div class="col-md-12 btn-block">

@@ -2760,7 +2760,7 @@
 												<input type="hidden" name="Hidden_idApp_Cliente" id="Hidden_idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>" />
 												<h4 class="mb-3"><b>Pedido</b></h4>
 												<div class="row">	
-													<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) || ($_SESSION['log']['idSis_Empresa'] == 5))  { ?>
+													<?php if($this->Basico_model->get_dt_validade()) { ?>
 														<?php if ($metodo > 1) { ?>
 														<!--<input type="hidden" name="idApp_Procedimento" value="<?php echo $procedimento['idApp_Procedimento']; ?>">
 														<input type="hidden" name="idApp_ParcelasRec" value="<?php echo $parcelasrec['idApp_ParcelasRec']; ?>">-->

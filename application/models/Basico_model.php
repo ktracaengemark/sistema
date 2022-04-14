@@ -119,6 +119,33 @@ class Basico_model extends CI_Model {
             $this->db->insert_batch('Sis_AuditoriaItemEmpresaMatriz', $data['auditoriaitem']);
         }
     }
+
+    public function get_dt_validade() {
+
+        if (isset($_SESSION['log']['idSis_Empresa'])) {
+			
+			if ($_SESSION['log']['idSis_Empresa'] !=5) {
+				
+				if (!isset($_SESSION['log']['DataDeValidade'])) {
+					return FALSE;
+				} else {
+					
+					$dt_val_5 	= date('Y-m-d', strtotime('+ 5 day',strtotime($_SESSION['log']['DataDeValidade'])));
+					$dt_hoje 	= date('Y-m-d', time());
+
+					if(strtotime($dt_val_5) >= strtotime($dt_hoje)){
+						return TRUE;
+					}else{
+						return FALSE;
+					}
+				}
+			} else {
+				return TRUE;
+			}
+        } else {
+            return FALSE;
+        }
+    }
 	
     public function get_municipio($data) {
 
@@ -4018,5 +4045,5 @@ if (isset($data) && $data) {
 
         return $array;
     }
-		
+	
 }

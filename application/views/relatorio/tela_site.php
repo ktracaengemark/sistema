@@ -59,7 +59,23 @@
 			<a href="<?php echo base_url() . 'documentos/alterar_a_empresa/' . $query['idSis_Empresa'] . ''; ?>">
 				<h3>"<?php if (isset($query['Texto_Top2'])) echo $query['Texto_Top2']; ?>"</h3>
 			</a>
-		</div>	
+		</div>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<h2 class="ser-title">Video</h2>
+			<a href="<?php echo base_url() . 'documentos/alterar_a_empresa/' . $query['idSis_Empresa'] . ''; ?>">
+				<h3>"<?php if (isset($query['Video_Empresa'])) echo $query['Video_Empresa']; ?>"</h3>
+			</a>
+			
+		</div>
+		<?php if (isset($query['Video_Empresa']) && $query['Video_Empresa'] != "") { ?>
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<figure >
+					<div class="boxVideo">
+						<iframe class="img-responsive thumbnail" src="https://www.youtube.com/embed/<?php echo $query['Video_Empresa']; ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					</div>
+				</figure>
+			</div>
+		<?php } ?>	
 		<hr class="botm-line">
 		<div class="col-md-12">
 			<h2 class="ser-title">Atuacao! (300 x 300)px</h2>

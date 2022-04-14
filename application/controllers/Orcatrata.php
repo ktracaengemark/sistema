@@ -4003,7 +4003,7 @@ class Orcatrata extends CI_Controller {
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
         //comentado fim) mas por enquanto, se está funcionando, vou deixar assim.
 
-        ($_SESSION['Usuario']['Bx_Pag'] == "S") ? $data['div']['Prof_comissao'] = '' : $data['div']['Prof_comissao'] = 'style="display: none;"';		
+        (isset($_SESSION['Usuario']['Bx_Pag']) && $_SESSION['Usuario']['Bx_Pag'] == "S") ? $data['div']['Prof_comissao'] = '' : $data['div']['Prof_comissao'] = 'style="display: none;"';		
 		
         (!$this->input->post('SCount')) ? $data['count']['SCount'] = 0 : $data['count']['SCount'] = $this->input->post('SCount');
         (!$this->input->post('PCount')) ? $data['count']['PCount'] = 0 : $data['count']['PCount'] = $this->input->post('PCount');
@@ -8007,7 +8007,7 @@ class Orcatrata extends CI_Controller {
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
         //comentado fim) mas por enquanto, se está funcionando, vou deixar assim.
 
-        ($_SESSION['Usuario']['Bx_Pag'] == "S") ? $data['div']['Prof_comissao'] = '' : $data['div']['Prof_comissao'] = 'style="display: none;"';		
+        (isset($_SESSION['Usuario']['Bx_Pag']) && $_SESSION['Usuario']['Bx_Pag'] == "S") ? $data['div']['Prof_comissao'] = '' : $data['div']['Prof_comissao'] = 'style="display: none;"';		
 		
         (!$this->input->post('SCount')) ? $data['count']['SCount'] = 0 : $data['count']['SCount'] = $this->input->post('SCount');
         (!$this->input->post('PCount')) ? $data['count']['PCount'] = 0 : $data['count']['PCount'] = $this->input->post('PCount');
@@ -9962,7 +9962,7 @@ class Orcatrata extends CI_Controller {
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
         //comentado fim) mas por enquanto, se está funcionando, vou deixar assim.
 
-        ($_SESSION['Usuario']['Bx_Pag'] == "S") ? $data['div']['Prof_comissao'] = '' : $data['div']['Prof_comissao'] = 'style="display: none;"';		
+        (isset($_SESSION['Usuario']['Bx_Pag']) && $_SESSION['Usuario']['Bx_Pag'] == "S") ? $data['div']['Prof_comissao'] = '' : $data['div']['Prof_comissao'] = 'style="display: none;"';		
 		
         (!$this->input->post('SCount')) ? $data['count']['SCount'] = 0 : $data['count']['SCount'] = $this->input->post('SCount');
         (!$this->input->post('PCount')) ? $data['count']['PCount'] = 0 : $data['count']['PCount'] = $this->input->post('PCount');
@@ -12079,7 +12079,7 @@ class Orcatrata extends CI_Controller {
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
         //comentado fim) mas por enquanto, se está funcionando, vou deixar assim.
 
-        ($_SESSION['Usuario']['Bx_Pag'] == "S") ? $data['div']['Prof_comissao'] = '' : $data['div']['Prof_comissao'] = 'style="display: none;"';		
+        (isset($_SESSION['Usuario']['Bx_Pag']) && $_SESSION['Usuario']['Bx_Pag'] == "S") ? $data['div']['Prof_comissao'] = '' : $data['div']['Prof_comissao'] = 'style="display: none;"';		
 		
         (!$this->input->post('SCount')) ? $data['count']['SCount'] = 0 : $data['count']['SCount'] = $this->input->post('SCount');
         (!$this->input->post('PCount')) ? $data['count']['PCount'] = 0 : $data['count']['PCount'] = $this->input->post('PCount');
@@ -13538,7 +13538,7 @@ class Orcatrata extends CI_Controller {
         //Dá pra melhorar/encurtar esse trecho (que vai daqui até onde estiver
         //comentado fim) mas por enquanto, se está funcionando, vou deixar assim.
 
-        ($_SESSION['Usuario']['Bx_Pag'] == "S") ? $data['div']['Prof_comissao'] = '' : $data['div']['Prof_comissao'] = 'style="display: none;"';		
+        (isset($_SESSION['Usuario']['Bx_Pag']) && $_SESSION['Usuario']['Bx_Pag'] == "S") ? $data['div']['Prof_comissao'] = '' : $data['div']['Prof_comissao'] = 'style="display: none;"';		
 		
         (!$this->input->post('SCount')) ? $data['count']['SCount'] = 0 : $data['count']['SCount'] = $this->input->post('SCount');
         (!$this->input->post('PCount')) ? $data['count']['PCount'] = 0 : $data['count']['PCount'] = $this->input->post('PCount');

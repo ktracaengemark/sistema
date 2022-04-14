@@ -855,7 +855,7 @@
 														<input type="hidden" name="Evento" value="1">
 														-->
 														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-															<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) || ($_SESSION['log']['idSis_Empresa'] == 5))  { ?>
+															<?php if($this->Basico_model->get_dt_validade()) { ?>
 																<?php if ($metodo == 2) { ?>
 																	<br>
 																	<button  type="button" class="btn btn-md btn-primary btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-salvar-modal-sm">
