@@ -1871,6 +1871,8 @@ class Login extends CI_Controller {
 
     public function recuperar() {
 
+        $this->load->view('basico/logologin');
+
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
@@ -1968,6 +1970,7 @@ class Login extends CI_Controller {
                 redirect(base_url() . 'login/recuperar/' . $data['msg']);
             }
         }
+        $this->load->view('basico/footer');
     }
 
     public function trocar_senha($codigo = NULL) {

@@ -66,7 +66,7 @@
 								</button>	
 							</div>
 							<div class=" col-md-12 col-sm-12 col-xs-12 center">	
-								<p><a href="<?php echo base_url(); ?>login/recuperar/?usuario=<?php echo set_value('CelularUsuario'); ?>">Esqueci usuário/senha!</a></p>
+								<p><a href="<?php echo base_url(); ?>login/recuperar">Esqueci usuário/senha!</a></p>
 							</div>
 						</div>
 					</div>
