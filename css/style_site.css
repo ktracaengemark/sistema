@@ -8,7 +8,7 @@ body {
 }
 */
 body {
-	background-color: #003761;
+	background-color: #BC0823;/*#003761*/
 }
 ol, ul {
 	list-style: none;
@@ -212,7 +212,7 @@ banner
 }
 
 .navbar-menu{
-    background-color: #003761;
+    background-color: #BC0823;
     color: #fff;
     font-size: 15px;
 }
@@ -220,16 +220,26 @@ banner
 .navbar-fonte{
 		margin-right: 15px;
 		margin-left: 5px;
+		font-size: 20px;
 }
 @media (min-width: 768px) and (max-width: 991px){
 	.navbar-fonte{
-		font-size: 14px;
+		font-size: 16px;
 	}
 }
 @media (min-width: 992px) and (max-width: 1054px){
 	.navbar-fonte{
-		font-size: 15px;
+		font-size: 18px;
 	}
+}
+
+#navbar a{
+	color: #fff;
+}
+
+#navbar  a:hover, a:focus, a:active{
+    outline: none;
+	color: #D7C6FF;
 }
 
 .top-nav-collapse {
@@ -279,14 +289,14 @@ banner
 
 #login{
 	/*background: url('../img/bg-banner.jpg') no-repeat fixed;*/
-	background-color: #003761;
+	background-color: #BC0823;
 	background-size: cover;
 	min-height: 0px;
 	position: relative;
 }
 
 #logologin{
-	background-color: #003761;
+	background-color: #BC0823;
 	background-size: cover;
 	min-height: 0px;
 	position: relative;
@@ -297,7 +307,7 @@ banner
 }
 
 #baselogin{
-	background-color: #003761;
+	background-color: #BC0823;
 	background-size: cover;
 	min-height: 0px;
 	position: relative;
@@ -305,7 +315,7 @@ banner
 
 #banner{
 	/*background: url('../img/bg-banner.jpg') no-repeat fixed;*/
-	background-color: #003761;
+	background-color: #BC0823;
 	background-size: cover;
 	min-height: 0px;
 	position: relative;
@@ -313,7 +323,7 @@ banner
 
 .bg-color{
 	/*background-color: transparent;*/
-	background-color: #003761;
+	background-color: #BC0823;
 	min-height: 150px;/*esta linha comanda o tamanho do bg, era 650px*/
 }
 .banner-info{
