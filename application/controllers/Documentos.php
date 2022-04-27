@@ -663,7 +663,7 @@ class Documentos extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-		$this->form_validation->set_rules('AEmpresa', 'A Empresa', 'required|trim');
+		$this->form_validation->set_rules('AEmpresa', 'A Empresa', 'trim');
 
         $data['titulo'] = 'A Empresa';
         $data['form_open_path'] = 'documentos/alterar_a_empresa';
