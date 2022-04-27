@@ -965,7 +965,8 @@ class Procedimento extends CI_Controller {
 				
 				unset($_SESSION['Orcatrata'], $_SESSION['Procedtarefa']);
                 //redirect(base_url() . 'procedimento/listar_Sac/' . $_SESSION['Cliente']['idApp_Cliente'] . $data['msg']);
-                redirect(base_url() . 'Procedimento/tela_Sac/' . $data['orcatrata']['idApp_Procedimento'] . $data['msg']);
+                //redirect(base_url() . 'Procedimento/tela_Sac/' . $data['orcatrata']['idApp_Procedimento'] . $data['msg']);
+                redirect(base_url() . 'relatorio/proc_Sac/' . $data['msg']);
 
 				exit();
             }
