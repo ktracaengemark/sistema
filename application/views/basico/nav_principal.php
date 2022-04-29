@@ -109,6 +109,19 @@
 						</ul>
 					</div>
 				</li>
+				<li class="botoesnav">
+					<?php 
+						if($_SESSION['log']['idSis_Empresa'] == "5"){
+							$usuario = 'associado';
+						}else{
+							
+							$usuario = 'usuario2';
+						}
+					?>				
+					<a href="<?php echo base_url() ?><?php echo $usuario; ?>/prontuario/<?php echo $_SESSION['log']['idSis_Usuario']; ?>" > 
+						<img class="img-circle img-responsive" width='30' height='30' style="margin-top:-15px; margin-bottom:-10px" alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Usuario']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Usuario']['Arquivo'] . ''; ?>">
+					</a>
+				</li>					
 			</ul>
 		</div>
 	</div>
