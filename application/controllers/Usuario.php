@@ -1190,6 +1190,7 @@ class Usuario extends CI_Controller {
 			'Permissao_Orcam',
 			'Permissao_Agend',
 			'Permissao_Comissao',
+			'Horario_Atend',
         ), TRUE);
 
 		(!$data['query']['Rel_Com']) ? $data['query']['Rel_Com'] = 'N' : FALSE;
@@ -1220,6 +1221,7 @@ class Usuario extends CI_Controller {
         $data['select']['Bx_Pag'] = $this->Basico_model->select_status_sn();
         $data['select']['Bx_Prd'] = $this->Basico_model->select_status_sn();
         $data['select']['Bx_Prc'] = $this->Basico_model->select_status_sn();
+        $data['select']['Horario_Atend'] = $this->Basico_model->select_status_sn();
 		$data['select']['Permissao_Orcam'] = array (
             '1' => '1-Retrito',
             '2' => '2-Irrestrito',

@@ -2557,13 +2557,17 @@ class Empresa extends CI_Controller {
         $j = 1;
         for ($i = 1; $i <= $data['count']['PRCount']; $i++) {
 
-            if ($this->input->post('Aberto' . $i) || $this->input->post('Hora_Abre' . $i) || $this->input->post('Hora_Fecha' . $i)) {
+            if ($this->input->post('Aberto' . $i) || $this->input->post('Hora_Abre' . $i) || $this->input->post('Hora_Fecha' . $i) || 
+				$this->input->post('Aberto_Atend' . $i) || $this->input->post('Hora_Abre_Atend' . $i) || $this->input->post('Hora_Fecha_Atend' . $i)) {
                 $data['atendimento'][$j]['idApp_Atendimento'] = $this->input->post('idApp_Atendimento' . $i);
                 $data['atendimento'][$j]['id_Dia'] = $this->input->post('id_Dia' . $i);
                 $data['atendimento'][$j]['Dia_Semana'] = $this->input->post('Dia_Semana' . $i);
                 $data['atendimento'][$j]['Aberto'] = $this->input->post('Aberto' . $i);
                 $data['atendimento'][$j]['Hora_Abre'] = $this->input->post('Hora_Abre' . $i);
                 $data['atendimento'][$j]['Hora_Fecha'] = $this->input->post('Hora_Fecha' . $i);
+                $data['atendimento'][$j]['Aberto_Atend'] = $this->input->post('Aberto_Atend' . $i);
+                $data['atendimento'][$j]['Hora_Abre_Atend'] = $this->input->post('Hora_Abre_Atend' . $i);
+                $data['atendimento'][$j]['Hora_Fecha_Atend'] = $this->input->post('Hora_Fecha_Atend' . $i);
 				$j++;
             }
         }
@@ -2602,7 +2606,8 @@ class Empresa extends CI_Controller {
         //$this->form_validation->set_rules('Hora_Fecha', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['atendimento']['Hora_Abre'] . ']');
 
 
-        $data['select']['Aberto'] = $this->Basico_model->select_status_sn();		
+        $data['select']['Aberto'] = $this->Basico_model->select_status_sn();
+        $data['select']['Aberto_Atend'] = $this->Basico_model->select_status_sn();		
 		
         $data['titulo'] = 'Atendimento';
         $data['form_open_path'] = 'empresa/atendimento';

@@ -466,7 +466,10 @@ class Loginempresa extends CI_Controller {
 							'Dia_Semana' => $data['atendimento'][$j]['Dia_Semana'],
 							'Aberto' => "S",
 							'Hora_Abre' => "00:00:00",
-							'Hora_Fecha' => "23:59:59"
+							'Hora_Fecha' => "23:59:59",
+							'Aberto_Atend' => "S",
+							'Hora_Abre_Atend' => "00:00:00",
+							'Hora_Fecha_Atend' => "23:59:59"
 						);
 						$data['campos'] = array_keys($data['atendimento'][$j]);
 						$data['idApp_Atendimento'] = $this->Loginempresa_model->set_atendimento($data['atendimento'][$j]);
@@ -1048,7 +1051,10 @@ class Loginempresa extends CI_Controller {
 						'Dia_Semana' => $data['atendimento'][$j]['Dia_Semana'],
 						'Aberto' => "S",
 						'Hora_Abre' => "00:00:00",
-						'Hora_Fecha' => "23:59:59"
+						'Hora_Fecha' => "23:59:59",
+						'Aberto_Atend' => "S",
+						'Hora_Abre_Atend' => "00:00:00",
+						'Hora_Fecha_Atend' => "23:59:59"
 					);
 					$data['campos'] = array_keys($data['atendimento'][$j]);
 					$data['idApp_Atendimento'] = $this->Loginempresa_model->set_atendimento($data['atendimento'][$j]);

@@ -167,6 +167,41 @@ class Empresa_model extends CI_Model {
         return $query;
     }
 
+    public function get_horario_atend($data) {
+
+		$dia_da_semana = date('N');
+		$horario = date('H:i:s');
+
+		$query = $this->db->query('
+            SELECT *
+            FROM
+				App_Atendimento
+            WHERE
+				idSis_Empresa = ' . $data . ' AND
+				id_Dia = ' . $dia_da_semana . ' AND
+				Aberto_Atend = "S"
+			LIMIT 1
+		');
+		/*
+        $query = $query->result_array();
+          
+        return $query;
+		*/
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			foreach ($query->result() as $row) {
+				$hora_abre 	= $row->Hora_Abre_Atend;
+				$hora_fecha	= $row->Hora_Fecha_Atend;
+				if($horario >= $hora_abre && $horario <= $hora_fecha){
+					return TRUE;
+				}else{
+					return FALSE;
+				}
+			}
+        }		
+    }
+
     public function update_empresa($data, $id) {
 		
 		unset($data['Id']);

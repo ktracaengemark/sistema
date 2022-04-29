@@ -25,12 +25,12 @@
 					<a class="nav-link" href="<?php echo base_url() ?>../enkontraki/contact.php">Fale Conosco</a>
 				</li>
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Login <span class="caret"></span>
+					<a style="font-size:20px;" class="btn btn-danger  nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Sou Cliente <span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="dropdown01">
 						<li>
-							<a class="dropdown-item" style="color:#000000;" href="<?php echo base_url() ?>login/index2">Painel de Controle do Cliente</a>
+							<a class="dropdown-item" style="color:#000000;" href="<?php echo base_url() ?>login/index2">Painel de Controle</a>
 						</li>
 					</ul>
 				</li>
