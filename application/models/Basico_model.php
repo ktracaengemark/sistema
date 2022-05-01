@@ -130,10 +130,10 @@ class Basico_model extends CI_Model {
 					return FALSE;
 				} else {
 					
-					$dt_val_5 	= date('Y-m-d', strtotime('+ 5 day',strtotime($_SESSION['log']['DataDeValidade'])));
+					$dt_val_extra 	= date('Y-m-d', strtotime('+ 7 day',strtotime($_SESSION['log']['DataDeValidade'])));
 					$dt_hoje 	= date('Y-m-d', time());
 
-					if(strtotime($dt_val_5) >= strtotime($dt_hoje)){
+					if(strtotime($dt_val_extra) >= strtotime($dt_hoje)){
 						return TRUE;
 					}else{
 						return FALSE;

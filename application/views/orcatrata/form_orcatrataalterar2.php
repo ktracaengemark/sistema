@@ -1,4 +1,3 @@
-<?php if (isset($msg)) echo $msg; ?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
@@ -9,6 +8,7 @@
 					<div class="panel panel-<?php echo $panel; ?>">
 						<div class="panel-heading">
 							<h4 class="text-center"><b>Colaborador: <?php echo $_SESSION['Orcatrata']['Nome'] ?></b></h4>
+							<?php if (isset($msg)) echo $msg; ?>
 							<div style="overflow: auto; height: auto; ">
 								<div class="panel-group">
 									<div class="panel panel-success">

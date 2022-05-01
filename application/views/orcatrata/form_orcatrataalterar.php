@@ -1,4 +1,3 @@
-<?php if (isset($msg)) echo $msg; ?>
 <div class="container-fluid">
 	<div class="row">	
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
@@ -198,6 +197,7 @@
 					<div class="panel panel-<?php echo $panel; ?>">
 						<div class="panel-heading">
 							<h4 class="text-center"><b>Colaborador: <?php echo $_SESSION['Orcatrata']['Nome'] ?></b></h4>
+							<?php if (isset($msg)) echo $msg; ?>
 							<div style="overflow: auto; height: auto; ">
 								<div class="panel-group">
 									<div class="panel panel-success">
@@ -410,71 +410,73 @@
 														<?php } ?>
 													<?php } ?>
 													<?php if ($_SESSION['Empresa']['CadastrarPet'] == "S" || $_SESSION['Empresa']['CadastrarDep'] == "S") { ?>	
-														<div class="col-xs-6 col-sm-3  col-md-3 col-lg-3 text-left">
-															<?php if ($_SESSION['Empresa']['CadastrarPet'] == "S") { ?>	
-																<label for="Cadastrar">Pet Encontrado?</label><br>
-															<?php }elseif($_SESSION['Empresa']['CadastrarDep'] == "S"){ ?>	
-																<label for="Cadastrar">Dep Encontrado?</label><br>
-															<?php } ?>
-															<div class="btn-group" data-toggle="buttons">
-																<?php
-																foreach ($select['Cadastrar'] as $key => $row) {
-																	if (!$cadastrar['Cadastrar']) $cadastrar['Cadastrar'] = 'S';
-																	($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-																	if ($cadastrar['Cadastrar'] == $key) {
-																		echo ''
-																		. '<label class="btn btn-warning active" name="Cadastrar_' . $hideshow . '">'
-																		. '<input type="radio" name="Cadastrar" id="' . $hideshow . '" '
-																		. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																		. '</label>'
-																		;
-																	} else {
-																		echo ''
-																		. '<label class="btn btn-default" name="Cadastrar_' . $hideshow . '">'
-																		. '<input type="radio" name="Cadastrar" id="' . $hideshow . '" '
-																		. 'autocomplete="off" value="' . $key . '" >' . $row
-																		. '</label>'
-																		;
+														<?php if($this->Basico_model->get_dt_validade()) { ?>
+															<div class="col-xs-6 col-sm-3  col-md-3 col-lg-3 text-left">
+																<?php if ($_SESSION['Empresa']['CadastrarPet'] == "S") { ?>	
+																	<label for="Cadastrar">Pet Encontrado?</label><br>
+																<?php }elseif($_SESSION['Empresa']['CadastrarDep'] == "S"){ ?>	
+																	<label for="Cadastrar">Dep Encontrado?</label><br>
+																<?php } ?>
+																<div class="btn-group" data-toggle="buttons">
+																	<?php
+																	foreach ($select['Cadastrar'] as $key => $row) {
+																		if (!$cadastrar['Cadastrar']) $cadastrar['Cadastrar'] = 'S';
+																		($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																		if ($cadastrar['Cadastrar'] == $key) {
+																			echo ''
+																			. '<label class="btn btn-warning active" name="Cadastrar_' . $hideshow . '">'
+																			. '<input type="radio" name="Cadastrar" id="' . $hideshow . '" '
+																			. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																			. '</label>'
+																			;
+																		} else {
+																			echo ''
+																			. '<label class="btn btn-default" name="Cadastrar_' . $hideshow . '">'
+																			. '<input type="radio" name="Cadastrar" id="' . $hideshow . '" '
+																			. 'autocomplete="off" value="' . $key . '" >' . $row
+																			. '</label>'
+																			;
+																		}
 																	}
-																}
-																?>
+																	?>
+																</div>
 															</div>
-														</div>
-														<div class="text-left" id="Cadastrar" <?php echo $div['Cadastrar']; ?>>
-															<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3  text-left">
-																<label >Recarregar</label><br>
-																<button class="btn btn-md btn-primary btn-block"  id="inputDb" data-loading-text="Aguarde..." type="submit">
-																		<span class="glyphicon glyphicon-refresh"></span>Recarregar
-																</button>
-															</div>
-															<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6  text-left">
-																<div class="row">
-																	<?php if ($_SESSION['Empresa']['CadastrarPet'] == "S") { ?>
-																		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6  text-left">
-																			<label >Pet</label><br>
-																			<button type="button" class="btn btn-success btn-block" id="addPet" data-toggle="modal" data-target="#addClientePetModal" >
-																				<span class="glyphicon glyphicon-plus"></span>Cadastrar
-																			</button>
-																		</div>
-																	<?php }else{ ?>	
-																		<?php if ($_SESSION['Empresa']['CadastrarDep'] == "S") { ?>
-																			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6  text-left">
-																				<label >Dependente</label><br>
-																				<button type="button" class="btn btn-success btn-block" id="addDep" data-toggle="modal" data-target="#addClienteDepModal">
+															<div class="text-left" id="Cadastrar" <?php echo $div['Cadastrar']; ?>>
+																<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3  text-left">
+																	<label >Recarregar</label><br>
+																	<button class="btn btn-md btn-primary btn-block"  id="inputDb" data-loading-text="Aguarde..." type="submit">
+																			<span class="glyphicon glyphicon-refresh"></span>Recarregar
+																	</button>
+																</div>
+																<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6  text-left">
+																	<div class="row">
+																		<?php if ($_SESSION['Empresa']['CadastrarPet'] == "S") { ?>
+																			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6  text-left">
+																				<label >Pet</label><br>
+																				<button type="button" class="btn btn-success btn-block" id="addPet" data-toggle="modal" data-target="#addClientePetModal" >
 																					<span class="glyphicon glyphicon-plus"></span>Cadastrar
 																				</button>
 																			</div>
+																		<?php }else{ ?>	
+																			<?php if ($_SESSION['Empresa']['CadastrarDep'] == "S") { ?>
+																				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6  text-left">
+																					<label >Dependente</label><br>
+																					<button type="button" class="btn btn-success btn-block" id="addDep" data-toggle="modal" data-target="#addClienteDepModal">
+																						<span class="glyphicon glyphicon-plus"></span>Cadastrar
+																					</button>
+																				</div>
+																			<?php } ?>
 																		<?php } ?>
-																	<?php } ?>
+																	</div>	
 																</div>	
-															</div>	
-															<!--
-															<a class="btn btn-md btn-info"   target="_blank" href="<?php echo base_url() ?>cliente2/cadastrar3/" role="button"> 
-																<span class="glyphicon glyphicon-plus"></span> <span class="glyphicon glyphicon-edit"></span> Cliente
-															</a>
-															-->
-															<?php echo form_error('Cadastrar'); ?>
-														</div>
+																<!--
+																<a class="btn btn-md btn-info"   target="_blank" href="<?php echo base_url() ?>cliente2/cadastrar3/" role="button"> 
+																	<span class="glyphicon glyphicon-plus"></span> <span class="glyphicon glyphicon-edit"></span> Cliente
+																</a>
+																-->
+																<?php echo form_error('Cadastrar'); ?>
+															</div>
+														<?php } ?>
 													<?php } ?>
 												</div>
 											</div>

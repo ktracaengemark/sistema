@@ -1,4 +1,3 @@
-<?php if (isset($msg)) echo $msg; ?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
@@ -8,7 +7,8 @@
 					<?php echo form_open_multipart($form_open_path); ?>
 					<div class="panel panel-<?php echo $panel; ?>">
 						<div class="panel-heading">
-							<h4 class="text-center"><b>Colaborador: <?php echo $_SESSION['Orcatrata']['Nome'] ?> - <?php echo $titulo; ?> - <?php echo $orcatrata['idApp_OrcaTrata'] ?></b></h4>
+							<h4 class="text-center"><b><?php echo $titulo; ?> - Colaborador: <?php echo $_SESSION['Orcatrata']['Nome'] ?></b></h4>
+							<?php if (isset($msg)) echo $msg; ?>
 							<div style="overflow: auto; height: auto; ">
 								<div class="panel-group">
 									<div class="panel panel-success">
@@ -27,7 +27,7 @@
 											<div class="form-group">	
 												<div class="row">
 													<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-														<h4 class="mb-3"><b>Editar Despesa</b></h4>
+														<h4 class="mb-3"><b>Editar Despesa</b> - Nº <?php echo $orcatrata['idApp_OrcaTrata'] ?></h4>
 													</div>
 												</div>
 											</div>
@@ -160,51 +160,53 @@
 															</div>	
 														</div>		
 														<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left">
-															<div class="row">
-																<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 text-left">
-																	<label for="Cadastrar">Forn. encontrado?</label><br>
-																	<div class="btn-larg-right btn-group" data-toggle="buttons">
-																		<?php
-																		foreach ($select['Cadastrar'] as $key => $row) {
-																			if (!$cadastrar['Cadastrar']) $cadastrar['Cadastrar'] = 'S';
-																			($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-																			if ($cadastrar['Cadastrar'] == $key) {
-																				echo ''
-																				. '<label class="btn btn-warning active" name="Cadastrar_' . $hideshow . '">'
-																				. '<input type="radio" name="Cadastrar" id="' . $hideshow . '" '
-																				. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																				. '</label>'
-																				;
-																			} else {
-																				echo ''
-																				. '<label class="btn btn-default" name="Cadastrar_' . $hideshow . '">'
-																				. '<input type="radio" name="Cadastrar" id="' . $hideshow . '" '
-																				. 'autocomplete="off" value="' . $key . '" >' . $row
-																				. '</label>'
-																				;
+															<?php if($this->Basico_model->get_dt_validade()) { ?>
+																<div class="row">
+																	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 text-left">
+																		<label for="Cadastrar">Forn. encontrado?</label><br>
+																		<div class="btn-larg-right btn-group" data-toggle="buttons">
+																			<?php
+																			foreach ($select['Cadastrar'] as $key => $row) {
+																				if (!$cadastrar['Cadastrar']) $cadastrar['Cadastrar'] = 'S';
+																				($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																				if ($cadastrar['Cadastrar'] == $key) {
+																					echo ''
+																					. '<label class="btn btn-warning active" name="Cadastrar_' . $hideshow . '">'
+																					. '<input type="radio" name="Cadastrar" id="' . $hideshow . '" '
+																					. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																					. '</label>'
+																					;
+																				} else {
+																					echo ''
+																					. '<label class="btn btn-default" name="Cadastrar_' . $hideshow . '">'
+																					. '<input type="radio" name="Cadastrar" id="' . $hideshow . '" '
+																					. 'autocomplete="off" value="' . $key . '" >' . $row
+																					. '</label>'
+																					;
+																				}
 																			}
-																		}
-																		?>
+																			?>
+																		</div>
+																	</div>
+																	<div id="Cadastrar" <?php echo $div['Cadastrar']; ?>>
+																		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
+																			<label>Recar.</label><br>
+																			<button class="btn btn-md btn-primary btn-block"  id="inputDb" data-loading-text="Aguarde..." type="submit">
+																					<span class="glyphicon glyphicon-refresh"></span> Recar
+																			</button>
+																		</div>
+																		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
+																			<label>Fornec</label><br>
+																			<a class="btn btn-md btn-info btn-block"   target="_blank" href="<?php echo base_url() ?>fornecedor2/cadastrar3/" role="button"> 
+																				<span class="glyphicon glyphicon-plus"></span> <span class="glyphicon glyphicon-edit"></span> Cad/Edit
+																			</a>
+																		</div>	
+																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">	
+																			<?php echo form_error('Cadastrar'); ?>
+																		</div>
 																	</div>
 																</div>
-																<div id="Cadastrar" <?php echo $div['Cadastrar']; ?>>
-																	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
-																		<label>Recar.</label><br>
-																		<button class="btn btn-md btn-primary btn-block"  id="inputDb" data-loading-text="Aguarde..." type="submit">
-																				<span class="glyphicon glyphicon-refresh"></span> Recar
-																		</button>
-																	</div>
-																	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
-																		<label>Fornec</label><br>
-																		<a class="btn btn-md btn-info btn-block"   target="_blank" href="<?php echo base_url() ?>fornecedor2/cadastrar3/" role="button"> 
-																			<span class="glyphicon glyphicon-plus"></span> <span class="glyphicon glyphicon-edit"></span> Cad/Edit
-																		</a>
-																	</div>	
-																	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">	
-																		<?php echo form_error('Cadastrar'); ?>
-																	</div>
-																</div>
-															</div>	
+															<?php } ?>
 														</div>
 													</div>
 													<br>

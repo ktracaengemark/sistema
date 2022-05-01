@@ -1,4 +1,3 @@
-<?php if (isset($msg)) echo $msg; ?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
@@ -170,12 +169,13 @@
 			<?php } ?>			
 			
 			<div class="row">
-				<div class="col-sm-offset-1 col-md-10 ">	
+				<div class="col-md-12 ">	
 					<?php echo form_open_multipart($form_open_path); ?>
 					<?php echo validation_errors(); ?>
 					
 					<div class="panel panel-<?php echo $panel; ?>">
 						<div class="panel-body">
+							<?php if (isset($msg)) echo $msg; ?>
 							<?php if ($metodo != 3) { ?>
 								
 								<?php if ($_SESSION['Empresa']['CadastrarDep'] == 'S' && $metodo == 1 ) { ?>
@@ -246,53 +246,55 @@
 																?>   
 															</select>
 															<?php echo form_error('RelacaoDep'); ?>          
-														</div>	
-														<div class="col-md-4 text-left">
-															<label for="CadastrarResp">Encontrado Responsável?</label><br>
-															<div class="btn-group" data-toggle="buttons">
-																<?php
-																	foreach ($select['CadastrarResp'] as $key => $row) {
-																		if (!$cadastrar['CadastrarResp']) $cadastrar['CadastrarResp'] = 'S';
-																		
-																		($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-																		
-																		if ($cadastrar['CadastrarResp'] == $key) {
-																			echo ''
-																			. '<label class="btn btn-warning active" name="CadastrarResp_' . $hideshow . '">'
-																			. '<input type="radio" name="CadastrarResp" id="' . $hideshow . '" '
-																			. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																			. '</label>'
-																			;
-																			} else {
-																			echo ''
-																			. '<label class="btn btn-default" name="CadastrarResp_' . $hideshow . '">'
-																			. '<input type="radio" name="CadastrarResp" id="' . $hideshow . '" '
-																			. 'autocomplete="off" value="' . $key . '" >' . $row
-																			. '</label>'
-																			;
+														</div>
+														<?php if($this->Basico_model->get_dt_validade()) { ?>	
+															<div class="col-md-4 text-left">
+																<label for="CadastrarResp">Encontrado Responsável?</label><br>
+																<div class="btn-group" data-toggle="buttons">
+																	<?php
+																		foreach ($select['CadastrarResp'] as $key => $row) {
+																			if (!$cadastrar['CadastrarResp']) $cadastrar['CadastrarResp'] = 'S';
+																			
+																			($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																			
+																			if ($cadastrar['CadastrarResp'] == $key) {
+																				echo ''
+																				. '<label class="btn btn-warning active" name="CadastrarResp_' . $hideshow . '">'
+																				. '<input type="radio" name="CadastrarResp" id="' . $hideshow . '" '
+																				. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																				. '</label>'
+																				;
+																				} else {
+																				echo ''
+																				. '<label class="btn btn-default" name="CadastrarResp_' . $hideshow . '">'
+																				. '<input type="radio" name="CadastrarResp" id="' . $hideshow . '" '
+																				. 'autocomplete="off" value="' . $key . '" >' . $row
+																				. '</label>'
+																				;
+																			}
 																		}
-																	}
-																?>
-																
+																	?>
+																	
+																</div>
 															</div>
-														</div>
-														
-														<div class="col-md-8 text-left" id="CadastrarResp" <?php echo $div['CadastrarResp']; ?>>
-															<div class="col-md-6">	
-																<label for="CadastrarResp">Responsavel</label><br>
-																<button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#addResponsavelModal">
-																	Cadastrar
-																</button>
-															</div>	
-															<div class="col-md-6">	
-																<label for="CadastrarResp">Recarregar</label><br>
-																<button type="submit" class="btn btn-md btn-primary btn-block"  id="inputDb" data-loading-text="Aguarde..." >
-																	<span class="glyphicon glyphicon-refresh"></span>Recarregar
-																</button>
-															</div>	
-															<span id="msg"></span>
-															<?php echo form_error('CadastrarResp'); ?>
-														</div>
+															
+															<div class="col-md-8 text-left" id="CadastrarResp" <?php echo $div['CadastrarResp']; ?>>
+																<div class="col-md-6">	
+																	<label for="CadastrarResp">Responsavel</label><br>
+																	<button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#addResponsavelModal">
+																		Cadastrar
+																	</button>
+																</div>	
+																<div class="col-md-6">	
+																	<label for="CadastrarResp">Recarregar</label><br>
+																	<button type="submit" class="btn btn-md btn-primary btn-block"  id="inputDb" data-loading-text="Aguarde..." >
+																		<span class="glyphicon glyphicon-refresh"></span>Recarregar
+																	</button>
+																</div>	
+																<span id="msg"></span>
+																<?php echo form_error('CadastrarResp'); ?>
+															</div>
+														<?php } ?>
 													</div>
 												</div>
 											</div>
@@ -744,13 +746,13 @@
 									</div>
 								</div>
 							<?php } ?>
-						</form>
+						</div>
 					</div>
-				</div>							
+					</form>							
+				</div>
 			</div>
 		</div>
-	</div>
-</div>	
+	</div>	
 </div>
 
 <div id="addResponsavelModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

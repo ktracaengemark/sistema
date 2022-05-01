@@ -47,13 +47,12 @@ class Basico {
             $data = '<div class="alert alert-' . $alert . ' hidediv text-center" id="' . $hide . '" role="alert">' . $span . $msg . '</div>';
         } else {
             $data = '
-                <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8">
-                        <div class="alert alert-' . $alert . $align . '" role="alert">' . $span . $msg . '</div>
-                    </div>
-                    <div class="col-md-2"></div>
-                </div>';
+					<div class="container">
+						<div class="row">
+								<div class="alert alert-' . $alert . $align . '" role="alert">' . $span . $msg . '</div>
+						</div>
+					</div>	
+					';
         }
 
         return $data;

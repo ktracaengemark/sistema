@@ -1,4 +1,3 @@
-<?php if (isset($msg)) echo $msg; ?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -11,6 +10,7 @@
 					</a>
 				</div>
 				<div class="panel-body">
+					<?php if (isset($msg)) echo $msg; ?>
 					<div class="panel panel-info">
 						<div class="panel-heading">
 						<?php echo form_open_multipart($form_open_path); ?>
