@@ -42,8 +42,10 @@ class Produtos extends CI_Controller {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-			elseif ($this->input->get('m') == 2)
+		elseif ($this->input->get('m') == 2)
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Não é possível salvar o Novo Produto.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da<br>Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
 		
@@ -104,39 +106,48 @@ class Produtos extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('produtos/form_produtos', $data);
-        } else {
-			$data['cadastrar']['Cadastrar'] = $data['cadastrar']['Cadastrar'];
-            ////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
-            #### Tab_Produtos ####
-			$data['produtos']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];            
-            $data['produtos']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-            $data['produtos']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-            $data['produtos']['idTab_Produtos'] = $this->Produtos_model->set_produtos($data['produtos']);
-            /*
-            echo count($data['servico']);
-            echo '<br>';
-            echo "<pre>";
-            print_r($data['servico']);
-            echo "</pre>";
-            exit ();
-            */
+        
+		} else {
 
-            if ($data['produtos']['idTab_Produtos'] === FALSE) {
-                $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+			if($this->Basico_model->get_dt_validade() === FALSE){
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'produtos/cadastrar' . $data['msg']);
+				
+			} else {
+							
+				$data['cadastrar']['Cadastrar'] = $data['cadastrar']['Cadastrar'];
+				////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
+				#### Tab_Produtos ####
+				$data['produtos']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];            
+				$data['produtos']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+				$data['produtos']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+				$data['produtos']['idTab_Produtos'] = $this->Produtos_model->set_produtos($data['produtos']);
+				/*
+				echo count($data['servico']);
+				echo '<br>';
+				echo "<pre>";
+				print_r($data['servico']);
+				echo "</pre>";
+				exit ();
+				*/
 
-                $this->basico->erro($msg);
-                $this->load->view('produtos/form_produtos', $data);
-            } else {
+				if ($data['produtos']['idTab_Produtos'] === FALSE) {
+					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
-                //$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Produtos'], FALSE);
-                //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
-                $data['msg'] = '?m=1';
+					$this->basico->erro($msg);
+					$this->load->view('produtos/form_produtos', $data);
+				} else {
 
-                #redirect(base_url() . 'produtos/listar/' . $data['msg']);
-				//redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
-				redirect(base_url() . 'produtos/alterar/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
-                exit();
-            }
+					//$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Produtos'], FALSE);
+					//$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
+					$data['msg'] = '?m=1';
+
+					#redirect(base_url() . 'produtos/listar/' . $data['msg']);
+					//redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
+					redirect(base_url() . 'produtos/alterar/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
+					exit();
+				}
+			}
         }
 
         $this->load->view('basico/footer');
@@ -148,6 +159,8 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
 		
@@ -357,46 +370,55 @@ class Produtos extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('produtos/form_produtos', $data);
-        } else {
-            ////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
-            #### Tab_Produtos ####
-			
-			$data['produtos']['Nome_Prod'] = trim(mb_strtoupper($data['produtos']['Nome_Prod'], 'ISO-8859-1'));
-			$data['produtos']['Produtos_Descricao'] = trim(mb_strtoupper($data['produtos']['Produtos_Descricao'], 'ISO-8859-1'));
-			$data['produtos']['Prod_Serv'] = $_SESSION['Produtos']['TipoCatprod'];
-			$data['update']['produtos']['anterior'] = $this->Produtos_model->get_produtos($data['produtos']['idTab_Produtos']);
-            $data['update']['produtos']['campos'] = array_keys($data['produtos']);
-            $data['update']['produtos']['auditoriaitem'] = $this->basico->set_log(
-                $data['update']['produtos']['anterior'],
-                $data['produtos'],
-                $data['update']['produtos']['campos'],
-                $data['produtos']['idTab_Produtos'], TRUE);
-            $data['update']['produtos']['bd'] = $this->Produtos_model->update_produtos($data['produtos'], $data['produtos']['idTab_Produtos']);
+        
+		} else {
+ 			
+			if($this->Basico_model->get_dt_validade() === FALSE){
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'produtos/alterar/' . $_SESSION['Produtos']['idTab_Produtos'] . $data['msg']);
+				
+			} else {
+           
+				////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
+				#### Tab_Produtos ####
+				
+				$data['produtos']['Nome_Prod'] = trim(mb_strtoupper($data['produtos']['Nome_Prod'], 'ISO-8859-1'));
+				$data['produtos']['Produtos_Descricao'] = trim(mb_strtoupper($data['produtos']['Produtos_Descricao'], 'ISO-8859-1'));
+				$data['produtos']['Prod_Serv'] = $_SESSION['Produtos']['TipoCatprod'];
+				$data['update']['produtos']['anterior'] = $this->Produtos_model->get_produtos($data['produtos']['idTab_Produtos']);
+				$data['update']['produtos']['campos'] = array_keys($data['produtos']);
+				$data['update']['produtos']['auditoriaitem'] = $this->basico->set_log(
+					$data['update']['produtos']['anterior'],
+					$data['produtos'],
+					$data['update']['produtos']['campos'],
+					$data['produtos']['idTab_Produtos'], TRUE);
+				$data['update']['produtos']['bd'] = $this->Produtos_model->update_produtos($data['produtos'], $data['produtos']['idTab_Produtos']);
 
 
-            //if ($data['idTab_Produtos'] === FALSE) {
-            //if ($data['auditoriaitem'] && $this->Cliente_model->update_cliente($data['query'], $data['query']['idApp_Cliente']) === FALSE) {
-            if ($data['auditoriaitem'] && !$data['update']['produtos']['bd']) {
-                $data['msg'] = '?m=2';
-                $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+				//if ($data['idTab_Produtos'] === FALSE) {
+				//if ($data['auditoriaitem'] && $this->Cliente_model->update_cliente($data['query'], $data['query']['idApp_Cliente']) === FALSE) {
+				if ($data['auditoriaitem'] && !$data['update']['produtos']['bd']) {
+					$data['msg'] = '?m=2';
+					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
-                $this->basico->erro($msg);
-                $this->load->view('produtos/form_produtos', $data);
-            } else {
+					$this->basico->erro($msg);
+					$this->load->view('produtos/form_produtos', $data);
+				} else {
 
-                //$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Produtos'], FALSE);
-                //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
-                $data['msg'] = '?m=1';
+					//$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Produtos'], FALSE);
+					//$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
+					$data['msg'] = '?m=1';
 
-                #redirect(base_url() . 'produtos/listar/' . $data['msg']);
-				//unset($data['cadastrar']['Codigo']);
-				//unset($_SESSION['Produtos']);
-                //unset($_SESSION['Atributos']);
-				//redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
-				//redirect(base_url() . 'produtos/alterar2/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
-				redirect(base_url() . 'produtos/tela/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
-                exit();
-            }
+					#redirect(base_url() . 'produtos/listar/' . $data['msg']);
+					//unset($data['cadastrar']['Codigo']);
+					//unset($_SESSION['Produtos']);
+					//unset($_SESSION['Atributos']);
+					//redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
+					//redirect(base_url() . 'produtos/alterar2/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
+					redirect(base_url() . 'produtos/tela/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
+					exit();
+				}
+			}
         }
 
         $this->load->view('basico/footer');
@@ -409,6 +431,8 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
 		
@@ -610,43 +634,52 @@ class Produtos extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('produtos/form_produtos', $data);
-        } else {
-            ////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
-            #### Tab_Produtos ####
-			$data['produtos']['Nome_Prod'] = trim(mb_strtoupper($data['produtos']['Nome_Prod'], 'ISO-8859-1'));
-			$data['produtos']['Produtos_Descricao'] = trim(mb_strtoupper($data['produtos']['Produtos_Descricao'], 'ISO-8859-1'));
-			$data['update']['produtos']['anterior'] = $this->Produtos_model->get_produtos($data['produtos']['idTab_Produtos']);
-            $data['update']['produtos']['campos'] = array_keys($data['produtos']);
-            $data['update']['produtos']['auditoriaitem'] = $this->basico->set_log(
-                $data['update']['produtos']['anterior'],
-                $data['produtos'],
-                $data['update']['produtos']['campos'],
-                $data['produtos']['idTab_Produtos'], TRUE);
-            $data['update']['produtos']['bd'] = $this->Produtos_model->update_produtos($data['produtos'], $data['produtos']['idTab_Produtos']);
+        
+		} else { 			
+			
+			if($this->Basico_model->get_dt_validade() === FALSE){
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'produtos/alterar2/' . $_SESSION['Produtos']['idTab_Produtos'] . $data['msg']);
+				
+			} else {
+
+				////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
+				#### Tab_Produtos ####
+				$data['produtos']['Nome_Prod'] = trim(mb_strtoupper($data['produtos']['Nome_Prod'], 'ISO-8859-1'));
+				$data['produtos']['Produtos_Descricao'] = trim(mb_strtoupper($data['produtos']['Produtos_Descricao'], 'ISO-8859-1'));
+				$data['update']['produtos']['anterior'] = $this->Produtos_model->get_produtos($data['produtos']['idTab_Produtos']);
+				$data['update']['produtos']['campos'] = array_keys($data['produtos']);
+				$data['update']['produtos']['auditoriaitem'] = $this->basico->set_log(
+					$data['update']['produtos']['anterior'],
+					$data['produtos'],
+					$data['update']['produtos']['campos'],
+					$data['produtos']['idTab_Produtos'], TRUE);
+				$data['update']['produtos']['bd'] = $this->Produtos_model->update_produtos($data['produtos'], $data['produtos']['idTab_Produtos']);
 
 
-            //if ($data['idTab_Produtos'] === FALSE) {
-            //if ($data['auditoriaitem'] && $this->Cliente_model->update_cliente($data['query'], $data['query']['idApp_Cliente']) === FALSE) {
-            if ($data['auditoriaitem'] && !$data['update']['produtos']['bd']) {
-                $data['msg'] = '?m=2';
-                $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+				//if ($data['idTab_Produtos'] === FALSE) {
+				//if ($data['auditoriaitem'] && $this->Cliente_model->update_cliente($data['query'], $data['query']['idApp_Cliente']) === FALSE) {
+				if ($data['auditoriaitem'] && !$data['update']['produtos']['bd']) {
+					$data['msg'] = '?m=2';
+					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
-                $this->basico->erro($msg);
-                $this->load->view('produtos/form_produtos', $data);
-            } else {
+					$this->basico->erro($msg);
+					$this->load->view('produtos/form_produtos', $data);
+				} else {
 
-                //$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Produtos'], FALSE);
-                //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
-                $data['msg'] = '?m=1';
+					//$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Produtos'], FALSE);
+					//$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
+					$data['msg'] = '?m=1';
 
-                #redirect(base_url() . 'produtos/listar/' . $data['msg']);
-				//unset($data['cadastrar']['Codigo']);
-				//unset($_SESSION['Produtos']);
-                //unset($_SESSION['Atributos']);
-				//redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
-				redirect(base_url() . 'produtos/tela/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
-                exit();
-            }
+					#redirect(base_url() . 'produtos/listar/' . $data['msg']);
+					//unset($data['cadastrar']['Codigo']);
+					//unset($_SESSION['Produtos']);
+					//unset($_SESSION['Atributos']);
+					//redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
+					redirect(base_url() . 'produtos/tela/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
+					exit();
+				}
+			}
         }
 
         $this->load->view('basico/footer');
@@ -659,6 +692,8 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
 		
@@ -807,52 +842,61 @@ class Produtos extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('produtos/form_produtos', $data);
-        } else {
-			/*
-			echo '<br>';
-			echo "<pre>";
-			print_r($data['cadastrar']['Codigo']);
-			echo "</pre>";
-			exit ();
-			*/
-		
-			$data['cadastrar']['Cadastrar'] = $data['cadastrar']['Cadastrar'];			
+        
+		} else {
+			
+			if($this->Basico_model->get_dt_validade() === FALSE){
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'produtos/tela/' . $_SESSION['Produtos']['idTab_Produtos'] . $data['msg']);
+				
+			} else {
 
-            ////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
-            #### Tab_Produtos ####
+				/*
+				echo '<br>';
+				echo "<pre>";
+				print_r($data['cadastrar']['Codigo']);
+				echo "</pre>";
+				exit ();
+				*/
+			
+				$data['cadastrar']['Cadastrar'] = $data['cadastrar']['Cadastrar'];			
 
-			$data['update']['produtos']['anterior'] = $this->Produtos_model->get_produtos($data['produtos']['idTab_Produtos']);
-            $data['update']['produtos']['campos'] = array_keys($data['produtos']);
-            $data['update']['produtos']['auditoriaitem'] = $this->basico->set_log(
-                $data['update']['produtos']['anterior'],
-                $data['produtos'],
-                $data['update']['produtos']['campos'],
-                $data['produtos']['idTab_Produtos'], TRUE);
-            $data['update']['produtos']['bd'] = $this->Produtos_model->update_produtos($data['produtos'], $data['produtos']['idTab_Produtos']);
+				////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
+				#### Tab_Produtos ####
+
+				$data['update']['produtos']['anterior'] = $this->Produtos_model->get_produtos($data['produtos']['idTab_Produtos']);
+				$data['update']['produtos']['campos'] = array_keys($data['produtos']);
+				$data['update']['produtos']['auditoriaitem'] = $this->basico->set_log(
+					$data['update']['produtos']['anterior'],
+					$data['produtos'],
+					$data['update']['produtos']['campos'],
+					$data['produtos']['idTab_Produtos'], TRUE);
+				$data['update']['produtos']['bd'] = $this->Produtos_model->update_produtos($data['produtos'], $data['produtos']['idTab_Produtos']);
 
 
-            //if ($data['idTab_Produtos'] === FALSE) {
-            //if ($data['auditoriaitem'] && $this->Cliente_model->update_cliente($data['query'], $data['query']['idApp_Cliente']) === FALSE) {
-            if ($data['auditoriaitem'] && !$data['update']['produtos']['bd']) {
-                $data['msg'] = '?m=2';
-                $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+				//if ($data['idTab_Produtos'] === FALSE) {
+				//if ($data['auditoriaitem'] && $this->Cliente_model->update_cliente($data['query'], $data['query']['idApp_Cliente']) === FALSE) {
+				if ($data['auditoriaitem'] && !$data['update']['produtos']['bd']) {
+					$data['msg'] = '?m=2';
+					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
-                $this->basico->erro($msg);
-                $this->load->view('produtos/form_produtos', $data);
-            } else {
+					$this->basico->erro($msg);
+					$this->load->view('produtos/form_produtos', $data);
+				} else {
 
-                //$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Produtos'], FALSE);
-                //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
-                $data['msg'] = '?m=1';
+					//$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Produtos'], FALSE);
+					//$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
+					$data['msg'] = '?m=1';
 
-                #redirect(base_url() . 'produtos/listar/' . $data['msg']);
-				//unset($data['cadastrar']['Codigo']);
-				//unset($_SESSION['Produtos']);
-                //unset($_SESSION['Atributos']);
-				//redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
-				redirect(base_url() . 'produtos/alterar2/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
-                exit();
-            }
+					#redirect(base_url() . 'produtos/listar/' . $data['msg']);
+					//unset($data['cadastrar']['Codigo']);
+					//unset($_SESSION['Produtos']);
+					//unset($_SESSION['Atributos']);
+					//redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
+					redirect(base_url() . 'produtos/alterar2/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
+					exit();
+				}
+			}
         }
 
         $this->load->view('basico/footer');
@@ -865,6 +909,8 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
 
@@ -904,91 +950,29 @@ class Produtos extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('produtos/form_produtos', $data);
-        } else {
-
-            if ($data['auditoriaitem'] && !$data['update']['produtos']['bd']) {
-                $data['msg'] = '?m=2';
-                $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-
-                $this->basico->erro($msg);
-                $this->load->view('produtos/form_produtos', $data);
-            } else {
-
-                $data['msg'] = '?m=1';
-				redirect(base_url() . 'produtos/alterar2/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
+        
+		} else {
+ 			
+			if($this->Basico_model->get_dt_validade() === FALSE){
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'produtos/tela_precos/' . $_SESSION['Produtos']['idTab_Produtos'] . $data['msg']);
 				
-                exit();
-            }
-        }
+			} else {
+           
+				if ($data['auditoriaitem'] && !$data['update']['produtos']['bd']) {
+					$data['msg'] = '?m=2';
+					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
-        $this->load->view('basico/footer');
+					$this->basico->erro($msg);
+					$this->load->view('produtos/form_produtos', $data);
+				} else {
 
-    }
-
-    public function tela_valor($id = FALSE) {
-			
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-		
-        $data['valor'] = quotes_to_entities($this->input->post(array(
-            #### Tab_Valor ####
-            'idTab_Valor',
-        ), TRUE));
-
-
-        if ($id) {
-            #### Tab_Valor ####
-			$_SESSION['Valor'] = $data['valor'] = $this->Produtos_model->get_valor($id);
-		}
-
-		//$data['select']['AtivoPreco'] = $this->Basico_model->select_status_sn();
-		$data['select']['VendaSitePreco'] = $this->Basico_model->select_status_sn();
-		$data['select']['VendaBalcaoPreco'] = $this->Basico_model->select_status_sn();		
-		
-        $data['titulo'] = 'Tela Preço';
-        $data['form_open_path'] = 'produtos/tela_valor';
-        $data['readonly'] = 'readonly=""';
-        $data['disabled'] = '';
-        $data['panel'] = 'primary';
-        $data['metodo'] = 6;
-
-        $data['sidebar'] = 'col-sm-3 col-md-2';
-        $data['main'] = 'col-sm-7 col-md-8';
-
-        $data['datepicker'] = 'DatePicker';
-        $data['timepicker'] = 'TimePicker';
-
-		$data['q_precos'] = $this->Produtos_model->list_precos($_SESSION['Valor'], TRUE);
-		$data['list_precos'] = $this->load->view('produtos/list_precos', $data, TRUE);
-		
-		$data['q_precos_promocoes'] = $this->Produtos_model->list_precos_promocoes($_SESSION['Valor'], TRUE);
-		$data['list_precos_promocoes'] = $this->load->view('produtos/list_precos_promocoes', $data, TRUE);			
-		
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-		$this->form_validation->set_rules('idTab_Valor', 'Produto', 'required|trim');
-
-        #run form validation
-        if ($this->form_validation->run() === FALSE) {
-            $this->load->view('produtos/form_valor', $data);
-        } else {
-
-            if ($data['auditoriaitem'] && !$data['update']['valor']['bd']) {
-                $data['msg'] = '?m=2';
-                $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-
-                $this->basico->erro($msg);
-                $this->load->view('produtos/form_valor', $data);
-            } else {
-
-                $data['msg'] = '?m=1';
-				redirect(base_url() . 'produtos/tela_valor/' . $data['valor']['idTab_Valor'] . $data['msg']);
-				
-                exit();
-            }
+					$data['msg'] = '?m=1';
+					redirect(base_url() . 'produtos/alterar2/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
+					
+					exit();
+				}
+			}
         }
 
         $this->load->view('basico/footer');
@@ -1001,6 +985,8 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
 
@@ -1097,145 +1083,234 @@ class Produtos extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('produtos/form_produtos', $data);
-        } else {
-            ////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
-			/*
-			echo '<br>';
-			echo "<pre>";
-			print_r($data['cadastrar']['Codigo']);
-			echo "</pre>";
-			exit ();
-			*/
-			/*
-            #### Tab_Produtos ####
-			$data['update']['produtos']['anterior'] = $this->Produtos_model->get_produtos($data['produtos']['idTab_Produtos']);
-            $data['update']['produtos']['campos'] = array_keys($data['produtos']);
-            $data['update']['produtos']['auditoriaitem'] = $this->basico->set_log(
-                $data['update']['produtos']['anterior'],
-                $data['produtos'],
-                $data['update']['produtos']['campos'],
-                $data['produtos']['idTab_Produtos'], TRUE);
-            $data['update']['produtos']['bd'] = $this->Produtos_model->update_produtos($data['produtos'], $data['produtos']['idTab_Produtos']);
-			*/
-            #### Tab_Valor ####
-            $data['update']['valor']['anterior'] = $this->Produtos_model->get_item($data['produtos']['idTab_Produtos'], "1");
-            if (isset($data['valor']) || (!isset($data['valor']) && isset($data['update']['valor']['anterior']) ) ) {
+        
+		} else {
+ 			
+			if($this->Basico_model->get_dt_validade() === FALSE){
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'produtos/alterar_precos/' . $_SESSION['Produtos']['idTab_Produtos'] . $data['msg']);
+				
+			} else {
+                       
+				////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
+				/*
+				echo '<br>';
+				echo "<pre>";
+				print_r($data['cadastrar']['Codigo']);
+				echo "</pre>";
+				exit ();
+				*/
+				/*
+				#### Tab_Produtos ####
+				$data['update']['produtos']['anterior'] = $this->Produtos_model->get_produtos($data['produtos']['idTab_Produtos']);
+				$data['update']['produtos']['campos'] = array_keys($data['produtos']);
+				$data['update']['produtos']['auditoriaitem'] = $this->basico->set_log(
+					$data['update']['produtos']['anterior'],
+					$data['produtos'],
+					$data['update']['produtos']['campos'],
+					$data['produtos']['idTab_Produtos'], TRUE);
+				$data['update']['produtos']['bd'] = $this->Produtos_model->update_produtos($data['produtos'], $data['produtos']['idTab_Produtos']);
+				*/
+				#### Tab_Valor ####
+				$data['update']['valor']['anterior'] = $this->Produtos_model->get_item($data['produtos']['idTab_Produtos'], "1");
+				if (isset($data['valor']) || (!isset($data['valor']) && isset($data['update']['valor']['anterior']) ) ) {
 
-                if (isset($data['valor']))
-                    $data['valor'] = array_values($data['valor']);
-                else
-                    $data['valor'] = array();
+					if (isset($data['valor']))
+						$data['valor'] = array_values($data['valor']);
+					else
+						$data['valor'] = array();
 
-                //faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
-                $data['update']['valor'] = $this->basico->tratamento_array_multidimensional($data['valor'], $data['update']['valor']['anterior'], 'idTab_Valor');
+					//faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
+					$data['update']['valor'] = $this->basico->tratamento_array_multidimensional($data['valor'], $data['update']['valor']['anterior'], 'idTab_Valor');
 
-                $max = count($data['update']['valor']['inserir']);
-                for($j=0;$j<$max;$j++) {
-					$data['update']['valor']['inserir'][$j]['Item_Promocao'] = 1;
-					$data['update']['valor']['inserir'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['valor']['inserir'][$j]['Convdesc'], 'UTF-8'));
-					$data['update']['valor']['inserir'][$j]['Desconto'] = 1;
-					$data['update']['valor']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-                    $data['update']['valor']['inserir'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-					$data['update']['valor']['inserir'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
-                    $data['update']['valor']['inserir'][$j]['idTab_Produtos'] = $data['produtos']['idTab_Produtos'];
-                    $data['update']['valor']['inserir'][$j]['idTab_Promocao'] = 1;
-					$data['update']['valor']['inserir'][$j]['idTab_Catprod'] = $_SESSION['Produtos']['idTab_Catprod'];
-					$data['update']['valor']['inserir'][$j]['idTab_Produto'] = $_SESSION['Produtos']['idTab_Produto'];
+					$max = count($data['update']['valor']['inserir']);
+					for($j=0;$j<$max;$j++) {
+						$data['update']['valor']['inserir'][$j]['Item_Promocao'] = 1;
+						$data['update']['valor']['inserir'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['valor']['inserir'][$j]['Convdesc'], 'UTF-8'));
+						$data['update']['valor']['inserir'][$j]['Desconto'] = 1;
+						$data['update']['valor']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+						$data['update']['valor']['inserir'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+						$data['update']['valor']['inserir'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
+						$data['update']['valor']['inserir'][$j]['idTab_Produtos'] = $data['produtos']['idTab_Produtos'];
+						$data['update']['valor']['inserir'][$j]['idTab_Promocao'] = 1;
+						$data['update']['valor']['inserir'][$j]['idTab_Catprod'] = $_SESSION['Produtos']['idTab_Catprod'];
+						$data['update']['valor']['inserir'][$j]['idTab_Produto'] = $_SESSION['Produtos']['idTab_Produto'];
+						
+						if(empty($data['update']['valor']['inserir'][$j]['ValorProduto'])){
+							$data['update']['valor']['inserir'][$j]['ValorProduto'] = "0.00";
+						}else{
+							$data['update']['valor']['inserir'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ValorProduto']));
+						}
+						if(empty($data['update']['valor']['inserir'][$j]['ComissaoVenda'])){
+							$data['update']['valor']['inserir'][$j]['ComissaoVenda'] = "0.00";
+						}else{
+							$data['update']['valor']['inserir'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ComissaoVenda']));
+						}						
+						if(empty($data['update']['valor']['inserir'][$j]['ComissaoServico'])){
+							$data['update']['valor']['inserir'][$j]['ComissaoServico'] = "0.00";
+						}else{
+							$data['update']['valor']['inserir'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ComissaoServico']));
+						}						
+						if(empty($data['update']['valor']['inserir'][$j]['ComissaoCashBack'])){
+							$data['update']['valor']['inserir'][$j]['ComissaoCashBack'] = "0.00";
+						}else{
+							$data['update']['valor']['inserir'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ComissaoCashBack']));
+						}
+						if(empty($data['update']['valor']['inserir'][$j]['QtdProdutoDesconto'])){
+							$data['update']['valor']['inserir'][$j]['QtdProdutoDesconto'] = "1";
+						}
+						if(empty($data['update']['valor']['inserir'][$j]['QtdProdutoIncremento'])){
+							$data['update']['valor']['inserir'][$j]['QtdProdutoIncremento'] = "1";
+						}
+						if(empty($data['update']['valor']['inserir'][$j]['TempoDeEntrega'])){
+							$data['update']['valor']['inserir'][$j]['TempoDeEntrega'] = "0";
+						}
+					}
+
+					$max = count($data['update']['valor']['alterar']);
+					for($j=0;$j<$max;$j++) {
+						$data['update']['valor']['alterar'][$j]['Item_Promocao'] = 1;
+						$data['update']['valor']['alterar'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['valor']['alterar'][$j]['Convdesc'], 'UTF-8'));
+						$data['update']['valor']['alterar'][$j]['Desconto'] = 1;
+						$data['update']['valor']['alterar'][$j]['idTab_Promocao'] = 1;
+						$data['update']['valor']['alterar'][$j]['idTab_Produto'] = $_SESSION['Produtos']['idTab_Produto'];
+
+						if(empty($data['update']['valor']['alterar'][$j]['ValorProduto'])){
+							$data['update']['valor']['alterar'][$j]['ValorProduto'] = "0.00";
+						}else{
+							$data['update']['valor']['alterar'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ValorProduto']));
+						}
+						if(empty($data['update']['valor']['alterar'][$j]['ComissaoVenda'])){
+							$data['update']['valor']['alterar'][$j]['ComissaoVenda'] = "0.00";
+						}else{
+							$data['update']['valor']['alterar'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ComissaoVenda']));
+						}						
+						if(empty($data['update']['valor']['alterar'][$j]['ComissaoServico'])){
+							$data['update']['valor']['alterar'][$j]['ComissaoServico'] = "0.00";
+						}else{
+							$data['update']['valor']['alterar'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ComissaoServico']));
+						}						
+						if(empty($data['update']['valor']['alterar'][$j]['ComissaoCashBack'])){
+							$data['update']['valor']['alterar'][$j]['ComissaoCashBack'] = "0.00";
+						}else{
+							$data['update']['valor']['alterar'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ComissaoCashBack']));
+						}
+						if(empty($data['update']['valor']['alterar'][$j]['QtdProdutoDesconto'])){
+							$data['update']['valor']['alterar'][$j]['QtdProdutoDesconto'] = "1";
+						}
+						if(empty($data['update']['valor']['alterar'][$j]['QtdProdutoIncremento'])){
+							$data['update']['valor']['alterar'][$j]['QtdProdutoIncremento'] = "1";
+						}					
+						if(empty($data['update']['valor']['alterar'][$j]['TempoDeEntrega'])){
+							$data['update']['valor']['alterar'][$j]['TempoDeEntrega'] = "0";
+						}
+					}
+
+					if (count($data['update']['valor']['inserir']))
+						$data['update']['valor']['bd']['inserir'] = $this->Produtos_model->set_valor($data['update']['valor']['inserir']);
+
+					if (count($data['update']['valor']['alterar']))
+						$data['update']['valor']['bd']['alterar'] =  $this->Produtos_model->update_valor($data['update']['valor']['alterar']);
+
+					if (count($data['update']['valor']['excluir']))
+						$data['update']['valor']['bd']['excluir'] = $this->Produtos_model->delete_valor($data['update']['valor']['excluir']);
+
+				}
 					
-					if(empty($data['update']['valor']['inserir'][$j]['ValorProduto'])){
-						$data['update']['valor']['inserir'][$j]['ValorProduto'] = "0.00";
-					}else{
-						$data['update']['valor']['inserir'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ValorProduto']));
-					}
-					if(empty($data['update']['valor']['inserir'][$j]['ComissaoVenda'])){
-						$data['update']['valor']['inserir'][$j]['ComissaoVenda'] = "0.00";
-					}else{
-						$data['update']['valor']['inserir'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ComissaoVenda']));
-					}						
-					if(empty($data['update']['valor']['inserir'][$j]['ComissaoServico'])){
-						$data['update']['valor']['inserir'][$j]['ComissaoServico'] = "0.00";
-					}else{
-						$data['update']['valor']['inserir'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ComissaoServico']));
-					}						
-					if(empty($data['update']['valor']['inserir'][$j]['ComissaoCashBack'])){
-						$data['update']['valor']['inserir'][$j]['ComissaoCashBack'] = "0.00";
-					}else{
-						$data['update']['valor']['inserir'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['inserir'][$j]['ComissaoCashBack']));
-					}
-					if(empty($data['update']['valor']['inserir'][$j]['QtdProdutoDesconto'])){
-						$data['update']['valor']['inserir'][$j]['QtdProdutoDesconto'] = "1";
-					}
-					if(empty($data['update']['valor']['inserir'][$j]['QtdProdutoIncremento'])){
-						$data['update']['valor']['inserir'][$j]['QtdProdutoIncremento'] = "1";
-					}
-					if(empty($data['update']['valor']['inserir'][$j]['TempoDeEntrega'])){
-						$data['update']['valor']['inserir'][$j]['TempoDeEntrega'] = "0";
-					}
+				if ($data['auditoriaitem'] && !$data['update']['produtos']['bd']) {
+					$data['msg'] = '?m=2';
+					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+					$this->basico->erro($msg);
+					$this->load->view('produtos/form_produtos', $data);
+				} else {
+
+					$data['msg'] = '?m=1';
+					redirect(base_url() . 'produtos/tela_precos/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
+					
+					exit();
 				}
+			}
+        }
 
-                $max = count($data['update']['valor']['alterar']);
-                for($j=0;$j<$max;$j++) {
-					$data['update']['valor']['alterar'][$j]['Item_Promocao'] = 1;
-					$data['update']['valor']['alterar'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['valor']['alterar'][$j]['Convdesc'], 'UTF-8'));
-					$data['update']['valor']['alterar'][$j]['Desconto'] = 1;
-                    $data['update']['valor']['alterar'][$j]['idTab_Promocao'] = 1;
-					$data['update']['valor']['alterar'][$j]['idTab_Produto'] = $_SESSION['Produtos']['idTab_Produto'];
+        $this->load->view('basico/footer');
 
-					if(empty($data['update']['valor']['alterar'][$j]['ValorProduto'])){
-						$data['update']['valor']['alterar'][$j]['ValorProduto'] = "0.00";
-					}else{
-						$data['update']['valor']['alterar'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ValorProduto']));
-					}
-					if(empty($data['update']['valor']['alterar'][$j]['ComissaoVenda'])){
-						$data['update']['valor']['alterar'][$j]['ComissaoVenda'] = "0.00";
-					}else{
-						$data['update']['valor']['alterar'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ComissaoVenda']));
-					}						
-					if(empty($data['update']['valor']['alterar'][$j]['ComissaoServico'])){
-						$data['update']['valor']['alterar'][$j]['ComissaoServico'] = "0.00";
-					}else{
-						$data['update']['valor']['alterar'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ComissaoServico']));
-					}						
-					if(empty($data['update']['valor']['alterar'][$j]['ComissaoCashBack'])){
-						$data['update']['valor']['alterar'][$j]['ComissaoCashBack'] = "0.00";
-					}else{
-						$data['update']['valor']['alterar'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['valor']['alterar'][$j]['ComissaoCashBack']));
-					}
-					if(empty($data['update']['valor']['alterar'][$j]['QtdProdutoDesconto'])){
-						$data['update']['valor']['alterar'][$j]['QtdProdutoDesconto'] = "1";
-					}
-					if(empty($data['update']['valor']['alterar'][$j]['QtdProdutoIncremento'])){
-						$data['update']['valor']['alterar'][$j]['QtdProdutoIncremento'] = "1";
-					}					
-					if(empty($data['update']['valor']['alterar'][$j]['TempoDeEntrega'])){
-						$data['update']['valor']['alterar'][$j]['TempoDeEntrega'] = "0";
-					}
+    }
+
+    public function tela_valor($id = FALSE) {
+			
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
+        else
+            $data['msg'] = '';
+		
+        $data['valor'] = quotes_to_entities($this->input->post(array(
+            #### Tab_Valor ####
+            'idTab_Valor',
+        ), TRUE));
+
+
+        if ($id) {
+            #### Tab_Valor ####
+			$_SESSION['Valor'] = $data['valor'] = $this->Produtos_model->get_valor($id);
+		}
+
+		//$data['select']['AtivoPreco'] = $this->Basico_model->select_status_sn();
+		$data['select']['VendaSitePreco'] = $this->Basico_model->select_status_sn();
+		$data['select']['VendaBalcaoPreco'] = $this->Basico_model->select_status_sn();		
+		
+        $data['titulo'] = 'Tela Preço';
+        $data['form_open_path'] = 'produtos/tela_valor';
+        $data['readonly'] = 'readonly=""';
+        $data['disabled'] = '';
+        $data['panel'] = 'primary';
+        $data['metodo'] = 6;
+
+        $data['sidebar'] = 'col-sm-3 col-md-2';
+        $data['main'] = 'col-sm-7 col-md-8';
+
+        $data['datepicker'] = 'DatePicker';
+        $data['timepicker'] = 'TimePicker';
+
+		$data['q_precos'] = $this->Produtos_model->list_precos($_SESSION['Valor'], TRUE);
+		$data['list_precos'] = $this->load->view('produtos/list_precos', $data, TRUE);
+		
+		$data['q_precos_promocoes'] = $this->Produtos_model->list_precos_promocoes($_SESSION['Valor'], TRUE);
+		$data['list_precos_promocoes'] = $this->load->view('produtos/list_precos_promocoes', $data, TRUE);			
+		
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+		$this->form_validation->set_rules('idTab_Valor', 'Produto', 'required|trim');
+
+        #run form validation
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('produtos/form_valor', $data);
+        
+		} else {
+ 			
+			if($this->Basico_model->get_dt_validade() === FALSE){
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'produtos/tela_valor/' . $_SESSION['Valor']['idTab_Valor'] . $data['msg']);
+				
+			} else {
+                
+				if ($data['auditoriaitem'] && !$data['update']['valor']['bd']) {
+					$data['msg'] = '?m=2';
+					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+					$this->basico->erro($msg);
+					$this->load->view('produtos/form_valor', $data);
+				} else {
+
+					$data['msg'] = '?m=1';
+					redirect(base_url() . 'produtos/tela_valor/' . $data['valor']['idTab_Valor'] . $data['msg']);
+					
+					exit();
 				}
-
-                if (count($data['update']['valor']['inserir']))
-                    $data['update']['valor']['bd']['inserir'] = $this->Produtos_model->set_valor($data['update']['valor']['inserir']);
-
-                if (count($data['update']['valor']['alterar']))
-                    $data['update']['valor']['bd']['alterar'] =  $this->Produtos_model->update_valor($data['update']['valor']['alterar']);
-
-                if (count($data['update']['valor']['excluir']))
-                    $data['update']['valor']['bd']['excluir'] = $this->Produtos_model->delete_valor($data['update']['valor']['excluir']);
-
-            }
-				
-            if ($data['auditoriaitem'] && !$data['update']['produtos']['bd']) {
-                $data['msg'] = '?m=2';
-                $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-
-                $this->basico->erro($msg);
-                $this->load->view('produtos/form_produtos', $data);
-            } else {
-
-                $data['msg'] = '?m=1';
-				redirect(base_url() . 'produtos/tela_precos/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
-				
-                exit();
-            }
+			}
         }
 
         $this->load->view('basico/footer');
@@ -1248,6 +1323,8 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
 
@@ -1315,82 +1392,91 @@ class Produtos extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('produtos/form_valor', $data);
-        } else {
-            ////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
-			/*
-			echo '<br>';
-			echo "<pre>";
-			print_r($data['valor']);
-			echo "</pre>";
-			exit ();
-			*/
-            #### Tab_Valor ####
-			$data['valor']['Item_Promocao'] = "1";
-			$data['valor']['Desconto'] = 1;
-			$data['valor']['idTab_Promocao'] = 1;
-			$data['valor']['idTab_Produto'] = $_SESSION['Valor']['idTab_Produto'];
-			$data['valor']['idTab_Catprod'] = $_SESSION['Valor']['idTab_Catprod'];
-			$data['valor']['Convdesc'] = trim(mb_strtoupper($convdesc1, 'UTF-8'));	
-
-			if(empty($data['valor']['ValorProduto'])){
-				$data['valor']['ValorProduto'] = "0.00";
-			}else{
-				$data['valor']['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ValorProduto']));			
-			}
-			
-			if(empty($data['valor']['ComissaoVenda'])){
-				$data['valor']['ComissaoVenda'] = "0.00";
-			}else{
-				$data['valor']['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoVenda']));			
-			}			
-			
-			if(empty($data['valor']['ComissaoServico'])){
-				$data['valor']['ComissaoServico'] = "0.00";
-			}else{
-				$data['valor']['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoServico']));			
-			}			
-			
-			if(empty($data['valor']['ComissaoCashBack'])){
-				$data['valor']['ComissaoCashBack'] = "0.00";
-			}else{
-				$data['valor']['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoCashBack']));			
-			}			
-			
-			if(empty($data['valor']['QtdProdutoDesconto'])){
-				$data['valor']['QtdProdutoDesconto'] = "1";
-			}
-						
-			if(empty($data['valor']['QtdProdutoIncremento'])){
-				$data['valor']['QtdProdutoIncremento'] = "1";
-			}
-						
-			if(empty($data['valor']['TempoDeEntrega'])){
-				$data['valor']['TempoDeEntrega'] = "0";
-			}
-			
-			$data['update']['valor']['anterior'] = $this->Produtos_model->get_valor($data['valor']['idTab_Valor']);
-            $data['update']['valor']['campos'] = array_keys($data['valor']);
-            $data['update']['valor']['auditoriaitem'] = $this->basico->set_log(
-                $data['update']['valor']['anterior'],
-                $data['valor'],
-                $data['update']['valor']['campos'],
-                $data['valor']['idTab_Valor'], TRUE);
-            $data['update']['valor']['bd'] = $this->Produtos_model->update_valor1($data['valor'], $data['valor']['idTab_Valor']);
-			
-            if ($data['auditoriaitem'] && !$data['update']['valor']['bd']) {
-                $data['msg'] = '?m=2';
-                $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-
-                $this->basico->erro($msg);
-                $this->load->view('produtos/form_valor', $data);
-            } else {
-
-                $data['msg'] = '?m=1';
-				//redirect(base_url() . 'produtos/tela_valor/' . $data['valor']['idTab_Valor'] . $data['msg']);
-				redirect(base_url() . 'produtos/tela_precos/' . $_SESSION['Valor']['idTab_Produtos'] . $data['msg']);
+        
+		} else {
+ 			
+			if($this->Basico_model->get_dt_validade() === FALSE){
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'produtos/alterar_valor/' . $_SESSION['Valor']['idTab_Valor'] . $data['msg']);
 				
-                exit();
-            }
+			} else {
+                				
+				////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
+				/*
+				echo '<br>';
+				echo "<pre>";
+				print_r($data['valor']);
+				echo "</pre>";
+				exit ();
+				*/
+				#### Tab_Valor ####
+				$data['valor']['Item_Promocao'] = "1";
+				$data['valor']['Desconto'] = 1;
+				$data['valor']['idTab_Promocao'] = 1;
+				$data['valor']['idTab_Produto'] = $_SESSION['Valor']['idTab_Produto'];
+				$data['valor']['idTab_Catprod'] = $_SESSION['Valor']['idTab_Catprod'];
+				$data['valor']['Convdesc'] = trim(mb_strtoupper($convdesc1, 'UTF-8'));	
+
+				if(empty($data['valor']['ValorProduto'])){
+					$data['valor']['ValorProduto'] = "0.00";
+				}else{
+					$data['valor']['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ValorProduto']));			
+				}
+				
+				if(empty($data['valor']['ComissaoVenda'])){
+					$data['valor']['ComissaoVenda'] = "0.00";
+				}else{
+					$data['valor']['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoVenda']));			
+				}			
+				
+				if(empty($data['valor']['ComissaoServico'])){
+					$data['valor']['ComissaoServico'] = "0.00";
+				}else{
+					$data['valor']['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoServico']));			
+				}			
+				
+				if(empty($data['valor']['ComissaoCashBack'])){
+					$data['valor']['ComissaoCashBack'] = "0.00";
+				}else{
+					$data['valor']['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoCashBack']));			
+				}			
+				
+				if(empty($data['valor']['QtdProdutoDesconto'])){
+					$data['valor']['QtdProdutoDesconto'] = "1";
+				}
+							
+				if(empty($data['valor']['QtdProdutoIncremento'])){
+					$data['valor']['QtdProdutoIncremento'] = "1";
+				}
+							
+				if(empty($data['valor']['TempoDeEntrega'])){
+					$data['valor']['TempoDeEntrega'] = "0";
+				}
+				
+				$data['update']['valor']['anterior'] = $this->Produtos_model->get_valor($data['valor']['idTab_Valor']);
+				$data['update']['valor']['campos'] = array_keys($data['valor']);
+				$data['update']['valor']['auditoriaitem'] = $this->basico->set_log(
+					$data['update']['valor']['anterior'],
+					$data['valor'],
+					$data['update']['valor']['campos'],
+					$data['valor']['idTab_Valor'], TRUE);
+				$data['update']['valor']['bd'] = $this->Produtos_model->update_valor1($data['valor'], $data['valor']['idTab_Valor']);
+				
+				if ($data['auditoriaitem'] && !$data['update']['valor']['bd']) {
+					$data['msg'] = '?m=2';
+					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+					$this->basico->erro($msg);
+					$this->load->view('produtos/form_valor', $data);
+				} else {
+
+					$data['msg'] = '?m=1';
+					//redirect(base_url() . 'produtos/tela_valor/' . $data['valor']['idTab_Valor'] . $data['msg']);
+					redirect(base_url() . 'produtos/tela_precos/' . $_SESSION['Valor']['idTab_Produtos'] . $data['msg']);
+					
+					exit();
+				}
+			}
         }
 
         $this->load->view('basico/footer');

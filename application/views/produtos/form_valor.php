@@ -1,5 +1,3 @@
-
-
 <div class="col-md-12 ">	
 	<?php #echo validation_errors(); ?>
 	
@@ -298,7 +296,7 @@
 									
 										<input type="hidden" name="idTab_Valor" id="idTab_Valor" value="<?php echo $valor['idTab_Valor']; ?>">
 										
-										<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) || ($_SESSION['log']['idSis_Empresa'] == 5))  { ?>
+										<?php if($this->Basico_model->get_dt_validade()) { ?>
 											<div class="row">
 												<div class="col-md-12">
 													<?php if ($metodo > 1) { ?>
@@ -325,13 +323,13 @@
 															</div>
 														<?php }elseif($metodo == 6){ ?>
 															<div class="col-md-2">
-																<label >Este Preço e Prazo</label><br>
+																<label >Editar Este</label><br>
 																<a class="btn btn-warning btn-block" name="submeter" id="submeter" onclick="DesabilitaBotao(this.name)" href="<?php echo base_url() . 'produtos/alterar_valor/' . $valor['idTab_Valor'] ?>" role="button">
 																	<span class="glyphicon glyphicon-edit"></span> Editar
 																</a>
 															</div>
 															<div class="col-md-2">
-																<label >Todos os Preços e Prazos</label><br>
+																<label >Editar Todos</label><br>
 																<a class="btn btn-warning btn-block" name="submeter2" id="submeter2" onclick="DesabilitaBotao(this.name)" href="<?php echo base_url() . 'produtos/alterar_precos/' . $_SESSION['Valor']['idTab_Produtos'] ?>" role="button">
 																	<span class="glyphicon glyphicon-edit"></span> Editar
 																</a>
