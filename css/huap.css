@@ -245,6 +245,24 @@ Para o alinhamento do modal da agenda, centralizando em relação a tela
   border-bottom: 1px solid transparent; 	  
 }
 
+.flash {
+	animation-name: flash;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes flash {
+	0% {
+		background: #EC971F;
+	}
+	50% {
+		background: #FAF203;
+	}
+	100% {
+		background: #EC971F;
+	}
+}
+
 @media (max-width: 343px) {	
 	.btn-larg-right{
 		/*margin-top: 20px;*/

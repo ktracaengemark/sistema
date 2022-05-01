@@ -83,7 +83,16 @@
 				</li>
 				<li class="botoesnav">								
 					<div class="btn-group">
-						<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+						<?php
+							$data1 = new DateTime(); 
+							$data2 = new DateTime($_SESSION['log']['DataDeValidade']); 
+							if (($data2 <= $data1) && ($_SESSION['log']['idSis_Empresa'] != 5)){
+								$atua_flash = 'flash';
+							}else{
+								$atua_flash = '';
+							}
+						?>
+						<button type="button" class="<?php echo $atua_flash ?> btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
 							
 							<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
 								
