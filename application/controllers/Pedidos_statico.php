@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Pedidos extends CI_Controller {
+class Pedidos_statico extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -17,7 +17,7 @@ class Pedidos extends CI_Controller {
         $this->load->driver('session');
 
         #load header view
-        $this->load->view('basico/header_refresh_pedido');
+        $this->load->view('basico/header');
         $this->load->view('basico/nav_principal');
 
         #$this->load->view('relatorio/nav_secundario');
@@ -193,8 +193,8 @@ class Pedidos extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();		
 		
-        $data['titulo'] = 'Dinâmico';
-        $data['form_open_path'] = 'Pedidos/pedidos';
+        $data['titulo'] = 'Estático';
+        $data['form_open_path'] = 'Pedidos_statico/pedidos';
 		$data['comissao'] = 'relatorio/comissao/';
         $data['status'] = 'Orcatrata/alterarstatus/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
@@ -204,7 +204,7 @@ class Pedidos extends CI_Controller {
         $data['panel'] = 'info';
         $data['metodo'] = 1;
 		$data['paginacao'] = 'N';
-        $data['pedidos'] = 'Pedidos';
+        $data['pedidos'] = 'Pedidos_statico';
 
 		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -245,14 +245,14 @@ class Pedidos extends CI_Controller {
 			$data['bd']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
 			$data['bd']['AVAP'] = $data['query']['AVAP'];
 			//$data['bd']['selecione'] = $data['query']['selecione'];
-	
+
 			$data['report_combinar'] = $this->Pedidos_model->list_pedidos_combinar($data['bd'],TRUE, TRUE);
 			$data['report_aprovar'] = $this->Pedidos_model->list_pedidos_aprovar($data['bd'],TRUE, TRUE);
 			$data['report_producao'] = $this->Pedidos_model->list_pedidos_producao($data['bd'],TRUE, TRUE);
 			$data['report_envio'] = $this->Pedidos_model->list_pedidos_envio($data['bd'],TRUE, TRUE);
 			$data['report_entrega'] = $this->Pedidos_model->list_pedidos_entrega($data['bd'],TRUE, TRUE);
 			$data['report_pagamento'] = $this->Pedidos_model->list_pedidos_pagamento($data['bd'],TRUE, TRUE);
-	
+			
             /*
 			$data['report_pagonline'] = $this->Pedidos_model->list_pedidos_pagonline($data['bd'],TRUE);
 			*/
@@ -405,8 +405,8 @@ class Pedidos extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();		
 		
-        $data['titulo'] = 'Dinâmico';
-        $data['form_open_path'] = 'Pedidos/pedidos_combinar';
+        $data['titulo'] = 'Estático';
+        $data['form_open_path'] = 'Pedidos_statico/pedidos_combinar';
 		$data['comissao'] = 'relatorio/comissao/';
         $data['status'] = 'Orcatrata/alterarstatus/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
@@ -416,7 +416,7 @@ class Pedidos extends CI_Controller {
         $data['panel'] = 'info';
         $data['metodo'] = 1;	
 		$data['paginacao'] = 'N';
-        $data['pedidos'] = 'Pedidos';
+        $data['pedidos'] = 'Pedidos_statico';
 
         $_SESSION['FiltroPedidos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
 		$_SESSION['FiltroPedidos']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
@@ -498,7 +498,7 @@ class Pedidos extends CI_Controller {
 			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_combinar($data['bd'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			$config['total_rows'] = $this->Pedidos_model->list_pedidos_combinar($data['bd'],TRUE, TRUE);
-			$config['base_url'] = base_url() . 'Pedidos_pag/pedidos_combinar_pag/';
+			$config['base_url'] = base_url() . 'Pedidos_statico_pag/pedidos_combinar_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -697,8 +697,8 @@ class Pedidos extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();		
 		
-        $data['titulo'] = 'Dinâmico';
-        $data['form_open_path'] = 'Pedidos/pedidos_aprovar';
+        $data['titulo'] = 'Estático';
+        $data['form_open_path'] = 'Pedidos_statico/pedidos_aprovar';
 		$data['comissao'] = 'relatorio/comissao/';
         $data['status'] = 'Orcatrata/alterarstatus/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
@@ -708,7 +708,7 @@ class Pedidos extends CI_Controller {
         $data['panel'] = 'info';
         $data['metodo'] = 1;	
 		$data['paginacao'] = 'N';
-        $data['pedidos'] = 'Pedidos';
+        $data['pedidos'] = 'Pedidos_statico';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -754,7 +754,7 @@ class Pedidos extends CI_Controller {
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			
 			$config['total_rows'] = $this->Pedidos_model->list_pedidos_aprovar($data['bd'], TRUE, TRUE);
-			$config['base_url'] = base_url() . 'Pedidos_pag/pedidos_aprovar_pag/';
+			$config['base_url'] = base_url() . 'Pedidos_statico_pag/pedidos_aprovar_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -950,8 +950,8 @@ class Pedidos extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();		
 		
-        $data['titulo'] = 'Dinâmico';
-        $data['form_open_path'] = 'Pedidos/pedidos_producao';
+        $data['titulo'] = 'Estático';
+        $data['form_open_path'] = 'Pedidos_statico/pedidos_producao';
 		$data['comissao'] = 'relatorio/comissao/';
         $data['status'] = 'Orcatrata/alterarstatus/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
@@ -961,7 +961,7 @@ class Pedidos extends CI_Controller {
         $data['panel'] = 'info';
         $data['metodo'] = 1;	
 		$data['paginacao'] = 'N';
-        $data['pedidos'] = 'Pedidos';
+        $data['pedidos'] = 'Pedidos_statico';
 
         $_SESSION['FiltroPedidos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
 		$_SESSION['FiltroPedidos']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
@@ -1043,7 +1043,7 @@ class Pedidos extends CI_Controller {
 			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_producao($data['bd'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			$config['total_rows'] = $this->Pedidos_model->list_pedidos_producao($data['bd'],TRUE, TRUE);
-			$config['base_url'] = base_url() . 'Pedidos_pag/pedidos_producao_pag/';
+			$config['base_url'] = base_url() . 'Pedidos_statico_pag/pedidos_producao_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -1241,8 +1241,8 @@ class Pedidos extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();		
 		
-        $data['titulo'] = 'Dinâmico';
-        $data['form_open_path'] = 'Pedidos/pedidos_envio';
+        $data['titulo'] = 'Estático';
+        $data['form_open_path'] = 'Pedidos_statico/pedidos_envio';
 		$data['comissao'] = 'relatorio/comissao/';
         $data['status'] = 'Orcatrata/alterarstatus/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
@@ -1252,7 +1252,7 @@ class Pedidos extends CI_Controller {
         $data['panel'] = 'info';
         $data['metodo'] = 1;	
 		$data['paginacao'] = 'N';
-        $data['pedidos'] = 'Pedidos';
+        $data['pedidos'] = 'Pedidos_statico';
 
         $_SESSION['FiltroPedidos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
 		$_SESSION['FiltroPedidos']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
@@ -1334,7 +1334,7 @@ class Pedidos extends CI_Controller {
 			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_envio($data['bd'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			$config['total_rows'] = $this->Pedidos_model->list_pedidos_envio($data['bd'],TRUE, TRUE);
-			$config['base_url'] = base_url() . 'Pedidos_pag/pedidos_envio_pag/';
+			$config['base_url'] = base_url() . 'Pedidos_statico_pag/pedidos_envio_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -1532,8 +1532,8 @@ class Pedidos extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();		
 		
-        $data['titulo'] = 'Dinâmico';
-        $data['form_open_path'] = 'Pedidos/pedidos_entrega';
+        $data['titulo'] = 'Estático';
+        $data['form_open_path'] = 'Pedidos_statico/pedidos_entrega';
 		$data['comissao'] = 'relatorio/comissao/';
         $data['status'] = 'Orcatrata/alterarstatus/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
@@ -1543,7 +1543,7 @@ class Pedidos extends CI_Controller {
         $data['panel'] = 'info';
         $data['metodo'] = 1;	
 		$data['paginacao'] = 'N';
-        $data['pedidos'] = 'Pedidos';
+        $data['pedidos'] = 'Pedidos_statico';
 
         $_SESSION['FiltroPedidos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
 		$_SESSION['FiltroPedidos']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
@@ -1625,7 +1625,7 @@ class Pedidos extends CI_Controller {
 			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_entrega($data['bd'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			$config['total_rows'] = $this->Pedidos_model->list_pedidos_entrega($data['bd'],TRUE, TRUE);
-			$config['base_url'] = base_url() . 'Pedidos_pag/pedidos_entrega_pag/';
+			$config['base_url'] = base_url() . 'Pedidos_statico_pag/pedidos_entrega_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -1823,8 +1823,8 @@ class Pedidos extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();		
 		
-        $data['titulo'] = 'Dinâmico';
-        $data['form_open_path'] = 'Pedidos/pedidos_pagamento';
+        $data['titulo'] = 'Estático';
+        $data['form_open_path'] = 'Pedidos_statico/pedidos_pagamento';
 		$data['comissao'] = 'relatorio/comissao/';
         $data['status'] = 'Orcatrata/alterarstatus/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
@@ -1834,7 +1834,7 @@ class Pedidos extends CI_Controller {
         $data['panel'] = 'info';
         $data['metodo'] = 1;	
 		$data['paginacao'] = 'N';
-        $data['pedidos'] = 'Pedidos';
+        $data['pedidos'] = 'Pedidos_statico';
 
         $_SESSION['FiltroPedidos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
 		$_SESSION['FiltroPedidos']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
@@ -1916,7 +1916,7 @@ class Pedidos extends CI_Controller {
 			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_pagamento($data['bd'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			$config['total_rows'] = $this->Pedidos_model->list_pedidos_pagamento($data['bd'],TRUE, TRUE);
-			$config['base_url'] = base_url() . 'Pedidos_pag/pedidos_pagamento_pag/';
+			$config['base_url'] = base_url() . 'Pedidos_statico_pag/pedidos_pagamento_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;

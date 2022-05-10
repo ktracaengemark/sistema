@@ -105,65 +105,6 @@ class Pedidos2 extends CI_Controller {
 			'TipoFrete',
 			'selecione',
 		), TRUE));
-		
-		$data['query']['selecione'] = 'SELECT 
-                C.idApp_Cliente,
-				C.NomeCliente,
-				C.CelularCliente,
-				OT.Descricao,
-				OT.idApp_OrcaTrata,
-				OT.AprovadoOrca,
-				DATE_FORMAT(OT.DataOrca, "%d/%m/%Y") AS DataOrca,
-				DATE_FORMAT(OT.DataEntregaOrca, "%d/%m/%Y") AS DataEntregaOrca,
-				DATE_FORMAT(OT.HoraEntregaOrca, "%H:%i") AS HoraEntregaOrca,
-				OT.DataEntradaOrca,
-				OT.DataPrazo,
-                OT.ValorOrca,
-				OT.ValorDev,				
-				OT.ValorEntradaOrca,
-				OT.ValorRestanteOrca,
-				OT.DataVencimentoOrca,
-                OT.ConcluidoOrca,
-                OT.QuitadoOrca,
-				OT.FinalizadoOrca,
-				OT.CanceladoOrca,
-				OT.EnviadoOrca,
-				OT.ProntoOrca,
-                OT.DataConclusao,
-                OT.DataQuitado,
-				OT.DataRetorno,
-				OT.idTab_TipoRD,
-				OT.FormaPagamento,
-				OT.ObsOrca,
-				OT.QtdParcelasOrca,
-				OT.Tipo_Orca,
-				OT.CombinadoFrete,
-                PR.idSis_Empresa,
-				PR.Parcela,
-				CONCAT(PR.Parcela) AS Parcela,
-                DATE_FORMAT(PR.DataVencimento, "%d/%m/%Y") AS DataVencimento,
-                PR.ValorParcela,
-                PR.DataPago,
-                PR.ValorPago,
-                PR.Quitado,
-				PRD.NomeProduto,
-				PRD.ConcluidoProduto,
-				TF.TipoFrete,
-				MD.Modalidade,
-				VP.Abrev2,
-				VP.AVAP,
-				TFP.FormaPag,
-				TR.TipoFinanceiro
-			FROM 
-                App_OrcaTrata AS OT
-					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
-					LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
-					LEFT JOIN App_Parcelas AS PR ON OT.idApp_OrcaTrata = PR.idApp_OrcaTrata
-					LEFT JOIN App_Produto AS PRD ON PRD.idApp_OrcaTrata = OT.idApp_OrcaTrata
-					LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
-					LEFT JOIN Tab_Modalidade AS MD ON MD.Abrev = OT.Modalidade
-					LEFT JOIN Tab_AVAP AS VP ON VP.Abrev2 = OT.AVAP
-					LEFT JOIN Tab_TipoFrete AS TF ON TF.idTab_TipoFrete = OT.TipoFrete';			
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -240,8 +181,7 @@ class Pedidos2 extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
-		
-		
+
 		$data['select']['NomeFornecedor'] = $this->Relatorio_model->select_fornecedor();
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
 		$data['select']['Orcades'] = $this->Relatorio_model->select_orcades();
@@ -266,6 +206,8 @@ class Pedidos2 extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'info';
         $data['metodo'] = 1;
+		$data['paginacao'] = 'N';
+        $data['pedidos'] = 'Pedidos';
 
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
@@ -303,33 +245,19 @@ class Pedidos2 extends CI_Controller {
 			$data['bd']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
 			$data['bd']['AVAP'] = $data['query']['AVAP'];
 			$data['bd']['selecione'] = $data['query']['selecione'];
-
-            $data['report_combinar'] = $this->Pedidos_model->list_pedidos_combinar($data['bd'],TRUE);
-			$data['report_aprovar'] = $this->Pedidos_model->list_pedidos_aprovar($data['bd'],TRUE);
-            $data['report_pagonline'] = $this->Pedidos_model->list_pedidos_pagonline($data['bd'],TRUE);
-            $data['report_producao'] = $this->Pedidos_model->list_pedidos_producao($data['bd'],TRUE);
-            $data['report_envio'] = $this->Pedidos_model->list_pedidos_envio($data['bd'],TRUE);
-            $data['report_entrega'] = $this->Pedidos_model->list_pedidos_entrega($data['bd'],TRUE);
-            $data['report_pagamento'] = $this->Pedidos_model->list_pedidos_pagamento($data['bd'],TRUE);
 			
-			$data['pesquisar'] = $this->Pedidos_model->list_pedidos_pesquisar($data['bd'],TRUE);
-			
-			if ($data['pesquisar']->num_rows() == 1) {
-				$info = $data['pesquisar']->result_array();
-				
-				redirect('orcatrata/alterarstatus/' . $info[0]['idApp_OrcaTrata'] );
 
-				exit();
-				
-			} else {
-				$data['list_combinar'] = $this->load->view('pedidos/list_pedidos_combinar', $data, TRUE);
-				$data['list_aprovar'] = $this->load->view('pedidos/list_pedidos_aprovar', $data, TRUE);
-				$data['list_pagonline'] = $this->load->view('pedidos/list_pedidos_pagonline', $data, TRUE);
-				$data['list_producao'] = $this->load->view('pedidos/list_pedidos_producao', $data, TRUE);
-				$data['list_envio'] = $this->load->view('pedidos/list_pedidos_envio', $data, TRUE);
-				$data['list_entrega'] = $this->load->view('pedidos/list_pedidos_entrega', $data, TRUE);
-				$data['list_pagamento'] = $this->load->view('pedidos/list_pedidos_pagamento', $data, TRUE);
-			}
+			$data['report_combinar'] = $this->Pedidos_model->list_pedidos_combinar($data['bd'],TRUE, TRUE);
+			$data['report_aprovar'] = $this->Pedidos_model->list_pedidos_aprovar($data['bd'],TRUE, TRUE);
+			$data['report_producao'] = $this->Pedidos_model->list_pedidos_producao($data['bd'],TRUE, TRUE);
+			$data['report_envio'] = $this->Pedidos_model->list_pedidos_envio($data['bd'],TRUE, TRUE);
+			$data['report_entrega'] = $this->Pedidos_model->list_pedidos_entrega($data['bd'],TRUE, TRUE);
+			$data['report_pagamento'] = $this->Pedidos_model->list_pedidos_pagamento($data['bd'],TRUE, TRUE);
+		
+			/*
+			$data['report_pagonline'] = $this->Pedidos_model->list_pedidos_pagonline($data['bd'],TRUE);
+			*/
+
         }
 
         $this->load->view('pedidos/tela_pedidos', $data);

@@ -49,9 +49,9 @@
 						</button>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="<?php echo base_url() ?>pedidos/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor de Receitas Dinamico</a></li>
-							<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>
 								<li role="separator" class="divider"></li>
-								<li><a href="<?php echo base_url() ?>orcatrata/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor de Receitas Statico</a></li>
+							<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>
+								<li><a href="<?php echo base_url() ?>pedidos_statico/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor de Receitas Statico</a></li>
 							<?php } ?>
 							<?php if ($_SESSION['log']['idSis_Empresa'] == 5 ) { ?>
 								<li role="separator" class="divider"></li>

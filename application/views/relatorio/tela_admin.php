@@ -77,7 +77,7 @@
 											<label for=""><h4><b>Receitas</b></h4></label>
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
-													<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>orcatrata/pedidos" role="button"> 
+													<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>pedidos_statico/pedidos" role="button"> 
 														<span class="glyphicon glyphicon-pencil"></span> Gestor de Receitas Estático
 													</a>											
 												</div>	
