@@ -97,8 +97,8 @@
 										<label for=""><h4><b>Receitas</b></h4></label>
 										<div class="form-group col-md-12 text-left">
 											<div class="row">		
-												<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>orcatrata/pedidos" role="button"> 
-													<span class="glyphicon glyphicon-pencil"></span> Gestor de Receitas Estático
+												<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>pedidos_statico/pedidos" role="button"> 
+													<span class="glyphicon glyphicon-pencil"></span> Gestor de Receitas Estatico
 												</a>											
 											</div>	
 										</div>
@@ -340,8 +340,8 @@
 											<label for=""><h4><b>Despesas</b></h4></label>
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
-													<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>despesas/despesas" role="button"> 
-														<span class="glyphicon glyphicon-pencil"></span> Gestor de Despesas Estático
+													<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>despesas_statico/despesas" role="button"> 
+														<span class="glyphicon glyphicon-pencil"></span> Gestor de Despesas Estatico
 													</a>											
 												</div>	
 											</div>

@@ -15447,7 +15447,7 @@ class Orcatrata extends CI_Controller {
 
         $this->load->view('basico/footer');
     }	
-    
+    /*
     public function pedidos() {
 
         if ($this->input->get('m') == 1)
@@ -15732,7 +15732,7 @@ class Orcatrata extends CI_Controller {
 
         $this->load->view('basico/footer');
     }
-
+	*/
 	public function arquivos($id = FALSE) {
 
         if ($this->input->get('m') == 1)
