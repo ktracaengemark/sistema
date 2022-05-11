@@ -22,7 +22,7 @@
 		</div>			
 
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-			<h2 class="ser-title">Navegador! (150 x 66)px</h2>
+			<h2 class="ser-title">Navegador! (1240 x 528)px</h2>
 			<?php if (isset($list3)) echo $list3; ?>
 		</div>			
 		<hr class="botm-line">
