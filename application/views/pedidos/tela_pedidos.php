@@ -6,7 +6,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
 				<div class="panel panel-info">
 					<div class="panel-heading">
-						<label>Gestor <?php echo $titulo; ?></label>
+						Gestor <b><?php echo $titulo; ?></b> de Receitas
 						<div class="row">
 							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 ">
 								<?php if($_SESSION['log']['idSis_Empresa'] == 5){ ?>
@@ -52,11 +52,13 @@
 								<?php }else{ ?>
 									<input type="hidden" name="Cliente" id="Cliente" value=""/>
 								<?php } ?>
+								<!--
 								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 ">
 									<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
 										<span class="glyphicon glyphicon-filter"></span>
 									</button>
 								</div>
+								-->
 							<?php }else{ ?>
 							
 							<?php } ?>
