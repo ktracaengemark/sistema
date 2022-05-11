@@ -78,7 +78,7 @@
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
 													<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>pedidos_statico/pedidos" role="button"> 
-														<span class="glyphicon glyphicon-pencil"></span> Gestor de Receitas Estático
+														<span class="glyphicon glyphicon-pencil"></span> Gestor Estatico de Receitas 
 													</a>											
 												</div>	
 											</div>
@@ -98,7 +98,7 @@
 										<div class="form-group col-md-12 text-left">
 											<div class="row">		
 												<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>pedidos_statico/pedidos" role="button"> 
-													<span class="glyphicon glyphicon-pencil"></span> Gestor de Receitas Estatico
+													<span class="glyphicon glyphicon-pencil"></span> Gestor de Estatico Receitas 
 												</a>											
 											</div>	
 										</div>
@@ -341,7 +341,7 @@
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
 													<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>despesas_statico/despesas" role="button"> 
-														<span class="glyphicon glyphicon-pencil"></span> Gestor de Despesas Estatico
+														<span class="glyphicon glyphicon-pencil"></span> Gestor Estatico de Despesas
 													</a>											
 												</div>	
 											</div>
