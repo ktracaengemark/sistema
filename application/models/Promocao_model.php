@@ -76,12 +76,29 @@ class Promocao_model extends CI_Model {
             return $this->db->insert_id();
         }
     }
+
+    public function get_catprom($data) {
+		$query = $this->db->query('
+			SELECT
+				TPM.*
+			FROM 
+				Tab_Catprom AS TPM
+			WHERE 
+				idTab_Catprom = ' . $data . '
+		');
+        $query = $query->result_array();
+
+        //return $query;
+		return $query[0];
+		}
 	
     public function get_promocao($data) {
         $query = $this->db->query('
 			SELECT  
 				TPM.*,
-				TCT.*
+				TPM.Arquivo AS ArquivoPromocao,
+				TCT.*,
+				TCT.Arquivo AS ArquivoCatprom
 			FROM 
 				Tab_Promocao AS TPM
 					LEFT JOIN Tab_Catprom AS TCT ON TCT.idTab_Catprom = TPM.idTab_Catprom
@@ -356,6 +373,14 @@ class Promocao_model extends CI_Model {
                 return $query;
             }
         }
+    }
+	
+    public function update_catprom($data, $id) {
+
+        unset($data['idTab_Catprom']);
+        $query = $this->db->update('Tab_Catprom', $data, array('idTab_Catprom' => $id));
+        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
+
     }
 	
     public function update_promocao($data, $id) {

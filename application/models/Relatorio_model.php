@@ -5151,8 +5151,10 @@ exit();*/
         $query = $this->db->query('
             SELECT
                 TPM.*,
+				TPM.Arquivo AS ArquivoPromocao,
                 TDS.*,
                 TCT.*,
+				TCT.Arquivo AS ArquivoCatprom,
 				SUM(TV.ValorProduto) AS SubTotal2
             FROM
                 Tab_Promocao AS TPM

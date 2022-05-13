@@ -513,6 +513,14 @@ class Basico {
 		$data = rand() . '_' . 'prodaux2' . '_' . $_SESSION['Produtos']['idTab_Prodaux2'] . '_' . $_SESSION['Empresa']['idSis_Empresa'] . $extensao;
 		return $data;
     }	
+
+    function renomeiacatprom($data) {
+		$extensao	= explode('.', $data);
+		$extensao	= end($extensao);
+		$extensao	= '.' . $extensao;
+		$data = rand() . '_' . 'catprom' . '_' . $_SESSION['Catprom']['idTab_Catprom'] . '_' . $_SESSION['Empresa']['idSis_Empresa'] . $extensao;
+		return $data;
+    }	
 	
     function renomeiapromocao($data) {
 		$extensao	= explode('.', $data);

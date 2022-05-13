@@ -15,10 +15,12 @@
 
 					<thead>
 						<tr>
-							<th class="active" scope="col">Foto</th>
+							<th class="active" scope="col">Im.CT</th>
+							<th class="active">Id.CT</th>
+							<th class="active" scope="col">Im.Prom</th>
+							<th class="active">Id</th>
 							<th class="active" scope="col">Editar</th>
 							<th class="active">Ativo</th>
-							<th class="active">Id</th>
 							<th class="active">Tipo</th>
 							<th class="active">Categoria</th>
 							<th class="active">Titulo</th>
@@ -32,12 +34,19 @@
 						foreach ($report->result_array() as $row) {?>
 
 					<!--<tr class="clickable-row" data-href="<?php echo base_url() . 'promocao/alterarlogo/' . $row['idTab_Promocao'] . ''; ?>">-->
-						<tr>	
+						<tr>
 							<td class="notclickable">
-								<a class="notclickable" href="<?php echo base_url() . 'promocao/alterarlogo/' . $row['idTab_Promocao'] . ''; ?>">
-									<img  alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $row['Arquivo'] . ''; ?> "class="img-circle img-responsive" width='100'>
+								<a class="notclickable" href="<?php echo base_url() . 'promocao/alterarlogocatprom/' . $row['idTab_Catprom'] . ''; ?>">
+									<img  alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $row['ArquivoCatprom'] . ''; ?> "class="img-circle img-responsive" width='50'>
 								</a>
 							</td>
+							<td><?php echo $row['idTab_Catprom'] ?></td>	
+							<td class="notclickable">
+								<a class="notclickable" href="<?php echo base_url() . 'promocao/alterarlogo/' . $row['idTab_Promocao'] . ''; ?>">
+									<img  alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $row['ArquivoPromocao'] . ''; ?> "class="img-circle img-responsive" width='50'>
+								</a>
+							</td>
+							<td><?php echo $row['idTab_Promocao'] ?></td>
 							<td class="notclickable">
 								<a class="btn btn-md btn-info notclickable" href="<?php echo base_url() . 'promocao/tela_promocao/' . $row['idTab_Promocao'] . ''; ?>">
 									<span class="glyphicon glyphicon-edit notclickable"></span>
@@ -45,7 +54,6 @@
 							</td>						
 							<!--<td><img  alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $row['Arquivo'] . ''; ?> "class="img-circle img-responsive" width='100'></td>-->
 							<td><?php echo $row['Ativo'] ?></td>
-							<td><?php echo $row['idTab_Promocao'] ?></td>
 							<td><?php echo $row['Desconto'] ?></td>
 							<td><?php echo $row['Catprom'] ?></td>
 							<td><?php echo $row['Promocao'] ?></td>
