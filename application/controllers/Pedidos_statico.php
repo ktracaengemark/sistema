@@ -245,14 +245,36 @@ class Pedidos_statico extends CI_Controller {
 			$data['bd']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
 			$data['bd']['AVAP'] = $data['query']['AVAP'];
 			//$data['bd']['selecione'] = $data['query']['selecione'];
-
-			$data['report_combinar'] = $this->Pedidos_model->list_pedidos_combinar($data['bd'],TRUE, TRUE);
-			$data['report_aprovar'] = $this->Pedidos_model->list_pedidos_aprovar($data['bd'],TRUE, TRUE);
-			$data['report_producao'] = $this->Pedidos_model->list_pedidos_producao($data['bd'],TRUE, TRUE);
-			$data['report_envio'] = $this->Pedidos_model->list_pedidos_envio($data['bd'],TRUE, TRUE);
-			$data['report_entrega'] = $this->Pedidos_model->list_pedidos_entrega($data['bd'],TRUE, TRUE);
-			$data['report_pagamento'] = $this->Pedidos_model->list_pedidos_pagamento($data['bd'],TRUE, TRUE);
 			
+			if(isset($data['bd']['Orcamento']) && $data['bd']['Orcamento'] !=""){
+				
+				$data['pesquisar'] = $this->Pedidos_model->list_pedidos_pesquisar($data['bd'],TRUE);
+				
+				if ($data['pesquisar']->num_rows() == 1) {
+					
+					$info = $data['pesquisar']->result_array();
+					
+					redirect('orcatrata/alterarstatus/' . $info[0]['idApp_OrcaTrata'] );
+
+					exit();
+				}else{	
+				
+					$data['report_combinar'] = $this->Pedidos_model->list_pedidos_combinar($data['bd'],TRUE, TRUE);
+					$data['report_aprovar'] = $this->Pedidos_model->list_pedidos_aprovar($data['bd'],TRUE, TRUE);
+					$data['report_producao'] = $this->Pedidos_model->list_pedidos_producao($data['bd'],TRUE, TRUE);
+					$data['report_envio'] = $this->Pedidos_model->list_pedidos_envio($data['bd'],TRUE, TRUE);
+					$data['report_entrega'] = $this->Pedidos_model->list_pedidos_entrega($data['bd'],TRUE, TRUE);
+					$data['report_pagamento'] = $this->Pedidos_model->list_pedidos_pagamento($data['bd'],TRUE, TRUE);
+				}				
+			}else{
+				
+				$data['report_combinar'] = $this->Pedidos_model->list_pedidos_combinar($data['bd'],TRUE, TRUE);
+				$data['report_aprovar'] = $this->Pedidos_model->list_pedidos_aprovar($data['bd'],TRUE, TRUE);
+				$data['report_producao'] = $this->Pedidos_model->list_pedidos_producao($data['bd'],TRUE, TRUE);
+				$data['report_envio'] = $this->Pedidos_model->list_pedidos_envio($data['bd'],TRUE, TRUE);
+				$data['report_entrega'] = $this->Pedidos_model->list_pedidos_entrega($data['bd'],TRUE, TRUE);
+				$data['report_pagamento'] = $this->Pedidos_model->list_pedidos_pagamento($data['bd'],TRUE, TRUE);
+			}
             /*
 			$data['report_pagonline'] = $this->Pedidos_model->list_pedidos_pagonline($data['bd'],TRUE);
 			*/

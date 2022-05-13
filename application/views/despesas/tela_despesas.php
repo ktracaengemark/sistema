@@ -6,9 +6,9 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
 				<div class="panel panel-info">
 					<div class="panel-heading">
-						Gestor <b><?php echo $titulo; ?></b> de Despesas
 						<div class="row">
 							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 ">
+								<label>Gestor <b><?php echo $titulo; ?></b> de Despesas</label><br>
 								<?php if($_SESSION['log']['idSis_Empresa'] == 5){ ?>
 										<a class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>orcatrata/cadastrardesp" role="button"> 
 											<span class="glyphicon glyphicon-plus"></span> Nova Compra / Despesa
@@ -21,8 +21,9 @@
 									<?php } ?>
 								<?php } ?>
 							</div>
-							<?php if($paginacao == "N") { ?>
-								<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 text-left">
+							<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 text-left">
+								<label>Pesquisar Despesa</label><br>
+								<?php if($paginacao == "N") { ?>
 									<div class="input-group">
 										<span class="input-group-btn">
 											<button class="btn btn-primary btn-md" type="submit">
@@ -31,37 +32,12 @@
 										</span>
 										<input type="text" class="form-control Numero" placeholder="Nº Pedido" name="Orcamento" value="<?php echo set_value('Orcamento', $query['Orcamento']); ?>">
 									</div>
-								</div>
-								<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>
-									<input type="hidden" class="form-control Numero" placeholder="Pesquisar Fornecedor"  name="Fornecedor" value="<?php echo set_value('Fornecedor', $query['Fornecedor']); ?>">
-									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left">
-										<div class="input-group">
-											<span class="input-group-btn">
-												<button class="btn btn-primary btn-md" type="submit">
-													<span class="glyphicon glyphicon-search"></span> 
-												</button>
-											</span>
-											<input type="text" name="id_Fornecedor_Auto" id="id_Fornecedor_Auto" value="<?php echo $cadastrar['id_Fornecedor_Auto']; ?>" class="form-control" placeholder="Pesquisar Fornecedor">
-											
-										</div>
-										<span class="modal-title" id="NomeFornecedorAuto1"><?php echo $cadastrar['NomeFornecedorAuto']; ?></span>
-										<input type="hidden" id="NomeFornecedorAuto" name="NomeFornecedorAuto" value="<?php echo $cadastrar['NomeFornecedorAuto']; ?>" />
-										<input type="hidden" id="Hidden_id_Fornecedor_Auto" name="Hidden_id_Fornecedor_Auto" value="<?php echo $query['idApp_Fornecedor']; ?>" />
-										<input type="hidden" name="idApp_Fornecedor" id="idApp_Fornecedor" value="<?php echo $query['idApp_Fornecedor']; ?>" class="form-control" readonly= "">
-									</div>
 								<?php }else{ ?>
-									<input type="hidden" name="Fornecedor" id="Fornecedor" value=""/>
+									<a class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?><?php echo $despesas; ?>/despesas" role="button"> 
+										<span class="glyphicon glyphicon-search"></span> Pesquisar Despesa
+									</a>
 								<?php } ?>
-								<!--
-								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 ">
-									<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
-										<span class="glyphicon glyphicon-filter"></span>
-									</button>
-								</div>
-								-->
-							<?php }else{ ?>
-							
-							<?php } ?>
+							</div>
 						</div>	
 					</div>
 				</div>

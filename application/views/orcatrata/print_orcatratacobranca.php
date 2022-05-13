@@ -59,7 +59,8 @@
 																				. '<br>Tel.:' . $orcatrata[$i]['CelularCliente'] . ' / ' . $orcatrata[$i]['Telefone'] . ' / ' . $orcatrata[$i]['Telefone2'] . ' / ' . $orcatrata[$i]['Telefone3'] . ''
 																		?></td>
 							<td class="col-md-1 text-center" scope="col"><?php echo 'Data:<br><strong>'  . $orcatrata[$i]['DataOrca'] . '</strong>'
-																				. '<br><br>Recebedor:<br><strong>'  . $orcatrata[$i]['NomeRec'] . '</strong>'
+																				. '<br>Recebedor:<br><strong>'  . $orcatrata[$i]['NomeRec'] . '</strong>'
+																				. '<br>Obs:<br><strong>'  . $orcatrata[$i]['Descricao'] . '</strong>'
 																			?></td>
 							<td class="col-md-1 text-center" scope="col"><?php echo 'Orçamento:<br><strong>' . $orcatrata[$i]['idApp_OrcaTrata'] . '</strong>'
 																				. '<br><br>Valor Total:'
@@ -80,7 +81,8 @@
 																				. '<br>Tel.:' . $orcatrata[$i]['CelularCliente'] . ' / ' . $orcatrata[$i]['Telefone'] . ' / ' . $orcatrata[$i]['Telefone2'] . ' / ' . $orcatrata[$i]['Telefone3'] . ''
 																		?></td>
 							<td class="col-md-1 text-center" scope="col"><?php echo 'Data:<br><strong>'  . $orcatrata[$i]['DataOrca'] . '</strong>'
-																				. '<br><br>Recebedor:<br><strong>'  . $orcatrata[$i]['NomeRec'] . '</strong>'
+																				. '<br>Recebedor:<br><strong>'  . $orcatrata[$i]['NomeRec'] . '</strong>'
+																				. '<br>Obs:<br><strong>'  . $orcatrata[$i]['Descricao'] . '</strong>'
 																			?></td>
 							<td class="col-md-1 text-center" scope="col"><?php echo 'Orçamento:<br><strong>' . $orcatrata[$i]['idApp_OrcaTrata'] . '</strong>'
 																				. '<br><br>Valor Total:'

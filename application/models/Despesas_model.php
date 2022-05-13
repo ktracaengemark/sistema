@@ -177,8 +177,60 @@ class Despesas_model extends CI_Model {
         }		
 
     }
+    
+	public function list_despesas_pesquisar($data, $completo) {
 
-    public function list_despesas_pesquisar($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+		$data['Orcamento'] = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] : FALSE;
+
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$permissao_orcam = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+			$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+		}else{
+			if($_SESSION['Usuario']['Permissao_Orcam'] == 1){
+				$permissao_orcam = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+			}else{
+				$permissao_orcam = FALSE;
+			}
+			$permissao = FALSE;
+		}
+
+        $query = $this->db->query('
+			SELECT
+				OT.idApp_OrcaTrata
+			FROM
+				App_OrcaTrata AS OT
+			WHERE
+                OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				' . $permissao_orcam . '
+				' . $permissao . '
+				OT.idTab_TipoRD = "1" 
+                ' . $data['Orcamento'] . '
+			GROUP BY
+                OT.idApp_OrcaTrata
+			ORDER BY 
+				OT.idApp_OrcaTrata ASC
+				
+		');
+
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+          */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+            foreach ($query->result() as $row) {
+            }
+            return $query;
+        }		
+
+    }
+
+    public function list_despesas_pesquisar_funcionando($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		$date_inicio_orca = ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;
 		$date_fim_orca = ($data['DataFim']) ? 'OT.DataOrca <= "' . $data['DataFim'] . '" AND ' : FALSE;

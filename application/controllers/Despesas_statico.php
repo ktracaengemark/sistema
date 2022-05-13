@@ -245,14 +245,36 @@ class Despesas_statico extends CI_Controller {
 			$data['bd']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
 			$data['bd']['AVAP'] = $data['query']['AVAP'];
 			//$data['bd']['selecione'] = $data['query']['selecione'];
-
-			$data['report_combinar'] = $this->Despesas_model->list_despesas_combinar($data['bd'],TRUE, TRUE);
-			$data['report_aprovar'] = $this->Despesas_model->list_despesas_aprovar($data['bd'],TRUE, TRUE);
-			$data['report_producao'] = $this->Despesas_model->list_despesas_producao($data['bd'],TRUE, TRUE);
-			$data['report_envio'] = $this->Despesas_model->list_despesas_envio($data['bd'],TRUE, TRUE);
-			$data['report_entrega'] = $this->Despesas_model->list_despesas_entrega($data['bd'],TRUE, TRUE);
-			$data['report_pagamento'] = $this->Despesas_model->list_despesas_pagamento($data['bd'],TRUE, TRUE);
 			
+			if(isset($data['bd']['Orcamento']) && $data['bd']['Orcamento'] !=""){
+				
+				$data['pesquisar'] = $this->Despesas_model->list_despesas_pesquisar($data['bd'],TRUE);
+				
+				if ($data['pesquisar']->num_rows() == 1) {
+					
+					$info = $data['pesquisar']->result_array();
+					
+					redirect('orcatrata/alterardesp/' . $info[0]['idApp_OrcaTrata'] );
+
+					exit();
+				}else{	
+				
+					$data['report_combinar'] = $this->Despesas_model->list_despesas_combinar($data['bd'],TRUE, TRUE);
+					$data['report_aprovar'] = $this->Despesas_model->list_despesas_aprovar($data['bd'],TRUE, TRUE);
+					$data['report_producao'] = $this->Despesas_model->list_despesas_producao($data['bd'],TRUE, TRUE);
+					$data['report_envio'] = $this->Despesas_model->list_despesas_envio($data['bd'],TRUE, TRUE);
+					$data['report_entrega'] = $this->Despesas_model->list_despesas_entrega($data['bd'],TRUE, TRUE);
+					$data['report_pagamento'] = $this->Despesas_model->list_despesas_pagamento($data['bd'],TRUE, TRUE);
+				}
+			}else{
+				
+				$data['report_combinar'] = $this->Despesas_model->list_despesas_combinar($data['bd'],TRUE, TRUE);
+				$data['report_aprovar'] = $this->Despesas_model->list_despesas_aprovar($data['bd'],TRUE, TRUE);
+				$data['report_producao'] = $this->Despesas_model->list_despesas_producao($data['bd'],TRUE, TRUE);
+				$data['report_envio'] = $this->Despesas_model->list_despesas_envio($data['bd'],TRUE, TRUE);
+				$data['report_entrega'] = $this->Despesas_model->list_despesas_entrega($data['bd'],TRUE, TRUE);
+				$data['report_pagamento'] = $this->Despesas_model->list_despesas_pagamento($data['bd'],TRUE, TRUE);
+			}
             /*
 			$data['report_pagonline'] = $this->Despesas_model->list_despesas_pagonline($data['bd'],TRUE);
 			*/
