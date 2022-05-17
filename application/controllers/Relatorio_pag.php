@@ -752,7 +752,7 @@ class Relatorio_pag extends CI_Controller {
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			//$config['total_rows'] = $this->Relatorio_model->list_orcamento(FALSE,TRUE, TRUE);
 			$config['base_url'] = base_url() . 'relatorio_pag/receitas_pag/';
-			$config['per_page'] = 50;
+			$config['per_page'] = 12;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
 			$config['num_links'] = 2;
@@ -1089,7 +1089,7 @@ class Relatorio_pag extends CI_Controller {
 			//$config['total_rows'] = $this->Relatorio_model->list_orcamento(FALSE, TRUE, TRUE); 
 			$config['base_url'] = base_url() . 'relatorio_pag/comissao_pag/';
 			//$this->load->library('pagination');
-			$config['per_page'] = 50;
+			$config['per_page'] = 12;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
 			$config['num_links'] = 2;

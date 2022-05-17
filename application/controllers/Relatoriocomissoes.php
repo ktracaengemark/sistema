@@ -127,13 +127,13 @@ class Relatoriocomissoes extends CI_Controller {
 			'nome',
 			'RecorrenciaOrca',
         ), TRUE));
-/*
-		if (!$data['query']['DataInicio2'])
-           $data['query']['DataInicio2'] = date("d/m/Y", mktime(0,0,0,date('m'),'01',date('Y')));
 		
-		if (!$data['query']['DataFim2'])
-           $data['query']['DataFim2'] = date("t/m/Y", mktime(0,0,0,date('m'),'01',date('Y')));
-					
+		if (!$data['query']['DataInicio8'])
+           $data['query']['DataInicio8'] = date("d/m/Y", mktime(0,0,0,date('m'),'01',date('Y')));
+		
+		if (!$data['query']['DataFim8'])
+           $data['query']['DataFim8'] = date("t/m/Y", mktime(0,0,0,date('m'),'01',date('Y')));
+		/*			
 		if (!$data['query']['DataInicio'])
            $data['query']['DataInicio'] = date("d/m/Y", mktime(0,0,0,date('m'),date('d'),date('Y')));
 		
@@ -148,7 +148,7 @@ class Relatoriocomissoes extends CI_Controller {
 
 		if (!$data['query']['Ano'])
            $data['query']['Ano'] = date('Y', time());	   
-*/
+		*/
 
 		$data['collapse'] = '';	
 

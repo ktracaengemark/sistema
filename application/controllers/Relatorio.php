@@ -1187,12 +1187,12 @@ class Relatorio extends CI_Controller {
            $data['query']['Ano'] = date('Y', time());	   
 		*/
 		//$_SESSION['DataInicio'] = $data['query']['DataInicio'];
-	
-		
-		/*
+
 		if (!$data['query']['DataInicio'])
-			$data['query']['DataInicio'] = "01/01/2021";
-		*/
+			$data['query']['DataInicio'] = "01/01/2022";
+		
+		if (!$data['query']['DataFim'])
+			$data['query']['DataFim'] = "31/12/2022";		
 		/*
 			if($_SESSION['DataInicio']){
 			$data['query']['DataInicio'] = $_SESSION['DataInicio'];
@@ -1552,7 +1552,7 @@ class Relatorio extends CI_Controller {
 			//$config['total_rows'] = $this->Relatorio_model->list_orcamento($data['bd'],TRUE, TRUE);			
 			$config['base_url'] = base_url() . 'relatorio_pag/receitas_pag/';
 			//$this->load->library('pagination');
-			$config['per_page'] = 50;
+			$config['per_page'] = 12;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
 			$config['num_links'] = 2;
@@ -3203,7 +3203,7 @@ class Relatorio extends CI_Controller {
 			'nome',
         ), TRUE));
 
-/*		   
+		/*		   
 		if (!$data['query']['DataInicio'])
            $data['query']['DataInicio'] = date("d/m/Y", mktime(0,0,0,date('m'),date('d'),date('Y')));
    
@@ -3212,8 +3212,14 @@ class Relatorio extends CI_Controller {
 
 		if (!$data['query']['Ano'])
            $data['query']['Ano'] = date('Y', time());	   
-*/
-
+		*/
+		
+		if (!$data['query']['DataInicio'])
+			$data['query']['DataInicio'] = "01/01/2022";
+		
+		if (!$data['query']['DataFim'])
+			$data['query']['DataFim'] = "31/12/2022";
+		
 		$data['collapse'] = '';	
 
 		$data['collapse1'] = 'class="collapse"';
@@ -3537,7 +3543,7 @@ class Relatorio extends CI_Controller {
 			//$config['total_rows'] = $this->Relatorio_model->list_orcamento($data['bd'],TRUE, TRUE);
 			$config['base_url'] = base_url() . 'relatorio_pag/comissao_pag/';
 			//$this->load->library('pagination');
-			$config['per_page'] = 50;
+			$config['per_page'] = 12;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
 			$config['num_links'] = 2;
@@ -4205,9 +4211,9 @@ class Relatorio extends CI_Controller {
         );
 		
         $data['select']['Agrupar'] = array(
-			'0' => '::Nenhum::',			
-			'idApp_OrcaTrata' => 'Orçamento',
-			'idApp_Cliente' => 'Cliente',
+			'0' => 'Parcelas',			
+			'idApp_OrcaTrata' => 'Orçamentos',
+			'idApp_Cliente' => 'Clientes',
         );
 		
         $data['select']['Ultimo'] = array(
