@@ -233,9 +233,12 @@ class Orcatrataprintcobranca_model extends CI_Model {
 		
 		$date_inicio_orca = ($_SESSION['FiltroAlteraParcela']['DataInicio']) ? 'OT.DataOrca >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio'] . '" AND ' : FALSE;
 		$date_fim_orca = ($_SESSION['FiltroAlteraParcela']['DataFim']) ? 'OT.DataOrca <= "' . $_SESSION['FiltroAlteraParcela']['DataFim'] . '" AND ' : FALSE;
-
+		/*
 		$date_inicio_entrega = ($_SESSION['FiltroAlteraParcela']['DataInicio2']) ? 'OT.DataEntregaOrca >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio2'] . '" AND ' : FALSE;
 		$date_fim_entrega = ($_SESSION['FiltroAlteraParcela']['DataFim2']) ? 'OT.DataEntregaOrca <= "' . $_SESSION['FiltroAlteraParcela']['DataFim2'] . '" AND ' : FALSE;
+		*/
+		$date_inicio_entrega = ($_SESSION['FiltroAlteraParcela']['DataInicio2']) ? 'PRDS.DataConcluidoProduto >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio2'] . '" AND ' : FALSE;
+		$date_fim_entrega = ($_SESSION['FiltroAlteraParcela']['DataFim2']) ? 'PRDS.DataConcluidoProduto <= "' . $_SESSION['FiltroAlteraParcela']['DataFim2'] . '" AND ' : FALSE;
 
 		$date_inicio_vnc = ($_SESSION['FiltroAlteraParcela']['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio3'] . '" AND ' : FALSE;
 		$date_fim_vnc = ($_SESSION['FiltroAlteraParcela']['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $_SESSION['FiltroAlteraParcela']['DataFim3'] . '" AND ' : FALSE;
@@ -259,6 +262,7 @@ class Orcatrataprintcobranca_model extends CI_Model {
 		$permissao3 = ($_SESSION['FiltroAlteraParcela']['ConcluidoOrca'] != "0" ) ? 'OT.ConcluidoOrca = "' . $_SESSION['FiltroAlteraParcela']['ConcluidoOrca'] . '" AND ' : FALSE;
 		$permissao2 = ($_SESSION['FiltroAlteraParcela']['QuitadoOrca'] != "0" ) ? 'OT.QuitadoOrca = "' . $_SESSION['FiltroAlteraParcela']['QuitadoOrca'] . '" AND ' : FALSE;
 		$permissao4 = ($_SESSION['FiltroAlteraParcela']['Quitado'] != "0" ) ? 'PR.Quitado = "' . $_SESSION['FiltroAlteraParcela']['Quitado'] . '" AND ' : FALSE;
+		$permissao14 = ($_SESSION['FiltroAlteraParcela']['ConcluidoProduto']) ? 'PRDS.ConcluidoProduto = "' . $_SESSION['FiltroAlteraParcela']['ConcluidoProduto'] . '" AND ' : FALSE;
 		$permissao10 = ($_SESSION['FiltroAlteraParcela']['FinalizadoOrca'] != "0" ) ? 'OT.FinalizadoOrca = "' . $_SESSION['FiltroAlteraParcela']['FinalizadoOrca'] . '" AND ' : FALSE;
 		$permissao11 = ($_SESSION['FiltroAlteraParcela']['CanceladoOrca'] != "0" ) ? 'OT.CanceladoOrca = "' . $_SESSION['FiltroAlteraParcela']['CanceladoOrca'] . '" AND ' : FALSE;
 		
@@ -277,8 +281,18 @@ class Orcatrataprintcobranca_model extends CI_Model {
 
 		$agrupar = $_SESSION['FiltroAlteraParcela']['Agrupar'];
 		
-		$groupby = ($agrupar != "0") ? 'GROUP BY OT.' . $agrupar . '' : FALSE;		
-		
+		//$groupby = ($agrupar != "0") ? 'GROUP BY OT.' . $agrupar . '' : FALSE;
+		$groupby = ($agrupar != "0") ? 'GROUP BY ' . $agrupar . '' : 'GROUP BY PR.idApp_Parcelas'; 		
+			
+		$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroAlteraParcela']['Produtos'] != "0") ? 'PRDS.idSis_Empresa ' . $_SESSION['FiltroAlteraParcela']['Produtos'] . ' AND' : FALSE;
+		/*	  
+		echo "<pre>";
+		echo "<br>";
+		print_r($produtos);
+		echo "<br>";
+		print_r($groupby);
+		echo "</pre>";
+		*/						
         if ($limit){
 			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
 		}else{
@@ -343,7 +357,9 @@ class Orcatrataprintcobranca_model extends CI_Model {
 				TP.TipoFinanceiro,
                 DATE_FORMAT(PR.DataVencimento, "%d/%m/%Y") AS DataVencimento,
                 DATE_FORMAT(PR.DataPago, "%d/%m/%Y") AS DataPagamento,
-                DATE_FORMAT(PR.DataLanc, "%d/%m/%Y") AS DataLancamento
+                DATE_FORMAT(PR.DataLanc, "%d/%m/%Y") AS DataLancamento,
+				PRDS.DataConcluidoProduto,
+				PRDS.ConcluidoProduto
             FROM 
 				App_OrcaTrata AS OT
 				LEFT JOIN Sis_Empresa AS EF ON EF.idSis_Empresa = OT.idSis_Empresa
@@ -353,6 +369,7 @@ class Orcatrataprintcobranca_model extends CI_Model {
 				LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 				LEFT JOIN App_Fornecedor AS F ON F.idApp_Fornecedor = OT.idApp_Fornecedor
 				LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
+				LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
             WHERE
             	' . $permissao . '
             	' . $permissao_orcam . '		
@@ -360,6 +377,7 @@ class Orcatrataprintcobranca_model extends CI_Model {
 				' . $permissao2 . '
 				' . $permissao3 . '
 				' . $permissao4 . '
+				' . $permissao14 . '
 				' . $permissao6 . '
 				' . $permissao7 . '
 				' . $permissao10 . '
@@ -387,6 +405,7 @@ class Orcatrataprintcobranca_model extends CI_Model {
                 ' . $date_inicio_lan_prc . '
                 ' . $date_fim_lan_prc . '
 				OT.idSis_Empresa = ' . $data . ' AND
+				' . $produtos . '
 				PR.idSis_Empresa = ' . $data . '
 			' . $groupby . '
             ORDER BY

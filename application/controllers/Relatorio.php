@@ -4105,12 +4105,14 @@ class Relatorio extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
 			'FormaPagamento',
 			'TipoFrete',
 			'Agrupar',
+			'Produtos',
 			'Ultimo',
 			'nome',
 			'Texto1',
@@ -4209,13 +4211,25 @@ class Relatorio extends CI_Controller {
 			'B' => 'Na Loja',
 			'O' => 'On line',
         );
-		
+
+		$data['select']['ConcluidoProduto'] = array(
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
+        );
+				
         $data['select']['Agrupar'] = array(
-			'0' => 'Parcelas',			
-			'idApp_OrcaTrata' => 'Orçamentos',
-			'idApp_Cliente' => 'Clientes',
+			'PR.idApp_Parcelas' => 'Parcelas',			
+			'OT.idApp_OrcaTrata' => 'Orçamentos',
+			'OT.idApp_Cliente' => 'Clientes',
         );
 		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+				
         $data['select']['Ultimo'] = array(
 			'0' => '::Nenhum::',			
 			#'1' => 'Último Pedido',			
@@ -4328,6 +4342,7 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
         $_SESSION['FiltroAlteraParcela']['Ano'] = $data['query']['Ano'];
 		$_SESSION['FiltroAlteraParcela']['Quitado'] = $data['query']['Quitado'];
+		$_SESSION['FiltroAlteraParcela']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 		$_SESSION['FiltroAlteraParcela']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
 		$_SESSION['FiltroAlteraParcela']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
 		$_SESSION['FiltroAlteraParcela']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
@@ -4355,6 +4370,7 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['nome'] = $data['query']['nome'];
 		$_SESSION['FiltroAlteraParcela']['Ultimo'] = $data['query']['Ultimo'];
 		$_SESSION['FiltroAlteraParcela']['Agrupar'] = $data['query']['Agrupar'];
+		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
         $_SESSION['FiltroAlteraParcela']['Mespag'] = $data['query']['Mespag'];
         $_SESSION['FiltroAlteraParcela']['ObsOrca'] = $data['query']['ObsOrca'];
 		
@@ -4417,6 +4433,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
             $data['bd']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
+			$data['bd']['Produtos'] = $data['query']['Produtos'];
 			$data['bd']['Ultimo'] = $data['query']['Ultimo'];
 			$data['bd']['nome'] = $data['query']['nome'];
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
@@ -4428,6 +4445,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
@@ -4547,12 +4565,14 @@ class Relatorio extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
 			'FormaPagamento',
 			'TipoFrete',
 			'Agrupar',
+			'Produtos',
 			'Ultimo',
 			'nome',
 			'Texto1',
@@ -4649,13 +4669,25 @@ class Relatorio extends CI_Controller {
 			'B' => 'Na Loja',
 			'O' => 'On line',
         );
-		
+
+		$data['select']['ConcluidoProduto'] = array(
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
+        );
+				
         $data['select']['Agrupar'] = array(
-			'0' => '::Nenhum::',			
-			'idApp_OrcaTrata' => 'Orçamento',
-			'idApp_Fornecedor' => 'Fornecedor',
+			'PR.idApp_Parcelas' => 'Parcelas',			
+			'OT.idApp_OrcaTrata' => 'Orçamentos',
+			'OT.idApp_Fornecedor' => 'Fornecedor',
         );
 		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+
         $data['select']['Ultimo'] = array(
 			'0' => '::Nenhum::',			
 			#'1' => 'Último Pedido',			
@@ -4764,6 +4796,7 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
         $_SESSION['FiltroAlteraParcela']['Ano'] = $data['query']['Ano'];
 		$_SESSION['FiltroAlteraParcela']['Quitado'] = $data['query']['Quitado'];
+		$_SESSION['FiltroAlteraParcela']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 		$_SESSION['FiltroAlteraParcela']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
 		$_SESSION['FiltroAlteraParcela']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
 		$_SESSION['FiltroAlteraParcela']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
@@ -4791,6 +4824,7 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['nome'] = $data['query']['nome'];
 		$_SESSION['FiltroAlteraParcela']['Ultimo'] = $data['query']['Ultimo'];
 		$_SESSION['FiltroAlteraParcela']['Agrupar'] = $data['query']['Agrupar'];
+		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
         $_SESSION['FiltroAlteraParcela']['Mespag'] = $data['query']['Mespag'];
         $_SESSION['FiltroAlteraParcela']['ObsOrca'] = $data['query']['ObsOrca'];
 		
@@ -4853,6 +4887,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
             $data['bd']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
+			$data['bd']['Produtos'] = $data['query']['Produtos'];
 			$data['bd']['Ultimo'] = $data['query']['Ultimo'];
 			$data['bd']['nome'] = $data['query']['nome'];
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
@@ -4864,6 +4899,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];

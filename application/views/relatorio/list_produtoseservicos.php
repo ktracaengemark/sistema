@@ -28,7 +28,17 @@
 					<input type="text" class="form-control" disabled aria-label="Total a Receber" value="<?php echo $report->soma->diferenca ?>">
 				</div>
 			</div>
-			-->			
+			-->	
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+				<label></label><br>
+				<div class="input-group">
+					<span class="input-group-addon">Prds</span>
+					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->num_rows() ?> / <?php echo $total_rows ?>">
+				</div>
+			</div>
+			<div class="col-md-4 text-left">
+				<?php echo $pagination; ?>
+			</div>		
 			<?php if($paginacao == "S") { ?>
 				<div class="col-md-2">
 					<label>Filtros</label>
@@ -61,16 +71,6 @@
 						Gerar Parcial
 					</button>
 				</a>
-			</div>
-			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
-				<label></label><br>
-				<div class="input-group">
-					<span class="input-group-addon">Prds</span>
-					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->num_rows() ?> / <?php echo $total_rows ?>">
-				</div>
-			</div>
-			<div class="col-md-4 text-left">
-				<?php echo $pagination; ?>
 			</div>
 		</div>	
 	</div>

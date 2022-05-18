@@ -68,7 +68,7 @@
 					<div class="col-md-1">
 						<label>Baixa</label>
 						<a href="<?php echo base_url() . $alterarparc . $_SESSION['log']['idSis_Empresa']; ?>">
-							<button class="btn btn-success btn-md btn-block" type="button">
+							<button class="btn btn-danger btn-md btn-block" type="button">
 								<span class="glyphicon glyphicon-edit"></span>
 							</button>
 						</a>
@@ -78,7 +78,7 @@
 						<div class="col-md-1">
 							<label>Baixa</label>
 							<a href="<?php echo base_url() . $alterarparc . $_SESSION['log']['idSis_Empresa']; ?>">
-								<button class="btn btn-success btn-md btn-block" type="button">
+								<button class="btn btn-danger btn-md btn-block" type="button">
 									<span class="glyphicon glyphicon-edit"></span>
 								</button>
 							</a>
@@ -88,7 +88,7 @@
 						<div class="col-md-1">
 							<label>Imprimir</label>
 							<a href="<?php echo base_url() . $imprimirlista . $_SESSION['log']['idSis_Empresa']; ?>">
-								<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
+								<button class="btn btn-info btn-md btn-block" type="button">
 									<span class="glyphicon glyphicon-print"></span>
 								</button>
 							</a>
@@ -133,9 +133,9 @@
 						<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 							<th class="active">DtEntrega</th>
 						<?php } ?>
-						<th class="active">Vencimento</th>
 						<th class="active">Parc.R$</th>
 						<th class="active">Quitada</th>
+						<th class="active">Vencimento</th>
 						<th class="active">Pagamento</th>
 						<th class="active">Lancamento</th>
 						<!--<th class="active">Dt.Pag</th>
@@ -244,9 +244,9 @@
 							if($_SESSION['log']['idSis_Empresa'] != "5"){
 								echo '<td>' . $row['DataEntregaOrca'] . '</td>';
 							}
-							echo '<td>' . $row['DataVencimento'] . '</td>';
 							echo '<td class="text-left">' . $row['ValorParcela'] . '</td>';
 							echo '<td>' . $row['Quitado'] . '</td>';
+							echo '<td>' . $row['DataVencimento'] . '</td>';
 							echo '<td>' . $row['DataPago'] . '</td>';
 							echo '<td>' . $row['DataLanc'] . '</td>';
 							#echo '<td class="text-left">' . $row['ValorPago'] . '</td>';

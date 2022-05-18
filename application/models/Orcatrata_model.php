@@ -2222,6 +2222,7 @@ class Orcatrata_model extends CI_Model {
 		$permissao3 = ($_SESSION['FiltroAlteraParcela']['ConcluidoOrca'] != "0" ) ? 'OT.ConcluidoOrca = "' . $_SESSION['FiltroAlteraParcela']['ConcluidoOrca'] . '" AND ' : FALSE;
 		$permissao2 = ($_SESSION['FiltroAlteraParcela']['QuitadoOrca'] != "0" ) ? 'OT.QuitadoOrca = "' . $_SESSION['FiltroAlteraParcela']['QuitadoOrca'] . '" AND ' : FALSE;
 		$permissao4 = ($_SESSION['FiltroAlteraParcela']['Quitado'] != "0" ) ? 'PR.Quitado = "' . $_SESSION['FiltroAlteraParcela']['Quitado'] . '" AND ' : FALSE;
+		$permissao14 = ($_SESSION['FiltroAlteraParcela']['ConcluidoProduto']) ? 'PRDS.ConcluidoProduto = "' . $_SESSION['FiltroAlteraParcela']['ConcluidoProduto'] . '" AND ' : FALSE;
 		$permissao10 = ($_SESSION['FiltroAlteraParcela']['FinalizadoOrca'] != "0" ) ? 'OT.FinalizadoOrca = "' . $_SESSION['FiltroAlteraParcela']['FinalizadoOrca'] . '" AND ' : FALSE;
 		$permissao11 = ($_SESSION['FiltroAlteraParcela']['CanceladoOrca'] != "0" ) ? 'OT.CanceladoOrca = "' . $_SESSION['FiltroAlteraParcela']['CanceladoOrca'] . '" AND ' : FALSE;
 		
@@ -2238,8 +2239,20 @@ class Orcatrata_model extends CI_Model {
 		//$permissao5 = (($_SESSION['log']['idSis_Empresa'] != 5) && ($_SESSION['FiltroAlteraParcela']['NomeCliente'] != "0" )) ? 'OT.idApp_Cliente = "' . $_SESSION['FiltroAlteraParcela']['NomeCliente'] . '" AND ' : FALSE;
 		$permissao60 = (!$_SESSION['FiltroAlteraParcela']['Campo']) ? 'OT.idApp_OrcaTrata' : $_SESSION['FiltroAlteraParcela']['Campo'];
         $permissao61 = (!$_SESSION['FiltroAlteraParcela']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroAlteraParcela']['Ordenamento'];
-
-        if ($limit){
+		
+		$agrupar = $_SESSION['FiltroAlteraParcela']['Agrupar'];
+		$groupby = ($agrupar != "0") ? 'GROUP BY ' . $agrupar . '' : 'GROUP BY PR.idApp_Parcelas'; 		
+				
+		$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroAlteraParcela']['Produtos'] != "0") ? 'PRDS.idSis_Empresa ' . $_SESSION['FiltroAlteraParcela']['Produtos'] . ' AND' : FALSE;
+		/*	  
+		echo "<pre>";
+		echo "<br>";
+		print_r($produtos);
+		echo "<br>";
+		print_r($groupby);
+		echo "</pre>";
+		*/	        
+		if ($limit){
 			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
 		}else{
 			$querylimit = '';
@@ -2279,14 +2292,17 @@ class Orcatrata_model extends CI_Model {
 				PR.DataVencimento,
 				PR.ValorPago,
 				PR.DataPago,
-				PR.Quitado				
+				PR.Quitado,
+				PRDS.DataConcluidoProduto,
+				PRDS.ConcluidoProduto				
 			FROM 
-				App_Parcelas AS PR
-					LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = PR.idApp_OrcaTrata
+				App_OrcaTrata AS OT
+					LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 					LEFT JOIN App_Fornecedor AS F ON F.idApp_Fornecedor = OT.idApp_Fornecedor
 					LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
 					LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = PR.idSis_Empresa
+					LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
 			WHERE
 				' . $permissao . '
 				' . $permissao_orcam . '
@@ -2304,6 +2320,7 @@ class Orcatrata_model extends CI_Model {
 				' . $permissao2 . '
 				' . $permissao3 . '
 				' . $permissao4 . '
+				' . $permissao14 . '
 				' . $permissao5 . '
 				' . $permissao6 . '
 				' . $permissao7 . '
@@ -2319,8 +2336,10 @@ class Orcatrata_model extends CI_Model {
 				' . $permissao36 . '
 				' . $permissao37 . '
 				' . $permissao38 . '
+				' . $produtos . '
 				PR.idSis_Empresa = ' . $data . ' AND
 				PR.Quitado = "N"
+			' . $groupby . '
 			ORDER BY
 				' . $permissao60 . '
 				' . $permissao61 . '
