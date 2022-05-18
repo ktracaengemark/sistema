@@ -53,6 +53,8 @@ class Despesas_statico extends CI_Controller {
     }
 
     public function despesas() {
+		
+		unset($_SESSION['FiltroDespesas']);
 
 		if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -98,6 +100,7 @@ class Despesas_statico extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -150,6 +153,12 @@ class Despesas_statico extends CI_Controller {
 			'S' => 'Quitada',
 			'N' => 'NÃO Quitada',
         );
+
+		$data['select']['ConcluidoProduto'] = array(
+			'0' => '::TODOS::',			
+			'S' => 'Entregue',
+			'N' => 'NÃO Entregue',
+        );
 		
 		$data['select']['Modalidade'] = array(
             '0' => '::TODOS::',
@@ -196,7 +205,7 @@ class Despesas_statico extends CI_Controller {
         $data['titulo'] = 'Estático';
         $data['form_open_path'] = 'Despesas_statico/despesas';
 		$data['comissao'] = 'relatorio/comissao/';
-        $data['status'] = 'Orcatrata/alterarstatus/';
+        $data['status'] = 'Orcatrata/alterardesp/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
         $data['nome'] = 'NomeColaborador';
         $data['readonly'] = '';
@@ -215,7 +224,7 @@ class Despesas_statico extends CI_Controller {
             $data['bd']['Orcamento'] = $data['query']['Orcamento'];
             $data['bd']['Fornecedor'] = $data['query']['Fornecedor'];
             $data['bd']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
-            $data['bd']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
+            $data['bd']['TipoFinanceiroD'] = $data['query']['TipoFinanceiroD'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
 			$data['bd']['Dia'] = $data['query']['Dia'];
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
@@ -239,6 +248,7 @@ class Despesas_statico extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
@@ -287,6 +297,8 @@ class Despesas_statico extends CI_Controller {
     }
 
     public function despesas_combinar() {
+		
+		unset($_SESSION['FiltroDespesas']);
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -332,6 +344,7 @@ class Despesas_statico extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -384,6 +397,12 @@ class Despesas_statico extends CI_Controller {
 			'S' => 'Quitada',
 			'N' => 'NÃO Quitada',
         );
+
+		$data['select']['ConcluidoProduto'] = array(
+			'0' => '::TODOS::',			
+			'S' => 'Entregue',
+			'N' => 'NÃO Entregue',
+        );
 		
 		$data['select']['Modalidade'] = array(
             '0' => '::TODOS::',
@@ -430,7 +449,7 @@ class Despesas_statico extends CI_Controller {
         $data['titulo'] = 'Estático';
         $data['form_open_path'] = 'Despesas_statico/despesas_combinar';
 		$data['comissao'] = 'relatorio/comissao/';
-        $data['status'] = 'Orcatrata/alterarstatus/';
+        $data['status'] = 'Orcatrata/alterardesp/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
         $data['nome'] = 'NomeColaborador';
         $data['readonly'] = '';
@@ -457,6 +476,7 @@ class Despesas_statico extends CI_Controller {
         $_SESSION['FiltroDespesas']['ObsOrca'] = $data['query']['ObsOrca'];
         $_SESSION['FiltroDespesas']['Ano'] = $data['query']['Ano'];
 		$_SESSION['FiltroDespesas']['Quitado'] = $data['query']['Quitado'];
+		$_SESSION['FiltroDespesas']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 		$_SESSION['FiltroDespesas']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 		$_SESSION['FiltroDespesas']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
 		$_SESSION['FiltroDespesas']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
@@ -474,7 +494,7 @@ class Despesas_statico extends CI_Controller {
 		$_SESSION['FiltroDespesas']['Modalidade'] = $data['query']['Modalidade'];
 		$_SESSION['FiltroDespesas']['Campo'] = $data['query']['Campo'];
 		$_SESSION['FiltroDespesas']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['FiltroDespesas']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
+		$_SESSION['FiltroDespesas']['TipoFinanceiroD'] = $data['query']['TipoFinanceiroD'];
 		$_SESSION['FiltroDespesas']['metodo'] = $data['metodo'];
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -486,7 +506,7 @@ class Despesas_statico extends CI_Controller {
             $data['bd']['Orcamento'] = $data['query']['Orcamento'];
             $data['bd']['Fornecedor'] = $data['query']['Fornecedor'];
             $data['bd']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
-            $data['bd']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
+            $data['bd']['TipoFinanceiroD'] = $data['query']['TipoFinanceiroD'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
 			$data['bd']['Dia'] = $data['query']['Dia'];
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
@@ -510,6 +530,7 @@ class Despesas_statico extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
@@ -578,6 +599,8 @@ class Despesas_statico extends CI_Controller {
     }
 
     public function despesas_aprovar() {
+		
+		unset($_SESSION['FiltroDespesas']);
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -623,6 +646,7 @@ class Despesas_statico extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -675,6 +699,12 @@ class Despesas_statico extends CI_Controller {
 			'S' => 'Quitada',
 			'N' => 'NÃO Quitada',
         );
+
+		$data['select']['ConcluidoProduto'] = array(
+			'0' => '::TODOS::',			
+			'S' => 'Entregue',
+			'N' => 'NÃO Entregue',
+        );
 		
 		$data['select']['Modalidade'] = array(
             '0' => '::TODOS::',
@@ -722,7 +752,7 @@ class Despesas_statico extends CI_Controller {
         $data['titulo'] = 'Estático';
         $data['form_open_path'] = 'Despesas_statico/despesas_aprovar';
 		$data['comissao'] = 'relatorio/comissao/';
-        $data['status'] = 'Orcatrata/alterarstatus/';
+        $data['status'] = 'Orcatrata/alterardesp/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
         $data['nome'] = 'NomeColaborador';
         $data['readonly'] = '';
@@ -731,6 +761,44 @@ class Despesas_statico extends CI_Controller {
         $data['metodo'] = 1;	
 		$data['paginacao'] = 'N';
         $data['despesas'] = 'Despesas_statico';
+
+        $_SESSION['FiltroDespesas']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+		$_SESSION['FiltroDespesas']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+        $_SESSION['FiltroDespesas']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+		$_SESSION['FiltroDespesas']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+        $_SESSION['FiltroDespesas']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+		$_SESSION['FiltroDespesas']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
+        $_SESSION['FiltroDespesas']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
+		$_SESSION['FiltroDespesas']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+		$_SESSION['FiltroDespesas']['Orcarec'] = $data['query']['Orcarec'];
+		$_SESSION['FiltroDespesas']['Orcades'] = $data['query']['Orcades'];
+		$_SESSION['FiltroDespesas']['NomeFornecedor'] = $data['query']['NomeFornecedor'];
+		$_SESSION['FiltroDespesas']['Dia'] = $data['query']['Dia'];
+        $_SESSION['FiltroDespesas']['Mesvenc'] = $data['query']['Mesvenc'];
+        $_SESSION['FiltroDespesas']['Mespag'] = $data['query']['Mespag'];
+        $_SESSION['FiltroDespesas']['ObsOrca'] = $data['query']['ObsOrca'];
+        $_SESSION['FiltroDespesas']['Ano'] = $data['query']['Ano'];
+		$_SESSION['FiltroDespesas']['Quitado'] = $data['query']['Quitado'];
+		$_SESSION['FiltroDespesas']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
+		$_SESSION['FiltroDespesas']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
+		$_SESSION['FiltroDespesas']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+		$_SESSION['FiltroDespesas']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
+		$_SESSION['FiltroDespesas']['FinalizadoOrca'] = $data['query']['FinalizadoOrca'];
+		$_SESSION['FiltroDespesas']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
+		$_SESSION['FiltroDespesas']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
+		$_SESSION['FiltroDespesas']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
+		$_SESSION['FiltroDespesas']['FormaPagamento'] = $data['query']['FormaPagamento'];
+		$_SESSION['FiltroDespesas']['AVAP'] = $data['query']['AVAP'];
+		$_SESSION['FiltroDespesas']['TipoFrete'] = $data['query']['TipoFrete'];
+		$_SESSION['FiltroDespesas']['TipoFinanceiro'] = $data['query']['TipoFinanceiro'];
+		$_SESSION['FiltroDespesas']['Orcamento'] = $data['query']['Orcamento'];
+		$_SESSION['FiltroDespesas']['Fornecedor'] = $data['query']['Fornecedor'];
+		$_SESSION['FiltroDespesas']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
+		$_SESSION['FiltroDespesas']['Modalidade'] = $data['query']['Modalidade'];
+		$_SESSION['FiltroDespesas']['Campo'] = $data['query']['Campo'];
+		$_SESSION['FiltroDespesas']['Ordenamento'] = $data['query']['Ordenamento'];
+		$_SESSION['FiltroDespesas']['TipoFinanceiroD'] = $data['query']['TipoFinanceiroD'];
+		$_SESSION['FiltroDespesas']['metodo'] = $data['metodo'];
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -741,7 +809,7 @@ class Despesas_statico extends CI_Controller {
             $data['bd']['Orcamento'] = $data['query']['Orcamento'];
             $data['bd']['Fornecedor'] = $data['query']['Fornecedor'];
             $data['bd']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
-            $data['bd']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
+            $data['bd']['TipoFinanceiroD'] = $data['query']['TipoFinanceiroD'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
 			$data['bd']['Dia'] = $data['query']['Dia'];
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
@@ -765,6 +833,7 @@ class Despesas_statico extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
@@ -832,6 +901,8 @@ class Despesas_statico extends CI_Controller {
     }
 
     public function despesas_producao() {
+		
+		unset($_SESSION['FiltroDespesas']);
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -877,6 +948,7 @@ class Despesas_statico extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -929,6 +1001,12 @@ class Despesas_statico extends CI_Controller {
 			'S' => 'Quitada',
 			'N' => 'NÃO Quitada',
         );
+
+		$data['select']['ConcluidoProduto'] = array(
+			'0' => '::TODOS::',			
+			'S' => 'Entregue',
+			'N' => 'NÃO Entregue',
+        );
 		
 		$data['select']['Modalidade'] = array(
             '0' => '::TODOS::',
@@ -975,7 +1053,7 @@ class Despesas_statico extends CI_Controller {
         $data['titulo'] = 'Estático';
         $data['form_open_path'] = 'Despesas_statico/despesas_producao';
 		$data['comissao'] = 'relatorio/comissao/';
-        $data['status'] = 'Orcatrata/alterarstatus/';
+        $data['status'] = 'Orcatrata/alterardesp/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
         $data['nome'] = 'NomeColaborador';
         $data['readonly'] = '';
@@ -1002,6 +1080,7 @@ class Despesas_statico extends CI_Controller {
         $_SESSION['FiltroDespesas']['ObsOrca'] = $data['query']['ObsOrca'];
         $_SESSION['FiltroDespesas']['Ano'] = $data['query']['Ano'];
 		$_SESSION['FiltroDespesas']['Quitado'] = $data['query']['Quitado'];
+		$_SESSION['FiltroDespesas']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 		$_SESSION['FiltroDespesas']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 		$_SESSION['FiltroDespesas']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
 		$_SESSION['FiltroDespesas']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
@@ -1019,7 +1098,7 @@ class Despesas_statico extends CI_Controller {
 		$_SESSION['FiltroDespesas']['Modalidade'] = $data['query']['Modalidade'];
 		$_SESSION['FiltroDespesas']['Campo'] = $data['query']['Campo'];
 		$_SESSION['FiltroDespesas']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['FiltroDespesas']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
+		$_SESSION['FiltroDespesas']['TipoFinanceiroD'] = $data['query']['TipoFinanceiroD'];
 		$_SESSION['FiltroDespesas']['metodo'] = $data['metodo'];
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -1031,7 +1110,7 @@ class Despesas_statico extends CI_Controller {
             $data['bd']['Orcamento'] = $data['query']['Orcamento'];
             $data['bd']['Fornecedor'] = $data['query']['Fornecedor'];
             $data['bd']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
-            $data['bd']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
+            $data['bd']['TipoFinanceiroD'] = $data['query']['TipoFinanceiroD'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
 			$data['bd']['Dia'] = $data['query']['Dia'];
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
@@ -1055,6 +1134,7 @@ class Despesas_statico extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
@@ -1123,6 +1203,8 @@ class Despesas_statico extends CI_Controller {
     }
 
     public function despesas_envio() {
+		
+		unset($_SESSION['FiltroDespesas']);
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -1168,6 +1250,7 @@ class Despesas_statico extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -1220,6 +1303,12 @@ class Despesas_statico extends CI_Controller {
 			'S' => 'Quitada',
 			'N' => 'NÃO Quitada',
         );
+
+		$data['select']['ConcluidoProduto'] = array(
+			'0' => '::TODOS::',			
+			'S' => 'Entregue',
+			'N' => 'NÃO Entregue',
+        );
 		
 		$data['select']['Modalidade'] = array(
             '0' => '::TODOS::',
@@ -1266,7 +1355,7 @@ class Despesas_statico extends CI_Controller {
         $data['titulo'] = 'Estático';
         $data['form_open_path'] = 'Despesas_statico/despesas_envio';
 		$data['comissao'] = 'relatorio/comissao/';
-        $data['status'] = 'Orcatrata/alterarstatus/';
+        $data['status'] = 'Orcatrata/alterardesp/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
         $data['nome'] = 'NomeColaborador';
         $data['readonly'] = '';
@@ -1293,6 +1382,7 @@ class Despesas_statico extends CI_Controller {
         $_SESSION['FiltroDespesas']['ObsOrca'] = $data['query']['ObsOrca'];
         $_SESSION['FiltroDespesas']['Ano'] = $data['query']['Ano'];
 		$_SESSION['FiltroDespesas']['Quitado'] = $data['query']['Quitado'];
+		$_SESSION['FiltroDespesas']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 		$_SESSION['FiltroDespesas']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 		$_SESSION['FiltroDespesas']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
 		$_SESSION['FiltroDespesas']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
@@ -1310,7 +1400,7 @@ class Despesas_statico extends CI_Controller {
 		$_SESSION['FiltroDespesas']['Modalidade'] = $data['query']['Modalidade'];
 		$_SESSION['FiltroDespesas']['Campo'] = $data['query']['Campo'];
 		$_SESSION['FiltroDespesas']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['FiltroDespesas']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
+		$_SESSION['FiltroDespesas']['TipoFinanceiroD'] = $data['query']['TipoFinanceiroD'];
 		$_SESSION['FiltroDespesas']['metodo'] = $data['metodo'];
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -1322,7 +1412,7 @@ class Despesas_statico extends CI_Controller {
             $data['bd']['Orcamento'] = $data['query']['Orcamento'];
             $data['bd']['Fornecedor'] = $data['query']['Fornecedor'];
             $data['bd']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
-            $data['bd']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
+            $data['bd']['TipoFinanceiroD'] = $data['query']['TipoFinanceiroD'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
 			$data['bd']['Dia'] = $data['query']['Dia'];
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
@@ -1346,6 +1436,7 @@ class Despesas_statico extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
@@ -1414,6 +1505,8 @@ class Despesas_statico extends CI_Controller {
     }
 
     public function despesas_entrega() {
+		
+		unset($_SESSION['FiltroDespesas']);
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -1459,6 +1552,7 @@ class Despesas_statico extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -1511,6 +1605,12 @@ class Despesas_statico extends CI_Controller {
 			'S' => 'Quitada',
 			'N' => 'NÃO Quitada',
         );
+
+		$data['select']['ConcluidoProduto'] = array(
+			'0' => '::TODOS::',			
+			'S' => 'Entregue',
+			'N' => 'NÃO Entregue',
+        );
 		
 		$data['select']['Modalidade'] = array(
             '0' => '::TODOS::',
@@ -1557,7 +1657,7 @@ class Despesas_statico extends CI_Controller {
         $data['titulo'] = 'Estático';
         $data['form_open_path'] = 'Despesas_statico/despesas_entrega';
 		$data['comissao'] = 'relatorio/comissao/';
-        $data['status'] = 'Orcatrata/alterarstatus/';
+        $data['status'] = 'Orcatrata/alterardesp/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
         $data['nome'] = 'NomeColaborador';
         $data['readonly'] = '';
@@ -1584,6 +1684,7 @@ class Despesas_statico extends CI_Controller {
         $_SESSION['FiltroDespesas']['ObsOrca'] = $data['query']['ObsOrca'];
         $_SESSION['FiltroDespesas']['Ano'] = $data['query']['Ano'];
 		$_SESSION['FiltroDespesas']['Quitado'] = $data['query']['Quitado'];
+		$_SESSION['FiltroDespesas']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 		$_SESSION['FiltroDespesas']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 		$_SESSION['FiltroDespesas']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
 		$_SESSION['FiltroDespesas']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
@@ -1601,7 +1702,7 @@ class Despesas_statico extends CI_Controller {
 		$_SESSION['FiltroDespesas']['Modalidade'] = $data['query']['Modalidade'];
 		$_SESSION['FiltroDespesas']['Campo'] = $data['query']['Campo'];
 		$_SESSION['FiltroDespesas']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['FiltroDespesas']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
+		$_SESSION['FiltroDespesas']['TipoFinanceiroD'] = $data['query']['TipoFinanceiroD'];
 		$_SESSION['FiltroDespesas']['metodo'] = $data['metodo'];
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -1613,7 +1714,7 @@ class Despesas_statico extends CI_Controller {
             $data['bd']['Orcamento'] = $data['query']['Orcamento'];
             $data['bd']['Fornecedor'] = $data['query']['Fornecedor'];
             $data['bd']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
-            $data['bd']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
+            $data['bd']['TipoFinanceiroD'] = $data['query']['TipoFinanceiroD'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
 			$data['bd']['Dia'] = $data['query']['Dia'];
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
@@ -1637,6 +1738,7 @@ class Despesas_statico extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
@@ -1705,6 +1807,8 @@ class Despesas_statico extends CI_Controller {
     }
 
     public function despesas_pagamento() {
+		
+		unset($_SESSION['FiltroDespesas']);
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -1750,6 +1854,7 @@ class Despesas_statico extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -1802,6 +1907,12 @@ class Despesas_statico extends CI_Controller {
 			'S' => 'Quitada',
 			'N' => 'NÃO Quitada',
         );
+
+		$data['select']['ConcluidoProduto'] = array(
+			'0' => '::TODOS::',			
+			'S' => 'Entregue',
+			'N' => 'NÃO Entregue',
+        );
 		
 		$data['select']['Modalidade'] = array(
             '0' => '::TODOS::',
@@ -1848,7 +1959,7 @@ class Despesas_statico extends CI_Controller {
         $data['titulo'] = 'Estático';
         $data['form_open_path'] = 'Despesas_statico/despesas_pagamento';
 		$data['comissao'] = 'relatorio/comissao/';
-        $data['status'] = 'Orcatrata/alterarstatus/';
+        $data['status'] = 'Orcatrata/alterardesp/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
         $data['nome'] = 'NomeColaborador';
         $data['readonly'] = '';
@@ -1875,6 +1986,7 @@ class Despesas_statico extends CI_Controller {
         $_SESSION['FiltroDespesas']['ObsOrca'] = $data['query']['ObsOrca'];
         $_SESSION['FiltroDespesas']['Ano'] = $data['query']['Ano'];
 		$_SESSION['FiltroDespesas']['Quitado'] = $data['query']['Quitado'];
+		$_SESSION['FiltroDespesas']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 		$_SESSION['FiltroDespesas']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 		$_SESSION['FiltroDespesas']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
 		$_SESSION['FiltroDespesas']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
@@ -1892,7 +2004,7 @@ class Despesas_statico extends CI_Controller {
 		$_SESSION['FiltroDespesas']['Modalidade'] = $data['query']['Modalidade'];
 		$_SESSION['FiltroDespesas']['Campo'] = $data['query']['Campo'];
 		$_SESSION['FiltroDespesas']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['FiltroDespesas']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
+		$_SESSION['FiltroDespesas']['TipoFinanceiroD'] = $data['query']['TipoFinanceiroD'];
 		$_SESSION['FiltroDespesas']['metodo'] = $data['metodo'];
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -1904,7 +2016,7 @@ class Despesas_statico extends CI_Controller {
             $data['bd']['Orcamento'] = $data['query']['Orcamento'];
             $data['bd']['Fornecedor'] = $data['query']['Fornecedor'];
             $data['bd']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
-            $data['bd']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
+            $data['bd']['TipoFinanceiroD'] = $data['query']['TipoFinanceiroD'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
 			$data['bd']['Dia'] = $data['query']['Dia'];
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
@@ -1928,6 +2040,7 @@ class Despesas_statico extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];

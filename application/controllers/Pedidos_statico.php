@@ -53,6 +53,8 @@ class Pedidos_statico extends CI_Controller {
     }
 
     public function pedidos() {
+		
+		unset($_SESSION['FiltroPedidos']);
 
 		if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -98,6 +100,7 @@ class Pedidos_statico extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -149,6 +152,12 @@ class Pedidos_statico extends CI_Controller {
 			'0' => '::TODOS::',			
 			'S' => 'Quitada',
 			'N' => 'NÃO Quitada',
+        );
+
+		$data['select']['ConcluidoProduto'] = array(
+			'0' => '::TODOS::',			
+			'S' => 'Entregue',
+			'N' => 'NÃO Entregue',
         );
 		
 		$data['select']['Modalidade'] = array(
@@ -239,6 +248,7 @@ class Pedidos_statico extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
@@ -287,6 +297,8 @@ class Pedidos_statico extends CI_Controller {
     }
 
     public function pedidos_combinar() {
+		
+		unset($_SESSION['FiltroPedidos']);
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -332,6 +344,7 @@ class Pedidos_statico extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -383,6 +396,12 @@ class Pedidos_statico extends CI_Controller {
 			'0' => '::TODOS::',			
 			'S' => 'Quitada',
 			'N' => 'NÃO Quitada',
+        );
+
+		$data['select']['ConcluidoProduto'] = array(
+			'0' => '::TODOS::',			
+			'S' => 'Entregue',
+			'N' => 'NÃO Entregue',
         );
 		
 		$data['select']['Modalidade'] = array(
@@ -457,6 +476,7 @@ class Pedidos_statico extends CI_Controller {
         $_SESSION['FiltroPedidos']['ObsOrca'] = $data['query']['ObsOrca'];
         $_SESSION['FiltroPedidos']['Ano'] = $data['query']['Ano'];
 		$_SESSION['FiltroPedidos']['Quitado'] = $data['query']['Quitado'];
+		$_SESSION['FiltroPedidos']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 		$_SESSION['FiltroPedidos']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 		$_SESSION['FiltroPedidos']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
 		$_SESSION['FiltroPedidos']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
@@ -510,6 +530,7 @@ class Pedidos_statico extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
@@ -578,6 +599,8 @@ class Pedidos_statico extends CI_Controller {
     }
 
     public function pedidos_aprovar() {
+		
+		unset($_SESSION['FiltroPedidos']);
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -623,6 +646,7 @@ class Pedidos_statico extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -674,6 +698,12 @@ class Pedidos_statico extends CI_Controller {
 			'0' => '::TODOS::',			
 			'S' => 'Quitada',
 			'N' => 'NÃO Quitada',
+        );
+
+		$data['select']['ConcluidoProduto'] = array(
+			'0' => '::TODOS::',			
+			'S' => 'Entregue',
+			'N' => 'NÃO Entregue',
         );
 		
 		$data['select']['Modalidade'] = array(
@@ -732,6 +762,44 @@ class Pedidos_statico extends CI_Controller {
 		$data['paginacao'] = 'N';
         $data['pedidos'] = 'Pedidos_statico';
 
+        $_SESSION['FiltroPedidos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+		$_SESSION['FiltroPedidos']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+        $_SESSION['FiltroPedidos']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+		$_SESSION['FiltroPedidos']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+        $_SESSION['FiltroPedidos']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+		$_SESSION['FiltroPedidos']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
+        $_SESSION['FiltroPedidos']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
+		$_SESSION['FiltroPedidos']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+		$_SESSION['FiltroPedidos']['Orcarec'] = $data['query']['Orcarec'];
+		$_SESSION['FiltroPedidos']['Orcades'] = $data['query']['Orcades'];
+		$_SESSION['FiltroPedidos']['NomeFornecedor'] = $data['query']['NomeFornecedor'];
+		$_SESSION['FiltroPedidos']['Dia'] = $data['query']['Dia'];
+        $_SESSION['FiltroPedidos']['Mesvenc'] = $data['query']['Mesvenc'];
+        $_SESSION['FiltroPedidos']['Mespag'] = $data['query']['Mespag'];
+        $_SESSION['FiltroPedidos']['ObsOrca'] = $data['query']['ObsOrca'];
+        $_SESSION['FiltroPedidos']['Ano'] = $data['query']['Ano'];
+		$_SESSION['FiltroPedidos']['Quitado'] = $data['query']['Quitado'];
+		$_SESSION['FiltroPedidos']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
+		$_SESSION['FiltroPedidos']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
+		$_SESSION['FiltroPedidos']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+		$_SESSION['FiltroPedidos']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
+		$_SESSION['FiltroPedidos']['FinalizadoOrca'] = $data['query']['FinalizadoOrca'];
+		$_SESSION['FiltroPedidos']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
+		$_SESSION['FiltroPedidos']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
+		$_SESSION['FiltroPedidos']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
+		$_SESSION['FiltroPedidos']['FormaPagamento'] = $data['query']['FormaPagamento'];
+		$_SESSION['FiltroPedidos']['AVAP'] = $data['query']['AVAP'];
+		$_SESSION['FiltroPedidos']['TipoFrete'] = $data['query']['TipoFrete'];
+		$_SESSION['FiltroPedidos']['TipoFinanceiro'] = $data['query']['TipoFinanceiro'];
+		$_SESSION['FiltroPedidos']['Orcamento'] = $data['query']['Orcamento'];
+		$_SESSION['FiltroPedidos']['Cliente'] = $data['query']['Cliente'];
+		$_SESSION['FiltroPedidos']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+		$_SESSION['FiltroPedidos']['Modalidade'] = $data['query']['Modalidade'];
+		$_SESSION['FiltroPedidos']['Campo'] = $data['query']['Campo'];
+		$_SESSION['FiltroPedidos']['Ordenamento'] = $data['query']['Ordenamento'];
+		$_SESSION['FiltroPedidos']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
+		$_SESSION['FiltroPedidos']['metodo'] = $data['metodo'];
+
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
 
@@ -765,6 +833,7 @@ class Pedidos_statico extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
@@ -832,6 +901,8 @@ class Pedidos_statico extends CI_Controller {
     }
 
     public function pedidos_producao() {
+		
+		unset($_SESSION['FiltroPedidos']);
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -877,6 +948,7 @@ class Pedidos_statico extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -928,6 +1000,12 @@ class Pedidos_statico extends CI_Controller {
 			'0' => '::TODOS::',			
 			'S' => 'Quitada',
 			'N' => 'NÃO Quitada',
+        );
+
+		$data['select']['ConcluidoProduto'] = array(
+			'0' => '::TODOS::',			
+			'S' => 'Entregue',
+			'N' => 'NÃO Entregue',
         );
 		
 		$data['select']['Modalidade'] = array(
@@ -1002,6 +1080,7 @@ class Pedidos_statico extends CI_Controller {
         $_SESSION['FiltroPedidos']['ObsOrca'] = $data['query']['ObsOrca'];
         $_SESSION['FiltroPedidos']['Ano'] = $data['query']['Ano'];
 		$_SESSION['FiltroPedidos']['Quitado'] = $data['query']['Quitado'];
+		$_SESSION['FiltroPedidos']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 		$_SESSION['FiltroPedidos']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 		$_SESSION['FiltroPedidos']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
 		$_SESSION['FiltroPedidos']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
@@ -1055,6 +1134,7 @@ class Pedidos_statico extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
@@ -1123,6 +1203,8 @@ class Pedidos_statico extends CI_Controller {
     }
 
     public function pedidos_envio() {
+		
+		unset($_SESSION['FiltroPedidos']);
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -1168,6 +1250,7 @@ class Pedidos_statico extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -1219,6 +1302,12 @@ class Pedidos_statico extends CI_Controller {
 			'0' => '::TODOS::',			
 			'S' => 'Quitada',
 			'N' => 'NÃO Quitada',
+        );
+
+		$data['select']['ConcluidoProduto'] = array(
+			'0' => '::TODOS::',			
+			'S' => 'Entregue',
+			'N' => 'NÃO Entregue',
         );
 		
 		$data['select']['Modalidade'] = array(
@@ -1293,6 +1382,7 @@ class Pedidos_statico extends CI_Controller {
         $_SESSION['FiltroPedidos']['ObsOrca'] = $data['query']['ObsOrca'];
         $_SESSION['FiltroPedidos']['Ano'] = $data['query']['Ano'];
 		$_SESSION['FiltroPedidos']['Quitado'] = $data['query']['Quitado'];
+		$_SESSION['FiltroPedidos']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 		$_SESSION['FiltroPedidos']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 		$_SESSION['FiltroPedidos']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
 		$_SESSION['FiltroPedidos']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
@@ -1346,6 +1436,7 @@ class Pedidos_statico extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
@@ -1414,6 +1505,8 @@ class Pedidos_statico extends CI_Controller {
     }
 
     public function pedidos_entrega() {
+		
+		unset($_SESSION['FiltroPedidos']);
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -1459,6 +1552,7 @@ class Pedidos_statico extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -1510,6 +1604,12 @@ class Pedidos_statico extends CI_Controller {
 			'0' => '::TODOS::',			
 			'S' => 'Quitada',
 			'N' => 'NÃO Quitada',
+        );
+
+		$data['select']['ConcluidoProduto'] = array(
+			'0' => '::TODOS::',			
+			'S' => 'Entregue',
+			'N' => 'NÃO Entregue',
         );
 		
 		$data['select']['Modalidade'] = array(
@@ -1584,6 +1684,7 @@ class Pedidos_statico extends CI_Controller {
         $_SESSION['FiltroPedidos']['ObsOrca'] = $data['query']['ObsOrca'];
         $_SESSION['FiltroPedidos']['Ano'] = $data['query']['Ano'];
 		$_SESSION['FiltroPedidos']['Quitado'] = $data['query']['Quitado'];
+		$_SESSION['FiltroPedidos']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 		$_SESSION['FiltroPedidos']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 		$_SESSION['FiltroPedidos']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
 		$_SESSION['FiltroPedidos']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
@@ -1637,6 +1738,7 @@ class Pedidos_statico extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
@@ -1705,6 +1807,8 @@ class Pedidos_statico extends CI_Controller {
     }
 
     public function pedidos_pagamento() {
+		
+		unset($_SESSION['FiltroPedidos']);
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -1750,6 +1854,7 @@ class Pedidos_statico extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -1801,6 +1906,12 @@ class Pedidos_statico extends CI_Controller {
 			'0' => '::TODOS::',			
 			'S' => 'Quitada',
 			'N' => 'NÃO Quitada',
+        );
+
+		$data['select']['ConcluidoProduto'] = array(
+			'0' => '::TODOS::',			
+			'S' => 'Entregue',
+			'N' => 'NÃO Entregue',
         );
 		
 		$data['select']['Modalidade'] = array(
@@ -1875,6 +1986,7 @@ class Pedidos_statico extends CI_Controller {
         $_SESSION['FiltroPedidos']['ObsOrca'] = $data['query']['ObsOrca'];
         $_SESSION['FiltroPedidos']['Ano'] = $data['query']['Ano'];
 		$_SESSION['FiltroPedidos']['Quitado'] = $data['query']['Quitado'];
+		$_SESSION['FiltroPedidos']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 		$_SESSION['FiltroPedidos']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 		$_SESSION['FiltroPedidos']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
 		$_SESSION['FiltroPedidos']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
@@ -1928,6 +2040,7 @@ class Pedidos_statico extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];

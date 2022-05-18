@@ -21,8 +21,8 @@
 							<th class="active">Pedido</th>
 							<th class="active">idCli</th>
 							<th class="active">Fornecedor</th>
-							<th class="active">Receita</th>
 							<th class="active">Compra</th>
+							<th class="active">Receita</th>
 							<th class="active">Parcela</th>
 							<th class="active">Vnc.Prc.</th>
 							<th class="active">Pago?</th>
@@ -39,8 +39,8 @@
 								echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';	
 								echo '<td>' . $row['idApp_Fornecedor'] . '</td>';	
 								echo '<td>' . $row['NomeFornecedor'] . '</td>';	
-								echo '<td>' . $row['TipoFinanceiro'] . '</td>';
 								echo '<td>' . $row['Tipo_Orca'] . '</td>';
+								echo '<td>' . $row['TipoFinanceiro'] . '</td>';
 								echo '<td>' . $row['Parcela'] . '</td>';
 								echo '<td>' . $row['DataVencimento'] . '</td>';
 								echo '<td>' . $row['Quitado'] . '</td>';

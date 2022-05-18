@@ -98,6 +98,7 @@ class Pedidos2 extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'Quitado',
+			'ConcluidoProduto',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -153,7 +154,12 @@ class Pedidos2 extends CI_Controller {
 			'S' => 'Quitada',
 			'N' => 'NÃO Quitada',
         );
-		
+		$data['select']['ConcluidoProduto'] = array(
+			'0' => '::TODOS::',			
+			'S' => 'Entregue',
+			'N' => 'NÃO Entregue',
+        );
+
 		$data['select']['Modalidade'] = array(
             '0' => '::TODOS::',
             'P' => 'Dividido',
@@ -239,6 +245,7 @@ class Pedidos2 extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
+			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];

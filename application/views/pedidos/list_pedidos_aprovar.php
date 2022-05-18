@@ -22,9 +22,10 @@
 							<th class="active">idCli</th>
 							<th class="active">Cliente</th>
 							<th class="active">Compra</th>
-							<th class="active">Entrega</th>
-							<th class="active">Hora</th>
-							<th class="active">Forma</th>
+							<th class="active">Receita</th>
+							<th class="active">Parcela</th>
+							<th class="active">Vnc.Prc.</th>
+							<th class="active">Pago?</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -38,10 +39,11 @@
 								echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';	
 								echo '<td>' . $row['idApp_Cliente'] . '</td>';	
 								echo '<td>' . $row['NomeCliente'] . '</td>';
-								echo '<td>' . $row['Tipo_Orca'] . '</td>';
-								echo '<td>' . $row['DataEntregaOrca'] . '</td>';
-								echo '<td>' . $row['HoraEntregaOrca'] . '</td>';
-								echo '<td>' . $row['TipoFrete'] . '</td>';
+								echo '<td>' . $row['Tipo_Orca'] . '</td>';	
+								echo '<td>' . $row['TipoFinanceiro'] . '</td>';
+								echo '<td>' . $row['Parcela'] . '</td>';
+								echo '<td>' . $row['DataVencimento'] . '</td>';
+								echo '<td>' . $row['Quitado'] . '</td>';
 							echo '</tr>';
 							$count++;
 						}

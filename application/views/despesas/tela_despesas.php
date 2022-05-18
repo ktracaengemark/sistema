@@ -30,7 +30,7 @@
 												<span class="glyphicon glyphicon-search"></span> 
 											</button>
 										</span>
-										<input type="text" class="form-control Numero" placeholder="Nº Pedido" name="Orcamento" value="<?php echo set_value('Orcamento', $query['Orcamento']); ?>">
+										<input type="text" class="form-control Numero" placeholder="Nº Pedido" autofocus name="Orcamento" value="<?php echo set_value('Orcamento', $query['Orcamento']); ?>">
 									</div>
 								<?php }else{ ?>
 									<a class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?><?php echo $despesas; ?>/despesas" role="button"> 
@@ -205,9 +205,21 @@
 								<input type="hidden" name="QuitadoOrca" id="QuitadoOrca" value="0"/>
 							<?php } ?>
 							<div class="row">
-								<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
-								<div class="col-md-3"></div>
-								<?php } ?>
+								<div class="col-md-3 text-left">
+									<label for="ConcluidoProduto">Status dos Produtos</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
+											id="ConcluidoProduto" name="ConcluidoProduto">
+										<?php
+										foreach ($select['ConcluidoProduto'] as $key => $row) {
+											if ($query['ConcluidoProduto'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
 								<div class="col-md-3 text-left">
 									<label for="Quitado">Status das Parcelas</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
@@ -333,12 +345,12 @@
 									</select>
 								</div>
 								<div class="col-md-3 text-left">
-									<label for="Ordenamento">Tipo Receita:</label>
+									<label for="Ordenamento">Tipo Despesa:</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
-											id="TipoFinanceiroR" name="TipoFinanceiroR">
+											id="TipoFinanceiroD" name="TipoFinanceiroD">
 										<?php
-										foreach ($select['TipoFinanceiroR'] as $key => $row) {
-											if ($query['TipoFinanceiroR'] == $key) {
+										foreach ($select['TipoFinanceiroD'] as $key => $row) {
+											if ($query['TipoFinanceiroD'] == $key) {
 												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 											} else {
 												echo '<option value="' . $key . '">' . $row . '</option>';

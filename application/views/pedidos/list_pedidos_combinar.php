@@ -22,9 +22,11 @@
 							<th class="active">idCli</th>
 							<th class="active">Cliente</th>
 							<th class="active">Compra</th>
+							<th class="active">Produto</th>
 							<th class="active">Entrega</th>
 							<th class="active">Hora</th>
 							<th class="active">Forma</th>
+							<th class="active">Entregue</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -35,13 +37,15 @@
 							#echo '<tr>';
 							echo '<tr class="clickable-row bg-danger" data-href="' . base_url() . $status . $row['idApp_OrcaTrata'] . '">';
 								echo '<td>' . ($linha + $count) . '</td>';
-								echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
+								echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';	
 								echo '<td>' . $row['idApp_Cliente'] . '</td>';	
 								echo '<td>' . $row['NomeCliente'] . '</td>';
 								echo '<td>' . $row['Tipo_Orca'] . '</td>';
-								echo '<td>' . $row['DataEntregaOrca'] . '</td>';
-								echo '<td>' . $row['HoraEntregaOrca'] . '</td>';
+								echo '<td>' . $row['NomeProduto'] . '</td>';
+								echo '<td>' . $row['DataConcluidoProduto'] . '</td>';
+								echo '<td>' . $row['HoraConcluidoProduto'] . '</td>';
 								echo '<td>' . $row['TipoFrete'] . '</td>';
+								echo '<td>' . $row['ConcluidoProduto'] . '</td>';
 							echo '</tr>';
 							$count++;
 						}

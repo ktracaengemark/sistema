@@ -241,9 +241,21 @@
 								<input type="hidden" name="QuitadoOrca" id="QuitadoOrca" value="0"/>
 							<?php } ?>
 							<div class="row">
-								<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
-								<div class="col-md-3"></div>
-								<?php } ?>
+								<div class="col-md-3 text-left">
+									<label for="ConcluidoProduto">Status dos Produtos</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
+											id="ConcluidoProduto" name="ConcluidoProduto">
+										<?php
+										foreach ($select['ConcluidoProduto'] as $key => $row) {
+											if ($query['ConcluidoProduto'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
 								<div class="col-md-3 text-left">
 									<label for="Quitado">Status das Parcelas</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
