@@ -25,6 +25,9 @@ class Agenda extends CI_Controller {
     }
 
     public function index() {
+
+		unset($_SESSION['Agendamentos']);
+		
 		if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
@@ -115,6 +118,9 @@ class Agenda extends CI_Controller {
 			'Categoria',
 			'SubPrioridade',
 			'Recorrencia',
+			'Tipo',
+			'Agrupar',
+			'Repeticao',
 			
         ), TRUE));
 		/*
@@ -122,39 +128,44 @@ class Agenda extends CI_Controller {
            $data['query']['Mesvenc'] = date('m', time());
 		*/
 		
-        $_SESSION['Filtro_Agenda']['Dia'] = $data['query']['Dia'];
-        $_SESSION['Filtro_Agenda']['Mesvenc'] = $data['query']['Mesvenc'];
-        $_SESSION['Filtro_Agenda']['Ano'] = $data['query']['Ano'];
-        $_SESSION['Filtro_Agenda']['Texto1'] = utf8_encode($data['query']['Texto1']);
-        $_SESSION['Filtro_Agenda']['Texto2'] = utf8_encode($data['query']['Texto2']);
-		$_SESSION['Filtro_Agenda']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
-		$_SESSION['Filtro_Agenda']['ConcluidoSubProcedimento'] = $data['query']['ConcluidoSubProcedimento'];
-        $_SESSION['Filtro_Agenda']['Prioridade'] = $data['query']['Prioridade'];
-		$_SESSION['Filtro_Agenda']['Statustarefa'] = $data['query']['Statustarefa'];
-		$_SESSION['Filtro_Agenda']['Statussubtarefa'] = $data['query']['Statussubtarefa'];
-		$_SESSION['Filtro_Agenda']['SubPrioridade'] = $data['query']['SubPrioridade'];
-		$_SESSION['Filtro_Agenda']['Categoria'] = $data['query']['Categoria'];
-		$_SESSION['Filtro_Agenda']['Procedimento'] = $data['query']['Procedimento'];
-		$_SESSION['Filtro_Agenda']['Diacli'] = $data['query']['Diacli'];
-        $_SESSION['Filtro_Agenda']['Mesvenccli'] = $data['query']['Mesvenccli'];
-        $_SESSION['Filtro_Agenda']['Anocli'] = $data['query']['Anocli'];		
-		$_SESSION['Filtro_Agenda']['Concluidocli'] = $data['query']['Concluidocli'];
-		$_SESSION['Filtro_Agenda']['NomeCliente'] = $data['query']['NomeCliente'];
-		$_SESSION['Filtro_Agenda']['NomeClientePet'] = $data['query']['NomeClientePet'];
-		$_SESSION['Filtro_Agenda']['NomeClienteDep'] = $data['query']['NomeClienteDep'];
-		$_SESSION['Filtro_Agenda']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-		$_SESSION['Filtro_Agenda']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-		$_SESSION['Filtro_Agenda']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
-		$_SESSION['Filtro_Agenda']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-		$_SESSION['Filtro_Agenda']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];				
-        $_SESSION['Filtro_Agenda']['Diaemp'] = $data['query']['Diaemp'];
-        $_SESSION['Filtro_Agenda']['Mesvencemp'] = $data['query']['Mesvencemp'];
-        $_SESSION['Filtro_Agenda']['Anoemp'] = $data['query']['Anoemp'];		
-		$_SESSION['Filtro_Agenda']['Concluidoemp'] = $data['query']['Concluidoemp'];			
-		$_SESSION['Filtro_Agenda']['NomeEmpresa'] = $data['query']['NomeEmpresa'];
-		$_SESSION['Filtro_Agenda']['NomeEmpresaCli'] = $data['query']['NomeEmpresaCli'];
-		$_SESSION['Filtro_Agenda']['NomeUsuario'] = $data['query']['NomeUsuario'];
-		$_SESSION['Filtro_Agenda']['Recorrencia'] = $data['query']['Recorrencia'];
+        $_SESSION['Agendamentos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+		$_SESSION['Agendamentos']['DataFim'] 	= $this->basico->mascara_data($data['query']['DataFim'], 'mysql');		
+        $_SESSION['Agendamentos']['Dia'] = $data['query']['Dia'];
+        $_SESSION['Agendamentos']['Mesvenc'] = $data['query']['Mesvenc'];
+        $_SESSION['Agendamentos']['Ano'] = $data['query']['Ano'];
+        $_SESSION['Agendamentos']['Texto1'] = utf8_encode($data['query']['Texto1']);
+        $_SESSION['Agendamentos']['Texto2'] = utf8_encode($data['query']['Texto2']);
+		$_SESSION['Agendamentos']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
+		$_SESSION['Agendamentos']['ConcluidoSubProcedimento'] = $data['query']['ConcluidoSubProcedimento'];
+        $_SESSION['Agendamentos']['Prioridade'] = $data['query']['Prioridade'];
+		$_SESSION['Agendamentos']['Statustarefa'] = $data['query']['Statustarefa'];
+		$_SESSION['Agendamentos']['Statussubtarefa'] = $data['query']['Statussubtarefa'];
+		$_SESSION['Agendamentos']['SubPrioridade'] = $data['query']['SubPrioridade'];
+		$_SESSION['Agendamentos']['Categoria'] = $data['query']['Categoria'];
+		$_SESSION['Agendamentos']['Procedimento'] = $data['query']['Procedimento'];
+		$_SESSION['Agendamentos']['Diacli'] = $data['query']['Diacli'];
+        $_SESSION['Agendamentos']['Mesvenccli'] = $data['query']['Mesvenccli'];
+        $_SESSION['Agendamentos']['Anocli'] = $data['query']['Anocli'];		
+		$_SESSION['Agendamentos']['Concluidocli'] = $data['query']['Concluidocli'];
+		$_SESSION['Agendamentos']['NomeCliente'] = $data['query']['NomeCliente'];
+		$_SESSION['Agendamentos']['NomeClientePet'] = $data['query']['NomeClientePet'];
+		$_SESSION['Agendamentos']['NomeClienteDep'] = $data['query']['NomeClienteDep'];
+		$_SESSION['Agendamentos']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+		$_SESSION['Agendamentos']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+		$_SESSION['Agendamentos']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
+		$_SESSION['Agendamentos']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+		$_SESSION['Agendamentos']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];				
+        $_SESSION['Agendamentos']['Diaemp'] = $data['query']['Diaemp'];
+        $_SESSION['Agendamentos']['Mesvencemp'] = $data['query']['Mesvencemp'];
+        $_SESSION['Agendamentos']['Anoemp'] = $data['query']['Anoemp'];		
+		$_SESSION['Agendamentos']['Concluidoemp'] = $data['query']['Concluidoemp'];			
+		$_SESSION['Agendamentos']['NomeEmpresa'] = $data['query']['NomeEmpresa'];
+		$_SESSION['Agendamentos']['NomeEmpresaCli'] = $data['query']['NomeEmpresaCli'];
+		$_SESSION['Agendamentos']['NomeUsuario'] = $data['query']['NomeUsuario'];
+		$_SESSION['Agendamentos']['Recorrencia'] = $data['query']['Recorrencia'];
+		$_SESSION['Agendamentos']['Tipo'] = $data['query']['Tipo'];
+		$_SESSION['Agendamentos']['Agrupar'] = $data['query']['Agrupar'];
+		$_SESSION['Agendamentos']['Repeticao'] = $data['query']['Repeticao'];
         //$_SESSION['log']['NomeUsuario'] = ($data['query']['NomeUsuario']) ? $data['query']['NomeUsuario'] : FALSE;
         $_SESSION['log']['NomeProfissional'] = ($data['query']['NomeProfissional']) ? $data['query']['NomeProfissional'] : FALSE;
         $_SESSION['log']['Compartilhar'] = ($data['query']['Compartilhar']) ? $data['query']['Compartilhar'] : FALSE;
@@ -224,7 +235,18 @@ class Agenda extends CI_Controller {
 			'2' => 'Fazendo',
 			'3' => 'Feito',
         );		
-		        
+
+        $data['select']['Tipo'] = array (
+            '0' => '::Todos::',
+			'2' => 'C/Cliente',
+			'1' => 'S/Cliente',
+        );
+		
+		$data['select']['Agrupar'] = array(	
+			'1' => 'Agenda',
+			'2' => 'Produto',
+		);		
+		 		        
 		$data['select']['Dia'] = $this->Agenda_model->select_dia();
 		$data['select']['Mesvenc'] = $this->Agenda_model->select_mes();
 		$data['select']['Diacli'] = $this->Agenda_model->select_dia();
@@ -258,7 +280,7 @@ class Agenda extends CI_Controller {
 		
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
-
+			
 			$data['bd']['Dia'] = $data['query']['Dia'];
 			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
 			$data['bd']['Ano'] = $data['query']['Ano'];
@@ -287,6 +309,10 @@ class Agenda extends CI_Controller {
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
 			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
             $data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+			$data['bd']['Recorrencia'] = $data['query']['Recorrencia'];
+			$data['bd']['Tipo'] = $data['query']['Tipo'];
+			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
+			$data['bd']['Repeticao'] = $data['query']['Repeticao'];
 
 			$config['per_page'] = 10;
 			$config["uri_segment"] = 3;

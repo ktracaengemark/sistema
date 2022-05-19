@@ -15,14 +15,20 @@
 		//Selecionar os itens da Tabela
 
 		$tipoevento = 'CO.Tipo = ' . $_SESSION['Agendamentos']['TipoEvento'];
-
+		
+		$tipo = $_SESSION['Agendamentos']['TipoEvento'];
+		
 		$cliente 	= ($_SESSION['Agendamentos']['idApp_Cliente']) ? ' AND CO.idApp_Cliente = ' . $_SESSION['Agendamentos']['idApp_Cliente'] : FALSE;
 		$clientepet = ($_SESSION['Empresa']['CadastrarPet'] == "S" && $_SESSION['Agendamentos']['idApp_ClientePet']) ? ' AND CO.idApp_ClientePet = ' . $_SESSION['Agendamentos']['idApp_ClientePet'] : FALSE;
 		$clientedep = ($_SESSION['Empresa']['CadastrarDep'] == "S" && $_SESSION['Agendamentos']['idApp_ClienteDep']) ? ' AND CO.idApp_ClienteDep = ' . $_SESSION['Agendamentos']['idApp_ClienteDep'] : FALSE;
 
 		$usuario 	= ($_SESSION['Agendamentos']['NomeUsuario']) ? ' AND ASS.idSis_Associado = ' . $_SESSION['Agendamentos']['NomeUsuario'] : FALSE;
-			
-		$campo 			= (!$_SESSION['Agendamentos']['Campo']) ? 'CO.DataInicio' : $_SESSION['Agendamentos']['Campo'];
+		
+		if($_SESSION['Agendamentos']['TipoEvento'] == 2){
+			$campo 	= (!$_SESSION['Agendamentos']['Campo']) ? 'TCAT.Catprod' : $_SESSION['Agendamentos']['Campo'];
+		}else{
+			$campo 	= (!$_SESSION['Agendamentos']['Campo']) ? 'CO.DataInicio' : $_SESSION['Agendamentos']['Campo'];
+		}
 		$ordenamento 	= (!$_SESSION['Agendamentos']['Ordenamento']) ? 'ASC' : $_SESSION['Agendamentos']['Ordenamento'];
 
 		($_SESSION['Agendamentos']['DataInicio']) ? $date_inicio = $_SESSION['Agendamentos']['DataInicio'] : FALSE;
@@ -31,9 +37,8 @@
 		$date_inicio_orca 	= ($_SESSION['Agendamentos']['DataInicio']) ? 'DataInicio >= "' . $date_inicio . '" AND ' : FALSE;
 		$date_fim_orca 		= ($_SESSION['Agendamentos']['DataFim']) ? 'DataInicio <= "' . $date_fim . '" AND ' : FALSE;
 
-		
-		$tipo = $_SESSION['Agendamentos']['TipoEvento'];
-		
+		$groupby = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['Agendamentos']['Agrupar'] != "0") ? 'GROUP BY ' . $_SESSION['Agendamentos']['Agrupar'] . '' : 'GROUP BY CO.idApp_Consulta';
+
 		if($_SESSION['Empresa']['CadastrarPet'] == "S"){
 			$sub_cliente = 1;
 		}elseif($_SESSION['Empresa']['CadastrarDep'] == "S"){
@@ -62,7 +67,11 @@
 									EPP.EspeciePet,
 									CD.*,
 									CONCAT(IFNULL(CD.NomeClienteDep,"")) AS NomeClienteDep,
-									ASS.Nome
+									ASS.Nome,
+									PRD.NomeProduto,
+									PRD.ValorProduto,
+									PRD.ObsProduto,
+									TCAT.Catprod
 								FROM
 									App_Consulta AS CO
 										LEFT JOIN App_Agenda AS A ON A.idApp_Agenda = CO.idApp_Agenda
@@ -74,6 +83,11 @@
 										LEFT JOIN Tab_PortePet AS POP ON POP.idTab_PortePet = CP.PortePet
 										LEFT JOIN Tab_EspeciePet AS EPP ON EPP.idTab_EspeciePet = CP.EspeciePet
 										LEFT JOIN App_ClienteDep AS CD ON CD.idApp_ClienteDep = CO.idApp_ClienteDep
+										LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = CO.idApp_OrcaTrata
+										LEFT JOIN App_Produto AS PRD ON PRD.idApp_OrcaTrata = OT.idApp_OrcaTrata
+										LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = PRD.idTab_Produtos_Produto
+										LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto
+										LEFT JOIN Tab_Catprod AS TCAT ON TCAT.idTab_Catprod = TPRD.idTab_Catprod
 								WHERE
 									' . $date_inicio_orca . '
 									' . $date_fim_orca . '
@@ -84,6 +98,7 @@
 									' . $clientepet . '
 									' . $clientedep . '
 									' . $usuario . '
+								' . $groupby . '
 								ORDER BY
 									' . $campo . '
 									' . $ordenamento . '
@@ -107,12 +122,13 @@
 		$html .= '<tr>';
 		$html .= '<td><b>Empresa</b></td>';
 		$html .= '<td><b>id_Agenda</b></td>';
-		$html .= '<td><b>id_OS</b></td>';
+		$html .= '<td><b>Recor</b></td>';
 		$html .= '<td><b>Prof</b></td>';
 		$html .= '<td><b>Data Ini</b></td>';
 		$html .= '<td><b>Data Fim</b></td>';
 		$html .= '<td><b>Hora Ini</b></td>';
 		$html .= '<td><b>Hora Fim</b></td>';
+		$html .= '<td><b>Evento</b></td>';
 		
 		if($tipo == 2){
 			
@@ -131,7 +147,7 @@
 				$html .= '<td><b>Cor</b></td>';
 				$html .= '<td><b>Peso</b></td>';
 				$html .= '<td><b>Aler.</b></td>';
-				$html .= '<td><b>Obs</b></td>';
+				$html .= '<td><b>ObsPet</b></td>';
 			
 			}elseif($sub_cliente == 2){
 				
@@ -139,9 +155,14 @@
 				$html .= '<td><b>Dep</b></td>';
 			
 			}
+			$html .= '<td><b>id_OS</b></td>';
+			$html .= '<td><b>Categoria</b></td>';
+			$html .= '<td><b>Produto</b></td>';
+			$html .= '<td><b>Valor</b></td>';
+			$html .= '<td><b>Obs O.S.</b></td>';
+			
 		}
 		
-		$html .= '<td><b>Evento</b></td>';
 		
 		$html .= '</tr>';
 		
@@ -151,12 +172,13 @@
 			$html .= '<tr>';
 			$html .= '<td>'.$row_msg_contatos["Empresa"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["idApp_Consulta"].'</td>';
-			$html .= '<td>'.$row_msg_contatos["idApp_OrcaTrata"].'</td>';
+			$html .= '<td>'.$row_msg_contatos["Recorrencia"].'.</td>';
 			$html .= '<td>'.$row_msg_contatos["Nome"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["DataInicio"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["DataFim"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["HoraInicio"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["HoraFim"].'</td>';
+			$html .= '<td>'.utf8_encode($row_msg_contatos["Obs"]).'</td>';
 			
 			if($tipo == 2){
 				
@@ -183,9 +205,13 @@
 					$html .= '<td>'.utf8_encode($row_msg_contatos["NomeClienteDep"]).'</td>';
 				
 				}
+				$html .= '<td>'.$row_msg_contatos["idApp_OrcaTrata"].'</td>';
+				$html .= '<td>'.$row_msg_contatos["Catprod"].'</td>';
+				$html .= '<td>'.$row_msg_contatos["NomeProduto"].'</td>';
+				$html .= '<td>'.$row_msg_contatos["ValorProduto"].'</td>';
+				$html .= '<td>'.$row_msg_contatos["ObsProduto"].'</td>';
 			}
 			
-			$html .= '<td>'.utf8_encode($row_msg_contatos["Obs"]).'</td>';
 			
 			$html .= '</tr>';
 		}

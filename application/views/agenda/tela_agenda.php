@@ -82,160 +82,240 @@
 	<?php echo form_open($form_open_path, 'role="form"'); ?>
 	<div class="panel panel-info">
 		<div class="panel-heading">
-			<?php if($paginacao == "N") { ?>					
+			<?php if($paginacao == "N") { ?>
 				<div class="row text-left">
 					<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>
-						<?php if ($_SESSION['log']['Permissao'] <= 2 ) { ?>
-							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
-								<label class="" for="Ordenamento">Profissional:</label><br>
-								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()" id="NomeUsuario" name="NomeUsuario">
-									<?php
-									foreach ($select['NomeUsuario'] as $key => $row) {
-										if ($query['NomeUsuario'] == $key) {
-											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-										} else {
-											echo '<option value="' . $key . '">' . $row . '</option>';
+						<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 text-left">
+							<div class="row text-left">
+								<?php if ($_SESSION['log']['Permissao'] <= 2 ) { ?>
+									<div class="col-lg-4 col-md-3 col-sm-3 col-xs-6 text-left" >
+										<label class="" for="Ordenamento">Profissional:</label>
+										<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()" id="NomeUsuario" name="NomeUsuario">
+											<?php
+											foreach ($select['NomeUsuario'] as $key => $row) {
+												if ($query['NomeUsuario'] == $key) {
+													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+												} else {
+													echo '<option value="' . $key . '">' . $row . '</option>';
+												}
+											}
+											?>
+										</select>
+									</div>
+								<?php } ?>
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-left" >
+									<label class="" for="Tipo">Evento:</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="this.form.submit()" id="Tipo" name="Tipo">
+										<?php
+										foreach ($select['Tipo'] as $key => $row) {
+											if ($query['Tipo'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
 										}
-									}
-									?>
-								</select>
-							</div>
-						<?php } ?>						
-						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
-							<label>Busca Cliente:</label>
-							<div class="input-group">
-								<span class="input-group-btn">
-									<button class="btn btn-primary btn-md" type="submit">
-										<span class="glyphicon glyphicon-search"></span> 
-									</button>
-								</span>
-								<input type="text" class="form-control" name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php echo $cadastrar['id_Cliente_Auto']; ?>"  placeholder="Pesquisar Cliente">
-							</div>
-							<span class="modal-title" id="NomeClienteAuto1"><?php echo $cadastrar['NomeClienteAuto']; ?></span>
-							<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php echo $cadastrar['NomeClienteAuto']; ?>" />
-							<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php echo $query['idApp_Cliente']; ?>" />
-							<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">
-						</div>
-
-						<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
-							<!--
-							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
-								<label  for="idApp_ClientePet">Pet</label>
-								<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClientePet" name="idApp_ClientePet" onchange="this.form.submit()">
-									<option value=""></option>
-								</select>
-								<span class="modal-title" id="Pet"></span>
-							</div>
-							<input type="hidden" id="Hidden_idApp_ClientePet" name="Hidden_idApp_ClientePet" value="<?php #echo $query['idApp_ClientePet']; ?>" />
-							-->
-							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
-								<label>Busca Pet:</label>
-								<div class="input-group">
-									<span class="input-group-btn">
-										<button class="btn btn-primary btn-md" type="submit">
-											<span class="glyphicon glyphicon-search"></span> 
-										</button>
-									</span>
-									<input type="text" class="form-control" name="id_ClientePet_Auto" id="id_ClientePet_Auto" value="<?php echo $cadastrar['id_ClientePet_Auto']; ?>"  placeholder="Pesquisar Pet">
-								</div>
-								<span class="modal-title" id="NomeClientePetAuto1"><?php echo $cadastrar['NomeClientePetAuto']; ?></span>
-								<input type="hidden" id="NomeClientePetAuto" name="NomeClientePetAuto" value="<?php echo $cadastrar['NomeClientePetAuto']; ?>" />
-								<input type="hidden" id="Hidden_id_ClientePet_Auto" name="Hidden_id_ClientePet_Auto" value="<?php echo $query['idApp_ClientePet2']; ?>" />
-								<input type="hidden" name="idApp_ClientePet2" id="idApp_ClientePet2" value="<?php echo $query['idApp_ClientePet2']; ?>" class="form-control" readonly= "">
-							</div>
-							
-						<?php } else { ?>
-							<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
-								<!--
-								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
-									<label  for="idApp_ClienteDep">Dep</label>
-									<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClienteDep" name="idApp_ClienteDep" onchange="this.form.submit()">
-										<option value=""></option>
+										?>
 									</select>
-									<span class="modal-title" id="Dep"></span>
-								</div>
-								<input type="hidden" id="Hidden_idApp_ClienteDep" name="Hidden_idApp_ClienteDep" value="<?php #echo $query['idApp_ClienteDep']; ?>" />
-								-->
-								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
-									<label>Busca Dep:</label>
+								</div>						
+								<div class="col-lg-5 col-md-6 col-sm-6 col-xs-12 text-left">
+									<label>Busca Cliente:</label>
 									<div class="input-group">
 										<span class="input-group-btn">
 											<button class="btn btn-primary btn-md" type="submit">
 												<span class="glyphicon glyphicon-search"></span> 
 											</button>
 										</span>
-										<input type="text" class="form-control" name="id_ClienteDep_Auto" id="id_ClienteDep_Auto" value="<?php echo $cadastrar['id_ClienteDep_Auto']; ?>"  placeholder="Pesquisar Dep">
+										<input type="text" class="form-control" name="id_Cliente_Auto" id="id_Cliente_Auto" value="<?php echo $cadastrar['id_Cliente_Auto']; ?>"  placeholder="Pesquisar Cliente">
 									</div>
-									<span class="modal-title" id="NomeClienteDepAuto1"><?php echo $cadastrar['NomeClienteDepAuto']; ?></span>
-									<input type="hidden" id="NomeClienteDepAuto" name="NomeClienteDepAuto" value="<?php echo $cadastrar['NomeClienteDepAuto']; ?>" />
-									<input type="hidden" id="Hidden_id_ClienteDep_Auto" name="Hidden_id_ClienteDep_Auto" value="<?php echo $query['idApp_ClienteDep2']; ?>" />
-									<input type="hidden" name="idApp_ClienteDep2" id="idApp_ClienteDep2" value="<?php echo $query['idApp_ClienteDep2']; ?>" class="form-control" readonly= "">
+									<span class="modal-title" id="NomeClienteAuto1"><?php echo $cadastrar['NomeClienteAuto']; ?></span>
+									<input type="hidden" id="NomeClienteAuto" name="NomeClienteAuto" value="<?php echo $cadastrar['NomeClienteAuto']; ?>" />
+									<input type="hidden" id="Hidden_id_Cliente_Auto" name="Hidden_id_Cliente_Auto" value="<?php echo $query['idApp_Cliente']; ?>" />
+									<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" class="form-control" readonly= "">
 								</div>
-
-							<?php } ?>
-						<?php } ?>
-					<?php } ?>
-					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">	
-						<label for="Recorrencia">Recor.</label>
-						<div class="input-group">
-							<span class="input-group-btn">
-								<button class="btn btn-primary btn-md" type="submit">
-									<span class="glyphicon glyphicon-search"></span> 
-								</button>
-							</span>
-							<input type="text" class="form-control " maxlength="7" placeholder="Ex: 4/4, 2/2" name="Recorrencia" id="Recorrencia" value="<?php echo set_value('Recorrencia', $query['Recorrencia']); ?>">
-						</div>
-					</div>
-					<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-left">	
-						<label class="" for="Ordenamento">Cal.</label><br>	
-						<div class=" btn btn-primary" type="button" data-toggle="collapse" data-target="#Calendario" aria-expanded="false" aria-controls="Calendario">
-							<span class="glyphicon glyphicon-calendar"></span>
-						</div>
-					</div>
-				</div>	
-				<div class="row text-left">	
-					<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>	
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
-							<label>Backup</label><br>
-							<a href="<?php echo base_url() . 'gerar_excel/Agendamentos/Agendamentos_total_xls.php'; ?>">
-								<button type='button' class='btn btn-md btn-success btn-block'>
-									Agendamentos
-								</button>
-							</a>
-						</div>
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
-							<label>Backup</label><br>
-							<a href="<?php echo base_url() . 'gerar_excel/Clientes/Clientes_total.php'; ?>">
-								<button type='button' class='btn btn-md btn-success btn-block'>
-									Clientes
-								</button>
-							</a>
-						</div>
-						<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
-								<label>Backup</label><br>
-								<a href="<?php echo base_url() . 'gerar_excel/Clientes/ClientesPet_total.php'; ?>">
-									<button type='button' class='btn btn-md btn-success btn-block'>
-										Pets
-									</button>
-								</a>
 							</div>
-						<?php }else{ ?>
-							<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
+						</div>
+					<?php } ?>
+					<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 text-left">
+						<div class="row text-left">
+							<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>	
+								<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
+									<!--
+									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
+										<label  for="idApp_ClientePet">Pet</label>
+										<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClientePet" name="idApp_ClientePet" onchange="this.form.submit()">
+											<option value=""></option>
+										</select>
+										<span class="modal-title" id="Pet"></span>
+									</div>
+									<input type="hidden" id="Hidden_idApp_ClientePet" name="Hidden_idApp_ClientePet" value="<?php #echo $query['idApp_ClientePet']; ?>" />
+									-->
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
+										<label>Busca Pet:</label>
+										<div class="input-group">
+											<span class="input-group-btn">
+												<button class="btn btn-primary btn-md" type="submit">
+													<span class="glyphicon glyphicon-search"></span> 
+												</button>
+											</span>
+											<input type="text" class="form-control" name="id_ClientePet_Auto" id="id_ClientePet_Auto" value="<?php echo $cadastrar['id_ClientePet_Auto']; ?>"  placeholder="Pesquisar Pet">
+										</div>
+										<span class="modal-title" id="NomeClientePetAuto1"><?php echo $cadastrar['NomeClientePetAuto']; ?></span>
+										<input type="hidden" id="NomeClientePetAuto" name="NomeClientePetAuto" value="<?php echo $cadastrar['NomeClientePetAuto']; ?>" />
+										<input type="hidden" id="Hidden_id_ClientePet_Auto" name="Hidden_id_ClientePet_Auto" value="<?php echo $query['idApp_ClientePet2']; ?>" />
+										<input type="hidden" name="idApp_ClientePet2" id="idApp_ClientePet2" value="<?php echo $query['idApp_ClientePet2']; ?>" class="form-control" readonly= "">
+									</div>
+								<?php } else { ?>
+									<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
+										<!--
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
+											<label  for="idApp_ClienteDep">Dep</label>
+											<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClienteDep" name="idApp_ClienteDep" onchange="this.form.submit()">
+												<option value=""></option>
+											</select>
+											<span class="modal-title" id="Dep"></span>
+										</div>
+										<input type="hidden" id="Hidden_idApp_ClienteDep" name="Hidden_idApp_ClienteDep" value="<?php #echo $query['idApp_ClienteDep']; ?>" />
+										-->
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
+											<label>Busca Dep:</label>
+											<div class="input-group">
+												<span class="input-group-btn">
+													<button class="btn btn-primary btn-md" type="submit">
+														<span class="glyphicon glyphicon-search"></span> 
+													</button>
+												</span>
+												<input type="text" class="form-control" name="id_ClienteDep_Auto" id="id_ClienteDep_Auto" value="<?php echo $cadastrar['id_ClienteDep_Auto']; ?>"  placeholder="Pesquisar Dep">
+											</div>
+											<span class="modal-title" id="NomeClienteDepAuto1"><?php echo $cadastrar['NomeClienteDepAuto']; ?></span>
+											<input type="hidden" id="NomeClienteDepAuto" name="NomeClienteDepAuto" value="<?php echo $cadastrar['NomeClienteDepAuto']; ?>" />
+											<input type="hidden" id="Hidden_id_ClienteDep_Auto" name="Hidden_id_ClienteDep_Auto" value="<?php echo $query['idApp_ClienteDep2']; ?>" />
+											<input type="hidden" name="idApp_ClienteDep2" id="idApp_ClienteDep2" value="<?php echo $query['idApp_ClienteDep2']; ?>" class="form-control" readonly= "">
+										</div>
+									<?php } ?>
+								<?php } ?>
+							<?php } ?>
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-left">	
+								<label for="Recorrencia">Recor.</label>
+								<input type="text" class="form-control " maxlength="7" placeholder="Ex: 4/4, 2/2" name="Recorrencia" id="Recorrencia" value="<?php echo set_value('Recorrencia', $query['Recorrencia']); ?>">
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-left">	
+								<label for="Repeticao">Repeticao</label>
+								<div class="input-group">
+									<span class="input-group-btn">
+										<button class="btn btn-primary btn-md" type="submit">
+											<span class="glyphicon glyphicon-search"></span> 
+										</button>
+									</span>
+									<input type="text" class="form-control Numero " name="Repeticao" id="Repeticao" value="<?php echo set_value('Repeticao', $query['Repeticao']); ?>">
+								</div>
+							</div>
+						</div>
+					</div>
+				<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>	
+				</div>
+				<div class="row text-left">
+				<?php } ?>	
+					<div class="col-lg-6 col-md-7 col-sm-7 col-xs-12 text-left">
+						<div class="row text-left">
+							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-left">
+								<label for="DataInicio">Data Inc.</label>
+								<div class="input-group DatePicker">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
+								</div>
+							</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-left">
+								<label for="DataFim">Data Fim</label>
+								<div class="input-group DatePicker">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
+								</div>
+							</div>
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">	
+								<label class="" for="Ordenamento">Cal.</label><br>	
+								<div class=" btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#Calendario" aria-expanded="false" aria-controls="Calendario">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</div>
+							</div>
+							<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>	
 								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
-									<label>Backup</label><br>
-									<a href="<?php echo base_url() . 'gerar_excel/Clientes/ClientesDep_total.php'; ?>">
+									<label for="Agrupar">Agrupar</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+											id="Agrupar" name="Agrupar">
+										<?php
+										foreach ($select['Agrupar'] as $key => $row) {
+											if ($query['Agrupar'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
+							<?php } ?>	
+						</div>
+					</div>
+					<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>						
+						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 text-left">
+							<div class="row text-left">
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-left">
+									<label>Agenda</label>
+									<a href="<?php echo base_url() . 'gerar_excel/Agendamentos/Agendamentos_total_xls.php'; ?>">
 										<button type='button' class='btn btn-md btn-success btn-block'>
-											Deps
+											Total
 										</button>
 									</a>
 								</div>
-							<?php } ?>
-						<?php } ?>
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
-							<label>Busca</label><br>
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-left">
+									<label>Agenda</label>
+									<a href="<?php echo base_url() . 'gerar_excel/Agendamentos/Agendamentos_parc_xls.php'; ?>">
+										<button type='button' class='btn btn-md btn-success btn-block'>
+											Parcial
+										</button>
+									</a>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-left">
+									<label>Cliente</label>
+									<a href="<?php echo base_url() . 'gerar_excel/Clientes/Clientes_total.php'; ?>">
+										<button type='button' class='btn btn-md btn-success btn-block'>
+											Clientes
+										</button>
+									</a>
+								</div>
+								<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
+									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-left">
+										<label>Pet</label>
+										<a href="<?php echo base_url() . 'gerar_excel/Clientes/ClientesPet_total.php'; ?>">
+											<button type='button' class='btn btn-md btn-success btn-block'>
+												Pets
+											</button>
+										</a>
+									</div>
+								<?php }else{ ?>
+									<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-left">
+											<label>Dep</label>
+											<a href="<?php echo base_url() . 'gerar_excel/Clientes/ClientesDep_total.php'; ?>">
+												<button type='button' class='btn btn-md btn-success btn-block'>
+													Deps
+												</button>
+											</a>
+										</div>
+									<?php } ?>
+								<?php } ?>
+							</div>	
+						</div>		
+						<div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 text-left">
+							<label>Busca</label>
 							<a type="button" class="btn  btn-info btn-block" data-toggle="modal" data-target="#buscaModal">
-								Produtos & Serviços
+								Prd/Srv
 							</a>
 						</div>
 					<?php } ?>
@@ -245,26 +325,21 @@
 			<input type="hidden" id="AgendaF" value="<?php echo $_SESSION['Empresa']['AgendaF'];?>">	
 		</div>
 	</div>
-		
-		<div <?php echo $collapse; ?> id="Agenda">
-			
-				<div <?php echo $collapse1; ?> id="Calendario">
-					<div class="row">
-						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 text-center" id="datepickerinline" >
-							</div>
-						</div>	
+	<div <?php echo $collapse; ?> id="Agenda">
+		<div <?php echo $collapse1; ?> id="Calendario">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 text-center" id="datepickerinline" >
 					</div>
 				</div>	
-				<div class="row">	
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						
-								<table id="calendar" class="table table-condensed table-striped "></table>
-						
-					</div>
-				</div>
-			
-		</div>		
+			</div>
+		</div>	
+		<div class="row">	
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<table id="calendar" class="table table-condensed table-striped "></table>
+			</div>
+		</div>
+	</div>		
 </div>
 <?php 
 	if ($_SESSION['log']['idSis_Empresa'] != 5){

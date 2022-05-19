@@ -141,6 +141,388 @@ class Relatorio extends CI_Controller {
             'DataFim',
 			'Ordenamento',
             'Campo',
+			'Agrupar',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
+			'nomedoCliente',
+			'idCliente',
+			'numerodopedido',
+			'site',
+        ), TRUE));
+
+		$data['collapse'] = '';
+		$data['collapse1'] = 'class="collapse"';
+
+		if($_SESSION['Empresa']['CadastrarPet'] == "S"){
+			$data['select']['Agrupar'] = array(
+				'CO.idApp_Consulta' => 'Agendamento',
+				'PRD.idApp_Produto' => 'Produto',
+				'CO.idApp_Cliente' => 'Cliente',
+				'CO.idApp_ClientePet' => 'Animal',
+			);
+			
+			$data['select']['Campo'] = array(
+				'TCAT.Catprod' => 'Categoria',
+				'CO.DataInicio' => 'Data',
+				'CO.HoraInicio' => 'Hora',
+				'CO.idApp_Consulta' => 'Agendamento',
+				'PRD.idApp_Produto' => 'Produto',
+				'CO.idApp_Cliente' => 'Cliente',
+				'CO.idApp_ClientePet' => 'Animal',
+			);
+		}elseif($_SESSION['Empresa']['CadastrarDep'] == "S"){
+			$data['select']['Agrupar'] = array(
+				'CO.idApp_Consulta' => 'Agendamento',
+				'PRD.idApp_Produto' => 'Produto',
+				'CO.idApp_Cliente' => 'Cliente',
+				'CO.idApp_ClienteDep' => 'Dependente',
+			);
+			
+			$data['select']['Campo'] = array(
+				'TCAT.Catprod' => 'Categoria',
+				'CO.DataInicio' => 'Data',
+				'CO.HoraInicio' => 'Hora',
+				'CO.idApp_Consulta' => 'Agendamento',
+				'PRD.idApp_Produto' => 'Produto',
+				'CO.idApp_Cliente' => 'Cliente',
+				'CO.idApp_ClienteDep' => 'Dependente',
+			);
+		}else{
+			$data['select']['Agrupar'] = array(	
+				'CO.idApp_Consulta' => 'Agendamentos',
+				'PRD.idApp_Produto' => 'Produtos',
+				'CO.idApp_Cliente' => 'Clientes',
+			);
+			
+			$data['select']['Campo'] = array(
+				'TCAT.Catprod' => 'Categoria',
+				'CO.DataInicio' => 'Data',
+				'CO.HoraInicio' => 'Hora',
+				'CO.idApp_Consulta' => 'Agendamento',
+				'PRD.idApp_Produto' => 'Produto',
+				'CO.idApp_Cliente' => 'Cliente',
+			);
+		}		
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+
+        $data['select']['NomeUsuario'] = $this->Agenda_model->select_associado();
+		$data['select']['idApp_ClientePet'] = $this->Relatorio_model->select_clientepet();
+		$data['select']['idApp_ClienteDep'] = $this->Relatorio_model->select_clientedep();
+		
+        $data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
+        $data['select']['idCliente'] = $this->Basico_model->select_status_sn();
+        $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
+        $data['select']['site'] = $this->Basico_model->select_status_sn();
+		
+		$data['radio'] = array(
+            'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
+        );
+        ($data['query']['nomedoCliente'] == 'S') ?
+            $data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
+		
+		$data['radio'] = array(
+            'idCliente' => $this->basico->radio_checked($data['query']['idCliente'], 'idCliente', 'NS'),
+        );
+        ($data['query']['idCliente'] == 'S') ?
+            $data['div']['idCliente'] = '' : $data['div']['idCliente'] = 'style="display: none;"';		
+		
+		$data['radio'] = array(
+            'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
+        );
+        ($data['query']['numerodopedido'] == 'S') ?
+            $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
+		
+		$data['radio'] = array(
+            'site' => $this->basico->radio_checked($data['query']['site'], 'site', 'NS'),
+        );
+        ($data['query']['site'] == 'S') ?
+            $data['div']['site'] = '' : $data['div']['site'] = 'style="display: none;"';		
+							
+		$data['query']['nome'] = 'Cliente';
+        $data['titulo1'] = 'Lista de Agendamentos';
+		$data['metodo'] = 2;
+		$data['form_open_path'] = 'relatorio/evento_cli';
+		$data['panel'] = 'info';
+		$data['Data'] = 'Data';
+		$data['TipoRD'] = 2;
+		$data['TipoEvento'] = 2;
+        $data['nome'] = 'Cliente';
+		$data['editar'] = 1;
+		$data['print'] = 1;
+		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+		$data['imprimirlista'] = 'ConsultaPrint/imprimirlista/';
+		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['edit'] = 'Consulta/alterar/';
+		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		$data['paginacao'] = 'N';	
+
+        $_SESSION['Agendamentos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+		$_SESSION['Agendamentos']['DataFim'] 	= $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+		$_SESSION['Agendamentos']['NomeUsuario'] = $data['query']['NomeUsuario'];
+		$_SESSION['Agendamentos']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+		$_SESSION['Agendamentos']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+		$_SESSION['Agendamentos']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+		$_SESSION['Agendamentos']['Campo'] = $data['query']['Campo'];
+		$_SESSION['Agendamentos']['Ordenamento'] = $data['query']['Ordenamento'];
+		$_SESSION['Agendamentos']['TipoEvento'] = $data['TipoEvento'];
+		$_SESSION['Agendamentos']['Agrupar'] = $data['query']['Agrupar'];
+		
+		$_SESSION['Agendamentos']['Texto1'] = utf8_encode($data['query']['Texto1']);
+        $_SESSION['Agendamentos']['Texto2'] = utf8_encode($data['query']['Texto2']);
+        $_SESSION['Agendamentos']['Texto3'] = utf8_encode($data['query']['Texto3']);
+        $_SESSION['Agendamentos']['Texto4'] = utf8_encode($data['query']['Texto4']);
+        $_SESSION['Agendamentos']['nomedoCliente'] = $data['query']['nomedoCliente'];
+        $_SESSION['Agendamentos']['idCliente'] = $data['query']['idCliente'];
+        $_SESSION['Agendamentos']['numerodopedido'] = $data['query']['numerodopedido'];
+        $_SESSION['Agendamentos']['site'] = $data['query']['site'];	
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        $this->form_validation->set_rules('DataInicio', 'Data Início', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+		
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
+			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+            $data['bd']['TipoEvento'] = $data['TipoEvento'];
+			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
+			
+			//$data['report'] = $this->Relatorio_model->list_evento($data['bd'],TRUE);
+
+			//$this->load->library('pagination');
+			$config['per_page'] = 10;
+			$config["uri_segment"] = 3;
+			$config['reuse_query_string'] = TRUE;
+			$config['num_links'] = 2;
+			$config['use_page_numbers'] = TRUE;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			$data['Pesquisa'] = '';
+			
+			$config['base_url'] = base_url() . 'relatorio_pag/evento_cli_pag/';
+			$config['total_rows'] = $this->Relatorio_model->list_evento($data['bd'],TRUE, TRUE);
+           
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
+			}else{
+				$data['total_rows'] = 0;
+			}
+			
+            $this->pagination->initialize($config);
+            
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+            $data['pagina'] = $page;
+			$data['per_page'] = $config['per_page'];
+			$data['report'] = $this->Relatorio_model->list_evento($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+			$data['pagination'] = $this->pagination->create_links();
+			
+            $data['list1'] = $this->load->view('relatorio/list_evento', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_evento', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+	public function evento() {
+
+		unset($_SESSION['Agendamentos']);
+	
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+			'id_Cliente_Auto',
+			'NomeClienteAuto',
+        ), TRUE));	
+		
+        $data['query'] = quotes_to_entities($this->input->post(array(
+			'NomeUsuario',
+            'idApp_Consulta',
+			'idApp_Cliente',
+			'idApp_ClientePet',
+			'idApp_ClienteDep',
+            'DataInicio',
+            'DataFim',
+			'Ordenamento',
+            'Campo',
+			'Agrupar',
+        ), TRUE));
+
+		$data['collapse'] = '';
+		$data['collapse1'] = 'class="collapse"';
+
+		$data['select']['Agrupar'] = array(	
+			'CO.idApp_Consulta' => 'Agendamentos',
+		);
+			
+		$data['select']['Campo'] = array(
+			'CO.DataInicio' => 'Data',
+			'CO.idApp_Consulta' => 'id do Agendamento',
+		);		
+		
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+
+        $data['select']['NomeUsuario'] = $this->Agenda_model->select_associado();
+		$data['select']['idApp_ClientePet'] = $this->Relatorio_model->select_clientepet();
+		$data['select']['idApp_ClienteDep'] = $this->Relatorio_model->select_clientedep();
+
+		$data['query']['nome'] = 'Cliente';
+        $data['titulo1'] = 'Lista de Agendamentos';
+		$data['metodo'] = 2;
+		$data['form_open_path'] = 'relatorio/evento';
+		$data['panel'] = 'info';
+		$data['Data'] = 'Data';
+		$data['TipoRD'] = 2;
+		$data['TipoEvento'] = 1;
+        $data['nome'] = 'Cliente';
+		$data['editar'] = 1;
+		$data['print'] = 1;
+		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+		$data['imprimirlista'] = 'ConsultaPrint/imprimirlista/';
+		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['edit'] = 'Consulta/alterar/';
+		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		$data['paginacao'] = 'N';	
+
+        $_SESSION['Agendamentos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+		$_SESSION['Agendamentos']['DataFim'] 	= $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+		$_SESSION['Agendamentos']['NomeUsuario'] = $data['query']['NomeUsuario'];
+		$_SESSION['Agendamentos']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+		$_SESSION['Agendamentos']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+		$_SESSION['Agendamentos']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+		$_SESSION['Agendamentos']['Campo'] = $data['query']['Campo'];
+		$_SESSION['Agendamentos']['Ordenamento'] = $data['query']['Ordenamento'];
+		$_SESSION['Agendamentos']['TipoEvento'] = $data['TipoEvento'];
+		$_SESSION['Agendamentos']['Agrupar'] = $data['query']['Agrupar'];
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        $this->form_validation->set_rules('DataInicio', 'Data Início', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+		
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
+			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+            $data['bd']['TipoEvento'] = $data['TipoEvento'];
+			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
+			
+			//$data['report'] = $this->Relatorio_model->list_evento($data['bd'],TRUE);
+
+			//$this->load->library('pagination');
+			$config['per_page'] = 10;
+			$config["uri_segment"] = 3;
+			$config['reuse_query_string'] = TRUE;
+			$config['num_links'] = 2;
+			$config['use_page_numbers'] = TRUE;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			$data['Pesquisa'] = '';
+			
+			$config['base_url'] = base_url() . 'relatorio_pag/evento_pag/';
+			$config['total_rows'] = $this->Relatorio_model->list_evento($data['bd'],TRUE, TRUE);
+           
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
+			}else{
+				$data['total_rows'] = 0;
+			}
+			
+            $this->pagination->initialize($config);
+            
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+            $data['pagina'] = $page;
+			$data['per_page'] = $config['per_page'];
+			$data['report'] = $this->Relatorio_model->list_evento($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+			$data['pagination'] = $this->pagination->create_links();
+			
+            $data['list1'] = $this->load->view('relatorio/list_evento', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_evento', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+	public function evento_cli_original() {
+
+		unset($_SESSION['Agendamentos']);
+	
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+			'id_Cliente_Auto',
+			'NomeClienteAuto',
+        ), TRUE));	
+		
+        $data['query'] = quotes_to_entities($this->input->post(array(
+			'NomeUsuario',
+            'idApp_Consulta',
+			'idApp_Cliente',
+			'idApp_ClientePet',
+			'idApp_ClienteDep',
+            'DataInicio',
+            'DataFim',
+			'Ordenamento',
+            'Campo',
 			'Texto1',
 			'Texto2',
 			'Texto3',
@@ -301,7 +683,7 @@ class Relatorio extends CI_Controller {
 
     }
 
-	public function evento() {
+	public function evento_original() {
 
 		unset($_SESSION['Agendamentos']);
 	
@@ -416,6 +798,174 @@ class Relatorio extends CI_Controller {
 			$data['Pesquisa'] = '';
 			
 			$config['base_url'] = base_url() . 'relatorio_pag/evento_pag/';
+			$config['total_rows'] = $this->Relatorio_model->list_agendamentos($data['bd'],TRUE, TRUE);
+           
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
+			}else{
+				$data['total_rows'] = 0;
+			}
+			
+            $this->pagination->initialize($config);
+            
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+            $data['pagina'] = $page;
+			$data['per_page'] = $config['per_page'];
+			$data['report'] = $this->Relatorio_model->list_agendamentos($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+			$data['pagination'] = $this->pagination->create_links();
+			
+            $data['list1'] = $this->load->view('relatorio/list_agendamentos', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_agendamentos', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+	public function agendamentos() {
+
+		unset($_SESSION['Agendamentos']);
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+			'id_Cliente_Auto',
+			'NomeClienteAuto',
+			'id_ClientePet_Auto',
+			'NomeClientePetAuto',
+			'id_ClienteDep_Auto',
+			'NomeClienteDepAuto',
+        ), TRUE));	
+		
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'idApp_Consulta',
+			'NomeUsuario',
+			'idApp_Cliente',
+			'idApp_ClientePet',
+			'idApp_ClientePet2',
+			'idApp_ClienteDep',
+			'idApp_ClienteDep2',
+            'DataInicio',
+            'DataFim',		
+            'Ordenamento',
+            'Campo',
+			'Recorrencia',
+			'Tipo',
+			'Agrupar',
+			'Repeticao',
+        ), TRUE));
+
+		$data['collapse'] = '';
+		$data['collapse1'] = 'class="collapse"';
+
+        $data['select']['Tipo'] = array (
+            '0' => '::Todos::',
+			'2' => 'C/Cliente',
+			'1' => 'S/Cliente',
+        );
+		
+		$data['select']['Agrupar'] = array(	
+			'1' => 'Agenda',
+			'2' => 'Produto',
+		);		
+		 		
+		$data['select']['Campo'] = array(
+			'CO.DataInicio' => 'Data',
+			'CO.idApp_Consulta' => 'id do Agendamento',
+		);		
+		
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+
+        $data['select']['NomeUsuario'] = $this->Agenda_model->select_associado();
+		
+		$data['query']['nome'] = 'Cliente';
+        $data['titulo1'] = 'Lista de Agendamentos';
+		$data['metodo'] = 2;
+		$data['form_open_path'] = 'relatorio/agendamentos';
+		$data['panel'] = 'info';
+		$data['Data'] = 'Data';
+		$data['TipoRD'] = 2;
+        $data['nome'] = 'Cliente';
+		$data['editar'] = 1;
+		$data['print'] = 1;
+		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+		$data['imprimirlista'] = 'ConsultaPrint/imprimirlista/';
+		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['edit'] = 'Consulta/alterar/';
+		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		$data['paginacao'] = 'N';	
+
+        $_SESSION['Agendamentos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+		$_SESSION['Agendamentos']['DataFim'] 	= $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+		$_SESSION['Agendamentos']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+		$_SESSION['Agendamentos']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+		$_SESSION['Agendamentos']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
+		$_SESSION['Agendamentos']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+		$_SESSION['Agendamentos']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
+		$_SESSION['Agendamentos']['Campo'] = $data['query']['Campo'];
+		$_SESSION['Agendamentos']['Ordenamento'] = $data['query']['Ordenamento'];
+		$_SESSION['Agendamentos']['NomeUsuario'] = $data['query']['NomeUsuario'];
+		$_SESSION['Agendamentos']['Recorrencia'] = $data['query']['Recorrencia'];
+		$_SESSION['Agendamentos']['Tipo'] = $data['query']['Tipo'];
+		$_SESSION['Agendamentos']['Agrupar'] = $data['query']['Agrupar'];
+		$_SESSION['Agendamentos']['Repeticao'] = $data['query']['Repeticao'];	
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        $this->form_validation->set_rules('DataInicio', 'Data Início', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+		
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+			$data['bd']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
+			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+			$data['bd']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
+			$data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
+			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+			$data['bd']['Recorrencia'] = $data['query']['Recorrencia'];
+			$data['bd']['Tipo'] = $data['query']['Tipo'];
+			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
+			$data['bd']['Repeticao'] = $data['query']['Repeticao'];
+			
+			//$data['report'] = $this->Relatorio_model->list_agendamentos($data['bd'],TRUE);
+
+			//$this->load->library('pagination');
+			$config['per_page'] = 10;
+			$config["uri_segment"] = 3;
+			$config['reuse_query_string'] = TRUE;
+			$config['num_links'] = 2;
+			$config['use_page_numbers'] = TRUE;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			$data['Pesquisa'] = '';
+			
+			$config['base_url'] = base_url() . 'relatorio_pag/agendamentos_pag/';
 			$config['total_rows'] = $this->Relatorio_model->list_agendamentos($data['bd'],TRUE, TRUE);
            
 			if($config['total_rows'] >= 1){

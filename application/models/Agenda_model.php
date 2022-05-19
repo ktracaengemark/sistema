@@ -59,10 +59,10 @@ class Agenda_model extends CI_Model {
 			$data['Ano'] = ($data['Ano']) ? ' AND YEAR(DataNascimento) = ' . $data['Ano'] : FALSE;	
 			$data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND idApp_Cliente = ' . $data['idApp_Cliente'] : FALSE;	
 		}else{
-			$data['Dia'] = ($_SESSION['Filtro_Agenda']['Dia']) ? ' AND DAY(DataNascimento) = ' . $_SESSION['Filtro_Agenda']['Dia'] : FALSE;
-			$data['Mesvenc'] = ($_SESSION['Filtro_Agenda']['Mesvenc']) ? ' AND MONTH(DataNascimento) = ' . $_SESSION['Filtro_Agenda']['Mesvenc'] : FALSE;
-			$data['Ano'] = ($_SESSION['Filtro_Agenda']['Ano']) ? ' AND YEAR(DataNascimento) = ' . $_SESSION['Filtro_Agenda']['Ano'] : FALSE;
-			$data['idApp_Cliente'] = ($_SESSION['Filtro_Agenda']['idApp_Cliente']) ? ' AND idApp_Cliente = ' . $_SESSION['Filtro_Agenda']['idApp_Cliente'] : FALSE;	
+			$data['Dia'] = ($_SESSION['Agendamentos']['Dia']) ? ' AND DAY(DataNascimento) = ' . $_SESSION['Agendamentos']['Dia'] : FALSE;
+			$data['Mesvenc'] = ($_SESSION['Agendamentos']['Mesvenc']) ? ' AND MONTH(DataNascimento) = ' . $_SESSION['Agendamentos']['Mesvenc'] : FALSE;
+			$data['Ano'] = ($_SESSION['Agendamentos']['Ano']) ? ' AND YEAR(DataNascimento) = ' . $_SESSION['Agendamentos']['Ano'] : FALSE;
+			$data['idApp_Cliente'] = ($_SESSION['Agendamentos']['idApp_Cliente']) ? ' AND idApp_Cliente = ' . $_SESSION['Agendamentos']['idApp_Cliente'] : FALSE;	
 		}
 		
 		$querylimit = '';
@@ -697,14 +697,14 @@ class Agenda_model extends CI_Model {
 
 	public function select_tarefa() {
 
-		$permissao1 = (($_SESSION['Filtro_Agenda']['Categoria'] != "0" ) && ($_SESSION['Filtro_Agenda']['Categoria'] != '' )) ? 'P.Categoria = "' . $_SESSION['Filtro_Agenda']['Categoria'] . '" AND ' : FALSE;
-		$permissao2 = (($_SESSION['Filtro_Agenda']['ConcluidoProcedimento'] != "0" ) && ($_SESSION['Filtro_Agenda']['ConcluidoProcedimento'] != '' )) ? 'P.ConcluidoProcedimento = "' . $_SESSION['Filtro_Agenda']['ConcluidoProcedimento'] . '" AND ' : FALSE;
-		$permissao3 = (($_SESSION['Filtro_Agenda']['Prioridade'] != "0" ) && ($_SESSION['Filtro_Agenda']['Prioridade'] != '' )) ? 'P.Prioridade = "' . $_SESSION['Filtro_Agenda']['Prioridade'] . '" AND ' : FALSE;
-		$permissao6 = (($_SESSION['Filtro_Agenda']['Statustarefa'] != "0" ) && ($_SESSION['Filtro_Agenda']['Statustarefa'] != '' )) ? 'P.Statustarefa = "' . $_SESSION['Filtro_Agenda']['Statustarefa'] . '" AND ' : FALSE;
-		$permissao7 = (($_SESSION['Filtro_Agenda']['Statussubtarefa'] != "0" ) && ($_SESSION['Filtro_Agenda']['Statussubtarefa'] != '' )) ? 'SP.Statussubtarefa = "' . $_SESSION['Filtro_Agenda']['Statussubtarefa'] . '" AND ' : FALSE;
-		$permissao8 = (($_SESSION['Filtro_Agenda']['SubPrioridade'] != "0" ) && ($_SESSION['Filtro_Agenda']['SubPrioridade'] != '' )) ? 'SP.SubPrioridade = "' . $_SESSION['Filtro_Agenda']['SubPrioridade'] . '" AND ' : FALSE;
-		$permissao4 = ((($_SESSION['Filtro_Agenda']['ConcluidoSubProcedimento'] != "0")&& ($_SESSION['Filtro_Agenda']['ConcluidoSubProcedimento'] != 'M') ) && ($_SESSION['Filtro_Agenda']['ConcluidoSubProcedimento'] != '' )) ? 'SP.ConcluidoSubProcedimento = "' . $_SESSION['Filtro_Agenda']['ConcluidoSubProcedimento'] . '" AND ' : FALSE;
-		$permissao5 = (($_SESSION['Filtro_Agenda']['ConcluidoSubProcedimento'] == 'M') && ($_SESSION['Filtro_Agenda']['ConcluidoSubProcedimento'] != '' )) ? '((SP.ConcluidoSubProcedimento = "S") OR (SP.ConcluidoSubProcedimento = "N")) AND ' : FALSE;		
+		$permissao1 = (($_SESSION['Agendamentos']['Categoria'] != "0" ) && ($_SESSION['Agendamentos']['Categoria'] != '' )) ? 'P.Categoria = "' . $_SESSION['Agendamentos']['Categoria'] . '" AND ' : FALSE;
+		$permissao2 = (($_SESSION['Agendamentos']['ConcluidoProcedimento'] != "0" ) && ($_SESSION['Agendamentos']['ConcluidoProcedimento'] != '' )) ? 'P.ConcluidoProcedimento = "' . $_SESSION['Agendamentos']['ConcluidoProcedimento'] . '" AND ' : FALSE;
+		$permissao3 = (($_SESSION['Agendamentos']['Prioridade'] != "0" ) && ($_SESSION['Agendamentos']['Prioridade'] != '' )) ? 'P.Prioridade = "' . $_SESSION['Agendamentos']['Prioridade'] . '" AND ' : FALSE;
+		$permissao6 = (($_SESSION['Agendamentos']['Statustarefa'] != "0" ) && ($_SESSION['Agendamentos']['Statustarefa'] != '' )) ? 'P.Statustarefa = "' . $_SESSION['Agendamentos']['Statustarefa'] . '" AND ' : FALSE;
+		$permissao7 = (($_SESSION['Agendamentos']['Statussubtarefa'] != "0" ) && ($_SESSION['Agendamentos']['Statussubtarefa'] != '' )) ? 'SP.Statussubtarefa = "' . $_SESSION['Agendamentos']['Statussubtarefa'] . '" AND ' : FALSE;
+		$permissao8 = (($_SESSION['Agendamentos']['SubPrioridade'] != "0" ) && ($_SESSION['Agendamentos']['SubPrioridade'] != '' )) ? 'SP.SubPrioridade = "' . $_SESSION['Agendamentos']['SubPrioridade'] . '" AND ' : FALSE;
+		$permissao4 = ((($_SESSION['Agendamentos']['ConcluidoSubProcedimento'] != "0")&& ($_SESSION['Agendamentos']['ConcluidoSubProcedimento'] != 'M') ) && ($_SESSION['Agendamentos']['ConcluidoSubProcedimento'] != '' )) ? 'SP.ConcluidoSubProcedimento = "' . $_SESSION['Agendamentos']['ConcluidoSubProcedimento'] . '" AND ' : FALSE;
+		$permissao5 = (($_SESSION['Agendamentos']['ConcluidoSubProcedimento'] == 'M') && ($_SESSION['Agendamentos']['ConcluidoSubProcedimento'] != '' )) ? '((SP.ConcluidoSubProcedimento = "S") OR (SP.ConcluidoSubProcedimento = "N")) AND ' : FALSE;		
 		
 		$query = $this->db->query('
             SELECT

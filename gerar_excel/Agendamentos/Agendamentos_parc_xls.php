@@ -5,7 +5,7 @@
 <html lang="pt-br">
 	<head>
 		<meta charset="utf-8">
-		<title>Agendamentos</title>
+		<title>Agendamentos Parcial</title>
 	<head>
 	<body>
 		<?php
@@ -41,9 +41,9 @@
 		$clientedep = ($_SESSION['Agendamentos']['idApp_ClienteDep'] && isset($_SESSION['Agendamentos']['idApp_ClienteDep'])) ? 'AND CO.idApp_ClienteDep = ' . $_SESSION['Agendamentos']['idApp_ClienteDep'] . '  ' : FALSE;
 		$clientedep2 = ($_SESSION['Agendamentos']['idApp_ClienteDep2'] && isset($_SESSION['Agendamentos']['idApp_ClienteDep2'])) ? 'AND CO.idApp_ClienteDep = ' . $_SESSION['Agendamentos']['idApp_ClienteDep2'] . '  ' : FALSE;		
 		$usuario 	= ($_SESSION['Agendamentos']['NomeUsuario']) ? ' AND ASS.idSis_Associado = ' . $_SESSION['Agendamentos']['NomeUsuario'] : FALSE;
-		$recorrencia = ($_SESSION['Agendamentos']['Recorrencia'] && isset($_SESSION['Agendamentos']['Recorrencia'])) ? 'AND CO.Recorrencia = "' . $_SESSION['Agendamentos']['Recorrencia'] . '"  ' : FALSE;		
+		$recorrencia = ($_SESSION['Agendamentos']['Recorrencia'] && isset($_SESSION['Agendamentos']['Recorrencia'])) ? 'AND CO.Recorrencia = "' . $_SESSION['Agendamentos']['Recorrencia'] . '"  ' : FALSE;	
 		$repeticao = ($_SESSION['Agendamentos']['Repeticao'] && isset($_SESSION['Agendamentos']['Repeticao'])) ? 'AND CO.Repeticao = "' . $_SESSION['Agendamentos']['Repeticao'] . '"  ' : FALSE;
-		
+				
 		($_SESSION['Agendamentos']['DataInicio']) ? $date_inicio = $_SESSION['Agendamentos']['DataInicio'] : FALSE;
 		($_SESSION['Agendamentos']['DataFim']) ? $date_fim = date('Y-m-d', strtotime('+1 days', strtotime($_SESSION['Agendamentos']['DataFim']))) : FALSE;
 
@@ -136,102 +136,57 @@
 
 		// Definimos o nome do arquivo que será exportado
 
-		$arquivo = 'Agendamentos_' . date('d-m-Y') . '.xls';
+		$arquivo = 'Agendamentos_parc_' . date('d-m-Y') . '.xls';
 		
 		// Título da Tabela
 		$html = '';
 		$html .= '<table border="1">';
 		$html .= '<tr>';
-		$html .= '<td colspan="2">Agendamentos Total</tr>';
+		$html .= '<td colspan="2">Agendamentos Parcial</tr>';
 		$html .= '</tr>';
 		
 		// Campos da Tabela
 		$html .= '<tr>';
-		$html .= '<td><b>Empresa</b></td>';
-		$html .= '<td><b>Tipo</b></td>';
-		$html .= '<td><b>id_Agenda</b></td>';
 		$html .= '<td><b>Repeticao</b></td>';
-		$html .= '<td><b>Prof</b></td>';
 		$html .= '<td><b>Recor</b></td>';
 		$html .= '<td><b>Evento</b></td>';
 		$html .= '<td><b>Data Ini</b></td>';
-		$html .= '<td><b>Data Fim</b></td>';
 		$html .= '<td><b>Hora Ini</b></td>';
-		$html .= '<td><b>Hora Fim</b></td>';
-		if($_SESSION['log']['idSis_Empresa'] != 5){
-			$html .= '<td><b>id_Cliente</b></td>';
-			$html .= '<td><b>Cliente</b></td>';
-			if($sub_cliente == 1){
-				$html .= '<td><b>id_Pet</b></td>';
-				$html .= '<td><b>Pet</b></td>';
-				$html .= '<td><b>Especie</b></td>';
-				$html .= '<td><b>Sexo</b></td>';
-				$html .= '<td><b>Raca</b></td>';
-				$html .= '<td><b>Pelo</b></td>';
-				$html .= '<td><b>Porte</b></td>';
-				$html .= '<td><b>Cor</b></td>';
-				$html .= '<td><b>Peso</b></td>';
-				$html .= '<td><b>Aler.</b></td>';
-				$html .= '<td><b>Obs</b></td>';
-			}elseif($sub_cliente == 2){
-				$html .= '<td><b>id_Dep</b></td>';
-				$html .= '<td><b>Dep</b></td>';
-			}
-			$html .= '<td><b>id_OS</b></td>';
-			$html .= '<td><b>id_Produto</b></td>';
-			$html .= '<td><b>Categoria</b></td>';
-			$html .= '<td><b>Produto</b></td>';
-			$html .= '<td><b>ObsProduto</b></td>';
-			$html .= '<td><b>DataProduto</b></td>';
-			$html .= '<td><b>HoraProduto</b></td>';
-			$html .= '<td><b>Valor</b></td>';
-		}	
+		$html .= '<td><b>Cliente</b></td>';
+		if($sub_cliente == 1){
+			$html .= '<td><b>Pet</b></td>';
+			$html .= '<td><b>Raca</b></td>';
+		}elseif($sub_cliente == 2){
+			$html .= '<td><b>Dep</b></td>';
+		}
+		$html .= '<td><b>O.S.</b></td>';
+		$html .= '<td><b>Categoria</b></td>';
+		$html .= '<td><b>Produto</b></td>';
+		$html .= '<td><b>ObsProduto</b></td>';
+		$html .= '<td><b>Valor</b></td>';
 		$html .= '</tr>';
 		
 		//Alocando os itens na Tabela
 		while($row_msg_contatos = mysqli_fetch_assoc($resultado_msg_contatos)){
 			
 			$html .= '<tr>';
-			$html .= '<td>'.$row_msg_contatos["Empresa"].'</td>';
-			$html .= '<td>'.$row_msg_contatos["Tipo"].'</td>';
-			$html .= '<td>'.$row_msg_contatos["idApp_Consulta"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["Repeticao"].'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["Nome"]).'</td>';
 			$html .= '<td>'.$row_msg_contatos["Recorrencia"].'.</td>';
 			$html .= '<td>'.utf8_encode($row_msg_contatos["Obs"]).'</td>';
 			$html .= '<td>'.$row_msg_contatos["DataInicio"].'</td>';
-			$html .= '<td>'.$row_msg_contatos["DataFim"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["HoraInicio"].'</td>';
-			$html .= '<td>'.$row_msg_contatos["HoraFim"].'</td>';
-			if($_SESSION['log']['idSis_Empresa'] != 5){
-				$html .= '<td>'.$row_msg_contatos["id_Cliente"].'</td>';
-				$html .= '<td>'.utf8_encode($row_msg_contatos["NomeCliente"]).'</td>';
-				
-				if($sub_cliente == 1){
-					$html .= '<td>'.$row_msg_contatos["idApp_ClientePet"].'</td>';
-					$html .= '<td>'.utf8_encode($row_msg_contatos["NomeClientePet"]).'</td>';
-					$html .= '<td>'.utf8_encode($row_msg_contatos["EspeciePet"]).'</td>';
-					$html .= '<td>'.utf8_encode($row_msg_contatos["SexoPet"]).'</td>';
-					$html .= '<td>'.utf8_encode($row_msg_contatos["RacaPet"]).'</td>';
-					$html .= '<td>'.utf8_encode($row_msg_contatos["PeloPet"]).'</td>';
-					$html .= '<td>'.utf8_encode($row_msg_contatos["PortePet"]).'</td>';
-					$html .= '<td>'.utf8_encode($row_msg_contatos["CorPet"]).'</td>';
-					$html .= '<td>'.utf8_encode($row_msg_contatos["PesoPet"]).'</td>';
-					$html .= '<td>'.utf8_encode($row_msg_contatos["AlergicoPet"]).'</td>';
-					$html .= '<td>'.utf8_encode($row_msg_contatos["ObsPet"]).'</td>';
-				}elseif($sub_cliente == 2){
-					$html .= '<td>'.$row_msg_contatos["idApp_ClienteDep"].'</td>';
-					$html .= '<td>'.utf8_encode($row_msg_contatos["NomeClienteDep"]).'</td>';
-				}
-				$html .= '<td>'.$row_msg_contatos["idApp_OrcaTrata"].'</td>';
-				$html .= '<td>'.$row_msg_contatos["idApp_Produto"].'</td>';
-				$html .= '<td>'.utf8_encode($row_msg_contatos["Catprod"]).'</td>';
-				$html .= '<td>'.utf8_encode($row_msg_contatos["NomeProduto"]).'</td>';
-				$html .= '<td>'.utf8_encode($row_msg_contatos["ObsProduto"]).'</td>';
-				$html .= '<td>'.$row_msg_contatos["DataProduto"].'</td>';
-				$html .= '<td>'.$row_msg_contatos["HoraProduto"].'</td>';
-				$html .= '<td>'.number_format($row_msg_contatos["SubTotalProduto"], 2, ',', '.'). '</td>';
-			}	
+			$html .= '<td>'.utf8_encode($row_msg_contatos["NomeCliente"]).'</td>';
+			if($sub_cliente == 1){
+				$html .= '<td>'.utf8_encode($row_msg_contatos["NomeClientePet"]).'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["RacaPet"]).'</td>';
+			}elseif($sub_cliente == 2){
+				$html .= '<td>'.utf8_encode($row_msg_contatos["NomeClienteDep"]).'</td>';
+			}
+			$html .= '<td>'.$row_msg_contatos["idApp_OrcaTrata"].'</td>';
+			$html .= '<td>'.utf8_encode($row_msg_contatos["Catprod"]).'</td>';
+			$html .= '<td>'.utf8_encode($row_msg_contatos["NomeProduto"]).'</td>';
+			$html .= '<td>'.utf8_encode($row_msg_contatos["ObsProduto"]).'</td>';
+			$html .= '<td>'.number_format($row_msg_contatos["SubTotalProduto"], 2, ',', '.'). '</td>';
 			$html .= '</tr>';
 		}
 		

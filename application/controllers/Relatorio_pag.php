@@ -64,17 +64,28 @@ class Relatorio_pag extends CI_Controller {
 		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 			'id_Cliente_Auto',
 			'NomeClienteAuto',
+			'id_ClientePet_Auto',
+			'NomeClientePetAuto',
+			'id_ClienteDep_Auto',
+			'NomeClienteDepAuto',
         ), TRUE));	
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
             'idApp_Consulta',
+			'NomeUsuario',
 			'idApp_Cliente',
 			'idApp_ClientePet',
+			'idApp_ClientePet2',
 			'idApp_ClienteDep',
+			'idApp_ClienteDep2',
             'DataInicio',
-            'DataFim',
-			'Ordenamento',
+            'DataFim',		
+            'Ordenamento',
             'Campo',
+			'Recorrencia',
+			'Tipo',
+			'Agrupar',
+			'Repeticao',
         ), TRUE));
 
 		$data['query']['nome'] = 'Cliente';
@@ -93,7 +104,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['edit'] = 'Consulta/alterar/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'S';
-		$data['caminho'] = 'relatorio/list_agendamentos/';	
+		$data['caminho'] = 'relatorio/agendamentos/';	
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 		
@@ -149,6 +160,212 @@ class Relatorio_pag extends CI_Controller {
     }
 
 	public function evento_cli_pag() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+			'id_Cliente_Auto',
+			'NomeClienteAuto',
+        ), TRUE));	
+		
+        $data['query'] = quotes_to_entities($this->input->post(array(
+			'NomeUsuario',
+            'idApp_Consulta',
+			'idApp_Cliente',
+			'idApp_ClientePet',
+			'idApp_ClienteDep',
+            'DataInicio',
+            'DataFim',
+			'Ordenamento',
+            'Campo',
+			'Agrupar',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
+			'nomedoCliente',
+			'idCliente',
+			'numerodopedido',
+			'site',
+        ), TRUE));
+
+		$data['query']['nome'] = 'Cliente';
+        $data['titulo1'] = 'Lista de Agendamentos';
+		$data['metodo'] = 2;
+		$data['form_open_path'] = 'relatorio_pag/evento_cli_pag';
+		$data['panel'] = 'info';
+		$data['Data'] = 'Data';
+		$data['TipoRD'] = 2;
+		$data['TipoEvento'] = 2;
+        $data['nome'] = 'Cliente';
+		$data['editar'] = 1;
+		$data['print'] = 1;
+		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+		$data['imprimirlista'] = 'ConsultaPrint/imprimirlista/';
+		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['edit'] = 'Consulta/alterar/';
+		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		$data['paginacao'] = 'S';
+		$data['caminho'] = 'relatorio/evento_cli/';	
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+		
+        #run form validation
+        if ($this->form_validation->run() !== TRUE) {
+
+			//$this->load->library('pagination');
+			$config['per_page'] = 10;
+			$config["uri_segment"] = 3;
+			$config['reuse_query_string'] = TRUE;
+			$config['num_links'] = 2;
+			$config['use_page_numbers'] = TRUE;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			$data['Pesquisa'] = '';
+			
+			$config['base_url'] = base_url() . 'relatorio_pag/evento_cli_pag/';
+			$config['total_rows'] = $this->Relatorio_model->list_evento(FALSE, TRUE, TRUE);
+           
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
+			}else{
+				$data['total_rows'] = 0;
+			}
+			
+            $this->pagination->initialize($config);
+            
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+            $data['pagina'] = $page;
+			$data['per_page'] = $config['per_page'];
+			$data['report'] = $this->Relatorio_model->list_evento(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+			$data['pagination'] = $this->pagination->create_links();
+			
+            $data['list1'] = $this->load->view('relatorio/list_evento', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_evento', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+	public function evento_pag() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+			'id_Cliente_Auto',
+			'NomeClienteAuto',
+        ), TRUE));	
+		
+        $data['query'] = quotes_to_entities($this->input->post(array(
+			'NomeUsuario',
+            'idApp_Consulta',
+			'idApp_Cliente',
+			'idApp_ClientePet',
+			'idApp_ClienteDep',
+            'DataInicio',
+            'DataFim',
+			'Ordenamento',
+            'Campo',
+			'Agrupar',
+        ), TRUE));
+
+		$data['query']['nome'] = 'Cliente';
+        $data['titulo1'] = 'Lista de Agendamentos';
+		$data['metodo'] = 2;
+		$data['form_open_path'] = 'relatorio_pag/evento_pag';
+		$data['panel'] = 'info';
+		$data['Data'] = 'Data';
+		$data['TipoRD'] = 2;
+		$data['TipoEvento'] = 1;
+        $data['nome'] = 'Cliente';
+		$data['editar'] = 1;
+		$data['print'] = 1;
+		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+		$data['imprimirlista'] = 'ConsultaPrint/imprimirlista/';
+		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['edit'] = 'Consulta/alterar/';
+		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		$data['paginacao'] = 'S';
+		$data['caminho'] = 'relatorio/evento/';	
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+		
+        #run form validation
+        if ($this->form_validation->run() !== TRUE) {
+
+			//$this->load->library('pagination');
+			$config['per_page'] = 10;
+			$config["uri_segment"] = 3;
+			$config['reuse_query_string'] = TRUE;
+			$config['num_links'] = 2;
+			$config['use_page_numbers'] = TRUE;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			$data['Pesquisa'] = '';
+			
+			$config['base_url'] = base_url() . 'relatorio_pag/evento_pag/';
+			$config['total_rows'] = $this->Relatorio_model->list_evento(FALSE, TRUE, TRUE);
+           
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
+			}else{
+				$data['total_rows'] = 0;
+			}
+			
+            $this->pagination->initialize($config);
+            
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+            $data['pagina'] = $page;
+			$data['per_page'] = $config['per_page'];
+			$data['report'] = $this->Relatorio_model->list_evento(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+			$data['pagination'] = $this->pagination->create_links();
+			
+            $data['list1'] = $this->load->view('relatorio/list_evento', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_evento', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+	public function evento_cli_pag_original() {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -254,7 +471,7 @@ class Relatorio_pag extends CI_Controller {
 
     }
 
-	public function evento_pag() {
+	public function evento_pag_original() {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);

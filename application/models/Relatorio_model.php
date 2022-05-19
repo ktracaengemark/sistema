@@ -14,6 +14,273 @@ class Relatorio_model extends CI_Model {
     }
 
 	public function list_agendamentos($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+
+		if($data != FALSE){
+
+			$tipo = (isset($data['Tipo'])) ? $data['Tipo'] : '0';		
+			if(isset($tipo)){
+				if($tipo == 2){
+					$tipoevento	= 'AND CO.Tipo = 2';	
+				}elseif($tipo == 1){
+					$tipoevento	= 'AND CO.Tipo = 1';
+				}else{
+					$tipoevento	= FALSE;
+				}
+			}else{
+				$tipoevento	= FALSE;
+			}
+			
+			$cliente = ($data['idApp_Cliente'] && isset($data['idApp_Cliente'])) ? 'AND CO.idApp_Cliente = ' . $data['idApp_Cliente'] . '  ' : FALSE;
+			$clientepet = ($data['idApp_ClientePet'] && isset($data['idApp_ClientePet'])) ? 'AND CO.idApp_ClientePet = ' . $data['idApp_ClientePet'] . '  ' : FALSE;
+			$clientepet2 = ($data['idApp_ClientePet2'] && isset($data['idApp_ClientePet2'])) ? 'AND CO.idApp_ClientePet = ' . $data['idApp_ClientePet2'] . '  ' : FALSE;
+			$clientedep = ($data['idApp_ClienteDep'] && isset($data['idApp_ClienteDep'])) ? 'AND CO.idApp_ClienteDep = ' . $data['idApp_ClienteDep'] . '  ' : FALSE;
+			$clientedep2 = ($data['idApp_ClienteDep2'] && isset($data['idApp_ClienteDep2'])) ? 'AND CO.idApp_ClienteDep = ' . $data['idApp_ClienteDep2'] . '  ' : FALSE;		
+			$usuario 	= ($data['NomeUsuario']) ? ' AND ASS.idSis_Associado = ' . $data['NomeUsuario'] : FALSE;
+			$recorrencia = ($data['Recorrencia'] && isset($data['Recorrencia'])) ? 'AND CO.Recorrencia = "' . $data['Recorrencia'] . '"  ' : FALSE;		
+			$repeticao = ($data['Repeticao'] && isset($data['Repeticao'])) ? 'AND CO.Repeticao = "' . $data['Repeticao'] . '"  ' : FALSE;
+			
+			($data['DataInicio']) ? $date_inicio = $data['DataInicio'] : FALSE;
+			($data['DataFim']) ? $date_fim = date('Y-m-d', strtotime('+1 days', strtotime($data['DataFim']))) : FALSE;
+
+			$date_inicio_orca 	= ($data['DataInicio']) ? 'DataInicio >= "' . $date_inicio . '" AND ' : FALSE;
+			$date_fim_orca 		= ($data['DataFim']) ? 'DataInicio <= "' . $date_fim . '" AND ' : FALSE;
+
+			if(isset($data['Agrupar'])){
+				if($data['Agrupar'] == 1){
+					$agrupar = 'CO.idApp_Consulta';
+				}elseif($data['Agrupar'] == 2){
+					$agrupar = 'P.idApp_Produto';
+				}else{
+					$agrupar = 'CO.idApp_Consulta';
+				}
+			}else{
+				$agrupar = 'CO.idApp_Consulta';
+			}
+			
+			$campo 			= (!$data['Campo']) ? 'CO.DataInicio' : $data['Campo'];
+			$ordenamento 	= (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+						
+		}else{
+
+			$tipo = (isset($_SESSION['Agendamentos']['Tipo'])) ? $_SESSION['Agendamentos']['Tipo'] : '0';		
+			if(isset($tipo)){
+				if($tipo == 2){
+					$tipoevento	= 'AND CO.Tipo = 2';	
+				}elseif($tipo == 1){
+					$tipoevento	= 'AND CO.Tipo = 1';
+				}else{
+					$tipoevento	= FALSE;
+				}
+			}else{
+				$tipoevento	= FALSE;
+			}
+
+			$cliente = ($_SESSION['Agendamentos']['idApp_Cliente'] && isset($_SESSION['Agendamentos']['idApp_Cliente'])) ? 'AND CO.idApp_Cliente = ' . $_SESSION['Agendamentos']['idApp_Cliente'] . '  ' : FALSE;
+			$clientepet = ($_SESSION['Agendamentos']['idApp_ClientePet'] && isset($_SESSION['Agendamentos']['idApp_ClientePet'])) ? 'AND CO.idApp_ClientePet = ' . $_SESSION['Agendamentos']['idApp_ClientePet'] . '  ' : FALSE;
+			$clientepet2 = ($_SESSION['Agendamentos']['idApp_ClientePet2'] && isset($_SESSION['Agendamentos']['idApp_ClientePet2'])) ? 'AND CO.idApp_ClientePet = ' . $_SESSION['Agendamentos']['idApp_ClientePet2'] . '  ' : FALSE;
+			$clientedep = ($_SESSION['Agendamentos']['idApp_ClienteDep'] && isset($_SESSION['Agendamentos']['idApp_ClienteDep'])) ? 'AND CO.idApp_ClienteDep = ' . $_SESSION['Agendamentos']['idApp_ClienteDep'] . '  ' : FALSE;
+			$clientedep2 = ($_SESSION['Agendamentos']['idApp_ClienteDep2'] && isset($_SESSION['Agendamentos']['idApp_ClienteDep2'])) ? 'AND CO.idApp_ClienteDep = ' . $_SESSION['Agendamentos']['idApp_ClienteDep2'] . '  ' : FALSE;		
+			$usuario 	= ($_SESSION['Agendamentos']['NomeUsuario']) ? ' AND ASS.idSis_Associado = ' . $_SESSION['Agendamentos']['NomeUsuario'] : FALSE;
+			$recorrencia = ($_SESSION['Agendamentos']['Recorrencia'] && isset($_SESSION['Agendamentos']['Recorrencia'])) ? 'AND CO.Recorrencia = "' . $_SESSION['Agendamentos']['Recorrencia'] . '"  ' : FALSE;		
+			$repeticao = ($_SESSION['Agendamentos']['Repeticao'] && isset($_SESSION['Agendamentos']['Repeticao'])) ? 'AND CO.Repeticao = "' . $_SESSION['Agendamentos']['Repeticao'] . '"  ' : FALSE;
+			
+			($_SESSION['Agendamentos']['DataInicio']) ? $date_inicio = $_SESSION['Agendamentos']['DataInicio'] : FALSE;
+			($_SESSION['Agendamentos']['DataFim']) ? $date_fim = date('Y-m-d', strtotime('+1 days', strtotime($_SESSION['Agendamentos']['DataFim']))) : FALSE;
+
+			$date_inicio_orca 	= ($_SESSION['Agendamentos']['DataInicio']) ? 'DataInicio >= "' . $date_inicio . '" AND ' : FALSE;
+			$date_fim_orca 		= ($_SESSION['Agendamentos']['DataFim']) ? 'DataInicio <= "' . $date_fim . '" AND ' : FALSE;
+
+			if(isset($_SESSION['Agendamentos']['Agrupar'])){
+				if($_SESSION['Agendamentos']['Agrupar'] == 1){
+					$agrupar = 'CO.idApp_Consulta';
+				}elseif($_SESSION['Agendamentos']['Agrupar'] == 2){
+					$agrupar = 'P.idApp_Produto';
+				}else{
+					$agrupar = 'CO.idApp_Consulta';
+				}
+			}else{
+				$agrupar = 'CO.idApp_Consulta';
+			}
+			
+			$campo 			= (!$_SESSION['Agendamentos']['Campo']) ? 'CO.DataInicio' : $_SESSION['Agendamentos']['Campo'];
+			$ordenamento 	= (!$_SESSION['Agendamentos']['Ordenamento']) ? 'ASC' : $_SESSION['Agendamentos']['Ordenamento'];
+		
+		}	
+			
+		$groupby = (isset($agrupar)) ? 'GROUP BY ' . $agrupar . '' : 'GROUP BY CO.idApp_Consulta';
+					
+		$permissao_agenda = ($_SESSION['log']['idSis_Empresa'] == 5) ? 'CO.idApp_Agenda = ' . $_SESSION['log']['Agenda'] . ' AND ' : FALSE;
+		
+		$querylimit = '';
+        if ($limit)
+            $querylimit = 'LIMIT ' . $start . ', ' . $limit;
+				
+		$query = $this->db->query('
+			SELECT
+				CO.*,
+				CO.idSis_Empresa AS Empresa,
+				DATE_FORMAT(CO.DataInicio, "%Y-%m-%d") AS DataInicio,
+				DATE_FORMAT(CO.DataInicio, "%H:%i") AS HoraInicio,
+				DATE_FORMAT(CO.DataFim, "%Y-%m-%d") AS DataFim,
+				DATE_FORMAT(CO.DataFim, "%H:%i") AS HoraFim,
+				P.idApp_Produto,
+				P.NomeProduto,
+				P.QtdProduto,
+				P.ValorProduto,
+				CONCAT(IFNULL(P.ObsProduto,"")) AS ObsProduto,
+				(P.QtdProduto*P.ValorProduto) AS SubTotalProduto,
+				DATE_FORMAT(P.DataConcluidoProduto, "%Y-%m-%d") AS DataProduto,
+				DATE_FORMAT(P.HoraConcluidoProduto, "%H:%i") AS HoraProduto,
+				CONCAT(IFNULL(TCAT.Catprod,"")) AS Catprod,
+				C.idApp_Cliente AS id_Cliente,
+				CONCAT(IFNULL(C.NomeCliente,"")) AS NomeCliente,
+				CP.*,
+				CONCAT(IFNULL(CP.NomeClientePet,"")) AS NomeClientePet,
+				RP.RacaPet,
+				PEP.PeloPet,
+				POP.PortePet,
+				EPP.EspeciePet,
+				CD.*,
+				CONCAT(IFNULL(CD.NomeClienteDep,"")) AS NomeClienteDep,
+				ASS.Nome
+			FROM
+				App_Consulta AS CO
+					LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = CO.idApp_OrcaTrata
+					LEFT JOIN App_Produto AS P ON P.idApp_OrcaTrata = OT.idApp_OrcaTrata
+					LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = P.idTab_Produtos_Produto
+					LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto
+					LEFT JOIN Tab_Catprod AS TCAT ON TCAT.idTab_Catprod = TPRD.idTab_Catprod
+					LEFT JOIN App_Agenda AS A ON A.idApp_Agenda = CO.idApp_Agenda
+					LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = A.idSis_Associado
+					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = CO.idApp_Cliente
+					LEFT JOIN App_ClientePet AS CP ON CP.idApp_ClientePet = CO.idApp_ClientePet
+					LEFT JOIN Tab_RacaPet AS RP ON RP.idTab_RacaPet = CP.RacaPet
+					LEFT JOIN Tab_PeloPet AS PEP ON PEP.idTab_PeloPet = CP.PeloPet
+					LEFT JOIN Tab_PortePet AS POP ON POP.idTab_PortePet = CP.PortePet
+					LEFT JOIN Tab_EspeciePet AS EPP ON EPP.idTab_EspeciePet = CP.EspeciePet
+					LEFT JOIN App_ClienteDep AS CD ON CD.idApp_ClienteDep = CO.idApp_ClienteDep
+			WHERE
+				' . $date_inicio_orca . '
+				' . $date_fim_orca . '
+				' . $permissao_agenda . '
+				CO.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+				' . $tipoevento . '
+				' . $cliente . '
+				' . $clientepet . '
+				' . $clientepet2 . '
+				' . $clientedep . '
+				' . $clientedep2 . '
+				' . $recorrencia . '
+				' . $repeticao . '
+				' . $usuario . '
+			' . $groupby . '
+			ORDER BY
+				' . $campo . '
+				' . $ordenamento . '
+			' . $querylimit . '
+        ');
+
+		if($total == TRUE) {
+			return $query->num_rows();
+		}
+		
+			/*
+			  echo $this->db->last_query();
+			  echo "<pre>";
+			  print_r($query);
+			  echo "</pre>";
+			  exit();
+			  */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            $somareceber=0;
+            foreach ($query->result() as $row) {
+				//$row->HoraInicio = $this->basico->mascara_hora($row->DataInicio, 'hora');
+				$row->DataInicio = $this->basico->mascara_data($row->DataInicio, 'barras');
+				//$row->HoraFim = $this->basico->mascara_hora($row->DataFim, 'hora');
+				$row->DataFim = $this->basico->mascara_data($row->DataFim, 'barras');
+                $row->AlergicoPet = $this->basico->mascara_palavra_completa($row->AlergicoPet, 'NS');
+				/*
+				if($row->PeloPet == 1){
+					$row->Pelo = "CURTO";
+				}elseif($row->PeloPet == 2){
+					$row->Pelo = "MÉDIO";
+				}elseif($row->PeloPet == 3){
+					$row->Pelo = "LONGO";
+				}elseif($row->PeloPet == 4){
+					$row->Pelo = "CACHEADO";
+				}else{
+					$row->Pelo = "N.I.";
+				}
+				
+				if($row->PortePet == 1){
+					$row->Porte = "MINI";
+				}elseif($row->PortePet == 2){
+					$row->Porte = "PEQUENO";
+				}elseif($row->PortePet == 3){
+					$row->Porte = "MÉDIO";
+				}elseif($row->PortePet == 4){
+					$row->Porte = "GRANDE";
+				}elseif($row->PortePet == 5){
+					$row->Porte = "GIGANTE";
+				}else{
+					$row->Porte = "N.I.";
+				}
+								
+				if($row->EspeciePet == 1){
+					$row->Especie = "CÃO";
+				}elseif($row->EspeciePet == 2){
+					$row->Especie = "GATO";
+				}elseif($row->EspeciePet == 3){
+					$row->Especie = "AVE";
+				}else{
+					$row->Especie = "N.I.";
+				}
+								
+				if($row->SexoPet == "M"){
+					$row->Sexo = "MACHO";
+				}elseif($row->SexoPet == "F"){
+					$row->Sexo = "FEMEA";
+				}elseif($row->SexoPet == "O"){
+					$row->Sexo = "OUT";
+				}else{
+					$row->Sexo = "N.I.";
+				}				
+				*/
+				/*
+				$data = DateTime::createFromFormat('d/m/Y H:i:s', $data);
+				$data = $data->format('Y-m-d H:i:s');
+				format('Y-m-d H:i:s');
+				*/
+				/*
+				  echo $this->db->last_query();
+				  echo "<pre>";
+				  print_r($somaentrada);          
+				  echo "</pre>";
+				  exit();
+				*/	
+		  
+            }	
+			/*
+			echo $this->db->last_query();
+			echo "<pre>";
+			print_r($balanco);
+			echo "</pre>";
+			exit();			
+			*/
+			
+            $query->soma = new stdClass();
+            //$query->soma->somareceber = number_format($somareceber, 2, ',', '.');
+			
+            return $query;
+        }
+
+    }
+
+	public function list_agendamentos_original($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 			  
 			  /*
 			  echo "<pre>";
@@ -104,6 +371,222 @@ class Relatorio_model extends CI_Model {
 				' . $clientepet . '
 				' . $clientedep . '
 				' . $usuario . '
+			ORDER BY
+				' . $campo . '
+				' . $ordenamento . '
+			' . $querylimit . '
+        ');
+
+		if($total == TRUE) {
+			return $query->num_rows();
+		}
+		
+			/*
+			  echo $this->db->last_query();
+			  echo "<pre>";
+			  print_r($query);
+			  echo "</pre>";
+			  exit();
+			  */
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            $somareceber=0;
+            foreach ($query->result() as $row) {
+				//$row->HoraInicio = $this->basico->mascara_hora($row->DataInicio, 'hora');
+				$row->DataInicio = $this->basico->mascara_data($row->DataInicio, 'barras');
+				//$row->HoraFim = $this->basico->mascara_hora($row->DataFim, 'hora');
+				$row->DataFim = $this->basico->mascara_data($row->DataFim, 'barras');
+                $row->AlergicoPet = $this->basico->mascara_palavra_completa($row->AlergicoPet, 'NS');
+				
+				if($row->PeloPet == 1){
+					$row->Pelo = "CURTO";
+				}elseif($row->PeloPet == 2){
+					$row->Pelo = "MÉDIO";
+				}elseif($row->PeloPet == 3){
+					$row->Pelo = "LONGO";
+				}elseif($row->PeloPet == 4){
+					$row->Pelo = "CACHEADO";
+				}else{
+					$row->Pelo = "N.I.";
+				}
+				
+				if($row->PortePet == 1){
+					$row->Porte = "MINI";
+				}elseif($row->PortePet == 2){
+					$row->Porte = "PEQUENO";
+				}elseif($row->PortePet == 3){
+					$row->Porte = "MÉDIO";
+				}elseif($row->PortePet == 4){
+					$row->Porte = "GRANDE";
+				}elseif($row->PortePet == 5){
+					$row->Porte = "GIGANTE";
+				}else{
+					$row->Porte = "N.I.";
+				}
+								
+				if($row->EspeciePet == 1){
+					$row->Especie = "CÃO";
+				}elseif($row->EspeciePet == 2){
+					$row->Especie = "GATO";
+				}elseif($row->EspeciePet == 3){
+					$row->Especie = "AVE";
+				}else{
+					$row->Especie = "N.I.";
+				}
+								
+				if($row->SexoPet == "M"){
+					$row->Sexo = "MACHO";
+				}elseif($row->SexoPet == "F"){
+					$row->Sexo = "FEMEA";
+				}elseif($row->SexoPet == "O"){
+					$row->Sexo = "OUT";
+				}else{
+					$row->Sexo = "N.I.";
+				}				
+
+				/*
+				$data = DateTime::createFromFormat('d/m/Y H:i:s', $data);
+				$data = $data->format('Y-m-d H:i:s');
+				format('Y-m-d H:i:s');
+				*/
+				/*
+				  echo $this->db->last_query();
+				  echo "<pre>";
+				  print_r($somaentrada);          
+				  echo "</pre>";
+				  exit();
+				*/	
+		  
+            }	
+			/*
+			echo $this->db->last_query();
+			echo "<pre>";
+			print_r($balanco);
+			echo "</pre>";
+			exit();			
+			*/
+			
+            $query->soma = new stdClass();
+            //$query->soma->somareceber = number_format($somareceber, 2, ',', '.');
+			
+            return $query;
+        }
+
+    }
+
+	public function list_evento($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+			  
+			  /*
+			  echo "<pre>";
+			  print_r($data['NomeUsuario']);
+			  echo "</pre>";
+			  exit();
+			  */
+		if($data != FALSE){
+			
+			$tipoevento = 'CO.Tipo = ' . $data['TipoEvento'];
+			
+			$cliente 	= ($data['idApp_Cliente']) ? ' AND CO.idApp_Cliente = ' . $data['idApp_Cliente'] : FALSE;
+			$clientepet = ($_SESSION['Empresa']['CadastrarPet'] == "S" && $data['idApp_ClientePet']) ? ' AND CO.idApp_ClientePet = ' . $data['idApp_ClientePet'] : FALSE;
+			$clientedep = ($_SESSION['Empresa']['CadastrarDep'] == "S" && $data['idApp_ClienteDep']) ? ' AND CO.idApp_ClienteDep = ' . $data['idApp_ClienteDep'] : FALSE;
+			
+			$usuario 	= ($data['NomeUsuario']) ? ' AND ASS.idSis_Associado = ' . $data['NomeUsuario'] : FALSE;
+			
+			if($data['TipoEvento'] == 2){
+				$campo 	= (!$data['Campo']) ? 'TCAT.Catprod' : $data['Campo'];
+			}else{
+				$campo 	= (!$data['Campo']) ? 'CO.DataInicio' : $data['Campo'];
+			}
+			$ordenamento 	= (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+
+			($data['DataInicio']) ? $date_inicio = $data['DataInicio'] : FALSE;
+			($data['DataFim']) ? $date_fim = date('Y-m-d', strtotime('+1 days', strtotime($data['DataFim']))) : FALSE;
+			
+			$date_inicio_orca 	= ($data['DataInicio']) ? 'DataInicio >= "' . $date_inicio . '" AND ' : FALSE;
+			$date_fim_orca 		= ($data['DataFim']) ? 'DataInicio <= "' . $date_fim . '" AND ' : FALSE;
+			$groupby = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Agrupar'] != "0") ? 'GROUP BY ' . $data['Agrupar'] . '' : 'GROUP BY CO.idApp_Consulta';		
+		
+		}else{
+		
+			$tipoevento = 'CO.Tipo = ' . $_SESSION['Agendamentos']['TipoEvento'];
+	
+			$cliente 	= ($_SESSION['Agendamentos']['idApp_Cliente']) ? ' AND CO.idApp_Cliente = ' . $_SESSION['Agendamentos']['idApp_Cliente'] : FALSE;
+			$clientepet = ($_SESSION['Empresa']['CadastrarPet'] == "S" && $_SESSION['Agendamentos']['idApp_ClientePet']) ? ' AND CO.idApp_ClientePet = ' . $_SESSION['Agendamentos']['idApp_ClientePet'] : FALSE;
+			$clientedep = ($_SESSION['Empresa']['CadastrarDep'] == "S" && $_SESSION['Agendamentos']['idApp_ClienteDep']) ? ' AND CO.idApp_ClienteDep = ' . $_SESSION['Agendamentos']['idApp_ClienteDep'] : FALSE;
+
+			$usuario 	= ($_SESSION['Agendamentos']['NomeUsuario']) ? ' AND ASS.idSis_Associado = ' . $_SESSION['Agendamentos']['NomeUsuario'] : FALSE;
+			
+			if($_SESSION['Agendamentos']['TipoEvento'] == 2){
+				$campo 	= (!$_SESSION['Agendamentos']['Campo']) ? 'TCAT.Catprod' : $_SESSION['Agendamentos']['Campo'];
+			}else{
+				$campo 	= (!$_SESSION['Agendamentos']['Campo']) ? 'CO.DataInicio' : $_SESSION['Agendamentos']['Campo'];
+			}
+			$ordenamento 	= (!$_SESSION['Agendamentos']['Ordenamento']) ? 'ASC' : $_SESSION['Agendamentos']['Ordenamento'];
+
+			($_SESSION['Agendamentos']['DataInicio']) ? $date_inicio = $_SESSION['Agendamentos']['DataInicio'] : FALSE;
+			($_SESSION['Agendamentos']['DataFim']) ? $date_fim = date('Y-m-d', strtotime('+1 days', strtotime($_SESSION['Agendamentos']['DataFim']))) : FALSE;
+			
+			$date_inicio_orca 	= ($_SESSION['Agendamentos']['DataInicio']) ? 'DataInicio >= "' . $date_inicio . '" AND ' : FALSE;
+			$date_fim_orca 		= ($_SESSION['Agendamentos']['DataFim']) ? 'DataInicio <= "' . $date_fim . '" AND ' : FALSE;
+			
+			$groupby = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['Agendamentos']['Agrupar'] != "0") ? 'GROUP BY ' . $_SESSION['Agendamentos']['Agrupar'] . '' : 'GROUP BY CO.idApp_Consulta';		
+				
+		}	
+		
+		$permissao_agenda = ($_SESSION['log']['idSis_Empresa'] == 5) ? 'CO.idApp_Agenda = ' . $_SESSION['log']['Agenda'] . ' AND ' : FALSE;
+		
+		$querylimit = '';
+        if ($limit)
+            $querylimit = 'LIMIT ' . $start . ', ' . $limit;
+				
+		$query = $this->db->query('
+            SELECT
+				CO.*,
+				DATE_FORMAT(CO.DataInicio, "%Y-%m-%d") AS DataInicio,
+				DATE_FORMAT(CO.DataInicio, "%H:%i") AS HoraInicio,
+				DATE_FORMAT(CO.DataFim, "%Y-%m-%d") AS DataFim,
+				DATE_FORMAT(CO.DataFim, "%H:%i") AS HoraFim,
+				C.idApp_Cliente AS id_Cliente,
+				C.CelularCliente,
+				CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,"")) AS NomeCliente,
+				CONCAT(IFNULL(C.NomeCliente,"")) AS NomeCliente2,
+				CP.*,
+				CONCAT(IFNULL(CP.idApp_ClientePet,""), " - " ,IFNULL(CP.NomeClientePet,"")) AS NomeClientePet,
+				RP.RacaPet,
+				CD.*,
+				CONCAT(IFNULL(CD.idApp_ClienteDep,""), " - " ,IFNULL(CD.NomeClienteDep,"")) AS NomeClienteDep,
+				ASS.Nome,
+				PRD.NomeProduto,
+				PRD.ValorProduto,
+				PRD.ObsProduto,
+				TCAT.Catprod
+            FROM
+				App_Consulta AS CO
+					LEFT JOIN App_Agenda AS A ON A.idApp_Agenda = CO.idApp_Agenda
+					LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = A.idSis_Associado
+					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = CO.idApp_Cliente
+					LEFT JOIN App_ClientePet AS CP ON CP.idApp_ClientePet = CO.idApp_ClientePet
+					LEFT JOIN Tab_RacaPet AS RP ON RP.idTab_RacaPet = CP.RacaPet
+					LEFT JOIN App_ClienteDep AS CD ON CD.idApp_ClienteDep = CO.idApp_ClienteDep
+					LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = CO.idApp_OrcaTrata
+					LEFT JOIN App_Produto AS PRD ON PRD.idApp_OrcaTrata = OT.idApp_OrcaTrata
+					LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = PRD.idTab_Produtos_Produto
+					LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto
+					LEFT JOIN Tab_Catprod AS TCAT ON TCAT.idTab_Catprod = TPRD.idTab_Catprod
+            WHERE
+				' . $date_inicio_orca . '
+				' . $date_fim_orca . '
+				' . $permissao_agenda . '
+                CO.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				' . $tipoevento . '
+				' . $cliente . '
+				' . $clientepet . '
+				' . $clientedep . '
+				' . $usuario . '
+			' . $groupby . '
 			ORDER BY
 				' . $campo . '
 				' . $ordenamento . '

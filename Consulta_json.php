@@ -17,17 +17,38 @@ if (!$db) {
 #echo 'Conexão bem sucedida';
 
 //Acho que as próximas linhas são redundantes, verificar
-$query = ($_SESSION['Filtro_Agenda']['NomeUsuario'] && isset($_SESSION['Filtro_Agenda']['NomeUsuario'])) ? 'AND A.idSis_Associado = ' . $_SESSION['Filtro_Agenda']['NomeUsuario'] . '  ' : FALSE;
-//$query = ($_SESSION['Filtro_Agenda']['NomeUsuario'] && isset($_SESSION['Filtro_Agenda']['NomeUsuario'])) ? 'AND A.idSis_Usuario = ' . $_SESSION['Filtro_Agenda']['NomeUsuario'] . '  ' : FALSE;	
-//$query3 = ($_SESSION['Filtro_Agenda']['NomeCliente'] && isset($_SESSION['Filtro_Agenda']['NomeCliente'])) ? 'AND C.idApp_Cliente = ' . $_SESSION['Filtro_Agenda']['NomeCliente'] . '  ' : FALSE;	
-$query3 = ($_SESSION['Filtro_Agenda']['idApp_Cliente'] && isset($_SESSION['Filtro_Agenda']['idApp_Cliente'])) ? 'AND C.idApp_Cliente = ' . $_SESSION['Filtro_Agenda']['idApp_Cliente'] . '  ' : FALSE;
-$query4 = ($_SESSION['Filtro_Agenda']['idApp_ClientePet'] && isset($_SESSION['Filtro_Agenda']['idApp_ClientePet'])) ? 'AND C.idApp_ClientePet = ' . $_SESSION['Filtro_Agenda']['idApp_ClientePet'] . '  ' : FALSE;
-$query42 = ($_SESSION['Filtro_Agenda']['idApp_ClientePet2'] && isset($_SESSION['Filtro_Agenda']['idApp_ClientePet2'])) ? 'AND C.idApp_ClientePet = ' . $_SESSION['Filtro_Agenda']['idApp_ClientePet2'] . '  ' : FALSE;
-$query5 = ($_SESSION['Filtro_Agenda']['idApp_ClienteDep'] && isset($_SESSION['Filtro_Agenda']['idApp_ClienteDep'])) ? 'AND C.idApp_ClienteDep = ' . $_SESSION['Filtro_Agenda']['idApp_ClienteDep'] . '  ' : FALSE;
-$query52 = ($_SESSION['Filtro_Agenda']['idApp_ClienteDep2'] && isset($_SESSION['Filtro_Agenda']['idApp_ClienteDep2'])) ? 'AND C.idApp_ClienteDep = ' . $_SESSION['Filtro_Agenda']['idApp_ClienteDep2'] . '  ' : FALSE;
-$query6 = ($_SESSION['Filtro_Agenda']['Recorrencia'] && isset($_SESSION['Filtro_Agenda']['Recorrencia'])) ? 'AND C.Recorrencia = "' . $_SESSION['Filtro_Agenda']['Recorrencia'] . '"  ' : FALSE;
+$query = ($_SESSION['Agendamentos']['NomeUsuario'] && isset($_SESSION['Agendamentos']['NomeUsuario'])) ? 'AND A.idSis_Associado = ' . $_SESSION['Agendamentos']['NomeUsuario'] . '  ' : FALSE;
+//$query = ($_SESSION['Agendamentos']['NomeUsuario'] && isset($_SESSION['Agendamentos']['NomeUsuario'])) ? 'AND A.idSis_Usuario = ' . $_SESSION['Agendamentos']['NomeUsuario'] . '  ' : FALSE;	
+//$query3 = ($_SESSION['Agendamentos']['NomeCliente'] && isset($_SESSION['Agendamentos']['NomeCliente'])) ? 'AND C.idApp_Cliente = ' . $_SESSION['Agendamentos']['NomeCliente'] . '  ' : FALSE;	
+$query3 = ($_SESSION['Agendamentos']['idApp_Cliente'] && isset($_SESSION['Agendamentos']['idApp_Cliente'])) ? 'AND C.idApp_Cliente = ' . $_SESSION['Agendamentos']['idApp_Cliente'] . '  ' : FALSE;
+$query4 = ($_SESSION['Agendamentos']['idApp_ClientePet'] && isset($_SESSION['Agendamentos']['idApp_ClientePet'])) ? 'AND C.idApp_ClientePet = ' . $_SESSION['Agendamentos']['idApp_ClientePet'] . '  ' : FALSE;
+$query42 = ($_SESSION['Agendamentos']['idApp_ClientePet2'] && isset($_SESSION['Agendamentos']['idApp_ClientePet2'])) ? 'AND C.idApp_ClientePet = ' . $_SESSION['Agendamentos']['idApp_ClientePet2'] . '  ' : FALSE;
+$query5 = ($_SESSION['Agendamentos']['idApp_ClienteDep'] && isset($_SESSION['Agendamentos']['idApp_ClienteDep'])) ? 'AND C.idApp_ClienteDep = ' . $_SESSION['Agendamentos']['idApp_ClienteDep'] . '  ' : FALSE;
+$query52 = ($_SESSION['Agendamentos']['idApp_ClienteDep2'] && isset($_SESSION['Agendamentos']['idApp_ClienteDep2'])) ? 'AND C.idApp_ClienteDep = ' . $_SESSION['Agendamentos']['idApp_ClienteDep2'] . '  ' : FALSE;
+$query6 = ($_SESSION['Agendamentos']['Recorrencia'] && isset($_SESSION['Agendamentos']['Recorrencia'])) ? 'AND C.Recorrencia = "' . $_SESSION['Agendamentos']['Recorrencia'] . '"  ' : FALSE;
 #$query2 = ($_SESSION['log']['NomeUsuario'] && isset($_SESSION['log']['NomeUsuario'])) ? 'C.idApp_Cliente = ' . $_SESSION['log']['NomeUsuario'] . ' AND ' : FALSE;
+$query7 = ($_SESSION['Agendamentos']['Repeticao'] && isset($_SESSION['Agendamentos']['Repeticao'])) ? 'AND C.Repeticao = "' . $_SESSION['Agendamentos']['Repeticao'] . '"  ' : FALSE;
 
+($_SESSION['Agendamentos']['DataInicio']) ? $date_inicio = $_SESSION['Agendamentos']['DataInicio'] : FALSE;
+($_SESSION['Agendamentos']['DataFim']) ? $date_fim = date('Y-m-d', strtotime('+1 days', strtotime($_SESSION['Agendamentos']['DataFim']))) : FALSE;
+
+$date_inicio_cons 	= ($_SESSION['Agendamentos']['DataInicio']) ? 'DataInicio >= "' . $date_inicio . '" AND ' : FALSE;
+$date_fim_cons 		= ($_SESSION['Agendamentos']['DataFim']) ? 'DataInicio <= "' . $date_fim . '" AND ' : FALSE;
+		
+
+$tipo = (isset($_SESSION['Agendamentos']['Tipo'])) ? $_SESSION['Agendamentos']['Tipo'] : '0';		
+if(isset($tipo)){
+	if($tipo == 2){
+		$tipoevento	= 'AND C.Tipo = 2';	
+	}elseif($tipo == 1){
+		$tipoevento	= 'AND C.Tipo = 1';
+	}else{
+		$tipoevento	= FALSE;
+	}
+}else{
+	$tipoevento	= FALSE;
+}
+			
 if($_SESSION['log']['idSis_Empresa'] != 5){
 	//$permissao = ($_SESSION['log']['Permissao'] >= 3 ) ? 'AND U.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . '  ' : FALSE;
 	$permissao = ($_SESSION['log']['Permissao'] >= 3 ) ? 'AND C.idApp_Agenda = ' . $_SESSION['log']['Agenda'] . '  ' : FALSE;
@@ -43,12 +64,7 @@ $permissao5 = ($_SESSION['log']['idSis_Empresa'] == 5) ? 'AND A.idSis_Associado 
 //$permissao4 = ($_SESSION['log']['idSis_Empresa'] == 5)  ? 'OR U.CelularUsuario = ' . $_SESSION['log']['CelularUsuario'] . '  ' : FALSE;
 //$permissao2 = ($_SESSION['log']['idSis_Empresa'] == 5)  ? 'U.CpfUsuario = ' . $_SESSION['log']['CpfUsuario'] . ' OR ' : FALSE;																																			
           
-/*
-echo '<br>';
-echo "<pre>";
-print_r($_SESSION['log']['idSis_Empresa']);
-echo "</pre>";
-*/		  
+		  
 $result = mysql_query(
         'SELECT
 			C.idApp_Consulta,
@@ -89,9 +105,12 @@ $result = mysql_query(
                 LEFT JOIN Tab_TipoConsulta AS TC ON TC.idTab_TipoConsulta = C.idTab_TipoConsulta
 				LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = C.idSis_Empresa
         WHERE
+
+			' . $date_inicio_cons . '
+			' . $date_fim_cons . '
+			
 			(C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
-				
-				
+				' . $tipoevento . ' 
 				' . $query . '
 				' . $query3 . '
 				' . $query4 . '
@@ -99,6 +118,7 @@ $result = mysql_query(
 				' . $query5 . '
 				' . $query52 . '
 				' . $query6 . '
+				' . $query7 . '
 				' . $permissao . '
 				' . $permissao3 . '
 				' . $permissao5 . '
