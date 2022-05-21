@@ -184,6 +184,187 @@
 	
 				<div class="panel panel-<?php echo $panel; ?>">
 					<div class="panel-heading text-left">
+						<?php if($_SESSION['log']['idSis_Empresa'] != 5) {?>
+							<div class="row">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left" >
+									<label class="text-left">Texto Whatsapp:</label>
+									<div class="row text-left">
+										<div class="col-lg-9 col-md-3 col-sm-12 col-xs-12 text-left" >
+											<label>t1</label><br>
+											<input type="text" class="form-control" maxlength="200" placeholder="Ex. Olá" 
+												name="Texto1" id="Texto1" value="<?php echo set_value('Texto1', $query['Texto1']); ?>">
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-left" >
+											<label for="nomedo<?php echo $nome?>">Nome do <?php echo $nome?>?</label><br>
+											<div class="btn-larg-right btn-group" data-toggle="buttons">
+												<?php
+												foreach ($select['nomedo' . $nome] as $key => $row) {
+													if (!$query['nomedo' . $nome]) $query['nomedo' . $nome] = 'N';
+													($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+													if ($query['nomedo' . $nome] == $key) {
+														echo ''
+														. '<label class="btn btn-warning active" name="nomedo' . $nome . '_' . $hideshow . '">'
+														. '<input type="radio" name="nomedo' . $nome . '" id="' . $hideshow . '" '
+														. 'autocomplete="off" value="' . $key . '" checked>' . $row
+														. '</label>'
+														;
+													} else {
+														echo ''
+														. '<label class="btn btn-default" name="nomedo' . $nome . '_' . $hideshow . '">'
+														. '<input type="radio" name="nomedo' . $nome . '" id="' . $hideshow . '" '
+														. 'autocomplete="off" value="' . $key . '" >' . $row
+														. '</label>'
+														;
+													}
+												}
+												?>
+											</div>
+										</div>
+									</div>	
+									<div class="row text-left">
+										<div class="col-lg-9 col-md-3 col-sm-12 col-xs-12 text-left" >
+											<label>t2</label><br>
+											<input type="text" class="form-control" maxlength="200" placeholder="Ex. tal tal tal tal!" 
+												name="Texto2" id="Texto2" value="<?php echo set_value('Texto2', $query['Texto2']); ?>">
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-left" >
+											<label for="datahora">Data & Hora?</label><br>
+											<div class="btn-larg-right btn-group" data-toggle="buttons">
+												<?php
+												foreach ($select['datahora'] as $key => $row) {
+													if (!$query['datahora']) $query['datahora'] = 'N';
+													($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+													if ($query['datahora'] == $key) {
+														echo ''
+														. '<label class="btn btn-warning active" name="datahora_' . $hideshow . '">'
+														. '<input type="radio" name="datahora" id="' . $hideshow . '" '
+														. 'autocomplete="off" value="' . $key . '" checked>' . $row
+														. '</label>'
+														;
+													} else {
+														echo ''
+														. '<label class="btn btn-default" name="datahora_' . $hideshow . '">'
+														. '<input type="radio" name="datahora" id="' . $hideshow . '" '
+														. 'autocomplete="off" value="' . $key . '" >' . $row
+														. '</label>'
+														;
+													}
+												}
+												?>
+											</div>
+										</div>
+									</div>
+									<div class="row text-left">
+										<div class="col-lg-9 col-md-3 col-sm-12 col-xs-12 text-left" >
+											<label>t3</label><br>
+											<input type="text" class="form-control" maxlength="200" placeholder="Ex. tal tal tal tal!" 
+												name="Texto3" id="Texto3" value="<?php echo set_value('Texto3', $query['Texto3']); ?>">
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-left" >
+											<label for="id<?php echo $nome?>">id do <?php echo $nome?>?</label><br>
+											<div class="btn-larg-right btn-group" data-toggle="buttons">
+												<?php
+												foreach ($select['id' . $nome] as $key => $row) {
+													if (!$query['id' . $nome]) $query['id' . $nome] = 'N';
+													($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+													if ($query['id' . $nome] == $key) {
+														echo ''
+														. '<label class="btn btn-warning active" name="id' . $nome . '_' . $hideshow . '">'
+														. '<input type="radio" name="id' . $nome . '" id="' . $hideshow . '" '
+														. 'autocomplete="off" value="' . $key . '" checked>' . $row
+														. '</label>'
+														;
+													} else {
+														echo ''
+														. '<label class="btn btn-default" name="id' . $nome . '_' . $hideshow . '">'
+														. '<input type="radio" name="id' . $nome . '" id="' . $hideshow . '" '
+														. 'autocomplete="off" value="' . $key . '" >' . $row
+														. '</label>'
+														;
+													}
+												}
+												?>
+											</div>
+										</div>
+									</div>
+									<div class="row text-left">
+										<div class="col-lg-9 col-md-3 col-sm-12 col-xs-12 text-left" >
+											<label>t4</label><br>
+											<input type="text" class="form-control" maxlength="200" placeholder="Ex. tal tal tal tal!" 
+												name="Texto4" id="Texto4" value="<?php echo set_value('Texto4', $query['Texto4']); ?>">
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-left" >
+											<label for="numerodopedido">id-Agenda?</label><br>
+											<div class="btn-larg-right btn-group" data-toggle="buttons">
+												<?php
+												foreach ($select['numerodopedido'] as $key => $row) {
+													if (!$query['numerodopedido']) $query['numerodopedido'] = 'N';
+													($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+													if ($query['numerodopedido'] == $key) {
+														echo ''
+														. '<label class="btn btn-warning active" name="numerodopedido_' . $hideshow . '">'
+														. '<input type="radio" name="numerodopedido" id="' . $hideshow . '" '
+														. 'autocomplete="off" value="' . $key . '" checked>' . $row
+														. '</label>'
+														;
+													} else {
+														echo ''
+														. '<label class="btn btn-default" name="numerodopedido_' . $hideshow . '">'
+														. '<input type="radio" name="numerodopedido" id="' . $hideshow . '" '
+														. 'autocomplete="off" value="' . $key . '" >' . $row
+														. '</label>'
+														;
+													}
+												}
+												?>
+											</div>
+										</div>
+									</div>
+									<div class="row text-left">
+										<div class="col-lg-9 col-md-3 col-sm-12 col-xs-12 text-left" >
+											<label>t5</label><br>
+											<input type="text" class="form-control" maxlength="200" placeholder="Ex. tal tal tal tal!" 
+												name="Texto5" id="Texto5" value="<?php echo set_value('Texto5', $query['Texto5']); ?>">
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-left" >
+											<label for="site">Seu Site?</label><br>
+											<div class="btn-larg-right btn-group" data-toggle="buttons">
+												<?php
+												foreach ($select['site'] as $key => $row) {
+													if (!$query['site']) $query['site'] = 'N';
+													($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+													if ($query['site'] == $key) {
+														echo ''
+														. '<label class="btn btn-warning active" name="site_' . $hideshow . '">'
+														. '<input type="radio" name="site" id="' . $hideshow . '" '
+														. 'autocomplete="off" value="' . $key . '" checked>' . $row
+														. '</label>'
+														;
+													} else {
+														echo ''
+														. '<label class="btn btn-default" name="site_' . $hideshow . '">'
+														. '<input type="radio" name="site" id="' . $hideshow . '" '
+														. 'autocomplete="off" value="' . $key . '" >' . $row
+														. '</label>'
+														;
+													}
+												}
+												?>
+											</div>
+										</div>
+									</div>		
+									<div class="row text-left">
+										
+											<div class="col-lg-12 col-md-3 col-sm-12 col-xs-12 text-left" >
+												<label></label><br>
+												<span >https://enkontraki.com.br/<?php echo $_SESSION['Empresa']['Site']; ?></span>
+											</div>
+										
+									</div>
+								</div>	
+							</div>
+							<br>
+						<?php } ?>					
 						<div class="row">				
 							<div class="col-md-6 text-left">
 								<label for="Ordenamento">Ordenamento:</label>

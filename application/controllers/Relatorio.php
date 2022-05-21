@@ -859,6 +859,16 @@ class Relatorio extends CI_Controller {
 			'Tipo',
 			'Agrupar',
 			'Repeticao',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
+			'Texto5',
+			'nomedoCliente',
+			'idCliente',
+			'numerodopedido',
+			'datahora',
+			'site',
         ), TRUE));
 
 		$data['collapse'] = '';
@@ -887,6 +897,42 @@ class Relatorio extends CI_Controller {
 
         $data['select']['NomeUsuario'] = $this->Agenda_model->select_associado();
 		
+        $data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
+        $data['select']['idCliente'] = $this->Basico_model->select_status_sn();
+        $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
+        $data['select']['datahora'] = $this->Basico_model->select_status_sn();
+        $data['select']['site'] = $this->Basico_model->select_status_sn();
+		
+		$data['radio'] = array(
+            'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
+        );
+        ($data['query']['nomedoCliente'] == 'S') ?
+            $data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
+		
+		$data['radio'] = array(
+            'idCliente' => $this->basico->radio_checked($data['query']['idCliente'], 'idCliente', 'NS'),
+        );
+        ($data['query']['idCliente'] == 'S') ?
+            $data['div']['idCliente'] = '' : $data['div']['idCliente'] = 'style="display: none;"';		
+		
+		$data['radio'] = array(
+            'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
+        );
+        ($data['query']['numerodopedido'] == 'S') ?
+            $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
+				
+		$data['radio'] = array(
+            'datahora' => $this->basico->radio_checked($data['query']['datahora'], 'datahora', 'NS'),
+        );
+        ($data['query']['datahora'] == 'S') ?
+            $data['div']['datahora'] = '' : $data['div']['datahora'] = 'style="display: none;"';		
+		
+		$data['radio'] = array(
+            'site' => $this->basico->radio_checked($data['query']['site'], 'site', 'NS'),
+        );
+        ($data['query']['site'] == 'S') ?
+            $data['div']['site'] = '' : $data['div']['site'] = 'style="display: none;"';		
+									
 		$data['query']['nome'] = 'Cliente';
         $data['titulo1'] = 'Lista de Agendamentos';
 		$data['metodo'] = 2;
@@ -918,10 +964,22 @@ class Relatorio extends CI_Controller {
 		$_SESSION['Agendamentos']['Tipo'] = $data['query']['Tipo'];
 		$_SESSION['Agendamentos']['Agrupar'] = $data['query']['Agrupar'];
 		$_SESSION['Agendamentos']['Repeticao'] = $data['query']['Repeticao'];	
+		
+		$_SESSION['Agendamentos']['Texto1'] = utf8_encode($data['query']['Texto1']);
+        $_SESSION['Agendamentos']['Texto2'] = utf8_encode($data['query']['Texto2']);
+        $_SESSION['Agendamentos']['Texto3'] = utf8_encode($data['query']['Texto3']);
+        $_SESSION['Agendamentos']['Texto4'] = utf8_encode($data['query']['Texto4']);
+        $_SESSION['Agendamentos']['Texto5'] = utf8_encode($data['query']['Texto5']);
+        $_SESSION['Agendamentos']['nomedoCliente'] = $data['query']['nomedoCliente'];
+        $_SESSION['Agendamentos']['idCliente'] = $data['query']['idCliente'];
+        $_SESSION['Agendamentos']['numerodopedido'] = $data['query']['numerodopedido'];
+        $_SESSION['Agendamentos']['datahora'] = $data['query']['datahora'];
+        $_SESSION['Agendamentos']['site'] = $data['query']['site'];	
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+        $this->form_validation->set_rules('Texto1', 'Texto1', 'trim');
 		
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
