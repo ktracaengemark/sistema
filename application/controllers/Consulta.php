@@ -3242,7 +3242,7 @@ class Consulta extends CI_Controller {
 					$horaini_alt 	= $data['query']['HoraInicio'];
 					$horafim_alt 	= $data['query']['HoraFim'];
 
-					if($_SESSION['Consulta']['idApp_OrcaTrata'] == 0 || $_SESSION['Consulta']['idApp_OrcaTrata'] == ""){
+					if(!isset($_SESSION['Consulta']['idApp_OrcaTrata']) || !$_SESSION['Consulta']['idApp_OrcaTrata'] || $_SESSION['Consulta']['idApp_OrcaTrata'] == 0 || $_SESSION['Consulta']['idApp_OrcaTrata'] == ""){
 						
 						//$data['consulta'] = $this->Consulta_model->get_repeticao($_SESSION['Consulta']['Repeticao']); //pego a consulta original dessa repetição
 						
@@ -3321,6 +3321,7 @@ class Consulta extends CI_Controller {
 								//Opções de cadastro de OS
 								if($data['cadastrar']['PorConsulta'] == "S"){
 									//cadastro o número de OS novas
+									$data['query']['OS'] = $data['query']['Recorrencias'];
 									$data['query']['idApp_OrcaTrata'] = "0";
 								}else{
 									if($data['count_repet'] > 1){
@@ -3430,6 +3431,7 @@ class Consulta extends CI_Controller {
 								//Opções de cadastro de OS
 								if($data['cadastrar']['PorConsulta'] == "S"){
 									//cadastro o número de OS novas
+									$data['query']['OS'] = $data['query']['Recorrencias'];
 									$data['query']['idApp_OrcaTrata'] = "0";
 								}else{
 									if($data['count_repet'] > 1){
