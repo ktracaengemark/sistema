@@ -95,13 +95,29 @@
 						</div>
 					<?php } ?>
 				<?php } ?>	
-			<?php } ?>				
+			<?php } ?>
+			<div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 text-left">
+				<label>Excel</label><br>
+				<a href="<?php echo base_url() . 'gerar_excel/Orcamentos/Parcelas_rec_total_xls.php'; ?>">
+					<button type='button' class='btn btn-md btn-success btn-block'>
+						<span class="glyphicon glyphicon-print"></span>Total
+					</button>
+				</a>
+			</div>
+			<div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 text-left">
+				<label>Excel</label><br>
+				<a href="<?php echo base_url() . 'gerar_excel/Orcamentos/Parcelas_rec_parc_xls.php'; ?>">
+					<button type='button' class='btn btn-md btn-success btn-block'>
+						<span class="glyphicon glyphicon-print"></span>Parcial
+					</button>
+				</a>
+			</div>				
 		</div>	
 	</div>
 </div>	
 <div class="container-fluid">
 	<div class="row">
-		<div style="overflow: auto; height: 550px; ">            
+		<div style="overflow: auto; height: auto; ">            
 			<table class="table table-bordered table-condensed table-striped">
 				<thead>
 					<tr>
@@ -114,10 +130,14 @@
 							<?php } ?>
 						<?php } ?>	
 						<th class="active">Pdd|Tp|Ct</th>
-						<th class="active">Pc</th>
+						<th class="active">DtPedido</th>
+						<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
+							<th class="active">DtEntrega</th>
+						<?php } ?>
 						<!--<th class="active">Pedido</th>-->
 						<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 							<th class="col-md-2 active"><?php echo $nome; ?></th>
+							<th class="col-md-2 active">Celular</th>
 							<th class="active">Comb.Ent</th>
 							<th class="active">Comb.Pag</th>
 							<th class="active">Entr.</th>
@@ -129,10 +149,7 @@
 							<th class="active">Pagam.</th>
 						<?php } ?>
 						<th class="active">Form.Pag.</th>
-						<th class="active">DtPedido</th>
-						<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
-							<th class="active">DtEntrega</th>
-						<?php } ?>
+						<th class="active">Pc</th>
 						<th class="active">Parc.R$</th>
 						<th class="active">Quitada</th>
 						<th class="active">Vencimento</th>
@@ -203,8 +220,11 @@
 									}
 								}
 							}	
-							echo '<td>' . $row['idApp_OrcaTrata'] . ' - ' . $row['TipoFinanceiro'] . ' - ' . $row['Descricao'] . ' - ' . ($linha + $count) . '</td>';	
-							echo '<td>' . $row['Parcela'] . '</td>';
+							echo '<td>' . $row['idApp_OrcaTrata'] . ' - ' . $row['TipoFinanceiro'] . ' - ' . $row['Descricao'] . ' - ' . ($linha + $count) . '</td>';
+							echo '<td>' . $row['DataOrca'] . '</td>';
+							if($_SESSION['log']['idSis_Empresa'] != "5"){
+								echo '<td>' . $row['DataEntregaOrca'] . '</td>';
+							}	
 							//echo '<td>' . $row['idApp_OrcaTrata'] . '- ' . $row['TipoFinanceiro'] . ' - ' . $row['Descricao'] . '</td>';
 							if($_SESSION['log']['idSis_Empresa'] != "5"){
 							
@@ -228,7 +248,8 @@
 									$whatsapp = FALSE;
 								}
 															
-								echo '<td>' . $row['Nome' . $nome] . ' '.$whatsapp.'</td>';
+								echo '<td>' . $row[$nome] . '</td>';
+								echo '<td>' . $row['Celular' . $nome] . ' '.$whatsapp.'</td>';
 								echo '<td>' . $row['CombinadoFrete'] . '</td>';
 								echo '<td>' . $row['AprovadoOrca'] . '</td>';
 								echo '<td>' . $row['ConcluidoOrca'] . '</td>';
@@ -240,10 +261,7 @@
 								echo '<td>' . $row['AVAP'] . '</td>';
 							}
 							echo '<td>' . $row['FormaPag'] . '</td>';
-							echo '<td>' . $row['DataOrca'] . '</td>';
-							if($_SESSION['log']['idSis_Empresa'] != "5"){
-								echo '<td>' . $row['DataEntregaOrca'] . '</td>';
-							}
+							echo '<td>' . $row['Parcela'] . '</td>';
 							echo '<td class="text-left">' . $row['ValorParcela'] . '</td>';
 							echo '<td>' . $row['Quitado'] . '</td>';
 							echo '<td>' . $row['DataVencimento'] . '</td>';
