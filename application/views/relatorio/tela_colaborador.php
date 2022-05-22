@@ -1,20 +1,25 @@
 <?php if (isset($msg)) echo $msg; ?>
 
-<div class="col-sm-offset-2 col-md-8 ">		
+<div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-12">
 	
 	<?php echo validation_errors(); ?>
 		
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			<div class="btn-group " role="group" aria-label="...">
+			
 				<div class="row text-left">	
-					<div class="col-md-12">
-						<button  class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
-							<span class="glyphicon glyphicon-plus"></span> Novo Colaborador
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+						<button  class="btn btn-md btn-danger btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
+							<span class="glyphicon glyphicon-plus"></span> Novo
 						</button>
 					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+						<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/site" role="button"> 
+							<span class="glyphicon glyphicon-barcode"></span> Site
+						</a>
+					</div>
 				</div>	
-			</div>			
+						
 		</div>		
 		<?php echo (isset($list)) ? $list : FALSE ?>	
 	</div>
