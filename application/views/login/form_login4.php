@@ -14,7 +14,7 @@
 							</div>	
 							<div class="col-md-6 col-sm-6 col-xs-6 ">			
 								<a class="" href="<?php echo base_url(); ?>login" role="button" >
-									<span class="glyphicon glyphicon-user"></span> Associado
+									<span class="glyphicon glyphicon-user"></span> Cliente
 								</a>
 							</div>
 							<div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12 text-center">
