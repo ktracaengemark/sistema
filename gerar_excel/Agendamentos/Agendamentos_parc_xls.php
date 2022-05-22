@@ -152,18 +152,20 @@
 		$html .= '<td><b>Evento</b></td>';
 		$html .= '<td><b>Data Ini</b></td>';
 		$html .= '<td><b>Hora Ini</b></td>';
-		$html .= '<td><b>Cliente</b></td>';
-		if($sub_cliente == 1){
-			$html .= '<td><b>Pet</b></td>';
-			$html .= '<td><b>Raca</b></td>';
-		}elseif($sub_cliente == 2){
-			$html .= '<td><b>Dep</b></td>';
+		if($_SESSION['log']['idSis_Empresa'] != 5){
+			$html .= '<td><b>Cliente</b></td>';
+			if($sub_cliente == 1){
+				$html .= '<td><b>Pet</b></td>';
+				$html .= '<td><b>Raca</b></td>';
+			}elseif($sub_cliente == 2){
+				$html .= '<td><b>Dep</b></td>';
+			}
+			$html .= '<td><b>O.S.</b></td>';
+			$html .= '<td><b>Categoria</b></td>';
+			$html .= '<td><b>Produto</b></td>';
+			$html .= '<td><b>ObsProduto</b></td>';
+			$html .= '<td><b>Valor</b></td>';
 		}
-		$html .= '<td><b>O.S.</b></td>';
-		$html .= '<td><b>Categoria</b></td>';
-		$html .= '<td><b>Produto</b></td>';
-		$html .= '<td><b>ObsProduto</b></td>';
-		$html .= '<td><b>Valor</b></td>';
 		$html .= '</tr>';
 		
 		//Alocando os itens na Tabela
@@ -172,21 +174,23 @@
 			$html .= '<tr>';
 			$html .= '<td>'.$row_msg_contatos["Repeticao"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["Recorrencia"].'.</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["Obs"]).'</td>';
+			$html .= '<td>'.$row_msg_contatos["Obs"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["DataInicio"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["HoraInicio"].'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["NomeCliente"]).'</td>';
-			if($sub_cliente == 1){
-				$html .= '<td>'.utf8_encode($row_msg_contatos["NomeClientePet"]).'</td>';
-				$html .= '<td>'.utf8_encode($row_msg_contatos["RacaPet"]).'</td>';
-			}elseif($sub_cliente == 2){
-				$html .= '<td>'.utf8_encode($row_msg_contatos["NomeClienteDep"]).'</td>';
-			}
-			$html .= '<td>'.$row_msg_contatos["idApp_OrcaTrata"].'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["Catprod"]).'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["NomeProduto"]).'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["ObsProduto"]).'</td>';
-			$html .= '<td>'.number_format($row_msg_contatos["SubTotalProduto"], 2, ',', '.'). '</td>';
+			if($_SESSION['log']['idSis_Empresa'] != 5){
+				$html .= '<td>'.utf8_encode($row_msg_contatos["NomeCliente"]).'</td>';
+				if($sub_cliente == 1){
+					$html .= '<td>'.utf8_encode($row_msg_contatos["NomeClientePet"]).'</td>';
+					$html .= '<td>'.utf8_encode($row_msg_contatos["RacaPet"]).'</td>';
+				}elseif($sub_cliente == 2){
+					$html .= '<td>'.utf8_encode($row_msg_contatos["NomeClienteDep"]).'</td>';
+				}
+				$html .= '<td>'.$row_msg_contatos["idApp_OrcaTrata"].'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["Catprod"]).'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["NomeProduto"]).'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["ObsProduto"]).'</td>';
+				$html .= '<td>'.number_format($row_msg_contatos["SubTotalProduto"], 2, ',', '.'). '</td>';
+			}	
 			$html .= '</tr>';
 		}
 		

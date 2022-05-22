@@ -198,7 +198,7 @@
 			$html .= '<td>'.$row_msg_contatos["Repeticao"].'</td>';
 			$html .= '<td>'.utf8_encode($row_msg_contatos["Nome"]).'</td>';
 			$html .= '<td>'.$row_msg_contatos["Recorrencia"].'.</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["Obs"]).'</td>';
+			$html .= '<td>'.$row_msg_contatos["Obs"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["DataInicio"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["DataFim"].'</td>';
 			$html .= '<td>'.$row_msg_contatos["HoraInicio"].'</td>';
