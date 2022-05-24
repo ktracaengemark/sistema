@@ -12,7 +12,7 @@
 				<div class="row">
 
 					<div class="col-md-2 text-left" >
-						<label for="Ordenamento">Dia do Venc.:</label>
+						<label for="Ordenamento">Dia:</label>
 						<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
 								id="Diavenc" name="Diavenc">
 							<?php
@@ -28,7 +28,7 @@
 					</div>
 
 					<div class="col-md-2 text-left" >
-						<label for="Ordenamento">Mes do Venc.:</label>
+						<label for="Ordenamento">Mes:</label>
 						<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
 								id="Mesvenc" name="Mesvenc">
 							<?php
