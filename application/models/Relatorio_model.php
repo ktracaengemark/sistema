@@ -3149,10 +3149,12 @@ class Relatorio_model extends CI_Model {
 		$data['ObsOrca'] = ($data['ObsOrca']) ? ' AND OT.idApp_OrcaTrata = ' . $data['ObsOrca'] : FALSE;
 		$data['Campo'] = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
         $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
-		$filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
+		$aprovadoorca = ($data['AprovadoOrca']) ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
+		//$filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ConcluidoOrca'] != '#') ? 'OT.ConcluidoOrca = "' . $data['ConcluidoOrca'] . '" AND ' : FALSE;
-		$filtro4 = ($data['Quitado'] != '#') ? 'PR.Quitado = "' . $data['Quitado'] . '" AND ' : FALSE;
+		$quitado = ($data['Quitado']) ? 'PR.Quitado = "' . $data['Quitado'] . '" AND ' : FALSE;
+		//$filtro4 = ($data['Quitado'] != '#') ? 'PR.Quitado = "' . $data['Quitado'] . '" AND ' : FALSE;
 		$filtro5 = ($data['Modalidade'] != '#') ? 'OT.Modalidade = "' . $data['Modalidade'] . '" AND ' : FALSE;
 		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 		
@@ -3193,9 +3195,9 @@ class Relatorio_model extends CI_Model {
             WHERE
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-				PR.Quitado = "S" AND
+				' . $aprovadoorca . '
+				' . $quitado . '
 				' . $permissao . '
-
 				OT.idTab_TipoRD = "2"
                 ' . $data['Diavenc'] . ' 
 				' . $data['Mesvenc'] . '
@@ -3283,10 +3285,12 @@ class Relatorio_model extends CI_Model {
 		$data['ObsOrca'] = ($data['ObsOrca']) ? ' AND OT.idApp_OrcaTrata = ' . $data['ObsOrca'] : FALSE;
 		$data['Campo'] = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
         $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
-		$filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
+		$aprovadoorca = ($data['AprovadoOrca']) ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
+		//$filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ConcluidoOrca'] != '#') ? 'OT.ConcluidoOrca = "' . $data['ConcluidoOrca'] . '" AND ' : FALSE;
-		$filtro4 = ($data['Quitado'] != '#') ? 'PR.Quitado = "' . $data['Quitado'] . '" AND ' : FALSE;
+		$quitado = ($data['Quitado']) ? 'PR.Quitado = "' . $data['Quitado'] . '" AND ' : FALSE;
+		//$filtro4 = ($data['Quitado'] != '#') ? 'PR.Quitado = "' . $data['Quitado'] . '" AND ' : FALSE;
 		$filtro5 = ($data['Modalidade'] != '#') ? 'OT.Modalidade = "' . $data['Modalidade'] . '" AND ' : FALSE;
 		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 		
@@ -3326,7 +3330,8 @@ class Relatorio_model extends CI_Model {
             WHERE
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
-				PR.Quitado = "S" AND
+				' . $aprovadoorca . '
+				' . $quitado . '
 				' . $permissao . '
 				OT.idTab_TipoRD = "1"
                 ' . $data['Diavenc'] . ' 
@@ -3406,8 +3411,12 @@ class Relatorio_model extends CI_Model {
     }
 	
     public function list_balancoanual($data) {
-		$filtro4 = ($data['Quitado']) ? 'PR.Quitado = "' . $data['Quitado'] . '" AND ' : FALSE;
-        if(isset($data['Quitado']) && $data['Quitado'] == "S"){
+		
+		$aprovadoorca = ($data['AprovadoOrca']) ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
+		
+		$quitado = ($data['Quitado']) ? 'PR.Quitado = "' . $data['Quitado'] . '" AND ' : FALSE;
+        
+		if(isset($data['Quitado']) && $data['Quitado'] == "S"){
 			$dataref = 'PR.DataPago';
 		}else{
 			$dataref = 'PR.DataVencimento';
@@ -3435,12 +3444,13 @@ class Relatorio_model extends CI_Model {
             WHERE
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				' . $aprovadoorca . '
 				' . $permissao . '
 				' . $permissao_orcam . '
 				OT.CanceladoOrca = "N" AND
 				OT.idTab_TipoRD = "2" AND
 				PR.idTab_TipoRD = "2" AND
-				' . $filtro4 . '
+				' . $quitado . '
             	YEAR(' . $dataref . ') = ' . $data['Ano']
         );
 
@@ -3469,12 +3479,13 @@ class Relatorio_model extends CI_Model {
             WHERE
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				' . $aprovadoorca . '
 				' . $permissao . '
 				' . $permissao_orcam . '
 				OT.CanceladoOrca = "N" AND
 				OT.idTab_TipoRD = "2" AND
 				PR.idTab_TipoRD = "2" AND
-				' . $filtro4 . '
+				' . $quitado . '
             	YEAR(' . $dataref . ') = ' . $data['Ano']
         );
 
@@ -3502,12 +3513,13 @@ class Relatorio_model extends CI_Model {
             WHERE
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				' . $aprovadoorca . '
 				' . $permissao . '
 				' . $permissao_orcam . '
 				OT.CanceladoOrca = "N" AND
 				OT.idTab_TipoRD = "2" AND
 				PR.idTab_TipoRD = "2" AND
-				' . $filtro4 . '
+				' . $quitado . '
             	YEAR(' . $dataref . ') = ' . $data['Ano']
         );
 
@@ -3536,12 +3548,13 @@ class Relatorio_model extends CI_Model {
             WHERE
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				' . $aprovadoorca . '
 				' . $permissao . '
 				' . $permissao_orcam . '
 				OT.CanceladoOrca = "N" AND
 				OT.idTab_TipoRD = "1" AND
 				PR.idTab_TipoRD = "1" AND
-				' . $filtro4 . '				
+				' . $quitado . '				
             	YEAR(' . $dataref . ') = ' . $data['Ano']
         );
 
@@ -3569,12 +3582,13 @@ class Relatorio_model extends CI_Model {
             WHERE
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				' . $aprovadoorca . '
 				' . $permissao . '
 				' . $permissao_orcam . '
 				OT.CanceladoOrca = "N" AND
 				OT.idTab_TipoRD = "1" AND
 				PR.idTab_TipoRD = "1" AND
-				' . $filtro4 . '				
+				' . $quitado . '				
             	YEAR(' . $dataref . ') = ' . $data['Ano']
         );
 
@@ -3602,12 +3616,13 @@ class Relatorio_model extends CI_Model {
             WHERE
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				' . $aprovadoorca . '
 				' . $permissao . '
 				' . $permissao_orcam . '
 				OT.CanceladoOrca = "N" AND
 				OT.idTab_TipoRD = "1" AND
 				PR.idTab_TipoRD = "1" AND
-				' . $filtro4 . '
+				' . $quitado . '
             	YEAR(' . $dataref . ') = ' . $data['Ano']
         );
 

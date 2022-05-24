@@ -7442,15 +7442,16 @@ class Relatorio extends CI_Controller {
 			'Modalidade',
         ), TRUE));
 		
+		$_SESSION['FiltroBalanco']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
 		$_SESSION['FiltroBalanco']['Quitado'] = $data['query']['Quitado'];
         $_SESSION['FiltroBalanco']['Diavenc'] = $data['query']['Diavenc'];
         $_SESSION['FiltroBalanco']['Mesvenc'] = $data['query']['Mesvenc'];
         $_SESSION['FiltroBalanco']['Ano'] = $data['query']['Ano'];
 		
         $data['select']['AprovadoOrca'] = array(
-            'S' => 'Sim',
-			'N' => 'Não',
 			'0' => 'TODOS',
+            'S' => 'Aprovado',
+			'N' => 'Não Aprovado',
         );
 
         $data['select']['QuitadoOrca'] = array(

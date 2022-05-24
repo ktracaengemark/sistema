@@ -2,7 +2,7 @@
 
 <div class="modal fade bs-excluir-modal2-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 <?php echo form_open('relatorio/balanco', 'role="form"'); ?>	
-	<div class="modal-dialog modal-md" role="document">
+	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header bg-danger">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -11,7 +11,7 @@
 			<div class="modal-footer">
 				<div class="row">
 
-					<div class="col-md-3 text-left" >
+					<div class="col-md-2 text-left" >
 						<label for="Ordenamento">Dia do Venc.:</label>
 						<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
 								id="Diavenc" name="Diavenc">
@@ -27,7 +27,7 @@
 						</select>
 					</div>
 
-					<div class="col-md-3 text-left" >
+					<div class="col-md-2 text-left" >
 						<label for="Ordenamento">Mes do Venc.:</label>
 						<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
 								id="Mesvenc" name="Mesvenc">
@@ -43,7 +43,7 @@
 						</select>
 					</div>
 
-					<div class="col-md-3 text-left" >
+					<div class="col-md-2 text-left" >
 						<label for="Ordenamento">Ano:</label>
 						<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
 								id="Ano" name="Ano">
@@ -58,7 +58,22 @@
 							?>
 						</select>
 					</div>
-
+				
+					<div class="col-md-3 text-left">
+						<label for="AprovadoOrca">Status do Pagamento</label>
+						<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
+								id="AprovadoOrca" name="AprovadoOrca">
+							<?php
+							foreach ($select['AprovadoOrca'] as $key => $row) {
+								if ($query['AprovadoOrca'] == $key) {
+									echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+								} else {
+									echo '<option value="' . $key . '">' . $row . '</option>';
+								}
+							}
+							?>
+						</select>
+					</div>
 					<div class="col-md-3 text-left">
 						<label for="Quitado">Status das Parc.</label>
 						<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
@@ -126,7 +141,7 @@
 
 <div class="modal fade bs-excluir-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 <?php echo form_open('relatorio/balanco', 'role="form"'); ?>	
-	<div class="modal-dialog modal-md" role="document">
+	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header bg-danger">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -141,6 +156,21 @@
 							<?php
 							foreach ($select['Ano'] as $key => $row) {
 								if ($query['Ano'] == $key) {
+									echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+								} else {
+									echo '<option value="' . $key . '">' . $row . '</option>';
+								}
+							}
+							?>
+						</select>
+					</div>				
+					<div class="col-md-3 text-left">
+						<label for="AprovadoOrca">Status do Pagamento</label>
+						<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
+								id="AprovadoOrca" name="AprovadoOrca">
+							<?php
+							foreach ($select['AprovadoOrca'] as $key => $row) {
+								if ($query['AprovadoOrca'] == $key) {
 									echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 								} else {
 									echo '<option value="' . $key . '">' . $row . '</option>';
