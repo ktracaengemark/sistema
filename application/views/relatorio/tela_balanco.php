@@ -210,6 +210,36 @@
 				</div>
 				<div class="row">
 					<div class="col-md-3 text-left" >
+						<label for="Ordenamento">Dia:</label>
+						<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
+								id="Diavenc" name="Diavenc">
+							<?php
+							foreach ($select['Diavenc'] as $key => $row) {
+								if ($query['Diavenc'] == $key) {
+									echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+								} else {
+									echo '<option value="' . $key . '">' . $row . '</option>';
+								}
+							}
+							?>
+						</select>
+					</div>
+					<div class="col-md-3 text-left" >
+						<label for="Ordenamento">Mes:</label>
+						<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
+								id="Mesvenc" name="Mesvenc">
+							<?php
+							foreach ($select['Mesvenc'] as $key => $row) {
+								if ($query['Mesvenc'] == $key) {
+									echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+								} else {
+									echo '<option value="' . $key . '">' . $row . '</option>';
+								}
+							}
+							?>
+						</select>
+					</div>
+					<div class="col-md-3 text-left" >
 						<label for="Ordenamento">Ano:</label>
 						<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
 								id="Ano" name="Ano">
@@ -223,7 +253,7 @@
 							}
 							?>
 						</select>
-					</div>
+					</div>	
 				</div>
 				<div class="row">
 					<br>
