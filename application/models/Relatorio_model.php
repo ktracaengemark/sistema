@@ -3162,6 +3162,7 @@ class Relatorio_model extends CI_Model {
 		$data['Campo'] = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
         $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 		$aprovadoorca = ($data['AprovadoOrca']) ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
+		$entregaorca = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
 		//$filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ConcluidoOrca'] != '#') ? 'OT.ConcluidoOrca = "' . $data['ConcluidoOrca'] . '" AND ' : FALSE;
@@ -3206,7 +3207,9 @@ class Relatorio_model extends CI_Model {
             WHERE
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				OT.CanceladoOrca = "N" AND
 				' . $aprovadoorca . '
+				' . $entregaorca . '
 				' . $quitado . '
 				' . $permissao . '
 				OT.idTab_TipoRD = "2"
@@ -3309,6 +3312,7 @@ class Relatorio_model extends CI_Model {
 		$data['Campo'] = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
         $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 		$aprovadoorca = ($data['AprovadoOrca']) ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
+		$entregaorca = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
 		//$filtro1 = ($data['AprovadoOrca'] != '#') ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
         $filtro2 = ($data['QuitadoOrca'] != '#') ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ConcluidoOrca'] != '#') ? 'OT.ConcluidoOrca = "' . $data['ConcluidoOrca'] . '" AND ' : FALSE;
@@ -3352,7 +3356,9 @@ class Relatorio_model extends CI_Model {
             WHERE
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
+				OT.CanceladoOrca = "N" AND
 				' . $aprovadoorca . '
+				' . $entregaorca . '
 				' . $quitado . '
 				' . $permissao . '
 				OT.idTab_TipoRD = "1"
@@ -3435,6 +3441,7 @@ class Relatorio_model extends CI_Model {
     public function list_balancoanual($data) {
 		
 		$aprovadoorca = ($data['AprovadoOrca']) ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
+		$entregaorca = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
 		
 		$quitado = ($data['Quitado']) ? 'PR.Quitado = "' . $data['Quitado'] . '" AND ' : FALSE;
         
@@ -3467,6 +3474,7 @@ class Relatorio_model extends CI_Model {
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				' . $aprovadoorca . '
+				' . $entregaorca . '
 				' . $permissao . '
 				' . $permissao_orcam . '
 				OT.CanceladoOrca = "N" AND
@@ -3502,6 +3510,7 @@ class Relatorio_model extends CI_Model {
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				' . $aprovadoorca . '
+				' . $entregaorca . '
 				' . $permissao . '
 				' . $permissao_orcam . '
 				OT.CanceladoOrca = "N" AND
@@ -3536,6 +3545,7 @@ class Relatorio_model extends CI_Model {
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				' . $aprovadoorca . '
+				' . $entregaorca . '
 				' . $permissao . '
 				' . $permissao_orcam . '
 				OT.CanceladoOrca = "N" AND
@@ -3571,6 +3581,7 @@ class Relatorio_model extends CI_Model {
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				' . $aprovadoorca . '
+				' . $entregaorca . '
 				' . $permissao . '
 				' . $permissao_orcam . '
 				OT.CanceladoOrca = "N" AND
@@ -3605,6 +3616,7 @@ class Relatorio_model extends CI_Model {
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				' . $aprovadoorca . '
+				' . $entregaorca . '
 				' . $permissao . '
 				' . $permissao_orcam . '
 				OT.CanceladoOrca = "N" AND
@@ -3639,6 +3651,7 @@ class Relatorio_model extends CI_Model {
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 OT.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
 				' . $aprovadoorca . '
+				' . $entregaorca . '
 				' . $permissao . '
 				' . $permissao_orcam . '
 				OT.CanceladoOrca = "N" AND

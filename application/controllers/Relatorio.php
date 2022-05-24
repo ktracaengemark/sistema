@@ -7436,6 +7436,7 @@ class Relatorio extends CI_Controller {
             'Campo',
 			'ObsOrca',
             'AprovadoOrca',
+            'CombinadoFrete',
             'QuitadoOrca',
 			'ConcluidoOrca',
 			'Quitado',
@@ -7443,12 +7444,19 @@ class Relatorio extends CI_Controller {
         ), TRUE));
 		
 		$_SESSION['FiltroBalanco']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+		$_SESSION['FiltroBalanco']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 		$_SESSION['FiltroBalanco']['Quitado'] = $data['query']['Quitado'];
         $_SESSION['FiltroBalanco']['Diavenc'] = $data['query']['Diavenc'];
         $_SESSION['FiltroBalanco']['Mesvenc'] = $data['query']['Mesvenc'];
         $_SESSION['FiltroBalanco']['Ano'] = $data['query']['Ano'];
 		
         $data['select']['AprovadoOrca'] = array(
+			'0' => 'TODOS',
+            'S' => 'Aprovado',
+			'N' => 'Não Aprovado',
+        );
+		
+        $data['select']['CombinadoFrete'] = array(
 			'0' => 'TODOS',
             'S' => 'Aprovado',
 			'N' => 'Não Aprovado',
@@ -7536,6 +7544,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+            $data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
             $data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
 			$data['bd']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
@@ -7570,6 +7579,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+            $data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
             $data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
 			$data['bd']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
 			$data['bd']['Quitado'] = $data['query']['Quitado'];
