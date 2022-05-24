@@ -515,28 +515,26 @@
 							</div>
 						</div>
 						<div class="row">
-							<!--
 							<div class="col-md-3">
-								<label for="DataInicio2">Entrega Inc.</label>
+								<label for="DataInicio5">Entrega</label>
 								<div class="input-group DatePicker">
 									<span class="input-group-addon" disabled>
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
 									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											name="DataInicio2" value="<?php #echo set_value('DataInicio2', $query['DataInicio2']); ?>">
+											name="DataInicio5" value="<?php echo set_value('DataInicio5', $query['DataInicio5']); ?>">
 								</div>
 							</div>
 							<div class="col-md-3">
-								<label for="DataFim2">Entrega Fim</label>
+								<label for="DataFim5">Entrega</label>
 								<div class="input-group DatePicker">
 									<span class="input-group-addon" disabled>
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
 									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											name="DataFim2" value="<?php #echo set_value('DataFim2', $query['DataFim2']); ?>">
+											name="DataFim5" value="<?php echo set_value('DataFim5', $query['DataFim5']); ?>">
 								</div>
 							</div>
-							-->
 							<div class="col-md-3">
 								<label for="Produtos">Produtos & Serviços:</label>
 								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -554,6 +552,26 @@
 							</div>
 						</div>
 						<div class="row">
+							<div class="col-md-3">
+								<label for="DataInicio4">Vencimento</label>
+								<div class="input-group DatePicker">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											name="DataInicio4" value="<?php echo set_value('DataInicio4', $query['DataInicio4']); ?>">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<label for="DataFim4">Vencimento</label>
+								<div class="input-group DatePicker">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											name="DataFim4" value="<?php echo set_value('DataFim4', $query['DataFim4']); ?>">
+								</div>
+							</div>
 							<div class="col-md-3">
 								<label for="Parcelas">Parcelas:</label>
 								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -574,8 +592,6 @@
 						<input type="hidden" name="DataFim2" id="DataFim2" value=""/>
 						<input type="hidden" name="DataInicio3" id="DataInicio3" value=""/>
 						<input type="hidden" name="DataFim3" id="DataFim3" value=""/>
-						<input type="hidden" name="DataInicio4" id="DataInicio4" value=""/>
-						<input type="hidden" name="DataFim4" id="DataFim4" value=""/>
 						<?php if($metodo == 1 || $metodo == 2) { ?>
 						<div class="row">
 							<div class="col-md-3">

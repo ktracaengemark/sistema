@@ -147,7 +147,7 @@
 		<div class="modal-content">
 			<div class="modal-header bg-<?php echo $panel; ?>">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title"><span class="glyphicon glyphicon-filter"></span> Filtros das <?php echo $titulo1; ?></h4>
+				<h4 class="modal-title"><span class="glyphicon glyphicon-filter"></span> Filtros dos Produtos</h4>
 			</div>
 			<div class="modal-footer">
 				<div class="panel panel-<?php echo $panel; ?>">
