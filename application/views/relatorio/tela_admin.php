@@ -112,7 +112,14 @@
 												</a>
 											</div>	
 										</div>
-									</div>
+										<div class="form-group col-md-12 text-left">
+											<div class="row">		
+												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/balanco" role="button"> 
+													<span class="glyphicon glyphicon-usd"></span> Balanço
+												</a>
+											</div>	
+										</div>
+									</div>	
 								<?php }else{ ?>
 									<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
 										<div class="col-md-12">	
@@ -123,7 +130,16 @@
 														<span class="glyphicon glyphicon-usd"></span> Parcelas
 													</a>
 												</div>	
-											</div>
+											</div>	
+											<?php if(isset($_SESSION['Usuario']['Rel_Est']) && $_SESSION['Usuario']['Rel_Est'] == "S") {?>		
+												<div class="form-group col-md-12 text-left">
+													<div class="row">		
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/balanco" role="button"> 
+															<span class="glyphicon glyphicon-usd"></span> Balanço
+														</a>
+													</div>	
+												</div>
+											<?php }?>
 										</div>	
 									<?php } ?>
 								<?php } ?>	
@@ -252,25 +268,6 @@
 									
 								<div class="col-md-12">											
 									<label for=""><h4><b>Estatísticas</b></h4></label>
-									<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>	
-										<?php if(isset($_SESSION['Usuario']['Rel_Est']) && $_SESSION['Usuario']['Rel_Est'] == "S") {?>		
-											<div class="form-group col-md-12 text-left">
-												<div class="row">		
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/balanco" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Balanço
-													</a>
-												</div>	
-											</div>
-										<?php }?>
-									<?php }else{?>	
-											<div class="form-group col-md-12 text-left">
-												<div class="row">		
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/balanco" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Balanço
-													</a>
-												</div>	
-											</div>											
-									<?php }?>
 									<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 										<div class="form-group col-md-12 text-left">
 											<div class="row">										
@@ -373,6 +370,13 @@
 													<span class="glyphicon glyphicon-usd"></span> Parcelas
 												</a>
 											</div>	
+										</div>		
+										<div class="form-group col-md-12 text-left">
+											<div class="row">		
+												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/balanco" role="button"> 
+													<span class="glyphicon glyphicon-usd"></span> Balanço
+												</a>
+											</div>	
 										</div>											
 									</div>
 								<?php }else{ ?>
@@ -385,7 +389,16 @@
 														<span class="glyphicon glyphicon-usd"></span> Parcelas
 													</a>
 												</div>	
-											</div>											
+											</div>	
+											<?php if(isset($_SESSION['Usuario']['Rel_Est']) && $_SESSION['Usuario']['Rel_Est'] == "S") {?>		
+												<div class="form-group col-md-12 text-left">
+													<div class="row">		
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/balanco" role="button"> 
+															<span class="glyphicon glyphicon-usd"></span> Balanço
+														</a>
+													</div>	
+												</div>
+											<?php }?>											
 										</div>
 									<?php } ?>
 								<?php } ?>	
@@ -465,26 +478,12 @@
 								<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 									<?php if(isset($_SESSION['Usuario']['Rel_Est']) && $_SESSION['Usuario']['Rel_Est'] == "S") {?>	
 										<div class="col-md-12">											
-											<label for=""><h4><b>Estatísticas</b></h4></label>
-											<div class="form-group col-md-12 text-left">
-												<div class="row">		
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/balanco" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Balanço
-													</a>
-												</div>	
-											</div>									
+											<label for=""><h4><b>Estatísticas</b></h4></label>									
 										</div>
 									<?php }?>
 								<?php }else{?>
 									<div class="col-md-12">											
-										<label for=""><h4><b>Estatísticas</b></h4></label>
-										<div class="form-group col-md-12 text-left">
-											<div class="row">		
-												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/balanco" role="button"> 
-													<span class="glyphicon glyphicon-usd"></span> Balanço
-												</a>
-											</div>	
-										</div>									
+										<label for=""><h4><b>Estatísticas</b></h4></label>									
 									</div>	
 								<?php }?>
 							</div>
