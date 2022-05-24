@@ -109,6 +109,9 @@ class Orcatrataprintcomissao_model extends CI_Model {
 		$permissao12 = ($_SESSION['FiltroAlteraParcela']['StatusComissaoOrca'] != "0" ) ? 'OT.StatusComissaoOrca = "' . $_SESSION['FiltroAlteraParcela']['StatusComissaoOrca'] . '" AND ' : FALSE;
 		$permissao14 = ($_SESSION['FiltroAlteraParcela']['StatusComissaoOrca_Online'] != "0" ) ? 'OT.StatusComissaoOrca_Online = "' . $_SESSION['FiltroAlteraParcela']['StatusComissaoOrca_Online'] . '" AND ' : FALSE;
 
+		$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroAlteraParcela']['Produtos'] != "0") ? 'PRDS.idSis_Empresa ' . $_SESSION['FiltroAlteraParcela']['Produtos'] . ' AND' : FALSE;
+		$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroAlteraParcela']['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $_SESSION['FiltroAlteraParcela']['Parcelas'] . ' AND' : FALSE;
+
         if ($limit){
 			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
 		}else{
@@ -185,6 +188,7 @@ class Orcatrataprintcomissao_model extends CI_Model {
 				LEFT JOIN Tab_AVAP AS MO ON MO.Abrev2 = OT.AVAP
 				LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 				LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
+				LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
 				LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
 				LEFT JOIN Sis_Usuario AS USA ON USA.idSis_Usuario = OT.Associado
 				LEFT JOIN Tab_TipoFrete AS TTF ON TTF.idTab_TipoFrete = OT.TipoFrete
@@ -210,6 +214,8 @@ class Orcatrataprintcomissao_model extends CI_Model {
 				' . $permissao34 . '
 				' . $permissao17 . '
 				' . $permissao18 . '
+				' . $produtos . '
+				' . $parcelas . '
                 ' . $date_inicio_orca . '
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '

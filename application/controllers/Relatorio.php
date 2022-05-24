@@ -1766,6 +1766,7 @@ class Relatorio extends CI_Controller {
 			'Orcarec',
 			'Orcades',
 			'Produtos',
+			'Parcelas',
 			'idTab_Catprod',
 			'DataValidadeProduto',
 			'ConcluidoProduto',
@@ -1927,6 +1928,18 @@ class Relatorio extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
+		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
 
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
 		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
@@ -1940,7 +1953,7 @@ class Relatorio extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
 		$data['select']['Orcades'] = $this->Relatorio_model->select_orcades();
-		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
+		//$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 		$data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresa();
 		
@@ -2014,6 +2027,7 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
+		$_SESSION['FiltroAlteraParcela']['Parcelas'] = $data['query']['Parcelas'];
 		$_SESSION['FiltroAlteraParcela']['Orcarec'] = $data['query']['Orcarec'];
 		$_SESSION['FiltroAlteraParcela']['Orcades'] = $data['query']['Orcades'];
 		//$_SESSION['FiltroAlteraParcela']['NomeCliente'] = $data['query']['NomeCliente'];
@@ -2132,6 +2146,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Parcelas'] = $data['query']['Parcelas'];
 			$data['bd']['idTab_Catprod'] = $data['query']['idTab_Catprod'];
 			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
@@ -2277,6 +2292,7 @@ class Relatorio extends CI_Controller {
 			'Orcarec',
 			'Orcades',
 			'Produtos',
+			'Parcelas',
 			'idTab_Catprod',
 			'DataValidadeProduto',
 			'ConcluidoProduto',
@@ -2425,6 +2441,18 @@ class Relatorio extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
+		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
 
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
 		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
@@ -2438,7 +2466,7 @@ class Relatorio extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
 		$data['select']['Orcades'] = $this->Relatorio_model->select_orcades();
-		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
+		//$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 		$data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresa();
 		
@@ -2512,6 +2540,7 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
+		$_SESSION['FiltroAlteraParcela']['Parcelas'] = $data['query']['Parcelas'];
 		$_SESSION['FiltroAlteraParcela']['Orcarec'] = $data['query']['Orcarec'];
 		$_SESSION['FiltroAlteraParcela']['Orcades'] = $data['query']['Orcades'];
 		//$_SESSION['FiltroAlteraParcela']['NomeCliente'] = $data['query']['NomeCliente'];
@@ -2629,6 +2658,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Parcelas'] = $data['query']['Parcelas'];
 			$data['bd']['idTab_Catprod'] = $data['query']['idTab_Catprod'];
 			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
@@ -2787,6 +2817,7 @@ class Relatorio extends CI_Controller {
 			'Orcarec',
 			'Orcades',
 			'Produtos',
+			'Parcelas',
 			'idTab_Catprod',
 			'DataValidadeProduto',
 			'ConcluidoProduto',
@@ -2935,6 +2966,18 @@ class Relatorio extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
+		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
 
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
 		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
@@ -2948,7 +2991,7 @@ class Relatorio extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
 		$data['select']['Orcades'] = $this->Relatorio_model->select_orcades();
-		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
+		//$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 		$data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresa();
 		
@@ -3023,6 +3066,7 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
+		$_SESSION['FiltroAlteraParcela']['Parcelas'] = $data['query']['Parcelas'];
 		$_SESSION['FiltroAlteraParcela']['Orcarec'] = $data['query']['Orcarec'];
 		$_SESSION['FiltroAlteraParcela']['Orcades'] = $data['query']['Orcades'];
 		//$_SESSION['FiltroAlteraParcela']['NomeCliente'] = $data['query']['NomeCliente'];
@@ -3140,6 +3184,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Parcelas'] = $data['query']['Parcelas'];
 			$data['bd']['idTab_Catprod'] = $data['query']['idTab_Catprod'];
 			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
@@ -3298,6 +3343,7 @@ class Relatorio extends CI_Controller {
 			'Orcarec',
 			'Orcades',
 			'Produtos',
+			'Parcelas',
 			'idTab_Catprod',
 			'DataValidadeProduto',
 			'ConcluidoProduto',
@@ -3445,6 +3491,18 @@ class Relatorio extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
+		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
 
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
 		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
@@ -3458,7 +3516,7 @@ class Relatorio extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
 		$data['select']['Orcades'] = $this->Relatorio_model->select_orcades();
-		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
+		//$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 		$data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresa();
 		
@@ -3533,6 +3591,7 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
+		$_SESSION['FiltroAlteraParcela']['Parcelas'] = $data['query']['Parcelas'];
 		$_SESSION['FiltroAlteraParcela']['Orcarec'] = $data['query']['Orcarec'];
 		$_SESSION['FiltroAlteraParcela']['Orcades'] = $data['query']['Orcades'];
 		//$_SESSION['FiltroAlteraParcela']['NomeCliente'] = $data['query']['NomeCliente'];
@@ -3650,6 +3709,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Parcelas'] = $data['query']['Parcelas'];
 			$data['bd']['idTab_Catprod'] = $data['query']['idTab_Catprod'];
 			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
@@ -3801,6 +3861,7 @@ class Relatorio extends CI_Controller {
 			'Orcarec',
 			'Orcades',
 			'Produtos',
+			'Parcelas',
 			'idTab_Catprod',
 			'DataValidadeProduto',
 			'ConcluidoProduto',
@@ -3946,6 +4007,18 @@ class Relatorio extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
+		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
 
 		//$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
 		$data['select']['NomeUsuario'] = $this->Relatorio_model->select_usuario();
@@ -3963,7 +4036,7 @@ class Relatorio extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
 		$data['select']['Orcades'] = $this->Relatorio_model->select_orcades();
-		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
+		//$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 		$data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresa();
 		
@@ -4009,6 +4082,7 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
+		$_SESSION['FiltroAlteraParcela']['Parcelas'] = $data['query']['Parcelas'];
 		$_SESSION['FiltroAlteraParcela']['Orcarec'] = $data['query']['Orcarec'];
 		$_SESSION['FiltroAlteraParcela']['Orcades'] = $data['query']['Orcades'];
 		//$_SESSION['FiltroAlteraParcela']['NomeCliente'] = $data['query']['NomeCliente'];
@@ -4120,6 +4194,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Parcelas'] = $data['query']['Parcelas'];
 			$data['bd']['idTab_Catprod'] = $data['query']['idTab_Catprod'];
 			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
@@ -4269,6 +4344,7 @@ class Relatorio extends CI_Controller {
 			'Orcarec',
 			'Orcades',
 			'Produtos',
+			'Parcelas',
 			'idTab_Catprod',
 			'DataValidadeProduto',
 			'ConcluidoProduto',
@@ -4407,6 +4483,18 @@ class Relatorio extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
+		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
 
 		$data['select']['NomeUsuario'] = $this->Relatorio_model->select_usuario();
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
@@ -4421,7 +4509,7 @@ class Relatorio extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
 		$data['select']['Orcades'] = $this->Relatorio_model->select_orcades();
-		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
+		//$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 		$data['select']['NomeEmpresa'] = $this->Relatorio_model->select_empresa();
 		
@@ -4471,6 +4559,7 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
+		$_SESSION['FiltroAlteraParcela']['Parcelas'] = $data['query']['Parcelas'];
 		$_SESSION['FiltroAlteraParcela']['Orcarec'] = $data['query']['Orcarec'];
 		$_SESSION['FiltroAlteraParcela']['Orcades'] = $data['query']['Orcades'];
 		//$_SESSION['FiltroAlteraParcela']['NomeCliente'] = $data['query']['NomeCliente'];
@@ -4581,6 +4670,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Parcelas'] = $data['query']['Parcelas'];
 			$data['bd']['idTab_Catprod'] = $data['query']['idTab_Catprod'];
 			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
@@ -4914,7 +5004,7 @@ class Relatorio extends CI_Controller {
             $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
 		
 		$data['query']['nome'] = 'Cliente';
-        $data['titulo1'] = 'Parcelas das Receitas';
+        $data['titulo1'] = 'Receitas';
 		$data['metodo'] = 2;
 		$data['form_open_path'] = 'relatorio/cobrancas';
 		$data['panel'] = 'info';
@@ -5614,6 +5704,7 @@ class Relatorio extends CI_Controller {
 			'Fornecedor',
 			'idApp_Fornecedor',
 			'Produtos',
+			'Parcelas',
 			'Categoria',
 			'Tipo_Orca',
 			'AVAP',
@@ -5625,6 +5716,8 @@ class Relatorio extends CI_Controller {
             'DataFim2',
 			'DataInicio3',
             'DataFim3',
+			'DataInicio4',
+            'DataFim4',
 			'DataInicio5',
             'DataFim5',
 			'DataInicio6',
@@ -5643,6 +5736,7 @@ class Relatorio extends CI_Controller {
 			'CanceladoOrca',
 			'CombinadoFrete',
 			'ConcluidoProduto',
+			'Quitado',
 			'Modalidade',
 			'Orcarec',
 			'Orcades',
@@ -5716,6 +5810,12 @@ class Relatorio extends CI_Controller {
         );
 
 		$data['select']['ConcluidoProduto'] = array(
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
+        );
+		
+		$data['select']['Quitado'] = array(
             '0' => '::TODOS::',
             'S' => 'Sim',
             'N' => 'Não',
@@ -5807,6 +5907,12 @@ class Relatorio extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
 
 		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
 		$data['select']['Categoria'] = $this->Relatorio_model->select_catprod();
@@ -5819,7 +5925,7 @@ class Relatorio extends CI_Controller {
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 		
 		$data['query']['nome'] = 'Cliente';
-        $data['titulo1'] = 'Vendidos';
+        $data['titulo1'] = 'Receitas';
 		$data['metodo'] = 2;
 		$data['form_open_path'] = 'relatorio/vendidos';
 		$data['panel'] = 'info';
@@ -5840,7 +5946,9 @@ class Relatorio extends CI_Controller {
         $_SESSION['Filtro_Vendidos']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
 		$_SESSION['Filtro_Vendidos']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
         $_SESSION['Filtro_Vendidos']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
-		$_SESSION['Filtro_Vendidos']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');	
+		$_SESSION['Filtro_Vendidos']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
+        $_SESSION['Filtro_Vendidos']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
+		$_SESSION['Filtro_Vendidos']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');	
         $_SESSION['Filtro_Vendidos']['DataInicio5'] = $this->basico->mascara_data($data['query']['DataInicio5'], 'mysql');
 		$_SESSION['Filtro_Vendidos']['DataFim5'] = $this->basico->mascara_data($data['query']['DataFim5'], 'mysql');
         $_SESSION['Filtro_Vendidos']['DataInicio6'] = $this->basico->mascara_data($data['query']['DataInicio6'], 'mysql');
@@ -5850,6 +5958,7 @@ class Relatorio extends CI_Controller {
         $_SESSION['Filtro_Vendidos']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
 		$_SESSION['Filtro_Vendidos']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');
 		$_SESSION['Filtro_Vendidos']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
+		$_SESSION['Filtro_Vendidos']['Quitado'] = $data['query']['Quitado'];
 		$_SESSION['Filtro_Vendidos']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
 		$_SESSION['Filtro_Vendidos']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
 		$_SESSION['Filtro_Vendidos']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
@@ -5878,6 +5987,7 @@ class Relatorio extends CI_Controller {
 		$_SESSION['Filtro_Vendidos']['Campo'] = $data['query']['Campo'];
 		$_SESSION['Filtro_Vendidos']['Ordenamento'] = $data['query']['Ordenamento'];
 		$_SESSION['Filtro_Vendidos']['Produtos'] = $data['query']['Produtos'];
+		$_SESSION['Filtro_Vendidos']['Parcelas'] = $data['query']['Parcelas'];
 		$_SESSION['Filtro_Vendidos']['Categoria'] = $data['query']['Categoria'];
 		$_SESSION['Filtro_Vendidos']['Agrupar'] = $data['query']['Agrupar'];
 
@@ -5888,6 +5998,8 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataFim2', 'Data Fim da Entrega', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio3', 'Data Início do Vencimento', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim3', 'Data Fim do Vencimento', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio4', 'Data Início do Vencimento', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim4', 'Data Fim do Vencimento', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio5', 'Data Início do Pag Comissao', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim5', 'Data Fim do Pag Comissao', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio6', 'Data Início do Cadastro', 'trim|valid_date');
@@ -5911,6 +6023,7 @@ class Relatorio extends CI_Controller {
             $data['bd']['Fornecedor'] = $data['query']['Fornecedor'];
             $data['bd']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Parcelas'] = $data['query']['Parcelas'];
 			$data['bd']['Categoria'] = $data['query']['Categoria'];
             $data['bd']['TipoFinanceiro'] = $data['query']['TipoFinanceiro'];
             $data['bd']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];		
@@ -5922,6 +6035,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
 			$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
             $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
+			$data['bd']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
+            $data['bd']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
 			$data['bd']['DataInicio5'] = $this->basico->mascara_data($data['query']['DataInicio5'], 'mysql');
             $data['bd']['DataFim5'] = $this->basico->mascara_data($data['query']['DataFim5'], 'mysql');
 			$data['bd']['DataInicio6'] = $this->basico->mascara_data($data['query']['DataInicio6'], 'mysql');
@@ -5942,6 +6057,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
 			$data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$data['bd']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
+			$data['bd']['Quitado'] = $data['query']['Quitado'];
 			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
             $data['bd']['FormaPagamento'] = $data['query']['FormaPagamento'];
 			$data['bd']['TipoFrete'] = $data['query']['TipoFrete'];

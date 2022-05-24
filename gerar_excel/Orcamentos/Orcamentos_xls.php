@@ -115,6 +115,10 @@
 		//$groupby = ($_SESSION['FiltroAlteraParcela']['Agrupar']) ? 'GROUP BY OT.' . $_SESSION['Agrupar'] . '' : FALSE;
 		//$ultimopedido1 = ($_SESSION['FiltroAlteraParcela']['Ultimo'] != "0") ? 'LEFT JOIN App_OrcaTrata OT2 ON (OT.idApp_Cliente = OT2.idApp_Cliente AND OT.idApp_OrcaTrata < OT2.idApp_OrcaTrata)' : FALSE;
 		//$ultimopedido2 = ($_SESSION['FiltroAlteraParcela']['Ultimo'] != "0") ? 'AND OT2.idApp_OrcaTrata IS NULL' : FALSE;
+
+		$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroAlteraParcela']['Produtos'] != "0") ? 'PRDS.idSis_Empresa ' . $_SESSION['FiltroAlteraParcela']['Produtos'] . ' AND' : FALSE;
+		$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroAlteraParcela']['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $_SESSION['FiltroAlteraParcela']['Parcelas'] . ' AND' : FALSE;
+
 		$_SESSION['FiltroAlteraParcela']['nome'] = $_SESSION['FiltroAlteraParcela']['nome'];
 		if($_SESSION['FiltroAlteraParcela']['Quitado']){
 			if($_SESSION['FiltroAlteraParcela']['Quitado'] == "N"){
@@ -225,6 +229,7 @@
 									LEFT JOIN App_Fornecedor AS F ON F.idApp_Fornecedor = OT.idApp_Fornecedor
 									LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 									' . $ultimopedido1 . '
+									LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
 									LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
 									LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
 									LEFT JOIN Tab_Modalidade AS MD ON MD.Abrev = OT.Modalidade
@@ -265,6 +270,8 @@
 									' . $filtro14 . '
 									' . $filtro17 . '
 									' . $filtro18 . '
+									' . $produtos . '
+									' . $parcelas . '
 									' . $data['idSis_Empresa'] . '
 									' . $data['Orcamento'] . '
 									' . $data['Cliente'] . '
@@ -330,6 +337,8 @@
 		// Campos da Tabela
 		$html .= '<tr>';
 		$html .= '<td><b>id_O.S.</b></td>';
+		$html .= '<td><b>DtPedido</b></td>';
+		
 		$html .= '<td><b>id_'.$nome.'</b></td>';
 		$html .= '<td><b>'.$nome.'</b></td>';
 		$html .= '<td><b>Recebedor</b></td>';
@@ -360,8 +369,6 @@
 		$html .= '<td><b>Pagam.</b></td>';
 		$html .= '<td><b>Form.Pag</b></td>';
 		
-		$html .= '<td><b>DtPedido</b></td>';
-		$html .= '<td><b>DtEntrega</b></td>';
 		
 		$html .= '</tr>';
 		
@@ -411,6 +418,8 @@
 			
 			$html .= '<tr>';
 			$html .= '<td>'.$row_msg_contatos["idApp_OrcaTrata"].'</td>';
+			$html .= '<td>'.$row_msg_contatos["DataOrca"].'</td>';
+			
 			$html .= '<td>'.$row_msg_contatos["idApp_".$nome].'</td>';
 			$html .= '<td>'.utf8_encode($row_msg_contatos[$nome]).'</td>';
 			$html .= '<td>'.utf8_encode($row_msg_contatos["NomeRec"]).'</td>';
@@ -441,8 +450,6 @@
 			$html .= '<td>'.$row_msg_contatos["AVAP"].'</td>';
 			$html .= '<td>'.utf8_encode($row_msg_contatos["FormaPag"]).'</td>';
 			
-			$html .= '<td>'.$row_msg_contatos["DataOrca"].'</td>';
-			$html .= '<td>'.$row_msg_contatos["DataEntregaOrca"].'</td>';
 			
 			$html .= '</tr>';
 		}

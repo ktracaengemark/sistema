@@ -94,8 +94,10 @@
 						<th class="active">Baixa</th>
 						<th class="active">Cont.</th>
 						<th class="active">Pedido</th>
+						<th class="active">DtPedido</th>
 						<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 							<th class="col-md-2 active"><?php echo $nome; ?></th>
+							<th class="col-md-2 active">Celular</th>
 							<?php if($_SESSION['Empresa']['CadastrarPet'] == "S") {?>
 								<th class="col-md-2 active">Pet</th>
 							<?php }else{ ?>
@@ -114,11 +116,6 @@
 							<th class="active">Pagam.</th>
 						<?php } ?>
 						<th class="active">Form.Pag.</th>
-						<th class="active">DtPedido</th>
-						<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
-							<th class="active">DtEntrega</th>
-							<!--<th class="active">DtVenc</th>-->
-						<?php } ?>
 						<th class="active">Categoria</th>
 						<th class="active">Qtd</th>
 						<th class="active">Produto</th>
@@ -188,8 +185,10 @@
 							
 							echo '<td>' . ($linha + $count) . '/' . $total_rows . '</td>';
 							echo '<td>' . $row['idApp_OrcaTrata'] . '- ' . $row['TipoFinanceiro'] . ' - ' . $row['Descricao'] . '</td>';
+							echo '<td>' . $row['DataOrca'] . '</td>';
 							if($_SESSION['log']['idSis_Empresa'] != "5"){
 								echo '<td>' . $row['Nome' . $nome] . '</td>';
+								echo '<td>' . $row['Celular' . $nome] . '</td>';
 								if($_SESSION['Empresa']['CadastrarPet'] == "S"){
 									echo '<td>' . $row['NomeClientePet'] . '</td>';
 								}else{
@@ -208,11 +207,6 @@
 								echo '<td>' . $row['AVAP'] . '</td>';
 							}
 							echo '<td>' . $row['FormaPag'] . '</td>';
-							echo '<td>' . $row['DataOrca'] . '</td>';
-							if($_SESSION['log']['idSis_Empresa'] != "5"){
-								echo '<td>' . $row['DataEntregaOrca'] . '</td>';
-								//echo '<td>' . $row['DataVencimentoOrca'] . '</td>';
-							}
 							echo '<td class="text-left">' . $row['Catprod'] . '</td>';
 							echo '<td class="text-left">' . $row['QuantidadeProduto'] . '</td>';
 							echo '<td class="text-left">' . $row['NomeProduto'] . '</td>';

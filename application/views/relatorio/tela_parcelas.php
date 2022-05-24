@@ -300,13 +300,6 @@
 									?>
 								</select>
 							</div>
-						</div>
-						<?php }else{ ?>
-							<input type="hidden" name="Tipo_Orca" id="Tipo_Orca" value="0"/>
-							<input type="hidden" name="TipoFrete" id="TipoFrete" value="0"/>
-							<input type="hidden" name="AVAP" id="AVAP" value="0"/>
-						<?php } ?>
-						<div class="row">
 							<div class="col-md-3">
 								<label for="Ordenamento">Forma de Pagamento</label>
 								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -322,6 +315,13 @@
 									?>
 								</select>
 							</div>
+						</div>
+						<?php }else{ ?>
+							<input type="hidden" name="Tipo_Orca" id="Tipo_Orca" value="0"/>
+							<input type="hidden" name="TipoFrete" id="TipoFrete" value="0"/>
+							<input type="hidden" name="AVAP" id="AVAP" value="0"/>
+						<?php } ?>
+						<div class="row">
 							<input type="hidden" name="idTab_TipoRD" id="idTab_TipoRD" value="<?php echo $TipoRD; ?>"/>
 							<div class="col-md-3 text-left">
 								<label for="Ordenamento">Tipo de <?php echo $TipoFinanceiro; ?>:</label>

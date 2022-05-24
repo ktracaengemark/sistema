@@ -940,6 +940,10 @@ class Relatorio_model extends CI_Model {
 			//$groupby = ($data['Agrupar']) ? 'GROUP BY OT.' . $data['Agrupar'] . '' : FALSE;
 			//$ultimopedido1 = ($data['Ultimo'] != "0") ? 'LEFT JOIN App_OrcaTrata OT2 ON (OT.idApp_Cliente = OT2.idApp_Cliente AND OT.idApp_OrcaTrata < OT2.idApp_OrcaTrata)' : FALSE;
 			//$ultimopedido2 = ($data['Ultimo'] != "0") ? 'AND OT2.idApp_OrcaTrata IS NULL' : FALSE;
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Produtos'] != "0") ? 'PRDS.idSis_Empresa ' . $data['Produtos'] . '  AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $data['Parcelas'] . '  AND' : FALSE;
+
 			$data['nome'] = $data['nome'];
 			if($data['Quitado']){
 				if($data['Quitado'] == "N"){
@@ -1080,6 +1084,10 @@ class Relatorio_model extends CI_Model {
 			//$groupby = ($_SESSION['FiltroAlteraParcela']['Agrupar']) ? 'GROUP BY OT.' . $_SESSION['Agrupar'] . '' : FALSE;
 			//$ultimopedido1 = ($_SESSION['FiltroAlteraParcela']['Ultimo'] != "0") ? 'LEFT JOIN App_OrcaTrata OT2 ON (OT.idApp_Cliente = OT2.idApp_Cliente AND OT.idApp_OrcaTrata < OT2.idApp_OrcaTrata)' : FALSE;
 			//$ultimopedido2 = ($_SESSION['FiltroAlteraParcela']['Ultimo'] != "0") ? 'AND OT2.idApp_OrcaTrata IS NULL' : FALSE;
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroAlteraParcela']['Produtos'] != "0") ? 'PRDS.idSis_Empresa ' . $_SESSION['FiltroAlteraParcela']['Produtos'] . ' AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroAlteraParcela']['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $_SESSION['FiltroAlteraParcela']['Parcelas'] . ' AND' : FALSE;
+
 			$_SESSION['FiltroAlteraParcela']['nome'] = $_SESSION['FiltroAlteraParcela']['nome'];
 			if($_SESSION['FiltroAlteraParcela']['Quitado']){
 				if($_SESSION['FiltroAlteraParcela']['Quitado'] == "N"){
@@ -1124,7 +1132,7 @@ class Relatorio_model extends CI_Model {
 		
 		$query = $this->db->query('
             SELECT
-                CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,""), " - " ,IFNULL(C.CelularCliente,"") ) AS NomeCliente,
+                CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,"")) AS NomeCliente,
                 CONCAT(IFNULL(C.NomeCliente,"")) AS Cliente,
 				C.CelularCliente,
 				C.DataCadastroCliente,
@@ -1181,6 +1189,8 @@ class Relatorio_model extends CI_Model {
 				OT.DataPagoComissaoOrca,
 				PR.DataVencimento,
 				PR.Quitado,
+				PRDS.DataConcluidoProduto,
+				PRDS.ConcluidoProduto,
 				EMP.NomeEmpresa,
 				EMP.Site,
 				US.Nome,
@@ -1199,6 +1209,7 @@ class Relatorio_model extends CI_Model {
 				LEFT JOIN App_Fornecedor AS F ON F.idApp_Fornecedor = OT.idApp_Fornecedor
 				LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 				' . $ultimopedido1 . '
+				LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
 				LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
 				LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
 				LEFT JOIN Tab_Modalidade AS MD ON MD.Abrev = OT.Modalidade
@@ -1239,6 +1250,8 @@ class Relatorio_model extends CI_Model {
 				' . $filtro14 . '
 				' . $filtro17 . '
 				' . $filtro18 . '
+				' . $produtos . '
+				' . $parcelas . '
 				' . $data['idSis_Empresa'] . '
                 ' . $data['Orcamento'] . '
                 ' . $data['Cliente'] . '
@@ -2503,6 +2516,9 @@ class Relatorio_model extends CI_Model {
 			
 			$date_inicio_vnc = ($data['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($data['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $data['DataFim3'] . '" AND ' : FALSE;
+			
+			$date_inicio_vnc_par = ($data['DataInicio4']) ? 'PR.DataVencimento >= "' . $data['DataInicio4'] . '" AND ' : FALSE;
+			$date_fim_vnc_par = ($data['DataFim4']) ? 'PR.DataVencimento <= "' . $data['DataFim4'] . '" AND ' : FALSE;
 
 			$date_inicio_prd_entr = ($data['DataInicio8']) ? 'PRDS.DataConcluidoProduto >= "' . $data['DataInicio8'] . '" AND ' : FALSE;
 			$date_fim_prd_entr = ($data['DataFim8']) ? 'PRDS.DataConcluidoProduto <= "' . $data['DataFim8'] . '" AND ' : FALSE;
@@ -2524,6 +2540,7 @@ class Relatorio_model extends CI_Model {
 			$filtro2 = ($data['QuitadoOrca']) ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 			$filtro3 = ($data['ConcluidoOrca']) ? 'OT.ConcluidoOrca = "' . $data['ConcluidoOrca'] . '" AND ' : FALSE;
 			$filtro17 = ($data['ConcluidoProduto']) ? 'PRDS.ConcluidoProduto = "' . $data['ConcluidoProduto'] . '" AND ' : FALSE;
+			$filtro21 = ($data['Quitado']) ? 'PR.Quitado = "' . $data['Quitado'] . '" AND ' : FALSE;
 			$filtro18 = ($data['Prod_Serv_Produto']) ? 'PRDS.Prod_Serv_Produto = "' . $data['Prod_Serv_Produto'] . '" AND ' : FALSE;
 			$filtro5 = ($data['Modalidade']) ? 'OT.Modalidade = "' . $data['Modalidade'] . '" AND ' : FALSE;
 			$filtro6 = ($data['FormaPagamento']) ? 'OT.FormaPagamento = "' . $data['FormaPagamento'] . '" AND ' : FALSE;
@@ -2538,7 +2555,9 @@ class Relatorio_model extends CI_Model {
 			$query42 = ($data['idApp_ClientePet2'] && isset($data['idApp_ClientePet2'])) ? 'AND OT.idApp_ClientePet = ' . $data['idApp_ClientePet2'] . '  ' : FALSE;
 			$query5 = ($data['idApp_ClienteDep'] && isset($data['idApp_ClienteDep'])) ? 'AND OT.idApp_ClienteDep = ' . $data['idApp_ClienteDep'] . '  ' : FALSE;
 			$query52 = ($data['idApp_ClienteDep2'] && isset($data['idApp_ClienteDep2'])) ? 'AND OT.idApp_ClienteDep = ' . $data['idApp_ClienteDep2'] . '  ' : FALSE;			
-							
+
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $data['Parcelas'] . '  AND' : FALSE;							
+			
 			$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 			//$groupby = (1 == 1) ? 'GROUP BY PRDS.idApp_Produto' : FALSE;
 			$groupby = ($data['Agrupar'] != "0") ? 'GROUP BY ' . $data['Agrupar'] . '' : FALSE;
@@ -2553,6 +2572,9 @@ class Relatorio_model extends CI_Model {
 			
 			$date_inicio_vnc = ($_SESSION['Filtro_Vendidos']['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $_SESSION['Filtro_Vendidos']['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($_SESSION['Filtro_Vendidos']['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $_SESSION['Filtro_Vendidos']['DataFim3'] . '" AND ' : FALSE;
+			
+			$date_inicio_vnc_par = ($_SESSION['Filtro_Vendidos']['DataInicio4']) ? 'PR.DataVencimento >= "' . $_SESSION['Filtro_Vendidos']['DataInicio4'] . '" AND ' : FALSE;
+			$date_fim_vnc_par = ($_SESSION['Filtro_Vendidos']['DataFim4']) ? 'PR.DataVencimento <= "' . $_SESSION['Filtro_Vendidos']['DataFim4'] . '" AND ' : FALSE;
 
 			$date_inicio_prd_entr = ($_SESSION['Filtro_Vendidos']['DataInicio8']) ? 'PRDS.DataConcluidoProduto >= "' . $_SESSION['Filtro_Vendidos']['DataInicio8'] . '" AND ' : FALSE;
 			$date_fim_prd_entr = ($_SESSION['Filtro_Vendidos']['DataFim8']) ? 'PRDS.DataConcluidoProduto <= "' . $_SESSION['Filtro_Vendidos']['DataFim8'] . '" AND ' : FALSE;
@@ -2574,6 +2596,7 @@ class Relatorio_model extends CI_Model {
 			$filtro2 = ($_SESSION['Filtro_Vendidos']['QuitadoOrca']) ? 'OT.QuitadoOrca = "' . $_SESSION['Filtro_Vendidos']['QuitadoOrca'] . '" AND ' : FALSE;
 			$filtro3 = ($_SESSION['Filtro_Vendidos']['ConcluidoOrca']) ? 'OT.ConcluidoOrca = "' . $_SESSION['Filtro_Vendidos']['ConcluidoOrca'] . '" AND ' : FALSE;
 			$filtro17 = ($_SESSION['Filtro_Vendidos']['ConcluidoProduto']) ? 'PRDS.ConcluidoProduto = "' . $_SESSION['Filtro_Vendidos']['ConcluidoProduto'] . '" AND ' : FALSE;
+			$filtro21 = ($_SESSION['Filtro_Vendidos']['Quitado']) ? 'PR.Quitado = "' . $_SESSION['Filtro_Vendidos']['Quitado'] . '" AND ' : FALSE;
 			$filtro18 = ($_SESSION['Filtro_Vendidos']['Prod_Serv_Produto']) ? 'PRDS.Prod_Serv_Produto = "' . $_SESSION['Filtro_Vendidos']['Prod_Serv_Produto'] . '" AND ' : FALSE;
 			$filtro5 = ($_SESSION['Filtro_Vendidos']['Modalidade']) ? 'OT.Modalidade = "' . $_SESSION['Filtro_Vendidos']['Modalidade'] . '" AND ' : FALSE;
 			$filtro6 = ($_SESSION['Filtro_Vendidos']['FormaPagamento']) ? 'OT.FormaPagamento = "' . $_SESSION['Filtro_Vendidos']['FormaPagamento'] . '" AND ' : FALSE;
@@ -2588,7 +2611,9 @@ class Relatorio_model extends CI_Model {
 			$query42 = ($_SESSION['Filtro_Vendidos']['idApp_ClientePet2'] && isset($_SESSION['Filtro_Vendidos']['idApp_ClientePet2'])) ? 'AND OT.idApp_ClientePet = ' . $_SESSION['Filtro_Vendidos']['idApp_ClientePet2'] . '  ' : FALSE;
 			$query5 = ($_SESSION['Filtro_Vendidos']['idApp_ClienteDep'] && isset($_SESSION['Filtro_Vendidos']['idApp_ClienteDep'])) ? 'AND OT.idApp_ClienteDep = ' . $_SESSION['Filtro_Vendidos']['idApp_ClienteDep'] . '  ' : FALSE;
 			$query52 = ($_SESSION['Filtro_Vendidos']['idApp_ClienteDep2'] && isset($_SESSION['Filtro_Vendidos']['idApp_ClienteDep2'])) ? 'AND OT.idApp_ClienteDep = ' . $_SESSION['Filtro_Vendidos']['idApp_ClienteDep2'] . '  ' : FALSE;			
-				
+			
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['Filtro_Vendidos']['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $_SESSION['Filtro_Vendidos']['Parcelas'] . ' AND' : FALSE;
+			
 			$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 			//$groupby = (1 == 1) ? 'GROUP BY PRDS.idApp_Produto' : FALSE;		
 			$groupby = ($_SESSION['Filtro_Vendidos']['Agrupar'] != "0") ? 'GROUP BY ' . $_SESSION['Filtro_Vendidos']['Agrupar'] . '' : FALSE;
@@ -2601,9 +2626,11 @@ class Relatorio_model extends CI_Model {
 
 		$query = $this->db->query('
             SELECT
-				CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,""), " - " ,IFNULL(C.CelularCliente,""), " - " ,IFNULL(C.Telefone,""), " - " ,IFNULL(C.Telefone2,""), " - " ,IFNULL(C.Telefone3,"") ) AS NomeCliente,
+				CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,""), " - " ,IFNULL(C.Telefone,""), " - " ,IFNULL(C.Telefone2,""), " - " ,IFNULL(C.Telefone3,"") ) AS NomeCliente,
+				C.CelularCliente,
 				CONCAT(IFNULL(F.idApp_Fornecedor,""), " - " ,IFNULL(F.NomeFornecedor,"")) AS NomeFornecedor,
-                OT.idApp_OrcaTrata,
+                F.CelularFornecedor,
+				OT.idApp_OrcaTrata,
 				OT.Tipo_Orca,
 				OT.idSis_Usuario,
 				OT.idTab_TipoRD,
@@ -2651,6 +2678,7 @@ class Relatorio_model extends CI_Model {
 					LEFT JOIN App_ClienteDep AS CDP ON CDP.idApp_ClienteDep = OT.idApp_ClienteDep
 					LEFT JOIN App_Fornecedor AS F ON F.idApp_Fornecedor = OT.idApp_Fornecedor
 					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = OT.idSis_Usuario
+					LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 					LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
 					LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = PRDS.idTab_Produtos_Produto
 					LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto
@@ -2665,10 +2693,12 @@ class Relatorio_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
-                ' . $date_inicio_vnc . '
-                ' . $date_fim_vnc . '
                 ' . $date_inicio_prd_entr . '
                 ' . $date_fim_prd_entr . '
+                ' . $date_inicio_vnc . '
+                ' . $date_fim_vnc . '
+                ' . $date_inicio_vnc_par . '
+                ' . $date_fim_vnc_par . '
 				' . $permissao . '
 				' . $filtro1 . '
 				' . $filtro2 . '
@@ -2683,6 +2713,8 @@ class Relatorio_model extends CI_Model {
 				' . $filtro13 . '
 				' . $filtro17 . '
 				' . $filtro18 . '
+				' . $filtro21 . '
+				' . $parcelas . '
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 PRDS.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
                 ' . $data['Orcamento'] . '
@@ -2734,6 +2766,7 @@ class Relatorio_model extends CI_Model {
                 App_OrcaTrata AS OT
 					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = OT.idSis_Usuario
+					LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 					LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
 					LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = PRDS.idTab_Produtos_Produto
 					LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto
@@ -2744,10 +2777,12 @@ class Relatorio_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
+                ' . $date_inicio_prd_entr . '
+                ' . $date_fim_prd_entr . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
-                ' . $date_inicio_prd_entr . '
-                ' . $date_fim_prd_entr . '			
+                ' . $date_inicio_vnc_par . '
+                ' . $date_fim_vnc_par . '			
 				' . $permissao . '
 				' . $filtro1 . '
 				' . $filtro2 . '
@@ -2762,6 +2797,8 @@ class Relatorio_model extends CI_Model {
 				' . $filtro13 . '
 				' . $filtro17 . '
 				' . $filtro18 . '
+				' . $filtro21 . '
+				' . $parcelas . '
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 PRDS.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				PRDS.ConcluidoProduto = "S"

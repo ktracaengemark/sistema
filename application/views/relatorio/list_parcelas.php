@@ -131,9 +131,6 @@
 						<?php } ?>	
 						<th class="active">Pdd|Tp|Ct</th>
 						<th class="active">DtPedido</th>
-						<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
-							<th class="active">DtEntrega</th>
-						<?php } ?>
 						<!--<th class="active">Pedido</th>-->
 						<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 							<th class="col-md-2 active"><?php echo $nome; ?></th>
@@ -221,11 +218,7 @@
 								}
 							}	
 							echo '<td>' . $row['idApp_OrcaTrata'] . ' - ' . $row['TipoFinanceiro'] . ' - ' . $row['Descricao'] . ' - ' . ($linha + $count) . '</td>';
-							echo '<td>' . $row['DataOrca'] . '</td>';
-							if($_SESSION['log']['idSis_Empresa'] != "5"){
-								echo '<td>' . $row['DataEntregaOrca'] . '</td>';
-							}	
-							//echo '<td>' . $row['idApp_OrcaTrata'] . '- ' . $row['TipoFinanceiro'] . ' - ' . $row['Descricao'] . '</td>';
+							echo '<td>' . $row['DataOrca'] . '</td>';	
 							if($_SESSION['log']['idSis_Empresa'] != "5"){
 							
 								if(isset($_SESSION['FiltroAlteraParcela']['nomedo' . $nome]) && $_SESSION['FiltroAlteraParcela']['nomedo' . $nome] == "S") {

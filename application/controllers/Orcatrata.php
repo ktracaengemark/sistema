@@ -15440,7 +15440,7 @@ class Orcatrata extends CI_Controller {
 				#redirect(base_url() . 'relatorio/financeiro/' . $data['msg']);
 				#redirect(base_url() . 'relatorio/parcelasdesp/' . $data['msg']);
 				#redirect(base_url() . 'relatorio/orcamento2/' . $data['msg']);
-				redirect(base_url() . 'despesas/despesas/' . $data['msg']);
+				redirect(base_url() . 'relatorio/despesas/' . $data['msg']);
                 exit();
             //}
         //}
