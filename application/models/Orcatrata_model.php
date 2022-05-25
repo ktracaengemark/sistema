@@ -1642,6 +1642,7 @@ class Orcatrata_model extends CI_Model {
 				OT.DataPagoComissaoOrca,
 				OT.idSis_Usuario,
 				OT.ObsOrca,
+				OT.Consideracoes,
 				OT.Descricao,
 				OT.TipoFinanceiro,
 				OT.Tipo_Orca,
@@ -1813,6 +1814,7 @@ class Orcatrata_model extends CI_Model {
                 OT.AprovadoOrca,
                 OT.CombinadoFrete,
 				OT.ObsOrca,
+				OT.Consideracoes,
 				CONCAT(IFNULL(OT.Descricao,"")) AS Descricao,
                 OT.DataOrca,
                 OT.DataEntradaOrca,
@@ -2016,6 +2018,7 @@ class Orcatrata_model extends CI_Model {
                 OT.AprovadoOrca,
                 OT.CombinadoFrete,
 				OT.ObsOrca,
+				OT.Consideracoes,
 				CONCAT(IFNULL(OT.Descricao,"")) AS Descricao,
                 OT.DataOrca,
                 OT.DataEntradaOrca,
@@ -2709,6 +2712,7 @@ class Orcatrata_model extends CI_Model {
                 OT.AprovadoOrca,
                 OT.CombinadoFrete,
 				OT.ObsOrca,
+				OT.Consideracoes,
 				CONCAT(IFNULL(OT.Descricao,"")) AS Descricao,
                 OT.DataOrca,
                 OT.DataEntradaOrca,
@@ -3350,7 +3354,8 @@ class Orcatrata_model extends CI_Model {
 			. 'OT.FinalizadoOrca, '
 			. 'OT.CanceladoOrca, '
 			. 'OT.CombinadoFrete, '
-            . 'OT.ObsOrca '
+            . 'OT.ObsOrca, '
+			. 'OT.Consideracoes '
             . 'FROM '
             . 'App_OrcaTrata AS OT '
             . 'WHERE '
@@ -3418,7 +3423,8 @@ class Orcatrata_model extends CI_Model {
 			. 'OT.QuitadoOrca, '
 			. 'OT.FinalizadoOrca, '
 			. 'OT.CanceladoOrca, '
-            . 'OT.ObsOrca '
+            . 'OT.ObsOrca, '
+			. 'OT.Consideracoes '
             . 'FROM '
             . 'App_OrcaTrata AS OT '
             . 'WHERE '
@@ -3484,7 +3490,8 @@ class Orcatrata_model extends CI_Model {
 			. 'OT.QuitadoOrca, '
 			. 'OT.FinalizadoOrca, '
 			. 'OT.CanceladoOrca, '
-            . 'OT.ObsOrca '
+            . 'OT.ObsOrca, '
+			. 'OT.Consideracoes '
             . 'FROM '
             . 'App_OrcaTrata AS OT '
             . 'WHERE '
@@ -3548,7 +3555,8 @@ class Orcatrata_model extends CI_Model {
 			. 'OT.QuitadoOrca, '
 			. 'OT.FinalizadoOrca, '
 			. 'OT.CanceladoOrca, '
-            . 'OT.ObsOrca '
+            . 'OT.ObsOrca, '
+			. 'OT.Consideracoes '
             . 'FROM '
             . 'App_OrcaTrata AS OT '
             . 'WHERE '

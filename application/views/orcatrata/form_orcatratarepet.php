@@ -2291,7 +2291,7 @@
 																	<div class="panel-heading">
 																		<div class="row">
 																			<div class="col-md-12 text-left">
-																				<label for="CombinadoFrete">Comb.Entrega?</label><br>
+																				<label for="CombinadoFrete">Aprovado Entrega?</label><br>
 																				<div class="btn-larg-right btn-group" data-toggle="buttons">
 																					<?php
 																					foreach ($select['CombinadoFrete'] as $key => $row) {
@@ -2319,7 +2319,7 @@
 																		</div>
 																		<div class="row">
 																			<div class="col-md-12 text-left">
-																				<label for="AprovadoOrca">Comb.Pagam?</label><br>
+																				<label for="AprovadoOrca">Aprovado Pagam?</label><br>
 																				<div class="btn-larg-right btn-group" data-toggle="buttons">
 																					<?php
 																					foreach ($select['AprovadoOrca'] as $key => $row) {
@@ -2700,6 +2700,19 @@
 												<input type="hidden" name="Hidden_idApp_Cliente" id="Hidden_idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>" />
 												<h4 class="mb-3"><b>Pedido</b></h4>
 												<div class="row">
+													<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left">
+														<div class="panel panel-default">
+															<div class="panel-heading">
+																<div class="row">	
+																	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																		<label for="Consideracoes">Informações Gerais</label>
+																		<textarea class="form-control" id="Consideracoes" <?php echo $readonly; ?> 
+																		placeholder="Descrição:" name="Consideracoes" value="<?php echo $orcatrata['Consideracoes']; ?>" rows="4"><?php echo $orcatrata['Consideracoes']; ?></textarea>
+																	</div>
+																</div>	
+															</div>
+														</div>
+													</div>
 													<?php if($this->Basico_model->get_dt_validade()) { ?>
 														<?php if ($metodo > 1) { ?>
 														<!--<input type="hidden" name="idApp_Procedimento" value="<?php echo $procedimento['idApp_Procedimento']; ?>">
@@ -2752,8 +2765,8 @@
 																</div>
 															</div>
 														<?php } else { ?>
-															<div class="col-sm-8 col-md-8 "></div>	
-															<div class="col-sm-4 col-md-4 text-left">
+															<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left"></div>	
+															<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left">
 																<!--
 																<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
 																	<span class="glyphicon glyphicon-save"></span> Salvar

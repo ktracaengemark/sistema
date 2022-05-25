@@ -2382,7 +2382,7 @@
 																	<div class="panel-heading">
 																		<div class="row">
 																			<div class="col-md-12 text-left">
-																				<label for="CombinadoFrete">Comb.Entrega?</label><br>
+																				<label for="CombinadoFrete">Aprovado Entrega?</label><br>
 																				<div class="btn-larg-right btn-group" data-toggle="buttons">
 																					<?php
 																					foreach ($select['CombinadoFrete'] as $key => $row) {
@@ -2410,7 +2410,7 @@
 																		</div>
 																		<div class="row">
 																			<div class="col-md-12 text-left">
-																				<label for="AprovadoOrca">Comb.Pagam?</label><br>
+																				<label for="AprovadoOrca">Aprovado Pagam?</label><br>
 																				<div class="btn-larg-right btn-group" data-toggle="buttons">
 																					<?php
 																					foreach ($select['AprovadoOrca'] as $key => $row) {
@@ -2791,7 +2791,20 @@
 											<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>">
 											<h4 class="mb-3"><b>Pedido</b></h4>
 											<div class="row">
-												<div class="col-sm-6 col-md-4">
+												<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<div class="row">	
+																<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																	<label for="Consideracoes">Informações Gerais</label>
+																	<textarea class="form-control" id="Consideracoes" <?php echo $readonly; ?> 
+																	placeholder="Descrição:" name="Consideracoes" value="<?php echo $orcatrata['Consideracoes']; ?>" rows="4"><?php echo $orcatrata['Consideracoes']; ?></textarea>
+																</div>
+															</div>	
+														</div>
+													</div>
+												</div>
+												<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left">
 													<div class="panel panel-default">
 														<div class="panel-heading">
 															<div class="row">
@@ -2840,7 +2853,6 @@
 													<input type="hidden" name="idApp_ParcelasRec" value="<?php echo $parcelasrec['idApp_ParcelasRec']; ?>">-->
 													<?php } ?>
 													<?php if ($metodo == 2) { ?>
-														<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left"></div>
 														<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left">
 															<?php if($_SESSION['log']['idSis_Empresa'] != 5){?>
 																<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">
@@ -2972,7 +2984,6 @@
 															</div>
 														</div>
 													<?php } else { ?>
-														<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left"></div>
 														<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left">
 															<div class="row">
 																<?php if($_SESSION['log']['idSis_Empresa'] != 5){?>

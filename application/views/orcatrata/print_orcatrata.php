@@ -236,7 +236,7 @@
 							<div class="row">	
 								<div class="panel panel-info">
 									<div class="panel-heading">
-										<table class="table table-bordered table-condensed table-striped">
+										<table class="table table-condensed table-striped">
 											<tbody>
 												<tr>
 													<td class="col-md-4 text-center" scope="col"><img alt="User Pic" src="<?php echo base_url() . '../'.$orcatrata['Site'].'/' . $orcatrata['idSis_Empresa'] . '/documentos/miniatura/' . $orcatrata['Arquivo'] . ''; ?>" class="img-responsive" width='200'></td>
@@ -423,8 +423,9 @@
 											<?php if ($_SESSION['log']['NivelEmpresa'] >= 4 ) { ?>						
 											<h3 class="text-left"><b>Entrega</b>: <?php echo '<strong>' . $query['idApp_OrcaTrata'] . '</strong>' ?>
 											<?php if($orcatrata['idApp_Cliente'] != 0) { ?>
-												- <b> Cliente:</b> <?php echo '' . $cliente['NomeCliente'] . '' ?> </h3><h4>Tel: <?php echo '' . $cliente['CelularCliente'] . '' ?> - id: <?php echo '' . $cliente['idApp_Cliente'] . '' ?></h4>
+												- <b> Cliente:</b> <?php echo '' . $cliente['NomeCliente'] . '' ?> <h4>Tel: <?php echo '' . $cliente['CelularCliente'] . '' ?> - id: <?php echo '' . $cliente['idApp_Cliente'] . '' ?></h4>
 											<?php } ?>
+											</h3>
 											<table class="table table-bordered table-condensed table-striped">
 												<thead>
 													<tr>
@@ -672,23 +673,23 @@
 												</tbody>
 											</table>
 											
-											
+											-->
 											<table class="table table-bordered table-condensed table-striped">
 												<thead>
 													<tr>
-														<th class="col-md-8" scope="col">Observações</th>
-														<th class="col-md-4" scope="col">Data do Retorno</th>
+														<th class="col-md-12" scope="col">Informações Gerais</th>
+														<!--<th class="col-md-4" scope="col">Data do Retorno</th>-->
 													</tr>
 												</thead>
 												<tbody>
 													<tr>
 
-														<td><?php echo $orcatrata['ObsOrca'] ?></td>
-														<td><?php echo $orcatrata['DataRetorno'] ?></td>
+														<td><?php echo $orcatrata['Consideracoes'] ?></td>
+														<!--<td><?php #echo $orcatrata['DataRetorno'] ?></td>-->
 													</tr>
 												</tbody>
 											</table>
-											-->
+											
 										</div>
 									</div>
 								</div>

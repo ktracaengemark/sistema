@@ -208,7 +208,7 @@
 					<div class="panel-heading text-left">
 						<div class="row">	
 							<div class="col-md-3">
-								<label for="CombinadoFrete">Comb.Entrega</label>
+								<label for="CombinadoFrete">Aprovado Entrega</label>
 								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 										id="CombinadoFrete" name="CombinadoFrete">
 									<?php
@@ -223,7 +223,7 @@
 								</select>
 							</div>
 							<div class="col-md-3">
-								<label for="AprovadoOrca">Comb.Pagam</label>
+								<label for="AprovadoOrca">Aprovado Pagam</label>
 								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 										id="AprovadoOrca" name="AprovadoOrca">
 									<?php

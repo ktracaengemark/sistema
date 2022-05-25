@@ -47,7 +47,7 @@
 							<div class="panel panel-danger">
 								<div class="panel-heading">
 									<a class="text-center" style="color: #DC143C" href="<?php echo base_url() ?><?php echo $pedidos; ?>/pedidos_combinar" role="button">
-										<h5 class="text-left">Combinar <b>Entrega</b>  - <?php echo $report_combinar; ?> resultado(s)</h5>
+										<h5 class="text-left">Aprovar <b>Entrega</b>  - <?php echo $report_combinar; ?> resultado(s)</h5>
 									</a>
 								</div>	
 							</div>
@@ -58,7 +58,7 @@
 							<div class="panel panel-warning">
 								<div class="panel-heading">
 									<a class="text-center" style="color: #DAA520"  href="<?php echo base_url() ?><?php echo $pedidos; ?>/pedidos_aprovar" role="button">
-										<h5 class="text-left">Combinar <b>Pagamento</b> - <?php echo $report_aprovar; ?> resultado(s)</h5>
+										<h5 class="text-left">Aprovar <b>Pagamento</b> - <?php echo $report_aprovar; ?> resultado(s)</h5>
 									</a>
 								</div>	
 							</div>
@@ -174,7 +174,7 @@
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 							<div class="row">	
 								<div class="col-md-3">
-									<label for="CombinadoFrete">Combinado</label>
+									<label for="CombinadoFrete">Aprovado Entrega</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="CombinadoFrete" name="CombinadoFrete">
 										<?php
@@ -189,7 +189,7 @@
 									</select>
 								</div>
 								<div class="col-md-3">
-									<label for="AprovadoOrca">Aprovado</label>
+									<label for="AprovadoOrca">Aprovado Pagamento</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="AprovadoOrca" name="AprovadoOrca">
 										<?php

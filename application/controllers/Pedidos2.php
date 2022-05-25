@@ -145,8 +145,8 @@ class Pedidos2 extends CI_Controller {
 
 		$data['select']['CombinadoFrete'] = array(
 			'0' => '::TODOS::',            
-			'S' => 'Combinado',
-            'N' => 'Não Combinado',
+			'S' => 'Aprovado',
+            'N' => 'Não Aprovado',
         );
 
 		$data['select']['Quitado'] = array(

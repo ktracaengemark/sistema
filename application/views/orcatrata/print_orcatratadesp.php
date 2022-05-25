@@ -1,6 +1,6 @@
 <?php if (isset($msg)) echo $msg; ?>
 
-<div class="col-sm-offset-3 col-md-6 ">		
+<div class="col-sm-offset-1 col-md-10 ">		
 	<?php if ( !isset($evento) && isset($query)) { ?>
 		<?php if ($query['idApp_OrcaTrata'] != 1 ) { ?>
 			<nav class="navbar navbar-inverse navbar-fixed" role="banner">
@@ -439,24 +439,24 @@
 								</tr>
 							</tbody>
 						</table>
-						
+						-->
 						
 						<table class="table table-bordered table-condensed table-striped">
 							<thead>
 								<tr>
-									<th class="col-md-8" scope="col">Observações</th>
-									<th class="col-md-4" scope="col">Data do Retorno</th>
+									<th class="col-md-12" scope="col">Informações Gerais</th>
+									<!--<th class="col-md-4" scope="col">Data do Retorno</th>-->
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
 
-									<td><?php echo $orcatrata['ObsOrca'] ?></td>
-									<td><?php echo $orcatrata['DataRetorno'] ?></td>
+									<td><?php echo $orcatrata['Consideracoes'] ?></td>
+									<!--<td><?php #echo $orcatrata['DataRetorno'] ?></td>-->
 								</tr>
 							</tbody>
 						</table>
-						-->
+						
 					</div>
 				</div>
 			</div>
