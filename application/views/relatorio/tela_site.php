@@ -28,6 +28,11 @@
 		<hr class="botm-line">
 		<div class="col-md-12">
 			<h2 class="ser-title">Slides! (1902 x 448)px</h2>
+			<div class="col-md-12">
+				<a class="btn btn-info btn-block" href="<?php echo base_url() ?>relatorio/slides" role="button">
+					<span class="glyphicon glyphicon-edit"></span> Slides
+				</a>
+			</div>	
 			<?php if (isset($list2)) echo $list2; ?>
 		</div>
 		<div class="col-md-12">
@@ -79,17 +84,32 @@
 		<hr class="botm-line">
 		<div class="col-md-12">
 			<h2 class="ser-title">Atuacao! (300 x 300)px</h2>
-		<?php if (isset($list7)) echo $list7; ?>
+			<div class="col-md-12">
+				<a class="btn btn-info btn-block" href="<?php echo base_url() ?>relatorio/atuacao" role="button">
+					<span class="glyphicon glyphicon-edit"></span>Editar
+				</a>
+			</div>
+			<?php if (isset($list7)) echo $list7; ?>
 		</div>	
 		<hr class="botm-line">
 		<div class="col-md-12">
 			<h2 class="ser-title">Equipe! (300 x 300)px</h2>
-		<?php if (isset($list5)) echo $list5; ?>
+			<div class="col-md-12">
+				<a class="btn btn-info btn-block" href="<?php echo base_url() ?>relatorio/colaborador" role="button">
+					<span class="glyphicon glyphicon-edit"></span>Editar
+				</a>
+			</div>
+			<?php if (isset($list5)) echo $list5; ?>
 		</div>	
 		<hr class="botm-line">
 		<div class="col-md-12">
 			<h2 class="ser-title">Depoimentos! (300 x 300)px</h2>
-		<?php if (isset($list6)) echo $list6; ?>
+			<div class="col-md-12">
+				<a class="btn btn-info btn-block" href="<?php echo base_url() ?>relatorio/depoimento" role="button">
+					<span class="glyphicon glyphicon-edit"></span>Editar
+				</a>
+			</div>
+			<?php if (isset($list6)) echo $list6; ?>
 		</div>	
 	</div>
 </div>
