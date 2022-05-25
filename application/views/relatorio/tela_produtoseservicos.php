@@ -468,6 +468,21 @@
 											name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
 								</div>
 							</div>
+							<div class="col-md-3">
+								<label for="Parcelas">Parcelas:</label>
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+										id="Parcelas" name="Parcelas">
+									<?php
+									foreach ($select['Parcelas'] as $key => $row) {
+										if ($query['Parcelas'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>
+								</select>
+							</div>
 						</div>
 						<div class="row">	
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
@@ -489,6 +504,26 @@
 									</span>
 									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											name="DataFim8" value="<?php echo set_value('DataFim8', $query['DataFim8']); ?>">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<label for="HoraInicio8">Hora Inc.</label>
+								<div class="input-group TimePicker">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-time"></span>
+									</span>
+									<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM"
+											name="HoraInicio8" value="<?php echo set_value('HoraInicio8', $query['HoraInicio8']); ?>">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<label for="HoraFim8">Hora Fim</label>
+								<div class="input-group TimePicker">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-time"></span>
+									</span>
+									<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM"
+											name="HoraFim8" value="<?php echo set_value('HoraFim8', $query['HoraFim8']); ?>">
 								</div>
 							</div>
 								<input type="hidden" name="DataInicio3" id="DataInicio3" value=""/>
@@ -520,21 +555,6 @@
 									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											name="DataFim4" value="<?php echo set_value('DataFim4', $query['DataFim4']); ?>">
 								</div>
-							</div>
-							<div class="col-md-3">
-								<label for="Parcelas">Parcelas:</label>
-								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-										id="Parcelas" name="Parcelas">
-									<?php
-									foreach ($select['Parcelas'] as $key => $row) {
-										if ($query['Parcelas'] == $key) {
-											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-										} else {
-											echo '<option value="' . $key . '">' . $row . '</option>';
-										}
-									}
-									?>
-								</select>
 							</div>
 						</div>
 					</div>

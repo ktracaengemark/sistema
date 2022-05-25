@@ -28,7 +28,10 @@
 
 		$date_inicio_prd_entr = ($_SESSION['Filtro_Vendidos']['DataInicio8']) ? 'PRDS.DataConcluidoProduto >= "' . $_SESSION['Filtro_Vendidos']['DataInicio8'] . '" AND ' : FALSE;
 		$date_fim_prd_entr = ($_SESSION['Filtro_Vendidos']['DataFim8']) ? 'PRDS.DataConcluidoProduto <= "' . $_SESSION['Filtro_Vendidos']['DataFim8'] . '" AND ' : FALSE;
-		
+
+		$hora_inicio_entrega_prd = ($_SESSION['Filtro_Vendidos']['HoraInicio8']) ? 'PRDS.HoraConcluidoProduto >= "' . $_SESSION['Filtro_Vendidos']['HoraInicio8'] . '" AND ' : FALSE;
+		$hora_fim_entrega_prd = ($_SESSION['Filtro_Vendidos']['HoraFim8']) ? 'PRDS.HoraConcluidoProduto <= "' . $_SESSION['Filtro_Vendidos']['HoraFim8'] . '" AND ' : FALSE;
+					
 		$data['Orcamento'] = ($_SESSION['Filtro_Vendidos']['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $_SESSION['Filtro_Vendidos']['Orcamento'] : FALSE;
 		$data['Cliente'] = ($_SESSION['Filtro_Vendidos']['Cliente']) ? ' AND OT.idApp_Cliente = ' . $_SESSION['Filtro_Vendidos']['Cliente'] : FALSE;
 		$data['idApp_Cliente'] = ($_SESSION['Filtro_Vendidos']['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $_SESSION['Filtro_Vendidos']['idApp_Cliente'] : FALSE;
@@ -143,6 +146,8 @@
 									' . $date_fim_entrega . '
 									' . $date_inicio_prd_entr . '
 									' . $date_fim_prd_entr . '
+									' . $hora_inicio_entrega_prd . '
+									' . $hora_fim_entrega_prd . '
 									' . $date_inicio_vnc . '
 									' . $date_fim_vnc . '
 									' . $date_inicio_vnc_par . '

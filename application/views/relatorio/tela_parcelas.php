@@ -379,29 +379,6 @@
 											name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
-							<div class="col-md-3">
-								<label for="DataInicio2">EntregaPRD Inc.</label>
-								<div class="input-group DatePicker">
-									<span class="input-group-addon" disabled>
-										<span class="glyphicon glyphicon-calendar"></span>
-									</span>
-									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											name="DataInicio2" value="<?php echo set_value('DataInicio2', $query['DataInicio2']); ?>">
-								</div>
-							</div>
-							<div class="col-md-3">
-								<label for="DataFim2">EntregaPRD Fim</label>
-								<div class="input-group DatePicker">
-									<span class="input-group-addon" disabled>
-										<span class="glyphicon glyphicon-calendar"></span>
-									</span>
-									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-											name="DataFim2" value="<?php echo set_value('DataFim2', $query['DataFim2']); ?>">
-								</div>
-							</div>
 							<div class="col-md-3">
 								<label for="Produtos">Produtos & Serviços:</label>
 								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
@@ -416,6 +393,49 @@
 									}
 									?>
 								</select>
+							</div>
+						</div>
+						<div class="row">
+							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
+							<div class="col-md-3">
+								<label for="DataInicio2">Entrega Inc.</label>
+								<div class="input-group DatePicker">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											name="DataInicio2" value="<?php echo set_value('DataInicio2', $query['DataInicio2']); ?>">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<label for="DataFim2">Entrega Fim</label>
+								<div class="input-group DatePicker">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+											name="DataFim2" value="<?php echo set_value('DataFim2', $query['DataFim2']); ?>">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<label for="HoraInicio5">Hora Inc.</label>
+								<div class="input-group TimePicker">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-time"></span>
+									</span>
+									<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM"
+											name="HoraInicio5" value="<?php echo set_value('HoraInicio5', $query['HoraInicio5']); ?>">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<label for="HoraFim5">Hora Fim</label>
+								<div class="input-group TimePicker">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-time"></span>
+									</span>
+									<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM"
+											name="HoraFim5" value="<?php echo set_value('HoraFim5', $query['HoraFim5']); ?>">
+								</div>
 							</div>
 							<?php }else{ ?>
 							<input type="hidden" name="DataInicio2" id="DataInicio2" value=""/>

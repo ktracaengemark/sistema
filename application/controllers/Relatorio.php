@@ -1740,6 +1740,8 @@ class Relatorio extends CI_Controller {
             'DataFim4',
 			'DataInicio5',
             'DataFim5',
+			'HoraInicio5',
+            'HoraFim5',
 			'DataInicio6',
             'DataFim6',
 			'DataInicio7',
@@ -2026,6 +2028,8 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
         $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+        $_SESSION['FiltroAlteraParcela']['HoraInicio5'] = $data['query']['HoraInicio5'];
+		$_SESSION['FiltroAlteraParcela']['HoraFim5'] = $data['query']['HoraFim5'];
 		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
 		$_SESSION['FiltroAlteraParcela']['Parcelas'] = $data['query']['Parcelas'];
 		$_SESSION['FiltroAlteraParcela']['Orcarec'] = $data['query']['Orcarec'];
@@ -2103,6 +2107,8 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataFim6', 'Data Fim do Cadastro', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio7', 'Data Pago Com. Início', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim7', 'Data Pago Com.Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('HoraInicio5', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim5', 'Hora Final', 'trim|valid_hour');
 				
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -2162,6 +2168,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
 			$data['bd']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
             $data['bd']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['NomeEmpresa'] = $data['query']['NomeEmpresa'];
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
 			$data['bd']['Ultimo'] = $data['query']['Ultimo'];
@@ -2266,6 +2274,8 @@ class Relatorio extends CI_Controller {
             'DataFim4',
 			'DataInicio5',
             'DataFim5',
+			'HoraInicio5',
+            'HoraFim5',
 			'DataInicio6',
             'DataFim6',
 			'DataInicio7',
@@ -2539,6 +2549,8 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
         $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+        $_SESSION['FiltroAlteraParcela']['HoraInicio5'] = $data['query']['HoraInicio5'];
+		$_SESSION['FiltroAlteraParcela']['HoraFim5'] = $data['query']['HoraFim5'];
 		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
 		$_SESSION['FiltroAlteraParcela']['Parcelas'] = $data['query']['Parcelas'];
 		$_SESSION['FiltroAlteraParcela']['Orcarec'] = $data['query']['Orcarec'];
@@ -2614,7 +2626,9 @@ class Relatorio extends CI_Controller {
 		$this->form_validation->set_rules('DataInicio6', 'Data Início do Cadastro', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim6', 'Data Fim do Cadastro', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio7', 'Data Pago Com. Início', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim7', 'Data Pago Com.Fim', 'trim|valid_date');		
+        $this->form_validation->set_rules('DataFim7', 'Data Pago Com.Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('HoraInicio5', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim5', 'Hora Final', 'trim|valid_hour');		
 		
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -2674,6 +2688,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
 			$data['bd']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
             $data['bd']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
 			$data['bd']['Ultimo'] = $data['query']['Ultimo'];
 			$data['bd']['nome'] = $data['query']['nome'];
@@ -2791,6 +2807,8 @@ class Relatorio extends CI_Controller {
             'DataFim4',
 			'DataInicio5',
             'DataFim5',
+			'HoraInicio5',
+            'HoraFim5',
 			'DataInicio6',
             'DataFim6',
 			'DataInicio7',
@@ -3065,6 +3083,8 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
         $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+        $_SESSION['FiltroAlteraParcela']['HoraInicio5'] = $data['query']['HoraInicio5'];
+		$_SESSION['FiltroAlteraParcela']['HoraFim5'] = $data['query']['HoraFim5'];
 		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
 		$_SESSION['FiltroAlteraParcela']['Parcelas'] = $data['query']['Parcelas'];
 		$_SESSION['FiltroAlteraParcela']['Orcarec'] = $data['query']['Orcarec'];
@@ -3141,6 +3161,8 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataFim6', 'Data Fim do Cadastro', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio7', 'Data Pago Com. Início', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim7', 'Data Pago Com.Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('HoraInicio5', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim5', 'Hora Final', 'trim|valid_hour');
 		
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -3200,6 +3222,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
 			$data['bd']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
             $data['bd']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
 			$data['bd']['Ultimo'] = $data['query']['Ultimo'];
 			$data['bd']['nome'] = $data['query']['nome'];
@@ -3317,6 +3341,8 @@ class Relatorio extends CI_Controller {
             'DataFim4',
 			'DataInicio5',
             'DataFim5',
+			'HoraInicio5',
+            'HoraFim5',
 			'DataInicio6',
             'DataFim6',
 			'DataInicio7',
@@ -3590,6 +3616,8 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
         $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+        $_SESSION['FiltroAlteraParcela']['HoraInicio5'] = $data['query']['HoraInicio5'];
+		$_SESSION['FiltroAlteraParcela']['HoraFim5'] = $data['query']['HoraFim5'];
 		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
 		$_SESSION['FiltroAlteraParcela']['Parcelas'] = $data['query']['Parcelas'];
 		$_SESSION['FiltroAlteraParcela']['Orcarec'] = $data['query']['Orcarec'];
@@ -3666,6 +3694,8 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataFim6', 'Data Fim do Cadastro', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio7', 'Data Pago Com. Início', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim7', 'Data Pago Com.Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('HoraInicio5', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim5', 'Hora Final', 'trim|valid_hour');
 		
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -3725,6 +3755,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
 			$data['bd']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
             $data['bd']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
 			$data['bd']['Ultimo'] = $data['query']['Ultimo'];
 			$data['bd']['nome'] = $data['query']['nome'];
@@ -3835,6 +3867,8 @@ class Relatorio extends CI_Controller {
             'DataFim4',
 			'DataInicio5',
             'DataFim5',
+			'HoraInicio5',
+            'HoraFim5',
 			'DataInicio6',
             'DataFim6',
 			'DataInicio7',
@@ -4081,6 +4115,8 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
         $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+        $_SESSION['FiltroAlteraParcela']['HoraInicio5'] = $data['query']['HoraInicio5'];
+		$_SESSION['FiltroAlteraParcela']['HoraFim5'] = $data['query']['HoraFim5'];
 		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
 		$_SESSION['FiltroAlteraParcela']['Parcelas'] = $data['query']['Parcelas'];
 		$_SESSION['FiltroAlteraParcela']['Orcarec'] = $data['query']['Orcarec'];
@@ -4150,6 +4186,8 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataFim6', 'Data Fim do Cadastro', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio7', 'Data Pago Com. Início', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim7', 'Data Pago Com.Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('HoraInicio5', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim5', 'Hora Final', 'trim|valid_hour');
 
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -4210,6 +4248,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
 			$data['bd']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
             $data['bd']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
 			$data['bd']['Ultimo'] = $data['query']['Ultimo'];
 			$data['bd']['nome'] = $data['query']['nome'];
@@ -4318,6 +4358,8 @@ class Relatorio extends CI_Controller {
             'DataFim4',
 			'DataInicio5',
             'DataFim5',
+			'HoraInicio5',
+            'HoraFim5',
 			'DataInicio6',
             'DataFim6',
 			'DataInicio7',
@@ -4558,6 +4600,8 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroAlteraParcela']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
         $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+        $_SESSION['FiltroAlteraParcela']['HoraInicio5'] = $data['query']['HoraInicio5'];
+		$_SESSION['FiltroAlteraParcela']['HoraFim5'] = $data['query']['HoraFim5'];
 		$_SESSION['FiltroAlteraParcela']['Produtos'] = $data['query']['Produtos'];
 		$_SESSION['FiltroAlteraParcela']['Parcelas'] = $data['query']['Parcelas'];
 		$_SESSION['FiltroAlteraParcela']['Orcarec'] = $data['query']['Orcarec'];
@@ -4626,6 +4670,8 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataFim6', 'Data Fim do Cadastro', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio7', 'Data Pago Com. Início', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim7', 'Data Pago Com.Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('HoraInicio5', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim5', 'Hora Final', 'trim|valid_hour');
 		
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -4686,6 +4732,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
 			$data['bd']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
             $data['bd']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
 			$data['bd']['Ultimo'] = $data['query']['Ultimo'];
 			$data['bd']['nome'] = $data['query']['nome'];
@@ -4787,6 +4835,8 @@ class Relatorio extends CI_Controller {
             'DataFim4',
 			'DataInicio5',
             'DataFim5',
+			'HoraInicio5',
+            'HoraFim5',
 			'DataInicio6',
             'DataFim6',
 			'DataInicio7',
@@ -5035,7 +5085,9 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
         $_SESSION['FiltroAlteraParcela']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');		
+		$_SESSION['FiltroAlteraParcela']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');
+        $_SESSION['FiltroAlteraParcela']['HoraInicio5'] = $data['query']['HoraInicio5'];
+		$_SESSION['FiltroAlteraParcela']['HoraFim5'] = $data['query']['HoraFim5'];		
 		$_SESSION['FiltroAlteraParcela']['Dia'] = $data['query']['Dia'];
         $_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
         $_SESSION['FiltroAlteraParcela']['Ano'] = $data['query']['Ano'];
@@ -5096,6 +5148,8 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataFim7', 'Data Pago Com.Fim', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio8', 'Data Lanc Com. Início', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim8', 'Data Lanc Com.Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('HoraInicio5', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim5', 'Hora Final', 'trim|valid_hour');
 		
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -5130,6 +5184,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
 			$data['bd']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
             $data['bd']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
 			$data['bd']['Ultimo'] = $data['query']['Ultimo'];
@@ -5247,6 +5303,8 @@ class Relatorio extends CI_Controller {
             'DataFim4',
 			'DataInicio5',
             'DataFim5',
+			'HoraInicio5',
+            'HoraFim5',
 			'DataInicio6',
             'DataFim6',
 			'DataInicio7',
@@ -5489,7 +5547,9 @@ class Relatorio extends CI_Controller {
         $_SESSION['FiltroAlteraParcela']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
 		$_SESSION['FiltroAlteraParcela']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
         $_SESSION['FiltroAlteraParcela']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');		
+		$_SESSION['FiltroAlteraParcela']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');
+        $_SESSION['FiltroAlteraParcela']['HoraInicio5'] = $data['query']['HoraInicio5'];
+		$_SESSION['FiltroAlteraParcela']['HoraFim5'] = $data['query']['HoraFim5'];		
 		$_SESSION['FiltroAlteraParcela']['Dia'] = $data['query']['Dia'];
         $_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
         $_SESSION['FiltroAlteraParcela']['Ano'] = $data['query']['Ano'];
@@ -5550,6 +5610,8 @@ class Relatorio extends CI_Controller {
         $this->form_validation->set_rules('DataFim7', 'Data Pago Com.Fim', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio8', 'Data Lanc Com. Início', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim8', 'Data Lanc Com.Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('HoraInicio5', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim5', 'Hora Final', 'trim|valid_hour');
 		
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -5584,6 +5646,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
 			$data['bd']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
             $data['bd']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
 			$data['bd']['Produtos'] = $data['query']['Produtos'];
 			$data['bd']['Ultimo'] = $data['query']['Ultimo'];
@@ -5726,6 +5790,8 @@ class Relatorio extends CI_Controller {
             'DataFim7',
 			'DataInicio8',
             'DataFim8',
+			'HoraInicio8',
+            'HoraFim8',
 			'Ordenamento',
             'Campo',
 			'ObsOrca',
@@ -5957,6 +6023,8 @@ class Relatorio extends CI_Controller {
 		$_SESSION['Filtro_Vendidos']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
         $_SESSION['Filtro_Vendidos']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
 		$_SESSION['Filtro_Vendidos']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');
+        $_SESSION['Filtro_Vendidos']['HoraInicio8'] = $data['query']['HoraInicio8'];
+		$_SESSION['Filtro_Vendidos']['HoraFim8'] 	= $data['query']['HoraFim8'];
 		$_SESSION['Filtro_Vendidos']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
 		$_SESSION['Filtro_Vendidos']['Quitado'] = $data['query']['Quitado'];
 		$_SESSION['Filtro_Vendidos']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
@@ -6007,7 +6075,9 @@ class Relatorio extends CI_Controller {
 		$this->form_validation->set_rules('DataInicio7', 'Data Pago Com. Início', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim7', 'Data Pago Com.Fim', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio8', 'Data Início Entregue Prod', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim8', 'Data Fim Entregue Prod', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim8', 'Data Fim Entregue Prod', 'trim|valid_date');		
+		$this->form_validation->set_rules('HoraInicio8', 'Hora Inicial', 'trim|valid_hour');		
+		$this->form_validation->set_rules('HoraFim8', 'Hora Fim', 'trim|valid_hour');
 		
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
@@ -6045,6 +6115,8 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
 			$data['bd']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
             $data['bd']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');
+			$data['bd']['HoraInicio8'] = $this->basico->mascara_data($data['query']['HoraInicio8'], 'mysql');
+            $data['bd']['HoraFim8'] = $this->basico->mascara_data($data['query']['HoraFim8'], 'mysql');
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
 			$data['bd']['Ultimo'] = $data['query']['Ultimo'];
 			$data['bd']['nome'] = $data['query']['nome'];

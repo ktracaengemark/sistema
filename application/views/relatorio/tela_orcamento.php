@@ -513,6 +513,36 @@
 											name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
 								</div>
 							</div>
+							<div class="col-md-3">
+								<label for="Produtos">Produtos & Serviços:</label>
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+										id="Produtos" name="Produtos">
+									<?php
+									foreach ($select['Produtos'] as $key => $row) {
+										if ($query['Produtos'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>
+								</select>
+							</div>
+							<div class="col-md-3">
+								<label for="Parcelas">Parcelas:</label>
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+										id="Parcelas" name="Parcelas">
+									<?php
+									foreach ($select['Parcelas'] as $key => $row) {
+										if ($query['Parcelas'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>
+								</select>
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-3">
@@ -536,19 +566,24 @@
 								</div>
 							</div>
 							<div class="col-md-3">
-								<label for="Produtos">Produtos & Serviços:</label>
-								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-										id="Produtos" name="Produtos">
-									<?php
-									foreach ($select['Produtos'] as $key => $row) {
-										if ($query['Produtos'] == $key) {
-											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-										} else {
-											echo '<option value="' . $key . '">' . $row . '</option>';
-										}
-									}
-									?>
-								</select>
+								<label for="HoraInicio5">Hora Inc.</label>
+								<div class="input-group TimePicker">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-time"></span>
+									</span>
+									<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM"
+											name="HoraInicio5" value="<?php echo set_value('HoraInicio5', $query['HoraInicio5']); ?>">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<label for="HoraFim5">Hora Fim</label>
+								<div class="input-group TimePicker">
+									<span class="input-group-addon" disabled>
+										<span class="glyphicon glyphicon-time"></span>
+									</span>
+									<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM"
+											name="HoraFim5" value="<?php echo set_value('HoraFim5', $query['HoraFim5']); ?>">
+								</div>
 							</div>
 						</div>
 						<div class="row">
@@ -571,21 +606,6 @@
 									<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
 											name="DataFim4" value="<?php echo set_value('DataFim4', $query['DataFim4']); ?>">
 								</div>
-							</div>
-							<div class="col-md-3">
-								<label for="Parcelas">Parcelas:</label>
-								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-										id="Parcelas" name="Parcelas">
-									<?php
-									foreach ($select['Parcelas'] as $key => $row) {
-										if ($query['Parcelas'] == $key) {
-											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-										} else {
-											echo '<option value="' . $key . '">' . $row . '</option>';
-										}
-									}
-									?>
-								</select>
 							</div>
 						</div>
 						<input type="hidden" name="DataInicio2" id="DataInicio2" value=""/>
