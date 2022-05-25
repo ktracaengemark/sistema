@@ -112,6 +112,8 @@ class Despesas_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
+                ' . $hora_inicio_entrega_prd . '
+                ' . $hora_fim_entrega_prd . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '
@@ -241,7 +243,10 @@ class Despesas_model extends CI_Model {
 			
 			$date_inicio_entrega = ($data['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($data['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $data['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$hora_inicio_entrega_prd = ($data['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $data['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($data['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $data['HoraFim5'] . '" AND ' : FALSE;
+				
 			$date_inicio_vnc = ($data['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($data['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $data['DataFim3'] . '" AND ' : FALSE;
 			
@@ -282,7 +287,13 @@ class Despesas_model extends CI_Model {
 			
 			$date_inicio_entrega = ($_SESSION['FiltroDespesas']['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $_SESSION['FiltroDespesas']['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($_SESSION['FiltroDespesas']['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $_SESSION['FiltroDespesas']['DataFim2'] . '" AND ' : FALSE;
+
+			$hora_inicio_entrega_prd = ($_SESSION['FiltroDespesas']['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $_SESSION['FiltroDespesas']['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($_SESSION['FiltroDespesas']['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $_SESSION['FiltroDespesas']['HoraFim5'] . '" AND ' : FALSE;
 			
+			$hora_inicio_entrega_prd = ($_SESSION['FiltroDespesas']['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $_SESSION['FiltroDespesas']['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($_SESSION['FiltroDespesas']['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $_SESSION['FiltroDespesas']['HoraFim5'] . '" AND ' : FALSE;
+				
 			$date_inicio_vnc = ($_SESSION['FiltroDespesas']['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $_SESSION['FiltroDespesas']['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($_SESSION['FiltroDespesas']['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $_SESSION['FiltroDespesas']['DataFim3'] . '" AND ' : FALSE;
 			
@@ -400,6 +411,8 @@ class Despesas_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
+                ' . $hora_inicio_entrega_prd . '
+                ' . $hora_fim_entrega_prd . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '
@@ -482,7 +495,10 @@ class Despesas_model extends CI_Model {
 			
 			$date_inicio_entrega = ($data['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($data['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $data['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$hora_inicio_entrega_prd = ($data['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $data['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($data['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $data['HoraFim5'] . '" AND ' : FALSE;
+				
 			$date_inicio_vnc = ($data['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($data['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $data['DataFim3'] . '" AND ' : FALSE;
 			
@@ -523,6 +539,9 @@ class Despesas_model extends CI_Model {
 			
 			$date_inicio_entrega = ($_SESSION['FiltroDespesas']['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $_SESSION['FiltroDespesas']['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($_SESSION['FiltroDespesas']['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $_SESSION['FiltroDespesas']['DataFim2'] . '" AND ' : FALSE;
+
+			$hora_inicio_entrega_prd = ($_SESSION['FiltroDespesas']['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $_SESSION['FiltroDespesas']['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($_SESSION['FiltroDespesas']['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $_SESSION['FiltroDespesas']['HoraFim5'] . '" AND ' : FALSE;
 			
 			$date_inicio_vnc = ($_SESSION['FiltroDespesas']['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $_SESSION['FiltroDespesas']['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($_SESSION['FiltroDespesas']['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $_SESSION['FiltroDespesas']['DataFim3'] . '" AND ' : FALSE;
@@ -641,6 +660,8 @@ class Despesas_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
+                ' . $hora_inicio_entrega_prd . '
+                ' . $hora_fim_entrega_prd . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '
@@ -724,7 +745,10 @@ class Despesas_model extends CI_Model {
 			
 			$date_inicio_entrega = ($data['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($data['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $data['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$hora_inicio_entrega_prd = ($data['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $data['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($data['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $data['HoraFim5'] . '" AND ' : FALSE;
+				
 			$date_inicio_vnc = ($data['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($data['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $data['DataFim3'] . '" AND ' : FALSE;
 			
@@ -765,6 +789,9 @@ class Despesas_model extends CI_Model {
 			
 			$date_inicio_entrega = ($_SESSION['FiltroDespesas']['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $_SESSION['FiltroDespesas']['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($_SESSION['FiltroDespesas']['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $_SESSION['FiltroDespesas']['DataFim2'] . '" AND ' : FALSE;
+
+			$hora_inicio_entrega_prd = ($_SESSION['FiltroDespesas']['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $_SESSION['FiltroDespesas']['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($_SESSION['FiltroDespesas']['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $_SESSION['FiltroDespesas']['HoraFim5'] . '" AND ' : FALSE;
 			
 			$date_inicio_vnc = ($_SESSION['FiltroDespesas']['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $_SESSION['FiltroDespesas']['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($_SESSION['FiltroDespesas']['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $_SESSION['FiltroDespesas']['DataFim3'] . '" AND ' : FALSE;
@@ -883,6 +910,8 @@ class Despesas_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
+                ' . $hora_inicio_entrega_prd . '
+                ' . $hora_fim_entrega_prd . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '
@@ -970,7 +999,10 @@ class Despesas_model extends CI_Model {
 			
 			$date_inicio_entrega = ($data['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($data['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $data['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$hora_inicio_entrega_prd = ($data['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $data['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($data['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $data['HoraFim5'] . '" AND ' : FALSE;
+				
 			$date_inicio_vnc = ($data['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($data['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $data['DataFim3'] . '" AND ' : FALSE;
 			
@@ -1011,6 +1043,9 @@ class Despesas_model extends CI_Model {
 			
 			$date_inicio_entrega = ($_SESSION['FiltroDespesas']['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $_SESSION['FiltroDespesas']['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($_SESSION['FiltroDespesas']['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $_SESSION['FiltroDespesas']['DataFim2'] . '" AND ' : FALSE;
+
+			$hora_inicio_entrega_prd = ($_SESSION['FiltroDespesas']['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $_SESSION['FiltroDespesas']['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($_SESSION['FiltroDespesas']['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $_SESSION['FiltroDespesas']['HoraFim5'] . '" AND ' : FALSE;
 			
 			$date_inicio_vnc = ($_SESSION['FiltroDespesas']['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $_SESSION['FiltroDespesas']['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($_SESSION['FiltroDespesas']['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $_SESSION['FiltroDespesas']['DataFim3'] . '" AND ' : FALSE;
@@ -1129,6 +1164,8 @@ class Despesas_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
+                ' . $hora_inicio_entrega_prd . '
+                ' . $hora_fim_entrega_prd . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '
@@ -1217,7 +1254,10 @@ class Despesas_model extends CI_Model {
 			
 			$date_inicio_entrega = ($data['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($data['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $data['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$hora_inicio_entrega_prd = ($data['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $data['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($data['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $data['HoraFim5'] . '" AND ' : FALSE;
+				
 			$date_inicio_vnc = ($data['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($data['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $data['DataFim3'] . '" AND ' : FALSE;
 			
@@ -1258,6 +1298,9 @@ class Despesas_model extends CI_Model {
 			
 			$date_inicio_entrega = ($_SESSION['FiltroDespesas']['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $_SESSION['FiltroDespesas']['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($_SESSION['FiltroDespesas']['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $_SESSION['FiltroDespesas']['DataFim2'] . '" AND ' : FALSE;
+
+			$hora_inicio_entrega_prd = ($_SESSION['FiltroDespesas']['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $_SESSION['FiltroDespesas']['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($_SESSION['FiltroDespesas']['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $_SESSION['FiltroDespesas']['HoraFim5'] . '" AND ' : FALSE;
 			
 			$date_inicio_vnc = ($_SESSION['FiltroDespesas']['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $_SESSION['FiltroDespesas']['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($_SESSION['FiltroDespesas']['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $_SESSION['FiltroDespesas']['DataFim3'] . '" AND ' : FALSE;
@@ -1376,6 +1419,8 @@ class Despesas_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
+                ' . $hora_inicio_entrega_prd . '
+                ' . $hora_fim_entrega_prd . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '
@@ -1461,7 +1506,10 @@ class Despesas_model extends CI_Model {
 			
 			$date_inicio_entrega = ($data['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($data['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $data['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$hora_inicio_entrega_prd = ($data['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $data['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($data['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $data['HoraFim5'] . '" AND ' : FALSE;
+				
 			$date_inicio_vnc = ($data['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($data['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $data['DataFim3'] . '" AND ' : FALSE;
 			
@@ -1502,6 +1550,9 @@ class Despesas_model extends CI_Model {
 			
 			$date_inicio_entrega = ($_SESSION['FiltroDespesas']['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $_SESSION['FiltroDespesas']['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($_SESSION['FiltroDespesas']['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $_SESSION['FiltroDespesas']['DataFim2'] . '" AND ' : FALSE;
+
+			$hora_inicio_entrega_prd = ($_SESSION['FiltroDespesas']['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $_SESSION['FiltroDespesas']['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($_SESSION['FiltroDespesas']['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $_SESSION['FiltroDespesas']['HoraFim5'] . '" AND ' : FALSE;
 			
 			$date_inicio_vnc = ($_SESSION['FiltroDespesas']['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $_SESSION['FiltroDespesas']['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($_SESSION['FiltroDespesas']['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $_SESSION['FiltroDespesas']['DataFim3'] . '" AND ' : FALSE;
@@ -1620,6 +1671,8 @@ class Despesas_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
+                ' . $hora_inicio_entrega_prd . '
+                ' . $hora_fim_entrega_prd . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '

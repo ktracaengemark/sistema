@@ -90,6 +90,8 @@ class Pedidos2 extends CI_Controller {
             'DataFim3',
 			'DataInicio4',
             'DataFim4',
+			'HoraInicio5',
+            'HoraFim5',
 			'ObsOrca',
             'AprovadoOrca',
             'QuitadoOrca',
@@ -236,6 +238,8 @@ class Pedidos2 extends CI_Controller {
             $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
 			$data['bd']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
             $data['bd']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];

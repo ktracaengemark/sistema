@@ -111,6 +111,8 @@ class Pedidos_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
+                ' . $hora_inicio_entrega_prd . '
+                ' . $hora_fim_entrega_prd . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '
@@ -239,7 +241,10 @@ class Pedidos_model extends CI_Model {
 			
 			$date_inicio_entrega = ($data['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($data['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $data['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$hora_inicio_entrega_prd = ($data['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $data['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($data['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $data['HoraFim5'] . '" AND ' : FALSE;
+						
 			$date_inicio_vnc = ($data['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($data['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $data['DataFim3'] . '" AND ' : FALSE;
 			
@@ -280,7 +285,10 @@ class Pedidos_model extends CI_Model {
 			
 			$date_inicio_entrega = ($_SESSION['FiltroPedidos']['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $_SESSION['FiltroPedidos']['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($_SESSION['FiltroPedidos']['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $_SESSION['FiltroPedidos']['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$hora_inicio_entrega_prd = ($_SESSION['FiltroPedidos']['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $_SESSION['FiltroPedidos']['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($_SESSION['FiltroPedidos']['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $_SESSION['FiltroPedidos']['HoraFim5'] . '" AND ' : FALSE;
+				
 			$date_inicio_vnc = ($_SESSION['FiltroPedidos']['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $_SESSION['FiltroPedidos']['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($_SESSION['FiltroPedidos']['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $_SESSION['FiltroPedidos']['DataFim3'] . '" AND ' : FALSE;
 			
@@ -398,6 +406,8 @@ class Pedidos_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
+                ' . $hora_inicio_entrega_prd . '
+                ' . $hora_fim_entrega_prd . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '
@@ -480,7 +490,10 @@ class Pedidos_model extends CI_Model {
 			
 			$date_inicio_entrega = ($data['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($data['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $data['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$hora_inicio_entrega_prd = ($data['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $data['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($data['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $data['HoraFim5'] . '" AND ' : FALSE;
+				
 			$date_inicio_vnc = ($data['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($data['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $data['DataFim3'] . '" AND ' : FALSE;
 			
@@ -521,6 +534,9 @@ class Pedidos_model extends CI_Model {
 			
 			$date_inicio_entrega = ($_SESSION['FiltroPedidos']['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $_SESSION['FiltroPedidos']['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($_SESSION['FiltroPedidos']['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $_SESSION['FiltroPedidos']['DataFim2'] . '" AND ' : FALSE;
+
+			$hora_inicio_entrega_prd = ($_SESSION['FiltroPedidos']['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $_SESSION['FiltroPedidos']['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($_SESSION['FiltroPedidos']['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $_SESSION['FiltroPedidos']['HoraFim5'] . '" AND ' : FALSE;
 			
 			$date_inicio_vnc = ($_SESSION['FiltroPedidos']['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $_SESSION['FiltroPedidos']['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($_SESSION['FiltroPedidos']['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $_SESSION['FiltroPedidos']['DataFim3'] . '" AND ' : FALSE;
@@ -639,6 +655,8 @@ class Pedidos_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
+                ' . $hora_inicio_entrega_prd . '
+                ' . $hora_fim_entrega_prd . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '
@@ -722,7 +740,10 @@ class Pedidos_model extends CI_Model {
 			
 			$date_inicio_entrega = ($data['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($data['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $data['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$hora_inicio_entrega_prd = ($data['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $data['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($data['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $data['HoraFim5'] . '" AND ' : FALSE;
+				
 			$date_inicio_vnc = ($data['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($data['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $data['DataFim3'] . '" AND ' : FALSE;
 			
@@ -763,6 +784,9 @@ class Pedidos_model extends CI_Model {
 			
 			$date_inicio_entrega = ($_SESSION['FiltroPedidos']['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $_SESSION['FiltroPedidos']['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($_SESSION['FiltroPedidos']['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $_SESSION['FiltroPedidos']['DataFim2'] . '" AND ' : FALSE;
+
+			$hora_inicio_entrega_prd = ($_SESSION['FiltroPedidos']['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $_SESSION['FiltroPedidos']['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($_SESSION['FiltroPedidos']['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $_SESSION['FiltroPedidos']['HoraFim5'] . '" AND ' : FALSE;
 			
 			$date_inicio_vnc = ($_SESSION['FiltroPedidos']['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $_SESSION['FiltroPedidos']['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($_SESSION['FiltroPedidos']['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $_SESSION['FiltroPedidos']['DataFim3'] . '" AND ' : FALSE;
@@ -881,6 +905,8 @@ class Pedidos_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
+                ' . $hora_inicio_entrega_prd . '
+                ' . $hora_fim_entrega_prd . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '
@@ -968,7 +994,10 @@ class Pedidos_model extends CI_Model {
 			
 			$date_inicio_entrega = ($data['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($data['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $data['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$hora_inicio_entrega_prd = ($data['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $data['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($data['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $data['HoraFim5'] . '" AND ' : FALSE;
+				
 			$date_inicio_vnc = ($data['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($data['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $data['DataFim3'] . '" AND ' : FALSE;
 			
@@ -1009,6 +1038,9 @@ class Pedidos_model extends CI_Model {
 			
 			$date_inicio_entrega = ($_SESSION['FiltroPedidos']['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $_SESSION['FiltroPedidos']['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($_SESSION['FiltroPedidos']['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $_SESSION['FiltroPedidos']['DataFim2'] . '" AND ' : FALSE;
+
+			$hora_inicio_entrega_prd = ($_SESSION['FiltroPedidos']['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $_SESSION['FiltroPedidos']['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($_SESSION['FiltroPedidos']['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $_SESSION['FiltroPedidos']['HoraFim5'] . '" AND ' : FALSE;
 			
 			$date_inicio_vnc = ($_SESSION['FiltroPedidos']['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $_SESSION['FiltroPedidos']['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($_SESSION['FiltroPedidos']['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $_SESSION['FiltroPedidos']['DataFim3'] . '" AND ' : FALSE;
@@ -1127,6 +1159,8 @@ class Pedidos_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
+                ' . $hora_inicio_entrega_prd . '
+                ' . $hora_fim_entrega_prd . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '
@@ -1215,7 +1249,10 @@ class Pedidos_model extends CI_Model {
 			
 			$date_inicio_entrega = ($data['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($data['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $data['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$hora_inicio_entrega_prd = ($data['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $data['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($data['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $data['HoraFim5'] . '" AND ' : FALSE;
+				
 			$date_inicio_vnc = ($data['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($data['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $data['DataFim3'] . '" AND ' : FALSE;
 			
@@ -1256,6 +1293,9 @@ class Pedidos_model extends CI_Model {
 			
 			$date_inicio_entrega = ($_SESSION['FiltroPedidos']['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $_SESSION['FiltroPedidos']['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($_SESSION['FiltroPedidos']['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $_SESSION['FiltroPedidos']['DataFim2'] . '" AND ' : FALSE;
+
+			$hora_inicio_entrega_prd = ($_SESSION['FiltroPedidos']['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $_SESSION['FiltroPedidos']['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($_SESSION['FiltroPedidos']['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $_SESSION['FiltroPedidos']['HoraFim5'] . '" AND ' : FALSE;
 			
 			$date_inicio_vnc = ($_SESSION['FiltroPedidos']['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $_SESSION['FiltroPedidos']['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($_SESSION['FiltroPedidos']['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $_SESSION['FiltroPedidos']['DataFim3'] . '" AND ' : FALSE;
@@ -1374,6 +1414,8 @@ class Pedidos_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
+                ' . $hora_inicio_entrega_prd . '
+                ' . $hora_fim_entrega_prd . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '
@@ -1459,7 +1501,10 @@ class Pedidos_model extends CI_Model {
 			
 			$date_inicio_entrega = ($data['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($data['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $data['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$hora_inicio_entrega_prd = ($data['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $data['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($data['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $data['HoraFim5'] . '" AND ' : FALSE;
+							
 			$date_inicio_vnc = ($data['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($data['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $data['DataFim3'] . '" AND ' : FALSE;
 			
@@ -1500,7 +1545,10 @@ class Pedidos_model extends CI_Model {
 			
 			$date_inicio_entrega = ($_SESSION['FiltroPedidos']['DataInicio2']) ? 'PRD.DataConcluidoProduto >= "' . $_SESSION['FiltroPedidos']['DataInicio2'] . '" AND ' : FALSE;
 			$date_fim_entrega = ($_SESSION['FiltroPedidos']['DataFim2']) ? 'PRD.DataConcluidoProduto <= "' . $_SESSION['FiltroPedidos']['DataFim2'] . '" AND ' : FALSE;
-			
+
+			$hora_inicio_entrega_prd = ($_SESSION['FiltroPedidos']['HoraInicio5']) ? 'PRD.HoraConcluidoProduto >= "' . $_SESSION['FiltroPedidos']['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($_SESSION['FiltroPedidos']['HoraFim5']) ? 'PRD.HoraConcluidoProduto <= "' . $_SESSION['FiltroPedidos']['HoraFim5'] . '" AND ' : FALSE;
+				
 			$date_inicio_vnc = ($_SESSION['FiltroPedidos']['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $_SESSION['FiltroPedidos']['DataInicio3'] . '" AND ' : FALSE;
 			$date_fim_vnc = ($_SESSION['FiltroPedidos']['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $_SESSION['FiltroPedidos']['DataFim3'] . '" AND ' : FALSE;
 			
@@ -1618,6 +1666,8 @@ class Pedidos_model extends CI_Model {
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
                 ' . $date_fim_entrega . '
+                ' . $hora_inicio_entrega_prd . '
+                ' . $hora_fim_entrega_prd . '
                 ' . $date_inicio_vnc . '
                 ' . $date_fim_vnc . '
                 ' . $date_inicio_vnc_prc . '

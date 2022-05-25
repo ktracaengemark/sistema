@@ -92,6 +92,8 @@ class Pedidos extends CI_Controller {
             'DataFim3',
 			'DataInicio4',
             'DataFim4',
+			'HoraInicio5',
+            'HoraFim5',
 			'ObsOrca',
             'AprovadoOrca',
             'QuitadoOrca',
@@ -239,6 +241,8 @@ class Pedidos extends CI_Controller {
             $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
 			$data['bd']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
             $data['bd']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
@@ -336,6 +340,8 @@ class Pedidos extends CI_Controller {
             'DataFim3',
 			'DataInicio4',
             'DataFim4',
+			'HoraInicio5',
+            'HoraFim5',
 			'ObsOrca',
             'AprovadoOrca',
             'QuitadoOrca',
@@ -467,6 +473,8 @@ class Pedidos extends CI_Controller {
 		$_SESSION['FiltroPedidos']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
         $_SESSION['FiltroPedidos']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
 		$_SESSION['FiltroPedidos']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+        $_SESSION['FiltroPedidos']['HoraInicio5'] = $data['query']['HoraInicio5'];
+		$_SESSION['FiltroPedidos']['HoraFim5'] = $data['query']['HoraFim5'];
 		$_SESSION['FiltroPedidos']['Orcarec'] = $data['query']['Orcarec'];
 		$_SESSION['FiltroPedidos']['Orcades'] = $data['query']['Orcades'];
 		$_SESSION['FiltroPedidos']['NomeFornecedor'] = $data['query']['NomeFornecedor'];
@@ -521,6 +529,8 @@ class Pedidos extends CI_Controller {
             $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
 			$data['bd']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
             $data['bd']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
@@ -638,6 +648,8 @@ class Pedidos extends CI_Controller {
             'DataFim3',
 			'DataInicio4',
             'DataFim4',
+			'HoraInicio5',
+            'HoraFim5',
 			'ObsOrca',
             'AprovadoOrca',
             'QuitadoOrca',
@@ -770,6 +782,8 @@ class Pedidos extends CI_Controller {
 		$_SESSION['FiltroPedidos']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
         $_SESSION['FiltroPedidos']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
 		$_SESSION['FiltroPedidos']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+        $_SESSION['FiltroPedidos']['HoraInicio5'] = $data['query']['HoraInicio5'];
+		$_SESSION['FiltroPedidos']['HoraFim5'] = $data['query']['HoraFim5'];
 		$_SESSION['FiltroPedidos']['Orcarec'] = $data['query']['Orcarec'];
 		$_SESSION['FiltroPedidos']['Orcades'] = $data['query']['Orcades'];
 		$_SESSION['FiltroPedidos']['NomeFornecedor'] = $data['query']['NomeFornecedor'];
@@ -824,6 +838,8 @@ class Pedidos extends CI_Controller {
             $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
 			$data['bd']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
             $data['bd']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
@@ -940,6 +956,8 @@ class Pedidos extends CI_Controller {
             'DataFim3',
 			'DataInicio4',
             'DataFim4',
+			'HoraInicio5',
+            'HoraFim5',
 			'ObsOrca',
             'AprovadoOrca',
             'QuitadoOrca',
@@ -1071,6 +1089,8 @@ class Pedidos extends CI_Controller {
 		$_SESSION['FiltroPedidos']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
         $_SESSION['FiltroPedidos']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
 		$_SESSION['FiltroPedidos']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+        $_SESSION['FiltroPedidos']['HoraInicio5'] = $data['query']['HoraInicio5'];
+		$_SESSION['FiltroPedidos']['HoraFim5'] = $data['query']['HoraFim5'];
 		$_SESSION['FiltroPedidos']['Orcarec'] = $data['query']['Orcarec'];
 		$_SESSION['FiltroPedidos']['Orcades'] = $data['query']['Orcades'];
 		$_SESSION['FiltroPedidos']['NomeFornecedor'] = $data['query']['NomeFornecedor'];
@@ -1125,6 +1145,8 @@ class Pedidos extends CI_Controller {
             $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
 			$data['bd']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
             $data['bd']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
@@ -1242,6 +1264,8 @@ class Pedidos extends CI_Controller {
             'DataFim3',
 			'DataInicio4',
             'DataFim4',
+			'HoraInicio5',
+            'HoraFim5',
 			'ObsOrca',
             'AprovadoOrca',
             'QuitadoOrca',
@@ -1373,6 +1397,8 @@ class Pedidos extends CI_Controller {
 		$_SESSION['FiltroPedidos']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
         $_SESSION['FiltroPedidos']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
 		$_SESSION['FiltroPedidos']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+        $_SESSION['FiltroPedidos']['HoraInicio5'] = $data['query']['HoraInicio5'];
+		$_SESSION['FiltroPedidos']['HoraFim5'] = $data['query']['HoraFim5'];
 		$_SESSION['FiltroPedidos']['Orcarec'] = $data['query']['Orcarec'];
 		$_SESSION['FiltroPedidos']['Orcades'] = $data['query']['Orcades'];
 		$_SESSION['FiltroPedidos']['NomeFornecedor'] = $data['query']['NomeFornecedor'];
@@ -1427,6 +1453,8 @@ class Pedidos extends CI_Controller {
             $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
 			$data['bd']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
             $data['bd']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
@@ -1544,6 +1572,8 @@ class Pedidos extends CI_Controller {
             'DataFim3',
 			'DataInicio4',
             'DataFim4',
+			'HoraInicio5',
+            'HoraFim5',
 			'ObsOrca',
             'AprovadoOrca',
             'QuitadoOrca',
@@ -1675,6 +1705,8 @@ class Pedidos extends CI_Controller {
 		$_SESSION['FiltroPedidos']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
         $_SESSION['FiltroPedidos']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
 		$_SESSION['FiltroPedidos']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+        $_SESSION['FiltroPedidos']['HoraInicio5'] = $data['query']['HoraInicio5'];
+		$_SESSION['FiltroPedidos']['HoraFim5'] = $data['query']['HoraFim5'];
 		$_SESSION['FiltroPedidos']['Orcarec'] = $data['query']['Orcarec'];
 		$_SESSION['FiltroPedidos']['Orcades'] = $data['query']['Orcades'];
 		$_SESSION['FiltroPedidos']['NomeFornecedor'] = $data['query']['NomeFornecedor'];
@@ -1729,6 +1761,8 @@ class Pedidos extends CI_Controller {
             $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
 			$data['bd']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
             $data['bd']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
@@ -1846,6 +1880,8 @@ class Pedidos extends CI_Controller {
             'DataFim3',
 			'DataInicio4',
             'DataFim4',
+			'HoraInicio5',
+            'HoraFim5',
 			'ObsOrca',
             'AprovadoOrca',
             'QuitadoOrca',
@@ -1977,6 +2013,8 @@ class Pedidos extends CI_Controller {
 		$_SESSION['FiltroPedidos']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
         $_SESSION['FiltroPedidos']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
 		$_SESSION['FiltroPedidos']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+        $_SESSION['FiltroPedidos']['HoraInicio5'] = $data['query']['HoraInicio5'];
+		$_SESSION['FiltroPedidos']['HoraFim5'] = $data['query']['HoraFim5'];
 		$_SESSION['FiltroPedidos']['Orcarec'] = $data['query']['Orcarec'];
 		$_SESSION['FiltroPedidos']['Orcades'] = $data['query']['Orcades'];
 		$_SESSION['FiltroPedidos']['NomeFornecedor'] = $data['query']['NomeFornecedor'];
@@ -2031,6 +2069,8 @@ class Pedidos extends CI_Controller {
             $data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
 			$data['bd']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
             $data['bd']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+			$data['bd']['HoraInicio5'] = $this->basico->mascara_data($data['query']['HoraInicio5'], 'mysql');
+            $data['bd']['HoraFim5'] = $this->basico->mascara_data($data['query']['HoraFim5'], 'mysql');
 			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
