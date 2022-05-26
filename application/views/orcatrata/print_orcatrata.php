@@ -323,8 +323,9 @@
 												<thead>
 													<tr>
 														<th class="col-md-1" scope="col">Qtd</th>												
-														<th class="col-md-10" scope="col">Produto</th>
+														<th class="col-md-9" scope="col">Produto</th>
 														<th class="col-md-1" scope="col">Subtotal</th>
+														<th class="col-md-1" scope="col">Data</th>
 													</tr>
 												</thead>
 
@@ -343,7 +344,7 @@
 																</b>
 															</h4>
 														</td>
-														<td class="col-md-10" scope="col">
+														<td class="col-md-9" scope="col">
 															<h4>
 																<?php echo $produto[$i]['NomeProduto'] ?> <br>
 																<?php if(!empty($produto[$i]['ObsProduto'])) echo 'Obs: ' . $produto[$i]['ObsProduto'] ?>
@@ -351,6 +352,9 @@
 														</td>
 														<td class="col-md-1" scope="col">
 															<?php echo $produto[$i]['SubtotalProduto'] ?>
+														</td>
+														<td class="col-md-1" scope="col">
+															<?php echo $produto[$i]['DataConcluidoProduto'] ?>
 														</td>
 													</tr>
 													
@@ -375,8 +379,9 @@
 												<thead>
 													<tr>
 														<th class="col-md-1" scope="col">Qtd</th>																															
-														<th class="col-md-10" scope="col">Serviço</th>
+														<th class="col-md-9" scope="col">Serviço</th>
 														<th class="col-md-1" scope="col">Subtotal</th>
+														<th class="col-md-1" scope="col">Data</th>
 													</tr>	
 												</thead>
 												<tbody>
@@ -394,7 +399,7 @@
 																</b>
 															</h4>
 														</td>																			
-														<td class="col-md-10" scope="col">
+														<td class="col-md-9" scope="col">
 															<h4>
 																<?php echo $servico[$i]['NomeProduto']  ?>
 															</h4>	
@@ -406,6 +411,9 @@
 														</td>
 														<td class="col-md-1" scope="col">
 															<?php echo $servico[$i]['SubtotalProduto'] ?>
+														</td>
+														<td class="col-md-1" scope="col">
+															<?php echo $servico[$i]['DataConcluidoProduto'] ?>
 														</td>
 													</tr>
 
