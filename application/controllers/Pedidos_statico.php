@@ -109,6 +109,8 @@ class Pedidos_statico extends CI_Controller {
 			'FormaPagamento',
 			'TipoFrete',
 			'selecione',
+			'Produtos',
+			'Parcelas',
         ), TRUE));
 
 		$data['collapse'] = '';
@@ -189,6 +191,18 @@ class Pedidos_statico extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
+		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Parcelas',
+        );
 
 		$data['select']['NomeFornecedor'] = $this->Relatorio_model->select_fornecedor();
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
@@ -259,6 +273,8 @@ class Pedidos_statico extends CI_Controller {
 			$data['bd']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
 			$data['bd']['AVAP'] = $data['query']['AVAP'];
 			//$data['bd']['selecione'] = $data['query']['selecione'];
+			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Parcelas'] = $data['query']['Parcelas'];
 			
 			if(isset($data['bd']['Orcamento']) && $data['bd']['Orcamento'] !=""){
 				
@@ -357,6 +373,8 @@ class Pedidos_statico extends CI_Controller {
 			'FormaPagamento',
 			'TipoFrete',
 			'selecione',
+			'Produtos',
+			'Parcelas',
         ), TRUE));
 
 		$data['collapse'] = '';
@@ -437,6 +455,18 @@ class Pedidos_statico extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
+		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Parcelas',
+        );
 
 		$data['select']['NomeFornecedor'] = $this->Relatorio_model->select_fornecedor();
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
@@ -504,6 +534,8 @@ class Pedidos_statico extends CI_Controller {
 		$_SESSION['FiltroPedidos']['Ordenamento'] = $data['query']['Ordenamento'];
 		$_SESSION['FiltroPedidos']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
 		$_SESSION['FiltroPedidos']['metodo'] = $data['metodo'];
+		$_SESSION['FiltroPedidos']['Produtos'] = $data['query']['Produtos'];
+		$_SESSION['FiltroPedidos']['Parcelas'] = $data['query']['Parcelas'];
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -547,6 +579,8 @@ class Pedidos_statico extends CI_Controller {
 			$data['bd']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
 			$data['bd']['AVAP'] = $data['query']['AVAP'];
 			//$data['bd']['selecione'] = $data['query']['selecione'];
+			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Parcelas'] = $data['query']['Parcelas'];
 
 			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_combinar($data['bd'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
@@ -665,6 +699,8 @@ class Pedidos_statico extends CI_Controller {
 			'FormaPagamento',
 			'TipoFrete',
 			'selecione',
+			'Produtos',
+			'Parcelas',
         ), TRUE));
 
 		$data['collapse'] = '';
@@ -746,6 +782,18 @@ class Pedidos_statico extends CI_Controller {
             'DESC' => 'Decrescente',
         );
 		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Parcelas',
+        );
+		
 		
 		$data['select']['NomeFornecedor'] = $this->Relatorio_model->select_fornecedor();
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
@@ -813,6 +861,8 @@ class Pedidos_statico extends CI_Controller {
 		$_SESSION['FiltroPedidos']['Ordenamento'] = $data['query']['Ordenamento'];
 		$_SESSION['FiltroPedidos']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
 		$_SESSION['FiltroPedidos']['metodo'] = $data['metodo'];
+		$_SESSION['FiltroPedidos']['Produtos'] = $data['query']['Produtos'];
+		$_SESSION['FiltroPedidos']['Parcelas'] = $data['query']['Parcelas'];
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -856,6 +906,8 @@ class Pedidos_statico extends CI_Controller {
 			$data['bd']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
 			$data['bd']['AVAP'] = $data['query']['AVAP'];
 			//$data['bd']['selecione'] = $data['query']['selecione'];
+			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Parcelas'] = $data['query']['Parcelas'];
 
 			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_aprovar($data['bd'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
@@ -973,6 +1025,8 @@ class Pedidos_statico extends CI_Controller {
 			'FormaPagamento',
 			'TipoFrete',
 			'selecione',
+			'Produtos',
+			'Parcelas',
         ), TRUE));
 
 		$data['collapse'] = '';
@@ -1053,6 +1107,18 @@ class Pedidos_statico extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
+		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Parcelas',
+        );
 
 		$data['select']['NomeFornecedor'] = $this->Relatorio_model->select_fornecedor();
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
@@ -1120,6 +1186,8 @@ class Pedidos_statico extends CI_Controller {
 		$_SESSION['FiltroPedidos']['Ordenamento'] = $data['query']['Ordenamento'];
 		$_SESSION['FiltroPedidos']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
 		$_SESSION['FiltroPedidos']['metodo'] = $data['metodo'];
+		$_SESSION['FiltroPedidos']['Produtos'] = $data['query']['Produtos'];
+		$_SESSION['FiltroPedidos']['Parcelas'] = $data['query']['Parcelas'];
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -1163,6 +1231,8 @@ class Pedidos_statico extends CI_Controller {
 			$data['bd']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
 			$data['bd']['AVAP'] = $data['query']['AVAP'];
 			//$data['bd']['selecione'] = $data['query']['selecione'];
+			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Parcelas'] = $data['query']['Parcelas'];
 
 			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_producao($data['bd'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
@@ -1281,6 +1351,8 @@ class Pedidos_statico extends CI_Controller {
 			'FormaPagamento',
 			'TipoFrete',
 			'selecione',
+			'Produtos',
+			'Parcelas',
         ), TRUE));
 
 		$data['collapse'] = '';
@@ -1361,6 +1433,18 @@ class Pedidos_statico extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
+		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Parcelas',
+        );
 
 		$data['select']['NomeFornecedor'] = $this->Relatorio_model->select_fornecedor();
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
@@ -1428,6 +1512,8 @@ class Pedidos_statico extends CI_Controller {
 		$_SESSION['FiltroPedidos']['Ordenamento'] = $data['query']['Ordenamento'];
 		$_SESSION['FiltroPedidos']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
 		$_SESSION['FiltroPedidos']['metodo'] = $data['metodo'];
+		$_SESSION['FiltroPedidos']['Produtos'] = $data['query']['Produtos'];
+		$_SESSION['FiltroPedidos']['Parcelas'] = $data['query']['Parcelas'];
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -1471,6 +1557,8 @@ class Pedidos_statico extends CI_Controller {
 			$data['bd']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
 			$data['bd']['AVAP'] = $data['query']['AVAP'];
 			//$data['bd']['selecione'] = $data['query']['selecione'];
+			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Parcelas'] = $data['query']['Parcelas'];
 
 			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_envio($data['bd'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
@@ -1589,6 +1677,8 @@ class Pedidos_statico extends CI_Controller {
 			'FormaPagamento',
 			'TipoFrete',
 			'selecione',
+			'Produtos',
+			'Parcelas',
         ), TRUE));
 
 		$data['collapse'] = '';
@@ -1669,6 +1759,18 @@ class Pedidos_statico extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
+		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Parcelas',
+        );
 
 		$data['select']['NomeFornecedor'] = $this->Relatorio_model->select_fornecedor();
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
@@ -1736,6 +1838,8 @@ class Pedidos_statico extends CI_Controller {
 		$_SESSION['FiltroPedidos']['Ordenamento'] = $data['query']['Ordenamento'];
 		$_SESSION['FiltroPedidos']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
 		$_SESSION['FiltroPedidos']['metodo'] = $data['metodo'];
+		$_SESSION['FiltroPedidos']['Produtos'] = $data['query']['Produtos'];
+		$_SESSION['FiltroPedidos']['Parcelas'] = $data['query']['Parcelas'];
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -1779,6 +1883,8 @@ class Pedidos_statico extends CI_Controller {
 			$data['bd']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
 			$data['bd']['AVAP'] = $data['query']['AVAP'];
 			//$data['bd']['selecione'] = $data['query']['selecione'];
+			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Parcelas'] = $data['query']['Parcelas'];
 
 			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_entrega($data['bd'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
@@ -1897,6 +2003,8 @@ class Pedidos_statico extends CI_Controller {
 			'FormaPagamento',
 			'TipoFrete',
 			'selecione',
+			'Produtos',
+			'Parcelas',
         ), TRUE));
 
 		$data['collapse'] = '';
@@ -1977,6 +2085,18 @@ class Pedidos_statico extends CI_Controller {
             'ASC' => 'Crescente',
             'DESC' => 'Decrescente',
         );
+		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Parcelas',
+        );
 
 		$data['select']['NomeFornecedor'] = $this->Relatorio_model->select_fornecedor();
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
@@ -2044,6 +2164,8 @@ class Pedidos_statico extends CI_Controller {
 		$_SESSION['FiltroPedidos']['Ordenamento'] = $data['query']['Ordenamento'];
 		$_SESSION['FiltroPedidos']['TipoFinanceiroR'] = $data['query']['TipoFinanceiroR'];
 		$_SESSION['FiltroPedidos']['metodo'] = $data['metodo'];
+		$_SESSION['FiltroPedidos']['Produtos'] = $data['query']['Produtos'];
+		$_SESSION['FiltroPedidos']['Parcelas'] = $data['query']['Parcelas'];
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -2087,6 +2209,8 @@ class Pedidos_statico extends CI_Controller {
 			$data['bd']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
 			$data['bd']['AVAP'] = $data['query']['AVAP'];
 			//$data['bd']['selecione'] = $data['query']['selecione'];
+			$data['bd']['Produtos'] = $data['query']['Produtos'];
+			$data['bd']['Parcelas'] = $data['query']['Parcelas'];
 
 			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_pagamento($data['bd'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();

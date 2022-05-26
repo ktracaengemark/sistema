@@ -437,6 +437,36 @@
 												name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
 									</div>
 								</div>
+								<div class="col-md-3">
+									<label for="Produtos">Produtos & Serviços:</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+											id="Produtos" name="Produtos">
+										<?php
+										foreach ($select['Produtos'] as $key => $row) {
+											if ($query['Produtos'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
+								<div class="col-md-3">
+									<label for="Parcelas">Parcelas:</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+											id="Parcelas" name="Parcelas">
+										<?php
+										foreach ($select['Parcelas'] as $key => $row) {
+											if ($query['Parcelas'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
 							</div>
 							<div class="row">
 								<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>

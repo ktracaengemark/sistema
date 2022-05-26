@@ -1940,7 +1940,7 @@ class Relatorio extends CI_Controller {
         $data['select']['Parcelas'] = array(
 			'0' => '::TODOS::',
 			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
-			'IS NULL' => 'S/ Prd & Srv',
+			'IS NULL' => 'S/ Parcelas',
         );
 
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
@@ -2461,7 +2461,7 @@ class Relatorio extends CI_Controller {
         $data['select']['Parcelas'] = array(
 			'0' => '::TODOS::',
 			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
-			'IS NULL' => 'S/ Prd & Srv',
+			'IS NULL' => 'S/ Parcelas',
         );
 
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
@@ -2994,7 +2994,7 @@ class Relatorio extends CI_Controller {
         $data['select']['Parcelas'] = array(
 			'0' => '::TODOS::',
 			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
-			'IS NULL' => 'S/ Prd & Srv',
+			'IS NULL' => 'S/ Parcelas',
         );
 
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
@@ -3527,7 +3527,7 @@ class Relatorio extends CI_Controller {
         $data['select']['Parcelas'] = array(
 			'0' => '::TODOS::',
 			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
-			'IS NULL' => 'S/ Prd & Srv',
+			'IS NULL' => 'S/ Parcelas',
         );
 
 		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
@@ -4051,7 +4051,7 @@ class Relatorio extends CI_Controller {
         $data['select']['Parcelas'] = array(
 			'0' => '::TODOS::',
 			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
-			'IS NULL' => 'S/ Prd & Srv',
+			'IS NULL' => 'S/ Parcelas',
         );
 
 		//$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
@@ -4535,7 +4535,7 @@ class Relatorio extends CI_Controller {
         $data['select']['Parcelas'] = array(
 			'0' => '::TODOS::',
 			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
-			'IS NULL' => 'S/ Prd & Srv',
+			'IS NULL' => 'S/ Parcelas',
         );
 
 		$data['select']['NomeUsuario'] = $this->Relatorio_model->select_usuario();
@@ -5977,7 +5977,7 @@ class Relatorio extends CI_Controller {
         $data['select']['Parcelas'] = array(
 			'0' => '::TODOS::',
 			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
-			'IS NULL' => 'S/ Prd & Srv',
+			'IS NULL' => 'S/ Parcelas',
         );
 
 		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();

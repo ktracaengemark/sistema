@@ -107,6 +107,8 @@ class Pedidos_statico_pag extends CI_Controller {
 			'FormaPagamento',
 			'TipoFrete',
 			'selecione',
+			'Produtos',
+			'Parcelas',
         ), TRUE));
 
 		$data['collapse'] = '';
@@ -204,6 +206,8 @@ class Pedidos_statico_pag extends CI_Controller {
 			'FormaPagamento',
 			'TipoFrete',
 			'selecione',
+			'Produtos',
+			'Parcelas',
         ), TRUE));
 
 		$data['collapse'] = '';
@@ -343,6 +347,8 @@ class Pedidos_statico_pag extends CI_Controller {
 			'FormaPagamento',
 			'TipoFrete',
 			'selecione',
+			'Produtos',
+			'Parcelas',
         ), TRUE));
 
 		$data['collapse'] = '';
@@ -481,6 +487,8 @@ class Pedidos_statico_pag extends CI_Controller {
 			'FormaPagamento',
 			'TipoFrete',
 			'selecione',
+			'Produtos',
+			'Parcelas',
         ), TRUE));
 
 		$data['collapse'] = '';
@@ -620,6 +628,8 @@ class Pedidos_statico_pag extends CI_Controller {
 			'FormaPagamento',
 			'TipoFrete',
 			'selecione',
+			'Produtos',
+			'Parcelas',
         ), TRUE));
 
 		$data['collapse'] = '';
@@ -759,6 +769,8 @@ class Pedidos_statico_pag extends CI_Controller {
 			'FormaPagamento',
 			'TipoFrete',
 			'selecione',
+			'Produtos',
+			'Parcelas',
         ), TRUE));
 
 		$data['collapse'] = '';
@@ -898,6 +910,8 @@ class Pedidos_statico_pag extends CI_Controller {
 			'FormaPagamento',
 			'TipoFrete',
 			'selecione',
+			'Produtos',
+			'Parcelas',
         ), TRUE));
 
 		$data['collapse'] = '';

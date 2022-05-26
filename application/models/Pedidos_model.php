@@ -132,6 +132,8 @@ class Pedidos_model extends CI_Model {
 				' . $filtro10 . '
 				' . $filtro11 . '
 				' . $filtro13 . '
+				' . $produtos . '
+				' . $parcelas . '
 				OT.idTab_TipoRD = "2" AND
 				OT.CanceladoOrca = "S"
                 ' . $data['Orcamento'] . '
@@ -277,6 +279,9 @@ class Pedidos_model extends CI_Model {
 			$filtro10 = ($data['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $data['FinalizadoOrca'] . '" AND ' : FALSE;
 			$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Produtos'] != "0") ? 'PRD.idSis_Empresa ' . $data['Produtos'] . '  AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $data['Parcelas'] . '  AND' : FALSE;
 			
 		}else{
 			
@@ -321,7 +326,10 @@ class Pedidos_model extends CI_Model {
 			$filtro10 = ($_SESSION['FiltroPedidos']['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $_SESSION['FiltroPedidos']['FinalizadoOrca'] . '" AND ' : FALSE;
 			$filtro11 = ($_SESSION['FiltroPedidos']['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $_SESSION['FiltroPedidos']['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($_SESSION['FiltroPedidos']['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $_SESSION['FiltroPedidos']['CombinadoFrete'] . '" AND ' : FALSE;
-			
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroPedidos']['Produtos'] != "0") ? 'PRD.idSis_Empresa ' . $_SESSION['FiltroPedidos']['Produtos'] . ' AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroPedidos']['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $_SESSION['FiltroPedidos']['Parcelas'] . ' AND' : FALSE;
+
 		}
 		
 		if($_SESSION['log']['idSis_Empresa'] == 5){
@@ -428,6 +436,8 @@ class Pedidos_model extends CI_Model {
 				' . $filtro10 . '
 				' . $filtro11 . '
 				' . $filtro13 . '
+				' . $produtos . '
+				' . $parcelas . '
 				OT.idTab_TipoRD = "2" AND
 				OT.CanceladoOrca = "N" AND
 				OT.CombinadoFrete = "N"
@@ -526,6 +536,9 @@ class Pedidos_model extends CI_Model {
 			$filtro10 = ($data['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $data['FinalizadoOrca'] . '" AND ' : FALSE;
 			$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Produtos'] != "0") ? 'PRD.idSis_Empresa ' . $data['Produtos'] . '  AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $data['Parcelas'] . '  AND' : FALSE;
 			
 		}else{
 			
@@ -570,7 +583,10 @@ class Pedidos_model extends CI_Model {
 			$filtro10 = ($_SESSION['FiltroPedidos']['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $_SESSION['FiltroPedidos']['FinalizadoOrca'] . '" AND ' : FALSE;
 			$filtro11 = ($_SESSION['FiltroPedidos']['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $_SESSION['FiltroPedidos']['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($_SESSION['FiltroPedidos']['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $_SESSION['FiltroPedidos']['CombinadoFrete'] . '" AND ' : FALSE;
-			
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroPedidos']['Produtos'] != "0") ? 'PRD.idSis_Empresa ' . $_SESSION['FiltroPedidos']['Produtos'] . ' AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroPedidos']['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $_SESSION['FiltroPedidos']['Parcelas'] . ' AND' : FALSE;
+
 		}
 					
 		if($_SESSION['log']['idSis_Empresa'] == 5){
@@ -677,6 +693,8 @@ class Pedidos_model extends CI_Model {
 				' . $filtro10 . '
 				' . $filtro11 . '
 				' . $filtro13 . '
+				' . $produtos . '
+				' . $parcelas . '
 				OT.idTab_TipoRD = "2" AND
 				OT.CanceladoOrca = "N" AND
 				
@@ -776,6 +794,9 @@ class Pedidos_model extends CI_Model {
 			$filtro10 = ($data['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $data['FinalizadoOrca'] . '" AND ' : FALSE;
 			$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Produtos'] != "0") ? 'PRD.idSis_Empresa ' . $data['Produtos'] . '  AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $data['Parcelas'] . '  AND' : FALSE;
 			
 		}else{
 			
@@ -820,7 +841,10 @@ class Pedidos_model extends CI_Model {
 			$filtro10 = ($_SESSION['FiltroPedidos']['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $_SESSION['FiltroPedidos']['FinalizadoOrca'] . '" AND ' : FALSE;
 			$filtro11 = ($_SESSION['FiltroPedidos']['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $_SESSION['FiltroPedidos']['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($_SESSION['FiltroPedidos']['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $_SESSION['FiltroPedidos']['CombinadoFrete'] . '" AND ' : FALSE;
-			
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroPedidos']['Produtos'] != "0") ? 'PRD.idSis_Empresa ' . $_SESSION['FiltroPedidos']['Produtos'] . ' AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroPedidos']['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $_SESSION['FiltroPedidos']['Parcelas'] . ' AND' : FALSE;
+
 		}
 		
 		if($_SESSION['log']['idSis_Empresa'] == 5){
@@ -927,6 +951,8 @@ class Pedidos_model extends CI_Model {
 				' . $filtro10 . '
 				' . $filtro11 . '
 				' . $filtro13 . '
+				' . $produtos . '
+				' . $parcelas . '
 				OT.idTab_TipoRD = "2" AND
 				OT.CanceladoOrca = "N" AND
 				OT.CombinadoFrete = "S" AND
@@ -1030,6 +1056,9 @@ class Pedidos_model extends CI_Model {
 			$filtro10 = ($data['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $data['FinalizadoOrca'] . '" AND ' : FALSE;
 			$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Produtos'] != "0") ? 'PRD.idSis_Empresa ' . $data['Produtos'] . '  AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $data['Parcelas'] . '  AND' : FALSE;
 			
 		}else{
 			
@@ -1074,7 +1103,10 @@ class Pedidos_model extends CI_Model {
 			$filtro10 = ($_SESSION['FiltroPedidos']['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $_SESSION['FiltroPedidos']['FinalizadoOrca'] . '" AND ' : FALSE;
 			$filtro11 = ($_SESSION['FiltroPedidos']['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $_SESSION['FiltroPedidos']['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($_SESSION['FiltroPedidos']['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $_SESSION['FiltroPedidos']['CombinadoFrete'] . '" AND ' : FALSE;
-			
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroPedidos']['Produtos'] != "0") ? 'PRD.idSis_Empresa ' . $_SESSION['FiltroPedidos']['Produtos'] . ' AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroPedidos']['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $_SESSION['FiltroPedidos']['Parcelas'] . ' AND' : FALSE;
+
 		}
 		
 		if($_SESSION['log']['idSis_Empresa'] == 5){
@@ -1181,6 +1213,8 @@ class Pedidos_model extends CI_Model {
 				' . $filtro10 . '
 				' . $filtro11 . '
 				' . $filtro13 . '
+				' . $produtos . '
+				' . $parcelas . '
 				OT.idTab_TipoRD = "2" AND
 				OT.CanceladoOrca = "N" AND
 				OT.CombinadoFrete = "S" AND
@@ -1285,6 +1319,9 @@ class Pedidos_model extends CI_Model {
 			$filtro10 = ($data['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $data['FinalizadoOrca'] . '" AND ' : FALSE;
 			$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Produtos'] != "0") ? 'PRD.idSis_Empresa ' . $data['Produtos'] . '  AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $data['Parcelas'] . '  AND' : FALSE;
 			
 		}else{
 			
@@ -1329,7 +1366,10 @@ class Pedidos_model extends CI_Model {
 			$filtro10 = ($_SESSION['FiltroPedidos']['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $_SESSION['FiltroPedidos']['FinalizadoOrca'] . '" AND ' : FALSE;
 			$filtro11 = ($_SESSION['FiltroPedidos']['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $_SESSION['FiltroPedidos']['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($_SESSION['FiltroPedidos']['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $_SESSION['FiltroPedidos']['CombinadoFrete'] . '" AND ' : FALSE;
-			
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroPedidos']['Produtos'] != "0") ? 'PRD.idSis_Empresa ' . $_SESSION['FiltroPedidos']['Produtos'] . ' AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroPedidos']['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $_SESSION['FiltroPedidos']['Parcelas'] . ' AND' : FALSE;
+
 		}
 		
 		if($_SESSION['log']['idSis_Empresa'] == 5){
@@ -1436,6 +1476,8 @@ class Pedidos_model extends CI_Model {
 				' . $filtro10 . '
 				' . $filtro11 . '
 				' . $filtro13 . '
+				' . $produtos . '
+				' . $parcelas . '
 				OT.idTab_TipoRD = "2" AND
 				OT.CanceladoOrca = "N" AND
 				OT.CombinadoFrete = "S" AND
@@ -1537,6 +1579,9 @@ class Pedidos_model extends CI_Model {
 			$filtro10 = ($data['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $data['FinalizadoOrca'] . '" AND ' : FALSE;
 			$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Produtos'] != "0") ? 'PRD.idSis_Empresa ' . $data['Produtos'] . '  AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $data['Parcelas'] . '  AND' : FALSE;
 			
 		}else{
 			
@@ -1581,7 +1626,10 @@ class Pedidos_model extends CI_Model {
 			$filtro10 = ($_SESSION['FiltroPedidos']['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $_SESSION['FiltroPedidos']['FinalizadoOrca'] . '" AND ' : FALSE;
 			$filtro11 = ($_SESSION['FiltroPedidos']['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $_SESSION['FiltroPedidos']['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($_SESSION['FiltroPedidos']['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $_SESSION['FiltroPedidos']['CombinadoFrete'] . '" AND ' : FALSE;
-			
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroPedidos']['Produtos'] != "0") ? 'PRD.idSis_Empresa ' . $_SESSION['FiltroPedidos']['Produtos'] . ' AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroPedidos']['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $_SESSION['FiltroPedidos']['Parcelas'] . ' AND' : FALSE;
+
 		}
 		
 		if($_SESSION['log']['idSis_Empresa'] == 5){
@@ -1688,6 +1736,8 @@ class Pedidos_model extends CI_Model {
 				' . $filtro10 . '
 				' . $filtro11 . '
 				' . $filtro13 . '
+				' . $produtos . '
+				' . $parcelas . '
 				OT.idTab_TipoRD = "2" AND
 				OT.CanceladoOrca = "N" AND
 				OT.CombinadoFrete = "S" AND
