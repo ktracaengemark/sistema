@@ -59,16 +59,17 @@
 							<?php } ?>
 						<?php } ?>
 						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
-							<label>Filtros</label>
+							<label>Filtros</label><br>
 							<button  class="btn btn-md btn-warning btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
 								<span class="glyphicon glyphicon-filter"></span>
 							</button>
 						</div>
-						<!--
-						<button  class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
-							<span class="glyphicon glyphicon-plus"></span> Novo Cliente
-						</button>
-						-->
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
+							<label>Cadastrar</label><br>
+							<button  class="btn btn-md btn-danger" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
+								<span class="glyphicon glyphicon-plus"></span> Novo Cliente
+							</button>
+						</div>	
 					</div>
 				</div>
 			</div>
@@ -375,6 +376,14 @@
 			</div>
 			-->
 			<div class="modal-footer">
+				<div class="form-group col-md-4">
+					<div class="form-footer ">
+						<button type="button" class="btn btn-warning btn-block" data-dismiss="modal">
+							<span class="glyphicon glyphicon-remove"></span> Pesquisar
+						</button>
+					</div>
+				</div>
+				<!--
 				<div class="form-group col-md-4 text-left">
 					<div class="form-footer">
 						<button  class="btn btn-warning btn-block"" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
@@ -382,6 +391,7 @@
 						</button>
 					</div>
 				</div>
+				-->
 				<div class="form-group col-md-4 text-right">
 					<div class="form-footer">		
 						<a class="btn btn-danger btn-block" href="<?php echo base_url() ?>cliente/cadastrar" role="button">
