@@ -316,7 +316,7 @@ class Marketing extends CI_Controller {
         for ($i = 1; $i <= $data['count']['PTCount']; $i++) {
 
             if ($this->input->post('DataSubMarketing' . $i) || $this->input->post('DataConcluidoSubMarketing' . $i) || $this->input->post('SubMarketing' . $i)) {
-                $data['procedtarefa'][$j]['idApp_SubMarketing'] = $this->input->post('idApp_SubMarketing' . $i);
+                //$data['procedtarefa'][$j]['idApp_SubMarketing'] = $this->input->post('idApp_SubMarketing' . $i);
                 $data['procedtarefa'][$j]['DataSubMarketing'] = $this->input->post('DataSubMarketing' . $i);
                 $data['procedtarefa'][$j]['DataConcluidoSubMarketing'] = $this->input->post('DataConcluidoSubMarketing' . $i);
                 $data['procedtarefa'][$j]['HoraSubMarketing'] = $this->input->post('HoraSubMarketing' . $i);

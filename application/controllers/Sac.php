@@ -314,7 +314,7 @@ class Sac extends CI_Controller {
         for ($i = 1; $i <= $data['count']['PTCount']; $i++) {
 
             if ($this->input->post('DataSubSac' . $i) || $this->input->post('DataConcluidoSubSac' . $i) || $this->input->post('SubSac' . $i)) {
-                $data['procedtarefa'][$j]['idApp_SubSac'] = $this->input->post('idApp_SubSac' . $i);
+                //$data['procedtarefa'][$j]['idApp_SubSac'] = $this->input->post('idApp_SubSac' . $i);
                 $data['procedtarefa'][$j]['DataSubSac'] = $this->input->post('DataSubSac' . $i);
                 $data['procedtarefa'][$j]['DataConcluidoSubSac'] = $this->input->post('DataConcluidoSubSac' . $i);
                 $data['procedtarefa'][$j]['HoraSubSac'] = $this->input->post('HoraSubSac' . $i);

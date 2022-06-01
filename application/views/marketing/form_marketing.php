@@ -206,7 +206,7 @@
 											?>
 
 											<?php if ($metodo == 2 || $metodo == 4) { ?>
-											<input type="hidden" name="idApp_SubMarketing<?php echo $i ?>" id="idApp_SubMarketing<?php echo $i ?>" value="<?php echo $procedtarefa[$i]['idApp_SubMarketing']; ?>"/>
+											<!--<input type="hidden" name="idApp_SubMarketing<?php echo $i ?>" id="idApp_SubMarketing<?php echo $i ?>" value="<?php echo $procedtarefa[$i]['idApp_SubMarketing']; ?>"/>-->
 											<?php } ?>
 
 											<div class="form-group" id="3div<?php echo $i ?>">
