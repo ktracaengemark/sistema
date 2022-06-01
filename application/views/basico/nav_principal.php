@@ -129,7 +129,7 @@
 						</button>
 						<ul class="dropdown-menu" role="menu">						
 							<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>
-								<li><a href="<?php echo base_url() ?>relatorio/loginempresa"><span class="glyphicon glyphicon-barcode"></span> Administração</a></li>
+								<li><a href="<?php echo base_url() ?>relatorio/loginempresa"><span class="glyphicon glyphicon-barcode"></span> Administracao</a></li>
 								<li role="separator" class="divider"></li>
 							<?php } ?>
 							<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>
