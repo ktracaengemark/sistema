@@ -86,6 +86,12 @@ class Clientedep extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 1;
+		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
 
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);		
         
@@ -192,6 +198,12 @@ class Clientedep extends CI_Controller {
         $data['disabled'] = '';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
+		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
 
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
         
@@ -299,6 +311,12 @@ class Clientedep extends CI_Controller {
             $data['list'] = FALSE;
         else
             $data['list'] = $this->load->view('clientedep/list_clientedep', $data, TRUE);
+		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
 
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
@@ -349,7 +367,15 @@ class Clientedep extends CI_Controller {
         $data['readonly'] = 'readonly';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
+		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
 
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+		
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             #load login view

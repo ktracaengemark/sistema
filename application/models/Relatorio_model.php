@@ -3185,6 +3185,460 @@ class Relatorio_model extends CI_Model {
         }
 
     }
+
+	public function list_sac($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+
+		if($data != FALSE){
+					
+			$date_inicio_prc = ($data['DataInicio9']) ? 'PRC.DataSac >= "' . $data['DataInicio9'] . '" AND ' : FALSE;
+			$date_fim_prc = ($data['DataFim9']) ? 'PRC.DataSac <= "' . $data['DataFim9'] . '" AND ' : FALSE;
+			
+			$date_inicio_sub_prc = ($data['DataInicio10']) ? 'SPRC.DataSubSac >= "' . $data['DataInicio10'] . '" AND ' : FALSE;
+			$date_fim_sub_prc = ($data['DataFim10']) ? 'SPRC.DataSubSac <= "' . $data['DataFim10'] . '" AND ' : FALSE;
+
+			$hora_inicio_prc = ($data['HoraInicio9']) ? 'PRC.HoraSac >= "' . $data['HoraInicio9'] . '" AND ' : FALSE;
+			$hora_fim_prc = ($data['HoraFim9']) ? 'PRC.HoraSac <= "' . $data['HoraFim9'] . '" AND ' : FALSE;
+			
+			$hora_inicio_sub_prc = ($data['HoraInicio10']) ? 'SPRC.HoraSubSac >= "' . $data['HoraInicio10'] . '" AND ' : FALSE;
+			$hora_fim_sub_prc = ($data['HoraFim10']) ? 'SPRC.HoraSubSac <= "' . $data['HoraFim10'] . '" AND ' : FALSE;
+			
+			$data['Dia'] = ($data['Dia']) ? ' AND DAY(PRC.DataSac) = ' . $data['Dia'] : FALSE;
+			$data['Mesvenc'] = ($data['Mesvenc']) ? ' AND MONTH(PRC.DataSac) = ' . $data['Mesvenc'] : FALSE;
+			$data['Ano'] = ($data['Ano']) ? ' AND YEAR(PRC.DataSac) = ' . $data['Ano'] : FALSE;
+			$data['Campo'] = (!$data['Campo']) ? 'PRC.DataSac' : $data['Campo'];
+			$data['Ordenamento'] = (!$data['Ordenamento']) ? 'DESC' : $data['Ordenamento'];
+			
+			$filtro10 = ($data['ConcluidoSac'] != '#') ? 'PRC.ConcluidoSac = "' . $data['ConcluidoSac'] . '" AND ' : FALSE;
+			
+			$filtro21 = ($data['idTab_TipoRD'] == 1) ? 'AND (OT.idTab_TipoRD = "1" OR F.idApp_Fornecedor = PRC.idApp_Fornecedor)' : FALSE;
+			$filtro22 = ($data['idTab_TipoRD'] == 2) ? 'AND (OT.idTab_TipoRD = "2" OR C.idApp_Cliente = PRC.idApp_Cliente)' : FALSE;
+			
+			$data['idApp_Sac'] = ($data['idApp_Sac']) ? ' AND PRC.idApp_Sac = ' . $data['idApp_Sac'] . '  ': FALSE;		
+			$data['CategoriaSac'] = ($data['CategoriaSac']) ? ' AND PRC.CategoriaSac = ' . $data['CategoriaSac'] . '  ': FALSE;		
+			$data['Marketing'] = ($data['Marketing']) ? ' AND PRC.Marketing = ' . $data['Marketing'] . '  ': FALSE;
+			$data['Orcamento'] = ($data['Orcamento']) ? ' AND PRC.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
+			$data['Cliente'] = ($data['Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
+			$data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;
+			$data['Fornecedor'] = ($data['Fornecedor']) ? ' AND PRC.idApp_Fornecedor = ' . $data['Fornecedor'] . '' : FALSE;
+			$data['idApp_Fornecedor'] = ($data['idApp_Fornecedor']) ? ' AND PRC.idApp_Cliente = ' . $data['idApp_Fornecedor'] . '' : FALSE;        
+			$filtro17 = ($data['NomeUsuario']) ? 'PRC.idSis_Usuario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;        
+			$filtro18 = ($data['Compartilhar']) ? 'PRC.Compartilhar = "' . $data['Compartilhar'] . '" AND ' : FALSE;		
+			
+			$data['TipoSac'] = $data['TipoSac'];
+			if($data['TipoSac'] == 1){
+				$tipoprocedimento = '(PRC.idApp_OrcaTrata != 0 AND PRC.idApp_Cliente = 0 AND PRC.Sac = 0 AND PRC.Marketing = 0)';
+			}elseif($data['TipoSac'] == 2){
+				$tipoprocedimento = '(PRC.idApp_OrcaTrata != 0 AND PRC.idApp_Fornecedor = 0 AND PRC.Sac = 0 AND PRC.Marketing = 0)';
+			}elseif($data['TipoSac'] == 3){
+				$tipoprocedimento = '(PRC.idApp_OrcaTrata = 0 AND PRC.idApp_Cliente != 0 AND PRC.idApp_Fornecedor = 0 AND PRC.Sac != 0 AND PRC.Marketing = 0)';
+			}elseif($data['TipoSac'] == 4){
+				$tipoprocedimento = '(PRC.idApp_OrcaTrata = 0 AND PRC.idApp_Cliente != 0 AND PRC.idApp_Fornecedor = 0 AND PRC.Sac = 0 AND PRC.Marketing != 0)';
+			}
+			$groupby = ($data['Agrupar'] && $data['Agrupar'] != "0") ? 'GROUP BY PRC.' . $data['Agrupar'] . '' : FALSE;
+			
+		}else{
+					
+			$date_inicio_prc = ($_SESSION['FiltroSac']['DataInicio9']) ? 'PRC.DataSac >= "' . $_SESSION['FiltroSac']['DataInicio9'] . '" AND ' : FALSE;
+			$date_fim_prc = ($_SESSION['FiltroSac']['DataFim9']) ? 'PRC.DataSac <= "' . $_SESSION['FiltroSac']['DataFim9'] . '" AND ' : FALSE;
+			
+			$date_inicio_sub_prc = ($_SESSION['FiltroSac']['DataInicio10']) ? 'SPRC.DataSubSac >= "' . $_SESSION['FiltroSac']['DataInicio10'] . '" AND ' : FALSE;
+			$date_fim_sub_prc = ($_SESSION['FiltroSac']['DataFim10']) ? 'SPRC.DataSubSac <= "' . $_SESSION['FiltroSac']['DataFim10'] . '" AND ' : FALSE;
+
+			$hora_inicio_prc = ($_SESSION['FiltroSac']['HoraInicio9']) ? 'PRC.HoraSac >= "' . $_SESSION['FiltroSac']['HoraInicio9'] . '" AND ' : FALSE;
+			$hora_fim_prc = ($_SESSION['FiltroSac']['HoraFim9']) ? 'PRC.HoraSac <= "' . $_SESSION['FiltroSac']['HoraFim9'] . '" AND ' : FALSE;
+			
+			$hora_inicio_sub_prc = ($_SESSION['FiltroSac']['HoraInicio10']) ? 'SPRC.HoraSubSac >= "' . $_SESSION['FiltroSac']['HoraInicio10'] . '" AND ' : FALSE;
+			$hora_fim_sub_prc = ($_SESSION['FiltroSac']['HoraFim10']) ? 'SPRC.HoraSubSac <= "' . $_SESSION['FiltroSac']['HoraFim10'] . '" AND ' : FALSE;
+			
+			$data['Dia'] = ($_SESSION['FiltroSac']['Dia']) ? ' AND DAY(PRC.DataSac) = ' . $_SESSION['FiltroSac']['Dia'] : FALSE;
+			$data['Mesvenc'] = ($_SESSION['FiltroSac']['Mesvenc']) ? ' AND MONTH(PRC.DataSac) = ' . $_SESSION['FiltroSac']['Mesvenc'] : FALSE;
+			$data['Ano'] = ($_SESSION['FiltroSac']['Ano']) ? ' AND YEAR(PRC.DataSac) = ' . $_SESSION['FiltroSac']['Ano'] : FALSE;
+			$data['Campo'] = (!$_SESSION['FiltroSac']['Campo']) ? 'PRC.DataSac' : $_SESSION['FiltroSac']['Campo'];
+			$data['Ordenamento'] = (!$_SESSION['FiltroSac']['Ordenamento']) ? 'DESC' : $_SESSION['FiltroSac']['Ordenamento'];
+			
+			$filtro10 = ($_SESSION['FiltroSac']['ConcluidoSac'] != '#') ? 'PRC.ConcluidoSac = "' . $_SESSION['FiltroSac']['ConcluidoSac'] . '" AND ' : FALSE;
+			
+			$filtro21 = ($_SESSION['FiltroSac']['idTab_TipoRD'] == 1) ? 'AND (OT.idTab_TipoRD = "1" OR F.idApp_Fornecedor = PRC.idApp_Fornecedor)' : FALSE;
+			$filtro22 = ($_SESSION['FiltroSac']['idTab_TipoRD'] == 2) ? 'AND (OT.idTab_TipoRD = "2" OR C.idApp_Cliente = PRC.idApp_Cliente)' : FALSE;
+			
+			$data['idApp_Sac'] = ($_SESSION['FiltroSac']['idApp_Sac']) ? ' AND PRC.idApp_Sac = ' . $_SESSION['FiltroSac']['idApp_Sac'] . '  ': FALSE;		
+			$data['CategoriaSac'] = ($_SESSION['FiltroSac']['CategoriaSac']) ? ' AND PRC.CategoriaSac = ' . $_SESSION['FiltroSac']['CategoriaSac'] . '  ': FALSE;		
+			$data['Marketing'] = ($_SESSION['FiltroSac']['Marketing']) ? ' AND PRC.Marketing = ' . $_SESSION['FiltroSac']['Marketing'] . '  ': FALSE;
+			$data['Orcamento'] = ($_SESSION['FiltroSac']['Orcamento']) ? ' AND PRC.idApp_OrcaTrata = ' . $_SESSION['FiltroSac']['Orcamento'] . '  ': FALSE;
+			$data['Cliente'] = ($_SESSION['FiltroSac']['Cliente']) ? ' AND PRC.idApp_Cliente = ' . $_SESSION['FiltroSac']['Cliente'] . '' : FALSE;
+			$data['idApp_Cliente'] = ($_SESSION['FiltroSac']['idApp_Cliente']) ? ' AND PRC.idApp_Cliente = ' . $_SESSION['FiltroSac']['idApp_Cliente'] . '' : FALSE;
+			$data['Fornecedor'] = ($_SESSION['FiltroSac']['Fornecedor']) ? ' AND PRC.idApp_Fornecedor = ' . $_SESSION['FiltroSac']['Fornecedor'] . '' : FALSE;
+			$data['idApp_Fornecedor'] = ($_SESSION['FiltroSac']['idApp_Fornecedor']) ? ' AND PRC.idApp_Cliente = ' . $_SESSION['FiltroSac']['idApp_Fornecedor'] . '' : FALSE;        
+			$filtro17 = ($_SESSION['FiltroSac']['NomeUsuario']) ? 'PRC.idSis_Usuario = "' . $_SESSION['FiltroSac']['NomeUsuario'] . '" AND ' : FALSE;        
+			$filtro18 = ($_SESSION['FiltroSac']['Compartilhar']) ? 'PRC.Compartilhar = "' . $_SESSION['FiltroSac']['Compartilhar'] . '" AND ' : FALSE;		
+			
+			$data['TipoSac'] = $_SESSION['FiltroSac']['TipoSac'];
+
+			$groupby = ($_SESSION['FiltroSac']['Agrupar'] && $_SESSION['FiltroSac']['Agrupar'] != "0") ? 'GROUP BY PRC.' . $_SESSION['FiltroSac']['Agrupar'] . '' : FALSE;
+
+		}	
+		/*
+		echo $this->db->last_query();
+		echo "<pre>";
+		print_r($groupby);
+		echo "</pre>";
+		exit();
+        */ 
+		
+		$querylimit = '';
+        if ($limit)
+            $querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		
+		$query = $this->db->query('
+            SELECT
+				PRC.idSis_Empresa,
+				PRC.idApp_Sac,
+                PRC.Sac,
+				PRC.DataSac,
+				PRC.HoraSac,
+				PRC.ConcluidoSac,
+				PRC.idApp_Cliente,
+				PRC.idApp_Fornecedor,
+				PRC.idApp_OrcaTrata,
+				PRC.Compartilhar,
+				PRC.CategoriaSac,
+				PRC.Marketing,
+				SPRC.SubSac,
+				SPRC.ConcluidoSubSac,
+				SPRC.DataSubSac,
+				SPRC.HoraSubSac,
+				OT.idTab_TipoRD,
+				CONCAT(IFNULL(C.NomeCliente,"")) AS NomeCliente,
+				CONCAT(IFNULL(F.NomeFornecedor,"")) AS NomeFornecedor,
+				U.idSis_Usuario,
+				U.CpfUsuario,
+				U.Nome AS NomeUsuario,
+				SU.idSis_Usuario,
+				SU.Nome AS NomeSubUsuario,
+				AU.idSis_Usuario,
+				AU.Nome AS NomeCompartilhar
+            FROM
+				App_Sac AS PRC
+					LEFT JOIN App_SubSac AS SPRC ON SPRC.idApp_Sac = PRC.idApp_Sac
+					LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = PRC.idApp_OrcaTrata
+					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = PRC.idApp_Cliente
+					LEFT JOIN App_Fornecedor AS F ON F.idApp_Fornecedor = PRC.idApp_Fornecedor
+					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = PRC.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS AU ON AU.idSis_Usuario = PRC.Compartilhar
+					LEFT JOIN Sis_Usuario AS SU ON SU.idSis_Usuario = SPRC.idSis_Usuario
+            WHERE
+                ' . $date_inicio_prc . '
+                ' . $date_fim_prc . '
+                ' . $date_inicio_sub_prc . '
+                ' . $date_fim_sub_prc . '
+                ' . $hora_inicio_prc . '
+                ' . $hora_fim_prc . '
+                ' . $hora_inicio_sub_prc . '
+                ' . $hora_fim_sub_prc . '
+				' . $filtro10 . '
+				' . $filtro17 . '
+				' . $filtro18 . '
+				PRC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND 
+				PRC.idApp_OrcaTrata = 0 AND 
+				PRC.idApp_Cliente != 0 AND 
+				PRC.idApp_Fornecedor = 0 AND 
+				PRC.CategoriaSac != 0 AND 
+				PRC.Marketing = 0
+                ' . $filtro21 . ' 
+                ' . $filtro22 . '
+                ' . $data['idApp_Sac'] . '
+                ' . $data['CategoriaSac'] . '
+                ' . $data['Marketing'] . '
+                ' . $data['Orcamento'] . '
+                ' . $data['Cliente'] . '
+                ' . $data['Fornecedor'] . '
+                ' . $data['idApp_Cliente'] . '
+                ' . $data['idApp_Fornecedor'] . '
+			' . $groupby . '
+            ORDER BY
+                ' . $data['Campo'] . ' 
+				' . $data['Ordenamento'] . '
+			' . $querylimit . '
+		');
+
+		if($total == TRUE) {
+			return $query->num_rows();
+		}
+		
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+				$row->DataSac = $this->basico->mascara_data($row->DataSac, 'barras');
+				$row->ConcluidoSac = $this->basico->mascara_palavra_completa($row->ConcluidoSac, 'NS');
+				$row->DataSubSac = $this->basico->mascara_data($row->DataSubSac, 'barras');
+				$row->ConcluidoSubSac = $this->basico->mascara_palavra_completa($row->ConcluidoSubSac, 'NS');
+				
+				if($row->Compartilhar == "0"){
+					$row->NomeCompartilhar = 'Todos';
+				}
+				
+				if($row->CategoriaSac == 1){
+					$row->CategoriaSac = 'Solicitação';
+				}elseif($row->CategoriaSac == 2){
+					$row->CategoriaSac = 'Elogio';
+				}elseif($row->CategoriaSac == 3){
+					$row->CategoriaSac = 'Reclamação';
+				}
+				
+				if($row->Marketing == 1){
+					$row->Marketing = 'Atualização';
+				}elseif($row->Marketing == 2){
+					$row->Marketing = 'Pesquisa';
+				}elseif($row->Marketing == 3){
+					$row->Marketing = 'Retorno';
+				}elseif($row->Marketing == 4){
+					$row->Marketing = 'Promoções';
+				}elseif($row->Marketing == 5){
+					$row->Marketing = 'Felicitações';
+				}
+				
+            }
+          /*
+		  //echo $this->db->last_query();
+		  echo "<br>";
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+		  */
+            return $query;
+        }
+
+    }
+
+	public function list_marketing($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+
+		if($data != FALSE){
+					
+			$date_inicio_prc = ($data['DataInicio9']) ? 'PRC.DataMarketing >= "' . $data['DataInicio9'] . '" AND ' : FALSE;
+			$date_fim_prc = ($data['DataFim9']) ? 'PRC.DataMarketing <= "' . $data['DataFim9'] . '" AND ' : FALSE;
+			
+			$date_inicio_sub_prc = ($data['DataInicio10']) ? 'SPRC.DataSubMarketing >= "' . $data['DataInicio10'] . '" AND ' : FALSE;
+			$date_fim_sub_prc = ($data['DataFim10']) ? 'SPRC.DataSubMarketing <= "' . $data['DataFim10'] . '" AND ' : FALSE;
+
+			$hora_inicio_prc = ($data['HoraInicio9']) ? 'PRC.HoraMarketing >= "' . $data['HoraInicio9'] . '" AND ' : FALSE;
+			$hora_fim_prc = ($data['HoraFim9']) ? 'PRC.HoraMarketing <= "' . $data['HoraFim9'] . '" AND ' : FALSE;
+			
+			$hora_inicio_sub_prc = ($data['HoraInicio10']) ? 'SPRC.HoraSubMarketing >= "' . $data['HoraInicio10'] . '" AND ' : FALSE;
+			$hora_fim_sub_prc = ($data['HoraFim10']) ? 'SPRC.HoraSubMarketing <= "' . $data['HoraFim10'] . '" AND ' : FALSE;
+			
+			$data['Dia'] = ($data['Dia']) ? ' AND DAY(PRC.DataMarketing) = ' . $data['Dia'] : FALSE;
+			$data['Mesvenc'] = ($data['Mesvenc']) ? ' AND MONTH(PRC.DataMarketing) = ' . $data['Mesvenc'] : FALSE;
+			$data['Ano'] = ($data['Ano']) ? ' AND YEAR(PRC.DataMarketing) = ' . $data['Ano'] : FALSE;
+			$data['Campo'] = (!$data['Campo']) ? 'PRC.DataMarketing' : $data['Campo'];
+			$data['Ordenamento'] = (!$data['Ordenamento']) ? 'DESC' : $data['Ordenamento'];
+			
+			$filtro10 = ($data['ConcluidoMarketing'] != '#') ? 'PRC.ConcluidoMarketing = "' . $data['ConcluidoMarketing'] . '" AND ' : FALSE;
+			
+			$filtro21 = ($data['idTab_TipoRD'] == 1) ? 'AND (OT.idTab_TipoRD = "1" OR F.idApp_Fornecedor = PRC.idApp_Fornecedor)' : FALSE;
+			$filtro22 = ($data['idTab_TipoRD'] == 2) ? 'AND (OT.idTab_TipoRD = "2" OR C.idApp_Cliente = PRC.idApp_Cliente)' : FALSE;
+			
+			$data['idApp_Marketing'] = ($data['idApp_Marketing']) ? ' AND PRC.idApp_Marketing = ' . $data['idApp_Marketing'] . '  ': FALSE;		
+			$data['Sac'] = ($data['Sac']) ? ' AND PRC.Sac = ' . $data['Sac'] . '  ': FALSE;		
+			$data['CategoriaMarketing'] = ($data['CategoriaMarketing']) ? ' AND PRC.CategoriaMarketing = ' . $data['CategoriaMarketing'] . '  ': FALSE;
+			$data['Orcamento'] = ($data['Orcamento']) ? ' AND PRC.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
+			$data['Cliente'] = ($data['Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
+			$data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;
+			$data['Fornecedor'] = ($data['Fornecedor']) ? ' AND PRC.idApp_Fornecedor = ' . $data['Fornecedor'] . '' : FALSE;
+			$data['idApp_Fornecedor'] = ($data['idApp_Fornecedor']) ? ' AND PRC.idApp_Cliente = ' . $data['idApp_Fornecedor'] . '' : FALSE;        
+			$filtro17 = ($data['NomeUsuario']) ? 'PRC.idSis_Usuario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;        
+			$filtro18 = ($data['Compartilhar']) ? 'PRC.Compartilhar = "' . $data['Compartilhar'] . '" AND ' : FALSE;		
+			
+			$data['TipoMarketing'] = $data['TipoMarketing'];
+			if($data['TipoMarketing'] == 1){
+				$tipoprocedimento = '(PRC.idApp_OrcaTrata != 0 AND PRC.idApp_Cliente = 0 AND PRC.Sac = 0 AND PRC.Marketing = 0)';
+			}elseif($data['TipoMarketing'] == 2){
+				$tipoprocedimento = '(PRC.idApp_OrcaTrata != 0 AND PRC.idApp_Fornecedor = 0 AND PRC.Sac = 0 AND PRC.Marketing = 0)';
+			}elseif($data['TipoMarketing'] == 3){
+				$tipoprocedimento = '(PRC.idApp_OrcaTrata = 0 AND PRC.idApp_Cliente != 0 AND PRC.idApp_Fornecedor = 0 AND PRC.Sac != 0 AND PRC.Marketing = 0)';
+			}elseif($data['TipoMarketing'] == 4){
+				$tipoprocedimento = '(PRC.idApp_OrcaTrata = 0 AND PRC.idApp_Cliente != 0 AND PRC.idApp_Fornecedor = 0 AND PRC.Sac = 0 AND PRC.Marketing != 0)';
+			}
+			$groupby = ($data['Agrupar'] && $data['Agrupar'] != "0") ? 'GROUP BY PRC.' . $data['Agrupar'] . '' : FALSE;
+			
+		}else{
+					
+			$date_inicio_prc = ($_SESSION['FiltroMarketing']['DataInicio9']) ? 'PRC.DataMarketing >= "' . $_SESSION['FiltroMarketing']['DataInicio9'] . '" AND ' : FALSE;
+			$date_fim_prc = ($_SESSION['FiltroMarketing']['DataFim9']) ? 'PRC.DataMarketing <= "' . $_SESSION['FiltroMarketing']['DataFim9'] . '" AND ' : FALSE;
+			
+			$date_inicio_sub_prc = ($_SESSION['FiltroMarketing']['DataInicio10']) ? 'SPRC.DataSubMarketing >= "' . $_SESSION['FiltroMarketing']['DataInicio10'] . '" AND ' : FALSE;
+			$date_fim_sub_prc = ($_SESSION['FiltroMarketing']['DataFim10']) ? 'SPRC.DataSubMarketing <= "' . $_SESSION['FiltroMarketing']['DataFim10'] . '" AND ' : FALSE;
+
+			$hora_inicio_prc = ($_SESSION['FiltroMarketing']['HoraInicio9']) ? 'PRC.HoraMarketing >= "' . $_SESSION['FiltroMarketing']['HoraInicio9'] . '" AND ' : FALSE;
+			$hora_fim_prc = ($_SESSION['FiltroMarketing']['HoraFim9']) ? 'PRC.HoraMarketing <= "' . $_SESSION['FiltroMarketing']['HoraFim9'] . '" AND ' : FALSE;
+			
+			$hora_inicio_sub_prc = ($_SESSION['FiltroMarketing']['HoraInicio10']) ? 'SPRC.HoraSubMarketing >= "' . $_SESSION['FiltroMarketing']['HoraInicio10'] . '" AND ' : FALSE;
+			$hora_fim_sub_prc = ($_SESSION['FiltroMarketing']['HoraFim10']) ? 'SPRC.HoraSubMarketing <= "' . $_SESSION['FiltroMarketing']['HoraFim10'] . '" AND ' : FALSE;
+			
+			$data['Dia'] = ($_SESSION['FiltroMarketing']['Dia']) ? ' AND DAY(PRC.DataMarketing) = ' . $_SESSION['FiltroMarketing']['Dia'] : FALSE;
+			$data['Mesvenc'] = ($_SESSION['FiltroMarketing']['Mesvenc']) ? ' AND MONTH(PRC.DataMarketing) = ' . $_SESSION['FiltroMarketing']['Mesvenc'] : FALSE;
+			$data['Ano'] = ($_SESSION['FiltroMarketing']['Ano']) ? ' AND YEAR(PRC.DataMarketing) = ' . $_SESSION['FiltroMarketing']['Ano'] : FALSE;
+			$data['Campo'] = (!$_SESSION['FiltroMarketing']['Campo']) ? 'PRC.DataMarketing' : $_SESSION['FiltroMarketing']['Campo'];
+			$data['Ordenamento'] = (!$_SESSION['FiltroMarketing']['Ordenamento']) ? 'DESC' : $_SESSION['FiltroMarketing']['Ordenamento'];
+			
+			$filtro10 = ($_SESSION['FiltroMarketing']['ConcluidoMarketing'] != '#') ? 'PRC.ConcluidoMarketing = "' . $_SESSION['FiltroMarketing']['ConcluidoMarketing'] . '" AND ' : FALSE;
+			
+			$filtro21 = ($_SESSION['FiltroMarketing']['idTab_TipoRD'] == 1) ? 'AND (OT.idTab_TipoRD = "1" OR F.idApp_Fornecedor = PRC.idApp_Fornecedor)' : FALSE;
+			$filtro22 = ($_SESSION['FiltroMarketing']['idTab_TipoRD'] == 2) ? 'AND (OT.idTab_TipoRD = "2" OR C.idApp_Cliente = PRC.idApp_Cliente)' : FALSE;
+			
+			$data['idApp_Marketing'] = ($_SESSION['FiltroMarketing']['idApp_Marketing']) ? ' AND PRC.idApp_Marketing = ' . $_SESSION['FiltroMarketing']['idApp_Marketing'] . '  ': FALSE;		
+			$data['Sac'] = ($_SESSION['FiltroMarketing']['Sac']) ? ' AND PRC.Sac = ' . $_SESSION['FiltroMarketing']['Sac'] . '  ': FALSE;		
+			$data['CategoriaMarketing'] = ($_SESSION['FiltroMarketing']['CategoriaMarketing']) ? ' AND PRC.CategoriaMarketing = ' . $_SESSION['FiltroMarketing']['CategoriaMarketing'] . '  ': FALSE;
+			$data['Orcamento'] = ($_SESSION['FiltroMarketing']['Orcamento']) ? ' AND PRC.idApp_OrcaTrata = ' . $_SESSION['FiltroMarketing']['Orcamento'] . '  ': FALSE;
+			$data['Cliente'] = ($_SESSION['FiltroMarketing']['Cliente']) ? ' AND PRC.idApp_Cliente = ' . $_SESSION['FiltroMarketing']['Cliente'] . '' : FALSE;
+			$data['idApp_Cliente'] = ($_SESSION['FiltroMarketing']['idApp_Cliente']) ? ' AND PRC.idApp_Cliente = ' . $_SESSION['FiltroMarketing']['idApp_Cliente'] . '' : FALSE;
+			$data['Fornecedor'] = ($_SESSION['FiltroMarketing']['Fornecedor']) ? ' AND PRC.idApp_Fornecedor = ' . $_SESSION['FiltroMarketing']['Fornecedor'] . '' : FALSE;
+			$data['idApp_Fornecedor'] = ($_SESSION['FiltroMarketing']['idApp_Fornecedor']) ? ' AND PRC.idApp_Cliente = ' . $_SESSION['FiltroMarketing']['idApp_Fornecedor'] . '' : FALSE;        
+			$filtro17 = ($_SESSION['FiltroMarketing']['NomeUsuario']) ? 'PRC.idSis_Usuario = "' . $_SESSION['FiltroMarketing']['NomeUsuario'] . '" AND ' : FALSE;        
+			$filtro18 = ($_SESSION['FiltroMarketing']['Compartilhar']) ? 'PRC.Compartilhar = "' . $_SESSION['FiltroMarketing']['Compartilhar'] . '" AND ' : FALSE;		
+			
+			$data['TipoMarketing'] = $_SESSION['FiltroMarketing']['TipoMarketing'];
+
+			$groupby = ($_SESSION['FiltroMarketing']['Agrupar'] && $_SESSION['FiltroMarketing']['Agrupar'] != "0") ? 'GROUP BY PRC.' . $_SESSION['FiltroMarketing']['Agrupar'] . '' : FALSE;
+					
+		}	
+		/*
+		echo $this->db->last_query();
+		echo "<pre>";
+		print_r($groupby);
+		echo "</pre>";
+		exit();
+        */ 
+		
+		$querylimit = '';
+        if ($limit)
+            $querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		
+		$query = $this->db->query('
+            SELECT
+				PRC.idSis_Empresa,
+				PRC.idApp_Marketing,
+                PRC.Marketing,
+				PRC.DataMarketing,
+				PRC.HoraMarketing,
+				PRC.ConcluidoMarketing,
+				PRC.idApp_Cliente,
+				PRC.idApp_Fornecedor,
+				PRC.idApp_OrcaTrata,
+				PRC.Compartilhar,
+				PRC.Sac,
+				PRC.CategoriaMarketing,
+				SPRC.SubMarketing,
+				SPRC.ConcluidoSubMarketing,
+				SPRC.DataSubMarketing,
+				SPRC.HoraSubMarketing,
+				OT.idTab_TipoRD,
+				CONCAT(IFNULL(C.NomeCliente,"")) AS NomeCliente,
+				CONCAT(IFNULL(F.NomeFornecedor,"")) AS NomeFornecedor,
+				U.idSis_Usuario,
+				U.CpfUsuario,
+				U.Nome AS NomeUsuario,
+				SU.idSis_Usuario,
+				SU.Nome AS NomeSubUsuario,
+				AU.idSis_Usuario,
+				AU.Nome AS NomeCompartilhar
+            FROM
+				App_Marketing AS PRC
+					LEFT JOIN App_SubMarketing AS SPRC ON SPRC.idApp_Marketing = PRC.idApp_Marketing
+					LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = PRC.idApp_OrcaTrata
+					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = PRC.idApp_Cliente
+					LEFT JOIN App_Fornecedor AS F ON F.idApp_Fornecedor = PRC.idApp_Fornecedor
+					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = PRC.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS AU ON AU.idSis_Usuario = PRC.Compartilhar
+					LEFT JOIN Sis_Usuario AS SU ON SU.idSis_Usuario = SPRC.idSis_Usuario
+            WHERE
+                ' . $date_inicio_prc . '
+                ' . $date_fim_prc . '
+                ' . $date_inicio_sub_prc . '
+                ' . $date_fim_sub_prc . '
+                ' . $hora_inicio_prc . '
+                ' . $hora_fim_prc . '
+                ' . $hora_inicio_sub_prc . '
+                ' . $hora_fim_sub_prc . '
+				' . $filtro10 . '
+				' . $filtro17 . '
+				' . $filtro18 . '
+				PRC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				PRC.idApp_OrcaTrata = 0 AND 
+				PRC.idApp_Cliente != 0 AND 
+				PRC.idApp_Fornecedor = 0 AND 
+				PRC.Sac = 0 AND 
+				PRC.CategoriaMarketing != 0 
+                ' . $filtro21 . ' 
+                ' . $filtro22 . '
+                ' . $data['idApp_Marketing'] . '
+                ' . $data['Sac'] . '
+                ' . $data['CategoriaMarketing'] . '
+                ' . $data['Orcamento'] . '
+                ' . $data['Cliente'] . '
+                ' . $data['Fornecedor'] . '
+                ' . $data['idApp_Cliente'] . '
+                ' . $data['idApp_Fornecedor'] . '
+			' . $groupby . '
+            ORDER BY
+                ' . $data['Campo'] . ' 
+				' . $data['Ordenamento'] . '
+			' . $querylimit . '
+		');
+
+		if($total == TRUE) {
+			return $query->num_rows();
+		}
+		
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            foreach ($query->result() as $row) {
+				$row->DataMarketing = $this->basico->mascara_data($row->DataMarketing, 'barras');
+				$row->ConcluidoMarketing = $this->basico->mascara_palavra_completa($row->ConcluidoMarketing, 'NS');
+				$row->DataSubMarketing = $this->basico->mascara_data($row->DataSubMarketing, 'barras');
+				$row->ConcluidoSubMarketing = $this->basico->mascara_palavra_completa($row->ConcluidoSubMarketing, 'NS');
+				
+				if($row->Compartilhar == "0"){
+					$row->NomeCompartilhar = 'Todos';
+				}
+				
+				if($row->Sac == 1){
+					$row->Sac = 'Solicitação';
+				}elseif($row->Sac == 2){
+					$row->Sac = 'Elogio';
+				}elseif($row->Sac == 3){
+					$row->Sac = 'Reclamação';
+				}
+				
+				if($row->CategoriaMarketing == 1){
+					$row->CategoriaMarketing = 'Atualização';
+				}elseif($row->CategoriaMarketing == 2){
+					$row->CategoriaMarketing = 'Pesquisa';
+				}elseif($row->CategoriaMarketing == 3){
+					$row->CategoriaMarketing = 'Retorno';
+				}elseif($row->CategoriaMarketing == 4){
+					$row->CategoriaMarketing = 'Promoções';
+				}elseif($row->CategoriaMarketing == 5){
+					$row->CategoriaMarketing = 'Felicitações';
+				}
+				
+            }
+          /*
+		  //echo $this->db->last_query();
+		  echo "<br>";
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+		  */
+            return $query;
+        }
+
+    }
 	
 	public function list1_receitadiaria($data, $completo) {
 		
@@ -6941,31 +7395,31 @@ exit();*/
 
         if ($data['DataFim']) {
             $consulta =
-                '(P.DataProcedimento >= "' . $data['DataInicio'] . '" AND P.DataProcedimento <= "' . $data['DataFim'] . '")';
+                '(P.DataTarefa >= "' . $data['DataInicio'] . '" AND P.DataTarefa <= "' . $data['DataFim'] . '")';
         }
         else {
             $consulta =
-                '(P.DataProcedimento >= "' . $data['DataInicio'] . '")';
+                '(P.DataTarefa >= "' . $data['DataInicio'] . '")';
         }
 		
-        $data['Campo'] = (!$data['Campo']) ? 'P.DataProcedimento' : $data['Campo'];
+        $data['Campo'] = (!$data['Campo']) ? 'P.DataTarefa' : $data['Campo'];
         $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
-		$filtro4 = ($data['ConcluidoProcedimento']) ? 'P.ConcluidoProcedimento = "' . $data['ConcluidoProcedimento'] . '" AND ' : FALSE;
+		$filtro4 = ($data['ConcluidoTarefa']) ? 'P.ConcluidoTarefa = "' . $data['ConcluidoTarefa'] . '" AND ' : FALSE;
 		#$filtro5 = ($data['Prioridade']) ? 'P.Prioridade = "' . $data['Prioridade'] . '" AND ' : FALSE;
-		#$filtro5 = ($data['ConcluidoProcedimento'] != '0') ? 'P.ConcluidoProcedimento = "' . $data['ConcluidoProcedimento'] . '" AND ' : FALSE;
+		#$filtro5 = ($data['ConcluidoTarefa'] != '0') ? 'P.ConcluidoTarefa = "' . $data['ConcluidoTarefa'] . '" AND ' : FALSE;
         $filtro6 = ($data['Prioridade'] != '0') ? 'P.Prioridade = "' . $data['Prioridade'] . '" AND ' : FALSE;		
 		$filtro11 = ($data['Statustarefa'] != '0') ? 'P.Statustarefa = "' . $data['Statustarefa'] . '" AND ' : FALSE;
 		$filtro12 = ($data['Statussubtarefa'] != '0') ? 'SP.Statussubtarefa = "' . $data['Statussubtarefa'] . '" AND ' : FALSE;
 		$filtro9 = ($data['Categoria'] != '0') ? 'P.Categoria = "' . $data['Categoria'] . '" AND ' : FALSE;
-		$filtro8 = (($data['ConcluidoSubProcedimento'] != '0') && ($data['ConcluidoSubProcedimento'] != 'M')) ? 'SP.ConcluidoSubProcedimento = "' . $data['ConcluidoSubProcedimento'] . '" AND ' : FALSE;
-		$filtro3 = ($data['ConcluidoSubProcedimento'] == 'M') ? '((SP.ConcluidoSubProcedimento = "S") OR (SP.ConcluidoSubProcedimento = "N")) AND ' : FALSE;
+		$filtro8 = (($data['ConcluidoSubTarefa'] != '0') && ($data['ConcluidoSubTarefa'] != 'M')) ? 'SP.ConcluidoSubTarefa = "' . $data['ConcluidoSubTarefa'] . '" AND ' : FALSE;
+		$filtro3 = ($data['ConcluidoSubTarefa'] == 'M') ? '((SP.ConcluidoSubTarefa = "S") OR (SP.ConcluidoSubTarefa = "N")) AND ' : FALSE;
 		$filtro10 = ($data['SubPrioridade'] != '0') ? 'SP.Prioridade = "' . $data['SubPrioridade'] . '" AND ' : FALSE;
-		$data['Procedimento'] = ($data['Procedimento']) ? ' AND P.idApp_Procedimento = ' . $data['Procedimento'] : FALSE;
-		#$data['ConcluidoProcedimento'] = ($data['ConcluidoProcedimento'] != '') ? ' AND P.ConcluidoProcedimento = ' . $data['ConcluidoProcedimento'] : FALSE;
+		$data['Tarefa'] = ($data['Tarefa']) ? ' AND P.idApp_Tarefa = ' . $data['Tarefa'] : FALSE;
+		#$data['ConcluidoTarefa'] = ($data['ConcluidoTarefa'] != '') ? ' AND P.ConcluidoTarefa = ' . $data['ConcluidoTarefa'] : FALSE;
 		#$data['Prioridade'] = ($data['Prioridade'] != '') ? ' AND P.Prioridade = ' . $data['Prioridade'] : FALSE;
-		#$permissao1 = (($_SESSION['FiltroAlteraProcedimento']['Categoria'] != "0" ) && ($_SESSION['FiltroAlteraProcedimento']['Categoria'] != '' )) ? 'P.Categoria = "' . $_SESSION['FiltroAlteraProcedimento']['Categoria'] . '" AND ' : FALSE;
-		#$permissao2 = (($_SESSION['FiltroAlteraProcedimento']['ConcluidoProcedimento'] != "0" ) && ($_SESSION['FiltroAlteraProcedimento']['ConcluidoProcedimento'] != '' )) ? 'P.ConcluidoProcedimento = "' . $_SESSION['FiltroAlteraProcedimento']['ConcluidoProcedimento'] . '" AND ' : FALSE;
-		#$permissao3 = (($_SESSION['FiltroAlteraProcedimento']['Prioridade'] != "0" ) && ($_SESSION['FiltroAlteraProcedimento']['Prioridade'] != '' )) ? 'P.Prioridade = "' . $_SESSION['FiltroAlteraProcedimento']['Prioridade'] . '" AND ' : FALSE;
+		#$permissao1 = (($_SESSION['FiltroAlteraTarefa']['Categoria'] != "0" ) && ($_SESSION['FiltroAlteraTarefa']['Categoria'] != '' )) ? 'P.Categoria = "' . $_SESSION['FiltroAlteraTarefa']['Categoria'] . '" AND ' : FALSE;
+		#$permissao2 = (($_SESSION['FiltroAlteraTarefa']['ConcluidoTarefa'] != "0" ) && ($_SESSION['FiltroAlteraTarefa']['ConcluidoTarefa'] != '' )) ? 'P.ConcluidoTarefa = "' . $_SESSION['FiltroAlteraTarefa']['ConcluidoTarefa'] . '" AND ' : FALSE;
+		#$permissao3 = (($_SESSION['FiltroAlteraTarefa']['Prioridade'] != "0" ) && ($_SESSION['FiltroAlteraTarefa']['Prioridade'] != '' )) ? 'P.Prioridade = "' . $_SESSION['FiltroAlteraTarefa']['Prioridade'] . '" AND ' : FALSE;
 
 		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5) ? '(P.Compartilhar = ' . $_SESSION['log']['idSis_Usuario'] . ' OR P.Compartilhar = 0) AND ' : FALSE;
 		$permissao2 = ($_SESSION['log']['idSis_Empresa'] != 5) ? 'OR P.Compartilhar = 0' : FALSE;
@@ -6988,29 +7442,29 @@ exit();*/
 				U.Nome AS NomeUsuario,
 				AU.Nome AS Comp,
 				P.idSis_Empresa,
-				P.idApp_Procedimento,
-                P.Procedimento,
-				P.DataProcedimento,
-				P.DataProcedimentoLimite,
-				P.ConcluidoProcedimento,
+				P.idApp_Tarefa,
+                P.Tarefa,
+				P.DataTarefa,
+				P.DataTarefaLimite,
+				P.ConcluidoTarefa,
 				P.Prioridade,
 				P.Statustarefa,
 				P.Compartilhar,
 				CT.Categoria,
-				SP.SubProcedimento,
+				SP.SubTarefa,
 				SP.Statussubtarefa,
-				SP.ConcluidoSubProcedimento,
-				SP.DataSubProcedimento,
-				SP.DataSubProcedimentoLimite,
+				SP.ConcluidoSubTarefa,
+				SP.DataSubTarefa,
+				SP.DataSubTarefaLimite,
 				SP.Prioridade AS SubPrioridade,
 				SN.StatusSN
             FROM
-				App_Procedimento AS P
-					LEFT JOIN App_SubProcedimento AS SP ON SP.idApp_Procedimento = P.idApp_Procedimento
+				App_Tarefa AS P
+					LEFT JOIN App_SubTarefa AS SP ON SP.idApp_Tarefa = P.idApp_Tarefa
 					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = P.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS AU ON AU.idSis_Usuario = P.Compartilhar
 					LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = P.idSis_Empresa
-					LEFT JOIN Tab_StatusSN AS SN ON SN.Abrev = P.ConcluidoProcedimento
+					LEFT JOIN Tab_StatusSN AS SN ON SN.Abrev = P.ConcluidoTarefa
 					LEFT JOIN Tab_Categoria AS CT ON CT.idTab_Categoria = P.Categoria
             WHERE
 				' . $permissao . '
@@ -7025,7 +7479,7 @@ exit();*/
 				P.idApp_OrcaTrata = "0" AND
 				P.idApp_Cliente = "0" AND
 				P.idApp_Fornecedor = "0" 
-				' . $data['Procedimento'] . '
+				' . $data['Tarefa'] . '
 			' . $groupby . '
 			ORDER BY
 				' . $data['Campo'] . '
@@ -7048,13 +7502,13 @@ exit();*/
 
             $somatarefa=0;
             foreach ($query->result() as $row) {
-				$row->DataProcedimento = $this->basico->mascara_data($row->DataProcedimento, 'barras');
-				$row->DataProcedimentoLimite = $this->basico->mascara_data($row->DataProcedimentoLimite, 'barras');
-				$row->DataSubProcedimento = $this->basico->mascara_data($row->DataSubProcedimento, 'barras');
-				$row->DataSubProcedimentoLimite = $this->basico->mascara_data($row->DataSubProcedimentoLimite, 'barras');				
+				$row->DataTarefa = $this->basico->mascara_data($row->DataTarefa, 'barras');
+				$row->DataTarefaLimite = $this->basico->mascara_data($row->DataTarefaLimite, 'barras');
+				$row->DataSubTarefa = $this->basico->mascara_data($row->DataSubTarefa, 'barras');
+				$row->DataSubTarefaLimite = $this->basico->mascara_data($row->DataSubTarefaLimite, 'barras');				
 				#$row->DataConclusao = $this->basico->mascara_data($row->DataConclusao, 'barras');
-				$row->ConcluidoProcedimento = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimento, 'NS');
-                $row->ConcluidoSubProcedimento = $this->basico->mascara_palavra_completa2($row->ConcluidoSubProcedimento, 'NS');
+				$row->ConcluidoTarefa = $this->basico->mascara_palavra_completa($row->ConcluidoTarefa, 'NS');
+                $row->ConcluidoSubTarefa = $this->basico->mascara_palavra_completa2($row->ConcluidoSubTarefa, 'NS');
 				$row->Prioridade = $this->basico->prioridade($row->Prioridade, '123');
 				$row->SubPrioridade = $this->basico->prioridade($row->SubPrioridade, '123');
 				$row->Statustarefa = $this->basico->statustrf($row->Statustarefa, '123');

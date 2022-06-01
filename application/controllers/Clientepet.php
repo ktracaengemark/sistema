@@ -134,11 +134,17 @@ class Clientepet extends CI_Controller {
         ($data['cadastrar']['Cadastrar'] == 'N') ?
             $data['div']['Cadastrar'] = '' : $data['div']['Cadastrar'] = 'style="display: none;"';		
 		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 		
 		$data['q3'] = $this->Clientepet_model->list_racapet(TRUE);
 		$data['list3'] = $this->load->view('clientepet/list_racapet', $data, TRUE);
-		
+	
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         $this->form_validation->set_rules('NomeClientePet', 'Nome do Pet', 'required|trim');
         $this->form_validation->set_rules('DataNascimentoPet', 'Data de Nascimento', 'trim|valid_date');
@@ -317,6 +323,12 @@ class Clientepet extends CI_Controller {
         ($data['cadastrar']['Cadastrar'] == 'N') ?
             $data['div']['Cadastrar'] = '' : $data['div']['Cadastrar'] = 'style="display: none;"';		
 		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 		
 		$data['q3'] = $this->Clientepet_model->list_racapet(TRUE);
@@ -463,6 +475,12 @@ class Clientepet extends CI_Controller {
             $data['list'] = FALSE;
         else
             $data['list'] = $this->load->view('clientepet/list_clientepet', $data, TRUE);
+		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
 
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
@@ -513,7 +531,15 @@ class Clientepet extends CI_Controller {
         $data['readonly'] = 'readonly';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
+		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
 
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+		
         #run form validation
         if ($this->form_validation->run() === FALSE) {
             #load login view

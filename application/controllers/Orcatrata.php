@@ -940,6 +940,12 @@ class Orcatrata extends CI_Controller {
 
         $data['datepicker'] = 'DatePicker';
         $data['timepicker'] = 'TimePicker';
+		
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'warning';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
 
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
@@ -3055,6 +3061,12 @@ class Orcatrata extends CI_Controller {
 
         $data['datepicker'] = 'DatePicker';
         $data['timepicker'] = 'TimePicker';
+		
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'warning';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
 
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
@@ -4662,8 +4674,14 @@ class Orcatrata extends CI_Controller {
 
         $data['datepicker'] = 'DatePicker';
         $data['timepicker'] = 'TimePicker';
+		
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'warning';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
 
-        #$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
 		$data['empresa'] = $this->Basico_model->get_end_empresa($_SESSION['log']['idSis_Empresa'], TRUE);
 
@@ -6624,9 +6642,23 @@ class Orcatrata extends CI_Controller {
 
         $data['datepicker'] = 'DatePicker';
         $data['timepicker'] = 'TimePicker';
+		
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'warning';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+		
+        $data['nav_orca'] 		= 'S';
+        $data['nav_status'] 	= 'S';
+        $data['nav_alterar'] 	= 'N';
+		
+        $data['nav_imprimir'] 	= 'N';
+        $data['nav_entrega'] 	= 'S';
+        $data['nav_cobranca'] 	= 'S';
 
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
-		
+
 		$data['empresa'] = $this->Basico_model->get_end_empresa($_SESSION['log']['idSis_Empresa'], TRUE);
 
 		$data['somatotal'] = floatval ($data['somatotal']);
@@ -8810,6 +8842,20 @@ class Orcatrata extends CI_Controller {
         $data['datepicker'] = 'DatePicker';
         $data['timepicker'] = 'TimePicker';
 
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'warning';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+		
+        $data['nav_orca'] 		= 'S';
+        $data['nav_status'] 	= 'S';
+        $data['nav_alterar'] 	= 'N';
+		
+        $data['nav_imprimir'] 	= 'N';
+        $data['nav_entrega'] 	= 'S';
+        $data['nav_cobranca'] 	= 'S';
+
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
         /*
@@ -10826,6 +10872,20 @@ class Orcatrata extends CI_Controller {
 
         $data['datepicker'] = 'DatePicker';
         $data['timepicker'] = 'TimePicker';
+		
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'warning';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+		
+        $data['nav_orca'] 		= 'S';
+        $data['nav_status'] 	= 'N';
+        $data['nav_alterar'] 	= 'S';
+		
+        $data['nav_imprimir'] 	= 'N';
+        $data['nav_entrega'] 	= 'S';
+        $data['nav_cobranca'] 	= 'S';
 
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
@@ -15778,6 +15838,23 @@ class Orcatrata extends CI_Controller {
 			echo "</pre>";
 			exit();		
 			*/
+
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'warning';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+		
+        $data['nav_orca'] 		= 'S';
+        $data['nav_status'] 	= 'S';
+        $data['nav_alterar'] 	= 'N';
+		
+        $data['nav_imprimir'] 	= 'N';
+        $data['nav_entrega'] 	= 'S';
+        $data['nav_cobranca'] 	= 'S';
+
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
 
@@ -15892,6 +15969,22 @@ class Orcatrata extends CI_Controller {
         $data['readonly'] = 'readonly';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
+
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'warning';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+		
+        $data['nav_orca'] 		= 'S';
+        $data['nav_status'] 	= 'S';
+        $data['nav_alterar'] 	= 'N';
+		
+        $data['nav_imprimir'] 	= 'N';
+        $data['nav_entrega'] 	= 'S';
+        $data['nav_cobranca'] 	= 'S';
+
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
  		(!$data['query']['Ativo_Arquivos']) ? $data['query']['Ativo_Arquivos'] = 'S' : FALSE;       
 		
@@ -16063,6 +16156,22 @@ class Orcatrata extends CI_Controller {
                 </button>
         ';
 
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'warning';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+		
+        $data['nav_orca'] 		= 'S';
+        $data['nav_status'] 	= 'S';
+        $data['nav_alterar'] 	= 'N';
+		
+        $data['nav_imprimir'] 	= 'N';
+        $data['nav_entrega'] 	= 'S';
+        $data['nav_cobranca'] 	= 'S';
+
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+
         $data['sidebar'] = 'col-sm-3 col-md-2';
         $data['main'] = 'col-sm-7 col-md-8';
 
@@ -16167,6 +16276,22 @@ class Orcatrata extends CI_Controller {
         $data['readonly'] = 'readonly';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
+
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'warning';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+		
+        $data['nav_orca'] 		= 'S';
+        $data['nav_status'] 	= 'S';
+        $data['nav_alterar'] 	= 'N';
+		
+        $data['nav_imprimir'] 	= 'N';
+        $data['nav_entrega'] 	= 'S';
+        $data['nav_cobranca'] 	= 'S';
+
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
  		(!$data['arquivos']['Ativo_Arquivos']) ? $data['arquivos']['Ativo_Arquivos'] = 'S' : FALSE;       
 		
@@ -23055,7 +23180,14 @@ class Orcatrata extends CI_Controller {
          */
 
         $data['list'] = $this->load->view('orcatrata/list_orcatrata', $data, TRUE);
-        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+		
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'warning';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+
+		$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
         $this->load->view('orcatrata/list_orcatrata', $data);
 

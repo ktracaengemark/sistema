@@ -1,16 +1,5 @@
 <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="col-md-4">	
-				<div id="piechart" style="width: auto; height: 300px;"></div>
-			</div>
-			<div class="col-md-4">
-				<div id="piechart3" style="width: auto; height: 300px;"></div>
-			</div>			
-			<div class="col-md-4">
-				<div id="piechart2" style="width: auto; height: 300px;"></div>
-			</div>
-		</div>		
+	<div class="row">	
 		<table class="table table-bordered table-condensed table-striped">	
 			<tfoot>
 				<tr>
@@ -18,7 +7,7 @@
 				</tr>
 			</tfoot>
 		</table>
-		<div style="overflow: auto; width: auto; height: 550px;">
+		<div style="overflow: auto; width: auto; height: auto;">
 			<table class="table table-bordered table-condensed table-striped">
 
 				<thead>
@@ -32,11 +21,11 @@
 						<!--<th class="active">Prior</th>
 						<th class="active">StatusTRF</th>-->
 						<th class="active">Tarefa</th>
-						<th class="active">Tarefa Concl.?</th>
+						<th class="active">Concl.?</th>
 						<th class="active">Inicia em:</th>
 						<th class="active">Conc. em:</th>
 						<th class="active">SubTarefa</th>
-						<th class="active">Ação Concl.?</th>
+						<th class="active">Concl.?</th>
 						<th class="active">Inicio em:</th>
 						<th class="active">Fim em:</th>
 						<?php if($_SESSION['log']['idSis_Empresa'] != 5) { ?>
@@ -69,43 +58,43 @@
 					foreach ($report->result_array() as $row) {
 						
 						#echo '<tr>';
-						echo '<tr class="clickable-row" data-href="' . base_url() . 'tarefa/alterar/' . $row['idApp_Procedimento'] . '">';
-							echo '<td>' . $row['idApp_Procedimento'] . '</td>';
+						echo '<tr class="clickable-row" data-href="' . base_url() . 'tarefa/alterar/' . $row['idApp_Tarefa'] . '">';
+							echo '<td>' . $row['idApp_Tarefa'] . '</td>';
 							if($_SESSION['log']['idSis_Empresa'] != 5) {	
 								echo '<td>' . $row['Comp'] . '</td>';
 							}
 							echo '<td>' . $row['Categoria'] . '</td>';
 							#echo '<td>' . $row['Prioridade'] . '</td>';
 							#echo '<td>' . $row['Statustarefa'] . '</td>';
-							echo '<td>' . $row['Procedimento'] . '</td>';
-							echo '<td>' . $row['ConcluidoProcedimento'] . '</td>';
-							echo '<td>' . $row['DataProcedimento'] . '</td>';
-							echo '<td>' . $row['DataProcedimentoLimite'] . '</td>';
-							echo '<td>' . $row['SubProcedimento'] . '</td>';
-							echo '<td>' . $row['ConcluidoSubProcedimento'] . '</td>';
-							echo '<td>' . $row['DataSubProcedimento'] . '</td>';
-							echo '<td>' . $row['DataSubProcedimentoLimite'] . '</td>';
+							echo '<td>' . $row['Tarefa'] . '</td>';
+							echo '<td>' . $row['ConcluidoTarefa'] . '</td>';
+							echo '<td>' . $row['DataTarefa'] . '</td>';
+							echo '<td>' . $row['DataTarefaLimite'] . '</td>';
+							echo '<td>' . $row['SubTarefa'] . '</td>';
+							echo '<td>' . $row['ConcluidoSubTarefa'] . '</td>';
+							echo '<td>' . $row['DataSubTarefa'] . '</td>';
+							echo '<td>' . $row['DataSubTarefaLimite'] . '</td>';
 							if($_SESSION['log']['idSis_Empresa'] != 5) {	
 								echo '<td>' . $row['NomeUsuario'] . '</td>';
 							}
 						echo '</tr>';
 						
-						$nomecliente = $row['Procedimento'];
+						$nomecliente = $row['Tarefa'];
 						$valorcliente = $row['Prioridade'];
 						$cliente[$i] = $nomecliente;
 						$valor[$i] = $valorcliente;
 						$i = $i + 1;
 						
-						if($row['ConcluidoSubProcedimento'] == 'Sim')
+						if($row['ConcluidoSubTarefa'] == 'Sim')
 							$cont_s_2++;
-						else if ($row['ConcluidoSubProcedimento'] == 'Não')
+						else if ($row['ConcluidoSubTarefa'] == 'Não')
 							$cont_n_2++;
 						else 
 							$cont_info_2++;
 						
-						if($row['ConcluidoProcedimento'] == 'Sim')
+						if($row['ConcluidoTarefa'] == 'Sim')
 							$cont_s_1++;
-						else if ($row['ConcluidoProcedimento'] == 'Não')
+						else if ($row['ConcluidoTarefa'] == 'Não')
 							$cont_n_1++;
 						else 
 							$cont_info_1++;
@@ -145,96 +134,111 @@
 				</tbody>
 
 			</table>
-			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-			<script type="text/javascript">
-			  google.charts.load('current', {'packages':['corechart']});
-			  google.charts.setOnLoadCallback(drawChart);
 
-			  function drawChart() {
-
-				var data = google.visualization.arrayToDataTable([
-				  ['Tarefas', ''],
-					
-					<?php 
-					$k = $i;
-					for ($i = 0; $i < $k; $i++){?>
-							
-					['<?php echo $cliente[$i] ?>', 1],
-
-					<?php } ?>
-				]);
-
-				var options = {
-				  title: 'Tarefa Dividida em - <?php echo $report->num_rows(); ?> partes'
-				};
-
-				var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-				chart.draw(data, options);
-			  }
-			</script>
-			<script type="text/javascript">
-			  google.charts.load('current', {'packages':['corechart']});
-			  google.charts.setOnLoadCallback(drawChart);
-
-			  function drawChart() {
-
-				var data = google.visualization.arrayToDataTable([
-				/*
-				["StsTrf", "Quantidade", { role: "style" } ],
-				["Fazer", <?php echo $cont_fazer2; ?>, "#b87333"],
-				["Fazendo", <?php echo $cont_fazendo2; ?>, "silver"],
-				["Feito", <?php echo $cont_feito2; ?>, "silver"],
-				["Nao Inform", <?php echo $cont_nao_infor2; ?>, "color: #e5e4e2"]
-				*/
-				
-				["StsTrf", "Quantidade", { role: "style" } ],
-				["Concluído", <?php echo $cont_s_1; ?>, "#b87333"],
-				["Não_Concluído", <?php echo $cont_n_1; ?>, "silver"],
-				["Nao_Inform", <?php echo $cont_info_1; ?>, "color: #e5e4e2"]				
-				
-				]);
-
-				var options = {
-				  title: 'Porcentagem do Status das Tarefas'
-				};
-
-				var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
-
-				chart.draw(data, options);
-			  }
-			</script>						
-			<script type="text/javascript">
-			  google.charts.load('current', {'packages':['corechart']});
-			  google.charts.setOnLoadCallback(drawChart);
-
-			  function drawChart() {
-
-				var data = google.visualization.arrayToDataTable([
-				/*
-				["StsSubTrf", "Quantidade", { role: "style" } ],
-				["Fazer", <?php echo $cont_fazer; ?>, "#b87333"],
-				["Fazendo", <?php echo $cont_fazendo; ?>, "silver"],
-				["Feito", <?php echo $cont_feito; ?>, "silver"],
-				["Nao Inform", <?php echo $cont_nao_infor; ?>, "color: #e5e4e2"]
-				*/
-				
-				["StsSubTrf", "Quantidade", { role: "style" } ],
-				["Concluído", <?php echo $cont_s_2; ?>, "#b87333"],
-				["Não_Concluído", <?php echo $cont_n_2; ?>, "silver"],
-				["Nao_Inform", <?php echo $cont_info_2; ?>, "color: #e5e4e2"]
-				
-				]);
-
-				var options = {
-				  title: 'Porcentagem do Status das Sub-Tarefas'
-				};
-
-				var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
-
-				chart.draw(data, options);
-			  }
-			</script>			
 		</div>
-	</div>
+	</div>	
+	<div class="row">
+		<div class="col-md-12">
+			<div class="col-md-4">	
+				<div id="piechart" style="width: auto; height: 300px;"></div>
+			</div>
+			<div class="col-md-4">
+				<div id="piechart3" style="width: auto; height: 300px;"></div>
+			</div>			
+			<div class="col-md-4">
+				<div id="piechart2" style="width: auto; height: 300px;"></div>
+			</div>
+		</div>
+	</div>	
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+	  google.charts.load('current', {'packages':['corechart']});
+	  google.charts.setOnLoadCallback(drawChart);
+
+	  function drawChart() {
+
+		var data = google.visualization.arrayToDataTable([
+		  ['Tarefas', ''],
+			
+			<?php 
+			$k = $i;
+			for ($i = 0; $i < $k; $i++){?>
+					
+			['<?php echo $cliente[$i] ?>', 1],
+
+			<?php } ?>
+		]);
+
+		var options = {
+		  title: 'Tarefa Dividida em - <?php echo $report->num_rows(); ?> partes'
+		};
+
+		var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+		chart.draw(data, options);
+	  }
+	</script>
+	<script type="text/javascript">
+	  google.charts.load('current', {'packages':['corechart']});
+	  google.charts.setOnLoadCallback(drawChart);
+
+	  function drawChart() {
+
+		var data = google.visualization.arrayToDataTable([
+		/*
+		["StsTrf", "Quantidade", { role: "style" } ],
+		["Fazer", <?php echo $cont_fazer2; ?>, "#b87333"],
+		["Fazendo", <?php echo $cont_fazendo2; ?>, "silver"],
+		["Feito", <?php echo $cont_feito2; ?>, "silver"],
+		["Nao Inform", <?php echo $cont_nao_infor2; ?>, "color: #e5e4e2"]
+		*/
+		
+		["StsTrf", "Quantidade", { role: "style" } ],
+		["Concluído", <?php echo $cont_s_1; ?>, "#b87333"],
+		["Não_Concluído", <?php echo $cont_n_1; ?>, "silver"],
+		["Nao_Inform", <?php echo $cont_info_1; ?>, "color: #e5e4e2"]				
+		
+		]);
+
+		var options = {
+		  title: 'Porcentagem do Status das Tarefas'
+		};
+
+		var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
+
+		chart.draw(data, options);
+	  }
+	</script>						
+	<script type="text/javascript">
+	  google.charts.load('current', {'packages':['corechart']});
+	  google.charts.setOnLoadCallback(drawChart);
+
+	  function drawChart() {
+
+		var data = google.visualization.arrayToDataTable([
+		/*
+		["StsSubTrf", "Quantidade", { role: "style" } ],
+		["Fazer", <?php echo $cont_fazer; ?>, "#b87333"],
+		["Fazendo", <?php echo $cont_fazendo; ?>, "silver"],
+		["Feito", <?php echo $cont_feito; ?>, "silver"],
+		["Nao Inform", <?php echo $cont_nao_infor; ?>, "color: #e5e4e2"]
+		*/
+		
+		["StsSubTrf", "Quantidade", { role: "style" } ],
+		["Concluído", <?php echo $cont_s_2; ?>, "#b87333"],
+		["Não_Concluído", <?php echo $cont_n_2; ?>, "silver"],
+		["Nao_Inform", <?php echo $cont_info_2; ?>, "color: #e5e4e2"]
+		
+		]);
+
+		var options = {
+		  title: 'Porcentagem do Status das Sub-Tarefas'
+		};
+
+		var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+
+		chart.draw(data, options);
+	  }
+	</script>
+
 </div>

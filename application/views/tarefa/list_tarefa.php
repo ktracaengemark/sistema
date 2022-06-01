@@ -3,7 +3,7 @@
 	<div class="form-group">
 		<div class="row">			
 			<a class="btn btn-lg btn-warning" href="<?php echo base_url() ?>tarefa/cadastrar" role="button"> 
-				<span class="glyphicon glyphicon-plus"></span> Nova Procedimento
+				<span class="glyphicon glyphicon-plus"></span> Nova Tarefa
 			</a>
 			<a class="btn btn-lg btn-info" href="<?php echo base_url() ?>agenda" role="button"> 
 				<span class="glyphicon glyphicon-calendar"></span> Agenda
@@ -34,7 +34,7 @@
 
                     <div class="bs-callout bs-callout-success" id=callout-overview-not-both>
 
-                        <a class="btn btn-success" href="<?php echo base_url() . 'tarefa/alterar/' . $row['idApp_Procedimento'] ?>" role="button">
+                        <a class="btn btn-success" href="<?php echo base_url() . 'tarefa/alterar/' . $row['idApp_Tarefa'] ?>" role="button">
                             <span class="glyphicon glyphicon-edit"></span> Editar Dados
                         </a>
 
@@ -45,28 +45,28 @@
                         
                         <h4>
 							<p>
-								<span class=""></span> <b>Procedimento:</b> <?php echo $row['idApp_Procedimento']; ?>
+								<span class=""></span> <b>Tarefa:</b> <?php echo $row['idApp_Tarefa']; ?>
                             </p>
 							<p>
-								<span class="glyphicon glyphicon-pencil"></span> <b></b> <?php echo nl2br($row['Procedimento']); ?>	
+								<span class="glyphicon glyphicon-pencil"></span> <b></b> <?php echo nl2br($row['Tarefa']); ?>	
 							</p>
                         </h4>
 						
 						<p>
-                            <?php if ($row['ProfissionalProcedimento']) { ?>
-                            <span class="glyphicon glyphicon-user"></span> <b>Responsável:</b> <?php echo $row['ProfissionalProcedimento']; ?> 
+                            <?php if ($row['ProfissionalTarefa']) { ?>
+                            <span class="glyphicon glyphicon-user"></span> <b>Responsável:</b> <?php echo $row['ProfissionalTarefa']; ?> 
                         </p>
 						<p>
 							<?php } if ($row['Rotina']) { ?>
                             <span class="glyphicon glyphicon-refresh"></span> <b>Rotina?</b> <?php echo $row['Rotina']; ?>							
 						</p>
 						<p>                           
-							<?php if ($row['DataProcedimento']) { ?>
-                            <span class="glyphicon glyphicon-calendar"></span> <b>Criada:</b> <?php echo $row['DataProcedimento']; ?> 
+							<?php if ($row['DataTarefa']) { ?>
+                            <span class="glyphicon glyphicon-calendar"></span> <b>Criada:</b> <?php echo $row['DataTarefa']; ?> 
                         </p>    
 						<p>	
-							<?php } if ($row['DataProcedimentoLimite']) { ?>
-                            <span class="glyphicon glyphicon-calendar"></span> <b>Prazo:</b> <?php echo $row['DataProcedimentoLimite']; ?>						
+							<?php } if ($row['DataTarefaLimite']) { ?>
+                            <span class="glyphicon glyphicon-calendar"></span> <b>Prazo:</b> <?php echo $row['DataTarefaLimite']; ?>						
 						</p>
 						<p>
 							<?php } if ($row['Prioridade']) { ?>
@@ -74,8 +74,8 @@
                             <?php } ?>						
 						</p>                       
 						<p>    
-							<?php } if ($row['ConcluidoProcedimento']) { ?>
-                            <span class="glyphicon glyphicon-thumbs-up"></span> <b>Procedimento Concluída?</b> <?php echo $row['ConcluidoProcedimento']; ?>
+							<?php } if ($row['ConcluidoTarefa']) { ?>
+                            <span class="glyphicon glyphicon-thumbs-up"></span> <b>Tarefa Concluída?</b> <?php echo $row['ConcluidoTarefa']; ?>
                             <?php } ?>
                         </p>                        
                     </div>
@@ -100,7 +100,7 @@
 
                     <div class="bs-callout bs-callout-danger" id=callout-overview-not-both>
 
-                        <a class="btn btn-danger" href="<?php echo base_url() . 'tarefa/alterar/' . $row['idApp_Procedimento'] ?>" role="button">
+                        <a class="btn btn-danger" href="<?php echo base_url() . 'tarefa/alterar/' . $row['idApp_Tarefa'] ?>" role="button">
                             <span class="glyphicon glyphicon-edit"></span> Editar Dados
                         </a>
 
@@ -108,28 +108,28 @@
 						
                         <h4>						
                             <p>
-								<span class=""></span> <b>Procedimento:</b> <?php echo $row['idApp_Procedimento']; ?>
+								<span class=""></span> <b>Tarefa:</b> <?php echo $row['idApp_Tarefa']; ?>
                             </p>
 							<p>
-								<span class="glyphicon glyphicon-pencil"></span> <b></b> <?php echo nl2br($row['Procedimento']); ?>	
+								<span class="glyphicon glyphicon-pencil"></span> <b></b> <?php echo nl2br($row['Tarefa']); ?>	
 							</p>					
                         </h4>
 						
 						<p>
-                            <?php if ($row['ProfissionalProcedimento']) { ?>
-                            <span class="glyphicon glyphicon-user"></span> <b>Responsável:</b> <?php echo $row['ProfissionalProcedimento']; ?> 
+                            <?php if ($row['ProfissionalTarefa']) { ?>
+                            <span class="glyphicon glyphicon-user"></span> <b>Responsável:</b> <?php echo $row['ProfissionalTarefa']; ?> 
                         </p>
 						<p>
 							<?php } if ($row['Rotina']) { ?>
                             <span class="glyphicon glyphicon-refresh"></span> <b>Rotina?</b> <?php echo $row['Rotina']; ?>							
 						</p>
 						<p>                           
-							<?php if ($row['DataProcedimento']) { ?>
-                            <span class="glyphicon glyphicon-calendar"></span> <b>Criada:</b> <?php echo $row['DataProcedimento']; ?> 
+							<?php if ($row['DataTarefa']) { ?>
+                            <span class="glyphicon glyphicon-calendar"></span> <b>Criada:</b> <?php echo $row['DataTarefa']; ?> 
                         </p>    
 						<p>	
-							<?php } if ($row['DataProcedimentoLimite']) { ?>
-                            <span class="glyphicon glyphicon-calendar"></span> <b>Prazo:</b> <?php echo $row['DataProcedimentoLimite']; ?>						
+							<?php } if ($row['DataTarefaLimite']) { ?>
+                            <span class="glyphicon glyphicon-calendar"></span> <b>Prazo:</b> <?php echo $row['DataTarefaLimite']; ?>						
 						</p>
 						<p>
 							<?php } if ($row['Prioridade']) { ?>
@@ -137,8 +137,8 @@
                             <?php } ?>						
 						</p>                       
 						<p>    
-							<?php } if ($row['ConcluidoProcedimento']) { ?>
-                            <span class="glyphicon glyphicon-thumbs-down"></span> <b>Procedimento Concluída?</b> <?php echo $row['ConcluidoProcedimento']; ?>
+							<?php } if ($row['ConcluidoTarefa']) { ?>
+                            <span class="glyphicon glyphicon-thumbs-down"></span> <b>Tarefa Concluída?</b> <?php echo $row['ConcluidoTarefa']; ?>
                             <?php } ?>
                         </p>                       
                     </div>

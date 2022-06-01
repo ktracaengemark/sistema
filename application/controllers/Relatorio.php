@@ -7011,7 +7011,473 @@ class Relatorio extends CI_Controller {
 
     }
 
-    public function proc_Sac() {
+    public function sac() {
+		
+		unset($_SESSION['FiltroSac']);
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+			'id_Cliente_Auto',
+			'NomeClienteAuto',
+        ), TRUE));	
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'idApp_Sac',
+            'CategoriaSac',
+            'Marketing',
+            'Orcamento',
+			'idTab_TipoRD',
+            'Cliente',
+			'idApp_Cliente',
+			'Fornecedor',
+			'idApp_Fornecedor',
+			'NomeUsuario',
+			'Compartilhar',
+			'DataInicio9',
+            'DataFim9',
+			'DataInicio10',
+            'DataFim10',
+			'HoraInicio9',
+            'HoraFim9',
+			'HoraInicio10',
+            'HoraFim10',
+			'Dia',
+			'Mesvenc',
+			'Ano',
+			'ConcluidoSac',
+            'Ordenamento',
+            'Campo',
+            'TipoSac',
+			'Agrupar',
+        ), TRUE));		
+
+        $data['select']['ConcluidoSac'] = array(
+			'#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+		$data['select']['CategoriaSac'] = array (
+            '0' => 'Todos',
+            '1' => 'Solicitação',
+            '2' => 'Elogio',
+			'3' => 'Reclamação',
+        );
+		
+		$data['select']['Marketing'] = array (
+            '0' => 'Todos',
+            '1' => 'Atualização',
+            '2' => 'Pesquisa',
+			'3' => 'Retorno',
+            '4' => 'Promoções',
+			'5' => 'Felicitações',
+        );
+		
+        $data['select']['Agrupar'] = array(
+			'0' => '::Nenhum::',
+			'idApp_Sac' => 'Chamada',
+			'idApp_Cliente' => 'Cliente',
+        );
+		
+		$data['select']['Campo'] = array(
+			'PRC.DataSac' => 'Data',
+            'PRC.idApp_Sac' => 'id',
+			'PRC.ConcluidoSac' => 'Concl.',
+			'PRC.idSis_Usuario' => 'Quem Cadastrou',
+			'PRC.Compartilhar' => 'Quem Fazer',
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'DESC' => 'Decrescente',
+			'ASC' => 'Crescente',
+        );
+
+        $data['select']['NomeUsuario'] = $this->Relatorio_model->select_usuario();
+		$data['select']['Dia'] = $this->Relatorio_model->select_dia();
+		$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
+		$data['select']['Compartilhar'] = $this->Relatorio_model->select_compartilhar();
+		
+		$data['query']['TipoSac'] = 3;
+		$data['query']['Marketing'] = 0;
+		$data['query']['Fornecedor'] = 0;		
+        $data['titulo1'] = 'Sac';
+		$data['tipoproc'] = 3;
+		$data['metodo'] = 2;
+		$data['form_open_path'] = 'relatorio/sac';
+		$data['panel'] = 'warning';
+		$data['TipoFinanceiro'] = 'Receitas';
+		$data['TipoRD'] = 0;
+        $data['nome'] = 'Cliente';
+		$data['editar'] = 0;
+		$data['print'] = 1;
+		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+		$data['imprimirlista'] = 'Sac/imprimir_lista_Sac/';
+		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
+		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		$data['paginacao'] = 'N';
+
+		$_SESSION['FiltroSac']['idApp_Sac'] = $data['query']['idApp_Sac'];
+		$_SESSION['FiltroSac']['CategoriaSac'] = $data['query']['CategoriaSac'];
+		$_SESSION['FiltroSac']['Marketing'] = $data['query']['Marketing'];
+		$_SESSION['FiltroSac']['Orcamento'] = $data['query']['Orcamento'];
+		$_SESSION['FiltroSac']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
+		$_SESSION['FiltroSac']['Cliente'] = $data['query']['Cliente'];
+		$_SESSION['FiltroSac']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+		$_SESSION['FiltroSac']['Fornecedor'] = $data['query']['Fornecedor'];
+		$_SESSION['FiltroSac']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
+		$_SESSION['FiltroSac']['NomeUsuario'] = $data['query']['NomeUsuario'];
+		$_SESSION['FiltroSac']['Compartilhar'] = $data['query']['Compartilhar'];
+		$_SESSION['FiltroSac']['TipoSac'] = $data['query']['TipoSac'];
+		$_SESSION['FiltroSac']['ConcluidoSac'] = $data['query']['ConcluidoSac'];
+        $_SESSION['FiltroSac']['DataInicio9'] = $this->basico->mascara_data($data['query']['DataInicio9'], 'mysql');
+		$_SESSION['FiltroSac']['DataFim9'] = $this->basico->mascara_data($data['query']['DataFim9'], 'mysql');
+        $_SESSION['FiltroSac']['DataInicio10'] = $this->basico->mascara_data($data['query']['DataInicio10'], 'mysql');
+		$_SESSION['FiltroSac']['DataFim10'] = $this->basico->mascara_data($data['query']['DataFim10'], 'mysql');
+        $_SESSION['FiltroSac']['HoraInicio9'] = $data['query']['HoraInicio9'];
+		$_SESSION['FiltroSac']['HoraFim9'] = $data['query']['HoraFim9'];
+        $_SESSION['FiltroSac']['HoraInicio10'] = $data['query']['HoraInicio10'];
+		$_SESSION['FiltroSac']['HoraFim10'] = $data['query']['HoraFim10'];
+		$_SESSION['FiltroSac']['Agrupar'] = $data['query']['Agrupar'];
+		$_SESSION['FiltroSac']['Campo'] = $data['query']['Campo'];
+		$_SESSION['FiltroSac']['Ordenamento'] = $data['query']['Ordenamento'];
+		$_SESSION['FiltroSac']['Dia'] = $data['query']['Dia'];
+		$_SESSION['FiltroSac']['Mesvenc'] = $data['query']['Mesvenc'];
+		$_SESSION['FiltroSac']['Ano'] = $data['query']['Ano'];			
+		
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+		$this->form_validation->set_rules('DataInicio9', 'Data Início do Sac', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim9', 'Data Fim do Sac', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio10', 'Data Início do SubSac', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim10', 'Data Fim do SubSac', 'trim|valid_date');
+		$this->form_validation->set_rules('HoraInicio9', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim9', 'Hora Final', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraInicio10', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim10', 'Hora Final', 'trim|valid_hour');
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+            
+			$data['bd']['idApp_Sac'] = $data['query']['idApp_Sac'];
+			$data['bd']['CategoriaSac'] = $data['query']['CategoriaSac'];
+			$data['bd']['Marketing'] = $data['query']['Marketing'];
+			$data['bd']['Orcamento'] = $data['query']['Orcamento'];
+            $data['bd']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
+            $data['bd']['Cliente'] = $data['query']['Cliente'];
+            $data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+            $data['bd']['Fornecedor'] = $data['query']['Fornecedor'];
+            $data['bd']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
+            $data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
+			$data['bd']['Compartilhar'] = $data['query']['Compartilhar'];
+			$data['bd']['Dia'] = $data['query']['Dia'];
+			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
+			$data['bd']['Ano'] = $data['query']['Ano'];
+			$data['bd']['ConcluidoSac'] = $data['query']['ConcluidoSac'];
+			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+            $data['bd']['TipoSac'] = $data['query']['TipoSac'];
+			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
+			$data['bd']['DataInicio9'] = $this->basico->mascara_data($data['query']['DataInicio9'], 'mysql');
+            $data['bd']['DataFim9'] = $this->basico->mascara_data($data['query']['DataFim9'], 'mysql');
+			$data['bd']['DataInicio10'] = $this->basico->mascara_data($data['query']['DataInicio10'], 'mysql');
+            $data['bd']['DataFim10'] = $this->basico->mascara_data($data['query']['DataFim10'], 'mysql');
+			$data['bd']['HoraInicio9'] = $this->basico->mascara_data($data['query']['HoraInicio9'], 'mysql');
+            $data['bd']['HoraFim9'] = $this->basico->mascara_data($data['query']['HoraFim9'], 'mysql');
+			$data['bd']['HoraInicio10'] = $this->basico->mascara_data($data['query']['HoraInicio10'], 'mysql');
+            $data['bd']['HoraFim10'] = $this->basico->mascara_data($data['query']['HoraFim10'], 'mysql');
+
+            //$data['report'] = $this->Relatorio_model->list_sac($data['bd'],TRUE);
+
+			//$this->load->library('pagination');
+			$config['per_page'] = 10;
+			$config["uri_segment"] = 3;
+			$config['reuse_query_string'] = TRUE;
+			$config['num_links'] = 2;
+			$config['use_page_numbers'] = TRUE;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			$data['Pesquisa'] = '';
+			
+			$config['base_url'] = base_url() . 'relatorio_pag/sac_pag/';
+			$config['total_rows'] = $this->Relatorio_model->list_sac($data['bd'],TRUE, TRUE);
+           
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
+			}else{
+				$data['total_rows'] = 0;
+			}
+			
+            $this->pagination->initialize($config);
+            
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+            $data['pagina'] = $page;
+			$data['per_page'] = $config['per_page'];
+			$data['report'] = $this->Relatorio_model->list_sac($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+			$data['pagination'] = $this->pagination->create_links();
+			
+            $data['list'] = $this->load->view('relatorio/list_sac', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_sac', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+    public function marketing() {
+		
+		unset($_SESSION['FiltroMarketing']);
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+			'id_Cliente_Auto',
+			'NomeClienteAuto',
+        ), TRUE));	
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'idApp_Marketing',
+            'Sac',
+            'CategoriaMarketing',
+            'Orcamento',
+			'idTab_TipoRD',
+            'Cliente',
+			'idApp_Cliente',
+			'Fornecedor',
+			'idApp_Fornecedor',
+			'NomeUsuario',
+			'Compartilhar',
+			'DataInicio9',
+            'DataFim9',
+			'DataInicio10',
+            'DataFim10',
+			'HoraInicio9',
+            'HoraFim9',
+			'HoraInicio10',
+            'HoraFim10',			
+			'Dia',
+			'Mesvenc',
+			'Ano',
+			'ConcluidoMarketing',
+            'Ordenamento',
+            'Campo',
+            'TipoMarketing',
+			'Agrupar',
+        ), TRUE));		
+
+        $data['select']['ConcluidoMarketing'] = array(
+			'#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+		$data['select']['Sac'] = array (
+            '0' => 'Todos',
+            '1' => 'Solicitação',
+            '2' => 'Elogio',
+			'3' => 'Reclamação',
+        );
+		
+		$data['select']['CategoriaMarketing'] = array (
+            '0' => 'Todos',
+            '1' => 'Atualização',
+            '2' => 'Pesquisa',
+			'3' => 'Retorno',
+            '4' => 'Promoções',
+			'5' => 'Felicitações',
+        );
+		
+        $data['select']['Agrupar'] = array(
+			'0' => '::Nenhum::',
+			'idApp_Marketing' => 'Campanha',
+			'idApp_Cliente' => 'Cliente',
+        );
+		
+		$data['select']['Campo'] = array(
+			'PRC.DataMarketing' => 'Data',
+            'PRC.idApp_Marketing' => 'id',
+			'PRC.ConcluidoMarketing' => 'Concl.',
+			'PRC.idSis_Usuario' => 'Quem Cadastrou',
+			'PRC.Compartilhar' => 'Quem Fazer',
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'DESC' => 'Decrescente',
+			'ASC' => 'Crescente',
+        );
+
+        $data['select']['NomeUsuario'] = $this->Relatorio_model->select_usuario();
+		$data['select']['Dia'] = $this->Relatorio_model->select_dia();
+		$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
+		$data['select']['Compartilhar'] = $this->Relatorio_model->select_compartilhar();
+
+		$data['query']['TipoMarketing'] = 4;
+		$data['query']['Sac'] = 0;
+		$data['query']['Fornecedor'] = 0;		
+        $data['titulo1'] = 'Marketing';
+		$data['tipoproc'] = 4;
+		$data['metodo'] = 2;
+		$data['form_open_path'] = 'relatorio/marketing';
+		$data['panel'] = 'success';
+		$data['TipoFinanceiro'] = 'Receitas';
+		$data['TipoRD'] = 0;
+        $data['nome'] = 'Cliente';
+		$data['editar'] = 0;
+		$data['print'] = 1;
+		$data['imprimir'] = 'Marketing/imprimir/';
+		$data['imprimirlista'] = 'Marketing/imprimir_lista_Marketing/';
+		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
+		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		$data['paginacao'] = 'N';
+
+		$_SESSION['FiltroMarketing']['idApp_Marketing'] = $data['query']['idApp_Marketing'];
+		$_SESSION['FiltroMarketing']['Sac'] = $data['query']['Sac'];
+		$_SESSION['FiltroMarketing']['CategoriaMarketing'] = $data['query']['CategoriaMarketing'];
+		$_SESSION['FiltroMarketing']['Orcamento'] = $data['query']['Orcamento'];
+		$_SESSION['FiltroMarketing']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
+		$_SESSION['FiltroMarketing']['Cliente'] = $data['query']['Cliente'];
+		$_SESSION['FiltroMarketing']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+		$_SESSION['FiltroMarketing']['Fornecedor'] = $data['query']['Fornecedor'];
+		$_SESSION['FiltroMarketing']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
+		$_SESSION['FiltroMarketing']['NomeUsuario'] = $data['query']['NomeUsuario'];
+		$_SESSION['FiltroMarketing']['Compartilhar'] = $data['query']['Compartilhar'];
+		$_SESSION['FiltroMarketing']['TipoMarketing'] = $data['query']['TipoMarketing'];
+		$_SESSION['FiltroMarketing']['ConcluidoMarketing'] = $data['query']['ConcluidoMarketing'];
+        $_SESSION['FiltroMarketing']['DataInicio9'] = $this->basico->mascara_data($data['query']['DataInicio9'], 'mysql');
+		$_SESSION['FiltroMarketing']['DataFim9'] = $this->basico->mascara_data($data['query']['DataFim9'], 'mysql');
+        $_SESSION['FiltroMarketing']['DataInicio10'] = $this->basico->mascara_data($data['query']['DataInicio10'], 'mysql');
+		$_SESSION['FiltroMarketing']['DataFim10'] = $this->basico->mascara_data($data['query']['DataFim10'], 'mysql');
+        $_SESSION['FiltroMarketing']['HoraInicio9'] = $data['query']['HoraInicio9'];
+		$_SESSION['FiltroMarketing']['HoraFim9'] = $data['query']['HoraFim9'];
+        $_SESSION['FiltroMarketing']['HoraInicio10'] = $data['query']['HoraInicio10'];
+		$_SESSION['FiltroMarketing']['HoraFim10'] = $data['query']['HoraFim10'];
+		$_SESSION['FiltroMarketing']['Agrupar'] = $data['query']['Agrupar'];
+		$_SESSION['FiltroMarketing']['Campo'] = $data['query']['Campo'];
+		$_SESSION['FiltroMarketing']['Ordenamento'] = $data['query']['Ordenamento'];
+		$_SESSION['FiltroMarketing']['Dia'] = $data['query']['Dia'];
+		$_SESSION['FiltroMarketing']['Mesvenc'] = $data['query']['Mesvenc'];
+		$_SESSION['FiltroMarketing']['Ano'] = $data['query']['Ano'];		
+		
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+		$this->form_validation->set_rules('DataInicio9', 'Data Início do Marketing', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim9', 'Data Fim do Marketing', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio10', 'Data Início do SubMarketing', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim10', 'Data Fim do SubMarketing', 'trim|valid_date');
+		$this->form_validation->set_rules('HoraInicio9', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim9', 'Hora Final', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraInicio10', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim10', 'Hora Final', 'trim|valid_hour');
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+            
+			$data['bd']['idApp_Marketing'] = $data['query']['idApp_Marketing'];
+			$data['bd']['Sac'] = $data['query']['Sac'];
+			$data['bd']['CategoriaMarketing'] = $data['query']['CategoriaMarketing'];
+			$data['bd']['Orcamento'] = $data['query']['Orcamento'];
+            $data['bd']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
+            $data['bd']['Cliente'] = $data['query']['Cliente'];
+            $data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+            $data['bd']['Fornecedor'] = $data['query']['Fornecedor'];
+            $data['bd']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
+            $data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
+			$data['bd']['Compartilhar'] = $data['query']['Compartilhar'];
+			$data['bd']['Dia'] = $data['query']['Dia'];
+			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
+			$data['bd']['Ano'] = $data['query']['Ano'];
+			$data['bd']['ConcluidoMarketing'] = $data['query']['ConcluidoMarketing'];
+			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+            $data['bd']['Campo'] = $data['query']['Campo'];
+            $data['bd']['TipoMarketing'] = $data['query']['TipoMarketing'];
+			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
+			$data['bd']['DataInicio9'] = $this->basico->mascara_data($data['query']['DataInicio9'], 'mysql');
+            $data['bd']['DataFim9'] = $this->basico->mascara_data($data['query']['DataFim9'], 'mysql');
+			$data['bd']['DataInicio10'] = $this->basico->mascara_data($data['query']['DataInicio10'], 'mysql');
+            $data['bd']['DataFim10'] = $this->basico->mascara_data($data['query']['DataFim10'], 'mysql');
+			$data['bd']['HoraInicio9'] = $this->basico->mascara_data($data['query']['HoraInicio9'], 'mysql');
+            $data['bd']['HoraFim9'] = $this->basico->mascara_data($data['query']['HoraFim9'], 'mysql');
+			$data['bd']['HoraInicio10'] = $this->basico->mascara_data($data['query']['HoraInicio10'], 'mysql');
+            $data['bd']['HoraFim10'] = $this->basico->mascara_data($data['query']['HoraFim10'], 'mysql');
+
+            //$data['report'] = $this->Relatorio_model->list_marketing($data['bd'],TRUE);
+
+			//$this->load->library('pagination');
+			$config['per_page'] = 10;
+			$config["uri_segment"] = 3;
+			$config['reuse_query_string'] = TRUE;
+			$config['num_links'] = 2;
+			$config['use_page_numbers'] = TRUE;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			$data['Pesquisa'] = '';
+			
+			$config['base_url'] = base_url() . 'relatorio_pag/marketing_pag/';
+			$config['total_rows'] = $this->Relatorio_model->list_marketing($data['bd'],TRUE, TRUE);
+           
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
+			}else{
+				$data['total_rows'] = 0;
+			}
+			
+            $this->pagination->initialize($config);
+            
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+            $data['pagina'] = $page;
+			$data['per_page'] = $config['per_page'];
+			$data['report'] = $this->Relatorio_model->list_marketing($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+			$data['pagination'] = $this->pagination->create_links();
+			
+            $data['list'] = $this->load->view('relatorio/list_marketing', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('relatorio/tela_marketing', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+    public function proc_Sac_original() {
 		
 		unset($_SESSION['FiltroAlteraParcela']);
 
@@ -7244,7 +7710,7 @@ class Relatorio extends CI_Controller {
 
     }
 
-    public function proc_Marketing() {
+    public function proc_Marketing_original() {
 		
 		unset($_SESSION['FiltroAlteraParcela']);
 
@@ -10217,13 +10683,13 @@ class Relatorio extends CI_Controller {
 			#'Profissional',
 			'Ordenamento',
             'Campo',
-            'ConcluidoProcedimento',
+            'ConcluidoTarefa',
             'Prioridade',
 			'Categoria',
 			#'Rotina',
-			'ConcluidoSubProcedimento',
-			'Procedimento',
-			'SubProcedimento',
+			'ConcluidoSubTarefa',
+			'Tarefa',
+			'SubTarefa',
 			'SubPrioridade',
 			'Statustarefa',
 			'Statussubtarefa',
@@ -10234,20 +10700,20 @@ class Relatorio extends CI_Controller {
            $data['query']['DataInicio'] = '01/01/2017';
 		*/
 		
-		$_SESSION['FiltroAlteraProcedimento']['Categoria'] = $data['query']['Categoria'];
-		$_SESSION['FiltroAlteraProcedimento']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
-		$_SESSION['FiltroAlteraProcedimento']['Prioridade'] = $data['query']['Prioridade'];
-		$_SESSION['FiltroAlteraProcedimento']['ConcluidoSubProcedimento'] = $data['query']['ConcluidoSubProcedimento'];
-		$_SESSION['FiltroAlteraProcedimento']['SubPrioridade'] = $data['query']['SubPrioridade'];
-		$_SESSION['FiltroAlteraProcedimento']['Statustarefa'] = $data['query']['Statustarefa'];
-		$_SESSION['FiltroAlteraProcedimento']['Statussubtarefa'] = $data['query']['Statussubtarefa'];
+		$_SESSION['FiltroAlteraTarefa']['Categoria'] = $data['query']['Categoria'];
+		$_SESSION['FiltroAlteraTarefa']['ConcluidoTarefa'] = $data['query']['ConcluidoTarefa'];
+		$_SESSION['FiltroAlteraTarefa']['Prioridade'] = $data['query']['Prioridade'];
+		$_SESSION['FiltroAlteraTarefa']['ConcluidoSubTarefa'] = $data['query']['ConcluidoSubTarefa'];
+		$_SESSION['FiltroAlteraTarefa']['SubPrioridade'] = $data['query']['SubPrioridade'];
+		$_SESSION['FiltroAlteraTarefa']['Statustarefa'] = $data['query']['Statustarefa'];
+		$_SESSION['FiltroAlteraTarefa']['Statussubtarefa'] = $data['query']['Statussubtarefa'];
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
 
-        $data['select']['ConcluidoProcedimento'] = array(
+        $data['select']['ConcluidoTarefa'] = array(
             '0' => '::Todos::',
 			'S' => 'Sim',
 			'N' => 'Não',
@@ -10285,7 +10751,7 @@ class Relatorio extends CI_Controller {
             'S' => 'Sim',
         );
 */
-		$data['select']['ConcluidoSubProcedimento'] = array(
+		$data['select']['ConcluidoSubTarefa'] = array(
             '0' => '::Todos::',
 			'S' => 'Sim',
 			'N' => 'Não',
@@ -10294,15 +10760,15 @@ class Relatorio extends CI_Controller {
 		
         $data['select']['Agrupar'] = array(
 			'0' => '::Nenhum::',			
-			'idApp_Procedimento' => 'Tarefa',
+			'idApp_Tarefa' => 'Tarefa',
         );
 
         $data['select']['Campo'] = array(
-			'P.DataProcedimento' => 'Data do Inicio',
-			'P.DataProcedimentoLimite' => 'Data da Concl.',	
+			'P.DataTarefa' => 'Data do Inicio',
+			'P.DataTarefaLimite' => 'Data da Concl.',	
 			'P.Compartilhar' => 'Quem Fazer',
 			'P.idSis_Usuario' => 'Quem Cadastrou',		
-			'P.ConcluidoProcedimento' => 'Concluido',
+			'P.ConcluidoTarefa' => 'Concluido',
 			'P.Categoria' => 'Categoria',
         );
 
@@ -10314,8 +10780,8 @@ class Relatorio extends CI_Controller {
         #$data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional3();
 		#$data['select']['Profissional'] = $this->Relatorio_model->select_profissional2();
 		$data['select']['Categoria'] = $this->Relatorio_model->select_categoria();
-		$data['select']['Procedimento'] = $this->Relatorio_model->select_tarefa();
-		$data['select']['SubProcedimento'] = $this->Relatorio_model->select_procedtarefa();
+		//$data['select']['Tarefa'] = $this->Relatorio_model->select_tarefa();
+		//$data['select']['SubTarefa'] = $this->Relatorio_model->select_procedtarefa();
 
         $data['titulo'] = 'Tarefas';
 
@@ -10329,13 +10795,13 @@ class Relatorio extends CI_Controller {
             $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
             $data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
             $data['bd']['Campo'] = $data['query']['Campo'];
-            $data['bd']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
+            $data['bd']['ConcluidoTarefa'] = $data['query']['ConcluidoTarefa'];
             $data['bd']['Prioridade'] = $data['query']['Prioridade'];
 			$data['bd']['Categoria'] = $data['query']['Categoria'];
 			#$data['bd']['Rotina'] = $data['query']['Rotina'];
-			$data['bd']['ConcluidoSubProcedimento'] = $data['query']['ConcluidoSubProcedimento'];
-			$data['bd']['Procedimento'] = $data['query']['Procedimento'];
-			$data['bd']['SubProcedimento'] = $data['query']['SubProcedimento'];
+			$data['bd']['ConcluidoSubTarefa'] = $data['query']['ConcluidoSubTarefa'];
+			$data['bd']['Tarefa'] = $data['query']['Tarefa'];
+			$data['bd']['SubTarefa'] = $data['query']['SubTarefa'];
 			$data['bd']['SubPrioridade'] = $data['query']['SubPrioridade'];
 			$data['bd']['Statustarefa'] = $data['query']['Statustarefa'];
 			$data['bd']['Statussubtarefa'] = $data['query']['Statussubtarefa'];

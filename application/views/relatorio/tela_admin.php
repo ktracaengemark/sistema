@@ -494,7 +494,7 @@
 		</div>
 		
 		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-			<div class="panel panel-default">
+			<div class="panel panel-warning">
 				<div class="panel-heading">
 					<div class="text-center" style="color: #4F4F4F" data-toggle="collapse" data-target="#Administracao" aria-expanded="false" aria-controls="Administracao">
 						<h3 class="text-center"><b>Administração<?php #echo $titulo2; ?></b></h3>
@@ -526,14 +526,14 @@
 								</div>
 								<div class="row">
 									<div class="form-group col-md-12 text-left">										
-										<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/proc_Sac" role="button">
+										<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/sac" role="button">
 											<span class="glyphicon glyphicon-pencil"></span> SAC
 										</a>
 									</div>	
 								</div>
 								<div class="row">
 									<div class="form-group col-md-12 text-left">										
-										<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/proc_Marketing" role="button">
+										<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/marketing" role="button">
 											<span class="glyphicon glyphicon-pencil"></span> Marketing
 										</a>
 									</div>	
@@ -757,6 +757,7 @@
 				</div>	
 			</div>
 		</div>		
+		
 		<!--
 		<div class="col-md-3">
 			<div class="panel panel-danger">

@@ -199,6 +199,22 @@ class OrcatrataPrint extends CI_Controller {
         $data['form_open_path'] = 'OrcatrataPrint/imprimir';
         $data['panel'] = 'info';
         $data['metodo'] = 1;		
+		
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'warning';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+		
+        $data['nav_orca'] 		= 'S';
+        $data['nav_status'] 	= 'S';
+        $data['nav_alterar'] 	= 'N';
+		
+        $data['nav_imprimir'] 	= 'S';
+        $data['nav_entrega'] 	= 'N';
+        $data['nav_cobranca'] 	= 'S';
+
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
         /*
           echo '<br>';
@@ -575,6 +591,22 @@ class OrcatrataPrint extends CI_Controller {
         $data['form_open_path'] = 'OrcatrataPrint/imprimircobranca';
         $data['panel'] = 'info';
         $data['metodo'] = 2;		
+		
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'warning';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+		
+        $data['nav_orca'] 		= 'S';
+        $data['nav_status'] 	= 'S';
+        $data['nav_alterar'] 	= 'N';
+		
+        $data['nav_imprimir'] 	= 'S';
+        $data['nav_entrega'] 	= 'S';
+        $data['nav_cobranca'] 	= 'N';
+
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
         /*
           echo '<br>';

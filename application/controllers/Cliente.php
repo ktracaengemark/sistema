@@ -200,6 +200,14 @@ class Cliente extends CI_Controller {
 		$data['q_motivo'] = $this->Cliente_model->list_motivo($_SESSION['log'], TRUE);
 		$data['list_motivo'] = $this->load->view('cliente/list_motivo', $data, TRUE);		
 		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+
 		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #$this->form_validation->set_rules('NomeCliente', 'Nome do Responsável', 'required|trim|is_unique_duplo[App_Cliente.NomeCliente.DataNascimento.' . $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql') . ']');
@@ -912,8 +920,6 @@ class Cliente extends CI_Controller {
         else
             $data['collapse'] = 'class="collapse"';
 
-        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
-
         $data['sidebar'] = 'col-sm-3 col-md-2 sidebar';
         $data['main'] = 'col-sm-7 col-sm-offset-3 col-md-8 col-md-offset-2 main';
 		/*
@@ -947,6 +953,14 @@ class Cliente extends CI_Controller {
 		
 		$data['q_motivo'] = $this->Cliente_model->list_motivo($_SESSION['log'], TRUE);
 		$data['list_motivo'] = $this->load->view('cliente/list_motivo', $data, TRUE);		
+		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
@@ -1289,11 +1303,6 @@ class Cliente extends CI_Controller {
 			$data['query']['DataCadastroCliente'] = $this->basico->mascara_data($data['query']['DataCadastroCliente'], 'barras');
         }
 
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');		
-		if($data['query']['Ativo'] == 'N'){
-			$this->form_validation->set_rules('Motivo', 'Motivo', 'required|trim');
-		}
         $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
 		$data['select']['Ativo'] = $this->Basico_model->select_status_sn();
 		$data['select']['Motivo'] = $this->Basico_model->select_motivo();
@@ -1311,8 +1320,6 @@ class Cliente extends CI_Controller {
             $data['collapse'] = '';
         else
             $data['collapse'] = 'class="collapse"';
-
-        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
         $data['sidebar'] = 'col-sm-3 col-md-2 sidebar';
         $data['main'] = 'col-sm-7 col-sm-offset-3 col-md-8 col-md-offset-2 main';
@@ -1332,6 +1339,20 @@ class Cliente extends CI_Controller {
         );
         ($data['cadastrar']['Cadastrar'] == 'N') ?
             $data['div']['Cadastrar'] = '' : $data['div']['Cadastrar'] = 'style="display: none;"';		
+		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');		
+		if($data['query']['Ativo'] == 'N'){
+			$this->form_validation->set_rules('Motivo', 'Motivo', 'required|trim');
+		}
 		
         #run form validation
         if ($this->form_validation->run() === FALSE) {
@@ -1411,6 +1432,12 @@ class Cliente extends CI_Controller {
         $data['readonly'] = 'readonly';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
+		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
@@ -1515,6 +1542,14 @@ class Cliente extends CI_Controller {
         $data['readonly'] = 'readonly';
         $data['panel'] = 'primary';
         $data['metodo'] = 2;
+		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
         #run form validation
         if ($this->form_validation->run() === FALSE) {
@@ -1938,7 +1973,7 @@ class Cliente extends CI_Controller {
         }
 
         $data['titulo'] = "Pesquisar Cliente";
-		
+
 		$this->load->library('pagination');
 		$_SESSION['Qtde'] = $config['per_page'] = 5;
 		$_SESSION['Page'] = $config["uri_segment"] = 5;
@@ -2064,7 +2099,7 @@ class Cliente extends CI_Controller {
         }
 
         $data['titulo'] = "Pesquisar Cliente";
-		
+
 		$this->load->library('pagination');
 		$_SESSION['Qtde'] = $config['per_page'] = 5;
 		$_SESSION['Page'] = $config["uri_segment"] = 4;
@@ -2302,7 +2337,7 @@ class Cliente extends CI_Controller {
         $data['titulo'] = 'Prontuário ' . $data['query']['NomeCliente'];
         $data['panel'] = 'primary';
         $data['metodo'] = 4;
-		
+
         $_SESSION['log']['idApp_Cliente'] = $data['resumo']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
         $data['resumo']['NomeCliente'] = $data['query']['NomeCliente'];
 
@@ -2348,9 +2383,16 @@ class Cliente extends CI_Controller {
             $data['list'] = FALSE;
         else
             $data['list'] = $this->load->view('contatocliente/list_contatocliente', $data, TRUE);
-
+		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+		
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
-        $this->load->view('cliente/tela_cliente', $data);
+        
+		$this->load->view('cliente/tela_cliente', $data);
 
         $this->load->view('basico/footer');
     }
@@ -2371,7 +2413,7 @@ class Cliente extends CI_Controller {
         $data['titulo'] = 'Prontuário ' . $data['query']['NomeCliente'];
         $data['panel'] = 'primary';
         $data['metodo'] = 4;
-		
+
         $_SESSION['log']['idApp_Cliente'] = $data['resumo']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
         $data['resumo']['NomeCliente'] = $data['query']['NomeCliente'];
 
@@ -2417,9 +2459,16 @@ class Cliente extends CI_Controller {
             $data['list'] = FALSE;
         else
             $data['list'] = $this->load->view('clientedep/list_clientedep', $data, TRUE);
-
+		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+		
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
-        $this->load->view('cliente/tela_clientedep', $data);
+        
+		$this->load->view('cliente/tela_clientedep', $data);
 
         $this->load->view('basico/footer');
     }
@@ -2440,7 +2489,7 @@ class Cliente extends CI_Controller {
         $data['titulo'] = 'Prontuário ' . $data['query']['NomeCliente'];
         $data['panel'] = 'primary';
         $data['metodo'] = 4;
-		
+
         $_SESSION['log']['idApp_Cliente'] = $data['resumo']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
         $data['resumo']['NomeCliente'] = $data['query']['NomeCliente'];
 
@@ -2486,9 +2535,16 @@ class Cliente extends CI_Controller {
             $data['list'] = FALSE;
         else
             $data['list'] = $this->load->view('clientepet/list_clientepet', $data, TRUE);
-
+		
+        $data['cor_cli'] 	= 'warning';
+        $data['cor_cons'] 	= 'default';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+		
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
-        $this->load->view('cliente/tela_clientepet', $data);
+        
+		$this->load->view('cliente/tela_clientepet', $data);
 
         $this->load->view('basico/footer');
     }

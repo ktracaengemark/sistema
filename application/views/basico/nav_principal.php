@@ -1,5 +1,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top " role="banner">
-	<div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+	<div class="col-lg-1 col-md-1">	
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
 		<div class="navbar-header ">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar1">
 				<span class="sr-only">MENU</span>
@@ -12,7 +14,8 @@
 					 <?php echo $_SESSION['log']['Nome2']; ?>./<?php echo $_SESSION['log']['NomeEmpresa2']; ?>.
 				</a>
 			<?php }else{?>	
-				<?php echo form_open(base_url() . 'cliente/pesquisar', 'class="pesquisarnav navbar-left"'); ?>
+				<!--
+				<?php #echo form_open(base_url() . 'cliente/pesquisar', 'class="pesquisarnav navbar-left"'); ?>
 				<div class="input-group">
 					<span class="input-group-btn">
 						<button class="btn btn-info btn-md" type="submit">
@@ -22,10 +25,29 @@
 					<input type="text" placeholder="Pesquisar Cliente" class="form-control btn-sm " name="Pesquisa" value="">
 				</div>
 				</form>
+				-->
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-8 btn-menu btn-group ">	
+					<button type="button" class="btn btn-sm btn-default btn-block dropdown-toggle" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-user"></span>
+							<strong>Clientes</strong>
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="<?php echo base_url() ?>relatorio/clientes"><span class="glyphicon glyphicon-user"></span> Clientes/ Dep/ Pet</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>relatorio/rankingvendas"><span class="glyphicon glyphicon-user"></span> Ranking & CashBack</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>relatorio/sac"><span class="glyphicon glyphicon-pencil"></span> Sac</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>relatorio/marketing"><span class="glyphicon glyphicon-pencil"></span> Marketing</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>
+					</ul>
+				</div>
 			<?php } ?>
 		</div>
 	</div>		
-	<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 ">		
+	<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 ">		
 		<div class="collapse navbar-collapse" id="myNavbar1">
 			<ul class="nav navbar-nav navbar-center">
 				<li class="botoesnav" >
@@ -92,7 +114,7 @@
 								$atua_flash = '';
 							}
 						?>
-						<button type="button" class="<?php echo $atua_flash ?> btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+						<button type="button" class="<?php echo $atua_flash ?> btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
 							
 							<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
 								
@@ -107,9 +129,7 @@
 						</button>
 						<ul class="dropdown-menu" role="menu">						
 							<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>
-								<li><a href="<?php echo base_url() ?>relatorio/clientes"><span class="glyphicon glyphicon-user"></span> Clientes/ Dep/ Pet</a></li>
-								<li role="separator" class="divider"></li>
-								<li><a href="<?php echo base_url() ?>relatorio/rankingvendas"><span class="glyphicon glyphicon-user"></span> Ranking & CashBack</a></li>
+								<li><a href="<?php echo base_url() ?>relatorio/loginempresa"><span class="glyphicon glyphicon-barcode"></span> Administração</a></li>
 								<li role="separator" class="divider"></li>
 							<?php } ?>
 							<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>

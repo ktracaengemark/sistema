@@ -6072,6 +6072,57 @@ function carregaQuitado(value, name, i, cadastrar = 0) {
 	
 }
 
+ /*Carrega a Data e Hora da Conclusão da Sac*/
+ function carregaConcluidoSac(value, name, cadastrar = 0) {
+    if (value == "S") {
+		if (cadastrar == 1){
+			$("#DataConcluidoSac").val($("#DataSac").val());
+			$("#HoraConcluidoSac").val($("#HoraSac").val());
+		}else{
+			$("#DataConcluidoSac").val(currentDate.format('DD/MM/YYYY'));
+			$("#HoraConcluidoSac").val(currentDate.format('HH:mm'));
+		}
+    }else{
+        $("#DataConcluidoSac").val("");
+        $("#HoraConcluidoSac").val("");
+    }
+	
+}
+
+ /*Carrega a Data e Hora da Conclusão da Marketing*/
+ function carregaConcluidoMarketing(value, name, cadastrar = 0) {
+    if (value == "S") {
+		if (cadastrar == 1){
+			$("#DataConcluidoMarketing").val($("#DataMarketing").val());
+			$("#HoraConcluidoMarketing").val($("#HoraMarketing").val());
+		}else{
+			$("#DataConcluidoMarketing").val(currentDate.format('DD/MM/YYYY'));
+			$("#HoraConcluidoMarketing").val(currentDate.format('HH:mm'));
+		}
+    }else{
+        $("#DataConcluidoMarketing").val("");
+        $("#HoraConcluidoMarketing").val("");
+    }
+	
+}
+
+ /*Carrega a Data e Hora da Conclusão da Tarefa*/
+ function carregaConcluidoTarefa(value, name, cadastrar = 0) {
+    if (value == "S") {
+		if (cadastrar == 1){
+			$("#DataConcluidoTarefa").val($("#DataTarefa").val());
+			$("#HoraConcluidoTarefa").val($("#HoraTarefa").val());
+		}else{
+			$("#DataConcluidoTarefa").val(currentDate.format('DD/MM/YYYY'));
+			$("#HoraConcluidoTarefa").val(currentDate.format('HH:mm'));
+		}
+    }else{
+        $("#DataConcluidoTarefa").val("");
+        $("#HoraConcluidoTarefa").val("");
+    }
+	
+}
+
  /*Carrega a Data e Hora da Conclusão do procedimento*/
  function carregaAtivoFuncao(value, name, i, cadastrar = 0) {
 	//alert('carregando');
@@ -6110,6 +6161,60 @@ function carregaQuitado(value, name, i, cadastrar = 0) {
     }else{
         $("#DataConcluidoSubProcedimento"+i).val("");
         $("#HoraConcluidoSubProcedimento"+i).val("");
+    }
+	
+}
+
+ /*Carrega a Data e Hora da Conclusão do SubSac*/
+ function carregaConclSubSac(value, name, i, cadastrar = 0) {
+
+    if (value == "S") {
+		if (cadastrar == 1){
+			$("#DataConcluidoSubSac"+i).val($("#DataSubSac"+i).val());
+			$("#HoraConcluidoSubSac"+i).val($("#HoraSubSac"+i).val());
+		}else{
+			$("#DataConcluidoSubSac"+i).val(currentDate.format('DD/MM/YYYY'));
+			$("#HoraConcluidoSubSac"+i).val(currentDate.format('HH:mm'));
+		}
+    }else{
+        $("#DataConcluidoSubSac"+i).val("");
+        $("#HoraConcluidoSubSac"+i).val("");
+    }
+	
+}
+
+ /*Carrega a Data e Hora da Conclusão do SubMarketing*/
+ function carregaConclSubMarketing(value, name, i, cadastrar = 0) {
+
+    if (value == "S") {
+		if (cadastrar == 1){
+			$("#DataConcluidoSubMarketing"+i).val($("#DataSubMarketing"+i).val());
+			$("#HoraConcluidoSubMarketing"+i).val($("#HoraSubMarketing"+i).val());
+		}else{
+			$("#DataConcluidoSubMarketing"+i).val(currentDate.format('DD/MM/YYYY'));
+			$("#HoraConcluidoSubMarketing"+i).val(currentDate.format('HH:mm'));
+		}
+    }else{
+        $("#DataConcluidoSubMarketing"+i).val("");
+        $("#HoraConcluidoSubMarketing"+i).val("");
+    }
+	
+}
+
+ /*Carrega a Data e Hora da Conclusão do SubTarefa*/
+ function carregaConclSubTarefa(value, name, i, cadastrar = 0) {
+
+    if (value == "S") {
+		if (cadastrar == 1){
+			$("#DataConcluidoSubTarefa"+i).val($("#DataSubTarefa"+i).val());
+			$("#HoraConcluidoSubTarefa"+i).val($("#HoraSubTarefa"+i).val());
+		}else{
+			$("#DataConcluidoSubTarefa"+i).val(currentDate.format('DD/MM/YYYY'));
+			$("#HoraConcluidoSubTarefa"+i).val(currentDate.format('HH:mm'));
+		}
+    }else{
+        $("#DataConcluidoSubTarefa"+i).val("");
+        $("#HoraConcluidoSubTarefa"+i).val("");
     }
 	
 }
@@ -8631,8 +8736,8 @@ function adicionaProcedimento() {
 }
 
 /*
- * Função responsável por adicionar novos campos de SubTarefas dinamicamente no
- * formulário de tarefa
+ * Função responsável por adicionar novos campos de SubProcedimento dinamicamente no
+ * formulário de Procedimento
  */
 function adicionaSubProcedimento() {
 
@@ -8827,6 +8932,404 @@ function adicionaSubProcedimento() {
 
 }
 
+/*
+ * Função responsável por adicionar novos campos de SubSac dinamicamente no
+ * formulário de Sac
+ */
+function adicionaSubSac() {
+
+    var pt = $("#PTCount").val(); //initlal text box count
+
+    //alert( $("#SCount").val() );
+    pt++; //text box increment
+    $("#PTCount").val(pt);
+    //console.log(pt);
+
+    if (pt >= 2) {
+        //console.log( $("#listadinamicad"+(pt-1)).val() );
+        var chosen;
+        chosen = $("#listadinamicad"+(pt-1)).val();
+        //console.log( chosen + ' :: ' + pt );
+    }
+	
+    if (pt >= 2) {
+        //console.log( $("#listadinamicae"+(pt-1)).val() );
+        var chosen2;
+        chosen2 = $("#listadinamicae"+(pt-1)).val();
+        //console.log( chosen + ' :: ' + pt );
+    }	
+
+    //Captura a data do dia e carrega no campo correspondente
+    //var currentDate = moment();
+
+    $(".input_fields_wrap3").append('\
+        <div class="form-group" id="3div'+pt+'">\
+			<div class="panel panel-info">\
+				<div class="panel-heading">\
+					<div class="row">\
+						<div class="col-md-6">\
+							<label for="SubSac'+pt+'">Ação:</label>\
+							<textarea class="form-control" id="SubSac'+pt+'"\
+									  name="SubSac'+pt+'"></textarea>\
+						</div>\
+					</div>\
+					<div class="row">\
+						<div class="col-md-2">\
+							<label for="DataSubSac'+pt+'">Cadastrada em:</label>\
+							<div class="input-group DatePicker">\
+								<span class="input-group-addon" disabled>\
+									<span class="glyphicon glyphicon-calendar"></span>\
+								</span>\
+								<input type="text" class="form-control Date" readonly=""\
+									   name="DataSubSac'+pt+'" id="DataSubSac'+pt+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
+							</div>\
+						</div>\
+						<div class="col-md-2">\
+							<label for="HoraSubSac'+pt+'">Às</label>\
+							<div class="input-group TimePicker">\
+								<span class="input-group-addon" disabled>\
+									<span class="glyphicon glyphicon-time"></span>\
+								</span>\
+								<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM" readonly=""\
+									   name="HoraSubSac'+pt+'"  id="HoraSubSac'+pt+'" value="'+currentDate.format('HH:mm')+'">\
+							</div>\
+						</div>\
+						<div class="col-md-2">\
+							<label for="ConcluidoSubSac">Concluido? </label><br>\
+							<div class="form-group">\
+								<div class="btn-group" data-toggle="buttons">\
+									<label class="btn btn-warning active" name="radio_ConcluidoSubSac'+pt+'" id="radio_ConcluidoSubSac'+pt+'N">\
+									<input type="radio" name="ConcluidoSubSac'+pt+'" id="radiogeraldinamico_subproc"\
+										onchange="carregaConclSubSac(this.value,this.name,'+pt+',0)" autocomplete="off" value="N" checked>Não\
+									</label>\
+									<label class="btn btn-default" name="radio_ConcluidoSubSac'+pt+'" id="radio_ConcluidoSubSac'+pt+'S">\
+									<input type="radio" name="ConcluidoSubSac'+pt+'" id="radiogeraldinamico_subproc"\
+										onchange="carregaConclSubSac(this.value,this.name,'+pt+',0)" autocomplete="off" value="S">Sim\
+									</label>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="col-md-4">\
+							<div id="ConcluidoSubSac'+pt+'" style="display:none">\
+								<div class="row">\
+									<div class="col-md-6">\
+										<label for="DataConcluidoSubSac'+pt+'">Data Concl</label>\
+										<div class="input-group DatePicker">\
+											<span class="input-group-addon" disabled>\
+												<span class="glyphicon glyphicon-calendar"></span>\
+											</span>\
+											<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA" readonly=""\
+												   name="DataConcluidoSubSac'+pt+'"  id="DataConcluidoSubSac'+pt+'" value="">\
+										</div>\
+									</div>\
+									<div class="col-md-6">\
+										<label for="HoraConcluidoSubSac'+pt+'">Às</label>\
+										<div class="input-group TimePicker">\
+											<span class="input-group-addon" disabled>\
+												<span class="glyphicon glyphicon-time"></span>\
+											</span>\
+											<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM" readonly=""\
+												   name="HoraConcluidoSubSac'+pt+'"  id="HoraConcluidoSubSac'+pt+'" value="">\
+										</div>\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="col-md-1">\
+							<label><br></label><br>\
+							<button type="button" id="'+pt+'" class="remove_field3 btn btn-danger">\
+								<span class="glyphicon glyphicon-trash"></span>\
+							</button>\
+						</div>\
+					</div>\
+				</div>\
+			</div>\
+        </div>'
+    ); //add input box
+    //habilita o botão de calendário após a geração dos campos dinâmicos
+    $('.DatePicker').datetimepicker(dateTimePickerOptions);
+
+    //get a reference to the select element
+    $select = $('#listadinamicad'+pt);
+
+    //request the JSON data and parse into the select element
+    $.ajax({
+        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=7',
+        dataType: 'JSON',
+        type: "GET",
+        success: function (data) {
+            //clear the current content of the select
+            $select.html('');
+            //iterate over the data and append a select option
+            //$select.append('<option value="">-- Selecione uma opção --</option>');
+            $.each(data, function (key, val) {
+                //alert(val.id);
+                if (val.id == chosen)
+                    $select.append('<option value="' + val.id + '" selected="selected">' + val.name + '</option>');
+                else
+                    $select.append('<option value="' + val.id + '">' + val.name + '</option>');
+            })
+        },
+        error: function () {
+            //alert('erro listadinamicaB');
+            //if there is an error append a 'none available' option
+            $select.html('<option id="-1">ERRO</option>');
+        }
+
+    });
+	
+    //get a reference to the select2 element
+    $select2 = $('#listadinamicae'+pt);	
+	
+    $.ajax({
+        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=10',
+        dataType: 'JSON',
+        type: "GET",
+        success: function (data) {
+            //clear the current content of the select2
+            $select2.html('');
+            //iterate over the data and append a select2 option
+            //$select2.append('<option value="">-- Selecione uma opção --</option>');
+            $.each(data, function (key, val) {
+                //alert(val.id);
+                if (val.id == chosen2)
+                    $select2.append('<option value="' + val.id + '" selected="selected">' + val.name + '</option>');
+                else
+                    $select2.append('<option value="' + val.id + '">' + val.name + '</option>');
+            })
+        },
+        error: function () {
+            //alert('erro listadinamicaB');
+            //if there is an error append a 'none available' option
+            $select2.html('<option id="-1">ERRO</option>');
+        }
+
+    });	
+	
+    //permite o uso de radio buttons nesse bloco dinâmico
+    $('input:radio[id="radiogeraldinamico_subproc"]').change(function() {
+
+        var value_subproc = $(this).val();
+        var name_subproc = $(this).attr("name");
+
+        //console.log(value_subproc + ' <<>> ' + name_subproc);
+
+        $('label[name="radio_' + name_subproc + '"]').removeClass();
+        $('label[name="radio_' + name_subproc + '"]').addClass("btn btn-default");
+        $('#radio_' + name_subproc + value_subproc).addClass("btn btn-warning active");
+        //$('#radiogeral'+ value_subproc).addClass("btn btn-warning active");
+		
+		if(value_subproc == "S"){
+			$("#"+name_subproc).css("display","");
+		}else{
+			$("#"+name_subproc).css("display","none");
+		}
+		
+	});
+
+}
+
+/*
+ * Função responsável por adicionar novos campos de SubMarketing dinamicamente no
+ * formulário de Marketing
+ */
+function adicionaSubMarketing() {
+
+    var pt = $("#PTCount").val(); //initlal text box count
+
+    //alert( $("#SCount").val() );
+    pt++; //text box increment
+    $("#PTCount").val(pt);
+    //console.log(pt);
+
+    if (pt >= 2) {
+        //console.log( $("#listadinamicad"+(pt-1)).val() );
+        var chosen;
+        chosen = $("#listadinamicad"+(pt-1)).val();
+        //console.log( chosen + ' :: ' + pt );
+    }
+	
+    if (pt >= 2) {
+        //console.log( $("#listadinamicae"+(pt-1)).val() );
+        var chosen2;
+        chosen2 = $("#listadinamicae"+(pt-1)).val();
+        //console.log( chosen + ' :: ' + pt );
+    }	
+
+    //Captura a data do dia e carrega no campo correspondente
+    //var currentDate = moment();
+
+    $(".input_fields_wrap3").append('\
+        <div class="form-group" id="3div'+pt+'">\
+			<div class="panel panel-info">\
+				<div class="panel-heading">\
+					<div class="row">\
+						<div class="col-md-6">\
+							<label for="SubMarketing'+pt+'">Ação:</label>\
+							<textarea class="form-control" id="SubMarketing'+pt+'"\
+									  name="SubMarketing'+pt+'"></textarea>\
+						</div>\
+					</div>\
+					<div class="row">\
+						<div class="col-md-2">\
+							<label for="DataSubMarketing'+pt+'">Cadastrada em:</label>\
+							<div class="input-group DatePicker">\
+								<span class="input-group-addon" disabled>\
+									<span class="glyphicon glyphicon-calendar"></span>\
+								</span>\
+								<input type="text" class="form-control Date" readonly=""\
+									   name="DataSubMarketing'+pt+'" id="DataSubMarketing'+pt+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
+							</div>\
+						</div>\
+						<div class="col-md-2">\
+							<label for="HoraSubMarketing'+pt+'">Às</label>\
+							<div class="input-group TimePicker">\
+								<span class="input-group-addon" disabled>\
+									<span class="glyphicon glyphicon-time"></span>\
+								</span>\
+								<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM" readonly=""\
+									   name="HoraSubMarketing'+pt+'"  id="HoraSubMarketing'+pt+'" value="'+currentDate.format('HH:mm')+'">\
+							</div>\
+						</div>\
+						<div class="col-md-2">\
+							<label for="ConcluidoSubMarketing">Concluido? </label><br>\
+							<div class="form-group">\
+								<div class="btn-group" data-toggle="buttons">\
+									<label class="btn btn-warning active" name="radio_ConcluidoSubMarketing'+pt+'" id="radio_ConcluidoSubMarketing'+pt+'N">\
+									<input type="radio" name="ConcluidoSubMarketing'+pt+'" id="radiogeraldinamico_subproc"\
+										onchange="carregaConclSubMarketing(this.value,this.name,'+pt+',0)" autocomplete="off" value="N" checked>Não\
+									</label>\
+									<label class="btn btn-default" name="radio_ConcluidoSubMarketing'+pt+'" id="radio_ConcluidoSubMarketing'+pt+'S">\
+									<input type="radio" name="ConcluidoSubMarketing'+pt+'" id="radiogeraldinamico_subproc"\
+										onchange="carregaConclSubMarketing(this.value,this.name,'+pt+',0)" autocomplete="off" value="S">Sim\
+									</label>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="col-md-4">\
+							<div id="ConcluidoSubMarketing'+pt+'" style="display:none">\
+								<div class="row">\
+									<div class="col-md-6">\
+										<label for="DataConcluidoSubMarketing'+pt+'">Data Concl</label>\
+										<div class="input-group DatePicker">\
+											<span class="input-group-addon" disabled>\
+												<span class="glyphicon glyphicon-calendar"></span>\
+											</span>\
+											<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA" readonly=""\
+												   name="DataConcluidoSubMarketing'+pt+'"  id="DataConcluidoSubMarketing'+pt+'" value="">\
+										</div>\
+									</div>\
+									<div class="col-md-6">\
+										<label for="HoraConcluidoSubMarketing'+pt+'">Às</label>\
+										<div class="input-group TimePicker">\
+											<span class="input-group-addon" disabled>\
+												<span class="glyphicon glyphicon-time"></span>\
+											</span>\
+											<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM" readonly=""\
+												   name="HoraConcluidoSubMarketing'+pt+'"  id="HoraConcluidoSubMarketing'+pt+'" value="">\
+										</div>\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="col-md-1">\
+							<label><br></label><br>\
+							<button type="button" id="'+pt+'" class="remove_field3 btn btn-danger">\
+								<span class="glyphicon glyphicon-trash"></span>\
+							</button>\
+						</div>\
+					</div>\
+				</div>\
+			</div>\
+        </div>'
+    ); //add input box
+    //habilita o botão de calendário após a geração dos campos dinâmicos
+    $('.DatePicker').datetimepicker(dateTimePickerOptions);
+
+    //get a reference to the select element
+    $select = $('#listadinamicad'+pt);
+
+    //request the JSON data and parse into the select element
+    $.ajax({
+        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=7',
+        dataType: 'JSON',
+        type: "GET",
+        success: function (data) {
+            //clear the current content of the select
+            $select.html('');
+            //iterate over the data and append a select option
+            //$select.append('<option value="">-- Selecione uma opção --</option>');
+            $.each(data, function (key, val) {
+                //alert(val.id);
+                if (val.id == chosen)
+                    $select.append('<option value="' + val.id + '" selected="selected">' + val.name + '</option>');
+                else
+                    $select.append('<option value="' + val.id + '">' + val.name + '</option>');
+            })
+        },
+        error: function () {
+            //alert('erro listadinamicaB');
+            //if there is an error append a 'none available' option
+            $select.html('<option id="-1">ERRO</option>');
+        }
+
+    });
+	
+    //get a reference to the select2 element
+    $select2 = $('#listadinamicae'+pt);	
+	
+    $.ajax({
+        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=10',
+        dataType: 'JSON',
+        type: "GET",
+        success: function (data) {
+            //clear the current content of the select2
+            $select2.html('');
+            //iterate over the data and append a select2 option
+            //$select2.append('<option value="">-- Selecione uma opção --</option>');
+            $.each(data, function (key, val) {
+                //alert(val.id);
+                if (val.id == chosen2)
+                    $select2.append('<option value="' + val.id + '" selected="selected">' + val.name + '</option>');
+                else
+                    $select2.append('<option value="' + val.id + '">' + val.name + '</option>');
+            })
+        },
+        error: function () {
+            //alert('erro listadinamicaB');
+            //if there is an error append a 'none available' option
+            $select2.html('<option id="-1">ERRO</option>');
+        }
+
+    });	
+	
+    //permite o uso de radio buttons nesse bloco dinâmico
+    $('input:radio[id="radiogeraldinamico_subproc"]').change(function() {
+
+        var value_subproc = $(this).val();
+        var name_subproc = $(this).attr("name");
+
+        //console.log(value_subproc + ' <<>> ' + name_subproc);
+
+        $('label[name="radio_' + name_subproc + '"]').removeClass();
+        $('label[name="radio_' + name_subproc + '"]').addClass("btn btn-default");
+        $('#radio_' + name_subproc + value_subproc).addClass("btn btn-warning active");
+        //$('#radiogeral'+ value_subproc).addClass("btn btn-warning active");
+		
+		if(value_subproc == "S"){
+			$("#"+name_subproc).css("display","");
+		}else{
+			$("#"+name_subproc).css("display","none");
+		}
+		
+	});
+
+}
+
+/*
+ * Função responsável por adicionar novos campos de SubTarefas dinamicamente no
+ * formulário de tarefa
+ */
 function adicionaSubTarefa() {
 
     var pt = $("#PTCount").val(); //initlal text box count
@@ -8859,40 +9362,40 @@ function adicionaSubTarefa() {
 				<div class="panel-heading">\
 					<div class="row">\
 						<div class="col-md-4">\
-							<label for="SubProcedimento'+pt+'">Ação:</label>\
-							<textarea class="form-control" id="SubProcedimento'+pt+'"\
-									  name="SubProcedimento'+pt+'"></textarea>\
+							<label for="SubTarefa'+pt+'">Ação:</label>\
+							<textarea class="form-control" id="SubTarefa'+pt+'"\
+									  name="SubTarefa'+pt+'"></textarea>\
 						</div>\
 						<div class="col-md-2">\
-							<label for="DataSubProcedimento'+pt+'">Iniciar em:</label>\
+							<label for="DataSubTarefa'+pt+'">Iniciar em:</label>\
 							<div class="input-group DatePicker">\
 								<span class="input-group-addon" disabled>\
 									<span class="glyphicon glyphicon-calendar"></span>\
 								</span>\
 								<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
-									   name="DataSubProcedimento'+pt+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
+									   name="DataSubTarefa'+pt+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
 							</div>\
 						</div>\
 						<div class="col-md-2">\
-							<label for="DataSubProcedimentoLimite'+pt+'">Concluir em:</label>\
+							<label for="DataSubTarefaLimite'+pt+'">Concluir em:</label>\
 							<div class="input-group DatePicker">\
 								<span class="input-group-addon" disabled>\
 									<span class="glyphicon glyphicon-calendar"></span>\
 								</span>\
 								<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
-									   name="DataSubProcedimentoLimite'+pt+'" value="">\
+									   name="DataSubTarefaLimite'+pt+'" value="">\
 							</div>\
 						</div>\
 						<div class="col-md-2">\
-							<label for="ConcluidoSubProcedimento">Concluido? </label><br>\
+							<label for="ConcluidoSubTarefa">Concluido? </label><br>\
 							<div class="form-group">\
 								<div class="btn-group" data-toggle="buttons">\
-									<label class="btn btn-warning active" name="radio_ConcluidoSubProcedimento'+pt+'" id="radio_ConcluidoSubProcedimento'+pt+'N">\
-									<input type="radio" name="ConcluidoSubProcedimento'+pt+'" id="radiogeraldinamico"\
+									<label class="btn btn-warning active" name="radio_ConcluidoSubTarefa'+pt+'" id="radio_ConcluidoSubTarefa'+pt+'N">\
+									<input type="radio" name="ConcluidoSubTarefa'+pt+'" id="radiogeraldinamico"\
 										autocomplete="off" value="N" checked>Não\
 									</label>\
-									<label class="btn btn-default" name="radio_ConcluidoSubProcedimento'+pt+'" id="radio_ConcluidoSubProcedimento'+pt+'S">\
-									<input type="radio" name="ConcluidoSubProcedimento'+pt+'" id="radiogeraldinamico"\
+									<label class="btn btn-default" name="radio_ConcluidoSubTarefa'+pt+'" id="radio_ConcluidoSubTarefa'+pt+'S">\
+									<input type="radio" name="ConcluidoSubTarefa'+pt+'" id="radiogeraldinamico"\
 										autocomplete="off" value="S">Sim\
 									</label>\
 								</div>\

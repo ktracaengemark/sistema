@@ -79,7 +79,7 @@ class Consulta extends CI_Controller {
             'idApp_ClientePet',
             'idApp_ClienteDep',
 			'idApp_OrcaTrata',
-            'Repeticao',
+            //'Repeticao',
 			//'idSis_EmpresaFilial',
             'Data2',
 			'Data',
@@ -273,8 +273,14 @@ class Consulta extends CI_Controller {
 					
         $data['datepicker'] = 'DatePicker';
         $data['timepicker'] = 'TimePicker';
+		
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'warning';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
 
-        #$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 		
 		$data['q3'] = $this->Clientepet_model->list_racapet(TRUE);
 		$data['list3'] = $this->load->view('clientepet/list_racapet', $data, TRUE);
@@ -408,7 +414,7 @@ class Consulta extends CI_Controller {
 						
 						if($data['cadastrar']['Hidden_Caso'] == 0){
 							
-							$data['query']['Repeticao'] = 0;				
+							//$data['query']['Repeticao'] = 0;				
 							
 							if($data['cadastrar']['Adicionar'] == "S"){
 								if($data['cadastrar']['PorConsulta'] == "S"){
@@ -579,7 +585,7 @@ class Consulta extends CI_Controller {
 						}
 										
 					}else{
-						$data['query']['Repeticao'] = 0;				
+						//$data['query']['Repeticao'] = 0;				
 						
 						if($data['cadastrar']['Adicionar'] == "S"){
 							if($data['cadastrar']['PorConsulta'] == "S"){
@@ -1255,8 +1261,14 @@ class Consulta extends CI_Controller {
 					
         $data['datepicker'] = 'DatePicker';
         $data['timepicker'] = 'TimePicker';
+		
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'warning';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
 
-        #$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 		
 		$data['q3'] = $this->Clientepet_model->list_racapet(TRUE);
 		$data['list3'] = $this->load->view('clientepet/list_racapet', $data, TRUE);
@@ -1387,7 +1399,7 @@ class Consulta extends CI_Controller {
 						
 						if($data['cadastrar']['Hidden_Caso'] == 0){
 							
-							$data['query']['Repeticao'] = 0;				
+							//$data['query']['Repeticao'] = 0;				
 							
 							if($data['cadastrar']['Adicionar'] == "S"){
 								if($data['cadastrar']['PorConsulta'] == "S"){
@@ -1536,7 +1548,7 @@ class Consulta extends CI_Controller {
 						}
 										
 					}else{
-						$data['query']['Repeticao'] = 0;				
+						//$data['query']['Repeticao'] = 0;				
 						
 						if($data['cadastrar']['Adicionar'] == "S"){
 							if($data['cadastrar']['PorConsulta'] == "S"){
@@ -1617,12 +1629,24 @@ class Consulta extends CI_Controller {
 						}
 
 						if($data['cadastrar']['Extra'] == 'S'){
-							if(isset($data['consulta'])){
-								$data['copiar']['idApp_ClientePet'] = $data['consulta']['idApp_ClientePet'];
-								$data['copiar']['idApp_ClienteDep'] = $data['consulta']['idApp_ClienteDep'];
-							}else{
+							
+							if($data['query']['idApp_ClientePet']){
 								$data['copiar']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+							}else{
+								if(isset($data['consulta'])){
+									$data['copiar']['idApp_ClientePet'] = $data['consulta']['idApp_ClientePet'];
+								}else{
+									$data['copiar']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+								}								
+							}
+							if($data['query']['idApp_ClienteDep']){
 								$data['copiar']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+							}else{
+								if(isset($data['consulta'])){
+									$data['copiar']['idApp_ClienteDep'] = $data['consulta']['idApp_ClienteDep'];
+								}else{
+									$data['copiar']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+								}
 							}
 							$data['copiar']['Repeticao'] 		= $data['query']['Repeticao'];
 							$_SESSION['Copiar']['Repeticao'] 	= $data['query']['Repeticao'];
@@ -1713,8 +1737,8 @@ class Consulta extends CI_Controller {
 										'OS' 					=> $data['query']['OS'],
 										'idApp_Agenda' 			=> $data['query']['idApp_Agenda'],
 										'idApp_Cliente' 		=> $data['query']['idApp_Cliente'],
-										'idApp_ClienteDep' 		=> $data['query']['idApp_ClienteDep'],
-										'idApp_ClientePet' 		=> $data['query']['idApp_ClientePet'],
+										'idApp_ClienteDep' 		=> $data['copiar']['idApp_ClienteDep'],
+										'idApp_ClientePet' 		=> $data['copiar']['idApp_ClientePet'],
 										'idApp_OrcaTrata' 		=> $data['query']['idApp_OrcaTrata'],
 										//'Evento' 				=> $data['query']['Evento'],
 										'Obs' 					=> $data['query']['Obs'],
@@ -1962,7 +1986,7 @@ class Consulta extends CI_Controller {
             'idApp_ClientePet',
             'idApp_ClienteDep',
             'idApp_OrcaTrata',
-            'Repeticao',
+            //'Repeticao',
             'Data2',
 			'Data',
             'HoraInicio',
@@ -2139,8 +2163,14 @@ class Consulta extends CI_Controller {
 		
         $data['datepicker'] = 'DatePicker';
         $data['timepicker'] = 'TimePicker';
+		
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'warning';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
 
-        #$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 		
 		$data['q3'] = $this->Clientepet_model->list_racapet(TRUE);
 		$data['list3'] = $this->load->view('clientepet/list_racapet', $data, TRUE);		
@@ -2274,7 +2304,7 @@ class Consulta extends CI_Controller {
 						
 						if($data['cadastrar']['Hidden_Caso'] == 0){
 							
-							$data['query']['Repeticao'] = 0;				
+							//$data['query']['Repeticao'] = 0;				
 							
 							if($data['cadastrar']['Adicionar'] == "S"){
 								if($data['cadastrar']['PorConsulta'] == "S"){
@@ -2445,7 +2475,7 @@ class Consulta extends CI_Controller {
 						}
 										
 					}else{
-						$data['query']['Repeticao'] = 0;				
+						//$data['query']['Repeticao'] = 0;				
 						
 						if($data['cadastrar']['Adicionar'] == "S"){
 							if($data['cadastrar']['PorConsulta'] == "S"){
@@ -2880,7 +2910,7 @@ class Consulta extends CI_Controller {
             'idApp_ClienteDep',
             'idApp_ClientePet',
             'idApp_OrcaTrata',
-            'Repeticao',
+            //'Repeticao',
             'OS',
             'Data',
             'Data2',
@@ -3122,6 +3152,12 @@ class Consulta extends CI_Controller {
         );
         ($data['cadastrar']['PorConsulta'] == 'N') ?
             $data['div']['PorConsulta'] = '' : $data['div']['PorConsulta'] = 'style="display: none;"';
+		
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'warning';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
 
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 		
@@ -3192,11 +3228,13 @@ class Consulta extends CI_Controller {
 					echo "</pre>";
 					exit();			
 					*/
+					/*
 					if($_SESSION['Consulta']['idApp_Cliente'] != $data['query']['idApp_Cliente']){
 						$data['query']['Repeticao'] = $data['query']['idApp_Consulta'];
 					}else{
 						$data['query']['Repeticao'] = $_SESSION['Consulta']['Repeticao'];
 					}
+					*/
 					if($_SESSION['Empresa']['CadastrarDep'] == "N"){
 						$data['query']['idApp_ClienteDep'] = 0;
 					}else{
@@ -3663,7 +3701,7 @@ class Consulta extends CI_Controller {
 									$dataatualfim[$j] 								= date('Y-m-d', strtotime($diffim  .  'day',strtotime($dataoriginalfim[$j])));
 									$data['repeticao'][$j]['DataInicio'] 			= $dataatualinicio[$j] . ' ' . $horaini_alt;
 									$data['repeticao'][$j]['DataFim'] 				= $dataatualfim[$j] . ' ' . $horafim_alt;
-									$data['repeticao'][$j]['Repeticao'] 			= $data['query']['Repeticao'];
+									$data['repeticao'][$j]['Repeticao'] 			= $_SESSION['Consulta']['Repeticao'];
 									$data['repeticao'][$j]['idApp_Agenda'] 			= $data['query']['idApp_Agenda'];
 									$data['repeticao'][$j]['idApp_Cliente'] 		= $data['query']['idApp_Cliente'];
 									$data['repeticao'][$j]['idApp_ClienteDep'] 		= $data['query']['idApp_ClienteDep'];
@@ -4069,6 +4107,12 @@ class Consulta extends CI_Controller {
         );
         ($data['cadastrar']['Cadastrar'] == 'N') ?
             $data['div']['Cadastrar'] = '' : $data['div']['Cadastrar'] = 'style="display: none;"';
+		
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'warning';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
 
         $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
@@ -4243,7 +4287,14 @@ class Consulta extends CI_Controller {
 
         #$data['tela'] = $this->load->view('consulta/list_consulta', $data, TRUE);
         #$data['resumo'] = $this->Cliente_model->get_cliente($data['Cliente']['idApp_Cliente']);
-        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+		
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'warning';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+        
+		$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
         $this->load->view('consulta/list_consulta', $data);
 
@@ -4394,7 +4445,7 @@ class Consulta extends CI_Controller {
 			'DataTermino',
 			'Recorrencias',
 			'Recorrencia',
-            'Repeticao',
+            //'Repeticao',
 		), TRUE));
 		
  		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'N' : FALSE;
@@ -4461,7 +4512,7 @@ class Consulta extends CI_Controller {
         ($data['cadastrar']['Extra'] == 'S') ?
             $data['div']['Extra'] = '' : $data['div']['Extra'] = 'style="display: none;"';
 					
-        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        #$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
@@ -4558,11 +4609,11 @@ class Consulta extends CI_Controller {
 					$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 					$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 					$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-
+					/*
 					if($data['cadastrar']['Extra'] == 'N'){
 						$data['query']['Repeticao'] = 0;
 					}
-					
+					*/
 					$data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
 					
 					unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
@@ -4771,7 +4822,7 @@ class Consulta extends CI_Controller {
         ($data['cadastrar']['Extra'] == 'S') ?
             $data['div']['Extra'] = '' : $data['div']['Extra'] = 'style="display: none;"';
 					
-        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        #$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 		
@@ -4865,11 +4916,11 @@ class Consulta extends CI_Controller {
 					$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 					$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 					$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-
+					/*
 					if($data['cadastrar']['Extra'] == 'N'){
 						$data['query']['Repeticao'] = 0;
 					}
-					
+					*/
 					$data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
 					
 					unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
@@ -5056,7 +5107,7 @@ class Consulta extends CI_Controller {
         $data['metodo'] = 2;
         $data['evento'] = 1;
 
-        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        #$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
