@@ -5714,6 +5714,35 @@ exit();*/
 
 		if($data != FALSE){
 				
+			if($data['Pesquisa']){
+				if (preg_match("/^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](1[89][0-9][0-9]|2[0189][0-9][0-9])$/", $data['Pesquisa'])) {
+					$pesquisa = '(DataNascimento = "' . $this->basico->mascara_data($data['Pesquisa'], 'mysql') . '" OR '
+							. 'DataCadastroCliente = "' . $this->basico->mascara_data($data['Pesquisa'], 'mysql') . '" )';
+				}elseif (is_numeric($data['Pesquisa'])) {
+					if($date === TRUE) {
+						$pesquisa = '(DataNascimento = "' . substr($data['Pesquisa'], 4, 4).'-'.substr($data['Pesquisa'], 2, 2).'-'.substr($data['Pesquisa'], 0, 2) . '" OR '
+								. 'DataCadastroCliente = "' . substr($data['Pesquisa'], 4, 4).'-'.substr($data['Pesquisa'], 2, 2).'-'.substr($data['Pesquisa'], 0, 2) . '" )';
+					}else{
+						if((strlen($data['Pesquisa'])) < 6){
+							$pesquisa = 'RegistroFicha like "' . $data['Pesquisa'] . '"';
+						}elseif(strlen($data['Pesquisa']) >= 6 && strlen($data['Pesquisa']) <= 7){
+							$pesquisa = 'idApp_Cliente like "' . $data['Pesquisa'] . '"';
+							
+						}else{
+							$pesquisa = '(CelularCliente like "%' . $data['Pesquisa'] . '%" OR '
+									. 'Telefone like "%' . $data['Pesquisa'] . '%" OR '
+									. 'Telefone2 like "%' . $data['Pesquisa'] . '%" OR '
+									. 'Telefone3 like "%' . $data['Pesquisa'] . '%" )';
+						}
+					}			
+				}else{
+					$pesquisa = '(NomeCliente like "%' . $data['Pesquisa'] . '%" )';
+				}
+				$pesquisar = 'AND ' . $pesquisa;
+       		}else{
+				$pesquisar = FALSE;
+			}		
+
 			$date_inicio_orca = ($data['DataInicio']) ? 'C.DataCadastroCliente >= "' . $data['DataInicio'] . '" AND ' : FALSE;
 			$date_fim_orca = ($data['DataFim']) ? 'C.DataCadastroCliente <= "' . $data['DataFim'] . '" AND ' : FALSE;
 
@@ -5774,66 +5803,95 @@ exit();*/
 
 		}else{
 			
-			$date_inicio_orca = ($_SESSION['FiltroAlteraParcela']['DataInicio']) ? 'C.DataCadastroCliente >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio'] . '" AND ' : FALSE;
-			$date_fim_orca = ($_SESSION['FiltroAlteraParcela']['DataFim']) ? 'C.DataCadastroCliente <= "' . $_SESSION['FiltroAlteraParcela']['DataFim'] . '" AND ' : FALSE;
-
-			$date_inicio_cash = ($_SESSION['FiltroAlteraParcela']['DataInicio2']) ? 'C.ValidadeCashBack >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio2'] . '" AND ' : FALSE;
-			$date_fim_cash = ($_SESSION['FiltroAlteraParcela']['DataFim2']) ? 'C.ValidadeCashBack <= "' . $_SESSION['FiltroAlteraParcela']['DataFim2'] . '" AND ' : FALSE;
-
-			$date_inicio_ultimo = ($_SESSION['FiltroAlteraParcela']['DataInicio3']) ? 'C.UltimoPedido >= "' . $_SESSION['FiltroAlteraParcela']['DataInicio3'] . '" AND ' : FALSE;
-			$date_fim_ultimo = ($_SESSION['FiltroAlteraParcela']['DataFim3']) ? 'C.UltimoPedido <= "' . $_SESSION['FiltroAlteraParcela']['DataFim3'] . '" AND ' : FALSE;		
+			if($_SESSION['FiltroClientes']['Pesquisa']){
+				if (preg_match("/^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](1[89][0-9][0-9]|2[0189][0-9][0-9])$/", $_SESSION['FiltroClientes']['Pesquisa'])) {
+					$pesquisa = '(DataNascimento = "' . $this->basico->mascara_data($_SESSION['FiltroClientes']['Pesquisa'], 'mysql') . '" OR '
+							. 'DataCadastroCliente = "' . $this->basico->mascara_data($_SESSION['FiltroClientes']['Pesquisa'], 'mysql') . '" )';
+				}elseif (is_numeric($_SESSION['FiltroClientes']['Pesquisa'])) {
+					if($date === TRUE) {
+						$pesquisa = '(DataNascimento = "' . substr($_SESSION['FiltroClientes']['Pesquisa'], 4, 4).'-'.substr($_SESSION['FiltroClientes']['Pesquisa'], 2, 2).'-'.substr($_SESSION['FiltroClientes']['Pesquisa'], 0, 2) . '" OR '
+								. 'DataCadastroCliente = "' . substr($_SESSION['FiltroClientes']['Pesquisa'], 4, 4).'-'.substr($_SESSION['FiltroClientes']['Pesquisa'], 2, 2).'-'.substr($_SESSION['FiltroClientes']['Pesquisa'], 0, 2) . '" )';
+					}else{
+						if((strlen($_SESSION['FiltroClientes']['Pesquisa'])) < 6){
+							$pesquisa = 'RegistroFicha like "' . $_SESSION['FiltroClientes']['Pesquisa'] . '"';
+						}elseif(strlen($_SESSION['FiltroClientes']['Pesquisa']) >= 6 && strlen($_SESSION['FiltroClientes']['Pesquisa']) <= 7){
+							$pesquisa = 'idApp_Cliente like "' . $_SESSION['FiltroClientes']['Pesquisa'] . '"';
+							
+						}else{
+							$pesquisa = '(CelularCliente like "%' . $_SESSION['FiltroClientes']['Pesquisa'] . '%" OR '
+									. 'Telefone like "%' . $_SESSION['FiltroClientes']['Pesquisa'] . '%" OR '
+									. 'Telefone2 like "%' . $_SESSION['FiltroClientes']['Pesquisa'] . '%" OR '
+									. 'Telefone3 like "%' . $_SESSION['FiltroClientes']['Pesquisa'] . '%" )';
+						}
+					}			
+				}else{
+					$pesquisa = '(NomeCliente like "%' . $_SESSION['FiltroClientes']['Pesquisa'] . '%" )';
+				}
+				$pesquisar = 'AND ' . $pesquisa;
+       		}else{
+				$pesquisar = FALSE;
+			}
 			
-			$data['Dia'] = ($_SESSION['FiltroAlteraParcela']['Dia']) ? ' AND DAY(C.DataNascimento) = ' . $_SESSION['FiltroAlteraParcela']['Dia'] : FALSE;
-			$data['Mesvenc'] = ($_SESSION['FiltroAlteraParcela']['Mesvenc']) ? ' AND MONTH(C.DataNascimento) = ' . $_SESSION['FiltroAlteraParcela']['Mesvenc'] : FALSE;
-			$data['Ano'] = ($_SESSION['FiltroAlteraParcela']['Ano']) ? ' AND YEAR(C.DataNascimento) = ' . $_SESSION['FiltroAlteraParcela']['Ano'] : FALSE;
+			$date_inicio_orca = ($_SESSION['FiltroClientes']['DataInicio']) ? 'C.DataCadastroCliente >= "' . $_SESSION['FiltroClientes']['DataInicio'] . '" AND ' : FALSE;
+			$date_fim_orca = ($_SESSION['FiltroClientes']['DataFim']) ? 'C.DataCadastroCliente <= "' . $_SESSION['FiltroClientes']['DataFim'] . '" AND ' : FALSE;
+
+			$date_inicio_cash = ($_SESSION['FiltroClientes']['DataInicio2']) ? 'C.ValidadeCashBack >= "' . $_SESSION['FiltroClientes']['DataInicio2'] . '" AND ' : FALSE;
+			$date_fim_cash = ($_SESSION['FiltroClientes']['DataFim2']) ? 'C.ValidadeCashBack <= "' . $_SESSION['FiltroClientes']['DataFim2'] . '" AND ' : FALSE;
+
+			$date_inicio_ultimo = ($_SESSION['FiltroClientes']['DataInicio3']) ? 'C.UltimoPedido >= "' . $_SESSION['FiltroClientes']['DataInicio3'] . '" AND ' : FALSE;
+			$date_fim_ultimo = ($_SESSION['FiltroClientes']['DataFim3']) ? 'C.UltimoPedido <= "' . $_SESSION['FiltroClientes']['DataFim3'] . '" AND ' : FALSE;		
 			
-			//$data['NomeCliente'] = ($_SESSION['FiltroAlteraParcela']['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $_SESSION['FiltroAlteraParcela']['NomeCliente'] : FALSE;
-			$data['idApp_Cliente'] = ($_SESSION['FiltroAlteraParcela']['idApp_Cliente']) ? ' AND C.idApp_Cliente = ' . $_SESSION['FiltroAlteraParcela']['idApp_Cliente'] : FALSE;
+			$data['Dia'] = ($_SESSION['FiltroClientes']['Dia']) ? ' AND DAY(C.DataNascimento) = ' . $_SESSION['FiltroClientes']['Dia'] : FALSE;
+			$data['Mesvenc'] = ($_SESSION['FiltroClientes']['Mesvenc']) ? ' AND MONTH(C.DataNascimento) = ' . $_SESSION['FiltroClientes']['Mesvenc'] : FALSE;
+			$data['Ano'] = ($_SESSION['FiltroClientes']['Ano']) ? ' AND YEAR(C.DataNascimento) = ' . $_SESSION['FiltroClientes']['Ano'] : FALSE;
+			
+			//$data['NomeCliente'] = ($_SESSION['FiltroClientes']['NomeCliente']) ? ' AND C.idApp_Cliente = ' . $_SESSION['FiltroClientes']['NomeCliente'] : FALSE;
+			$data['idApp_Cliente'] = ($_SESSION['FiltroClientes']['idApp_Cliente']) ? ' AND C.idApp_Cliente = ' . $_SESSION['FiltroClientes']['idApp_Cliente'] : FALSE;
 			
 			if($_SESSION['Empresa']['CadastrarPet'] == "S"){
-				$data['idApp_ClientePet'] = ($_SESSION['FiltroAlteraParcela']['idApp_ClientePet']) ? ' AND CP.idApp_ClientePet = ' . $_SESSION['FiltroAlteraParcela']['idApp_ClientePet'] : FALSE;
+				$data['idApp_ClientePet'] = ($_SESSION['FiltroClientes']['idApp_ClientePet']) ? ' AND CP.idApp_ClientePet = ' . $_SESSION['FiltroClientes']['idApp_ClientePet'] : FALSE;
 				$data['idApp_ClienteDep'] = FALSE;
 			}else{
 				$data['idApp_ClientePet'] = FALSE;
 				if($_SESSION['Empresa']['CadastrarDep'] == "S"){
-					$data['idApp_ClienteDep'] = ($_SESSION['FiltroAlteraParcela']['idApp_ClienteDep']) ? ' AND CD.idApp_ClienteDep = ' . $_SESSION['FiltroAlteraParcela']['idApp_ClienteDep'] : FALSE;
+					$data['idApp_ClienteDep'] = ($_SESSION['FiltroClientes']['idApp_ClienteDep']) ? ' AND CD.idApp_ClienteDep = ' . $_SESSION['FiltroClientes']['idApp_ClienteDep'] : FALSE;
 				}else{
 					$data['idApp_ClienteDep'] = FALSE;
 				}
 			}
-			if(isset($_SESSION['FiltroAlteraParcela']['Sexo'])){
-				if($_SESSION['FiltroAlteraParcela']['Sexo'] == 0){
+			if(isset($_SESSION['FiltroClientes']['Sexo'])){
+				if($_SESSION['FiltroClientes']['Sexo'] == 0){
 					$sexo = FALSE;
-				}elseif($_SESSION['FiltroAlteraParcela']['Sexo'] == 1){
+				}elseif($_SESSION['FiltroClientes']['Sexo'] == 1){
 					$sexo = 'C.Sexo = "M" AND ';
-				}elseif($_SESSION['FiltroAlteraParcela']['Sexo'] == 2){
+				}elseif($_SESSION['FiltroClientes']['Sexo'] == 2){
 					$sexo = 'C.Sexo = "F" AND ';
-				}elseif($_SESSION['FiltroAlteraParcela']['Sexo'] == 3){
+				}elseif($_SESSION['FiltroClientes']['Sexo'] == 3){
 					$sexo = 'C.Sexo = "O" AND ';
 				}
 			}else{
 				$sexo = FALSE;
 			}
-			if(isset($_SESSION['FiltroAlteraParcela']['Pedidos'])){
-				if($_SESSION['FiltroAlteraParcela']['Pedidos'] == 0){
+			if(isset($_SESSION['FiltroClientes']['Pedidos'])){
+				if($_SESSION['FiltroClientes']['Pedidos'] == 0){
 					$pedidos = FALSE;
-				}elseif($_SESSION['FiltroAlteraParcela']['Pedidos'] == 1){
+				}elseif($_SESSION['FiltroClientes']['Pedidos'] == 1){
 					$pedidos = 'C.UltimoPedido = "0000-00-00" AND ';
-				}elseif($_SESSION['FiltroAlteraParcela']['Pedidos'] == 2){
+				}elseif($_SESSION['FiltroClientes']['Pedidos'] == 2){
 					$pedidos = 'C.UltimoPedido != "0000-00-00" AND ';
 				}
 			}else{
 				$pedidos = FALSE;
 			}			
-			$data['Campo'] = (!$_SESSION['FiltroAlteraParcela']['Campo']) ? 'C.NomeCliente' : $_SESSION['FiltroAlteraParcela']['Campo'];
-			$data['Ordenamento'] = (!$_SESSION['FiltroAlteraParcela']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroAlteraParcela']['Ordenamento'];
-			$filtro10 = ($_SESSION['FiltroAlteraParcela']['Ativo'] != '#') ? 'C.Ativo = "' . $_SESSION['FiltroAlteraParcela']['Ativo'] . '" AND ' : FALSE;
-			$filtro20 = ($_SESSION['FiltroAlteraParcela']['Motivo'] != '0') ? 'C.Motivo = "' . $_SESSION['FiltroAlteraParcela']['Motivo'] . '" AND ' : FALSE;
+			$data['Campo'] = (!$_SESSION['FiltroClientes']['Campo']) ? 'C.NomeCliente' : $_SESSION['FiltroClientes']['Campo'];
+			$data['Ordenamento'] = (!$_SESSION['FiltroClientes']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroClientes']['Ordenamento'];
+			$filtro10 = ($_SESSION['FiltroClientes']['Ativo'] != '#') ? 'C.Ativo = "' . $_SESSION['FiltroClientes']['Ativo'] . '" AND ' : FALSE;
+			$filtro20 = ($_SESSION['FiltroClientes']['Motivo'] != '0') ? 'C.Motivo = "' . $_SESSION['FiltroClientes']['Motivo'] . '" AND ' : FALSE;
 			#$q = ($_SESSION['log']['Permissao'] > 2) ? ' C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-			$groupby = ($_SESSION['FiltroAlteraParcela']['Agrupar'] != "0") ? 'GROUP BY C.' . $_SESSION['FiltroAlteraParcela']['Agrupar'] . '' : FALSE;
+			$groupby = ($_SESSION['FiltroClientes']['Agrupar'] != "0") ? 'GROUP BY C.' . $_SESSION['FiltroClientes']['Agrupar'] . '' : FALSE;
 	
 		}
-		
+
 		if($_SESSION['Empresa']['CadastrarPet'] == "S"){
 			$data['ClientePet'] = 'LEFT JOIN App_ClientePet AS CP ON CP.idApp_Cliente = C.idApp_Cliente';
 			$data['CP.idApp_ClientePet'] = 'CP.idApp_ClientePet,';
@@ -5918,6 +5976,7 @@ exit();*/
 				' . $data['Dia'] . ' 
 				' . $data['Mesvenc'] . '
 				' . $data['Ano'] . '
+				' . $pesquisar . '
 			' . $groupby . '
             ORDER BY
                 ' . $data['Campo'] . '

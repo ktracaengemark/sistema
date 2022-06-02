@@ -110,7 +110,11 @@
 									<?php echo $row['idApp_Cliente'] ?>
 								</a>
 							</td>
-							<td> <?php echo $row['NomeCliente'] ?></td>
+							<td>
+								<a class="notclickable" href="<?php echo base_url() . 'cliente/prontuario/' . $row['idApp_Cliente'] . ''; ?>">	
+									<?php echo $row['NomeCliente'] ?>
+								</a>	
+							</td>
 							<td class="notclickable">
 								<?php echo $row['CelularCliente'] ?>
 								<!--<a href="javascript:window.open('https://api.whatsapp.com/send?phone=55<?php echo $_SESSION['Cliente']['CelularCliente'];?>&text=','1366002941508','width=700,height=250,top=300')">

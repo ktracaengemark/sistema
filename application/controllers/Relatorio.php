@@ -8436,6 +8436,8 @@ class Relatorio extends CI_Controller {
 }
 
 	public function rankingvendas() {
+		
+		unset($_SESSION['FiltroRankingVendas']);
 
 		if ($this->input->get('m') == 1)
 			$data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -8976,7 +8978,9 @@ class Relatorio extends CI_Controller {
     }
 
     public function clientes() {
-
+		
+		unset($_SESSION['FiltroClientes']);
+		
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
@@ -9018,6 +9022,7 @@ class Relatorio extends CI_Controller {
 			'Agrupar',
 			'Pedidos',
 			'Sexo',
+			'Pesquisa',
         ), TRUE));
 
         $data['select']['Ativo'] = array(
@@ -9080,33 +9085,34 @@ class Relatorio extends CI_Controller {
 		
 		$data['paginacao'] = 'N';
 
-        $_SESSION['FiltroAlteraParcela']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');        
-		$_SESSION['FiltroAlteraParcela']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-		$_SESSION['FiltroAlteraParcela']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-		$_SESSION['FiltroAlteraParcela']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-		$_SESSION['FiltroAlteraParcela']['Ativo'] = $data['query']['Ativo'];
-		$_SESSION['FiltroAlteraParcela']['Motivo'] = $data['query']['Motivo'];
-		$_SESSION['FiltroAlteraParcela']['Campo'] = $data['query']['Campo'];
-		$_SESSION['FiltroAlteraParcela']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['FiltroAlteraParcela']['Dia'] = $data['query']['Dia'];
-		$_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
-		$_SESSION['FiltroAlteraParcela']['Ano'] = $data['query']['Ano'];
-		$_SESSION['FiltroAlteraParcela']['Agrupar'] = $data['query']['Agrupar'];
-		$_SESSION['FiltroAlteraParcela']['Pedidos'] = $data['query']['Pedidos'];
-		$_SESSION['FiltroAlteraParcela']['Sexo'] = $data['query']['Sexo'];
+        $_SESSION['FiltroClientes']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+		$_SESSION['FiltroClientes']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+		$_SESSION['FiltroClientes']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+		$_SESSION['FiltroClientes']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+		$_SESSION['FiltroClientes']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+		$_SESSION['FiltroClientes']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');        
+		$_SESSION['FiltroClientes']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+		$_SESSION['FiltroClientes']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+		$_SESSION['FiltroClientes']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+		$_SESSION['FiltroClientes']['Ativo'] = $data['query']['Ativo'];
+		$_SESSION['FiltroClientes']['Motivo'] = $data['query']['Motivo'];
+		$_SESSION['FiltroClientes']['Campo'] = $data['query']['Campo'];
+		$_SESSION['FiltroClientes']['Ordenamento'] = $data['query']['Ordenamento'];
+		$_SESSION['FiltroClientes']['Dia'] = $data['query']['Dia'];
+		$_SESSION['FiltroClientes']['Mesvenc'] = $data['query']['Mesvenc'];
+		$_SESSION['FiltroClientes']['Ano'] = $data['query']['Ano'];
+		$_SESSION['FiltroClientes']['Agrupar'] = $data['query']['Agrupar'];
+		$_SESSION['FiltroClientes']['Pedidos'] = $data['query']['Pedidos'];
+		$_SESSION['FiltroClientes']['Sexo'] = $data['query']['Sexo'];
+		$_SESSION['FiltroClientes']['Pesquisa'] = $data['query']['Pesquisa'];
         
-		$_SESSION['FiltroAlteraParcela']['Texto1'] = utf8_encode($data['query']['Texto1']);
-        $_SESSION['FiltroAlteraParcela']['Texto2'] = utf8_encode($data['query']['Texto2']);
-        $_SESSION['FiltroAlteraParcela']['Texto3'] = utf8_encode($data['query']['Texto3']);
-        $_SESSION['FiltroAlteraParcela']['Texto4'] = utf8_encode($data['query']['Texto4']);
+		$_SESSION['FiltroClientes']['Texto1'] = utf8_encode($data['query']['Texto1']);
+        $_SESSION['FiltroClientes']['Texto2'] = utf8_encode($data['query']['Texto2']);
+        $_SESSION['FiltroClientes']['Texto3'] = utf8_encode($data['query']['Texto3']);
+        $_SESSION['FiltroClientes']['Texto4'] = utf8_encode($data['query']['Texto4']);
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+        $this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'trim');
         $this->form_validation->set_rules('DataInicio', 'Data Início do Cadastro', 'trim|valid_date');
         $this->form_validation->set_rules('DataFim', 'Data Fim do Cadastro', 'trim|valid_date');
 		$this->form_validation->set_rules('DataInicio2', 'Data Inicio', 'trim|valid_date');
@@ -9137,6 +9143,7 @@ class Relatorio extends CI_Controller {
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
 			$data['bd']['Pedidos'] = $data['query']['Pedidos'];
 			$data['bd']['Sexo'] = $data['query']['Sexo'];
+			$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
 
 			//$this->load->library('pagination');
 			$config['per_page'] = 10;
@@ -9158,7 +9165,6 @@ class Relatorio extends CI_Controller {
 			$config['first_tagl_close'] = "</li>";
 			$config['last_tag_open'] = "<li>";
 			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
 			
 			$config['base_url'] = base_url() . 'relatorio_pag/clientes_pag/';
 			$config['total_rows'] = $this->Relatorio_model->list_clientes($data['bd'],TRUE, TRUE);

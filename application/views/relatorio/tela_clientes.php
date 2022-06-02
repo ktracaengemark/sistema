@@ -8,8 +8,8 @@
 			<div class="panel-heading">
 				<div class="btn-group " role="group" aria-label="...">
 					<div class="row text-left">
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
-							<label >Cliente:</label>
+						<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 text-left">
+							<label>Pesquisar Cliente C/Autocomplete</label>
 							<div class="input-group">
 								<span class="input-group-btn">
 									<button class="btn btn-info btn-md" type="submit">
@@ -58,15 +58,26 @@
 								</div>
 							<?php } ?>
 						<?php } ?>
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
+						<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 text-left">
+							<label>Pesquisar Cliente S/Autocomplete</label>
+							<div class="input-group">
+								<span class="input-group-btn">
+									<button class="btn btn-info btn-md" type="submit">
+										<span class="glyphicon glyphicon-search"></span> 
+									</button>
+								</span>
+								<input type="text" placeholder="Pesquisar Cliente" class="form-control btn-md " name="Pesquisa" id="Pesquisa" value="<?php echo set_value('Pesquisa', $query['Pesquisa']); ?>">
+							</div>
+						</div>	
+						<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 							<label>Filtros</label><br>
 							<button  class="btn btn-md btn-warning btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
 								<span class="glyphicon glyphicon-filter"></span>
 							</button>
 						</div>
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
+						<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 							<label>Cadastrar</label><br>
-							<button  class="btn btn-md btn-danger" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
+							<button  class="btn btn-md btn-danger btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 								<span class="glyphicon glyphicon-plus"></span> Novo Cliente
 							</button>
 						</div>	
@@ -120,8 +131,7 @@
 						</div>
 						<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
 							<label for="Ano">Aniv.Ano:</label>
-							<input type="text" class="form-control Numero" maxlength="4" placeholder="AAAA"
-									   name="Ano" id="Ano" value="<?php echo set_value('Ano', $query['Ano']); ?>">
+							<input type="text" class="form-control Numero" maxlength="4" placeholder="AAAA" name="Ano" id="Ano" value="<?php echo set_value('Ano', $query['Ano']); ?>">
 						</div>
 						<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
 							<label for="Sexo">Sexo:</label>
