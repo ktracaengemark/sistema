@@ -3450,7 +3450,7 @@ class Orcatrata_model extends CI_Model {
 			. 'OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND '
 			. 'OT.idApp_Cliente = ' . $id . ' AND '
 			. 'OT.idTab_TipoRD = "2" AND '
-            . 'OT.CombinadoFrete = "S" AND '
+            
             . 'OT.AprovadoOrca = "' . $aprovado . '" AND '
             . 'OT.FinalizadoOrca = "N" AND '
 			. 'OT.CanceladoOrca = "N" '
