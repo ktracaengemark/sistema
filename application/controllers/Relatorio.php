@@ -9002,6 +9002,8 @@ class Relatorio extends CI_Controller {
 			'idApp_Cliente',
 			'idApp_ClientePet',
 			'idApp_ClienteDep',
+			'idApp_ClientePet2',
+			'idApp_ClienteDep2',
 			'Ativo',
 			'Motivo',
             'Ordenamento',
@@ -9094,6 +9096,8 @@ class Relatorio extends CI_Controller {
 		$_SESSION['FiltroClientes']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
 		$_SESSION['FiltroClientes']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
 		$_SESSION['FiltroClientes']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+		$_SESSION['FiltroClientes']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
+		$_SESSION['FiltroClientes']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
 		$_SESSION['FiltroClientes']['Ativo'] = $data['query']['Ativo'];
 		$_SESSION['FiltroClientes']['Motivo'] = $data['query']['Motivo'];
 		$_SESSION['FiltroClientes']['Campo'] = $data['query']['Campo'];
@@ -9133,6 +9137,8 @@ class Relatorio extends CI_Controller {
 			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
 			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
 			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+			$data['bd']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
+			$data['bd']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
 			$data['bd']['Ativo'] = $data['query']['Ativo'];
 			$data['bd']['Motivo'] = $data['query']['Motivo'];
             $data['bd']['Campo'] = $data['query']['Campo'];
@@ -9180,18 +9186,21 @@ class Relatorio extends CI_Controller {
 			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
             $data['pagina'] = $page;
 			$data['per_page'] = $config['per_page'];
+			
 			$data['report'] = $this->Relatorio_model->list_clientes($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
 			$data['pagination'] = $this->pagination->create_links();
-			
-            /*
-              echo "<pre>";
-              print_r($data['report']);
-              echo "</pre>";
-              exit();
-              */
 
-            $data['list'] = $this->load->view('relatorio/list_clientes', $data, TRUE);
-            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+			if($data['query']['idApp_Cliente']){
+				if ($data['report']->num_rows() >= 1) {
+					$info = $data['report']->result_array();
+					redirect('cliente/prontuario/' . $info[0]['idApp_Cliente'] );
+					exit();
+				} else {
+					$data['list'] = $this->load->view('relatorio/list_clientes', $data, TRUE);
+				}				
+			}else{
+				$data['list'] = $this->load->view('relatorio/list_clientes', $data, TRUE);
+			}
         }
 
         $this->load->view('relatorio/tela_clientes', $data);

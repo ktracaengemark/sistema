@@ -5761,14 +5761,19 @@ exit();*/
 			
 			if($_SESSION['Empresa']['CadastrarPet'] == "S"){
 				$data['idApp_ClientePet'] = ($data['idApp_ClientePet']) ? ' AND CP.idApp_ClientePet = ' . $data['idApp_ClientePet'] : FALSE;
+				$data['idApp_ClientePet2'] = ($data['idApp_ClientePet2']) ? 'AND CP.idApp_ClientePet = ' . $data['idApp_ClientePet2'] : FALSE;
 				$data['idApp_ClienteDep'] = FALSE;
+				$data['idApp_ClienteDep2'] =  FALSE;
 			}else{
-				$data['idApp_ClientePet'] = FALSE;
 				if($_SESSION['Empresa']['CadastrarDep'] == "S"){
 					$data['idApp_ClienteDep'] = ($data['idApp_ClienteDep']) ? ' AND CD.idApp_ClienteDep = ' . $data['idApp_ClienteDep'] : FALSE;
+					$data['idApp_ClienteDep2'] = ($data['idApp_ClienteDep2']) ? 'AND CD.idApp_ClienteDep = ' . $data['idApp_ClienteDep2'] : FALSE;
 				}else{	
 					$data['idApp_ClienteDep'] = FALSE;
+					$data['idApp_ClienteDep2'] = FALSE;
 				}
+				$data['idApp_ClientePet'] = FALSE;
+				$data['idApp_ClientePet2'] = FALSE;
 			}
 			if(isset($data['Sexo'])){
 				if($data['Sexo'] == 0){
@@ -5850,15 +5855,21 @@ exit();*/
 			
 			if($_SESSION['Empresa']['CadastrarPet'] == "S"){
 				$data['idApp_ClientePet'] = ($_SESSION['FiltroClientes']['idApp_ClientePet']) ? ' AND CP.idApp_ClientePet = ' . $_SESSION['FiltroClientes']['idApp_ClientePet'] : FALSE;
+				$data['idApp_ClientePet2'] = ($_SESSION['FiltroClientes']['idApp_ClientePet2']) ? ' AND CP.idApp_ClientePet = ' . $_SESSION['FiltroClientes']['idApp_ClientePet2'] : FALSE;
 				$data['idApp_ClienteDep'] = FALSE;
+				$data['idApp_ClienteDep2'] = FALSE;
 			}else{
-				$data['idApp_ClientePet'] = FALSE;
 				if($_SESSION['Empresa']['CadastrarDep'] == "S"){
 					$data['idApp_ClienteDep'] = ($_SESSION['FiltroClientes']['idApp_ClienteDep']) ? ' AND CD.idApp_ClienteDep = ' . $_SESSION['FiltroClientes']['idApp_ClienteDep'] : FALSE;
+					$data['idApp_ClienteDep2'] = ($_SESSION['FiltroClientes']['idApp_ClienteDep2']) ? ' AND CD.idApp_ClienteDep = ' . $_SESSION['FiltroClientes']['idApp_ClienteDep2'] : FALSE;
 				}else{
 					$data['idApp_ClienteDep'] = FALSE;
+					$data['idApp_ClienteDep2'] = FALSE;
 				}
+				$data['idApp_ClientePet'] = FALSE;
+				$data['idApp_ClientePet2'] = FALSE;
 			}
+			
 			if(isset($_SESSION['FiltroClientes']['Sexo'])){
 				if($_SESSION['FiltroClientes']['Sexo'] == 0){
 					$sexo = FALSE;
@@ -5973,6 +5984,8 @@ exit();*/
 				' . $data['idApp_Cliente'] . ' 
 				' . $data['idApp_ClientePet'] . '
 				' . $data['idApp_ClienteDep'] . '
+				' . $data['idApp_ClientePet2'] . '
+				' . $data['idApp_ClienteDep2'] . '
 				' . $data['Dia'] . ' 
 				' . $data['Mesvenc'] . '
 				' . $data['Ano'] . '
