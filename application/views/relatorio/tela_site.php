@@ -30,7 +30,7 @@
 			<h2 class="ser-title">Slides! (1902 x 448)px</h2>
 			<div class="col-md-12">
 				<a class="btn btn-info btn-block" href="<?php echo base_url() ?>relatorio/slides" role="button">
-					<span class="glyphicon glyphicon-edit"></span> Slides
+					<span class="glyphicon glyphicon-edit"></span> Editar Slides
 				</a>
 			</div>	
 			<?php if (isset($list2)) echo $list2; ?>
@@ -83,33 +83,73 @@
 		<?php } ?>	
 		<hr class="botm-line">
 		<div class="col-md-12">
-			<h2 class="ser-title">Atuacao! (300 x 300)px</h2>
+			<h2 class="ser-title">O que Fazemos! (300 x 300)px</h2>
 			<div class="col-md-12">
 				<a class="btn btn-info btn-block" href="<?php echo base_url() ?>relatorio/atuacao" role="button">
-					<span class="glyphicon glyphicon-edit"></span>Editar
+					<span class="glyphicon glyphicon-edit"></span>Editar O que Fazemos
 				</a>
 			</div>
 			<?php if (isset($list7)) echo $list7; ?>
+		</div>
+		<hr class="botm-line">
+		<div class="col-md-12">
+			<h2 class="ser-title">Depoimentos! (300 x 300)px</h2>
+			<div class="col-md-12">
+				<a class="btn btn-info btn-block" href="<?php echo base_url() ?>relatorio/depoimento" role="button">
+					<span class="glyphicon glyphicon-edit"></span>Editar Depoimentos
+				</a>
+			</div>
+			<?php if (isset($list6)) echo $list6; ?>
 		</div>	
 		<hr class="botm-line">
 		<div class="col-md-12">
 			<h2 class="ser-title">Equipe! (300 x 300)px</h2>
 			<div class="col-md-12">
 				<a class="btn btn-info btn-block" href="<?php echo base_url() ?>relatorio/colaborador" role="button">
-					<span class="glyphicon glyphicon-edit"></span>Editar
+					<span class="glyphicon glyphicon-edit"></span>Editar Equipe
 				</a>
 			</div>
 			<?php if (isset($list5)) echo $list5; ?>
-		</div>	
-		<hr class="botm-line">
-		<div class="col-md-12">
-			<h2 class="ser-title">Depoimentos! (300 x 300)px</h2>
-			<div class="col-md-12">
-				<a class="btn btn-info btn-block" href="<?php echo base_url() ?>relatorio/depoimento" role="button">
-					<span class="glyphicon glyphicon-edit"></span>Editar
-				</a>
+		</div>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<h2 class="ser-title">Rodape</h2>
+			<div class="row">
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+					<h3 class="ser-title">Sobre Nos</h3>
+					<a href="<?php echo base_url() . 'documentos/alterar_redessociais/' . $query['idSis_Empresa'] . ''; ?>">
+						<h4>"<?php if (isset($query['SobreNos'])) echo $query['SobreNos']; ?>"</h4>
+					</a>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+					<h3 class="ser-title">Atendimento</h3>
+					<a href="<?php echo base_url() . 'documentos/alterar_redessociais/' . $query['idSis_Empresa'] . ''; ?>">
+						<h4>"<?php if (isset($query['Atendimento'])) echo $query['Atendimento']; ?>"</h4>
+					</a>
+				</div>
 			</div>
-			<?php if (isset($list6)) echo $list6; ?>
+		</div>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<h2 class="ser-title">Redes Sociais</h2>
+			<div class="row">
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+					<h3 class="ser-title">Facebook</h3>
+					<a href="<?php echo base_url() . 'documentos/alterar_redessociais/' . $query['idSis_Empresa'] . ''; ?>">
+						<h4>"<?php if (isset($query['Facebook'])) echo $query['Facebook']; ?>"</h4>
+					</a>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+					<h3 class="ser-title">Instagram</h3>
+					<a href="<?php echo base_url() . 'documentos/alterar_redessociais/' . $query['idSis_Empresa'] . ''; ?>">
+						<h4>"<?php if (isset($query['Instagram'])) echo $query['Instagram']; ?>"</h4>
+					</a>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+					<h3 class="ser-title">Youtube</h3>
+					<a href="<?php echo base_url() . 'documentos/alterar_redessociais/' . $query['idSis_Empresa'] . ''; ?>">
+						<h4>"<?php if (isset($query['Youtube'])) echo $query['Youtube']; ?>"</h4>
+					</a>
+				</div>
+			</div>
 		</div>	
 	</div>
 </div>
