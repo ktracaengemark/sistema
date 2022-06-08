@@ -294,6 +294,7 @@ class Relatorioempresa extends CI_Controller {
 
 
         $data['select']['Campo'] = array(
+            'F.Nivel' => 'Nivel',
             'F.Nome' => 'Nome do Usuário',
         );
 
@@ -315,7 +316,7 @@ class Relatorioempresa extends CI_Controller {
             $data['bd']['Campo'] = $data['query']['Campo'];
 
             $data['report'] = $this->Relatorioempresa_model->list_funcionario($data['bd'],TRUE);
-
+			$data['total'] = $data['report']->num_rows();
             /*
               echo "<pre>";
               print_r($data['report']);

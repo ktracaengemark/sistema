@@ -120,13 +120,12 @@
 											<div class="form-group">
 												<div class="row">
 													<div class="col-md-3">	
-														<label for="idSis_Empresa">Empresa:</label>
-														<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?> readonly=""
-																id="idSis_Empresa" name="idSis_Empresa">
-
+														<label for="Nivel">Nivel:</label>
+														<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?> readonly="" id="Nivel" name="Nivel">
 															<?php
-															foreach ($select['idSis_Empresa'] as $key => $row) {
-																if ($query['idSis_Empresa'] == $key) {
+															foreach ($select['Nivel'] as $key => $row) {
+																if (!$query['Nivel']) $query['Nivel'] = '1';
+																if ($query['Nivel'] == $key) {
 																	echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 																} else {
 																	echo '<option value="' . $key . '">' . $row . '</option>';
@@ -406,8 +405,8 @@
 									</div>
 									<div class="form-group">
 										<div class="row">
-											<input type="hidden" name="idSis_Usuario" value="<?php echo $query['idSis_Usuario']; ?>">
-											<input type="hidden" name="idSis_Empresa" value="<?php echo $query['idSis_Empresa']; ?>">
+											<input type="hidden" id="idSis_Empresa" name="idSis_Empresa" value="<?php echo $_SESSION['log']['idSis_Empresa']; ?>">
+											<input type="hidden" id="idSis_Usuario" name="idSis_Usuario" value="<?php echo $query['idSis_Usuario']; ?>">
 											<?php if ($metodo == 2) { ?>
 
 												<div class="col-md-6">

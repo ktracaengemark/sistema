@@ -2117,15 +2117,15 @@ class Relatorioempresa_model extends CI_Model {
 	public function list_funcionario($data, $completo) {
 
         $data['Nome'] = ($data['Nome']) ? ' AND F.idSis_Usuario = ' . $data['Nome'] : FALSE;
-        $data['Campo'] = (!$data['Campo']) ? 'F.Nome' : $data['Campo'];
+        $data['Campo'] = (!$data['Campo']) ? 'F.Nivel' : $data['Campo'];
         $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 
         $query = $this->db->query('
             SELECT
                 F.idSis_Usuario,
                 F.Nome,
+				F.Nivel,
 				FU.Funcao,
-				PE.Nivel,
 				PE.Permissao
             FROM
                 Sis_Usuario AS F
@@ -2155,7 +2155,13 @@ class Relatorioempresa_model extends CI_Model {
         } else {
 
             foreach ($query->result() as $row) {
-
+				if($row->Nivel == 1){
+					$row->Nivel = "1 - Funcionario";
+				}elseif($row->Nivel == 2){
+					$row->Nivel = "2 - Revendedor";
+				}else{
+					$row->Nivel = "N.I.";
+				}
             }
 
             return $query;

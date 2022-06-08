@@ -6,15 +6,15 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<?php echo form_open('relatorioempresa/funcionario', 'role="form"'); ?>
-
+			<?php echo $titulo; ?>
 			<button  class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
-				<span class="glyphicon glyphicon-search"></span> <?php echo $titulo; ?>
+				<span class="glyphicon glyphicon-search"></span> Filtros
 			</button>
-			<!--											
-			<a class="btn btn-sm btn-danger" href="<?php echo base_url() ?>usuario/cadastrar" role="button"> 
-				<span class="glyphicon glyphicon-plus"></span> Novo Usuário
-			</a>
-			-->
+			<?php if(isset($_SESSION['Empresa']['NumUsuarios']) && isset($total) && ($_SESSION['Empresa']['NumUsuarios'] > $total)) { ?>
+				<a class="btn btn-sm btn-danger" href="<?php echo base_url() ?>usuario/cadastrar" role="button"> 
+					<span class="glyphicon glyphicon-plus"></span> Novo Usuário
+				</a>
+			<?php } ?>
 		</div>
 		<div class="panel-body">
 			<div class="modal fade bs-excluir-modal2-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">

@@ -533,7 +533,8 @@ class Loginempresa extends CI_Controller {
 							'Permissao_Comissao' => "3",
 							'Inativo' => "0",
 							'idTab_Modulo' => "1",
-							'Permissao' => "3"
+							'Permissao' => "3",
+							'Nivel' => "1"
 						);
 						$data['campos'] = array_keys($data['usuario']);
 
@@ -1092,7 +1093,8 @@ class Loginempresa extends CI_Controller {
 						'CpfUsuario' => $data['query']['CpfAdmin'],
 						'Inativo' => "0",
 						'idTab_Modulo' => "1",
-						'Permissao' => "3"
+						'Permissao' => "3",
+						'Nivel' => "1"
 					);
 					$data['campos'] = array_keys($data['usuario']);
 

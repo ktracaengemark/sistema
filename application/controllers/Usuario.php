@@ -77,6 +77,7 @@ class Usuario extends CI_Controller {
 			'EstadoUsuario',
 			'CepUsuario',
 			'CompAgenda',
+			'Nivel',
         ), TRUE));
 
 		#$this->load->model('Empresa_model');
@@ -114,7 +115,10 @@ class Usuario extends CI_Controller {
 		$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
 		$data['select']['CompAgenda'] = $this->Basico_model->select_status_sn();
 		$data['select']['idSis_Empresa'] = $this->Basico_model->select_empresa2();
-		
+        $data['select']['Nivel'] = array(
+            '1' => '1 - Funcionario',
+            '2' => '2 - Revendedor',
+        );		
         $data['titulo'] = 'Cadastrar Usuário';
         $data['form_open_path'] = 'usuario/cadastrar';
         $data['readonly'] = '';
@@ -366,6 +370,7 @@ class Usuario extends CI_Controller {
 			'EstadoUsuario',
 			'CepUsuario',
 			'CompAgenda',
+			'Nivel',
         ), TRUE);
 
         if ($id) {
@@ -395,6 +400,10 @@ class Usuario extends CI_Controller {
 		$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
 		$data['select']['CompAgenda'] = $this->Basico_model->select_status_sn();
 		$data['select']['idSis_Empresa'] = $this->Basico_model->select_empresa2();
+        $data['select']['Nivel'] = array(
+            '1' => '1 - Funcionario',
+            '2' => '2 - Revendedor',
+        );
 		
         $data['titulo'] = 'Editar Usuário';
         $data['form_open_path'] = 'usuario/alterar';
