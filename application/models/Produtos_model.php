@@ -147,39 +147,104 @@ class Produtos_model extends CI_Model {
         }
     }
 
+    public function get_catprod_verificacao($data) {
+		$query = $this->db->query(
+			'SELECT
+				idTab_Catprod
+			FROM 
+				Tab_Catprod AS TP
+			WHERE 
+				idTab_Catprod = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+        $query = $query->result_array();
+
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+	}
+
     public function get_catprod($data) {
-		$query = $this->db->query('
-			SELECT
+		$query = $this->db->query(
+			'SELECT
 				TP.*
 			FROM 
 				Tab_Catprod AS TP
 			WHERE 
-				idTab_Catprod = ' . $data . '
-		');
+				idTab_Catprod = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
         $query = $query->result_array();
 
-        //return $query;
-		return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
 		}
+	}
+
+    public function get_produto_verificacao($data) {
+		$query = $this->db->query(
+			'SELECT
+				idTab_Produto
+			FROM 
+				Tab_Produto AS TP
+			WHERE 
+				idTab_Produto = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+        $query = $query->result_array();
+
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+	}
 
     public function get_produto($data) {
-		$query = $this->db->query('
-			SELECT
+		$query = $this->db->query(
+			'SELECT
 				TP.*
 			FROM 
 				Tab_Produto AS TP
 			WHERE 
-				idTab_Produto = ' . $data . '
-		');
+				idTab_Produto = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
         $query = $query->result_array();
 
-        //return $query;
-		return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
 		}
+	}
+	
+    public function get_produtos_verificacao($data) {
+        $query = $this->db->query(
+			'SELECT  
+				TPS.idTab_Produtos
+			FROM 
+				Tab_Produtos AS TPS
+			WHERE 
+				TPS.idTab_Produtos = ' . $data . ' AND
+				TPS.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+        $query = $query->result_array();
+
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
 	
     public function get_produtos($data) {
-        $query = $this->db->query('
-			SELECT  
+        $query = $this->db->query(
+			'SELECT  
 				TPS.*,
 				TPS.Arquivo AS ArquivoDerivado,
 				TCP.*,
@@ -198,11 +263,16 @@ class Produtos_model extends CI_Model {
 					LEFT JOIN Tab_Opcao AS TOP1 ON TOP1.idTab_Opcao = TPS.Opcao_Atributo_1
 					LEFT JOIN Tab_Opcao AS TOP2 ON TOP2.idTab_Opcao = TPS.Opcao_Atributo_2
 			WHERE 
-				TPS.idTab_Produtos = ' . $data
+				TPS.idTab_Produtos = ' . $data . ' AND
+				TPS.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
 		);
         $query = $query->result_array();
-		
-        return $query[0];
+
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
     }
 
     public function get_app_produto($data) {
@@ -245,9 +315,28 @@ class Produtos_model extends CI_Model {
         return $query;
     }
 	
+    public function get_valor_verificacao($data) {
+		$query = $this->db->query(
+			'SELECT 
+				TV.idTab_Valor
+			FROM 
+				Tab_Valor AS TV
+			WHERE 
+				TV.idTab_Valor = ' . $data . ' AND
+				TV.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+        $query = $query->result_array();
+
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
+	
     public function get_valor($data) {
-		$query = $this->db->query('
-			SELECT 
+		$query = $this->db->query(
+			'SELECT 
 				TV.*,
 				TPS.Nome_Prod,
 				TPS.idTab_Produto,
@@ -262,11 +351,16 @@ class Produtos_model extends CI_Model {
 				Tab_Valor AS TV
 					LEFT JOIN Tab_Produtos AS TPS ON TPS.idTab_Produtos = TV.idTab_Produtos
 			WHERE 
-				TV.idTab_Valor = ' . $data . ' 
-		');
+				TV.idTab_Valor = ' . $data . ' AND
+				TV.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
         $query = $query->result_array();
 
-        return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
     }
 
     public function get_servico($data) {
@@ -362,9 +456,28 @@ class Produtos_model extends CI_Model {
         return $query;
     }	
 
+    public function get_produtosderivados_verificacao($data) {
+		$query = $this->db->query(
+			'SELECT
+				TPS.idTab_Produtos
+			FROM 
+				Tab_Produtos AS TPS
+			WHERE 
+				TPS.idTab_Produtos = ' . $data . ' AND
+				TPS.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+        $query = $query->result_array();
+
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
+
     public function get_produtosderivados($data) {
-		$query = $this->db->query('
-			SELECT
+		$query = $this->db->query(
+			'SELECT
 				TPS.idTab_Produtos,
 				TPS.idSis_Empresa,
 				TPS.Arquivo,
@@ -379,12 +492,16 @@ class Produtos_model extends CI_Model {
 					LEFT JOIN Tab_Opcao AS TOP2 ON TOP2.idTab_Opcao = TPS.Opcao_Atributo_1
 					LEFT JOIN Tab_Opcao AS TOP1 ON TOP1.idTab_Opcao = TPS.Opcao_Atributo_2
 			WHERE 
-				idTab_Produtos = ' . $data . '
-		');
+				TPS.idTab_Produtos = ' . $data . ' AND
+				TPS.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
         $query = $query->result_array();
 
-        //return $query;
-		return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
     }
 	
 	public function get_item($data, $desconto) {
@@ -830,7 +947,8 @@ class Produtos_model extends CI_Model {
 				TPM.DataInicioProm,
 				TPM.DataFimProm,
 				TPM.Promocao,
-				TPM.Descricao
+				TPM.Descricao,
+				TPM.TipoPromocao
 			FROM 
 				Tab_Valor AS TV
 					LEFT JOIN Tab_Desconto AS TDS ON TDS.idTab_Desconto = TV.Desconto

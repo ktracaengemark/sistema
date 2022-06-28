@@ -159,8 +159,9 @@
 						
 							<div class="form-group">
 								<div class="row">
-									<input type="hidden" name="idSis_Empresa" value="<?php echo $_SESSION['log']['idSis_Empresa']; ?>">
-									<!--<input type="hidden" name="idSis_Empresa" value="<?php echo $orcatrata['idSis_Empresa']; ?>">-->
+									<!--<input type="hidden" name="idSis_Empresa" value="<?php #echo $_SESSION['log']['idSis_Empresa']; ?>">
+									<input type="hidden" name="idSis_Empresa" value="<?php #echo $orcatrata['idSis_Empresa']; ?>">-->
+									<input type="hidden" name="idSis_Empresa" value="<?php echo $empresa['idSis_Empresa']; ?>">
 									<div class="col-md-2 text-left">
 										<label for="QuitadoParcelas">Quitar Todas as Parcelas?</label><br>
 										<div class="btn-group" data-toggle="buttons">

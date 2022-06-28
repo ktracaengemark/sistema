@@ -77,9 +77,9 @@ class Usuario_model extends CI_Model {
 
     }
 	
-    public function get_usuario($data) {
-        $query = $this->db->query('
-			SELECT 
+    public function get_usuario_verificacao($data) {
+        $query = $this->db->query(
+			'SELECT 
 				U.*,
 				A.idApp_Agenda
 			FROM 
@@ -87,12 +87,40 @@ class Usuario_model extends CI_Model {
 				 LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = U.idSis_Associado
 				 LEFT JOIN App_Agenda AS A ON A.idSis_Associado = ASS.idSis_Associado
 			WHERE 
-				U.idSis_Usuario = ' . $data . '
-		');
+				U.idSis_Usuario = ' . $data . ' AND
+				U.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND
+				U.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
+
+    }
+	
+    public function get_usuario($data) {
+        $query = $this->db->query(
+			'SELECT 
+				U.*,
+				A.idApp_Agenda
+			FROM 
+				Sis_Usuario AS U
+				 LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = U.idSis_Associado
+				 LEFT JOIN App_Agenda AS A ON A.idSis_Associado = ASS.idSis_Associado
+			WHERE 
+				U.idSis_Usuario = ' . $data . ''
+		);
 
         $query = $query->result_array();
 
-        return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
     }
 
     public function get_usuario_associado($data) {

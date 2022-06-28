@@ -120,20 +120,58 @@ class Orcatrata_model extends CI_Model {
 
     }
 	
-    public function get_arquivos($data) {
-        $query = $this->db->query('SELECT * FROM App_Arquivos WHERE idApp_Arquivos = ' . $data);
+    public function get_arquivos_verificacao($data) {
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
+		$query = $this->db->query(
+			'SELECT
+				idApp_Arquivos 
+			FROM 
+				App_Arquivos 
+			WHERE 
+				idApp_Arquivos = ' . $data . ' AND
+				' . $revendedor . '
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
         $query = $query->result_array();
 
-        /*
-        //echo $this->db->last_query();
-        echo '<br>';
-        echo "<pre>";
-        print_r($query);
-        echo "</pre>";
-        exit ();
-        */
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}		
+    }
+	
+    public function get_arquivos($data) {
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
+        $query = $this->db->query(
+			'SELECT
+				*
+			FROM 
+				App_Arquivos 
+			WHERE 
+				idApp_Arquivos = ' . $data . ' AND
+				' . $revendedor . '
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+        $query = $query->result_array();
 
-        return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}		
     }
 
     public function get_orcatrata_delete($data) {
@@ -185,7 +223,53 @@ class Orcatrata_model extends CI_Model {
         return $query;
     }
 
+    public function get_orcatrata_verificacao($data) {
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
+        $query = $this->db->query(
+			'SELECT 
+				OT.idApp_OrcaTrata,
+				OT.idTab_TipoRD,
+				OT.idApp_Cliente
+			FROM 
+				App_OrcaTrata AS OT 
+			WHERE 
+				OT.idApp_OrcaTrata = ' . $data . ' AND
+				' . $revendedor . '
+				OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+        $query = $query->result_array();
+		
+        /*
+        //echo $this->db->last_query();
+        echo '<br>';
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit ();
+        */
+
+        //return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}		
+    }
+
     public function get_orcatrata($data) {
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
         $query = $this->db->query('
 			SELECT 
 				OT.*,
@@ -201,8 +285,10 @@ class Orcatrata_model extends CI_Model {
 					LEFT JOIN Tab_FormaPag AS FP ON FP.idTab_FormaPag = OT.FormaPagamento
 					LEFT JOIN Tab_TipoFinanceiro AS TF ON TF.idTab_TipoFinanceiro = OT.TipoFinanceiro
 					LEFT JOIN Sis_Usuario AS SU ON SU.idSis_Usuario = OT.idSis_Usuario
-					WHERE 
-				idApp_OrcaTrata = ' . $data . '
+			WHERE 
+				OT.idApp_OrcaTrata = ' . $data . ' AND
+				' . $revendedor . '
+				OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
 		');
         $query = $query->result_array();
 		
@@ -215,30 +301,40 @@ class Orcatrata_model extends CI_Model {
         exit ();
         */
 
-        return $query[0];
+        //return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}		
     }
 
     public function get_orcatrata_arquivo($data) {
-        $query = $this->db->query('
-			SELECT 
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
+        $query = $this->db->query(
+			'SELECT 
 				OT.*
 			FROM 
 				App_OrcaTrata AS OT 
 			WHERE 
-				idApp_OrcaTrata = ' . $data . '
-		');
-        $query = $query->result_array();
+				idApp_OrcaTrata = ' . $data . ' AND
+				' . $revendedor . '
+				OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+        
+		$query = $query->result_array();
 		
-        /*
-        //echo $this->db->last_query();
-        echo '<br>';
-        echo "<pre>";
-        print_r($query);
-        echo "</pre>";
-        exit ();
-        */
-
-        return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
     }
 	
     public function get_orcatratas($data) {
@@ -3354,6 +3450,12 @@ class Orcatrata_model extends CI_Model {
 	
     public function list_orcamentocomb($id, $combinado, $completo) {
 		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+				
 		$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 		
         $query = $this->db->query('SELECT '
@@ -3378,6 +3480,7 @@ class Orcatrata_model extends CI_Model {
             . 'App_OrcaTrata AS OT '
             . 'WHERE '
 			. $permissao_orcam 
+			. $revendedor 
 			. 'OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND '
 			. 'OT.idApp_Cliente = ' . $id . ' AND '
 			. 'OT.idTab_TipoRD = "2" AND '
@@ -3422,7 +3525,13 @@ class Orcatrata_model extends CI_Model {
     }
 	
     public function list_orcamento($id, $aprovado, $completo) {
-
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
 		$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 		
         $query = $this->db->query('SELECT '
@@ -3447,6 +3556,7 @@ class Orcatrata_model extends CI_Model {
             . 'App_OrcaTrata AS OT '
             . 'WHERE '
 			. $permissao_orcam 
+			. $revendedor 
 			. 'OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND '
 			. 'OT.idApp_Cliente = ' . $id . ' AND '
 			. 'OT.idTab_TipoRD = "2" AND '
@@ -3490,7 +3600,13 @@ class Orcatrata_model extends CI_Model {
     }
 
     public function list_orcamentofinal($id, $finalizado, $completo) {
-
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
 		$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 		
         $query = $this->db->query('SELECT '
@@ -3514,6 +3630,7 @@ class Orcatrata_model extends CI_Model {
             . 'App_OrcaTrata AS OT '
             . 'WHERE '
 			. $permissao_orcam
+			. $revendedor
 			. 'OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND '
 			. 'OT.idApp_Cliente = ' . $id . ' AND '
 			. 'OT.idTab_TipoRD = "2" AND '
@@ -3555,7 +3672,13 @@ class Orcatrata_model extends CI_Model {
     }
 
     public function list_orcamentocancel($id, $cancelado, $completo) {
-
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
 		$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 		
         $query = $this->db->query('SELECT '
@@ -3579,6 +3702,7 @@ class Orcatrata_model extends CI_Model {
             . 'App_OrcaTrata AS OT '
             . 'WHERE '
 			. $permissao_orcam 
+			. $revendedor 
 			. 'OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND '
 			. 'OT.idApp_Cliente = ' . $id . ' AND '
 			. 'OT.idTab_TipoRD = "2" AND '
@@ -3923,6 +4047,7 @@ class Orcatrata_model extends CI_Model {
 			$this->db->delete($tables);
 			*/
 		
+			$query = $this->db->delete('App_Arquivos', array('idApp_Orcatrata' => $id));
 			$query = $this->db->delete('App_Servico', array('idApp_Orcatrata' => $id));
 			$query = $this->db->delete('App_Produto', array('idApp_Orcatrata' => $id));
 			$query = $this->db->delete('App_Parcelas', array('idApp_Orcatrata' => $id));

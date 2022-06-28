@@ -317,7 +317,42 @@ class Orcatrataprint_model extends CI_Model {
         return $query;
     }
 
+    public function get_orcatrata_verificacao($data) {
+				
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
+        $query = $this->db->query(
+            'SELECT
+				OT.idApp_OrcaTrata,
+				OT.idTab_TipoRD
+            FROM
+				App_OrcaTrata AS OT
+            WHERE
+            	OT.idApp_OrcaTrata = ' . $data . ' AND
+				' . $revendedor . '
+				OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+        $query = $query->result_array();
+
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
+
     public function get_orcatrata($data) {
+				
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
         $query = $this->db->query(
             'SELECT
 				C.NomeCliente,
@@ -422,6 +457,7 @@ class Orcatrataprint_model extends CI_Model {
 				OT.Cupom,
 				OT.CashBackOrca,
 				OT.ValorFinalOrca,
+				OT.idTab_TipoRD,
 				MO.Modalidade,
 				TP.TipoFinanceiro
 
@@ -437,6 +473,8 @@ class Orcatrataprint_model extends CI_Model {
 				LEFT JOIN Sis_Usuario AS SU ON SU.idSis_Usuario = OT.Entregador
 
             WHERE
+				' . $revendedor . '
+				OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
             	OT.idApp_OrcaTrata = ' . $data . ' 
 		');
         $query = $query->result_array();
@@ -450,7 +488,12 @@ class Orcatrataprint_model extends CI_Model {
         exit ();
         */
 
-        return $query[0];
+        //return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
     }
 
 	public function get_servico1($data) {

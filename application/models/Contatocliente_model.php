@@ -25,35 +25,43 @@ class Contatocliente_model extends CI_Model {
         }
     }
 
-    public function get_contatocliente($data) {
-        $query = $this->db->query('SELECT * FROM App_ContatoCliente WHERE idApp_ContatoCliente = ' . $data);
-        /*
-          $query = $this->db->query(
-          . 'SELECT '
-          . 'P.NomePaciente, '
-          . 'P.DataNascimento, '
-          . 'P.Telefone, '
-          . 'S.Sexo, '
-          . 'P.Endereco, '
-          . 'P.Bairro, '
-          . 'M.NomeMunicipio AS Municipio, '
-          . 'M.Uf, '
-          . 'P.Obs, '
-          . 'P.Email '
-          . 'FROM '
-          . 'App_ContatoCliente AS P, '
-          . 'Tab_Sexo AS S, '
-          . 'Tab_Municipio AS M '
-          . 'WHERE '
-          . 'P.idApp_ContatoCliente = ' . $data . ' AND '
-          . 'P.Sexo = S.idTab_Sexo AND '
-          . 'P.Municipio = M.idTab_Municipio'
-          );
-         *
-         */
-        $query = $query->result_array();
+    public function get_contatocliente_verificacao($data) {
+        $query = $this->db->query(
+			'SELECT
+				idApp_ContatoCliente 
+			FROM 
+				App_ContatoCliente 
+			WHERE
+				idApp_ContatoCliente = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+        
+		$query = $query->result_array();
 
-        return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
+
+    public function get_contatocliente($data) {
+        $query = $this->db->query(
+			'SELECT
+				* 
+			FROM 
+				App_ContatoCliente 
+			WHERE
+				idApp_ContatoCliente = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
     }
 
     public function update_contatocliente($data, $id) {
@@ -85,11 +93,11 @@ class Contatocliente_model extends CI_Model {
         }
     }
 
-    public function lista_contatocliente($x) {
+    public function lista_contatocliente($data, $x) {
 
         $query = $this->db->query('SELECT * '
                 . 'FROM App_ContatoCliente WHERE '
-                . 'idApp_Cliente = ' . $_SESSION['Cliente']['idApp_Cliente'] . ' '
+                . 'idApp_Cliente = ' . $data . ' '
                 . 'ORDER BY NomeContatoCliente ASC ');
         /*
           echo $this->db->last_query();

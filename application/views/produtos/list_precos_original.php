@@ -17,7 +17,6 @@
 				<th>Tempo</th>
 				<th>Desc</th>
 				<th>Ativo</th>
-				<th>V/R</th>
 				<!--<th>Balcao</th>
 				<th>Site</th>-->
 			</tr>
@@ -48,7 +47,6 @@
 						echo '<td>' . $row['TempoDeEntrega'] . '</td>';
 						echo '<td>' . $row['Convdesc'] . '</td>';
 						echo '<td>' . $row['AtivoPreco'] . '</td>';
-						echo '<td>' . $row['TipoPreco'] . '</td>';
 						//echo '<td>' . $row['VendaBalcaoPreco'] . '</td>';
 						//echo '<td>' . $row['VendaSitePreco'] . '</td>';
 					echo '</tr>';            

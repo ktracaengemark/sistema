@@ -9937,7 +9937,7 @@ function adiciona_precos() {
 							</div>\
 						</div>\
 						<div class="col-md-2">\
-							<label for="VendaBalcaoPreco">VendaBalcao?</label><br>\
+							<label for="VendaBalcaoPreco">Balcao?</label><br>\
 							<div class="form-group">\
 								<div class="btn-group" data-toggle="buttons">\
 									<label class="btn btn-warning active" name="radio_VendaBalcaoPreco'+pt+'" id="radio_VendaBalcaoPreco'+pt+'N">\
@@ -9952,7 +9952,7 @@ function adiciona_precos() {
 							</div>\
 						</div>\
 						<div class="col-md-2">\
-							<label for="VendaSitePreco">VendaSite?</label><br>\
+							<label for="VendaSitePreco">Site?</label><br>\
 							<div class="form-group">\
 								<div class="btn-group" data-toggle="buttons">\
 									<label class="btn btn-warning active" name="radio_VendaSitePreco'+pt+'" id="radio_VendaSitePreco'+pt+'N">\
@@ -9962,6 +9962,21 @@ function adiciona_precos() {
 									<label class="btn btn-default" name="radio_VendaSitePreco'+pt+'" id="radio_VendaSitePreco'+pt+'S">\
 									<input type="radio" name="VendaSitePreco'+pt+'" id="radiogeraldinamico"\
 										 autocomplete="off" value="S">Sim\
+									</label>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="col-md-2">\
+							<label for="TipoPreco">Venda/Revenda?</label><br>\
+							<div class="form-group">\
+								<div class="btn-group" data-toggle="buttons">\
+									<label class="btn btn-warning active" name="radio_TipoPreco'+pt+'" id="radio_TipoPreco'+pt+'V">\
+									<input type="radio" name="TipoPreco'+pt+'" id="radiogeraldinamico"\
+										 autocomplete="off" value="V" checked>Venda\
+									</label>\
+									<label class="btn btn-default" name="radio_TipoPreco'+pt+'" id="radio_TipoPreco'+pt+'R">\
+									<input type="radio" name="TipoPreco'+pt+'" id="radiogeraldinamico"\
+										 autocomplete="off" value="R">Revenda\
 									</label>\
 								</div>\
 							</div>\

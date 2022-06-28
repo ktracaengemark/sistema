@@ -223,7 +223,7 @@
 																	</div>
 																</div>
 																<div class="col-md-2">
-																	<label for="VendaBalcaoPreco">VendaBalcao?</label><br>
+																	<label for="VendaBalcaoPreco">Balcao?</label><br>
 																	<?php if ($metodo == 6) { ?>
 																		<input type="text" class="form-control text-left" readonly="" value="<?php echo $_SESSION['Valor']['VendaBalcaoPreco'] ?>">
 																	<?php }elseif ($metodo == 7) { ?>
@@ -255,7 +255,7 @@
 																	<?php } ?>
 																</div>
 																<div class="col-md-2">
-																	<label for="VendaSitePreco">VendaSite?</label><br>
+																	<label for="VendaSitePreco">Site?</label><br>
 																	<?php if ($metodo == 6) { ?>
 																		<input type="text" class="form-control text-left" readonly="" value="<?php echo $_SESSION['Valor']['VendaSitePreco'] ?>">
 																	<?php }elseif ($metodo == 7) { ?>
@@ -286,7 +286,37 @@
 																		</div>
 																	<?php } ?>
 																</div>
-																<div class="col-md-2 text-right"></div>
+																<div class="col-md-2">
+																	<label for="TipoPreco">Venda/Revenda?</label><br>
+																	<?php if ($metodo == 6) { ?>
+																		<input type="text" class="form-control text-left" readonly="" value="<?php echo $_SESSION['Valor']['TipoPreco'] ?>">
+																	<?php }elseif ($metodo == 7) { ?>
+																		<div class="form-group">
+																			<div class="btn-group" data-toggle="buttons">
+																				<?php
+																				foreach ($select['TipoPreco'] as $key => $row) {
+																					(!$valor['TipoPreco']) ? $valor['TipoPreco'] = 'V' : FALSE;
+																					if ($valor['TipoPreco'] == $key) {
+																						echo ''
+																						. '<label class="btn btn-warning active" name="radiobutton_TipoPreco" id="radiobutton_TipoPreco' .  $key . '">'
+																						. '<input type="radio" name="TipoPreco" id="radiobuttondinamico" '
+																						. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																						. '</label>'
+																						;
+																					} else {
+																						echo ''
+																						. '<label class="btn btn-default" name="radiobutton_TipoPreco" id="radiobutton_TipoPreco' .  $key . '">'
+																						. '<input type="radio" name="TipoPreco" id="radiobuttondinamico" '
+																						. 'autocomplete="off" value="' . $key . '" >' . $row
+																						. '</label>'
+																						;
+																					}
+																				}
+																				?>
+																			</div>
+																		</div>
+																	<?php } ?>
+																</div>
 															</div>
 														</div>	
 													</div>

@@ -53,6 +53,7 @@
 									<th class="active">CashBack</th>
 									<th class="active">Tempo</th>
 									<th class="active">Ativo</th>
+									<th class="active">V/R</th>
 								<?php } ?>
 							<?php } ?>
 						</tr>
@@ -145,6 +146,7 @@
 										<td><?php echo $row['ComissaoCashBack'] ?> %</td>
 										<td><?php echo $row['TempoDeEntrega'] ?> Dias</td>
 										<td><?php echo $row['AtivoPreco'] ?></td>
+										<td><?php echo $row['TipoPreco'] ?></td>
 									<?php } ?>	
 								<?php } ?>	
 							</tr>	

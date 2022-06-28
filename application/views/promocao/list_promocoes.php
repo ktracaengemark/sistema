@@ -10,6 +10,7 @@
 				<th>Dt.Inicio</th>
 				<th>Dt.Fim</th>
 				<th>Ativo</th>
+				<th>V/R</th>
 				<!--<th>Balcao</th>
 				<th>Site</th>-->
 				<th></th>
@@ -34,6 +35,7 @@
 						echo '<td>' . $row['DataInicioProm'] . '</td>';
 						echo '<td>' . $row['DataFimProm'] . '</td>';
 						echo '<td>' . $row['Ativo'] . '</td>';
+						echo '<td>' . $row['TipoPromocao'] . '</td>';
 						//echo '<td>' . $row['VendaBalcao'] . '</td>';
 						//echo '<td>' . $row['VendaSite'] . '</td>';
 						echo '<td></td>';

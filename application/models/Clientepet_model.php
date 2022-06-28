@@ -39,35 +39,43 @@ class Clientepet_model extends CI_Model {
 
     }
 
-    public function get_clientepet($data) {
-        $query = $this->db->query('SELECT * FROM App_ClientePet WHERE idApp_ClientePet = ' . $data);
-        /*
-          $query = $this->db->query(
-          . 'SELECT '
-          . 'P.NomePaciente, '
-          . 'P.DataNascimentoPet, '
-          . 'P.Telefone, '
-          . 'S.SexoPet, '
-          . 'P.Endereco, '
-          . 'P.Bairro, '
-          . 'M.NomeMunicipio AS Municipio, '
-          . 'M.Uf, '
-          . 'P.ObsPet, '
-          . 'P.Email '
-          . 'FROM '
-          . 'App_ClientePet AS P, '
-          . 'Tab_SexoPet AS S, '
-          . 'Tab_Municipio AS M '
-          . 'WHERE '
-          . 'P.idApp_ClientePet = ' . $data . ' AND '
-          . 'P.SexoPet = S.idTab_SexoPet AND '
-          . 'P.Municipio = M.idTab_Municipio'
-          );
-         *
-         */
+    public function get_clientepet_verificacao($data) {
+        $query = $this->db->query(
+			'SELECT
+				idApp_ClientePet
+			FROM 
+				App_ClientePet 
+			WHERE 
+				idApp_ClientePet = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+
         $query = $query->result_array();
 
-        return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
+
+    public function get_clientepet($data) {
+        $query = $this->db->query(
+			'SELECT
+				* 
+			FROM 
+				App_ClientePet 
+			WHERE 
+				idApp_ClientePet = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
     }
 
     public function update_clientepet($data, $id) {

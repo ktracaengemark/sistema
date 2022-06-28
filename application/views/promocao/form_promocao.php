@@ -677,6 +677,36 @@
 															</div>
 														<?php } ?>	
 													</div>
+													<div class="col-md-2 text-left">
+														<label for="TipoPromocao">Venda/Revenda?</label><br>
+														<?php if ($metodo == 3) { ?>
+															<input type="text" class="form-control text-left" readonly="" value="<?php echo $_SESSION['Promocao']['TipoPromocao'] ?>">
+														<?php }else{ ?>
+															<div class="btn-group" data-toggle="buttons">
+																<?php
+																foreach ($select['TipoPromocao'] as $key => $row) {
+																	if (!$promocao['TipoPromocao']) $promocao['TipoPromocao'] = 'V';
+																	($key == 'V') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																	if ($promocao['TipoPromocao'] == $key) {
+																		echo ''
+																		. '<label class="btn btn-warning active" name="TipoPromocao_' . $hideshow . '">'
+																		. '<input type="radio" name="TipoPromocao" id="' . $hideshow . '" '
+																		. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																		. '</label>'
+																		;
+																	} else {
+																		echo ''
+																		. '<label class="btn btn-default" name="TipoPromocao_' . $hideshow . '">'
+																		. '<input type="radio" name="TipoPromocao" id="' . $hideshow . '" '
+																		. 'autocomplete="off" value="' . $key . '" >' . $row
+																		. '</label>'
+																		;
+																	}
+																}
+																?>
+															</div>
+														<?php } ?>	
+													</div>
 												</div>
 											</div>										
 										</div>

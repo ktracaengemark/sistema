@@ -60,12 +60,10 @@ class Login_model extends CI_Model {
          */
         if ($query->num_rows() === 0) {
             return FALSE;
-        }
-        else {
+        } else {
             if ($retorna === FALSE) {
                 return TRUE;
-            }
-            else {
+            } else {
                 $query = $query->result_array();
                 return $query[0];
             }

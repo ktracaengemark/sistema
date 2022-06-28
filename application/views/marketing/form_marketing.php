@@ -48,7 +48,7 @@
 													if ($metodo == 1 || $metodo == 3) { 
 														$nomecadatrou = $_SESSION['log']['Nome'];
 													}elseif(isset($orcatrata['idSis_Usuario']) && ($metodo == 2 || $metodo == 4)){
-														$nomecadatrou = $_SESSION['Orcatrata']['NomeCadastrou'];
+														$nomecadatrou = $_SESSION['Marketing']['NomeCadastrou'];
 													}else{
 														$nomecadatrou = false;
 													}
@@ -81,7 +81,7 @@
 												<div class="col-md-3">
 													<input type="hidden" name="Compartilhar" id="Compartilhar" value="<?php echo $orcatrata['Compartilhar']; ?>"/>
 													<label for="Compartilhar">Quem Fazer</label>
-													<input type="text" class="form-control" readonly="" value="<?php echo $_SESSION['Orcatrata']['NomeCompartilhar']; ?>"/>
+													<input type="text" class="form-control" readonly="" value="<?php echo $_SESSION['Marketing']['NomeCompartilhar']; ?>"/>
 												</div>
 											<?php } ?>
 											-->

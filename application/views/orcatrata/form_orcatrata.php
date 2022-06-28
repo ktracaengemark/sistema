@@ -1476,36 +1476,38 @@
 																		</div>	
 																	</div>
 																	<div class="row">
-																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-left">
-																			<label for="UsarCupom">Usar Cupom?</label><br>
-																			<div class="btn-group" data-toggle="buttons">
-																				<?php
-																				foreach ($select['UsarCupom'] as $key => $row) {
-																					if (!$orcatrata['UsarCupom'])$orcatrata['UsarCupom'] = 'N';
-
-																					($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-
-																					if ($orcatrata['UsarCupom'] == $key) {
-																						echo ''
-																						. '<label class="btn btn-warning active" name="UsarCupom_' . $hideshow . '">'
-																						. '<input type="radio" name="UsarCupom" id="' . $hideshow . '" '
-																						. 'onchange="usarcupom(this.value)" '
-																						. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																						. '</label>'
-																						;
-																					} else {
-																						echo ''
-																						. '<label class="btn btn-default" name="UsarCupom_' . $hideshow . '">'
-																						. '<input type="radio" name="UsarCupom" id="' . $hideshow . '" '
-																						. 'onchange="usarcupom(this.value)" '
-																						. 'autocomplete="off" value="' . $key . '" >' . $row
-																						. '</label>'
-																						;
+																		<?php if(isset($_SESSION['Usuario']['Nivel']) && $_SESSION['Usuario']['Nivel'] == 1) { ?>
+																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-left">
+																				<label for="UsarCupom">Usar Cupom?</label><br>
+																				<div class="btn-group" data-toggle="buttons">
+																					<?php
+																					foreach ($select['UsarCupom'] as $key => $row) {
+																						if (!$orcatrata['UsarCupom'])$orcatrata['UsarCupom'] = 'N';
+																						($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																						if ($orcatrata['UsarCupom'] == $key) {
+																							echo ''
+																							. '<label class="btn btn-warning active" name="UsarCupom_' . $hideshow . '">'
+																							. '<input type="radio" name="UsarCupom" id="' . $hideshow . '" '
+																							. 'onchange="usarcupom(this.value)" '
+																							. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																							. '</label>'
+																							;
+																						} else {
+																							echo ''
+																							. '<label class="btn btn-default" name="UsarCupom_' . $hideshow . '">'
+																							. '<input type="radio" name="UsarCupom" id="' . $hideshow . '" '
+																							. 'onchange="usarcupom(this.value)" '
+																							. 'autocomplete="off" value="' . $key . '" >' . $row
+																							. '</label>'
+																							;
+																						}
 																					}
-																				}
-																				?>
+																					?>
+																				</div>
 																			</div>
-																		</div>
+																		<?php }else{ ?>
+																			<input type="hidden" name="UsarCupom" id="UsarCupom" value="<?php echo $orcatrata['UsarCupom'] ?>"/>
+																		<?php } ?>
 																		<div id="UsarCupom" <?php echo $div['UsarCupom']; ?>>	
 																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
 																				<label for="Cupom">Cupom <span class="modal-title" id="Hidden_CodigoCupom"><?php echo $cadastrar['CodigoCupom'];?></span> </label><br>
@@ -1548,38 +1550,40 @@
 																				<input type="text" class="form-control Valor" name="SubValorFinal" id="SubValorFinal" value="<?php echo $orcatrata['SubValorFinal'] ?>" readonly=''/>
 																			</div>
 																		</div>
-																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-left">
-																			<label for="UsarCashBack">Usar CashBack?</label><br>
-																			<div class="btn-group" data-toggle="buttons">
-																				<?php
-																				foreach ($select['UsarCashBack'] as $key => $row) {
-																					if (!$orcatrata['UsarCashBack'])$orcatrata['UsarCashBack'] = 'N';
-
-																					($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-
-																					if ($orcatrata['UsarCashBack'] == $key) {
-																						echo ''
-																						. '<label class="btn btn-warning active" name="UsarCashBack_' . $hideshow . '">'
-																						. '<input type="radio" name="UsarCashBack" id="' . $hideshow . '" '
-																						//. 'onchange="descValorOrca(this.value)" '
-																						. 'onchange="usarcashback(this.value)" '
-																						. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																						. '</label>'
-																						;
-																					} else {
-																						echo ''
-																						. '<label class="btn btn-default" name="UsarCashBack_' . $hideshow . '">'
-																						. '<input type="radio" name="UsarCashBack" id="' . $hideshow . '" '
-																						//. 'onchange="descValorOrca(this.value)" '
-																						. 'onchange="usarcashback(this.value)" '
-																						. 'autocomplete="off" value="' . $key . '" >' . $row
-																						. '</label>'
-																						;
+																		<?php if(isset($_SESSION['Usuario']['Nivel']) && $_SESSION['Usuario']['Nivel'] == 1) { ?>
+																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-left">
+																				<label for="UsarCashBack">Usar CashBack?</label><br>
+																				<div class="btn-group" data-toggle="buttons">
+																					<?php
+																					foreach ($select['UsarCashBack'] as $key => $row) {
+																						if (!$orcatrata['UsarCashBack'])$orcatrata['UsarCashBack'] = 'N';
+																						($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																						if ($orcatrata['UsarCashBack'] == $key) {
+																							echo ''
+																							. '<label class="btn btn-warning active" name="UsarCashBack_' . $hideshow . '">'
+																							. '<input type="radio" name="UsarCashBack" id="' . $hideshow . '" '
+																							//. 'onchange="descValorOrca(this.value)" '
+																							. 'onchange="usarcashback(this.value)" '
+																							. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																							. '</label>'
+																							;
+																						} else {
+																							echo ''
+																							. '<label class="btn btn-default" name="UsarCashBack_' . $hideshow . '">'
+																							. '<input type="radio" name="UsarCashBack" id="' . $hideshow . '" '
+																							//. 'onchange="descValorOrca(this.value)" '
+																							. 'onchange="usarcashback(this.value)" '
+																							. 'autocomplete="off" value="' . $key . '" >' . $row
+																							. '</label>'
+																							;
+																						}
 																					}
-																				}
-																				?>
+																					?>
+																				</div>
 																			</div>
-																		</div>
+																		<?php }else{ ?>
+																			<input type="hidden" name="UsarCashBack" id="UsarCashBack" value="<?php echo $orcatrata['UsarCashBack'] ?>"/>
+																		<?php } ?>
 																	</div>
 																	<div class="row">
 																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">

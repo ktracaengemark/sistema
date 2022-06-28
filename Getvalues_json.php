@@ -386,7 +386,8 @@ elseif ($_GET['q'] == 2) {
 }
 
 elseif ($_GET['q'] == 90) {
-
+	
+	$nivel = ($_SESSION['Usuario']['Nivel'] == 2) ? 'AND V.TipoPreco = "V"' : FALSE;
 	$filtro1 = ($_GET['tipo_orca'] == "B") ? ' AND ((V.Desconto = "1" AND 
 													V.VendaBalcaoPreco = "S") OR 
 													(V.Desconto = "2" AND 
@@ -414,6 +415,7 @@ elseif ($_GET['q'] == 90) {
 				V.QtdProdutoIncremento,
 				V.Convdesc,
 				V.Desconto,
+				V.TipoPreco,
 				TDS.Desconto,
 				TPM.Promocao,
 				TPM.VendaBalcao,
@@ -432,6 +434,7 @@ elseif ($_GET['q'] == 90) {
 				P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND 
 				P.Prod_Serv = "P"
 				' . $filtro1 . '
+				' . $nivel . '
 			ORDER BY
 				TDS.Desconto ASC,
 				P.Nome_Prod ASC,
@@ -439,21 +442,28 @@ elseif ($_GET['q'] == 90) {
         ');
 
     while ($row = mysql_fetch_assoc($result)) {
-
+		if($row['TipoPreco'] == "V"){
+			$row['TipoPreco'] = "CHEIO";
+		}elseif($row['TipoPreco'] == "R"){
+			$row['TipoPreco'] = "REVENDA";
+		}else{
+			$row['TipoPreco'] = "";
+		}
         $event_array[] = array(
             'id' => $row['idTab_Valor'],
 			'id_produto' => $row['idTab_Produtos'],
             #'name' => utf8_encode($row['NomeProduto']),
             #'name' => $row['NomeProduto'],
-            'name' => mb_convert_encoding($row['NomeProduto'], "UTF-8", "ISO-8859-1"),
+            'name' => mb_convert_encoding($row['NomeProduto'].' - '.$row['TipoPreco'], "UTF-8", "ISO-8859-1"),
             'value' => $row['ValorProduto'],
         );
     }
 
 }
 
-elseif ($_GET['q'] == 902) {	
-
+elseif ($_GET['q'] == 902) {
+	
+	$nivel = ($_SESSION['Usuario']['Nivel'] == 2) ? 'AND V.TipoPreco = "V"' : FALSE;
 	$filtro1 = ($_GET['tipo_orca'] == "B") ? ' AND ((V.Desconto = "1" AND 
 													V.VendaBalcaoPreco = "S") OR 
 													(V.Desconto = "2" AND 
@@ -480,6 +490,7 @@ elseif ($_GET['q'] == 902) {
 				V.QtdProdutoIncremento,
 				V.Convdesc,
 				V.Desconto,
+				V.TipoPreco,
 				TDS.Desconto,
 				TPM.Promocao,
 				TPM.VendaBalcao,
@@ -498,6 +509,7 @@ elseif ($_GET['q'] == 902) {
 				P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				P.Prod_Serv = "S"
 				' . $filtro1 . '
+				' . $nivel . '
 			ORDER BY
 				TDS.Desconto ASC,
 				P.Nome_Prod ASC,
@@ -505,13 +517,19 @@ elseif ($_GET['q'] == 902) {
         ');
 
     while ($row = mysql_fetch_assoc($result)) {
-
+		if($row['TipoPreco'] == "V"){
+			$row['TipoPreco'] = "CHEIO";
+		}elseif($row['TipoPreco'] == "R"){
+			$row['TipoPreco'] = "REVENDA";
+		}else{
+			$row['TipoPreco'] = "";
+		}
         $event_array[] = array(
             'id' => $row['idTab_Valor'],
 			'id_produto' => $row['idTab_Produtos'],
             #'name' => utf8_encode($row['NomeProduto']),
             #'name' => $row['NomeProduto'],
-            'name' => mb_convert_encoding($row['NomeProduto'], "UTF-8", "ISO-8859-1"),
+            'name' => mb_convert_encoding($row['NomeProduto'].' - '.$row['TipoPreco'], "UTF-8", "ISO-8859-1"),
             'value' => $row['ValorProduto'],
         );
     }

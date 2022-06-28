@@ -26,11 +26,22 @@ class Contatofornec_model extends CI_Model {
     }
 
     public function get_contatofornec($data) {
-        $query = $this->db->query('SELECT * FROM App_Contatofornec WHERE idApp_Contatofornec = ' . $data);
-        
-        $query = $query->result_array();
+        $query = $this->db->query(
+			'SELECT 
+				* 
+			FROM 
+				App_Contatofornec 
+			WHERE 
+				idApp_Contatofornec = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
 
-        return $query[0];
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
     }
 
     public function update_contatofornec($data, $id) {
@@ -62,11 +73,11 @@ class Contatofornec_model extends CI_Model {
         }
     }
 
-    public function lista_contatofornec($x) {
+    public function lista_contatofornec($data, $x) {
 
         $query = $this->db->query('SELECT * '
                 . 'FROM App_Contatofornec WHERE '
-                . 'idApp_Fornecedor = ' . $_SESSION['Fornecedor']['idApp_Fornecedor'] . ' '
+                . 'idApp_Fornecedor = ' . $data . ' '
                 . 'ORDER BY NomeContatofornec ASC ');
         /*
           echo $this->db->last_query();

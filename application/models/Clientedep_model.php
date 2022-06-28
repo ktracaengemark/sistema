@@ -39,35 +39,43 @@ class Clientedep_model extends CI_Model {
 
     }
 
-    public function get_clientedep($data) {
-        $query = $this->db->query('SELECT * FROM App_ClienteDep WHERE idApp_ClienteDep = ' . $data);
-        /*
-          $query = $this->db->query(
-          . 'SELECT '
-          . 'P.NomePaciente, '
-          . 'P.DataNascimentoDep, '
-          . 'P.Telefone, '
-          . 'S.SexoDep, '
-          . 'P.Endereco, '
-          . 'P.Bairro, '
-          . 'M.NomeMunicipio AS Municipio, '
-          . 'M.Uf, '
-          . 'P.ObsDep, '
-          . 'P.Email '
-          . 'FROM '
-          . 'App_ClienteDep AS P, '
-          . 'Tab_SexoDep AS S, '
-          . 'Tab_Municipio AS M '
-          . 'WHERE '
-          . 'P.idApp_ClienteDep = ' . $data . ' AND '
-          . 'P.SexoDep = S.idTab_SexoDep AND '
-          . 'P.Municipio = M.idTab_Municipio'
-          );
-         *
-         */
+    public function get_clientedep_verificacao($data) {
+        $query = $this->db->query(
+			'SELECT 
+				idApp_ClienteDep 
+			FROM 
+				App_ClienteDep 
+			WHERE 
+				idApp_ClienteDep = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+
         $query = $query->result_array();
 
-        return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
+
+    public function get_clientedep($data) {
+        $query = $this->db->query(
+			'SELECT 
+				* 
+			FROM 
+				App_ClienteDep 
+			WHERE 
+				idApp_ClienteDep = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
     }
 
     public function update_clientedep($data, $id) {

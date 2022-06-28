@@ -6,46 +6,6 @@
 			<div class="row">
 				<div class="col-sm-offset-1 col-md-10 ">
 					<div class="panel panel-<?php echo $panel; ?>">
-						<div class="panel-heading">
-							<div class="btn-group">
-								<button type="button" class="btn btn-sm btn-default  dropdown-toggle" data-toggle="dropdown">
-									<span class="glyphicon glyphicon-file"></span> <?php echo '<small>' . $_SESSION['Cliente']['NomeCliente'] . '</small> - <small>Id.: ' . $_SESSION['Cliente']['idApp_Cliente'] . '</small>' ?> <span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu" role="menu">
-									<li>
-										<a <?php if (preg_match("/cliente\/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
-											<a href="<?php echo base_url() . 'cliente/prontuario/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
-												<span class="glyphicon glyphicon-file"> </span>Ver Dados do Cliente
-											</a>
-										</a>
-									</li>
-									<li role="separator" class="divider"></li>
-									<li>
-										<a <?php if (preg_match("/cliente\/alterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-											<a href="<?php echo base_url() . 'cliente/alterar/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
-												<span class="glyphicon glyphicon-edit"></span> Editar Dados do Cliente
-											</a>
-										</a>
-									</li>
-									<li role="separator" class="divider"></li>
-									<li>
-										<a <?php if (preg_match("/cliente\/alterar_status\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-											<a href="<?php echo base_url() . 'cliente/alterar_status/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
-												<span class="glyphicon glyphicon-edit"></span> Alterar Status do Cliente
-											</a>
-										</a>
-									</li>
-									<li role="separator" class="divider"></li>
-									<li>
-										<a <?php if (preg_match("/cliente\/alterarlogo\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-											<a href="<?php echo base_url() . 'cliente/alterarlogo/' . $_SESSION['Cliente']['idApp_Cliente']; ?>">
-												<span class="glyphicon glyphicon-edit"></span> Alterar Logo
-											</a>
-										</a>
-									</li>							
-								</ul>
-							</div>
-						</div>
 						<div class="panel-body">
 							<?php if (isset($msg)) echo $msg; ?>
 							<?php echo validation_errors(); ?>

@@ -17,6 +17,7 @@ $result_sub_cat = "
 						App_OrcaTrata 
 					WHERE 
 						idApp_Cliente=" . $id_cliente . " AND
+						NivelOrca = " . $_SESSION['Usuario']['Nivel'] . " AND
 						RepeticaoCons = 0 AND
 						ConcluidoOrca='N' AND 
 						CanceladoOrca='N' 

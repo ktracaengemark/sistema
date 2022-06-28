@@ -7,7 +7,7 @@
 				<div class="col-sm-offset-1 col-md-10 ">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
-							<?php echo '<small>' . $titulo . '</small> <strong>' . $_SESSION['Cliente']['NomeCompleto'] . '</strong> - <small>' . $_SESSION['Cliente']['idApp_Cliente'] . '</small>' ?>
+							<?php echo '<small>' . $titulo . '</small> <strong>' . $_SESSION['Cliente']['NomeCliente'] . '</strong> - <small>' . $_SESSION['Cliente']['idApp_Cliente'] . '</small>' ?>
 						</div>
 						<div class="panel-body">
 

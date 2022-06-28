@@ -1308,7 +1308,7 @@
 													<input type="hidden" class="form-control Valor" name="ValorFinalOrca" id="ValorFinalOrca" value="<?php echo $orcatrata['ValorFinalOrca'] ?>"/>
 												<?php } ?>
 												<input type="hidden" name="UsarCashBack" id="UsarCashBack" value="<?php echo $_SESSION['Orcatrata']['UsarCashBack']; ?>"/>
-												<input type="hidden" id="Hidden_UsarCashBack" value="<?php echo $orcatrata['UsarCashBack'] ?>">	
+												<input type="hidden" id="Hidden_UsarCashBack" value="<?php echo $_SESSION['Orcatrata']['UsarCashBack']; ?>">	
 											</div>
 											<br>
 											<div class="row">

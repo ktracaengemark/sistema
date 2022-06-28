@@ -1700,6 +1700,8 @@ class Relatorio extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Receita Não Encontrada.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
 		
@@ -8985,6 +8987,8 @@ class Relatorio extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Cliente Não Encontrado.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
 		

@@ -22,12 +22,14 @@
 										<label for="NomeContatoCliente">Nome do Contato: *</label>
 										<input type="text" class="form-control" id="NomeContatoCliente" maxlength="255" <?php echo $readonly; ?>
 											   name="NomeContatoCliente" autofocus value="<?php echo $query['NomeContatoCliente']; ?>">
+										<?php echo form_error('NomeContatoCliente'); ?>
 									</div>
 
 									<div class="col-md-4">
 										<label for="Telefone1">Telefone Principal: *</label>
 										<input type="text" class="form-control Celular" id="Telefone1" maxlength="14" <?php echo $readonly; ?>
 											   name="Telefone1" placeholder="(XX)999999999" value="<?php echo $query['Telefone1']; ?>">
+										<?php echo form_error('Telefone1'); ?>
 									</div>
 									<div class="col-md-4">
 										<label for="DataNascimento">Data de Nascimento:</label>
@@ -71,7 +73,8 @@
 												}
 											}
 											?>   
-										</select>          
+										</select> 
+										<?php echo form_error('Relacao'); ?>         
 									</div>
 									<div class="col-md-4">
 										<label for="Obs">OBS:</label>

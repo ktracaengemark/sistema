@@ -57,21 +57,63 @@ class Marketing_model extends CI_Model {
         return $query[0];
     }
 
-    public function get_marketing2($data) {
-        $query = $this->db->query('
-			SELECT 
+    public function get_marketing2_verificacao($data) {
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(PC.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
+        $query = $this->db->query(
+			'SELECT 
 				PC.*,
 				USC.Nome AS NomeCadastrou
 			FROM 
 				App_Marketing PC
 					LEFT JOIN Sis_Usuario AS USC ON USC.idSis_Usuario = PC.idSis_Usuario
 			WHERE 
-				PC.idApp_Marketing = ' . $data . '
-		');
+				PC.idApp_Marketing = ' . $data . ' AND
+				' . $revendedor . '
+				PC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
 
         $query = $query->result_array();
 
-        return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
+
+    public function get_marketing2($data) {
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(PC.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
+        $query = $this->db->query(
+			'SELECT 
+				PC.*,
+				USC.Nome AS NomeCadastrou
+			FROM 
+				App_Marketing PC
+					LEFT JOIN Sis_Usuario AS USC ON USC.idSis_Usuario = PC.idSis_Usuario
+			WHERE 
+				PC.idApp_Marketing = ' . $data . ' AND
+				' . $revendedor . '
+				PC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
     }
 
     public function get_submarketing($data) {
@@ -381,7 +423,13 @@ class Marketing_model extends CI_Model {
     }
 
     public function list_atualizacao($id, $concluido, $completo) {
-
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(PRC.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
         $query = $this->db->query('SELECT '
             . 'PRC.idApp_Marketing, '
 			. 'PRC.idApp_OrcaTrata, '
@@ -394,6 +442,7 @@ class Marketing_model extends CI_Model {
             . 'App_Marketing AS PRC '
             . 'WHERE '
             . 'PRC.idApp_Cliente = ' . $id . ' AND '
+			. $revendedor 
             . 'PRC.idApp_OrcaTrata = 0 AND '
             . 'PRC.CategoriaMarketing = 1 AND '
             . 'PRC.ConcluidoMarketing = "' . $concluido . '" '
@@ -423,7 +472,13 @@ class Marketing_model extends CI_Model {
     }
 
     public function list_pesquisa($id, $concluido, $completo) {
-
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(PRC.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
         $query = $this->db->query('SELECT '
             . 'PRC.idApp_Marketing, '
 			. 'PRC.idApp_OrcaTrata, '
@@ -436,6 +491,7 @@ class Marketing_model extends CI_Model {
             . 'App_Marketing AS PRC '
             . 'WHERE '
             . 'PRC.idApp_Cliente = ' . $id . ' AND '
+			. $revendedor 
             . 'PRC.idApp_OrcaTrata = 0 AND '
             . 'PRC.CategoriaMarketing = 2 AND '
             . 'PRC.ConcluidoMarketing = "' . $concluido . '" '
@@ -465,7 +521,13 @@ class Marketing_model extends CI_Model {
     }
 	
     public function list_retorno($id, $concluido, $completo) {
-
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(PRC.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
         $query = $this->db->query('SELECT '
             . 'PRC.idApp_Marketing, '
 			. 'PRC.idApp_OrcaTrata, '
@@ -478,6 +540,7 @@ class Marketing_model extends CI_Model {
             . 'App_Marketing AS PRC '
             . 'WHERE '
             . 'PRC.idApp_Cliente = ' . $id . ' AND '
+			. $revendedor
             . 'PRC.idApp_OrcaTrata = 0 AND '
             . 'PRC.CategoriaMarketing = 3 AND '
             . 'PRC.ConcluidoMarketing = "' . $concluido . '" '
@@ -507,7 +570,13 @@ class Marketing_model extends CI_Model {
     }
 	
     public function list_promocao($id, $concluido, $completo) {
-
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(PRC.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
         $query = $this->db->query('SELECT '
             . 'PRC.idApp_Marketing, '
 			. 'PRC.idApp_OrcaTrata, '
@@ -520,6 +589,7 @@ class Marketing_model extends CI_Model {
             . 'App_Marketing AS PRC '
             . 'WHERE '
             . 'PRC.idApp_Cliente = ' . $id . ' AND '
+			. $revendedor
             . 'PRC.idApp_OrcaTrata = 0 AND '
             . 'PRC.CategoriaMarketing = 4 AND '
             . 'PRC.ConcluidoMarketing = "' . $concluido . '" '
@@ -549,7 +619,13 @@ class Marketing_model extends CI_Model {
     }
 	
     public function list_felicitacao($id, $concluido, $completo) {
-
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(PRC.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
         $query = $this->db->query('SELECT '
             . 'PRC.idApp_Marketing, '
 			. 'PRC.idApp_OrcaTrata, '
@@ -562,6 +638,7 @@ class Marketing_model extends CI_Model {
             . 'App_Marketing AS PRC '
             . 'WHERE '
             . 'PRC.idApp_Cliente = ' . $id . ' AND '
+			. $revendedor
             . 'PRC.idApp_OrcaTrata = 0 AND '
             . 'PRC.CategoriaMarketing = 5 AND '
             . 'PRC.ConcluidoMarketing = "' . $concluido . '" '

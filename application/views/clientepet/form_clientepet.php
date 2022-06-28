@@ -22,6 +22,7 @@
 										<label for="NomeClientePet">Nome do Pet: *</label>
 										<input type="text" class="form-control" id="NomeClientePet" maxlength="255" <?php echo $readonly; ?>
 											   name="NomeClientePet" autofocus value="<?php echo $query['NomeClientePet']; ?>">
+										<?php echo form_error('NomeClientePet'); ?>
 									</div>
 									<div class="col-md-4">
 										<label for="DataNascimentoPet">Data de Nascimento:</label>

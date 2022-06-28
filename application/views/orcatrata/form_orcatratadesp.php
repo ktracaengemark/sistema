@@ -1461,38 +1461,7 @@
 																				<input type="text" class="form-control Valor" name="SubValorFinal" id="SubValorFinal" value="<?php echo $orcatrata['SubValorFinal'] ?>" readonly=''/>
 																			</div>
 																		</div>
-																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-left">
-																			<label for="UsarCashBack">Uasr CashBack?</label><br>
-																			<div class="btn-group" data-toggle="buttons">
-																				<?php
-																				foreach ($select['UsarCashBack'] as $key => $row) {
-																					if (!$orcatrata['UsarCashBack'])$orcatrata['UsarCashBack'] = 'N';
-
-																					($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-
-																					if ($orcatrata['UsarCashBack'] == $key) {
-																						echo ''
-																						. '<label class="btn btn-warning active" name="UsarCashBack_' . $hideshow . '">'
-																						. '<input type="radio" name="UsarCashBack" id="' . $hideshow . '" '
-																						//. 'onchange="descValorOrca(this.value)" '
-																						. 'onchange="usarcashback(this.value)" '
-																						. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																						. '</label>'
-																						;
-																					} else {
-																						echo ''
-																						. '<label class="btn btn-default" name="UsarCashBack_' . $hideshow . '">'
-																						. '<input type="radio" name="UsarCashBack" id="' . $hideshow . '" '
-																						//. 'onchange="descValorOrca(this.value)" '
-																						. 'onchange="usarcashback(this.value)" '
-																						. 'autocomplete="off" value="' . $key . '" >' . $row
-																						. '</label>'
-																						;
-																					}
-																				}
-																				?>
-																			</div>
-																		</div>
+																		<input type="hidden" name="UsarCashBack" id="UsarCashBack" value="<?php echo $orcatrata['UsarCashBack'] ?>"/>
 																	</div>
 																	<div class="row">
 																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">

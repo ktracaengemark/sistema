@@ -170,8 +170,8 @@
 						
 							<div class="form-group">
 								<div class="row">
-									<!--<input type="hidden" name="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>">-->
-									<!--<input type="hidden" name="idSis_Empresa" value="<?php echo $_SESSION['log']['idSis_Empresa']; ?>">-->
+									<!--<input type="hidden" name="idApp_Cliente" value="<?php #echo $_SESSION['Cliente']['idApp_Cliente']; ?>">-->
+									<!--<input type="hidden" name="idSis_Empresa" value="<?php #echo $_SESSION['log']['idSis_Empresa']; ?>">-->
 									<input type="hidden" name="idSis_Empresa" value="<?php echo $empresa['idSis_Empresa']; ?>">
 									
 									<div class="col-md-4 text-left">

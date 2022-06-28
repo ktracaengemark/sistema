@@ -266,7 +266,7 @@
 													<?php if (isset($extra) && $extra == "S") { ?>	
 														<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 															<label>Repeticao</label>
-															<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['Consulta']['Repeticao'];?> - <?php echo $_SESSION['Consulta']['DataTermino'];?>">
+															<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['Consulta']['Repeticao'];?> - <?php echo $_SESSION['Datas']['DataTermino'];?>">
 															<?php echo form_error('Repeticao'); ?>
 														</div>
 													<?php  } else { ?>
@@ -318,7 +318,7 @@
 												<?php  } elseif($metodo == 2) { ?>
 													<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 														<label>Repeticao</label><br>
-														<a type="button" class="btn btn-md btn-info btn-block" data-loading-text="Aguarde..." href="<?php echo base_url() . 'Consulta/cadastrar_extra/' . $query['idApp_Cliente'] . '/' . $_SESSION['Consulta']['Repeticao']; ?>">
+														<a type="button" class="btn btn-md btn-info btn-block" data-loading-text="Aguarde..." href="<?php echo base_url() . 'Consulta/cadastrar_extra/' . $_SESSION['Consulta']['idApp_Cliente'] . '/' . $_SESSION['Consulta']['Repeticao']; ?>">
 															<?php echo $_SESSION['Consulta']['Repeticao']; ?> / Cad Extra 										
 														</a>
 														<input type="hidden" id="Repeticao" name="Repeticao" readonly="" value="<?php echo $_SESSION['Consulta']['Repeticao']; ?>">
@@ -690,7 +690,7 @@
 															<input type="hidden" name="idApp_Consulta" value="<?php echo $query['idApp_Consulta']; ?>">
 														<?php } ?>
 														<?php if ($alterarcliente == 2) { ?>
-															<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $query['idApp_Cliente']; ?>">
+															<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $_SESSION['Consulta']['idApp_Cliente']; ?>">
 														<?php } ?>
 														<!--
 														<input type="hidden" name="Evento" value="1">
@@ -1187,7 +1187,11 @@
 										</div>
 									</div>	
 								</div>
-								<input type="hidden" name="id_Cliente" id="id_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" >
+								<?php if($alterarcliente == 1){?>
+									<input type="hidden" name="id_Cliente" id="id_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" >
+								<?php }elseif($alterarcliente == 2){?>
+									<input type="hidden" name="id_Cliente" id="id_Cliente" value="<?php echo $_SESSION['Consulta']['idApp_Cliente']; ?>" >
+								<?php } ?>
 							</div>
 							<div class="row">
 								<!--
@@ -1491,7 +1495,11 @@
 											</div>
 										</div>
 									</div>
-									<input type="hidden" name="id_Cliente" id="id_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" >
+									<?php if($alterarcliente == 1){?>
+										<input type="hidden" name="id_Cliente" id="id_Cliente" value="<?php echo $query['idApp_Cliente']; ?>" >
+									<?php }elseif($alterarcliente == 2){?>
+										<input type="hidden" name="id_Cliente" id="id_Cliente" value="<?php echo $_SESSION['Consulta']['idApp_Cliente']; ?>" >
+									<?php } ?>
 								</div>
 								<div class="row">					
 									<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">

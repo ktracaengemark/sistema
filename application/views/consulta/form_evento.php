@@ -90,14 +90,14 @@
 													<?php if (isset($extra) && $extra == "S") { ?>	
 														<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 															<label>Repeticao</label>
-															<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['Consulta']['Repeticao'];?> - <?php echo $_SESSION['Consulta']['DataTermino'];?>">
+															<input class="form-control"<?php echo $readonly; ?> readonly="" value="<?php echo $_SESSION['Consulta']['Repeticao'];?> - <?php echo $_SESSION['Datas']['DataTermino'];?>">
 															<?php echo form_error('Repeticao'); ?>
 														</div>
 													<?php  } ?>
 												<?php  } elseif($metodo == 2) { ?>
 													<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 														<label>Repeticao</label><br>
-														<a type="button" class="btn btn-md btn-info btn-block" data-loading-text="Aguarde..." href="<?php echo base_url() . 'Consulta/cadastrar_evento_extra/' . $query['Repeticao']; ?>">
+														<a type="button" class="btn btn-md btn-info btn-block" data-loading-text="Aguarde..." href="<?php echo base_url() . 'Consulta/cadastrar_evento_extra/' . $_SESSION['Consulta']['Repeticao']; ?>">
 															Cad Extra <?php echo $_SESSION['Consulta']['Repeticao']; ?>										
 														</a>
 														<input type="hidden" id="Repeticao" name="Repeticao" readonly="" value="<?php echo $_SESSION['Consulta']['Repeticao']; ?>">
@@ -263,7 +263,7 @@
 													<!--
 													<div class="col-xs-7 col-sm-6 col-md-6 col-lg-4">
 														<label>Término</label>
-														<input class="form-control"<?php #echo $readonly; ?> readonly="" value="<?php #echo $_SESSION['Consulta']['DataTermino']; ?>">
+														<input class="form-control"<?php #echo $readonly; ?> readonly="" value="<?php #echo $_SESSION['Datas']['DataTermino']; ?>">
 													</div>
 													-->
 													<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">

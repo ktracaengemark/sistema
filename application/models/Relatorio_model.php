@@ -1145,11 +1145,19 @@ class Relatorio_model extends CI_Model {
 			$comissao3 = ($_SESSION['FiltroAlteraParcela']['metodo'] == 2 && $_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['Usuario']['Permissao_Comissao'] < 2 ) ? 'AND OT.Associado = ' . $_SESSION['log']['idSis_Usuario'] . '  ' : FALSE;
 				
 
-		}			
+		}
 		
 		$_SESSION['FiltroAlteraParcela']['Start'] = $start;
 		$_SESSION['FiltroAlteraParcela']['Limit'] = $limit;
-
+		
+		if($_SESSION['Usuario']['Nivel'] == 1){
+			$nivel = 'AND OT.NivelOrca = 1';
+		}elseif($_SESSION['Usuario']['Nivel'] == 2){
+			$nivel = 'AND OT.NivelOrca = 2';
+		}else{
+			$nivel = FALSE;
+		}
+		
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
@@ -1297,6 +1305,7 @@ class Relatorio_model extends CI_Model {
 				' . $DiaAniv . '
 				' . $MesAniv . '
 				' . $AnoAniv . '
+				' . $nivel . '
 			' . $groupby . '
             ORDER BY
 				' . $data['Campo'] . '
@@ -5925,6 +5934,12 @@ exit();*/
 			}
 		}
 
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = 'AND (C.NivelCliente = "1" OR C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ')';
+		}else{
+			$revendedor = FALSE;
+		}
+		
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
@@ -5990,6 +6005,7 @@ exit();*/
 				' . $data['Mesvenc'] . '
 				' . $data['Ano'] . '
 				' . $pesquisar . '
+				' . $revendedor . '
 			' . $groupby . '
             ORDER BY
                 ' . $data['Campo'] . '
@@ -6587,6 +6603,7 @@ exit();*/
 				TV.TempoDeEntrega,
 				TV.QtdProdutoDesconto,
 				TV.QtdProdutoIncremento,
+				TV.TipoPreco,
 				TDS.idTab_Desconto,
 				TDS.Desconto,
 				TPM.idTab_Promocao,

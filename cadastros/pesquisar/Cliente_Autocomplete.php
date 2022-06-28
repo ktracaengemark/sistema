@@ -69,7 +69,13 @@ if(is_numeric($cliente0)){
 }else{
 	$query0 = '(NomeCliente like "%' . $cliente0 . '%" )';
 }
-
+		
+if($_SESSION['Usuario']['Nivel'] == 2){
+	$revendedor = '(NivelCliente = "1" OR idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+}else{
+	$revendedor = FALSE;
+}
+		
 //SQL para selecionar os registros
 $result_msg_cont = '
 					SELECT 
@@ -85,6 +91,7 @@ $result_msg_cont = '
 						App_Cliente 
 					WHERE
 						idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+						' . $revendedor . '
 						(' . $query0 . ' ' . $filtro1 . ' ' . $filtro2 . ')
 					ORDER BY NomeCliente ASC 
 					LIMIT 7

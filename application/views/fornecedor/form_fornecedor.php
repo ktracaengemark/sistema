@@ -313,11 +313,13 @@
 												<span class="glyphicon glyphicon-save"></span> Salvar
 											</button>
 										</div>
-										<div class="col-md-6 text-right">
-											<button  type="button" class="btn btn-lg btn-danger" name="submeter2" id="submeter2" onclick="DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
-												<span class="glyphicon glyphicon-trash"></span> Excluir
-											</button>
-										</div>
+										
+											<div class="col-md-6 text-right">
+												<button  type="button" class="btn btn-lg btn-danger" name="submeter2" id="submeter2" onclick="DesabilitaBotao(this.name)" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
+													<span class="glyphicon glyphicon-trash"></span> Excluir
+												</button>
+											</div>
+										
 										<div class="modal fade bs-excluir-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 											<div class="modal-dialog" role="document">
 												<div class="modal-content">

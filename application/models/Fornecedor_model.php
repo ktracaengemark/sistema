@@ -23,14 +23,33 @@ class Fornecedor_model extends CI_Model {
             return $this->db->insert_id();
         }
     }
+	
+    public function get_fornecedor($data) {
+        $query = $this->db->query(
+			'SELECT
+				* 
+			FROM 
+				App_Fornecedor 
+			WHERE 
+				idApp_Fornecedor = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);       
 
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
+    }
+	/*
     public function get_fornecedor($data) {
         $query = $this->db->query('SELECT * FROM App_Fornecedor WHERE idApp_Fornecedor = ' . $data);       
         $query = $query->result_array();
 
         return $query[0];
     }
-
+	*/
     public function update_fornecedor($data, $id) {
 
         unset($data['Id']);

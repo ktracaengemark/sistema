@@ -166,6 +166,15 @@
 											
 										
 										<?php if ($metodo >= 2) { ?>
+										
+											<?php 
+												if ($metodo == 2 || $metodo == 3){
+													$referencia = $produtos;
+												}else{
+													$referencia = $_SESSION['Produtos'];
+												} 
+											?>
+											
 											<div class="form-group">
 												<div class="row">
 													<div class="col-md-1 text-center" >
@@ -175,13 +184,13 @@
 													</div>		
 													<div class="col-md-5">
 														<label for="Nome_Prod">Nome Produto*</label>
-														<input type="text" class="form-control" readonly="" id="Nome_Prod" name="Nome_Prod" value="<?php echo $produtos['Nome_Prod']; ?>">
+														<input type="text" class="form-control" readonly="" id="Nome_Prod" name="Nome_Prod" value="<?php echo $referencia['Nome_Prod']; ?>">
 														<?php echo form_error('Nome_Prod'); ?>
 													</div>		
 													<div class="col-md-3">
 														<label for="Produtos_Descricao">Descrição</label>
 														<textarea type="text" class="form-control " <?php echo $readonly ?> id="Produtos_Descricao" name="Produtos_Descricao" 
-															maxlength="200" value="<?php echo $produtos['Produtos_Descricao']; ?>"><?php echo $produtos['Produtos_Descricao']; ?></textarea>
+															maxlength="200" value="<?php echo $referencia['Produtos_Descricao']; ?>"><?php echo $referencia['Produtos_Descricao']; ?></textarea>
 														<?php echo form_error('Produtos_Descricao'); ?>
 													</div>
 													<div class="col-md-3 text-left">
@@ -239,16 +248,16 @@
 													<div class="col-md-1"></div>
 													<div class="col-md-1">
 														<label for="id">id_Produto</label>
-														<input type="text" class="form-control" readonly="" value="<?php echo $produtos['idTab_Produtos']; ?>">
+														<input type="text" class="form-control" readonly="" value="<?php echo $_SESSION['Produtos']['idTab_Produtos']; ?>">
 													</div>		
 													<div class="col-md-2">
 														<label for="Cod_Prod">Codigo *</label>
-														<input type="text" class="form-control" readonly="" id="Cod_Prod" name="Cod_Prod" value="<?php echo $produtos['Cod_Prod']; ?>">
+														<input type="text" class="form-control" readonly="" id="Cod_Prod" name="Cod_Prod" value="<?php echo $referencia['Cod_Prod']; ?>">
 														<?php echo form_error('Cod_Prod'); ?>
 													</div>		
 													<div class="col-md-2">
 														<label for="Cod_Barra">Codigo de Barras</label>
-														<input type="text" class="form-control" <?php echo $readonly ?> id="Cod_Barra" name="Cod_Barra" value="<?php echo $produtos['Cod_Barra']; ?>">
+														<input type="text" class="form-control" <?php echo $readonly ?> id="Cod_Barra" name="Cod_Barra" value="<?php echo $referencia['Cod_Barra']; ?>">
 														<?php echo form_error('Cod_Barra'); ?>
 													</div>
 												</div>
@@ -372,7 +381,7 @@
 																			</div>
 																		</div>
 																		<div class="col-md-2">
-																			<label for="VendaBalcaoPreco">VendaBalcao?</label><br>
+																			<label for="VendaBalcaoPreco">Balcao?</label><br>
 																			<div class="form-group">
 																				<div class="btn-group" data-toggle="buttons">
 																					<?php
@@ -400,7 +409,7 @@
 																			</div>
 																		</div>
 																		<div class="col-md-2">
-																			<label for="VendaSitePreco">VendaSite?</label><br>
+																			<label for="VendaSitePreco">Site?</label><br>
 																			<div class="form-group">
 																				<div class="btn-group" data-toggle="buttons">
 																					<?php
@@ -418,6 +427,33 @@
 																							echo ''
 																							. '<label class="btn btn-default" name="radiobutton_VendaSitePreco' . $i . '" id="radiobutton_VendaSitePreco' . $i .  $key . '">'
 																							. '<input type="radio" name="VendaSitePreco' . $i . '" id="radiobuttondinamico" '
+																							. 'autocomplete="off" value="' . $key . '" >' . $row
+																							. '</label>'
+																							;
+																						}
+																					}
+																					?>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="col-md-2">
+																			<label for="TipoPreco">Venda/Revenda?</label><br>
+																			<div class="form-group">
+																				<div class="btn-group" data-toggle="buttons">
+																					<?php
+																					foreach ($select['TipoPreco'] as $key => $row) {
+																						(!$valor[$i]['TipoPreco']) ? $valor[$i]['TipoPreco'] = 'V' : FALSE;
+																						if ($valor[$i]['TipoPreco'] == $key) {
+																							echo ''
+																							. '<label class="btn btn-warning active" name="radiobutton_TipoPreco' . $i . '" id="radiobutton_TipoPreco' . $i .  $key . '">'
+																							. '<input type="radio" name="TipoPreco' . $i . '" id="radiobuttondinamico" '
+																							. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																							. '</label>'
+																							;
+																						} else {
+																							echo ''
+																							. '<label class="btn btn-default" name="radiobutton_TipoPreco' . $i . '" id="radiobutton_TipoPreco' . $i .  $key . '">'
+																							. '<input type="radio" name="TipoPreco' . $i . '" id="radiobuttondinamico" '
 																							. 'autocomplete="off" value="' . $key . '" >' . $row
 																							. '</label>'
 																							;

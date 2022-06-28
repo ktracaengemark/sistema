@@ -77,24 +77,66 @@ class Promocao_model extends CI_Model {
         }
     }
 
+    public function get_catprom_verificacao($data) {
+		$query = $this->db->query(
+			'SELECT
+				TPM.idTab_Catprom
+			FROM 
+				Tab_Catprom AS TPM
+			WHERE 
+				TPM.idTab_Catprom = ' . $data . ' AND
+				TPM.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+        $query = $query->result_array();
+
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+	}
+	
     public function get_catprom($data) {
-		$query = $this->db->query('
-			SELECT
+		$query = $this->db->query(
+			'SELECT
 				TPM.*
 			FROM 
 				Tab_Catprom AS TPM
 			WHERE 
-				idTab_Catprom = ' . $data . '
-		');
+				TPM.idTab_Catprom = ' . $data . ' AND
+				TPM.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
         $query = $query->result_array();
 
-        //return $query;
-		return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
 		}
+	}
+	
+    public function get_promocao_verificacao($data) {
+        $query = $this->db->query(
+			'SELECT  
+				TPM.idTab_Promocao
+			FROM 
+				Tab_Promocao AS TPM
+			WHERE 
+				TPM.idTab_Promocao = ' . $data . ' AND
+				TPM.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+        $query = $query->result_array();
+
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }	
 	
     public function get_promocao($data) {
-        $query = $this->db->query('
-			SELECT  
+        $query = $this->db->query(
+			'SELECT  
 				TPM.*,
 				TPM.Arquivo AS ArquivoPromocao,
 				TCT.*,
@@ -103,19 +145,16 @@ class Promocao_model extends CI_Model {
 				Tab_Promocao AS TPM
 					LEFT JOIN Tab_Catprom AS TCT ON TCT.idTab_Catprom = TPM.idTab_Catprom
 			WHERE 
-				TPM.idTab_Promocao = ' . $data . '
-		');
+				TPM.idTab_Promocao = ' . $data . ' AND
+				TPM.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
         $query = $query->result_array();
 
-        /*
-        //echo $this->db->last_query();
-        echo '<br>';
-        echo "<pre>";
-        print_r($query);
-        echo "</pre>";
-        exit ();
-        */
-        return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
     }	
 
 	public function get_item_promocao($data, $desconto) {

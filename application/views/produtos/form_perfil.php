@@ -1,4 +1,4 @@
-<?php if ( !isset($evento) && isset($_SESSION['Empresa']) && isset($_SESSION['Produtos'])) { ?>
+<?php if ( !isset($evento) && isset($_SESSION['Empresa']) && isset($_SESSION['Produto'])) { ?>
 <div class="container-fluid">	
 	<div class="row">
 		<div class="col-md-3"></div>
@@ -18,7 +18,7 @@
 												<div class="row">
 													<label>Produto: Dimensão 300 x 300</label>
 													<a href="<?php echo base_url() . 'relatorio/produtos/'; ?>">
-														<img alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Produtos']['Arquivo'] . ''; ?>" 
+														<img alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Produto']['Arquivo'] . ''; ?>" 
 														class="img-responsive" width='300'>
 													</a>
 												</div>	
@@ -27,7 +27,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="row">
-													<strong><?php echo $_SESSION['Produtos']['Produtos']; ?></strong>
+													<strong><?php echo $_SESSION['Produto']['Produtos']; ?></strong>
 												</div>
 											</div>
 										</div>	

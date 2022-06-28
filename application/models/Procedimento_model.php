@@ -511,7 +511,13 @@ class Procedimento_model extends CI_Model {
     }
 			
     public function list_procedimento_orc($id, $concluido, $completo) {
-
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(PRC.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
         $query = $this->db->query('SELECT '
             . 'PRC.idApp_Procedimento, '
 			. 'PRC.idApp_OrcaTrata, '
@@ -525,6 +531,8 @@ class Procedimento_model extends CI_Model {
             . 'PRC.idApp_Cliente = ' . $id . ' AND '
             . 'PRC.idApp_OrcaTrata != 0 AND '
             . 'PRC.Marketing = 0 AND '
+			. $revendedor 
+			. 'PRC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND '
             . 'PRC.ConcluidoProcedimento = "' . $concluido . '" '
             . 'ORDER BY '
 			. 'PRC.ConcluidoProcedimento ASC, '

@@ -134,7 +134,7 @@
 									<?php if (isset($nav_alterar) && $nav_alterar == "S") { ?>	
 										<li class="botoesnav" role="toolbar" aria-label="...">
 											<div class="btn-group">
-												<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'orcatrata/alterar/' . $orcatrata['idApp_OrcaTrata']; ?>">
+												<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'orcatrata/alterar/' . $_SESSION['Orcatrata']['idApp_OrcaTrata']; ?>">
 													<span class="glyphicon glyphicon-edit"></span> Editar
 												</a>
 											</div>									
@@ -143,7 +143,7 @@
 									<?php if (isset($nav_status) && $nav_status == "S") { ?>	
 										<li class="botoesnav" role="toolbar" aria-label="...">
 											<div class="btn-group">
-												<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'orcatrata/alterarstatus/' . $orcatrata['idApp_OrcaTrata']; ?>">
+												<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'orcatrata/alterarstatus/' . $_SESSION['Orcatrata']['idApp_OrcaTrata']; ?>">
 													<span class="glyphicon glyphicon-edit"></span> Ststus
 												</a>
 											</div>									
@@ -152,7 +152,7 @@
 								<?php } ?>
 								<li class="botoesnav" role="toolbar" aria-label="...">
 									<div class="btn-group">
-										<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'orcatrata/arquivos/' . $orcatrata['idApp_OrcaTrata']; ?>">
+										<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'orcatrata/arquivos/' . $_SESSION['Orcatrata']['idApp_OrcaTrata']; ?>">
 											<span class="glyphicon glyphicon-picture"></span> Arquivos
 										</a>
 									</div>									
@@ -160,7 +160,7 @@
 								<?php if (isset($nav_entrega) && $nav_entrega == "S" ) { ?>
 									<li class="botoesnav" role="toolbar" aria-label="...">
 										<div class="btn-group">
-											<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $orcatrata['idApp_OrcaTrata']; ?>">
+											<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $_SESSION['Orcatrata']['idApp_OrcaTrata']; ?>">
 												<span class="glyphicon glyphicon-edit"></span> Entrega
 											</a>
 										</div>
@@ -169,7 +169,7 @@
 								<?php if (isset($nav_cobranca) && $nav_cobranca == "S" ) { ?>
 									<li class="botoesnav" role="toolbar" aria-label="...">
 										<div class="btn-group">
-											<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'OrcatrataPrint/imprimircobranca/' . $orcatrata['idApp_OrcaTrata']; ?>">
+											<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'OrcatrataPrint/imprimircobranca/' . $_SESSION['Orcatrata']['idApp_OrcaTrata']; ?>">
 												<span class="glyphicon glyphicon-edit"></span> Cobrancça
 											</a>
 										</div>
@@ -215,7 +215,7 @@
 								<?php if (isset($nav_sac_editar) && $nav_sac_editar == "S" ) { ?>	
 									<li class="botoesnav" role="toolbar" aria-label="...">
 										<div class="btn-group">
-											<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'sac/alterar_' . $alterar . '/' . $orcatrata['idApp_Sac']; ?>">
+											<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'sac/alterar_' . $alterar . '/' . $_SESSION['Sac']['idApp_Sac']; ?>">
 												<span class="glyphicon glyphicon-edit"></span> Editar
 											</a>
 										</div>									
@@ -226,7 +226,7 @@
 							<?php if (isset($nav_sac_resumido) && $nav_sac_resumido == "S" ) { ?>
 								<li class="botoesnav" role="toolbar" aria-label="...">
 									<div class="btn-group">
-										<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'sac/imprimir_' . $imprimir . '/' . $orcatrata['idApp_Sac']; ?>">
+										<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'sac/imprimir_' . $imprimir . '/' . $_SESSION['Sac']['idApp_Sac']; ?>">
 											<span class="glyphicon glyphicon-pencil"></span> Versão Resumida
 										</a>
 									</div>
@@ -235,7 +235,7 @@
 							<?php if (isset($nav_sac_inteiro) && $nav_sac_inteiro == "S" ) { ?>
 								<li class="botoesnav" role="toolbar" aria-label="...">
 									<div class="btn-group">
-										<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'sac/tela_' . $imprimir . '/' . $orcatrata['idApp_Sac']; ?>">
+										<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'sac/tela_' . $imprimir . '/' . $_SESSION['Sac']['idApp_Sac']; ?>">
 											<span class="glyphicon glyphicon-pencil"></span> Versão Completa
 										</a>
 									</div>
@@ -282,7 +282,7 @@
 								<?php if (isset($nav_mark_editar) && $nav_mark_editar == "S" ) { ?>
 									<li class="botoesnav" role="toolbar" aria-label="...">
 										<div class="btn-group">
-											<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'marketing/alterar_' . $alterar . '/' . $orcatrata['idApp_Marketing']; ?>">
+											<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'marketing/alterar_' . $alterar . '/' . $_SESSION['Marketing']['idApp_Marketing']; ?>">
 												<span class="glyphicon glyphicon-edit"></span> Editar
 											</a>
 										</div>									
@@ -292,7 +292,7 @@
 							<?php if (isset($nav_mark_resumido) && $nav_mark_resumido == "S" ) { ?>
 								<li class="botoesnav" role="toolbar" aria-label="...">
 									<div class="btn-group">
-										<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'marketing/imprimir_' . $imprimir . '/' . $orcatrata['idApp_Marketing']; ?>">
+										<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'marketing/imprimir_' . $imprimir . '/' . $_SESSION['Marketing']['idApp_Marketing']; ?>">
 											<span class="glyphicon glyphicon-pencil"></span> Versão Resumida
 										</a>
 									</div>									
@@ -301,7 +301,7 @@
 							<?php if (isset($nav_mark_inteiro) && $nav_mark_inteiro == "S" ) { ?>
 								<li class="botoesnav" role="toolbar" aria-label="...">
 									<div class="btn-group">
-										<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'marketing/tela_' . $imprimir . '/' . $orcatrata['idApp_Marketing']; ?>">
+										<a type="button" class="btn btn-md btn-warning " href="<?php echo base_url() . 'marketing/tela_' . $imprimir . '/' . $_SESSION['Marketing']['idApp_Marketing']; ?>">
 											<span class="glyphicon glyphicon-pencil"></span> Versão Completa
 										</a>
 									</div>									

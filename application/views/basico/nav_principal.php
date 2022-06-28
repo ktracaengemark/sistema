@@ -50,6 +50,28 @@
 	<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 ">		
 		<div class="collapse navbar-collapse" id="myNavbar1">
 			<ul class="nav navbar-nav navbar-center">
+				<!--
+				<li class="botoesnav" >
+					<div class="btn-group">	
+						<button type="button" class="btn btn-sm btn-default btn-block dropdown-toggle" data-toggle="dropdown">
+							<span class="glyphicon glyphicon-user"></span>
+								<strong>Clientes</strong>
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="<?php #echo base_url() ?>relatorio/clientes"><span class="glyphicon glyphicon-user"></span> Pesquisar Clientes</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="<?php #echo base_url() ?>relatorio/rankingvendas"><span class="glyphicon glyphicon-user"></span> Ranking & CashBack</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="<?php #echo base_url() ?>relatorio/sac"><span class="glyphicon glyphicon-pencil"></span> Sac</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="<?php #echo base_url() ?>relatorio/marketing"><span class="glyphicon glyphicon-pencil"></span> Marketing</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="<?php #echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>
+						</ul>
+					</div>							
+				</li>
+				-->
 				<li class="botoesnav" >
 					<div class="btn-group">
 						<button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown">

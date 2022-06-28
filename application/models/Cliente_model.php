@@ -87,12 +87,60 @@ class Cliente_model extends CI_Model {
 
     }
 
-    public function get_cliente($data) {
-        $query = $this->db->query('SELECT * FROM App_Cliente WHERE idApp_Cliente = ' . $data);
+    public function get_cliente_verificacao($data) {
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(NivelCliente = "1" OR idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}
+
+		$query = $this->db->query(
+			'SELECT 
+				idApp_Cliente 
+			FROM 
+				App_Cliente 
+			WHERE
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				' . $revendedor . '
+				idApp_Cliente = ' . $data . ''
+		);
 
         $query = $query->result_array();
+		
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
 
-        return $query[0];
+    public function get_cliente($data) {
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(NivelCliente = "1" OR idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}
+
+		$query = $this->db->query(
+			'SELECT 
+				* 
+			FROM 
+				App_Cliente 
+			WHERE
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				' . $revendedor . '
+				idApp_Cliente = ' . $data . ''
+		);
+
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
+
     }
 
     public function get_cliente_associado($data) {
@@ -119,20 +167,42 @@ class Cliente_model extends CI_Model {
 
     }    
 	
-    public function get_empresa($data) {
-        $query = $this->db->query('SELECT idSis_Empresa FROM Sis_Empresa WHERE idSis_Empresa = ' . $data);
+    public function get_empresa_verificacao($data) {
+        $query = $this->db->query(
+			'SELECT 
+				idSis_Empresa 
+			FROM 
+				Sis_Empresa 
+			WHERE 
+				idSis_Empresa = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
         $query = $query->result_array();
 
-        /*
-        //echo $this->db->last_query();
-        echo '<br>';
-        echo "<pre>";
-        print_r($query);
-        echo "</pre>";
-        exit ();
-        */
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
+	
+    public function get_empresa($data) {
+        $query = $this->db->query(
+			'SELECT 
+				idSis_Empresa 
+			FROM 
+				Sis_Empresa 
+			WHERE 
+				idSis_Empresa = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
 
-        return $query[0];
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
     }
 	
     public function get_empresa5($data) {

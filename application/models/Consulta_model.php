@@ -22,19 +22,120 @@ class Consulta_model extends CI_Model {
             return $this->db->insert_id();
     }
 
-    public function get_consulta($data) {
-        $query = $this->db->query('
-			SELECT * 
+    public function get_consulta_verificacao($data) {
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
+		$query = $this->db->query(
+			'SELECT 
+				C.idApp_Consulta
 			FROM 
 				App_Consulta AS C
-					LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = C.idSis_Empresa
 			WHERE 
-				C.idApp_Consulta = ' . $data
+				C.idApp_Consulta = ' . $data . ' AND
+				' . $revendedor . '
+				C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
 		);
 		
         $query = $query->result_array();
 
-        return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
+
+    public function get_consulta($data) {
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
+        $query = $this->db->query('
+			SELECT 
+				* 
+			FROM 
+				App_Consulta AS C
+					LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = C.idSis_Empresa
+			WHERE 
+				C.idApp_Consulta = ' . $data . ' AND
+				' . $revendedor . '
+				C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+		
+        $query = $query->result_array();
+
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
+
+    public function get_consulta_orca_zero_verificacao($data) {
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
+        $query = $this->db->query('
+			SELECT 
+				C.idApp_Consulta 
+			FROM 
+				App_Consulta AS C
+			WHERE 
+				C.idApp_Consulta = ' . $data . ' AND 
+				C.idApp_OrcaTrata = 0 AND
+				' . $revendedor . '
+				C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+		
+        $query = $query->result_array();
+
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
+
+    public function get_consulta_orca_zero($data) {
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
+        $query = $this->db->query('
+			SELECT 
+				* 
+			FROM 
+				App_Consulta AS C
+					LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = C.idSis_Empresa
+			WHERE 
+				C.idApp_Consulta = ' . $data . ' AND 
+				C.idApp_OrcaTrata = 0 AND
+				' . $revendedor . '
+				C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+		
+        $query = $query->result_array();
+
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
     }
 
     public function get_consulta_orca($data) {
@@ -143,14 +244,40 @@ class Consulta_model extends CI_Model {
         return $query[0];
     }
 	
-    public function get_repeticao($data) {
-        $query = $this->db->query('
-			SELECT *
+    public function get_repeticao_verificacao($data) {
+        $query = $this->db->query(
+			'SELECT 
+				C.Repeticao
 			FROM 
 				App_Consulta AS C
 					LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = C.idSis_Empresa
 			WHERE 
-				C.Repeticao = ' . $data . '
+				C.Repeticao = ' . $data . ' AND
+				C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+			ORDER BY
+				C.DataInicio DESC
+			LIMIT 1'
+		);
+		
+        $query = $query->result_array();
+
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
+	
+    public function get_repeticao($data) {
+        $query = $this->db->query('
+			SELECT 
+				*
+			FROM 
+				App_Consulta AS C
+					LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = C.idSis_Empresa
+			WHERE 
+				C.Repeticao = ' . $data . ' AND
+				C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
 			ORDER BY
 				C.DataInicio DESC
 			LIMIT 1
@@ -158,7 +285,12 @@ class Consulta_model extends CI_Model {
 		
         $query = $query->result_array();
 
-        return $query[0];
+
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
     }
 	
     public function get_repeticao_cos($data) {
@@ -363,7 +495,13 @@ class Consulta_model extends CI_Model {
     }
 
     public function lista_consulta_proxima($data) {
-
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
         $query = $this->db->query('SELECT '
                 . 'C.idApp_Consulta, '
                 . 'C.idApp_Agenda, '
@@ -388,6 +526,7 @@ class Consulta_model extends CI_Model {
                 . 'C.DataInicio < "' . date('Y-m-d H:i:s', time()) . '" AND '
                 . 'C.DataFim >= "' . date('Y-m-d H:i:s', time()) . '") ) AND '
                 . 'C.idTab_Status = S.idTab_Status AND '
+				. $revendedor 
                 . 'V.idSis_Usuario = C.idSis_Usuario '
             . 'ORDER BY C.DataInicio ASC ');
         
@@ -398,7 +537,13 @@ class Consulta_model extends CI_Model {
     }
 
     public function lista_consulta_anterior($data) {
-
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = '(C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+		}else{
+			$revendedor = FALSE;
+		}        
+		
         $query = $this->db->query('SELECT '
                 . 'C.idApp_Consulta, '
                 . 'C.idApp_Agenda, '
@@ -421,6 +566,7 @@ class Consulta_model extends CI_Model {
                 . 'C.idApp_Cliente = ' . $data . ' AND '
                 . 'C.DataFim < "' . date('Y-m-d H:i:s', time()) . '" AND '
                 . 'C.idTab_Status = S.idTab_Status AND '
+				. $revendedor 
                 . 'V.idSis_Usuario = C.idSis_Usuario '
             . 'ORDER BY C.DataInicio ASC ');
         /*

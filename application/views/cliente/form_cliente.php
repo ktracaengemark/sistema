@@ -175,6 +175,27 @@
 												?>
 											</select>
 										</div>
+										<?php if ($metodo != 1) { ?>
+											<?php if ($_SESSION['Usuario']['Nivel'] == 1) { ?>
+												<div class="col-md-3">	
+													<label for="NivelCliente">Nivel:</label>
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?> readonly="" id="NivelCliente" name="NivelCliente">
+														<?php
+														foreach ($select['NivelCliente'] as $key => $row) {
+															if (!$query['NivelCliente']) $query['NivelCliente'] = '1';
+															if ($query['NivelCliente'] == $key) {
+																echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+															} else {
+																echo '<option value="' . $key . '">' . $row . '</option>';
+															}
+														}
+														?>
+													</select>
+												</div>
+											<?php }else{ ?>
+												<input type="hidden" id="NivelCliente" name="NivelCliente" value="<?php echo $_SESSION['Cliente']['NivelCliente']; ?>">
+											<?php } ?>											
+										<?php } ?>
 									</div>
 								</div>
 								<div class="form-group">
@@ -351,14 +372,7 @@
 												<label for="Email">E-mail:</label>
 												<input type="text" class="form-control" maxlength="100" <?php echo $readonly; ?>
 												name="Email" value="<?php echo $query['Email']; ?>">
-											</div>											
-											<!--
-												<div class="col-md-3">
-												<label for="DataCadastroCliente">Cadastrado em:</label>													
-												<input type="text" class="form-control Date"  maxlength="10" <?php echo $readonly; ?>
-												name="DataCadastroCliente" placeholder="DD/MM/AAAA" value="<?php echo $query['DataCadastroCliente']; ?>">													
-												</div>
-											-->
+											</div>
 											<div class="col-md-3">
 												<label for="RegistroFicha">Ficha Nº:</label>
 												<input type="text" class="form-control Numero" maxlength="5" <?php echo $readonly; ?>
