@@ -290,23 +290,13 @@ class Orcatrata_model extends CI_Model {
 				' . $revendedor . '
 				OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
 		');
-        $query = $query->result_array();
-		
-        /*
-        //echo $this->db->last_query();
-        echo '<br>';
-        echo "<pre>";
-        print_r($query);
-        echo "</pre>";
-        exit ();
-        */
 
-        //return $query[0];
-		if($query){
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
 			return $query[0];
-		}else{
-			return FALSE;
-		}		
+        }
     }
 
     public function get_orcatrata_arquivo($data) {
@@ -782,19 +772,25 @@ class Orcatrata_model extends CI_Model {
     }	
 	
     public function get_orcatrataalterar($data) {
-        $query = $this->db->query('SELECT * FROM Sis_Empresa WHERE idSis_Empresa = ' . $data);
-        $query = $query->result_array();
+        $query = $this->db->query('
+			SELECT 
+				* 
+			FROM 
+				Sis_Empresa 
+			WHERE 
+				idSis_Empresa = ' . $data . ' AND
+				' . $_SESSION['log']['idSis_Empresa'] . ' = ' . $data . ''
+		);
+		
+        //$query = $query->result_array();
+        //return $query[0];
 
-        /*
-        //echo $this->db->last_query();
-        echo '<br>';
-        echo "<pre>";
-        print_r($query);
-        echo "</pre>";
-        exit ();
-        */
-
-        return $query[0];
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }		
     }
 	
 	public function get_servico_bkp($data) {
@@ -1007,19 +1003,25 @@ class Orcatrata_model extends CI_Model {
     }
 	
     public function get_produtos($data) {
-        $query = $this->db->query(' SELECT * FROM App_Produto WHERE idApp_Produto = ' . $data . '');
-        $query = $query->result_array();
-		
-        /*
-        //echo $this->db->last_query();
-        echo '<br>';
-        echo "<pre>";
-        print_r($query);
-        echo "</pre>";
-        exit ();
-        */
+        $query = $this->db->query(
+			'SELECT
+				* 
+			FROM 
+				App_Produto 
+			WHERE 
+				idApp_Produto = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+        
+		//$query = $query->result_array();
+        //return $query[0];
 
-        return $query[0];
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
     }
 
     public function get_produto_baixa($data) {
@@ -1258,19 +1260,25 @@ class Orcatrata_model extends CI_Model {
     }
 	
     public function get_parcela($data) {
-        $query = $this->db->query(' SELECT * FROM App_Parcelas WHERE idApp_Parcelas = ' . $data . '');
-        $query = $query->result_array();
+        $query = $this->db->query(
+			' SELECT
+				* 
+			FROM 
+				App_Parcelas 
+			WHERE 
+				idApp_Parcelas = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '' 
+		);
 		
-        /*
-        //echo $this->db->last_query();
-        echo '<br>';
-        echo "<pre>";
-        print_r($query);
-        echo "</pre>";
-        exit ();
-        */
+        //$query = $query->result_array();
+        //return $query[0];
 
-        return $query[0];
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
     }
 	
     public function get_parcelas_orcamento($data) {
@@ -1544,7 +1552,8 @@ class Orcatrata_model extends CI_Model {
 				' . $parcelas . '
 				OT.FinalizadoOrca = "N" AND 
 				OT.CanceladoOrca = "N" AND			
-				OT.idSis_Empresa = ' . $data . '
+				OT.idSis_Empresa = ' . $data . ' AND
+				OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
 				' . $associado . '
 				' . $vendedor . '
 				' . $DiaAniv . '
@@ -1576,13 +1585,12 @@ class Orcatrata_model extends CI_Model {
 			$query->soma2->somafinal2 = number_format($somafinal2, 2, ',', '.');
 			//$query->soma2->somacomissao2 = number_format($somacomissao2, 2, ',', '.');
 			
-			return $query;			
+			return $query;
 		}	
-	
+
 		$query = $query->result_array();
-	
-		
         return $query;
+
     }
 	
     public function get_baixadacomissao($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
@@ -2463,6 +2471,7 @@ class Orcatrata_model extends CI_Model {
                 ' . $date_inicio_vnc_prc . '
                 ' . $date_fim_vnc_prc . '
 				OT.idSis_Empresa = ' . $data . ' AND
+				OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				OT.CanceladoOrca = "N" AND
 				' . $permissao1 . '
 				' . $permissao2 . '
@@ -2499,8 +2508,9 @@ class Orcatrata_model extends CI_Model {
 		}
 		
         $query = $query->result_array();
-          
         return $query;
+
+		
     }	
 	
     public function get_alterarparceladesp($data) {
@@ -2895,6 +2905,7 @@ class Orcatrata_model extends CI_Model {
 				' . $filtro18 . '
 				' . $parcelas . '
                 OT.idSis_Empresa = ' . $data . ' AND
+				OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				OT.CanceladoOrca = "N" AND
                 PRDS.idSis_Empresa = ' . $data . ' 
                 ' . $filtro['Orcamento'] . '

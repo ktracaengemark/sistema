@@ -1469,6 +1469,7 @@ class Relatorio extends CI_Controller {
         $data['titulo'] = 'Receitas';
 		$data['form_open_path'] = 'relatorio/ultimopedido';
 		$data['baixatodas'] = 'Orcatrata/alterarreceitas/';
+		$data['editartodas'] = 'relatorio/receitas/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
         $data['nomeusuario'] = 'NomeColaborador';
         $data['status'] = 'StatusComissaoOrca';
@@ -1998,6 +1999,7 @@ class Relatorio extends CI_Controller {
         $data['titulo'] = 'Receitas';
 		$data['form_open_path'] = 'relatorio/receitas';
 		$data['baixatodas'] = 'Orcatrata/alterarreceitas/';
+		$data['editartodas'] = 'relatorio/receitas/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
         $data['nomeusuario'] = 'NomeColaborador';
         $data['status'] = 'StatusComissaoOrca';
@@ -2519,6 +2521,7 @@ class Relatorio extends CI_Controller {
         $data['titulo'] = 'Despesas';
 		$data['form_open_path'] = 'relatorio/despesas';
 		$data['baixatodas'] = 'Orcatrata/alterardespesas/';
+		$data['editartodas'] = 'relatorio/despesas/';
 		$data['baixa'] = 'Orcatrata/baixadadespesa/';
         $data['nomeusuario'] = 'NomeColaborador';
         $data['status'] = 'StatusComissaoOrca';
@@ -3052,6 +3055,7 @@ class Relatorio extends CI_Controller {
         $data['titulo'] = 'Baixa das Receitas';
 		$data['form_open_path'] = 'relatorio/alterarreceitas';
 		$data['baixatodas'] = 'Orcatrata/alterarreceitas/';
+		$data['editartodas'] = 'relatorio/receitas/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
         $data['nomeusuario'] = 'NomeColaborador';
         $data['status'] = 'StatusComissaoOrca';
@@ -3585,6 +3589,7 @@ class Relatorio extends CI_Controller {
         $data['titulo'] = 'Baixa das Despesas';
 		$data['form_open_path'] = 'relatorio/alterardespesas';
 		$data['baixatodas'] = 'Orcatrata/alterardespesas/';
+		$data['editartodas'] = 'relatorio/despesas/';
 		$data['baixa'] = 'Orcatrata/baixadadespesa/';
         $data['nomeusuario'] = 'NomeColaborador';
         $data['status'] = 'StatusComissaoOrca';
@@ -4079,6 +4084,7 @@ class Relatorio extends CI_Controller {
 		$data['query']['nome'] = 'Cliente';
 		$data['form_open_path'] = 'relatorio/comissao';
 		$data['baixatodas'] = 'Orcatrata/baixadacomissao/';
+		$data['editartodas'] = 'relatorio/receitas/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
         $data['titulo'] = 'Comissão Colaborador';
         $data['nomeusuario'] = 'NomeColaborador';
@@ -4560,6 +4566,7 @@ class Relatorio extends CI_Controller {
 		$data['query']['nome'] = 'Cliente';
 		$data['form_open_path'] = 'relatorio/comissao_online';
 		$data['baixatodas'] = 'Orcatrata/baixadacomissao_online/';
+		$data['editartodas'] = 'relatorio/receitas/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
         $data['titulo'] = 'Comissão Associado';
         $data['nomeusuario'] = 'NomeAssociado';
