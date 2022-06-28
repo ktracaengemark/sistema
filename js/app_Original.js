@@ -26,7 +26,8 @@ Aguardar();
 clientePet();
 clienteDep();
 clienteOT();
-fechaBuscaOS();
+repeticao();
+//fechaBuscaOS();
 exibirTroco();
 exibirExtraOrca();
 exibirDescOrca();
@@ -38,6 +39,32 @@ calculacashback();
 function whatsapp(celular){
 	window.open('https://api.whatsapp.com/send?phone=55'+celular+'&text=','1366002941508','width=700,height=350,left=375,right=375,top=300');
 }
+
+// função que busca Empresa
+$('#Whatsapp').on('click', function () {
+	$.ajax({
+		url: window.location.origin+ '/' + app + '/whatsapp/Orcamentos/Receitas.php',
+		dataType: "json",
+		success: function (data) {
+			//console.log(data);
+			//console.log(data.length);
+			for(var i = 0; i < data.length; i++){
+				(function(i){
+				  setTimeout(function(){
+					//console.log(data[i].nomecliente);
+					window.open('https://web.whatsapp.com/send?phone=55'+data[i].celularcliente+'&text=Ola '+data[i].nomecliente+'','1366002941508','');
+					//window.open('https://api.whatsapp.com/send?phone=55'+data[i].celularcliente+'&text=Ola '+data[i].nomecliente+'','1366002941508','');
+					//window.open('https://api.whatsapp.com/send?phone=55'+data[i].celularcliente+'&text=Ola '+data[i].nomecliente+'','1366002941508','width=700,height=350,left=375,right=375,top=300');
+					//whatsapp(data[i].celularcliente);
+				  }, (i)*10000); // 1000 = 1 segundo
+			   }(i));
+			}
+		},
+		error:function(data){
+			console.log('erro');
+		}
+	});
+});
 
 if($('#Hidden_UsarCupom').val()){
 	if($('#Hidden_UsarCupom').val() == 'S'){
@@ -78,6 +105,102 @@ function exibir_confirmar(){
 	$('.Open').show();
 	$('.Close').hide();
 }
+
+$('.input-produto_empresa').show();
+
+$('#SetProduto_Empresa').on('click', function () {
+	//alert('Copiando');
+	$('.input-produto_empresa').show();
+	$(".input_fields_produtos_empresa").empty();
+	$('#Produto_Empresa').val('');
+});
+// função que LIMPA busca de Produto da empresa
+function limpaBuscaProduto_Empresa(){
+	$(".input_fields_produtos_empresa").empty();
+	$('#Produto_Empresa').val('');
+}
+
+// função que busca Produtos da empresa
+$('#Produto_Empresa').on('keyup', function () {
+	//alert('produto');
+	var produto = $('#Produto_Empresa').val();
+	//console.log('id_empresa = '+id_empresa);
+	//console.log('produto = '+produto);
+	$.ajax({
+		url: window.location.origin+ '/' + app + '/cadastros/pesquisar/Produto_Empresa.php?produto='+produto,
+		dataType: "json",
+		success: function (data) {
+			//console.log(data);
+			//console.log(data.length);
+			
+			$(".input_fields_produtos_empresa").empty();
+            // executo este laço para acessar os itens do objeto javaScript
+            for (i = 0; i < data.length; i++) {
+				
+				data[i].ver 		= 'href="../../'+data[i].site+'/produto.php?id='+data[i].id_valor+'" target="_blank"';
+				
+				//console.log( data[i].contarestoque +' - '+ data[i].estoque);	
+				
+				if(data[i].contarestoque == "S"){
+					data[i].contar = "S";
+					if(data[i].estoque > 0){
+						data[i].liberar = 'href="meu_carrinho.php?carrinho=produto&id='+data[i].id_valor+'"';
+						data[i].carrinho = "carrinho_inserir.png";
+						data[i].texto = "";
+					}else{
+						data[i].liberar = '';
+						data[i].carrinho = "carrinho_indisp.png";
+						data[i].texto = " | indisp. no momento";
+					}
+				}else{
+					data[i].contar = "N";
+					data[i].liberar = 'href="meu_carrinho.php?carrinho=produto&id='+data[i].id_valor+'"';
+					data[i].carrinho = "carrinho_inserir.png";
+					data[i].texto = "";
+				}
+				
+				$(".input_fields_produtos_empresa").append('\
+					<div class="form-group">\
+						<div class="row">\
+							<div class="container-2">\
+								<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">\
+										<img class="team-img img-responsive" src="../../'+data[i].site+'/'+data[i].id_empresa+'/documentos/miniatura/'+data[i].arquivo_empresa+'" alt="" width="50" >\
+								</div>\
+								<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">\
+										<img class="team-img img-responsive" src="../../'+data[i].site+'/'+data[i].id_empresa+'/produtos/miniatura/'+data[i].arquivo_produto+'" alt="" width="50" >\
+								</div>\
+								<div class="col-xs-8 col-sm-10 col-md-10 col-lg-10 ">\
+										<div class="row">\
+											<span class="card-title" style="color: #000000">\
+												'+data[i].nomeprod+'\
+											</span>\
+										</div>\
+										<div class="row">\
+											<span class="card-title" style="color: #000000">\
+												'+data[i].descprod+'\
+											</span>\
+										</div>\
+										<div class="row">\
+											<span class="card-title" style="color: #000000">\
+												'+data[i].qtdinc+' Unid | R$ '+data[i].valor+'\
+											</span>\
+										</div>\
+								</div>\
+							</div>\
+						</div>\
+					</div>\
+					<hr>'
+				);						
+
+            }//fim do laço		
+			
+		},
+		error:function(data){
+			//console.log('erro');
+			$(".input_fields_produtos_empresa").empty();
+		}
+	});	
+});
 
 $('.input-produto').show();
 $('.input-promocao').hide();
@@ -442,10 +565,23 @@ $("#id_Cliente_Auto").autocomplete({
 											');
 				$("#NomeClienteAuto").val(''+idcliente+ ' | ' + nomecliente + ' | Cel: ' + celularcliente + '');
 				
+				$('#Hidden_idApp_OrcaTrata').val(null);
+				$('#Hidden_Repeticao').val(null);
+
+				//console.log('Hidden_Repeticao = '+ $('#Hidden_Repeticao').val());		
+		
+				clienteOT(null);
+				repeticao(null);
+				
 			},
 			error:function(data){
 				$("#NomeClienteAuto1").html('<label>Nenhum Cliente Selecionado!</label>');
 				$("#NomeClienteAuto").val('Nenhum Cliente Selecionado!');
+				
+				$('#Hidden_idApp_OrcaTrata').val('');
+				$('#Hidden_Repeticao').val('');
+
+				console.log('Hidden_Repeticao = '+ $('#Hidden_Repeticao').val());
 			}
 			
 		});
@@ -457,12 +593,20 @@ $("#id_Cliente_Auto").autocomplete({
 		calculacashback(id_Cliente);
 		buscaEnderecoCliente(id_Cliente);
 		clienteOT(id_Cliente);
+		repeticao(id_Cliente);
 		
 		$('#id_ClientePet_Auto').val('');
 		limpaCampos_ClientePet();
 		$('#id_ClienteDep_Auto').val('');
 		limpaCampos_ClienteDep();
 		
+		$('#Hidden_idApp_OrcaTrata').val('');
+		$('#Hidden_Repeticao').val('');
+
+		//console.log('Hidden_Repeticao = '+ $('#Hidden_Repeticao').val());		
+		
+		clienteOT(null);
+		repeticao(null);
 	}
 	
 });
@@ -496,6 +640,14 @@ function limpaCampos_Cliente(){
 		$('#Cidade').val('');
 		$('#Estado').val('');
 		$('#Referencia').val('');
+		
+		$('#Hidden_idApp_OrcaTrata').val('');
+		$('#Hidden_Repeticao').val('');
+
+		//console.log('Hidden_Repeticao = '+ $('#Hidden_Repeticao').val());		
+		
+		clienteOT(null);
+		repeticao(null);
    }
 }	
 
@@ -511,8 +663,10 @@ $("#id_ClientePet_Auto").autocomplete({
 		//console.log('pegar = '+pegar);
 		var pegarSplit = pegar.split('#');
 		var id_ClientePet = pegarSplit[0];
+		var nomeCliente = pegarSplit[2];
 		
 		//console.log('id cliente Autocomplete = '+id_ClientePet);
+		//console.log('nome cliente Autocomplete = '+nomeCliente);
 		
 		$.ajax({
 			url: window.location.origin+ '/' + app + '/cadastros/pesquisar/Pet.php?id=' + id_ClientePet,
@@ -532,11 +686,11 @@ $("#id_ClientePet_Auto").autocomplete({
 			}
 			
 		});
-
 		$('#idApp_ClientePet').val(id_ClientePet);
 		$('#idApp_ClientePet2').val(id_ClientePet);
 		$('#id_Cliente_Auto').val('');
 		limpaCampos_Cliente();
+		$('#id_Cliente_Auto').val(nomeCliente);
 	}
 	
 });
@@ -567,8 +721,10 @@ $("#id_ClienteDep_Auto").autocomplete({
 		//console.log('pegar = '+pegar);
 		var pegarSplit = pegar.split('#');
 		var id_ClienteDep = pegarSplit[0];
+		var nomeCliente = pegarSplit[2];
 		
 		//console.log('id cliente Autocomplete = '+id_ClienteDep);
+		//console.log('nome cliente Autocomplete = '+nomeCliente);
 		
 		$.ajax({
 			url: window.location.origin+ '/' + app + '/cadastros/pesquisar/Dep.php?id=' + id_ClienteDep,
@@ -593,6 +749,7 @@ $("#id_ClienteDep_Auto").autocomplete({
 		$('#idApp_ClienteDep2').val(id_ClienteDep);
 		$('#id_Cliente_Auto').val('');
 		limpaCampos_Cliente();
+		$('#id_Cliente_Auto').val(nomeCliente);
 
 	}
 	
@@ -1085,10 +1242,12 @@ $('#idApp_ClientePet').on('change', function(event){
 				var pelopet = 'N.I.';
 			}
 			
+			$('#Pet').show();
 			$("#Pet").html('<p>' + especiepet + '/ ' + raca + '/ ' + sexopet + '/ ' + portepet + '/ ' + peso + '/ Pelo: ' + pelopet + '/ Aler: ' + alergicopet + '/ Obs: ' + obs + '</p>');
 			
 		},
 		error:function(data){
+			$('#Pet').show();
 			$("#Pet").html('<p >Nenhum Pet Selecionado!</p>');
 		}
 		
@@ -1116,10 +1275,12 @@ $('#idApp_ClienteDep').on('change', function(event){
 			var sexo 		= data[0]['sexo'];
 			var obs 		= data[0]['obs'];
 
+			$('#Dep').show();
 			$("#Dep").html('<p>' + obs + '</p>');
 			
 		},
 		error:function(data){
+			$('#Dep').show();
 			$("#Dep").html('<p >Nenhum Dependente Selecionado!</p>');
 		}
 		
@@ -3468,6 +3629,7 @@ function clienteDep(id = null){
 }
 
 function fechaBuscaOS(novaos){
+	/*
 	//alert('fechaBuscaOS');
 	//console.log('novaos = '+novaos);
 	//console.log('Hidden_NovaOS = '+$('#Hidden_NovaOS').val());
@@ -3485,12 +3647,11 @@ function fechaBuscaOS(novaos){
 		$('.vincular').show();
 		$('.hnovaos').show();
 	}
-	
-	
+	*/
 }
 
 function mudaBuscaOS(novaos){
-	
+	/*
 	var hnovaos = $('#Hidden_NovaOS').val();
 	//console.log(hnovaos);
 	
@@ -3499,7 +3660,7 @@ function mudaBuscaOS(novaos){
 	}else{
 		$('.hnovaos').show();
 	}
-	
+	*/
 }
 
 function quais(){
@@ -3518,6 +3679,118 @@ function quais(){
 	$("#Texto_Excluir").html('<div class="col-md-7 text-left alert alert-warning" role="alert">Você vai excluir ' + quais_texto + ' agendamento(s) vinculado(s) a esse!</div>');
 }
 
+function extra(status_extra = null){
+	
+	if(status_extra && status_extra!= 'null'){
+		$('#Hidden_StatusExtra').val(status_extra);	
+		var extra = status_extra;
+	}else{
+		if($('#Hidden_StatusExtra').val()){
+			var extra = $('#Hidden_StatusExtra').val();
+		}else{
+			$('#Hidden_StatusExtra').val('N');	
+			var extra = 'N';
+		}
+	}
+
+	//console.log('Hidden_StatusExtra = '+ $('#Hidden_StatusExtra').val());
+	//console.log('Extra = '+ extra);
+	
+	$('#Repeticao').html('<option value="">– Sel. Repeticao –</option>');
+	$('#Hidden_Repeticao').val('');
+	
+	repeticao();
+}
+
+function statusAdicionar(status_adicionar = null){
+	
+	if(status_adicionar && status_adicionar!= 'null'){
+		$('#Hidden_Status_Adicionar').val(status_adicionar);	
+		var adicionar = status_adicionar;
+	}else{
+		if($('#Hidden_Status_Adicionar').val()){
+			var adicionar = $('#Hidden_Status_Adicionar').val();
+		}else{
+			$('#Hidden_Status_Adicionar').val('N');	
+			var adicionar = 'N';
+		}
+	}
+	//console.log('Hidden_Status_Adicionar = '+ $('#Hidden_Status_Adicionar').val());
+	//console.log('Adicionar = '+ adicionar);
+
+	//repeticao();
+	qtd_ocorrencias();
+}
+
+function statusPorConsulta(status_porconsulta = null){
+	
+	if(status_porconsulta && status_porconsulta!= 'null'){
+		$('#Hidden_Status_PorConsulta').val(status_porconsulta);	
+		var porconsulta = status_porconsulta;
+	}else{
+		if($('#Hidden_Status_PorConsulta').val()){
+			var porconsulta = $('#Hidden_Status_PorConsulta').val();
+		}else{
+			$('#Hidden_Status_PorConsulta').val('N');	
+			var porconsulta = 'N';
+		}
+	}
+	//console.log('Hidden_Status_PorConsulta = '+ $('#Hidden_Status_PorConsulta').val());
+	//console.log('PorConsulta = '+ porconsulta);
+
+	//qtd_ocorrencias(porconsulta);
+	qtd_ocorrencias();
+}
+
+function statusNovaOs(status_novaos = null){
+	
+	if(status_novaos && status_novaos!= 'null'){
+		$('#Hidden_NovaOS').val(status_novaos);	
+		var novaos = status_novaos;
+	}else{
+		if($('#Hidden_NovaOS').val()){
+			var novaos = $('#Hidden_NovaOS').val();
+		}else{
+			$('#Hidden_NovaOS').val('N');	
+			var novaos = 'N';
+		}
+	}
+	//console.log('Hidden_NovaOS = '+ $('#Hidden_NovaOS').val());
+	//console.log('NovaOS = '+ novaos);
+
+	//fechaBuscaOS(novaos);
+	qtd_ocorrencias();
+}
+
+function statusVincular(status_vincular = null){
+	
+	if(status_vincular && status_vincular!= 'null'){
+		$('#Hidden_Status_Vincular').val(status_vincular);	
+		var vincular = status_vincular;
+	}else{
+		if($('#Hidden_Status_Vincular').val()){
+			var vincular = $('#Hidden_Status_Vincular').val();
+		}else{
+			$('#Hidden_Status_Vincular').val('N');	
+			var vincular = 'N';
+		}
+	}
+	//console.log('Hidden_Status_Vincular = '+ $('#Hidden_Status_Vincular').val());
+	//console.log('vincular = '+ vincular);
+	
+	$('#idApp_OrcaTrata').html('<option value="">– Sel. OS –</option>');						
+	/*
+	$('#idApp_OrcaTrata').html('\
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" name="idApp_OrcaTrata" onchange="osSelecionada(this.value)">\
+									<option value="">– Selecione um Orcam. –</option>\
+								</select>\
+							');
+	*/	
+	$('#Hidden_idApp_OrcaTrata').val('');
+
+	clienteOT();
+}
+
 //Função que busca O.S. do cliente.
 function clienteOT(id = null){
 	
@@ -3526,46 +3799,279 @@ function clienteOT(id = null){
 	}else{
 		var id_cliente = $('#idApp_Cliente').val();
 	}
-	
-	//var id_cliente = $('#idApp_Cliente').val();
-	
-	var caminho2 = $('#Caminho2').val();
-	//console.log(caminho2);
-	//var caminho2 = '../../';
-	//console.log(id_cliente);
-	//console.log(id);
-	
-	//console.log(' <br>OrcaTrata<br> ');
-		
-	//console.log('<br> Hidden_idApp_OrcaTrata = '+ $('#Hidden_idApp_OrcaTrata').val());
-	
+
 	if(id_cliente) {
-		//console.log(id);
 		
-		//$('#idApp_OrcaTrata').hide();
 		$.getJSON(window.location.origin+ '/' + app + '/cadastros/pesquisar/OrcaTrata.php?search=',{idApp_Cliente: id_cliente, ajax: 'true'}, function(j){
 			if(j != null){
 				var options = '<option value="">-- Sel. O.S. --</option>';	
 				for (var i = 0; i < j.length; i++) {
 					if (j[i].id_OrcaTrata == $('#Hidden_idApp_OrcaTrata').val()) {
 						options += '<option value="' + j[i].id_OrcaTrata + '" selected="selected">' + j[i].id_OrcaTrata + ' | ' + j[i].descricao_OrcaTrata + '</option>';
-						buscaPet();
+						//buscaPet();
 					} else {
 						options += '<option value="' + j[i].id_OrcaTrata + '">' + j[i].id_OrcaTrata + ' | ' + j[i].descricao_OrcaTrata + '</option>';
 					}
 				}	
 				$('#idApp_OrcaTrata').html(options).show();
+				/*
+				$('#idApp_OrcaTrata').html('\
+											<select data-placeholder="Selecione uma opção..." class="form-control Chosen" name="idApp_OrcaTrata" onchange="osSelecionada(this.value)">\
+												'+options+'\
+											</select>\
+										');	
+				*/						
 				//$('.carregando').hide();
 				//console.log(options);
 			}else{
-				$('#idApp_OrcaTrata').html('<option value="">– Selecione um Orcam. –</option>');
+				$('#idApp_OrcaTrata').html('<option value="">– Sel. OS –</option>');
+				/*
+				$('#idApp_OrcaTrata').html('\
+											<select data-placeholder="Selecione uma opção..." class="form-control Chosen" name="idApp_OrcaTrata" onchange="osSelecionada(this.value)">\
+												<option value="">– Selecione um Orcam. –</option>\
+											</select>\
+										');
+				*/						
 			}				
 		});
 		
 	}else{
-		$('#idApp_OrcaTrata').html('<option value="">– Selecione um Orcam. –</option>');
+		$('#idApp_OrcaTrata').html('<option value="">– Sel. OS –</option>');
+		/*
+		$('#idApp_OrcaTrata').html('\
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen" name="idApp_OrcaTrata" onchange="osSelecionada(this.value)">\
+										<option value="">– Selecione um Orcam. –</option>\
+									</select>\
+								');
+		*/						
+	}
+	if($('#Hidden_idApp_OrcaTrata').val()){
+		osSelecionada($('#Hidden_idApp_OrcaTrata').val());
+	}else{
+		osSelecionada();
+	}
+}
+
+//função que passa a OS selecionada
+function osSelecionada (osselecionada = null) {
+	
+	if(osselecionada && osselecionada != null){
+		var os = osselecionada;
+	}else{
+		var os = null;
+	}
+		
+	//console.log('os = '+os);
+	
+	$('#Hidden_idApp_OrcaTrata').val(os);
+	
+	qtd_ocorrencias();
+}
+
+//Função que busca Repetiçao do cliente.
+function repeticao(id = null){
+	
+	if(id && id!= 'null'){
+		var id_cliente = id;
+	}else{
+		var id_cliente = $('#idApp_Cliente').val();
 	}
 
+	if(id_cliente) {
+
+		$.getJSON(window.location.origin+ '/' + app + '/cadastros/pesquisar/Repeticao.php?search=',{idApp_Cliente: id_cliente, ajax: 'true'}, function(j){
+			if(j != null){
+				var options = '<option value="">-- Sel. Repeticao --</option>';	
+				for (var i = 0; i < j.length; i++) {
+					if (j[i].id_Repeticao == $('#Hidden_Repeticao').val()) {
+						options += '<option value="' + j[i].id_Repeticao + '" selected="selected">' + j[i].id_Repeticao +  ' | ' + j[i].dt_Term + '</option>';
+					} else {
+						options += '<option value="' + j[i].id_Repeticao + '">' + j[i].id_Repeticao +  ' | ' + j[i].dt_Term + '</option>';
+					}
+				}	
+				$('#Repeticao').html(options).show();
+
+			}else{
+				$('#Repeticao').html('<option value="">– Sel. Repeticao –</option>');
+			}				
+		});
+		
+	}else{
+		$('#Repeticao').html('<option value="">– Sel. Repeticao –</option>');
+	}
+	if($('#Hidden_Repeticao').val()){
+		repeticaoSelecionada($('#Hidden_Repeticao').val());
+	}else{
+		repeticaoSelecionada();
+	}
+}
+
+//função que passa a repetição selecionada
+function repeticaoSelecionada (repeticaoselecionada = null) {
+	
+	if(repeticaoselecionada && repeticaoselecionada != null){
+		var repeticao = repeticaoselecionada;
+	}else{
+		var repeticao = null;
+	}
+		
+	//console.log('repeticao = '+repeticao);
+	
+	$('#Hidden_Repeticao').val(repeticao);
+	
+	if(!repeticao) {
+		$('#Hidden_RepeticaoCons').val(0);
+		$('#Hidden_RepeticaoOrca').val(0);
+	}
+	repeticaoCons();
+}
+
+//função que conta repetições de consulta
+function repeticaoCons () {
+	if($('#Hidden_Repeticao').val()){
+		var repeticao = $('#Hidden_Repeticao').val();
+	}else{
+		var repeticao = null;
+	}
+	//console.log('Repeticao = '+repeticao);
+	
+	if(repeticao && repeticao != null) {
+
+		$.ajax({
+			url: window.location.origin+ '/' + app + '/cadastros/pesquisar/RepeticaoCons.php?id_cons=' + repeticao,
+			dataType: "json",
+			success: function (j) {
+				//console.log(j.length);
+				//console.log(j);
+				//console.log('sucesso');
+				$('#Hidden_RepeticaoCons').val(j.length);
+				repeticaoOrca();
+			},
+			error:function(j){
+				//console.log('erro');
+				$('#Hidden_RepeticaoCons').val(0);
+				repeticaoOrca();
+			}
+		});
+
+	}else{
+		//console.log('erro de pesquisa');
+		$('#Hidden_RepeticaoCons').val(0);
+		repeticaoOrca();
+	}
+}
+
+//função que conta repetições de OS
+function repeticaoOrca () {
+	
+	if($('#Hidden_Repeticao').val()){
+		var repeticao = $('#Hidden_Repeticao').val();
+	}else{
+		var repeticao = null;
+	}
+	//console.log('Repeticao = '+repeticao);
+	
+	if(repeticao && repeticao != null) {
+
+		$.ajax({
+			url: window.location.origin+ '/' + app + '/cadastros/pesquisar/RepeticaoOrca.php?id_orca=' + repeticao,
+			dataType: "json",
+			success: function (k) {
+				//console.log(k.length);
+				//console.log(k);
+				//console.log('sucesso');
+				$('#Hidden_RepeticaoOrca').val(k.length);
+				compararRepetioes();
+			},
+			error:function(k){
+				//console.log('erro');
+				$('#Hidden_RepeticaoOrca').val(0);
+				compararRepetioes();
+			}
+		});
+		
+	}else{
+		//console.log('erro de pesquisa');
+		$('#Hidden_RepeticaoOrca').val(0);
+		compararRepetioes();
+	}
+}
+
+//Função que compara as repetições e determina o caso
+function compararRepetioes() {
+	
+	if($('#Hidden_Repeticao').val()){
+		var repeticao = $('#Hidden_Repeticao').val();
+	}else{
+		var repeticao = null;
+	}
+	
+	//console.log('Repeticao = '+repeticao);
+	
+	if(repeticao && repeticao != null){
+		if($('#Hidden_RepeticaoCons').val()){
+			qtdcons = $('#Hidden_RepeticaoCons').val();
+		}else{
+			qtdcons = 0;
+		}
+		if($('#Hidden_RepeticaoOrca').val()){
+			qtdorca = $('#Hidden_RepeticaoOrca').val();
+		}else{
+			qtdorca = 0;
+		}	
+	}else{
+		$('#Hidden_RepeticaoCons').val(0);
+		$('#Hidden_RepeticaoOrca').val(0);
+		qtdcons = 0;
+		qtdorca = 0;
+	}
+
+	if(repeticao){
+		var repet = repeticao;
+	}else{
+		var repet = 'Vazio';
+	}
+	//console.log('Repeticao = '+repet);
+	//console.log('qtdCons = '+qtdcons);
+	//console.log('qtdOrca = '+qtdorca);
+	
+	if(qtdcons == 1 && qtdorca == 0){
+		var hidden_caso = 1;
+		var caso = 'N-1 ou N-N, Permito criar  N OS Nova, ou 1 OS Nova, ou Selecionar 1 OS Existente';
+		//$('.adicionar').show();
+	}else if(qtdcons == 1 && qtdorca == 1){
+		var hidden_caso = 2;
+		var caso = 'N-1 ou N-N, Uso a OS da Repetição, ou Crio a Qtd da diferença de OS novas';
+		//$('.adicionar').show();
+	}else if(qtdcons > 1 && qtdorca == 0){
+		var hidden_caso = 3;
+		var caso = 'N-1 ou N-N, Permito Criar N OSs novas, ou 1 OS Nova, ou Selecionar 1 OS Existente ';
+		//$('.adicionar').show();
+	}else if(qtdcons > 1 && qtdorca == 1){
+		var hidden_caso = 4;
+		var caso = 'N-1, Uso a OS da Repetição';
+		//$('.adicionar').hide();
+	}else if(qtdcons > 1 && qtdorca > 1){
+		var hidden_caso = 5;
+		var caso = 'N-N, Crio a qtd da diferenca de OS novas';
+		//$('.adicionar').hide();
+	}else{
+		var hidden_caso = 0;
+		var caso = 'Nenhum dos Casos';
+		//$('.adicionar').show();
+	}
+	
+	//console.log('Caso '+hidden_caso+' = '+caso);
+	$('#Hidden_Caso').val(hidden_caso);
+	
+	if($('#Hidden_Status_PorConsulta').val()){
+		var status_PorConsulta = $('#Hidden_Status_PorConsulta').val();
+	}else{
+		var status_PorConsulta = null;
+	}
+	
+	//qtd_ocorrencias(status_PorConsulta);
+	qtd_ocorrencias();
 }
 
 //Função que desabilita o botão fechar após 1 click, evitando mais de um envio de formulário.
@@ -3741,19 +4247,21 @@ $(document).ready(function () {
 		status = $('#Hidden_status').val();
 		if(status == 1){
 			cor = 'warning';
+			titulo = 'Am';
 		}else if(status == 2){
 			cor = 'success';
+			titulo = 'Vd';
 		}else if(status == 3){
 			cor = 'primary';
+			titulo = 'Az';
 		}else if(status == 4){
 			cor = 'danger';
+			titulo = 'Vm';
 		}else {
 			cor = 'default';
+			titulo = 'Br';
 		}
-		$("#botao_status").html('\
-									<button type="button" class="btn btn-'+cor+' btn-block">\
-									</button>\
-								');	
+		$("#botao_status").html('<button type="button" class="btn btn-'+cor+' btn-block">'+titulo+'</button>');	
 	}
 	
 });
@@ -3763,80 +4271,43 @@ function hidden_status(status = null){
 		$('#Hidden_status').val(status);
 		if(status == 1){
 			cor = 'warning';
+			titulo = 'Am';
 		}else if(status == 2){
 			cor = 'success';
+			titulo = 'Vd';
 		}else if(status == 3){
 			cor = 'primary';
+			titulo = 'Az';
 		}else if(status == 4){
 			cor = 'danger';
+			titulo = 'Vm';
 		}else {
 			cor = 'default';
+			titulo = 'Br';
 		}
-		$("#botao_status").html('\
-									<button type="button" class="btn btn-'+cor+' btn-block">\
-									</button>\
-								');	
+		$("#botao_status").html('<button type="button" class="btn btn-'+cor+' btn-block">'+titulo+'</button>');	
 	}else{
 		$('#Hidden_status').val(0);
 		$("#botao_status").html('');
 	}
 }
 
-function qtd_ocorrencias(status_PorConsulta) {
-	if(status_PorConsulta){
-		var novo_status_PorConsulta = status_PorConsulta;
-		$('#Hidden_Status_PorConsulta').val(novo_status_PorConsulta);
-		var Hidden_Status_Vincular = $('#Hidden_Status_Vincular').val();
+function statusRepetir(status_repetir = null){
+	
+	if(status_repetir && status_repetir!= 'null'){
+		$('#Hidden_Status_Repetir').val(status_repetir);	
+		var repetir = status_repetir;
 	}else{
-		var novo_status_PorConsulta = $('#Hidden_Status_PorConsulta').val();
-		
+		if($('#Hidden_Status_Repetir').val()){
+			var repetir = $('#Hidden_Status_Repetir').val();
+		}else{
+			$('#Hidden_Status_Repetir').val('N');	
+			var repetir = 'N';
+		}
 	}
-	//$("#Ocorrencias").html('<span>'+ocorrencias+ '</span>');
-		
-		//console.log('Hidden_Status_Vincular = '+Hidden_Status_Vincular);
-	
-	
-		var count_repet = $('#count_repet').val();
-						//console.log('count_repet = '+count_repet);
-		var metodo = $('#metodo').val();
-						//console.log('metodo = '+metodo);
-		//var ocorrencias = $('#Recorrencias').val();
-						
-		
-		if(metodo == 1){
-			var ocorrencias = $('#Recorrencias').val();
-			$("#Ocorrencias").html('<span>'+ocorrencias+'</span>');
-			
-		}else{
-			if(count_repet == 0){
-				var ocorrencias = 1;
-				$("#Ocorrencias").html('<span>1</span>');
-			}else{
-				var ocorrencias = count_repet;
-				$("#Ocorrencias").html('<span>'+count_repet+'</span>');
-			}
-		}
-			
-		//console.log('status_PorConsulta = '+novo_status_PorConsulta);
-	
-		if(ocorrencias == 1){
-			if(novo_status_PorConsulta == "N"){
-				$('.novaos').hide();
-				$('.vincular').show();
-				$('.hnovaos').show();
-				
-			}else{
-				$('.novaos').hide();
-				$('.hnovaos').hide();
-			}
-		}else{
-			$('.novaos').show();
-			$('.vincular').hide();
-			$('.hnovaos').hide();
-		}
-		//console.log('ocorrencias = '+ocorrencias);
-		
-	
+	console.log('Hidden_Status_Repetir = '+ $('#Hidden_Status_Repetir').val());	
+	ocorrencias(repetir);
+	qtd_ocorrencias();
 }
 
 function ocorrencias(repetir = null) {
@@ -3856,7 +4327,7 @@ function ocorrencias(repetir = null) {
 			$('#Recorrencias').val('1');
 		}
 	}
-	
+
 	var ocorrencias = $('#Recorrencias').val();
 	$("#Ocorrencias").html('<span>'+ocorrencias+ '</span>');
 
@@ -4093,6 +4564,287 @@ function dateTermina() {
 	//console.log('DataTermino : ' + dataterminoedit);
 	$('#DataTermino').val(dataterminoedit);	
 	
+}
+
+function qtd_ocorrencias() {
+	/*
+	if(status_PorConsulta){
+		var novo_status_PorConsulta = status_PorConsulta;
+		$('#Hidden_Status_PorConsulta').val(novo_status_PorConsulta);
+		var Hidden_Status_Vincular = $('#Hidden_Status_Vincular').val();
+	}else{
+		var novo_status_PorConsulta = $('#Hidden_Status_PorConsulta').val();
+	}
+	*/
+	var status_extra = $('#Hidden_StatusExtra').val();
+	var status_caso = $('#Hidden_Caso').val();
+	var status_adicionar = $('#Hidden_Status_Adicionar').val();
+	var status_porconsulta = $('#Hidden_Status_PorConsulta').val();
+	var status_novaos = $('#Hidden_NovaOS').val();
+	var status_vincular = $('#Hidden_Status_Vincular').val();
+	
+	//console.log('Hidden_Caso = '+status_caso);
+		
+	var qtd_cons = $('#Hidden_RepeticaoCons').val();
+	//console.log('qtd_cons = '+qtd_cons);	
+	
+	var qtd_orca = $('#Hidden_RepeticaoOrca').val();
+	//console.log('qtd_orca = '+qtd_orca);		
+
+	var qtd_recor = $('#Recorrencias').val();
+	//console.log('qtd_recor = '+qtd_recor);
+	
+	var count_repet = $('#count_repet').val();
+	//console.log('count_repet = '+count_repet);
+	var metodo = $('#metodo').val();
+	//console.log('metodo = '+metodo);
+
+	if(metodo == 1){//estou CADASTRANDO
+		if(status_extra == "N"){
+			var ocorrencias = qtd_recor;
+		}else{
+			if(qtd_orca == 0){
+				var ocorrencias = -( -qtd_recor -qtd_cons);
+			}else if(qtd_orca == 1){
+				var ocorrencias = qtd_recor;
+			}else{
+				var ocorrencias = qtd_recor;
+			}			
+		}	
+	}else{//Estou ALTERANDO
+		if(count_repet == 0){
+			var ocorrencias = 1;
+		}else{
+			var ocorrencias = count_repet;
+		}
+	}
+
+	//console.log('ocorrencias = '+ocorrencias);
+	
+	$("#Ocorrencias").html('<span>'+ocorrencias+'</span>');	
+	
+	$("#OS").val(ocorrencias);	
+
+	
+	if(status_extra == "N"){
+		//$('.adicionar').show();
+		if(status_adicionar == "N"){
+			$('.porconsulta').hide();
+			$('.novaos').hide();
+			$('.vincular').hide();
+			$('.hnovaos').hide();
+		}else{
+			$('.porconsulta').show();
+			if(ocorrencias > 1){
+				if(status_porconsulta == "N"){
+					$('.novaos').show();
+					if(status_novaos == "N"){
+						$('.vincular').show();
+						if(status_vincular == "N"){
+							$('.hnovaos').hide();
+						}else{
+							$('.hnovaos').show();
+						}
+					}else{
+						$('.vincular').hide();
+						$('.hnovaos').hide();
+					}
+				}else{
+					$('.novaos').hide();
+					$('.vincular').hide();
+					$('.hnovaos').hide();
+				}	
+			}else{
+				$('.novaos').hide();
+				if(status_porconsulta == "N"){
+					$('.vincular').show();
+					if(status_vincular == "N"){
+						$('.hnovaos').hide();
+					}else{
+						$('.hnovaos').show();
+					}
+				}else{
+					$('.novaos').hide();
+					$('.vincular').hide();
+					$('.hnovaos').hide();
+				}
+			}
+		}
+	}else{
+		if(status_caso == 0){
+			if(status_adicionar == "N"){
+				$('.porconsulta').hide();
+				$('.novaos').hide();
+				$('.vincular').hide();
+				$('.hnovaos').hide();
+			}else{
+				$('.porconsulta').show();
+				if(ocorrencias > 1){
+					if(status_porconsulta == "N"){
+						$('.novaos').show();
+						if(status_novaos == "N"){
+							$('.vincular').show();
+							if(status_vincular == "N"){
+								$('.hnovaos').hide();
+							}else{
+								$('.hnovaos').show();
+							}
+						}else{
+							$('.vincular').hide();
+							$('.hnovaos').hide();
+						}
+					}else{
+						$('.novaos').hide();
+						$('.vincular').hide();
+						$('.hnovaos').hide();
+					}	
+				}else{
+					$('.novaos').hide();
+					if(status_porconsulta == "N"){
+						$('.vincular').show();
+						if(status_vincular == "N"){
+							$('.hnovaos').hide();
+						}else{
+							$('.hnovaos').show();
+						}
+					}else{
+						$('.novaos').hide();
+						$('.vincular').hide();
+						$('.hnovaos').hide();
+					}
+				}
+			}			
+		}else if(status_caso == 1){
+			if(status_adicionar == "N"){
+				$('.porconsulta').hide();
+				$('.novaos').hide();
+				$('.vincular').hide();
+				$('.hnovaos').hide();
+			}else{
+				$('.porconsulta').show();
+				if(ocorrencias > 1){
+					if(status_porconsulta == "N"){
+						$('.novaos').show();
+						if(status_novaos == "N"){
+							$('.vincular').show();
+							if(status_vincular == "N"){
+								$('.hnovaos').hide();
+							}else{
+								$('.hnovaos').show();
+							}
+						}else{
+							$('.vincular').hide();
+							$('.hnovaos').hide();
+						}
+					}else{
+						$('.novaos').hide();
+						$('.vincular').hide();
+						$('.hnovaos').hide();
+					}	
+				}else{
+					$('.novaos').hide();
+					if(status_porconsulta == "N"){
+						$('.vincular').show();
+						if(status_vincular == "N"){
+							$('.hnovaos').hide();
+						}else{
+							$('.hnovaos').show();
+						}
+					}else{
+						$('.novaos').hide();
+						$('.vincular').hide();
+						$('.hnovaos').hide();
+					}
+				}
+			}			
+		}else if(status_caso == 2){
+			$('.novaos').hide();
+			$('.vincular').hide();
+			$('.hnovaos').hide();
+			if(status_adicionar == "N"){
+				$('.porconsulta').hide();
+				//Não cadastro nenhuma OS
+			}else{
+				$('.porconsulta').show();
+				if(status_porconsulta == "N"){
+					//1-N Uso a OS da Repetição para todas as consultas
+				}else{
+					//N-N Cadastro N OS novas
+				}				
+			}			
+		}else if(status_caso == 3){
+			if(status_adicionar == "N"){
+				//Não Cadastro nenhuma OS
+				$('.porconsulta').hide();
+				$('.novaos').hide();
+				$('.vincular').hide();
+				$('.hnovaos').hide();
+			}else{
+				$('.porconsulta').show();
+				if(ocorrencias > 1){
+					if(status_porconsulta == "N"){
+						$('.novaos').show();
+						if(status_novaos == "N"){
+							$('.vincular').show();
+							if(status_vincular == "N"){
+								//Não Cadastro nenhuma OS
+								$('.hnovaos').hide();
+							}else{
+								//Pego uma OS existente
+								$('.hnovaos').show();
+							}
+						}else{
+							//Cadastro 1 OS
+							$('.vincular').hide();
+							$('.hnovaos').hide();
+						}
+					}else{
+						//Cadastro N OS
+						$('.novaos').hide();
+						$('.vincular').hide();
+						$('.hnovaos').hide();
+					}	
+				}else{
+					$('.novaos').hide();
+					if(status_porconsulta == "N"){
+						$('.vincular').show();
+						if(status_vincular == "N"){
+							$('.hnovaos').hide();
+							//Não Cadastro nenhuma OS
+						}else{
+							//Pego uma OS existente
+							$('.hnovaos').show();
+						}
+					}else{
+						//Cadastro N OS
+						$('.novaos').hide();
+						$('.vincular').hide();
+						$('.hnovaos').hide();
+					}
+				}
+			}		
+		}else if(status_caso == 4){
+				$('.porconsulta').hide();
+				$('.novaos').hide();
+				$('.vincular').hide();
+				$('.hnovaos').hide();
+			if(status_adicionar == "N"){
+				//Não cadastro OS
+			}else{
+				//Pego a OS da Repetição
+			}				
+		}else if(status_caso == 5){
+			$('.novaos').hide();
+			$('.vincular').hide();
+			$('.hnovaos').hide();
+			$('.porconsulta').hide();
+			if(status_adicionar == "N"){
+				//Não cadastro nenhuma OS
+			}else{
+				//N-N Cadastro N OS novas				
+			}		
+		}
+	}
 }
 
 function exibirentrega() {
@@ -5034,12 +5786,13 @@ function calculaQtdSomaDev(campo, soma, somaproduto, excluir, produtonum, countm
  */
  
  /*Carrega os Profissionais do Servico i */
-function carregaHidden_Prof(value = 0, name, i, PR = 0, cont_PR = 4) {
-
+function carregaHidden_Prof(value = 0, name, i, PR = 0, cont_PR = 6) {
+	//console.log(value);
+	//console.log(PR);
 	if (value != 0) {
-	
+		$("#ValorComProf_Servico_"+PR+i).prop('readonly', false);
 		$("#ProfissionalServico_"+PR+i).val(value);
-
+		//console.log($("#ProfissionalServico_"+PR+i).val());
 		$.ajax({
             url: window.location.origin+ '/' + app + '/Getvalues_json2.php?q=31&f='+value,
             dataType: 'JSON',
@@ -5064,6 +5817,7 @@ function carregaHidden_Prof(value = 0, name, i, PR = 0, cont_PR = 4) {
 
     }else{
 		//console.log('Prof_1 = Vazio'+value);
+		$("#ValorComProf_Servico_"+PR+i).prop('readonly', true);
 		$("#ProfissionalServico_"+PR+i).val(0);
 		$("#idTFProf_Servico_"+PR+i).val(0);
 		$("#ComFunProf_Servico_"+PR+i).val(0);
@@ -5117,11 +5871,12 @@ function carregaValores_Prof(i, cont_PR, tipo) {
 						}else{
 							$("#ComFunProf_Servico_"+j+i).val(0);
 						}						
-					}	
+					}
 				}
 			}
 			
 		}else{
+			$("#ValorComProf_Servico_"+j+i).prop('readonly', true);
 			$("#ProfissionalServico_"+j+i).val(0);
 			$("#idTFProf_Servico_"+j+i).val(0);
 			$("#ComFunProf_Servico_"+j+i).val(0);
@@ -5134,7 +5889,8 @@ function carregaValores_Prof(i, cont_PR, tipo) {
 }
 
 function SomaComissaoServico(i, cont_PR) {
-
+	
+	//console.log(cont_PR);
 	somacomissao = 0;
 	for (j = 1; j <= cont_PR; j++) {
 
@@ -5316,6 +6072,57 @@ function carregaQuitado(value, name, i, cadastrar = 0) {
 	
 }
 
+ /*Carrega a Data e Hora da Conclusão da Sac*/
+ function carregaConcluidoSac(value, name, cadastrar = 0) {
+    if (value == "S") {
+		if (cadastrar == 1){
+			$("#DataConcluidoSac").val($("#DataSac").val());
+			$("#HoraConcluidoSac").val($("#HoraSac").val());
+		}else{
+			$("#DataConcluidoSac").val(currentDate.format('DD/MM/YYYY'));
+			$("#HoraConcluidoSac").val(currentDate.format('HH:mm'));
+		}
+    }else{
+        $("#DataConcluidoSac").val("");
+        $("#HoraConcluidoSac").val("");
+    }
+	
+}
+
+ /*Carrega a Data e Hora da Conclusão da Marketing*/
+ function carregaConcluidoMarketing(value, name, cadastrar = 0) {
+    if (value == "S") {
+		if (cadastrar == 1){
+			$("#DataConcluidoMarketing").val($("#DataMarketing").val());
+			$("#HoraConcluidoMarketing").val($("#HoraMarketing").val());
+		}else{
+			$("#DataConcluidoMarketing").val(currentDate.format('DD/MM/YYYY'));
+			$("#HoraConcluidoMarketing").val(currentDate.format('HH:mm'));
+		}
+    }else{
+        $("#DataConcluidoMarketing").val("");
+        $("#HoraConcluidoMarketing").val("");
+    }
+	
+}
+
+ /*Carrega a Data e Hora da Conclusão da Tarefa*/
+ function carregaConcluidoTarefa(value, name, cadastrar = 0) {
+    if (value == "S") {
+		if (cadastrar == 1){
+			$("#DataConcluidoTarefa").val($("#DataTarefa").val());
+			$("#HoraConcluidoTarefa").val($("#HoraTarefa").val());
+		}else{
+			$("#DataConcluidoTarefa").val(currentDate.format('DD/MM/YYYY'));
+			$("#HoraConcluidoTarefa").val(currentDate.format('HH:mm'));
+		}
+    }else{
+        $("#DataConcluidoTarefa").val("");
+        $("#HoraConcluidoTarefa").val("");
+    }
+	
+}
+
  /*Carrega a Data e Hora da Conclusão do procedimento*/
  function carregaAtivoFuncao(value, name, i, cadastrar = 0) {
 	//alert('carregando');
@@ -5354,6 +6161,60 @@ function carregaQuitado(value, name, i, cadastrar = 0) {
     }else{
         $("#DataConcluidoSubProcedimento"+i).val("");
         $("#HoraConcluidoSubProcedimento"+i).val("");
+    }
+	
+}
+
+ /*Carrega a Data e Hora da Conclusão do SubSac*/
+ function carregaConclSubSac(value, name, i, cadastrar = 0) {
+
+    if (value == "S") {
+		if (cadastrar == 1){
+			$("#DataConcluidoSubSac"+i).val($("#DataSubSac"+i).val());
+			$("#HoraConcluidoSubSac"+i).val($("#HoraSubSac"+i).val());
+		}else{
+			$("#DataConcluidoSubSac"+i).val(currentDate.format('DD/MM/YYYY'));
+			$("#HoraConcluidoSubSac"+i).val(currentDate.format('HH:mm'));
+		}
+    }else{
+        $("#DataConcluidoSubSac"+i).val("");
+        $("#HoraConcluidoSubSac"+i).val("");
+    }
+	
+}
+
+ /*Carrega a Data e Hora da Conclusão do SubMarketing*/
+ function carregaConclSubMarketing(value, name, i, cadastrar = 0) {
+
+    if (value == "S") {
+		if (cadastrar == 1){
+			$("#DataConcluidoSubMarketing"+i).val($("#DataSubMarketing"+i).val());
+			$("#HoraConcluidoSubMarketing"+i).val($("#HoraSubMarketing"+i).val());
+		}else{
+			$("#DataConcluidoSubMarketing"+i).val(currentDate.format('DD/MM/YYYY'));
+			$("#HoraConcluidoSubMarketing"+i).val(currentDate.format('HH:mm'));
+		}
+    }else{
+        $("#DataConcluidoSubMarketing"+i).val("");
+        $("#HoraConcluidoSubMarketing"+i).val("");
+    }
+	
+}
+
+ /*Carrega a Data e Hora da Conclusão do SubTarefa*/
+ function carregaConclSubTarefa(value, name, i, cadastrar = 0) {
+
+    if (value == "S") {
+		if (cadastrar == 1){
+			$("#DataConcluidoSubTarefa"+i).val($("#DataSubTarefa"+i).val());
+			$("#HoraConcluidoSubTarefa"+i).val($("#HoraSubTarefa"+i).val());
+		}else{
+			$("#DataConcluidoSubTarefa"+i).val(currentDate.format('DD/MM/YYYY'));
+			$("#HoraConcluidoSubTarefa"+i).val(currentDate.format('HH:mm'));
+		}
+    }else{
+        $("#DataConcluidoSubTarefa"+i).val("");
+        $("#HoraConcluidoSubTarefa"+i).val("");
     }
 	
 }
@@ -5413,6 +6274,8 @@ function buscaValor1Tabelas(id, campo, tabela, num, campo2, recorrencias) {
 					if (data[i].id == id) {
 						$('#Escrever'+campo2+num).css("display","");
 						$('#Entregue'+campo2+num).css("display","");
+						$('#FechaObs'+campo2+num).css("display","");
+						$('#FechaProf'+campo2+num).css("display","");
 						//""ou posso usar assim, passando diretamente o qtdinc do id ""
 						$('#Nome'+campo2+num).val(data[i].nomeprod);
 						$('#Comissao'+campo2+num).val(data[i].comissaoprod);
@@ -5437,19 +6300,21 @@ function buscaValor1Tabelas(id, campo, tabela, num, campo2, recorrencias) {
 						//if (tabela == area && $("#Qtd"+tabela+num).val()) {
 						if ($("#Qtd"+campo2+num).val()) {
 							calculaSubtotal($("#idTab_"+campo2+num).val(),$("#Qtd"+campo2+num).val(),num,'OUTRO',campo2,$("#QtdIncremento"+campo2+num).val(),$("#Comissao"+campo2+num).val(),$("#ComissaoServico"+campo2+num).val(),$("#ComissaoCashBack"+campo2+num).val());
-							//carregaValores_Prof(num, cont_PR = 4,1);
+							//carregaValores_Prof(num, cont_PR = 6,1);
 							break;
 						}
 
 						//para cada valor carregado o orçamento é calculado/atualizado
 						//através da chamada de sua função
-						//carregaValores_Prof(num, cont_PR = 4,1);
+						//carregaValores_Prof(num, cont_PR = 6,1);
 						calculaOrcamento();
 						break;
 					}
 				}else{
 					$('#Escrever'+campo2+num).css("display","none");
 					$('#Entregue'+campo2+num).css("display","none");
+					$('#FechaObs'+campo2+num).css("display","none");
+					$('#FechaProf'+campo2+num).css("display","none");
 					//""ou posso usar assim, passando diretamente o qtdinc do id ""
 					$('#Nome'+campo2+num).val("");
 					$('#Comissao'+campo2+num).val("0");
@@ -5471,13 +6336,13 @@ function buscaValor1Tabelas(id, campo, tabela, num, campo2, recorrencias) {
 					//if (tabela == area && $("#Qtd"+tabela+num).val()) {
 					if ($("#Qtd"+campo2+num).val()) {
 						calculaSubtotal($("#idTab_"+campo2+num).val(),$("#Qtd"+campo2+num).val(),num,'OUTRO',campo2,$("#QtdIncremento"+campo2+num).val(),$("#Comissao"+campo2+num).val(),$("#ComissaoServico"+campo2+num).val(),$("#ComissaoCashBack"+campo2+num).val());
-						//carregaValores_Prof(num, cont_PR = 4,1);
+						//carregaValores_Prof(num, cont_PR = 6,1);
 						break;
 					}
 				
 					//para cada valor carregado o orçamento é calculado/atualizado
 					//através da chamada de sua função
-					//carregaValores_Prof(num, cont_PR = 4,1);
+					//carregaValores_Prof(num, cont_PR = 6,1);
 					calculaOrcamento();
 					break;
 				}
@@ -5505,6 +6370,8 @@ function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
 					if (data[i].id == id) {
 						$('#Escrever'+campo2+num).css("display","");
 						$('#Entregue'+campo2+num).css("display","");
+						$('#FechaObs'+campo2+num).css("display","");
+						$('#FechaProf'+campo2+num).css("display","");
 						//""ou posso usar assim, passando diretamente o qtdinc do id ""
 						$('#Nome'+campo2+num).val(data[i].nomeprod);
 						$('#idTab_Produtos_'+campo2+num).val(data[i].id_produto);
@@ -5527,13 +6394,15 @@ function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
 
 						//para cada valor carregado o orçamento é calculado/atualizado
 						//através da chamada de sua função
-						//carregaValores_Prof(num, cont_PR = 4,1);
+						//carregaValores_Prof(num, cont_PR = 6,1);
 						calculaOrcamento();
 						break;
 					}
 				}else{
 					$('#Escrever'+campo2+num).css("display","none");
 					$('#Entregue'+campo2+num).css("display","none");
+					$('#FechaObs'+campo2+num).css("display","none");
+					$('#FechaProf'+campo2+num).css("display","none");
 					//""ou posso usar assim, passando diretamente o qtdinc do id ""
 					$('#Nome'+campo2+num).val("");
 					$('#Comissao'+campo2+num).val("0");
@@ -5558,7 +6427,7 @@ function buscaValor2Tabelas(id, campo, tabela, num, campo2) {
 				
 					//para cada valor carregado o orçamento é calculado/atualizado
 					//através da chamada de sua função
-					//carregaValores_Prof(num, cont_PR = 4,1);
+					//carregaValores_Prof(num, cont_PR = 6,1);
 					calculaOrcamento();
 					break;
 				}
@@ -5692,7 +6561,9 @@ function calculaSubtotal(valor, campo, num, tipo, tabela, qtdinc, comissao, comi
     //para cada vez que o subtotal for calculado o orçamento e o total restante
     //também serão atualizados
     calculaOrcamento();
-	carregaValores_Prof(num, cont_PR = 4,1);
+	if(tabela == "Servico"){
+		carregaValores_Prof(num, cont_PR = 6,1);
+	}
 
 }
 
@@ -7865,8 +8736,8 @@ function adicionaProcedimento() {
 }
 
 /*
- * Função responsável por adicionar novos campos de SubTarefas dinamicamente no
- * formulário de tarefa
+ * Função responsável por adicionar novos campos de SubProcedimento dinamicamente no
+ * formulário de Procedimento
  */
 function adicionaSubProcedimento() {
 
@@ -8061,6 +8932,404 @@ function adicionaSubProcedimento() {
 
 }
 
+/*
+ * Função responsável por adicionar novos campos de SubSac dinamicamente no
+ * formulário de Sac
+ */
+function adicionaSubSac() {
+
+    var pt = $("#PTCount").val(); //initlal text box count
+
+    //alert( $("#SCount").val() );
+    pt++; //text box increment
+    $("#PTCount").val(pt);
+    //console.log(pt);
+
+    if (pt >= 2) {
+        //console.log( $("#listadinamicad"+(pt-1)).val() );
+        var chosen;
+        chosen = $("#listadinamicad"+(pt-1)).val();
+        //console.log( chosen + ' :: ' + pt );
+    }
+	
+    if (pt >= 2) {
+        //console.log( $("#listadinamicae"+(pt-1)).val() );
+        var chosen2;
+        chosen2 = $("#listadinamicae"+(pt-1)).val();
+        //console.log( chosen + ' :: ' + pt );
+    }	
+
+    //Captura a data do dia e carrega no campo correspondente
+    //var currentDate = moment();
+
+    $(".input_fields_wrap3").append('\
+        <div class="form-group" id="3div'+pt+'">\
+			<div class="panel panel-info">\
+				<div class="panel-heading">\
+					<div class="row">\
+						<div class="col-md-6">\
+							<label for="SubSac'+pt+'">Ação:</label>\
+							<textarea class="form-control" id="SubSac'+pt+'"\
+									  name="SubSac'+pt+'"></textarea>\
+						</div>\
+					</div>\
+					<div class="row">\
+						<div class="col-md-2">\
+							<label for="DataSubSac'+pt+'">Cadastrada em:</label>\
+							<div class="input-group DatePicker">\
+								<span class="input-group-addon" disabled>\
+									<span class="glyphicon glyphicon-calendar"></span>\
+								</span>\
+								<input type="text" class="form-control Date" readonly=""\
+									   name="DataSubSac'+pt+'" id="DataSubSac'+pt+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
+							</div>\
+						</div>\
+						<div class="col-md-2">\
+							<label for="HoraSubSac'+pt+'">Às</label>\
+							<div class="input-group TimePicker">\
+								<span class="input-group-addon" disabled>\
+									<span class="glyphicon glyphicon-time"></span>\
+								</span>\
+								<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM" readonly=""\
+									   name="HoraSubSac'+pt+'"  id="HoraSubSac'+pt+'" value="'+currentDate.format('HH:mm')+'">\
+							</div>\
+						</div>\
+						<div class="col-md-2">\
+							<label for="ConcluidoSubSac">Concluido? </label><br>\
+							<div class="form-group">\
+								<div class="btn-group" data-toggle="buttons">\
+									<label class="btn btn-warning active" name="radio_ConcluidoSubSac'+pt+'" id="radio_ConcluidoSubSac'+pt+'N">\
+									<input type="radio" name="ConcluidoSubSac'+pt+'" id="radiogeraldinamico_subproc"\
+										onchange="carregaConclSubSac(this.value,this.name,'+pt+',0)" autocomplete="off" value="N" checked>Não\
+									</label>\
+									<label class="btn btn-default" name="radio_ConcluidoSubSac'+pt+'" id="radio_ConcluidoSubSac'+pt+'S">\
+									<input type="radio" name="ConcluidoSubSac'+pt+'" id="radiogeraldinamico_subproc"\
+										onchange="carregaConclSubSac(this.value,this.name,'+pt+',0)" autocomplete="off" value="S">Sim\
+									</label>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="col-md-4">\
+							<div id="ConcluidoSubSac'+pt+'" style="display:none">\
+								<div class="row">\
+									<div class="col-md-6">\
+										<label for="DataConcluidoSubSac'+pt+'">Data Concl</label>\
+										<div class="input-group DatePicker">\
+											<span class="input-group-addon" disabled>\
+												<span class="glyphicon glyphicon-calendar"></span>\
+											</span>\
+											<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA" readonly=""\
+												   name="DataConcluidoSubSac'+pt+'"  id="DataConcluidoSubSac'+pt+'" value="">\
+										</div>\
+									</div>\
+									<div class="col-md-6">\
+										<label for="HoraConcluidoSubSac'+pt+'">Às</label>\
+										<div class="input-group TimePicker">\
+											<span class="input-group-addon" disabled>\
+												<span class="glyphicon glyphicon-time"></span>\
+											</span>\
+											<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM" readonly=""\
+												   name="HoraConcluidoSubSac'+pt+'"  id="HoraConcluidoSubSac'+pt+'" value="">\
+										</div>\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="col-md-1">\
+							<label><br></label><br>\
+							<button type="button" id="'+pt+'" class="remove_field3 btn btn-danger">\
+								<span class="glyphicon glyphicon-trash"></span>\
+							</button>\
+						</div>\
+					</div>\
+				</div>\
+			</div>\
+        </div>'
+    ); //add input box
+    //habilita o botão de calendário após a geração dos campos dinâmicos
+    $('.DatePicker').datetimepicker(dateTimePickerOptions);
+
+    //get a reference to the select element
+    $select = $('#listadinamicad'+pt);
+
+    //request the JSON data and parse into the select element
+    $.ajax({
+        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=7',
+        dataType: 'JSON',
+        type: "GET",
+        success: function (data) {
+            //clear the current content of the select
+            $select.html('');
+            //iterate over the data and append a select option
+            //$select.append('<option value="">-- Selecione uma opção --</option>');
+            $.each(data, function (key, val) {
+                //alert(val.id);
+                if (val.id == chosen)
+                    $select.append('<option value="' + val.id + '" selected="selected">' + val.name + '</option>');
+                else
+                    $select.append('<option value="' + val.id + '">' + val.name + '</option>');
+            })
+        },
+        error: function () {
+            //alert('erro listadinamicaB');
+            //if there is an error append a 'none available' option
+            $select.html('<option id="-1">ERRO</option>');
+        }
+
+    });
+	
+    //get a reference to the select2 element
+    $select2 = $('#listadinamicae'+pt);	
+	
+    $.ajax({
+        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=10',
+        dataType: 'JSON',
+        type: "GET",
+        success: function (data) {
+            //clear the current content of the select2
+            $select2.html('');
+            //iterate over the data and append a select2 option
+            //$select2.append('<option value="">-- Selecione uma opção --</option>');
+            $.each(data, function (key, val) {
+                //alert(val.id);
+                if (val.id == chosen2)
+                    $select2.append('<option value="' + val.id + '" selected="selected">' + val.name + '</option>');
+                else
+                    $select2.append('<option value="' + val.id + '">' + val.name + '</option>');
+            })
+        },
+        error: function () {
+            //alert('erro listadinamicaB');
+            //if there is an error append a 'none available' option
+            $select2.html('<option id="-1">ERRO</option>');
+        }
+
+    });	
+	
+    //permite o uso de radio buttons nesse bloco dinâmico
+    $('input:radio[id="radiogeraldinamico_subproc"]').change(function() {
+
+        var value_subproc = $(this).val();
+        var name_subproc = $(this).attr("name");
+
+        //console.log(value_subproc + ' <<>> ' + name_subproc);
+
+        $('label[name="radio_' + name_subproc + '"]').removeClass();
+        $('label[name="radio_' + name_subproc + '"]').addClass("btn btn-default");
+        $('#radio_' + name_subproc + value_subproc).addClass("btn btn-warning active");
+        //$('#radiogeral'+ value_subproc).addClass("btn btn-warning active");
+		
+		if(value_subproc == "S"){
+			$("#"+name_subproc).css("display","");
+		}else{
+			$("#"+name_subproc).css("display","none");
+		}
+		
+	});
+
+}
+
+/*
+ * Função responsável por adicionar novos campos de SubMarketing dinamicamente no
+ * formulário de Marketing
+ */
+function adicionaSubMarketing() {
+
+    var pt = $("#PTCount").val(); //initlal text box count
+
+    //alert( $("#SCount").val() );
+    pt++; //text box increment
+    $("#PTCount").val(pt);
+    //console.log(pt);
+
+    if (pt >= 2) {
+        //console.log( $("#listadinamicad"+(pt-1)).val() );
+        var chosen;
+        chosen = $("#listadinamicad"+(pt-1)).val();
+        //console.log( chosen + ' :: ' + pt );
+    }
+	
+    if (pt >= 2) {
+        //console.log( $("#listadinamicae"+(pt-1)).val() );
+        var chosen2;
+        chosen2 = $("#listadinamicae"+(pt-1)).val();
+        //console.log( chosen + ' :: ' + pt );
+    }	
+
+    //Captura a data do dia e carrega no campo correspondente
+    //var currentDate = moment();
+
+    $(".input_fields_wrap3").append('\
+        <div class="form-group" id="3div'+pt+'">\
+			<div class="panel panel-info">\
+				<div class="panel-heading">\
+					<div class="row">\
+						<div class="col-md-6">\
+							<label for="SubMarketing'+pt+'">Ação:</label>\
+							<textarea class="form-control" id="SubMarketing'+pt+'"\
+									  name="SubMarketing'+pt+'"></textarea>\
+						</div>\
+					</div>\
+					<div class="row">\
+						<div class="col-md-2">\
+							<label for="DataSubMarketing'+pt+'">Cadastrada em:</label>\
+							<div class="input-group DatePicker">\
+								<span class="input-group-addon" disabled>\
+									<span class="glyphicon glyphicon-calendar"></span>\
+								</span>\
+								<input type="text" class="form-control Date" readonly=""\
+									   name="DataSubMarketing'+pt+'" id="DataSubMarketing'+pt+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
+							</div>\
+						</div>\
+						<div class="col-md-2">\
+							<label for="HoraSubMarketing'+pt+'">Às</label>\
+							<div class="input-group TimePicker">\
+								<span class="input-group-addon" disabled>\
+									<span class="glyphicon glyphicon-time"></span>\
+								</span>\
+								<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM" readonly=""\
+									   name="HoraSubMarketing'+pt+'"  id="HoraSubMarketing'+pt+'" value="'+currentDate.format('HH:mm')+'">\
+							</div>\
+						</div>\
+						<div class="col-md-2">\
+							<label for="ConcluidoSubMarketing">Concluido? </label><br>\
+							<div class="form-group">\
+								<div class="btn-group" data-toggle="buttons">\
+									<label class="btn btn-warning active" name="radio_ConcluidoSubMarketing'+pt+'" id="radio_ConcluidoSubMarketing'+pt+'N">\
+									<input type="radio" name="ConcluidoSubMarketing'+pt+'" id="radiogeraldinamico_subproc"\
+										onchange="carregaConclSubMarketing(this.value,this.name,'+pt+',0)" autocomplete="off" value="N" checked>Não\
+									</label>\
+									<label class="btn btn-default" name="radio_ConcluidoSubMarketing'+pt+'" id="radio_ConcluidoSubMarketing'+pt+'S">\
+									<input type="radio" name="ConcluidoSubMarketing'+pt+'" id="radiogeraldinamico_subproc"\
+										onchange="carregaConclSubMarketing(this.value,this.name,'+pt+',0)" autocomplete="off" value="S">Sim\
+									</label>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="col-md-4">\
+							<div id="ConcluidoSubMarketing'+pt+'" style="display:none">\
+								<div class="row">\
+									<div class="col-md-6">\
+										<label for="DataConcluidoSubMarketing'+pt+'">Data Concl</label>\
+										<div class="input-group DatePicker">\
+											<span class="input-group-addon" disabled>\
+												<span class="glyphicon glyphicon-calendar"></span>\
+											</span>\
+											<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA" readonly=""\
+												   name="DataConcluidoSubMarketing'+pt+'"  id="DataConcluidoSubMarketing'+pt+'" value="">\
+										</div>\
+									</div>\
+									<div class="col-md-6">\
+										<label for="HoraConcluidoSubMarketing'+pt+'">Às</label>\
+										<div class="input-group TimePicker">\
+											<span class="input-group-addon" disabled>\
+												<span class="glyphicon glyphicon-time"></span>\
+											</span>\
+											<input type="text" class="form-control Time" maxlength="5" placeholder="HH:MM" readonly=""\
+												   name="HoraConcluidoSubMarketing'+pt+'"  id="HoraConcluidoSubMarketing'+pt+'" value="">\
+										</div>\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="col-md-1">\
+							<label><br></label><br>\
+							<button type="button" id="'+pt+'" class="remove_field3 btn btn-danger">\
+								<span class="glyphicon glyphicon-trash"></span>\
+							</button>\
+						</div>\
+					</div>\
+				</div>\
+			</div>\
+        </div>'
+    ); //add input box
+    //habilita o botão de calendário após a geração dos campos dinâmicos
+    $('.DatePicker').datetimepicker(dateTimePickerOptions);
+
+    //get a reference to the select element
+    $select = $('#listadinamicad'+pt);
+
+    //request the JSON data and parse into the select element
+    $.ajax({
+        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=7',
+        dataType: 'JSON',
+        type: "GET",
+        success: function (data) {
+            //clear the current content of the select
+            $select.html('');
+            //iterate over the data and append a select option
+            //$select.append('<option value="">-- Selecione uma opção --</option>');
+            $.each(data, function (key, val) {
+                //alert(val.id);
+                if (val.id == chosen)
+                    $select.append('<option value="' + val.id + '" selected="selected">' + val.name + '</option>');
+                else
+                    $select.append('<option value="' + val.id + '">' + val.name + '</option>');
+            })
+        },
+        error: function () {
+            //alert('erro listadinamicaB');
+            //if there is an error append a 'none available' option
+            $select.html('<option id="-1">ERRO</option>');
+        }
+
+    });
+	
+    //get a reference to the select2 element
+    $select2 = $('#listadinamicae'+pt);	
+	
+    $.ajax({
+        url: window.location.origin+ '/' + app + '/Getvalues_json.php?q=10',
+        dataType: 'JSON',
+        type: "GET",
+        success: function (data) {
+            //clear the current content of the select2
+            $select2.html('');
+            //iterate over the data and append a select2 option
+            //$select2.append('<option value="">-- Selecione uma opção --</option>');
+            $.each(data, function (key, val) {
+                //alert(val.id);
+                if (val.id == chosen2)
+                    $select2.append('<option value="' + val.id + '" selected="selected">' + val.name + '</option>');
+                else
+                    $select2.append('<option value="' + val.id + '">' + val.name + '</option>');
+            })
+        },
+        error: function () {
+            //alert('erro listadinamicaB');
+            //if there is an error append a 'none available' option
+            $select2.html('<option id="-1">ERRO</option>');
+        }
+
+    });	
+	
+    //permite o uso de radio buttons nesse bloco dinâmico
+    $('input:radio[id="radiogeraldinamico_subproc"]').change(function() {
+
+        var value_subproc = $(this).val();
+        var name_subproc = $(this).attr("name");
+
+        //console.log(value_subproc + ' <<>> ' + name_subproc);
+
+        $('label[name="radio_' + name_subproc + '"]').removeClass();
+        $('label[name="radio_' + name_subproc + '"]').addClass("btn btn-default");
+        $('#radio_' + name_subproc + value_subproc).addClass("btn btn-warning active");
+        //$('#radiogeral'+ value_subproc).addClass("btn btn-warning active");
+		
+		if(value_subproc == "S"){
+			$("#"+name_subproc).css("display","");
+		}else{
+			$("#"+name_subproc).css("display","none");
+		}
+		
+	});
+
+}
+
+/*
+ * Função responsável por adicionar novos campos de SubTarefas dinamicamente no
+ * formulário de tarefa
+ */
 function adicionaSubTarefa() {
 
     var pt = $("#PTCount").val(); //initlal text box count
@@ -8093,40 +9362,40 @@ function adicionaSubTarefa() {
 				<div class="panel-heading">\
 					<div class="row">\
 						<div class="col-md-4">\
-							<label for="SubProcedimento'+pt+'">Ação:</label>\
-							<textarea class="form-control" id="SubProcedimento'+pt+'"\
-									  name="SubProcedimento'+pt+'"></textarea>\
+							<label for="SubTarefa'+pt+'">Ação:</label>\
+							<textarea class="form-control" id="SubTarefa'+pt+'"\
+									  name="SubTarefa'+pt+'"></textarea>\
 						</div>\
 						<div class="col-md-2">\
-							<label for="DataSubProcedimento'+pt+'">Iniciar em:</label>\
+							<label for="DataSubTarefa'+pt+'">Iniciar em:</label>\
 							<div class="input-group DatePicker">\
 								<span class="input-group-addon" disabled>\
 									<span class="glyphicon glyphicon-calendar"></span>\
 								</span>\
 								<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
-									   name="DataSubProcedimento'+pt+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
+									   name="DataSubTarefa'+pt+'" value="'+currentDate.format('DD/MM/YYYY')+'">\
 							</div>\
 						</div>\
 						<div class="col-md-2">\
-							<label for="DataSubProcedimentoLimite'+pt+'">Concluir em:</label>\
+							<label for="DataSubTarefaLimite'+pt+'">Concluir em:</label>\
 							<div class="input-group DatePicker">\
 								<span class="input-group-addon" disabled>\
 									<span class="glyphicon glyphicon-calendar"></span>\
 								</span>\
 								<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"\
-									   name="DataSubProcedimentoLimite'+pt+'" value="">\
+									   name="DataSubTarefaLimite'+pt+'" value="">\
 							</div>\
 						</div>\
 						<div class="col-md-2">\
-							<label for="ConcluidoSubProcedimento">Concluido? </label><br>\
+							<label for="ConcluidoSubTarefa">Concluido? </label><br>\
 							<div class="form-group">\
 								<div class="btn-group" data-toggle="buttons">\
-									<label class="btn btn-warning active" name="radio_ConcluidoSubProcedimento'+pt+'" id="radio_ConcluidoSubProcedimento'+pt+'N">\
-									<input type="radio" name="ConcluidoSubProcedimento'+pt+'" id="radiogeraldinamico"\
+									<label class="btn btn-warning active" name="radio_ConcluidoSubTarefa'+pt+'" id="radio_ConcluidoSubTarefa'+pt+'N">\
+									<input type="radio" name="ConcluidoSubTarefa'+pt+'" id="radiogeraldinamico"\
 										autocomplete="off" value="N" checked>Não\
 									</label>\
-									<label class="btn btn-default" name="radio_ConcluidoSubProcedimento'+pt+'" id="radio_ConcluidoSubProcedimento'+pt+'S">\
-									<input type="radio" name="ConcluidoSubProcedimento'+pt+'" id="radiogeraldinamico"\
+									<label class="btn btn-default" name="radio_ConcluidoSubTarefa'+pt+'" id="radio_ConcluidoSubTarefa'+pt+'S">\
+									<input type="radio" name="ConcluidoSubTarefa'+pt+'" id="radiogeraldinamico"\
 										autocomplete="off" value="S">Sim\
 									</label>\
 								</div>\
@@ -9693,7 +10962,19 @@ $(document).ready(function () {
 		if(empresa == 2) {
 			$('.campos').hide();
 		}
-
+		
+		if($('#Readonly_Cons').val()){
+			if($('#Readonly_Cons').val() == 1){
+				readonly_cons = '';
+				//console.log('');
+			}else{
+				readonly_cons = 'readonly=""';
+				//console.log('readonly_cons=""');
+			}		
+		}else{
+			readonly_cons = '';
+		}
+		
 		e.preventDefault();
 		
         pc++; //text box increment
@@ -9713,11 +10994,18 @@ $(document).ready(function () {
 						<div class="row">\
 							<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">\
 								<div class="row">\
-									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+									<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">\
 										<label for="idTab_Produto">Produto '+pc+':</label><br>\
 										<select class="form-control Chosen" id="listadinamicab'+pc+'" name="idTab_Produto'+pc+'" onchange="'+buscavalor+'(this.value,this.name,\''+tblbusca+'\','+pc+',\'Produto\','+recorrencias+'),calculaQtdSoma(\'QtdProduto\',\'QtdSoma\',\'ProdutoSoma\',0,0,\'CountMax\',0,\'ProdutoHidden\')">\
 											<option value="">-- Selecione uma opção --</option>\
 										</select>\
+									</div>\
+									<div id="FechaObsProduto'+pc+'" style="display:none">\
+										<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">\
+											<label for="ObsProduto">Obs</label><br>\
+											<textarea type="text" class="form-control" maxlength="200" placeholder="Observacao:" id="ObsProduto'+pc+'"\
+											   name="ObsProduto'+pc+'" value=""  rows="1"></textarea>\
+										</div>\
 									</div>\
 								</div>\
 								<div id="EscreverProduto'+pc+'" style="display:none">\
@@ -9767,42 +11055,28 @@ $(document).ready(function () {
 							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">\
 								<div class="row">\
 									<div id="EntregueProduto'+pc+'" style="display:none">\
-										<div class="col-md-12 col-md-12 col-md-12 col-lg-12">\
-											<div class="row">\
-												<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">\
-													<label for="ObsProduto">Obs</label><br>\
-													<textarea type="text" class="form-control" maxlength="200" placeholder="Observacao:" id="ObsProduto'+pc+'"\
-													   name="ObsProduto'+pc+'" value=""  rows="1"></textarea>\
-												</div>\
-												<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">\
-													<label for="PrazoProduto">Prazo</label><br>\
-													<input type="text" class="form-control Numero" maxlength="3" placeholder="0" id="PrazoProduto'+pc+'"\
-														onkeyup="calculaPrazoProdutos(\'PrazoProduto\',\'QtdSoma\',\'ProdutoSoma\',0,0,\'CountMax\',0,\'ProdutoHidden\')"\
-														name="PrazoProduto'+pc+'" value="0" >\
-												</div>\
-											</div>\
-										</div>\
-										<div class="col-xs-12 col-sm-4 col-md-6 col-lg-6">\
+										<div class="col-xs-6 col-sm-4 col-md-6 col-lg-6">\
 											<label for="DataConcluidoProduto">Data Entrega</label>\
 											<div class="input-group DatePicker">\
 												<span class="input-group-addon" disabled>\
 													<span class="glyphicon glyphicon-calendar"></span>\
 												</span>\
 												<input type="text" class="form-control Date" id="DataConcluidoProduto'+pc+'" maxlength="10" placeholder="DD/MM/AAAA"\
-													   name="DataConcluidoProduto'+pc+'" value="">\
+													   name="DataConcluidoProduto'+pc+'" value="" '+readonly_cons+'>\
 											</div>\
 										</div>\
-										<div class="col-xs-12 col-sm-4 col-md-6 col-lg-6">\
-											<label for="HoraConcluidoProduto">Hora Entrega</label>\
-											<div class="input-group TimePicker">\
-												<span class="input-group-addon" disabled>\
-													<span class="glyphicon glyphicon-time"></span>\
-												</span>\
-												<input type="text" class="form-control Time" id="HoraConcluidoProduto'+pc+'" maxlength="5" placeholder="HH:MM"\
-													   name="HoraConcluidoProduto'+pc+'" value="">\
-											</div>\
+										<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">\
+											<label for="HoraConcluidoProduto">Hora </label>\
+											<input type="text" class="form-control Time" id="HoraConcluidoProduto'+pc+'" maxlength="5" placeholder="HH:MM"\
+													   name="HoraConcluidoProduto'+pc+'" value="" '+readonly_cons+'>\
 										</div>\
-										<div class="col-xs-8 col-sm-3 col-md-9  col-lg-9">\
+										<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">\
+											<label for="PrazoProduto">Prazo</label><br>\
+											<input type="text" class="form-control Numero" maxlength="3" placeholder="0" id="PrazoProduto'+pc+'"\
+												onkeyup="calculaPrazoProdutos(\'PrazoProduto\',\'QtdSoma\',\'ProdutoSoma\',0,0,\'CountMax\',0,\'ProdutoHidden\')"\
+												name="PrazoProduto'+pc+'" value="0" '+readonly_cons+'>\
+										</div>\
+										<div class="col-xs-6 col-sm-4 col-md-6  col-lg-6">\
 											<label for="ConcluidoProduto">Entregue? </label><br>\
 											<div class="btn-group" data-toggle="buttons">\
 												<label class="btn btn-warning active" name="radio_ConcluidoProduto'+pc+'" id="radio_ConcluidoProduto'+pc+'N">\
@@ -9817,10 +11091,12 @@ $(document).ready(function () {
 										</div>\
 										<div id="ConcluidoProduto'+pc+'" style="display:none">\
 										</div>\
+										<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">\
+										</div>\
 									</div>\
-									<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right">\
-										<label>Excl</label><br>\
-										<button type="button" id="'+pc+'" class="remove_field9 btn btn-danger"\
+									<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">\
+										<label>Excluir</label><br>\
+										<button type="button" id="'+pc+'" class="remove_field9 btn btn-danger btn-block"\
 												onclick="calculaQtdSoma(\'QtdProduto\',\'QtdSoma\',\'ProdutoSoma\',1,'+pc+',\'CountMax\',0,\'ProdutoHidden\')">\
 											<span class="glyphicon glyphicon-trash"></span>\
 										</button>\
@@ -9951,6 +11227,30 @@ $(document).ready(function () {
 			var tblbusca_serv = 'Produtos';
 		}
 		
+		if($('#Readonly_Cons').val()){
+			if($('#Readonly_Cons').val() == 1){
+				readonly_cons = '';
+				//console.log('');
+			}else{
+				readonly_cons = 'readonly=""';
+				//console.log('readonly_cons=""');
+			}		
+		}else{
+			readonly_cons = '';
+		}
+		
+		if($('#Bx_Pag').val()){
+			if($('#Bx_Pag').val() == "N"){
+				Prof_comissao = 'style="display: none;"';
+			}else{
+				Prof_comissao = '';
+			}
+		}else{
+			Prof_comissao = '';
+		}
+		//console.log('Prof_comissao = '+Prof_comissao);
+		//console.log('Bx_Pag = '+$('#Bx_Pag').val());
+		
 		e.preventDefault();
     
 		ps++; //text box increment
@@ -9970,11 +11270,18 @@ $(document).ready(function () {
 						<div class="row">\
 							<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">\
 								<div class="row">\
-									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+									<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">\
 										<label for="idTab_Servico">Servico '+ps+':</label><br>\
 										<select class="form-control Chosen4" id="listadinamica'+ps+'"  name="idTab_Servico'+ps+'" onchange="'+buscavalor_serv+'(this.value,this.name,\''+tblbusca_serv+'\','+ps+',\'Servico\','+recorrencias+'),calculaQtdSomaDev(\'QtdServico\',\'QtdSomaDev\',\'ServicoSoma\',0,0,\'CountMax2\',0,\'ServicoHidden\')">\
 											<option value="">-- Selecione uma opção --</option>\
 										</select>\
+									</div>\
+									<div id="FechaObsServico'+ps+'" style="display:none">\
+										<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">\
+											<label for="ObsServico">Obs</label><br>\
+											<textarea type="text" class="form-control " maxlength="200" id="ObsServico'+ps+'" placeholder="Observacao"\
+												name="ObsServico'+ps+'" value=""  rows="1"></textarea>\
+										</div>\
 									</div>\
 								</div>\
 								<div id="EscreverServico'+ps+'" style="display:none">\
@@ -10014,126 +11321,33 @@ $(document).ready(function () {
 											</div>\
 										</div>\
 									</div>\
-									<div class="row">\
-										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
-											<div class="row">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<label for="ProfissionalServico_1'+ps+'">Profissional 1</label>\
-													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_1"\
-															 id="listadinamica_prof_1'+ps+'" name="ProfissionalServico_1'+ps+'"\
-															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',1)">\
-														<option value=""></option>\
-													</select>\
-												</div>\
-												<input type="hidden" class="form-control " id="ProfissionalServico_1'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="idTFProf_Servico_1'+ps+'" name="idTFProf_Servico_1'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="ComFunProf_Servico_1'+ps+'" name="ComFunProf_Servico_1'+ps+'" value="" readonly="">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<input type="text" class="form-control Valor" id="ValorComProf_Servico_1'+ps+'" name="ValorComProf_Servico_1'+ps+'" value=""\
-														onkeyup="carregaValores_Prof('+ps+', 4, 2)" readonly="">\
-												</div>\
-											</div>\
-										</div>\
-										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
-											<div class="row">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<label for="ProfissionalServico_2'+ps+'">Profissional 2</label>\
-													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_2"\
-															 id="listadinamica_prof_2'+ps+'" name="ProfissionalServico_2'+ps+'"\
-															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',2)">\
-														<option value=""></option>\
-													</select>\
-												</div>\
-												<input type="hidden" class="form-control " id="ProfissionalServico_2'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="idTFProf_Servico_2'+ps+'" name="idTFProf_Servico_2'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="ComFunProf_Servico_2'+ps+'" name="ComFunProf_Servico_2'+ps+'" value="" readonly="">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<input type="text" class="form-control Valor" id="ValorComProf_Servico_2'+ps+'" name="ValorComProf_Servico_2'+ps+'" value=""\
-														onkeyup="carregaValores_Prof('+ps+', 4, 2)" readonly="">\
-												</div>\
-											</div>\
-										</div>\
-										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
-											<div class="row">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<label for="ProfissionalServico_3'+ps+'">Profissional 3</label>\
-													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_3"\
-															 id="listadinamica_prof_3'+ps+'" name="ProfissionalServico_3'+ps+'"\
-															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',3)">\
-														<option value=""></option>\
-													</select>\
-												</div>\
-												<input type="hidden" class="form-control " id="ProfissionalServico_3'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="idTFProf_Servico_3'+ps+'" name="idTFProf_Servico_3'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="ComFunProf_Servico_3'+ps+'" name="ComFunProf_Servico_3'+ps+'" value="" readonly="">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<input type="text" class="form-control Valor" id="ValorComProf_Servico_3'+ps+'" name="ValorComProf_Servico_3'+ps+'" value=""\
-														onkeyup="carregaValores_Prof('+ps+', 4, 2)" readonly="">\
-												</div>\
-											</div>\
-										</div>\
-										<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">\
-											<div class="row">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<label for="ProfissionalServico_4'+ps+'">Profissional 4</label>\
-													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_4"\
-															 id="listadinamica_prof_4'+ps+'" name="ProfissionalServico_4'+ps+'"\
-															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',4)">\
-														<option value=""></option>\
-													</select>\
-												</div>\
-												<input type="hidden" class="form-control " id="ProfissionalServico_4'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="idTFProf_Servico_4'+ps+'" name="idTFProf_Servico_4'+ps+'" value="" readonly="">\
-												<input type="hidden" class="form-control " id="ComFunProf_Servico_4'+ps+'" name="ComFunProf_Servico_4'+ps+'" value="" readonly="">\
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-													<input type="text" class="form-control Valor" id="ValorComProf_Servico_4'+ps+'" name="ValorComProf_Servico_4'+ps+'" value=""\
-														onkeyup="carregaValores_Prof('+ps+', 4, 2)" readonly="">\
-												</div>\
-											</div>\
-										</div>\
-										<input type="hidden" class="form-control Valor" id="ValorComissaoServico'+ps+'" name="ValorComissaoServico'+ps+'" value="" readonly="">\
-									</div>\
 								</div>\
 							</div>\
 							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">\
 								<div class="row">\
 									<div id="EntregueServico'+ps+'" style="display:none">\
-										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
-											<div class="row">\
-												<div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">\
-													<label for="ObsServico">Obs</label><br>\
-													<textarea type="text" class="form-control " maxlength="200" id="ObsServico'+ps+'" placeholder="Observacao"\
-														name="ObsServico'+ps+'" value=""  rows="1"></textarea>\
-												</div>\
-												<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">\
-													<label for="PrazoServico">Prazo</label><br>\
-													<input type="text" class="form-control Numero" maxlength="3" placeholder="0" id="PrazoServico'+ps+'"\
-														onkeyup="calculaPrazoServicos(\'PrazoServico\',\'QtdSomaDev\',\'ServicoSoma\',0,0,\'CountMax2\',0,\'ServicoHidden\')"\
-														name="PrazoServico'+ps+'" value="0" >\
-												</div>\
-											</div>\
-										</div>\
-										<div class="col-xs-12 col-sm-4 col-md-6 col-lg-6">\
+										<div class="col-xs-6 col-sm-4 col-md-6 col-lg-6">\
 											<label for="DataConcluidoServico">Data Entrega</label>\
 											<div class="input-group DatePicker">\
 												<span class="input-group-addon" disabled>\
 													<span class="glyphicon glyphicon-calendar"></span>\
 												</span>\
 												<input type="text" class="form-control Date" id="DataConcluidoServico'+ps+'" maxlength="10" placeholder="DD/MM/AAAA"\
-													   name="DataConcluidoServico'+ps+'" value="">\
+													   name="DataConcluidoServico'+ps+'" value="" '+readonly_cons+'>\
 											</div>\
 										</div>\
-										<div class="col-xs-12 col-sm-4 col-md-6 col-lg-6">\
-											<label for="HoraConcluidoServico">Hora Entrega</label>\
-											<div class="input-group TimePicker">\
-												<span class="input-group-addon" disabled>\
-													<span class="glyphicon glyphicon-time"></span>\
-												</span>\
-												<input type="text" class="form-control Time" id="HoraConcluidoServico'+ps+'" maxlength="5" placeholder="HH:MM"\
-													   name="HoraConcluidoServico'+ps+'" value="">\
-											</div>\
+										<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">\
+											<label for="HoraConcluidoServico">Hora </label>\
+											<input type="text" class="form-control Time" id="HoraConcluidoServico'+ps+'" maxlength="5" placeholder="HH:MM"\
+													   name="HoraConcluidoServico'+ps+'" value="" '+readonly_cons+'>\
 										</div>\
-										<div class="col-xs-8 col-sm-3 col-md-9  col-lg-9">\
+										<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">\
+											<label for="PrazoServico">Prazo</label><br>\
+											<input type="text" class="form-control Numero" maxlength="3" placeholder="0" id="PrazoServico'+ps+'"\
+												onkeyup="calculaPrazoServicos(\'PrazoServico\',\'QtdSomaDev\',\'ServicoSoma\',0,0,\'CountMax2\',0,\'ServicoHidden\')"\
+												name="PrazoServico'+ps+'" value="0" '+readonly_cons+'>\
+										</div>\
+										<div class="col-xs-6 col-sm-4 col-md-6  col-lg-6">\
 											<label for="ConcluidoServico">Entregue? </label><br>\
 											<div class="btn-group" data-toggle="buttons">\
 												<label class="btn btn-warning active" name="radio_ConcluidoServico'+ps+'" id="radio_ConcluidoServico'+ps+'N">\
@@ -10148,13 +11362,137 @@ $(document).ready(function () {
 										</div>\
 										<div id="ConcluidoServico'+ps+'" style="display:none">\
 										</div>\
+										<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">\
+											<label for="ValorComissaoServico">Comissao</label><br>\
+											<input type="text" class="form-control Valor" id="ValorComissaoServico'+ps+'" name="ValorComissaoServico'+ps+'" value="" readonly="">\
+										</div>\
 									</div>\
-									<div class="col-xs-1 col-sm-1 col-md-1  col-lg-1 text-right">\
-										<label><br></label><br>\
-										<button type="button" id="'+ps+'" class="remove_field10 btn btn-danger"\
+									<div class="col-xs-6 col-sm-4 col-md-3  col-lg-3">\
+										<label>Excluir</label><br>\
+										<button type="button" id="'+ps+'" class="remove_field10 btn btn-danger btn-block"\
 											onclick="calculaQtdSomaDev(\'QtdServico\',\'QtdSomaDev\',\'ServicoSoma\',1,'+ps+',\'CountMax2\',0,\'ServicoHidden\')">\
 											<span class="glyphicon glyphicon-trash"></span>\
 										</button>\
+									</div>\
+								</div>\
+							</div>\
+							<div id="FechaProfServico'+ps+'" style="display:none">\
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" '+Prof_comissao+'>\
+									<div class="row">\
+										<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_1'+ps+'">Profissional 1</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_1"\
+															 id="listadinamica_prof_1'+ps+'" name="ProfissionalServico_1'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',1)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_1'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_1'+ps+'" name="idTFProf_Servico_1'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_1'+ps+'" name="ComFunProf_Servico_1'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_1'+ps+'" name="ValorComProf_Servico_1'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 6, 2)">\
+												</div>\
+											</div>\
+										</div>\
+										<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_2'+ps+'">Profissional 2</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_2"\
+															 id="listadinamica_prof_2'+ps+'" name="ProfissionalServico_2'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',2)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_2'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_2'+ps+'" name="idTFProf_Servico_2'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_2'+ps+'" name="ComFunProf_Servico_2'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_2'+ps+'" name="ValorComProf_Servico_2'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 6, 2)">\
+												</div>\
+											</div>\
+										</div>\
+										<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_3'+ps+'">Profissional 3</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_3"\
+															 id="listadinamica_prof_3'+ps+'" name="ProfissionalServico_3'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',3)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_3'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_3'+ps+'" name="idTFProf_Servico_3'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_3'+ps+'" name="ComFunProf_Servico_3'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_3'+ps+'" name="ValorComProf_Servico_3'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 6, 2)">\
+												</div>\
+											</div>\
+										</div>\
+										<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_4'+ps+'">Profissional 4</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_4"\
+															 id="listadinamica_prof_4'+ps+'" name="ProfissionalServico_4'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',4)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_4'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_4'+ps+'" name="idTFProf_Servico_4'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_4'+ps+'" name="ComFunProf_Servico_4'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_4'+ps+'" name="ValorComProf_Servico_4'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 6, 2)">\
+												</div>\
+											</div>\
+										</div>\
+										<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_5'+ps+'">Profissional 5</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_5"\
+															 id="listadinamica_prof_5'+ps+'" name="ProfissionalServico_5'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',5)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_5'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_5'+ps+'" name="idTFProf_Servico_5'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_5'+ps+'" name="ComFunProf_Servico_5'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_5'+ps+'" name="ValorComProf_Servico_5'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 6, 2)">\
+												</div>\
+											</div>\
+										</div>\
+										<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">\
+											<div class="row">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<label for="ProfissionalServico_6'+ps+'">Profissional 6</label>\
+													<select data-placeholder="Selecione uma opção..." class="form-control Chosen_6"\
+															 id="listadinamica_prof_6'+ps+'" name="ProfissionalServico_6'+ps+'"\
+															 onchange="carregaHidden_Prof(this.value,this.name,'+ps+',6)">\
+														<option value=""></option>\
+													</select>\
+												</div>\
+												<input type="hidden" class="form-control " id="ProfissionalServico_6'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="idTFProf_Servico_6'+ps+'" name="idTFProf_Servico_6'+ps+'" value="" readonly="">\
+												<input type="hidden" class="form-control " id="ComFunProf_Servico_6'+ps+'" name="ComFunProf_Servico_6'+ps+'" value="" readonly="">\
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">\
+													<input type="text" class="form-control Valor" id="ValorComProf_Servico_6'+ps+'" name="ValorComProf_Servico_6'+ps+'" value=""\
+														onkeyup="carregaValores_Prof('+ps+', 6, 2)">\
+												</div>\
+											</div>\
+										</div>\
 									</div>\
 								</div>\
 							</div>\
@@ -10329,6 +11667,72 @@ $(document).ready(function () {
                 //alert('erro listadinamicaB');
                 //if there is an error append a 'none available' option
                 $select_4.html('<option id="-1">ERRO</option>');
+            }
+
+        });		
+		
+		//get a reference to the select element
+        $select_5 = $('#listadinamica_prof_5'+ps);
+
+        //request the JSON data and parse into the select element
+        $.ajax({
+            url: window.location.origin+ '/' + app + '/Getvalues_json2.php?q=30',
+            dataType: 'JSON',
+            type: "GET",
+            success: function (data) {
+                //clear the current content of the select
+                $select_5.html('');
+                //iterate over the data and append a select option
+                $select_5.append('<option value="">-- Sel. Profis. --</option>');
+                $.each(data, function (key, val) {
+                    //alert(val.id);
+                    $select_5.append('<option value="' + val.id + '">' + val.name + '</option>');
+                })
+                $('.Chosen_5').chosen({
+                    disable_search_threshold: 10,
+                    multiple_text: "Selecione uma ou mais opções",
+                    single_text: "Selecione uma opção",
+                    no_results_text: "Nenhum resultado para",
+                    width: "100%"
+                });
+            },
+            error: function () {
+                //alert('erro listadinamicaB');
+                //if there is an error append a 'none available' option
+                $select_5.html('<option id="-1">ERRO</option>');
+            }
+
+        });		
+		
+		//get a reference to the select element
+        $select_6 = $('#listadinamica_prof_6'+ps);
+
+        //request the JSON data and parse into the select element
+        $.ajax({
+            url: window.location.origin+ '/' + app + '/Getvalues_json2.php?q=30',
+            dataType: 'JSON',
+            type: "GET",
+            success: function (data) {
+                //clear the current content of the select
+                $select_6.html('');
+                //iterate over the data and append a select option
+                $select_6.append('<option value="">-- Sel. Profis. --</option>');
+                $.each(data, function (key, val) {
+                    //alert(val.id);
+                    $select_6.append('<option value="' + val.id + '">' + val.name + '</option>');
+                })
+                $('.Chosen_6').chosen({
+                    disable_search_threshold: 10,
+                    multiple_text: "Selecione uma ou mais opções",
+                    single_text: "Selecione uma opção",
+                    no_results_text: "Nenhum resultado para",
+                    width: "100%"
+                });
+            },
+            error: function () {
+                //alert('erro listadinamicaB');
+                //if there is an error append a 'none available' option
+                $select_6.html('<option id="-1">ERRO</option>');
             }
 
         });		
