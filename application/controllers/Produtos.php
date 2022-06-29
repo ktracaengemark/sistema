@@ -1720,6 +1720,8 @@ class Produtos extends CI_Controller {
 				} else {
 						
 					if($this->Basico_model->get_dt_validade() === FALSE){
+					
+						unset($_SESSION['Catprod']);
 						$data['msg'] = '?m=3';
 						redirect(base_url() . 'acesso' . $data['msg']);
 						
@@ -1904,6 +1906,8 @@ class Produtos extends CI_Controller {
 				} else {
 						
 					if($this->Basico_model->get_dt_validade() === FALSE){
+				
+						unset($_SESSION['Produto']);
 						$data['msg'] = '?m=3';
 						redirect(base_url() . 'acesso' . $data['msg']);
 						
@@ -2093,6 +2097,8 @@ class Produtos extends CI_Controller {
 				} else {
 						
 					if($this->Basico_model->get_dt_validade() === FALSE){
+						
+						unset($_SESSION['Derivados']);
 						$data['msg'] = '?m=3';
 						redirect(base_url() . 'acesso' . $data['msg']);
 						
@@ -2241,6 +2247,8 @@ class Produtos extends CI_Controller {
 			} else {
 						
 				if($this->Basico_model->get_dt_validade() === FALSE){
+					
+					unset($_SESSION['Produtos']);
 					$data['msg'] = '?m=3';
 					redirect(base_url() . 'acesso' . $data['msg']);
 					

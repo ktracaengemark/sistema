@@ -106,13 +106,13 @@ class Promocao_model extends CI_Model {
 				TPM.idTab_Catprom = ' . $data . ' AND
 				TPM.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
 		);
-        $query = $query->result_array();
 
-		if($query){
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
 			return $query[0];
-		}else{
-			return FALSE;
-		}
+        }
 	}
 	
     public function get_promocao_verificacao($data) {
@@ -148,13 +148,13 @@ class Promocao_model extends CI_Model {
 				TPM.idTab_Promocao = ' . $data . ' AND
 				TPM.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
 		);
-        $query = $query->result_array();
 
-		if($query){
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
 			return $query[0];
-		}else{
-			return FALSE;
-		}
+        }
     }	
 
 	public function get_item_promocao($data, $desconto) {

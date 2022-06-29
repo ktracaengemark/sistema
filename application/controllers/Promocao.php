@@ -343,30 +343,7 @@ class Promocao extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-		
-		if ($id) {
-            $verificacao = $this->Promocao_model->get_promocao_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			if(!$_SESSION['Promocao']){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}
 	
-		if($seguir === FALSE){
-			unset($_SESSION['Promocao']);
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
-			
-		} else {
-				
 			$caracteres_sem_acento = array(
 				'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
 				'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
@@ -451,55 +428,64 @@ class Promocao extends CI_Controller {
 			if ($id) {
 				#### Tab_Promocao ####
 				$_SESSION['Promocao'] = $data['promocao'] = $this->Promocao_model->get_promocao($id);
-				
-				$data['promocao']['DataInicioProm'] = $this->basico->mascara_data($data['promocao']['DataInicioProm'], 'barras');
-				$data['promocao']['DataFimProm'] = $this->basico->mascara_data($data['promocao']['DataFimProm'], 'barras');
-				
-				#### Tab_Valor ####
-				$_SESSION['Item_Promocao'] = $data['item_promocao'] = $this->Promocao_model->get_item_promocao($id, "2");
-				if (count($data['item_promocao']) > 0) {
-					$data['item_promocao'] = array_combine(range(1, count($data['item_promocao'])), array_values($data['item_promocao']));
-					$data['count']['PTCount'] = count($data['item_promocao']);
-					if (isset($data['item_promocao'])) {
 
-						for($j=1; $j <= $data['count']['PTCount']; $j++){
-							$_SESSION['Item_Promocao'][$j] = $data['item_promocao'][$j];	 
-							/*
-							echo '<br>';
-							echo "<pre>";
-							print_r($_SESSION['Item_Promocao'][$j]);
-							echo "</pre>";
-							*/
-						}
-							
-					}				
-				}
-
-				#### Tab_Dia_Prom ####
-				$_SESSION['Dia_Promocao'] = $data['dia_promocao'] = $this->Promocao_model->get_dia_promocao($id, "2");
-				if (count($data['dia_promocao']) > 0) {
-					$data['dia_promocao'] = array_combine(range(1, count($data['dia_promocao'])), array_values($data['dia_promocao']));
-					$data['count']['DiaCount'] = count($data['dia_promocao']);
+				if($data['promocao'] === FALSE){
 					
-					if (isset($data['dia_promocao'])) {
+					unset($_SESSION['Promocao']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				} else {
+				
+					$data['promocao']['DataInicioProm'] = $this->basico->mascara_data($data['promocao']['DataInicioProm'], 'barras');
+					$data['promocao']['DataFimProm'] = $this->basico->mascara_data($data['promocao']['DataFimProm'], 'barras');
+					
+					#### Tab_Valor ####
+					$_SESSION['Item_Promocao'] = $data['item_promocao'] = $this->Promocao_model->get_item_promocao($id, "2");
+					if (count($data['item_promocao']) > 0) {
+						$data['item_promocao'] = array_combine(range(1, count($data['item_promocao'])), array_values($data['item_promocao']));
+						$data['count']['PTCount'] = count($data['item_promocao']);
+						if (isset($data['item_promocao'])) {
 
-						for($j=1; $j <= $data['count']['DiaCount']; $j++){
-							$_SESSION['Dia_Promocao'][$j] = $data['dia_promocao'][$j];
-							/*
-							echo '<br>';
-							echo "<pre>";
-							print_r($_SESSION['Dia_Promocao'][$j]);
-							echo "</pre>";
-							*/
-						}
-							
+							for($j=1; $j <= $data['count']['PTCount']; $j++){
+								$_SESSION['Item_Promocao'][$j] = $data['item_promocao'][$j];	 
+								/*
+								echo '<br>';
+								echo "<pre>";
+								print_r($_SESSION['Item_Promocao'][$j]);
+								echo "</pre>";
+								*/
+							}
+								
+						}				
 					}
-									
-				}			
-			
+
+					#### Tab_Dia_Prom ####
+					$_SESSION['Dia_Promocao'] = $data['dia_promocao'] = $this->Promocao_model->get_dia_promocao($id, "2");
+					if (count($data['dia_promocao']) > 0) {
+						$data['dia_promocao'] = array_combine(range(1, count($data['dia_promocao'])), array_values($data['dia_promocao']));
+						$data['count']['DiaCount'] = count($data['dia_promocao']);
+						
+						if (isset($data['dia_promocao'])) {
+
+							for($j=1; $j <= $data['count']['DiaCount']; $j++){
+								$_SESSION['Dia_Promocao'][$j] = $data['dia_promocao'][$j];
+								/*
+								echo '<br>';
+								echo "<pre>";
+								print_r($_SESSION['Dia_Promocao'][$j]);
+								echo "</pre>";
+								*/
+							}
+								
+						}
+										
+					}			
+				}
 			}
 
-			if(!$data['promocao']['idTab_Promocao'] || $_SESSION['Promocao'] === FALSE){
+			if(!$data['promocao']['idTab_Promocao'] || !$_SESSION['Promocao']){
 				
 				unset($_SESSION['Promocao']);
 				$data['msg'] = '?m=3';
@@ -573,222 +559,232 @@ class Promocao extends CI_Controller {
 				if ($this->form_validation->run() === FALSE) {
 					$this->load->view('promocao/form_promocao', $data);
 				} else {
-					////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
-					
-					#### Tab_Promocao ####
-					$data['promocao']['Promocao'] = trim(mb_strtoupper($data['promocao']['Promocao'], 'UTF-8'));
-					$data['promocao']['Descricao'] = trim(mb_strtoupper($data['promocao']['Descricao'], 'UTF-8'));
-					$data['promocao']['DataInicioProm'] = $this->basico->mascara_data($data['promocao']['DataInicioProm'], 'mysql');
-					$data['promocao']['DataFimProm'] = $this->basico->mascara_data($data['promocao']['DataFimProm'], 'mysql');
-					
-					$data['update']['promocao']['anterior'] = $this->Promocao_model->get_promocao($data['promocao']['idTab_Promocao']);
-					$data['update']['promocao']['campos'] = array_keys($data['promocao']);
-					$data['update']['promocao']['auditoriaitem'] = $this->basico->set_log(
-						$data['update']['promocao']['anterior'],
-						$data['promocao'],
-						$data['update']['promocao']['campos'],
-						$data['promocao']['idTab_Promocao'], TRUE);
-					$data['update']['promocao']['bd'] = $this->Promocao_model->update_promocao($data['promocao'], $data['promocao']['idTab_Promocao']);
-					
-					#### Tab_Valor ####
-					$data['update']['item_promocao']['anterior'] = $this->Promocao_model->get_item_promocao($data['promocao']['idTab_Promocao'], "2");
-					if (isset($data['item_promocao']) || (!isset($data['item_promocao']) && isset($data['update']['item_promocao']['anterior']) ) ) {
-
-						if (isset($data['item_promocao']))
-							$data['item_promocao'] = array_values($data['item_promocao']);
-						else
-							$data['item_promocao'] = array();
-
-						//faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
-						$data['update']['item_promocao'] = $this->basico->tratamento_array_multidimensional($data['item_promocao'], $data['update']['item_promocao']['anterior'], 'idTab_Valor');
-
-						$max = count($data['update']['item_promocao']['inserir']);
-						for($j=0;$j<$max;$j++) {
-							$data['update']['item_promocao']['inserir'][$j]['Item_Promocao'] = "1";
-							$data['update']['item_promocao']['inserir'][$j]['Desconto'] = 2;
-							$data['update']['item_promocao']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-							$data['update']['item_promocao']['inserir'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-							$data['update']['item_promocao']['inserir'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
-							$data['update']['item_promocao']['inserir'][$j]['idTab_Promocao'] = $data['promocao']['idTab_Promocao'];
-							//$data['update']['item_promocao']['inserir'][$j]['idTab_Catprod'] = $_SESSION['Item_Promocao']['idTab_Catprod'];
-							//$data['update']['item_promocao']['inserir'][$j]['idTab_Produto'] = $_SESSION['Item_Promocao']['idTab_Produto'];
-							$data['update']['item_promocao']['inserir'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['item_promocao']['inserir'][$j]['Convdesc'], 'UTF-8'));					
-							if(empty($data['update']['item_promocao']['inserir'][$j]['ValorProduto'])){
-								$data['update']['item_promocao']['inserir'][$j]['ValorProduto'] = "0.00";
-							}else{
-								$data['update']['item_promocao']['inserir'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ValorProduto']));
-							}
-							if(empty($data['update']['item_promocao']['inserir'][$j]['ComissaoVenda'])){
-								$data['update']['item_promocao']['inserir'][$j]['ComissaoVenda'] = "0.00";
-							}else{
-								$data['update']['item_promocao']['inserir'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ComissaoVenda']));
-							}
-							if(empty($data['update']['item_promocao']['inserir'][$j]['ComissaoServico'])){
-								$data['update']['item_promocao']['inserir'][$j]['ComissaoServico'] = "0.00";
-							}else{
-								$data['update']['item_promocao']['inserir'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ComissaoServico']));
-							}
-							if(empty($data['update']['item_promocao']['inserir'][$j]['ComissaoCashBack'])){
-								$data['update']['item_promocao']['inserir'][$j]['ComissaoCashBack'] = "0.00";
-							}else{
-								$data['update']['item_promocao']['inserir'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ComissaoCashBack']));
-							}
-							if(empty($data['update']['item_promocao']['inserir'][$j]['QtdProdutoDesconto'])){
-								$data['update']['item_promocao']['inserir'][$j]['QtdProdutoDesconto'] = "1";
-							}
-							if(empty($data['update']['item_promocao']['inserir'][$j]['QtdProdutoIncremento'])){
-								$data['update']['item_promocao']['inserir'][$j]['QtdProdutoIncremento'] = "1";
-							}
-							if(empty($data['update']['item_promocao']['inserir'][$j]['TempoDeEntrega'])){
-								$data['update']['item_promocao']['inserir'][$j]['TempoDeEntrega'] = "0";
-							}
-							if(empty($data['update']['item_promocao']['inserir'][$j]['idTab_Produtos'])){
-								$data['update']['item_promocao']['inserir'][$j]['idTab_Produtos'] = "0";
-							}						
-
-						}
-
-						$max = count($data['update']['item_promocao']['alterar']);
-						for($j=0;$j<$max;$j++) {
-							$data['update']['item_promocao']['alterar'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['item_promocao']['alterar'][$j]['Convdesc'], 'UTF-8'));
-							if(empty($data['update']['item_promocao']['alterar'][$j]['ValorProduto'])){
-								$data['update']['item_promocao']['alterar'][$j]['ValorProduto'] = "0.00";
-							}else{
-								$data['update']['item_promocao']['alterar'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ValorProduto']));
-							}					
-							if(empty($data['update']['item_promocao']['alterar'][$j]['ComissaoVenda'])){
-								$data['update']['item_promocao']['alterar'][$j]['ComissaoVenda'] = "0.00";
-							}else{
-								$data['update']['item_promocao']['alterar'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ComissaoVenda']));
-							}						
-							if(empty($data['update']['item_promocao']['alterar'][$j]['ComissaoServico'])){
-								$data['update']['item_promocao']['alterar'][$j]['ComissaoServico'] = "0.00";
-							}else{
-								$data['update']['item_promocao']['alterar'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ComissaoServico']));
-							}						
-							if(empty($data['update']['item_promocao']['alterar'][$j]['ComissaoCashBack'])){
-								$data['update']['item_promocao']['alterar'][$j]['ComissaoCashBack'] = "0.00";
-							}else{
-								$data['update']['item_promocao']['alterar'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ComissaoCashBack']));
-							}
-							if(empty($data['update']['item_promocao']['alterar'][$j]['QtdProdutoDesconto'])){
-								$data['update']['item_promocao']['alterar'][$j]['QtdProdutoDesconto'] = "1";
-							}
-							if(empty($data['update']['item_promocao']['alterar'][$j]['QtdProdutoIncremento'])){
-								$data['update']['item_promocao']['alterar'][$j]['QtdProdutoIncremento'] = "1";
-							}
-							if(empty($data['update']['item_promocao']['alterar'][$j]['TempoDeEntrega'])){
-								$data['update']['item_promocao']['alterar'][$j]['TempoDeEntrega'] = "0";
-							}
-							if(empty($data['update']['item_promocao']['alterar'][$j]['idTab_Produtos'])){
-								$data['update']['item_promocao']['alterar'][$j]['idTab_Produtos'] = "0";
-							}						
-							
-						}
-
-						if (count($data['update']['item_promocao']['inserir']))
-							$data['update']['item_promocao']['bd']['inserir'] = $this->Promocao_model->set_item_promocao($data['update']['item_promocao']['inserir']);
-
-						if (count($data['update']['item_promocao']['alterar']))
-							$data['update']['item_promocao']['bd']['alterar'] =  $this->Promocao_model->update_item_promocao($data['update']['item_promocao']['alterar']);
-
-						if (count($data['update']['item_promocao']['excluir']))
-							$data['update']['item_promocao']['bd']['excluir'] = $this->Promocao_model->delete_item_promocao($data['update']['item_promocao']['excluir']);
-
-					}
-					
-					#### Tab_Dia_Prom ####
-					$data['update']['dia_promocao']['anterior'] = $this->Promocao_model->get_dia_promocao($data['promocao']['idTab_Promocao'], "2");
-
-					if (isset($data['dia_promocao']) || (!isset($data['dia_promocao']) && isset($data['update']['dia_promocao']['anterior']) ) ) {
-
-						if (isset($data['dia_promocao']))
-							$data['dia_promocao'] = array_values($data['dia_promocao']);
-						else
-							$data['dia_promocao'] = array();
-
-						//faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
-						$data['update']['dia_promocao'] = $this->basico->tratamento_array_multidimensional($data['dia_promocao'], $data['update']['dia_promocao']['anterior'], 'idTab_Dia_Prom');
-
-						$max = count($data['update']['dia_promocao']['alterar']);
-						for($j=0;$j<$max;$j++) {
-							if($data['promocao']['TodoDiaProm'] == 'S'){
-								$data['update']['dia_promocao']['alterar'][$j]['Aberto_Prom'] = 'S';
-							}
-							/*
-							$data['update']['dia_promocao']['alterar'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['dia_promocao']['alterar'][$j]['ValorProduto']));
-							$data['update']['dia_promocao']['alterar'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['dia_promocao']['alterar'][$j]['ComissaoVenda']));
-							$data['update']['dia_promocao']['alterar'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['dia_promocao']['alterar'][$j]['Convdesc'], 'UTF-8'));
-							*/
-						}
-
-						if (count($data['update']['dia_promocao']['alterar']))
-							$data['update']['dia_promocao']['bd']['alterar'] =  $this->Promocao_model->update_dia_promocao($data['update']['dia_promocao']['alterar']);
+	
+					if($this->Basico_model->get_dt_validade() === FALSE){
 						
-						if(!$data['dia_promocao'] && !$data['update']['dia_promocao']['anterior']){
-					
-							$data['dia_promocao']['1']['Dia_Semana_Prom'] = "SEGUNDA";
-							$data['dia_promocao']['2']['Dia_Semana_Prom'] = "TERCA";
-							$data['dia_promocao']['3']['Dia_Semana_Prom'] = "QUARTA";
-							$data['dia_promocao']['4']['Dia_Semana_Prom'] = "QUINTA";
-							$data['dia_promocao']['5']['Dia_Semana_Prom'] = "SEXTA";
-							$data['dia_promocao']['6']['Dia_Semana_Prom'] = "SABADO";
-							$data['dia_promocao']['7']['Dia_Semana_Prom'] = "DOMINGO";
-							
-							for($j=1; $j<=7; $j++) {
-								$data['dia_promocao'][$j] = array(
-									'idTab_Promocao' => $data['promocao']['idTab_Promocao'],
-									'idSis_Empresa' => $_SESSION['log']['idSis_Empresa'],
-									'id_Dia_Prom' => $j,
-									'Dia_Semana_Prom' => $data['dia_promocao'][$j]['Dia_Semana_Prom'],
-									'Aberto_Prom' => "S",
-									'Hora_Abre_Prom' => "00:00:00",
-									'Hora_Fecha_Prom' => "23:59:59"
-								);
-								$data['campos'] = array_keys($data['dia_promocao'][$j]);
-								$data['idTab_Dia_Prom'] = $this->Promocao_model->set_dia_promocao($data['dia_promocao'][$j]);
-							}			
+						unset($_SESSION['Promocao']);
+						$data['msg'] = '?m=3';
+						redirect(base_url() . 'acesso' . $data['msg']);
 						
-						}
-						
-					}
-					
-					$data['update']['dia_promocao']['posterior'] = $this->Promocao_model->get_dia_promocao_posterior($data['promocao']['idTab_Promocao']);
-					if (isset($data['update']['dia_promocao']['posterior'])){
-						$max_dia_promocao = count($data['update']['dia_promocao']['posterior']);
-						if($max_dia_promocao == 0){
-							$data['promocao']['TodoDiaProm'] = "S";				
-						}else{
-							$data['promocao']['TodoDiaProm'] = "N";
-						}
-
-					}
-					
-					$data['update']['promocao']['anterior'] = $this->Promocao_model->get_promocao($data['promocao']['idTab_Promocao']);
-					$data['update']['promocao']['campos'] = array_keys($data['promocao']);
-					$data['update']['promocao']['auditoriaitem'] = $this->basico->set_log(
-						$data['update']['promocao']['anterior'],
-						$data['promocao'],
-						$data['update']['promocao']['campos'],
-						$data['promocao']['idTab_Promocao'], TRUE);
-					$data['update']['promocao']['bd'] = $this->Promocao_model->update_promocao($data['promocao'], $data['promocao']['idTab_Promocao']);	
-						
-					if ($data['auditoriaitem'] && !$data['update']['promocao']['bd']) {
-						$data['msg'] = '?m=2';
-						$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-
-						$this->basico->erro($msg);
-						$this->load->view('promocao/form_promocao', $data);
 					} else {
-
-						$data['msg'] = '?m=1';
-						redirect(base_url() . 'promocao/tela_promocao/' . $data['promocao']['idTab_Promocao'] . $data['msg']);
 						
-						exit();
-					}
+						////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
+						
+						#### Tab_Promocao ####
+						$data['promocao']['Promocao'] = trim(mb_strtoupper($data['promocao']['Promocao'], 'UTF-8'));
+						$data['promocao']['Descricao'] = trim(mb_strtoupper($data['promocao']['Descricao'], 'UTF-8'));
+						$data['promocao']['DataInicioProm'] = $this->basico->mascara_data($data['promocao']['DataInicioProm'], 'mysql');
+						$data['promocao']['DataFimProm'] = $this->basico->mascara_data($data['promocao']['DataFimProm'], 'mysql');
+						
+						$data['update']['promocao']['anterior'] = $this->Promocao_model->get_promocao($data['promocao']['idTab_Promocao']);
+						$data['update']['promocao']['campos'] = array_keys($data['promocao']);
+						$data['update']['promocao']['auditoriaitem'] = $this->basico->set_log(
+							$data['update']['promocao']['anterior'],
+							$data['promocao'],
+							$data['update']['promocao']['campos'],
+							$data['promocao']['idTab_Promocao'], TRUE);
+						$data['update']['promocao']['bd'] = $this->Promocao_model->update_promocao($data['promocao'], $data['promocao']['idTab_Promocao']);
+						
+						#### Tab_Valor ####
+						$data['update']['item_promocao']['anterior'] = $this->Promocao_model->get_item_promocao($data['promocao']['idTab_Promocao'], "2");
+						if (isset($data['item_promocao']) || (!isset($data['item_promocao']) && isset($data['update']['item_promocao']['anterior']) ) ) {
+
+							if (isset($data['item_promocao']))
+								$data['item_promocao'] = array_values($data['item_promocao']);
+							else
+								$data['item_promocao'] = array();
+
+							//faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
+							$data['update']['item_promocao'] = $this->basico->tratamento_array_multidimensional($data['item_promocao'], $data['update']['item_promocao']['anterior'], 'idTab_Valor');
+
+							$max = count($data['update']['item_promocao']['inserir']);
+							for($j=0;$j<$max;$j++) {
+								$data['update']['item_promocao']['inserir'][$j]['Item_Promocao'] = "1";
+								$data['update']['item_promocao']['inserir'][$j]['Desconto'] = 2;
+								$data['update']['item_promocao']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+								$data['update']['item_promocao']['inserir'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+								$data['update']['item_promocao']['inserir'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
+								$data['update']['item_promocao']['inserir'][$j]['idTab_Promocao'] = $data['promocao']['idTab_Promocao'];
+								//$data['update']['item_promocao']['inserir'][$j]['idTab_Catprod'] = $_SESSION['Item_Promocao']['idTab_Catprod'];
+								//$data['update']['item_promocao']['inserir'][$j]['idTab_Produto'] = $_SESSION['Item_Promocao']['idTab_Produto'];
+								$data['update']['item_promocao']['inserir'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['item_promocao']['inserir'][$j]['Convdesc'], 'UTF-8'));					
+								if(empty($data['update']['item_promocao']['inserir'][$j]['ValorProduto'])){
+									$data['update']['item_promocao']['inserir'][$j]['ValorProduto'] = "0.00";
+								}else{
+									$data['update']['item_promocao']['inserir'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ValorProduto']));
+								}
+								if(empty($data['update']['item_promocao']['inserir'][$j]['ComissaoVenda'])){
+									$data['update']['item_promocao']['inserir'][$j]['ComissaoVenda'] = "0.00";
+								}else{
+									$data['update']['item_promocao']['inserir'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ComissaoVenda']));
+								}
+								if(empty($data['update']['item_promocao']['inserir'][$j]['ComissaoServico'])){
+									$data['update']['item_promocao']['inserir'][$j]['ComissaoServico'] = "0.00";
+								}else{
+									$data['update']['item_promocao']['inserir'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ComissaoServico']));
+								}
+								if(empty($data['update']['item_promocao']['inserir'][$j]['ComissaoCashBack'])){
+									$data['update']['item_promocao']['inserir'][$j]['ComissaoCashBack'] = "0.00";
+								}else{
+									$data['update']['item_promocao']['inserir'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ComissaoCashBack']));
+								}
+								if(empty($data['update']['item_promocao']['inserir'][$j]['QtdProdutoDesconto'])){
+									$data['update']['item_promocao']['inserir'][$j]['QtdProdutoDesconto'] = "1";
+								}
+								if(empty($data['update']['item_promocao']['inserir'][$j]['QtdProdutoIncremento'])){
+									$data['update']['item_promocao']['inserir'][$j]['QtdProdutoIncremento'] = "1";
+								}
+								if(empty($data['update']['item_promocao']['inserir'][$j]['TempoDeEntrega'])){
+									$data['update']['item_promocao']['inserir'][$j]['TempoDeEntrega'] = "0";
+								}
+								if(empty($data['update']['item_promocao']['inserir'][$j]['idTab_Produtos'])){
+									$data['update']['item_promocao']['inserir'][$j]['idTab_Produtos'] = "0";
+								}						
+
+							}
+
+							$max = count($data['update']['item_promocao']['alterar']);
+							for($j=0;$j<$max;$j++) {
+								$data['update']['item_promocao']['alterar'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['item_promocao']['alterar'][$j]['Convdesc'], 'UTF-8'));
+								if(empty($data['update']['item_promocao']['alterar'][$j]['ValorProduto'])){
+									$data['update']['item_promocao']['alterar'][$j]['ValorProduto'] = "0.00";
+								}else{
+									$data['update']['item_promocao']['alterar'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ValorProduto']));
+								}					
+								if(empty($data['update']['item_promocao']['alterar'][$j]['ComissaoVenda'])){
+									$data['update']['item_promocao']['alterar'][$j]['ComissaoVenda'] = "0.00";
+								}else{
+									$data['update']['item_promocao']['alterar'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ComissaoVenda']));
+								}						
+								if(empty($data['update']['item_promocao']['alterar'][$j]['ComissaoServico'])){
+									$data['update']['item_promocao']['alterar'][$j]['ComissaoServico'] = "0.00";
+								}else{
+									$data['update']['item_promocao']['alterar'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ComissaoServico']));
+								}						
+								if(empty($data['update']['item_promocao']['alterar'][$j]['ComissaoCashBack'])){
+									$data['update']['item_promocao']['alterar'][$j]['ComissaoCashBack'] = "0.00";
+								}else{
+									$data['update']['item_promocao']['alterar'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ComissaoCashBack']));
+								}
+								if(empty($data['update']['item_promocao']['alterar'][$j]['QtdProdutoDesconto'])){
+									$data['update']['item_promocao']['alterar'][$j]['QtdProdutoDesconto'] = "1";
+								}
+								if(empty($data['update']['item_promocao']['alterar'][$j]['QtdProdutoIncremento'])){
+									$data['update']['item_promocao']['alterar'][$j]['QtdProdutoIncremento'] = "1";
+								}
+								if(empty($data['update']['item_promocao']['alterar'][$j]['TempoDeEntrega'])){
+									$data['update']['item_promocao']['alterar'][$j]['TempoDeEntrega'] = "0";
+								}
+								if(empty($data['update']['item_promocao']['alterar'][$j]['idTab_Produtos'])){
+									$data['update']['item_promocao']['alterar'][$j]['idTab_Produtos'] = "0";
+								}						
+								
+							}
+
+							if (count($data['update']['item_promocao']['inserir']))
+								$data['update']['item_promocao']['bd']['inserir'] = $this->Promocao_model->set_item_promocao($data['update']['item_promocao']['inserir']);
+
+							if (count($data['update']['item_promocao']['alterar']))
+								$data['update']['item_promocao']['bd']['alterar'] =  $this->Promocao_model->update_item_promocao($data['update']['item_promocao']['alterar']);
+
+							if (count($data['update']['item_promocao']['excluir']))
+								$data['update']['item_promocao']['bd']['excluir'] = $this->Promocao_model->delete_item_promocao($data['update']['item_promocao']['excluir']);
+
+						}
+						
+						#### Tab_Dia_Prom ####
+						$data['update']['dia_promocao']['anterior'] = $this->Promocao_model->get_dia_promocao($data['promocao']['idTab_Promocao'], "2");
+
+						if (isset($data['dia_promocao']) || (!isset($data['dia_promocao']) && isset($data['update']['dia_promocao']['anterior']) ) ) {
+
+							if (isset($data['dia_promocao']))
+								$data['dia_promocao'] = array_values($data['dia_promocao']);
+							else
+								$data['dia_promocao'] = array();
+
+							//faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
+							$data['update']['dia_promocao'] = $this->basico->tratamento_array_multidimensional($data['dia_promocao'], $data['update']['dia_promocao']['anterior'], 'idTab_Dia_Prom');
+
+							$max = count($data['update']['dia_promocao']['alterar']);
+							for($j=0;$j<$max;$j++) {
+								if($data['promocao']['TodoDiaProm'] == 'S'){
+									$data['update']['dia_promocao']['alterar'][$j]['Aberto_Prom'] = 'S';
+								}
+								/*
+								$data['update']['dia_promocao']['alterar'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['dia_promocao']['alterar'][$j]['ValorProduto']));
+								$data['update']['dia_promocao']['alterar'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['dia_promocao']['alterar'][$j]['ComissaoVenda']));
+								$data['update']['dia_promocao']['alterar'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['dia_promocao']['alterar'][$j]['Convdesc'], 'UTF-8'));
+								*/
+							}
+
+							if (count($data['update']['dia_promocao']['alterar']))
+								$data['update']['dia_promocao']['bd']['alterar'] =  $this->Promocao_model->update_dia_promocao($data['update']['dia_promocao']['alterar']);
+							
+							if(!$data['dia_promocao'] && !$data['update']['dia_promocao']['anterior']){
+						
+								$data['dia_promocao']['1']['Dia_Semana_Prom'] = "SEGUNDA";
+								$data['dia_promocao']['2']['Dia_Semana_Prom'] = "TERCA";
+								$data['dia_promocao']['3']['Dia_Semana_Prom'] = "QUARTA";
+								$data['dia_promocao']['4']['Dia_Semana_Prom'] = "QUINTA";
+								$data['dia_promocao']['5']['Dia_Semana_Prom'] = "SEXTA";
+								$data['dia_promocao']['6']['Dia_Semana_Prom'] = "SABADO";
+								$data['dia_promocao']['7']['Dia_Semana_Prom'] = "DOMINGO";
+								
+								for($j=1; $j<=7; $j++) {
+									$data['dia_promocao'][$j] = array(
+										'idTab_Promocao' => $data['promocao']['idTab_Promocao'],
+										'idSis_Empresa' => $_SESSION['log']['idSis_Empresa'],
+										'id_Dia_Prom' => $j,
+										'Dia_Semana_Prom' => $data['dia_promocao'][$j]['Dia_Semana_Prom'],
+										'Aberto_Prom' => "S",
+										'Hora_Abre_Prom' => "00:00:00",
+										'Hora_Fecha_Prom' => "23:59:59"
+									);
+									$data['campos'] = array_keys($data['dia_promocao'][$j]);
+									$data['idTab_Dia_Prom'] = $this->Promocao_model->set_dia_promocao($data['dia_promocao'][$j]);
+								}			
+							
+							}
+							
+						}
+						
+						$data['update']['dia_promocao']['posterior'] = $this->Promocao_model->get_dia_promocao_posterior($data['promocao']['idTab_Promocao']);
+						if (isset($data['update']['dia_promocao']['posterior'])){
+							$max_dia_promocao = count($data['update']['dia_promocao']['posterior']);
+							if($max_dia_promocao == 0){
+								$data['promocao']['TodoDiaProm'] = "S";				
+							}else{
+								$data['promocao']['TodoDiaProm'] = "N";
+							}
+
+						}
+						
+						$data['update']['promocao']['anterior'] = $this->Promocao_model->get_promocao($data['promocao']['idTab_Promocao']);
+						$data['update']['promocao']['campos'] = array_keys($data['promocao']);
+						$data['update']['promocao']['auditoriaitem'] = $this->basico->set_log(
+							$data['update']['promocao']['anterior'],
+							$data['promocao'],
+							$data['update']['promocao']['campos'],
+							$data['promocao']['idTab_Promocao'], TRUE);
+						$data['update']['promocao']['bd'] = $this->Promocao_model->update_promocao($data['promocao'], $data['promocao']['idTab_Promocao']);	
+							
+						if ($data['auditoriaitem'] && !$data['update']['promocao']['bd']) {
+							$data['msg'] = '?m=2';
+							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+							$this->basico->erro($msg);
+							$this->load->view('promocao/form_promocao', $data);
+						} else {
+
+							$data['msg'] = '?m=1';
+							redirect(base_url() . 'promocao/tela_promocao/' . $data['promocao']['idTab_Promocao'] . $data['msg']);
+							
+							exit();
+						}
+					}	
 				}
 			}
-		}
+		
         $this->load->view('basico/footer');
 
     }
@@ -802,25 +798,6 @@ class Promocao extends CI_Controller {
         else
             $data['msg'] = '';
 
-		if ($id) {
-            $verificacao = $this->Promocao_model->get_promocao_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			$seguir = FALSE;
-		}
-	
-		if($seguir === FALSE){
-			unset($_SESSION['Promocao']);
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
-			
-		} else {
-				
 			$caracteres_sem_acento = array(
 				'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
 				'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
@@ -892,67 +869,74 @@ class Promocao extends CI_Controller {
 							
 			}
 			$data['count']['DiaCount'] = $j - 1;		
-			
-			
+
 			if ($id) {
 				#### Tab_Promocao ####
 				$_SESSION['Promocao'] = $data['promocao'] = $this->Promocao_model->get_promocao($id);
 
-				#### Tab_Valor ####
-				$_SESSION['Item_Promocao'] = $data['item_promocao'] = $this->Promocao_model->get_item_promocao($id, "2");
-				if (count($data['item_promocao']) > 0) {
-					$data['item_promocao'] = array_combine(range(1, count($data['item_promocao'])), array_values($data['item_promocao']));
-					$data['count']['PTCount'] = count($data['item_promocao']);
+				if($data['promocao'] === FALSE){
 					
-					if (isset($data['item_promocao'])) {
+					unset($_SESSION['Promocao']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				} else {
+					#### Tab_Valor ####
+					$_SESSION['Item_Promocao'] = $data['item_promocao'] = $this->Promocao_model->get_item_promocao($id, "2");
+					if (count($data['item_promocao']) > 0) {
+						$data['item_promocao'] = array_combine(range(1, count($data['item_promocao'])), array_values($data['item_promocao']));
+						$data['count']['PTCount'] = count($data['item_promocao']);
+						
+						if (isset($data['item_promocao'])) {
 
-						for($j=1; $j <= $data['count']['PTCount']; $j++){
-							$_SESSION['Item_Promocao'][$j] = $data['item_promocao'][$j];
-							//$_SESSION['Item_Promocao'][$j]['AtivoPreco'] = $this->basico->mascara_palavra_completa($data['item_promocao'][$j]['AtivoPreco'], 'NS');
-							//$_SESSION['Item_Promocao'][$j]['VendaSitePreco'] = $this->basico->mascara_palavra_completa($data['item_promocao'][$j]['VendaSitePreco'], 'NS');
-							//$_SESSION['Item_Promocao'][$j]['VendaBalcaoPreco'] = $this->basico->mascara_palavra_completa($data['item_promocao'][$j]['VendaBalcaoPreco'], 'NS');
-							if($data['item_promocao'][$j]['TempoDeEntrega'] == 0){
-								$_SESSION['Item_Promocao'][$j]['TempoDeEntrega'] = "Pronta Entrega";
+							for($j=1; $j <= $data['count']['PTCount']; $j++){
+								$_SESSION['Item_Promocao'][$j] = $data['item_promocao'][$j];
+								//$_SESSION['Item_Promocao'][$j]['AtivoPreco'] = $this->basico->mascara_palavra_completa($data['item_promocao'][$j]['AtivoPreco'], 'NS');
+								//$_SESSION['Item_Promocao'][$j]['VendaSitePreco'] = $this->basico->mascara_palavra_completa($data['item_promocao'][$j]['VendaSitePreco'], 'NS');
+								//$_SESSION['Item_Promocao'][$j]['VendaBalcaoPreco'] = $this->basico->mascara_palavra_completa($data['item_promocao'][$j]['VendaBalcaoPreco'], 'NS');
+								if($data['item_promocao'][$j]['TempoDeEntrega'] == 0){
+									$_SESSION['Item_Promocao'][$j]['TempoDeEntrega'] = "Pronta Entrega";
+								}
+								/*
+								echo '<br>';
+								echo "<pre>";
+								print_r($_SESSION['Item_Promocao'][$j]);
+								echo "</pre>";
+								*/
 							}
-							/*
-							echo '<br>';
-							echo "<pre>";
-							print_r($_SESSION['Item_Promocao'][$j]);
-							echo "</pre>";
-							*/
+								
 						}
-							
+										
 					}
-									
-				}
-				
-				#### Tab_Dia_Prom ####
-				$_SESSION['Dia_Promocao'] = $data['dia_promocao'] = $this->Promocao_model->get_dia_promocao($id, "2");
-				if (count($data['dia_promocao']) > 0) {
-					$data['dia_promocao'] = array_combine(range(1, count($data['dia_promocao'])), array_values($data['dia_promocao']));
-					$data['count']['DiaCount'] = count($data['dia_promocao']);
 					
-					if (isset($data['dia_promocao'])) {
+					#### Tab_Dia_Prom ####
+					$_SESSION['Dia_Promocao'] = $data['dia_promocao'] = $this->Promocao_model->get_dia_promocao($id, "2");
+					if (count($data['dia_promocao']) > 0) {
+						$data['dia_promocao'] = array_combine(range(1, count($data['dia_promocao'])), array_values($data['dia_promocao']));
+						$data['count']['DiaCount'] = count($data['dia_promocao']);
+						
+						if (isset($data['dia_promocao'])) {
 
-						for($j=1; $j <= $data['count']['DiaCount']; $j++){
-							$_SESSION['Dia_Promocao'][$j] = $data['dia_promocao'][$j];
-							$_SESSION['Dia_Promocao'][$j]['Aberto_Prom'] = $this->basico->mascara_palavra_completa($data['dia_promocao'][$j]['Aberto_Prom'], 'NS');
-							/*
-							echo '<br>';
-							echo "<pre>";
-							print_r($_SESSION['Dia_Promocao'][$j]);
-							echo "</pre>";
-							*/
+							for($j=1; $j <= $data['count']['DiaCount']; $j++){
+								$_SESSION['Dia_Promocao'][$j] = $data['dia_promocao'][$j];
+								$_SESSION['Dia_Promocao'][$j]['Aberto_Prom'] = $this->basico->mascara_palavra_completa($data['dia_promocao'][$j]['Aberto_Prom'], 'NS');
+								/*
+								echo '<br>';
+								echo "<pre>";
+								print_r($_SESSION['Dia_Promocao'][$j]);
+								echo "</pre>";
+								*/
+							}
+								
 						}
-							
-					}
-									
-				}			
-			
+										
+					}			
+				}
 			}
 			//exit();
 
-			if(!$data['promocao']['idTab_Promocao'] || $_SESSION['Promocao'] === FALSE){
+			if(!$data['promocao']['idTab_Promocao'] || !$_SESSION['Promocao']){
 				
 				unset($_SESSION['Promocao']);
 				$data['msg'] = '?m=3';
@@ -1015,112 +999,122 @@ class Promocao extends CI_Controller {
 				if ($this->form_validation->run() === FALSE) {
 					$this->load->view('promocao/form_promocao', $data);
 				} else {
-					////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
-
-					#### Tab_Promocao ####
-					$data['promocao']['Promocao'] = trim(mb_strtoupper($data['promocao']['Promocao'], 'UTF-8'));
-					$data['promocao']['Descricao'] = trim(mb_strtoupper($data['promocao']['Descricao'], 'UTF-8'));
-					
-					$data['update']['promocao']['anterior'] = $this->Promocao_model->get_promocao($data['promocao']['idTab_Promocao']);
-					$data['update']['promocao']['campos'] = array_keys($data['promocao']);
-					$data['update']['promocao']['auditoriaitem'] = $this->basico->set_log(
-						$data['update']['promocao']['anterior'],
-						$data['promocao'],
-						$data['update']['promocao']['campos'],
-						$data['promocao']['idTab_Promocao'], TRUE);
-					$data['update']['promocao']['bd'] = $this->Promocao_model->update_promocao($data['promocao'], $data['promocao']['idTab_Promocao']);
-					
-					#### Tab_Valor ####
-					$data['update']['item_promocao']['anterior'] = $this->Promocao_model->get_item_promocao($data['promocao']['idTab_Promocao'], "2");
-					if (isset($data['item_promocao']) || (!isset($data['item_promocao']) && isset($data['update']['item_promocao']['anterior']) ) ) {
-
-						if (isset($data['item_promocao']))
-							$data['item_promocao'] = array_values($data['item_promocao']);
-						else
-							$data['item_promocao'] = array();
-
-						//faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
-						$data['update']['item_promocao'] = $this->basico->tratamento_array_multidimensional($data['item_promocao'], $data['update']['item_promocao']['anterior'], 'idTab_Valor');
-
-						$max = count($data['update']['item_promocao']['inserir']);
-						for($j=0;$j<$max;$j++) {
-							$data['update']['item_promocao']['inserir'][$j]['Item_Promocao'] = "1";
-							$data['update']['item_promocao']['inserir'][$j]['Desconto'] = 2;
-							$data['update']['item_promocao']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-							$data['update']['item_promocao']['inserir'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-							$data['update']['item_promocao']['inserir'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
-							$data['update']['item_promocao']['inserir'][$j]['idTab_Promocao'] = $data['promocao']['idTab_Promocao'];
-							//$data['update']['item_promocao']['inserir'][$j]['idTab_Catprod'] = $_SESSION['Item_Promocao']['idTab_Catprod'];
-							//$data['update']['item_promocao']['inserir'][$j]['idTab_Produto'] = $_SESSION['Item_Promocao']['idTab_Produto'];
-							$data['update']['item_promocao']['inserir'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ValorProduto']));
-							$data['update']['item_promocao']['inserir'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ComissaoVenda']));
-							$data['update']['item_promocao']['inserir'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ComissaoServico']));
-							$data['update']['item_promocao']['inserir'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ComissaoCashBack']));
-							$data['update']['item_promocao']['inserir'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['item_promocao']['inserir'][$j]['Convdesc'], 'UTF-8'));
-						}
-
-						$max = count($data['update']['item_promocao']['alterar']);
-						for($j=0;$j<$max;$j++) {
-							$data['update']['item_promocao']['alterar'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ValorProduto']));
-							$data['update']['item_promocao']['alterar'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ComissaoVenda']));
-							$data['update']['item_promocao']['alterar'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ComissaoServico']));
-							$data['update']['item_promocao']['alterar'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ComissaoCashBack']));
-							$data['update']['item_promocao']['alterar'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['item_promocao']['alterar'][$j]['Convdesc'], 'UTF-8'));
-						}
-
-						if (count($data['update']['item_promocao']['inserir']))
-							$data['update']['item_promocao']['bd']['inserir'] = $this->Promocao_model->set_item_promocao($data['update']['item_promocao']['inserir']);
-
-						if (count($data['update']['item_promocao']['alterar']))
-							$data['update']['item_promocao']['bd']['alterar'] =  $this->Promocao_model->update_item_promocao($data['update']['item_promocao']['alterar']);
-
-						if (count($data['update']['item_promocao']['excluir']))
-							$data['update']['item_promocao']['bd']['excluir'] = $this->Promocao_model->delete_item_promocao($data['update']['item_promocao']['excluir']);
-
-					}
-					
-					#### Tab_Dia_Prom ####
-					$data['update']['dia_promocao']['anterior'] = $this->Promocao_model->get_dia_promocao($data['promocao']['idTab_Promocao'], "2");
-					if (isset($data['dia_promocao']) || (!isset($data['dia_promocao']) && isset($data['update']['dia_promocao']['anterior']) ) ) {
-
-						if (isset($data['dia_promocao']))
-							$data['dia_promocao'] = array_values($data['dia_promocao']);
-						else
-							$data['dia_promocao'] = array();
-
-						//faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
-						$data['update']['dia_promocao'] = $this->basico->tratamento_array_multidimensional($data['dia_promocao'], $data['update']['dia_promocao']['anterior'], 'idTab_Dia_Prom');
-
-						$max = count($data['update']['dia_promocao']['alterar']);
-						for($j=0;$j<$max;$j++) {
-							/*
-							$data['update']['dia_promocao']['alterar'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['dia_promocao']['alterar'][$j]['ValorProduto']));
-							$data['update']['dia_promocao']['alterar'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['dia_promocao']['alterar'][$j]['ComissaoVenda']));
-							$data['update']['dia_promocao']['alterar'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['dia_promocao']['alterar'][$j]['Convdesc'], 'UTF-8'));
-							*/
-						}
-
-						if (count($data['update']['dia_promocao']['alterar']))
-							$data['update']['dia_promocao']['bd']['alterar'] =  $this->Promocao_model->update_dia_promocao($data['update']['dia_promocao']['alterar']);
-
-					}			
 						
-					if ($data['auditoriaitem'] && !$data['update']['promocao']['bd']) {
-						$data['msg'] = '?m=2';
-						$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-
-						$this->basico->erro($msg);
-						$this->load->view('promocao/form_promocao', $data);
+					if($this->Basico_model->get_dt_validade() === FALSE){
+						
+						unset($_SESSION['Promocao']);
+						$data['msg'] = '?m=3';
+						redirect(base_url() . 'acesso' . $data['msg']);
+						
 					} else {
+							
+						////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
 
-						$data['msg'] = '?m=1';
-						redirect(base_url() . 'promocao/tela_promocao/' . $data['promocao']['idTab_Promocao'] . $data['msg']);
+						#### Tab_Promocao ####
+						$data['promocao']['Promocao'] = trim(mb_strtoupper($data['promocao']['Promocao'], 'UTF-8'));
+						$data['promocao']['Descricao'] = trim(mb_strtoupper($data['promocao']['Descricao'], 'UTF-8'));
 						
-						exit();
+						$data['update']['promocao']['anterior'] = $this->Promocao_model->get_promocao($data['promocao']['idTab_Promocao']);
+						$data['update']['promocao']['campos'] = array_keys($data['promocao']);
+						$data['update']['promocao']['auditoriaitem'] = $this->basico->set_log(
+							$data['update']['promocao']['anterior'],
+							$data['promocao'],
+							$data['update']['promocao']['campos'],
+							$data['promocao']['idTab_Promocao'], TRUE);
+						$data['update']['promocao']['bd'] = $this->Promocao_model->update_promocao($data['promocao'], $data['promocao']['idTab_Promocao']);
+						
+						#### Tab_Valor ####
+						$data['update']['item_promocao']['anterior'] = $this->Promocao_model->get_item_promocao($data['promocao']['idTab_Promocao'], "2");
+						if (isset($data['item_promocao']) || (!isset($data['item_promocao']) && isset($data['update']['item_promocao']['anterior']) ) ) {
+
+							if (isset($data['item_promocao']))
+								$data['item_promocao'] = array_values($data['item_promocao']);
+							else
+								$data['item_promocao'] = array();
+
+							//faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
+							$data['update']['item_promocao'] = $this->basico->tratamento_array_multidimensional($data['item_promocao'], $data['update']['item_promocao']['anterior'], 'idTab_Valor');
+
+							$max = count($data['update']['item_promocao']['inserir']);
+							for($j=0;$j<$max;$j++) {
+								$data['update']['item_promocao']['inserir'][$j]['Item_Promocao'] = "1";
+								$data['update']['item_promocao']['inserir'][$j]['Desconto'] = 2;
+								$data['update']['item_promocao']['inserir'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+								$data['update']['item_promocao']['inserir'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+								$data['update']['item_promocao']['inserir'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
+								$data['update']['item_promocao']['inserir'][$j]['idTab_Promocao'] = $data['promocao']['idTab_Promocao'];
+								//$data['update']['item_promocao']['inserir'][$j]['idTab_Catprod'] = $_SESSION['Item_Promocao']['idTab_Catprod'];
+								//$data['update']['item_promocao']['inserir'][$j]['idTab_Produto'] = $_SESSION['Item_Promocao']['idTab_Produto'];
+								$data['update']['item_promocao']['inserir'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ValorProduto']));
+								$data['update']['item_promocao']['inserir'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ComissaoVenda']));
+								$data['update']['item_promocao']['inserir'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ComissaoServico']));
+								$data['update']['item_promocao']['inserir'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['inserir'][$j]['ComissaoCashBack']));
+								$data['update']['item_promocao']['inserir'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['item_promocao']['inserir'][$j]['Convdesc'], 'UTF-8'));
+							}
+
+							$max = count($data['update']['item_promocao']['alterar']);
+							for($j=0;$j<$max;$j++) {
+								$data['update']['item_promocao']['alterar'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ValorProduto']));
+								$data['update']['item_promocao']['alterar'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ComissaoVenda']));
+								$data['update']['item_promocao']['alterar'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ComissaoServico']));
+								$data['update']['item_promocao']['alterar'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['update']['item_promocao']['alterar'][$j]['ComissaoCashBack']));
+								$data['update']['item_promocao']['alterar'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['item_promocao']['alterar'][$j]['Convdesc'], 'UTF-8'));
+							}
+
+							if (count($data['update']['item_promocao']['inserir']))
+								$data['update']['item_promocao']['bd']['inserir'] = $this->Promocao_model->set_item_promocao($data['update']['item_promocao']['inserir']);
+
+							if (count($data['update']['item_promocao']['alterar']))
+								$data['update']['item_promocao']['bd']['alterar'] =  $this->Promocao_model->update_item_promocao($data['update']['item_promocao']['alterar']);
+
+							if (count($data['update']['item_promocao']['excluir']))
+								$data['update']['item_promocao']['bd']['excluir'] = $this->Promocao_model->delete_item_promocao($data['update']['item_promocao']['excluir']);
+
+						}
+						
+						#### Tab_Dia_Prom ####
+						$data['update']['dia_promocao']['anterior'] = $this->Promocao_model->get_dia_promocao($data['promocao']['idTab_Promocao'], "2");
+						if (isset($data['dia_promocao']) || (!isset($data['dia_promocao']) && isset($data['update']['dia_promocao']['anterior']) ) ) {
+
+							if (isset($data['dia_promocao']))
+								$data['dia_promocao'] = array_values($data['dia_promocao']);
+							else
+								$data['dia_promocao'] = array();
+
+							//faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
+							$data['update']['dia_promocao'] = $this->basico->tratamento_array_multidimensional($data['dia_promocao'], $data['update']['dia_promocao']['anterior'], 'idTab_Dia_Prom');
+
+							$max = count($data['update']['dia_promocao']['alterar']);
+							for($j=0;$j<$max;$j++) {
+								/*
+								$data['update']['dia_promocao']['alterar'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['dia_promocao']['alterar'][$j]['ValorProduto']));
+								$data['update']['dia_promocao']['alterar'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['update']['dia_promocao']['alterar'][$j]['ComissaoVenda']));
+								$data['update']['dia_promocao']['alterar'][$j]['Convdesc'] = trim(mb_strtoupper($data['update']['dia_promocao']['alterar'][$j]['Convdesc'], 'UTF-8'));
+								*/
+							}
+
+							if (count($data['update']['dia_promocao']['alterar']))
+								$data['update']['dia_promocao']['bd']['alterar'] =  $this->Promocao_model->update_dia_promocao($data['update']['dia_promocao']['alterar']);
+
+						}			
+							
+						if ($data['auditoriaitem'] && !$data['update']['promocao']['bd']) {
+							$data['msg'] = '?m=2';
+							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+							$this->basico->erro($msg);
+							$this->load->view('promocao/form_promocao', $data);
+						} else {
+
+							$data['msg'] = '?m=1';
+							redirect(base_url() . 'promocao/tela_promocao/' . $data['promocao']['idTab_Promocao'] . $data['msg']);
+							
+							exit();
+						}
 					}
 				}
 			}
-		}
+		
         $this->load->view('basico/footer');
 
     }
@@ -1133,30 +1127,7 @@ class Promocao extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-		
-		if ($id) {
-            $verificacao = $this->Promocao_model->get_catprom_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			if(!$_SESSION['Catprom']){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}
-	
-		if($seguir === FALSE){
-			unset($_SESSION['Catprom']);
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
-			
-		} else {
-			
+
 			$data['catprom'] = $this->input->post(array(
 				'idTab_Catprom',
 			), TRUE);
@@ -1169,10 +1140,20 @@ class Promocao extends CI_Controller {
 
 			if ($id) {
 				$_SESSION['Catprom'] = $data['catprom'] = $this->Promocao_model->get_catprom($id, TRUE);
-				$data['file']['idTab_Catprom'] = $id;
+			
+				if($data['catprom'] === FALSE){
+					
+					unset($_SESSION['Catprom']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				} else {
+					$data['file']['idTab_Catprom'] = $id;
+				}
 			}
 			
-			if(!$data['catprom']['idTab_Catprom'] || $_SESSION['Catprom'] === FALSE){
+			if(!$data['catprom']['idTab_Catprom'] || !$_SESSION['Catprom']){
 				
 				unset($_SESSION['Catprom']);
 				$data['msg'] = '?m=3';
@@ -1203,115 +1184,122 @@ class Promocao extends CI_Controller {
 					$this->load->view('promocao/form_catprom', $data);
 				} else {
 
-					$config['upload_path'] = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/';
-					$config['max_size'] = 1000;
-					$config['allowed_types'] = ['jpg','jpeg','pjpeg','png','x-png'];
-					$config['file_name'] = $data['file']['Arquivo'];
-
-					$this->load->library('upload', $config);
-					if (!$this->upload->do_upload('Arquivo')) {
-						$data['msg'] = $this->basico->msg($this->upload->display_errors(), 'erro', FALSE, FALSE, FALSE);
-						$this->load->view('promocao/form_catprom', $data);
-					}
-					else {
-					
-						$dir = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/';		
-						$foto = $data['file']['Arquivo'];
-						$diretorio = $dir.$foto;					
-						$dir2 = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/';
-
-						switch($_FILES['Arquivo']['type']):
-							case 'image/jpg';
-							case 'image/jpeg';
-							case 'image/pjpeg';
+					if($this->Basico_model->get_dt_validade() === FALSE){
 						
-								list($largura, $altura, $tipo) = getimagesize($diretorio);
-								
-								$img = imagecreatefromjpeg($diretorio);
+						unset($_SESSION['Catprom']);
+						$data['msg'] = '?m=3';
+						redirect(base_url() . 'acesso' . $data['msg']);
+						
+					} else {
+						
+						$config['upload_path'] = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/';
+						$config['max_size'] = 1000;
+						$config['allowed_types'] = ['jpg','jpeg','pjpeg','png','x-png'];
+						$config['file_name'] = $data['file']['Arquivo'];
 
-								$thumb = imagecreatetruecolor(200, 200);
-								
-								imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
-								
-								imagejpeg($thumb, $dir2 . $foto);
-								imagedestroy($img);
-								imagedestroy($thumb);				      
-							
-							break;					
-
-							case 'image/png';
-							case 'image/x-png';
-
-								list($width, $height) = getimagesize($diretorio);
-								$newwidth = 200;
-								$newheight = 200;
-
-								$thumb = imagecreatetruecolor($newwidth, $newheight);
-								imagealphablending($thumb, false);
-								imagesavealpha($thumb, true);
-								$source = imagecreatefrompng($diretorio);
-								imagealphablending($source, true);
-								imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-								imagepng($thumb, $dir2 . $foto);
-								imagedestroy($thumb);
-								imagedestroy($source);						
-								
-							break;
-							
-						endswitch;			
-
-						$data['camposfile'] = array_keys($data['file']);
-						$data['file']['idSis_Empresa'] = $_SESSION['Empresa']['idSis_Empresa'];
-						$data['idSis_Arquivo'] = $this->Promocao_model->set_arquivo($data['file']);
-
-						if ($data['idSis_Arquivo'] === FALSE) {
-							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-							$this->basico->erro($msg);
+						$this->load->library('upload', $config);
+						if (!$this->upload->do_upload('Arquivo')) {
+							$data['msg'] = $this->basico->msg($this->upload->display_errors(), 'erro', FALSE, FALSE, FALSE);
 							$this->load->view('promocao/form_catprom', $data);
-						}
-						else {
+						} else {
+						
+							$dir = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/';		
+							$foto = $data['file']['Arquivo'];
+							$diretorio = $dir.$foto;					
+							$dir2 = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/';
 
-							$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['file'], $data['camposfile'], $data['idSis_Arquivo'], FALSE);
-							$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'idSis_Arquivo', 'CREATE', $data['auditoriaitem']);
+							switch($_FILES['Arquivo']['type']):
+								case 'image/jpg';
+								case 'image/jpeg';
+								case 'image/pjpeg';
 							
-							$data['catprom']['Arquivo'] = $data['file']['Arquivo'];
-							$data['anterior'] = $this->Promocao_model->get_catprom($data['catprom']['idTab_Catprom']);
-							$data['campos'] = array_keys($data['catprom']);
+									list($largura, $altura, $tipo) = getimagesize($diretorio);
+									
+									$img = imagecreatefromjpeg($diretorio);
 
-							$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['catprom'], $data['campos'], $data['catprom']['idTab_Catprom'], TRUE);
+									$thumb = imagecreatetruecolor(200, 200);
+									
+									imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
+									
+									imagejpeg($thumb, $dir2 . $foto);
+									imagedestroy($img);
+									imagedestroy($thumb);				      
+								
+								break;					
 
-							if ($data['auditoriaitem'] && $this->Promocao_model->update_catprom($data['catprom'], $data['catprom']['idTab_Catprom']) === FALSE) {
-								$data['msg'] = '?m=2';
-								redirect(base_url() . 'promocao/alterarlogocatprom/' . $data['catprom']['idTab_Catprom'] . $data['msg']);
-								exit();
+								case 'image/png';
+								case 'image/x-png';
+
+									list($width, $height) = getimagesize($diretorio);
+									$newwidth = 200;
+									$newheight = 200;
+
+									$thumb = imagecreatetruecolor($newwidth, $newheight);
+									imagealphablending($thumb, false);
+									imagesavealpha($thumb, true);
+									$source = imagecreatefrompng($diretorio);
+									imagealphablending($source, true);
+									imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+									imagepng($thumb, $dir2 . $foto);
+									imagedestroy($thumb);
+									imagedestroy($source);						
+									
+								break;
+								
+							endswitch;			
+
+							$data['camposfile'] = array_keys($data['file']);
+							$data['file']['idSis_Empresa'] = $_SESSION['Empresa']['idSis_Empresa'];
+							$data['idSis_Arquivo'] = $this->Promocao_model->set_arquivo($data['file']);
+
+							if ($data['idSis_Arquivo'] === FALSE) {
+								$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+								$this->basico->erro($msg);
+								$this->load->view('promocao/form_catprom', $data);
 							} else {
 
-								if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/' . $_SESSION['Catprom']['Arquivo'] . ''))
-									&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/' . $_SESSION['Catprom']['Arquivo'] . '')
-									!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/fotopromocao.jpg'))){
-									unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/' . $_SESSION['Catprom']['Arquivo'] . '');						
-								}
-								if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $_SESSION['Catprom']['Arquivo'] . ''))
-									&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $_SESSION['Catprom']['Arquivo'] . '')
-									!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/fotopromocao.jpg'))){
-									unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $_SESSION['Catprom']['Arquivo'] . '');						
-								}						
+								$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['file'], $data['camposfile'], $data['idSis_Arquivo'], FALSE);
+								$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'idSis_Arquivo', 'CREATE', $data['auditoriaitem']);
 								
-								if ($data['auditoriaitem'] === FALSE) {
-									$data['msg'] = '';
-								} else {
-									$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Catprom', 'UPDATE', $data['auditoriaitem']);
-									$data['msg'] = '?m=1';
-								}
+								$data['catprom']['Arquivo'] = $data['file']['Arquivo'];
+								$data['anterior'] = $this->Promocao_model->get_catprom($data['catprom']['idTab_Catprom']);
+								$data['campos'] = array_keys($data['catprom']);
 
-								redirect(base_url() . 'relatorio/promocao/' . $data['msg']);
-								exit();
-							}				
+								$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['catprom'], $data['campos'], $data['catprom']['idTab_Catprom'], TRUE);
+
+								if ($data['auditoriaitem'] && $this->Promocao_model->update_catprom($data['catprom'], $data['catprom']['idTab_Catprom']) === FALSE) {
+									$data['msg'] = '?m=2';
+									redirect(base_url() . 'promocao/alterarlogocatprom/' . $data['catprom']['idTab_Catprom'] . $data['msg']);
+									exit();
+								} else {
+
+									if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/' . $_SESSION['Catprom']['Arquivo'] . ''))
+										&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/' . $_SESSION['Catprom']['Arquivo'] . '')
+										!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/fotopromocao.jpg'))){
+										unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/' . $_SESSION['Catprom']['Arquivo'] . '');						
+									}
+									if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $_SESSION['Catprom']['Arquivo'] . ''))
+										&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $_SESSION['Catprom']['Arquivo'] . '')
+										!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/fotopromocao.jpg'))){
+										unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $_SESSION['Catprom']['Arquivo'] . '');						
+									}						
+									
+									if ($data['auditoriaitem'] === FALSE) {
+										$data['msg'] = '';
+									} else {
+										$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Catprom', 'UPDATE', $data['auditoriaitem']);
+										$data['msg'] = '?m=1';
+									}
+
+									redirect(base_url() . 'relatorio/promocao/' . $data['msg']);
+									exit();
+								}				
+							}
 						}
-					}
+					}	
 				}
 			}
-		}
+		
         $this->load->view('basico/footer');
     }
 	
@@ -1359,10 +1347,20 @@ class Promocao extends CI_Controller {
 
 			if ($id) {
 				$_SESSION['Promocao'] = $data['promocao'] = $this->Promocao_model->get_promocao($id, TRUE);
-				$data['file']['idTab_Promocao'] = $id;
+
+				if($data['promocao'] === FALSE){
+					
+					unset($_SESSION['Promocao']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				} else {
+					$data['file']['idTab_Promocao'] = $id;
+				}
 			}
 
-			if(!$data['promocao']['idTab_Promocao'] || $_SESSION['Promocao'] === FALSE){
+			if(!$data['promocao']['idTab_Promocao'] || !$_SESSION['Promocao']){
 				
 				unset($_SESSION['Promocao']);
 				$data['msg'] = '?m=3';
@@ -1393,108 +1391,117 @@ class Promocao extends CI_Controller {
 					$this->load->view('promocao/form_logo_promocao', $data);
 				} else {
 
-					$config['upload_path'] = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/';
-					$config['max_size'] = 1000;
-					$config['allowed_types'] = ['jpg','jpeg','pjpeg','png','x-png'];
-					$config['file_name'] = $data['file']['Arquivo'];
-
-					$this->load->library('upload', $config);
-					if (!$this->upload->do_upload('Arquivo')) {
-						$data['msg'] = $this->basico->msg($this->upload->display_errors(), 'erro', FALSE, FALSE, FALSE);
-						$this->load->view('promocao/form_logo_promocao', $data);
-					} else {
-					
-						$dir = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/';		
-						$foto = $data['file']['Arquivo'];
-						$diretorio = $dir.$foto;					
-						$dir2 = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/';
-
-						switch($_FILES['Arquivo']['type']):
-							case 'image/jpg';
-							case 'image/jpeg';
-							case 'image/pjpeg';
+					if($this->Basico_model->get_dt_validade() === FALSE){
 						
-								list($largura, $altura, $tipo) = getimagesize($diretorio);
-								
-								$img = imagecreatefromjpeg($diretorio);
+						unset($_SESSION['Promocao']);
+						$data['msg'] = '?m=3';
+						redirect(base_url() . 'acesso' . $data['msg']);
+						
+					} else {
+						
+						$config['upload_path'] = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/';
+						$config['max_size'] = 1000;
+						$config['allowed_types'] = ['jpg','jpeg','pjpeg','png','x-png'];
+						$config['file_name'] = $data['file']['Arquivo'];
 
-								$thumb = imagecreatetruecolor(200, 200);
-								
-								imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
-								
-								imagejpeg($thumb, $dir2 . $foto);
-								imagedestroy($img);
-								imagedestroy($thumb);				      
-							
-							break;					
-
-							case 'image/png';
-							case 'image/x-png';
-
-								list($width, $height) = getimagesize($diretorio);
-								$newwidth = 200;
-								$newheight = 200;
-
-								$thumb = imagecreatetruecolor($newwidth, $newheight);
-								imagealphablending($thumb, false);
-								imagesavealpha($thumb, true);
-								$source = imagecreatefrompng($diretorio);
-								imagealphablending($source, true);
-								imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-								imagepng($thumb, $dir2 . $foto);
-								imagedestroy($thumb);
-								imagedestroy($source);						
-								
-							break;
-							
-						endswitch;			
-
-						$data['camposfile'] = array_keys($data['file']);
-						$data['file']['idSis_Empresa'] = $_SESSION['Empresa']['idSis_Empresa'];
-						$data['idSis_Arquivo'] = $this->Promocao_model->set_arquivo($data['file']);
-
-						if ($data['idSis_Arquivo'] === FALSE) {
-							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-							$this->basico->erro($msg);
+						$this->load->library('upload', $config);
+						if (!$this->upload->do_upload('Arquivo')) {
+							$data['msg'] = $this->basico->msg($this->upload->display_errors(), 'erro', FALSE, FALSE, FALSE);
 							$this->load->view('promocao/form_logo_promocao', $data);
 						} else {
+						
+							$dir = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/';		
+							$foto = $data['file']['Arquivo'];
+							$diretorio = $dir.$foto;					
+							$dir2 = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/';
 
-							$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['file'], $data['camposfile'], $data['idSis_Arquivo'], FALSE);
-							$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'idSis_Arquivo', 'CREATE', $data['auditoriaitem']);
+							switch($_FILES['Arquivo']['type']):
+								case 'image/jpg';
+								case 'image/jpeg';
+								case 'image/pjpeg';
 							
-							$data['promocao']['Arquivo'] = $data['file']['Arquivo'];
-							$data['anterior'] = $this->Promocao_model->get_promocao($data['promocao']['idTab_Promocao']);
-							$data['campos'] = array_keys($data['promocao']);
+									list($largura, $altura, $tipo) = getimagesize($diretorio);
+									
+									$img = imagecreatefromjpeg($diretorio);
 
-							$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['promocao'], $data['campos'], $data['promocao']['idTab_Promocao'], TRUE);
+									$thumb = imagecreatetruecolor(200, 200);
+									
+									imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
+									
+									imagejpeg($thumb, $dir2 . $foto);
+									imagedestroy($img);
+									imagedestroy($thumb);				      
+								
+								break;					
 
-							if ($data['auditoriaitem'] && $this->Promocao_model->update_promocao($data['promocao'], $data['promocao']['idTab_Promocao']) === FALSE) {
-								$data['msg'] = '?m=2';
-								redirect(base_url() . 'promocao/form_logo_promocao/' . $data['promocao']['idTab_Promocao'] . $data['msg']);
-								exit();
+								case 'image/png';
+								case 'image/x-png';
+
+									list($width, $height) = getimagesize($diretorio);
+									$newwidth = 200;
+									$newheight = 200;
+
+									$thumb = imagecreatetruecolor($newwidth, $newheight);
+									imagealphablending($thumb, false);
+									imagesavealpha($thumb, true);
+									$source = imagecreatefrompng($diretorio);
+									imagealphablending($source, true);
+									imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+									imagepng($thumb, $dir2 . $foto);
+									imagedestroy($thumb);
+									imagedestroy($source);						
+									
+								break;
+								
+							endswitch;			
+
+							$data['camposfile'] = array_keys($data['file']);
+							$data['file']['idSis_Empresa'] = $_SESSION['Empresa']['idSis_Empresa'];
+							$data['idSis_Arquivo'] = $this->Promocao_model->set_arquivo($data['file']);
+
+							if ($data['idSis_Arquivo'] === FALSE) {
+								$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+								$this->basico->erro($msg);
+								$this->load->view('promocao/form_logo_promocao', $data);
 							} else {
 
-								if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/' . $_SESSION['Promocao']['Arquivo'] . ''))
-									&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/' . $_SESSION['Promocao']['Arquivo'] . '')
-									!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/fotopromocao.jpg'))){
-									unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/' . $_SESSION['Promocao']['Arquivo'] . '');						
-								}
-								if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $_SESSION['Promocao']['Arquivo'] . ''))
-									&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $_SESSION['Promocao']['Arquivo'] . '')
-									!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/fotopromocao.jpg'))){
-									unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $_SESSION['Promocao']['Arquivo'] . '');						
-								}						
+								$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['file'], $data['camposfile'], $data['idSis_Arquivo'], FALSE);
+								$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'idSis_Arquivo', 'CREATE', $data['auditoriaitem']);
 								
-								if ($data['auditoriaitem'] === FALSE) {
-									$data['msg'] = '';
-								} else {
-									$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Promocao', 'UPDATE', $data['auditoriaitem']);
-									$data['msg'] = '?m=1';
-								}
+								$data['promocao']['Arquivo'] = $data['file']['Arquivo'];
+								$data['anterior'] = $this->Promocao_model->get_promocao($data['promocao']['idTab_Promocao']);
+								$data['campos'] = array_keys($data['promocao']);
 
-								redirect(base_url() . 'promocao/tela_promocao/' . $data['promocao']['idTab_Promocao'] . $data['msg']);
-								exit();
-							}				
+								$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['promocao'], $data['campos'], $data['promocao']['idTab_Promocao'], TRUE);
+
+								if ($data['auditoriaitem'] && $this->Promocao_model->update_promocao($data['promocao'], $data['promocao']['idTab_Promocao']) === FALSE) {
+									$data['msg'] = '?m=2';
+									redirect(base_url() . 'promocao/form_logo_promocao/' . $data['promocao']['idTab_Promocao'] . $data['msg']);
+									exit();
+								} else {
+
+									if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/' . $_SESSION['Promocao']['Arquivo'] . ''))
+										&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/' . $_SESSION['Promocao']['Arquivo'] . '')
+										!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/fotopromocao.jpg'))){
+										unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/' . $_SESSION['Promocao']['Arquivo'] . '');						
+									}
+									if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $_SESSION['Promocao']['Arquivo'] . ''))
+										&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $_SESSION['Promocao']['Arquivo'] . '')
+										!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/fotopromocao.jpg'))){
+										unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $_SESSION['Promocao']['Arquivo'] . '');						
+									}						
+									
+									if ($data['auditoriaitem'] === FALSE) {
+										$data['msg'] = '';
+									} else {
+										$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Promocao', 'UPDATE', $data['auditoriaitem']);
+										$data['msg'] = '?m=1';
+									}
+
+									redirect(base_url() . 'promocao/tela_promocao/' . $data['promocao']['idTab_Promocao'] . $data['msg']);
+									exit();
+								}				
+							}
 						}
 					}
 				}
@@ -1502,165 +1509,6 @@ class Promocao extends CI_Controller {
 		}
         $this->load->view('basico/footer');
     }	
-	
-    public function alterarlogo_original($id = FALSE) {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-
-        $data['promocao'] = $this->input->post(array(
-			'idTab_Promocao',
-        ), TRUE);
-		
-        $data['file'] = $this->input->post(array(
-            'idTab_Promocao',
-			'idSis_Empresa',
-            'Arquivo',
-		), TRUE);
-
-        if ($id) {
-            $_SESSION['Promocao'] = $data['promocao'] = $this->Promocao_model->get_promocao($id, TRUE);
-        }
-		
-        if ($id)
-            $data['file']['idTab_Promocao'] = $id;
-
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-        if (isset($_FILES['Arquivo']) && $_FILES['Arquivo']['name']) {
-            
-			$data['file']['Arquivo'] = $this->basico->renomeiapromocao($_FILES['Arquivo']['name']);
-            $this->form_validation->set_rules('Arquivo', 'Arquivo', 'file_allowed_type[jpg, jpeg, gif, png]|file_size_max[1000]');
-        }
-        else {
-            $this->form_validation->set_rules('Arquivo', 'Arquivo', 'required');
-        }
-
-        $data['titulo'] = 'Alterar Foto';
-        $data['form_open_path'] = 'promocao/alterarlogo';
-        $data['readonly'] = 'readonly';
-        $data['panel'] = 'primary';
-        $data['metodo'] = 2;
-
-        #run form validation
-        if ($this->form_validation->run() === FALSE) {
-            #load login view
-            $this->load->view('promocao/form_perfil', $data);
-        }
-        else {
-
-            $config['upload_path'] = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/';
-            $config['max_size'] = 1000;
-            $config['allowed_types'] = ['jpg','jpeg','pjpeg','png','x-png'];
-            $config['file_name'] = $data['file']['Arquivo'];
-
-            $this->load->library('upload', $config);
-            if (!$this->upload->do_upload('Arquivo')) {
-                $data['msg'] = $this->basico->msg($this->upload->display_errors(), 'erro', FALSE, FALSE, FALSE);
-                $this->load->view('promocao/form_perfil', $data);
-            }
-            else {
-			
-				$dir = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/';		
-				$foto = $data['file']['Arquivo'];
-				$diretorio = $dir.$foto;					
-				$dir2 = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/';
-
-				switch($_FILES['Arquivo']['type']):
-					case 'image/jpg';
-					case 'image/jpeg';
-					case 'image/pjpeg';
-				
-						list($largura, $altura, $tipo) = getimagesize($diretorio);
-						
-						$img = imagecreatefromjpeg($diretorio);
-
-						$thumb = imagecreatetruecolor(200, 200);
-						
-						imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
-						
-						imagejpeg($thumb, $dir2 . $foto);
-						imagedestroy($img);
-						imagedestroy($thumb);				      
-					
-					break;					
-
-					case 'image/png':
-					case 'image/x-png';
-						
-						list($largura, $altura, $tipo) = getimagesize($diretorio);
-						
-						$img = imagecreatefrompng($diretorio);
-
-						$thumb = imagecreatetruecolor(200, 200);
-						
-						imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
-						
-						imagejpeg($thumb, $dir2 . $foto);
-						imagedestroy($img);
-						imagedestroy($thumb);				      
-					
-					break;
-					
-				endswitch;			
-
-                $data['camposfile'] = array_keys($data['file']);
-				$data['file']['idSis_Empresa'] = $_SESSION['Empresa']['idSis_Empresa'];
-				$data['idSis_Arquivo'] = $this->Promocao_model->set_arquivo($data['file']);
-
-                if ($data['idSis_Arquivo'] === FALSE) {
-                    $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-                    $this->basico->erro($msg);
-                    $this->load->view('promocao/form_perfil', $data);
-                }
-				else {
-
-					$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['file'], $data['camposfile'], $data['idSis_Arquivo'], FALSE);
-					$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'idSis_Arquivo', 'CREATE', $data['auditoriaitem']);
-					
-					$data['promocao']['Arquivo'] = $data['file']['Arquivo'];
-					$data['anterior'] = $this->Promocao_model->get_promocao($data['promocao']['idTab_Promocao']);
-					$data['campos'] = array_keys($data['promocao']);
-
-					$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['promocao'], $data['campos'], $data['promocao']['idTab_Promocao'], TRUE);
-
-					if ($data['auditoriaitem'] && $this->Promocao_model->update_promocao($data['promocao'], $data['promocao']['idTab_Promocao']) === FALSE) {
-						$data['msg'] = '?m=2';
-						redirect(base_url() . 'promocao/form_perfil/' . $data['promocao']['idTab_Promocao'] . $data['msg']);
-						exit();
-					} else {
-
-						if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/' . $_SESSION['Promocao']['Arquivo'] . ''))
-							&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/' . $_SESSION['Promocao']['Arquivo'] . '')
-							!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/fotopromocao.jpg'))){
-							unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/original/' . $_SESSION['Promocao']['Arquivo'] . '');						
-						}
-						if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $_SESSION['Promocao']['Arquivo'] . ''))
-							&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $_SESSION['Promocao']['Arquivo'] . '')
-							!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/fotopromocao.jpg'))){
-							unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/promocao/miniatura/' . $_SESSION['Promocao']['Arquivo'] . '');						
-						}						
-						
-						if ($data['auditoriaitem'] === FALSE) {
-							$data['msg'] = '';
-						} else {
-							$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Promocao', 'UPDATE', $data['auditoriaitem']);
-							$data['msg'] = '?m=1';
-						}
-
-						redirect(base_url() . 'relatorio/promocao/' . $data['msg']);
-						exit();
-					}				
-				}
-            }
-        }
-
-        $this->load->view('basico/footer');
-    }
 	
     public function excluir($id = FALSE) {
 
@@ -1671,35 +1519,47 @@ class Promocao extends CI_Controller {
         else
             $data['msg'] = '';
 
-		if ($id) {
-            $verificacao = $this->Promocao_model->get_promocao_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			$seguir = FALSE;
-		}
-	
-		if($seguir === FALSE){
+		if (!$id) {
 			unset($_SESSION['Promocao']);
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 			
 		} else {
-			
-			$this->Promocao_model->delete_promocao($id);
+			$_SESSION['Promocao'] = $data['promocao'] = $this->Promocao_model->get_promocao($id, TRUE);
 
-			$data['msg'] = '?m=1';
+			if($data['promocao'] === FALSE){
+				
+				unset($_SESSION['Promocao']);
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'acesso' . $data['msg']);
+				exit();
+				
+			} else {
+	
+				if($this->Basico_model->get_dt_validade() === FALSE){
+					
+					unset($_SESSION['Promocao']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					
+				} else {
+					
+					$this->Promocao_model->delete_promocao($id);
+					
+					unset($_SESSION['Promocao']);
 
-			redirect(base_url() . 'relatorio/promocao/' . $data['msg']);
-			exit();
+					$data['msg'] = '?m=1';
+
+					redirect(base_url() . 'relatorio/promocao/' . $data['msg']);
+					exit();
+				}
+			}
 		}
         $this->load->view('basico/footer');
     }
 
+/*	
     public function listar($id = NULL) {
 
         if ($this->input->get('m') == 1)
@@ -1717,12 +1577,7 @@ class Promocao extends CI_Controller {
 
         //$data['aprovado'] = array();
         //$data['naoaprovado'] = array();
-        /*
-          echo "<pre>";
-          print_r($data['query']);
-          echo "</pre>";
-          exit();
-         */
+
 
         $data['list'] = $this->load->view('promocao/list_promocao', $data, TRUE);
        # $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
@@ -1731,5 +1586,5 @@ class Promocao extends CI_Controller {
 
         $this->load->view('basico/footer');
     }
-
+*/
 }
