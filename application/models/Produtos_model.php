@@ -176,13 +176,13 @@ class Produtos_model extends CI_Model {
 				idTab_Catprod = ' . $data . ' AND
 				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
 		);
-        $query = $query->result_array();
 
-		if($query){
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
 			return $query[0];
-		}else{
-			return FALSE;
-		}
+        }
 	}
 
     public function get_produto_verificacao($data) {
@@ -214,13 +214,13 @@ class Produtos_model extends CI_Model {
 				idTab_Produto = ' . $data . ' AND
 				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
 		);
-        $query = $query->result_array();
 
-		if($query){
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
 			return $query[0];
-		}else{
-			return FALSE;
-		}
+        }
 	}
 	
     public function get_produtos_verificacao($data) {
@@ -266,13 +266,13 @@ class Produtos_model extends CI_Model {
 				TPS.idTab_Produtos = ' . $data . ' AND
 				TPS.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
 		);
-        $query = $query->result_array();
 
-		if($query){
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
 			return $query[0];
-		}else{
-			return FALSE;
-		}
+        }
     }
 
     public function get_app_produto($data) {
@@ -354,13 +354,13 @@ class Produtos_model extends CI_Model {
 				TV.idTab_Valor = ' . $data . ' AND
 				TV.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
 		);
-        $query = $query->result_array();
 
-		if($query){
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
 			return $query[0];
-		}else{
-			return FALSE;
-		}
+        }
     }
 
     public function get_servico($data) {
@@ -495,13 +495,13 @@ class Produtos_model extends CI_Model {
 				TPS.idTab_Produtos = ' . $data . ' AND
 				TPS.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
 		);
-        $query = $query->result_array();
 
-		if($query){
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
 			return $query[0];
-		}else{
-			return FALSE;
-		}
+        }
     }
 	
 	public function get_item($data, $desconto) {

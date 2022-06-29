@@ -142,8 +142,6 @@ class Produtos extends CI_Controller {
 					//$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
 					$data['msg'] = '?m=1';
 
-					#redirect(base_url() . 'produtos/listar/' . $data['msg']);
-					//redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
 					redirect(base_url() . 'produtos/alterar/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
 					exit();
 				}
@@ -163,30 +161,7 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
-		
-		if ($id) {
-            $verificacao = $this->Produtos_model->get_produtos_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			if(!$_SESSION['Produtos']){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}
-	
-		if($seguir === FALSE){
-			unset($_SESSION['Produtos']);
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
 			
-		} else {
-						
 			$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 				'Cadastrar',
 				'TipoCatprod',
@@ -216,11 +191,21 @@ class Produtos extends CI_Controller {
 
 
 			if ($id) {
+				
 				#### Tab_Produtos ####
 			   $_SESSION['Produtos'] = $data['produtos'] = $this->Produtos_model->get_produtos($id);
+				
+				if($data['produtos'] === FALSE){
+					
+					unset($_SESSION['Produtos']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				}
 			}
 
-			if(!$data['produtos']['idTab_Produtos'] || $_SESSION['Produtos'] === FALSE){
+			if(!$data['produtos']['idTab_Produtos'] || !$_SESSION['Produtos']){
 				
 				unset($_SESSION['Produtos']);
 				$data['msg'] = '?m=3';
@@ -425,9 +410,6 @@ class Produtos extends CI_Controller {
 							$data['produtos']['idTab_Produtos'], TRUE);
 						$data['update']['produtos']['bd'] = $this->Produtos_model->update_produtos($data['produtos'], $data['produtos']['idTab_Produtos']);
 
-
-						//if ($data['idTab_Produtos'] === FALSE) {
-						//if ($data['auditoriaitem'] && $this->Cliente_model->update_cliente($data['query'], $data['query']['idApp_Cliente']) === FALSE) {
 						if ($data['auditoriaitem'] && !$data['update']['produtos']['bd']) {
 							$data['msg'] = '?m=2';
 							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
@@ -440,19 +422,13 @@ class Produtos extends CI_Controller {
 							//$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
 							$data['msg'] = '?m=1';
 
-							#redirect(base_url() . 'produtos/listar/' . $data['msg']);
-							//unset($data['cadastrar']['Codigo']);
-							//unset($_SESSION['Produtos']);
-							//unset($_SESSION['Atributos']);
-							//redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
-							//redirect(base_url() . 'produtos/alterar2/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
 							redirect(base_url() . 'produtos/tela/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
 							exit();
 						}
 					}
 				}
 			}
-		}
+		
         $this->load->view('basico/footer');
 
     }
@@ -467,30 +443,7 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
-		
-		if ($id) {
-            $verificacao = $this->Produtos_model->get_produtos_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			if(!$_SESSION['Produtos']){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}
-	
-		if($seguir === FALSE){
-			unset($_SESSION['Produtos']);
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
-			
-		} else {
-			
+
 			$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 				'Cadastrar',
 				'TipoCatprod',
@@ -518,15 +471,22 @@ class Produtos extends CI_Controller {
 				'Produtos_Descricao',
 			), TRUE));
 
-			//(!$data['cadastrar']['VendaSite1']) ? $data['cadastrar']['VendaSite1'] = $data['cadastrar']['VendaSite_Atual'] : FALSE;
-			
 			if ($id) {
+				
 				#### Tab_Produtos ####
-				$_SESSION['Produtos'] = $data['produtos'] = $this->Produtos_model->get_produtos($id);
-				$data['cadastrar']['VendaSite1'] = $data['produtos']['VendaSite_Produto'];
+			   $_SESSION['Produtos'] = $data['produtos'] = $this->Produtos_model->get_produtos($id);
+				
+				if($data['produtos'] === FALSE){
+					
+					unset($_SESSION['Produtos']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				}
 			}
 
-			if(!$data['produtos']['idTab_Produtos'] || $_SESSION['Produtos'] === FALSE){
+			if(!$data['produtos']['idTab_Produtos'] || !$_SESSION['Produtos']){
 				
 				unset($_SESSION['Produtos']);
 				$data['msg'] = '?m=3';
@@ -724,9 +684,6 @@ class Produtos extends CI_Controller {
 							$data['produtos']['idTab_Produtos'], TRUE);
 						$data['update']['produtos']['bd'] = $this->Produtos_model->update_produtos($data['produtos'], $data['produtos']['idTab_Produtos']);
 
-
-						//if ($data['idTab_Produtos'] === FALSE) {
-						//if ($data['auditoriaitem'] && $this->Cliente_model->update_cliente($data['query'], $data['query']['idApp_Cliente']) === FALSE) {
 						if ($data['auditoriaitem'] && !$data['update']['produtos']['bd']) {
 							$data['msg'] = '?m=2';
 							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
@@ -739,18 +696,13 @@ class Produtos extends CI_Controller {
 							//$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
 							$data['msg'] = '?m=1';
 
-							#redirect(base_url() . 'produtos/listar/' . $data['msg']);
-							//unset($data['cadastrar']['Codigo']);
-							//unset($_SESSION['Produtos']);
-							//unset($_SESSION['Atributos']);
-							//redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
 							redirect(base_url() . 'produtos/tela/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
 							exit();
 						}
 					}
 				}
 			}
-		}
+		
         $this->load->view('basico/footer');
 
     }
@@ -766,25 +718,6 @@ class Produtos extends CI_Controller {
         else
             $data['msg'] = '';
 
-		if ($id) {
-            $verificacao = $this->Produtos_model->get_produtos_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			$seguir = FALSE;
-		}
-	
-		if($seguir === FALSE){
-			unset($_SESSION['Produtos']);
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
-			
-		} else {
-						
 			$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 				'Cadastrar',
 				'idCat_Atributo',
@@ -804,13 +737,22 @@ class Produtos extends CI_Controller {
 				'Cod_Prod',
 			), TRUE));
 
-
 			if ($id) {
+				
 				#### Tab_Produtos ####
 				$_SESSION['Produtos'] = $data['produtos'] = $this->Produtos_model->get_produtos($id);
+			
+				if($data['produtos'] === FALSE){
+					
+					unset($_SESSION['Produtos']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				}
 			}
 			
-			if(!$data['produtos']['idTab_Produtos'] || $_SESSION['Produtos'] === FALSE){
+			if(!$data['produtos']['idTab_Produtos'] || !$_SESSION['Produtos']){
 				
 				unset($_SESSION['Produtos']);
 				$data['msg'] = '?m=3';
@@ -970,9 +912,6 @@ class Produtos extends CI_Controller {
 							$data['produtos']['idTab_Produtos'], TRUE);
 						$data['update']['produtos']['bd'] = $this->Produtos_model->update_produtos($data['produtos'], $data['produtos']['idTab_Produtos']);
 
-
-						//if ($data['idTab_Produtos'] === FALSE) {
-						//if ($data['auditoriaitem'] && $this->Cliente_model->update_cliente($data['query'], $data['query']['idApp_Cliente']) === FALSE) {
 						if ($data['auditoriaitem'] && !$data['update']['produtos']['bd']) {
 							$data['msg'] = '?m=2';
 							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
@@ -985,18 +924,13 @@ class Produtos extends CI_Controller {
 							//$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
 							$data['msg'] = '?m=1';
 
-							#redirect(base_url() . 'produtos/listar/' . $data['msg']);
-							//unset($data['cadastrar']['Codigo']);
-							//unset($_SESSION['Produtos']);
-							//unset($_SESSION['Atributos']);
-							//redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
 							redirect(base_url() . 'produtos/alterar2/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
 							exit();
 						}
 					}
 				}
 			}
-		}
+		
         $this->load->view('basico/footer');
 
     }
@@ -1012,25 +946,6 @@ class Produtos extends CI_Controller {
         else
             $data['msg'] = '';
 
-		if ($id) {
-            $verificacao = $this->Produtos_model->get_produtos_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			$seguir = FALSE;
-		}
-	
-		if($seguir === FALSE){
-			unset($_SESSION['Produtos']);
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
-			
-		} else {
-			
 			$data['produtos'] = quotes_to_entities($this->input->post(array(
 				#### Tab_Produtos ####
 				'idTab_Produtos',
@@ -1038,11 +953,21 @@ class Produtos extends CI_Controller {
 
 
 			if ($id) {
+				
 				#### Tab_Produtos ####
 				$_SESSION['Produtos'] = $data['produtos'] = $this->Produtos_model->get_produtos($id);
+			
+				if($data['produtos'] === FALSE){
+					
+					unset($_SESSION['Produtos']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				}
 			}
 			
-			if(!$data['produtos']['idTab_Produtos'] || $_SESSION['Produtos'] === FALSE){
+			if(!$data['produtos']['idTab_Produtos'] || !$_SESSION['Produtos']){
 				
 				unset($_SESSION['Produtos']);
 				$data['msg'] = '?m=3';
@@ -1101,7 +1026,7 @@ class Produtos extends CI_Controller {
 					}
 				}
 			}
-		}	
+			
         $this->load->view('basico/footer');
 
     }
@@ -1116,30 +1041,7 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
-		
-		if ($id) {
-            $verificacao = $this->Produtos_model->get_produtos_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			if(!$_SESSION['Produtos']){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}
-	
-		if($seguir === FALSE){
-			unset($_SESSION['Produtos']);
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
-			
-		} else {
-			
+
 			$caracteres_sem_acento = array(
 				'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
 				'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
@@ -1183,27 +1085,38 @@ class Produtos extends CI_Controller {
 			$data['count']['PTCount'] = $j - 1;		
 			
 			if ($id) {
+				
 				#### Tab_Produtos ####
-			   $_SESSION['Produtos'] = $data['produtos'] = $this->Produtos_model->get_produtos($id);
-			
-				#### Tab_Valor ####
-				$data['valor'] = $this->Produtos_model->get_item($id, "1");
-				if (count($data['valor']) > 0) {
-					$data['valor'] = array_combine(range(1, count($data['valor'])), array_values($data['valor']));
-					$data['count']['PTCount'] = count($data['valor']);
-					/*
-					if (isset($data['valor'])) {
+				$_SESSION['Produtos'] = $data['produtos'] = $this->Produtos_model->get_produtos($id);
+				
+				if($data['produtos'] === FALSE){
+					
+					unset($_SESSION['Produtos']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				} else {
+					
+					#### Tab_Valor ####
+					$data['valor'] = $this->Produtos_model->get_item($id, "1");
+					if (count($data['valor']) > 0) {
+						$data['valor'] = array_combine(range(1, count($data['valor'])), array_values($data['valor']));
+						$data['count']['PTCount'] = count($data['valor']);
+						/*
+						if (isset($data['valor'])) {
 
-						for($j=1; $j <= $data['count']['PTCount']; $j++){
-						
-						}
+							for($j=1; $j <= $data['count']['PTCount']; $j++){
 							
+							}
+								
+						}
+						*/				
 					}
-					*/				
-				}
+				}	
 			}
 			
-			if(!$data['produtos']['idTab_Produtos'] || $_SESSION['Produtos'] === FALSE){
+			if(!$data['produtos']['idTab_Produtos'] || !$_SESSION['Produtos']){
 				
 				unset($_SESSION['Produtos']);
 				$data['msg'] = '?m=3';
@@ -1409,7 +1322,7 @@ class Produtos extends CI_Controller {
 					}
 				}
 			}
-		}
+		
         $this->load->view('basico/footer');
 
     }
@@ -1424,39 +1337,30 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
-
-		if ($id) {
-            $verificacao = $this->Produtos_model->get_valor_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			$seguir = FALSE;
-		}
-	
-		if($seguir === FALSE){
-			unset($_SESSION['Valor']);
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
 			
-		} else {
-						
 			$data['valor'] = quotes_to_entities($this->input->post(array(
 				#### Tab_Valor ####
 				'idTab_Valor',
 			), TRUE));
 
-
 			if ($id) {
+				
 				#### Tab_Valor ####
 				$_SESSION['Valor'] = $data['valor'] = $this->Produtos_model->get_valor($id);
+				
+				if($data['valor'] === FALSE){
+					
+					unset($_SESSION['Valor']);
+					unset($_SESSION['Produtos']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+				}
 			}
 			
-			if(!$data['valor']['idTab_Valor'] || $_SESSION['Valor'] === FALSE){
+			if(!$data['valor']['idTab_Valor'] || !$_SESSION['Valor']){
 				
+				unset($_SESSION['Valor']);
 				unset($_SESSION['Produtos']);
 				$data['msg'] = '?m=3';
 				redirect(base_url() . 'acesso' . $data['msg']);
@@ -1464,65 +1368,79 @@ class Produtos extends CI_Controller {
 				
 			} else {
 				
-				//$data['select']['AtivoPreco'] = $this->Basico_model->select_status_sn();
-				$data['select']['VendaSitePreco'] = $this->Basico_model->select_status_sn();
-				$data['select']['VendaBalcaoPreco'] = $this->Basico_model->select_status_sn();
-				$data['select']['TipoPreco'] = array(
-					'V' => 'Venda',
-					'R' => 'Revenda',
-				);
+				#### Tab_Produtos ####
+				$_SESSION['Produtos'] = $data['produtos'] = $this->Produtos_model->get_produtos($_SESSION['Valor']['idTab_Produtos']);
 				
-				$data['titulo'] = 'Tela Preço';
-				$data['form_open_path'] = 'produtos/tela_valor';
-				$data['readonly'] = 'readonly=""';
-				$data['disabled'] = '';
-				$data['panel'] = 'primary';
-				$data['metodo'] = 6;
-
-				$data['sidebar'] = 'col-sm-3 col-md-2';
-				$data['main'] = 'col-sm-7 col-md-8';
-
-				$data['datepicker'] = 'DatePicker';
-				$data['timepicker'] = 'TimePicker';
-
-				$data['q_precos'] = $this->Produtos_model->list_precos($_SESSION['Valor'], TRUE);
-				$data['list_precos'] = $this->load->view('produtos/list_precos', $data, TRUE);
-				
-				$data['q_precos_promocoes'] = $this->Produtos_model->list_precos_promocoes($_SESSION['Valor'], TRUE);
-				$data['list_precos_promocoes'] = $this->load->view('produtos/list_precos_promocoes', $data, TRUE);			
-				
-				$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-				$this->form_validation->set_rules('idTab_Valor', 'Produto', 'required|trim');
-
-				#run form validation
-				if ($this->form_validation->run() === FALSE) {
-					$this->load->view('produtos/form_valor', $data);
-				
+				if($data['produtos'] === FALSE){
+					
+					unset($_SESSION['Valor']);
+					unset($_SESSION['Produtos']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
 				} else {
 					
-					if($this->Basico_model->get_dt_validade() === FALSE){
-						$data['msg'] = '?m=3';
-						redirect(base_url() . 'produtos/tela_valor/' . $_SESSION['Valor']['idTab_Valor'] . $data['msg']);
-						
+					//$data['select']['AtivoPreco'] = $this->Basico_model->select_status_sn();
+					$data['select']['VendaSitePreco'] = $this->Basico_model->select_status_sn();
+					$data['select']['VendaBalcaoPreco'] = $this->Basico_model->select_status_sn();
+					$data['select']['TipoPreco'] = array(
+						'V' => 'Venda',
+						'R' => 'Revenda',
+					);
+					
+					$data['titulo'] = 'Tela Preço';
+					$data['form_open_path'] = 'produtos/tela_valor';
+					$data['readonly'] = 'readonly=""';
+					$data['disabled'] = '';
+					$data['panel'] = 'primary';
+					$data['metodo'] = 6;
+
+					$data['sidebar'] = 'col-sm-3 col-md-2';
+					$data['main'] = 'col-sm-7 col-md-8';
+
+					$data['datepicker'] = 'DatePicker';
+					$data['timepicker'] = 'TimePicker';
+
+					$data['q_precos'] = $this->Produtos_model->list_precos($_SESSION['Valor'], TRUE);
+					$data['list_precos'] = $this->load->view('produtos/list_precos', $data, TRUE);
+					
+					$data['q_precos_promocoes'] = $this->Produtos_model->list_precos_promocoes($_SESSION['Valor'], TRUE);
+					$data['list_precos_promocoes'] = $this->load->view('produtos/list_precos_promocoes', $data, TRUE);			
+					
+					$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+					$this->form_validation->set_rules('idTab_Valor', 'Produto', 'required|trim');
+
+					#run form validation
+					if ($this->form_validation->run() === FALSE) {
+						$this->load->view('produtos/form_valor', $data);
+					
 					} else {
 						
-						if ($data['auditoriaitem'] && !$data['update']['valor']['bd']) {
-							$data['msg'] = '?m=2';
-							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-
-							$this->basico->erro($msg);
-							$this->load->view('produtos/form_valor', $data);
-						} else {
-
-							$data['msg'] = '?m=1';
-							redirect(base_url() . 'produtos/tela_valor/' . $data['valor']['idTab_Valor'] . $data['msg']);
+						if($this->Basico_model->get_dt_validade() === FALSE){
+							$data['msg'] = '?m=3';
+							redirect(base_url() . 'produtos/tela_valor/' . $_SESSION['Valor']['idTab_Valor'] . $data['msg']);
 							
-							exit();
+						} else {
+							
+							if ($data['auditoriaitem'] && !$data['update']['valor']['bd']) {
+								$data['msg'] = '?m=2';
+								$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+								$this->basico->erro($msg);
+								$this->load->view('produtos/form_valor', $data);
+							} else {
+
+								$data['msg'] = '?m=1';
+								redirect(base_url() . 'produtos/tela_valor/' . $data['valor']['idTab_Valor'] . $data['msg']);
+								
+								exit();
+							}
 						}
 					}
-				}
+				}	
 			}
-		}
+		
         $this->load->view('basico/footer');
 
     }
@@ -1537,30 +1455,7 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
-		
-		if ($id) {
-            $verificacao = $this->Produtos_model->get_valor_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			if(!$_SESSION['Valor']){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}
-	
-		if($seguir === FALSE){
-			unset($_SESSION['Valor']);
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
-			
-		} else {
-			
+
 			$data['valor'] = quotes_to_entities($this->input->post(array(
 				#### Tab_Valor ####
 				'idTab_Valor',			
@@ -1579,154 +1474,180 @@ class Produtos extends CI_Controller {
 			), TRUE));
 
 			if ($id) {
+				
 				#### Tab_Valor ####
-				$_SESSION['Valor'] = $data['valor'] = $this->Produtos_model->get_valor($id);
+				$_SESSION['Valor'] = $data['valor'] = $this->Produtos_model->get_valor($id);			
+				
+				if($data['valor'] === FALSE){
+					
+					unset($_SESSION['Valor']);
+					unset($_SESSION['Produtos']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				}
 			}
 			
-			if(!$data['valor']['idTab_Valor'] || $_SESSION['Valor'] === FALSE){
+			if(!$data['valor']['idTab_Valor'] || !$_SESSION['Valor']){
 				
 				unset($_SESSION['Valor']);
+				unset($_SESSION['Produtos']);
 				$data['msg'] = '?m=3';
 				redirect(base_url() . 'acesso' . $data['msg']);
 				exit();
 				
 			} else {
 				
-				$caracteres_sem_acento = array(
-					'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
-					'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
-					'Ï'=>'I', 'Ñ'=>'N', 'N'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U',
-					'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss','à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a',
-					'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i',
-					'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'n'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u',
-					'ú'=>'u', 'û'=>'u', 'ü'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', 'ƒ'=>'f',
-					'a'=>'a', 'î'=>'i', 'â'=>'a', '?'=>'s', '?'=>'t', 'A'=>'A', 'Î'=>'I', 'Â'=>'A', '?'=>'S', '?'=>'T',
-				);
-
-				$convdesc1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($data['valor']['Convdesc'], $caracteres_sem_acento));		
-						
-				//$data['select']['AtivoPreco'] = $this->Basico_model->select_status_sn();
-				$data['select']['VendaSitePreco'] = $this->Basico_model->select_status_sn();
-				$data['select']['VendaBalcaoPreco'] = $this->Basico_model->select_status_sn();
-				$data['select']['TipoPreco'] = array(
-					'V' => 'Venda',
-					'R' => 'Revenda',
-				);		
+				#### Tab_Produtos ####
+				$_SESSION['Produtos'] = $data['produtos'] = $this->Produtos_model->get_produtos($_SESSION['Valor']['idTab_Produtos']);
 				
-				$data['titulo'] = 'Alterar Preço';
-				$data['form_open_path'] = 'produtos/alterar_valor';
-				$data['readonly'] = '';
-				$data['disabled'] = '';
-				$data['panel'] = 'primary';
-				$data['metodo'] = 7;
-
-				$data['sidebar'] = 'col-sm-3 col-md-2';
-				$data['main'] = 'col-sm-7 col-md-8';
-
-				$data['datepicker'] = 'DatePicker';
-				$data['timepicker'] = 'TimePicker';
-
-				$data['q_precos'] = $this->Produtos_model->list_precos($_SESSION['Valor'], TRUE);
-				$data['list_precos'] = $this->load->view('produtos/list_precos', $data, TRUE);
-				
-				$data['q_precos_promocoes'] = $this->Produtos_model->list_precos_promocoes($_SESSION['Valor'], TRUE);
-				$data['list_precos_promocoes'] = $this->load->view('produtos/list_precos_promocoes', $data, TRUE);			
-				
-				$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-				$this->form_validation->set_rules('idTab_Valor', 'Produto', 'required|trim');
-				$this->form_validation->set_rules('ValorProduto', 'Valor', 'required|trim');
-
-				#run form validation
-				if ($this->form_validation->run() === FALSE) {
-					$this->load->view('produtos/form_valor', $data);
-				
+				if($data['produtos'] === FALSE){
+					
+					unset($_SESSION['Valor']);
+					unset($_SESSION['Produtos']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
 				} else {
 					
-					if($this->Basico_model->get_dt_validade() === FALSE){
-						$data['msg'] = '?m=3';
-						redirect(base_url() . 'produtos/alterar_valor/' . $_SESSION['Valor']['idTab_Valor'] . $data['msg']);
-						
-					} else {
-										
-						////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
-						/*
-						echo '<br>';
-						echo "<pre>";
-						print_r($data['valor']);
-						echo "</pre>";
-						exit ();
-						*/
-						#### Tab_Valor ####
-						$data['valor']['Item_Promocao'] = "1";
-						$data['valor']['Desconto'] = 1;
-						$data['valor']['idTab_Promocao'] = 1;
-						$data['valor']['idTab_Produto'] = $_SESSION['Valor']['idTab_Produto'];
-						$data['valor']['idTab_Catprod'] = $_SESSION['Valor']['idTab_Catprod'];
-						$data['valor']['Convdesc'] = trim(mb_strtoupper($convdesc1, 'UTF-8'));	
+					$caracteres_sem_acento = array(
+						'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
+						'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
+						'Ï'=>'I', 'Ñ'=>'N', 'N'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U',
+						'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss','à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a',
+						'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i',
+						'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'n'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u',
+						'ú'=>'u', 'û'=>'u', 'ü'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', 'ƒ'=>'f',
+						'a'=>'a', 'î'=>'i', 'â'=>'a', '?'=>'s', '?'=>'t', 'A'=>'A', 'Î'=>'I', 'Â'=>'A', '?'=>'S', '?'=>'T',
+					);
 
-						if(empty($data['valor']['ValorProduto'])){
-							$data['valor']['ValorProduto'] = "0.00";
-						}else{
-							$data['valor']['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ValorProduto']));			
-						}
-						
-						if(empty($data['valor']['ComissaoVenda'])){
-							$data['valor']['ComissaoVenda'] = "0.00";
-						}else{
-							$data['valor']['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoVenda']));			
-						}			
-						
-						if(empty($data['valor']['ComissaoServico'])){
-							$data['valor']['ComissaoServico'] = "0.00";
-						}else{
-							$data['valor']['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoServico']));			
-						}			
-						
-						if(empty($data['valor']['ComissaoCashBack'])){
-							$data['valor']['ComissaoCashBack'] = "0.00";
-						}else{
-							$data['valor']['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoCashBack']));			
-						}			
-						
-						if(empty($data['valor']['QtdProdutoDesconto'])){
-							$data['valor']['QtdProdutoDesconto'] = "1";
-						}
-									
-						if(empty($data['valor']['QtdProdutoIncremento'])){
-							$data['valor']['QtdProdutoIncremento'] = "1";
-						}
-									
-						if(empty($data['valor']['TempoDeEntrega'])){
-							$data['valor']['TempoDeEntrega'] = "0";
-						}
-						
-						$data['update']['valor']['anterior'] = $this->Produtos_model->get_valor($data['valor']['idTab_Valor']);
-						$data['update']['valor']['campos'] = array_keys($data['valor']);
-						$data['update']['valor']['auditoriaitem'] = $this->basico->set_log(
-							$data['update']['valor']['anterior'],
-							$data['valor'],
-							$data['update']['valor']['campos'],
-							$data['valor']['idTab_Valor'], TRUE);
-						$data['update']['valor']['bd'] = $this->Produtos_model->update_valor1($data['valor'], $data['valor']['idTab_Valor']);
-						
-						if ($data['auditoriaitem'] && !$data['update']['valor']['bd']) {
-							$data['msg'] = '?m=2';
-							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-
-							$this->basico->erro($msg);
-							$this->load->view('produtos/form_valor', $data);
-						} else {
-
-							$data['msg'] = '?m=1';
-							//redirect(base_url() . 'produtos/tela_valor/' . $data['valor']['idTab_Valor'] . $data['msg']);
-							redirect(base_url() . 'produtos/tela_precos/' . $_SESSION['Valor']['idTab_Produtos'] . $data['msg']);
+					$convdesc1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($data['valor']['Convdesc'], $caracteres_sem_acento));		
 							
-							exit();
+					//$data['select']['AtivoPreco'] = $this->Basico_model->select_status_sn();
+					$data['select']['VendaSitePreco'] = $this->Basico_model->select_status_sn();
+					$data['select']['VendaBalcaoPreco'] = $this->Basico_model->select_status_sn();
+					$data['select']['TipoPreco'] = array(
+						'V' => 'Venda',
+						'R' => 'Revenda',
+					);		
+					
+					$data['titulo'] = 'Alterar Preço';
+					$data['form_open_path'] = 'produtos/alterar_valor';
+					$data['readonly'] = '';
+					$data['disabled'] = '';
+					$data['panel'] = 'primary';
+					$data['metodo'] = 7;
+
+					$data['sidebar'] = 'col-sm-3 col-md-2';
+					$data['main'] = 'col-sm-7 col-md-8';
+
+					$data['datepicker'] = 'DatePicker';
+					$data['timepicker'] = 'TimePicker';
+
+					$data['q_precos'] = $this->Produtos_model->list_precos($_SESSION['Valor'], TRUE);
+					$data['list_precos'] = $this->load->view('produtos/list_precos', $data, TRUE);
+					
+					$data['q_precos_promocoes'] = $this->Produtos_model->list_precos_promocoes($_SESSION['Valor'], TRUE);
+					$data['list_precos_promocoes'] = $this->load->view('produtos/list_precos_promocoes', $data, TRUE);			
+					
+					$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+					$this->form_validation->set_rules('idTab_Valor', 'Produto', 'required|trim');
+					$this->form_validation->set_rules('ValorProduto', 'Valor', 'required|trim');
+
+					#run form validation
+					if ($this->form_validation->run() === FALSE) {
+						$this->load->view('produtos/form_valor', $data);
+					
+					} else {
+						
+						if($this->Basico_model->get_dt_validade() === FALSE){
+							$data['msg'] = '?m=3';
+							redirect(base_url() . 'produtos/alterar_valor/' . $_SESSION['Valor']['idTab_Valor'] . $data['msg']);
+							
+						} else {
+											
+							////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
+							/*
+							echo '<br>';
+							echo "<pre>";
+							print_r($data['valor']);
+							echo "</pre>";
+							exit ();
+							*/
+							#### Tab_Valor ####
+							$data['valor']['Item_Promocao'] = "1";
+							$data['valor']['Desconto'] = 1;
+							$data['valor']['idTab_Promocao'] = 1;
+							$data['valor']['idTab_Produto'] = $_SESSION['Valor']['idTab_Produto'];
+							$data['valor']['idTab_Catprod'] = $_SESSION['Valor']['idTab_Catprod'];
+							$data['valor']['Convdesc'] = trim(mb_strtoupper($convdesc1, 'UTF-8'));	
+
+							if(empty($data['valor']['ValorProduto'])){
+								$data['valor']['ValorProduto'] = "0.00";
+							}else{
+								$data['valor']['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ValorProduto']));			
+							}
+							
+							if(empty($data['valor']['ComissaoVenda'])){
+								$data['valor']['ComissaoVenda'] = "0.00";
+							}else{
+								$data['valor']['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoVenda']));			
+							}			
+							
+							if(empty($data['valor']['ComissaoServico'])){
+								$data['valor']['ComissaoServico'] = "0.00";
+							}else{
+								$data['valor']['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoServico']));			
+							}			
+							
+							if(empty($data['valor']['ComissaoCashBack'])){
+								$data['valor']['ComissaoCashBack'] = "0.00";
+							}else{
+								$data['valor']['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['valor']['ComissaoCashBack']));			
+							}			
+							
+							if(empty($data['valor']['QtdProdutoDesconto'])){
+								$data['valor']['QtdProdutoDesconto'] = "1";
+							}
+										
+							if(empty($data['valor']['QtdProdutoIncremento'])){
+								$data['valor']['QtdProdutoIncremento'] = "1";
+							}
+										
+							if(empty($data['valor']['TempoDeEntrega'])){
+								$data['valor']['TempoDeEntrega'] = "0";
+							}
+							
+							$data['update']['valor']['anterior'] = $this->Produtos_model->get_valor($data['valor']['idTab_Valor']);
+							$data['update']['valor']['campos'] = array_keys($data['valor']);
+							$data['update']['valor']['auditoriaitem'] = $this->basico->set_log(
+								$data['update']['valor']['anterior'],
+								$data['valor'],
+								$data['update']['valor']['campos'],
+								$data['valor']['idTab_Valor'], TRUE);
+							$data['update']['valor']['bd'] = $this->Produtos_model->update_valor1($data['valor'], $data['valor']['idTab_Valor']);
+							
+							if ($data['auditoriaitem'] && !$data['update']['valor']['bd']) {
+								$data['msg'] = '?m=2';
+								$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+								$this->basico->erro($msg);
+								$this->load->view('produtos/form_valor', $data);
+							} else {
+
+								$data['msg'] = '?m=1';
+								//redirect(base_url() . 'produtos/tela_valor/' . $data['valor']['idTab_Valor'] . $data['msg']);
+								redirect(base_url() . 'produtos/tela_precos/' . $_SESSION['Valor']['idTab_Produtos'] . $data['msg']);
+								
+								exit();
+							}
 						}
 					}
 				}
 			}
-		}
+		
         $this->load->view('basico/footer');
 
     }
@@ -1739,30 +1660,7 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-		
-		if ($id) {
-            $verificacao = $this->Produtos_model->get_catprod_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			if(!$_SESSION['Catprod']){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}
-	
-		if($seguir === FALSE){
-			unset($_SESSION['Catprod']);
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
-			
-		} else {
-			
+
 			$data['catprod'] = $this->input->post(array(
 				'idTab_Catprod',
 			), TRUE);
@@ -1774,11 +1672,22 @@ class Produtos extends CI_Controller {
 			), TRUE);
 
 			if ($id) {
+				
 				$_SESSION['Catprod'] = $data['catprod'] = $this->Produtos_model->get_catprod($id, TRUE);
-				$data['file']['idTab_Catprod'] = $id;
+				
+				if($data['catprod'] === FALSE){
+					
+					unset($_SESSION['Catprod']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				} else {
+					$data['file']['idTab_Catprod'] = $id;
+				}
 			}
 			
-			if(!$data['catprod']['idTab_Catprod'] || $_SESSION['Catprod'] === FALSE){
+			if(!$data['catprod']['idTab_Catprod'] || !$_SESSION['Catprod']){
 				
 				unset($_SESSION['Catprod']);
 				$data['msg'] = '?m=3';
@@ -1808,118 +1717,122 @@ class Produtos extends CI_Controller {
 				if ($this->form_validation->run() === FALSE) {
 					#load login view
 					$this->load->view('produtos/form_catprod', $data);
-				}
-				else {
-
-					$config['upload_path'] = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/';
-					$config['max_size'] = 1000;
-					$config['allowed_types'] = ['jpg','jpeg','pjpeg','png','x-png'];
-					$config['file_name'] = $data['file']['Arquivo'];
-
-					$this->load->library('upload', $config);
-					if (!$this->upload->do_upload('Arquivo')) {
-						$data['msg'] = $this->basico->msg($this->upload->display_errors(), 'erro', FALSE, FALSE, FALSE);
-						$this->load->view('produtos/form_catprod', $data);
-					}
-					else {
-					
-						$dir = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/';		
-						$foto = $data['file']['Arquivo'];
-						$diretorio = $dir.$foto;					
-						$dir2 = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/';
-
-						switch($_FILES['Arquivo']['type']):
-							case 'image/jpg';
-							case 'image/jpeg';
-							case 'image/pjpeg';
+				} else {
 						
-								list($largura, $altura, $tipo) = getimagesize($diretorio);
-								
-								$img = imagecreatefromjpeg($diretorio);
+					if($this->Basico_model->get_dt_validade() === FALSE){
+						$data['msg'] = '?m=3';
+						redirect(base_url() . 'acesso' . $data['msg']);
+						
+					} else {
+						
+						$config['upload_path'] = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/';
+						$config['max_size'] = 1000;
+						$config['allowed_types'] = ['jpg','jpeg','pjpeg','png','x-png'];
+						$config['file_name'] = $data['file']['Arquivo'];
 
-								$thumb = imagecreatetruecolor(200, 200);
-								
-								imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
-								
-								imagejpeg($thumb, $dir2 . $foto);
-								imagedestroy($img);
-								imagedestroy($thumb);				      
-							
-							break;					
-
-							case 'image/png';
-							case 'image/x-png';
-
-								list($width, $height) = getimagesize($diretorio);
-								$newwidth = 200;
-								$newheight = 200;
-
-								$thumb = imagecreatetruecolor($newwidth, $newheight);
-								imagealphablending($thumb, false);
-								imagesavealpha($thumb, true);
-								$source = imagecreatefrompng($diretorio);
-								imagealphablending($source, true);
-								imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-								imagepng($thumb, $dir2 . $foto);
-								imagedestroy($thumb);
-								imagedestroy($source);						
-								
-							break;
-							
-						endswitch;			
-
-						$data['camposfile'] = array_keys($data['file']);
-						$data['file']['idSis_Empresa'] = $_SESSION['Empresa']['idSis_Empresa'];
-						$data['idSis_Arquivo'] = $this->Produtos_model->set_arquivo($data['file']);
-
-						if ($data['idSis_Arquivo'] === FALSE) {
-							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-							$this->basico->erro($msg);
+						$this->load->library('upload', $config);
+						if (!$this->upload->do_upload('Arquivo')) {
+							$data['msg'] = $this->basico->msg($this->upload->display_errors(), 'erro', FALSE, FALSE, FALSE);
 							$this->load->view('produtos/form_catprod', $data);
-						}
-						else {
+						} else {
+						
+							$dir = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/';		
+							$foto = $data['file']['Arquivo'];
+							$diretorio = $dir.$foto;					
+							$dir2 = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/';
 
-							$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['file'], $data['camposfile'], $data['idSis_Arquivo'], FALSE);
-							$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'idSis_Arquivo', 'CREATE', $data['auditoriaitem']);
+							switch($_FILES['Arquivo']['type']):
+								case 'image/jpg';
+								case 'image/jpeg';
+								case 'image/pjpeg';
 							
-							$data['catprod']['Arquivo'] = $data['file']['Arquivo'];
-							$data['anterior'] = $this->Produtos_model->get_catprod($data['catprod']['idTab_Catprod']);
-							$data['campos'] = array_keys($data['catprod']);
+									list($largura, $altura, $tipo) = getimagesize($diretorio);
+									
+									$img = imagecreatefromjpeg($diretorio);
 
-							$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['catprod'], $data['campos'], $data['catprod']['idTab_Catprod'], TRUE);
+									$thumb = imagecreatetruecolor(200, 200);
+									
+									imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
+									
+									imagejpeg($thumb, $dir2 . $foto);
+									imagedestroy($img);
+									imagedestroy($thumb);				      
+								
+								break;					
 
-							if ($data['auditoriaitem'] && $this->Produtos_model->update_catprod($data['catprod'], $data['catprod']['idTab_Catprod']) === FALSE) {
-								$data['msg'] = '?m=2';
-								redirect(base_url() . 'produtos/alterarlogocatprod/' . $data['catprod']['idTab_Catprod'] . $data['msg']);
-								exit();
+								case 'image/png';
+								case 'image/x-png';
+
+									list($width, $height) = getimagesize($diretorio);
+									$newwidth = 200;
+									$newheight = 200;
+
+									$thumb = imagecreatetruecolor($newwidth, $newheight);
+									imagealphablending($thumb, false);
+									imagesavealpha($thumb, true);
+									$source = imagecreatefrompng($diretorio);
+									imagealphablending($source, true);
+									imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+									imagepng($thumb, $dir2 . $foto);
+									imagedestroy($thumb);
+									imagedestroy($source);						
+									
+								break;
+								
+							endswitch;			
+
+							$data['camposfile'] = array_keys($data['file']);
+							$data['file']['idSis_Empresa'] = $_SESSION['Empresa']['idSis_Empresa'];
+							$data['idSis_Arquivo'] = $this->Produtos_model->set_arquivo($data['file']);
+
+							if ($data['idSis_Arquivo'] === FALSE) {
+								$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+								$this->basico->erro($msg);
+								$this->load->view('produtos/form_catprod', $data);
 							} else {
 
-								if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Catprod']['Arquivo'] . ''))
-									&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Catprod']['Arquivo'] . '')
-									!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/fotoproduto.jpg'))){
-									unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Catprod']['Arquivo'] . '');						
-								}
-								if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Catprod']['Arquivo'] . ''))
-									&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Catprod']['Arquivo'] . '')
-									!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/fotoproduto.jpg'))){
-									unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Catprod']['Arquivo'] . '');						
-								}						
+								$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['file'], $data['camposfile'], $data['idSis_Arquivo'], FALSE);
+								$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'idSis_Arquivo', 'CREATE', $data['auditoriaitem']);
 								
-								if ($data['auditoriaitem'] === FALSE) {
-									$data['msg'] = '';
-								} else {
-									$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Catprod', 'UPDATE', $data['auditoriaitem']);
-									$data['msg'] = '?m=1';
-								}
+								$data['catprod']['Arquivo'] = $data['file']['Arquivo'];
+								$data['anterior'] = $this->Produtos_model->get_catprod($data['catprod']['idTab_Catprod']);
+								$data['campos'] = array_keys($data['catprod']);
 
-								redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
-								exit();
-							}				
+								$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['catprod'], $data['campos'], $data['catprod']['idTab_Catprod'], TRUE);
+
+								if ($data['auditoriaitem'] && $this->Produtos_model->update_catprod($data['catprod'], $data['catprod']['idTab_Catprod']) === FALSE) {
+									$data['msg'] = '?m=2';
+									redirect(base_url() . 'produtos/alterarlogocatprod/' . $data['catprod']['idTab_Catprod'] . $data['msg']);
+									exit();
+								} else {
+
+									if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Catprod']['Arquivo'] . ''))
+										&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Catprod']['Arquivo'] . '')
+										!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/fotoproduto.jpg'))){
+										unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Catprod']['Arquivo'] . '');						
+									}
+									if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Catprod']['Arquivo'] . ''))
+										&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Catprod']['Arquivo'] . '')
+										!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/fotoproduto.jpg'))){
+										unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Catprod']['Arquivo'] . '');						
+									}						
+									
+									if ($data['auditoriaitem'] === FALSE) {
+										$data['msg'] = '';
+									} else {
+										$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Catprod', 'UPDATE', $data['auditoriaitem']);
+										$data['msg'] = '?m=1';
+									}
+
+									redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
+									exit();
+								}				
+							}
 						}
-					}
+					}	
 				}
 			}
-		}
+		
         $this->load->view('basico/footer');
     }
 	
@@ -1931,30 +1844,7 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-		
-		if ($id) {
-            $verificacao = $this->Produtos_model->get_produto_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			if(!$_SESSION['Produto']){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}
-	
-		if($seguir === FALSE){
-			unset($_SESSION['Produto']);
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
-			
-		} else {
-			
+
 			$data['query'] = $this->input->post(array(
 				'idTab_Produto',
 			), TRUE);
@@ -1966,13 +1856,24 @@ class Produtos extends CI_Controller {
 			), TRUE);
 
 			if ($id) {
+				
 				$_SESSION['Produto'] = $data['query'] = $this->Produtos_model->get_produto($id, TRUE);
-				$data['file']['idTab_Produto'] = $id;
+			
+				if($data['query'] === FALSE){
+					
+					unset($_SESSION['Produto']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				} else {
+					$data['file']['idTab_Produto'] = $id;
+				}
 			}
 			
-			if(!$data['query']['idTab_Produto'] || $_SESSION['Produto'] === FALSE){
+			if(!$data['query']['idTab_Produto'] || !$_SESSION['Produto']){
 				
-				unset($_SESSION['Catprod']);
+				unset($_SESSION['Produto']);
 				$data['msg'] = '?m=3';
 				redirect(base_url() . 'acesso' . $data['msg']);
 				exit();
@@ -2000,118 +1901,122 @@ class Produtos extends CI_Controller {
 				if ($this->form_validation->run() === FALSE) {
 					#load login view
 					$this->load->view('produtos/form_perfil', $data);
-				}
-				else {
-
-					$config['upload_path'] = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/';
-					$config['max_size'] = 1000;
-					$config['allowed_types'] = ['jpg','jpeg','pjpeg','png','x-png'];
-					$config['file_name'] = $data['file']['Arquivo'];
-
-					$this->load->library('upload', $config);
-					if (!$this->upload->do_upload('Arquivo')) {
-						$data['msg'] = $this->basico->msg($this->upload->display_errors(), 'erro', FALSE, FALSE, FALSE);
-						$this->load->view('produtos/form_perfil', $data);
-					}
-					else {
-					
-						$dir = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/';		
-						$foto = $data['file']['Arquivo'];
-						$diretorio = $dir.$foto;					
-						$dir2 = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/';
-
-						switch($_FILES['Arquivo']['type']):
-							case 'image/jpg';
-							case 'image/jpeg';
-							case 'image/pjpeg';
+				} else {
 						
-								list($largura, $altura, $tipo) = getimagesize($diretorio);
-								
-								$img = imagecreatefromjpeg($diretorio);
+					if($this->Basico_model->get_dt_validade() === FALSE){
+						$data['msg'] = '?m=3';
+						redirect(base_url() . 'acesso' . $data['msg']);
+						
+					} else {
+						
+						$config['upload_path'] = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/';
+						$config['max_size'] = 1000;
+						$config['allowed_types'] = ['jpg','jpeg','pjpeg','png','x-png'];
+						$config['file_name'] = $data['file']['Arquivo'];
 
-								$thumb = imagecreatetruecolor(200, 200);
-								
-								imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
-								
-								imagejpeg($thumb, $dir2 . $foto);
-								imagedestroy($img);
-								imagedestroy($thumb);				      
-							
-							break;					
-
-							case 'image/png';
-							case 'image/x-png';
-
-								list($width, $height) = getimagesize($diretorio);
-								$newwidth = 200;
-								$newheight = 200;
-
-								$thumb = imagecreatetruecolor($newwidth, $newheight);
-								imagealphablending($thumb, false);
-								imagesavealpha($thumb, true);
-								$source = imagecreatefrompng($diretorio);
-								imagealphablending($source, true);
-								imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-								imagepng($thumb, $dir2 . $foto);
-								imagedestroy($thumb);
-								imagedestroy($source);						
-								
-							break;
-							
-						endswitch;			
-
-						$data['camposfile'] = array_keys($data['file']);
-						$data['file']['idSis_Empresa'] = $_SESSION['Empresa']['idSis_Empresa'];
-						$data['idSis_Arquivo'] = $this->Produtos_model->set_arquivo($data['file']);
-
-						if ($data['idSis_Arquivo'] === FALSE) {
-							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-							$this->basico->erro($msg);
+						$this->load->library('upload', $config);
+						if (!$this->upload->do_upload('Arquivo')) {
+							$data['msg'] = $this->basico->msg($this->upload->display_errors(), 'erro', FALSE, FALSE, FALSE);
 							$this->load->view('produtos/form_perfil', $data);
-						}
-						else {
+						} else {
+						
+							$dir = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/';		
+							$foto = $data['file']['Arquivo'];
+							$diretorio = $dir.$foto;					
+							$dir2 = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/';
 
-							$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['file'], $data['camposfile'], $data['idSis_Arquivo'], FALSE);
-							$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'idSis_Arquivo', 'CREATE', $data['auditoriaitem']);
+							switch($_FILES['Arquivo']['type']):
+								case 'image/jpg';
+								case 'image/jpeg';
+								case 'image/pjpeg';
 							
-							$data['query']['Arquivo'] = $data['file']['Arquivo'];
-							$data['anterior'] = $this->Produtos_model->get_produto($data['query']['idTab_Produto']);
-							$data['campos'] = array_keys($data['query']);
+									list($largura, $altura, $tipo) = getimagesize($diretorio);
+									
+									$img = imagecreatefromjpeg($diretorio);
 
-							$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_Produto'], TRUE);
+									$thumb = imagecreatetruecolor(200, 200);
+									
+									imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
+									
+									imagejpeg($thumb, $dir2 . $foto);
+									imagedestroy($img);
+									imagedestroy($thumb);				      
+								
+								break;					
 
-							if ($data['auditoriaitem'] && $this->Produtos_model->update_produto($data['query'], $data['query']['idTab_Produto']) === FALSE) {
-								$data['msg'] = '?m=2';
-								redirect(base_url() . 'produtos/alterarlogo/' . $data['query']['idTab_Produto'] . $data['msg']);
-								exit();
+								case 'image/png';
+								case 'image/x-png';
+
+									list($width, $height) = getimagesize($diretorio);
+									$newwidth = 200;
+									$newheight = 200;
+
+									$thumb = imagecreatetruecolor($newwidth, $newheight);
+									imagealphablending($thumb, false);
+									imagesavealpha($thumb, true);
+									$source = imagecreatefrompng($diretorio);
+									imagealphablending($source, true);
+									imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+									imagepng($thumb, $dir2 . $foto);
+									imagedestroy($thumb);
+									imagedestroy($source);						
+									
+								break;
+								
+							endswitch;			
+
+							$data['camposfile'] = array_keys($data['file']);
+							$data['file']['idSis_Empresa'] = $_SESSION['Empresa']['idSis_Empresa'];
+							$data['idSis_Arquivo'] = $this->Produtos_model->set_arquivo($data['file']);
+
+							if ($data['idSis_Arquivo'] === FALSE) {
+								$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+								$this->basico->erro($msg);
+								$this->load->view('produtos/form_perfil', $data);
 							} else {
 
-								if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Produto']['Arquivo'] . ''))
-									&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Produto']['Arquivo'] . '')
-									!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/fotoproduto.jpg'))){
-									unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Produto']['Arquivo'] . '');						
-								}
-								if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Produto']['Arquivo'] . ''))
-									&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Produto']['Arquivo'] . '')
-									!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/fotoproduto.jpg'))){
-									unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Produto']['Arquivo'] . '');						
-								}						
+								$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['file'], $data['camposfile'], $data['idSis_Arquivo'], FALSE);
+								$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'idSis_Arquivo', 'CREATE', $data['auditoriaitem']);
 								
-								if ($data['auditoriaitem'] === FALSE) {
-									$data['msg'] = '';
-								} else {
-									$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produto', 'UPDATE', $data['auditoriaitem']);
-									$data['msg'] = '?m=1';
-								}
+								$data['query']['Arquivo'] = $data['file']['Arquivo'];
+								$data['anterior'] = $this->Produtos_model->get_produto($data['query']['idTab_Produto']);
+								$data['campos'] = array_keys($data['query']);
 
-								redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
-								exit();
-							}				
+								$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_Produto'], TRUE);
+
+								if ($data['auditoriaitem'] && $this->Produtos_model->update_produto($data['query'], $data['query']['idTab_Produto']) === FALSE) {
+									$data['msg'] = '?m=2';
+									redirect(base_url() . 'produtos/alterarlogo/' . $data['query']['idTab_Produto'] . $data['msg']);
+									exit();
+								} else {
+
+									if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Produto']['Arquivo'] . ''))
+										&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Produto']['Arquivo'] . '')
+										!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/fotoproduto.jpg'))){
+										unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Produto']['Arquivo'] . '');						
+									}
+									if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Produto']['Arquivo'] . ''))
+										&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Produto']['Arquivo'] . '')
+										!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/fotoproduto.jpg'))){
+										unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Produto']['Arquivo'] . '');						
+									}						
+									
+									if ($data['auditoriaitem'] === FALSE) {
+										$data['msg'] = '';
+									} else {
+										$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produto', 'UPDATE', $data['auditoriaitem']);
+										$data['msg'] = '?m=1';
+									}
+
+									redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
+									exit();
+								}				
+							}
 						}
 					}
 				}
 			}
-		}
+		
         $this->load->view('basico/footer');
     }
 
@@ -2123,30 +2028,7 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-		
-		if ($id) {
-            $verificacao = $this->Produtos_model->get_produtosderivados_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			if(!$_SESSION['Derivados']){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}
-	
-		if($seguir === FALSE){
-			unset($_SESSION['Derivados']);
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
-			
-		} else {
-			
+
 			$data['derivado'] = $this->input->post(array(
 				'idTab_Produtos',
 			), TRUE);
@@ -2158,13 +2040,24 @@ class Produtos extends CI_Controller {
 			), TRUE);
 
 			if ($id) {
+				
 				$_SESSION['Derivados'] = $data['derivado'] = $this->Produtos_model->get_produtosderivados($id, TRUE);
-				$data['file']['idTab_Produtos'] = $id;
+			
+				if($data['derivado'] === FALSE){
+					
+					unset($_SESSION['Derivados']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				} else {
+					$data['file']['idTab_Produtos'] = $id;
+				}
 			}
 			
-			if(!$data['derivado']['idTab_Produtos'] || $_SESSION['Derivados'] === FALSE){
+			if(!$data['derivado']['idTab_Produtos'] || !$_SESSION['Derivados']){
 				
-				unset($_SESSION['Catprod']);
+				unset($_SESSION['Derivados']);
 				$data['msg'] = '?m=3';
 				redirect(base_url() . 'acesso' . $data['msg']);
 				exit();
@@ -2197,119 +2090,123 @@ class Produtos extends CI_Controller {
 				if ($this->form_validation->run() === FALSE) {
 					#load login view
 					$this->load->view('produtos/form_derivado', $data);
-				}
-				else {
-
-					$config['upload_path'] = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/';
-					$config['max_size'] = 1000;
-					$config['allowed_types'] = ['jpg','jpeg','pjpeg','png','x-png'];
-					$config['file_name'] = $data['file']['Arquivo'];
-
-					$this->load->library('upload', $config);
-					if (!$this->upload->do_upload('Arquivo')) {
-						$data['msg'] = $this->basico->msg($this->upload->display_errors(), 'erro', FALSE, FALSE, FALSE);
-						$this->load->view('produtos/form_derivado', $data);
-					}
-					else {
-					
-						$dir = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/';		
-						$foto = $data['file']['Arquivo'];
-						$diretorio = $dir.$foto;					
-						$dir2 = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/';
-
-						switch($_FILES['Arquivo']['type']):
-							case 'image/jpg';
-							case 'image/jpeg';
-							case 'image/pjpeg';
+				} else {
 						
-								list($largura, $altura, $tipo) = getimagesize($diretorio);
-								
-								$img = imagecreatefromjpeg($diretorio);
-
-								$thumb = imagecreatetruecolor(200, 200);
-								
-								imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
-								
-								imagejpeg($thumb, $dir2 . $foto);
-								imagedestroy($img);
-								imagedestroy($thumb);				      
-							
-							break;					
-
-							case 'image/png';
-							case 'image/x-png';
-
-								list($width, $height) = getimagesize($diretorio);
-								$newwidth = 200;
-								$newheight = 200;
-
-								$thumb = imagecreatetruecolor($newwidth, $newheight);
-								imagealphablending($thumb, false);
-								imagesavealpha($thumb, true);
-								$source = imagecreatefrompng($diretorio);
-								imagealphablending($source, true);
-								imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-								imagepng($thumb, $dir2 . $foto);
-								imagedestroy($thumb);
-								imagedestroy($source);						
-								
-							break;
-							
-						endswitch;
+					if($this->Basico_model->get_dt_validade() === FALSE){
+						$data['msg'] = '?m=3';
+						redirect(base_url() . 'acesso' . $data['msg']);
 						
-						$data['camposfile'] = array_keys($data['file']);
-						$data['file']['idSis_Empresa'] = $_SESSION['Empresa']['idSis_Empresa'];
-						$data['idSis_Arquivo'] = $this->Produtos_model->set_arquivo($data['file']);
+					} else {
+						
+						$config['upload_path'] = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/';
+						$config['max_size'] = 1000;
+						$config['allowed_types'] = ['jpg','jpeg','pjpeg','png','x-png'];
+						$config['file_name'] = $data['file']['Arquivo'];
 
-						if ($data['idSis_Arquivo'] === FALSE) {
-							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-							$this->basico->erro($msg);
+						$this->load->library('upload', $config);
+						if (!$this->upload->do_upload('Arquivo')) {
+							$data['msg'] = $this->basico->msg($this->upload->display_errors(), 'erro', FALSE, FALSE, FALSE);
 							$this->load->view('produtos/form_derivado', $data);
-						}
-						else {
+						} else {
+						
+							$dir = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/';		
+							$foto = $data['file']['Arquivo'];
+							$diretorio = $dir.$foto;					
+							$dir2 = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/';
 
-							$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['file'], $data['camposfile'], $data['idSis_Arquivo'], FALSE);
-							$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'idSis_Arquivo', 'CREATE', $data['auditoriaitem']);
+							switch($_FILES['Arquivo']['type']):
+								case 'image/jpg';
+								case 'image/jpeg';
+								case 'image/pjpeg';
 							
-							$data['derivado']['Arquivo'] = $data['file']['Arquivo'];
-							$data['anterior'] = $this->Produtos_model->get_produtosderivados($data['derivado']['idTab_Produtos']);
-							$data['campos'] = array_keys($data['derivado']);
+									list($largura, $altura, $tipo) = getimagesize($diretorio);
+									
+									$img = imagecreatefromjpeg($diretorio);
 
-							$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['derivado'], $data['campos'], $data['derivado']['idTab_Produtos'], TRUE);
+									$thumb = imagecreatetruecolor(200, 200);
+									
+									imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
+									
+									imagejpeg($thumb, $dir2 . $foto);
+									imagedestroy($img);
+									imagedestroy($thumb);				      
+								
+								break;					
 
-							if ($data['auditoriaitem'] && $this->Produtos_model->update_produtosderivados($data['derivado'], $data['derivado']['idTab_Produtos']) === FALSE) {
-								$data['msg'] = '?m=2';
-								redirect(base_url() . 'produtos/form_derivado/' . $data['derivado']['idTab_Produtos'] . $data['msg']);
-								exit();
+								case 'image/png';
+								case 'image/x-png';
+
+									list($width, $height) = getimagesize($diretorio);
+									$newwidth = 200;
+									$newheight = 200;
+
+									$thumb = imagecreatetruecolor($newwidth, $newheight);
+									imagealphablending($thumb, false);
+									imagesavealpha($thumb, true);
+									$source = imagecreatefrompng($diretorio);
+									imagealphablending($source, true);
+									imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+									imagepng($thumb, $dir2 . $foto);
+									imagedestroy($thumb);
+									imagedestroy($source);						
+									
+								break;
+								
+							endswitch;
+							
+							$data['camposfile'] = array_keys($data['file']);
+							$data['file']['idSis_Empresa'] = $_SESSION['Empresa']['idSis_Empresa'];
+							$data['idSis_Arquivo'] = $this->Produtos_model->set_arquivo($data['file']);
+
+							if ($data['idSis_Arquivo'] === FALSE) {
+								$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+								$this->basico->erro($msg);
+								$this->load->view('produtos/form_derivado', $data);
 							} else {
 
-								if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Derivados']['Arquivo'] . ''))
-									&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Derivados']['Arquivo'] . '')
-									!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/fotoproduto.jpg'))){
-									unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Derivados']['Arquivo'] . '');						
-								}
-								if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Derivados']['Arquivo'] . ''))
-									&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Derivados']['Arquivo'] . '')
-									!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/fotoproduto.jpg'))){
-									unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Derivados']['Arquivo'] . '');						
-								}						
+								$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['file'], $data['camposfile'], $data['idSis_Arquivo'], FALSE);
+								$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'idSis_Arquivo', 'CREATE', $data['auditoriaitem']);
 								
-								if ($data['auditoriaitem'] === FALSE) {
-									$data['msg'] = '';
-								} else {
-									$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'UPDATE', $data['auditoriaitem']);
-									$data['msg'] = '?m=1';
-								}
+								$data['derivado']['Arquivo'] = $data['file']['Arquivo'];
+								$data['anterior'] = $this->Produtos_model->get_produtosderivados($data['derivado']['idTab_Produtos']);
+								$data['campos'] = array_keys($data['derivado']);
 
-								//redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
-								redirect(base_url() . 'produtos/tela/' . $data['derivado']['idTab_Produtos'] . $data['msg']);
-								exit();
-							}				
+								$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['derivado'], $data['campos'], $data['derivado']['idTab_Produtos'], TRUE);
+
+								if ($data['auditoriaitem'] && $this->Produtos_model->update_produtosderivados($data['derivado'], $data['derivado']['idTab_Produtos']) === FALSE) {
+									$data['msg'] = '?m=2';
+									redirect(base_url() . 'produtos/form_derivado/' . $data['derivado']['idTab_Produtos'] . $data['msg']);
+									exit();
+								} else {
+
+									if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Derivados']['Arquivo'] . ''))
+										&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Derivados']['Arquivo'] . '')
+										!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/fotoproduto.jpg'))){
+										unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/original/' . $_SESSION['Derivados']['Arquivo'] . '');						
+									}
+									if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Derivados']['Arquivo'] . ''))
+										&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Derivados']['Arquivo'] . '')
+										!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/fotoproduto.jpg'))){
+										unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $_SESSION['Derivados']['Arquivo'] . '');						
+									}						
+									
+									if ($data['auditoriaitem'] === FALSE) {
+										$data['msg'] = '';
+									} else {
+										$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'UPDATE', $data['auditoriaitem']);
+										$data['msg'] = '?m=1';
+									}
+
+									//redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
+									redirect(base_url() . 'produtos/tela/' . $data['derivado']['idTab_Produtos'] . $data['msg']);
+									exit();
+								}				
+							}
 						}
-					}
+					}	
 				}
 			}
-		}
+		
         $this->load->view('basico/footer');
     }
 	
@@ -2322,38 +2219,79 @@ class Produtos extends CI_Controller {
         else
             $data['msg'] = '';
 
-		if ($id) {
-            $verificacao = $this->Produtos_model->get_produtos_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			$seguir = FALSE;
-		}
-	
-		if($seguir === FALSE){
+		if (!$id) {
+
 			unset($_SESSION['Produtos']);
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 			
 		} else {
-			
-			$this->Produtos_model->delete_produtos($id);
+				
+			#### Tab_Produtos ####
+			$_SESSION['Produtos'] = $data['produtos'] = $this->Produtos_model->get_produtos($id);
+		
+			if($data['produtos'] === FALSE){
+				
+				unset($_SESSION['Produtos']);
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'acesso' . $data['msg']);
+				exit();
+				
+			} else {
+						
+				if($this->Basico_model->get_dt_validade() === FALSE){
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					
+				} else {
+					
+					#### Busca Se o produto já foi usado###
+					$data['usado'] = $this->Produtos_model->get_app_produto($_SESSION['Produtos']);
+					if (isset($data['usado'])){
+						$max_produto = count($data['usado']);
+						if($max_produto >= 1){
+							$data['usado']['produto'] = "S";
+						}else{
+							$data['usado']['produto'] = "N";
+						}
+					}
+					#### Busca Se o produto pertence a promoções###
+					$data['promocao'] = $this->Produtos_model->get_tab_valor($_SESSION['Produtos']);
+					if (isset($data['promocao'])){
+						$max_promocao = count($data['promocao']);
+						if($max_promocao >= 1){
+							$data['promocao']['produto'] = "S";
+						}else{
+							$data['promocao']['produto'] = "N";
+						}
+					}	
 
-			$data['msg'] = '?m=1';
+					if($data['usado']['produto'] == "S" || $data['promocao']['produto'] == "S"){
+					
+						unset($_SESSION['Produtos']);
+						$data['msg'] = '?m=3';
+						redirect(base_url() . 'acesso' . $data['msg']);
+						exit();
+					
+					}else{
+						$this->Produtos_model->delete_produtos($id);
 
-			unset($_SESSION['Produtos']);
-			unset($_SESSION['Atributo']);
-			#redirect(base_url() . 'produtos/listar/' . $data['msg']);
-			redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
-			exit();
+						$data['msg'] = '?m=1';
+
+						unset($_SESSION['Produtos']);
+						unset($_SESSION['Atributo']);
+
+						redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
+						exit();
+					}
+				}	
+			}
 		}
         $this->load->view('basico/footer');
     }
 
+/*	
     public function listar($id = NULL) {
 
         if ($this->input->get('m') == 1)
@@ -2371,12 +2309,6 @@ class Produtos extends CI_Controller {
 
         //$data['aprovado'] = array();
         //$data['naoaprovado'] = array();
-        /*
-          echo "<pre>";
-          print_r($data['query']);
-          echo "</pre>";
-          exit();
-         */
 
         $data['list'] = $this->load->view('produtos/list_produtos', $data, TRUE);
        # $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
@@ -2385,7 +2317,8 @@ class Produtos extends CI_Controller {
 
         $this->load->view('basico/footer');
     }
-
+*/
+/*
     public function listarBKP($id = NULL) {
 
         if ($this->input->get('m') == 1)
@@ -2399,12 +2332,7 @@ class Produtos extends CI_Controller {
         //$_SESSION['Produtos'] = $this->Produtos_model->get_cliente($id, TRUE);
         #$_SESSION['Produtos']['idApp_Cliente'] = $id;
         $data['query'] = $this->Produtos_model->list_produtos(TRUE, TRUE);
-        /*
-          echo "<pre>";
-          print_r($data['query']);
-          echo "</pre>";
-          exit();
-         */
+
         if (!$data['query'])
             $data['list'] = FALSE;
         else
@@ -2416,5 +2344,5 @@ class Produtos extends CI_Controller {
 
         $this->load->view('basico/footer');
     }
-
+*/
 }
