@@ -7499,7 +7499,7 @@ exit();*/
         $filtro6 = ($data['Prioridade'] != '0') ? 'P.Prioridade = "' . $data['Prioridade'] . '" AND ' : FALSE;		
 		$filtro11 = ($data['Statustarefa'] != '0') ? 'P.Statustarefa = "' . $data['Statustarefa'] . '" AND ' : FALSE;
 		$filtro12 = ($data['Statussubtarefa'] != '0') ? 'SP.Statussubtarefa = "' . $data['Statussubtarefa'] . '" AND ' : FALSE;
-		$filtro9 = ($data['Categoria'] != '0') ? 'P.Categoria = "' . $data['Categoria'] . '" AND ' : FALSE;
+		$filtro9 = ($data['idTab_Categoria'] != '0') ? 'P.idTab_Categoria = "' . $data['idTab_Categoria'] . '" AND ' : FALSE;
 		$filtro8 = (($data['ConcluidoSubTarefa'] != '0') && ($data['ConcluidoSubTarefa'] != 'M')) ? 'SP.ConcluidoSubTarefa = "' . $data['ConcluidoSubTarefa'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ConcluidoSubTarefa'] == 'M') ? '((SP.ConcluidoSubTarefa = "S") OR (SP.ConcluidoSubTarefa = "N")) AND ' : FALSE;
 		$filtro10 = ($data['SubPrioridade'] != '0') ? 'SP.Prioridade = "' . $data['SubPrioridade'] . '" AND ' : FALSE;
@@ -7554,7 +7554,7 @@ exit();*/
 					LEFT JOIN Sis_Usuario AS AU ON AU.idSis_Usuario = P.Compartilhar
 					LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = P.idSis_Empresa
 					LEFT JOIN Tab_StatusSN AS SN ON SN.Abrev = P.ConcluidoTarefa
-					LEFT JOIN Tab_Categoria AS CT ON CT.idTab_Categoria = P.Categoria
+					LEFT JOIN Tab_Categoria AS CT ON CT.idTab_Categoria = P.idTab_Categoria
             WHERE
 				' . $permissao . '
 				' . $filtro4 . '
@@ -7562,8 +7562,7 @@ exit();*/
 				' . $filtro3 . '
 				' . $filtro8 . '
 				(' . $consulta . ') AND
-				(
-				(P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				((P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				(P.Compartilhar = ' . $_SESSION['log']['idSis_Usuario'] . ' OR P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' ' . $permissao2 . '))) AND
 				P.idApp_OrcaTrata = "0" AND
 				P.idApp_Cliente = "0" AND
@@ -9038,9 +9037,8 @@ exit();*/
                 Tab_Categoria AS C
 					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = C.idSis_Usuario
             WHERE
-				U.CelularUsuario = ' . $_SESSION['log']['CelularUsuario'] . ' OR
-				(C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-				C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' )
+				' . $permissao . '
+				C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
             ORDER BY
                 C.Categoria ASC
         ');

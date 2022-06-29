@@ -38,6 +38,49 @@ class Tarefa_model extends CI_Model {
     }
 
     public function get_tarefa($data) {
+		
+		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5) ? 'PC.Compartilhar = ' . $_SESSION['log']['idSis_Usuario'] . ' AND' : FALSE;
+		$permissao200 = ($_SESSION['log']['idSis_Empresa'] != 5) ? 'OR PC.Compartilhar = 0' : FALSE;
+		
+        $query = $this->db->query('
+			SELECT
+				PC.*,
+				PC.Compartilhar,
+				CT.*,
+				
+				US.idSis_Usuario AS Compartilhar,
+				US.CelularUsuario AS CelularCompartilhou,
+				US.Nome AS NomeCompartilhar,
+				
+				PC.idSis_Usuario AS idSis_Usuario,
+				USC.CelularUsuario AS CelularCadastrou,
+				USC.Nome AS NomeCadastrou
+			FROM 
+				App_Tarefa AS PC
+					LEFT JOIN Tab_Categoria AS CT ON CT.idTab_Categoria = PC.idTab_Categoria
+					LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = PC.Compartilhar
+					LEFT JOIN Sis_Usuario AS USC ON USC.idSis_Usuario = PC.idSis_Usuario
+			WHERE 
+				' . $permissao . '
+				PC.idApp_Tarefa = ' . $data . ' AND
+				PC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				(PC.Compartilhar = ' . $_SESSION['log']['idSis_Usuario'] . ' OR PC.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' ' . $permissao200 . ') 
+		');
+		
+		foreach ($query->result() as $row) {
+			
+		}
+
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
+
+    }
+
+    public function get_tarefa_original($data) {
         $query = $this->db->query('
 			SELECT
 				PC.*,
@@ -156,12 +199,12 @@ class Tarefa_model extends CI_Model {
 		$filtro8 = ($data['ConcluidoSubTarefa']) ? 'SP.ConcluidoSubTarefa = "' . $data['ConcluidoSubTarefa'] . '" AND ' : FALSE;
 		$filtro6 = ($data['Prioridade']) ? 'P.Prioridade = "' . $data['Prioridade'] . '" AND ' : FALSE;
 		$filtro10 = ($data['SubPrioridade']) ? 'SP.Prioridade = "' . $data['SubPrioridade'] . '" AND ' : FALSE;
-		$filtro9 = ($data['Categoria']) ? 'P.Categoria = "' . $data['Categoria'] . '" AND ' : FALSE;
+		$filtro9 = ($data['idTab_Categoria']) ? 'P.idTab_Categoria = "' . $data['idTab_Categoria'] . '" AND ' : FALSE;
 		$filtro11 = ($data['Statustarefa']) ? 'P.Statustarefa = "' . $data['Statustarefa'] . '" AND ' : FALSE;
 		$filtro12 = ($data['Statussubtarefa']) ? 'SP.Statussubtarefa = "' . $data['Statussubtarefa'] . '" AND ' : FALSE;
 		#$filtro5 = ($data['ConcluidoTarefa'] != '0') ? 'P.ConcluidoTarefa = "' . $data['ConcluidoTarefa'] . '" AND ' : FALSE;
         #$filtro6 = ($data['Prioridade'] != '0') ? 'P.Prioridade = "' . $data['Prioridade'] . '" AND ' : FALSE;		
-		#$filtro9 = ($data['Categoria'] != '0') ? 'P.Categoria = "' . $data['Categoria'] . '" AND ' : FALSE;		
+		#$filtro9 = ($data['idTab_Categoria'] != '0') ? 'P.idTab_Categoria = "' . $data['idTab_Categoria'] . '" AND ' : FALSE;		
 		#$filtro8 = (($data['ConcluidoSubTarefa'] != '0') && ($data['ConcluidoSubTarefa'] != 'M')) ? 'SP.ConcluidoSubTarefa = "' . $data['ConcluidoSubTarefa'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ConcluidoSubTarefa'] == 'M') ? '((SP.ConcluidoSubTarefa = "S") OR (SP.ConcluidoSubTarefa = "N")) AND ' : FALSE;		
 		$data['ConcluidoTarefa'] = ($data['ConcluidoTarefa'] != '') ? ' AND P.ConcluidoTarefa = ' . $data['ConcluidoTarefa'] : FALSE;
@@ -205,7 +248,7 @@ class Tarefa_model extends CI_Model {
 					LEFT JOIN Sis_Usuario AS AU ON AU.idSis_Usuario = P.Compartilhar
 					LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = P.idSis_Empresa
 					LEFT JOIN Tab_StatusSN AS SN ON SN.Abrev = P.ConcluidoTarefa
-					LEFT JOIN Tab_Categoria AS CT ON CT.idTab_Categoria = P.Categoria
+					LEFT JOIN Tab_Categoria AS CT ON CT.idTab_Categoria = P.idTab_Categoria
             WHERE
 				' . $permissao . '
 				' . $date_inicio_proc . '
@@ -654,15 +697,6 @@ class Tarefa_model extends CI_Model {
 
     public function delete_tarefa($id) {
 
-        /*
-        $tables = array('App_ServicoVenda', 'App_ProdutoVenda', 'App_ParcelasRecebiveis', 'App_SubTarefa', 'App_Tarefa');
-        $this->db->where('idApp_Tarefa', $id);
-        $this->db->delete($tables);
-        */
-
-        #$query = $this->db->delete('App_ServicoVenda', array('idApp_Tarefa' => $id));
-        #$query = $this->db->delete('App_ProdutoVenda', array('idApp_Tarefa' => $id));
-        #$query = $this->db->delete('App_ParcelasRecebiveis', array('idApp_Tarefa' => $id));
         $query = $this->db->delete('App_SubTarefa', array('idApp_Tarefa' => $id));
         $query = $this->db->delete('App_Tarefa', array('idApp_Tarefa' => $id));
 
@@ -993,7 +1027,7 @@ class Tarefa_model extends CI_Model {
 
 	public function select_tarefa() {
 
-		$permissao1 = (($_SESSION['FiltroAlteraTarefa']['Categoria'] != "0" ) && ($_SESSION['FiltroAlteraTarefa']['Categoria'] != '' )) ? 'P.Categoria = "' . $_SESSION['FiltroAlteraTarefa']['Categoria'] . '" AND ' : FALSE;
+		$permissao1 = (($_SESSION['FiltroAlteraTarefa']['idTab_Categoria'] != "0" ) && ($_SESSION['FiltroAlteraTarefa']['idTab_Categoria'] != '' )) ? 'P.idTab_Categoria = "' . $_SESSION['FiltroAlteraTarefa']['idTab_Categoria'] . '" AND ' : FALSE;
 		$permissao2 = (($_SESSION['FiltroAlteraTarefa']['ConcluidoTarefa'] != "0" ) && ($_SESSION['FiltroAlteraTarefa']['ConcluidoTarefa'] != '' )) ? 'P.ConcluidoTarefa = "' . $_SESSION['FiltroAlteraTarefa']['ConcluidoTarefa'] . '" AND ' : FALSE;
 		$permissao3 = (($_SESSION['FiltroAlteraTarefa']['Prioridade'] != "0" ) && ($_SESSION['FiltroAlteraTarefa']['Prioridade'] != '' )) ? 'P.Prioridade = "' . $_SESSION['FiltroAlteraTarefa']['Prioridade'] . '" AND ' : FALSE;
 		$permissao6 = (($_SESSION['FiltroAlteraTarefa']['Statustarefa'] != "0" ) && ($_SESSION['FiltroAlteraTarefa']['Statustarefa'] != '' )) ? 'P.Statustarefa = "' . $_SESSION['FiltroAlteraTarefa']['Statustarefa'] . '" AND ' : FALSE;

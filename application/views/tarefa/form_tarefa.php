@@ -18,7 +18,7 @@
 		-->
 		<div class="col-md-1"></div>
 		<div class="col-md-10 ">
-			<?php #echo validation_errors(); ?>
+			<?php echo validation_errors(); ?>
 
 			<div class="panel panel-<?php echo $panel; ?>">
 
@@ -54,20 +54,20 @@
 									<div class="col-md-4">
 										<label  for="Tarefa">Tarefa:</label>
 										<textarea class="form-control" id="Tarefa" <?php echo $readonly; ?> maxlength="200"
-												  name="Tarefa"><?php echo $tarefa['Tarefa']; ?></textarea>
+												  autofocus  name="Tarefa"><?php echo $tarefa['Tarefa']; ?></textarea>
 										<?php echo form_error('Tarefa'); ?>
 									</div>
 									<?php if ($metodo == 1) { ?>
 										<div class="col-md-4">
 											<div class="row">
 												<div class="col-md-12 " >
-													<label for="Categoria">Categoria:</label>
+													<label for="idTab_Categoria">Categoria:</label>
 													<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
-															id="Categoria" autofocus name="Categoria">
+															id="idTab_Categoria" name="idTab_Categoria">
 														<option value="">- Selec. Categoria -</option>	
 														<?php
-														foreach ($select['Categoria'] as $key => $row) {
-															if ($tarefa['Categoria'] == $key) {
+														foreach ($select['idTab_Categoria'] as $key => $row) {
+															if ($tarefa['idTab_Categoria'] == $key) {
 																echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 															} else {
 																echo '<option value="' . $key . '">' . $row . '</option>';
@@ -107,7 +107,7 @@
 														?>
 
 													</div>
-													<?php echo form_error('Categoria'); ?>
+													<?php echo form_error('idTab_Categoria '); ?>
 												</div>
 											</div>	
 											<div id="Cadastrar" <?php echo $div['Cadastrar']; ?>>	
@@ -136,10 +136,10 @@
 										</div>
 									<?php } elseif ($metodo == 2) { ?>
 										<div class="col-md-4">
-											<input type="hidden" name="Categoria" id="Categoria" value="<?php echo $tarefa['Categoria']; ?>"/>
+											<!--<input type="hidden" name="idTab_Categoria" id="idTab_Categoria" value="<?php #echo $tarefa['idTab_Categoria']; ?>"/>-->
 											<input type="hidden" name="Cadastrar" id="Cadastrar" value="S">
-											<label for="Categoria">Categoria</label>
-											<input type="text" class="form-control" readonly="" value="<?php echo $_SESSION['Tarefa']['NomeCategoria']; ?>"/>
+											<label for="idTab_Categoria">Categoria</label>
+											<input type="text" class="form-control" readonly="" value="<?php echo $_SESSION['Tarefa']['Categoria']; ?>"/>
 										</div>
 									<?php } ?>
 									<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>
@@ -163,7 +163,7 @@
 										<?php } elseif ($metodo == 2){ ?>
 													
 											<div class="col-md-4">
-												<input type="hidden" name="Compartilhar" id="Compartilhar" value="<?php echo $tarefa['Compartilhar']; ?>"/>
+												<!--<input type="hidden" name="Compartilhar" id="Compartilhar" value="<?php #echo $tarefa['Compartilhar']; ?>"/>-->
 												<label for="Compartilhar">Quem Fazer</label>
 												<input type="text" class="form-control" readonly="" value="<?php echo $_SESSION['Tarefa']['NomeCompartilhar']; ?>"/>
 											</div>

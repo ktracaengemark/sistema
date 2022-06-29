@@ -41,12 +41,12 @@
 				<div class="form-group">	
 					<div class="row text-left">
 						<div class="col-md-3 text-left">
-							<label for="Ordenamento">Categoria:</label>
+							<label for="idTab_Categoria">Categoria:</label>
 							<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
-									id="Categoria" name="Categoria">
+									id="idTab_Categoria" name="idTab_Categoria">
 								<?php
-								foreach ($select['Categoria'] as $key => $row) {
-									if ($query['Categoria'] == $key) {
+								foreach ($select['idTab_Categoria'] as $key => $row) {
+									if ($query['idTab_Categoria'] == $key) {
 										echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 									} else {
 										echo '<option value="' . $key . '">' . $row . '</option>';

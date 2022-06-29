@@ -10711,7 +10711,7 @@ class Relatorio extends CI_Controller {
             'Campo',
             'ConcluidoTarefa',
             'Prioridade',
-			'Categoria',
+			'idTab_Categoria',
 			#'Rotina',
 			'ConcluidoSubTarefa',
 			'Tarefa',
@@ -10726,7 +10726,7 @@ class Relatorio extends CI_Controller {
            $data['query']['DataInicio'] = '01/01/2017';
 		*/
 		
-		$_SESSION['FiltroAlteraTarefa']['Categoria'] = $data['query']['Categoria'];
+		$_SESSION['FiltroAlteraTarefa']['idTab_Categoria'] = $data['query']['idTab_Categoria'];
 		$_SESSION['FiltroAlteraTarefa']['ConcluidoTarefa'] = $data['query']['ConcluidoTarefa'];
 		$_SESSION['FiltroAlteraTarefa']['Prioridade'] = $data['query']['Prioridade'];
 		$_SESSION['FiltroAlteraTarefa']['ConcluidoSubTarefa'] = $data['query']['ConcluidoSubTarefa'];
@@ -10795,7 +10795,7 @@ class Relatorio extends CI_Controller {
 			'P.Compartilhar' => 'Quem Fazer',
 			'P.idSis_Usuario' => 'Quem Cadastrou',		
 			'P.ConcluidoTarefa' => 'Concluido',
-			'P.Categoria' => 'Categoria',
+			'P.idTab_Categoria' => 'Categoria',
         );
 
         $data['select']['Ordenamento'] = array(
@@ -10805,7 +10805,7 @@ class Relatorio extends CI_Controller {
 
         #$data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional3();
 		#$data['select']['Profissional'] = $this->Relatorio_model->select_profissional2();
-		$data['select']['Categoria'] = $this->Relatorio_model->select_categoria();
+		$data['select']['idTab_Categoria'] = $this->Relatorio_model->select_categoria();
 		//$data['select']['Tarefa'] = $this->Relatorio_model->select_tarefa();
 		//$data['select']['SubTarefa'] = $this->Relatorio_model->select_procedtarefa();
 
@@ -10823,7 +10823,7 @@ class Relatorio extends CI_Controller {
             $data['bd']['Campo'] = $data['query']['Campo'];
             $data['bd']['ConcluidoTarefa'] = $data['query']['ConcluidoTarefa'];
             $data['bd']['Prioridade'] = $data['query']['Prioridade'];
-			$data['bd']['Categoria'] = $data['query']['Categoria'];
+			$data['bd']['idTab_Categoria'] = $data['query']['idTab_Categoria'];
 			#$data['bd']['Rotina'] = $data['query']['Rotina'];
 			$data['bd']['ConcluidoSubTarefa'] = $data['query']['ConcluidoSubTarefa'];
 			$data['bd']['Tarefa'] = $data['query']['Tarefa'];
