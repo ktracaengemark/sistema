@@ -11,7 +11,7 @@
 					<div class="row">
 							
 						<div class="col-md-12">	
-							<?php #echo validation_errors(); ?>
+							<?php echo validation_errors(); ?>
 
 							<div class="panel panel-<?php echo $panel; ?>">
 

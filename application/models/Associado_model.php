@@ -76,6 +76,32 @@ class Associado_model extends CI_Model {
         }
 
     }
+
+    public function get_associado_verificacao($data) {
+        $query = $this->db->query(
+			'SELECT
+				* 
+			FROM
+				Sis_Associado
+			WHERE 
+				idSis_Associado = ' . $data . ' AND
+				idSis_Associado = ' . $_SESSION['log']['idSis_Usuario'] . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+
+		$count = $query->num_rows();
+		
+		if(isset($count)){
+			if($count == 0){
+				return FALSE;
+			}else{
+				$query = $query->result_array();
+				return $query[0];
+			}
+		}else{
+			return FALSE;
+		}
+    }
 	
     public function get_associado($data) {
         $query = $this->db->query('SELECT * FROM Sis_Associado WHERE idSis_Associado = ' . $data);
@@ -256,40 +282,6 @@ class Associado_model extends CI_Model {
         }
 
     }    
-
-    public function lista_associado($data, $x) {
-
-        $query = $this->db->query('SELECT * '
-                . 'FROM Sis_Associado WHERE '
-                #. 'Associado = ' . $_SESSION['log']['idSis_Associado'] . ' AND '
-				. 'idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND '
-                . '(Nome like "%' . $data . '%" OR '
-                #. 'DataNascimento = "' . $this->basico->mascara_data($data, 'mysql') . '" OR '
-                #. 'Nome like "%' . $data . '%" OR '
-                . 'DataNascimento = "' . $this->basico->mascara_data($data, 'mysql') . '" OR '
-                . 'CelularAssociado like "%' . $data . '%") '
-                . 'ORDER BY Nome ASC ');
-        /*
-          echo $this->db->last_query();
-          echo "<pre>";
-          print_r($query);
-          echo "</pre>";
-          exit();
-        */
-        if ($query->num_rows() === 0) {
-            return FALSE;
-        } else {
-            if ($x === FALSE) {
-                return TRUE;
-            } else {
-                foreach ($query->result() as $row) {
-                    $row->DataNascimento = $this->basico->mascara_data($row->DataNascimento, 'barras');
-                }
-
-                return $query;
-            }
-        }
-    }
     
 	public function list_funcao($x) {
 		

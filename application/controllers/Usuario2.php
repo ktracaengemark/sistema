@@ -315,6 +315,15 @@ class Usuario2 extends CI_Controller {
 
 		if ($id) {
 			$data['query'] = $this->Usuario_model->get_usuario_verificacao($id);
+	
+			if($data['query'] === FALSE){
+				
+				unset($_SESSION['Query']);
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'acesso' . $data['msg']);
+				exit();
+				
+			}
 		}
 	
 		if(!$data['query']['idSis_Usuario']){
@@ -519,11 +528,22 @@ class Usuario2 extends CI_Controller {
 
         if ($id) {
             $_SESSION['Query'] = $data['query'] = $this->Usuario_model->get_usuario_verificacao($id, TRUE);
-			$data['file']['idSis_Usuario'] = $id;
-        }
 	
-		if(!$data['query']['idSis_Usuario'] || $_SESSION['Query'] === FALSE){
+			if($data['query'] === FALSE){
+				
+				unset($_SESSION['Query']);
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'acesso' . $data['msg']);
+				exit();
+				
+			} else {
+				$data['file']['idSis_Usuario'] = $id;
+			}
+		}
+	
+		if(!$data['query']['idSis_Usuario'] || !$_SESSION['Query']){
 			
+			unset($_SESSION['Query']);
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
@@ -551,113 +571,118 @@ class Usuario2 extends CI_Controller {
 				#load login view
 				$this->load->view('usuario/form_perfil2', $data);
 			} else {
-
-				$config['upload_path'] = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/';
-				$config['max_size'] = 1000;
-				$config['allowed_types'] = ['jpg','jpeg','pjpeg','png','x-png'];
-				$config['file_name'] = $data['file']['Arquivo'];
-
-				$this->load->library('upload', $config);
-				if (!$this->upload->do_upload('Arquivo')) {
-					$data['msg'] = $this->basico->msg($this->upload->display_errors(), 'erro', FALSE, FALSE, FALSE);
-					$this->load->view('usuario/form_perfil2', $data);
-				}
-				else {
-
-					$dir = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/';		
-					$foto = $data['file']['Arquivo'];
-					$diretorio = $dir.$foto;					
-					$dir2 = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/';
-
-					switch($_FILES['Arquivo']['type']):
-						case 'image/jpg';
-						case 'image/jpeg';
-						case 'image/pjpeg';
+				
+				if($this->Basico_model->get_dt_validade() === FALSE){
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
 					
-							list($largura, $altura, $tipo) = getimagesize($diretorio);
-							
-							$img = imagecreatefromjpeg($diretorio);
-
-							$thumb = imagecreatetruecolor(200, 200);
-							
-							imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
-							
-							imagejpeg($thumb, $dir2 . $foto);
-							imagedestroy($img);
-							imagedestroy($thumb);				      
-						
-						break;					
-
-						case 'image/png';
-						case 'image/x-png';
-							
-							list($width, $height) = getimagesize($diretorio);
-							$newwidth = 200;
-							$newheight = 200;
-
-							$thumb = imagecreatetruecolor($newwidth, $newheight);
-							imagealphablending($thumb, false);
-							imagesavealpha($thumb, true);
-							$source = imagecreatefrompng($diretorio);
-							imagealphablending($source, true);
-							imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-							imagepng($thumb, $dir2 . $foto);
-							imagedestroy($thumb);
-							imagedestroy($source);				      
-						
-						break;
-						
-					endswitch;
+				} else {
 					
-					$data['camposfile'] = array_keys($data['file']);
-					$data['idSis_Arquivo'] = $this->Usuario_model->set_arquivo($data['file']);
+					$config['upload_path'] = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/';
+					$config['max_size'] = 1000;
+					$config['allowed_types'] = ['jpg','jpeg','pjpeg','png','x-png'];
+					$config['file_name'] = $data['file']['Arquivo'];
 
-					if ($data['idSis_Arquivo'] === FALSE) {
-						$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-						$this->basico->erro($msg);
+					$this->load->library('upload', $config);
+					if (!$this->upload->do_upload('Arquivo')) {
+						$data['msg'] = $this->basico->msg($this->upload->display_errors(), 'erro', FALSE, FALSE, FALSE);
 						$this->load->view('usuario/form_perfil2', $data);
-					}
-					else {
+					} else {
 
-						$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['file'], $data['camposfile'], $data['idSis_Arquivo'], FALSE);
-						$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'idSis_Arquivo', 'CREATE', $data['auditoriaitem']);
+						$dir = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/';		
+						$foto = $data['file']['Arquivo'];
+						$diretorio = $dir.$foto;					
+						$dir2 = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/';
+
+						switch($_FILES['Arquivo']['type']):
+							case 'image/jpg';
+							case 'image/jpeg';
+							case 'image/pjpeg';
 						
-						$data['query']['Arquivo'] = $data['file']['Arquivo'];
-						$data['anterior'] = $this->Usuario_model->get_usuario_verificacao($data['query']['idSis_Usuario']);
-						$data['campos'] = array_keys($data['query']);
+								list($largura, $altura, $tipo) = getimagesize($diretorio);
+								
+								$img = imagecreatefromjpeg($diretorio);
 
-						$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idSis_Usuario'], TRUE);
+								$thumb = imagecreatetruecolor(200, 200);
+								
+								imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
+								
+								imagejpeg($thumb, $dir2 . $foto);
+								imagedestroy($img);
+								imagedestroy($thumb);				      
+							
+							break;					
 
-						if ($data['auditoriaitem'] && $this->Usuario_model->update_usuario($data['query'], $data['query']['idSis_Usuario']) === FALSE) {
-							$data['msg'] = '?m=2';
-							redirect(base_url() . 'usuario/form_perfil2/' . $data['query']['idSis_Usuario'] . $data['msg']);
-							exit();
+							case 'image/png';
+							case 'image/x-png';
+								
+								list($width, $height) = getimagesize($diretorio);
+								$newwidth = 200;
+								$newheight = 200;
+
+								$thumb = imagecreatetruecolor($newwidth, $newheight);
+								imagealphablending($thumb, false);
+								imagesavealpha($thumb, true);
+								$source = imagecreatefrompng($diretorio);
+								imagealphablending($source, true);
+								imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+								imagepng($thumb, $dir2 . $foto);
+								imagedestroy($thumb);
+								imagedestroy($source);				      
+							
+							break;
+							
+						endswitch;
+						
+						$data['camposfile'] = array_keys($data['file']);
+						$data['idSis_Arquivo'] = $this->Usuario_model->set_arquivo($data['file']);
+
+						if ($data['idSis_Arquivo'] === FALSE) {
+							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+							$this->basico->erro($msg);
+							$this->load->view('usuario/form_perfil2', $data);
 						} else {
 
-							if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/' . $_SESSION['Usuario']['Arquivo'] . ''))
-								&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/' . $_SESSION['Usuario']['Arquivo'] . '')
-								!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/SuaFoto.jpg'))){
-								unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/' . $_SESSION['Usuario']['Arquivo'] . '');						
-							}
-							if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Usuario']['Arquivo'] . ''))
-								&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Usuario']['Arquivo'] . '')
-								!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/SuaFoto.jpg'))){
-								unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Usuario']['Arquivo'] . '');						
-							}						
+							$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['file'], $data['camposfile'], $data['idSis_Arquivo'], FALSE);
+							$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'idSis_Arquivo', 'CREATE', $data['auditoriaitem']);
 							
-							if ($data['auditoriaitem'] === FALSE) {
-								$data['msg'] = '';
+							$data['query']['Arquivo'] = $data['file']['Arquivo'];
+							$data['anterior'] = $this->Usuario_model->get_usuario_verificacao($data['query']['idSis_Usuario']);
+							$data['campos'] = array_keys($data['query']);
+
+							$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idSis_Usuario'], TRUE);
+
+							if ($data['auditoriaitem'] && $this->Usuario_model->update_usuario($data['query'], $data['query']['idSis_Usuario']) === FALSE) {
+								$data['msg'] = '?m=2';
+								redirect(base_url() . 'usuario/form_perfil2/' . $data['query']['idSis_Usuario'] . $data['msg']);
+								exit();
 							} else {
-								$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_Usuario', 'UPDATE', $data['auditoriaitem']);
-								$data['msg'] = '?m=1';
-							}
-							
-							unset($_SESSION['Query']);
-							redirect(base_url() . 'usuario2/prontuario/' . $data['file']['idSis_Usuario'] . $data['msg']);
-							exit();
-						}				
+
+								if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/' . $_SESSION['Usuario']['Arquivo'] . ''))
+									&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/' . $_SESSION['Usuario']['Arquivo'] . '')
+									!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/SuaFoto.jpg'))){
+									unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/' . $_SESSION['Usuario']['Arquivo'] . '');						
+								}
+								if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Usuario']['Arquivo'] . ''))
+									&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Usuario']['Arquivo'] . '')
+									!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/SuaFoto.jpg'))){
+									unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Usuario']['Arquivo'] . '');						
+								}						
+								
+								if ($data['auditoriaitem'] === FALSE) {
+									$data['msg'] = '';
+								} else {
+									$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_Usuario', 'UPDATE', $data['auditoriaitem']);
+									$data['msg'] = '?m=1';
+								}
+								
+								unset($_SESSION['Query']);
+								redirect(base_url() . 'usuario2/prontuario/' . $data['file']['idSis_Usuario'] . $data['msg']);
+								exit();
+							}				
+						}
 					}
-				}
+				}	
 			}
 		}
         $this->load->view('basico/footer');
