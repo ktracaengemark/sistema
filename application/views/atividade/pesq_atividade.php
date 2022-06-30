@@ -25,8 +25,9 @@
 						<div class="col-md-6">
 							<?php echo $button ?>
 						</div>
-						
-						<input type="hidden" name="idApp_Atividade" value="<?php echo $query['idApp_Atividade']; ?>">
+						<?php if ($metodo == 2) { ?>
+							<input type="hidden" name="idApp_Atividade" value="<?php echo $query['idApp_Atividade']; ?>">
+						<?php } ?>
 						</form>
 
 					</div>

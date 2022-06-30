@@ -1,5 +1,15 @@
 <div class="container-fluid">
 	<div class="row">
+		<div class="ccol-lg-2 col-md-2 col-sm-2 col-xs-6">
+			<label></label><br>
+			<div class="input-group">
+				<span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
+				<input type="text" class="form-control" disabled aria-label="Contagem" value="<?php echo $report->num_rows(); ?> / <?php echo $total_rows; ?>">
+			</div>
+		</div>
+		<div class="col-lg-5 col-md-4 col-sm-4 col-xs-12 text-left">
+			<?php echo $pagination; ?>
+		</div>
 		<?php if($paginacao == "S") { ?>
 			<div class="col-lg-1 col-md-2 col-sm-2 col-xs-6">
 				<label></label><br>
@@ -46,16 +56,6 @@
 					Parcial
 				</button>
 			</a>
-		</div>
-		<div class="ccol-lg-2 col-md-2 col-sm-2 col-xs-6">
-			<label></label><br>
-			<div class="input-group">
-				<span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
-				<input type="text" class="form-control" disabled aria-label="Contagem" value="<?php echo $report->num_rows(); ?> / <?php echo $total_rows; ?>">
-			</div>
-		</div>
-		<div class="col-lg-5 col-md-4 col-sm-4 col-xs-12 text-left">
-			<?php echo $pagination; ?>
 		</div>
 	</div>	
 	<div class="row">

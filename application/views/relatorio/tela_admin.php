@@ -10,11 +10,6 @@
 					<div class=" text-center" style="color: #3CB371" data-toggle="collapse" data-target="#Tarefas" aria-expanded="false" aria-controls="Tarefas">
 						 <h3 class="text-center"><b>Agenda & Tarefas</b></h3>
 					</div>
-					<!--
-					<a class="text-center" style="color: #3CB371" data-toggle="collapse" data-target="#Tarefas" aria-expanded="false" aria-controls="Tarefas">
-						<h3 class="text-center"><b>Tarefas & Agendas<?php #echo $titulo2; ?></b></h3>
-					</a>
-					-->
 					<div <?php echo $collapse1; ?> id="Tarefas">	
 						<div class="panel-body">
 							<div class="row">
@@ -43,7 +38,6 @@
 					</div>
 				</div>
 			</div>
-				
 		</div>	
 		
 		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -519,6 +513,8 @@
 								</div>
 							</div>
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
+								
+								<label for=""><h4><b>Empresa</b></h4></label>
 								<div class="row">
 									<div class="form-group col-md-12 text-left">
 										<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/loginempresa" role="button"> 
@@ -541,6 +537,13 @@
 									</div>	
 								</div>
 							<?php }?>
+							<div class="row">
+								<div class="form-group col-md-12 text-left">
+									<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/empresas" role="button"> 
+										<span class="glyphicon glyphicon-home"></span> Empresas
+									</a>
+								</div>	
+							</div>
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 								<label for=""><h4><b>Fornecedores</b></h4></label>
 								<div class="row">
@@ -561,7 +564,7 @@
 								<div class="row">
 									<div class="form-group col-md-12 text-left">	
 										<a class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/produtos" role="button"> 
-											<span class="glyphicon glyphicon-gift"></span> Produtos
+											<span class="glyphicon glyphicon-gift"></span> Produtos & Estoque
 										</a>
 									</div>	
 								</div>
@@ -647,8 +650,8 @@
 								</div>											
 							</div>
 							-->	
-							<label for=""><h4><b>Site</b></h4></label>	
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
+								<label for=""><h4><b>Site</b></h4></label>	
 								<div class="row">
 									<div class="form-group col-md-12 text-left">
 										<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/site" role="button"> 
@@ -685,13 +688,6 @@
 									</div>	
 								</div>
 							<?php }?>
-							<div class="row">
-								<div class="form-group col-md-12 text-left">
-									<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/empresas" role="button"> 
-										<span class="glyphicon glyphicon-home"></span> Empresas
-									</a>
-								</div>	
-							</div>
 							<div class="row">
 								<div class="form-group col-md-12 text-left">
 									<a type="button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>login/sair" role="button"> 

@@ -90,739 +90,6 @@ class Relatorio extends CI_Controller {
 
     }
 
-	public function adminempresa() {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-        $data['titulo1'] = 'Cadastrar';
-		$data['titulo2'] = 'Relatórios';
-
-        #run form validation
-        if ($this->form_validation->run() !== FALSE) {
-
-        }
-
-        $this->load->view('relatorio/tela_adminempresa', $data);
-
-        $this->load->view('basico/footer');
-
-    }
-
-	public function evento_cli() {
-
-		unset($_SESSION['Agendamentos']);
-	
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-        ), TRUE));	
-		
-        $data['query'] = quotes_to_entities($this->input->post(array(
-			'NomeUsuario',
-            'idApp_Consulta',
-			'idApp_Cliente',
-			'idApp_ClientePet',
-			'idApp_ClienteDep',
-            'DataInicio',
-            'DataFim',
-			'Ordenamento',
-            'Campo',
-			'Agrupar',
-			'Texto1',
-			'Texto2',
-			'Texto3',
-			'Texto4',
-			'nomedoCliente',
-			'idCliente',
-			'numerodopedido',
-			'site',
-        ), TRUE));
-
-		$data['collapse'] = '';
-		$data['collapse1'] = 'class="collapse"';
-
-		if($_SESSION['Empresa']['CadastrarPet'] == "S"){
-			$data['select']['Agrupar'] = array(
-				'CO.idApp_Consulta' => 'Agendamento',
-				'PRD.idApp_Produto' => 'Produto',
-				'CO.idApp_Cliente' => 'Cliente',
-				'CO.idApp_ClientePet' => 'Animal',
-			);
-			
-			$data['select']['Campo'] = array(
-				'TCAT.Catprod' => 'Categoria',
-				'CO.DataInicio' => 'Data',
-				'CO.HoraInicio' => 'Hora',
-				'CO.idApp_Consulta' => 'Agendamento',
-				'PRD.idApp_Produto' => 'Produto',
-				'CO.idApp_Cliente' => 'Cliente',
-				'CO.idApp_ClientePet' => 'Animal',
-			);
-		}elseif($_SESSION['Empresa']['CadastrarDep'] == "S"){
-			$data['select']['Agrupar'] = array(
-				'CO.idApp_Consulta' => 'Agendamento',
-				'PRD.idApp_Produto' => 'Produto',
-				'CO.idApp_Cliente' => 'Cliente',
-				'CO.idApp_ClienteDep' => 'Dependente',
-			);
-			
-			$data['select']['Campo'] = array(
-				'TCAT.Catprod' => 'Categoria',
-				'CO.DataInicio' => 'Data',
-				'CO.HoraInicio' => 'Hora',
-				'CO.idApp_Consulta' => 'Agendamento',
-				'PRD.idApp_Produto' => 'Produto',
-				'CO.idApp_Cliente' => 'Cliente',
-				'CO.idApp_ClienteDep' => 'Dependente',
-			);
-		}else{
-			$data['select']['Agrupar'] = array(	
-				'CO.idApp_Consulta' => 'Agendamentos',
-				'PRD.idApp_Produto' => 'Produtos',
-				'CO.idApp_Cliente' => 'Clientes',
-			);
-			
-			$data['select']['Campo'] = array(
-				'TCAT.Catprod' => 'Categoria',
-				'CO.DataInicio' => 'Data',
-				'CO.HoraInicio' => 'Hora',
-				'CO.idApp_Consulta' => 'Agendamento',
-				'PRD.idApp_Produto' => 'Produto',
-				'CO.idApp_Cliente' => 'Cliente',
-			);
-		}		
-
-        $data['select']['Ordenamento'] = array(
-            'ASC' => 'Crescente',
-            'DESC' => 'Decrescente',
-        );
-
-        $data['select']['NomeUsuario'] = $this->Agenda_model->select_associado();
-		$data['select']['idApp_ClientePet'] = $this->Relatorio_model->select_clientepet();
-		$data['select']['idApp_ClienteDep'] = $this->Relatorio_model->select_clientedep();
-		
-        $data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
-        $data['select']['idCliente'] = $this->Basico_model->select_status_sn();
-        $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
-        $data['select']['site'] = $this->Basico_model->select_status_sn();
-		
-		$data['radio'] = array(
-            'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
-        );
-        ($data['query']['nomedoCliente'] == 'S') ?
-            $data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
-		
-		$data['radio'] = array(
-            'idCliente' => $this->basico->radio_checked($data['query']['idCliente'], 'idCliente', 'NS'),
-        );
-        ($data['query']['idCliente'] == 'S') ?
-            $data['div']['idCliente'] = '' : $data['div']['idCliente'] = 'style="display: none;"';		
-		
-		$data['radio'] = array(
-            'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
-        );
-        ($data['query']['numerodopedido'] == 'S') ?
-            $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
-		
-		$data['radio'] = array(
-            'site' => $this->basico->radio_checked($data['query']['site'], 'site', 'NS'),
-        );
-        ($data['query']['site'] == 'S') ?
-            $data['div']['site'] = '' : $data['div']['site'] = 'style="display: none;"';		
-							
-		$data['query']['nome'] = 'Cliente';
-        $data['titulo1'] = 'Lista de Agendamentos';
-		$data['metodo'] = 2;
-		$data['form_open_path'] = 'relatorio/evento_cli';
-		$data['panel'] = 'info';
-		$data['Data'] = 'Data';
-		$data['TipoRD'] = 2;
-		$data['TipoEvento'] = 2;
-        $data['nome'] = 'Cliente';
-		$data['editar'] = 1;
-		$data['print'] = 1;
-		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'ConsultaPrint/imprimirlista/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
-		$data['edit'] = 'Consulta/alterar/';
-		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
-		$data['paginacao'] = 'N';	
-
-        $_SESSION['Agendamentos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-		$_SESSION['Agendamentos']['DataFim'] 	= $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-		$_SESSION['Agendamentos']['NomeUsuario'] = $data['query']['NomeUsuario'];
-		$_SESSION['Agendamentos']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-		$_SESSION['Agendamentos']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-		$_SESSION['Agendamentos']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-		$_SESSION['Agendamentos']['Campo'] = $data['query']['Campo'];
-		$_SESSION['Agendamentos']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['Agendamentos']['TipoEvento'] = $data['TipoEvento'];
-		$_SESSION['Agendamentos']['Agrupar'] = $data['query']['Agrupar'];
-		
-		$_SESSION['Agendamentos']['Texto1'] = utf8_encode($data['query']['Texto1']);
-        $_SESSION['Agendamentos']['Texto2'] = utf8_encode($data['query']['Texto2']);
-        $_SESSION['Agendamentos']['Texto3'] = utf8_encode($data['query']['Texto3']);
-        $_SESSION['Agendamentos']['Texto4'] = utf8_encode($data['query']['Texto4']);
-        $_SESSION['Agendamentos']['nomedoCliente'] = $data['query']['nomedoCliente'];
-        $_SESSION['Agendamentos']['idCliente'] = $data['query']['idCliente'];
-        $_SESSION['Agendamentos']['numerodopedido'] = $data['query']['numerodopedido'];
-        $_SESSION['Agendamentos']['site'] = $data['query']['site'];	
-
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        $this->form_validation->set_rules('DataInicio', 'Data Início', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
-		
-        #run form validation
-        if ($this->form_validation->run() !== FALSE) {
-
-			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-			$data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
-			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];
-            $data['bd']['TipoEvento'] = $data['TipoEvento'];
-			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
-			
-			//$data['report'] = $this->Relatorio_model->list_evento($data['bd'],TRUE);
-
-			//$this->load->library('pagination');
-			$config['per_page'] = 10;
-			$config["uri_segment"] = 3;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
-			
-			$config['base_url'] = base_url() . 'relatorio_pag/evento_cli_pag/';
-			$config['total_rows'] = $this->Relatorio_model->list_evento($data['bd'],TRUE, TRUE);
-           
-			if($config['total_rows'] >= 1){
-				$data['total_rows'] = $config['total_rows'];
-			}else{
-				$data['total_rows'] = 0;
-			}
-			
-            $this->pagination->initialize($config);
-            
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-            $data['pagina'] = $page;
-			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Relatorio_model->list_evento($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-			$data['pagination'] = $this->pagination->create_links();
-			
-            $data['list1'] = $this->load->view('relatorio/list_evento', $data, TRUE);
-        }
-
-        $this->load->view('relatorio/tela_evento', $data);
-
-        $this->load->view('basico/footer');
-
-    }
-
-	public function evento() {
-
-		unset($_SESSION['Agendamentos']);
-	
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-        ), TRUE));	
-		
-        $data['query'] = quotes_to_entities($this->input->post(array(
-			'NomeUsuario',
-            'idApp_Consulta',
-			'idApp_Cliente',
-			'idApp_ClientePet',
-			'idApp_ClienteDep',
-            'DataInicio',
-            'DataFim',
-			'Ordenamento',
-            'Campo',
-			'Agrupar',
-        ), TRUE));
-
-		$data['collapse'] = '';
-		$data['collapse1'] = 'class="collapse"';
-
-		$data['select']['Agrupar'] = array(	
-			'CO.idApp_Consulta' => 'Agendamentos',
-		);
-			
-		$data['select']['Campo'] = array(
-			'CO.DataInicio' => 'Data',
-			'CO.idApp_Consulta' => 'id do Agendamento',
-		);		
-		
-        $data['select']['Ordenamento'] = array(
-            'ASC' => 'Crescente',
-            'DESC' => 'Decrescente',
-        );
-
-        $data['select']['NomeUsuario'] = $this->Agenda_model->select_associado();
-		$data['select']['idApp_ClientePet'] = $this->Relatorio_model->select_clientepet();
-		$data['select']['idApp_ClienteDep'] = $this->Relatorio_model->select_clientedep();
-
-		$data['query']['nome'] = 'Cliente';
-        $data['titulo1'] = 'Lista de Agendamentos';
-		$data['metodo'] = 2;
-		$data['form_open_path'] = 'relatorio/evento';
-		$data['panel'] = 'info';
-		$data['Data'] = 'Data';
-		$data['TipoRD'] = 2;
-		$data['TipoEvento'] = 1;
-        $data['nome'] = 'Cliente';
-		$data['editar'] = 1;
-		$data['print'] = 1;
-		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'ConsultaPrint/imprimirlista/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
-		$data['edit'] = 'Consulta/alterar/';
-		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
-		$data['paginacao'] = 'N';	
-
-        $_SESSION['Agendamentos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-		$_SESSION['Agendamentos']['DataFim'] 	= $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-		$_SESSION['Agendamentos']['NomeUsuario'] = $data['query']['NomeUsuario'];
-		$_SESSION['Agendamentos']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-		$_SESSION['Agendamentos']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-		$_SESSION['Agendamentos']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-		$_SESSION['Agendamentos']['Campo'] = $data['query']['Campo'];
-		$_SESSION['Agendamentos']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['Agendamentos']['TipoEvento'] = $data['TipoEvento'];
-		$_SESSION['Agendamentos']['Agrupar'] = $data['query']['Agrupar'];
-
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        $this->form_validation->set_rules('DataInicio', 'Data Início', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
-		
-        #run form validation
-        if ($this->form_validation->run() !== FALSE) {
-
-			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-			$data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
-			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];
-            $data['bd']['TipoEvento'] = $data['TipoEvento'];
-			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
-			
-			//$data['report'] = $this->Relatorio_model->list_evento($data['bd'],TRUE);
-
-			//$this->load->library('pagination');
-			$config['per_page'] = 10;
-			$config["uri_segment"] = 3;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
-			
-			$config['base_url'] = base_url() . 'relatorio_pag/evento_pag/';
-			$config['total_rows'] = $this->Relatorio_model->list_evento($data['bd'],TRUE, TRUE);
-           
-			if($config['total_rows'] >= 1){
-				$data['total_rows'] = $config['total_rows'];
-			}else{
-				$data['total_rows'] = 0;
-			}
-			
-            $this->pagination->initialize($config);
-            
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-            $data['pagina'] = $page;
-			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Relatorio_model->list_evento($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-			$data['pagination'] = $this->pagination->create_links();
-			
-            $data['list1'] = $this->load->view('relatorio/list_evento', $data, TRUE);
-        }
-
-        $this->load->view('relatorio/tela_evento', $data);
-
-        $this->load->view('basico/footer');
-
-    }
-
-	public function evento_cli_original() {
-
-		unset($_SESSION['Agendamentos']);
-	
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-        ), TRUE));	
-		
-        $data['query'] = quotes_to_entities($this->input->post(array(
-			'NomeUsuario',
-            'idApp_Consulta',
-			'idApp_Cliente',
-			'idApp_ClientePet',
-			'idApp_ClienteDep',
-            'DataInicio',
-            'DataFim',
-			'Ordenamento',
-            'Campo',
-			'Texto1',
-			'Texto2',
-			'Texto3',
-			'Texto4',
-			'nomedoCliente',
-			'idCliente',
-			'numerodopedido',
-			'site',
-        ), TRUE));
-
-		$data['collapse'] = '';
-		$data['collapse1'] = 'class="collapse"';
-		
-		$data['select']['Campo'] = array(
-			'CO.DataInicio' => 'Data',
-			'CO.idApp_Consulta' => 'id do Agendamento',
-		);		
-		
-        $data['select']['Ordenamento'] = array(
-            'ASC' => 'Crescente',
-            'DESC' => 'Decrescente',
-        );
-
-        $data['select']['NomeUsuario'] = $this->Agenda_model->select_associado();
-		$data['select']['idApp_ClientePet'] = $this->Relatorio_model->select_clientepet();
-		$data['select']['idApp_ClienteDep'] = $this->Relatorio_model->select_clientedep();
-		
-        $data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
-        $data['select']['idCliente'] = $this->Basico_model->select_status_sn();
-        $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
-        $data['select']['site'] = $this->Basico_model->select_status_sn();
-		
-		$data['radio'] = array(
-            'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
-        );
-        ($data['query']['nomedoCliente'] == 'S') ?
-            $data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
-		
-		$data['radio'] = array(
-            'idCliente' => $this->basico->radio_checked($data['query']['idCliente'], 'idCliente', 'NS'),
-        );
-        ($data['query']['idCliente'] == 'S') ?
-            $data['div']['idCliente'] = '' : $data['div']['idCliente'] = 'style="display: none;"';		
-		
-		$data['radio'] = array(
-            'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
-        );
-        ($data['query']['numerodopedido'] == 'S') ?
-            $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
-		
-		$data['radio'] = array(
-            'site' => $this->basico->radio_checked($data['query']['site'], 'site', 'NS'),
-        );
-        ($data['query']['site'] == 'S') ?
-            $data['div']['site'] = '' : $data['div']['site'] = 'style="display: none;"';		
-							
-		$data['query']['nome'] = 'Cliente';
-        $data['titulo1'] = 'Lista de Agendamentos';
-		$data['metodo'] = 2;
-		$data['form_open_path'] = 'relatorio/evento_cli';
-		$data['panel'] = 'info';
-		$data['Data'] = 'Data';
-		$data['TipoRD'] = 2;
-		$data['TipoEvento'] = 2;
-        $data['nome'] = 'Cliente';
-		$data['editar'] = 1;
-		$data['print'] = 1;
-		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'ConsultaPrint/imprimirlista/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
-		$data['edit'] = 'Consulta/alterar/';
-		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
-		$data['paginacao'] = 'N';	
-
-        $_SESSION['Agendamentos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-		$_SESSION['Agendamentos']['DataFim'] 	= $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-		$_SESSION['Agendamentos']['NomeUsuario'] = $data['query']['NomeUsuario'];
-		$_SESSION['Agendamentos']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-		$_SESSION['Agendamentos']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-		$_SESSION['Agendamentos']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-		$_SESSION['Agendamentos']['Campo'] = $data['query']['Campo'];
-		$_SESSION['Agendamentos']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['Agendamentos']['TipoEvento'] = $data['TipoEvento'];
-		
-		$_SESSION['Agendamentos']['Texto1'] = utf8_encode($data['query']['Texto1']);
-        $_SESSION['Agendamentos']['Texto2'] = utf8_encode($data['query']['Texto2']);
-        $_SESSION['Agendamentos']['Texto3'] = utf8_encode($data['query']['Texto3']);
-        $_SESSION['Agendamentos']['Texto4'] = utf8_encode($data['query']['Texto4']);
-        $_SESSION['Agendamentos']['nomedoCliente'] = $data['query']['nomedoCliente'];
-        $_SESSION['Agendamentos']['idCliente'] = $data['query']['idCliente'];
-        $_SESSION['Agendamentos']['numerodopedido'] = $data['query']['numerodopedido'];
-        $_SESSION['Agendamentos']['site'] = $data['query']['site'];	
-
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        $this->form_validation->set_rules('DataInicio', 'Data Início', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
-		
-        #run form validation
-        if ($this->form_validation->run() !== FALSE) {
-
-			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-			$data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
-			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];
-            $data['bd']['TipoEvento'] = $data['TipoEvento'];
-			
-			//$data['report'] = $this->Relatorio_model->list_agendamentos($data['bd'],TRUE);
-
-			//$this->load->library('pagination');
-			$config['per_page'] = 10;
-			$config["uri_segment"] = 3;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
-			
-			$config['base_url'] = base_url() . 'relatorio_pag/evento_cli_pag/';
-			$config['total_rows'] = $this->Relatorio_model->list_agendamentos($data['bd'],TRUE, TRUE);
-           
-			if($config['total_rows'] >= 1){
-				$data['total_rows'] = $config['total_rows'];
-			}else{
-				$data['total_rows'] = 0;
-			}
-			
-            $this->pagination->initialize($config);
-            
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-            $data['pagina'] = $page;
-			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Relatorio_model->list_agendamentos($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-			$data['pagination'] = $this->pagination->create_links();
-			
-            $data['list1'] = $this->load->view('relatorio/list_agendamentos', $data, TRUE);
-        }
-
-        $this->load->view('relatorio/tela_agendamentos', $data);
-
-        $this->load->view('basico/footer');
-
-    }
-
-	public function evento_original() {
-
-		unset($_SESSION['Agendamentos']);
-	
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-        ), TRUE));	
-		
-        $data['query'] = quotes_to_entities($this->input->post(array(
-			'NomeUsuario',
-            'idApp_Consulta',
-			'idApp_Cliente',
-			'idApp_ClientePet',
-			'idApp_ClienteDep',
-            'DataInicio',
-            'DataFim',
-			'Ordenamento',
-            'Campo',
-        ), TRUE));
-
-		$data['collapse'] = '';
-		$data['collapse1'] = 'class="collapse"';
-		
-		$data['select']['Campo'] = array(
-			'CO.DataInicio' => 'Data',
-			'CO.idApp_Consulta' => 'id do Agendamento',
-		);		
-		
-        $data['select']['Ordenamento'] = array(
-            'ASC' => 'Crescente',
-            'DESC' => 'Decrescente',
-        );
-
-        $data['select']['NomeUsuario'] = $this->Agenda_model->select_associado();
-		$data['select']['idApp_ClientePet'] = $this->Relatorio_model->select_clientepet();
-		$data['select']['idApp_ClienteDep'] = $this->Relatorio_model->select_clientedep();
-
-		$data['query']['nome'] = 'Cliente';
-        $data['titulo1'] = 'Lista de Agendamentos';
-		$data['metodo'] = 2;
-		$data['form_open_path'] = 'relatorio/evento';
-		$data['panel'] = 'info';
-		$data['Data'] = 'Data';
-		$data['TipoRD'] = 2;
-		$data['TipoEvento'] = 1;
-        $data['nome'] = 'Cliente';
-		$data['editar'] = 1;
-		$data['print'] = 1;
-		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'ConsultaPrint/imprimirlista/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
-		$data['edit'] = 'Consulta/alterar/';
-		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
-		$data['paginacao'] = 'N';	
-
-        $_SESSION['Agendamentos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-		$_SESSION['Agendamentos']['DataFim'] 	= $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-		$_SESSION['Agendamentos']['NomeUsuario'] = $data['query']['NomeUsuario'];
-		$_SESSION['Agendamentos']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-		$_SESSION['Agendamentos']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-		$_SESSION['Agendamentos']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-		$_SESSION['Agendamentos']['Campo'] = $data['query']['Campo'];
-		$_SESSION['Agendamentos']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['Agendamentos']['TipoEvento'] = $data['TipoEvento'];
-
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        $this->form_validation->set_rules('DataInicio', 'Data Início', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
-		
-        #run form validation
-        if ($this->form_validation->run() !== FALSE) {
-
-			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-			$data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
-			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];
-            $data['bd']['TipoEvento'] = $data['TipoEvento'];
-			
-			//$data['report'] = $this->Relatorio_model->list_agendamentos($data['bd'],TRUE);
-
-			//$this->load->library('pagination');
-			$config['per_page'] = 10;
-			$config["uri_segment"] = 3;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
-			
-			$config['base_url'] = base_url() . 'relatorio_pag/evento_pag/';
-			$config['total_rows'] = $this->Relatorio_model->list_agendamentos($data['bd'],TRUE, TRUE);
-           
-			if($config['total_rows'] >= 1){
-				$data['total_rows'] = $config['total_rows'];
-			}else{
-				$data['total_rows'] = 0;
-			}
-			
-            $this->pagination->initialize($config);
-            
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-            $data['pagina'] = $page;
-			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Relatorio_model->list_agendamentos($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-			$data['pagination'] = $this->pagination->create_links();
-			
-            $data['list1'] = $this->load->view('relatorio/list_agendamentos', $data, TRUE);
-        }
-
-        $this->load->view('relatorio/tela_agendamentos', $data);
-
-        $this->load->view('basico/footer');
-
-    }
-
 	public function agendamentos() {
 
 		unset($_SESSION['Agendamentos']);
@@ -998,138 +265,6 @@ class Relatorio extends CI_Controller {
 			$data['bd']['Tipo'] = $data['query']['Tipo'];
 			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
 			$data['bd']['Repeticao'] = $data['query']['Repeticao'];
-			
-			//$data['report'] = $this->Relatorio_model->list_agendamentos($data['bd'],TRUE);
-
-			//$this->load->library('pagination');
-			$config['per_page'] = 10;
-			$config["uri_segment"] = 3;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
-			
-			$config['base_url'] = base_url() . 'relatorio_pag/agendamentos_pag/';
-			$config['total_rows'] = $this->Relatorio_model->list_agendamentos($data['bd'],TRUE, TRUE);
-           
-			if($config['total_rows'] >= 1){
-				$data['total_rows'] = $config['total_rows'];
-			}else{
-				$data['total_rows'] = 0;
-			}
-			
-            $this->pagination->initialize($config);
-            
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-            $data['pagina'] = $page;
-			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Relatorio_model->list_agendamentos($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-			$data['pagination'] = $this->pagination->create_links();
-			
-            $data['list1'] = $this->load->view('relatorio/list_agendamentos', $data, TRUE);
-        }
-
-        $this->load->view('relatorio/tela_agendamentos', $data);
-
-        $this->load->view('basico/footer');
-
-    }
-
-	public function list_agendamentos() {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-        ), TRUE));	
-		
-        $data['query'] = quotes_to_entities($this->input->post(array(
-            'idApp_Consulta',
-			'idApp_Cliente',
-			'idApp_ClientePet',
-			'idApp_ClienteDep',
-            'DataInicio',
-            'DataFim',
-			'Ordenamento',
-            'Campo',
-        ), TRUE));
-
-		$data['collapse'] = '';
-		$data['collapse1'] = 'class="collapse"';
-		
-		$data['select']['Campo'] = array(
-			'CO.DataInicio' => 'Data',
-			'CO.idApp_Consulta' => 'id do Agendamento',
-		);		
-		
-        $data['select']['Ordenamento'] = array(
-            'ASC' => 'Crescente',
-            'DESC' => 'Decrescente',
-        );
-
-		//$data['select']['idApp_Cliente'] = $this->Relatorio_model->select_cliente();
-		$data['select']['idApp_ClientePet'] = $this->Relatorio_model->select_clientepet();
-		$data['select']['idApp_ClienteDep'] = $this->Relatorio_model->select_clientedep();
-
-		$data['query']['nome'] = 'Cliente';
-        $data['titulo1'] = 'Lista de Agendamentos';
-		$data['metodo'] = 2;
-		$data['form_open_path'] = 'relatorio/list_agendamentos';
-		$data['panel'] = 'info';
-		$data['Data'] = 'Data';
-		$data['TipoRD'] = 2;
-        $data['nome'] = 'Cliente';
-		$data['editar'] = 1;
-		$data['print'] = 1;
-		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'ConsultaPrint/imprimirlista/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
-		$data['edit'] = 'Consulta/alterar/';
-		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
-		$data['paginacao'] = 'N';	
-
-        $_SESSION['Agendamentos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-		$_SESSION['Agendamentos']['DataFim'] 	= $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-		$_SESSION['Agendamentos']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-		$_SESSION['Agendamentos']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-		$_SESSION['Agendamentos']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-		$_SESSION['Agendamentos']['Campo'] = $data['query']['Campo'];
-		$_SESSION['Agendamentos']['Ordenamento'] = $data['query']['Ordenamento'];	
-
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        $this->form_validation->set_rules('DataInicio', 'Data Início', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
-		
-        #run form validation
-        if ($this->form_validation->run() !== FALSE) {
-
-			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];
 			
 			//$data['report'] = $this->Relatorio_model->list_agendamentos($data['bd'],TRUE);
 
@@ -7485,472 +6620,6 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-
-    public function proc_Sac_original() {
-		
-		unset($_SESSION['FiltroAlteraParcela']);
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-        ), TRUE));	
-
-        $data['query'] = quotes_to_entities($this->input->post(array(
-            'idApp_Procedimento',
-            'Sac',
-            'Marketing',
-            'Orcamento',
-			'idTab_TipoRD',
-            'Cliente',
-			'idApp_Cliente',
-			'Fornecedor',
-			'idApp_Fornecedor',
-			'NomeUsuario',
-			'Compartilhar',
-			'DataInicio9',
-            'DataFim9',
-			'DataInicio10',
-            'DataFim10',
-			'HoraInicio9',
-            'HoraFim9',
-			'HoraInicio10',
-            'HoraFim10',
-			'Dia',
-			'Mesvenc',
-			'Ano',
-			'ConcluidoProcedimento',
-            'Ordenamento',
-            'Campo',
-            'TipoProcedimento',
-			'Agrupar',
-        ), TRUE));		
-
-        $data['select']['ConcluidoProcedimento'] = array(
-			'#' => 'TODOS',
-            'N' => 'Não',
-            'S' => 'Sim',
-        );
-
-		$data['select']['Sac'] = array (
-            '0' => 'Todos',
-            '1' => 'Solicitação',
-            '2' => 'Elogio',
-			'3' => 'Reclamação',
-        );
-		
-		$data['select']['Marketing'] = array (
-            '0' => 'Todos',
-            '1' => 'Atualização',
-            '2' => 'Pesquisa',
-			'3' => 'Retorno',
-            '4' => 'Promoções',
-			'5' => 'Felicitações',
-        );
-		
-        $data['select']['Agrupar'] = array(
-			'0' => '::Nenhum::',
-			'idApp_Procedimento' => 'Chamada',
-			'idApp_Cliente' => 'Cliente',
-        );
-		
-		$data['select']['Campo'] = array(
-			'PRC.DataProcedimento' => 'Data',
-            'PRC.idApp_Procedimento' => 'id',
-			'PRC.ConcluidoProcedimento' => 'Concl.',
-			'PRC.idSis_Usuario' => 'Quem Cadastrou',
-			'PRC.Compartilhar' => 'Quem Fazer',
-        );
-
-        $data['select']['Ordenamento'] = array(
-            'DESC' => 'Decrescente',
-			'ASC' => 'Crescente',
-        );
-
-        $data['select']['NomeUsuario'] = $this->Relatorio_model->select_usuario();
-		$data['select']['Dia'] = $this->Relatorio_model->select_dia();
-		$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
-		$data['select']['Compartilhar'] = $this->Relatorio_model->select_compartilhar();
-		
-		$data['query']['TipoProcedimento'] = 3;
-		$data['query']['Marketing'] = 0;
-		$data['query']['Fornecedor'] = 0;		
-        $data['titulo1'] = 'Sac';
-		$data['tipoproc'] = 3;
-		$data['metodo'] = 2;
-		$data['form_open_path'] = 'relatorio/proc_Sac';
-		$data['panel'] = 'warning';
-		$data['TipoFinanceiro'] = 'Receitas';
-		$data['TipoRD'] = 0;
-        $data['nome'] = 'Cliente';
-		$data['editar'] = 0;
-		$data['print'] = 1;
-		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'Procedimento/imprimir_lista_Sac/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
-		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
-		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
-		$data['paginacao'] = 'N';
-
-		$_SESSION['FiltroAlteraParcela']['idApp_Procedimento'] = $data['query']['idApp_Procedimento'];
-		$_SESSION['FiltroAlteraParcela']['Sac'] = $data['query']['Sac'];
-		$_SESSION['FiltroAlteraParcela']['Marketing'] = $data['query']['Marketing'];
-		$_SESSION['FiltroAlteraParcela']['Orcamento'] = $data['query']['Orcamento'];
-		$_SESSION['FiltroAlteraParcela']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
-		$_SESSION['FiltroAlteraParcela']['Cliente'] = $data['query']['Cliente'];
-		$_SESSION['FiltroAlteraParcela']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-		$_SESSION['FiltroAlteraParcela']['Fornecedor'] = $data['query']['Fornecedor'];
-		$_SESSION['FiltroAlteraParcela']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
-		$_SESSION['FiltroAlteraParcela']['NomeUsuario'] = $data['query']['NomeUsuario'];
-		$_SESSION['FiltroAlteraParcela']['Compartilhar'] = $data['query']['Compartilhar'];
-		$_SESSION['FiltroAlteraParcela']['TipoProcedimento'] = $data['query']['TipoProcedimento'];
-		$_SESSION['FiltroAlteraParcela']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
-        $_SESSION['FiltroAlteraParcela']['DataInicio9'] = $this->basico->mascara_data($data['query']['DataInicio9'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim9'] = $this->basico->mascara_data($data['query']['DataFim9'], 'mysql');
-        $_SESSION['FiltroAlteraParcela']['DataInicio10'] = $this->basico->mascara_data($data['query']['DataInicio10'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim10'] = $this->basico->mascara_data($data['query']['DataFim10'], 'mysql');
-        $_SESSION['FiltroAlteraParcela']['HoraInicio9'] = $data['query']['HoraInicio9'];
-		$_SESSION['FiltroAlteraParcela']['HoraFim9'] = $data['query']['HoraFim9'];
-        $_SESSION['FiltroAlteraParcela']['HoraInicio10'] = $data['query']['HoraInicio10'];
-		$_SESSION['FiltroAlteraParcela']['HoraFim10'] = $data['query']['HoraFim10'];
-		$_SESSION['FiltroAlteraParcela']['Agrupar'] = $data['query']['Agrupar'];
-		$_SESSION['FiltroAlteraParcela']['Campo'] = $data['query']['Campo'];
-		$_SESSION['FiltroAlteraParcela']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['FiltroAlteraParcela']['Dia'] = $data['query']['Dia'];
-		$_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
-		$_SESSION['FiltroAlteraParcela']['Ano'] = $data['query']['Ano'];			
-		
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
-		$this->form_validation->set_rules('DataInicio9', 'Data Início do Procedimento', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim9', 'Data Fim do Procedimento', 'trim|valid_date');
-		$this->form_validation->set_rules('DataInicio10', 'Data Início do SubProcedimento', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim10', 'Data Fim do SubProcedimento', 'trim|valid_date');
-		$this->form_validation->set_rules('HoraInicio9', 'Hora Inicial', 'trim|valid_hour');
-		$this->form_validation->set_rules('HoraFim9', 'Hora Final', 'trim|valid_hour');
-		$this->form_validation->set_rules('HoraInicio10', 'Hora Inicial', 'trim|valid_hour');
-		$this->form_validation->set_rules('HoraFim10', 'Hora Final', 'trim|valid_hour');
-
-        #run form validation
-        if ($this->form_validation->run() !== FALSE) {
-            
-			$data['bd']['idApp_Procedimento'] = $data['query']['idApp_Procedimento'];
-			$data['bd']['Sac'] = $data['query']['Sac'];
-			$data['bd']['Marketing'] = $data['query']['Marketing'];
-			$data['bd']['Orcamento'] = $data['query']['Orcamento'];
-            $data['bd']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
-            $data['bd']['Cliente'] = $data['query']['Cliente'];
-            $data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-            $data['bd']['Fornecedor'] = $data['query']['Fornecedor'];
-            $data['bd']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
-            $data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
-			$data['bd']['Compartilhar'] = $data['query']['Compartilhar'];
-			$data['bd']['Dia'] = $data['query']['Dia'];
-			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
-			$data['bd']['Ano'] = $data['query']['Ano'];
-			$data['bd']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
-			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];
-            $data['bd']['TipoProcedimento'] = $data['query']['TipoProcedimento'];
-			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
-			$data['bd']['DataInicio9'] = $this->basico->mascara_data($data['query']['DataInicio9'], 'mysql');
-            $data['bd']['DataFim9'] = $this->basico->mascara_data($data['query']['DataFim9'], 'mysql');
-			$data['bd']['DataInicio10'] = $this->basico->mascara_data($data['query']['DataInicio10'], 'mysql');
-            $data['bd']['DataFim10'] = $this->basico->mascara_data($data['query']['DataFim10'], 'mysql');
-			$data['bd']['HoraInicio9'] = $this->basico->mascara_data($data['query']['HoraInicio9'], 'mysql');
-            $data['bd']['HoraFim9'] = $this->basico->mascara_data($data['query']['HoraFim9'], 'mysql');
-			$data['bd']['HoraInicio10'] = $this->basico->mascara_data($data['query']['HoraInicio10'], 'mysql');
-            $data['bd']['HoraFim10'] = $this->basico->mascara_data($data['query']['HoraFim10'], 'mysql');
-
-            //$data['report'] = $this->Relatorio_model->list_procedimentos($data['bd'],TRUE);
-
-			//$this->load->library('pagination');
-			$config['per_page'] = 10;
-			$config["uri_segment"] = 3;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
-			
-			$config['base_url'] = base_url() . 'relatorio_pag/proc_Sac_pag/';
-			$config['total_rows'] = $this->Relatorio_model->list_procedimentos($data['bd'],TRUE, TRUE);
-           
-			if($config['total_rows'] >= 1){
-				$data['total_rows'] = $config['total_rows'];
-			}else{
-				$data['total_rows'] = 0;
-			}
-			
-            $this->pagination->initialize($config);
-            
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-            $data['pagina'] = $page;
-			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Relatorio_model->list_procedimentos($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-			$data['pagination'] = $this->pagination->create_links();
-			
-            $data['list'] = $this->load->view('relatorio/list_procedimentos', $data, TRUE);
-            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
-        }
-
-        $this->load->view('relatorio/tela_procedimentos', $data);
-
-        $this->load->view('basico/footer');
-
-    }
-
-    public function proc_Marketing_original() {
-		
-		unset($_SESSION['FiltroAlteraParcela']);
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-        ), TRUE));	
-
-        $data['query'] = quotes_to_entities($this->input->post(array(
-            'idApp_Procedimento',
-            'Sac',
-            'Marketing',
-            'Orcamento',
-			'idTab_TipoRD',
-            'Cliente',
-			'idApp_Cliente',
-			'Fornecedor',
-			'idApp_Fornecedor',
-			'NomeUsuario',
-			'Compartilhar',
-			'DataInicio9',
-            'DataFim9',
-			'DataInicio10',
-            'DataFim10',
-			'HoraInicio9',
-            'HoraFim9',
-			'HoraInicio10',
-            'HoraFim10',			
-			'Dia',
-			'Mesvenc',
-			'Ano',
-			'ConcluidoProcedimento',
-            'Ordenamento',
-            'Campo',
-            'TipoProcedimento',
-			'Agrupar',
-        ), TRUE));		
-
-        $data['select']['ConcluidoProcedimento'] = array(
-			'#' => 'TODOS',
-            'N' => 'Não',
-            'S' => 'Sim',
-        );
-
-		$data['select']['Sac'] = array (
-            '0' => 'Todos',
-            '1' => 'Solicitação',
-            '2' => 'Elogio',
-			'3' => 'Reclamação',
-        );
-		
-		$data['select']['Marketing'] = array (
-            '0' => 'Todos',
-            '1' => 'Atualização',
-            '2' => 'Pesquisa',
-			'3' => 'Retorno',
-            '4' => 'Promoções',
-			'5' => 'Felicitações',
-        );
-		
-        $data['select']['Agrupar'] = array(
-			'0' => '::Nenhum::',
-			'idApp_Procedimento' => 'Campanha',
-			'idApp_Cliente' => 'Cliente',
-        );
-		
-		$data['select']['Campo'] = array(
-			'PRC.DataProcedimento' => 'Data',
-            'PRC.idApp_Procedimento' => 'id',
-			'PRC.ConcluidoProcedimento' => 'Concl.',
-			'PRC.idSis_Usuario' => 'Quem Cadastrou',
-			'PRC.Compartilhar' => 'Quem Fazer',
-        );
-
-        $data['select']['Ordenamento'] = array(
-            'DESC' => 'Decrescente',
-			'ASC' => 'Crescente',
-        );
-
-        $data['select']['NomeUsuario'] = $this->Relatorio_model->select_usuario();
-		$data['select']['Dia'] = $this->Relatorio_model->select_dia();
-		$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
-		$data['select']['Compartilhar'] = $this->Relatorio_model->select_compartilhar();
-
-		$data['query']['TipoProcedimento'] = 4;
-		$data['query']['Sac'] = 0;
-		$data['query']['Fornecedor'] = 0;		
-        $data['titulo1'] = 'Marketing';
-		$data['tipoproc'] = 4;
-		$data['metodo'] = 2;
-		$data['form_open_path'] = 'relatorio/proc_Marketing';
-		$data['panel'] = 'success';
-		$data['TipoFinanceiro'] = 'Receitas';
-		$data['TipoRD'] = 0;
-        $data['nome'] = 'Cliente';
-		$data['editar'] = 0;
-		$data['print'] = 1;
-		$data['imprimir'] = 'Procedimento/imprimir/';
-		$data['imprimirlista'] = 'Procedimento/imprimir_lista_Marketing/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
-		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
-		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
-		$data['paginacao'] = 'N';
-
-		$_SESSION['FiltroAlteraParcela']['idApp_Procedimento'] = $data['query']['idApp_Procedimento'];
-		$_SESSION['FiltroAlteraParcela']['Sac'] = $data['query']['Sac'];
-		$_SESSION['FiltroAlteraParcela']['Marketing'] = $data['query']['Marketing'];
-		$_SESSION['FiltroAlteraParcela']['Orcamento'] = $data['query']['Orcamento'];
-		$_SESSION['FiltroAlteraParcela']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
-		$_SESSION['FiltroAlteraParcela']['Cliente'] = $data['query']['Cliente'];
-		$_SESSION['FiltroAlteraParcela']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-		$_SESSION['FiltroAlteraParcela']['Fornecedor'] = $data['query']['Fornecedor'];
-		$_SESSION['FiltroAlteraParcela']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
-		$_SESSION['FiltroAlteraParcela']['NomeUsuario'] = $data['query']['NomeUsuario'];
-		$_SESSION['FiltroAlteraParcela']['Compartilhar'] = $data['query']['Compartilhar'];
-		$_SESSION['FiltroAlteraParcela']['TipoProcedimento'] = $data['query']['TipoProcedimento'];
-		$_SESSION['FiltroAlteraParcela']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
-        $_SESSION['FiltroAlteraParcela']['DataInicio9'] = $this->basico->mascara_data($data['query']['DataInicio9'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim9'] = $this->basico->mascara_data($data['query']['DataFim9'], 'mysql');
-        $_SESSION['FiltroAlteraParcela']['DataInicio10'] = $this->basico->mascara_data($data['query']['DataInicio10'], 'mysql');
-		$_SESSION['FiltroAlteraParcela']['DataFim10'] = $this->basico->mascara_data($data['query']['DataFim10'], 'mysql');
-        $_SESSION['FiltroAlteraParcela']['HoraInicio9'] = $data['query']['HoraInicio9'];
-		$_SESSION['FiltroAlteraParcela']['HoraFim9'] = $data['query']['HoraFim9'];
-        $_SESSION['FiltroAlteraParcela']['HoraInicio10'] = $data['query']['HoraInicio10'];
-		$_SESSION['FiltroAlteraParcela']['HoraFim10'] = $data['query']['HoraFim10'];
-		$_SESSION['FiltroAlteraParcela']['Agrupar'] = $data['query']['Agrupar'];
-		$_SESSION['FiltroAlteraParcela']['Campo'] = $data['query']['Campo'];
-		$_SESSION['FiltroAlteraParcela']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['FiltroAlteraParcela']['Dia'] = $data['query']['Dia'];
-		$_SESSION['FiltroAlteraParcela']['Mesvenc'] = $data['query']['Mesvenc'];
-		$_SESSION['FiltroAlteraParcela']['Ano'] = $data['query']['Ano'];		
-		
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
-		$this->form_validation->set_rules('DataInicio9', 'Data Início do Procedimento', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim9', 'Data Fim do Procedimento', 'trim|valid_date');
-		$this->form_validation->set_rules('DataInicio10', 'Data Início do SubProcedimento', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim10', 'Data Fim do SubProcedimento', 'trim|valid_date');
-		$this->form_validation->set_rules('HoraInicio9', 'Hora Inicial', 'trim|valid_hour');
-		$this->form_validation->set_rules('HoraFim9', 'Hora Final', 'trim|valid_hour');
-		$this->form_validation->set_rules('HoraInicio10', 'Hora Inicial', 'trim|valid_hour');
-		$this->form_validation->set_rules('HoraFim10', 'Hora Final', 'trim|valid_hour');
-
-        #run form validation
-        if ($this->form_validation->run() !== FALSE) {
-            
-			$data['bd']['idApp_Procedimento'] = $data['query']['idApp_Procedimento'];
-			$data['bd']['Sac'] = $data['query']['Sac'];
-			$data['bd']['Marketing'] = $data['query']['Marketing'];
-			$data['bd']['Orcamento'] = $data['query']['Orcamento'];
-            $data['bd']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
-            $data['bd']['Cliente'] = $data['query']['Cliente'];
-            $data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-            $data['bd']['Fornecedor'] = $data['query']['Fornecedor'];
-            $data['bd']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
-            $data['bd']['NomeUsuario'] = $data['query']['NomeUsuario'];
-			$data['bd']['Compartilhar'] = $data['query']['Compartilhar'];
-			$data['bd']['Dia'] = $data['query']['Dia'];
-			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
-			$data['bd']['Ano'] = $data['query']['Ano'];
-			$data['bd']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
-			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];
-            $data['bd']['TipoProcedimento'] = $data['query']['TipoProcedimento'];
-			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
-			$data['bd']['DataInicio9'] = $this->basico->mascara_data($data['query']['DataInicio9'], 'mysql');
-            $data['bd']['DataFim9'] = $this->basico->mascara_data($data['query']['DataFim9'], 'mysql');
-			$data['bd']['DataInicio10'] = $this->basico->mascara_data($data['query']['DataInicio10'], 'mysql');
-            $data['bd']['DataFim10'] = $this->basico->mascara_data($data['query']['DataFim10'], 'mysql');
-			$data['bd']['HoraInicio9'] = $this->basico->mascara_data($data['query']['HoraInicio9'], 'mysql');
-            $data['bd']['HoraFim9'] = $this->basico->mascara_data($data['query']['HoraFim9'], 'mysql');
-			$data['bd']['HoraInicio10'] = $this->basico->mascara_data($data['query']['HoraInicio10'], 'mysql');
-            $data['bd']['HoraFim10'] = $this->basico->mascara_data($data['query']['HoraFim10'], 'mysql');
-
-            //$data['report'] = $this->Relatorio_model->list_procedimentos($data['bd'],TRUE);
-
-			//$this->load->library('pagination');
-			$config['per_page'] = 10;
-			$config["uri_segment"] = 3;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
-			
-			$config['base_url'] = base_url() . 'relatorio_pag/proc_Marketing_pag/';
-			$config['total_rows'] = $this->Relatorio_model->list_procedimentos($data['bd'],TRUE, TRUE);
-           
-			if($config['total_rows'] >= 1){
-				$data['total_rows'] = $config['total_rows'];
-			}else{
-				$data['total_rows'] = 0;
-			}
-			
-            $this->pagination->initialize($config);
-            
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-            $data['pagina'] = $page;
-			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Relatorio_model->list_procedimentos($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-			$data['pagination'] = $this->pagination->create_links();
-			
-            $data['list'] = $this->load->view('relatorio/list_procedimentos', $data, TRUE);
-            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
-        }
-
-        $this->load->view('relatorio/tela_procedimentos', $data);
-
-        $this->load->view('basico/footer');
-
-    }
 	
     public function balanco() {
 
@@ -8454,201 +7123,209 @@ class Relatorio extends CI_Controller {
 			$data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
 		else
 			$data['msg'] = '';
-			
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-		), TRUE));	
-			
-		$data['query'] = quotes_to_entities($this->input->post(array(
-			'ValorOrca',
-			'NomeCliente',
-			'idApp_Cliente',
-			'DataInicio',
-			'DataFim',
-			'DataInicio2',
-			'DataFim2',
-			'DataInicio3',
-			'DataFim3',
-			'Ordenamento',
-			'Campo',
-			'Pedidos_de',
-			'Pedidos_ate',
-			'Valor_de',
-			'Valor_ate',
-			'Valor_cash_de',
-			'Valor_cash_ate',
-			'Ultimo',
-			'Texto1',
-			'Texto2',
-			'Texto3',
-			'Texto4',
-			'nomedoCliente',
-			'idCliente',
-			'numerodopedido',
-			'site',
-		), TRUE));
 		
-        $data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
-        $data['select']['idCliente'] = $this->Basico_model->select_status_sn();
-        $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
-        $data['select']['site'] = $this->Basico_model->select_status_sn();
-		
- 		(!$data['query']['nomedoCliente']) ? $data['query']['nomedoCliente'] = 'N' : FALSE;
-		$data['radio'] = array(
-            'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
-        );
-        ($data['query']['nomedoCliente'] == 'S') ?
-            $data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
-
- 		(!$data['query']['idCliente']) ? $data['query']['idCliente'] = 'N' : FALSE;
-		$data['radio'] = array(
-            'idCliente' => $this->basico->radio_checked($data['query']['idCliente'], 'idCliente', 'NS'),
-        );
-        ($data['query']['idCliente'] == 'S') ?
-            $data['div']['idCliente'] = '' : $data['div']['idCliente'] = 'style="display: none;"';
+		if ($_SESSION['log']['idSis_Empresa'] == 5) {
+				
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
 			
- 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'N' : FALSE;
-		$data['radio'] = array(
-            'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
-        );
-        ($data['query']['numerodopedido'] == 'S') ?
-            $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
-
- 		(!$data['query']['site']) ? $data['query']['site'] = 'N' : FALSE;
-		$data['radio'] = array(
-            'site' => $this->basico->radio_checked($data['query']['site'], 'site', 'NS'),
-        );
-        ($data['query']['site'] == 'S') ?
-            $data['div']['site'] = '' : $data['div']['site'] = 'style="display: none;"';		
-
-		$data['select']['Campo'] = array(
-			'Valor' => 'Valor Pedido',
-			'F.CashBackCliente' => 'Valor CashBach',
-			'ContPedidos' => 'Pedidos',
-			'F.NomeCliente' => 'Cliente',
-			'F.idApp_Cliente' => 'Id',
-			'F.UltimoPedido' => 'Ultimo Pedido',
-		);
-
-		$data['select']['Ordenamento'] = array(
-			'DESC' => 'Decrescente',
-			'ASC' => 'Crescente',
-		);
-		
-        $data['select']['Ultimo'] = array(
-			'0' => '::Nenhum::',			
-			#'1' => 'Último Pedido',
-        );		
-
-		$data['titulo'] = 'Ranking de Vendas';
-		$data['form_open_path'] = 'relatorio/rankingvendas';	
-		$data['paginacao'] = 'N';
-        $data['nome'] = 'Cliente';
-		
-		$_SESSION['FiltroRankingVendas']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-		$_SESSION['FiltroRankingVendas']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-		$_SESSION['FiltroRankingVendas']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-		$_SESSION['FiltroRankingVendas']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
-		$_SESSION['FiltroRankingVendas']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
-		$_SESSION['FiltroRankingVendas']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
-		$_SESSION['FiltroRankingVendas']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
-		$_SESSION['FiltroRankingVendas']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['FiltroRankingVendas']['Campo'] = $data['query']['Campo'];
-		$_SESSION['FiltroRankingVendas']['Pedidos_de'] = $data['query']['Pedidos_de'];
-		$_SESSION['FiltroRankingVendas']['Pedidos_ate'] = $data['query']['Pedidos_ate'];
-		$_SESSION['FiltroRankingVendas']['Valor_de'] = $data['query']['Valor_de'];
-		$_SESSION['FiltroRankingVendas']['Valor_ate'] = $data['query']['Valor_ate'];
-		$_SESSION['FiltroRankingVendas']['Valor_cash_de'] = $data['query']['Valor_cash_de'];
-		$_SESSION['FiltroRankingVendas']['Valor_cash_ate'] = $data['query']['Valor_cash_ate'];
-		$_SESSION['FiltroRankingVendas']['Ultimo'] = $data['query']['Ultimo'];
-		
-        $_SESSION['FiltroRankingVendas']['Texto1'] = utf8_encode($data['query']['Texto1']);
-        $_SESSION['FiltroRankingVendas']['Texto2'] = utf8_encode($data['query']['Texto2']);
-        $_SESSION['FiltroRankingVendas']['Texto3'] = utf8_encode($data['query']['Texto3']);
-        $_SESSION['FiltroRankingVendas']['Texto4'] = utf8_encode($data['query']['Texto4']);	
-        $_SESSION['FiltroRankingVendas']['nomedoCliente'] = $data['query']['nomedoCliente'];
-        $_SESSION['FiltroRankingVendas']['idCliente'] = $data['query']['idCliente'];
-        $_SESSION['FiltroRankingVendas']['numerodopedido'] = $data['query']['numerodopedido'];
-        $_SESSION['FiltroRankingVendas']['site'] = $data['query']['site'];	
+		}else{
 			
-		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-		#$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
-		$this->form_validation->set_rules('DataInicio', 'Data Inicio', 'trim|valid_date');
-		$this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
-		$this->form_validation->set_rules('DataInicio2', 'Data Inicio', 'trim|valid_date');
-		$this->form_validation->set_rules('DataFim2', 'Data Fim', 'trim|valid_date');
-		$this->form_validation->set_rules('DataInicio3', 'Data Inicio', 'trim|valid_date');
-		$this->form_validation->set_rules('DataFim3', 'Data Fim', 'trim|valid_date');
-
-		#run form validation
-		if ($this->form_validation->run() !== FALSE) {
-
-			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-			$data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
-			$data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
-			$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
-			$data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
-			$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
-			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-			$data['bd']['Campo'] = $data['query']['Campo'];
-			$data['bd']['Valor_de'] = $data['query']['Valor_de'];
-			$data['bd']['Valor_ate'] = $data['query']['Valor_ate'];
-			$data['bd']['Valor_cash_de'] = $data['query']['Valor_cash_de'];
-			$data['bd']['Valor_cash_ate'] = $data['query']['Valor_cash_ate'];
-			$data['bd']['Pedidos_de'] = $data['query']['Pedidos_de'];
-			$data['bd']['Pedidos_ate'] = $data['query']['Pedidos_ate'];
-			$data['bd']['Ultimo'] = $data['query']['Ultimo'];
-
-			//$data['report'] = $this->Relatorio_model->list_rankingvendas($data['bd'],TRUE);
-
-			//$this->load->library('pagination');
-			$config['per_page'] = 10;
-			$config["uri_segment"] = 3;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
+			$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+				'id_Cliente_Auto',
+				'NomeClienteAuto',
+			), TRUE));	
+				
+			$data['query'] = quotes_to_entities($this->input->post(array(
+				'ValorOrca',
+				'NomeCliente',
+				'idApp_Cliente',
+				'DataInicio',
+				'DataFim',
+				'DataInicio2',
+				'DataFim2',
+				'DataInicio3',
+				'DataFim3',
+				'Ordenamento',
+				'Campo',
+				'Pedidos_de',
+				'Pedidos_ate',
+				'Valor_de',
+				'Valor_ate',
+				'Valor_cash_de',
+				'Valor_cash_ate',
+				'Ultimo',
+				'Texto1',
+				'Texto2',
+				'Texto3',
+				'Texto4',
+				'nomedoCliente',
+				'idCliente',
+				'numerodopedido',
+				'site',
+			), TRUE));
 			
-			$config['base_url'] = base_url() . 'relatorio_pag/rankingvendas_pag/';
-			$config['total_rows'] = $this->Relatorio_model->list_rankingvendas($data['bd'],TRUE, TRUE);
-           
-			if($config['total_rows'] >= 1){
-				$data['total_rows'] = $config['total_rows'];
-			}else{
-				$data['total_rows'] = 0;
+			$data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
+			$data['select']['idCliente'] = $this->Basico_model->select_status_sn();
+			$data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
+			$data['select']['site'] = $this->Basico_model->select_status_sn();
+			
+			(!$data['query']['nomedoCliente']) ? $data['query']['nomedoCliente'] = 'N' : FALSE;
+			$data['radio'] = array(
+				'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
+			);
+			($data['query']['nomedoCliente'] == 'S') ?
+				$data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
+
+			(!$data['query']['idCliente']) ? $data['query']['idCliente'] = 'N' : FALSE;
+			$data['radio'] = array(
+				'idCliente' => $this->basico->radio_checked($data['query']['idCliente'], 'idCliente', 'NS'),
+			);
+			($data['query']['idCliente'] == 'S') ?
+				$data['div']['idCliente'] = '' : $data['div']['idCliente'] = 'style="display: none;"';
+				
+			(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'N' : FALSE;
+			$data['radio'] = array(
+				'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
+			);
+			($data['query']['numerodopedido'] == 'S') ?
+				$data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
+
+			(!$data['query']['site']) ? $data['query']['site'] = 'N' : FALSE;
+			$data['radio'] = array(
+				'site' => $this->basico->radio_checked($data['query']['site'], 'site', 'NS'),
+			);
+			($data['query']['site'] == 'S') ?
+				$data['div']['site'] = '' : $data['div']['site'] = 'style="display: none;"';		
+
+			$data['select']['Campo'] = array(
+				'Valor' => 'Valor Pedido',
+				'F.CashBackCliente' => 'Valor CashBach',
+				'ContPedidos' => 'Pedidos',
+				'F.NomeCliente' => 'Cliente',
+				'F.idApp_Cliente' => 'Id',
+				'F.UltimoPedido' => 'Ultimo Pedido',
+			);
+
+			$data['select']['Ordenamento'] = array(
+				'DESC' => 'Decrescente',
+				'ASC' => 'Crescente',
+			);
+			
+			$data['select']['Ultimo'] = array(
+				'0' => '::Nenhum::',			
+				#'1' => 'Último Pedido',
+			);		
+
+			$data['titulo'] = 'Ranking de Vendas';
+			$data['form_open_path'] = 'relatorio/rankingvendas';	
+			$data['paginacao'] = 'N';
+			$data['nome'] = 'Cliente';
+			
+			$_SESSION['FiltroRankingVendas']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+			$_SESSION['FiltroRankingVendas']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+			$_SESSION['FiltroRankingVendas']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$_SESSION['FiltroRankingVendas']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+			$_SESSION['FiltroRankingVendas']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+			$_SESSION['FiltroRankingVendas']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+			$_SESSION['FiltroRankingVendas']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
+			$_SESSION['FiltroRankingVendas']['Ordenamento'] = $data['query']['Ordenamento'];
+			$_SESSION['FiltroRankingVendas']['Campo'] = $data['query']['Campo'];
+			$_SESSION['FiltroRankingVendas']['Pedidos_de'] = $data['query']['Pedidos_de'];
+			$_SESSION['FiltroRankingVendas']['Pedidos_ate'] = $data['query']['Pedidos_ate'];
+			$_SESSION['FiltroRankingVendas']['Valor_de'] = $data['query']['Valor_de'];
+			$_SESSION['FiltroRankingVendas']['Valor_ate'] = $data['query']['Valor_ate'];
+			$_SESSION['FiltroRankingVendas']['Valor_cash_de'] = $data['query']['Valor_cash_de'];
+			$_SESSION['FiltroRankingVendas']['Valor_cash_ate'] = $data['query']['Valor_cash_ate'];
+			$_SESSION['FiltroRankingVendas']['Ultimo'] = $data['query']['Ultimo'];
+			
+			$_SESSION['FiltroRankingVendas']['Texto1'] = utf8_encode($data['query']['Texto1']);
+			$_SESSION['FiltroRankingVendas']['Texto2'] = utf8_encode($data['query']['Texto2']);
+			$_SESSION['FiltroRankingVendas']['Texto3'] = utf8_encode($data['query']['Texto3']);
+			$_SESSION['FiltroRankingVendas']['Texto4'] = utf8_encode($data['query']['Texto4']);	
+			$_SESSION['FiltroRankingVendas']['nomedoCliente'] = $data['query']['nomedoCliente'];
+			$_SESSION['FiltroRankingVendas']['idCliente'] = $data['query']['idCliente'];
+			$_SESSION['FiltroRankingVendas']['numerodopedido'] = $data['query']['numerodopedido'];
+			$_SESSION['FiltroRankingVendas']['site'] = $data['query']['site'];	
+				
+			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+			#$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+			$this->form_validation->set_rules('DataInicio', 'Data Inicio', 'trim|valid_date');
+			$this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
+			$this->form_validation->set_rules('DataInicio2', 'Data Inicio', 'trim|valid_date');
+			$this->form_validation->set_rules('DataFim2', 'Data Fim', 'trim|valid_date');
+			$this->form_validation->set_rules('DataInicio3', 'Data Inicio', 'trim|valid_date');
+			$this->form_validation->set_rules('DataFim3', 'Data Fim', 'trim|valid_date');
+
+			#run form validation
+			if ($this->form_validation->run() !== FALSE) {
+
+				$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+				$data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+				$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+				$data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+				$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+				$data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
+				$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
+				$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+				$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+				$data['bd']['Campo'] = $data['query']['Campo'];
+				$data['bd']['Valor_de'] = $data['query']['Valor_de'];
+				$data['bd']['Valor_ate'] = $data['query']['Valor_ate'];
+				$data['bd']['Valor_cash_de'] = $data['query']['Valor_cash_de'];
+				$data['bd']['Valor_cash_ate'] = $data['query']['Valor_cash_ate'];
+				$data['bd']['Pedidos_de'] = $data['query']['Pedidos_de'];
+				$data['bd']['Pedidos_ate'] = $data['query']['Pedidos_ate'];
+				$data['bd']['Ultimo'] = $data['query']['Ultimo'];
+
+				//$data['report'] = $this->Relatorio_model->list_rankingvendas($data['bd'],TRUE);
+
+				//$this->load->library('pagination');
+				$config['per_page'] = 10;
+				$config["uri_segment"] = 3;
+				$config['reuse_query_string'] = TRUE;
+				$config['num_links'] = 2;
+				$config['use_page_numbers'] = TRUE;
+				$config['full_tag_open'] = "<ul class='pagination'>";
+				$config['full_tag_close'] = "</ul>";
+				$config['num_tag_open'] = '<li>';
+				$config['num_tag_close'] = '</li>';
+				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+				$config['next_tag_open'] = "<li>";
+				$config['next_tagl_close'] = "</li>";
+				$config['prev_tag_open'] = "<li>";
+				$config['prev_tagl_close'] = "</li>";
+				$config['first_tag_open'] = "<li>";
+				$config['first_tagl_close'] = "</li>";
+				$config['last_tag_open'] = "<li>";
+				$config['last_tagl_close'] = "</li>";
+				$data['Pesquisa'] = '';
+				
+				$config['base_url'] = base_url() . 'relatorio_pag/rankingvendas_pag/';
+				$config['total_rows'] = $this->Relatorio_model->list_rankingvendas($data['bd'],TRUE, TRUE);
+			   
+				if($config['total_rows'] >= 1){
+					$data['total_rows'] = $config['total_rows'];
+				}else{
+					$data['total_rows'] = 0;
+				}
+				
+				$this->pagination->initialize($config);
+				
+				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+				$data['pagina'] = $page;
+				$data['per_page'] = $config['per_page'];
+				$data['report'] = $this->Relatorio_model->list_rankingvendas($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+				$data['pagination'] = $this->pagination->create_links();
+				
+				$data['list'] = $this->load->view('relatorio/list_rankingvendas', $data, TRUE);
+				//$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 			}
-			
-            $this->pagination->initialize($config);
-            
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-            $data['pagina'] = $page;
-			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Relatorio_model->list_rankingvendas($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-			$data['pagination'] = $this->pagination->create_links();
-			
-			$data['list'] = $this->load->view('relatorio/list_rankingvendas', $data, TRUE);
-			//$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+
+			$this->load->view('relatorio/tela_rankingvendas', $data);
 		}
-
-		$this->load->view('relatorio/tela_rankingvendas', $data);
-
 		$this->load->view('basico/footer');
 
 	}
@@ -8884,108 +7561,6 @@ class Relatorio extends CI_Controller {
 
 }
 
-	public function sistema() {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-        $data['titulo1'] = 'Manuteção';
-		$data['titulo2'] = 'Comissão';
-
-        #run form validation
-        if ($this->form_validation->run() !== FALSE) {
-
-        }
-
-        $this->load->view('relatorio/tela_sistema', $data);
-
-        $this->load->view('basico/footer');
-
-    }
-	
-	public function servicosprest() {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-
-        $data['query'] = quotes_to_entities($this->input->post(array(
-            'NomeCliente',
-			'NomeProfissional',
-			'DataInicio',
-            'DataFim',
-			'Ordenamento',
-            'Campo',
-
-        ), TRUE));
-
-        if (!$data['query']['DataInicio'])
-           $data['query']['DataInicio'] = '01/01/2017';
-
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
-        $this->form_validation->set_rules('DataInicio', 'Data Início', 'required|trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim', 'trim|valid_date');
-
-
-        $data['select']['Campo'] = array(
-            'C.NomeCliente' => 'Nome do Cliente',
-			'OT.idApp_OrcaTrata' => 'Id Orçam.',
-            'OT.DataOrca' => 'Data do Orçam.',
-			'OT.ProfissionalOrca' => 'Responsável',
-			'PD.NomeServico' => 'Serviço',
-
-        );
-
-        $data['select']['Ordenamento'] = array(
-            'ASC' => 'Crescente',
-            'DESC' => 'Decrescente',
-        );
-
-		$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
-		$data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional();
-
-        $data['titulo'] = 'Relatório de Serviços Prestados';
-
-        #run form validation
-        if ($this->form_validation->run() !== FALSE) {
-
-            #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
-			$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
-			$data['bd']['NomeProfissional'] = $data['query']['NomeProfissional'];
-            $data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];
-
-            $data['report'] = $this->Relatorio_model->list_servicosprest($data['bd'],TRUE);
-
-            /*
-              echo "<pre>";
-              print_r($data['report']);
-              echo "</pre>";
-              exit();
-              */
-
-            $data['list'] = $this->load->view('relatorio/list_servicosprest', $data, TRUE);
-            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
-        }
-
-        $this->load->view('relatorio/tela_servicosprest', $data);
-
-        $this->load->view('basico/footer');
-
-    }
-
     public function clientes() {
 		
 		unset($_SESSION['FiltroClientes']);
@@ -8999,223 +7574,231 @@ class Relatorio extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-			'id_ClientePet_Auto',
-			'NomeClientePetAuto',
-			'id_ClienteDep_Auto',
-			'NomeClienteDepAuto',
-		), TRUE));	
-		
-        $data['query'] = quotes_to_entities($this->input->post(array(
-            //'NomeCliente',
-			'idApp_Cliente',
-			'idApp_ClientePet',
-			'idApp_ClienteDep',
-			'idApp_ClientePet2',
-			'idApp_ClienteDep2',
-			'Ativo',
-			'Motivo',
-            'Ordenamento',
-            'Campo',
-			'DataInicio',
-            'DataFim',
-			'DataInicio2',
-			'DataFim2',
-			'DataInicio3',
-			'DataFim3',
-			'Dia',
-			'Mesvenc',
-			'Ano',
-			'Texto1',
-			'Texto2',
-			'Texto3',
-			'Texto4',
-			'Agrupar',
-			'Pedidos',
-			'Sexo',
-			'Pesquisa',
-        ), TRUE));
-
-        $data['select']['Ativo'] = array(
-            '#' => 'TODOS',
-            'N' => 'Não',
-            'S' => 'Sim',
-        );
-		
-        $data['select']['Sexo'] = array(
-			'0' => 'Todos',
-			'1' => 'Masculino',
-			'2' => 'Feminino',
-			'3' => 'Outros',
-        );
-		
-        $data['select']['Agrupar'] = array(
-			'0' => 'Todos',
-			'idApp_Cliente' => 'Cliente',
-        );
-		
-        $data['select']['Pedidos'] = array(
-			'0' => 'Todos',
-			'1' => 'Clientes S/Pedidos',
-			'2' => 'Clientes C/Pedidos',
-        );
+		if ($_SESSION['log']['idSis_Empresa'] == 5) {
 				
-		$data['select']['Campo'] = array(
-            'C.idApp_Cliente' => 'nº Cliente',
-			'C.NomeCliente' => 'Nome do Cliente',
-			'C.Ativo' => 'Ativo',
-            'C.DataNascimento' => 'Data de Nascimento',
-            'C.DataCadastroCliente' => 'Data do Cadastro',
-            'C.Sexo' => 'Sexo',
-            'C.BairroCliente' => 'Bairro',
-            'C.MunicipioCliente' => 'Município',
-            'C.Email' => 'E-mail',
-			'CC.NomeContatoCliente' => 'Contato do Cliente',
-			'TCC.RelaPes' => 'Rel. Pes.',
-			'TCC.RelaCom' => 'Rel. Com.',
-			'CC.Sexo' => 'Sexo',
-			'C.UltimoPedido' => 'Ultimo Pedido',
-			'C.ValidadeCashBack' => 'Validade CashBack',
-
-        );
-
-        $data['select']['Ordenamento'] = array(
-            'ASC' => 'Crescente',
-            'DESC' => 'Decrescente',
-        );
-
-        //$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
-		$data['select']['Dia'] = $this->Relatorio_model->select_dia();
-		$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
-		$data['select']['Motivo'] = $this->Relatorio_model->select_motivo();
-		
-		$data['select']['option'] = ($_SESSION['log']['Permissao'] <= 2) ? '<option value="">-- Sel. um Prof. --</option>' : FALSE;
-
-        $data['titulo'] = 'Clientes';
-		$data['form_open_path'] = 'relatorio/clientes';
-		
-		$data['paginacao'] = 'N';
-
-        $_SESSION['FiltroClientes']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-		$_SESSION['FiltroClientes']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-		$_SESSION['FiltroClientes']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
-		$_SESSION['FiltroClientes']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
-		$_SESSION['FiltroClientes']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
-		$_SESSION['FiltroClientes']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');        
-		$_SESSION['FiltroClientes']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-		$_SESSION['FiltroClientes']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-		$_SESSION['FiltroClientes']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-		$_SESSION['FiltroClientes']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
-		$_SESSION['FiltroClientes']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
-		$_SESSION['FiltroClientes']['Ativo'] = $data['query']['Ativo'];
-		$_SESSION['FiltroClientes']['Motivo'] = $data['query']['Motivo'];
-		$_SESSION['FiltroClientes']['Campo'] = $data['query']['Campo'];
-		$_SESSION['FiltroClientes']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['FiltroClientes']['Dia'] = $data['query']['Dia'];
-		$_SESSION['FiltroClientes']['Mesvenc'] = $data['query']['Mesvenc'];
-		$_SESSION['FiltroClientes']['Ano'] = $data['query']['Ano'];
-		$_SESSION['FiltroClientes']['Agrupar'] = $data['query']['Agrupar'];
-		$_SESSION['FiltroClientes']['Pedidos'] = $data['query']['Pedidos'];
-		$_SESSION['FiltroClientes']['Sexo'] = $data['query']['Sexo'];
-		$_SESSION['FiltroClientes']['Pesquisa'] = $data['query']['Pesquisa'];
-        
-		$_SESSION['FiltroClientes']['Texto1'] = utf8_encode($data['query']['Texto1']);
-        $_SESSION['FiltroClientes']['Texto2'] = utf8_encode($data['query']['Texto2']);
-        $_SESSION['FiltroClientes']['Texto3'] = utf8_encode($data['query']['Texto3']);
-        $_SESSION['FiltroClientes']['Texto4'] = utf8_encode($data['query']['Texto4']);
-		
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        $this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'trim');
-        $this->form_validation->set_rules('DataInicio', 'Data Início do Cadastro', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim do Cadastro', 'trim|valid_date');
-		$this->form_validation->set_rules('DataInicio2', 'Data Inicio', 'trim|valid_date');
-		$this->form_validation->set_rules('DataFim2', 'Data Fim', 'trim|valid_date');
-		$this->form_validation->set_rules('DataInicio3', 'Data Inicio', 'trim|valid_date');
-		$this->form_validation->set_rules('DataFim3', 'Data Fim', 'trim|valid_date');
-
-        #run form validation
-        if ($this->form_validation->run() !== FALSE) {
-
-			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-			$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
-			$data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
-			$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
-			$data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
-            //$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
-			$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-			$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-			$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-			$data['bd']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
-			$data['bd']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
-			$data['bd']['Ativo'] = $data['query']['Ativo'];
-			$data['bd']['Motivo'] = $data['query']['Motivo'];
-            $data['bd']['Campo'] = $data['query']['Campo'];
-			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-			$data['bd']['Dia'] = $data['query']['Dia'];
-			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
-			$data['bd']['Ano'] = $data['query']['Ano'];
-			$data['bd']['Agrupar'] = $data['query']['Agrupar'];
-			$data['bd']['Pedidos'] = $data['query']['Pedidos'];
-			$data['bd']['Sexo'] = $data['query']['Sexo'];
-			$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
-
-			//$this->load->library('pagination');
-			$config['per_page'] = 10;
-			$config["uri_segment"] = 3;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
 			
-			$config['base_url'] = base_url() . 'relatorio_pag/clientes_pag/';
-			$config['total_rows'] = $this->Relatorio_model->list_clientes($data['bd'],TRUE, TRUE);
-           
-			if($config['total_rows'] >= 1){
-				$data['total_rows'] = $config['total_rows'];
-			}else{
-				$data['total_rows'] = 0;
-			}
+		}else{
 			
-            $this->pagination->initialize($config);
-            
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-            $data['pagina'] = $page;
-			$data['per_page'] = $config['per_page'];
+			$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+				'id_Cliente_Auto',
+				'NomeClienteAuto',
+				'id_ClientePet_Auto',
+				'NomeClientePetAuto',
+				'id_ClienteDep_Auto',
+				'NomeClienteDepAuto',
+			), TRUE));	
 			
-			$data['report'] = $this->Relatorio_model->list_clientes($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-			$data['pagination'] = $this->pagination->create_links();
+			$data['query'] = quotes_to_entities($this->input->post(array(
+				//'NomeCliente',
+				'idApp_Cliente',
+				'idApp_ClientePet',
+				'idApp_ClienteDep',
+				'idApp_ClientePet2',
+				'idApp_ClienteDep2',
+				'Ativo',
+				'Motivo',
+				'Ordenamento',
+				'Campo',
+				'DataInicio',
+				'DataFim',
+				'DataInicio2',
+				'DataFim2',
+				'DataInicio3',
+				'DataFim3',
+				'Dia',
+				'Mesvenc',
+				'Ano',
+				'Texto1',
+				'Texto2',
+				'Texto3',
+				'Texto4',
+				'Agrupar',
+				'Pedidos',
+				'Sexo',
+				'Pesquisa',
+			), TRUE));
 
-			if($data['query']['idApp_Cliente']){
-				if ($data['report']->num_rows() >= 1) {
-					$info = $data['report']->result_array();
-					redirect('cliente/prontuario/' . $info[0]['idApp_Cliente'] );
-					exit();
-				} else {
+			$data['select']['Ativo'] = array(
+				'#' => 'TODOS',
+				'N' => 'Não',
+				'S' => 'Sim',
+			);
+			
+			$data['select']['Sexo'] = array(
+				'0' => 'Todos',
+				'1' => 'Masculino',
+				'2' => 'Feminino',
+				'3' => 'Outros',
+			);
+			
+			$data['select']['Agrupar'] = array(
+				'0' => 'Todos',
+				'idApp_Cliente' => 'Cliente',
+			);
+			
+			$data['select']['Pedidos'] = array(
+				'0' => 'Todos',
+				'1' => 'Clientes S/Pedidos',
+				'2' => 'Clientes C/Pedidos',
+			);
+					
+			$data['select']['Campo'] = array(
+				'C.idApp_Cliente' => 'nº Cliente',
+				'C.NomeCliente' => 'Nome do Cliente',
+				'C.Ativo' => 'Ativo',
+				'C.DataNascimento' => 'Data de Nascimento',
+				'C.DataCadastroCliente' => 'Data do Cadastro',
+				'C.Sexo' => 'Sexo',
+				'C.BairroCliente' => 'Bairro',
+				'C.MunicipioCliente' => 'Município',
+				'C.Email' => 'E-mail',
+				'CC.NomeContatoCliente' => 'Contato do Cliente',
+				'TCC.RelaPes' => 'Rel. Pes.',
+				'TCC.RelaCom' => 'Rel. Com.',
+				'CC.Sexo' => 'Sexo',
+				'C.UltimoPedido' => 'Ultimo Pedido',
+				'C.ValidadeCashBack' => 'Validade CashBack',
+
+			);
+
+			$data['select']['Ordenamento'] = array(
+				'ASC' => 'Crescente',
+				'DESC' => 'Decrescente',
+			);
+
+			//$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
+			$data['select']['Dia'] = $this->Relatorio_model->select_dia();
+			$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
+			$data['select']['Motivo'] = $this->Relatorio_model->select_motivo();
+			
+			$data['select']['option'] = ($_SESSION['log']['Permissao'] <= 2) ? '<option value="">-- Sel. um Prof. --</option>' : FALSE;
+
+			$data['titulo'] = 'Clientes';
+			$data['form_open_path'] = 'relatorio/clientes';
+			
+			$data['paginacao'] = 'N';
+
+			$_SESSION['FiltroClientes']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+			$_SESSION['FiltroClientes']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$_SESSION['FiltroClientes']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+			$_SESSION['FiltroClientes']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+			$_SESSION['FiltroClientes']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+			$_SESSION['FiltroClientes']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');        
+			$_SESSION['FiltroClientes']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+			$_SESSION['FiltroClientes']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+			$_SESSION['FiltroClientes']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+			$_SESSION['FiltroClientes']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
+			$_SESSION['FiltroClientes']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
+			$_SESSION['FiltroClientes']['Ativo'] = $data['query']['Ativo'];
+			$_SESSION['FiltroClientes']['Motivo'] = $data['query']['Motivo'];
+			$_SESSION['FiltroClientes']['Campo'] = $data['query']['Campo'];
+			$_SESSION['FiltroClientes']['Ordenamento'] = $data['query']['Ordenamento'];
+			$_SESSION['FiltroClientes']['Dia'] = $data['query']['Dia'];
+			$_SESSION['FiltroClientes']['Mesvenc'] = $data['query']['Mesvenc'];
+			$_SESSION['FiltroClientes']['Ano'] = $data['query']['Ano'];
+			$_SESSION['FiltroClientes']['Agrupar'] = $data['query']['Agrupar'];
+			$_SESSION['FiltroClientes']['Pedidos'] = $data['query']['Pedidos'];
+			$_SESSION['FiltroClientes']['Sexo'] = $data['query']['Sexo'];
+			$_SESSION['FiltroClientes']['Pesquisa'] = $data['query']['Pesquisa'];
+			
+			$_SESSION['FiltroClientes']['Texto1'] = utf8_encode($data['query']['Texto1']);
+			$_SESSION['FiltroClientes']['Texto2'] = utf8_encode($data['query']['Texto2']);
+			$_SESSION['FiltroClientes']['Texto3'] = utf8_encode($data['query']['Texto3']);
+			$_SESSION['FiltroClientes']['Texto4'] = utf8_encode($data['query']['Texto4']);
+			
+			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+			$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'trim');
+			$this->form_validation->set_rules('DataInicio', 'Data Início do Cadastro', 'trim|valid_date');
+			$this->form_validation->set_rules('DataFim', 'Data Fim do Cadastro', 'trim|valid_date');
+			$this->form_validation->set_rules('DataInicio2', 'Data Inicio', 'trim|valid_date');
+			$this->form_validation->set_rules('DataFim2', 'Data Fim', 'trim|valid_date');
+			$this->form_validation->set_rules('DataInicio3', 'Data Inicio', 'trim|valid_date');
+			$this->form_validation->set_rules('DataFim3', 'Data Fim', 'trim|valid_date');
+
+			#run form validation
+			if ($this->form_validation->run() !== FALSE) {
+
+				$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+				$data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+				$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+				$data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+				$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+				$data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
+				//$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
+				$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+				$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+				$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+				$data['bd']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
+				$data['bd']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
+				$data['bd']['Ativo'] = $data['query']['Ativo'];
+				$data['bd']['Motivo'] = $data['query']['Motivo'];
+				$data['bd']['Campo'] = $data['query']['Campo'];
+				$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
+				$data['bd']['Dia'] = $data['query']['Dia'];
+				$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
+				$data['bd']['Ano'] = $data['query']['Ano'];
+				$data['bd']['Agrupar'] = $data['query']['Agrupar'];
+				$data['bd']['Pedidos'] = $data['query']['Pedidos'];
+				$data['bd']['Sexo'] = $data['query']['Sexo'];
+				$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
+
+				//$this->load->library('pagination');
+				$config['per_page'] = 10;
+				$config["uri_segment"] = 3;
+				$config['reuse_query_string'] = TRUE;
+				$config['num_links'] = 2;
+				$config['use_page_numbers'] = TRUE;
+				$config['full_tag_open'] = "<ul class='pagination'>";
+				$config['full_tag_close'] = "</ul>";
+				$config['num_tag_open'] = '<li>';
+				$config['num_tag_close'] = '</li>';
+				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+				$config['next_tag_open'] = "<li>";
+				$config['next_tagl_close'] = "</li>";
+				$config['prev_tag_open'] = "<li>";
+				$config['prev_tagl_close'] = "</li>";
+				$config['first_tag_open'] = "<li>";
+				$config['first_tagl_close'] = "</li>";
+				$config['last_tag_open'] = "<li>";
+				$config['last_tagl_close'] = "</li>";
+				
+				$config['base_url'] = base_url() . 'relatorio_pag/clientes_pag/';
+				$config['total_rows'] = $this->Relatorio_model->list_clientes($data['bd'],TRUE, TRUE);
+			   
+				if($config['total_rows'] >= 1){
+					$data['total_rows'] = $config['total_rows'];
+				}else{
+					$data['total_rows'] = 0;
+				}
+				
+				$this->pagination->initialize($config);
+				
+				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+				$data['pagina'] = $page;
+				$data['per_page'] = $config['per_page'];
+				
+				$data['report'] = $this->Relatorio_model->list_clientes($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+				$data['pagination'] = $this->pagination->create_links();
+
+				if($data['query']['idApp_Cliente']){
+					if ($data['report']->num_rows() >= 1) {
+						$info = $data['report']->result_array();
+						redirect('cliente/prontuario/' . $info[0]['idApp_Cliente'] );
+						exit();
+					} else {
+						$data['list'] = $this->load->view('relatorio/list_clientes', $data, TRUE);
+					}				
+				}else{
 					$data['list'] = $this->load->view('relatorio/list_clientes', $data, TRUE);
-				}				
-			}else{
-				$data['list'] = $this->load->view('relatorio/list_clientes', $data, TRUE);
+				}
 			}
-        }
 
-        $this->load->view('relatorio/tela_clientes', $data);
-
+			$this->load->view('relatorio/tela_clientes', $data);
+		}
         $this->load->view('basico/footer');
 
     }
@@ -9291,99 +7874,6 @@ class Relatorio extends CI_Controller {
         $this->load->view('relatorio/tela_clenkontraki', $data);
 
         $this->load->view('basico/footer');
-
-    }
-
-    public function clientes3() {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-
-        $data['query'] = quotes_to_entities($this->input->post(array(
-            'NomeCliente',
-			'Ativo',
-            'Ordenamento',
-            'Campo',
-			'DataInicio',
-            'DataFim',
-			'Dia',
-			'Mesvenc',
-			'Ano',
-        ), TRUE));
-
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
-
-        $data['select']['Ativo'] = array(
-            '#' => 'TODOS',
-            'N' => 'Não',
-            'S' => 'Sim',
-        );
-
-		$data['select']['Campo'] = array(
-            'C.idApp_Cliente' => 'nº Cliente',
-			'C.NomeCliente' => 'Nome do Cliente',
-			'C.Ativo' => 'Ativo',
-            'C.DataNascimento' => 'Data de Nascimento',
-            'C.Sexo' => 'Sexo',
-            'C.Bairro' => 'Bairro',
-            'C.Municipio' => 'Município',
-            'C.Email' => 'E-mail',
-			'CC.NomeContatoCliente' => 'Contato do Cliente',
-			'TCC.RelaPes' => 'Rel. Pes.',
-			'TCC.RelaCom' => 'Rel. Com.',
-			'CC.Sexo' => 'Sexo',
-
-        );
-
-        $data['select']['Ordenamento'] = array(
-            'ASC' => 'Crescente',
-            'DESC' => 'Decrescente',
-        );
-
-        $data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
-		$data['select']['Dia'] = $this->Relatorio_model->select_dia();
-		$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
-		
-		$data['select']['option'] = ($_SESSION['log']['Permissao'] <= 2) ? '<option value="">-- Sel. um Prof. --</option>' : FALSE;
-
-        $data['titulo'] = 'Clientes';
-
-        #run form validation
-        if ($this->form_validation->run() !== TRUE) {
-
-            $data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
-			$data['bd']['Ativo'] = $data['query']['Ativo'];
-			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];
-			$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-            $data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-			$data['bd']['Dia'] = $data['query']['Dia'];
-			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
-			$data['bd']['Ano'] = $data['query']['Ano'];
-
-            $data['report'] = $this->Relatorio_model->list_clientes($data['bd'],TRUE);
-
-            /*
-              echo "<pre>";
-              print_r($data['report']);
-              echo "</pre>";
-              exit();
-              */
-
-            $data['list'] = $this->load->view('relatorio/list_clientes3', $data, TRUE);
-            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
-        }
-
-        $this->load->view('relatorio/tela_clientes3', $data);
-
-        $this->load->view('basico/footer');
-
-
 
     }
 
