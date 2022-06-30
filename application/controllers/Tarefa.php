@@ -343,7 +343,7 @@ class Tarefa extends CI_Controller {
         $data['datepicker'] = 'DatePicker';
         $data['timepicker'] = 'TimePicker';
 
-		$data['q_categoria'] = $this->Tarefa_model->list_categoria($_SESSION['log'], TRUE);
+		$data['q_categoria'] = $this->Tarefa_model->list_categoria($_SESSION['log']['idSis_Empresa'], TRUE);
 		$data['list_categoria'] = $this->load->view('tarefa/list_categoria', $data, TRUE);
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -381,6 +381,7 @@ class Tarefa extends CI_Controller {
 				$data['tarefa']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 				$data['tarefa']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 				$data['tarefa']['TipoTarefa'] = 5;
+				$data['tarefa']['NivelTarefa'] = $_SESSION['Usuario']['Nivel'];
 				$data['tarefa']['idApp_Tarefa'] = $this->Tarefa_model->set_tarefa($data['tarefa']);
 
 				if ($data['tarefa']['idApp_Tarefa'] === FALSE) {
@@ -400,6 +401,7 @@ class Tarefa extends CI_Controller {
 							$data['procedtarefa'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 							$data['procedtarefa'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 							$data['procedtarefa'][$j]['TipoSubTarefa'] = 5;
+							$data['procedtarefa'][$j]['NivelSubTarefa'] = $_SESSION['Usuario']['Nivel'];
 							$data['procedtarefa'][$j]['DataSubTarefa'] = $this->basico->mascara_data($data['procedtarefa'][$j]['DataSubTarefa'], 'mysql');
 							
 							if(empty($data['procedtarefa'][$j]['DataSubTarefaLimite'])){
@@ -613,7 +615,7 @@ class Tarefa extends CI_Controller {
 			$data['datepicker'] = 'DatePicker';
 			$data['timepicker'] = 'TimePicker';
 
-			$data['q_categoria'] = $this->Tarefa_model->list_categoria($_SESSION['log'], TRUE);
+			$data['q_categoria'] = $this->Tarefa_model->list_categoria($_SESSION['log']['idSis_Empresa'], TRUE);
 			$data['list_categoria'] = $this->load->view('tarefa/list_categoria', $data, TRUE);
 
 			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -681,6 +683,7 @@ class Tarefa extends CI_Controller {
 							$data['update']['procedtarefa']['inserir'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 							$data['update']['procedtarefa']['inserir'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 							$data['update']['procedtarefa']['inserir'][$j]['TipoSubTarefa'] = 5;
+							$data['update']['procedtarefa']['inserir'][$j]['NivelSubTarefa'] = $_SESSION['Tarefa']['NivelTarefa'];
 							$data['update']['procedtarefa']['inserir'][$j]['idApp_Tarefa'] = $data['tarefa']['idApp_Tarefa'];
 							$data['update']['procedtarefa']['inserir'][$j]['DataSubTarefa'] = $this->basico->mascara_data($data['update']['procedtarefa']['inserir'][$j]['DataSubTarefa'], 'mysql');
 							

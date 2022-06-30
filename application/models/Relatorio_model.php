@@ -7510,8 +7510,18 @@ exit();*/
 		#$permissao2 = (($_SESSION['FiltroAlteraTarefa']['ConcluidoTarefa'] != "0" ) && ($_SESSION['FiltroAlteraTarefa']['ConcluidoTarefa'] != '' )) ? 'P.ConcluidoTarefa = "' . $_SESSION['FiltroAlteraTarefa']['ConcluidoTarefa'] . '" AND ' : FALSE;
 		#$permissao3 = (($_SESSION['FiltroAlteraTarefa']['Prioridade'] != "0" ) && ($_SESSION['FiltroAlteraTarefa']['Prioridade'] != '' )) ? 'P.Prioridade = "' . $_SESSION['FiltroAlteraTarefa']['Prioridade'] . '" AND ' : FALSE;
 
-		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5) ? '(P.Compartilhar = ' . $_SESSION['log']['idSis_Usuario'] . ' OR P.Compartilhar = 0) AND ' : FALSE;
-		$permissao2 = ($_SESSION['log']['idSis_Empresa'] != 5) ? 'OR P.Compartilhar = 0' : FALSE;
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$permissao = 'P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+			$permissao2 = FALSE;
+		}else{
+			if($_SESSION['Usuario']['Nivel'] == 2){
+				$permissao = 'P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+				$permissao2 = FALSE;
+			}else{
+				$permissao = 'P.NivelTarefa = "1" AND';
+				$permissao2 = 'OR P.Compartilhar = 0';
+			}
+		}
 
 		$groupby = ($data['Agrupar'] != "0") ? 'GROUP BY P.' . $data['Agrupar'] . '' : FALSE;		
 		/*
@@ -9026,9 +9036,17 @@ exit();*/
     }
 
     public function select_categoria() {
+
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$permissao = 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+		}else{
+			if($_SESSION['Usuario']['Nivel'] == 2){
+				$permissao = 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+			}else{
+				$permissao = 'C.NivelCategoria = "1" AND';
+			}
+		}
 		
-		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-        
 		$query = $this->db->query('
             SELECT
                 C.idTab_Categoria,

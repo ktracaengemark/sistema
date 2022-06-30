@@ -10803,9 +10803,9 @@ class Relatorio extends CI_Controller {
 			'ASC' => 'Crescente',
         );
 
+		$data['select']['idTab_Categoria'] = $this->Relatorio_model->select_categoria();
         #$data['select']['NomeProfissional'] = $this->Relatorio_model->select_profissional3();
 		#$data['select']['Profissional'] = $this->Relatorio_model->select_profissional2();
-		$data['select']['idTab_Categoria'] = $this->Relatorio_model->select_categoria();
 		//$data['select']['Tarefa'] = $this->Relatorio_model->select_tarefa();
 		//$data['select']['SubTarefa'] = $this->Relatorio_model->select_procedtarefa();
 

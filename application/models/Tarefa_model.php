@@ -38,33 +38,43 @@ class Tarefa_model extends CI_Model {
     }
 
     public function get_tarefa($data) {
-		
-		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5) ? 'PC.Compartilhar = ' . $_SESSION['log']['idSis_Usuario'] . ' AND' : FALSE;
-		$permissao200 = ($_SESSION['log']['idSis_Empresa'] != 5) ? 'OR PC.Compartilhar = 0' : FALSE;
-		
+
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$permissao = 'P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+			$permissao2 = FALSE;
+		}else{
+			if($_SESSION['Usuario']['Nivel'] == 2){
+				$permissao = 'P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+				$permissao2 = FALSE;
+			}else{
+				$permissao = 'P.NivelTarefa = "1" AND';
+				$permissao2 = 'OR P.Compartilhar = 0';
+			}
+		}
+
         $query = $this->db->query('
 			SELECT
-				PC.*,
-				PC.Compartilhar,
+				P.*,
+				P.Compartilhar,
 				CT.*,
 				
 				US.idSis_Usuario AS Compartilhar,
 				US.CelularUsuario AS CelularCompartilhou,
 				US.Nome AS NomeCompartilhar,
 				
-				PC.idSis_Usuario AS idSis_Usuario,
+				P.idSis_Usuario AS idSis_Usuario,
 				USC.CelularUsuario AS CelularCadastrou,
 				USC.Nome AS NomeCadastrou
 			FROM 
-				App_Tarefa AS PC
-					LEFT JOIN Tab_Categoria AS CT ON CT.idTab_Categoria = PC.idTab_Categoria
-					LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = PC.Compartilhar
-					LEFT JOIN Sis_Usuario AS USC ON USC.idSis_Usuario = PC.idSis_Usuario
+				App_Tarefa AS P
+					LEFT JOIN Tab_Categoria AS CT ON CT.idTab_Categoria = P.idTab_Categoria
+					LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = P.Compartilhar
+					LEFT JOIN Sis_Usuario AS USC ON USC.idSis_Usuario = P.idSis_Usuario
 			WHERE 
 				' . $permissao . '
-				PC.idApp_Tarefa = ' . $data . ' AND
-				PC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-				(PC.Compartilhar = ' . $_SESSION['log']['idSis_Usuario'] . ' OR PC.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' ' . $permissao200 . ') 
+				P.idApp_Tarefa = ' . $data . ' AND
+				P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				(P.Compartilhar = ' . $_SESSION['log']['idSis_Usuario'] . ' OR P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' ' . $permissao2 . ') 
 		');
 		
 		foreach ($query->result() as $row) {
@@ -214,9 +224,20 @@ class Tarefa_model extends CI_Model {
 		$data['Compartilhar'] = ($data['Compartilhar']) ? ' AND P.Compartilhar = ' . $data['Compartilhar'] : FALSE;
 		$data['NomeUsuario'] = ($data['NomeUsuario']) ? ' AND P.idSis_Usuario = ' . $data['NomeUsuario'] : FALSE;
 		$data['NomeProfissional'] = ($data['NomeProfissional']) ? ' AND P.idSis_Usuario = ' . $data['NomeProfissional'] : FALSE;
-		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5) ? 'P.Compartilhar = ' . $_SESSION['log']['idSis_Usuario'] . ' AND' : FALSE;
-		$permissao200 = ($_SESSION['log']['idSis_Empresa'] != 5) ? 'OR P.Compartilhar = 0' : FALSE;
-		
+
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$permissao = 'P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+			$permissao2 = FALSE;
+		}else{
+			if($_SESSION['Usuario']['Nivel'] == 2){
+				$permissao = 'P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+				$permissao2 = FALSE;
+			}else{
+				$permissao = 'P.NivelTarefa = "1" AND';
+				$permissao2 = 'OR P.Compartilhar = 0';
+			}
+		}
+
 		$query = $this->db->query('
             SELECT
 				P.idSis_Empresa,
@@ -259,7 +280,7 @@ class Tarefa_model extends CI_Model {
 				' . $filtro5 . '
 				' . $filtro9 . '
 				P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-				(P.Compartilhar = ' . $_SESSION['log']['idSis_Usuario'] . ' OR P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' ' . $permissao200 . ') AND
+				(P.Compartilhar = ' . $_SESSION['log']['idSis_Usuario'] . ' OR P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' ' . $permissao2 . ') AND
 				P.idApp_OrcaTrata = "0" AND
 				P.idApp_Cliente = "0" AND
 				P.idApp_Fornecedor = "0" AND
@@ -590,28 +611,28 @@ class Tarefa_model extends CI_Model {
     
 	public function list_categoria($data, $x) {
 		
-		$data['idSis_Usuario'] = ($data['idSis_Empresa'] == 5) ? ' AND TA.idSis_Usuario = ' . $data['idSis_Usuario'] : FALSE;
-
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$permissao = 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+		}else{
+			if($_SESSION['Usuario']['Nivel'] == 2){
+				$permissao = 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+			}else{
+				$permissao = 'C.NivelCategoria = "1" AND';
+			}
+		}
+		
         $query = $this->db->query('
 			SELECT 
-				TA.*
+				C.*
 			FROM 
-				Tab_Categoria AS TA
+				Tab_Categoria AS C
 			WHERE 
-                TA.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
-                ' . $data['idSis_Usuario'] . '
+                ' . $permissao . '
+                C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
 			ORDER BY  
-				TA.Categoria ASC 
+				C.Categoria ASC 
 		');
 
-        /*
-          echo $this->db->last_query();
-          $query = $query->result_array();
-          echo "<pre>";
-          print_r($query);
-          echo "</pre>";
-          exit();
-        */
         if ($query->num_rows() === 0) {
             return FALSE;
         } else {
@@ -708,7 +729,17 @@ class Tarefa_model extends CI_Model {
     }
 
 	public function select_categoria() {
-		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$permissao = 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+		}else{
+			if($_SESSION['Usuario']['Nivel'] == 2){
+				$permissao = 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+			}else{
+				$permissao = 'C.NivelCategoria = "1" AND';
+			}
+		}
+		
 		$query = $this->db->query('
             SELECT
                 C.idTab_Categoria,
@@ -732,9 +763,17 @@ class Tarefa_model extends CI_Model {
     }
 
     public function select_categoria2() {
+
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$permissao = 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+		}else{
+			if($_SESSION['Usuario']['Nivel'] == 2){
+				$permissao = 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+			}else{
+				$permissao = 'C.NivelCategoria = "1" AND';
+			}
+		}
 		
-		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-        
 		$query = $this->db->query('
             SELECT
                 C.idTab_Categoria,
@@ -759,6 +798,16 @@ class Tarefa_model extends CI_Model {
     }
 	
 	public function select_usuario() {
+
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$permissao = 'P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+		}else{
+			if($_SESSION['Usuario']['Nivel'] == 2){
+				$permissao = 'P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+			}else{
+				$permissao = 'P.Nivel = "1" AND';
+			}
+		}
 		
         $query = $this->db->query('
             SELECT
@@ -770,6 +819,7 @@ class Tarefa_model extends CI_Model {
                 Sis_Usuario AS P
 					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
             WHERE
+				' . $permissao . '
                 P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND 
 				P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
 			ORDER BY 
@@ -777,7 +827,11 @@ class Tarefa_model extends CI_Model {
         ');
 
         $array = array();
-        $array[0] = ':: Todos ::';
+		
+		if($_SESSION['Usuario']['Nivel'] == 1){
+			$array[0] = ':: Todos ::';
+		}
+		
         foreach ($query->result() as $row) {
             $array[$row->idSis_Usuario] = $row->NomeUsuario;
         }
@@ -787,6 +841,16 @@ class Tarefa_model extends CI_Model {
 
 	public function select_compartilhar() {
 
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$permissao = 'P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+		}else{
+			if($_SESSION['Usuario']['Nivel'] == 2){
+				$permissao = 'P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+			}else{
+				$permissao = 'P.Nivel = "1" AND';
+			}
+		}
+		
         $query = $this->db->query('
             SELECT
 				P.idSis_Usuario,
@@ -795,6 +859,7 @@ class Tarefa_model extends CI_Model {
                 Sis_Usuario AS P
 					LEFT JOIN Tab_Funcao AS F ON F.idTab_Funcao = P.Funcao
             WHERE
+				' . $permissao . '
                 P.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . ' AND
                 P.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
 			ORDER BY 
@@ -802,9 +867,13 @@ class Tarefa_model extends CI_Model {
         ');
 
         $array = array();
-        $array[0] = ':: Todos ::';
-        //$array[50] = ':: O Próprio ::';
-        //$array[51] = ':: Todos ::';
+		
+		if($_SESSION['log']['idSis_Empresa'] != 5){
+			if($_SESSION['Usuario']['Nivel'] == 1){
+				$array[0] = ':: Todos ::';
+			}
+		}
+		
         foreach ($query->result() as $row) {
             $array[$row->idSis_Usuario] = $row->NomeUsuario;
         }
