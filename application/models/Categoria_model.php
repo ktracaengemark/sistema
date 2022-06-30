@@ -25,10 +25,38 @@ class Categoria_model extends CI_Model {
     }
 
     public function get_categoria($data) {
-        $query = $this->db->query('SELECT * FROM Tab_Categoria WHERE idTab_Categoria = ' . $data);
-        $query = $query->result_array();
 
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$permissao = 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+		}else{
+			if($_SESSION['Usuario']['Nivel'] == 2){
+				$permissao = 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+			}else{
+				$permissao = 'C.NivelCategoria = "1" AND';
+			}
+		}
+		
+		$query = $this->db->query(
+			'SELECT
+				C.* 
+			FROM 
+				Tab_Categoria AS C
+			WHERE 
+                ' . $permissao . '
+				C.idTab_Categoria = ' . $data . ' AND
+                C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+        /*
+		$query = $query->result_array();
         return $query[0];
+		*/
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
+
     }
 
     public function update_categoria($data, $id) {
@@ -61,8 +89,19 @@ class Categoria_model extends CI_Model {
     }
 
     public function lista_categoria($x) {
-		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-        $query = $this->db->query('
+		//$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+		
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$permissao = 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+		}else{
+			if($_SESSION['Usuario']['Nivel'] == 2){
+				$permissao = 'C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND';
+			}else{
+				$permissao = 'C.NivelCategoria = "1" AND';
+			}
+		}
+
+		$query = $this->db->query('
             SELECT
                 C.idTab_Categoria,
                 C.Categoria

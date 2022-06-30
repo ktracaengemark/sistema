@@ -24,13 +24,19 @@
 						<br>
 						<div class="form-group">
 							<div class="row">
-								<input type="hidden" name="idTab_Motivo" value="<?php echo $query['idTab_Motivo']; ?>">
 								<?php if ($metodo == 2) { ?>
 
+									<input type="hidden" name="idTab_Motivo" value="<?php echo $query['idTab_Motivo']; ?>">
+									
 									<div class="col-md-6">
-										<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
+										<button class="btn btn-md btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
 											<span class="glyphicon glyphicon-save"></span> Salvar
 										</button>
+									</div>
+									<div class="col-md-6 ">
+										<a class="btn btn-success" href="<?php echo base_url() . 'motivo/cadastrar/'?>" role="button">
+											<span class="glyphicon glyphicon-pencil"></span> Nova Motivo
+										</a>
 									</div>
 									<!--
 									<div class="col-md-6 text-right">
@@ -68,7 +74,7 @@
 
 								<?php } else { ?>
 									<div class="col-md-6">
-										<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
+										<button class="btn btn-md btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
 											<span class="glyphicon glyphicon-save"></span> Salvar
 										</button>
 									</div>

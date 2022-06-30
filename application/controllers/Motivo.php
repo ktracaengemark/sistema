@@ -46,73 +46,84 @@ class Motivo extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5) {
+				
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
+			$data['query'] = quotes_to_entities($this->input->post(array(
+				'Motivo',
+				'Desc_Motivo',
+			), TRUE));
 
-        $data['query'] = quotes_to_entities($this->input->post(array(
-            'idSis_Usuario',
-			'idTab_Motivo',
-            'Motivo',
-			'Desc_Motivo',
-			'idSis_Empresa',
-                ), TRUE));
+			$data['titulo'] = 'Cadastrar Motivo';
+			$data['form_open_path'] = 'motivo/cadastrar';
+			$data['readonly'] = '';
+			$data['disabled'] = '';
+			$data['panel'] = 'primary';
+			$data['metodo'] = 1;
+			$data['button'] =
+					'
+					<button class="btn btn-sm btn-primary" name="pesquisar" value="0" type="submit">
+						<span class="glyphicon glyphicon-plus"></span> Cadastrar
+					</button>
+			';
 
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+			$data['sidebar'] = 'col-sm-3 col-md-2';
+			$data['main'] = 'col-sm-7 col-md-8';
 
-        $this->form_validation->set_rules('Motivo', 'Nome do Convênio', 'required|trim');
-		$this->form_validation->set_rules('Desc_Motivo', 'Descrição', 'required|trim');
+			$data['q'] = $this->Motivo_model->lista_motivo(TRUE);
+			$data['list'] = $this->load->view('motivo/list_motivo', $data, TRUE);
 
-        $data['titulo'] = 'Cadastrar Motivo';
-        $data['form_open_path'] = 'motivo/cadastrar';
-        $data['readonly'] = '';
-        $data['disabled'] = '';
-        $data['panel'] = 'primary';
-        $data['metodo'] = 1;
-        $data['button'] =
-                '
-                <button class="btn btn-sm btn-primary" name="pesquisar" value="0" type="submit">
-                    <span class="glyphicon glyphicon-plus"></span> Cadastrar
-                </button>
-        ';
+			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $data['sidebar'] = 'col-sm-3 col-md-2';
-        $data['main'] = 'col-sm-7 col-md-8';
+			$this->form_validation->set_rules('Motivo', 'Nome do Convênio', 'required|trim');
+			$this->form_validation->set_rules('Desc_Motivo', 'Descrição', 'required|trim');
 
-        $data['q'] = $this->Motivo_model->lista_motivo(TRUE);
-        $data['list'] = $this->load->view('motivo/list_motivo', $data, TRUE);
+			#run form validation
+			if ($this->form_validation->run() === FALSE) {
+				$this->load->view('motivo/pesq_motivo', $data);
+			} else {
+		
+				if($this->Basico_model->get_dt_validade() === FALSE){
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					
+				} else {
+						
+					$data['query']['Motivo'] = trim(mb_strtoupper($data['query']['Motivo'], 'ISO-8859-1'));
+					$data['query']['Desc_Motivo'] = trim(mb_strtoupper($data['query']['Desc_Motivo'], 'ISO-8859-1'));
+					$data['query']['Data_Cad_Motivo'] = date('Y-m-d H:i:s', time());
+					$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+					$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+					$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 
-        #run form validation
-        if ($this->form_validation->run() === FALSE) {
-            $this->load->view('motivo/pesq_motivo', $data);
-        } else {
+					$data['campos'] = array_keys($data['query']);
+					$data['anterior'] = array();
 
-            $data['query']['Motivo'] = trim(mb_strtoupper($data['query']['Motivo'], 'ISO-8859-1'));
-			$data['query']['Desc_Motivo'] = trim(mb_strtoupper($data['query']['Desc_Motivo'], 'ISO-8859-1'));
-			#$data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
-			$data['query']['Data_Cad_Motivo'] = date('Y-m-d H:i:s', time());
-            $data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-            $data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-			$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
+					$data['idTab_Motivo'] = $this->Motivo_model->set_motivo($data['query']);
 
-            $data['campos'] = array_keys($data['query']);
-            $data['anterior'] = array();
+					if ($data['idTab_Motivo'] === FALSE) {
+						$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
-            $data['idTab_Motivo'] = $this->Motivo_model->set_motivo($data['query']);
+						$this->basico->erro($msg);
+						$this->load->view('motivo/cadastrar', $data);
+					} else {
 
-            if ($data['idTab_Motivo'] === FALSE) {
-                $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+						$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Motivo'], FALSE);
+						$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Motivo', 'CREATE', $data['auditoriaitem']);
+						$data['msg'] = '?m=1';
 
-                $this->basico->erro($msg);
-                $this->load->view('motivo/cadastrar', $data);
-            } else {
-
-                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Motivo'], FALSE);
-                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Motivo', 'CREATE', $data['auditoriaitem']);
-                $data['msg'] = '?m=1';
-
-                redirect(base_url() . 'motivo/cadastrar' . $data['msg']);
-                exit();
-            }
-        }
-
+						redirect(base_url() . 'motivo/cadastrar' . $data['msg']);
+						exit();
+					}
+				}
+			}
+		}
         $this->load->view('basico/footer');
     }
 
@@ -126,77 +137,93 @@ class Motivo extends CI_Controller {
             $data['msg'] = '';
 
         $data['query'] = quotes_to_entities($this->input->post(array(
-            #'idSis_Usuario',
 			'idTab_Motivo',
             'Motivo',
             'Desc_Motivo',
-			#'idSis_Empresa',
-                ), TRUE));
+		), TRUE));
 
-
-        if ($id)
+        if ($id){
             $data['query'] = $this->Motivo_model->get_motivo($id);
+			if($data['query'] === FALSE){
+				
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'acesso' . $data['msg']);
+				exit();
+				
+			}
+		}
+		
+		if(!$data['query']['idTab_Motivo']){
+			
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		} else {
+			
+			$data['titulo'] = 'Editar Motivo';
+			$data['form_open_path'] = 'motivo/alterar';
+			$data['readonly'] = '';
+			$data['disabled'] = '';
+			$data['panel'] = 'primary';
+			$data['metodo'] = 2;
+			$data['button'] =
+					'
+					<button class="btn btn-sm btn-warning" name="pesquisar" value="0" type="submit">
+						<span class="glyphicon glyphicon-edit"></span> Salvar Alteração
+					</button>
+			';
 
+			$data['sidebar'] = 'col-sm-3 col-md-2';
+			$data['main'] = 'col-sm-7 col-md-8';
 
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+			$data['q'] = $this->Motivo_model->lista_motivo(TRUE);
+			$data['list'] = $this->load->view('motivo/list_motivo', $data, TRUE);
 
-        $this->form_validation->set_rules('Motivo', 'Nome do Convênio', 'required|trim');
-		$this->form_validation->set_rules('Desc_Motivo', 'Descrição', 'required|trim');
-		#$this->form_validation->set_rules('ValorVenda', 'Valor do Convênio', 'required|trim');
+			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        $data['titulo'] = 'Editar Motivo';
-        $data['form_open_path'] = 'motivo/alterar';
-        $data['readonly'] = '';
-        $data['disabled'] = '';
-        $data['panel'] = 'primary';
-        $data['metodo'] = 2;
-        $data['button'] =
-                '
-                <button class="btn btn-sm btn-warning" name="pesquisar" value="0" type="submit">
-                    <span class="glyphicon glyphicon-edit"></span> Salvar Alteração
-                </button>
-        ';
+			$this->form_validation->set_rules('Motivo', 'Nome do Convênio', 'required|trim');
+			$this->form_validation->set_rules('Desc_Motivo', 'Descrição', 'required|trim');
 
-        $data['sidebar'] = 'col-sm-3 col-md-2';
-        $data['main'] = 'col-sm-7 col-md-8';
+			#run form validation
+			if ($this->form_validation->run() === FALSE) {
+				$this->load->view('motivo/pesq_motivo', $data);
+			} else {
+		
+				if($this->Basico_model->get_dt_validade() === FALSE){
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					
+				} else {
+					
 
-        $data['q'] = $this->Motivo_model->lista_motivo(TRUE);
-        $data['list'] = $this->load->view('motivo/list_motivo', $data, TRUE);
+					$data['query']['Motivo'] = trim(mb_strtoupper($data['query']['Motivo'], 'ISO-8859-1'));
+					$data['query']['Desc_Motivo'] = trim(mb_strtoupper($data['query']['Desc_Motivo'], 'ISO-8859-1'));
 
-        #run form validation
-        if ($this->form_validation->run() === FALSE) {
-            $this->load->view('motivo/pesq_motivo', $data);
-        } else {
+					$data['anterior'] = $this->Motivo_model->get_motivo($data['query']['idTab_Motivo']);
+					$data['campos'] = array_keys($data['query']);
 
-            $data['query']['Motivo'] = trim(mb_strtoupper($data['query']['Motivo'], 'ISO-8859-1'));
-			$data['query']['Desc_Motivo'] = trim(mb_strtoupper($data['query']['Desc_Motivo'], 'ISO-8859-1'));
-			#$data['query']['ValorVenda'] = str_replace(',','.',str_replace('.','',$data['query']['ValorVenda']));
-            #$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-			#$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
+					$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_Motivo'], TRUE);
 
-            $data['anterior'] = $this->Motivo_model->get_motivo($data['query']['idTab_Motivo']);
-            $data['campos'] = array_keys($data['query']);
+					if ($data['auditoriaitem'] && $this->Motivo_model->update_motivo($data['query'], $data['query']['idTab_Motivo']) === FALSE) {
+						$data['msg'] = '?m=2';
+						redirect(base_url() . 'motivo/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
+						exit();
+					} else {
 
-            $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idTab_Motivo'], TRUE);
+						if ($data['auditoriaitem'] === FALSE) {
+							$data['msg'] = '';
+						} else {
+							$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Motivo', 'UPDATE', $data['auditoriaitem']);
+							$data['msg'] = '?m=1';
+						}
 
-            if ($data['auditoriaitem'] && $this->Motivo_model->update_motivo($data['query'], $data['query']['idTab_Motivo']) === FALSE) {
-                $data['msg'] = '?m=2';
-                redirect(base_url() . 'motivo/alterar/' . $data['query']['idApp_Cliente'] . $data['msg']);
-                exit();
-            } else {
-
-                if ($data['auditoriaitem'] === FALSE) {
-                    $data['msg'] = '';
-                } else {
-                    $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Motivo', 'UPDATE', $data['auditoriaitem']);
-                    $data['msg'] = '?m=1';
-                }
-
-                redirect(base_url() . 'motivo/cadastrar/' . $data['msg']);
-                exit();
-            }
-        }
-
+						redirect(base_url() . 'motivo/cadastrar/' . $data['msg']);
+						exit();
+					}
+				}
+			}
+		}
         $this->load->view('basico/footer');
     }
 	
@@ -209,15 +236,38 @@ class Motivo extends CI_Controller {
         else
             $data['msg'] = '';
 
-                $this->Motivo_model->delete_motivo($id);
-
-                $data['msg'] = '?m=1';
-
-				redirect(base_url() . 'motivo/cadastrar/' . $data['msg']);
+		if (!$id) {
+				
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
+            $data['query'] = $this->Motivo_model->get_motivo($id);
+			
+			if($data['query'] === FALSE){
+				
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'acesso' . $data['msg']);
 				exit();
-            //}
-        //}
+				
+			} else {
+				
+				if($this->Basico_model->get_dt_validade() === FALSE){
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+				} else {
+					
+					$this->Motivo_model->delete_motivo($id);
 
+					$data['msg'] = '?m=1';
+
+					redirect(base_url() . 'motivo/cadastrar/' . $data['msg']);
+					exit();
+				}
+			}
+		}
         $this->load->view('basico/footer');
     }
 

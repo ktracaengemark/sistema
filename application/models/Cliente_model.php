@@ -654,8 +654,6 @@ class Cliente_model extends CI_Model {
     }	
     
 	public function list_motivo($data, $x) {
-		
-		$data['idSis_Empresa'] = ($data['idSis_Empresa'] != 0) ? ' AND TA.idSis_Empresa = ' . $data['idSis_Empresa'] : FALSE;
 
         $query = $this->db->query('
 			SELECT 
@@ -664,7 +662,6 @@ class Cliente_model extends CI_Model {
 				Tab_Motivo AS TA
 			WHERE 
                 TA.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
-                
 			ORDER BY  
 				TA.Motivo ASC 
 		');

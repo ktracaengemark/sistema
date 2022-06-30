@@ -41,6 +41,8 @@
 						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/marketing"><span class="glyphicon glyphicon-pencil"></span> Marketing</a></li>
 						<li role="separator" class="divider"></li>
+						<li><a href="<?php echo base_url() ?>campanha"><span class="glyphicon glyphicon-pencil"></span> Campanhas</a></li>
+						<li role="separator" class="divider"></li>
 						<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>
 					</ul>
 				</div>

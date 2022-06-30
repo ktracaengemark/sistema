@@ -36,31 +36,16 @@ class Campanha_model extends CI_Model {
 				PC.idApp_Campanha = ' . $data . '
 		');
 		
-		foreach ($query->result_array() as $row) {
-			//$row->DataCampanha = $this->basico->mascara_data($row->DataCampanha, 'barras');
-			//$row->DataCampanhaLimite = $this->basico->mascara_data($row->DataCampanhaLimite, 'barras');
-			//$row->AtivoCampanha = $this->basico->mascara_palavra_completa($row->AtivoCampanha, 'NS');
+		foreach ($query->result() as $row) {
+			
 		}
-		
-		//$query = $query->result_array();		
-		
-		/*
-        echo $this->db->last_query();
-        echo '<br>';
-        echo "<pre>";
-        print_r($row);
-        echo '<br>';
-        print_r($row['idApp_Campanha']);
-        echo '<br>';
-        print_r($row['Campanha']);
-        echo '<br>';
-        print_r($row['DescCampanha']);
-        echo "</pre>";
-        exit ();
-       */
 
-		return $row;
-        //return $query[0];
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
     }
 
     public function get_campanha_cupom($data) {
@@ -131,9 +116,10 @@ class Campanha_model extends CI_Model {
 				Cupom = ' . $data . ' 
 				
 		');
-        $query = $query->result_array();
+        /*
+		$query = $query->result_array();
         $contagem = count($query);
-		/*
+		
 		echo $this->db->last_query();
         echo '<br>';
         echo "<pre>";
@@ -141,12 +127,20 @@ class Campanha_model extends CI_Model {
         echo '<br>';
         print_r($query);
         echo "</pre>";
-        */
+        
         if(isset($contagem) && $contagem > 0){
 			return TRUE;
 		}else{
 			return FALSE;
 		}
+        */
+		if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			return TRUE;
+        }
+		
+		
     }
 	
 	public function list1_campanha($data, $completo) {

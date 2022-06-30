@@ -78,41 +78,39 @@
 											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 												<label  for="DescCampanha">Premio/Regras:</label>
 												<textarea class="form-control" id="DescCampanha" <?php echo $readonly; ?> maxlength="200"
-														  name="DescCampanha" rows="1"><?php echo $campanha['DescCampanha'];?></textarea>
+														  name="DescCampanha" rows="4"><?php echo $campanha['DescCampanha'];?></textarea>
 												<?php echo form_error('DescCampanha'); ?>
 											</div>
 										</div>
 									</div>
-									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">								
+									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 										<div class="row">
-											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-												<div class="row">
-													<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left">
-														<label for="DataCampanha">Inicia em:</label>
-														<div class="input-group <?php echo $datepicker; ?>">
-															<span class="input-group-addon" disabled>
-																<span class="glyphicon glyphicon-calendar"></span>
-															</span>
-															<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-																   name="DataCampanha" value="<?php echo $campanha['DataCampanha']; ?>">
-															
-														</div>
-														<?php echo form_error('DataCampanha'); ?>
-													</div>
-													<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left">
-														<label for="DataCampanhaLimite">Termina em:</label>
-														<div class="input-group <?php echo $datepicker; ?>">
-															<span class="input-group-addon" disabled>
-																<span class="glyphicon glyphicon-calendar"></span>
-															</span>
-															<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-																   name="DataCampanhaLimite" value="<?php echo $campanha['DataCampanhaLimite']; ?>">
-															
-														</div>
-														<?php echo form_error('DataCampanhaLimite'); ?>
-													</div>
+											<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left">
+												<label for="DataCampanha">Inicia em:</label>
+												<div class="input-group <?php echo $datepicker; ?>">
+													<span class="input-group-addon" disabled>
+														<span class="glyphicon glyphicon-calendar"></span>
+													</span>
+													<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+														   name="DataCampanha" value="<?php echo $campanha['DataCampanha']; ?>">
+													
 												</div>
+												<?php echo form_error('DataCampanha'); ?>
 											</div>
+											<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left">
+												<label for="DataCampanhaLimite">Termina em:</label>
+												<div class="input-group <?php echo $datepicker; ?>">
+													<span class="input-group-addon" disabled>
+														<span class="glyphicon glyphicon-calendar"></span>
+													</span>
+													<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
+														   name="DataCampanhaLimite" value="<?php echo $campanha['DataCampanhaLimite']; ?>">
+													
+												</div>
+												<?php echo form_error('DataCampanhaLimite'); ?>
+											</div>
+										</div>
+										<div class="row">
 											<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-inline">
 												<label for="AtivoCampanha">Ativa?</label><br>
 												<div class="form-group">
@@ -153,66 +151,66 @@
 														<?php echo form_error('Ganhador'); ?>
 													</div>
 												<?php } ?>
-											<?php } ?>	
+											<?php } ?>
 										</div>
-									</div>	
-									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" id="TipoCampanha" <?php echo $div['TipoCampanha']; ?>>
 										<div class="row">	
-											<?php if (!isset($contagem_orc) || $contagem_orc != 1) { ?>
-												<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-inline">
-													<label for="TipoDescCampanha">Tipo Desc</label><br>
-													<div class="form-group">
-														<div class="btn-group" data-toggle="buttons">
-															<?php
-															foreach ($select['TipoDescCampanha'] as $key => $row) {
-																if (!$campanha['TipoDescCampanha']) $campanha['TipoDescCampanha'] = 'V';
-																($key == 'P') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-																if ($campanha['TipoDescCampanha'] == $key) {
-																	echo ''
-																	. '<label class="btn btn-warning active" name="TipoDescCampanha_' . $hideshow . '">'
-																	. '<input type="radio" name="TipoDescCampanha" id="' . $hideshow . '" '
-																	. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																	. '</label>'
-																	;
-																} else {
-																	echo ''
-																	. '<label class="btn btn-default" name="TipoDescCampanha_' . $hideshow . '">'
-																	. '<input type="radio" name="TipoDescCampanha" id="' . $hideshow . '" '
-																	. 'autocomplete="off" value="' . $key . '" >' . $row
-																	. '</label>'
-																	;
+											<div id="TipoCampanha" <?php echo $div['TipoCampanha']; ?>>
+												<?php if (!isset($contagem_orc) || $contagem_orc != 1) { ?>
+													<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-inline">
+														<label for="TipoDescCampanha">Tipo Desc</label><br>
+														<div class="form-group">
+															<div class="btn-group" data-toggle="buttons">
+																<?php
+																foreach ($select['TipoDescCampanha'] as $key => $row) {
+																	if (!$campanha['TipoDescCampanha']) $campanha['TipoDescCampanha'] = 'V';
+																	($key == 'P') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																	if ($campanha['TipoDescCampanha'] == $key) {
+																		echo ''
+																		. '<label class="btn btn-warning active" name="TipoDescCampanha_' . $hideshow . '">'
+																		. '<input type="radio" name="TipoDescCampanha" id="' . $hideshow . '" '
+																		. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																		. '</label>'
+																		;
+																	} else {
+																		echo ''
+																		. '<label class="btn btn-default" name="TipoDescCampanha_' . $hideshow . '">'
+																		. '<input type="radio" name="TipoDescCampanha" id="' . $hideshow . '" '
+																		. 'autocomplete="off" value="' . $key . '" >' . $row
+																		. '</label>'
+																		;
+																	}
 																}
-															}
-															?>
+																?>
+															</div>
 														</div>
 													</div>
+												<?php } else { ?>
+													<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+														<input type="hidden" name="TipoDescCampanha" id="TipoDescCampanha" value="<?php echo $campanha['TipoDescCampanha']; ?>"/>
+														<label for="TipoDescCampanha">Tipo Desc</label>
+														<input type="text" class="form-control" <?php echo $readonly; ?> value="<?php echo $TipoDesc; ?>"/>
+													</div>
+												<?php } ?>
+												<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">	
+													<label for="ValorDesconto">Valor Desconto:</label><br>
+													<div class="input-group" id="txtHint">
+														<span class="input-group-addon" id="basic-addon1">??</span>
+														<input type="text" class="form-control text-left Valor" id="ValorDesconto" maxlength="10" placeholder="0,00" 
+															   name="ValorDesconto" <?php echo $readonly; ?> value="<?php echo $campanha['ValorDesconto'] ?>">
+													</div>
+													<?php echo form_error('ValorDesconto'); ?>
 												</div>
-											<?php } else { ?>
-												<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-													<input type="hidden" name="TipoDescCampanha" id="TipoDescCampanha" value="<?php echo $campanha['TipoDescCampanha']; ?>"/>
-													<label for="TipoDescCampanha">Tipo Desc</label>
-													<input type="text" class="form-control" <?php echo $readonly; ?> value="<?php echo $TipoDesc; ?>"/>
+												<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">	
+													<label for="ValorMinimo">Valor Minimo:</label><br>
+													<div class="input-group" id="txtHint">
+														<span class="input-group-addon" id="basic-addon1">R$</span>
+														<input type="text" class="form-control text-left Valor" id="ValorMinimo" maxlength="10" placeholder="0,00" 
+															   name="ValorMinimo" <?php echo $readonly; ?> value="<?php echo $campanha['ValorMinimo'] ?>">
+													</div>
+													<?php echo form_error('ValorMinimo'); ?>
 												</div>
-											<?php } ?>
-											<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">	
-												<label for="ValorDesconto">Valor Desconto:</label><br>
-												<div class="input-group" id="txtHint">
-													<span class="input-group-addon" id="basic-addon1">??</span>
-													<input type="text" class="form-control text-left Valor" id="ValorDesconto" maxlength="10" placeholder="0,00" 
-														   name="ValorDesconto" <?php echo $readonly; ?> value="<?php echo $campanha['ValorDesconto'] ?>">
-												</div>
-												<?php echo form_error('ValorDesconto'); ?>
-											</div>
-											<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">	
-												<label for="ValorMinimo">Valor Minimo:</label><br>
-												<div class="input-group" id="txtHint">
-													<span class="input-group-addon" id="basic-addon1">R$</span>
-													<input type="text" class="form-control text-left Valor" id="ValorMinimo" maxlength="10" placeholder="0,00" 
-														   name="ValorMinimo" <?php echo $readonly; ?> value="<?php echo $campanha['ValorMinimo'] ?>">
-												</div>
-												<?php echo form_error('ValorMinimo'); ?>
-											</div>
-										</div>	
+											</div>	
+										</div>
 									</div>
 								</div>	
 							</div>	
@@ -229,9 +227,7 @@
 										<span class="glyphicon glyphicon-save"></span> Salvar
 									</button>
 								</div>
-								<?php if (isset($contagem_orc) && $contagem_orc == 1) { ?>
-									
-								<?php } else { ?>
+								<?php if (isset($contagem_orc) && $contagem_orc != 1) { ?>
 									<div class="col-md-6 text-right">
 										<button  type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 											<span class="glyphicon glyphicon-trash"></span> Excluir

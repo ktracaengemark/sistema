@@ -25,10 +25,22 @@ class Motivo_model extends CI_Model {
     }
 
     public function get_motivo($data) {
-        $query = $this->db->query('SELECT * FROM Tab_Motivo WHERE idTab_Motivo = ' . $data);
-        $query = $query->result_array();
-
-        return $query[0];
+        $query = $this->db->query(
+			'SELECT 
+				* 
+			FROM 
+				Tab_Motivo 
+			WHERE 
+				idTab_Motivo = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+		);
+        
+		if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
     }
 
     public function update_motivo($data, $id) {
