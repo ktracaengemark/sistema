@@ -33,10 +33,8 @@ class Cliente extends CI_Controller {
         else
             $data['msg'] = '';
 
-        //$this->load->view('cliente/tela_index', $data);
-			//$data['msg'] = '?m=3';
-			redirect(base_url() . 'relatorio/clientes');
-			exit();
+        $this->load->view('cliente/tela_index', $data);
+
         #load footer view
         $this->load->view('basico/footer');
     }
@@ -2088,379 +2086,6 @@ class Cliente extends CI_Controller {
         $this->load->view('basico/footer');
     }
 
-    public function pesquisar_2() {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-		
-		
-
-        //$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-        //$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'trim|callback_get_cliente');
-		//$this->form_validation->set_rules('NomeDoCliente', 'Nome do Cliente', 'trim');
-		//$this->form_validation->set_rules('TelefoneDoCliente', 'Telefone do Cliente', 'trim');
-
-        if ($this->input->get('start') && $this->input->get('end')) {
-            //$data['start'] = substr($this->input->get('start'),0,-3);
-            //$data['end'] = substr($this->input->get('end'),0,-3);
-            $_SESSION['agenda']['HoraInicio'] = substr($this->input->get('start'),0,-3);
-            $_SESSION['agenda']['HoraFim'] = substr($this->input->get('end'),0,-3);
-        }
-
-        $data['titulo'] = "Pesquisar Cliente";
-
-		$this->load->library('pagination');
-		$_SESSION['Qtde'] = $config['per_page'] = 5;
-		$_SESSION['Page'] = $config["uri_segment"] = 5;
-		
-		$config['reuse_query_string'] = TRUE;
-        $config['num_links'] = 2;
-        $config['use_page_numbers'] = TRUE;
-
-        $config['full_tag_open'] = "<ul class='pagination'>";
-        $config['full_tag_close'] = "</ul>";
-        $config['num_tag_open'] = '<li>';
-        $config['num_tag_close'] = '</li>';
-        $config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-        $config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-        $config['next_tag_open'] = "<li>";
-        $config['next_tagl_close'] = "</li>";
-        $config['prev_tag_open'] = "<li>";
-        $config['prev_tagl_close'] = "</li>";
-        $config['first_tag_open'] = "<li>";
-        $config['first_tagl_close'] = "</li>";
-        $config['last_tag_open'] = "<li>";
-        $config['last_tagl_close'] = "</li>";
-
-		
-        $_SESSION['pesquisa'] = $data['Pesquisa'] = $this->input->post('Pesquisa');
-		$_SESSION['nomedocliente'] = $data['NomeDoCliente'] = $this->input->post('NomeDoCliente');
-		$_SESSION['telefone'] = $data['TelefoneDoCliente'] = $this->input->post('TelefoneDoCliente');
-		/*	
-			echo "<pre>";
-			print_r($_SESSION['pesquisa']);
-			echo "<br>";
-			print_r($_SESSION['nomedocliente']);
-			echo "<br>";
-			echo "</pre>";
-			exit();
-		*/
-		
-        //echo date('d/m/Y H:i:s', $data['start'],0,-3));
-
-        #run form validation
-        //if ($this->form_validation->run() !== FALSE && $this->Cliente_model->lista_cliente($data['Pesquisa'], $data['NomeDoCliente'], $data['TelefoneDoCliente'],  FALSE) === TRUE) {
-
-		$uri = (!$this->input->post('Pesquisa')) ? 4 : 4;
-
-        //if ($this->uri->segment($uri)) {
-			$config['base_url'] = base_url() . 'cliente/pesquisar/' . $data['Pesquisa'] . '/';
-			//$config['base_url'] = base_url() . 'cliente/pesquisar/';
-			//$config['total_rows'] = $this->Cliente_model->lista_cliente($data['Pesquisa'], $data['NomeDoCliente'], $data['TelefoneDoCliente'], TRUE)->num_rows();
-			$config['total_rows'] = $this->Cliente_model->lista_cliente($_SESSION['pesquisa'], $_SESSION['nomedocliente'], $_SESSION['telefone'], TRUE)->num_rows();
-			($config['total_rows'] > 1) ? $data['total'] = $config['total_rows']: $config['total_rows'];
-			$qtde = $config['per_page'];
-			
-			
-			//$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"])) : 0;
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-			
-			$this->pagination->initialize($config);
-		
-            //$data['query'] = $this->Cliente_model->lista_cliente($data['Pesquisa'], TRUE);
-			//$data['query'] = $this->Cliente_model->lista_cliente($data['Pesquisa'], $data['NomeDoCliente'], $data['TelefoneDoCliente'], TRUE, $qtde, $page);
-			$data['query'] = $this->Cliente_model->lista_cliente($_SESSION['pesquisa'], $_SESSION['nomedocliente'], $_SESSION['telefone'], TRUE, $qtde, ($page * $config["per_page"]));
-			$data['pagination'] = $this->pagination->create_links();
-			/*
-			echo "<pre>";
-			print_r($config['base_url']);
-			echo "<br>";
-			print_r($config['total_rows']);
-			echo "<br>";
-			print_r($qtde);
-			echo "<br>";
-			print_r($page);
-			echo "<br>";
-			echo "</pre>";
-			exit();
-			*/
-			/*
-            if ($data['query']->num_rows() == 1) {
-                $info = $data['query']->result_array();
-
-                if ($_SESSION['agenda'])
-                    redirect('consulta/cadastrar/' . $info[0]['idApp_Cliente'] );
-                else
-                    redirect('cliente/prontuario/' . $info[0]['idApp_Cliente'] );
-
-                exit();
-            } else {
-                $data['list'] = $this->load->view('cliente/list_cliente', $data, TRUE);
-            }
-			*/
-			$data['list'] = $this->load->view('cliente/list_cliente', $data, TRUE);
-			
-        //}
-
-        ($data['Pesquisa']) ? $data['cadastrar'] = TRUE : $data['cadastrar'] = FALSE;
-
-        $this->load->view('cliente/pesq_cliente', $data);
-
-        $this->load->view('basico/footer');
-    }
-	
-    public function pesquisar1() {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-		
-		
-
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-        $this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'trim|callback_get_cliente');
-		$this->form_validation->set_rules('NomeDoCliente', 'Nome do Cliente', 'trim');
-		$this->form_validation->set_rules('TelefoneDoCliente', 'Telefone do Cliente', 'trim');
-
-        if ($this->input->get('start') && $this->input->get('end')) {
-            //$data['start'] = substr($this->input->get('start'),0,-3);
-            //$data['end'] = substr($this->input->get('end'),0,-3);
-            $_SESSION['agenda']['HoraInicio'] = substr($this->input->get('start'),0,-3);
-            $_SESSION['agenda']['HoraFim'] = substr($this->input->get('end'),0,-3);
-        }
-
-        $data['titulo'] = "Pesquisar Cliente";
-
-		$this->load->library('pagination');
-		$_SESSION['Qtde'] = $config['per_page'] = 5;
-		$_SESSION['Page'] = $config["uri_segment"] = 4;
-		
-        $_SESSION['pesquisa'] = $data['Pesquisa'] = $this->input->post('Pesquisa');
-		$_SESSION['nomedocliente'] = $data['NomeDoCliente'] = $this->input->post('NomeDoCliente');
-		$_SESSION['telefone'] = $data['TelefoneDoCliente'] = $this->input->post('TelefoneDoCliente');
-		/*	
-			echo "<pre>";
-			print_r($_SESSION['pesquisa']);
-			echo "<br>";
-			print_r($_SESSION['nomedocliente']);
-			echo "<br>";
-			echo "</pre>";
-			exit();
-		*/
-		
-        //echo date('d/m/Y H:i:s', $data['start'],0,-3));
-
-        #run form validation
-        if ($this->form_validation->run() !== FALSE && $this->Cliente_model->lista_cliente($data['Pesquisa'], $data['NomeDoCliente'], $data['TelefoneDoCliente'],  FALSE) === TRUE) {
-
-			$config['base_url'] = base_url() . 'cliente/pesquisar/' . $data['Pesquisa'] . '/';
-			$config['total_rows'] = $this->Cliente_model->lista_cliente($data['Pesquisa'], $data['NomeDoCliente'], $data['TelefoneDoCliente'], TRUE)->num_rows();
-			
-			$qtde = $config['per_page'];
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"])) : 0;
-			
-			
-			$this->pagination->initialize($config);
-		
-            //$data['query'] = $this->Cliente_model->lista_cliente($data['Pesquisa'], TRUE);
-			$data['query'] = $this->Cliente_model->lista_cliente($data['Pesquisa'], $data['NomeDoCliente'], $data['TelefoneDoCliente'], TRUE, $qtde, $page);
-			
-			$data['pagination'] = $this->pagination->create_links();
-			/*
-			echo "<pre>";
-			print_r($config['base_url']);
-			echo "<br>";
-			print_r($config['total_rows']);
-			echo "<br>";
-			print_r($qtde);
-			echo "<br>";
-			print_r($page);
-			echo "<br>";
-			echo "</pre>";
-			exit();
-			*/
-			/*
-            if ($data['query']->num_rows() == 1) {
-                $info = $data['query']->result_array();
-
-                if ($_SESSION['agenda'])
-                    redirect('consulta/cadastrar/' . $info[0]['idApp_Cliente'] );
-                else
-                    redirect('cliente/prontuario/' . $info[0]['idApp_Cliente'] );
-
-                exit();
-            } else {
-                $data['list'] = $this->load->view('cliente/list_cliente', $data, TRUE);
-            }
-			*/
-			$data['list'] = $this->load->view('cliente/list_cliente', $data, TRUE);
-			
-        }
-
-        ($data['Pesquisa']) ? $data['cadastrar'] = TRUE : $data['cadastrar'] = FALSE;
-
-        $this->load->view('cliente/pesq_cliente', $data);
-
-        $this->load->view('basico/footer');
-    }
-
-    public function pesquisar() {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-
-        if ($this->input->get('start') && $this->input->get('end')) {
-            //$data['start'] = substr($this->input->get('start'),0,-3);
-            //$data['end'] = substr($this->input->get('end'),0,-3);
-            $_SESSION['agenda']['HoraInicio'] = substr($this->input->get('start'),0,-3);
-            $_SESSION['agenda']['HoraFim'] = substr($this->input->get('end'),0,-3);
-        }		
-		
-        $data['titulo'] = "Pesquisar Cliente";
-        $data['novo'] = '';
-
-        $this->load->library('pagination');
-        $config['per_page'] = 10;
-        $config["uri_segment"] = 4;
-        $config['reuse_query_string'] = TRUE;
-        $config['num_links'] = 3;
-        $config['use_page_numbers'] = TRUE;
-
-        $config['full_tag_open'] = "<ul class='pagination'>";
-        $config['full_tag_close'] = "</ul>";
-        $config['num_tag_open'] = '<li>';
-        $config['num_tag_close'] = '</li>';
-        $config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-        $config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-        $config['next_tag_open'] = "<li>";
-        $config['next_tagl_close'] = "</li>";
-        $config['prev_tag_open'] = "<li>";
-        $config['prev_tagl_close'] = "</li>";
-        $config['first_tag_open'] = "<li>";
-        $config['first_tagl_close'] = "</li>";
-        $config['last_tag_open'] = "<li>";
-        $config['last_tagl_close'] = "</li>";
-		$data['total'] = $this->Cliente_model->lista_cliente_total();
-        $data['Pesquisa'] = '';
-
-#echo '<br><br><br><br> >> ' . $this->uri->segment(3);
-		
-        if ($this->uri->segment(3)) {
-		
-            $data['Pesquisa'] = urldecode($this->uri->segment(3));
-
-            #run form validation
-            if ($this->Cliente_model->lista_cliente($data['Pesquisa'], TRUE) === TRUE) {
-
-                $config['base_url'] = base_url() . 'cliente/pesquisar/' . $data['Pesquisa'] . '/';
-                $config['total_rows'] = $this->Cliente_model->lista_cliente($data['Pesquisa'], FALSE, TRUE);
-                ($config['total_rows'] > 1) ? $data['total_rows'] = $config['total_rows'] . ' resultados' : $config['total_rows'] . ' resultado';
-				($config['total_rows'] > 1) ? $data['cadastrar'] = FALSE : $data['cadastrar'] = TRUE;
-                $this->pagination->initialize($config);
-#echo '<br><br><br><br> >> ' . $config["uri_segment"];
-                $page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-                $data['query'] = $this->Cliente_model->lista_cliente($data['Pesquisa'], FALSE, FALSE, $config["per_page"], ($page * $config["per_page"]));
-				/*
-				echo "<pre>";
-				print_r($data['total']);
-				echo "</pre>";
-				exit();
-				*/
-				$data['pagination'] = $this->pagination->create_links();
-
-				if ($data['query']->num_rows() == 1) {
-					$info = $data['query']->result_array();
-					
-					if ($_SESSION['agenda'])
-						redirect('consulta/cadastrar/' . $info[0]['idApp_Cliente'] );
-					else
-						redirect('cliente/prontuario/' . $info[0]['idApp_Cliente'] );
-
-					exit();
-				} else {
-					$data['list'] = $this->load->view('cliente/list_cliente', $data, TRUE);
-				}				
-				
-				
-                //$data['list'] = $this->load->view('cliente/list_cliente', $data, TRUE);
-            }
-        } elseif ($this->input->post('Pesquisa')) {
-
-            $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-            $this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim|callback_get_cliente');
-
-            #$data['Pesquisa'] = $this->input->post('Pesquisa');
-            #echo '<br /><br /><br /> >>> '.$this->input->post('Pesquisa').'<>'.$_SESSION['DataURI'] = (strpos($data['Pesquisa'], "/") > 0) ? TRUE : FALSE;
-            #$_SESSION['DataURI'] = (strpos($data['Pesquisa'], "/") > 0) ? TRUE : FALSE;
-            if((strpos($data['Pesquisa'], "/") > 0)) {
-                $data['Pesquisa'] = str_replace("/", "", $this->input->post('Pesquisa'));
-                $SESSION['DataURI'] = TRUE;
-            }
-            else {
-                $data['Pesquisa'] = $this->input->post('Pesquisa');
-                $SESSION['DataURI'] = FALSE;
-            }
-
-
-            #run form validation
-            if ($this->form_validation->run() !== FALSE && $this->Cliente_model->lista_cliente($data['Pesquisa'], TRUE) === TRUE) {
-
-                $config['base_url'] = base_url() . 'cliente/pesquisar/' . $data['Pesquisa'] . '/';
-                $config['total_rows'] = $this->Cliente_model->lista_cliente($data['Pesquisa'], FALSE, TRUE);
-				/*
-				echo "<pre>";
-				print_r($data['total']);
-				echo "</pre>";
-				exit();
-				*/
-                ($config['total_rows'] > 1) ? $data['total_rows'] = $config['total_rows'] . ' resultados' : $data['total_rows'] = $config['total_rows'] . ' resultado';
-				($config['total_rows'] > 1) ? $data['cadastrar'] = FALSE : $data['cadastrar'] = TRUE;
-                $this->pagination->initialize($config);
-
-                $page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-                $data['query'] = $this->Cliente_model->lista_cliente($data['Pesquisa'], FALSE, FALSE, $config["per_page"], ($page * $config["per_page"]));
-
-                $data['pagination'] = $this->pagination->create_links();
-
-				if ($data['query']->num_rows() == 1) {
-					$info = $data['query']->result_array();
-					
-					if ($_SESSION['agenda'])
-						redirect('consulta/cadastrar/' . $info[0]['idApp_Cliente'] );
-					else
-						redirect('cliente/prontuario/' . $info[0]['idApp_Cliente'] );
-
-					exit();
-				} else {
-					$data['list'] = $this->load->view('cliente/list_cliente', $data, TRUE);
-				}                
-				
-				
-				//$data['list'] = $this->load->view('cliente/list_cliente', $data, TRUE);
-            }
-        }
-
-		($data['Pesquisa']) ? $data['cadastrar'] = TRUE : $data['cadastrar'] = FALSE;
-        
-		$this->load->view('cliente/pesq_cliente', $data);
-
-        $this->load->view('basico/footer');		
-
-    }
-
     public function prontuario($id) {
 
         if ($this->input->get('m') == 1)
@@ -2557,7 +2182,7 @@ class Cliente extends CI_Controller {
         $this->load->view('basico/footer');
     }
 
-    public function clientedep($id) {
+    public function pesquisar() {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -2565,148 +2190,154 @@ class Cliente extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-
-        $_SESSION['Cliente'] = $data['query'] = $this->Cliente_model->get_cliente($id, TRUE);
-        $_SESSION['Cliente']['NomeCliente'] = (strlen($data['query']['NomeCliente']) > 12) ? substr($data['query']['NomeCliente'], 0, 12) : $data['query']['NomeCliente'];
 		
-		#$data['query'] = $this->Paciente_model->get_paciente($prontuario, TRUE);
-        $data['titulo'] = 'Prontuário ' . $data['query']['NomeCliente'];
-        $data['panel'] = 'primary';
-        $data['metodo'] = 4;
+		if ($_SESSION['log']['idSis_Empresa'] == 5) {
+				
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
+			if ($this->input->get('start') && $this->input->get('end')) {
+				//$data['start'] = substr($this->input->get('start'),0,-3);
+				//$data['end'] = substr($this->input->get('end'),0,-3);
+				$_SESSION['agenda']['HoraInicio'] = substr($this->input->get('start'),0,-3);
+				$_SESSION['agenda']['HoraFim'] = substr($this->input->get('end'),0,-3);
+			}		
+			
+			$data['titulo'] = "Pesquisar Cliente";
+			$data['novo'] = '';
 
-        $_SESSION['log']['idApp_Cliente'] = $data['resumo']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-        $data['resumo']['NomeCliente'] = $data['query']['NomeCliente'];
+			$this->load->library('pagination');
+			$config['per_page'] = 10;
+			$config["uri_segment"] = 4;
+			$config['reuse_query_string'] = TRUE;
+			$config['num_links'] = 3;
+			$config['use_page_numbers'] = TRUE;
 
-        $data['query']['Idade'] = $this->basico->calcula_idade($data['query']['DataNascimento']);
-        $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'barras');
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			$data['total'] = $this->Cliente_model->lista_cliente_total();
+			$data['Pesquisa'] = '';
 
-        /*
-        if ($data['query']['Sexo'] == 1)
-            $data['query']['profile'] = 'm';
-        elseif ($data['query']['Sexo'] == 2)
-            $data['query']['profile'] = 'f';
-        else
-            $data['query']['profile'] = 'o';
-        */
-        $data['query']['profile'] = ($data['query']['Sexo']) ? strtolower($data['query']['Sexo']) : 'o';
+			#echo '<br><br><br><br> >> ' . $this->uri->segment(3);
+			
+			if ($this->uri->segment(3)) {
+			
+				$data['Pesquisa'] = urldecode($this->uri->segment(3));
 
-        $data['query']['Sexo'] = $this->Basico_model->get_sexo($data['query']['Sexo']);
-		$data['query']['Ativo'] = $this->Basico_model->get_ativo($data['query']['Ativo']);
-		$data['query']['ClienteConsultor'] = $this->Basico_model->get_ativo($data['query']['ClienteConsultor']);
-		$data['query']['idSis_Empresa'] = $this->Basico_model->get_empresa($data['query']['idSis_Empresa']);
-		$data['query']['Profissional'] = $this->Basico_model->get_profissional($data['query']['Profissional']);
-		
-        $data['query']['Telefone'] = $data['query']['CelularCliente'] . ' - ' . $data['query']['Telefone'];
-        ($data['query']['Telefone2']) ? $data['query']['Telefone'] = $data['query']['Telefone'] . ' - ' . $data['query']['Telefone2'] : FALSE;
-        ($data['query']['Telefone3']) ? $data['query']['Telefone'] = $data['query']['Telefone'] . ' - ' . $data['query']['Telefone3'] : FALSE;
+				#run form validation
+				if ($this->Cliente_model->lista_cliente($data['Pesquisa'], TRUE) === TRUE) {
 
+					$config['base_url'] = base_url() . 'cliente/pesquisar/' . $data['Pesquisa'] . '/';
+					$config['total_rows'] = $this->Cliente_model->lista_cliente($data['Pesquisa'], FALSE, TRUE);
+					($config['total_rows'] > 1) ? $data['total_rows'] = $config['total_rows'] . ' resultados' : $config['total_rows'] . ' resultado';
+					($config['total_rows'] > 1) ? $data['cadastrar'] = FALSE : $data['cadastrar'] = TRUE;
+					$this->pagination->initialize($config);
+					
+					#echo '<br><br><br><br> >> ' . $config["uri_segment"];
+					
+					$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+					$data['query'] = $this->Cliente_model->lista_cliente($data['Pesquisa'], FALSE, FALSE, $config["per_page"], ($page * $config["per_page"]));
+					/*
+					echo "<pre>";
+					print_r($data['total']);
+					echo "</pre>";
+					exit();
+					*/
+					$data['pagination'] = $this->pagination->create_links();
 
-        if ($data['query']['MunicipioCliente']) {
-            $mun = $this->Basico_model->get_municipio($data['query']['MunicipioCliente']);
-            $data['query']['MunicipioCliente'] = $mun['NomeMunicipio'] . '/' . $mun['Uf'];
-        } else {
-            $data['query']['MunicipioCliente'] = $data['query']['Uf'] = $mun['Uf'] = '';
-        }
+					if ($data['query']->num_rows() == 1) {
+						$info = $data['query']->result_array();
+						
+						if ($_SESSION['agenda'])
+							redirect('consulta/cadastrar/' . $info[0]['idApp_Cliente'] );
+						else
+							redirect('cliente/prontuario/' . $info[0]['idApp_Cliente'] );
 
-        $data['clientedep'] = $this->Clientedep_model->lista_clientedep(TRUE);
-        /*
-          echo "<pre>";
-          print_r($data['clientedep']);
-          echo "</pre>";
-          exit();
-        */
-        if (!$data['clientedep'])
-            $data['list'] = FALSE;
-        else
-            $data['list'] = $this->load->view('clientedep/list_clientedep', $data, TRUE);
-		
-        $data['cor_cli'] 	= 'warning';
-        $data['cor_cons'] 	= 'default';
-        $data['cor_orca'] 	= 'default';
-        $data['cor_sac'] 	= 'default';
-        $data['cor_mark'] 	= 'default';
-		
-        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
-        
-		$this->load->view('cliente/tela_clientedep', $data);
+						exit();
+					} else {
+						$data['list'] = $this->load->view('cliente/list_cliente', $data, TRUE);
+					}				
+					
+					
+					//$data['list'] = $this->load->view('cliente/list_cliente', $data, TRUE);
+				}
+			} elseif ($this->input->post('Pesquisa')) {
 
-        $this->load->view('basico/footer');
-    }
+				$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+				$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim|callback_get_cliente');
 
-    public function clientepet($id) {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-
-        $_SESSION['Cliente'] = $data['query'] = $this->Cliente_model->get_cliente($id, TRUE);
-        $_SESSION['Cliente']['NomeCliente'] = (strlen($data['query']['NomeCliente']) > 12) ? substr($data['query']['NomeCliente'], 0, 12) : $data['query']['NomeCliente'];
-		
-		#$data['query'] = $this->Paciente_model->get_paciente($prontuario, TRUE);
-        $data['titulo'] = 'Prontuário ' . $data['query']['NomeCliente'];
-        $data['panel'] = 'primary';
-        $data['metodo'] = 4;
-
-        $_SESSION['log']['idApp_Cliente'] = $data['resumo']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-        $data['resumo']['NomeCliente'] = $data['query']['NomeCliente'];
-
-        $data['query']['Idade'] = $this->basico->calcula_idade($data['query']['DataNascimento']);
-        $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'barras');
-
-        /*
-        if ($data['query']['Sexo'] == 1)
-            $data['query']['profile'] = 'm';
-        elseif ($data['query']['Sexo'] == 2)
-            $data['query']['profile'] = 'f';
-        else
-            $data['query']['profile'] = 'o';
-        */
-        $data['query']['profile'] = ($data['query']['Sexo']) ? strtolower($data['query']['Sexo']) : 'o';
-
-        $data['query']['Sexo'] = $this->Basico_model->get_sexo($data['query']['Sexo']);
-		$data['query']['Ativo'] = $this->Basico_model->get_ativo($data['query']['Ativo']);
-		$data['query']['ClienteConsultor'] = $this->Basico_model->get_ativo($data['query']['ClienteConsultor']);
-		$data['query']['idSis_Empresa'] = $this->Basico_model->get_empresa($data['query']['idSis_Empresa']);
-		$data['query']['Profissional'] = $this->Basico_model->get_profissional($data['query']['Profissional']);
-		
-        $data['query']['Telefone'] = $data['query']['CelularCliente'] . ' - ' . $data['query']['Telefone'];
-        ($data['query']['Telefone2']) ? $data['query']['Telefone'] = $data['query']['Telefone'] . ' - ' . $data['query']['Telefone2'] : FALSE;
-        ($data['query']['Telefone3']) ? $data['query']['Telefone'] = $data['query']['Telefone'] . ' - ' . $data['query']['Telefone3'] : FALSE;
+				#$data['Pesquisa'] = $this->input->post('Pesquisa');
+				#echo '<br /><br /><br /> >>> '.$this->input->post('Pesquisa').'<>'.$_SESSION['DataURI'] = (strpos($data['Pesquisa'], "/") > 0) ? TRUE : FALSE;
+				#$_SESSION['DataURI'] = (strpos($data['Pesquisa'], "/") > 0) ? TRUE : FALSE;
+				if((strpos($data['Pesquisa'], "/") > 0)) {
+					$data['Pesquisa'] = str_replace("/", "", $this->input->post('Pesquisa'));
+					$SESSION['DataURI'] = TRUE;
+				}
+				else {
+					$data['Pesquisa'] = $this->input->post('Pesquisa');
+					$SESSION['DataURI'] = FALSE;
+				}
 
 
-        if ($data['query']['MunicipioCliente']) {
-            $mun = $this->Basico_model->get_municipio($data['query']['MunicipioCliente']);
-            $data['query']['MunicipioCliente'] = $mun['NomeMunicipio'] . '/' . $mun['Uf'];
-        } else {
-            $data['query']['MunicipioCliente'] = $data['query']['Uf'] = $mun['Uf'] = '';
-        }
+				#run form validation
+				if ($this->form_validation->run() !== FALSE && $this->Cliente_model->lista_cliente($data['Pesquisa'], TRUE) === TRUE) {
 
-        $data['clientepet'] = $this->Clientepet_model->lista_clientepet(TRUE);
-        /*
-          echo "<pre>";
-          print_r($data['clientepet']);
-          echo "</pre>";
-          exit();
-        */
-        if (!$data['clientepet'])
-            $data['list'] = FALSE;
-        else
-            $data['list'] = $this->load->view('clientepet/list_clientepet', $data, TRUE);
-		
-        $data['cor_cli'] 	= 'warning';
-        $data['cor_cons'] 	= 'default';
-        $data['cor_orca'] 	= 'default';
-        $data['cor_sac'] 	= 'default';
-        $data['cor_mark'] 	= 'default';
-		
-        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
-        
-		$this->load->view('cliente/tela_clientepet', $data);
+					$config['base_url'] = base_url() . 'cliente/pesquisar/' . $data['Pesquisa'] . '/';
+					$config['total_rows'] = $this->Cliente_model->lista_cliente($data['Pesquisa'], FALSE, TRUE);
+					/*
+					echo "<pre>";
+					print_r($data['total']);
+					echo "</pre>";
+					exit();
+					*/
+					($config['total_rows'] > 1) ? $data['total_rows'] = $config['total_rows'] . ' resultados' : $data['total_rows'] = $config['total_rows'] . ' resultado';
+					($config['total_rows'] > 1) ? $data['cadastrar'] = FALSE : $data['cadastrar'] = TRUE;
+					$this->pagination->initialize($config);
 
-        $this->load->view('basico/footer');
+					$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+					$data['query'] = $this->Cliente_model->lista_cliente($data['Pesquisa'], FALSE, FALSE, $config["per_page"], ($page * $config["per_page"]));
+
+					$data['pagination'] = $this->pagination->create_links();
+
+					if ($data['query']->num_rows() == 1) {
+						$info = $data['query']->result_array();
+						
+						if ($_SESSION['agenda'])
+							redirect('consulta/cadastrar/' . $info[0]['idApp_Cliente'] );
+						else
+							redirect('cliente/prontuario/' . $info[0]['idApp_Cliente'] );
+
+						exit();
+					} else {
+						$data['list'] = $this->load->view('cliente/list_cliente', $data, TRUE);
+					}                
+					
+					
+					//$data['list'] = $this->load->view('cliente/list_cliente', $data, TRUE);
+				}
+			}
+
+			($data['Pesquisa']) ? $data['cadastrar'] = TRUE : $data['cadastrar'] = FALSE;
+			
+			$this->load->view('cliente/pesq_cliente', $data);
+		}
+        $this->load->view('basico/footer');		
+
     }
 
     function get_cliente_1() {

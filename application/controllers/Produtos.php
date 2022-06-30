@@ -49,105 +49,113 @@ class Produtos extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'Cadastrar',
-			'TipoCatprod',
-        ), TRUE));		
-
-        $data['produtos'] = quotes_to_entities($this->input->post(array(
-            #### Tab_Produtos ####
-            //'idTab_Produtos',  
-            'idTab_Catprod',
-        ), TRUE));
-
-        $data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();	
-		$data['select']['TipoCatprod'] = $this->Basico_model->select_prod_serv();	
-		$data['select']['idTab_Catprod'] = $this->Basico_model->select_catprod();
-		
-        $data['titulo'] = 'Cadastrar Categoria';
-        $data['form_open_path'] = 'produtos/cadastrar';
-        $data['readonly'] = '';
-        $data['disabled'] = '';
-        $data['panel'] = 'primary';
-        $data['metodo'] = 1;
-
-        $data['sidebar'] = 'col-sm-3 col-md-2';
-        $data['main'] = 'col-sm-7 col-md-8';
-
-        $data['datepicker'] = 'DatePicker';
-        $data['timepicker'] = 'TimePicker';
-
- 		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;       
-		
-		$data['radio'] = array(
-            'Cadastrar' => $this->basico->radio_checked($data['cadastrar']['Cadastrar'], 'Cadastrar', 'NS'),
-        );
-        ($data['cadastrar']['Cadastrar'] == 'N') ?
-            $data['div']['Cadastrar'] = '' : $data['div']['Cadastrar'] = 'style="display: none;"';		
-
-        
-		$data['q1'] = $this->Produtos_model->list_categoria($_SESSION['log'], TRUE);
-		$data['list1'] = $this->load->view('produtos/list_categoria', $data, TRUE);		
-		
-		
-		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-		$this->form_validation->set_rules('idTab_Catprod', 'Categoria', 'required|trim');		
-		#$this->form_validation->set_rules('CodProd', 'Código', 'is_unique[Tab_Produto.CodProd]');
-		#$this->form_validation->set_rules('CodProd', 'Código', 'trim|alpha_numeric_spaces|is_unique_duplo[Tab_Produto.CodProd.idSis_Empresa.' . $data['query']['idSis_Empresa'] . ']');
-		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');	
-		/*
-          echo '<br>';
-          echo "<pre>";
-          print_r($data);
-          echo "</pre>";
-          exit ();
-          */
-
-        #run form validation
-        if ($this->form_validation->run() === FALSE) {
-            $this->load->view('produtos/form_produtos', $data);
-        
-		} else {
-
-			if($this->Basico_model->get_dt_validade() === FALSE){
-				$data['msg'] = '?m=3';
-				redirect(base_url() . 'produtos/cadastrar' . $data['msg']);
+		if ($_SESSION['log']['idSis_Empresa'] == 5) {
 				
-			} else {
-							
-				$data['cadastrar']['Cadastrar'] = $data['cadastrar']['Cadastrar'];
-				////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
+			$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+				'Cadastrar',
+				'TipoCatprod',
+			), TRUE));		
+
+			$data['produtos'] = quotes_to_entities($this->input->post(array(
 				#### Tab_Produtos ####
-				$data['produtos']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];            
-				$data['produtos']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-				$data['produtos']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-				$data['produtos']['idTab_Produtos'] = $this->Produtos_model->set_produtos($data['produtos']);
-				/*
-				echo count($data['servico']);
-				echo '<br>';
-				echo "<pre>";
-				print_r($data['servico']);
-				echo "</pre>";
-				exit ();
-				*/
+				//'idTab_Produtos',  
+				'idTab_Catprod',
+			), TRUE));
 
-				if ($data['produtos']['idTab_Produtos'] === FALSE) {
-					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+			$data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();	
+			$data['select']['TipoCatprod'] = $this->Basico_model->select_prod_serv();	
+			$data['select']['idTab_Catprod'] = $this->Basico_model->select_catprod();
+			
+			$data['titulo'] = 'Cadastrar Categoria';
+			$data['form_open_path'] = 'produtos/cadastrar';
+			$data['readonly'] = '';
+			$data['disabled'] = '';
+			$data['panel'] = 'primary';
+			$data['metodo'] = 1;
 
-					$this->basico->erro($msg);
-					$this->load->view('produtos/form_produtos', $data);
+			$data['sidebar'] = 'col-sm-3 col-md-2';
+			$data['main'] = 'col-sm-7 col-md-8';
+
+			$data['datepicker'] = 'DatePicker';
+			$data['timepicker'] = 'TimePicker';
+
+			(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;       
+			
+			$data['radio'] = array(
+				'Cadastrar' => $this->basico->radio_checked($data['cadastrar']['Cadastrar'], 'Cadastrar', 'NS'),
+			);
+			($data['cadastrar']['Cadastrar'] == 'N') ?
+				$data['div']['Cadastrar'] = '' : $data['div']['Cadastrar'] = 'style="display: none;"';		
+
+			
+			$data['q1'] = $this->Produtos_model->list_categoria($_SESSION['log'], TRUE);
+			$data['list1'] = $this->load->view('produtos/list_categoria', $data, TRUE);		
+			
+			
+			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+			$this->form_validation->set_rules('idTab_Catprod', 'Categoria', 'required|trim');		
+			#$this->form_validation->set_rules('CodProd', 'Código', 'is_unique[Tab_Produto.CodProd]');
+			#$this->form_validation->set_rules('CodProd', 'Código', 'trim|alpha_numeric_spaces|is_unique_duplo[Tab_Produto.CodProd.idSis_Empresa.' . $data['query']['idSis_Empresa'] . ']');
+			$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');	
+			/*
+			  echo '<br>';
+			  echo "<pre>";
+			  print_r($data);
+			  echo "</pre>";
+			  exit ();
+			  */
+
+			#run form validation
+			if ($this->form_validation->run() === FALSE) {
+				$this->load->view('produtos/form_produtos', $data);
+			
+			} else {
+
+				if($this->Basico_model->get_dt_validade() === FALSE){
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'produtos/cadastrar' . $data['msg']);
+					
 				} else {
+								
+					$data['cadastrar']['Cadastrar'] = $data['cadastrar']['Cadastrar'];
+					////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
+					#### Tab_Produtos ####
+					$data['produtos']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];            
+					$data['produtos']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+					$data['produtos']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+					$data['produtos']['idTab_Produtos'] = $this->Produtos_model->set_produtos($data['produtos']);
+					/*
+					echo count($data['servico']);
+					echo '<br>';
+					echo "<pre>";
+					print_r($data['servico']);
+					echo "</pre>";
+					exit ();
+					*/
 
-					//$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Produtos'], FALSE);
-					//$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
-					$data['msg'] = '?m=1';
+					if ($data['produtos']['idTab_Produtos'] === FALSE) {
+						$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
-					redirect(base_url() . 'produtos/alterar/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
-					exit();
+						$this->basico->erro($msg);
+						$this->load->view('produtos/form_produtos', $data);
+					} else {
+
+						//$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Produtos'], FALSE);
+						//$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
+						$data['msg'] = '?m=1';
+
+						redirect(base_url() . 'produtos/alterar/' . $data['produtos']['idTab_Produtos'] . $data['msg']);
+						exit();
+					}
 				}
 			}
-        }
-
+		}
         $this->load->view('basico/footer');
     }
 		
