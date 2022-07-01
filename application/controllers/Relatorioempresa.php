@@ -853,6 +853,7 @@ $this->load->view('relatorioempresa/tela_empresafilial', $data);
 							$this->basico->erro($msg);
 							$this->load->view('form_login2');
 						} else {
+							unset($_SESSION['AdminEmpresa']);
 							redirect('acesso');
 						}						
 					}						

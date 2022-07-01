@@ -337,6 +337,8 @@ class Login extends CI_Controller {
 						$this->basico->erro($msg);
 						$this->load->view('form_login1');
 					} else {
+						
+						unset($_SESSION['AdminEmpresa']);
 						redirect('acesso_associado');
 					}
 				}
@@ -522,6 +524,7 @@ class Login extends CI_Controller {
 							$this->basico->erro($msg);
 							$this->load->view('form_login1');
 						} else {
+							unset($_SESSION['AdminEmpresa']);
 							redirect('acesso');
 						}						
 					}
@@ -659,6 +662,7 @@ class Login extends CI_Controller {
 								$this->basico->erro($msg);
 								$this->load->view('form_login2');
 							} else {
+								unset($_SESSION['AdminEmpresa']);
 								redirect('acesso');
 							}
 						}else{
@@ -725,6 +729,7 @@ class Login extends CI_Controller {
 							$this->basico->erro($msg);
 							$this->load->view('form_login2');
 						} else {
+							unset($_SESSION['AdminEmpresa']);
 							redirect('acesso');
 						}						
 					}	
@@ -845,6 +850,7 @@ class Login extends CI_Controller {
 								$this->basico->erro($msg);
 								$this->load->view('form_login2');
 							} else {
+								unset($_SESSION['AdminEmpresa']);
 								redirect('acesso');
 							}
 						}else{
@@ -911,6 +917,7 @@ class Login extends CI_Controller {
 							$this->basico->erro($msg);
 							$this->load->view('form_login3');
 						} else {
+							unset($_SESSION['AdminEmpresa']);
 							redirect('acesso');
 						}						
 					}
@@ -1031,6 +1038,7 @@ class Login extends CI_Controller {
 								$this->basico->erro($msg);
 								$this->load->view('form_login2');
 							} else {
+								unset($_SESSION['AdminEmpresa']);
 								redirect('acesso');
 							}
 						}else{
@@ -1097,6 +1105,7 @@ class Login extends CI_Controller {
 							$this->basico->erro($msg);
 							$this->load->view('form_login4');
 						} else {
+							unset($_SESSION['AdminEmpresa']);
 							redirect('acesso');
 						}						
 					}
@@ -1241,6 +1250,7 @@ class Login extends CI_Controller {
 										$this->load->view('login/form_login2', $data);
 									}
 								} else {
+									unset($_SESSION['AdminEmpresa']);
 									redirect('acesso');
 								}
 							}else{
@@ -1311,6 +1321,7 @@ class Login extends CI_Controller {
 									$this->load->view('login/form_login2', $data);
 								}
 							} else {
+								unset($_SESSION['AdminEmpresa']);
 								redirect('acesso');
 							}						
 						}

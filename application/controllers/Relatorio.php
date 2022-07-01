@@ -10036,9 +10036,9 @@ class Relatorio extends CI_Controller {
                     $this->basico->erro($msg);
                     $this->load->view('relatorio/form_loginempresa');
                 } else {
+					
+					unset($_SESSION['Empresa']);
 					redirect('acessoempresa');
-					#redirect('agenda');
-					#redirect('cliente');
                 }
             }
         }
@@ -10047,6 +10047,7 @@ class Relatorio extends CI_Controller {
         #$this->load->view('basico/footerloginempresa');
         $this->load->view('basico/footer');
     }
+	
 	function valid_celular($celular) {
 
         if ($this->Loginempresa_model->check_celular($celular) == 1) {

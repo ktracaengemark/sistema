@@ -39,6 +39,102 @@ class Cliente extends CI_Controller {
         $this->load->view('basico/footer');
     }
 
+    public function prontuario($id) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+		if (!$id) {
+				
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{		
+		
+			$_SESSION['Cliente'] = $data['query'] = $this->Cliente_model->get_cliente($id);
+		
+			if(!$data['query']['idApp_Cliente'] || $_SESSION['Cliente'] === FALSE){
+				unset($_SESSION['Cliente']);
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'acesso' . $data['msg']);
+				exit();
+				
+			} else {			
+								
+				$_SESSION['Cliente']['NomeCliente'] = (strlen($data['query']['NomeCliente']) > 12) ? substr($data['query']['NomeCliente'], 0, 12) : $data['query']['NomeCliente'];
+				
+				#$data['query'] = $this->Paciente_model->get_paciente($prontuario, TRUE);
+				$data['titulo'] = 'Prontuário ' . $data['query']['NomeCliente'];
+				$data['panel'] = 'primary';
+				$data['metodo'] = 4;
+
+				$_SESSION['log']['idApp_Cliente'] = $data['resumo']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+				$data['resumo']['NomeCliente'] = $data['query']['NomeCliente'];
+
+				$data['query']['Idade'] = $this->basico->calcula_idade($data['query']['DataNascimento']);
+				$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'barras');
+
+				/*
+				if ($data['query']['Sexo'] == 1)
+					$data['query']['profile'] = 'm';
+				elseif ($data['query']['Sexo'] == 2)
+					$data['query']['profile'] = 'f';
+				else
+					$data['query']['profile'] = 'o';
+				*/
+				$data['query']['profile'] = ($data['query']['Sexo']) ? strtolower($data['query']['Sexo']) : 'o';
+
+				$data['query']['Sexo'] = $this->Basico_model->get_sexo($data['query']['Sexo']);
+				$data['query']['Ativo'] = $this->Basico_model->get_ativo($data['query']['Ativo']);
+				$data['query']['ClienteConsultor'] = $this->Basico_model->get_ativo($data['query']['ClienteConsultor']);
+				$data['query']['idSis_Empresa'] = $this->Basico_model->get_empresa($data['query']['idSis_Empresa']);
+				$data['query']['Profissional'] = $this->Basico_model->get_profissional($data['query']['Profissional']);
+				
+				$data['query']['Telefone'] = $data['query']['CelularCliente'] . ' - ' . $data['query']['Telefone'];
+				($data['query']['Telefone2']) ? $data['query']['Telefone'] = $data['query']['Telefone'] . ' - ' . $data['query']['Telefone2'] : FALSE;
+				($data['query']['Telefone3']) ? $data['query']['Telefone'] = $data['query']['Telefone'] . ' - ' . $data['query']['Telefone3'] : FALSE;
+
+
+				if ($data['query']['MunicipioCliente']) {
+					$mun = $this->Basico_model->get_municipio($data['query']['MunicipioCliente']);
+					$data['query']['MunicipioCliente'] = $mun['NomeMunicipio'] . '/' . $mun['Uf'];
+				} else {
+					$data['query']['MunicipioCliente'] = $data['query']['Uf'] = $mun['Uf'] = '';
+				}
+
+				$data['contatocliente'] = $this->Contatocliente_model->lista_contatocliente($id, TRUE);
+				/*
+				  echo "<pre>";
+				  print_r($data['contatocliente']);
+				  echo "</pre>";
+				  exit();
+				*/
+				if (!$data['contatocliente'])
+					$data['list'] = FALSE;
+				else
+					$data['list'] = $this->load->view('contatocliente/list_contatocliente', $data, TRUE);
+			
+			
+				$data['cor_cli'] 	= 'warning';
+				$data['cor_cons'] 	= 'default';
+				$data['cor_orca'] 	= 'default';
+				$data['cor_sac'] 	= 'default';
+				$data['cor_mark'] 	= 'default';
+				
+				$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+
+				$this->load->view('cliente/tela_cliente', $data);
+			}
+		}
+	
+        $this->load->view('basico/footer');
+    }
+
     public function cadastrar() {
 
         if ($this->input->get('m') == 1)
@@ -2083,102 +2179,6 @@ class Cliente extends CI_Controller {
 				}
 			}
 		}
-        $this->load->view('basico/footer');
-    }
-
-    public function prontuario($id) {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-
-		if (!$id) {
-				
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
-			
-		}else{		
-		
-			$_SESSION['Cliente'] = $data['query'] = $this->Cliente_model->get_cliente($id);
-		
-			if(!$data['query']['idApp_Cliente'] || $_SESSION['Cliente'] === FALSE){
-				unset($_SESSION['Cliente']);
-				$data['msg'] = '?m=3';
-				redirect(base_url() . 'acesso' . $data['msg']);
-				exit();
-				
-			} else {			
-								
-				$_SESSION['Cliente']['NomeCliente'] = (strlen($data['query']['NomeCliente']) > 12) ? substr($data['query']['NomeCliente'], 0, 12) : $data['query']['NomeCliente'];
-				
-				#$data['query'] = $this->Paciente_model->get_paciente($prontuario, TRUE);
-				$data['titulo'] = 'Prontuário ' . $data['query']['NomeCliente'];
-				$data['panel'] = 'primary';
-				$data['metodo'] = 4;
-
-				$_SESSION['log']['idApp_Cliente'] = $data['resumo']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-				$data['resumo']['NomeCliente'] = $data['query']['NomeCliente'];
-
-				$data['query']['Idade'] = $this->basico->calcula_idade($data['query']['DataNascimento']);
-				$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'barras');
-
-				/*
-				if ($data['query']['Sexo'] == 1)
-					$data['query']['profile'] = 'm';
-				elseif ($data['query']['Sexo'] == 2)
-					$data['query']['profile'] = 'f';
-				else
-					$data['query']['profile'] = 'o';
-				*/
-				$data['query']['profile'] = ($data['query']['Sexo']) ? strtolower($data['query']['Sexo']) : 'o';
-
-				$data['query']['Sexo'] = $this->Basico_model->get_sexo($data['query']['Sexo']);
-				$data['query']['Ativo'] = $this->Basico_model->get_ativo($data['query']['Ativo']);
-				$data['query']['ClienteConsultor'] = $this->Basico_model->get_ativo($data['query']['ClienteConsultor']);
-				$data['query']['idSis_Empresa'] = $this->Basico_model->get_empresa($data['query']['idSis_Empresa']);
-				$data['query']['Profissional'] = $this->Basico_model->get_profissional($data['query']['Profissional']);
-				
-				$data['query']['Telefone'] = $data['query']['CelularCliente'] . ' - ' . $data['query']['Telefone'];
-				($data['query']['Telefone2']) ? $data['query']['Telefone'] = $data['query']['Telefone'] . ' - ' . $data['query']['Telefone2'] : FALSE;
-				($data['query']['Telefone3']) ? $data['query']['Telefone'] = $data['query']['Telefone'] . ' - ' . $data['query']['Telefone3'] : FALSE;
-
-
-				if ($data['query']['MunicipioCliente']) {
-					$mun = $this->Basico_model->get_municipio($data['query']['MunicipioCliente']);
-					$data['query']['MunicipioCliente'] = $mun['NomeMunicipio'] . '/' . $mun['Uf'];
-				} else {
-					$data['query']['MunicipioCliente'] = $data['query']['Uf'] = $mun['Uf'] = '';
-				}
-
-				$data['contatocliente'] = $this->Contatocliente_model->lista_contatocliente($id, TRUE);
-				/*
-				  echo "<pre>";
-				  print_r($data['contatocliente']);
-				  echo "</pre>";
-				  exit();
-				*/
-				if (!$data['contatocliente'])
-					$data['list'] = FALSE;
-				else
-					$data['list'] = $this->load->view('contatocliente/list_contatocliente', $data, TRUE);
-			
-			
-				$data['cor_cli'] 	= 'warning';
-				$data['cor_cons'] 	= 'default';
-				$data['cor_orca'] 	= 'default';
-				$data['cor_sac'] 	= 'default';
-				$data['cor_mark'] 	= 'default';
-				
-				$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
-
-				$this->load->view('cliente/tela_cliente', $data);
-			}
-		}
-	
         $this->load->view('basico/footer');
     }
 

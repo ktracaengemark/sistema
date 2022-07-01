@@ -86,7 +86,7 @@ class Associado_model extends CI_Model {
 			WHERE 
 				idSis_Associado = ' . $data . ' AND
 				idSis_Associado = ' . $_SESSION['log']['idSis_Usuario'] . ' AND
-				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+				idSis_Empresa = ' . $_SESSION['Empresa']['idSis_Empresa'] . ''
 		);
 
 		$count = $query->num_rows();

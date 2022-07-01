@@ -89,7 +89,7 @@ class Usuario_model extends CI_Model {
 			WHERE 
 				U.idSis_Usuario = ' . $data . ' AND
 				U.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND
-				U.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ''
+				U.idSis_Empresa = ' . $_SESSION['Empresa']['idSis_Empresa'] . ''
 		);
 
         if ($query->num_rows() === 0) {

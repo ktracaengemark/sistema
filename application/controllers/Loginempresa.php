@@ -146,9 +146,8 @@ class Loginempresa extends CI_Controller {
                     $this->basico->erro($msg);
                     $this->load->view('form_loginempresa');
                 } else {
+					unset($_SESSION['Empresa']);
 					redirect('acessoempresa');
-					#redirect('agenda');
-					#redirect('cliente');
                 }
             }
         }

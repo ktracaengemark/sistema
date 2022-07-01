@@ -32,12 +32,18 @@ class Acessoempresa extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-
-		//$_SESSION['AdminEmpresa']  = $this->Empresa_model->get_empresa($_SESSION['log']['idSis_Empresa'], TRUE);
+     
+		if (!isset($_SESSION['AdminEmpresa']) || !$_SESSION['AdminEmpresa']['idSis_Empresa']) {
+				
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'login/sair' . $data['msg']);
+			exit();
+			
+		}else{	
+			
+			$this->load->view('acessoempresa/tela_acessoempresa', $data);
 		
-		$this->load->view('acessoempresa/tela_acessoempresa', $data);
-
-        #load footer view
+		}
         $this->load->view('basico/footer');
     }
 
