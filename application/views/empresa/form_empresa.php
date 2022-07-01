@@ -1,14 +1,15 @@
 <?php if (isset($msg)) echo $msg; ?>
-<?php if ( !isset($evento) && isset($_SESSION['Empresa'])) { ?>
+<?php if ( !isset($evento) && isset($_SESSION['QueryEmpresa'])) { ?>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-				<?php if ($nav_secundario) echo $nav_secundario; ?>
+				<?php #if ($nav_secundario) echo $nav_secundario; ?>
 				<div class="row">
 					<div class="col-md-offset-1 col-md-10">
 						<?php echo form_open_multipart($form_open_path); ?>
 						<div class="panel panel-primary">
 							<div class="panel-heading">
+									<?php echo $titulo; ?>
 							</div>			
 							<div class="panel-body">
 								<div class="row">	
@@ -65,7 +66,7 @@
 														</div>
 														<div class="col-md-3">
 															<label for="Site">Site:</label><br>
-															<span >enkontraki.com.br/<?php echo $_SESSION['Empresa']['Site']; ?></span>
+															<span >enkontraki.com.br/<?php echo $_SESSION['QueryEmpresa']['Site']; ?></span>
 														</div>
 													</div>
 													<div class="row">

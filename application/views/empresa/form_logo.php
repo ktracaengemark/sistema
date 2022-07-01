@@ -1,13 +1,14 @@
 <?php if (isset($msg)) echo $msg; ?>
-<?php if ( !isset($evento) && isset($_SESSION['Empresa'])) { ?>
+<?php if ( !isset($evento) && isset($_SESSION['QueryEmpresa'])) { ?>
 	<div class="container-fluid">	
 		<div class="row">
 			<div class="col-md-12">
-				<?php if ($nav_secundario) echo $nav_secundario; ?>
+				<?php #if ($nav_secundario) echo $nav_secundario; ?>
 				<div class="row">
 					<div class="col-md-offset-1 col-md-10">
 						<div class="panel panel-<?php echo $panel; ?>">
 							<div class="panel-heading">
+									<?php echo $titulo; ?>
 							</div>
 							<div class="panel-body">
 								<?php if (isset($msg)) echo $msg; ?>
@@ -21,7 +22,7 @@
 												<div class="col-md-6">
 													<!--<label for="NomeEmpresa">NomeEmpresa do Empresa:</label>-->
 													<input type="text" class="form-control" id="NomeEmpresa" maxlength="45" readonly=''
-															name="NomeEmpresa"  value="<?php echo $_SESSION['Empresa']['NomeEmpresa']; ?>">
+															name="NomeEmpresa"  value="<?php echo $_SESSION['QueryEmpresa']['NomeEmpresa']; ?>">
 												</div>
 
 											</div>
@@ -30,8 +31,8 @@
 										<div class="form-group">
 											<div class="row">
 												<div class="col-md-12 "> 
-													<a href="<?php echo base_url() . 'empresa/prontuario/' . $_SESSION['Empresa']['idSis_Empresa']; ?>">
-														<img alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/miniatura/' . $_SESSION['Empresa']['Arquivo'] . ''; ?>" 
+													<a href="<?php echo base_url() . 'empresa/prontuario/' . $_SESSION['QueryEmpresa']['idSis_Empresa']; ?>">
+														<img alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['QueryEmpresa']['idSis_Empresa'] . '/documentos/miniatura/' . $_SESSION['QueryEmpresa']['Arquivo'] . ''; ?>" 
 														class="img-circle img-responsive" width='200'>
 													</a>												
 												</div>
@@ -68,29 +69,18 @@
 								</div>
 								<div class="form-group">
 									<div class="row">
-										<input type="hidden" name="idSis_Empresa" value="<?php echo $file['idSis_Empresa']; ?>">
+										<input type="hidden" name="idSis_Empresa" value="<?php echo $query['idSis_Empresa']; ?>">
+										<!--<input type="hidden" name="idSis_Empresa" value="<?php #echo $file['idSis_Empresa']; ?>">-->
 										<?php if ($metodo == 3) { ?>
 											<input type="hidden" name="idSis_Arquivo" value="<?php echo $file['idSis_Arquivo']; ?>">
-											<input type="hidden" name="Arquivo" value="<?php echo $file['Arquivo']; ?>">
-											<div class="col-md-6">                            
-												<button class="btn btn-lg btn-danger" id="inputDb" data-loading-text="Aguarde..." type="submit" name="submit">
-													<span class="glyphicon glyphicon-trash"></span> Excluir
-												</button>                            
-											</div>                        
+											<input type="hidden" name="Arquivo" value="<?php echo $file['Arquivo']; ?>">                       
 										<?php } else { ?>
 											<div class="col-md-6">                            
 												<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
 													<span class="glyphicon glyphicon-save"></span> Salvar
 												</button>                            
 											</div>                        
-										<?php } ?>     
-											<!--
-											<div class="col-md-6 text-right">
-												<button class="btn btn-lg btn-warning" id="inputDb" onClick="history.go(-1); return true;">
-													<span class="glyphicon glyphicon-ban-circle"></span> Voltar
-												</button>
-											</div>
-											-->
+										<?php } ?>  
 									</div>
 								</div>                
 								</form>

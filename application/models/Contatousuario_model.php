@@ -66,7 +66,7 @@ class Contatousuario_model extends CI_Model {
 
         $query = $this->db->query('SELECT * '
                 . 'FROM App_ContatoUsuario WHERE '
-                . 'idSis_Usuario = ' . $_SESSION['Usuario']['idSis_Usuario'] . ' '
+                . 'idSis_Usuario = ' . $_SESSION['QueryUsuario']['idSis_Usuario'] . ' '
                 . 'ORDER BY NomeContatoUsuario ASC ');
         /*
           echo $this->db->last_query();

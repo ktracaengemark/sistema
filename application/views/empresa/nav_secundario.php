@@ -11,13 +11,13 @@
 					<div class="btn-menu btn-group">	
 						<button type="button" class="btn btn-md btn-<?php echo $cor_cli;?>  dropdown-toggle" data-toggle="dropdown">
 							<span class="glyphicon glyphicon-file"></span>
-								<?php echo '<small>' . $_SESSION['Empresa']['NomeEmpresa'] . '</small> - <small>' . $_SESSION['Empresa']['idSis_Empresa'] . '</small>' ?> 
+								<?php echo '<small>' . $_SESSION['QueryEmpresa']['NomeEmpresa'] . '</small> - <small>' . $_SESSION['QueryEmpresa']['idSis_Empresa'] . '</small>' ?> 
 							<span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu" role="menu">
 							<li>
 								<a <?php if (preg_match("/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
-									<a href="<?php echo base_url() . 'empresa/prontuario/' . $_SESSION['Empresa']['idSis_Empresa']; ?>">
+									<a href="<?php echo base_url() . 'empresa/prontuario/' . $_SESSION['QueryEmpresa']['idSis_Empresa']; ?>">
 										<span class="glyphicon glyphicon-file"> </span> Ver Dados da Empresa
 									</a>
 								</a>
@@ -25,7 +25,7 @@
 							<li role="separator" class="divider"></li>
 							<li>
 								<a <?php if (preg_match("/empresa\/alterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-									<a href="<?php echo base_url() . 'empresa/alterar/' . $_SESSION['Empresa']['idSis_Empresa']; ?>">
+									<a href="<?php echo base_url() . 'empresa/alterar/' . $_SESSION['QueryEmpresa']['idSis_Empresa']; ?>">
 										<span class="glyphicon glyphicon-edit"></span> Editar Dados da Empresa
 									</a>
 								</a>
@@ -33,7 +33,7 @@
 							<li role="separator" class="divider"></li>
 							<li>
 								<a <?php if (preg_match("/empresa\/atendimento\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-									<a href="<?php echo base_url() . 'empresa/atendimento/' . $_SESSION['Empresa']['idSis_Empresa']; ?>">
+									<a href="<?php echo base_url() . 'empresa/atendimento/' . $_SESSION['QueryEmpresa']['idSis_Empresa']; ?>">
 										<span class="glyphicon glyphicon-edit"></span> Horario de Atendimento
 									</a>
 								</a>
@@ -41,7 +41,7 @@
 							<li role="separator" class="divider"></li>
 							<li>
 								<a <?php if (preg_match("/empresa\/alterarlogo\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-									<a href="<?php echo base_url() . 'empresa/alterarlogo/' . $_SESSION['Empresa']['idSis_Empresa']; ?>">
+									<a href="<?php echo base_url() . 'empresa/alterarlogo/' . $_SESSION['QueryEmpresa']['idSis_Empresa']; ?>">
 										<span class="glyphicon glyphicon-edit"></span> Alterar Logo
 									</a>
 								</a>
@@ -49,7 +49,7 @@
 							<li role="separator" class="divider"></li>
 							<li>
 								<a <?php if (preg_match("/empresa\/saudacao\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-									<a href="<?php echo base_url() . 'empresa/saudacao/' . $_SESSION['Empresa']['idSis_Empresa']; ?>">
+									<a href="<?php echo base_url() . 'empresa/saudacao/' . $_SESSION['QueryEmpresa']['idSis_Empresa']; ?>">
 										<span class="glyphicon glyphicon-edit"></span> Saudacoes
 									</a>
 								</a>
@@ -57,23 +57,16 @@
 							<li role="separator" class="divider"></li>
 							<li>
 								<a <?php if (preg_match("/empresa\/pagseguro\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-									<a href="<?php echo base_url() . 'empresa/pagseguro/' . $_SESSION['Empresa']['idSis_Empresa']; ?>">
+									<a href="<?php echo base_url() . 'empresa/pagseguro/' . $_SESSION['QueryEmpresa']['idSis_Empresa']; ?>">
 										<span class="glyphicon glyphicon-edit"></span> Pag Seguro
 									</a>
 								</a>
 							</li>								
 						</ul>
-						
-						
-						
-						
-						
-						
-						
 					</div>
 						<!--
-						<a class="navbar-brand" href="<?php echo base_url() . 'empresa/prontuario/' . $_SESSION['Empresa']['idSis_Empresa']; ?>">
-							<?php echo '<small>' . $_SESSION['Empresa']['idSis_Empresa'] . '</small>|<small>' . $_SESSION['Empresa']['NomeEmpresa'] . '.</small>' ?>
+						<a class="navbar-brand" href="<?php echo base_url() . 'empresa/prontuario/' . $_SESSION['QueryEmpresa']['idSis_Empresa']; ?>">
+							<?php echo '<small>' . $_SESSION['QueryEmpresa']['idSis_Empresa'] . '</small>|<small>' . $_SESSION['QueryEmpresa']['NomeEmpresa'] . '.</small>' ?>
 						</a>
 						-->
 				</div>
@@ -88,7 +81,7 @@
 								<ul class="dropdown-menu" role="menu">
 									<li>
 										<a <?php #if (preg_match("/consulta\/listar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/consulta/   ?>>
-											<a href="<?php #echo base_url() . 'consulta/listar/' . $_SESSION['Empresa']['idSis_Empresa']; ?>">
+											<a href="<?php #echo base_url() . 'consulta/listar/' . $_SESSION['QueryEmpresa']['idSis_Empresa']; ?>">
 												<span class="glyphicon glyphicon-calendar"></span> Lista de Agendamentos
 											</a>
 										</a>
@@ -96,7 +89,7 @@
 									<li role="separator" class="divider"></li>
 									<li>
 										<a <?php #if (preg_match("/consulta\/cadastrar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/cadastrar1/    ?>>
-											<a href="<?php #echo base_url() . 'consulta/cadastrar/' . $_SESSION['Empresa']['idSis_Empresa']; ?>">
+											<a href="<?php #echo base_url() . 'consulta/cadastrar/' . $_SESSION['QueryEmpresa']['idSis_Empresa']; ?>">
 												<span class="glyphicon glyphicon-plus"></span> Novo Agendamento
 											</a>
 										</a>

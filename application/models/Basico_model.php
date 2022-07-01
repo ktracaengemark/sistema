@@ -124,7 +124,9 @@ class Basico_model extends CI_Model {
 
         if (isset($_SESSION['log']['idSis_Empresa'])) {
 			
-			if ($_SESSION['log']['idSis_Empresa'] !=5) {
+			if ($_SESSION['log']['idSis_Empresa'] == 5) {
+				return TRUE;
+			} else {
 				
 				if (!isset($_SESSION['log']['DataDeValidade'])) {
 					return FALSE;
@@ -139,8 +141,6 @@ class Basico_model extends CI_Model {
 						return FALSE;
 					}
 				}
-			} else {
-				return TRUE;
 			}
         } else {
             return FALSE;

@@ -1,14 +1,15 @@
 <?php if (isset($msg)) echo $msg; ?>
-<?php if ( !isset($evento) && isset($_SESSION['Empresa']) && isset($_SESSION['Saudacao'])) { ?>
+<?php if ( !isset($evento) && isset($_SESSION['QueryEmpresa']) && isset($_SESSION['Saudacao'])) { ?>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-				<?php if ($nav_secundario) echo $nav_secundario; ?>
+				<?php #if ($nav_secundario) echo $nav_secundario; ?>
 				<div class="row">
 					<div class="col-md-offset-1 col-md-10">
 						<?php echo form_open_multipart($form_open_path); ?>
 						<div class="panel panel-primary">
 							<div class="panel-heading">
+									<?php echo $titulo; ?>
 							</div>			
 							<div class="panel-body">
 								<div class="row">	
@@ -288,6 +289,10 @@
 														</div>
 													</div>
 												</div>
+												<!--<input type="hidden" name="idSis_Empresa" value="<?php #echo $_SESSION['Saudacao']['idSis_Empresa']; ?>">
+												<input type="hidden" name="idApp_Documentos" value="<?php #echo $_SESSION['Saudacao']['idApp_Documentos']; ?>">-->
+												<input type="hidden" name="idSis_Empresa" value="<?php echo $saudacao['idSis_Empresa']; ?>">
+												<input type="hidden" name="idApp_Documentos" value="<?php echo $saudacao['idApp_Documentos']; ?>">
 												<div class="row">
 													<div class="col-md-12">
 														<div class="panel panel-primary">
@@ -305,9 +310,6 @@
 										</div>
 									</div>
 								</div>
-								<input type="hidden" name="idSis_Empresa" value="<?php echo $_SESSION['Saudacao']['idSis_Empresa']; ?>">
-								<input type="hidden" name="idApp_Documentos" value="<?php echo $_SESSION['Saudacao']['idApp_Documentos']; ?>">
-								<!--<input type="hidden" name="idSis_Empresa" value="<?php echo $saudacao['idSis_Empresa']; ?>">-->
 							</div>	
 						</div>
 						</form>

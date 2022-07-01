@@ -10038,6 +10038,7 @@ class Relatorio extends CI_Controller {
                 } else {
 					
 					unset($_SESSION['Empresa']);
+					unset($_SESSION['Usuario']);
 					redirect('acessoempresa');
                 }
             }

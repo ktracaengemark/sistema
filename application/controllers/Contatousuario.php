@@ -69,7 +69,7 @@ class Contatousuario extends CI_Controller {
 		$data['select']['Relacao'] = $this->Relacao_model->select_relacao();
         $data['select']['Ativo'] = $this->Basico_model->select_status_sn();
 		
-		$data['titulo'] = 'Cadastrar Contatousuario';
+		$data['titulo'] = 'Cadastrar Contato';
         $data['form_open_path'] = 'contatousuario/cadastrar';
         $data['readonly'] = '';
         $data['disabled'] = '';
@@ -116,8 +116,8 @@ class Contatousuario extends CI_Controller {
                 $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_ContatoUsuario', 'CREATE', $data['auditoriaitem']);
                 $data['msg'] = '?m=1';
 
-                #redirect(base_url() . 'contatousuario/pesquisar/' . $_SESSION['Usuario']['idSis_Usuario'] . $data['msg']);
-                redirect(base_url() . 'usuario/prontuario/' . $_SESSION['Usuario']['idSis_Usuario'] . $data['msg']);
+                redirect(base_url() . 'contatousuario/pesquisar/' . $_SESSION['QueryUsuario']['idSis_Usuario'] . $data['msg']);
+                #redirect(base_url() . 'usuario/prontuario/' . $_SESSION['QueryUsuario']['idSis_Usuario'] . $data['msg']);
 				exit();
             }
         }
@@ -197,7 +197,7 @@ class Contatousuario extends CI_Controller {
 
             if ($data['auditoriaitem'] && $this->Contatousuario_model->update_contatousuario($data['query'], $data['query']['idApp_ContatoUsuario']) === FALSE) {
                 $data['msg'] = '?m=1';
-                redirect(base_url() . 'usuario/prontuario/' . $_SESSION['Usuario']['idSis_Usuario'] . $data['msg']);
+                redirect(base_url() . 'usuario/prontuario/' . $_SESSION['QueryUsuario']['idSis_Usuario'] . $data['msg']);
                 exit();
             } else {
 
@@ -208,68 +208,8 @@ class Contatousuario extends CI_Controller {
                     $data['msg'] = '?m=1';
                 }
 
-                #redirect(base_url() . 'contatousuario/pesquisar/' . $_SESSION['Usuario']['idSis_Usuario'] . $data['msg']);
-				redirect(base_url() . 'usuario/prontuario/' . $_SESSION['Usuario']['idSis_Usuario'] . $data['msg']);
-                exit();
-            }
-        }
-
-        $this->load->view('basico/footer');
-    }
-
-    public function excluir2($id = FALSE) {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-
-        $data['query'] = $this->input->post(array(
-            'idApp_ContatoUsuario',
-            'submit'
-                ), TRUE);
-
-        if ($id) {
-            $data['query'] = $this->Contatousuario_model->get_contatousuario($id);
-            $data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'barras');
-            $data['query']['ContatousuarioDataNascimento'] = $this->basico->mascara_data($data['query']['ContatousuarioDataNascimento'], 'barras');
-        }
-
-        $data['select']['Municipio'] = $this->Basico_model->select_municipio();
-        $data['select']['Sexo'] = $this->Basico_model->select_sexo();
-
-        $data['titulo'] = 'Tem certeza que deseja excluir o registro abaixo?';
-        $data['form_open_path'] = 'contatousuario/excluir';
-        $data['readonly'] = 'readonly';
-        $data['disabled'] = 'disabled';
-        $data['panel'] = 'danger';
-        $data['metodo'] = 3;
-
-        $data['tela'] = $this->load->view('contatousuario/form_contatousuario', $data, TRUE);
-
-        #run form validation
-        if ($this->form_validation->run() === FALSE) {
-            $this->load->view('contatousuario/tela_contatousuario', $data);
-        } else {
-
-            if ($data['query']['idApp_ContatoUsuario'] === FALSE) {
-                $data['msg'] = '?m=2';
-                $this->load->view('contatousuario/form_contatousuario', $data);
-            } else {
-
-                $data['anterior'] = $this->Contatousuario_model->get_contatousuario($data['query']['idApp_ContatoUsuario']);
-                $data['campos'] = array_keys($data['anterior']);
-
-                $data['auditoriaitem'] = $this->basico->set_log($data['anterior'], NULL, $data['campos'], $data['query']['idApp_ContatoUsuario'], FALSE, TRUE);
-                $data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_ContatoUsuario', 'DELETE', $data['auditoriaitem']);
-
-                $this->Contatousuario_model->delete_contatousuario($data['query']['idApp_ContatoUsuario']);
-
-                $data['msg'] = '?m=1';
-
-                redirect(base_url() . 'contatousuario' . $data['msg']);
+                redirect(base_url() . 'contatousuario/pesquisar/' . $_SESSION['QueryUsuario']['idSis_Usuario'] . $data['msg']);
+				#redirect(base_url() . 'usuario/prontuario/' . $_SESSION['QueryUsuario']['idSis_Usuario'] . $data['msg']);
                 exit();
             }
         }
@@ -290,10 +230,9 @@ class Contatousuario extends CI_Controller {
 
                 $data['msg'] = '?m=1';
 
-				redirect(base_url() . 'contatousuario/pesquisar/' . $_SESSION['Usuario']['idSis_Usuario'] . $data['msg']);
+				redirect(base_url() . 'contatousuario/pesquisar/' . $_SESSION['QueryUsuario']['idSis_Usuario'] . $data['msg']);
 				exit();
-            //}
-        //}
+
 
         $this->load->view('basico/footer');
     }
@@ -314,7 +253,7 @@ class Contatousuario extends CI_Controller {
             $_SESSION['agenda']['HoraFim'] = substr($this->input->get('end'), 0, -3);
         }
 
-        $_SESSION['Usuario'] = $this->Usuario_model->get_usuario($id, TRUE);
+        $_SESSION['QueryUsuario'] = $this->Usuario_model->get_usuario($id, TRUE);
         
         //echo date('d/m/Y H:i:s', $data['start'],0,-3));
 
@@ -330,7 +269,10 @@ class Contatousuario extends CI_Controller {
         else
             $data['list'] = $this->load->view('contatousuario/list_contatousuario', $data, TRUE);
         
-        $data['nav_secundario'] = $this->load->view('usuario/nav_secundario', $data, TRUE);
+        
+		$data['titulo'] = 'Contatos';
+        
+		$data['nav_secundario'] = $this->load->view('usuario/nav_secundario', $data, TRUE);
 
         $this->load->view('contatousuario/tela_contatousuario', $data);
 

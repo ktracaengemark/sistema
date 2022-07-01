@@ -1,9 +1,9 @@
 <?php if (isset($msg)) echo $msg; ?>
-<?php if ( !isset($evento) && isset($_SESSION['Empresa'])) { ?>
+<?php if ( !isset($evento) && isset($_SESSION['QueryEmpresa'])) { ?>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-				<?php if ($nav_secundario) echo $nav_secundario; ?>
+				<?php #if ($nav_secundario) echo $nav_secundario; ?>
 				<div class="row">
 					<div class="col-md-offset-1 col-md-10">
 						<?php echo validation_errors(); ?>
@@ -156,22 +156,22 @@
 										<?php
 										}
 										?>
-										<div class="row">
-											<div class="col-md-12">
-												<div class="panel panel-primary">
-													<div class="panel-heading">
-														<div class="btn-group">
-															<button class="btn btn-sm btn-default" id="inputDb" data-loading-text="Aguarde..." type="submit">
-																<span class="glyphicon glyphicon-save"></span> Salvar
-															</button>
-														</div>
-													</div>
+									</div>	
+								</div>
+								<input type="hidden" name="idSis_Empresa" value="<?php echo $empresa['idSis_Empresa']; ?>">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="panel panel-primary">
+											<div class="panel-heading">
+												<div class="btn-group">
+													<button class="btn btn-sm btn-default" id="inputDb" data-loading-text="Aguarde..." type="submit">
+														<span class="glyphicon glyphicon-save"></span> Salvar
+													</button>
 												</div>
 											</div>
 										</div>
-									</div>	
+									</div>
 								</div>
-								<input type="hidden" name="idSis_Empresa" value="<?php echo $_SESSION['log']['idSis_Empresa']; ?>">
 							</div>	
 						</div>
 						</form>

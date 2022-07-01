@@ -1,13 +1,14 @@
 <?php if ($msg) echo $msg; ?>
-<?php if ( !isset($evento) && isset($_SESSION['Empresa']) && isset($_SESSION['Saudacao'])) { ?>
+<?php if ( !isset($evento) && isset($_SESSION['QueryEmpresa']) && isset($_SESSION['Saudacao'])) { ?>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-				<?php if ($nav_secundario) echo $nav_secundario; ?>
+				<?php #if ($nav_secundario) echo $nav_secundario; ?>
 				<div class="row">
 					<div class="col-md-offset-1 col-md-10">
 						<div class="panel panel-primary">
 							<div class="panel-heading">
+									<?php echo $titulo; ?>
 							</div>
 							<div class="panel-body">
 								<div style="overflow: auto; height: auto; ">
@@ -18,7 +19,7 @@
 													<div class=" col-md-6">	
 														<div class="row">	
 															<div class="col-sm-offset-2 col-md-10 " align="left"> 	
-																	<img alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/miniatura/' . $_SESSION['Empresa']['Arquivo'] . ''; ?>"
+																	<img alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['QueryEmpresa']['idSis_Empresa'] . '/documentos/miniatura/' . $_SESSION['QueryEmpresa']['Arquivo'] . ''; ?>"
 																	class="img-circle img-responsive" width='200'>
 															</div>
 														</div>		
@@ -74,7 +75,7 @@
 													<div class="panel panel-primary">
 														<div class="panel-heading">
 															<div class="btn-group">
-																<a type="button" class="btn btn-sm btn-default" href="<?php echo base_url() . 'empresa/alterarsaudacao/' . $_SESSION['Empresa']['idSis_Empresa']; ?>">
+																<a type="button" class="btn btn-sm btn-default" href="<?php echo base_url() . 'empresa/alterarsaudacao/' . $_SESSION['QueryEmpresa']['idSis_Empresa']; ?>">
 																	<span class="glyphicon glyphicon-edit"></span> Editar Saudacoes
 																</a>
 															</div>
