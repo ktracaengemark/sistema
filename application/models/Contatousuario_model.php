@@ -26,11 +26,22 @@ class Contatousuario_model extends CI_Model {
     }
 
     public function get_contatousuario($data) {
-        $query = $this->db->query('SELECT * FROM App_ContatoUsuario WHERE idApp_ContatoUsuario = ' . $data);
-        
-        $query = $query->result_array();
+        $query = $this->db->query(
+			'SELECT
+				* 
+			FROM 
+				App_ContatoUsuario 
+			WHERE 
+				idApp_ContatoUsuario = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['AdminEmpresa']['idSis_Empresa'] . ''
+		);
 
-        return $query[0];
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
     }
 
     public function update_contatousuario($data, $id) {
@@ -62,11 +73,11 @@ class Contatousuario_model extends CI_Model {
         }
     }
 
-    public function lista_contatousuario($x) {
+    public function lista_contatousuario($data, $x) {
 
         $query = $this->db->query('SELECT * '
                 . 'FROM App_ContatoUsuario WHERE '
-                . 'idSis_Usuario = ' . $_SESSION['QueryUsuario']['idSis_Usuario'] . ' '
+                . 'idSis_Usuario = ' . $data . ' '
                 . 'ORDER BY NomeContatoUsuario ASC ');
         /*
           echo $this->db->last_query();

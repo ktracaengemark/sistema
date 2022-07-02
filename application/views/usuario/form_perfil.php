@@ -66,7 +66,7 @@
 								</div>
 								<div class="form-group">
 									<div class="row">
-										<input type="hidden" name="idSis_Usuario" value="<?php echo $file['idSis_Usuario']; ?>">
+										<input type="hidden" name="idSis_Usuario" value="<?php echo $query['idSis_Usuario']; ?>">
 										<?php if ($metodo == 3) { ?>
 											<input type="hidden" name="idSis_Arquivo" value="<?php echo $file['idSis_Arquivo']; ?>">
 											<input type="hidden" name="Arquivo" value="<?php echo $file['Arquivo']; ?>">

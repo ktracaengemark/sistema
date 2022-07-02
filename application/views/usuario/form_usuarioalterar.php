@@ -344,7 +344,7 @@
 										</div>
 										<div class="form-group">
 											<div class="row">
-												<input type="hidden" id="idSis_Empresa" name="idSis_Empresa" value="<?php echo $_SESSION['log']['idSis_Empresa']; ?>">
+												<!--<input type="hidden" id="idSis_Empresa" name="idSis_Empresa" value="<?php #echo $_SESSION['log']['idSis_Empresa']; ?>">-->
 												<input type="hidden" id="idSis_Usuario" name="idSis_Usuario" value="<?php echo $query['idSis_Usuario']; ?>">
 												<?php if ($metodo == 2) { ?>
 

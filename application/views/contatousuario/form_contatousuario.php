@@ -41,6 +41,7 @@
 															<div class="form-group">
 																<div class="btn-group" data-toggle="buttons">
 																	<?php
+																	/*
 																	foreach ($select['StatusVida'] as $key => $row) {
 																		if (!$query['StatusVida'])
 																			$query['StatusVida'] = 'V';
@@ -61,6 +62,7 @@
 																			;
 																		}
 																	}
+																	*/
 																	?>  
 																</div>
 															</div>
@@ -89,9 +91,6 @@
 														</div>						
 														<div class="col-md-4">
 															<label for="Relacao">Relação*</label>
-															<!--<a class="btn btn-xs btn-info" href="<?php echo base_url() ?>relacao/cadastrar/relacao" role="button"> 
-																<span class="glyphicon glyphicon-plus"></span> <b>Nova Relação</b>
-															</a>-->
 															<select data-placeholder="Selecione uma opção..." class="form-control" <?php echo $readonly; ?>
 																	id="Relacao" name="Relacao">
 																<option value="">-- Selecione uma Relação --</option>
@@ -141,8 +140,6 @@
 														</div>
 													</div>
 												</div>
-												
-												</form>
 											</div>
 										</div>
 									</div>
@@ -152,7 +149,7 @@
 								<?php } ?>
 								<div class="form-group">
 									<div class="row">
-										<input type="hidden" name="idSis_Usuario" value="<?php echo $_SESSION['QueryUsuario']['idSis_Usuario']; ?>"> 
+										<!--<input type="hidden" name="idSis_Usuario" value="<?php echo $_SESSION['QueryUsuario']['idSis_Usuario']; ?>">--> 
 										<?php if ($metodo == 2) { ?>
 
 											<div class="col-md-6">
@@ -202,9 +199,9 @@
 										<?php } ?>
 									</div>
 								</div>
-
 							</div>
-						</div>	
+						</div>
+						</form>						
 					</div>
 				</div>
 			</div>	

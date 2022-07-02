@@ -404,7 +404,7 @@
 								<div class="form-group">
 									<div class="row">
 										<input type="hidden" name="idSis_Usuario" value="<?php echo $query['idSis_Usuario']; ?>">
-										<input type="hidden" name="idSis_Empresa" value="<?php echo $query['idSis_Empresa']; ?>">
+										<!--<input type="hidden" name="idSis_Empresa" value="<?php #echo $query['idSis_Empresa']; ?>">-->
 										<div class="col-md-6">
 											<button class="btn btn-sm btn-primary" id="inputDb" data-loading-text="Aguarde..." name="submit" value="1" type="submit">
 												<span class="glyphicon glyphicon-save"></span> Salvar
