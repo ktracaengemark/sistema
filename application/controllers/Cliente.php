@@ -2340,16 +2340,6 @@ class Cliente extends CI_Controller {
 
     }
 
-    function get_cliente_1() {
-		
-        if ($this->Cliente_model->lista_cliente($_SESSION['pesquisa'], $_SESSION['nomedocliente'], $_SESSION['telefone'], FALSE, $_SESSION['Qtde'], $_SESSION['Page']) === FALSE) {
-            $this->form_validation->set_message('get_cliente', '<strong>Cliente</strong> não encontrado.');
-            return FALSE;
-        } else {
-		return TRUE;
-        }
-    }
-	
     function get_cliente($data) {
 
         if ($this->Cliente_model->lista_cliente($data, TRUE) === FALSE) {
