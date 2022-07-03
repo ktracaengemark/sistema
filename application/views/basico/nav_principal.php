@@ -1,7 +1,5 @@
 <nav class="navbar navbar-inverse navbar-fixed-top " role="banner">
-	<div class="col-lg-1 col-md-1">	
-	</div>
-	<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 		<div class="navbar-header ">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar1">
 				<span class="sr-only">MENU</span>
@@ -26,25 +24,30 @@
 				</div>
 				</form>
 				-->
-				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-8 btn-menu btn-group ">	
-					<button type="button" class="btn btn-sm btn-default btn-block dropdown-toggle" data-toggle="dropdown">
-						<span class="glyphicon glyphicon-user"></span>
-							<strong>Clientes</strong>
-						<span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="<?php echo base_url() ?>relatorio/clientes"><span class="glyphicon glyphicon-user"></span> Pesquisar Clientes</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/rankingvendas"><span class="glyphicon glyphicon-user"></span> Ranking & CashBack</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/sac"><span class="glyphicon glyphicon-pencil"></span> Sac</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/marketing"><span class="glyphicon glyphicon-pencil"></span> Marketing</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>campanha"><span class="glyphicon glyphicon-pencil"></span> Campanhas</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>
-					</ul>
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-8 btn-menu btn-group ">
+					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
+						<a type="button" class="btn btn-secondary btn-sm btn-default" href="<?php echo base_url() ?>relatorio/clientes" role="button">
+							<span class="glyphicon glyphicon-user"></span> Pesq. Clientes
+						</a>
+						<div class="btn-group" role="group">
+							<button type="button" class="btn btn-secondary btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+								<span class="glyphicon glyphicon-pencil"></span>  Mais <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="<?php echo base_url() ?>relatorio/clientes"><span class="glyphicon glyphicon-user"></span> Pesquisar Clientes</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="<?php echo base_url() ?>relatorio/rankingvendas"><span class="glyphicon glyphicon-user"></span> Ranking & CashBack</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="<?php echo base_url() ?>relatorio/sac"><span class="glyphicon glyphicon-pencil"></span> Sac</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="<?php echo base_url() ?>relatorio/marketing"><span class="glyphicon glyphicon-pencil"></span> Marketing</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="<?php echo base_url() ?>campanha"><span class="glyphicon glyphicon-pencil"></span> Campanhas</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			<?php } ?>
 		</div>
