@@ -27,16 +27,16 @@
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-8 btn-menu btn-group ">
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
 						<a type="button" class="btn btn-secondary btn-sm btn-default" href="<?php echo base_url() ?>relatorio/clientes" role="button">
-							<span class="glyphicon glyphicon-user"></span> Pesq. Clientes
+							<span class="glyphicon glyphicon-user"></span> Pesquisar Clientes
 						</a>
-						<div class="btn-group" role="group">
+						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="btn btn-secondary btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
-								<span class="glyphicon glyphicon-pencil"></span>  Mais <span class="caret"></span>
+								  <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="<?php echo base_url() ?>relatorio/clientes"><span class="glyphicon glyphicon-user"></span> Pesquisar Clientes</a></li>
 								<li role="separator" class="divider"></li>
-								<li><a href="<?php echo base_url() ?>relatorio/rankingvendas"><span class="glyphicon glyphicon-user"></span> Ranking & CashBack</a></li>
+								<li><a href="<?php echo base_url() ?>relatorio/rankingvendas"><span class="glyphicon glyphicon-usd"></span> Ranking & CashBack</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>relatorio/sac"><span class="glyphicon glyphicon-pencil"></span> Sac</a></li>
 								<li role="separator" class="divider"></li>
@@ -46,7 +46,7 @@
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>
 							</ul>
-						</div>
+						<!--</div>-->
 					</div>
 				</div>
 			<?php } ?>
@@ -55,83 +55,76 @@
 	<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 ">		
 		<div class="collapse navbar-collapse" id="myNavbar1">
 			<ul class="nav navbar-nav navbar-center">
-				<!--
 				<li class="botoesnav" >
-					<div class="btn-group">	
-						<button type="button" class="btn btn-sm btn-default btn-block dropdown-toggle" data-toggle="dropdown">
-							<span class="glyphicon glyphicon-user"></span>
-								<strong>Clientes</strong>
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="<?php #echo base_url() ?>relatorio/clientes"><span class="glyphicon glyphicon-user"></span> Pesquisar Clientes</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="<?php #echo base_url() ?>relatorio/rankingvendas"><span class="glyphicon glyphicon-user"></span> Ranking & CashBack</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="<?php #echo base_url() ?>relatorio/sac"><span class="glyphicon glyphicon-pencil"></span> Sac</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="<?php #echo base_url() ?>relatorio/marketing"><span class="glyphicon glyphicon-pencil"></span> Marketing</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="<?php #echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>
-						</ul>
-					</div>							
-				</li>
-				-->
-				<li class="botoesnav" >
-					<div class="btn-group">
-						<button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown">
-							Agenda | Tarefas | <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a class="dropdown-item" href="<?php echo base_url() ?>agenda"><span class="glyphicon glyphicon-calendar"></span> Agenda </a></li>
-							<li role="separator" class="divider"></li>
-							<li><a class="dropdown-item" href="<?php echo base_url() ?>tarefa"><span class="glyphicon glyphicon-pencil"></span> Tarefas </a></li>
-							<li role="separator" class="divider"></li>
-							<li><a class="dropdown-item" href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes </a></li>
-						</ul>
-					</div>							
+					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
+						<a type="button" class="btn btn-secondary btn-sm btn-success" href="<?php echo base_url() ?>agenda" role="button">
+							 Agenda | Tarefas 
+						</a>
+						<!--<div class="btn-group" role="group">-->
+							<button type="button" class="btn btn-secondary btn-sm btn-success dropdown-toggle" data-toggle="dropdown">
+								 <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a class="dropdown-item" href="<?php echo base_url() ?>agenda"><span class="glyphicon glyphicon-calendar"></span> Agenda </a></li>
+								<li role="separator" class="divider"></li>
+								<li><a class="dropdown-item" href="<?php echo base_url() ?>tarefa"><span class="glyphicon glyphicon-pencil"></span> Tarefas </a></li>
+								<li role="separator" class="divider"></li>
+								<li><a class="dropdown-item" href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes </a></li>
+							</ul>
+						<!--</div>-->
+					</div>	
 				</li>						
 				<li class="botoesnav">
-					<div class="btn-group">
-						<button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-							Receitas | Vendas | <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>
-							<li><a href="<?php echo base_url() ?>pedidos/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor Dinamico</a></li>
-								<li role="separator" class="divider"></li>
-							<?php } ?>
-								<li><a href="<?php echo base_url() ?>pedidos_statico/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor Estatico</a></li>
-							<?php if ($_SESSION['log']['idSis_Empresa'] == 5 ) { ?>
-								<li role="separator" class="divider"></li>
-								<li><a href="<?php echo base_url() ?>Orcatrata/cadastrar3"><span class="glyphicon glyphicon-plus"></span> Nova Receita</a></li>
-							<?php }else{ ?>	
-								<?php if ($_SESSION['log']['Cad_Orcam'] == "S" ) { ?>	
+					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
+						<a type="button" class="btn btn-secondary btn-sm btn-primary" href="<?php echo base_url() ?>pedidos/pedidos" role="button">
+							 Receitas | Vendas 
+						</a>
+						<!--<div class="btn-group" role="group">-->
+							<button type="button" class="btn btn-secondary btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+								 <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>
+								<li><a href="<?php echo base_url() ?>pedidos/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor Dinamico</a></li>
+									<li role="separator" class="divider"></li>
+								<?php } ?>
+									<li><a href="<?php echo base_url() ?>pedidos_statico/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor Estatico</a></li>
+								<?php if ($_SESSION['log']['idSis_Empresa'] == 5 ) { ?>
 									<li role="separator" class="divider"></li>
 									<li><a href="<?php echo base_url() ?>Orcatrata/cadastrar3"><span class="glyphicon glyphicon-plus"></span> Nova Receita</a></li>
-								<?php } ?>
-							<?php } ?>	
-							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>						
-						</ul>
+								<?php }else{ ?>	
+									<?php if ($_SESSION['log']['Cad_Orcam'] == "S" ) { ?>	
+										<li role="separator" class="divider"></li>
+										<li><a href="<?php echo base_url() ?>Orcatrata/cadastrar3"><span class="glyphicon glyphicon-plus"></span> Nova Receita</a></li>
+									<?php } ?>
+								<?php } ?>	
+								<li role="separator" class="divider"></li>
+								<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>						
+							</ul>
+						<!--</div>-->
 					</div>							
 				</li>
 				<li class="botoesnav">
-					<div class="btn-group">
-						<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown">
-							 Despesas | Compras | <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="<?php echo base_url() ?>despesas_statico/despesas"><span class="glyphicon glyphicon-pencil"></span> Gestor Estatico</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>Orcatrata/cadastrardesp"><span class="glyphicon glyphicon-plus"></span> Nova Despesa</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes </a></li>							
-						</ul>
+					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
+						<a type="button" class="btn btn-secondary btn-sm btn-danger" href="<?php echo base_url() ?>despesas_statico/despesas" role="button">
+							 Despesas | Compras 
+						</a>
+						<!--<div class="btn-group" role="group">-->
+							<button type="button" class="btn btn-secondary btn-sm btn-danger dropdown-toggle" data-toggle="dropdown">
+								 <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="<?php echo base_url() ?>despesas_statico/despesas"><span class="glyphicon glyphicon-pencil"></span> Gestor Estatico</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="<?php echo base_url() ?>Orcatrata/cadastrardesp"><span class="glyphicon glyphicon-plus"></span> Nova Despesa</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes </a></li>							
+							</ul>
+						<!--</div>-->
 					</div>							
 				</li>
-				<li class="botoesnav">								
-					<div class="btn-group">
+				<li class="botoesnav">
+					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
 						<?php
 							$data1 = new DateTime(); 
 							$data2 = new DateTime($_SESSION['log']['DataDeValidade']); 
@@ -141,7 +134,7 @@
 								$atua_flash = '';
 							}
 						?>
-						<button type="button" class="<?php echo $atua_flash ?> btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
+						<a type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning" href="<?php echo base_url() ?>relatorio/loginempresa" role="button">
 							
 							<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
 								
@@ -152,17 +145,21 @@
 							<?php } else {?>
 								<span class="glyphicon glyphicon-home"></span> enkontraki|Sair
 							<?php } ?>
-							 | <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">						
-							<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>
-								<li><a href="<?php echo base_url() ?>relatorio/loginempresa"><span class="glyphicon glyphicon-barcode"></span> Administracao</a></li>
+						</a>
+						<!--<div class="btn-group" role="group">-->
+							<button type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
+								 <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">						
+								<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>
+									<li><a href="<?php echo base_url() ?>relatorio/loginempresa"><span class="glyphicon glyphicon-barcode"></span> Administracao</a></li>
+									<li role="separator" class="divider"></li>
+								<?php } ?>
+								<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>
 								<li role="separator" class="divider"></li>
-							<?php } ?>
-							<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>login/sair"><span class="glyphicon glyphicon-log-out"></span> Sair do Sistema</a></li>
-						</ul>
+								<li><a href="<?php echo base_url() ?>login/sair"><span class="glyphicon glyphicon-log-out"></span> Sair do Sistema</a></li>
+							</ul>
+						<!--</div>-->
 					</div>
 				</li>
 				<li class="botoesnav">
