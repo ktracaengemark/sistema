@@ -1347,6 +1347,7 @@ class Orcatrata extends CI_Controller {
 										$data['servico'][$j]['ValorComissaoVenda'] = $data['servico'][$j]['SubtotalComissaoProduto'];
 										
 										//$data['servico'][$j]['ValorComissaoServico'] = $data['servico'][$j]['SubtotalComissaoServicoProduto'];
+										$data['servico'][$j]['ValorComissaoAssociado'] = $data['servico'][$j]['SubtotalComissaoServicoProduto'];
 										
 										$data['servico'][$j]['ValorComissaoCashBack'] = $data['servico'][$j]['SubtotalComissaoCashBackProduto'];
 										
@@ -1424,6 +1425,7 @@ class Orcatrata extends CI_Controller {
 										$data['produto'][$j]['ValorComissaoVenda'] = $data['produto'][$j]['SubtotalComissaoProduto'];
 										
 										//$data['produto'][$j]['ValorComissaoServico'] = $data['produto'][$j]['SubtotalComissaoServicoProduto'];
+										$data['produto'][$j]['ValorComissaoAssociado'] = $data['produto'][$j]['SubtotalComissaoServicoProduto'];
 										
 										$data['produto'][$j]['ValorComissaoCashBack'] = $data['produto'][$j]['SubtotalComissaoCashBackProduto'];
 										
@@ -3518,6 +3520,7 @@ class Orcatrata extends CI_Controller {
 									$data['servico'][$j]['ValorComissaoVenda'] = $data['servico'][$j]['SubtotalComissaoProduto'];
 									
 									//$data['servico'][$j]['ValorComissaoServico'] = $data['servico'][$j]['SubtotalComissaoServicoProduto'];
+									$data['servico'][$j]['ValorComissaoAssociado'] = $data['servico'][$j]['SubtotalComissaoServicoProduto'];
 									
 									$data['servico'][$j]['ValorComissaoCashBack'] = $data['servico'][$j]['SubtotalComissaoCashBackProduto'];
 									
@@ -3595,6 +3598,7 @@ class Orcatrata extends CI_Controller {
 									$data['produto'][$j]['ValorComissaoVenda'] = $data['produto'][$j]['SubtotalComissaoProduto'];
 									
 									//$data['produto'][$j]['ValorComissaoServico'] = $data['produto'][$j]['SubtotalComissaoServicoProduto'];
+									$data['produto'][$j]['ValorComissaoAssociado'] = $data['produto'][$j]['SubtotalComissaoServicoProduto'];
 									
 									$data['produto'][$j]['ValorComissaoCashBack'] = $data['produto'][$j]['SubtotalComissaoCashBackProduto'];
 									
@@ -5153,6 +5157,7 @@ class Orcatrata extends CI_Controller {
 							$data['servico'][$j]['ValorComissaoVenda'] = $data['servico'][$j]['SubtotalComissaoProduto'];
 							
 							//$data['servico'][$j]['ValorComissaoServico'] = $data['servico'][$j]['SubtotalComissaoServicoProduto'];
+							$data['servico'][$j]['ValorComissaoAssociado'] = $data['servico'][$j]['SubtotalComissaoServicoProduto'];
 							
 							$data['servico'][$j]['ValorComissaoCashBack'] = $data['servico'][$j]['SubtotalComissaoCashBackProduto'];
 							
@@ -5230,6 +5235,7 @@ class Orcatrata extends CI_Controller {
 							$data['produto'][$j]['ValorComissaoVenda'] = $data['produto'][$j]['SubtotalComissaoProduto'];
 							
 							//$data['produto'][$j]['ValorComissaoServico'] = $data['produto'][$j]['SubtotalComissaoServicoProduto'];
+							$data['produto'][$j]['ValorComissaoAssociado'] = $data['produto'][$j]['SubtotalComissaoServicoProduto'];
 							
 							$data['produto'][$j]['ValorComissaoCashBack'] = $data['produto'][$j]['SubtotalComissaoCashBackProduto'];
 							
@@ -7255,6 +7261,7 @@ class Orcatrata extends CI_Controller {
 									$data['update']['servico']['inserir'][$j]['ValorComissaoVenda'] = $data['update']['servico']['inserir'][$j]['SubtotalComissaoProduto'];
 									
 									//$data['update']['servico']['inserir'][$j]['ValorComissaoServico'] = $data['update']['servico']['inserir'][$j]['SubtotalComissaoServicoProduto'];
+									$data['update']['servico']['inserir'][$j]['ValorComissaoAssociado'] = $data['update']['servico']['inserir'][$j]['SubtotalComissaoServicoProduto'];
 									
 									$data['update']['servico']['inserir'][$j]['ValorComissaoCashBack'] = $data['update']['servico']['inserir'][$j]['SubtotalComissaoCashBackProduto'];
 
@@ -7366,6 +7373,7 @@ class Orcatrata extends CI_Controller {
 									$data['update']['servico']['alterar'][$j]['ValorComissaoVenda'] = $data['update']['servico']['alterar'][$j]['SubtotalComissaoProduto'];
 									
 									//$data['update']['servico']['alterar'][$j]['ValorComissaoServico'] = $data['update']['servico']['alterar'][$j]['SubtotalComissaoServicoProduto'];
+									$data['update']['servico']['alterar'][$j]['ValorComissaoAssociado'] = $data['update']['servico']['alterar'][$j]['SubtotalComissaoServicoProduto'];
 									
 									$data['update']['servico']['alterar'][$j]['ValorComissaoCashBack'] = $data['update']['servico']['alterar'][$j]['SubtotalComissaoCashBackProduto'];
 								
@@ -7445,6 +7453,7 @@ class Orcatrata extends CI_Controller {
 									$data['update']['produto']['inserir'][$j]['ValorComissaoVenda'] = $data['update']['produto']['inserir'][$j]['SubtotalComissaoProduto'];
 									
 									//$data['update']['produto']['inserir'][$j]['ValorComissaoServico'] = $data['update']['produto']['inserir'][$j]['SubtotalComissaoServicoProduto'];
+									$data['update']['produto']['inserir'][$j]['ValorComissaoAssociado'] = $data['update']['produto']['inserir'][$j]['SubtotalComissaoServicoProduto'];
 									
 									$data['update']['produto']['inserir'][$j]['ValorComissaoCashBack'] = $data['update']['produto']['inserir'][$j]['SubtotalComissaoCashBackProduto'];
 
@@ -7495,6 +7504,7 @@ class Orcatrata extends CI_Controller {
 									$data['update']['produto']['alterar'][$j]['ValorComissaoVenda'] = $data['update']['produto']['alterar'][$j]['SubtotalComissaoProduto'];
 									
 									//$data['update']['produto']['alterar'][$j]['ValorComissaoServico'] = $data['update']['produto']['alterar'][$j]['SubtotalComissaoServicoProduto'];
+									$data['update']['produto']['alterar'][$j]['ValorComissaoAssociado'] = $data['update']['produto']['alterar'][$j]['SubtotalComissaoServicoProduto'];
 									
 									$data['update']['produto']['alterar'][$j]['ValorComissaoCashBack'] = $data['update']['produto']['alterar'][$j]['SubtotalComissaoCashBackProduto'];
 
@@ -9404,6 +9414,7 @@ class Orcatrata extends CI_Controller {
 								$data['update']['servico']['inserir'][$j]['ValorComissaoVenda'] = $data['update']['servico']['inserir'][$j]['SubtotalComissaoProduto'];
 								
 								//$data['update']['servico']['inserir'][$j]['ValorComissaoServico'] = $data['update']['servico']['inserir'][$j]['SubtotalComissaoServicoProduto'];
+								$data['update']['servico']['inserir'][$j]['ValorComissaoAssociado'] = $data['update']['servico']['inserir'][$j]['SubtotalComissaoServicoProduto'];
 								
 								$data['update']['servico']['inserir'][$j]['ValorComissaoCashBack'] = $data['update']['servico']['inserir'][$j]['SubtotalComissaoCashBackProduto'];
 						
@@ -9514,6 +9525,7 @@ class Orcatrata extends CI_Controller {
 								$data['update']['servico']['alterar'][$j]['ValorComissaoVenda'] = $data['update']['servico']['alterar'][$j]['SubtotalComissaoProduto'];
 								
 								//$data['update']['servico']['alterar'][$j]['ValorComissaoServico'] = $data['update']['servico']['alterar'][$j]['SubtotalComissaoServicoProduto'];
+								$data['update']['servico']['alterar'][$j]['ValorComissaoAssociado'] = $data['update']['servico']['alterar'][$j]['SubtotalComissaoServicoProduto'];
 								
 								$data['update']['servico']['alterar'][$j]['ValorComissaoCashBack'] = $data['update']['servico']['alterar'][$j]['SubtotalComissaoCashBackProduto'];
 								
@@ -9592,6 +9604,7 @@ class Orcatrata extends CI_Controller {
 								$data['update']['produto']['inserir'][$j]['ValorComissaoVenda'] = $data['update']['produto']['inserir'][$j]['SubtotalComissaoProduto'];
 								
 								//$data['update']['produto']['inserir'][$j]['ValorComissaoServico'] = $data['update']['produto']['inserir'][$j]['SubtotalComissaoServicoProduto'];
+								$data['update']['produto']['inserir'][$j]['ValorComissaoAssociado'] = $data['update']['produto']['inserir'][$j]['SubtotalComissaoServicoProduto'];
 								
 								$data['update']['produto']['inserir'][$j]['ValorComissaoCashBack'] = $data['update']['produto']['inserir'][$j]['SubtotalComissaoCashBackProduto'];
 
@@ -9649,6 +9662,7 @@ class Orcatrata extends CI_Controller {
 								$data['update']['produto']['alterar'][$j]['ValorComissaoVenda'] = $data['update']['produto']['alterar'][$j]['SubtotalComissaoProduto'];
 								
 								//$data['update']['produto']['alterar'][$j]['ValorComissaoServico'] = $data['update']['produto']['alterar'][$j]['SubtotalComissaoServicoProduto'];
+								$data['update']['produto']['alterar'][$j]['ValorComissaoAssociado'] = $data['update']['produto']['alterar'][$j]['SubtotalComissaoServicoProduto'];
 								
 								$data['update']['produto']['alterar'][$j]['ValorComissaoCashBack'] = $data['update']['produto']['alterar'][$j]['SubtotalComissaoCashBackProduto'];
 
@@ -11429,6 +11443,7 @@ class Orcatrata extends CI_Controller {
 								$data['update']['servico']['inserir'][$j]['ValorComissaoVenda'] = $data['update']['servico']['inserir'][$j]['SubtotalComissaoProduto'];
 								
 								//$data['update']['servico']['inserir'][$j]['ValorComissaoServico'] = $data['update']['servico']['inserir'][$j]['SubtotalComissaoServicoProduto'];
+								$data['update']['servico']['inserir'][$j]['ValorComissaoAssociado'] = $data['update']['servico']['inserir'][$j]['SubtotalComissaoServicoProduto'];
 								
 								$data['update']['servico']['inserir'][$j]['ValorComissaoCashBack'] = $data['update']['servico']['inserir'][$j]['SubtotalComissaoCashBackProduto'];
 						
@@ -11539,6 +11554,7 @@ class Orcatrata extends CI_Controller {
 								$data['update']['servico']['alterar'][$j]['ValorComissaoVenda'] = $data['update']['servico']['alterar'][$j]['SubtotalComissaoProduto'];
 								
 								//$data['update']['servico']['alterar'][$j]['ValorComissaoServico'] = $data['update']['servico']['alterar'][$j]['SubtotalComissaoServicoProduto'];
+								$data['update']['servico']['alterar'][$j]['ValorComissaoAssociado'] = $data['update']['servico']['alterar'][$j]['SubtotalComissaoServicoProduto'];
 								
 								$data['update']['servico']['alterar'][$j]['ValorComissaoCashBack'] = $data['update']['servico']['alterar'][$j]['SubtotalComissaoCashBackProduto'];
 						
@@ -11617,6 +11633,7 @@ class Orcatrata extends CI_Controller {
 								$data['update']['produto']['inserir'][$j]['ValorComissaoVenda'] = $data['update']['produto']['inserir'][$j]['SubtotalComissaoProduto'];
 								
 								//$data['update']['produto']['inserir'][$j]['ValorComissaoServico'] = $data['update']['produto']['inserir'][$j]['SubtotalComissaoServicoProduto'];
+								$data['update']['produto']['inserir'][$j]['ValorComissaoAssociado'] = $data['update']['produto']['inserir'][$j]['SubtotalComissaoServicoProduto'];
 								
 								$data['update']['produto']['inserir'][$j]['ValorComissaoCashBack'] = $data['update']['produto']['inserir'][$j]['SubtotalComissaoCashBackProduto'];
 
@@ -11674,6 +11691,7 @@ class Orcatrata extends CI_Controller {
 								$data['update']['produto']['alterar'][$j]['ValorComissaoVenda'] = $data['update']['produto']['alterar'][$j]['SubtotalComissaoProduto'];
 								
 								//$data['update']['produto']['alterar'][$j]['ValorComissaoServico'] = $data['update']['produto']['alterar'][$j]['SubtotalComissaoServicoProduto'];
+								$data['update']['produto']['alterar'][$j]['ValorComissaoAssociado'] = $data['update']['produto']['alterar'][$j]['SubtotalComissaoServicoProduto'];
 								
 								$data['update']['produto']['alterar'][$j]['ValorComissaoCashBack'] = $data['update']['produto']['alterar'][$j]['SubtotalComissaoCashBackProduto'];
 

@@ -9913,7 +9913,7 @@ function adiciona_precos() {
 					</div>\
 					<div class="row">\
 						<div class="col-md-2">\
-							<label for="ComissaoVenda'+pt+'">ComissaoVenda</label><br>\
+							<label for="ComissaoVenda'+pt+'">Comissao Vendedor</label><br>\
 							<div class="input-group id="ComissaoVenda'+pt+'">\
 								<input type="text" class="form-control Valor text-right" id="ComissaoVenda'+pt+'" maxlength="10" placeholder="0,00" \
 									name="ComissaoVenda'+pt+'" value="">\
@@ -9921,7 +9921,7 @@ function adiciona_precos() {
 							</div>\
 						</div>\
 						<div class="col-md-2">\
-							<label for="ComissaoServico'+pt+'">ComissaoServico</label><br>\
+							<label for="ComissaoServico'+pt+'">Comissao Associado</label><br>\
 							<div class="input-group id="ComissaoServico'+pt+'">\
 								<input type="text" class="form-control Valor text-right" id="ComissaoServico'+pt+'" maxlength="10" placeholder="0,00" \
 									name="ComissaoServico'+pt+'" value="">\

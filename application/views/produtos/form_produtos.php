@@ -357,7 +357,7 @@
 																		</div>
 																		-->
 																		<div class="col-md-2">
-																			<label for="ComissaoVenda">ComissaoVenda<?php echo $i ?></label>
+																			<label for="ComissaoVenda">Comissao Vendedor <?php echo $i ?></label>
 																			<div class="input-group">
 																				<input type="text" class="form-control Valor text-right" id="ComissaoVenda<?php echo $i ?>" maxlength="10" placeholder="0,00"
 																					name="ComissaoVenda<?php echo $i ?>" value="<?php echo $valor[$i]['ComissaoVenda'] ?>">
@@ -365,7 +365,7 @@
 																			</div>
 																		</div>
 																		<div class="col-md-2">
-																			<label for="ComissaoServico">ComissaoServico<?php echo $i ?></label>
+																			<label for="ComissaoServico">Comissao Associado <?php echo $i ?></label>
 																			<div class="input-group">
 																				<input type="text" class="form-control Valor text-right" id="ComissaoServico<?php echo $i ?>" maxlength="10" placeholder="0,00"
 																					name="ComissaoServico<?php echo $i ?>" value="<?php echo $valor[$i]['ComissaoServico'] ?>">
@@ -373,7 +373,7 @@
 																			</div>
 																		</div>
 																		<div class="col-md-2">
-																			<label for="ComissaoCashBack">CashBack<?php echo $i ?></label>
+																			<label for="ComissaoCashBack">CashBack <?php echo $i ?></label>
 																			<div class="input-group">
 																				<input type="text" class="form-control Valor text-right" id="ComissaoCashBack<?php echo $i ?>" maxlength="10" placeholder="0,00"
 																					name="ComissaoCashBack<?php echo $i ?>" value="<?php echo $valor[$i]['ComissaoCashBack'] ?>">

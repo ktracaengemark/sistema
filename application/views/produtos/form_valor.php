@@ -187,7 +187,7 @@
 																</div>
 																-->
 																<div class="col-md-2">
-																	<label for="ComissaoVenda">ComissaoVenda</label>
+																	<label for="ComissaoVenda">Comissao Vendedor</label>
 																	<div class="input-group">
 																		<?php if ($metodo == 6) { ?>
 																			<input type="text" class="form-control Valor text-right" readonly="" value="<?php echo $_SESSION['Valor']['ComissaoVenda'] ?>">
@@ -199,7 +199,7 @@
 																	</div>
 																</div>
 																<div class="col-md-2">
-																	<label for="ComissaoServico">ComissaoServico</label>
+																	<label for="ComissaoServico">Comissao Associado</label>
 																	<div class="input-group">
 																		<?php if ($metodo == 6) { ?>
 																			<input type="text" class="form-control Valor text-right" readonly="" value="<?php echo $_SESSION['Valor']['ComissaoServico'] ?>">
