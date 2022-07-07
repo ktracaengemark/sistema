@@ -138,10 +138,10 @@
 							
 							<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
 								
-								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?>| Sair
+								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?>| Admin
 							<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
 								<span class="glyphicon glyphicon-warning-sign"></span>Renovar ! 
-								<span class="glyphicon glyphicon-home"></span>Sair
+								<span class="glyphicon glyphicon-home"></span>Admin
 							<?php } else {?>
 								<span class="glyphicon glyphicon-home"></span> enkontraki|Sair
 							<?php } ?>

@@ -1,14 +1,14 @@
-<?php (isset($contatorevendedor)) ? $query = $contatorevendedor : FALSE; ?>
+<?php (isset($contatorevendedor)) ? $contato = $contatorevendedor : FALSE; ?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="btn-group" role="group">
 			<a class="btn btn-sm btn-primary active">
-				<span class="glyphicon glyphicon-sort-by-attributes"></span> <?php echo '<b>Total:</b> ' . $query->num_rows() ?>
+				<span class="glyphicon glyphicon-sort-by-attributes"></span> <?php echo '<b>Total:</b> ' . $contato->num_rows() ?>
 			</a>
 		</div>
 
 		<div class="btn-group" role="group">
-			<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>Contatorevendedor/cadastrar" role="button">
+			<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>Contatousuario2/cadastrar/<?php echo $query['idSis_Usuario'];?>" role="button">
 				<span class="glyphicon glyphicon-plus"></span> Novo Contato Revendedor
 			</a>
 		</div>
@@ -16,7 +16,7 @@
 </div>
 
 <?php
-foreach ($query->result_array() as $row) {
+foreach ($contato->result_array() as $row) {
 
     if ($row['StatusVida'] == 'O') {
         $row['class'] = 'danger';
@@ -45,7 +45,7 @@ foreach ($query->result_array() as $row) {
 
         <div class="bs-callout bs-callout-<?php echo $row['class']; ?>" id=callout-overview-not-both>
 
-            <a class="btn btn-<?php echo $row['class']; ?>" href="<?php echo base_url() . 'Contatorevendedor/alterar/' . $row['idApp_ContatoUsuario'] ?>" role="button">
+            <a class="btn btn-<?php echo $row['class']; ?>" href="<?php echo base_url() . 'Contatousuario2/alterar/' . $row['idApp_ContatoUsuario'] ?>" role="button">
                 <span class="glyphicon glyphicon-edit"></span> Editar Dados
             </a>
 

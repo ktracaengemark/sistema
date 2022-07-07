@@ -204,7 +204,7 @@
 								<?php
 								if (!$list) {
 								?>
-									<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>Contatorevendedor/cadastrar/<?php echo $_SESSION['Usuario']['idSis_Usuario'];?>" role="button"> 
+									<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>Contatousuario2/cadastrar/<?php echo $query['idSis_Usuario'];?>" role="button"> 
 										<span class="glyphicon glyphicon-plus"></span> Novo Contato Revendedor
 									</a>
 									<br><br>

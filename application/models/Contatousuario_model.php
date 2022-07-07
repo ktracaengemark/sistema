@@ -44,6 +44,25 @@ class Contatousuario_model extends CI_Model {
         }
     }
 
+    public function get_contatousuario2($data) {
+        $query = $this->db->query(
+			'SELECT
+				* 
+			FROM 
+				App_ContatoUsuario 
+			WHERE 
+				idApp_ContatoUsuario = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['Empresa']['idSis_Empresa'] . ''
+		);
+
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
+    }
+
     public function update_contatousuario($data, $id) {
 
         unset($data['Id']);

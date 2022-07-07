@@ -20,7 +20,6 @@ class Contatousuario2 extends CI_Controller {
         $this->load->view('basico/header');
         $this->load->view('basico/nav_principal');
 
-        #$this->load->view('contatousuario/nav_secundario');
     }
 
     public function index() {
@@ -55,9 +54,7 @@ class Contatousuario2 extends CI_Controller {
 			
 		}else{
 				
-			$data['query'] = quotes_to_entities($this->input->post(array(
-				//'idApp_ContatoUsuario',
-				//'idSis_Empresa',			
+			$data['query'] = quotes_to_entities($this->input->post(array(		
 				'NomeContatoUsuario',
 				'StatusVida',
 				'Ativo',
@@ -66,29 +63,28 @@ class Contatousuario2 extends CI_Controller {
 				'Relacao',
 				'TelefoneContatoUsuario',
 				'Obs',
-				//'idSis_Usuario',
 				'QuemCad',
 			), TRUE));
 
 			if ($idSis_Usuario) {
 				
-				$_SESSION['QueryUsuario'] = $data['usuario'] = $this->Usuario_model->get_usuario_verificacao_admin($idSis_Usuario);
+				$_SESSION['Revendedor'] = $data['revendedor'] = $this->Usuario_model->get_revendedor($idSis_Usuario);
 
-				if($data['usuario'] === FALSE){
+				if($data['revendedor'] === FALSE){
 					
-					unset($_SESSION['QueryUsuario']);
+					unset($_SESSION['Revendedor']);
 					$data['msg'] = '?m=3';
-					redirect(base_url() . 'acessoempresa' . $data['msg']);
+					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
 					
 				}
 			}
 
-			if(!$_SESSION['QueryUsuario']){
+			if(!$_SESSION['Revendedor']){
 				
-				unset($_SESSION['QueryUsuario']);
+				unset($_SESSION['Revendedor']);
 				$data['msg'] = '?m=3';
-				redirect(base_url() . 'acessoempresa' . $data['msg']);
+				redirect(base_url() . 'acesso' . $data['msg']);
 				exit();
 				
 			} else {
@@ -100,14 +96,14 @@ class Contatousuario2 extends CI_Controller {
 				$data['select']['Relacao'] = $this->Relacao_model->select_relacao();
 				$data['select']['Ativo'] = $this->Basico_model->select_status_sn();
 				
-				$data['titulo'] = 'Cadastrar Contato';
-				$data['form_open_path'] = 'contatousuario/cadastrar';
+				$data['titulo'] = 'Cadastrar Contato do Revendedor: ' . $_SESSION['Revendedor']['Nome'];
+				$data['form_open_path'] = 'contatousuario2/cadastrar';
 				$data['readonly'] = '';
 				$data['disabled'] = '';
 				$data['panel'] = 'primary';
 				$data['metodo'] = 1;
 
-				$data['nav_secundario'] = $this->load->view('usuario/nav_secundario', $data, TRUE);
+				$data['nav_secundario'] = $this->load->view('usuario/nav_secundario2', $data, TRUE);
 				
 				$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
@@ -119,7 +115,7 @@ class Contatousuario2 extends CI_Controller {
 				
 				#run form validation
 				if ($this->form_validation->run() === FALSE) {
-					$this->load->view('contatousuario/form_contatousuario', $data);
+					$this->load->view('contatousuario/form_contatousuario2', $data);
 				} else {
 
 					if($this->Basico_model->get_dt_validade() === FALSE){
@@ -134,10 +130,10 @@ class Contatousuario2 extends CI_Controller {
 							$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
 						}
 						$data['query']['Obs'] = nl2br($data['query']['Obs']);
-						$data['query']['idSis_Empresa'] = $_SESSION['AdminEmpresa']['idSis_Empresa'];
+						$data['query']['idSis_Empresa'] = $_SESSION['Empresa']['idSis_Empresa'];
 						$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 						$data['query']['QuemCad'] = $_SESSION['log']['idSis_Usuario'];
-						$data['query']['idSis_Usuario'] = $_SESSION['QueryUsuario']['idSis_Usuario'];
+						$data['query']['idSis_Usuario'] = $_SESSION['Revendedor']['idSis_Usuario'];
 						$data['campos'] = array_keys($data['query']);
 						$data['anterior'] = array();
 
@@ -147,15 +143,15 @@ class Contatousuario2 extends CI_Controller {
 							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 							$this->basico->erro($msg);
-							$this->load->view('contatousuario/form_contatousuario', $data);
+							$this->load->view('contatousuario/form_contatousuario2', $data);
 						} else {
 
 							$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_ContatoUsuario'], FALSE);
 							$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_ContatoUsuario', 'CREATE', $data['auditoriaitem']);
 							$data['msg'] = '?m=1';
 
-							redirect(base_url() . 'contatousuario/pesquisar/' . $_SESSION['QueryUsuario']['idSis_Usuario'] . $data['msg']);
-							#redirect(base_url() . 'usuario/prontuario/' . $_SESSION['QueryUsuario']['idSis_Usuario'] . $data['msg']);
+							//redirect(base_url() . 'contatousuario/pesquisar/' . $_SESSION['Revendedor']['idSis_Usuario'] . $data['msg']);
+							redirect(base_url() . 'revendedor/prontuario/' . $_SESSION['Revendedor']['idSis_Usuario'] . $data['msg']);
 							exit();
 						}
 					}
@@ -174,7 +170,7 @@ class Contatousuario2 extends CI_Controller {
         else
             $data['msg'] = '';
 
-		if (!$_SESSION['AdminEmpresa']['idSis_Empresa']) {
+		if ($_SESSION['Empresa']['idSis_Empresa'] == 5) {
 				
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'login/sair' . $data['msg']);
@@ -184,7 +180,6 @@ class Contatousuario2 extends CI_Controller {
 			
 			$data['query'] = $this->input->post(array(
 				'idApp_ContatoUsuario',
-				//'idSis_Empresa',
 				'NomeContatoUsuario',
 				'StatusVida',
 				'DataNascimento',
@@ -192,20 +187,18 @@ class Contatousuario2 extends CI_Controller {
 				'Relacao',
 				'TelefoneContatoUsuario',
 				'Obs',
-				//'idSis_Usuario',
 				'Ativo',
-					), TRUE);
+			), TRUE);
 
 			if ($id) {
 				
-				$_SESSION['ContatoUsuario'] = $data['query'] = $this->Contatousuario_model->get_contatousuario($id);
+				$_SESSION['ContatoUsuario'] = $data['query'] = $this->Contatousuario_model->get_contatousuario2($id);
 				
 				if($data['query'] === FALSE){
 					
 					unset($_SESSION['ContatoUsuario']);
-					unset($_SESSION['QueryUsuario']);
 					$data['msg'] = '?m=3';
-					redirect(base_url() . 'acessoempresa' . $data['msg']);
+					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
 					
 				} else {				
@@ -218,19 +211,19 @@ class Contatousuario2 extends CI_Controller {
 				unset($_SESSION['ContatoUsuario']);
 				unset($_SESSION['QueryUsuario']);
 				$data['msg'] = '?m=3';
-				redirect(base_url() . 'acessoempresa' . $data['msg']);
+				redirect(base_url() . 'acesso' . $data['msg']);
 				exit();
 				
 			} else {
 				
-				$_SESSION['QueryUsuario'] = $data['usuario'] = $this->Usuario_model->get_usuario_verificacao_admin($_SESSION['ContatoUsuario']['idSis_Usuario']);
+				$_SESSION['Revendedor'] = $data['revendedor'] = $this->Usuario_model->get_revendedor($_SESSION['ContatoUsuario']['idSis_Usuario']);
 
-				if($data['usuario'] === FALSE){
+				if($data['revendedor'] === FALSE){
 					
 					unset($_SESSION['ContatoUsuario']);
-					unset($_SESSION['QueryUsuario']);
+					unset($_SESSION['Revendedor']);
 					$data['msg'] = '?m=3';
-					redirect(base_url() . 'acessoempresa' . $data['msg']);
+					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
 					
 				}else{
@@ -240,14 +233,14 @@ class Contatousuario2 extends CI_Controller {
 					$data['select']['Relacao'] = $this->Relacao_model->select_relacao();
 					$data['select']['Ativo'] = $this->Basico_model->select_status_sn();
 					
-					$data['titulo'] = 'Editar Dados';
-					$data['form_open_path'] = 'contatousuario/alterar';
+					$data['titulo'] = 'Editar Contato do Revendedor: ' . $_SESSION['Revendedor']['Nome'];
+					$data['form_open_path'] = 'contatousuario2/alterar';
 					$data['readonly'] = '';
 					$data['disabled'] = '';
 					$data['panel'] = 'primary';
 					$data['metodo'] = 2;
 
-					$data['nav_secundario'] = $this->load->view('usuario/nav_secundario', $data, TRUE);
+					$data['nav_secundario'] = $this->load->view('usuario/nav_secundario2', $data, TRUE);
 
 					$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
@@ -259,7 +252,7 @@ class Contatousuario2 extends CI_Controller {
 					
 					#run form validation
 					if ($this->form_validation->run() === FALSE) {
-						$this->load->view('contatousuario/form_contatousuario', $data);
+						$this->load->view('contatousuario/form_contatousuario2', $data);
 					} else {
 
 						if($this->Basico_model->get_dt_validade() === FALSE){
@@ -276,14 +269,14 @@ class Contatousuario2 extends CI_Controller {
 								$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
 							}
 
-							$data['anterior'] = $this->Contatousuario_model->get_contatousuario($data['query']['idApp_ContatoUsuario']);
+							$data['anterior'] = $this->Contatousuario_model->get_contatousuario2($data['query']['idApp_ContatoUsuario']);
 							$data['campos'] = array_keys($data['query']);
 
 							$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_ContatoUsuario'], TRUE);
 
 							if ($data['auditoriaitem'] && $this->Contatousuario_model->update_contatousuario($data['query'], $data['query']['idApp_ContatoUsuario']) === FALSE) {
 								$data['msg'] = '?m=1';
-								redirect(base_url() . 'usuario/prontuario/' . $_SESSION['QueryUsuario']['idSis_Usuario'] . $data['msg']);
+								redirect(base_url() . 'revendedor/prontuario/' . $_SESSION['Revendedor']['idSis_Usuario'] . $data['msg']);
 								exit();
 							} else {
 
@@ -294,73 +287,13 @@ class Contatousuario2 extends CI_Controller {
 									$data['msg'] = '?m=1';
 								}
 
-								redirect(base_url() . 'contatousuario/pesquisar/' . $_SESSION['QueryUsuario']['idSis_Usuario'] . $data['msg']);
+								redirect(base_url() . 'revendedor/prontuario/' . $_SESSION['Revendedor']['idSis_Usuario'] . $data['msg']);
 								exit();
 							}
 						}
 					}
 				}
 			}	
-		}
-        $this->load->view('basico/footer');
-    }
-	
-    public function pesquisar($id = FALSE) {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-
-		if (!$_SESSION['AdminEmpresa']['idSis_Empresa']) {
-				
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'login/sair' . $data['msg']);
-			exit();
-			
-		}else{
-						
-			if (!$id) {
-					
-				$data['msg'] = '?m=3';
-				redirect(base_url() . 'acessoempresa' . $data['msg']);
-				exit();
-				
-			}else{		
-				
-				$_SESSION['QueryUsuario'] = $data['query'] = $this->Usuario_model->get_usuario_verificacao_admin($id, TRUE);
-
-				if($data['query'] === FALSE){
-					
-					unset($_SESSION['QueryUsuario']);
-					$data['msg'] = '?m=3';
-					redirect(base_url() . 'acessoempresa' . $data['msg']);
-					exit();
-					
-				} else {
-
-					$data['contatousuario'] = $this->Contatousuario_model->lista_contatousuario($id, TRUE);
-					/*
-					  echo "<pre>";
-					  print_r($data['contatousuario']);
-					  echo "</pre>";
-					  exit();
-					 */
-					if (!$data['contatousuario'])
-						$data['list'] = FALSE;
-					else
-						$data['list'] = $this->load->view('contatousuario/list_contatousuario', $data, TRUE);
-					
-					
-					$data['titulo'] = 'Contatos';
-					
-					$data['nav_secundario'] = $this->load->view('usuario/nav_secundario', $data, TRUE);
-
-					$this->load->view('contatousuario/tela_contatousuario', $data);
-				}
-			}
 		}
         $this->load->view('basico/footer');
     }
@@ -374,7 +307,7 @@ class Contatousuario2 extends CI_Controller {
         else
             $data['msg'] = '';
 
-		if (!$_SESSION['AdminEmpresa']['idSis_Empresa']) {
+		if (!$_SESSION['Empresa']['idSis_Empresa']) {
 				
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'login/sair' . $data['msg']);
@@ -385,38 +318,37 @@ class Contatousuario2 extends CI_Controller {
 			if (!$id) {
 					
 				$data['msg'] = '?m=3';
-				redirect(base_url() . 'acessoempresa' . $data['msg']);
+				redirect(base_url() . 'acesso' . $data['msg']);
 				exit();
 				
 			}else{		
 
-				$_SESSION['ContatoUsuario'] = $data['query'] = $this->Contatousuario_model->get_contatousuario($id);
+				$_SESSION['ContatoUsuario'] = $data['query'] = $this->Contatousuario_model->get_contatousuario2($id);
 				
 				if($data['query'] === FALSE){
 					
 					unset($_SESSION['ContatoUsuario']);
-					unset($_SESSION['QueryUsuario']);
 					$data['msg'] = '?m=3';
-					redirect(base_url() . 'acessoempresa' . $data['msg']);
+					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
 					
 				} else {				
 
-					$_SESSION['QueryUsuario'] = $data['usuario'] = $this->Usuario_model->get_usuario_verificacao_admin($_SESSION['ContatoUsuario']['idSis_Usuario']);
+					$_SESSION['Revendedor'] = $data['revendedor'] = $this->Usuario_model->get_revendedor($_SESSION['ContatoUsuario']['idSis_Usuario']);
 
-					if($data['usuario'] === FALSE){
+					if($data['revendedor'] === FALSE){
 						
 						unset($_SESSION['ContatoUsuario']);
-						unset($_SESSION['QueryUsuario']);
+						unset($_SESSION['Revendedor']);
 						$data['msg'] = '?m=3';
-						redirect(base_url() . 'acessoempresa' . $data['msg']);
+						redirect(base_url() . 'acesso' . $data['msg']);
 						exit();
 						
 					}else{
 
 						if($this->Basico_model->get_dt_validade() === FALSE){
 							$data['msg'] = '?m=3';
-							redirect(base_url() . 'acessoempresa' . $data['msg']);
+							redirect(base_url() . 'acesso' . $data['msg']);
 						} else {
 
 							$this->Contatousuario_model->delete_contatousuario($id);
@@ -424,7 +356,7 @@ class Contatousuario2 extends CI_Controller {
 							unset($_SESSION['ContatoUsuario']);
 							$data['msg'] = '?m=1';
 
-							redirect(base_url() . 'contatousuario/pesquisar/' . $_SESSION['QueryUsuario']['idSis_Usuario'] . $data['msg']);
+							redirect(base_url() . 'revendedor/prontuario/' . $_SESSION['Revendedor']['idSis_Usuario'] . $data['msg']);
 							exit();
 						}
 					}
