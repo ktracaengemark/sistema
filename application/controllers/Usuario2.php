@@ -86,9 +86,6 @@ class Usuario2 extends CI_Controller {
 					$data['panel'] = 'primary';
 					$data['metodo'] = 4;
 
-					$_SESSION['log']['idSis_Usuario'] = $data['resumo']['idSis_Usuario'] = $data['query']['idSis_Usuario'];
-					$data['resumo']['Nome'] = $data['query']['Nome'];
-
 					$data['query']['Idade'] = $this->basico->calcula_idade($data['query']['DataNascimento']);
 					$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'barras');
 
@@ -124,7 +121,8 @@ class Usuario2 extends CI_Controller {
 					else
 						$data['list'] = $this->load->view('usuario/list_contatousuario', $data, TRUE);
 
-					$data['nav_secundario'] = $this->load->view('usuario/nav_secundario', $data, TRUE);
+					$data['nav_secundario'] = $this->load->view('usuario/nav_secundario2', $data, TRUE);
+					
 					$this->load->view('usuario/tela_usuario2', $data);
 				}
 			}
@@ -151,9 +149,7 @@ class Usuario2 extends CI_Controller {
 		}else{
 			
 			$data['query'] = $this->input->post(array(
-				'idSis_Empresa',
 				'idSis_Usuario',
-				//'Nome',
 				'Banco',
 				'Agencia',
 				'Conta',
@@ -191,8 +187,6 @@ class Usuario2 extends CI_Controller {
 					'a'=>'a', 'î'=>'i', 'â'=>'a', '?'=>'s', '?'=>'t', 'A'=>'A', 'Î'=>'I', 'Â'=>'A', '?'=>'S', '?'=>'T',
 				);
 
-				//$nomeusuario1 = preg_replace("/[^a-zA-Z]/", " ", strtr($data['query']['Nome'], $caracteres_sem_acento));		
-
 				$data['titulo'] = 'Editar Conta';
 				$data['form_open_path'] = 'usuario2/alterarconta';
 				$data['readonly'] = '';
@@ -205,23 +199,19 @@ class Usuario2 extends CI_Controller {
 				else
 					$data['collapse'] = 'class="collapse"';
 
-				$data['nav_secundario'] = $this->load->view('usuario/nav_secundario', $data, TRUE);
+				$data['nav_secundario'] = $this->load->view('usuario/nav_secundario2', $data, TRUE);
 
 				$data['sidebar'] = 'col-sm-3 col-md-2 sidebar';
 				$data['main'] = 'col-sm-7 col-sm-offset-3 col-md-8 col-md-offset-2 main';
 
 				$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-				//$this->form_validation->set_rules('Nome', 'Nome do Usuário', 'required|trim');
+				
 				$this->form_validation->set_rules('Conta', 'Chave Pix / Conta', 'trim');
 
 				#run form validation
 				if ($this->form_validation->run() === FALSE) {
 					$this->load->view('usuario/form_usuarioconta', $data);
 				} else {
-
-					//$data['query']['Nome'] = trim(mb_strtoupper($nomeusuario1, 'ISO-8859-1'));
-
 
 					$data['anterior'] = $this->Usuario_model->get_usuario_verificacao($data['query']['idSis_Usuario']);
 					$data['campos'] = array_keys($data['query']);
@@ -308,6 +298,8 @@ class Usuario2 extends CI_Controller {
 				$data['panel'] = 'primary';
 				$data['metodo'] = 2;
 
+				$data['nav_secundario'] = $this->load->view('usuario/nav_secundario2', $data, TRUE);
+				
 				$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
 				if (isset($_FILES['Arquivo']) && $_FILES['Arquivo']['name']) {
@@ -440,6 +432,65 @@ class Usuario2 extends CI_Controller {
 			
 		}	
 		$this->load->view('basico/footer');
+    }
+	
+    public function revendedores($id = FALSE) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+		if ($_SESSION['Empresa']['idSis_Empresa'] == 5) {
+				
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'login/sair' . $data['msg']);
+			exit();
+			
+		}else{
+						
+			if (!$id) {
+					
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'acesso' . $data['msg']);
+				exit();
+				
+			}else{		
+				
+				$data['query'] = $this->Usuario_model->get_usuario_verificacao($id, TRUE);
+
+				if($data['query'] === FALSE){
+					
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				} else {
+
+					$data['revendedor'] = $this->Usuario_model->lista_revendedor($id, TRUE);
+					/*
+					  echo "<pre>";
+					  print_r($data['revendedor']);
+					  echo "</pre>";
+					  exit();
+					 */
+					if (!$data['revendedor'])
+						$data['list'] = FALSE;
+					else
+						$data['list'] = $this->load->view('usuario/list_revendedores', $data, TRUE);
+					
+					
+					$data['titulo'] = 'Revendedor';
+					
+					$data['nav_secundario'] = $this->load->view('usuario/nav_secundario2', $data, TRUE);
+
+					$this->load->view('usuario/tela_revendedores', $data);
+				}
+			}
+		}
+        $this->load->view('basico/footer');
     }
 
     function get_usuario($data) {

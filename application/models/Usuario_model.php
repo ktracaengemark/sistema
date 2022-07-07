@@ -123,6 +123,30 @@ class Usuario_model extends CI_Model {
         }
 
     }
+		
+    public function get_revendedor($data) {
+        $query = $this->db->query(
+			'SELECT 
+				U.*,
+				A.idApp_Agenda
+			FROM 
+				Sis_Usuario AS U
+				 LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = U.idSis_Associado
+				 LEFT JOIN App_Agenda AS A ON A.idSis_Associado = ASS.idSis_Associado
+			WHERE 
+				U.idSis_Usuario = ' . $data . ' AND
+				U.QuemCad = ' . $_SESSION['log']['idSis_Usuario'] . ' AND
+				U.idSis_Empresa = ' . $_SESSION['Empresa']['idSis_Empresa'] . ''
+		);
+
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
+
+    }
 	
     public function get_usuario($data) {
         $query = $this->db->query(
@@ -438,6 +462,37 @@ class Usuario_model extends CI_Model {
         }
     }
 
+    public function lista_revendedor($data, $x) {
+
+        $query = $this->db->query('SELECT * '
+                . 'FROM Sis_Usuario WHERE '
+                . 'Nivel = 2 AND '
+                . 'QuemCad = ' . $data . ' '
+                . 'ORDER BY Nome ASC ');
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+         */
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+            if ($x === FALSE) {
+                return TRUE;
+            } else {
+                foreach ($query->result() as $row) {
+                    $row->Idade = $this->basico->calcula_idade($row->DataNascimento);
+                    $row->DataNascimento = $this->basico->mascara_data($row->DataNascimento, 'barras');
+                    $row->Sexo = $this->Basico_model->get_sexo($row->Sexo);
+                }
+
+                return $query;
+            }
+        }
+    }
+   
 	public function select_usuario($data = FALSE) {
 		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'P.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
         if ($data === TRUE) {

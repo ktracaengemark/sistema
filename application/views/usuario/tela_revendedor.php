@@ -1,26 +1,29 @@
 <?php if ($msg) echo $msg; ?>
-<?php if ( !isset($evento) && isset($_SESSION['QueryUsuario'])) { ?>
+<?php if ( !isset($evento) && isset($_SESSION['Usuario'])) { ?>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
 				<?php if ($nav_secundario) echo $nav_secundario; ?>
 				<div class="row">
-					<div class="col-md-offset-1 col-md-10">	
+					<div class="col-sm-offset-1 col-md-10">
 						<div class="panel panel-primary">
 							<div class="panel-heading">
 								<?php echo $titulo; ?>
-							</div>	
+								<a class="btn btn-sm btn-info" href="<?php echo base_url() ?>revendedor/alterar/<?php echo $query['idSis_Usuario'];?>" role="button"> 
+									<span class="glyphicon glyphicon-edit"></span> Editar. Revendedor
+								</a>
+							</div>
 							<div class="panel-body">
 								<div style="overflow: auto; height: auto; ">
 									<div class="form-group">	
 										<div class="row">
 											<div class=" col-md-6">	
 												<div class="row">	
-													<div class="col-sm-offset-2 col-md-10 " align="left">
-														<a href="<?php echo base_url() . 'usuario/alterarlogo/' . $_SESSION['QueryUsuario']['idSis_Usuario']; ?>">
-															<img alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['AdminEmpresa']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['QueryUsuario']['Arquivo'] . ''; ?>" 
+													<div class="col-sm-offset-2 col-md-10 " align="left"> 
+														<a href="<?php echo base_url() . 'revendedor/alterarlogo/' . $query['idSis_Usuario']; ?>">
+															<img alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/' . $query['Arquivo'] . ''; ?>" 
 															class="img-circle img-responsive" width='200'>
-														</a>
+														</a>	
 													</div>
 												</div>		
 											</div>
@@ -34,7 +37,7 @@
 
 														echo '
 														<tr>
-															<td class="col-md-3 col-lg-3"><span class="glyphicon glyphicon-user"></span> Usu·rio:</td>
+															<td class="col-md-3 col-lg-3"><span class="glyphicon glyphicon-user"></span> Usu√°rio:</td>
 															<td>' . $query['Nome'] . '</td>
 														</tr>
 														';
@@ -116,7 +119,7 @@
 
 														echo '
 														<tr>
-															<td><span class="glyphicon glyphicon-alert"></span> NÌvel:</td>
+															<td><span class="glyphicon glyphicon-alert"></span> N√≠vel:</td>
 															<td>' . $query['Permissao'] . '</td>
 														</tr>
 														';
@@ -127,19 +130,8 @@
 
 														echo '
 														<tr>
-															<td><span class="glyphicon glyphicon-alert"></span> FunÁ„o:</td>
+															<td><span class="glyphicon glyphicon-alert"></span> Fun√ß√£o:</td>
 															<td>' . $query['Funcao'] . '</td>
-														</tr>
-														';
-
-														}
-
-														if ($query['Comissao']) {
-
-														echo '
-														<tr>
-															<td><span class="glyphicon glyphicon-usd"></span> Comissao:</td>
-															<td>' . $query['Comissao'] . ' %</td>
 														</tr>
 														';
 
@@ -166,20 +158,67 @@
 														';
 
 														}
+														
+														if ($query['Banco']) {
+
+														echo '
+														<tr>
+															<td><span class="glyphicon glyphicon-pencil"></span> Banco</td>
+															<td>' . $query['Banco'] . '</td>
+														</tr>
+														';
+
+														}
+														
+														if ($query['Agencia']) {
+
+														echo '
+														<tr>
+															<td><span class="glyphicon glyphicon-pencil"></span> Agencia</td>
+															<td>' . $query['Agencia'] . '</td>
+														</tr>
+														';
+
+														}
+														
+														if ($query['Conta']) {
+
+														echo '
+														<tr>
+															<td><span class="glyphicon glyphicon-pencil"></span> Conta</td>
+															<td>' . $query['Conta'] . '</td>
+														</tr>
+														';
+
+														}
 
 														?>
 
 													</tbody>
 												</table>
 											</div>
-										</div>
+										</div>	
 									</div>
 								</div>
+								<br>
+								<?php
+								if (!$list) {
+								?>
+									<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>Contatorevendedor/cadastrar/<?php echo $_SESSION['Usuario']['idSis_Usuario'];?>" role="button"> 
+										<span class="glyphicon glyphicon-plus"></span> Novo Contato Revendedor
+									</a>
+									<br><br>
+									<div class="alert alert-info" role="alert"><b>Nenhum Cad.</b></div>
+								<?php
+								} else {
+									echo $list;
+								}
+								?>
 							</div>
 						</div>
-					</div>
-				</div>
+					</div>	
+				</div>	
 			</div>
-		</div>
+		</div>	
 	</div>
-<?php } ?>	
+<?php } ?>

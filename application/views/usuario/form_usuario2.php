@@ -1,24 +1,20 @@
-<?php if (isset($msg)) echo $msg; ?>
-<?php if ( !isset($evento) && isset($_SESSION['AdminEmpresa'])) { ?>
+<?php if ( !isset($evento) && isset($_SESSION['Empresa']) && isset($_SESSION['Usuario'])) { ?>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-offset-1 col-md-10">
-			<?php echo form_open_multipart($form_open_path); ?>
-					
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<?php echo $titulo; ?>
-					</div>
-					<div class="panel-body">
-						
-						<div class="row">
-							<div class="col-md-12">	
-								
-								<?php #echo validation_errors(); ?>
-
+			<div class="col-md-12">
+				<?php if ($nav_secundario) echo $nav_secundario; ?>
+				<div class="row">
+					<div class="col-md-offset-1 col-md-10">	
+						<div class="panel panel-<?php echo $panel; ?>">
+							<div class="panel-heading">
+								<?php echo $titulo; ?>
+							</div>
+							<div class="panel-body">
+								<?php if (isset($msg)) echo $msg; ?>
+								<?php echo validation_errors(); ?>
+								<?php echo form_open_multipart($form_open_path); ?>
 								<div class="panel panel-info">
 									<div class="panel-heading">
-										
 										<div class="form-group">
 											<h3 class="text-left">Dados do Usuário  </h3>
 											<div class="row">
@@ -59,21 +55,6 @@
 										</div>
 										<div class="form-group">
 											<div class="row">
-												<div class="col-md-3">	
-													<label for="Nivel">Nivel:</label>
-													<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?> readonly="" id="Nivel" name="Nivel">
-														<?php
-														foreach ($select['Nivel'] as $key => $row) {
-															if (!$query['Nivel']) $query['Nivel'] = '1';
-															if ($query['Nivel'] == $key) {
-																echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-															} else {
-																echo '<option value="' . $key . '">' . $row . '</option>';
-															}
-														}
-														?>
-													</select>
-												</div>
 												<div class="col-md-3">
 													<div class="row">
 														<div class="col-md-12 text-left">	
@@ -145,63 +126,6 @@
 														</div>
 													</div>
 												</div>
-												<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 mb-3">
-													<label for="Comissao">Comissão:</label><br>
-													<div class="input-group" id="txtHint">
-														<span class="input-group-addon ">R$</span>
-														<input type="text" class="form-control Valor" id="Comissao" maxlength="10" placeholder="0,00" 
-															  name="Comissao" value="<?php echo $query['Comissao']; ?>">
-													</div>
-												</div>											
-												<div class="col-md-3">
-													<label for="Permissao">Acesso às Agendas:*</label>
-													<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
-															id="Permissao" name="Permissao">
-														<option value="">-- Selecione uma Permissao --</option>
-														<?php
-														foreach ($select['Permissao'] as $key => $row) {
-															if ($query['Permissao'] == $key) {
-																echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-															} else {
-																echo '<option value="' . $key . '">' . $row . '</option>';
-															}
-														}
-														?>   
-													</select>          
-													<?php echo form_error('Permissao'); ?>
-												</div>
-												<!--
-												<div class="col-md-2">
-													<label for="CompAgenda">Comp. Agenda?</label><br>
-													<div class="form-group">
-														<div class="btn-group" data-toggle="buttons">
-															<?php
-															/*
-															foreach ($select['CompAgenda'] as $key => $row) {
-																(!$query['CompAgenda']) ? $query['CompAgenda'] = 'N' : FALSE;
-
-																if ($query['CompAgenda'] == $key) {
-																	echo ''
-																	. '<label class="btn btn-warning active" name="radiobutton_Ativo" id="radiobutton_Ativo' . $key . '">'
-																	. '<input type="radio" name="CompAgenda" id="radiobutton" '
-																	. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																	. '</label>'
-																	;
-																} else {
-																	echo ''
-																	. '<label class="btn btn-default" name="radiobutton_Ativo" id="radiobutton_Ativo' . $key . '">'
-																	. '<input type="radio" name="CompAgenda" id="radiobutton" '
-																	. 'autocomplete="off" value="' . $key . '" >' . $row
-																	. '</label>'
-																	;
-																}
-															}
-															*/
-															?>
-														</div>
-													</div>
-												</div>
-												-->
 											</div>
 										</div>
 										<div class="form-group">
@@ -325,8 +249,7 @@
 											</div>
 											<!--
 											<div class="form-group">
-												<div class="row">		
-													
+												<div class="row">
 													<div class="col-md-3">
 														<label for="Usuario">Usuário:</label>
 														<input type="text" class="form-control" id="Usuario" maxlength="45" 
@@ -337,109 +260,107 @@
 												</div>
 											</div>
 											-->
-										</div>	
-
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="row">
-								<!--<input type="hidden" id="idSis_Empresa" name="idSis_Empresa" value="<?php #echo $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>">-->
-								<?php if ($metodo > 1) { ?>
-									<input type="hidden" name="idSis_Usuario" value="<?php echo $query['idSis_Usuario']; ?>">
-								<?php } ?>
-								<?php if ($metodo == 2) { ?>
+								<div class="form-group">
+									<div class="row">
+										<?php if ($metodo > 1) { ?>
+											<input type="hidden" name="idSis_Usuario" value="<?php echo $query['idSis_Usuario']; ?>">
+										<?php } ?>
+										<?php if ($metodo == 2) { ?>
 
-									<div class="col-md-6">
-										<button class="btn btn-sm btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
-											<span class="glyphicon glyphicon-save"></span> Salvar
-										</button>
+											<div class="col-md-6">
+												<button class="btn btn-sm btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
+													<span class="glyphicon glyphicon-save"></span> Salvar
+												</button>
+											</div>
+											<!--
+											<div class="col-md-6 text-right">
+												<button  type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
+													<span class="glyphicon glyphicon-trash"></span> Excluir
+												</button>
+											</div>
+											-->
+											<div class="modal fade bs-excluir-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header bg-danger">
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+															<h4 class="modal-title">Tem certeza que deseja excluir?</h4>
+														</div>
+														<div class="modal-body">
+															<p>Ao confirmar esta operação todos os dados serão excluídos permanentemente do sistema.
+																Esta operação é irreversível.</p>
+														</div>
+														<div class="modal-footer">
+															<div class="col-md-6 text-left">
+																<button type="button" class="btn btn-warning" data-dismiss="modal">
+																	<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
+																</button>
+															</div>
+															<div class="col-md-6 text-right">
+																<a class="btn btn-danger" href="<?php echo base_url() . 'usuario/excluir/' . $query['idSis_Usuario'] ?>" role="button">
+																	<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										<?php } elseif ($metodo == 3) { ?>
+											<div class="col-md-12 text-center">
+												<button class="btn btn-sm btn-danger" id="inputDb" data-loading-text="Aguarde..." name="submit" value="1" type="submit">
+													<span class="glyphicon glyphicon-trash"></span> Excluir
+												</button>
+												<button class="btn btn-sm btn-warning" id="inputDb" onClick="history.go(-1);
+														return true;">
+													<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
+												</button>
+											</div>
+										<?php } else { ?>
+											<div class="col-md-6">
+												<button class="btn btn-sm btn-primary" id="inputDb" data-loading-text="Aguarde..." name="submit" value="1" type="submit">
+													<span class="glyphicon glyphicon-save"></span> Salvar
+												</button>
+											</div>
+										<?php } ?>
 									</div>
-									<!--
-									<div class="col-md-6 text-right">
-										<button  type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
-											<span class="glyphicon glyphicon-trash"></span> Excluir
-										</button>
-									</div>
-									-->
-									<div class="modal fade bs-excluir-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+									<div id="msgCadSucesso" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
-												<div class="modal-header bg-danger">
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-													<h4 class="modal-title">Tem certeza que deseja excluir?</h4>
+												<div class="modal-header bg-success text-center">
+													<h4 class="modal-title" id="visulClienteModalLabel">Cadastrado com sucesso!</h4>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													  <span aria-hidden="true">&times;</span>
+													</button>
 												</div>
+												<!--
 												<div class="modal-body">
-													<p>Ao confirmar esta operação todos os dados serão excluídos permanentemente do sistema.
-														Esta operação é irreversível.</p>
+													Cliente cadastrado com sucesso!
 												</div>
+												-->
 												<div class="modal-footer">
-													<div class="col-md-6 text-left">
-														<button type="button" class="btn btn-warning" data-dismiss="modal">
-															<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
+													<div class="col-md-6">	
+														<button class="btn btn-success btn-block" name="botaoFechar2" id="botaoFechar2" onclick="DesabilitaBotaoFechar(this.name)" value="0" type="submit">
+															<span class="glyphicon glyphicon-filter"></span> Fechar
 														</button>
+														<div class="col-md-12 alert alert-warning aguardar2" role="alert" >
+															Aguarde um instante! Estamos processando sua solicitação!
+														</div>
 													</div>
-													<div class="col-md-6 text-right">
-														<a class="btn btn-danger" href="<?php echo base_url() . 'usuario/excluir/' . $query['idSis_Usuario'] ?>" role="button">
-															<span class="glyphicon glyphicon-trash"></span> Confirmar Exclusão
-														</a>
-													</div>
+													<!--<button type="button" class="btn btn-outline-info" data-dismiss="modal">Fechar</button>-->
 												</div>
 											</div>
-										</div>
-									</div>
-
-								<?php } elseif ($metodo == 3) { ?>
-									<div class="col-md-12 text-center">
-										<button class="btn btn-sm btn-danger" id="inputDb" data-loading-text="Aguarde..." name="submit" value="1" type="submit">
-											<span class="glyphicon glyphicon-trash"></span> Excluir
-										</button>
-										<button class="btn btn-sm btn-warning" id="inputDb" onClick="history.go(-1);
-												return true;">
-											<span class="glyphicon glyphicon-ban-circle"></span> Cancelar
-										</button>
-									</div>
-								<?php } else { ?>
-									<div class="col-md-6">
-										<button class="btn btn-sm btn-primary" id="inputDb" data-loading-text="Aguarde..." name="submit" value="1" type="submit">
-											<span class="glyphicon glyphicon-save"></span> Salvar
-										</button>
-									</div>
-								<?php } ?>
-							</div>
-							<div id="msgCadSucesso" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<div class="modal-header bg-success text-center">
-											<h4 class="modal-title" id="visulClienteModalLabel">Cadastrado com sucesso!</h4>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											  <span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<!--
-										<div class="modal-body">
-											Cliente cadastrado com sucesso!
-										</div>
-										-->
-										<div class="modal-footer">
-											<div class="col-md-6">	
-												<button class="btn btn-success btn-block" name="botaoFechar2" id="botaoFechar2" onclick="DesabilitaBotaoFechar(this.name)" value="0" type="submit">
-													<span class="glyphicon glyphicon-filter"></span> Fechar
-												</button>
-												<div class="col-md-12 alert alert-warning aguardar2" role="alert" >
-													Aguarde um instante! Estamos processando sua solicitação!
-												</div>
-											</div>
-											<!--<button type="button" class="btn btn-outline-info" data-dismiss="modal">Fechar</button>-->
 										</div>
 									</div>
 								</div>
-							</div>
-						</div>
+								</form>	
+							</div>	
+						</div>	
 					</div>	
-				</div>		
-			</form>
+				</div>	
 			</div>
 		</div>	
 	</div>

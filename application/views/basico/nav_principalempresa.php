@@ -1,7 +1,6 @@
 <nav class="navbar navbar-inverse navbar-fixed-top " role="banner">
-	<div class="col-lg-1 col-md-1">	
-	</div>
-	<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+
+	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 		<div class="navbar-header ">
 			<button type="button" class="navbar-toggle " data-toggle="collapse" data-target="#myNavbar1">
 				<span class="sr-only">MENU</span>
@@ -13,67 +12,74 @@
 				<?php #echo $_SESSION['log']['NomeEmpresa2']; ?>.
 			</a>
 			<a class="navbar-brand" href="https://www.enkontraki.com"> Melhor loja</a>-->
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-8 btn-menu btn-group ">	
-				<button type="button" class="btn btn-sm btn-default btn-block dropdown-toggle" data-toggle="dropdown">
-					<span class="glyphicon glyphicon-home"></span>
+
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-8 btn-menu btn-group ">
+				<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
+					<a type="button" class="btn btn-secondary btn-sm btn-default" href="<?php echo base_url() . 'empresa/prontuario/' . $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>" role="button">
+						<span class="glyphicon glyphicon-home"></span>
 						<strong><?php echo $_SESSION['AdminEmpresa']['NomeEmpresa']; ?></strong>
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">							
-					<li>
-						<a href="<?php echo base_url() ?>acessoempresa">
-							<span class="glyphicon glyphicon-home"></span> Perfil
-						</a>
-					</li>
-					<li role="separator" class="divider"></li>
-					<li>
-						<a <?php if (preg_match("/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
-							<a href="<?php echo base_url() . 'empresa/prontuario/' . $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>">
-								<span class="glyphicon glyphicon-file"> </span> Ver Dados da Empresa
-							</a>
-						</a>
-					</li>
-					<li role="separator" class="divider"></li>
-					<li>
-						<a <?php if (preg_match("/empresa\/alterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-							<a href="<?php echo base_url() . 'empresa/alterar/' . $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>">
-								<span class="glyphicon glyphicon-edit"></span> Editar Dados da Empresa
-							</a>
-						</a>
-					</li>
-					<li role="separator" class="divider"></li>
-					<li>
-						<a <?php if (preg_match("/empresa\/atendimento\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-							<a href="<?php echo base_url() . 'empresa/atendimento/' . $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>">
-								<span class="glyphicon glyphicon-edit"></span> Horario de Atendimento
-							</a>
-						</a>
-					</li>
-					<li role="separator" class="divider"></li>
-					<li>
-						<a <?php if (preg_match("/empresa\/alterarlogo\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-							<a href="<?php echo base_url() . 'empresa/alterarlogo/' . $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>">
-								<span class="glyphicon glyphicon-edit"></span> Alterar Logo
-							</a>
-						</a>
-					</li>
-					<li role="separator" class="divider"></li>
-					<li>
-						<a <?php if (preg_match("/empresa\/saudacao\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-							<a href="<?php echo base_url() . 'empresa/saudacao/' . $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>">
-								<span class="glyphicon glyphicon-file"></span> Saudacoes
-							</a>
-						</a>
-					</li>
-					<li role="separator" class="divider"></li>
-					<li>
-						<a <?php if (preg_match("/empresa\/pagseguro\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
-							<a href="<?php echo base_url() . 'empresa/pagseguro/' . $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>">
-								<span class="glyphicon glyphicon-file"></span> Pag Seguro
-							</a>
-						</a>
-					</li>								
-				</ul>
+					</a>
+					<!--<div class="btn-group" role="group">-->				
+						<button type="button" class="btn btn-secondary btn-sm btn-default  dropdown-toggle" data-toggle="dropdown">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">							
+							<li>
+								<a href="<?php echo base_url() ?>acessoempresa">
+									<span class="glyphicon glyphicon-home"></span> Perfil
+								</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li>
+								<a <?php if (preg_match("/prontuario\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; //(.)+\/prontuario/   ?>>
+									<a href="<?php echo base_url() . 'empresa/prontuario/' . $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>">
+										<span class="glyphicon glyphicon-file"> </span> Ver Dados da Empresa
+									</a>
+								</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li>
+								<a <?php if (preg_match("/empresa\/alterar\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+									<a href="<?php echo base_url() . 'empresa/alterar/' . $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>">
+										<span class="glyphicon glyphicon-edit"></span> Editar Dados da Empresa
+									</a>
+								</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li>
+								<a <?php if (preg_match("/empresa\/atendimento\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+									<a href="<?php echo base_url() . 'empresa/atendimento/' . $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>">
+										<span class="glyphicon glyphicon-edit"></span> Horario de Atendimento
+									</a>
+								</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li>
+								<a <?php if (preg_match("/empresa\/alterarlogo\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+									<a href="<?php echo base_url() . 'empresa/alterarlogo/' . $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>">
+										<span class="glyphicon glyphicon-edit"></span> Alterar Logo
+									</a>
+								</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li>
+								<a <?php if (preg_match("/empresa\/saudacao\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+									<a href="<?php echo base_url() . 'empresa/saudacao/' . $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>">
+										<span class="glyphicon glyphicon-file"></span> Saudacoes
+									</a>
+								</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li>
+								<a <?php if (preg_match("/empresa\/pagseguro\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
+									<a href="<?php echo base_url() . 'empresa/pagseguro/' . $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>">
+										<span class="glyphicon glyphicon-file"></span> Pag Seguro
+									</a>
+								</a>
+							</li>								
+						</ul>						
+					<!--</div>-->
+				</div>
 			</div>
 		</div>
 	</div>		
@@ -81,13 +87,18 @@
 		<div class="collapse navbar-collapse" id="myNavbar1">
 			<ul class="nav navbar-nav navbar-center">
 				<li class="btn-toolbar btn-sm navbar-form" role="toolbar" aria-label="...">
-					<div class="btn-group">
-						<button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown">
-							<span class="glyphicon glyphicon-user"></span> Colaboradores  <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">							
-							<li><a href="<?php echo base_url() ?>relatorioempresa/funcionario"><span class="glyphicon glyphicon-user"></span> Lista de Colaboradores </a></li>
-						</ul>
+					<div class="btn-group " role="group" aria-label="Grupo de botões com dropdown aninhado">
+						<a type="button" class="btn btn-secondary btn-sm btn-info " href="<?php echo base_url() ?>relatorioempresa/funcionario" role="button">
+							 Usuarios 
+						</a>
+						<!--<div class="btn-group" role="group">-->
+							<button type="button" class="btn btn-sm btn-info  dropdown-toggle" data-toggle="dropdown">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">							
+								<li><a href="<?php echo base_url() ?>relatorioempresa/funcionario"><span class="glyphicon glyphicon-user"></span> Lista de Usuários </a></li>
+							</ul>
+						<!--</div>-->
 					</div>
 				</li>
 				<!--

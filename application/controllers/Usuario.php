@@ -86,6 +86,7 @@ class Usuario extends CI_Controller {
 				'CepUsuario',
 				'CompAgenda',
 				'Nivel',
+				'Comissao',
 			), TRUE));
 
 			$caracteres_sem_acento = array(
@@ -137,6 +138,10 @@ class Usuario extends CI_Controller {
 			else
 				$data['collapse'] = 'class="collapse"';
 
+			(!$data['query']['Permissao']) ? $data['query']['Permissao'] = 3 : FALSE;
+			
+			(!$data['query']['Comissao']) ? $data['query']['Comissao'] = '0.00' : FALSE;
+			
 			(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;       
 			
 			$data['radio'] = array(
@@ -260,6 +265,7 @@ class Usuario extends CI_Controller {
 						$data['query']['Senha'] = $data['associado']['Senha'];
 						$data['query']['Codigo'] = $data['associado']['Codigo'];
 						$data['query']['DataCriacao'] = $data['associado']['DataCriacao'];
+						$data['query']['Comissao'] = str_replace(',', '.', str_replace('.', '', $data['query']['Comissao']));
 						unset($data['query']['Confirma']);
 
 						$data['campos'] = array_keys($data['query']);
@@ -309,6 +315,7 @@ class Usuario extends CI_Controller {
 					$data['query']['Senha'] = $data['associado']['Senha'];
 					$data['query']['Codigo'] = $data['associado']['Codigo'];
 					$data['query']['DataCriacao'] = date('Y-m-d', time());
+					$data['query']['Comissao'] = str_replace(',', '.', str_replace('.', '', $data['query']['Comissao']));
 					unset($data['query']['Confirma']);
 
 					$data['campos'] = array_keys($data['query']);
@@ -470,6 +477,7 @@ class Usuario extends CI_Controller {
 				'CepUsuario',
 				'CompAgenda',
 				'Nivel',
+				'Comissao',
 			), TRUE);
 
 			if ($id) {
@@ -538,6 +546,10 @@ class Usuario extends CI_Controller {
 				else
 					$data['collapse'] = 'class="collapse"';
 
+				(!$data['query']['Permissao']) ? $data['query']['Permissao'] = 3 : FALSE;
+				
+				(!$data['query']['Comissao']) ? $data['query']['Comissao'] = 0 : FALSE;
+				
 				(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;       
 				
 				$data['radio'] = array(
@@ -583,7 +595,13 @@ class Usuario extends CI_Controller {
 						$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'mysql');
 						$data['query']['DataEmUsuario'] = $this->basico->mascara_data($data['query']['DataEmUsuario'], 'mysql');
 						#$data['query']['Obs'] = nl2br($data['query']['Obs']);
-
+							
+						if(!$data['query']['Comissao']){
+							$data['query']['Comissao'] = 0;
+						}else{
+							$data['query']['Comissao'] = str_replace(',', '.', str_replace('.', '', $data['query']['Comissao']));
+						}
+							
 						$data['anterior'] = $this->Usuario_model->get_usuario($data['query']['idSis_Usuario']);
 						$data['campos'] = array_keys($data['query']);
 
