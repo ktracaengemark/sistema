@@ -279,6 +279,7 @@ class Revendedor extends CI_Controller {
 							$data['query']['Delet_Agend'] = "S";
 							$data['query']['Permissao_Agend'] = 1;
 							
+							$data['query']['Cad_Orcam'] = "S";
 							$data['query']['Ver_Orcam'] = "S";
 							$data['query']['Permissao_Orcam'] = 1;
 							
@@ -350,6 +351,7 @@ class Revendedor extends CI_Controller {
 						$data['query']['Delet_Agend'] = "S";
 						$data['query']['Permissao_Agend'] = 1;
 						
+						$data['query']['Cad_Orcam'] = "S";
 						$data['query']['Ver_Orcam'] = "S";
 						$data['query']['Permissao_Orcam'] = 1;
 						
