@@ -3797,7 +3797,7 @@ class Orcatrata extends CI_Controller {
 							$data['CashBackNovo'] = $data['CashBackServicos'] + $data['CashBackProdutos'];
 
 							//Se existir Cliente  Atualizo ou não o valor do cashback no campo CashBackCliente do Cliente
-							if(isset($_SESSION['Usuario']['Nivel']) && $_SESSION['Usuario']['Nivel'] == 1){
+							
 								if(isset($data['orcatrata']['idApp_Cliente']) && $data['orcatrata']['idApp_Cliente'] !=0){
 									if($data['orcatrata']['UsarCashBack'] == "S"){
 										if($data['orcatrata']['QuitadoOrca'] == "S"){
@@ -3850,7 +3850,7 @@ class Orcatrata extends CI_Controller {
 									$data['update']['cliente_cashback']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_cashback'], $data['orcatrata']['idApp_Cliente']);					
 								
 								}
-							}				
+											
 							$data['orcatrata']['RepeticaoOrca'] = $data['orcatrata']['idApp_OrcaTrata'];
 							$data['orcatrata']['RecorrenciasOrca'] = "1";
 							$data['orcatrata']['RecorrenciaOrca'] = "1/1";
@@ -3865,7 +3865,7 @@ class Orcatrata extends CI_Controller {
 							$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['orcatrata']['idApp_OrcaTrata']);
 							
 							#### Estoque_Produto_posterior ####
-							if(isset($_SESSION['Usuario']['Nivel']) && $_SESSION['Usuario']['Nivel'] == 1){
+							
 								if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
 									
 									$data['busca']['estoque']['posterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
@@ -3908,7 +3908,7 @@ class Orcatrata extends CI_Controller {
 									}
 									
 								}
-							}
+							
 							/*
 							/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 										//*******CORRIGIR -  ALTERAR PARA ENTRAR COM TODAS AS MUDANÇAS NA TABELA DE LOG*****
@@ -5466,7 +5466,7 @@ class Orcatrata extends CI_Controller {
 						$data['CashBackNovo'] = $data['CashBackServicos'] + $data['CashBackProdutos'];
 
 						//Se existir Cliente  Atualizo ou não o valor do cashback no campo CashBackCliente do Cliente
-						if(isset($_SESSION['Usuario']['Nivel']) && $_SESSION['Usuario']['Nivel'] == 1){	
+						
 							if(isset($data['orcatrata']['idApp_Cliente']) && $data['orcatrata']['idApp_Cliente'] !=0){
 								if($data['orcatrata']['UsarCashBack'] == "S"){
 									if($data['orcatrata']['QuitadoOrca'] == "S"){
@@ -5521,7 +5521,7 @@ class Orcatrata extends CI_Controller {
 								$data['update']['cliente_cashback']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_cashback'], $data['orcatrata']['idApp_Cliente']);					
 							
 							}
-						}
+						
 						$data['orcatrata']['RepeticaoOrca'] = $data['orcatrata']['idApp_OrcaTrata'];
 						$data['orcatrata']['RecorrenciasOrca'] = "1";
 						$data['orcatrata']['RecorrenciaOrca'] = "1/1";
@@ -5536,7 +5536,7 @@ class Orcatrata extends CI_Controller {
 						$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['orcatrata']['idApp_OrcaTrata']);
 						
 						#### Estoque_Produto_posterior ####
-						if(isset($_SESSION['Usuario']['Nivel']) && $_SESSION['Usuario']['Nivel'] == 1){
+						
 							if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
 								
 								$data['busca']['estoque']['posterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
@@ -5585,7 +5585,7 @@ class Orcatrata extends CI_Controller {
 								}
 								
 							}			
-						}
+						
 						/*
 						/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 									//*******CORRIGIR -  ALTERAR PARA ENTRAR COM TODAS AS MUDANÇAS NA TABELA DE LOG*****
@@ -6831,7 +6831,7 @@ class Orcatrata extends CI_Controller {
 						} else {
 							
 							#### Estoque_Produto_anterior e CashBack_anterior####
-							if(isset($_SESSION['Orcatrata']['NivelOrca']) && $_SESSION['Orcatrata']['NivelOrca'] == 1){
+							
 								
 								#### Estoque_Produto_anterior ####
 								if ($_SESSION['Orcatrata']['CombinadoFrete'] == 'S' && $_SESSION['Orcatrata']['AprovadoOrca'] == 'S') {
@@ -6947,7 +6947,7 @@ class Orcatrata extends CI_Controller {
 									}
 									
 								}			
-							}
+							
 							
 							$data['cadastrar']['QuitadoParcelas'] = $data['cadastrar']['QuitadoParcelas'];
 							$data['cadastrar']['ConcluidoProduto'] = $data['cadastrar']['ConcluidoProduto'];
@@ -7806,7 +7806,7 @@ class Orcatrata extends CI_Controller {
 							}
 							
 							#### Estoque_Produto_posterior e CashBack_posterior####
-							if(isset($_SESSION['Orcatrata']['NivelOrca']) && $_SESSION['Orcatrata']['NivelOrca'] == 1){
+							
 								
 								#### Estoque_Produto_posterior ####
 								if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
@@ -7943,7 +7943,7 @@ class Orcatrata extends CI_Controller {
 									}
 									
 								}			
-							}	
+								
 							if(isset($data['orcatrata']['idApp_Cliente']) && $data['orcatrata']['idApp_Cliente'] != 0 && $data['orcatrata']['idApp_Cliente'] != ''){
 
 								$data['update']['cliente_ult_pdd']['anterior'] = $this->Orcatrata_model->get_cliente($data['orcatrata']['idApp_Cliente']);
@@ -9065,7 +9065,7 @@ class Orcatrata extends CI_Controller {
 					} else {
 						
 						#### Estoque_Produto_anterior####
-						if(isset($_SESSION['Orcatrata']['NivelOrca']) && $_SESSION['Orcatrata']['NivelOrca'] == 1){
+						
 							
 							#### Estoque_Produto_anterior ####
 							if ($_SESSION['Orcatrata']['CombinadoFrete'] == 'S' && $_SESSION['Orcatrata']['AprovadoOrca'] == 'S') {
@@ -9110,7 +9110,7 @@ class Orcatrata extends CI_Controller {
 								}
 								
 							}
-						}				
+										
 						$data['cadastrar']['QuitadoParcelas'] = $data['cadastrar']['QuitadoParcelas'];
 						$data['cadastrar']['ConcluidoProduto'] = $data['cadastrar']['ConcluidoProduto'];
 						$data['cadastrar']['Cadastrar'] = $data['cadastrar']['Cadastrar'];
@@ -9970,7 +9970,7 @@ class Orcatrata extends CI_Controller {
 						$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['orcatrata']['idApp_OrcaTrata']);			
 						
 						#### Estoque_Produto_posterior####
-						if(isset($_SESSION['Orcatrata']['NivelOrca']) && $_SESSION['Orcatrata']['NivelOrca'] == 1){
+						
 										
 							#### Estoque_Produto_posterior ####
 							if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
@@ -10015,7 +10015,7 @@ class Orcatrata extends CI_Controller {
 								}
 								
 							}
-						}
+						
 						/*
 						/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 									//*******CORRIGIR -  ALTERAR PARA ENTRAR COM TODAS AS MUDANÇAS NA TABELA DE LOG*****
@@ -11102,7 +11102,7 @@ class Orcatrata extends CI_Controller {
 						*/
 						
 						#### Estoque_Produto_anterior e CashBack_anterior####
-						if(isset($_SESSION['Orcatrata']['NivelOrca']) && $_SESSION['Orcatrata']['NivelOrca'] == 1){
+						
 							
 							#### Estoque_Produto_anterior ####					
 							if ($_SESSION['Orcatrata']['CombinadoFrete'] == 'S' && $_SESSION['Orcatrata']['AprovadoOrca'] == 'S') {
@@ -11220,7 +11220,7 @@ class Orcatrata extends CI_Controller {
 								}
 								
 							}
-						}	
+							
 						/*
 						echo '<br>';
 						echo "<pre>";
@@ -12019,7 +12019,7 @@ class Orcatrata extends CI_Controller {
 						}
 						
 						#### Estoque_Produto_posterior e CashBack_posterior####
-						if(isset($_SESSION['Orcatrata']['NivelOrca']) && $_SESSION['Orcatrata']['NivelOrca'] == 1){
+						
 							
 							#### Estoque_Produto_posterior ####
 							if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
@@ -12160,7 +12160,7 @@ class Orcatrata extends CI_Controller {
 								}
 								
 							}			
-						}	
+							
 						if($data['count_orcatratas'] > 0){
 						
 							if($data['orcatrata']['QuitadoOrca'] == "S"){	
@@ -13647,7 +13647,7 @@ class Orcatrata extends CI_Controller {
 					$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['orcatrata']['idApp_OrcaTrata']);			
 					
 					#### Estoque_Produto_posterior ####
-					if(isset($_SESSION['Usuario']['Nivel']) && $_SESSION['Usuario']['Nivel'] == 1){
+					
 						if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
 							
 							$data['busca']['estoque']['posterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
@@ -13690,7 +13690,7 @@ class Orcatrata extends CI_Controller {
 							}
 							
 						}
-					}
+					
 					/*
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 								//*******CORRIGIR -  ALTERAR PARA ENTRAR COM TODAS AS MUDANÇAS NA TABELA DE LOG*****
@@ -14709,7 +14709,7 @@ class Orcatrata extends CI_Controller {
 					} else {
 						
 						#### Estoque_Produto_anterior####
-						if(isset($_SESSION['Orcatrata']['NivelOrca']) && $_SESSION['Orcatrata']['NivelOrca'] == 1){
+						
 							
 							#### Estoque_Produto_anterior ####
 							if ($_SESSION['Orcatrata']['CombinadoFrete'] == 'S' && $_SESSION['Orcatrata']['AprovadoOrca'] == 'S') {
@@ -14754,7 +14754,7 @@ class Orcatrata extends CI_Controller {
 								}
 								
 							}
-						}
+						
 						
 						$data['cadastrar']['QuitadoParcelas'] = $data['cadastrar']['QuitadoParcelas'];
 						$data['cadastrar']['ConcluidoProduto'] = $data['cadastrar']['ConcluidoProduto'];
@@ -15584,7 +15584,7 @@ class Orcatrata extends CI_Controller {
 						$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['orcatrata']['idApp_OrcaTrata']);			
 						
 						#### Estoque_Produto_posterior####
-						if(isset($_SESSION['Orcatrata']['NivelOrca']) && $_SESSION['Orcatrata']['NivelOrca'] == 1){
+						
 												
 							#### Estoque_Produto_posterior ####
 							if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
@@ -15629,7 +15629,7 @@ class Orcatrata extends CI_Controller {
 								}
 								
 							}
-						}
+						
 						
 						/*
 						/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
