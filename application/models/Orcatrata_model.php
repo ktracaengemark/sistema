@@ -1111,6 +1111,22 @@ class Orcatrata_model extends CI_Model {
         return $query[0];
     }
 
+    public function get_produto_comissao_atual($data) {
+		$query = $this->db->query(
+			'SELECT
+				ValorComissaoAssociado,
+				ValorComissaoFuncionario
+			FROM 
+				App_Produto 
+			WHERE 
+				idApp_OrcaTrata = ' . $data . ''
+		);
+		
+        $query = $query->result_array();
+
+        return $query;
+    }
+
     public function get_produto_estoque($data) {
 		$query = $this->db->query('SELECT * FROM App_Produto WHERE idApp_OrcaTrata = ' . $data . '');
         $query = $query->result_array();
