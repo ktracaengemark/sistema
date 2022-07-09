@@ -1680,7 +1680,7 @@ class Orcatrata extends CI_Controller {
 								}
 								
 								#### Estoque_Produto_posterior ####
-								if(isset($_SESSION['Consulta']['NivelAgenda']) && $_SESSION['Consulta']['NivelAgenda'] == 1){
+								
 									
 									if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
 										
@@ -1724,7 +1724,7 @@ class Orcatrata extends CI_Controller {
 										}
 										
 									}
-								}
+								
 								////Inicio da Criação das Repetições///////
 								$tipointervalo = 1;
 								if($tipointervalo == 1){
@@ -2216,7 +2216,7 @@ class Orcatrata extends CI_Controller {
 								$data['CashBackNovo'] = $data['CashBackServicos'] + $data['CashBackProdutos'];
 
 								//Se existir Cliente  Atualizo ou não o valor do cashback no campo CashBackCliente do Cliente
-								if(isset($_SESSION['Consulta']['NivelAgenda']) && $_SESSION['Consulta']['NivelAgenda'] == 1){
+								
 									
 									if(isset($data['orcatrata']['idApp_Cliente']) && $data['orcatrata']['idApp_Cliente'] !=0){
 										
@@ -2275,7 +2275,7 @@ class Orcatrata extends CI_Controller {
 										$data['update']['cliente_cashback']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_cashback'], $data['orcatrata']['idApp_Cliente']);					
 									
 									}
-								}
+								
 								$data['msg'] = '?m=1';
 
 								redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);	
