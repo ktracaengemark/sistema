@@ -148,6 +148,25 @@ class Usuario_model extends CI_Model {
         }
 
     }
+	
+    public function get_funcionario($data) {
+        $query = $this->db->query(
+			'SELECT 
+				U.Comissao
+			FROM 
+				Sis_Usuario AS U
+			WHERE 
+				U.idSis_Usuario = ' . $data . '
+			LIMIT 1'
+		);
+		
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
+    }
 			
     public function get_revendedor($data) {
         $query = $this->db->query(

@@ -4983,27 +4983,33 @@ class Orcatrata extends CI_Controller {
 						$data['orcatrata']['Cupom'] = 0;
 					}
 
+					### pego o Valor da Comissão do Funcionário ###
 					if($_SESSION['Usuario']['Nivel'] != 2){
 						$data['orcatrata']['ComissaoFunc'] = $_SESSION['Usuario']['Comissao'];
 					}else{
-			/////////////// por enquanto estou passando 0, mas tenho que pegar o valor da comissão do Funcionario nivel 1 ///////////
-						$data['orcatrata']['ComissaoFunc'] = 0;
+						$data['Funcionario'] = $this->Usuario_model->get_funcionario($_SESSION['Usuario']['QuemCad']);
+						if($data['Funcionario'] !== FALSE){
+							$data['orcatrata']['ComissaoFunc'] = $data['Funcionario']['Comissao'];
+						}else{
+							$data['orcatrata']['ComissaoFunc'] = 0;
+						}
 					}
 					$data['orcatrata']['ValorComissaoFunc'] = 0;
 					$data['orcatrata']['ValorComissaoAssoc'] = 0;
+
 					/*
 					echo '<br>';
 					echo "<pre>";
-					print_r('Whatsapp = ' . $data['cadastrar']['Whatsapp']);
+					print_r($data['Funcionario']);
 					echo '<br>';
-					print_r('Whatsapp_Site = ' . $data['cadastrar']['Whatsapp_Site']);
+					print_r('ComissaoFunc = ' . $data['Funcionario']['Comissao']);
 					echo '<br>';
-					print_r('TipoDescOrca = ' . $data['orcatrata']['TipoDescOrca']);
+					//print_r('TipoDescOrca = ' . $data['orcatrata']['TipoDescOrca']);
 					echo '<br>';
-					print_r('ValidaCupom = ' . $data['cadastrar']['ValidaCupom']);
+					//print_r('ValidaCupom = ' . $data['cadastrar']['ValidaCupom']);
 					echo '<br>';
-					print_r('Cupom = ' . $data['orcatrata']['Cupom']);
-					echo "</pre>";			
+					//print_r('Cupom = ' . $data['orcatrata']['Cupom']);
+					echo "</pre>";	
 					exit ();
 					*/
 					/*
