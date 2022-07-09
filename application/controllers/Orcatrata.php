@@ -52,40 +52,40 @@ class Orcatrata extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Não é possível salvar o novo Pedido.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
-		
+
+		#### Carrega os dados da Agenda nas variáves de sessão do Whatsapp ####
+		if ($_SESSION['log']['idSis_Empresa'] != 5){
+			if(isset($_SESSION['bd_consulta']['Whatsapp']) && $_SESSION['bd_consulta']['Whatsapp'] == "S"){
+				if(isset($_SESSION['Empresa']['ClienteAgenda']) && $_SESSION['Empresa']['ClienteAgenda'] == "S") {
+					$nomecliente = '*'.$_SESSION['bd_consulta']['NomeCliente'].'*';
+				}else{
+					$nomecliente = FALSE;
+				}
+				if(isset($_SESSION['Empresa']['ProfAgenda']) && $_SESSION['Empresa']['ProfAgenda'] == "S") {
+					$nomeprof = '*'.$_SESSION['bd_consulta']['Profissional'].'*';
+				}else{
+					$nomeprof = FALSE;
+				}
+				if(isset($_SESSION['Empresa']['DataAgenda']) && $_SESSION['Empresa']['DataAgenda'] == "S") {
+					$dataagenda = '*'.$_SESSION['bd_consulta']['DataInicio'].' as '.$_SESSION['bd_consulta']['HoraInicio'].'*';
+				}else{
+					$dataagenda = FALSE;
+				}
+				if(isset($_SESSION['Empresa']['SiteAgenda']) && $_SESSION['Empresa']['SiteAgenda'] == "S") {
+					$siteagenda = "https://enkontraki.com.br/".$_SESSION['Empresa']['Site'];
+				}else{
+					$siteagenda = FALSE;
+				}
+				$data['whatsapp_agenda'] = utf8_encode($_SESSION['Empresa']['TextoAgenda_1'].' '.$nomecliente. ' ' .$_SESSION['Empresa']['TextoAgenda_2']. ' ' . $nomeprof . ' ' .$_SESSION['Empresa']['TextoAgenda_3']. ' ' . $dataagenda . ' ' .$_SESSION['Empresa']['TextoAgenda_4']. ' ' . $siteagenda);
+			}
+		}
+				
 		if($_SESSION['Usuario']['Nivel'] == 2){
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 		}else{
 
-			#### Carrega os dados da Agenda nas variáves de sessão do Whatsapp ####
-			if ($_SESSION['log']['idSis_Empresa'] != 5){
-				if(isset($_SESSION['bd_consulta']['Whatsapp']) && $_SESSION['bd_consulta']['Whatsapp'] == "S"){
-					if(isset($_SESSION['Empresa']['ClienteAgenda']) && $_SESSION['Empresa']['ClienteAgenda'] == "S") {
-						$nomecliente = '*'.$_SESSION['bd_consulta']['NomeCliente'].'*';
-					}else{
-						$nomecliente = FALSE;
-					}
-					if(isset($_SESSION['Empresa']['ProfAgenda']) && $_SESSION['Empresa']['ProfAgenda'] == "S") {
-						$nomeprof = '*'.$_SESSION['bd_consulta']['Profissional'].'*';
-					}else{
-						$nomeprof = FALSE;
-					}
-					if(isset($_SESSION['Empresa']['DataAgenda']) && $_SESSION['Empresa']['DataAgenda'] == "S") {
-						$dataagenda = '*'.$_SESSION['bd_consulta']['DataInicio'].' as '.$_SESSION['bd_consulta']['HoraInicio'].'*';
-					}else{
-						$dataagenda = FALSE;
-					}
-					if(isset($_SESSION['Empresa']['SiteAgenda']) && $_SESSION['Empresa']['SiteAgenda'] == "S") {
-						$siteagenda = "https://enkontraki.com.br/".$_SESSION['Empresa']['Site'];
-					}else{
-						$siteagenda = FALSE;
-					}
-					$data['whatsapp_agenda'] = utf8_encode($_SESSION['Empresa']['TextoAgenda_1'].' '.$nomecliente. ' ' .$_SESSION['Empresa']['TextoAgenda_2']. ' ' . $nomeprof . ' ' .$_SESSION['Empresa']['TextoAgenda_3']. ' ' . $dataagenda . ' ' .$_SESSION['Empresa']['TextoAgenda_4']. ' ' . $siteagenda);
-				}
-			}
-			
 			$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 				'ConcluidoProduto',
 				'QuitadoParcelas',
@@ -230,7 +230,7 @@ class Orcatrata extends CI_Controller {
 			$estado1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($data['orcatrata']['Estado'], $caracteres_sem_acento));
 
 			$referencia1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($data['orcatrata']['Referencia'], $caracteres_sem_acento));
-
+		
 			if ($idApp_Consulta) {
 				
 				$_SESSION['Consulta'] = $data['consulta'] = $this->Consulta_model->get_consulta_orca_zero($idApp_Consulta, TRUE);
@@ -253,7 +253,7 @@ class Orcatrata extends CI_Controller {
 				exit();
 				
 			} else {
-					
+
 				$_SESSION['Cliente'] = $data['query'] = $this->Cliente_model->get_cliente($_SESSION['Consulta']['idApp_Cliente'], TRUE);
 				
 				if($data['query'] === FALSE){
@@ -1192,19 +1192,31 @@ class Orcatrata extends CI_Controller {
 							}else{
 								$data['orcatrata']['Cupom'] = 0;
 							}
+
+							### pego o Valor da Comissão do Funcionário ###
+							if($_SESSION['Usuario']['Nivel'] != 2){
+								$data['orcatrata']['ComissaoFunc'] = $_SESSION['Usuario']['Comissao'];
+							}else{
+								$data['Funcionario'] = $this->Usuario_model->get_funcionario($_SESSION['Usuario']['QuemCad']);
+								if($data['Funcionario'] !== FALSE){
+									$data['orcatrata']['ComissaoFunc'] = $data['Funcionario']['Comissao'];
+								}else{
+									$data['orcatrata']['ComissaoFunc'] = 0;
+								}
+							}
+							$data['orcatrata']['ValorComissaoFunc'] = 0;
+							$data['orcatrata']['ValorComissaoAssoc'] = 0;
+
 							/*
 							echo '<br>';
 							echo "<pre>";
-							print_r($data['orcatrata']['RecorrenciasOrca']);
+							print_r($data['orcatrata']['ComissaoFunc']);
 							echo '<br>';
-							print_r($data['orcatrata']['RepeticaoCons']);
-							echo '<br>';
-							print_r($idApp_Consulta);
-							echo '<br>';
-							print_r($_SESSION['Consulta']);
+							print_r($data['Funcionario']);
 							echo "</pre>";
 							exit ();
 							*/
+							
 							$data['orcatrata']['idApp_OrcaTrata'] = $this->Orcatrata_model->set_orcatrata($data['orcatrata']);
 
 							if ($data['orcatrata']['idApp_OrcaTrata'] === FALSE) {
@@ -1270,6 +1282,8 @@ class Orcatrata extends CI_Controller {
 								*/			
 								
 								$data['CashBackServicos'] = 0;
+								$data['ComAssocServicos'] = 0;
+								$data['ComFuncServicos'] = 0;
 								#### App_Servico ####
 								if (isset($data['servico'])) {
 									$max = count($data['servico']);
@@ -1354,9 +1368,12 @@ class Orcatrata extends CI_Controller {
 										
 										//$data['servico'][$j]['ValorComissaoServico'] = $data['servico'][$j]['SubtotalComissaoServicoProduto'];
 										$data['servico'][$j]['ValorComissaoAssociado'] = $data['servico'][$j]['SubtotalComissaoServicoProduto'];
-										
+										$data['ComAssocServicos'] += $data['servico'][$j]['ValorComissaoAssociado'];
+
+										$data['servico'][$j]['ValorComissaoFuncionario'] = $data['servico'][$j]['QtdProduto']*$data['servico'][$j]['ValorProduto']*$data['orcatrata']['ComissaoFunc']/100;
+										$data['ComFuncServicos'] += $data['servico'][$j]['ValorComissaoFuncionario'];
+
 										$data['servico'][$j]['ValorComissaoCashBack'] = $data['servico'][$j]['SubtotalComissaoCashBackProduto'];
-										
 										$data['CashBackServicos'] += $data['servico'][$j]['ValorComissaoCashBack'];
 
 										if(!$data['servico'][$j]['DataValidadeProduto'] || $data['servico'][$j]['DataValidadeProduto'] == "00/00/0000" || empty($data['servico'][$j]['DataValidadeProduto'])){
@@ -1409,6 +1426,8 @@ class Orcatrata extends CI_Controller {
 								}
 
 								$data['CashBackProdutos'] = 0;
+								$data['ComAssocProdutos'] = 0;
+								$data['ComFuncProdutos'] = 0;
 								#### App_Produto ####
 								if (isset($data['produto'])) {
 									$max = count($data['produto']);
@@ -1432,9 +1451,12 @@ class Orcatrata extends CI_Controller {
 										
 										//$data['produto'][$j]['ValorComissaoServico'] = $data['produto'][$j]['SubtotalComissaoServicoProduto'];
 										$data['produto'][$j]['ValorComissaoAssociado'] = $data['produto'][$j]['SubtotalComissaoServicoProduto'];
-										
+										$data['ComAssocProdutos'] += $data['produto'][$j]['ValorComissaoAssociado'];
+
+										$data['produto'][$j]['ValorComissaoFuncionario'] = $data['produto'][$j]['QtdProduto']*$data['produto'][$j]['ValorProduto']*$data['orcatrata']['ComissaoFunc']/100;
+										$data['ComFuncProdutos'] += $data['produto'][$j]['ValorComissaoFuncionario'];
+
 										$data['produto'][$j]['ValorComissaoCashBack'] = $data['produto'][$j]['SubtotalComissaoCashBackProduto'];
-										
 										$data['CashBackProdutos'] += $data['produto'][$j]['ValorComissaoCashBack'];
 
 										if(!$data['produto'][$j]['DataValidadeProduto'] || $data['produto'][$j]['DataValidadeProduto'] == "00/00/0000" || empty($data['produto'][$j]['DataValidadeProduto'])){
@@ -1637,7 +1659,12 @@ class Orcatrata extends CI_Controller {
 								////Fim da Criação das Repetições///////				
 								
 								
+								$data['orcatrata']['ValorComissaoFunc'] = $data['ComFuncServicos'] + $data['ComFuncProdutos'];
+								$data['orcatrata']['ValorComissaoFunc'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorComissaoFunc']));
 								
+								$data['orcatrata']['ValorComissaoAssoc'] = $data['ComAssocServicos'] + $data['ComAssocProdutos'];
+								$data['orcatrata']['ValorComissaoAssoc'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorComissaoAssoc']));
+
 								$data['update']['orcatrata']['anterior'] = $this->Orcatrata_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata']);
 								$data['update']['orcatrata']['campos'] = array_keys($data['orcatrata']);
 								$data['update']['orcatrata']['auditoriaitem'] = $this->basico->set_log(
@@ -1927,6 +1954,9 @@ class Orcatrata extends CI_Controller {
 											'ValorFatura' 			=> $data['orcatrata']['ValorFatura'],
 											'ValorGateway' 			=> $data['orcatrata']['ValorGateway'],
 											'ValorComissao' 		=> $data['orcatrata']['ValorComissao'],
+											'ValorComissaoAssoc' 	=> $data['orcatrata']['ValorComissaoAssoc'],
+											'ValorComissaoFunc' 	=> $data['orcatrata']['ValorComissaoFunc'],
+											'ComissaoFunc' 			=> $data['orcatrata']['ComissaoFunc'],
 											'ValorEmpresa' 			=> $data['orcatrata']['ValorEmpresa'],
 											'QtdPrdOrca' 			=> $data['orcatrata']['QtdPrdOrca'],
 											'QtdSrvOrca' 			=> $data['orcatrata']['QtdSrvOrca'],
@@ -1987,6 +2017,8 @@ class Orcatrata extends CI_Controller {
 														'ComissaoServicoProduto'	=> $data['update']['produto']['baixa'][$k]['ComissaoServicoProduto'],
 														'ComissaoCashBackProduto' 	=> $data['update']['produto']['baixa'][$k]['ComissaoCashBackProduto'],
 														'ValorComissaoVenda' 	=> $data['update']['produto']['baixa'][$k]['ValorComissaoVenda'],
+														'ValorComissaoAssociado' 	=> $data['update']['produto']['baixa'][$k]['ValorComissaoAssociado'],
+														'ValorComissaoFuncionario' 	=> $data['update']['produto']['baixa'][$k]['ValorComissaoFuncionario'],
 														'ValorComissaoServico' 	=> $data['update']['produto']['baixa'][$k]['ValorComissaoServico'],
 														'ValorComissaoCashBack'	=> $data['update']['produto']['baixa'][$k]['ValorComissaoCashBack'],
 														'NomeProduto' 			=> $data['update']['produto']['baixa'][$k]['NomeProduto'],
@@ -3352,7 +3384,21 @@ class Orcatrata extends CI_Controller {
 						}else{
 							$data['orcatrata']['Cupom'] = 0;
 						}
-						
+
+						### pego o Valor da Comissão do Funcionário ###
+						if($_SESSION['Usuario']['Nivel'] != 2){
+							$data['orcatrata']['ComissaoFunc'] = $_SESSION['Usuario']['Comissao'];
+						}else{
+							$data['Funcionario'] = $this->Usuario_model->get_funcionario($_SESSION['Usuario']['QuemCad']);
+							if($data['Funcionario'] !== FALSE){
+								$data['orcatrata']['ComissaoFunc'] = $data['Funcionario']['Comissao'];
+							}else{
+								$data['orcatrata']['ComissaoFunc'] = 0;
+							}
+						}
+						$data['orcatrata']['ValorComissaoFunc'] = 0;
+						$data['orcatrata']['ValorComissaoAssoc'] = 0;
+
 						$data['redirect'] = '&gtd=' . $data['orcatrata']['DataEntregaOrca'];
 						/*
 						echo '<br>';
@@ -3447,8 +3493,11 @@ class Orcatrata extends CI_Controller {
 							print_r($data['cliente']);
 							echo "</pre>";
 							exit ();
-							*/			
+							*/
+							
 							$data['CashBackServicos'] = 0;
+							$data['ComAssocServicos'] = 0;
+							$data['ComFuncServicos'] = 0;
 							#### App_Servico ####
 							if (isset($data['servico'])) {
 								$max = count($data['servico']);
@@ -3533,9 +3582,12 @@ class Orcatrata extends CI_Controller {
 									
 									//$data['servico'][$j]['ValorComissaoServico'] = $data['servico'][$j]['SubtotalComissaoServicoProduto'];
 									$data['servico'][$j]['ValorComissaoAssociado'] = $data['servico'][$j]['SubtotalComissaoServicoProduto'];
-									
+									$data['ComAssocServicos'] += $data['servico'][$j]['ValorComissaoAssociado'];
+
+									$data['servico'][$j]['ValorComissaoFuncionario'] = $data['servico'][$j]['QtdProduto']*$data['servico'][$j]['ValorProduto']*$data['orcatrata']['ComissaoFunc']/100;
+									$data['ComFuncServicos'] += $data['servico'][$j]['ValorComissaoFuncionario'];
+
 									$data['servico'][$j]['ValorComissaoCashBack'] = $data['servico'][$j]['SubtotalComissaoCashBackProduto'];
-									
 									$data['CashBackServicos'] += $data['servico'][$j]['ValorComissaoCashBack'];
 													
 									if(!$data['servico'][$j]['DataValidadeProduto'] || $data['servico'][$j]['DataConcluidoProduto'] == "00/00/0000" || empty($data['servico'][$j]['DataValidadeProduto'])){
@@ -3588,6 +3640,8 @@ class Orcatrata extends CI_Controller {
 							}
 
 							$data['CashBackProdutos'] = 0;
+							$data['ComAssocProdutos'] = 0;
+							$data['ComFuncProdutos'] = 0;
 							#### App_Produto ####
 							if (isset($data['produto'])) {
 								$max = count($data['produto']);
@@ -3611,9 +3665,12 @@ class Orcatrata extends CI_Controller {
 									
 									//$data['produto'][$j]['ValorComissaoServico'] = $data['produto'][$j]['SubtotalComissaoServicoProduto'];
 									$data['produto'][$j]['ValorComissaoAssociado'] = $data['produto'][$j]['SubtotalComissaoServicoProduto'];
-									
+									$data['ComAssocProdutos'] += $data['produto'][$j]['ValorComissaoAssociado'];
+
+									$data['produto'][$j]['ValorComissaoFuncionario'] = $data['produto'][$j]['QtdProduto']*$data['produto'][$j]['ValorProduto']*$data['orcatrata']['ComissaoFunc']/100;
+									$data['ComFuncProdutos'] += $data['produto'][$j]['ValorComissaoFuncionario'];
+
 									$data['produto'][$j]['ValorComissaoCashBack'] = $data['produto'][$j]['SubtotalComissaoCashBackProduto'];
-									
 									$data['CashBackProdutos'] += $data['produto'][$j]['ValorComissaoCashBack'];
 
 									if(!$data['produto'][$j]['DataValidadeProduto'] || $data['produto'][$j]['DataValidadeProduto'] == "00/00/0000" || empty($data['produto'][$j]['DataValidadeProduto'])){
@@ -3850,7 +3907,13 @@ class Orcatrata extends CI_Controller {
 									$data['update']['cliente_cashback']['bd'] = $this->Orcatrata_model->update_cliente($data['cliente_cashback'], $data['orcatrata']['idApp_Cliente']);					
 								
 								}
-											
+							
+							$data['orcatrata']['ValorComissaoFunc'] = $data['ComFuncServicos'] + $data['ComFuncProdutos'];
+							$data['orcatrata']['ValorComissaoFunc'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorComissaoFunc']));
+							
+							$data['orcatrata']['ValorComissaoAssoc'] = $data['ComAssocServicos'] + $data['ComAssocProdutos'];
+							$data['orcatrata']['ValorComissaoAssoc'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorComissaoAssoc']));
+							
 							$data['orcatrata']['RepeticaoOrca'] = $data['orcatrata']['idApp_OrcaTrata'];
 							$data['orcatrata']['RecorrenciasOrca'] = "1";
 							$data['orcatrata']['RecorrenciaOrca'] = "1/1";
@@ -13260,7 +13323,13 @@ class Orcatrata extends CI_Controller {
 						}
 					}else{
 						$data['orcatrata']['Cupom'] = 0;
-					}			
+					}
+
+					### Na despesa, não preciso pegar o Valor da Comissão do Funcionário ###
+					$data['orcatrata']['ComissaoFunc'] = 0;
+					$data['orcatrata']['ValorComissaoFunc'] = 0;
+					$data['orcatrata']['ValorComissaoAssoc'] = 0;
+					
 					/*
 					echo "<pre>";
 					echo '<br>';
