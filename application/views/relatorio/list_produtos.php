@@ -48,8 +48,8 @@
 									<th class="active">Qtd</th>
 									<th class="active">Embal</th>
 									<th class="active">Preco</th>
-									<th class="active">ComVenda</th>
-									<th class="active">ComServico</th>
+									<th class="active">Com.Venda</th>
+									<th class="active">Com.Assoc</th>
 									<th class="active">CashBack</th>
 									<th class="active">Tempo</th>
 									<th class="active">Ativo</th>
