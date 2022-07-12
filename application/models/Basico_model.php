@@ -2191,13 +2191,20 @@ if (isset($data) && $data) {
             ' U.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 		*/
 		if($_SESSION['log']['idSis_Empresa'] != 5){
+			
+			if($_SESSION['Usuario']['Nivel'] == 0 || $_SESSION['Usuario']['Nivel'] == 1){
+				$nivel = 'AND U.Nivel = 1';
+			}else{
+				$nivel = 'AND U.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . '';
+			}
 			$usuario = 'WHERE
-							U.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' ';
+							U.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 				
+							' . $nivel . '';
 		}else{
 			$usuario = 'WHERE
 							A.idSis_Associado = ' . $_SESSION['log']['idSis_Usuario'] . ' ';
 		}
-			
+
 		if ($data === TRUE) {
             $array = $this->db->query('
                 SELECT

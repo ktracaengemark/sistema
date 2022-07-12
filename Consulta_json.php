@@ -51,15 +51,23 @@ if(isset($tipo)){
 			
 if($_SESSION['log']['idSis_Empresa'] != 5){
 	//$permissao = ($_SESSION['log']['Permissao'] >= 3 ) ? 'AND U.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . '  ' : FALSE;
+	if($_SESSION['Usuario']['Nivel'] == 0 || $_SESSION['Usuario']['Nivel'] == 1){
+		$nivel = 'C.NivelAgenda = "1" AND';
+	}else{
+		$nivel = 'C.NivelAgenda = "2" AND';
+	}
 	$permissao = ($_SESSION['log']['Permissao'] >= 3 ) ? 'AND C.idApp_Agenda = ' . $_SESSION['log']['Agenda'] . '  ' : FALSE;
+	$permissao5 = FALSE;
 }else{
 	$permissao = FALSE;
+	$nivel = FALSE;
+	$permissao5 = 'AND A.idSis_Associado = ' . $_SESSION['log']['idSis_Usuario'] . '';
 }
 
 //$permissao3 = ($_SESSION['log']['idSis_Empresa'] != 5 ) ? 'AND A.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '  ' : FALSE;
-$permissao3 = ($_SESSION['log']['idSis_Empresa'] != 5 ) ? 'AND C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '  ' : FALSE;
+//$permissao3 = ($_SESSION['log']['idSis_Empresa'] != 5 ) ? 'AND C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '  ' : FALSE;
 //$permissao5 = ($_SESSION['log']['idSis_Empresa'] == 5) ? 'AND A.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . '  ' : FALSE;
-$permissao5 = ($_SESSION['log']['idSis_Empresa'] == 5) ? 'AND A.idSis_Associado = ' . $_SESSION['log']['idSis_Usuario'] . '  ' : FALSE;
+//$permissao5 = ($_SESSION['log']['idSis_Empresa'] == 5) ? 'AND A.idSis_Associado = ' . $_SESSION['log']['idSis_Usuario'] . '  ' : FALSE;
 //$permissao1 = ($_SESSION['log']['idSis_Empresa'] == 5)  ? 'OR R.CelularCliente = ' . $_SESSION['log']['CelularUsuario'] . '  ' : FALSE;
 //$permissao4 = ($_SESSION['log']['idSis_Empresa'] == 5)  ? 'OR U.CelularUsuario = ' . $_SESSION['log']['CelularUsuario'] . '  ' : FALSE;
 //$permissao2 = ($_SESSION['log']['idSis_Empresa'] == 5)  ? 'U.CpfUsuario = ' . $_SESSION['log']['CpfUsuario'] . ' OR ' : FALSE;																																			
@@ -86,6 +94,7 @@ $result = mysql_query(
 			C.idApp_OrcaTrata,
 			A.idSis_Associado,
             ASS.Nome AS NomeProfissional,
+			
             E.NomeEmpresa AS NomeEmpresaEmp,
             E.CadastrarPet,
             E.CadastrarDep,
@@ -108,7 +117,8 @@ $result = mysql_query(
 
 			' . $date_inicio_cons . '
 			' . $date_fim_cons . '
-			
+			' . $nivel . '
+			C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 			(C.idTab_Modulo = ' . $_SESSION['log']['idTab_Modulo'] . '
 				' . $tipoevento . ' 
 				' . $query . '
@@ -120,7 +130,7 @@ $result = mysql_query(
 				' . $query6 . '
 				' . $query7 . '
 				' . $permissao . '
-				' . $permissao3 . '
+				
 				' . $permissao5 . '
   
 			)

@@ -4765,6 +4765,7 @@ class Consulta extends CI_Controller {
 					$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 					$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 					$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+					$data['query']['NivelAgenda'] = $_SESSION['Usuario']['Nivel'];
 					/*
 					if($data['cadastrar']['Extra'] == 'N'){
 						$data['query']['Repeticao'] = 0;
@@ -4832,7 +4833,8 @@ class Consulta extends CI_Controller {
 										'DataFim' 				=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) . $ref,strtotime($datafim_cad))) . ' ' . $horafim_cad,
 										'idSis_Usuario' 		=> $_SESSION['log']['idSis_Usuario'],
 										'idSis_Empresa' 		=> $_SESSION['log']['idSis_Empresa'],
-										'idTab_Modulo' 			=> $_SESSION['log']['idTab_Modulo']
+										'idTab_Modulo' 			=> $_SESSION['log']['idTab_Modulo'],
+										'NivelAgenda' 			=> $_SESSION['Usuario']['Nivel']
 									);
 									$data['campos'] = array_keys($data['repeticao'][$j]);
 									$data['id_Repeticao'] = $this->Consulta_model->set_consulta($data['repeticao'][$j]);
@@ -5108,6 +5110,7 @@ class Consulta extends CI_Controller {
 							$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 							$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 							$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+							$data['query']['NivelAgenda'] = $_SESSION['Usuario']['Nivel'];
 							/*
 							if($data['cadastrar']['Extra'] == 'N'){
 								$data['query']['Repeticao'] = 0;
@@ -5172,7 +5175,8 @@ class Consulta extends CI_Controller {
 												'DataFim' 				=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) . $ref,strtotime($datafim_cad))) . ' ' . $horafim_cad,
 												'idSis_Usuario' 		=> $_SESSION['log']['idSis_Usuario'],
 												'idSis_Empresa' 		=> $_SESSION['log']['idSis_Empresa'],
-												'idTab_Modulo' 			=> $_SESSION['log']['idTab_Modulo']
+												'idTab_Modulo' 			=> $_SESSION['log']['idTab_Modulo'],
+												'NivelAgenda' 			=> $_SESSION['Usuario']['Nivel']
 											);
 											$data['campos'] = array_keys($data['repeticao'][$j]);
 											$data['id_Repeticao'] = $this->Consulta_model->set_consulta($data['repeticao'][$j]);

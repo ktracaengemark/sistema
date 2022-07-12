@@ -520,7 +520,7 @@
 											<div class="panel panel-warning">
 												<div class="panel-heading">
 													<div class="row adicionar">
-														<?php if ($vincular == "S") { ?>
+														<?php if ($vincular == "S" && ($_SESSION['Usuario']['Nivel'] == 0 || $_SESSION['Usuario']['Nivel'] == 1)) { ?>
 															<div class="col-xs-12 col-sm-3 col-md-6 col-lg-6">
 																<label for="Adicionar">Adicionar O.S.?</label><br>
 																<div class="btn-group" data-toggle="buttons">

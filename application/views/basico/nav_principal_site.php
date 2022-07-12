@@ -26,11 +26,19 @@
 				</li>
 				<li class="nav-item dropdown">
 					<a style="font-size:20px;" class="btn btn-danger  nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Sou Cliente <span class="caret"></span>
+						Painel de Controle <span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="dropdown01">
 						<li>
-							<a class="dropdown-item" style="color:#000000;" href="<?php echo base_url() ?>login/index2">Painel de Controle</a>
+							<a class="dropdown-item" style="color:#000000;" href="<?php echo base_url() ?>login/index2">
+								<span class="glyphicon glyphicon-home"></span>  Empresa
+							</a>
+						</li>
+						<li role="separator" class="divider"></li>
+						<li>
+							<a class="dropdown-item" style="color:#000000;" href="<?php echo base_url() ?>login/index">
+								<span class="glyphicon glyphicon-user"></span>  Associado
+							</a>
 						</li>
 					</ul>
 				</li>

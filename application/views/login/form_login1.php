@@ -8,7 +8,7 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
 						<div class="row acabamento text-center">
 							<div class="col-md-6 col-sm-6 col-xs-6 "style="color: #000000">
-								<span class="glyphicon glyphicon-user"></span> Cliente
+								<span class="glyphicon glyphicon-user"></span> Associado
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-6 ">			
 								<a class="" href="<?php echo base_url(); ?>login/index2" role="button"  >
