@@ -1,5 +1,5 @@
-<div class="container col-sm-offset-4 col-md-4 ">
-    <?php if (isset($msg)) echo $msg; ?>
+<div class="container ">
+	<?php if (isset($msg)) echo $msg; ?>
 	<?php echo form_open('relatorioempresa/login', 'role="form"'); ?>
 	<script>
 		function mostrarSenha(){
@@ -15,11 +15,8 @@
 			}
 		}
 	</script>
-	<div class="col-md-2 "></div>
-	<div class="col-md-8 ">
-	
-		<div class="row">	
-
+	<div class="col-sm-offset-4 col-md-4 ">
+		<div class="row">
 			<label class="sr-only">Empresa</label>
 			<select data-placeholder="Selecione uma opção..." class="form-control" id="idSis_Empresa" name="idSis_Empresa" readonly=''>			
 				<!--<option value="">Selecione sua Empresa</option>-->
