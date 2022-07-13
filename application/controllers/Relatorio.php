@@ -9923,18 +9923,9 @@ class Relatorio extends CI_Controller {
 	
     public function loginempresa() {
 
-        #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
-		$_SESSION['Empresa'] = $data['query'] = $this->Empresa_model->get_empresa($_SESSION['log']['idSis_Empresa'], TRUE);
-        ###################################################
-        #só pra eu saber quando estou no banco de testes ou de produção
-        #$CI = & get_instance();
-        #$CI->load->database();
-        #if ($CI->db->database != 'sishuap')
-        #echo $CI->db->database;
-        ###################################################
         #change error delimiter view
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
@@ -9944,16 +9935,11 @@ class Relatorio extends CI_Controller {
         $senha = md5($this->input->get_post('Senha'));
 
         #set validation rules
-        /*
-		$this->form_validation->set_rules('CelularAdmin', 'Celular do Admin', 'required|trim|callback_valid_celular');
-		$this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'required|trim|callback_valid_empresa[' . $celular . ']');
-        $this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5|callback_valid_senha[' . $celular . ']');
-		*/
+
 		$this->form_validation->set_rules('CelularAdmin', 'Celular do Admin', 'required|trim');
         $this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'required|trim');
 		$this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5');
 		
-		#$data['select']['idSis_Empresa'] = $this->Loginempresa_model->select_empresa();
 		$data['select']['idSis_Empresa'] = $this->Basico_model->select_empresa31();
 		
         if ($this->input->get('m') == 1)
@@ -9977,75 +9963,67 @@ class Relatorio extends CI_Controller {
 
             session_regenerate_id(true);
 
-            #Get GET or POST data
-            #$usuario = $this->input->get_post('UsuarioEmpresa');
-            #$senha = md5($this->input->get_post('Senha'));
-            /*
-              echo "<pre>";
-              print_r($query);
-              echo "</pre>";
-              exit();
-             */
-            //$query = $this->Loginempresa_model->check_dados_celular($senha, $celular, TRUE);
-			//$query = $this->Loginempresa_model->check_dados_empresa($empresa, $celular, TRUE);
-			
-			$query = $this->Loginempresa_model->check_dados_empresa($empresa, $celular, $senha, TRUE);
-            
-			#$_SESSION['log']['Agenda'] = $this->Loginempresa_model->get_agenda_padrao($query['idSis_Empresa']);
-			
-            #echo "<pre>".print_r($query)."</pre>";
-            #exit();
+			$_SESSION['AdminUsuario'] = $query = $this->Loginempresa_model->check_dados_admin($empresa, $celular, $senha, TRUE);
 
             if ($query === FALSE) {
-                #$msg = "<strong>Senha</strong> incorreta ou <strong>usuário</strong> inexistente.";
-                #$this->basico->erro($msg);
-                $data['msg'] = $this->basico->msg('<strong>Celular ou Senha</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
-				#$data['msg'] = $this->basico->msg('<strong>NomeEmpresa</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
+				
+				unset($_SESSION['AdminUsuario']);
+                
+				$data['msg'] = $this->basico->msg('<strong>Celular ou Senha</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
+
                 $this->load->view('relatorio/form_loginempresa', $data);
 
             } else {
                 #initialize session
                 $this->load->driver('session');
 
-				$_SESSION['AdminEmpresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
-		
-                #$_SESSION['log']['UsuarioEmpresa'] = $query['UsuarioEmpresa'];
-                //se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
-				$_SESSION['log']['UsuarioEmpresa'] = (strlen($query['UsuarioEmpresa']) > 13) ? substr($query['UsuarioEmpresa'], 0, 13) : $query['UsuarioEmpresa'];
-                $_SESSION['log']['Nome'] = $query['NomeAdmin'];
-				$_SESSION['log']['Nome2'] = (strlen($query['NomeAdmin']) > 6) ? substr($query['NomeAdmin'], 0, 6) : $query['NomeAdmin'];
-				$_SESSION['log']['CpfAdmin'] = $query['CpfAdmin'];
-				$_SESSION['log']['CelularAdmin'] = $query['CelularAdmin'];
-				$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];
-				$_SESSION['log']['NomeEmpresa2'] = (strlen($query['NomeEmpresa']) > 15) ? substr($query['NomeEmpresa'], 0, 15) : $query['NomeEmpresa'];
-				$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
-				$_SESSION['log']['PermissaoEmpresa'] = $query['PermissaoEmp'];
-				$_SESSION['log']['NivelEmpresa'] = $query['NivelEmpresa'];
-				$_SESSION['log']['DataCriacao'] = $query['DataCriacao'];
-				$_SESSION['log']['DataDeValidade'] = $query['DataDeValidade'];
-
-                $this->load->database();
-                $_SESSION['db']['hostname'] = $this->db->hostname;
-                $_SESSION['db']['username'] = $this->db->username;
-                $_SESSION['db']['password'] = $this->db->password;
-                $_SESSION['db']['database'] = $this->db->database;
-
-                if ($this->Loginempresa_model->set_acesso($_SESSION['log']['idSis_Empresa'], 'LOGIN') === FALSE) {
-                    $msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
-
-                    $this->basico->erro($msg);
-                    $this->load->view('relatorio/form_loginempresa');
-                } else {
+				$_SESSION['AdminEmpresa']  = $query2 = $this->Empresa_model->get_empresa($empresa, TRUE);
+				
+				if ($query2 === FALSE) {
 					
-					unset($_SESSION['Empresa']);
-					unset($_SESSION['Usuario']);
-					redirect('acessoempresa');
-                }
+					unset($_SESSION['AdminUsuario'], $_SESSION['AdminEmpresa']);
+					
+					$data['msg'] = $this->basico->msg('<strong>Celular ou Senha</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
+
+					$this->load->view('relatorio/form_loginempresa', $data);
+
+				} else {
+					
+					$_SESSION['log']['Nome'] = $query['Nome'];
+					$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
+					$_SESSION['log']['CpfAdmin'] = $query['CpfUsuario'];
+					$_SESSION['log']['CelularAdmin'] = $query['CelularUsuario'];
+					$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];
+					$_SESSION['log']['NomeEmpresa2'] = (strlen($query['NomeEmpresa']) > 15) ? substr($query['NomeEmpresa'], 0, 15) : $query['NomeEmpresa'];
+					$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
+					$_SESSION['log']['UsuarioEmpresa'] = $query2['UsuarioEmpresa'];
+					$_SESSION['log']['PermissaoEmpresa'] = $query2['PermissaoEmp'];
+					$_SESSION['log']['NivelEmpresa'] = $query2['NivelEmpresa'];
+					$_SESSION['log']['DataCriacao'] = $query2['DataCriacao'];
+					$_SESSION['log']['DataDeValidade'] = $query2['DataDeValidade'];
+					$_SESSION['log']['Site'] = $query2['Site'];
+
+					$this->load->database();
+					$_SESSION['db']['hostname'] = $this->db->hostname;
+					$_SESSION['db']['username'] = $this->db->username;
+					$_SESSION['db']['password'] = $this->db->password;
+					$_SESSION['db']['database'] = $this->db->database;
+
+					if ($this->Loginempresa_model->set_acesso($_SESSION['log']['idSis_Empresa'], 'LOGIN') === FALSE) {
+						$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
+
+						$this->basico->erro($msg);
+						$this->load->view('relatorio/form_loginempresa');
+					} else {
+						
+						unset($_SESSION['Empresa']);
+						unset($_SESSION['Usuario']);
+						redirect('acessoempresa');
+					}
+				}	
             }
         }
 
-        #load footer view
-        #$this->load->view('basico/footerloginempresa');
         $this->load->view('basico/footer');
     }
 	
@@ -10080,5 +10058,6 @@ class Relatorio extends CI_Controller {
         } else {
             return TRUE;
         }
-    }	
+    }
+	
 }

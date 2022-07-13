@@ -2155,7 +2155,9 @@ class Relatorioempresa_model extends CI_Model {
         } else {
 
             foreach ($query->result() as $row) {
-				if($row->Nivel == 1){
+				if($row->Nivel == 0){
+					$row->Nivel = "0 - Administrador";
+				}elseif($row->Nivel == 1){
 					$row->Nivel = "1 - Funcionario";
 				}elseif($row->Nivel == 2){
 					$row->Nivel = "2 - Revendedor";

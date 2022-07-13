@@ -121,6 +121,7 @@ class Usuario extends CI_Controller {
 			$data['select']['CompAgenda'] = $this->Basico_model->select_status_sn();
 			#$data['select']['idSis_Empresa'] = $this->Basico_model->select_empresa2();
 			$data['select']['Nivel'] = array(
+				'0' => '0 - Administrador',
 				'1' => '1 - Funcionario',
 				'2' => '2 - Revendedor',
 			);		
@@ -528,6 +529,7 @@ class Usuario extends CI_Controller {
 				$data['select']['CompAgenda'] = $this->Basico_model->select_status_sn();
 				#$data['select']['idSis_Empresa'] = $this->Basico_model->select_empresa2();
 				$data['select']['Nivel'] = array(
+					'0' => '0 - Administrador',
 					'1' => '1 - Funcionario',
 					'2' => '2 - Revendedor',
 				);

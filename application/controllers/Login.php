@@ -147,7 +147,7 @@ class Login extends CI_Controller {
 						$this->load->view('form_login1');
 					} else {
 						
-						unset($_SESSION['AdminEmpresa']);
+						unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 						unset($_SESSION['QueryUsuario']);
 						unset($_SESSION['QueryEmpresa']);
 						redirect('acesso_associado');
@@ -269,7 +269,7 @@ class Login extends CI_Controller {
 								$this->basico->erro($msg);
 								$this->load->view('form_login2');
 							} else {
-								unset($_SESSION['AdminEmpresa']);
+								unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 								unset($_SESSION['QueryUsuario']);
 								unset($_SESSION['QueryEmpresa']);
 								redirect('acesso');
@@ -338,7 +338,7 @@ class Login extends CI_Controller {
 							$this->basico->erro($msg);
 							$this->load->view('form_login1');
 						} else {
-							unset($_SESSION['AdminEmpresa']);
+							unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 							unset($_SESSION['QueryUsuario']);
 							unset($_SESSION['QueryEmpresa']);
 							redirect('acesso');
@@ -478,7 +478,7 @@ class Login extends CI_Controller {
 								$this->basico->erro($msg);
 								$this->load->view('form_login2');
 							} else {
-								unset($_SESSION['AdminEmpresa']);
+								unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 								unset($_SESSION['QueryUsuario']);
 								unset($_SESSION['QueryEmpresa']);
 								redirect('acesso');
@@ -547,7 +547,7 @@ class Login extends CI_Controller {
 							$this->basico->erro($msg);
 							$this->load->view('form_login2');
 						} else {
-							unset($_SESSION['AdminEmpresa']);
+							unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 							unset($_SESSION['QueryUsuario']);
 							unset($_SESSION['QueryEmpresa']);
 							redirect('acesso');
@@ -670,7 +670,7 @@ class Login extends CI_Controller {
 								$this->basico->erro($msg);
 								$this->load->view('form_login2');
 							} else {
-								unset($_SESSION['AdminEmpresa']);
+								unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 								unset($_SESSION['QueryUsuario']);
 								unset($_SESSION['QueryEmpresa']);
 								redirect('acesso');
@@ -739,7 +739,7 @@ class Login extends CI_Controller {
 							$this->basico->erro($msg);
 							$this->load->view('form_login3');
 						} else {
-							unset($_SESSION['AdminEmpresa']);
+							unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 							unset($_SESSION['QueryUsuario']);
 							unset($_SESSION['QueryEmpresa']);
 							redirect('acesso');
@@ -862,7 +862,7 @@ class Login extends CI_Controller {
 								$this->basico->erro($msg);
 								$this->load->view('form_login2');
 							} else {
-								unset($_SESSION['AdminEmpresa']);
+								unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 								unset($_SESSION['QueryUsuario']);
 								unset($_SESSION['QueryEmpresa']);
 								redirect('acesso');
@@ -931,7 +931,7 @@ class Login extends CI_Controller {
 							$this->basico->erro($msg);
 							$this->load->view('form_login4');
 						} else {
-							unset($_SESSION['AdminEmpresa']);
+							unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 							unset($_SESSION['QueryUsuario']);
 							unset($_SESSION['QueryEmpresa']);
 							redirect('acesso');
@@ -1078,7 +1078,7 @@ class Login extends CI_Controller {
 										$this->load->view('login/form_login2', $data);
 									}
 								} else {
-									unset($_SESSION['AdminEmpresa']);
+									unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 									unset($_SESSION['QueryUsuario']);
 									unset($_SESSION['QueryEmpresa']);
 									redirect('acesso');
@@ -1151,7 +1151,7 @@ class Login extends CI_Controller {
 									$this->load->view('login/form_login2', $data);
 								}
 							} else {
-								unset($_SESSION['AdminEmpresa']);
+								unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 								unset($_SESSION['QueryUsuario']);
 								unset($_SESSION['QueryEmpresa']);
 								redirect('acesso');

@@ -36,34 +36,21 @@ class Loginempresa extends CI_Controller {
 
     public function index() {
 
-        #$_SESSION['log']['cliente'] = $_SESSION['log']['nome_modulo'] =
+        $this->load->view('basico/logologin');
+		
         $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
         $_SESSION['log']['idTab_Modulo'] = 1;
 
-        ###################################################
-        #só pra eu saber quando estou no banco de testes ou de produção
-        #$CI = & get_instance();
-        #$CI->load->database();
-        /*
-		#if ($CI->db->database != 'sishuap')
-        #echo $CI->db->database;
-		*/
-        ###################################################
         #change error delimiter view
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
         #Get GET or POST data
-        $celular = $this->input->get_post('CelularAdmin');
+        $celular = $this->input->get_post('CelularUsuario');
 		$empresa = $this->input->get_post('idSis_Empresa');
         $senha = md5($this->input->get_post('Senha'));
 
         #set validation rules
-        /*
-		$this->form_validation->set_rules('CelularAdmin', 'Celular do Admin', 'required|trim|callback_valid_celular');
-		$this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'required|trim|callback_valid_empresa[' . $celular . ']');
-        $this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5|callback_valid_senha[' . $celular . ']');
-		*/
-		$this->form_validation->set_rules('CelularAdmin', 'Celular do Admin', 'required|trim');
+		$this->form_validation->set_rules('CelularUsuario', 'Celular do Usuario', 'required|trim');
         $this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'required|trim');
 		$this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5');
 
@@ -90,71 +77,65 @@ class Loginempresa extends CI_Controller {
 
             session_regenerate_id(true);
 
-            #Get GET or POST data
-            #$usuario = $this->input->get_post('UsuarioEmpresa');
-            #$senha = md5($this->input->get_post('Senha'));
-            /*
-             
-             */
-            //$query = $this->Loginempresa_model->check_dados_celular($senha, $celular, TRUE);
-			//$query = $this->Loginempresa_model->check_dados_empresa($empresa, $celular, TRUE);
-			$query = $this->Loginempresa_model->check_dados_empresa($empresa, $celular, $senha, TRUE);
-			#$_SESSION['log']['Agenda'] = $this->Loginempresa_model->get_agenda_padrao($query['idSis_Empresa']);
-
-            #echo "<pre>".print_r($query)."</pre>";
-            #exit();
+			$_SESSION['AdminUsuario'] = $query = $this->Loginempresa_model->check_dados_admin($empresa, $celular, $senha, TRUE);
 
             if ($query === FALSE) {
-                #$msg = "<strong>Senha</strong> incorreta ou <strong>usuário</strong> inexistente.";
-                #$this->basico->erro($msg);
+
+				unset($_SESSION['AdminUsuario']);
+				
 				$data['msg'] = $this->basico->msg('<strong>Empresa, Celular ou Senha</strong> incorretos.', 'erro', FALSE, FALSE, FALSE);
-				#$data['msg'] = $this->basico->msg('<strong>NomeEmpresa</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
-                $this->load->view('form_loginempresa', $data);
+
+                $this->load->view('loginempresa/form_loginempresa', $data);
 
             } else {
                 #initialize session
                 $this->load->driver('session');
 
-				$_SESSION['AdminEmpresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
-		
-                #$_SESSION['log']['UsuarioEmpresa'] = $query['UsuarioEmpresa'];
-                //se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
-				$_SESSION['log']['UsuarioEmpresa'] = (strlen($query['UsuarioEmpresa']) > 13) ? substr($query['UsuarioEmpresa'], 0, 13) : $query['UsuarioEmpresa'];
-                $_SESSION['log']['Nome'] = $query['NomeAdmin'];
-				$_SESSION['log']['Nome2'] = (strlen($query['NomeAdmin']) > 6) ? substr($query['NomeAdmin'], 0, 6) : $query['NomeAdmin'];
-				$_SESSION['log']['CpfAdmin'] = $query['CpfAdmin'];
-				$_SESSION['log']['CelularAdmin'] = $query['CelularAdmin'];
-				$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];
-				$_SESSION['log']['NomeEmpresa2'] = (strlen($query['NomeEmpresa']) > 15) ? substr($query['NomeEmpresa'], 0, 15) : $query['NomeEmpresa'];
-				$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
-				$_SESSION['log']['PermissaoEmpresa'] = $query['PermissaoEmp'];
-				$_SESSION['log']['NivelEmpresa'] = $query['NivelEmpresa'];
-				$_SESSION['log']['TabelasEmpresa'] = $query['TabelasEmpresa'];
-				$_SESSION['log']['DataCriacao'] = $query['DataCriacao'];
-				$_SESSION['log']['DataDeValidade'] = $query['DataDeValidade'];
-				$_SESSION['log']['Site'] = $query['Site'];
+				$_SESSION['AdminEmpresa']  = $query2 =  $this->Empresa_model->get_empresa($empresa, TRUE);
+				
+				if ($query2 === FALSE) {
+					
+					unset($_SESSION['AdminUsuario'], $_SESSION['AdminEmpresa']);
+					$data['msg'] = $this->basico->msg('<strong>Celular ou Senha</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
 
-                $this->load->database();
-                $_SESSION['db']['hostname'] = $this->db->hostname;
-                $_SESSION['db']['username'] = $this->db->username;
-                $_SESSION['db']['password'] = $this->db->password;
-                $_SESSION['db']['database'] = $this->db->database;
+					$this->load->view('loginempresa/form_loginempresa', $data);
 
-                if ($this->Loginempresa_model->set_acesso($_SESSION['log']['idSis_Empresa'], 'LOGIN') === FALSE) {
-                    $msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
+				} else {
+							
+					$_SESSION['log']['Nome'] = $query['Nome'];
+					$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
+					$_SESSION['log']['CpfAdmin'] = $query['CpfUsuario'];
+					$_SESSION['log']['CelularAdmin'] = $query['CelularUsuario'];
+					$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];
+					$_SESSION['log']['NomeEmpresa2'] = (strlen($query['NomeEmpresa']) > 15) ? substr($query['NomeEmpresa'], 0, 15) : $query['NomeEmpresa'];
+					$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
+					$_SESSION['log']['UsuarioEmpresa'] = $query2['UsuarioEmpresa'];
+					$_SESSION['log']['PermissaoEmpresa'] = $query2['PermissaoEmp'];
+					$_SESSION['log']['NivelEmpresa'] = $query2['NivelEmpresa'];
+					$_SESSION['log']['DataCriacao'] = $query2['DataCriacao'];
+					$_SESSION['log']['DataDeValidade'] = $query2['DataDeValidade'];
+					$_SESSION['log']['Site'] = $query2['Site'];
 
-                    $this->basico->erro($msg);
-                    $this->load->view('form_loginempresa');
-                } else {
-					unset($_SESSION['Empresa']);
-					unset($_SESSION['Usuario']);
-					redirect('acessoempresa');
-                }
+					$this->load->database();
+					$_SESSION['db']['hostname'] = $this->db->hostname;
+					$_SESSION['db']['username'] = $this->db->username;
+					$_SESSION['db']['password'] = $this->db->password;
+					$_SESSION['db']['database'] = $this->db->database;
+
+					if ($this->Loginempresa_model->set_acesso($_SESSION['log']['idSis_Empresa'], 'LOGIN') === FALSE) {
+						$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
+
+						$this->basico->erro($msg);
+						$this->load->view('loginempresa/form_loginempresa', $data);
+					} else {
+						unset($_SESSION['Empresa']);
+						unset($_SESSION['Usuario']);
+						redirect('acessoempresa');
+					}
+				}
             }
         }
 
-        #load footer view
-        #$this->load->view('basico/footerloginempresa');
         $this->load->view('basico/footer');
     }
 
@@ -534,7 +515,7 @@ class Loginempresa extends CI_Controller {
 							'Inativo' => "0",
 							'idTab_Modulo' => "1",
 							'Permissao' => "3",
-							'Nivel' => "1"
+							'Nivel' => "0"
 						);
 						$data['campos'] = array_keys($data['usuario']);
 
@@ -1094,7 +1075,7 @@ class Loginempresa extends CI_Controller {
 						'Inativo' => "0",
 						'idTab_Modulo' => "1",
 						'Permissao' => "3",
-						'Nivel' => "1"
+						'Nivel' => "0"
 					);
 					$data['campos'] = array_keys($data['usuario']);
 

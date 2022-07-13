@@ -1150,7 +1150,7 @@ class Relatorio_model extends CI_Model {
 		$_SESSION['FiltroAlteraParcela']['Start'] = $start;
 		$_SESSION['FiltroAlteraParcela']['Limit'] = $limit;
 		
-		if($_SESSION['Usuario']['Nivel'] == 1){
+		if($_SESSION['Usuario']['Nivel'] == 0 || $_SESSION['Usuario']['Nivel'] == 1){
 			$nivel = 'AND OT.NivelOrca = 1';
 		}elseif($_SESSION['Usuario']['Nivel'] == 2){
 			$nivel = 'AND OT.NivelOrca = 2';

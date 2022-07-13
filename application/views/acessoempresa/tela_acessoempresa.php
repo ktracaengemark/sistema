@@ -9,7 +9,7 @@
 				</div>
 				<div class="panel-body">
 					<div class="col-md-12 text-center t">
-						<h4><?php echo '<small>Bem Vindo<br></small><strong>"' . $_SESSION['AdminEmpresa']['NomeAdmin'] . '"</strong>'  ?></h4>
+						<h4><?php echo '<small>Bem Vindo<br></small><strong>"' . $_SESSION['AdminUsuario']['Nome'] . '"</strong>'  ?></h4>
 						<h4><?php echo '<small>Administrador da(o)<br></small><strong> ' . $_SESSION['AdminEmpresa']['NomeEmpresa'] . '</strong>.'  ?></h4>
 					</div>
 					<div class="col-sm-offset-4 col-lg-4 " align="center"> 

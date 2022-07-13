@@ -786,7 +786,7 @@ $this->load->view('relatorioempresa/tela_empresafilial', $data);
 								$this->basico->erro($msg);
 								$this->load->view('relatorioempresa/form_login');
 							} else {
-								unset($_SESSION['AdminEmpresa']);
+								unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 								unset($_SESSION['QueryUsuario']);
 								unset($_SESSION['QueryEmpresa']);
 								redirect('acesso');
@@ -856,7 +856,7 @@ $this->load->view('relatorioempresa/tela_empresafilial', $data);
 							$this->basico->erro($msg);
 							$this->load->view('form_login2');
 						} else {
-							unset($_SESSION['AdminEmpresa']);
+							unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 							unset($_SESSION['QueryUsuario']);
 							unset($_SESSION['QueryEmpresa']);
 							redirect('acesso');

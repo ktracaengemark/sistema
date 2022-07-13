@@ -43,6 +43,37 @@ class Loginempresa_model extends CI_Model {
 
     }
 	
+	public function check_dados_admin($empresa, $celular, $senha, $retorna = FALSE) {
+
+        $query = $this->db->query('SELECT * FROM Sis_Usuario WHERE '
+                . '(idSis_Empresa = "' . $empresa . '" AND '
+                . 'CelularUsuario = "' . $celular . '" AND '
+                . 'Senha = "' . $senha . '" AND '
+				. 'Nivel = 0 )'
+        );
+        #$query = $this->db->get_where('Sis_Usuario', $data);
+        /*
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+         */
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        }
+        else {
+            if ($retorna === FALSE) {
+                return TRUE;
+            }
+            else {
+                $query = $query->result_array();
+                return $query[0];
+            }
+        }
+
+    }
+		
 	public function check_dados_empresa($empresa, $celular, $senha, $retorna = FALSE) {
 
         $query = $this->db->query('SELECT * FROM Sis_Empresa WHERE '

@@ -109,9 +109,18 @@ class Empresa_model extends CI_Model {
 				E.idSis_Empresa = ' . $data . '
 		');
 
-        $query = $query->result_array();
-
-        return $query[0];
+		$count = $query->num_rows();
+		
+		if(isset($count)){
+			if($count == 0){
+				return FALSE;
+			}else{
+				$query = $query->result_array();
+				return $query[0];
+			}
+		}else{
+			return FALSE;
+		}
     }
 
     public function get_empresa_associado($data) {
