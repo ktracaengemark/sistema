@@ -9922,112 +9922,120 @@ class Relatorio extends CI_Controller {
     }
 	
     public function loginempresa() {
-
-        $_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
-        $_SESSION['log']['idTab_Modulo'] = 1;
-
-        #change error delimiter view
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-        #Get GET or POST data
-        $celular = $this->input->get_post('CelularAdmin');
-		$empresa = $this->input->get_post('idSis_Empresa');
-        $senha = md5($this->input->get_post('Senha'));
-
-        #set validation rules
-
-		$this->form_validation->set_rules('CelularAdmin', 'Celular do Admin', 'required|trim');
-        $this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'required|trim');
-		$this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5');
 		
-		$data['select']['idSis_Empresa'] = $this->Basico_model->select_empresa31();
-		
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 3)
-            $data['msg'] = $this->basico->msg('<strong>Sua sessão expirou. Faça o loginempresa novamente.</strong>', 'erro', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 4)
-            $data['msg'] = $this->basico->msg('<strong>Usuário ativado com sucesso! Faça o loginempresa para acessar o sistema.</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 5)
-            $data['msg'] = $this->basico->msg('<strong>Link expirado.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-
-        #run form validation
-        if ($this->form_validation->run() === FALSE) {
-            #load loginempresa view
-            $this->load->view('relatorio/form_loginempresa', $data);
-        } else {
-
-            session_regenerate_id(true);
-
-			$_SESSION['AdminUsuario'] = $query = $this->Loginempresa_model->check_dados_admin($empresa, $celular, $senha, TRUE);
-
-            if ($query === FALSE) {
+		if ($_SESSION['Empresa']['idSis_Empresa'] == 5) {
 				
-				unset($_SESSION['AdminUsuario']);
-                
-				$data['msg'] = $this->basico->msg('<strong>Celular ou Senha</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
-
-                $this->load->view('relatorio/form_loginempresa', $data);
-
-            } else {
-                #initialize session
-                $this->load->driver('session');
-
-				$_SESSION['AdminEmpresa']  = $query2 = $this->Empresa_model->get_empresa($empresa, TRUE);
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'login/sair' . $data['msg']);
+			exit();
+			
+		}else{
 				
-				if ($query2 === FALSE) {
+			$_SESSION['log']['nome_modulo'] = $_SESSION['log']['modulo'] = $data['modulo'] = $data['nome_modulo'] = 'profliberal';
+			$_SESSION['log']['idTab_Modulo'] = 1;
+
+			#change error delimiter view
+			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+			#Get GET or POST data
+			$celular = $this->input->get_post('CelularAdmin');
+			$empresa = $this->input->get_post('idSis_Empresa');
+			$senha = md5($this->input->get_post('Senha'));
+
+			#set validation rules
+
+			$this->form_validation->set_rules('CelularAdmin', 'Celular do Admin', 'required|trim');
+			$this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'required|trim');
+			$this->form_validation->set_rules('Senha', 'Senha', 'required|trim|md5');
+			
+			$data['select']['idSis_Empresa'] = $this->Basico_model->select_empresa31();
+			
+			if ($this->input->get('m') == 1)
+				$data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+			elseif ($this->input->get('m') == 2)
+				$data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+			elseif ($this->input->get('m') == 3)
+				$data['msg'] = $this->basico->msg('<strong>Sua sessão expirou. Faça o loginempresa novamente.</strong>', 'erro', TRUE, TRUE, TRUE);
+			elseif ($this->input->get('m') == 4)
+				$data['msg'] = $this->basico->msg('<strong>Usuário ativado com sucesso! Faça o loginempresa para acessar o sistema.</strong>', 'sucesso', TRUE, TRUE, TRUE);
+			elseif ($this->input->get('m') == 5)
+				$data['msg'] = $this->basico->msg('<strong>Link expirado.</strong>', 'erro', TRUE, TRUE, TRUE);
+			else
+				$data['msg'] = '';
+
+			#run form validation
+			if ($this->form_validation->run() === FALSE) {
+				#load loginempresa view
+				$this->load->view('relatorio/form_loginempresa', $data);
+			} else {
+
+				session_regenerate_id(true);
+
+				$_SESSION['AdminUsuario'] = $query = $this->Loginempresa_model->check_dados_admin($empresa, $celular, $senha, TRUE);
+
+				if ($query === FALSE) {
 					
-					unset($_SESSION['AdminUsuario'], $_SESSION['AdminEmpresa']);
+					unset($_SESSION['AdminUsuario']);
 					
 					$data['msg'] = $this->basico->msg('<strong>Celular ou Senha</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
 
 					$this->load->view('relatorio/form_loginempresa', $data);
 
 				} else {
+					#initialize session
+					$this->load->driver('session');
+
+					$_SESSION['AdminEmpresa']  = $query2 = $this->Empresa_model->get_empresa($empresa, TRUE);
 					
-					unset($_SESSION['log']);
-					
-					$_SESSION['log']['Nome'] = $query['Nome'];
-					$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
-					$_SESSION['log']['CpfAdmin'] = $query['CpfUsuario'];
-					$_SESSION['log']['CelularAdmin'] = $query['CelularUsuario'];
-					$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];
-					$_SESSION['log']['NomeEmpresa2'] = (strlen($query['NomeEmpresa']) > 15) ? substr($query['NomeEmpresa'], 0, 15) : $query['NomeEmpresa'];
-					$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
-					$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
-					$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
-					$_SESSION['log']['UsuarioEmpresa'] = $query2['UsuarioEmpresa'];
-					$_SESSION['log']['PermissaoEmpresa'] = $query2['PermissaoEmp'];
-					$_SESSION['log']['NivelEmpresa'] = $query2['NivelEmpresa'];
-					$_SESSION['log']['DataCriacao'] = $query2['DataCriacao'];
-					$_SESSION['log']['DataDeValidade'] = $query2['DataDeValidade'];
-					$_SESSION['log']['Site'] = $query2['Site'];
+					if ($query2 === FALSE) {
+						
+						unset($_SESSION['AdminUsuario'], $_SESSION['AdminEmpresa']);
+						
+						$data['msg'] = $this->basico->msg('<strong>Celular ou Senha</strong> incorreta.', 'erro', FALSE, FALSE, FALSE);
 
-					$this->load->database();
-					$_SESSION['db']['hostname'] = $this->db->hostname;
-					$_SESSION['db']['username'] = $this->db->username;
-					$_SESSION['db']['password'] = $this->db->password;
-					$_SESSION['db']['database'] = $this->db->database;
+						$this->load->view('relatorio/form_loginempresa', $data);
 
-					if ($this->Loginempresa_model->set_acesso($_SESSION['log']['idSis_Empresa'], 'LOGIN') === FALSE) {
-						$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
-
-						$this->basico->erro($msg);
-						$this->load->view('relatorio/form_loginempresa');
 					} else {
 						
-						unset($_SESSION['Empresa']);
-						unset($_SESSION['Usuario']);
-						redirect('acessoempresa');
-					}
-				}	
-            }
-        }
+						unset($_SESSION['log']);
+						
+						$_SESSION['log']['Nome'] = $query['Nome'];
+						$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
+						$_SESSION['log']['CpfAdmin'] = $query['CpfUsuario'];
+						$_SESSION['log']['CelularAdmin'] = $query['CelularUsuario'];
+						$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];
+						$_SESSION['log']['NomeEmpresa2'] = (strlen($query['NomeEmpresa']) > 15) ? substr($query['NomeEmpresa'], 0, 15) : $query['NomeEmpresa'];
+						$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
+						$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
+						$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
+						$_SESSION['log']['UsuarioEmpresa'] = $query2['UsuarioEmpresa'];
+						$_SESSION['log']['PermissaoEmpresa'] = $query2['PermissaoEmp'];
+						$_SESSION['log']['NivelEmpresa'] = $query2['NivelEmpresa'];
+						$_SESSION['log']['DataCriacao'] = $query2['DataCriacao'];
+						$_SESSION['log']['DataDeValidade'] = $query2['DataDeValidade'];
+						$_SESSION['log']['Site'] = $query2['Site'];
 
+						$this->load->database();
+						$_SESSION['db']['hostname'] = $this->db->hostname;
+						$_SESSION['db']['username'] = $this->db->username;
+						$_SESSION['db']['password'] = $this->db->password;
+						$_SESSION['db']['database'] = $this->db->database;
+
+						if ($this->Loginempresa_model->set_acesso($_SESSION['log']['idSis_Empresa'], 'LOGIN') === FALSE) {
+							$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
+
+							$this->basico->erro($msg);
+							$this->load->view('relatorio/form_loginempresa');
+						} else {
+							
+							unset($_SESSION['Empresa']);
+							unset($_SESSION['Usuario']);
+							redirect('acessoempresa');
+						}
+					}	
+				}
+			}
+		}
         $this->load->view('basico/footer');
     }
 	

@@ -2193,7 +2193,7 @@ if (isset($data) && $data) {
 		if($_SESSION['log']['idSis_Empresa'] != 5){
 			
 			if($_SESSION['Usuario']['Nivel'] == 0 || $_SESSION['Usuario']['Nivel'] == 1){
-				$nivel = 'AND U.Nivel = 1';
+				$nivel = 'AND (U.Nivel = 0 OR U.Nivel = 1)';
 			}else{
 				$nivel = 'AND U.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . '';
 			}

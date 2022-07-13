@@ -443,7 +443,7 @@ class Usuario2 extends CI_Controller {
         else
             $data['msg'] = '';
 
-		if ($_SESSION['Empresa']['idSis_Empresa'] == 5) {
+		if ($_SESSION['Empresa']['idSis_Empresa'] == 5 || $_SESSION['Empresa']['Rede'] != "S" ) {
 				
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'login/sair' . $data['msg']);

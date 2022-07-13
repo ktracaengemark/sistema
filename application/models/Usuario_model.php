@@ -537,11 +537,20 @@ class Usuario_model extends CI_Model {
 
     public function lista_revendedor($data, $x) {
 
-        $query = $this->db->query('SELECT * '
-                . 'FROM Sis_Usuario WHERE '
-                . 'Nivel = 2 AND '
-                . 'QuemCad = ' . $data . ' '
-                . 'ORDER BY Nome ASC ');
+        $query = $this->db->query(
+			'SELECT 
+				U.* 
+			FROM 
+				Sis_Usuario AS U
+					LEFT JOIN Sis_Empresa AS E ON E.idSis_Empresa = U.idSis_Empresa
+			WHERE
+				U.QuemCad = ' . $data . ' AND
+				U.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				U.Nivel = 2 AND
+				E.Rede = "S"
+			ORDER BY 
+				U.Nome ASC '
+		);
         /*
           echo $this->db->last_query();
           echo "<pre>";

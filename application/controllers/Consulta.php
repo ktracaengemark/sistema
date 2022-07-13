@@ -427,7 +427,12 @@ class Consulta extends CI_Controller {
 							$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 							$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 							$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-							$data['query']['NivelAgenda'] = $_SESSION['Usuario']['Nivel'];
+
+							if($_SESSION['Usuario']['Nivel'] == 2){
+								$data['query']['NivelAgenda'] = 2;
+							}else{
+								$data['query']['NivelAgenda'] = 1;
+							}
 							
 							if($data['cadastrar']['Extra'] == 'S'){
 								
@@ -1000,6 +1005,942 @@ class Consulta extends CI_Controller {
 				}
 			}
 		
+        $this->load->view('basico/footer');
+    }
+
+    public function cadastrar2($idApp_Cliente = NULL, $idApp_ContatoCliente = NULL) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Não é possível salvar o novo Agendamento.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
+        else
+            $data['msg'] = '';
+
+		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+			'Cadastrar',
+			'Whatsapp',
+			'Repetir',
+			'Extra',
+			'Adicionar',
+			'Vincular',
+			'NovaOS',
+			'PorConsulta',
+			'Prazo',
+			'DataMinima',
+			'RelacaoDep',
+			'PeloPet',
+			'PortePet',
+			'EspeciePet',
+			'RacaPet',
+			'id_Cliente_Auto',
+			'NomeClienteAuto',
+			'id_ClientePet_Auto',
+			'NomeClientePetAuto',
+			'id_ClienteDep_Auto',
+			'NomeClienteDepAuto',
+			'Hidden_status',
+			'Hidden_Caso',
+        ), TRUE));
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'idSis_Usuario',
+			//'idApp_Consulta',
+            'idApp_Agenda',
+            'idApp_Cliente',
+            'idApp_ClientePet',
+            'idApp_ClienteDep',
+            'idApp_OrcaTrata',
+            //'Repeticao',
+            'Data2',
+			'Data',
+            'HoraInicio',
+            'HoraFim',
+            'Paciente',
+			'idTab_Status',
+            'idTab_TipoConsulta',
+            'Procedimento',
+            'Obs',
+			'Intervalo',
+			'Periodo',
+			'Tempo',
+			'Tempo2',
+			'DataTermino',
+			'Recorrencias',
+			'Recorrencia',
+			'OS',
+		), TRUE));
+		
+ 		(!$data['cadastrar']['Hidden_Caso']) ? $data['cadastrar']['Hidden_Caso'] = 0 : FALSE;
+ 		(!$data['cadastrar']['Whatsapp']) ? $data['cadastrar']['Whatsapp'] = 'S' : FALSE;
+ 		(!$data['cadastrar']['Repetir']) ? $data['cadastrar']['Repetir'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['Extra']) ? $data['cadastrar']['Extra'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['Adicionar']) ? $data['cadastrar']['Adicionar'] = 'N' : FALSE;
+ 		(!$data['cadastrar']['Vincular']) ? $data['cadastrar']['Vincular'] = 'S' : FALSE;
+ 		(!$data['cadastrar']['NovaOS']) ? $data['cadastrar']['NovaOS'] = 'S' : FALSE;
+ 		(!$data['cadastrar']['PorConsulta']) ? $data['cadastrar']['PorConsulta'] = 'S' : FALSE;
+		(!$data['query']['Recorrencias']) ? $data['query']['Recorrencias'] = '1' : FALSE;
+		(!$data['query']['Tempo']) ? $data['query']['Tempo'] = '1' : FALSE;
+		(!$data['query']['Tempo']) ? $data['query']['Tempo2'] = '1' : FALSE;
+		(!$data['query']['OS']) ? $data['query']['OS'] = 0 : FALSE;		
+		
+		if($_SESSION['log']['idSis_Empresa'] != 5){
+			(!$data['query']['idApp_Agenda']) ? $data['query']['idApp_Agenda'] = $_SESSION['log']['Agenda'] : FALSE;
+		}
+
+		/*
+		//// Uso esse método para cadastrar agendamentos escolhendo clientes no pesquisa clientes////
+        if (isset($_SESSION['agenda']) && !$data['query']['HoraInicio'] && !$data['query']['HoraFim']) {
+            $data['query']['Data'] = date('d/m/Y', $_SESSION['agenda']['HoraInicio']);
+            $data['query']['Data2'] = date('d/m/Y', $_SESSION['agenda']['HoraFim']);
+			$data['query']['HoraInicio'] = date('H:i', $_SESSION['agenda']['HoraInicio']);
+            $data['query']['HoraFim'] = date('H:i', $_SESSION['agenda']['HoraFim']);
+        }
+		*/		
+		
+		//// Uso esse método para cadastrar agendamentos escolhendo clientes no formulário////
+		if ($this->input->get('start') && $this->input->get('end')) {
+            //$data['query']['Data'] = date('d/m/Y', substr($this->input->get('start'), 0, -3));
+            $data['query']['Data'] = date('d/m/Y', substr($this->input->get('end'), 0, -3));
+            $data['query']['Data2'] = date('d/m/Y', substr($this->input->get('end'), 0, -3));
+			$data['query']['HoraInicio'] = date('H:i', substr($this->input->get('start'), 0, -3));
+            $data['query']['HoraFim'] = date('H:i', substr($this->input->get('end'), 0, -3));
+		}
+
+        #Ver uma solução melhor para este campo
+        (!$data['query']['Paciente']) ? $data['query']['Paciente'] = 'R' : FALSE;
+
+        $data['radio'] = array(
+            'Paciente' => $this->basico->radio_checked($data['query']['Paciente'], 'Paciente', 'RD'),
+        );
+
+        ($data['query']['Paciente'] == 'D') ?
+            $data['div']['Paciente'] = '' : $data['div']['Paciente'] = 'style="display: none;"';
+
+		
+		$data['select']['EspeciePet'] = array (
+            //'0' => '',
+            '1' => 'CÃO',
+            '2' => 'GATO',
+			'3' => 'AVE',
+        );		
+		$data['select']['PeloPet'] = array (
+            //'0' => '',
+            '1' => 'CURTO',
+            '2' => 'MÉDIO',
+			'3' => 'LONGO',
+			'4' => 'CACHEADO',
+        );		
+		$data['select']['PortePet'] = array (
+            //'0' => '',
+            '1' => 'MINI',
+            '2' => 'PEQUENO',
+			'3' => 'MÉDIO',
+			'4' => 'GRANDE',
+			'5' => 'GIGANTE',
+        );
+		$data['select']['RacaPet'] = $this->Cliente_model->select_racapet();
+		$data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
+		$data['select']['Whatsapp'] = $this->Basico_model->select_status_sn();
+		$data['select']['Repetir'] = $this->Basico_model->select_status_sn();
+		$data['select']['Extra'] = $this->Basico_model->select_status_sn();
+		$data['select']['Adicionar'] = $this->Basico_model->select_status_sn();  
+		$data['select']['Vincular'] = $this->Basico_model->select_status_sn();
+		$data['select']['NovaOS'] = $this->Basico_model->select_status_sn();
+		$data['select']['PorConsulta'] = $this->Basico_model->select_status_sn();        
+		$data['select']['Tempo'] = array (
+            '1' => 'Dia(s)',
+            '2' => 'Semana(s)',
+            '3' => 'Mês(s)',
+			'4' => 'Ano(s)',
+        );		
+		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
+		$data['select']['Status'] = $this->Basico_model->select_status();
+        $data['select']['TipoConsulta'] = $this->Basico_model->select_tipo_consulta();
+        //$data['select']['idApp_Cliente'] = $this->Cliente_model->select_cliente();
+		$data['select']['RelacaoDep'] = $this->Cliente_model->select_relacao();
+
+        $data['select']['option'] = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['log']['Permissao'] <= 2 ) ? '<option value="">-- Sel. um Prof. --</option>' : FALSE;
+
+        $data['titulo'] = 'Agendamento';
+        $data['form_open_path'] = 'consulta/cadastrar2';
+        $data['panel'] = 'primary';
+        $data['readonly'] = '';
+        $data['disabled'] = '';
+        $data['metodo'] = 1;
+        $data['alterarcliente'] = 1;
+        $data['caminho2'] = '../';
+ 		$data['vincular'] = 'S';
+		$data['porconsulta'] = 'S';
+		
+		$data['exibir_id'] = 1;
+		$data['count_repet'] = 0;
+		
+		//(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;       
+		
+		$data['radio'] = array(
+            'Cadastrar' => $this->basico->radio_checked($data['cadastrar']['Cadastrar'], 'Cadastrar', 'NS'),
+        );
+        ($data['cadastrar']['Cadastrar'] == 'N') ?
+            $data['div']['Cadastrar'] = '' : $data['div']['Cadastrar'] = 'style="display: none;"';
+				
+		$data['radio'] = array(
+            'Whatsapp' => $this->basico->radio_checked($data['cadastrar']['Whatsapp'], 'Whatsapp', 'NS'),
+        );
+        ($data['cadastrar']['Whatsapp'] == 'N') ?
+            $data['div']['Whatsapp'] = '' : $data['div']['Whatsapp'] = 'style="display: none;"';
+		
+		$data['radio'] = array(
+            'Repetir' => $this->basico->radio_checked($data['cadastrar']['Repetir'], 'Repetir', 'NS'),
+        );
+        ($data['cadastrar']['Repetir'] == 'S') ?
+            $data['div']['Repetir'] = '' : $data['div']['Repetir'] = 'style="display: none;"';
+		
+		$data['radio'] = array(
+            'Extra' => $this->basico->radio_checked($data['cadastrar']['Extra'], 'Extra', 'NS'),
+        );
+        ($data['cadastrar']['Extra'] == 'S') ?
+            $data['div']['Extra'] = '' : $data['div']['Extra'] = 'style="display: none;"';
+				
+		$data['radio'] = array(
+            'Adicionar' => $this->basico->radio_checked($data['cadastrar']['Adicionar'], 'Adicionar', 'NS'),
+        );
+        ($data['cadastrar']['Adicionar'] == 'S') ?
+            $data['div']['Adicionar'] = '' : $data['div']['Adicionar'] = 'style="display: none;"';
+			
+		$data['radio'] = array(
+            'Vincular' => $this->basico->radio_checked($data['cadastrar']['Vincular'], 'Vincular', 'NS'),
+        );
+        ($data['cadastrar']['Vincular'] == 'S') ?
+            $data['div']['Vincular'] = '' : $data['div']['Vincular'] = 'style="display: none;"';
+		
+		$data['radio'] = array(
+            'NovaOS' => $this->basico->radio_checked($data['cadastrar']['NovaOS'], 'NovaOS', 'NS'),
+        );
+        ($data['cadastrar']['NovaOS'] == 'N') ?
+            $data['div']['NovaOS'] = '' : $data['div']['NovaOS'] = 'style="display: none;"';
+		
+		$data['radio'] = array(
+            'PorConsulta' => $this->basico->radio_checked($data['cadastrar']['PorConsulta'], 'PorConsulta', 'NS'),
+        );
+        ($data['cadastrar']['PorConsulta'] == 'N') ?
+            $data['div']['PorConsulta'] = '' : $data['div']['PorConsulta'] = 'style="display: none;"';
+		
+        $data['datepicker'] = 'DatePicker';
+        $data['timepicker'] = 'TimePicker';
+		
+        $data['cor_cli'] 	= 'default';
+        $data['cor_cons'] 	= 'warning';
+        $data['cor_orca'] 	= 'default';
+        $data['cor_sac'] 	= 'default';
+        $data['cor_mark'] 	= 'default';
+
+        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+		
+		$data['q3'] = $this->Clientepet_model->list_racapet(TRUE);
+		$data['list3'] = $this->load->view('clientepet/list_racapet', $data, TRUE);		
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+		if ($data['cadastrar']['Extra'] == 'S') {
+			$this->form_validation->set_rules('Repeticao', 'Repeticao', 'required|trim');
+		}
+		if ($data['cadastrar']['Repetir'] == 'S') {
+			$this->form_validation->set_rules('Intervalo', 'Intervalo', 'required|trim|valid_intervalo');
+			$this->form_validation->set_rules('Periodo', 'Período', 'required|trim|valid_periodo');
+			$this->form_validation->set_rules('Tempo', 'Tempo', 'required|trim');
+			$this->form_validation->set_rules('Tempo', 'Tempo2', 'required|trim');
+			$this->form_validation->set_rules('DataMinima', 'Data Mínima:', 'trim|valid_date');
+			$this->form_validation->set_rules('DataTermino', 'Termina em:', 'required|trim|valid_date|valid_data_termino[' . $data['cadastrar']['DataMinima'] . ']|valid_data_termino2[' . $data['query']['Data'] . ']');
+		}else{
+			if($data['query']['Recorrencias'] > 1){
+				$this->form_validation->set_rules('Repetir', 'Repetir', 'valid_repetir');
+			}
+		}
+		if(($data['query']['OS'] > 1 && $data['cadastrar']['Adicionar'] == "S" 
+			&& $data['cadastrar']['PorConsulta'] == "N" && $data['cadastrar']['NovaOS'] == "N" 
+			&& $data['cadastrar']['Vincular'] == "S") 
+			|| ($data['query']['OS'] == 1 && $data['cadastrar']['Adicionar'] == "S" 
+			&& $data['cadastrar']['PorConsulta'] == "N" && $data['cadastrar']['Vincular'] == "S" )){
+			$this->form_validation->set_rules('idApp_OrcaTrata', 'O.S.', 'required|trim');
+		}
+        $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
+        $this->form_validation->set_rules('Data2', 'Data do Fim', 'required|trim|valid_date');
+
+        $this->form_validation->set_rules('idApp_Cliente', 'Cliente', 'required|trim|valid_cliente');
+		$this->form_validation->set_rules('idApp_Agenda', 'Profissional', 'required|trim');
+
+		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');		
+		
+        #run form validation
+        if ($this->form_validation->run() === FALSE) {
+			$this->load->view('consulta/form_consulta', $data);
+
+		} else {
+		
+			$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
+			$data1 = $data1->format('Y-m-d');       
+			
+			$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
+			$data2 = $data2->format('Y-m-d');    
+				
+
+			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');			
+			$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
+			
+			if(strtotime($data2) == strtotime($data1)){
+				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
+			}else{
+				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
+			}			
+			
+			if ($this->form_validation->run() === FALSE) {
+				$this->load->view('consulta/form_consulta', $data);
+
+			} else {
+
+				if($this->Basico_model->get_dt_validade() === FALSE){
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'consulta/cadastrar2' . $data['msg']);
+
+				} else {
+
+					$dataini_cad 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
+					$datafim_cad 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
+					$horaini_cad 	= $data['query']['HoraInicio'];
+					$horafim_cad 	= $data['query']['HoraFim'];
+					
+					if ($data['cadastrar']['Repetir'] == 'N') {
+						$data['query']['Intervalo'] = 0;
+						$data['query']['Periodo'] = 0;
+						$data['query']['Tempo'] = 0;
+						$data['query']['Tempo2'] = 0;
+						$data['query']['DataTermino'] = $dataini_cad;
+					}else{
+						
+						$tipointervalo = $data['query']['Tempo'];
+						if($tipointervalo == 1){
+							$semana = 1;
+							$ref = "day";
+						}elseif($tipointervalo == 2){
+							$semana = 7;
+							$ref = "day";
+						}elseif($tipointervalo == 3){
+							$semana = 1;
+							$ref = "month";
+						}elseif($tipointervalo == 4){
+							$semana = 1;
+							$ref = "Year";
+						}
+
+						$n = $data['query']['Intervalo']; //intervalo - a cada tantos dias
+						$qtd = $data['query']['Recorrencias'];
+						$data['query']['DataTermino'] = $this->basico->mascara_data($data['query']['DataTermino'], 'mysql');
+						
+					}
+					if($_SESSION['Empresa']['CadastrarDep'] == "N"){
+						$data['query']['idApp_ClienteDep'] = 0;
+					}else{
+						if($data['query']['idApp_ClienteDep'] == ''){
+							$data['query']['idApp_ClienteDep'] = 0;
+						}
+					}
+					if($_SESSION['Empresa']['CadastrarPet'] == "N"){
+						$data['query']['idApp_ClientePet'] = 0;
+					}else{
+						if($data['query']['idApp_ClientePet'] == ''){
+							$data['query']['idApp_ClientePet'] = 0;
+						}
+					}
+					$data['query']['Tipo'] = 2;
+					$data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
+					#$data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraFim'];
+					$data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data2'], 'mysql') . ' ' . $data['query']['HoraFim'];
+					//$data['query']['idTab_Status'] = 1;
+					$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+					$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
+					$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+
+					if($_SESSION['Usuario']['Nivel'] == 2){
+						$data['query']['NivelAgenda'] = 2;
+					}else{
+						$data['query']['NivelAgenda'] = 1;
+					}
+
+					if($data['cadastrar']['Extra'] == 'S'){
+						
+						$data['consulta'] = $this->Consulta_model->get_consulta($data['query']['Repeticao']);
+						$data['update']['cons_anters'] = $this->Consulta_model->get_consultas($data['query']['Repeticao']);
+						$cont_cons_anters = count($data['update']['cons_anters']);
+						
+						if($data['cadastrar']['Hidden_Caso'] == 0){
+							
+							//$data['query']['Repeticao'] = 0;				
+							
+							if($data['cadastrar']['Adicionar'] == "S"){
+								if($data['cadastrar']['PorConsulta'] == "S"){
+									//Cadastro O número de Recorrências de OS  novas
+									$data['query']['OS'] = $data['query']['Recorrencias'];
+									$data['query']['idApp_OrcaTrata'] = "0";
+								}else{
+									if($data['query']['Recorrencias'] > 1){
+										//Abro a Opção de escolher Cadastrar  1 OS Nova, ou Selecionar 1 OS
+										if($data['cadastrar']['NovaOS'] == "S"){
+											//Cadastro 1 OS  nova
+											$data['query']['OS'] = "1";
+											$data['query']['idApp_OrcaTrata'] = "0";
+										}else{
+											if($data['cadastrar']['Vincular'] == "S"){
+												//Seleciona 1 OS
+												$data['query']['OS'] = "1";
+											}else{
+												//Não cadastro nenhuma OS
+												$data['query']['OS'] = "0";
+												$data['query']['idApp_OrcaTrata'] = "0";
+											}
+										}
+									}else{
+										//Escolher 1 OS
+										if($data['cadastrar']['Vincular'] == "S"){
+											//Seleciona 1 OS
+											$data['query']['OS'] = "1";
+										}else{
+											//Não cadastro nenhuma OS
+											$data['query']['OS'] = "0";
+											$data['query']['idApp_OrcaTrata'] = "0";
+										}
+									}
+								}
+							}else{
+								$data['query']['OS'] = "0";
+								$data['query']['idApp_OrcaTrata'] = "0";
+							}
+							
+						}elseif($data['cadastrar']['Hidden_Caso'] == 1){
+							
+							//N-1 ou N-N, Cadastro 1 ou N os novas
+							
+							if($data['cadastrar']['Adicionar'] == "S"){
+								//Opções de cadastro de OS
+								if($data['cadastrar']['PorConsulta'] == "S"){
+									//cadastro o número de OS novas
+									$data['query']['idApp_OrcaTrata'] = "0";
+								}else{
+									if($data['query']['OS'] > 1){
+										if($data['cadastrar']['NovaOS'] == "S"){
+											//cadastro 1 OS nova
+											$data['query']['OS'] = "1";
+											$data['query']['idApp_OrcaTrata'] = "0";
+										}else{
+											if($data['cadastrar']['Vincular'] == "S"){
+												//Seleciona 1 OS
+												$data['query']['OS'] = "1";
+											}else{
+												//Não cadastro nenhuma OS
+												$data['query']['OS'] = "0";
+												$data['query']['idApp_OrcaTrata'] = "0";
+											}
+										}
+									}else{
+										if($data['cadastrar']['Vincular'] == "S"){
+											//Seleciona 1 OS
+											$data['query']['OS'] = "1";
+										}else{
+											//Não cadastro nenhuma OS
+											$data['query']['OS'] = "0";
+											$data['query']['idApp_OrcaTrata'] = "0";
+										}
+									}
+								}
+							}else{
+								//Não cadastro nemhuma OS nova
+								$data['query']['OS'] = "0";
+								$data['query']['idApp_OrcaTrata'] = "0";
+							}
+													
+						}elseif($data['cadastrar']['Hidden_Caso'] == 2){
+							
+							//N-1 ou N-N, Uso a OS existente, ou Cadastro o Numero de Recorrencias de OS novas
+							
+							if($data['cadastrar']['Adicionar'] == "S"){
+								//Opções de cadastro de OS
+								if($data['cadastrar']['PorConsulta'] == "S"){
+									//cadastro o número de OS novas
+									$data['query']['OS'] = $data['query']['Recorrencias'];
+									$data['query']['idApp_OrcaTrata'] = "0";
+								}else{
+									//Pego a OS existente e uso para todas os agendamentos
+									$data['query']['OS'] = 1;
+									$data['query']['idApp_OrcaTrata'] = $data['consulta']['idApp_OrcaTrata'];
+								}
+							}else{
+								//Não cadastro nenhuma OS
+								$data['query']['OS'] = "0";
+								$data['query']['idApp_OrcaTrata'] = "0";
+							}
+							
+						}elseif($data['cadastrar']['Hidden_Caso'] == 3){
+							
+							//N-1 ou N-N, Cadastro 1 ou N os novas
+							
+							if($data['cadastrar']['Adicionar'] == "S"){
+								//Opções de cadastro de OS
+								if($data['cadastrar']['PorConsulta'] == "S"){
+									//cadastro o número de OS novas
+									$data['query']['idApp_OrcaTrata'] = "0";
+								}else{
+									if($data['query']['OS'] > 1){
+										if($data['cadastrar']['NovaOS'] == "S"){
+											//cadastro 1 OS nova
+											$data['query']['OS'] = "1";
+											$data['query']['idApp_OrcaTrata'] = "0";
+										}else{
+											if($data['cadastrar']['Vincular'] == "S"){
+												//Seleciona 1 OS
+												$data['query']['OS'] = "1";
+											}else{
+												//Não cadastro nenhuma OS
+												$data['query']['OS'] = "0";
+												$data['query']['idApp_OrcaTrata'] = "0";
+											}
+										}
+									}else{
+										if($data['cadastrar']['Vincular'] == "S"){
+											//Seleciona 1 OS
+											$data['query']['OS'] = "1";
+										}else{
+											//Não cadastro nenhuma OS
+											$data['query']['OS'] = "0";
+											$data['query']['idApp_OrcaTrata'] = "0";
+										}
+									}
+								}
+							}else{
+								//Não cadastro nemhuma OS nova
+								$data['query']['OS'] = "0";
+								$data['query']['idApp_OrcaTrata'] = "0";
+							}
+							
+						}elseif($data['cadastrar']['Hidden_Caso'] == 4){
+							if($data['cadastrar']['Adicionar'] == "S"){
+								//N-1, Pego a OS existente e uso para todas os agendamentos
+								$data['query']['OS'] = 1;
+								$data['query']['idApp_OrcaTrata'] = $data['consulta']['idApp_OrcaTrata'];
+							}else{
+								//Não cadastro nemhuma OS nova
+								$data['query']['OS'] = "0";
+								$data['query']['idApp_OrcaTrata'] = "0";
+							}
+						}elseif($data['cadastrar']['Hidden_Caso'] == 5){
+							if($data['cadastrar']['Adicionar'] == "S"){		
+								//N-N, Cadastro o número de OS novas
+								$data['query']['OS'] = $data['query']['Recorrencias'];
+								$data['query']['idApp_OrcaTrata'] = "0";
+							}else{
+								//Não cadastro nemhuma OS nova
+								$data['query']['OS'] = "0";
+								$data['query']['idApp_OrcaTrata'] = "0";
+							}						
+						}else{
+
+						}
+										
+					}else{
+						//$data['query']['Repeticao'] = 0;				
+						
+						if($data['cadastrar']['Adicionar'] == "S"){
+							if($data['cadastrar']['PorConsulta'] == "S"){
+								//Cadastro O número de Recorrências de OS  novas
+								$data['query']['OS'] = $data['query']['Recorrencias'];
+								$data['query']['idApp_OrcaTrata'] = "0";
+							}else{
+								if($data['query']['Recorrencias'] > 1){
+									//Abro a Opção de escolher Cadastrar  1 OS Nova, ou Selecionar 1 OS
+									if($data['cadastrar']['NovaOS'] == "S"){
+										//Cadastro 1 OS  nova
+										$data['query']['OS'] = "1";
+										$data['query']['idApp_OrcaTrata'] = "0";
+									}else{
+										if($data['cadastrar']['Vincular'] == "S"){
+											//Seleciona 1 OS
+											$data['query']['OS'] = "1";
+											//$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
+										}else{
+											//Não cadastro nenhuma OS
+											$data['query']['OS'] = "0";
+											$data['query']['idApp_OrcaTrata'] = "0";
+										}
+									}
+								}else{
+									//Escolher 1 OS
+									if($data['cadastrar']['Vincular'] == "S"){
+										//Seleciona 1 OS
+										$data['query']['OS'] = "1";
+										//$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
+									}else{
+										//Não cadastro nenhuma OS
+										$data['query']['OS'] = "0";
+										$data['query']['idApp_OrcaTrata'] = "0";
+									}
+								}
+							}
+						}else{
+							$data['query']['OS'] = "0";
+							$data['query']['idApp_OrcaTrata'] = "0";
+						}
+					}
+					
+					$data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
+					
+					$dataini_whats 	= $data['query']['Data'];
+					$horaini_whats	= $data['query']['HoraInicio'];
+					
+					#unset($data['query']['Data'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
+					unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
+					
+					$data['campos'] = array_keys($data['query']);
+					$data['anterior'] = array();
+
+					$data['query']['idApp_Consulta'] = $this->Consulta_model->set_consulta($data['query']);
+
+					unset($_SESSION['Agenda']);
+
+					if ($data['query']['idApp_Consulta'] === FALSE) {
+						$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+						$this->basico->erro($msg);
+						$this->load->view('consulta/form_consulta', $data);
+					} else {
+						
+						#### Whatsapp ####
+						if($data['cadastrar']['Whatsapp'] == 'S'){
+							$data['Cliente'] 		= $this->Cliente_model->get_cliente($data['query']['idApp_Cliente'], TRUE);
+							$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
+							
+							$_SESSION['bd_consulta']['Whatsapp'] 		= $data['cadastrar']['Whatsapp'];
+							$_SESSION['bd_consulta']['NomeCliente'] 	= utf8_encode($data['Cliente']['NomeCliente']);
+							$_SESSION['bd_consulta']['CelularCliente'] 	= $data['Cliente']['CelularCliente'];
+							$_SESSION['bd_consulta']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
+							$_SESSION['bd_consulta']['DataInicio'] 		= $dataini_whats;
+							$_SESSION['bd_consulta']['HoraInicio'] 		= $horaini_whats;
+							
+							unset($data['Cliente'], $data['Profissional'], $dataini_whats, $horaini_whats);
+						}
+
+						if($data['cadastrar']['Extra'] == 'S'){
+							if(isset($data['consulta'])){
+								$data['copiar']['idApp_ClientePet'] = $data['consulta']['idApp_ClientePet'];
+								$data['copiar']['idApp_ClienteDep'] = $data['consulta']['idApp_ClienteDep'];
+							}else{
+								$data['copiar']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+								$data['copiar']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+							}
+							$data['copiar']['Repeticao'] 		= $data['query']['Repeticao'];
+							$_SESSION['Copiar']['Repeticao'] 	= $data['query']['Repeticao'];
+							$qtd_OS = $data['query']['OS'];
+						}else{
+							$data['copiar']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+							$data['copiar']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+							$data['copiar']['Repeticao'] 		= $data['query']['idApp_Consulta'];
+							$_SESSION['Copiar']['Repeticao'] 	= $data['query']['idApp_Consulta'];
+							$qtd_OS = $data['query']['Recorrencias'];
+						}
+						
+						$pegouOS = false;
+						if($data['cadastrar']['Adicionar'] == "S"){
+							if($data['cadastrar']['PorConsulta'] == "N"){
+								if($qtd_OS > 1){
+									if($data['cadastrar']['NovaOS'] == "N"){
+										if($data['cadastrar']['Vincular'] == "S"){
+											if(isset($data['query']['idApp_OrcaTrata']) && $data['query']['idApp_OrcaTrata'] !=0){
+												$pegouOS = true;
+											}
+										}
+									}
+								}else{
+									if($data['cadastrar']['Vincular'] == "S"){
+										if(isset($data['query']['idApp_OrcaTrata']) && $data['query']['idApp_OrcaTrata'] !=0){
+											$pegouOS = true;
+										}
+									}
+								}
+							}							
+						}
+						
+						if($pegouOS == true){	
+							
+							//Passo o valor da repetição para a OS selecionada
+
+							$data['orcatrata']['RepeticaoCons'] 	= $data['copiar']['Repeticao'];
+							$data['orcatrata']['idApp_ClientePet'] 	= $data['copiar']['idApp_ClientePet'];
+							$data['orcatrata']['idApp_ClienteDep'] 	= $data['copiar']['idApp_ClienteDep'];
+							
+							$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['query']['idApp_OrcaTrata']);
+							
+							// update nos agendamento de OS = 0 
+							if(isset($cont_cons_anters)){
+								
+								for($j=0;$j<$cont_cons_anters;$j++) {
+								
+									$data['update']['cons_anters'][$j]['OS'] = $data['query']['OS'];
+									$data['update']['cons_anters'][$j]['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
+									
+									$data['update']['cons_anters']['bd'][$j] = $this->Consulta_model->update_consulta($data['update']['cons_anters'][$j], $data['update']['cons_anters'][$j]['idApp_Consulta']);
+								}
+							}
+						}					
+
+						
+						if($data['cadastrar']['Repetir'] == 'S'){
+							$data['copiar']['DataTermino'] = $data['query']['DataTermino'];
+							$data['copiar']['Recorrencia'] = "1/" . $qtd;
+						}else{
+							if($data['cadastrar']['Extra'] == 'S'){
+								$data['copiar']['Recorrencia'] = "Ext";
+							}else{
+								$data['copiar']['Recorrencia'] = "1/1";
+								//$data['copiar']['DataTermino'] = $dataini_cad;
+							}
+						}
+						
+						$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['query']['idApp_Consulta']);
+
+						if ($data['update']['copiar']['bd'] === FALSE) {
+							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+							$this->basico->erro($msg);
+							$this->load->view('consulta/form_consulta', $data);
+						} else {
+							if ($data['cadastrar']['Repetir'] == 'S') {
+								for($j=1; $j<$qtd; $j++) {
+									$data['repeticao'][$j] = array(
+										'Repeticao' 			=> $data['copiar']['Repeticao'],
+										'Intervalo' 			=> $data['query']['Intervalo'],
+										'Periodo' 				=> $data['query']['Periodo'],
+										'Tempo' 				=> $data['query']['Tempo'],
+										'Tempo2' 				=> $data['query']['Tempo2'],
+										'DataTermino' 			=> $data['query']['DataTermino'],
+										'Recorrencias' 			=> $data['query']['Recorrencias'],
+										'Recorrencia' 			=> ($j + 1) .  '/' . $data['query']['Recorrencias'],
+										'OS' 					=> $data['query']['OS'],
+										'idApp_Agenda' 			=> $data['query']['idApp_Agenda'],
+										'idApp_Cliente' 		=> $data['query']['idApp_Cliente'],
+										'idApp_ClienteDep' 		=> $data['copiar']['idApp_ClienteDep'],
+										'idApp_ClientePet' 		=> $data['copiar']['idApp_ClientePet'],
+										'idApp_OrcaTrata' 		=> $data['query']['idApp_OrcaTrata'],
+										//'Evento' 				=> $data['query']['Evento'],
+										'Obs' 					=> $data['query']['Obs'],
+										'idTab_Status' 			=> $data['query']['idTab_Status'],
+										'Tipo' 					=> $data['query']['Tipo'],
+										'idTab_TipoConsulta' 	=> $data['query']['idTab_TipoConsulta'],
+										'Paciente' 				=> $data['query']['Paciente'],
+										'DataInicio' 			=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) .  $ref,strtotime($dataini_cad))) . ' ' . $horaini_cad,
+										'DataFim' 				=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) . $ref,strtotime($datafim_cad))) . ' ' . $horafim_cad,
+										'idSis_Usuario' 		=> $_SESSION['log']['idSis_Usuario'],
+										'idSis_Empresa' 		=> $_SESSION['log']['idSis_Empresa'],
+										'idTab_Modulo' 			=> $_SESSION['log']['idTab_Modulo'],
+										'NivelAgenda' 			=> $data['query']['NivelAgenda']
+									);
+									$data['campos'] = array_keys($data['repeticao'][$j]);
+									$data['id_Repeticao'] = $this->Consulta_model->set_consulta($data['repeticao'][$j]);
+								}
+						
+							}
+						}
+
+						if($data['cadastrar']['Extra'] == 'S'){	
+						
+							$data['cons_datatermino'] = $this->Consulta_model->get_consulta_datatermino($data['query']['Repeticao']);
+							$data['data_termino'] = $data['cons_datatermino']['DataInicio'];
+							
+							$data['update']['cons_posts'] = $this->Consulta_model->get_consultas($data['query']['Repeticao']);
+							$cont_cons_posts = count($data['update']['cons_posts']);
+							
+							if(isset($cont_cons_posts)){
+								
+								for($j=0;$j<$cont_cons_posts;$j++) {
+									$k = (1 + $j);
+									$data['update']['cons_posts'][$j]['DataTermino'] = $data['data_termino'];
+									$data['update']['cons_posts'][$j]['Recorrencias'] = $cont_cons_posts;
+									$data['update']['cons_posts'][$j]['Recorrencia'] = $k . "/" . $cont_cons_posts;
+									$data['update']['cons_posts']['bd'][$j] = $this->Consulta_model->update_consulta($data['update']['cons_posts'][$j], $data['update']['cons_posts'][$j]['idApp_Consulta']);
+								}
+							}
+						}
+											
+						$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], FALSE);
+						$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'CREATE', $data['auditoriaitem']);
+						$data['msg'] = '?m=1';
+
+						if($data['cadastrar']['Extra'] == 'S'){
+							
+							if($data['cadastrar']['Hidden_Caso'] == 0){
+								
+								if($data['cadastrar']['Adicionar'] == "S"){	
+									if($data['cadastrar']['PorConsulta'] == "S"){
+										//Gera O.S. Replicadas pelo número de ocorrências
+										redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+										exit();
+									}else{
+										if($data['query']['Recorrencias'] > 1){
+											if($data['cadastrar']['NovaOS'] == "S"){
+												//Gera uma única O.S.
+												redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+												exit();
+											}else{
+												//Não Gera O.S. 
+												redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+												exit();
+											}
+										}else{
+											//Não Gera O.S. 
+											redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+											exit();
+										}
+									}
+								}else{
+									//Não Gera O.S. 
+									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+									exit();
+								}
+
+							}elseif($data['cadastrar']['Hidden_Caso'] == 1){
+								
+								if($data['cadastrar']['Adicionar'] == "S"){	
+									if($data['cadastrar']['PorConsulta'] == "S"){
+										//Gera O.S. Replicadas pelo número de ocorrências
+										redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+										exit();
+									}else{
+										if($data['query']['OS'] > 1){
+											if($data['cadastrar']['NovaOS'] == "S"){
+												//Gera uma única O.S.
+												redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+												exit();
+											}else{
+												//Não Gera O.S. 
+												redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+												exit();
+											}
+										}else{
+											//Não Gera O.S. 
+											redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+											exit();
+										}
+									}
+								}else{
+									//Não Gera O.S. 
+									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+									exit();
+								}
+								
+							}elseif($data['cadastrar']['Hidden_Caso'] == 2){
+								
+								if($data['cadastrar']['Adicionar'] == "S"){	
+									if($data['cadastrar']['PorConsulta'] == "S"){
+										//Gera O.S. Replicadas pelo número de ocorrências
+										redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+										exit();
+									}else{
+										//Não Gera O.S. 
+										redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+										exit();
+									}
+								}else{
+									//Não Gera O.S. 
+									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+									exit();
+								}
+								
+							}elseif($data['cadastrar']['Hidden_Caso'] == 3){
+								
+								if($data['cadastrar']['Adicionar'] == "S"){	
+									if($data['cadastrar']['PorConsulta'] == "S"){
+										//Gera O.S. Replicadas pelo número de ocorrências
+										redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+										exit();
+									}else{
+										if($data['query']['OS'] > 1){
+											if($data['cadastrar']['NovaOS'] == "S"){
+												//Gera uma única O.S.
+												redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+												exit();
+											}else{
+												//Não Gera O.S. 
+												redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+												exit();
+											}
+										}else{
+											//Não Gera O.S. 
+											redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+											exit();
+										}
+									}
+								}else{
+									//Não Gera O.S. 
+									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+									exit();
+								}
+								
+							}elseif($data['cadastrar']['Hidden_Caso'] == 4){
+								if($data['cadastrar']['Adicionar'] == "S"){	
+									//Pega a O.S. da repetição
+									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+									exit();
+								}else{
+									//Não Gera O.S. 
+									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+									exit();
+								}							
+							}elseif($data['cadastrar']['Hidden_Caso'] == 5){
+								if($data['cadastrar']['Adicionar'] == "S"){	
+									//Gera O.S. Replicadas pelo número de Recorrências
+									redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+									exit();
+								}else{
+									//Não Gera O.S. 
+									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+									exit();
+								}							
+							}else{
+
+							}							
+						}else{
+							if($data['cadastrar']['Adicionar'] == "S"){	
+								if($data['cadastrar']['PorConsulta'] == "S"){
+									//Gera O.S. Replicadas pelo número de ocorrências
+									redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+									exit();
+								}else{
+									if($data['query']['Recorrencias'] > 1){
+										if($data['cadastrar']['NovaOS'] == "S"){
+											//Gera uma única O.S.
+											redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
+											exit();
+										}else{
+											//Não Gera O.S. 
+											redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+											exit();
+										}
+									}else{
+										//Não Gera O.S. 
+										redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+										exit();
+									}
+								}
+							}else{
+								//Não Gera O.S. 
+								redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
+								exit();
+							}						
+						}
+					}
+				}	
+			}
+        }
+
         $this->load->view('basico/footer');
     }
 
@@ -2011,937 +2952,6 @@ class Consulta extends CI_Controller {
 				}
 			}
 		
-        $this->load->view('basico/footer');
-    }
-
-    public function cadastrar2($idApp_Cliente = NULL, $idApp_ContatoCliente = NULL) {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 3)
-            $data['msg'] = $this->basico->msg('<strong>Não é possível salvar o novo Agendamento.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
-        else
-            $data['msg'] = '';
-
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'Cadastrar',
-			'Whatsapp',
-			'Repetir',
-			'Extra',
-			'Adicionar',
-			'Vincular',
-			'NovaOS',
-			'PorConsulta',
-			'Prazo',
-			'DataMinima',
-			'RelacaoDep',
-			'PeloPet',
-			'PortePet',
-			'EspeciePet',
-			'RacaPet',
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-			'id_ClientePet_Auto',
-			'NomeClientePetAuto',
-			'id_ClienteDep_Auto',
-			'NomeClienteDepAuto',
-			'Hidden_status',
-			'Hidden_Caso',
-        ), TRUE));
-
-        $data['query'] = quotes_to_entities($this->input->post(array(
-            'idSis_Usuario',
-			//'idApp_Consulta',
-            'idApp_Agenda',
-            'idApp_Cliente',
-            'idApp_ClientePet',
-            'idApp_ClienteDep',
-            'idApp_OrcaTrata',
-            //'Repeticao',
-            'Data2',
-			'Data',
-            'HoraInicio',
-            'HoraFim',
-            'Paciente',
-			'idTab_Status',
-            'idTab_TipoConsulta',
-            'Procedimento',
-            'Obs',
-			'Intervalo',
-			'Periodo',
-			'Tempo',
-			'Tempo2',
-			'DataTermino',
-			'Recorrencias',
-			'Recorrencia',
-			'OS',
-		), TRUE));
-		
- 		(!$data['cadastrar']['Hidden_Caso']) ? $data['cadastrar']['Hidden_Caso'] = 0 : FALSE;
- 		(!$data['cadastrar']['Whatsapp']) ? $data['cadastrar']['Whatsapp'] = 'S' : FALSE;
- 		(!$data['cadastrar']['Repetir']) ? $data['cadastrar']['Repetir'] = 'N' : FALSE;
- 		(!$data['cadastrar']['Extra']) ? $data['cadastrar']['Extra'] = 'N' : FALSE;
- 		(!$data['cadastrar']['Adicionar']) ? $data['cadastrar']['Adicionar'] = 'N' : FALSE;
- 		(!$data['cadastrar']['Vincular']) ? $data['cadastrar']['Vincular'] = 'S' : FALSE;
- 		(!$data['cadastrar']['NovaOS']) ? $data['cadastrar']['NovaOS'] = 'S' : FALSE;
- 		(!$data['cadastrar']['PorConsulta']) ? $data['cadastrar']['PorConsulta'] = 'S' : FALSE;
-		(!$data['query']['Recorrencias']) ? $data['query']['Recorrencias'] = '1' : FALSE;
-		(!$data['query']['Tempo']) ? $data['query']['Tempo'] = '1' : FALSE;
-		(!$data['query']['Tempo']) ? $data['query']['Tempo2'] = '1' : FALSE;
-		(!$data['query']['OS']) ? $data['query']['OS'] = 0 : FALSE;		
-		
-		if($_SESSION['log']['idSis_Empresa'] != 5){
-			(!$data['query']['idApp_Agenda']) ? $data['query']['idApp_Agenda'] = $_SESSION['log']['Agenda'] : FALSE;
-		}
-
-		/*
-		//// Uso esse método para cadastrar agendamentos escolhendo clientes no pesquisa clientes////
-        if (isset($_SESSION['agenda']) && !$data['query']['HoraInicio'] && !$data['query']['HoraFim']) {
-            $data['query']['Data'] = date('d/m/Y', $_SESSION['agenda']['HoraInicio']);
-            $data['query']['Data2'] = date('d/m/Y', $_SESSION['agenda']['HoraFim']);
-			$data['query']['HoraInicio'] = date('H:i', $_SESSION['agenda']['HoraInicio']);
-            $data['query']['HoraFim'] = date('H:i', $_SESSION['agenda']['HoraFim']);
-        }
-		*/		
-		
-		//// Uso esse método para cadastrar agendamentos escolhendo clientes no formulário////
-		if ($this->input->get('start') && $this->input->get('end')) {
-            //$data['query']['Data'] = date('d/m/Y', substr($this->input->get('start'), 0, -3));
-            $data['query']['Data'] = date('d/m/Y', substr($this->input->get('end'), 0, -3));
-            $data['query']['Data2'] = date('d/m/Y', substr($this->input->get('end'), 0, -3));
-			$data['query']['HoraInicio'] = date('H:i', substr($this->input->get('start'), 0, -3));
-            $data['query']['HoraFim'] = date('H:i', substr($this->input->get('end'), 0, -3));
-		}
-
-        #Ver uma solução melhor para este campo
-        (!$data['query']['Paciente']) ? $data['query']['Paciente'] = 'R' : FALSE;
-
-        $data['radio'] = array(
-            'Paciente' => $this->basico->radio_checked($data['query']['Paciente'], 'Paciente', 'RD'),
-        );
-
-        ($data['query']['Paciente'] == 'D') ?
-            $data['div']['Paciente'] = '' : $data['div']['Paciente'] = 'style="display: none;"';
-
-		
-		$data['select']['EspeciePet'] = array (
-            //'0' => '',
-            '1' => 'CÃO',
-            '2' => 'GATO',
-			'3' => 'AVE',
-        );		
-		$data['select']['PeloPet'] = array (
-            //'0' => '',
-            '1' => 'CURTO',
-            '2' => 'MÉDIO',
-			'3' => 'LONGO',
-			'4' => 'CACHEADO',
-        );		
-		$data['select']['PortePet'] = array (
-            //'0' => '',
-            '1' => 'MINI',
-            '2' => 'PEQUENO',
-			'3' => 'MÉDIO',
-			'4' => 'GRANDE',
-			'5' => 'GIGANTE',
-        );
-		$data['select']['RacaPet'] = $this->Cliente_model->select_racapet();
-		$data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
-		$data['select']['Whatsapp'] = $this->Basico_model->select_status_sn();
-		$data['select']['Repetir'] = $this->Basico_model->select_status_sn();
-		$data['select']['Extra'] = $this->Basico_model->select_status_sn();
-		$data['select']['Adicionar'] = $this->Basico_model->select_status_sn();  
-		$data['select']['Vincular'] = $this->Basico_model->select_status_sn();
-		$data['select']['NovaOS'] = $this->Basico_model->select_status_sn();
-		$data['select']['PorConsulta'] = $this->Basico_model->select_status_sn();        
-		$data['select']['Tempo'] = array (
-            '1' => 'Dia(s)',
-            '2' => 'Semana(s)',
-            '3' => 'Mês(s)',
-			'4' => 'Ano(s)',
-        );		
-		$data['select']['idApp_Agenda'] = $this->Basico_model->select_agenda();
-		$data['select']['Status'] = $this->Basico_model->select_status();
-        $data['select']['TipoConsulta'] = $this->Basico_model->select_tipo_consulta();
-        //$data['select']['idApp_Cliente'] = $this->Cliente_model->select_cliente();
-		$data['select']['RelacaoDep'] = $this->Cliente_model->select_relacao();
-
-        $data['select']['option'] = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['log']['Permissao'] <= 2 ) ? '<option value="">-- Sel. um Prof. --</option>' : FALSE;
-
-        $data['titulo'] = 'Agendamento';
-        $data['form_open_path'] = 'consulta/cadastrar2';
-        $data['panel'] = 'primary';
-        $data['readonly'] = '';
-        $data['disabled'] = '';
-        $data['metodo'] = 1;
-        $data['alterarcliente'] = 1;
-        $data['caminho2'] = '../';
- 		$data['vincular'] = 'S';
-		$data['porconsulta'] = 'S';
-		
-		$data['exibir_id'] = 1;
-		$data['count_repet'] = 0;
-		
-		//(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;       
-		
-		$data['radio'] = array(
-            'Cadastrar' => $this->basico->radio_checked($data['cadastrar']['Cadastrar'], 'Cadastrar', 'NS'),
-        );
-        ($data['cadastrar']['Cadastrar'] == 'N') ?
-            $data['div']['Cadastrar'] = '' : $data['div']['Cadastrar'] = 'style="display: none;"';
-				
-		$data['radio'] = array(
-            'Whatsapp' => $this->basico->radio_checked($data['cadastrar']['Whatsapp'], 'Whatsapp', 'NS'),
-        );
-        ($data['cadastrar']['Whatsapp'] == 'N') ?
-            $data['div']['Whatsapp'] = '' : $data['div']['Whatsapp'] = 'style="display: none;"';
-		
-		$data['radio'] = array(
-            'Repetir' => $this->basico->radio_checked($data['cadastrar']['Repetir'], 'Repetir', 'NS'),
-        );
-        ($data['cadastrar']['Repetir'] == 'S') ?
-            $data['div']['Repetir'] = '' : $data['div']['Repetir'] = 'style="display: none;"';
-		
-		$data['radio'] = array(
-            'Extra' => $this->basico->radio_checked($data['cadastrar']['Extra'], 'Extra', 'NS'),
-        );
-        ($data['cadastrar']['Extra'] == 'S') ?
-            $data['div']['Extra'] = '' : $data['div']['Extra'] = 'style="display: none;"';
-				
-		$data['radio'] = array(
-            'Adicionar' => $this->basico->radio_checked($data['cadastrar']['Adicionar'], 'Adicionar', 'NS'),
-        );
-        ($data['cadastrar']['Adicionar'] == 'S') ?
-            $data['div']['Adicionar'] = '' : $data['div']['Adicionar'] = 'style="display: none;"';
-			
-		$data['radio'] = array(
-            'Vincular' => $this->basico->radio_checked($data['cadastrar']['Vincular'], 'Vincular', 'NS'),
-        );
-        ($data['cadastrar']['Vincular'] == 'S') ?
-            $data['div']['Vincular'] = '' : $data['div']['Vincular'] = 'style="display: none;"';
-		
-		$data['radio'] = array(
-            'NovaOS' => $this->basico->radio_checked($data['cadastrar']['NovaOS'], 'NovaOS', 'NS'),
-        );
-        ($data['cadastrar']['NovaOS'] == 'N') ?
-            $data['div']['NovaOS'] = '' : $data['div']['NovaOS'] = 'style="display: none;"';
-		
-		$data['radio'] = array(
-            'PorConsulta' => $this->basico->radio_checked($data['cadastrar']['PorConsulta'], 'PorConsulta', 'NS'),
-        );
-        ($data['cadastrar']['PorConsulta'] == 'N') ?
-            $data['div']['PorConsulta'] = '' : $data['div']['PorConsulta'] = 'style="display: none;"';
-		
-        $data['datepicker'] = 'DatePicker';
-        $data['timepicker'] = 'TimePicker';
-		
-        $data['cor_cli'] 	= 'default';
-        $data['cor_cons'] 	= 'warning';
-        $data['cor_orca'] 	= 'default';
-        $data['cor_sac'] 	= 'default';
-        $data['cor_mark'] 	= 'default';
-
-        $data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
-		
-		$data['q3'] = $this->Clientepet_model->list_racapet(TRUE);
-		$data['list3'] = $this->load->view('clientepet/list_racapet', $data, TRUE);		
-
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-
-		if ($data['cadastrar']['Extra'] == 'S') {
-			$this->form_validation->set_rules('Repeticao', 'Repeticao', 'required|trim');
-		}
-		if ($data['cadastrar']['Repetir'] == 'S') {
-			$this->form_validation->set_rules('Intervalo', 'Intervalo', 'required|trim|valid_intervalo');
-			$this->form_validation->set_rules('Periodo', 'Período', 'required|trim|valid_periodo');
-			$this->form_validation->set_rules('Tempo', 'Tempo', 'required|trim');
-			$this->form_validation->set_rules('Tempo', 'Tempo2', 'required|trim');
-			$this->form_validation->set_rules('DataMinima', 'Data Mínima:', 'trim|valid_date');
-			$this->form_validation->set_rules('DataTermino', 'Termina em:', 'required|trim|valid_date|valid_data_termino[' . $data['cadastrar']['DataMinima'] . ']|valid_data_termino2[' . $data['query']['Data'] . ']');
-		}else{
-			if($data['query']['Recorrencias'] > 1){
-				$this->form_validation->set_rules('Repetir', 'Repetir', 'valid_repetir');
-			}
-		}
-		if(($data['query']['OS'] > 1 && $data['cadastrar']['Adicionar'] == "S" 
-			&& $data['cadastrar']['PorConsulta'] == "N" && $data['cadastrar']['NovaOS'] == "N" 
-			&& $data['cadastrar']['Vincular'] == "S") 
-			|| ($data['query']['OS'] == 1 && $data['cadastrar']['Adicionar'] == "S" 
-			&& $data['cadastrar']['PorConsulta'] == "N" && $data['cadastrar']['Vincular'] == "S" )){
-			$this->form_validation->set_rules('idApp_OrcaTrata', 'O.S.', 'required|trim');
-		}
-        $this->form_validation->set_rules('Data', 'Data', 'required|trim|valid_date');
-        $this->form_validation->set_rules('Data2', 'Data do Fim', 'required|trim|valid_date');
-
-        $this->form_validation->set_rules('idApp_Cliente', 'Cliente', 'required|trim|valid_cliente');
-		$this->form_validation->set_rules('idApp_Agenda', 'Profissional', 'required|trim');
-
-		$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');		
-		
-        #run form validation
-        if ($this->form_validation->run() === FALSE) {
-			$this->load->view('consulta/form_consulta', $data);
-
-		} else {
-		
-			$data1 = DateTime::createFromFormat('d/m/Y', $data['query']['Data']);
-			$data1 = $data1->format('Y-m-d');       
-			
-			$data2 = DateTime::createFromFormat('d/m/Y', $data['query']['Data2']);
-			$data2 = $data2->format('Y-m-d');    
-				
-
-			$this->form_validation->set_rules('Data2', 'Data Fim', 'required|trim|valid_periodo_data[' . $data['query']['Data'] . ']');			
-			$this->form_validation->set_rules('HoraInicio', 'Hora Inicial', 'required|trim|valid_hour');
-			
-			if(strtotime($data2) == strtotime($data1)){
-				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour|valid_periodo_hora[' . $data['query']['HoraInicio'] . ']');
-			}else{
-				$this->form_validation->set_rules('HoraFim', 'Hora Final', 'required|trim|valid_hour');
-			}			
-			
-			if ($this->form_validation->run() === FALSE) {
-				$this->load->view('consulta/form_consulta', $data);
-
-			} else {
-
-				if($this->Basico_model->get_dt_validade() === FALSE){
-					$data['msg'] = '?m=3';
-					redirect(base_url() . 'consulta/cadastrar2' . $data['msg']);
-
-				} else {
-
-					$dataini_cad 	= $this->basico->mascara_data($data['query']['Data'], 'mysql');
-					$datafim_cad 	= $this->basico->mascara_data($data['query']['Data2'], 'mysql');
-					$horaini_cad 	= $data['query']['HoraInicio'];
-					$horafim_cad 	= $data['query']['HoraFim'];
-					
-					if ($data['cadastrar']['Repetir'] == 'N') {
-						$data['query']['Intervalo'] = 0;
-						$data['query']['Periodo'] = 0;
-						$data['query']['Tempo'] = 0;
-						$data['query']['Tempo2'] = 0;
-						$data['query']['DataTermino'] = $dataini_cad;
-					}else{
-						
-						$tipointervalo = $data['query']['Tempo'];
-						if($tipointervalo == 1){
-							$semana = 1;
-							$ref = "day";
-						}elseif($tipointervalo == 2){
-							$semana = 7;
-							$ref = "day";
-						}elseif($tipointervalo == 3){
-							$semana = 1;
-							$ref = "month";
-						}elseif($tipointervalo == 4){
-							$semana = 1;
-							$ref = "Year";
-						}
-
-						$n = $data['query']['Intervalo']; //intervalo - a cada tantos dias
-						$qtd = $data['query']['Recorrencias'];
-						$data['query']['DataTermino'] = $this->basico->mascara_data($data['query']['DataTermino'], 'mysql');
-						
-					}
-					if($_SESSION['Empresa']['CadastrarDep'] == "N"){
-						$data['query']['idApp_ClienteDep'] = 0;
-					}else{
-						if($data['query']['idApp_ClienteDep'] == ''){
-							$data['query']['idApp_ClienteDep'] = 0;
-						}
-					}
-					if($_SESSION['Empresa']['CadastrarPet'] == "N"){
-						$data['query']['idApp_ClientePet'] = 0;
-					}else{
-						if($data['query']['idApp_ClientePet'] == ''){
-							$data['query']['idApp_ClientePet'] = 0;
-						}
-					}
-					$data['query']['Tipo'] = 2;
-					$data['query']['DataInicio'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraInicio'];
-					#$data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data'], 'mysql') . ' ' . $data['query']['HoraFim'];
-					$data['query']['DataFim'] = $this->basico->mascara_data($data['query']['Data2'], 'mysql') . ' ' . $data['query']['HoraFim'];
-					//$data['query']['idTab_Status'] = 1;
-					$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-					$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
-					$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-					$data['query']['NivelAgenda'] = $_SESSION['Usuario']['Nivel'];
-
-					if($data['cadastrar']['Extra'] == 'S'){
-						
-						$data['consulta'] = $this->Consulta_model->get_consulta($data['query']['Repeticao']);
-						$data['update']['cons_anters'] = $this->Consulta_model->get_consultas($data['query']['Repeticao']);
-						$cont_cons_anters = count($data['update']['cons_anters']);
-						
-						if($data['cadastrar']['Hidden_Caso'] == 0){
-							
-							//$data['query']['Repeticao'] = 0;				
-							
-							if($data['cadastrar']['Adicionar'] == "S"){
-								if($data['cadastrar']['PorConsulta'] == "S"){
-									//Cadastro O número de Recorrências de OS  novas
-									$data['query']['OS'] = $data['query']['Recorrencias'];
-									$data['query']['idApp_OrcaTrata'] = "0";
-								}else{
-									if($data['query']['Recorrencias'] > 1){
-										//Abro a Opção de escolher Cadastrar  1 OS Nova, ou Selecionar 1 OS
-										if($data['cadastrar']['NovaOS'] == "S"){
-											//Cadastro 1 OS  nova
-											$data['query']['OS'] = "1";
-											$data['query']['idApp_OrcaTrata'] = "0";
-										}else{
-											if($data['cadastrar']['Vincular'] == "S"){
-												//Seleciona 1 OS
-												$data['query']['OS'] = "1";
-											}else{
-												//Não cadastro nenhuma OS
-												$data['query']['OS'] = "0";
-												$data['query']['idApp_OrcaTrata'] = "0";
-											}
-										}
-									}else{
-										//Escolher 1 OS
-										if($data['cadastrar']['Vincular'] == "S"){
-											//Seleciona 1 OS
-											$data['query']['OS'] = "1";
-										}else{
-											//Não cadastro nenhuma OS
-											$data['query']['OS'] = "0";
-											$data['query']['idApp_OrcaTrata'] = "0";
-										}
-									}
-								}
-							}else{
-								$data['query']['OS'] = "0";
-								$data['query']['idApp_OrcaTrata'] = "0";
-							}
-							
-						}elseif($data['cadastrar']['Hidden_Caso'] == 1){
-							
-							//N-1 ou N-N, Cadastro 1 ou N os novas
-							
-							if($data['cadastrar']['Adicionar'] == "S"){
-								//Opções de cadastro de OS
-								if($data['cadastrar']['PorConsulta'] == "S"){
-									//cadastro o número de OS novas
-									$data['query']['idApp_OrcaTrata'] = "0";
-								}else{
-									if($data['query']['OS'] > 1){
-										if($data['cadastrar']['NovaOS'] == "S"){
-											//cadastro 1 OS nova
-											$data['query']['OS'] = "1";
-											$data['query']['idApp_OrcaTrata'] = "0";
-										}else{
-											if($data['cadastrar']['Vincular'] == "S"){
-												//Seleciona 1 OS
-												$data['query']['OS'] = "1";
-											}else{
-												//Não cadastro nenhuma OS
-												$data['query']['OS'] = "0";
-												$data['query']['idApp_OrcaTrata'] = "0";
-											}
-										}
-									}else{
-										if($data['cadastrar']['Vincular'] == "S"){
-											//Seleciona 1 OS
-											$data['query']['OS'] = "1";
-										}else{
-											//Não cadastro nenhuma OS
-											$data['query']['OS'] = "0";
-											$data['query']['idApp_OrcaTrata'] = "0";
-										}
-									}
-								}
-							}else{
-								//Não cadastro nemhuma OS nova
-								$data['query']['OS'] = "0";
-								$data['query']['idApp_OrcaTrata'] = "0";
-							}
-													
-						}elseif($data['cadastrar']['Hidden_Caso'] == 2){
-							
-							//N-1 ou N-N, Uso a OS existente, ou Cadastro o Numero de Recorrencias de OS novas
-							
-							if($data['cadastrar']['Adicionar'] == "S"){
-								//Opções de cadastro de OS
-								if($data['cadastrar']['PorConsulta'] == "S"){
-									//cadastro o número de OS novas
-									$data['query']['OS'] = $data['query']['Recorrencias'];
-									$data['query']['idApp_OrcaTrata'] = "0";
-								}else{
-									//Pego a OS existente e uso para todas os agendamentos
-									$data['query']['OS'] = 1;
-									$data['query']['idApp_OrcaTrata'] = $data['consulta']['idApp_OrcaTrata'];
-								}
-							}else{
-								//Não cadastro nenhuma OS
-								$data['query']['OS'] = "0";
-								$data['query']['idApp_OrcaTrata'] = "0";
-							}
-							
-						}elseif($data['cadastrar']['Hidden_Caso'] == 3){
-							
-							//N-1 ou N-N, Cadastro 1 ou N os novas
-							
-							if($data['cadastrar']['Adicionar'] == "S"){
-								//Opções de cadastro de OS
-								if($data['cadastrar']['PorConsulta'] == "S"){
-									//cadastro o número de OS novas
-									$data['query']['idApp_OrcaTrata'] = "0";
-								}else{
-									if($data['query']['OS'] > 1){
-										if($data['cadastrar']['NovaOS'] == "S"){
-											//cadastro 1 OS nova
-											$data['query']['OS'] = "1";
-											$data['query']['idApp_OrcaTrata'] = "0";
-										}else{
-											if($data['cadastrar']['Vincular'] == "S"){
-												//Seleciona 1 OS
-												$data['query']['OS'] = "1";
-											}else{
-												//Não cadastro nenhuma OS
-												$data['query']['OS'] = "0";
-												$data['query']['idApp_OrcaTrata'] = "0";
-											}
-										}
-									}else{
-										if($data['cadastrar']['Vincular'] == "S"){
-											//Seleciona 1 OS
-											$data['query']['OS'] = "1";
-										}else{
-											//Não cadastro nenhuma OS
-											$data['query']['OS'] = "0";
-											$data['query']['idApp_OrcaTrata'] = "0";
-										}
-									}
-								}
-							}else{
-								//Não cadastro nemhuma OS nova
-								$data['query']['OS'] = "0";
-								$data['query']['idApp_OrcaTrata'] = "0";
-							}
-							
-						}elseif($data['cadastrar']['Hidden_Caso'] == 4){
-							if($data['cadastrar']['Adicionar'] == "S"){
-								//N-1, Pego a OS existente e uso para todas os agendamentos
-								$data['query']['OS'] = 1;
-								$data['query']['idApp_OrcaTrata'] = $data['consulta']['idApp_OrcaTrata'];
-							}else{
-								//Não cadastro nemhuma OS nova
-								$data['query']['OS'] = "0";
-								$data['query']['idApp_OrcaTrata'] = "0";
-							}
-						}elseif($data['cadastrar']['Hidden_Caso'] == 5){
-							if($data['cadastrar']['Adicionar'] == "S"){		
-								//N-N, Cadastro o número de OS novas
-								$data['query']['OS'] = $data['query']['Recorrencias'];
-								$data['query']['idApp_OrcaTrata'] = "0";
-							}else{
-								//Não cadastro nemhuma OS nova
-								$data['query']['OS'] = "0";
-								$data['query']['idApp_OrcaTrata'] = "0";
-							}						
-						}else{
-
-						}
-										
-					}else{
-						//$data['query']['Repeticao'] = 0;				
-						
-						if($data['cadastrar']['Adicionar'] == "S"){
-							if($data['cadastrar']['PorConsulta'] == "S"){
-								//Cadastro O número de Recorrências de OS  novas
-								$data['query']['OS'] = $data['query']['Recorrencias'];
-								$data['query']['idApp_OrcaTrata'] = "0";
-							}else{
-								if($data['query']['Recorrencias'] > 1){
-									//Abro a Opção de escolher Cadastrar  1 OS Nova, ou Selecionar 1 OS
-									if($data['cadastrar']['NovaOS'] == "S"){
-										//Cadastro 1 OS  nova
-										$data['query']['OS'] = "1";
-										$data['query']['idApp_OrcaTrata'] = "0";
-									}else{
-										if($data['cadastrar']['Vincular'] == "S"){
-											//Seleciona 1 OS
-											$data['query']['OS'] = "1";
-											//$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
-										}else{
-											//Não cadastro nenhuma OS
-											$data['query']['OS'] = "0";
-											$data['query']['idApp_OrcaTrata'] = "0";
-										}
-									}
-								}else{
-									//Escolher 1 OS
-									if($data['cadastrar']['Vincular'] == "S"){
-										//Seleciona 1 OS
-										$data['query']['OS'] = "1";
-										//$data['query']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
-									}else{
-										//Não cadastro nenhuma OS
-										$data['query']['OS'] = "0";
-										$data['query']['idApp_OrcaTrata'] = "0";
-									}
-								}
-							}
-						}else{
-							$data['query']['OS'] = "0";
-							$data['query']['idApp_OrcaTrata'] = "0";
-						}
-					}
-					
-					$data['redirect'] = '&gtd=' . $this->basico->mascara_data($data['query']['Data'], 'mysql');
-					
-					$dataini_whats 	= $data['query']['Data'];
-					$horaini_whats	= $data['query']['HoraInicio'];
-					
-					#unset($data['query']['Data'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
-					unset($data['query']['Data'], $data['query']['Data2'], $data['query']['HoraInicio'], $data['query']['HoraFim']);
-					
-					$data['campos'] = array_keys($data['query']);
-					$data['anterior'] = array();
-
-					$data['query']['idApp_Consulta'] = $this->Consulta_model->set_consulta($data['query']);
-
-					unset($_SESSION['Agenda']);
-
-					if ($data['query']['idApp_Consulta'] === FALSE) {
-						$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-
-						$this->basico->erro($msg);
-						$this->load->view('consulta/form_consulta', $data);
-					} else {
-						
-						#### Whatsapp ####
-						if($data['cadastrar']['Whatsapp'] == 'S'){
-							$data['Cliente'] 		= $this->Cliente_model->get_cliente($data['query']['idApp_Cliente'], TRUE);
-							$data['Profissional'] 	= $this->Cliente_model->get_profissional($data['query']['idApp_Agenda'], TRUE);
-							
-							$_SESSION['bd_consulta']['Whatsapp'] 		= $data['cadastrar']['Whatsapp'];
-							$_SESSION['bd_consulta']['NomeCliente'] 	= utf8_encode($data['Cliente']['NomeCliente']);
-							$_SESSION['bd_consulta']['CelularCliente'] 	= $data['Cliente']['CelularCliente'];
-							$_SESSION['bd_consulta']['Profissional'] 	= utf8_encode($data['Profissional']['Nome']);
-							$_SESSION['bd_consulta']['DataInicio'] 		= $dataini_whats;
-							$_SESSION['bd_consulta']['HoraInicio'] 		= $horaini_whats;
-							
-							unset($data['Cliente'], $data['Profissional'], $dataini_whats, $horaini_whats);
-						}
-
-						if($data['cadastrar']['Extra'] == 'S'){
-							if(isset($data['consulta'])){
-								$data['copiar']['idApp_ClientePet'] = $data['consulta']['idApp_ClientePet'];
-								$data['copiar']['idApp_ClienteDep'] = $data['consulta']['idApp_ClienteDep'];
-							}else{
-								$data['copiar']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-								$data['copiar']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-							}
-							$data['copiar']['Repeticao'] 		= $data['query']['Repeticao'];
-							$_SESSION['Copiar']['Repeticao'] 	= $data['query']['Repeticao'];
-							$qtd_OS = $data['query']['OS'];
-						}else{
-							$data['copiar']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-							$data['copiar']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-							$data['copiar']['Repeticao'] 		= $data['query']['idApp_Consulta'];
-							$_SESSION['Copiar']['Repeticao'] 	= $data['query']['idApp_Consulta'];
-							$qtd_OS = $data['query']['Recorrencias'];
-						}
-						
-						$pegouOS = false;
-						if($data['cadastrar']['Adicionar'] == "S"){
-							if($data['cadastrar']['PorConsulta'] == "N"){
-								if($qtd_OS > 1){
-									if($data['cadastrar']['NovaOS'] == "N"){
-										if($data['cadastrar']['Vincular'] == "S"){
-											if(isset($data['query']['idApp_OrcaTrata']) && $data['query']['idApp_OrcaTrata'] !=0){
-												$pegouOS = true;
-											}
-										}
-									}
-								}else{
-									if($data['cadastrar']['Vincular'] == "S"){
-										if(isset($data['query']['idApp_OrcaTrata']) && $data['query']['idApp_OrcaTrata'] !=0){
-											$pegouOS = true;
-										}
-									}
-								}
-							}							
-						}
-						
-						if($pegouOS == true){	
-							
-							//Passo o valor da repetição para a OS selecionada
-
-							$data['orcatrata']['RepeticaoCons'] 	= $data['copiar']['Repeticao'];
-							$data['orcatrata']['idApp_ClientePet'] 	= $data['copiar']['idApp_ClientePet'];
-							$data['orcatrata']['idApp_ClienteDep'] 	= $data['copiar']['idApp_ClienteDep'];
-							
-							$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['query']['idApp_OrcaTrata']);
-							
-							// update nos agendamento de OS = 0 
-							if(isset($cont_cons_anters)){
-								
-								for($j=0;$j<$cont_cons_anters;$j++) {
-								
-									$data['update']['cons_anters'][$j]['OS'] = $data['query']['OS'];
-									$data['update']['cons_anters'][$j]['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];
-									
-									$data['update']['cons_anters']['bd'][$j] = $this->Consulta_model->update_consulta($data['update']['cons_anters'][$j], $data['update']['cons_anters'][$j]['idApp_Consulta']);
-								}
-							}
-						}					
-
-						
-						if($data['cadastrar']['Repetir'] == 'S'){
-							$data['copiar']['DataTermino'] = $data['query']['DataTermino'];
-							$data['copiar']['Recorrencia'] = "1/" . $qtd;
-						}else{
-							if($data['cadastrar']['Extra'] == 'S'){
-								$data['copiar']['Recorrencia'] = "Ext";
-							}else{
-								$data['copiar']['Recorrencia'] = "1/1";
-								//$data['copiar']['DataTermino'] = $dataini_cad;
-							}
-						}
-						
-						$data['update']['copiar']['bd'] = $this->Consulta_model->update_consulta($data['copiar'], $data['query']['idApp_Consulta']);
-
-						if ($data['update']['copiar']['bd'] === FALSE) {
-							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-
-							$this->basico->erro($msg);
-							$this->load->view('consulta/form_consulta', $data);
-						} else {
-							if ($data['cadastrar']['Repetir'] == 'S') {
-								for($j=1; $j<$qtd; $j++) {
-									$data['repeticao'][$j] = array(
-										'Repeticao' 			=> $data['copiar']['Repeticao'],
-										'Intervalo' 			=> $data['query']['Intervalo'],
-										'Periodo' 				=> $data['query']['Periodo'],
-										'Tempo' 				=> $data['query']['Tempo'],
-										'Tempo2' 				=> $data['query']['Tempo2'],
-										'DataTermino' 			=> $data['query']['DataTermino'],
-										'Recorrencias' 			=> $data['query']['Recorrencias'],
-										'Recorrencia' 			=> ($j + 1) .  '/' . $data['query']['Recorrencias'],
-										'OS' 					=> $data['query']['OS'],
-										'idApp_Agenda' 			=> $data['query']['idApp_Agenda'],
-										'idApp_Cliente' 		=> $data['query']['idApp_Cliente'],
-										'idApp_ClienteDep' 		=> $data['copiar']['idApp_ClienteDep'],
-										'idApp_ClientePet' 		=> $data['copiar']['idApp_ClientePet'],
-										'idApp_OrcaTrata' 		=> $data['query']['idApp_OrcaTrata'],
-										//'Evento' 				=> $data['query']['Evento'],
-										'Obs' 					=> $data['query']['Obs'],
-										'idTab_Status' 			=> $data['query']['idTab_Status'],
-										'Tipo' 					=> $data['query']['Tipo'],
-										'idTab_TipoConsulta' 	=> $data['query']['idTab_TipoConsulta'],
-										'Paciente' 				=> $data['query']['Paciente'],
-										'DataInicio' 			=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) .  $ref,strtotime($dataini_cad))) . ' ' . $horaini_cad,
-										'DataFim' 				=> date('Y-m-d', strtotime('+ ' . ($semana*$n*$j) . $ref,strtotime($datafim_cad))) . ' ' . $horafim_cad,
-										'idSis_Usuario' 		=> $_SESSION['log']['idSis_Usuario'],
-										'idSis_Empresa' 		=> $_SESSION['log']['idSis_Empresa'],
-										'idTab_Modulo' 			=> $_SESSION['log']['idTab_Modulo'],
-										'NivelAgenda' 			=> $data['query']['NivelAgenda']
-									);
-									$data['campos'] = array_keys($data['repeticao'][$j]);
-									$data['id_Repeticao'] = $this->Consulta_model->set_consulta($data['repeticao'][$j]);
-								}
-						
-							}
-						}
-
-						if($data['cadastrar']['Extra'] == 'S'){	
-						
-							$data['cons_datatermino'] = $this->Consulta_model->get_consulta_datatermino($data['query']['Repeticao']);
-							$data['data_termino'] = $data['cons_datatermino']['DataInicio'];
-							
-							$data['update']['cons_posts'] = $this->Consulta_model->get_consultas($data['query']['Repeticao']);
-							$cont_cons_posts = count($data['update']['cons_posts']);
-							
-							if(isset($cont_cons_posts)){
-								
-								for($j=0;$j<$cont_cons_posts;$j++) {
-									$k = (1 + $j);
-									$data['update']['cons_posts'][$j]['DataTermino'] = $data['data_termino'];
-									$data['update']['cons_posts'][$j]['Recorrencias'] = $cont_cons_posts;
-									$data['update']['cons_posts'][$j]['Recorrencia'] = $k . "/" . $cont_cons_posts;
-									$data['update']['cons_posts']['bd'][$j] = $this->Consulta_model->update_consulta($data['update']['cons_posts'][$j], $data['update']['cons_posts'][$j]['idApp_Consulta']);
-								}
-							}
-						}
-											
-						$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idApp_Consulta'], FALSE);
-						$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'App_Consulta', 'CREATE', $data['auditoriaitem']);
-						$data['msg'] = '?m=1';
-
-						if($data['cadastrar']['Extra'] == 'S'){
-							
-							if($data['cadastrar']['Hidden_Caso'] == 0){
-								
-								if($data['cadastrar']['Adicionar'] == "S"){	
-									if($data['cadastrar']['PorConsulta'] == "S"){
-										//Gera O.S. Replicadas pelo número de ocorrências
-										redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-										exit();
-									}else{
-										if($data['query']['Recorrencias'] > 1){
-											if($data['cadastrar']['NovaOS'] == "S"){
-												//Gera uma única O.S.
-												redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-												exit();
-											}else{
-												//Não Gera O.S. 
-												redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-												exit();
-											}
-										}else{
-											//Não Gera O.S. 
-											redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-											exit();
-										}
-									}
-								}else{
-									//Não Gera O.S. 
-									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-									exit();
-								}
-
-							}elseif($data['cadastrar']['Hidden_Caso'] == 1){
-								
-								if($data['cadastrar']['Adicionar'] == "S"){	
-									if($data['cadastrar']['PorConsulta'] == "S"){
-										//Gera O.S. Replicadas pelo número de ocorrências
-										redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-										exit();
-									}else{
-										if($data['query']['OS'] > 1){
-											if($data['cadastrar']['NovaOS'] == "S"){
-												//Gera uma única O.S.
-												redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-												exit();
-											}else{
-												//Não Gera O.S. 
-												redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-												exit();
-											}
-										}else{
-											//Não Gera O.S. 
-											redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-											exit();
-										}
-									}
-								}else{
-									//Não Gera O.S. 
-									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-									exit();
-								}
-								
-							}elseif($data['cadastrar']['Hidden_Caso'] == 2){
-								
-								if($data['cadastrar']['Adicionar'] == "S"){	
-									if($data['cadastrar']['PorConsulta'] == "S"){
-										//Gera O.S. Replicadas pelo número de ocorrências
-										redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-										exit();
-									}else{
-										//Não Gera O.S. 
-										redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-										exit();
-									}
-								}else{
-									//Não Gera O.S. 
-									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-									exit();
-								}
-								
-							}elseif($data['cadastrar']['Hidden_Caso'] == 3){
-								
-								if($data['cadastrar']['Adicionar'] == "S"){	
-									if($data['cadastrar']['PorConsulta'] == "S"){
-										//Gera O.S. Replicadas pelo número de ocorrências
-										redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-										exit();
-									}else{
-										if($data['query']['OS'] > 1){
-											if($data['cadastrar']['NovaOS'] == "S"){
-												//Gera uma única O.S.
-												redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-												exit();
-											}else{
-												//Não Gera O.S. 
-												redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-												exit();
-											}
-										}else{
-											//Não Gera O.S. 
-											redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-											exit();
-										}
-									}
-								}else{
-									//Não Gera O.S. 
-									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-									exit();
-								}
-								
-							}elseif($data['cadastrar']['Hidden_Caso'] == 4){
-								if($data['cadastrar']['Adicionar'] == "S"){	
-									//Pega a O.S. da repetição
-									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-									exit();
-								}else{
-									//Não Gera O.S. 
-									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-									exit();
-								}							
-							}elseif($data['cadastrar']['Hidden_Caso'] == 5){
-								if($data['cadastrar']['Adicionar'] == "S"){	
-									//Gera O.S. Replicadas pelo número de Recorrências
-									redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-									exit();
-								}else{
-									//Não Gera O.S. 
-									redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-									exit();
-								}							
-							}else{
-
-							}							
-						}else{
-							if($data['cadastrar']['Adicionar'] == "S"){	
-								if($data['cadastrar']['PorConsulta'] == "S"){
-									//Gera O.S. Replicadas pelo número de ocorrências
-									redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-									exit();
-								}else{
-									if($data['query']['Recorrencias'] > 1){
-										if($data['cadastrar']['NovaOS'] == "S"){
-											//Gera uma única O.S.
-											redirect(base_url() . 'orcatrata/cadastrarrepet/' . $data['query']['idApp_Cliente'] . '/' . $data['query']['idApp_Consulta'] . $data['msg']);
-											exit();
-										}else{
-											//Não Gera O.S. 
-											redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-											exit();
-										}
-									}else{
-										//Não Gera O.S. 
-										redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-										exit();
-									}
-								}
-							}else{
-								//Não Gera O.S. 
-								redirect(base_url() . 'agenda' . $data['msg'] . $data['redirect']);
-								exit();
-							}						
-						}
-					}
-				}	
-			}
-        }
-
         $this->load->view('basico/footer');
     }
 
@@ -4765,7 +4775,11 @@ class Consulta extends CI_Controller {
 					$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 					$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 					$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-					$data['query']['NivelAgenda'] = $_SESSION['Usuario']['Nivel'];
+					if($_SESSION['Usuario']['Nivel'] == 2){
+						$data['query']['NivelAgenda'] = 2;
+					}else{
+						$data['query']['NivelAgenda'] = 1;
+					}
 					/*
 					if($data['cadastrar']['Extra'] == 'N'){
 						$data['query']['Repeticao'] = 0;
@@ -4834,7 +4848,7 @@ class Consulta extends CI_Controller {
 										'idSis_Usuario' 		=> $_SESSION['log']['idSis_Usuario'],
 										'idSis_Empresa' 		=> $_SESSION['log']['idSis_Empresa'],
 										'idTab_Modulo' 			=> $_SESSION['log']['idTab_Modulo'],
-										'NivelAgenda' 			=> $_SESSION['Usuario']['Nivel']
+										'NivelAgenda' 			=> $data['query']['NivelAgenda']
 									);
 									$data['campos'] = array_keys($data['repeticao'][$j]);
 									$data['id_Repeticao'] = $this->Consulta_model->set_consulta($data['repeticao'][$j]);
@@ -5110,7 +5124,7 @@ class Consulta extends CI_Controller {
 							$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 							$data['query']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 							$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-							$data['query']['NivelAgenda'] = $_SESSION['Usuario']['Nivel'];
+							$data['query']['NivelAgenda'] = $_SESSION['Consulta']['NivelAgenda'];
 							/*
 							if($data['cadastrar']['Extra'] == 'N'){
 								$data['query']['Repeticao'] = 0;
@@ -5176,7 +5190,7 @@ class Consulta extends CI_Controller {
 												'idSis_Usuario' 		=> $_SESSION['log']['idSis_Usuario'],
 												'idSis_Empresa' 		=> $_SESSION['log']['idSis_Empresa'],
 												'idTab_Modulo' 			=> $_SESSION['log']['idTab_Modulo'],
-												'NivelAgenda' 			=> $_SESSION['Usuario']['Nivel']
+												'NivelAgenda' 			=> $data['query']['NivelAgenda']
 											);
 											$data['campos'] = array_keys($data['repeticao'][$j]);
 											$data['id_Repeticao'] = $this->Consulta_model->set_consulta($data['repeticao'][$j]);

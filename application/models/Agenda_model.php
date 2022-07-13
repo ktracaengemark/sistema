@@ -351,7 +351,7 @@ class Agenda_model extends CI_Model {
 	public function select_associado() {
 		
 		if($_SESSION['Usuario']['Nivel'] == 0 || $_SESSION['Usuario']['Nivel'] == 1){
-			$nivel = 'AND U.Nivel = 1';
+			$nivel = 'AND (U.Nivel = 0 OR U.Nivel = 1 )';
 		}elseif($_SESSION['Usuario']['Nivel'] == 2){
 			$nivel = 'AND U.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . '';
 		}else{

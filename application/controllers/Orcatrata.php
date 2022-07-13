@@ -3346,7 +3346,13 @@ class Orcatrata extends CI_Controller {
 						$data['orcatrata']['ValorRestanteOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorRestanteOrca']));
 						
 						$data['orcatrata']['idTab_TipoRD'] = "2";
-						$data['orcatrata']['NivelOrca'] = $_SESSION['Usuario']['Nivel'];
+
+						if($_SESSION['Usuario']['Nivel'] == 2){
+							$data['orcatrata']['NivelOrca'] = 2;
+						}else{
+							$data['orcatrata']['NivelOrca'] = 1;
+						}
+					
 						$data['orcatrata']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 						$data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 						$data['orcatrata']['Associado'] = 0;
@@ -5004,7 +5010,13 @@ class Orcatrata extends CI_Controller {
 					$data['orcatrata']['ValorFinalOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFinalOrca']));
 					
 					$data['orcatrata']['idTab_TipoRD'] = "2";
-					$data['orcatrata']['NivelOrca'] = $_SESSION['Usuario']['Nivel'];
+
+					if($_SESSION['Usuario']['Nivel'] == 2){
+						$data['orcatrata']['NivelOrca'] = 2;
+					}else{
+						$data['orcatrata']['NivelOrca'] = 1;
+					}
+					
 					$data['orcatrata']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa']; 
 					$data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 					$data['orcatrata']['Associado'] = 0;
@@ -13338,7 +13350,13 @@ class Orcatrata extends CI_Controller {
 					$data['orcatrata']['ValorFinalOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFinalOrca']));
 					$data['orcatrata']['SubValorFinal'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['SubValorFinal']));
 					$data['orcatrata']['idTab_TipoRD'] = "1";
-					$data['orcatrata']['NivelOrca'] = $_SESSION['Usuario']['Nivel'];
+
+					if($_SESSION['Usuario']['Nivel'] == 2){
+						$data['orcatrata']['NivelOrca'] = 2;
+					}else{
+						$data['orcatrata']['NivelOrca'] = 1;
+					}
+							
 					$data['orcatrata']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa']; 
 					$data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 					$data['orcatrata']['Associado'] = 0;
