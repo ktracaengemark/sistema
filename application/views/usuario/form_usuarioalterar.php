@@ -14,7 +14,7 @@
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-md-12">	
-										<?php #echo validation_errors(); ?>
+										<?php echo validation_errors(); ?>
 										<div class="panel panel-info">
 											<div class="panel-heading">
 												<div class="form-group">
@@ -61,9 +61,9 @@
 														<div class="col-md-3">	
 															<label for="Nivel">Nivel:</label>
 															<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?> readonly="" id="Nivel" name="Nivel">
+																<option value="">-- Sel. Nivel --</option>
 																<?php
 																foreach ($select['Nivel'] as $key => $row) {
-																	if (!$query['Nivel']) $query['Nivel'] = '1';
 																	if ($query['Nivel'] == $key) {
 																		echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 																	} else {
@@ -72,13 +72,13 @@
 																}
 																?>
 															</select>
+															<?php echo form_error('Nivel'); ?>
 														</div>
 														<div class="col-md-3">
 															<div class="row">
 																<div class="col-md-12 text-left">	
 																	<label  for="Funcao">Funçao:</label>
-																	<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
-																			id="Funcao" name="Funcao">
+																	<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?> id="Funcao" name="Funcao">
 																		<option value="">-- Sel. Função --</option>
 																		<?php
 																		foreach ($select['Funcao'] as $key => $row) {

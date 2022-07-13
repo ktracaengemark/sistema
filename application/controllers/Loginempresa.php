@@ -101,13 +101,17 @@ class Loginempresa extends CI_Controller {
 					$this->load->view('loginempresa/form_loginempresa', $data);
 
 				} else {
-							
+					
+					unset($_SESSION['log']);		
+					
 					$_SESSION['log']['Nome'] = $query['Nome'];
 					$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
 					$_SESSION['log']['CpfAdmin'] = $query['CpfUsuario'];
 					$_SESSION['log']['CelularAdmin'] = $query['CelularUsuario'];
 					$_SESSION['log']['NomeEmpresa'] = $query['NomeEmpresa'];
 					$_SESSION['log']['NomeEmpresa2'] = (strlen($query['NomeEmpresa']) > 15) ? substr($query['NomeEmpresa'], 0, 15) : $query['NomeEmpresa'];
+					$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
+					$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
 					$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
 					$_SESSION['log']['UsuarioEmpresa'] = $query2['UsuarioEmpresa'];
 					$_SESSION['log']['PermissaoEmpresa'] = $query2['PermissaoEmp'];
@@ -515,6 +519,7 @@ class Loginempresa extends CI_Controller {
 							'Inativo' => "0",
 							'idTab_Modulo' => "1",
 							'Permissao' => "3",
+							'QuemCad' => "0",
 							'Nivel' => "0"
 						);
 						$data['campos'] = array_keys($data['usuario']);
@@ -1075,6 +1080,7 @@ class Loginempresa extends CI_Controller {
 						'Inativo' => "0",
 						'idTab_Modulo' => "1",
 						'Permissao' => "3",
+						'QuemCad' => "0",
 						'Nivel' => "0"
 					);
 					$data['campos'] = array_keys($data['usuario']);

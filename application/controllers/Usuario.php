@@ -120,11 +120,18 @@ class Usuario extends CI_Controller {
 			$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
 			$data['select']['CompAgenda'] = $this->Basico_model->select_status_sn();
 			#$data['select']['idSis_Empresa'] = $this->Basico_model->select_empresa2();
-			$data['select']['Nivel'] = array(
-				'0' => '0 - Administrador',
-				'1' => '1 - Funcionario',
-				'2' => '2 - Revendedor',
-			);		
+			if($_SESSION['AdminEmpresa']['Rede'] == "S"){	
+				$data['select']['Nivel'] = array(
+					'0' => '0 - Administrador',
+					'1' => '1 - Funcionario',
+					'2' => '2 - Revendedor',
+				);
+			}else{	
+				$data['select']['Nivel'] = array(
+					'0' => '0 - Administrador',
+					'1' => '1 - Funcionario',
+				);
+			}		
 			$data['titulo'] = 'Cadastrar Usuário';
 			$data['form_open_path'] = 'usuario/cadastrar';
 			$data['readonly'] = '';
@@ -166,6 +173,7 @@ class Usuario extends CI_Controller {
 			$this->form_validation->set_rules('Nome', 'Nome do Usuário', 'required|trim');
 			//$this->form_validation->set_rules('CelularUsuario', 'CelularUsuario', 'required|trim');
 			$this->form_validation->set_rules('CelularUsuario', 'Celular do Usuário', 'required|trim|is_unique_duplo[Sis_Usuario.CelularUsuario.idSis_Empresa.' . $_SESSION['AdminEmpresa']['idSis_Empresa'] . ']');
+			$this->form_validation->set_rules('Nivel', 'Nivel', 'required|trim');
 			$this->form_validation->set_rules('Funcao', 'Funcao', 'required|trim');		
 			$this->form_validation->set_rules('Permissao', 'Acesso Ás Agendas', 'required|trim');		
 			$this->form_validation->set_rules('Senha', 'Senha', 'required|trim');
@@ -371,7 +379,7 @@ class Usuario extends CI_Controller {
 				
 			}else{		
 				
-				$_SESSION['QueryUsuario'] = $data['query'] = $this->Usuario_model->get_usuario_verificacao_admin($id, TRUE);
+				$_SESSION['QueryUsuario'] = $data['query'] = $this->Usuario_model->get_usuario_funcionario($id, TRUE);
 
 				if($data['query'] === FALSE){
 					
@@ -385,9 +393,6 @@ class Usuario extends CI_Controller {
 					$data['titulo'] = 'Colaborador ';
 					$data['panel'] = 'primary';
 					$data['metodo'] = 4;
-
-					//$_SESSION['log']['idSis_Usuario'] = $data['resumo']['idSis_Usuario'] = $data['query']['idSis_Usuario'];
-					//$data['resumo']['Nome'] = $data['query']['Nome'];
 
 					$data['query']['Idade'] = $this->basico->calcula_idade($data['query']['DataNascimento']);
 					$data['query']['DataNascimento'] = $this->basico->mascara_data($data['query']['DataNascimento'], 'barras');
@@ -482,7 +487,7 @@ class Usuario extends CI_Controller {
 			), TRUE);
 
 			if ($id) {
-				$_SESSION['QueryUsuario'] = $data['query'] = $this->Usuario_model->get_usuario_verificacao_admin($id);
+				$_SESSION['QueryUsuario'] = $data['query'] = $this->Usuario_model->get_usuario_funcionario($id);
 
 				if($data['query'] === FALSE){
 					
@@ -528,12 +533,18 @@ class Usuario extends CI_Controller {
 				$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
 				$data['select']['CompAgenda'] = $this->Basico_model->select_status_sn();
 				#$data['select']['idSis_Empresa'] = $this->Basico_model->select_empresa2();
-				$data['select']['Nivel'] = array(
-					'0' => '0 - Administrador',
-					'1' => '1 - Funcionario',
-					'2' => '2 - Revendedor',
-				);
-				
+				if($_SESSION['AdminEmpresa']['Rede'] == "S"){	
+					$data['select']['Nivel'] = array(
+						'0' => '0 - Administrador',
+						'1' => '1 - Funcionario',
+						'2' => '2 - Revendedor',
+					);
+				}else{	
+					$data['select']['Nivel'] = array(
+						'0' => '0 - Administrador',
+						'1' => '1 - Funcionario',
+					);
+				}	
 				$data['titulo'] = 'Editar Usuário';
 				$data['form_open_path'] = 'usuario/alterar';
 				$data['readonly'] = '';
@@ -576,9 +587,10 @@ class Usuario extends CI_Controller {
 				$this->form_validation->set_rules('DataEmUsuario', 'Data de Emissão', 'trim|valid_date');
 				//$this->form_validation->set_rules('CelularUsuario', 'CelularUsuario', 'required|trim');
 				//$this->form_validation->set_rules('CelularUsuario', 'Celular do Usuario', 'required|trim|is_unique_by_id_empresa[Sis_Usuario.CelularUsuario.' . $data['query']['idSis_Usuario'] . '.idSis_Empresa.' . $data['query']['idSis_Empresa'] . ']');
-				$this->form_validation->set_rules('Email', 'E-mail', 'trim|valid_email');
-				$this->form_validation->set_rules('Permissao', 'Acesso as Agendas', 'required|trim');
+				$this->form_validation->set_rules('Nivel', 'Nivel', 'required|trim');
 				$this->form_validation->set_rules('Funcao', 'Funcao', 'required|trim');
+				$this->form_validation->set_rules('Permissao', 'Acesso as Agendas', 'required|trim');
+				$this->form_validation->set_rules('Email', 'E-mail', 'trim|valid_email');
 				$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posiçao "Sim"', 'trim|valid_aprovado');		
 
 				#run form validation
@@ -659,7 +671,7 @@ class Usuario extends CI_Controller {
 			), TRUE);
 
 			if ($id) {
-				$_SESSION['QueryUsuario'] = $data['query'] = $this->Usuario_model->get_usuario_verificacao_admin($id);
+				$_SESSION['QueryUsuario'] = $data['query'] = $this->Usuario_model->get_usuario_funcionario($id);
 
 				if($data['query'] === FALSE){
 					
@@ -887,7 +899,7 @@ class Usuario extends CI_Controller {
 			(!$data['query']['Tarefas']) ? $data['query']['Tarefas'] = 'N' : FALSE;
 
 			if ($id) {
-				$_SESSION['QueryUsuario'] = $data['query'] = $this->Usuario_model->get_usuario_verificacao_admin($id);
+				$_SESSION['QueryUsuario'] = $data['query'] = $this->Usuario_model->get_usuario_funcionario($id);
 
 				if($data['query'] === FALSE){
 					
@@ -1087,7 +1099,7 @@ class Usuario extends CI_Controller {
 			), TRUE);
 
 			if ($id) {
-				$_SESSION['QueryUsuario'] = $data['query'] = $this->Usuario_model->get_usuario_verificacao_admin($id);
+				$_SESSION['QueryUsuario'] = $data['query'] = $this->Usuario_model->get_usuario_funcionario($id);
 
 				if($data['query'] === FALSE){
 					

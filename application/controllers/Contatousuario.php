@@ -72,7 +72,7 @@ class Contatousuario extends CI_Controller {
 
 			if ($idSis_Usuario) {
 				
-				$_SESSION['QueryUsuario'] = $data['usuario'] = $this->Usuario_model->get_usuario_verificacao_admin($idSis_Usuario);
+				$_SESSION['QueryUsuario'] = $data['usuario'] = $this->Usuario_model->get_usuario_funcionario($idSis_Usuario);
 
 				if($data['usuario'] === FALSE){
 					
@@ -223,7 +223,7 @@ class Contatousuario extends CI_Controller {
 				
 			} else {
 				
-				$_SESSION['QueryUsuario'] = $data['usuario'] = $this->Usuario_model->get_usuario_verificacao_admin($_SESSION['ContatoUsuario']['idSis_Usuario']);
+				$_SESSION['QueryUsuario'] = $data['usuario'] = $this->Usuario_model->get_usuario_funcionario($_SESSION['ContatoUsuario']['idSis_Usuario']);
 
 				if($data['usuario'] === FALSE){
 					
@@ -330,7 +330,7 @@ class Contatousuario extends CI_Controller {
 				
 			}else{		
 				
-				$_SESSION['QueryUsuario'] = $data['query'] = $this->Usuario_model->get_usuario_verificacao_admin($id, TRUE);
+				$_SESSION['QueryUsuario'] = $data['query'] = $this->Usuario_model->get_usuario_funcionario($id, TRUE);
 
 				if($data['query'] === FALSE){
 					
@@ -402,7 +402,7 @@ class Contatousuario extends CI_Controller {
 					
 				} else {				
 
-					$_SESSION['QueryUsuario'] = $data['usuario'] = $this->Usuario_model->get_usuario_verificacao_admin($_SESSION['ContatoUsuario']['idSis_Usuario']);
+					$_SESSION['QueryUsuario'] = $data['usuario'] = $this->Usuario_model->get_usuario_funcionario($_SESSION['ContatoUsuario']['idSis_Usuario']);
 
 					if($data['usuario'] === FALSE){
 						

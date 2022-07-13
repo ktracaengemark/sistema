@@ -105,13 +105,14 @@ class Associado_model extends CI_Model {
 	
     public function get_associado($data) {
         $query = $this->db->query('SELECT * FROM Sis_Associado WHERE idSis_Associado = ' . $data);
+
 		$count = $query->num_rows();
-        $query = $query->result_array();
 		
 		if(isset($count)){
 			if($count == 0){
 				return FALSE;
 			}else{
+				$query = $query->result_array();
 				return $query[0];
 			}
 		}else{

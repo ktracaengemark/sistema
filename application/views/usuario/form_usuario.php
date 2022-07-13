@@ -1,5 +1,5 @@
 <?php if (isset($msg)) echo $msg; ?>
-<?php if ( !isset($evento) && isset($_SESSION['AdminEmpresa'])) { ?>
+<?php if ( !isset($evento) && isset($_SESSION['AdminUsuario'])) { ?>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-offset-1 col-md-10">
@@ -10,15 +10,11 @@
 						<?php echo $titulo; ?>
 					</div>
 					<div class="panel-body">
-						
 						<div class="row">
 							<div class="col-md-12">	
-								
-								<?php #echo validation_errors(); ?>
-
+								<?php echo validation_errors(); ?>
 								<div class="panel panel-info">
 									<div class="panel-heading">
-										
 										<div class="form-group">
 											<h3 class="text-left">Dados do Usuário  </h3>
 											<div class="row">
@@ -62,6 +58,7 @@
 												<div class="col-md-3">	
 													<label for="Nivel">Nivel:</label>
 													<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?> readonly="" id="Nivel" name="Nivel">
+														<option value="">-- Sel. Nivel --</option>
 														<?php
 														foreach ($select['Nivel'] as $key => $row) {
 															if (!$query['Nivel']) $query['Nivel'] = '1';
@@ -73,6 +70,7 @@
 														}
 														?>
 													</select>
+													<?php echo form_error('Nivel'); ?>
 												</div>
 												<div class="col-md-3">
 													<div class="row">
@@ -345,7 +343,6 @@
 						</div>
 						<div class="form-group">
 							<div class="row">
-								<!--<input type="hidden" id="idSis_Empresa" name="idSis_Empresa" value="<?php #echo $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>">-->
 								<?php if ($metodo > 1) { ?>
 									<input type="hidden" name="idSis_Usuario" value="<?php echo $query['idSis_Usuario']; ?>">
 								<?php } ?>

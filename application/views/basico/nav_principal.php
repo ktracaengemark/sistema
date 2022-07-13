@@ -133,8 +133,14 @@
 							}else{
 								$atua_flash = '';
 							}
+							 
+							if ($_SESSION['log']['idSis_Empresa'] != 5){
+								$loginempresa = base_url() . 'relatorio/loginempresa';
+							}else{
+								$loginempresa = '';
+							}
 						?>
-						<a type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning" href="<?php echo base_url() ?>relatorio/loginempresa" role="button">
+						<a type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning" href="<?php echo $loginempresa ?>" role="button">
 							
 							<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
 								

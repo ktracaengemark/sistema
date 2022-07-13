@@ -101,57 +101,67 @@ class Login extends CI_Controller {
 					#initialize session
 					$this->load->driver('session');
 
-					$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
-					$_SESSION['Usuario']  = $this->Associado_model->get_associado($query['idSis_Associado'], TRUE);
-			
-					$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao_associado($query['idSis_Associado']);
-				
-					#### Carrega os dados da Empresa nas vari?ves de sess?o ####
+					$_SESSION['Empresa']  = $data['empresa'] = $this->Empresa_model->get_empresa($empresa, TRUE);
+					$_SESSION['Usuario']  = $data['usuario'] = $this->Associado_model->get_associado($query['idSis_Associado'], TRUE);
 
-					$query2 = $this->Login_model->check_documentos_log($empresa, TRUE);			
-					$_SESSION['log']['Icone'] = $query2['Icone'];
+					if ($data['empresa'] === FALSE || $data['usuario'] === FALSE ) {
+					
+						$data['msg'] = $this->basico->msg('<strong>Empresa, Celular ou Senha</strong> incorretos.', 'erro', FALSE, FALSE, FALSE);
+						$this->load->view('login/form_login1', $data);
 						
-					$query3 = $this->Login_model->dados_empresa_log($empresa);			
-					$_SESSION['log']['NivelEmpresa'] = $query3['NivelEmpresa'];
-					$_SESSION['log']['TabelasEmpresa'] = $query3['TabelasEmpresa'];
-					$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
-					$_SESSION['log']['Site'] = $query3['Site'];
-					$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
-					$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
-					$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];
-
-					#$_SESSION['log']['Usuario'] = $query[''];
-					//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
-					$_SESSION['log']['Usuario'] = (strlen($query['Associado']) > 13) ? substr($query['Associado'], 0, 13) : $query['Associado'];
-					$_SESSION['log']['Nome'] = $query['Nome'];
-					$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
-					$_SESSION['log']['CpfUsuario'] = $query['CpfAssociado'];
-					$_SESSION['log']['CelularUsuario'] = $query['CelularAssociado'];
-					$_SESSION['log']['idSis_Usuario'] = $query['idSis_Associado'];
-					$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
-					$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
-					$_SESSION['log']['Arquivo'] = $query['Arquivo'];
-
-					$this->load->database();
-					$_SESSION['db']['hostname'] = $this->db->hostname;
-					$_SESSION['db']['username'] = $this->db->username;
-					$_SESSION['db']['password'] = $this->db->password;
-					$_SESSION['db']['database'] = $this->db->database;
-
-					$set_acesso_associado = $this->Login_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'LOGIN');
-
-					if ($set_acesso_associado === FALSE) {
-						$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
-
-						$this->basico->erro($msg);
-						$this->load->view('form_login1');
 					} else {
+			
+						unset($_SESSION['log']);
 						
-						unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
-						unset($_SESSION['QueryUsuario']);
-						unset($_SESSION['QueryEmpresa']);
-						redirect('acesso_associado');
-					}
+						$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao_associado($query['idSis_Associado']);
+					
+						#### Carrega os dados da Empresa nas vari?ves de sess?o ####
+
+						$query2 = $this->Login_model->check_documentos_log($empresa, TRUE);			
+						$_SESSION['log']['Icone'] = $query2['Icone'];
+							
+						$query3 = $this->Login_model->dados_empresa_log($empresa);			
+						$_SESSION['log']['NivelEmpresa'] = $query3['NivelEmpresa'];
+						$_SESSION['log']['TabelasEmpresa'] = $query3['TabelasEmpresa'];
+						$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
+						$_SESSION['log']['Site'] = $query3['Site'];
+						$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
+						$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
+						$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];
+
+						#$_SESSION['log']['Usuario'] = $query[''];
+						//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
+						$_SESSION['log']['Usuario'] = (strlen($query['Associado']) > 13) ? substr($query['Associado'], 0, 13) : $query['Associado'];
+						$_SESSION['log']['Nome'] = $query['Nome'];
+						$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
+						$_SESSION['log']['CpfUsuario'] = $query['CpfAssociado'];
+						$_SESSION['log']['CelularUsuario'] = $query['CelularAssociado'];
+						$_SESSION['log']['idSis_Usuario'] = $query['idSis_Associado'];
+						$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
+						$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
+						$_SESSION['log']['Arquivo'] = $query['Arquivo'];
+
+						$this->load->database();
+						$_SESSION['db']['hostname'] = $this->db->hostname;
+						$_SESSION['db']['username'] = $this->db->username;
+						$_SESSION['db']['password'] = $this->db->password;
+						$_SESSION['db']['database'] = $this->db->database;
+
+						$set_acesso_associado = $this->Login_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'LOGIN');
+
+						if ($set_acesso_associado === FALSE) {
+							$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
+
+							$this->basico->erro($msg);
+							$this->load->view('form_login1');
+						} else {
+							
+							unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
+							unset($_SESSION['QueryUsuario']);
+							unset($_SESSION['QueryEmpresa']);
+							redirect('acesso_associado');
+						}
+					}	
 				}
             }
         }
@@ -220,12 +230,93 @@ class Login extends CI_Controller {
 				
 					#initialize session
 					$this->load->driver('session');
-
-					$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
-					$_SESSION['Usuario']  = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);					
-					if($_SESSION['Usuario']['Horario_Atend'] == "S"){
 					
-						if($this->Empresa_model->get_horario_atend($empresa) === TRUE){
+					$_SESSION['Empresa']  = $data['empresa'] = $this->Empresa_model->get_empresa($empresa, TRUE);
+					$_SESSION['Usuario']  = $data['usuario'] = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);
+
+					if ($data['empresa'] === FALSE || $data['usuario'] === FALSE ) {
+					
+						$data['msg'] = $this->basico->msg('<strong>Empresa, Celular ou Senha</strong> incorretos.', 'erro', FALSE, FALSE, FALSE);
+						$this->load->view('login/form_login1', $data);
+						
+					} else {
+			
+						if($_SESSION['Usuario']['Horario_Atend'] == "S"){
+						
+							if($this->Empresa_model->get_horario_atend($empresa) === TRUE){
+								
+								unset($_SESSION['log']);
+								
+								$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
+								#### Carrega os dados da Empresa nas vari?ves de sess?o ####
+								
+								$query2 = $this->Login_model->check_documentos_log($empresa, TRUE);
+								$_SESSION['log']['Icone'] = $query2['Icone'];
+
+								$query3 = $this->Login_model->dados_empresa_log($empresa);			
+								$_SESSION['log']['NivelEmpresa'] = $query3['NivelEmpresa'];
+								$_SESSION['log']['TabelasEmpresa'] = $query3['TabelasEmpresa'];
+								$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
+								$_SESSION['log']['Site'] = $query3['Site'];
+								$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
+								$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
+								$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];		
+							
+								#$_SESSION['log']['Usuario'] = $query['Usuario'];
+								//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
+								$_SESSION['log']['Usuario'] = (strlen($query['Usuario']) > 13) ? substr($query['Usuario'], 0, 13) : $query['Usuario'];
+								$_SESSION['log']['Nome'] = $query['Nome'];
+								$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
+								$_SESSION['log']['CpfUsuario'] = $query['CpfUsuario'];
+								$_SESSION['log']['CelularUsuario'] = $query['CelularUsuario'];
+								$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
+								$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
+								$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
+								$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
+								$_SESSION['log']['Permissao'] = $query['Permissao'];
+								$_SESSION['log']['Arquivo'] = $query['Arquivo'];
+								$_SESSION['log']['Cad_Orcam'] = $query['Cad_Orcam'];
+
+								$this->load->database();
+								$_SESSION['db']['hostname'] = $this->db->hostname;
+								$_SESSION['db']['username'] = $this->db->username;
+								$_SESSION['db']['password'] = $this->db->password;
+								$_SESSION['db']['database'] = $this->db->database;
+
+								if ($this->Login_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'LOGIN') === FALSE) {
+									$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
+
+									$this->basico->erro($msg);
+									$this->load->view('form_login2');
+								} else {
+									unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
+									unset($_SESSION['QueryUsuario']);
+									unset($_SESSION['QueryEmpresa']);
+									redirect('acesso');
+								}
+							}else{
+								
+								$this->session->unset_userdata('log');
+								foreach ($_SESSION as $key => $value) {
+									if ($key != 'Site_Back') {
+										unset($_SESSION[$key]);
+									}
+								}
+								
+								$data['aviso'] = ''
+										. '
+									<div class="alert alert-success" role="alert">
+										<h4>
+											<p><b>Horário de Acesso Negado para Usuário ' . $celular . ' !</b></p>
+											<p>Entre em contato com o Administrador da sua Empresa</b>.</p>
+										</h4>
+									</div> '
+										. '';
+								$this->load->view('login/tela_msg', $data);
+							}
+						}else{
+								
+							unset($_SESSION['log']);
 							
 							$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
 							#### Carrega os dados da Empresa nas vari?ves de sess?o ####
@@ -240,7 +331,7 @@ class Login extends CI_Controller {
 							$_SESSION['log']['Site'] = $query3['Site'];
 							$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
 							$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
-							$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];		
+							$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];			
 						
 							#$_SESSION['log']['Usuario'] = $query['Usuario'];
 							//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
@@ -267,82 +358,14 @@ class Login extends CI_Controller {
 								$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
 
 								$this->basico->erro($msg);
-								$this->load->view('form_login2');
+								$this->load->view('form_login1');
 							} else {
 								unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 								unset($_SESSION['QueryUsuario']);
 								unset($_SESSION['QueryEmpresa']);
 								redirect('acesso');
-							}
-						}else{
-							
-							$this->session->unset_userdata('log');
-							foreach ($_SESSION as $key => $value) {
-								if ($key != 'Site_Back') {
-									unset($_SESSION[$key]);
-								}
-							}
-							
-							$data['aviso'] = ''
-									. '
-								<div class="alert alert-success" role="alert">
-									<h4>
-										<p><b>Horário de Acesso Negado para Usuário ' . $celular . ' !</b></p>
-										<p>Entre em contato com o Administrador da sua Empresa</b>.</p>
-									</h4>
-								</div> '
-									. '';
-							$this->load->view('login/tela_msg', $data);
+							}						
 						}
-					}else{
-						
-						$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
-						#### Carrega os dados da Empresa nas vari?ves de sess?o ####
-						
-						$query2 = $this->Login_model->check_documentos_log($empresa, TRUE);
-						$_SESSION['log']['Icone'] = $query2['Icone'];
-
-						$query3 = $this->Login_model->dados_empresa_log($empresa);			
-						$_SESSION['log']['NivelEmpresa'] = $query3['NivelEmpresa'];
-						$_SESSION['log']['TabelasEmpresa'] = $query3['TabelasEmpresa'];
-						$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
-						$_SESSION['log']['Site'] = $query3['Site'];
-						$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
-						$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
-						$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];			
-					
-						#$_SESSION['log']['Usuario'] = $query['Usuario'];
-						//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
-						$_SESSION['log']['Usuario'] = (strlen($query['Usuario']) > 13) ? substr($query['Usuario'], 0, 13) : $query['Usuario'];
-						$_SESSION['log']['Nome'] = $query['Nome'];
-						$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
-						$_SESSION['log']['CpfUsuario'] = $query['CpfUsuario'];
-						$_SESSION['log']['CelularUsuario'] = $query['CelularUsuario'];
-						$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
-						$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
-						$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
-						$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
-						$_SESSION['log']['Permissao'] = $query['Permissao'];
-						$_SESSION['log']['Arquivo'] = $query['Arquivo'];
-						$_SESSION['log']['Cad_Orcam'] = $query['Cad_Orcam'];
-
-						$this->load->database();
-						$_SESSION['db']['hostname'] = $this->db->hostname;
-						$_SESSION['db']['username'] = $this->db->username;
-						$_SESSION['db']['password'] = $this->db->password;
-						$_SESSION['db']['database'] = $this->db->database;
-
-						if ($this->Login_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'LOGIN') === FALSE) {
-							$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
-
-							$this->basico->erro($msg);
-							$this->load->view('form_login1');
-						} else {
-							unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
-							unset($_SESSION['QueryUsuario']);
-							unset($_SESSION['QueryEmpresa']);
-							redirect('acesso');
-						}						
 					}
 				}
             }
@@ -429,13 +452,93 @@ class Login extends CI_Controller {
 					#initialize session
 					$this->load->driver('session');
 					
-					$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
-					$_SESSION['Usuario']  = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);				
+					$_SESSION['Empresa']  = $data['empresa'] = $this->Empresa_model->get_empresa($empresa, TRUE);
+					$_SESSION['Usuario']  = $data['usuario'] = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);
 
-					if($_SESSION['Usuario']['Horario_Atend'] == "S"){
+					if ($data['empresa'] === FALSE || $data['usuario'] === FALSE ) {
 					
-						if($this->Empresa_model->get_horario_atend($empresa) === TRUE){
+						$data['msg'] = $this->basico->msg('<strong>Empresa, Celular ou Senha</strong> incorretos.', 'erro', FALSE, FALSE, FALSE);
+						$this->load->view('login/form_login2', $data);
+						
+					} else {
+			
+						if($_SESSION['Usuario']['Horario_Atend'] == "S"){
+						
+							if($this->Empresa_model->get_horario_atend($empresa) === TRUE){
+								
+								unset($_SESSION['log']);		
+					
+								$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
+								#### Carrega os dados da Empresa nas vari?ves de sess?o ####
+								
+								$query2 = $this->Login_model->check_documentos_log($empresa, TRUE);
+								$_SESSION['log']['Icone'] = $query2['Icone'];
+
+								$query3 = $this->Login_model->dados_empresa_log($empresa);			
+								$_SESSION['log']['NivelEmpresa'] = $query3['NivelEmpresa'];
+								$_SESSION['log']['TabelasEmpresa'] = $query3['TabelasEmpresa'];
+								$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
+								$_SESSION['log']['Site'] = $query3['Site'];
+								$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
+								$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
+								$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];		
 							
+								#$_SESSION['log']['Usuario'] = $query['Usuario'];
+								//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
+								$_SESSION['log']['Usuario'] = (strlen($query['Usuario']) > 13) ? substr($query['Usuario'], 0, 13) : $query['Usuario'];
+								$_SESSION['log']['Nome'] = $query['Nome'];
+								$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
+								$_SESSION['log']['CpfUsuario'] = $query['CpfUsuario'];
+								$_SESSION['log']['CelularUsuario'] = $query['CelularUsuario'];
+								$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
+								$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
+								$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
+								$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
+								$_SESSION['log']['Permissao'] = $query['Permissao'];
+								$_SESSION['log']['Arquivo'] = $query['Arquivo'];
+								$_SESSION['log']['Cad_Orcam'] = $query['Cad_Orcam'];
+
+								$this->load->database();
+								$_SESSION['db']['hostname'] = $this->db->hostname;
+								$_SESSION['db']['username'] = $this->db->username;
+								$_SESSION['db']['password'] = $this->db->password;
+								$_SESSION['db']['database'] = $this->db->database;
+
+								if ($this->Login_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'LOGIN') === FALSE) {
+									$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
+
+									$this->basico->erro($msg);
+									$this->load->view('form_login2');
+								} else {
+									unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
+									unset($_SESSION['QueryUsuario']);
+									unset($_SESSION['QueryEmpresa']);
+									redirect('acesso');
+								}
+							}else{
+								
+								$this->session->unset_userdata('log');
+								foreach ($_SESSION as $key => $value) {
+									if ($key != 'Site_Back') {
+										unset($_SESSION[$key]);
+									}
+								}
+								
+								$data['aviso'] = ''
+										. '
+									<div class="alert alert-success" role="alert">
+										<h4>
+											<p><b>Horário de Acesso Negado para Usuário ' . $celular . ' !</b></p>
+											<p>Entre em contato com o Administrador da sua Empresa</b>.</p>
+										</h4>
+									</div> '
+										. '';
+								$this->load->view('login/tela_msg', $data);
+							}
+						}else{
+								
+							unset($_SESSION['log']);		
+					
 							$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
 							#### Carrega os dados da Empresa nas vari?ves de sess?o ####
 							
@@ -449,7 +552,7 @@ class Login extends CI_Controller {
 							$_SESSION['log']['Site'] = $query3['Site'];
 							$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
 							$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
-							$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];		
+							$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];			
 						
 							#$_SESSION['log']['Usuario'] = $query['Usuario'];
 							//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
@@ -482,77 +585,9 @@ class Login extends CI_Controller {
 								unset($_SESSION['QueryUsuario']);
 								unset($_SESSION['QueryEmpresa']);
 								redirect('acesso');
-							}
-						}else{
-							
-							$this->session->unset_userdata('log');
-							foreach ($_SESSION as $key => $value) {
-								if ($key != 'Site_Back') {
-									unset($_SESSION[$key]);
-								}
-							}
-							
-							$data['aviso'] = ''
-									. '
-								<div class="alert alert-success" role="alert">
-									<h4>
-										<p><b>Horário de Acesso Negado para Usuário ' . $celular . ' !</b></p>
-										<p>Entre em contato com o Administrador da sua Empresa</b>.</p>
-									</h4>
-								</div> '
-									. '';
-							$this->load->view('login/tela_msg', $data);
+							}						
 						}
-					}else{
-						
-						$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
-						#### Carrega os dados da Empresa nas vari?ves de sess?o ####
-						
-						$query2 = $this->Login_model->check_documentos_log($empresa, TRUE);
-						$_SESSION['log']['Icone'] = $query2['Icone'];
-
-						$query3 = $this->Login_model->dados_empresa_log($empresa);			
-						$_SESSION['log']['NivelEmpresa'] = $query3['NivelEmpresa'];
-						$_SESSION['log']['TabelasEmpresa'] = $query3['TabelasEmpresa'];
-						$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
-						$_SESSION['log']['Site'] = $query3['Site'];
-						$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
-						$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
-						$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];			
-					
-						#$_SESSION['log']['Usuario'] = $query['Usuario'];
-						//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
-						$_SESSION['log']['Usuario'] = (strlen($query['Usuario']) > 13) ? substr($query['Usuario'], 0, 13) : $query['Usuario'];
-						$_SESSION['log']['Nome'] = $query['Nome'];
-						$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
-						$_SESSION['log']['CpfUsuario'] = $query['CpfUsuario'];
-						$_SESSION['log']['CelularUsuario'] = $query['CelularUsuario'];
-						$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
-						$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
-						$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
-						$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
-						$_SESSION['log']['Permissao'] = $query['Permissao'];
-						$_SESSION['log']['Arquivo'] = $query['Arquivo'];
-						$_SESSION['log']['Cad_Orcam'] = $query['Cad_Orcam'];
-
-						$this->load->database();
-						$_SESSION['db']['hostname'] = $this->db->hostname;
-						$_SESSION['db']['username'] = $this->db->username;
-						$_SESSION['db']['password'] = $this->db->password;
-						$_SESSION['db']['database'] = $this->db->database;
-
-						if ($this->Login_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'LOGIN') === FALSE) {
-							$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
-
-							$this->basico->erro($msg);
-							$this->load->view('form_login2');
-						} else {
-							unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
-							unset($_SESSION['QueryUsuario']);
-							unset($_SESSION['QueryEmpresa']);
-							redirect('acesso');
-						}						
-					}	
+					}
 				}
             }
         }
@@ -620,13 +655,93 @@ class Login extends CI_Controller {
 				
 					#initialize session
 					$this->load->driver('session');
-
-					$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
-					$_SESSION['Usuario']  = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);					
-
-					if($_SESSION['Usuario']['Horario_Atend'] == "S"){
 					
-						if($this->Empresa_model->get_horario_atend($empresa) === TRUE){
+					$_SESSION['Empresa']  = $data['empresa'] = $this->Empresa_model->get_empresa($empresa, TRUE);
+					$_SESSION['Usuario']  = $data['usuario'] = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);
+
+					if ($data['empresa'] === FALSE || $data['usuario'] === FALSE ) {
+					
+						$data['msg'] = $this->basico->msg('<strong>Empresa, Celular ou Senha</strong> incorretos.', 'erro', FALSE, FALSE, FALSE);
+						$this->load->view('login/form_login3', $data);
+						
+					} else {
+			
+						if($_SESSION['Usuario']['Horario_Atend'] == "S"){
+						
+							if($this->Empresa_model->get_horario_atend($empresa) === TRUE){
+								
+								unset($_SESSION['log']);
+								
+								$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
+								#### Carrega os dados da Empresa nas vari?ves de sess?o ####
+								
+								$query2 = $this->Login_model->check_documentos_log($empresa, TRUE);
+								$_SESSION['log']['Icone'] = $query2['Icone'];
+
+								$query3 = $this->Login_model->dados_empresa_log($empresa);			
+								$_SESSION['log']['NivelEmpresa'] = $query3['NivelEmpresa'];
+								$_SESSION['log']['TabelasEmpresa'] = $query3['TabelasEmpresa'];
+								$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
+								$_SESSION['log']['Site'] = $query3['Site'];
+								$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
+								$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
+								$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];		
+							
+								#$_SESSION['log']['Usuario'] = $query['Usuario'];
+								//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
+								$_SESSION['log']['Usuario'] = (strlen($query['Usuario']) > 13) ? substr($query['Usuario'], 0, 13) : $query['Usuario'];
+								$_SESSION['log']['Nome'] = $query['Nome'];
+								$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
+								$_SESSION['log']['CpfUsuario'] = $query['CpfUsuario'];
+								$_SESSION['log']['CelularUsuario'] = $query['CelularUsuario'];
+								$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
+								$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
+								$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
+								$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
+								$_SESSION['log']['Permissao'] = $query['Permissao'];
+								$_SESSION['log']['Arquivo'] = $query['Arquivo'];
+								$_SESSION['log']['Cad_Orcam'] = $query['Cad_Orcam'];
+
+								$this->load->database();
+								$_SESSION['db']['hostname'] = $this->db->hostname;
+								$_SESSION['db']['username'] = $this->db->username;
+								$_SESSION['db']['password'] = $this->db->password;
+								$_SESSION['db']['database'] = $this->db->database;
+
+								if ($this->Login_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'LOGIN') === FALSE) {
+									$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
+
+									$this->basico->erro($msg);
+									$this->load->view('form_login2');
+								} else {
+									unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
+									unset($_SESSION['QueryUsuario']);
+									unset($_SESSION['QueryEmpresa']);
+									redirect('acesso');
+								}
+							}else{
+								
+								$this->session->unset_userdata('log');
+								foreach ($_SESSION as $key => $value) {
+									if ($key != 'Site_Back') {
+										unset($_SESSION[$key]);
+									}
+								}
+								
+								$data['aviso'] = ''
+										. '
+									<div class="alert alert-success" role="alert">
+										<h4>
+											<p><b>Horário de Acesso Negado para Usuário ' . $celular . ' !</b></p>
+											<p>Entre em contato com o Administrador da sua Empresa</b>.</p>
+										</h4>
+									</div> '
+										. '';
+								$this->load->view('login/tela_msg', $data);
+							}
+						}else{
+								
+							unset($_SESSION['log']);
 							
 							$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
 							#### Carrega os dados da Empresa nas vari?ves de sess?o ####
@@ -641,7 +756,7 @@ class Login extends CI_Controller {
 							$_SESSION['log']['Site'] = $query3['Site'];
 							$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
 							$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
-							$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];		
+							$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];			
 						
 							#$_SESSION['log']['Usuario'] = $query['Usuario'];
 							//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
@@ -668,82 +783,14 @@ class Login extends CI_Controller {
 								$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
 
 								$this->basico->erro($msg);
-								$this->load->view('form_login2');
+								$this->load->view('form_login3');
 							} else {
 								unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 								unset($_SESSION['QueryUsuario']);
 								unset($_SESSION['QueryEmpresa']);
 								redirect('acesso');
-							}
-						}else{
-							
-							$this->session->unset_userdata('log');
-							foreach ($_SESSION as $key => $value) {
-								if ($key != 'Site_Back') {
-									unset($_SESSION[$key]);
-								}
-							}
-							
-							$data['aviso'] = ''
-									. '
-								<div class="alert alert-success" role="alert">
-									<h4>
-										<p><b>Horário de Acesso Negado para Usuário ' . $celular . ' !</b></p>
-										<p>Entre em contato com o Administrador da sua Empresa</b>.</p>
-									</h4>
-								</div> '
-									. '';
-							$this->load->view('login/tela_msg', $data);
+							}						
 						}
-					}else{
-						
-						$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
-						#### Carrega os dados da Empresa nas vari?ves de sess?o ####
-						
-						$query2 = $this->Login_model->check_documentos_log($empresa, TRUE);
-						$_SESSION['log']['Icone'] = $query2['Icone'];
-
-						$query3 = $this->Login_model->dados_empresa_log($empresa);			
-						$_SESSION['log']['NivelEmpresa'] = $query3['NivelEmpresa'];
-						$_SESSION['log']['TabelasEmpresa'] = $query3['TabelasEmpresa'];
-						$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
-						$_SESSION['log']['Site'] = $query3['Site'];
-						$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
-						$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
-						$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];			
-					
-						#$_SESSION['log']['Usuario'] = $query['Usuario'];
-						//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
-						$_SESSION['log']['Usuario'] = (strlen($query['Usuario']) > 13) ? substr($query['Usuario'], 0, 13) : $query['Usuario'];
-						$_SESSION['log']['Nome'] = $query['Nome'];
-						$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
-						$_SESSION['log']['CpfUsuario'] = $query['CpfUsuario'];
-						$_SESSION['log']['CelularUsuario'] = $query['CelularUsuario'];
-						$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
-						$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
-						$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
-						$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
-						$_SESSION['log']['Permissao'] = $query['Permissao'];
-						$_SESSION['log']['Arquivo'] = $query['Arquivo'];
-						$_SESSION['log']['Cad_Orcam'] = $query['Cad_Orcam'];
-
-						$this->load->database();
-						$_SESSION['db']['hostname'] = $this->db->hostname;
-						$_SESSION['db']['username'] = $this->db->username;
-						$_SESSION['db']['password'] = $this->db->password;
-						$_SESSION['db']['database'] = $this->db->database;
-
-						if ($this->Login_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'LOGIN') === FALSE) {
-							$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
-
-							$this->basico->erro($msg);
-							$this->load->view('form_login3');
-						} else {
-							unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
-							unset($_SESSION['QueryUsuario']);
-							unset($_SESSION['QueryEmpresa']);
-							redirect('acesso');
-						}						
 					}
 				}
             }
@@ -813,12 +860,92 @@ class Login extends CI_Controller {
 					#initialize session
 					$this->load->driver('session');
 					
-					$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
-					$_SESSION['Usuario']  = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);
+					$_SESSION['Empresa']  = $data['empresa'] = $this->Empresa_model->get_empresa($empresa, TRUE);
+					$_SESSION['Usuario']  = $data['usuario'] = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);
+
+					if ($data['empresa'] === FALSE || $data['usuario'] === FALSE ) {
 					
-					if($_SESSION['Usuario']['Horario_Atend'] == "S"){
-					
-						if($this->Empresa_model->get_horario_atend($empresa) === TRUE){
+						$data['msg'] = $this->basico->msg('<strong>Empresa, Celular ou Senha</strong> incorretos.', 'erro', FALSE, FALSE, FALSE);
+						$this->load->view('login/form_login4', $data);
+						
+					} else {
+			
+						if($_SESSION['Usuario']['Horario_Atend'] == "S"){
+						
+							if($this->Empresa_model->get_horario_atend($empresa) === TRUE){
+								
+								unset($_SESSION['log']);
+								
+								$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
+								#### Carrega os dados da Empresa nas vari?ves de sess?o ####
+								
+								$query2 = $this->Login_model->check_documentos_log($empresa, TRUE);
+								$_SESSION['log']['Icone'] = $query2['Icone'];
+
+								$query3 = $this->Login_model->dados_empresa_log($empresa);			
+								$_SESSION['log']['NivelEmpresa'] = $query3['NivelEmpresa'];
+								$_SESSION['log']['TabelasEmpresa'] = $query3['TabelasEmpresa'];
+								$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
+								$_SESSION['log']['Site'] = $query3['Site'];
+								$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
+								$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
+								$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];		
+							
+								#$_SESSION['log']['Usuario'] = $query['Usuario'];
+								//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
+								$_SESSION['log']['Usuario'] = (strlen($query['Usuario']) > 13) ? substr($query['Usuario'], 0, 13) : $query['Usuario'];
+								$_SESSION['log']['Nome'] = $query['Nome'];
+								$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
+								$_SESSION['log']['CpfUsuario'] = $query['CpfUsuario'];
+								$_SESSION['log']['CelularUsuario'] = $query['CelularUsuario'];
+								$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
+								$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
+								$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
+								$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
+								$_SESSION['log']['Permissao'] = $query['Permissao'];
+								$_SESSION['log']['Arquivo'] = $query['Arquivo'];
+								$_SESSION['log']['Cad_Orcam'] = $query['Cad_Orcam'];
+
+								$this->load->database();
+								$_SESSION['db']['hostname'] = $this->db->hostname;
+								$_SESSION['db']['username'] = $this->db->username;
+								$_SESSION['db']['password'] = $this->db->password;
+								$_SESSION['db']['database'] = $this->db->database;
+
+								if ($this->Login_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'LOGIN') === FALSE) {
+									$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
+
+									$this->basico->erro($msg);
+									$this->load->view('form_login2');
+								} else {
+									unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
+									unset($_SESSION['QueryUsuario']);
+									unset($_SESSION['QueryEmpresa']);
+									redirect('acesso');
+								}
+							}else{
+								
+								$this->session->unset_userdata('log');
+								foreach ($_SESSION as $key => $value) {
+									if ($key != 'Site_Back') {
+										unset($_SESSION[$key]);
+									}
+								}
+								
+								$data['aviso'] = ''
+										. '
+									<div class="alert alert-success" role="alert">
+										<h4>
+											<p><b>Horário de Acesso Negado para Usuário ' . $celular . ' !</b></p>
+											<p>Entre em contato com o Administrador da sua Empresa</b>.</p>
+										</h4>
+									</div> '
+										. '';
+								$this->load->view('login/tela_msg', $data);
+							}
+						}else{
+								
+							unset($_SESSION['log']);
 							
 							$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
 							#### Carrega os dados da Empresa nas vari?ves de sess?o ####
@@ -833,7 +960,7 @@ class Login extends CI_Controller {
 							$_SESSION['log']['Site'] = $query3['Site'];
 							$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
 							$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
-							$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];		
+							$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];			
 						
 							#$_SESSION['log']['Usuario'] = $query['Usuario'];
 							//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
@@ -860,82 +987,14 @@ class Login extends CI_Controller {
 								$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
 
 								$this->basico->erro($msg);
-								$this->load->view('form_login2');
+								$this->load->view('form_login4');
 							} else {
 								unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
 								unset($_SESSION['QueryUsuario']);
 								unset($_SESSION['QueryEmpresa']);
 								redirect('acesso');
-							}
-						}else{
-							
-							$this->session->unset_userdata('log');
-							foreach ($_SESSION as $key => $value) {
-								if ($key != 'Site_Back') {
-									unset($_SESSION[$key]);
-								}
-							}
-							
-							$data['aviso'] = ''
-									. '
-								<div class="alert alert-success" role="alert">
-									<h4>
-										<p><b>Horário de Acesso Negado para Usuário ' . $celular . ' !</b></p>
-										<p>Entre em contato com o Administrador da sua Empresa</b>.</p>
-									</h4>
-								</div> '
-									. '';
-							$this->load->view('login/tela_msg', $data);
+							}						
 						}
-					}else{
-						
-						$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
-						#### Carrega os dados da Empresa nas vari?ves de sess?o ####
-						
-						$query2 = $this->Login_model->check_documentos_log($empresa, TRUE);
-						$_SESSION['log']['Icone'] = $query2['Icone'];
-
-						$query3 = $this->Login_model->dados_empresa_log($empresa);			
-						$_SESSION['log']['NivelEmpresa'] = $query3['NivelEmpresa'];
-						$_SESSION['log']['TabelasEmpresa'] = $query3['TabelasEmpresa'];
-						$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
-						$_SESSION['log']['Site'] = $query3['Site'];
-						$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
-						$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
-						$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];			
-					
-						#$_SESSION['log']['Usuario'] = $query['Usuario'];
-						//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
-						$_SESSION['log']['Usuario'] = (strlen($query['Usuario']) > 13) ? substr($query['Usuario'], 0, 13) : $query['Usuario'];
-						$_SESSION['log']['Nome'] = $query['Nome'];
-						$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
-						$_SESSION['log']['CpfUsuario'] = $query['CpfUsuario'];
-						$_SESSION['log']['CelularUsuario'] = $query['CelularUsuario'];
-						$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
-						$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
-						$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
-						$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
-						$_SESSION['log']['Permissao'] = $query['Permissao'];
-						$_SESSION['log']['Arquivo'] = $query['Arquivo'];
-						$_SESSION['log']['Cad_Orcam'] = $query['Cad_Orcam'];
-
-						$this->load->database();
-						$_SESSION['db']['hostname'] = $this->db->hostname;
-						$_SESSION['db']['username'] = $this->db->username;
-						$_SESSION['db']['password'] = $this->db->password;
-						$_SESSION['db']['database'] = $this->db->database;
-
-						if ($this->Login_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'LOGIN') === FALSE) {
-							$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
-
-							$this->basico->erro($msg);
-							$this->load->view('form_login4');
-						} else {
-							unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
-							unset($_SESSION['QueryUsuario']);
-							unset($_SESSION['QueryEmpresa']);
-							redirect('acesso');
-						}						
 					}
 				}
             }
@@ -1024,13 +1083,102 @@ class Login extends CI_Controller {
 					} else {
 						#initialize session
 						$this->load->driver('session');
-						
-						$_SESSION['Empresa']  = $this->Empresa_model->get_empresa($empresa, TRUE);
-						$_SESSION['Usuario']  = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);					
 					
-						if($_SESSION['Usuario']['Horario_Atend'] == "S"){
+						$_SESSION['Empresa']  = $data['empresa'] = $this->Empresa_model->get_empresa($empresa, TRUE);
+						$_SESSION['Usuario']  = $data['usuario'] = $this->Usuario_model->get_usuario($query['idSis_Usuario'], TRUE);
+
+						if ($data['empresa'] === FALSE || $data['usuario'] === FALSE ) {
 						
-							if($this->Empresa_model->get_horario_atend($empresa) === TRUE){
+							$data['msg'] = $this->basico->msg('<strong>Empresa, Celular ou Senha</strong> incorretos.', 'erro', FALSE, FALSE, FALSE);
+							
+							if($_SESSION['Site_Back']['Acesso']['idSis_Empresa']){
+								$this->load->view('login/form_login5', $data);
+							}else{
+								$this->load->view('login/form_login2', $data);
+							}
+							
+						} else {
+			
+							if($_SESSION['Usuario']['Horario_Atend'] == "S"){
+							
+								if($this->Empresa_model->get_horario_atend($empresa) === TRUE){
+								
+									unset($_SESSION['log']);
+									
+									$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
+									#### Carrega os dados da Empresa nas vari?ves de sess?o ####
+									
+									$query2 = $this->Login_model->check_documentos_log($empresa, TRUE);
+									$_SESSION['log']['Icone'] = $query2['Icone'];
+
+									$query3 = $this->Login_model->dados_empresa_log($empresa);			
+									$_SESSION['log']['NivelEmpresa'] = $query3['NivelEmpresa'];
+									$_SESSION['log']['TabelasEmpresa'] = $query3['TabelasEmpresa'];
+									$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
+									$_SESSION['log']['Site'] = $query3['Site'];
+									$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
+									$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
+									$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];		
+								
+									#$_SESSION['log']['Usuario'] = $query['Usuario'];
+									//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
+									$_SESSION['log']['Usuario'] = (strlen($query['Usuario']) > 13) ? substr($query['Usuario'], 0, 13) : $query['Usuario'];
+									$_SESSION['log']['Nome'] = $query['Nome'];
+									$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
+									$_SESSION['log']['CpfUsuario'] = $query['CpfUsuario'];
+									$_SESSION['log']['CelularUsuario'] = $query['CelularUsuario'];
+									$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
+									$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
+									$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
+									$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
+									$_SESSION['log']['Permissao'] = $query['Permissao'];
+									$_SESSION['log']['Arquivo'] = $query['Arquivo'];
+									$_SESSION['log']['Cad_Orcam'] = $query['Cad_Orcam'];
+
+									$this->load->database();
+									$_SESSION['db']['hostname'] = $this->db->hostname;
+									$_SESSION['db']['username'] = $this->db->username;
+									$_SESSION['db']['password'] = $this->db->password;
+									$_SESSION['db']['database'] = $this->db->database;
+
+									if ($this->Login_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'LOGIN') === FALSE) {
+										$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
+
+										$this->basico->erro($msg);
+										if($_SESSION['Site_Back']['Acesso']['idSis_Empresa']){
+											$this->load->view('login/form_login5', $data);
+										}else{
+											$this->load->view('login/form_login2', $data);
+										}
+									} else {
+										unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
+										unset($_SESSION['QueryUsuario']);
+										unset($_SESSION['QueryEmpresa']);
+										redirect('acesso');
+									}
+								}else{
+									
+									$this->session->unset_userdata('log');
+									foreach ($_SESSION as $key => $value) {
+										if ($key != 'Site_Back') {
+											unset($_SESSION[$key]);
+										}
+									}
+									
+									$data['aviso'] = ''
+											. '
+										<div class="alert alert-success" role="alert">
+											<h4>
+												<p><b>Horário de Acesso Negado para Usuário ' . $celular . ' !</b></p>
+												<p>Entre em contato com o Administrador da sua Empresa</b>.</p>
+											</h4>
+										</div> '
+											. '';
+									$this->load->view('login/tela_msg', $data);
+								}
+							}else{
+								
+								unset($_SESSION['log']);
 								
 								$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
 								#### Carrega os dados da Empresa nas vari?ves de sess?o ####
@@ -1045,7 +1193,7 @@ class Login extends CI_Controller {
 								$_SESSION['log']['Site'] = $query3['Site'];
 								$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
 								$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
-								$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];		
+								$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];			
 							
 								#$_SESSION['log']['Usuario'] = $query['Usuario'];
 								//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
@@ -1082,80 +1230,8 @@ class Login extends CI_Controller {
 									unset($_SESSION['QueryUsuario']);
 									unset($_SESSION['QueryEmpresa']);
 									redirect('acesso');
-								}
-							}else{
-								
-								$this->session->unset_userdata('log');
-								foreach ($_SESSION as $key => $value) {
-									if ($key != 'Site_Back') {
-										unset($_SESSION[$key]);
-									}
-								}
-								
-								$data['aviso'] = ''
-										. '
-									<div class="alert alert-success" role="alert">
-										<h4>
-											<p><b>Horário de Acesso Negado para Usuário ' . $celular . ' !</b></p>
-											<p>Entre em contato com o Administrador da sua Empresa</b>.</p>
-										</h4>
-									</div> '
-										. '';
-								$this->load->view('login/tela_msg', $data);
+								}						
 							}
-						}else{
-							
-							$_SESSION['log']['Agenda'] = $this->Login_model->get_agenda_padrao($query['idSis_Usuario']);
-							#### Carrega os dados da Empresa nas vari?ves de sess?o ####
-							
-							$query2 = $this->Login_model->check_documentos_log($empresa, TRUE);
-							$_SESSION['log']['Icone'] = $query2['Icone'];
-
-							$query3 = $this->Login_model->dados_empresa_log($empresa);			
-							$_SESSION['log']['NivelEmpresa'] = $query3['NivelEmpresa'];
-							$_SESSION['log']['TabelasEmpresa'] = $query3['TabelasEmpresa'];
-							$_SESSION['log']['DataDeValidade'] = $query3['DataDeValidade'];
-							$_SESSION['log']['Site'] = $query3['Site'];
-							$_SESSION['log']['Arquivo_Empresa'] = $query3['Arquivo'];
-							$_SESSION['log']['NomeEmpresa'] = $query3['NomeEmpresa'];
-							$_SESSION['log']['NomeEmpresa2'] = (strlen($query3['NomeEmpresa']) > 6) ? substr($query3['NomeEmpresa'], 0, 6) : $query3['NomeEmpresa'];			
-						
-							#$_SESSION['log']['Usuario'] = $query['Usuario'];
-							//se for necessário reduzir o tamanho do nome de usuário, que pode ser um email
-							$_SESSION['log']['Usuario'] = (strlen($query['Usuario']) > 13) ? substr($query['Usuario'], 0, 13) : $query['Usuario'];
-							$_SESSION['log']['Nome'] = $query['Nome'];
-							$_SESSION['log']['Nome2'] = (strlen($query['Nome']) > 6) ? substr($query['Nome'], 0, 6) : $query['Nome'];
-							$_SESSION['log']['CpfUsuario'] = $query['CpfUsuario'];
-							$_SESSION['log']['CelularUsuario'] = $query['CelularUsuario'];
-							$_SESSION['log']['idSis_Usuario'] = $query['idSis_Usuario'];
-							$_SESSION['log']['idSis_Empresa'] = $query['idSis_Empresa'];
-							$_SESSION['log']['idSis_EmpresaMatriz'] = $query['idSis_EmpresaMatriz'];
-							$_SESSION['log']['idTab_Modulo'] = $query['idTab_Modulo'];
-							$_SESSION['log']['Permissao'] = $query['Permissao'];
-							$_SESSION['log']['Arquivo'] = $query['Arquivo'];
-							$_SESSION['log']['Cad_Orcam'] = $query['Cad_Orcam'];
-
-							$this->load->database();
-							$_SESSION['db']['hostname'] = $this->db->hostname;
-							$_SESSION['db']['username'] = $this->db->username;
-							$_SESSION['db']['password'] = $this->db->password;
-							$_SESSION['db']['database'] = $this->db->database;
-
-							if ($this->Login_model->set_acesso($_SESSION['log']['idSis_Usuario'], 'LOGIN') === FALSE) {
-								$msg = "<strong>Erro no Banco de dados. Entre em contato com o Administrador.</strong>";
-
-								$this->basico->erro($msg);
-								if($_SESSION['Site_Back']['Acesso']['idSis_Empresa']){
-									$this->load->view('login/form_login5', $data);
-								}else{
-									$this->load->view('login/form_login2', $data);
-								}
-							} else {
-								unset($_SESSION['AdminEmpresa'], $_SESSION['AdminUsuario']);
-								unset($_SESSION['QueryUsuario']);
-								unset($_SESSION['QueryEmpresa']);
-								redirect('acesso');
-							}						
 						}
 					}
 				}
