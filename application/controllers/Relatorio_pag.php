@@ -2590,6 +2590,170 @@ class Relatorio_pag extends CI_Controller {
 		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 			'id_Cliente_Auto',
 			'NomeClienteAuto',
+			'Whatsapp',
+        ), TRUE));	
+		
+        $data['query'] = quotes_to_entities($this->input->post(array(
+			'Orcamento',
+			'Cliente',
+			'idApp_Cliente',
+			'idApp_OrcaTrata',
+			'idSis_Usuario',
+			'DataVencimentoOrca',
+			'NomeUsuario',
+			'NomeEmpresa',
+			'DiaAniv',
+			'MesAniv',
+			'AnoAniv',
+			'Dia',
+			'Ano',
+			'Mesvenc',
+			'Mespag',
+			'DataInicio',
+            'DataFim',
+			'DataInicio2',
+            'DataFim2',
+			'DataInicio3',
+            'DataFim3',
+			'DataInicio4',
+            'DataFim4',
+			'DataInicio5',
+            'DataFim5',
+			'DataInicio6',
+            'DataFim6',
+			'DataInicio7',
+            'DataFim7',
+			'HoraInicio5',
+            'HoraFim5',
+			'TipoFinanceiro',
+			'idTab_TipoRD',
+			'Ordenamento',
+            'Campo',
+            'AprovadoOrca',
+			'CombinadoFrete',
+            'QuitadoOrca',
+			'ConcluidoOrca',
+			'FinalizadoOrca',
+			'CanceladoOrca',
+			'Quitado',
+			'Modalidade',
+			'AVAP',
+			'Tipo_Orca',
+			'FormaPagamento',
+			'TipoFrete',
+			'Produtos',
+			'Parcelas',
+			'Agrupar',
+			'Ultimo',
+			'nome',
+			'Texto1',
+			'Texto2',
+			'Texto3',
+			'Texto4',
+			'nomedoCliente',
+			'idCliente',
+			'numerodopedido',
+			'site',
+        ), TRUE));
+
+        $data['titulo'] = 'Baixa das Receitas';
+		$data['form_open_path'] = 'relatorio_pag/alterarreceitas_pag';
+		$data['baixatodas'] = 'Orcatrata/alterarreceitas/';
+		$data['baixa'] = 'Orcatrata/baixadareceita/';
+        $data['nomeusuario'] = 'NomeColaborador';
+        $data['status'] = 'StatusComissaoOrca';
+		$data['alterar'] = 'relatorio/alterarreceitas/';
+		$data['editar'] = 1;
+		$data['metodo'] = 3;
+		$data['panel'] = 'info';
+		$data['TipoFinanceiro'] = 'Receitas';
+		$data['TipoRD'] = 2;
+        $data['nome'] = 'Cliente';
+		$data['print'] = 1;
+		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistarec/';
+		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['edit'] = 'orcatrata/alterarstatus/';
+		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		
+		$data['paginacao'] = 'S';
+		$data['caminho'] = 'relatorio/alterarreceitas/';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+		
+        #run form validation
+        
+		if ($this->form_validation->run() !== TRUE) {
+
+			$config['total_rows'] = $_SESSION['FiltroReceitas']['total_rows'];
+			
+			$config['base_url'] = base_url() . 'relatorio_pag/alterarreceitas_pag/';
+			$config['per_page'] = 12;
+			$config["uri_segment"] = 3;
+			$config['reuse_query_string'] = TRUE;
+			$config['num_links'] = 2;
+			$config['use_page_numbers'] = TRUE;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			
+			$data['Pesquisa'] = '';
+			
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
+			}else{
+				$data['total_rows'] = 0;
+			}
+			
+            $this->pagination->initialize($config);
+			
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+            
+			$data['pagina'] = $page;
+			
+			$data['per_page'] = $config['per_page'];
+			
+			$data['linha'] = $page * $config['per_page'];
+		
+			$_SESSION['FiltroReceitas']['Limit'] = $data['per_page'];
+			$_SESSION['FiltroReceitas']['Start'] = $data['linha'];
+
+			$data['report'] = $this->Relatorio_model->list_receitas(FALSE, TRUE, FALSE, $config['per_page'], $data['linha']);
+						
+			$data['pagination'] = $this->pagination->create_links();
+
+            $data['list1'] = $this->load->view('relatorio/list_receitas', $data, TRUE);
+        }		
+
+        $this->load->view('relatorio/tela_receitas', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+	public function alterarreceitas_pag_original() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+			'id_Cliente_Auto',
+			'NomeClienteAuto',
         ), TRUE));	
 		
         $data['query'] = quotes_to_entities($this->input->post(array(

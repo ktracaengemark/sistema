@@ -879,13 +879,13 @@ class Relatorio_model extends CI_Model {
 			$MesAniv = ($data['MesAniv']) ? ' AND MONTH(' . $aniversario . ') = ' . $data['MesAniv'] : FALSE;
 			$AnoAniv = ($data['AnoAniv']) ? ' AND YEAR(' . $aniversario . ') = ' . $data['AnoAniv'] : FALSE;
 
-			$data['Orcamento'] = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
-			$data['Cliente'] = ($data['Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
-			$data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;
-			$data['TipoFinanceiro'] = ($data['TipoFinanceiro']) ? ' AND TR.idTab_TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
-			$data['idTab_TipoRD'] = ($data['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $data['idTab_TipoRD'] : FALSE;
-			$data['Campo'] = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
-			$data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+			$orcamento = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
+			$cliente = ($data['Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
+			$id_cliente = ($data['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;
+			$tipofinandeiro = ($data['TipoFinanceiro']) ? ' AND TR.idTab_TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
+			$idtipord = ($data['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $data['idTab_TipoRD'] : FALSE;
+			$campo = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
+			$ordenamento = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 			$filtro1 = ($data['AprovadoOrca']) ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
 			$filtro2 = ($data['QuitadoOrca']) ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 			$filtro3 = ($data['ConcluidoOrca']) ? 'OT.ConcluidoOrca = "' . $data['ConcluidoOrca'] . '" AND ' : FALSE;
@@ -955,13 +955,13 @@ class Relatorio_model extends CI_Model {
 			$MesAniv = ($_SESSION['FiltroReceitas']['MesAniv']) ? ' AND MONTH(' . $aniversario . ') = ' . $_SESSION['FiltroReceitas']['MesAniv'] : FALSE;
 			$AnoAniv = ($_SESSION['FiltroReceitas']['AnoAniv']) ? ' AND YEAR(' . $aniversario . ') = ' . $_SESSION['FiltroReceitas']['AnoAniv'] : FALSE;			
 
-			$data['Orcamento'] = ($_SESSION['FiltroReceitas']['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $_SESSION['FiltroReceitas']['Orcamento'] . '  ': FALSE;
-			$data['Cliente'] = ($_SESSION['FiltroReceitas']['Cliente']) ? ' AND OT.idApp_Cliente = ' . $_SESSION['FiltroReceitas']['Cliente'] . '' : FALSE;
-			$data['idApp_Cliente'] = ($_SESSION['FiltroReceitas']['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $_SESSION['FiltroReceitas']['idApp_Cliente'] . '' : FALSE;
-			$data['TipoFinanceiro'] = ($_SESSION['FiltroReceitas']['TipoFinanceiro']) ? ' AND TR.idTab_TipoFinanceiro = ' . $_SESSION['FiltroReceitas']['TipoFinanceiro'] : FALSE;
-			$data['idTab_TipoRD'] = ($_SESSION['FiltroReceitas']['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $_SESSION['FiltroReceitas']['idTab_TipoRD'] : FALSE;
-			$data['Campo'] = (!$_SESSION['FiltroReceitas']['Campo']) ? 'OT.idApp_OrcaTrata' : $_SESSION['FiltroReceitas']['Campo'];
-			$data['Ordenamento'] = (!$_SESSION['FiltroReceitas']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroReceitas']['Ordenamento'];
+			$orcamento = ($_SESSION['FiltroReceitas']['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $_SESSION['FiltroReceitas']['Orcamento'] . '  ': FALSE;
+			$cliente = ($_SESSION['FiltroReceitas']['Cliente']) ? ' AND OT.idApp_Cliente = ' . $_SESSION['FiltroReceitas']['Cliente'] . '' : FALSE;
+			$id_cliente = ($_SESSION['FiltroReceitas']['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $_SESSION['FiltroReceitas']['idApp_Cliente'] . '' : FALSE;
+			$tipofinandeiro = ($_SESSION['FiltroReceitas']['TipoFinanceiro']) ? ' AND TR.idTab_TipoFinanceiro = ' . $_SESSION['FiltroReceitas']['TipoFinanceiro'] : FALSE;
+			$idtipord = ($_SESSION['FiltroReceitas']['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $_SESSION['FiltroReceitas']['idTab_TipoRD'] : FALSE;
+			$campo = (!$_SESSION['FiltroReceitas']['Campo']) ? 'OT.idApp_OrcaTrata' : $_SESSION['FiltroReceitas']['Campo'];
+			$ordenamento = (!$_SESSION['FiltroReceitas']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroReceitas']['Ordenamento'];
 			$filtro1 = ($_SESSION['FiltroReceitas']['AprovadoOrca']) ? 'OT.AprovadoOrca = "' . $_SESSION['FiltroReceitas']['AprovadoOrca'] . '" AND ' : FALSE;
 			$filtro2 = ($_SESSION['FiltroReceitas']['QuitadoOrca']) ? 'OT.QuitadoOrca = "' . $_SESSION['FiltroReceitas']['QuitadoOrca'] . '" AND ' : FALSE;
 			$filtro3 = ($_SESSION['FiltroReceitas']['ConcluidoOrca']) ? 'OT.ConcluidoOrca = "' . $_SESSION['FiltroReceitas']['ConcluidoOrca'] . '" AND ' : FALSE;
@@ -1050,11 +1050,11 @@ class Relatorio_model extends CI_Model {
 					' . $produtos . '
 					' . $parcelas . '
 					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '
-					' . $data['Orcamento'] . '
-					' . $data['Cliente'] . '
-					' . $data['idApp_Cliente'] . '
-					' . $data['TipoFinanceiro'] . ' 
-					' . $data['idTab_TipoRD'] . '
+					' . $orcamento . '
+					' . $cliente . '
+					' . $id_cliente . '
+					' . $tipofinandeiro . ' 
+					' . $idtipord . '
 					' . $DiaAniv . '
 					' . $MesAniv . '
 					' . $AnoAniv . '
@@ -1098,6 +1098,7 @@ class Relatorio_model extends CI_Model {
                 OT.ConcluidoOrca,
                 OT.QuitadoOrca,
                 OT.DataOrca,
+                OT.DataEntregaOrca,
 				DATE_FORMAT(OT.HoraEntregaOrca, "%H:%i") AS HoraEntregaOrca,
 				OT.ValorRestanteOrca,
 				OT.DescValorOrca,
@@ -1111,9 +1112,9 @@ class Relatorio_model extends CI_Model {
 				OT.NomeRec,
 				OT.ParentescoRec,
 				OT.TelefoneRec,
+				OT.idApp_Cliente,
                 CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,"")) AS NomeCliente,
                 CONCAT(IFNULL(C.NomeCliente,"")) AS Cliente,
-				C.idApp_Cliente,
 				C.CelularCliente,
 				C.DataCadastroCliente,
 				C.DataNascimento,
@@ -1171,19 +1172,19 @@ class Relatorio_model extends CI_Model {
 				' . $produtos . '
 				' . $parcelas . '
 				OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '
-                ' . $data['Orcamento'] . '
-                ' . $data['Cliente'] . '
-                ' . $data['idApp_Cliente'] . '
-                ' . $data['TipoFinanceiro'] . ' 
-                ' . $data['idTab_TipoRD'] . '
+                ' . $orcamento . '
+                ' . $cliente . '
+                ' . $id_cliente . '
+                ' . $tipofinandeiro . ' 
+                ' . $idtipord . '
 				' . $DiaAniv . '
 				' . $MesAniv . '
 				' . $AnoAniv . '
 				' . $nivel . '
 			' . $groupby . '
 			ORDER BY
-				' . $data['Campo'] . '
-				' . $data['Ordenamento'] . '
+				' . $campo . '
+				' . $ordenamento . '
 			' . $querylimit . ''
 		);
 

@@ -18175,66 +18175,75 @@ class Orcatrata extends CI_Controller {
 					
 				}else{
 					
-					$data['pesquisa_query'] = $this->Orcatrata_model->get_alterarorcamentos($id, TRUE);
-
-					$_SESSION['Pesquisa_Query']['FinalTotal'] = $data['pesquisa_query']->soma2->somafinal2;
-					$config['total_rows'] = $data['pesquisa_query']->num_rows();
-					//$config['total_rows'] = $this->Orcatrata_model->get_alterarorcamentos($id, TRUE);
-					$config['base_url'] = base_url() . 'Orcatrata/alterarreceitas/' . $id . '/';	
-					$config['per_page'] = 50;
-					$config["uri_segment"] = 4;
-					$config['reuse_query_string'] = TRUE;
-					$config['num_links'] = 2;
-					$config['use_page_numbers'] = TRUE;
-					$config['full_tag_open'] = "<ul class='pagination'>";
-					$config['full_tag_close'] = "</ul>";
-					$config['num_tag_open'] = '<li>';
-					$config['num_tag_close'] = '</li>';
-					$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-					$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-					$config['next_tag_open'] = "<li>";
-					$config['next_tagl_close'] = "</li>";
-					$config['prev_tag_open'] = "<li>";
-					$config['prev_tagl_close'] = "</li>";
-					$config['first_tag_open'] = "<li>";
-					$config['first_tagl_close'] = "</li>";
-					$config['last_tag_open'] = "<li>";
-					$config['last_tagl_close'] = "</li>";
-					
-					if($config['total_rows'] >= 1){
-						$data['total_rows'] = $config['total_rows'];
+					$data['pesquisa_query'] = $this->Orcatrata_model->get_alterarreceitas($id, TRUE);
+			
+					if($data['pesquisa_query'] === FALSE){
+						
+						$data['msg'] = '?m=4';
+						redirect(base_url() . 'relatorio/alterarreceitas' . $data['msg']);
+						exit();
 					}else{
-						$data['total_rows'] = 0;
-					}
-					
-					$this->pagination->initialize($config);
-					
-					$_SESSION['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-					$_SESSION['Per_Page'] = $data['per_page'] = $config['per_page'];
-					
-					$data['pagination'] = $this->pagination->create_links();		
 
-					#### App_OrcaTrata ####
-					$_SESSION['Orcamento'] = $data['orcamento'] = $this->Orcatrata_model->get_alterarorcamentos($id, FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
+						$_SESSION['Pesquisa_Query']['FinalTotal'] = $data['pesquisa_query']->soma2->somafinal2;
+						
+						$config['total_rows'] = $data['pesquisa_query']->num_rows();
+						//$config['total_rows'] = $this->Orcatrata_model->get_alterarreceitas($id, TRUE);
+						$config['base_url'] = base_url() . 'Orcatrata/alterarreceitas/' . $id . '/';	
+						$config['per_page'] = 50;
+						$config["uri_segment"] = 4;
+						$config['reuse_query_string'] = TRUE;
+						$config['num_links'] = 2;
+						$config['use_page_numbers'] = TRUE;
+						$config['full_tag_open'] = "<ul class='pagination'>";
+						$config['full_tag_close'] = "</ul>";
+						$config['num_tag_open'] = '<li>';
+						$config['num_tag_close'] = '</li>';
+						$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+						$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+						$config['next_tag_open'] = "<li>";
+						$config['next_tagl_close'] = "</li>";
+						$config['prev_tag_open'] = "<li>";
+						$config['prev_tagl_close'] = "</li>";
+						$config['first_tag_open'] = "<li>";
+						$config['first_tagl_close'] = "</li>";
+						$config['last_tag_open'] = "<li>";
+						$config['last_tagl_close'] = "</li>";
+						
+						if($config['total_rows'] >= 1){
+							$data['total_rows'] = $config['total_rows'];
+						}else{
+							$data['total_rows'] = 0;
+						}
+						
+						$this->pagination->initialize($config);
+						
+						$_SESSION['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+						$_SESSION['Per_Page'] = $data['per_page'] = $config['per_page'];
+						
+						$data['pagination'] = $this->pagination->create_links();		
 
-					if (count($data['orcamento']) > 0) {
-						$data['orcamento'] = array_combine(range(1, count($data['orcamento'])), array_values($data['orcamento']));
-						$data['count']['PRCount'] = count($data['orcamento']);
-						if (isset($data['orcamento'])) {
-							for($j=1; $j <= $data['count']['PRCount']; $j++) {
-								$data['somatotal'] += $data['orcamento'][$j]['ValorFinalOrca'];
-								$data['orcamento'][$j]['DataOrca'] = $this->basico->mascara_data($data['orcamento'][$j]['DataOrca'], 'barras');
-								$data['orcamento'][$j]['DataEntregaOrca'] = $this->basico->mascara_data($data['orcamento'][$j]['DataEntregaOrca'], 'barras');
-								
-								//$data['orcamento'][$j]['HoraEntregaOrca'] = $data['orcamento'][$j]['HoraEntregaOrca'];
-								/*
-								echo '<br>';
-								echo "<pre>";
-								print_r($data['orcamento'][$j]['HoraEntregaOrca']);
-								echo "</pre>";
-								*/
+						#### App_OrcaTrata ####
+						$_SESSION['Orcamento'] = $data['orcamento'] = $this->Orcatrata_model->get_alterarreceitas($id, FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
+
+						if (count($data['orcamento']) > 0) {
+							$data['orcamento'] = array_combine(range(1, count($data['orcamento'])), array_values($data['orcamento']));
+							$data['count']['PRCount'] = count($data['orcamento']);
+							if (isset($data['orcamento'])) {
+								for($j=1; $j <= $data['count']['PRCount']; $j++) {
+									$data['somatotal'] += $data['orcamento'][$j]['ValorFinalOrca'];
+									$data['orcamento'][$j]['DataOrca'] = $this->basico->mascara_data($data['orcamento'][$j]['DataOrca'], 'barras');
+									$data['orcamento'][$j]['DataEntregaOrca'] = $this->basico->mascara_data($data['orcamento'][$j]['DataEntregaOrca'], 'barras');
+									
+									//$data['orcamento'][$j]['HoraEntregaOrca'] = $data['orcamento'][$j]['HoraEntregaOrca'];
+									/*
+									echo '<br>';
+									echo "<pre>";
+									print_r($data['orcamento'][$j]['HoraEntregaOrca']);
+									echo "</pre>";
+									*/
+								}
+								$data['somatotal'] = number_format($data['somatotal'],2,",",".");
 							}
-							$data['somatotal'] = number_format($data['somatotal'],2,",",".");
 						}
 					}
 				}
@@ -18267,7 +18276,8 @@ class Orcatrata extends CI_Controller {
 				
 				$data['titulo'] = 'Baixa das Receitas';
 				$data['form_open_path'] = 'orcatrata/alterarreceitas';
-				$data['relatorio'] = 'relatorio/alterarreceitas/';
+				//$data['relatorio'] = 'relatorio/alterarreceitas/';
+				$data['relatorio'] = 'relatorio_pag/alterarreceitas_pag/';
 				$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
 				$data['nomeusuario'] = 'NomeColaborador';
 				$data['readonly'] = '';
@@ -18329,7 +18339,7 @@ class Orcatrata extends CI_Controller {
 						
 						////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
 						#### App_OrcaTrata ####
-						$data['update']['orcamento']['anterior'] = $this->Orcatrata_model->get_alterarorcamentos($data['empresa']['idSis_Empresa'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));	
+						$data['update']['orcamento']['anterior'] = $this->Orcatrata_model->get_alterarreceitas($data['empresa']['idSis_Empresa'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));	
 						if (isset($data['orcamento']) || (!isset($data['orcamento']) && isset($data['update']['orcamento']['anterior']) ) ) {
 
 							if (isset($data['orcamento']))

@@ -142,6 +142,16 @@
 								</button>
 							</a>
 						</div>
+						<?php if ($print == 1) { ?>	
+							<div class="col-md-1">
+								<label>Lista</label>
+								<a href="<?php echo base_url() . 'relatorio_pag_print/alterarreceitas_pag'; ?>">
+									<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
+										<span class="glyphicon glyphicon-list"></span>
+									</button>
+								</a>
+							</div>
+						<?php } ?>
 					<?php }elseif($editar == 2){ ?>
 						<div class="col-md-1">
 							<label>Baixa</label>
@@ -151,23 +161,23 @@
 								</button>
 							</a>
 						</div>
+						<?php if ($print == 1) { ?>	
+							<div class="col-md-1">
+								<label>Lista</label>
+								<a href="<?php echo base_url() . 'relatorio_pag_print/receitas_pag'; ?>">
+									<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
+										<span class="glyphicon glyphicon-list"></span>
+									</button>
+								</a>
+							</div>
+						<?php } ?>
 					<?php } ?>
 				<?php } ?>	
-				<?php if ($print == 1) { ?>	
-					<div class="col-md-1">
-						<label>Lista</label>
-						<a href="<?php echo base_url() . 'relatorio_pag_print/receitas_pag'; ?>">
-							<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
-								<span class="glyphicon glyphicon-list"></span>
-							</button>
-						</a>
-					</div>
-				<?php } ?>
 				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 text-left">
 					<label>Excel</label><br>
-					<a href="<?php echo base_url() . 'gerar_excel/Orcamentos/Receitas_xls.php'; ?>">
+					<a href="<?php echo base_url() . 'gerar_excel/Receitas/Receitas_xls.php'; ?>">
 						<button type='button' class='btn btn-md btn-success btn-block'>
-							Excel
+							C/<span class="glyphicon glyphicon-filter"></span>
 						</button>
 					</a>
 				</div>
