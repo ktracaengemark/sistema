@@ -7,20 +7,6 @@
 				<div class="panel panel-info">
 					<div class="panel-heading">
 						<div class="row">
-							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 ">
-								<label>Gestor <b><?php echo $titulo; ?></b> de Despesas</label><br>
-								<?php if($_SESSION['log']['idSis_Empresa'] == 5){ ?>
-										<a class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>orcatrata/cadastrardesp" role="button"> 
-											<span class="glyphicon glyphicon-plus"></span> Nova Compra / Despesa
-										</a>
-								<?php }else{ ?>
-									<?php if ($_SESSION['Usuario']['Cad_Orcam'] == "S" ) { ?>
-											<a class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>orcatrata/cadastrardesp" role="button"> 
-												<span class="glyphicon glyphicon-plus"></span> Nova Compra / Despesa
-											</a>
-									<?php } ?>
-								<?php } ?>
-							</div>
 							<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 text-left">
 								<label>Pesquisar Despesa</label><br>
 								<?php if($paginacao == "N") { ?>
@@ -36,6 +22,20 @@
 									<a class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?><?php echo $despesas; ?>/despesas" role="button"> 
 										<span class="glyphicon glyphicon-search"></span> Pesquisar Despesa
 									</a>
+								<?php } ?>
+							</div>
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 ">
+								<label>Gestor <b><?php echo $titulo; ?></b> de Despesas</label><br>
+								<?php if($_SESSION['log']['idSis_Empresa'] == 5){ ?>
+										<a class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>orcatrata/cadastrardesp" role="button"> 
+											<span class="glyphicon glyphicon-plus"></span> Nova Compra / Despesa
+										</a>
+								<?php }else{ ?>
+									<?php if ($_SESSION['Usuario']['Cad_Orcam'] == "S" ) { ?>
+											<a class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>orcatrata/cadastrardesp" role="button"> 
+												<span class="glyphicon glyphicon-plus"></span> Nova Compra / Despesa
+											</a>
+									<?php } ?>
 								<?php } ?>
 							</div>
 						</div>	
