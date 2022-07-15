@@ -1,5 +1,4 @@
 <?php if ($msg) echo $msg; ?>
-<!--<?php #echo form_open('relatorio/comissao', 'role="form"'); ?>-->
 <?php echo form_open($form_open_path, 'role="form"'); ?>
 <div class="col-md-12 ">		
 	<?php echo validation_errors(); ?>
@@ -10,7 +9,7 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-md-2 text-left">
-								<label><?php echo $titulo;?></label>
+								<label><?php echo $titulo;?>11111</label>
 								<div class="input-group">
 									<span class="input-group-btn">
 										<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">

@@ -835,6 +835,453 @@ class Relatorio_model extends CI_Model {
 
     }
 
+    public function list_receitas($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+
+		if($data != FALSE){
+
+			$date_inicio_orca = ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;
+			$date_fim_orca = ($data['DataFim']) ? 'OT.DataOrca <= "' . $data['DataFim'] . '" AND ' : FALSE;
+			
+			$date_inicio_entrega = ($data['DataInicio2']) ? 'OT.DataEntregaOrca >= "' . $data['DataInicio2'] . '" AND ' : FALSE;
+			$date_fim_entrega = ($data['DataFim2']) ? 'OT.DataEntregaOrca <= "' . $data['DataFim2'] . '" AND ' : FALSE;
+			
+			$date_inicio_entrega_prd = ($data['DataInicio5']) ? 'PRDS.DataConcluidoProduto >= "' . $data['DataInicio5'] . '" AND ' : FALSE;
+			$date_fim_entrega_prd = ($data['DataFim5']) ? 'PRDS.DataConcluidoProduto <= "' . $data['DataFim5'] . '" AND ' : FALSE;
+
+			$hora_inicio_entrega_prd = ($data['HoraInicio5']) ? 'PRDS.HoraConcluidoProduto >= "' . $data['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($data['HoraFim5']) ? 'PRDS.HoraConcluidoProduto <= "' . $data['HoraFim5'] . '" AND ' : FALSE;
+							
+			$date_inicio_vnc = ($data['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $data['DataInicio3'] . '" AND ' : FALSE;
+			$date_fim_vnc = ($data['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $data['DataFim3'] . '" AND ' : FALSE;
+			
+			if(isset($data['Quitado']) && $data['Quitado'] == "S"){
+				$dataref = 'PR.DataPago';
+			}else{
+				$dataref = 'PR.DataVencimento';
+			}
+			
+			$date_inicio_vnc_prc = ($data['DataInicio4']) ? ''.$dataref.' >= "' . $data['DataInicio4'] . '" AND ' : FALSE;
+			$date_fim_vnc_prc = ($data['DataFim4']) ? ''.$dataref.' <= "' . $data['DataFim4'] . '" AND ' : FALSE;
+			
+			if($data['nome']){
+				if($data['nome'] == "Cliente"){
+					$cadastro = "C.DataCadastroCliente";
+					$aniversario = "C.DataNascimento";
+				}
+			}else{
+				echo "Não existe data de cadastro";
+			}
+			
+			$date_inicio_cadastro = ($data['DataInicio6']) ? '' . $cadastro . ' >= "' . $data['DataInicio6'] . '" AND ' : FALSE;
+			$date_fim_cadastro = ($data['DataFim6']) ? '' . $cadastro . ' <= "' . $data['DataFim6'] . '" AND ' : FALSE;
+
+			$DiaAniv = ($data['DiaAniv']) ? ' AND DAY(' . $aniversario . ') = ' . $data['DiaAniv'] : FALSE;
+			$MesAniv = ($data['MesAniv']) ? ' AND MONTH(' . $aniversario . ') = ' . $data['MesAniv'] : FALSE;
+			$AnoAniv = ($data['AnoAniv']) ? ' AND YEAR(' . $aniversario . ') = ' . $data['AnoAniv'] : FALSE;
+
+			$data['Orcamento'] = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
+			$data['Cliente'] = ($data['Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
+			$data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;
+			$data['TipoFinanceiro'] = ($data['TipoFinanceiro']) ? ' AND TR.idTab_TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
+			$data['idTab_TipoRD'] = ($data['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $data['idTab_TipoRD'] : FALSE;
+			$data['Campo'] = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
+			$data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+			$filtro1 = ($data['AprovadoOrca']) ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
+			$filtro2 = ($data['QuitadoOrca']) ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
+			$filtro3 = ($data['ConcluidoOrca']) ? 'OT.ConcluidoOrca = "' . $data['ConcluidoOrca'] . '" AND ' : FALSE;
+			$filtro5 = ($data['Modalidade']) ? 'OT.Modalidade = "' . $data['Modalidade'] . '" AND ' : FALSE;
+			$filtro6 = ($data['FormaPagamento']) ? 'OT.FormaPagamento = "' . $data['FormaPagamento'] . '" AND ' : FALSE;
+			$filtro7 = ($data['Tipo_Orca']) ? 'OT.Tipo_Orca = "' . $data['Tipo_Orca'] . '" AND ' : FALSE;
+			$filtro8 = ($data['TipoFrete']) ? 'OT.TipoFrete = "' . $data['TipoFrete'] . '" AND ' : FALSE;
+			$filtro9 = ($data['AVAP']) ? 'OT.AVAP = "' . $data['AVAP'] . '" AND ' : FALSE;
+			$filtro10 = ($data['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $data['FinalizadoOrca'] . '" AND ' : FALSE;
+			$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
+			$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
+			$permissao = ($data['metodo'] == 3 && $_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+
+			if($_SESSION['log']['idSis_Empresa'] != 5){
+				$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+			}else{
+				$permissao_orcam = FALSE;
+			}
+						
+			$permissao2 = ($data['NomeEmpresa']) ? 'OT.idSis_Empresa = "' . $data['NomeEmpresa'] . '" AND ' : FALSE;
+			$filtro17 = ($data['NomeUsuario']) ? 'OT.idSis_Usuario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;
+
+			$groupby = ($data['Agrupar'] != "0") ? 'GROUP BY OT.' . $data['Agrupar'] . '' : FALSE;
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Produtos'] != "0") ? 'PRDS.idSis_Empresa ' . $data['Produtos'] . '  AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $data['Parcelas'] . '  AND' : FALSE;
+
+		}else{
+			
+			$date_inicio_orca = ($_SESSION['FiltroReceitas']['DataInicio']) ? 'OT.DataOrca >= "' . $_SESSION['FiltroReceitas']['DataInicio'] . '" AND ' : FALSE;
+			$date_fim_orca = ($_SESSION['FiltroReceitas']['DataFim']) ? 'OT.DataOrca <= "' . $_SESSION['FiltroReceitas']['DataFim'] . '" AND ' : FALSE;
+			
+			$date_inicio_entrega = ($_SESSION['FiltroReceitas']['DataInicio2']) ? 'OT.DataEntregaOrca >= "' . $_SESSION['FiltroReceitas']['DataInicio2'] . '" AND ' : FALSE;
+			$date_fim_entrega = ($_SESSION['FiltroReceitas']['DataFim2']) ? 'OT.DataEntregaOrca <= "' . $_SESSION['FiltroReceitas']['DataFim2'] . '" AND ' : FALSE;
+			
+			$date_inicio_entrega_prd = ($_SESSION['FiltroReceitas']['DataInicio5']) ? 'PRDS.DataConcluidoProduto >= "' . $_SESSION['FiltroReceitas']['DataInicio5'] . '" AND ' : FALSE;
+			$date_fim_entrega_prd = ($_SESSION['FiltroReceitas']['DataFim5']) ? 'PRDS.DataConcluidoProduto <= "' . $_SESSION['FiltroReceitas']['DataFim5'] . '" AND ' : FALSE;
+
+			$hora_inicio_entrega_prd = ($_SESSION['FiltroReceitas']['HoraInicio5']) ? 'PRDS.HoraConcluidoProduto >= "' . $_SESSION['FiltroReceitas']['HoraInicio5'] . '" AND ' : FALSE;
+			$hora_fim_entrega_prd = ($_SESSION['FiltroReceitas']['HoraFim5']) ? 'PRDS.HoraConcluidoProduto <= "' . $_SESSION['FiltroReceitas']['HoraFim5'] . '" AND ' : FALSE;
+							
+			$date_inicio_vnc = ($_SESSION['FiltroReceitas']['DataInicio3']) ? 'OT.DataVencimentoOrca >= "' . $_SESSION['FiltroReceitas']['DataInicio3'] . '" AND ' : FALSE;
+			$date_fim_vnc = ($_SESSION['FiltroReceitas']['DataFim3']) ? 'OT.DataVencimentoOrca <= "' . $_SESSION['FiltroReceitas']['DataFim3'] . '" AND ' : FALSE;
+			
+			if(isset($_SESSION['FiltroReceitas']['Quitado']) && $_SESSION['FiltroReceitas']['Quitado'] == "S"){
+				$dataref = 'PR.DataPago';
+			}else{
+				$dataref = 'PR.DataVencimento';
+			}
+			
+			$date_inicio_vnc_prc = ($_SESSION['FiltroReceitas']['DataInicio4']) ? ''.$dataref.' >= "' . $_SESSION['FiltroReceitas']['DataInicio4'] . '" AND ' : FALSE;
+			$date_fim_vnc_prc = ($_SESSION['FiltroReceitas']['DataFim4']) ? ''.$dataref.' <= "' . $_SESSION['FiltroReceitas']['DataFim4'] . '" AND ' : FALSE;
+			
+			if($_SESSION['FiltroReceitas']['nome']){
+				if($_SESSION['FiltroReceitas']['nome'] == "Cliente"){
+					$cadastro = "C.DataCadastroCliente";
+					$aniversario = "C.DataNascimento";
+				}
+			}else{
+				echo "Não existe data de cadastro";
+			}
+			
+			$date_inicio_cadastro = ($_SESSION['FiltroReceitas']['DataInicio6']) ? '' . $cadastro . ' >= "' . $_SESSION['FiltroReceitas']['DataInicio6'] . '" AND ' : FALSE;
+			$date_fim_cadastro = ($_SESSION['FiltroReceitas']['DataFim6']) ? '' . $cadastro . ' <= "' . $_SESSION['FiltroReceitas']['DataFim6'] . '" AND ' : FALSE;
+			
+			$DiaAniv = ($_SESSION['FiltroReceitas']['DiaAniv']) ? ' AND DAY(' . $aniversario . ') = ' . $_SESSION['FiltroReceitas']['DiaAniv'] : FALSE;
+			$MesAniv = ($_SESSION['FiltroReceitas']['MesAniv']) ? ' AND MONTH(' . $aniversario . ') = ' . $_SESSION['FiltroReceitas']['MesAniv'] : FALSE;
+			$AnoAniv = ($_SESSION['FiltroReceitas']['AnoAniv']) ? ' AND YEAR(' . $aniversario . ') = ' . $_SESSION['FiltroReceitas']['AnoAniv'] : FALSE;			
+
+			$data['Orcamento'] = ($_SESSION['FiltroReceitas']['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $_SESSION['FiltroReceitas']['Orcamento'] . '  ': FALSE;
+			$data['Cliente'] = ($_SESSION['FiltroReceitas']['Cliente']) ? ' AND OT.idApp_Cliente = ' . $_SESSION['FiltroReceitas']['Cliente'] . '' : FALSE;
+			$data['idApp_Cliente'] = ($_SESSION['FiltroReceitas']['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $_SESSION['FiltroReceitas']['idApp_Cliente'] . '' : FALSE;
+			$data['TipoFinanceiro'] = ($_SESSION['FiltroReceitas']['TipoFinanceiro']) ? ' AND TR.idTab_TipoFinanceiro = ' . $_SESSION['FiltroReceitas']['TipoFinanceiro'] : FALSE;
+			$data['idTab_TipoRD'] = ($_SESSION['FiltroReceitas']['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $_SESSION['FiltroReceitas']['idTab_TipoRD'] : FALSE;
+			$data['Campo'] = (!$_SESSION['FiltroReceitas']['Campo']) ? 'OT.idApp_OrcaTrata' : $_SESSION['FiltroReceitas']['Campo'];
+			$data['Ordenamento'] = (!$_SESSION['FiltroReceitas']['Ordenamento']) ? 'ASC' : $_SESSION['FiltroReceitas']['Ordenamento'];
+			$filtro1 = ($_SESSION['FiltroReceitas']['AprovadoOrca']) ? 'OT.AprovadoOrca = "' . $_SESSION['FiltroReceitas']['AprovadoOrca'] . '" AND ' : FALSE;
+			$filtro2 = ($_SESSION['FiltroReceitas']['QuitadoOrca']) ? 'OT.QuitadoOrca = "' . $_SESSION['FiltroReceitas']['QuitadoOrca'] . '" AND ' : FALSE;
+			$filtro3 = ($_SESSION['FiltroReceitas']['ConcluidoOrca']) ? 'OT.ConcluidoOrca = "' . $_SESSION['FiltroReceitas']['ConcluidoOrca'] . '" AND ' : FALSE;
+			$filtro5 = ($_SESSION['FiltroReceitas']['Modalidade']) ? 'OT.Modalidade = "' . $_SESSION['FiltroReceitas']['Modalidade'] . '" AND ' : FALSE;
+			$filtro6 = ($_SESSION['FiltroReceitas']['FormaPagamento']) ? 'OT.FormaPagamento = "' . $_SESSION['FiltroReceitas']['FormaPagamento'] . '" AND ' : FALSE;
+			$filtro7 = ($_SESSION['FiltroReceitas']['Tipo_Orca']) ? 'OT.Tipo_Orca = "' . $_SESSION['FiltroReceitas']['Tipo_Orca'] . '" AND ' : FALSE;
+			$filtro8 = ($_SESSION['FiltroReceitas']['TipoFrete']) ? 'OT.TipoFrete = "' . $_SESSION['FiltroReceitas']['TipoFrete'] . '" AND ' : FALSE;
+			$filtro9 = ($_SESSION['FiltroReceitas']['AVAP']) ? 'OT.AVAP = "' . $_SESSION['FiltroReceitas']['AVAP'] . '" AND ' : FALSE;
+			$filtro10 = ($_SESSION['FiltroReceitas']['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $_SESSION['FiltroReceitas']['FinalizadoOrca'] . '" AND ' : FALSE;
+			$filtro11 = ($_SESSION['FiltroReceitas']['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $_SESSION['FiltroReceitas']['CanceladoOrca'] . '" AND ' : FALSE;
+			$filtro13 = ($_SESSION['FiltroReceitas']['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $_SESSION['FiltroReceitas']['CombinadoFrete'] . '" AND ' : FALSE;
+			$permissao = ($_SESSION['FiltroReceitas']['metodo'] == 3 && $_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+
+			if($_SESSION['log']['idSis_Empresa'] != 5){
+				$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+			}else{
+				$permissao_orcam = FALSE;
+			}			
+			
+			$permissao2 = ($_SESSION['FiltroReceitas']['NomeEmpresa']) ? 'OT.idSis_Empresa = "' . $_SESSION['FiltroReceitas']['NomeEmpresa'] . '" AND ' : FALSE;
+			$filtro17 = ($_SESSION['FiltroReceitas']['NomeUsuario']) ? 'OT.idSis_Usuario = "' . $_SESSION['FiltroReceitas']['NomeUsuario'] . '" AND ' : FALSE;
+
+			$groupby = ($_SESSION['FiltroReceitas']['Agrupar'] != "0") ? 'GROUP BY OT.' . $_SESSION['FiltroReceitas']['Agrupar'] . '' : FALSE;
+
+			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroReceitas']['Produtos'] != "0") ? 'PRDS.idSis_Empresa ' . $_SESSION['FiltroReceitas']['Produtos'] . ' AND' : FALSE;
+			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroReceitas']['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $_SESSION['FiltroReceitas']['Parcelas'] . ' AND' : FALSE;
+
+		}
+
+		if($_SESSION['Usuario']['Nivel'] == 0 || $_SESSION['Usuario']['Nivel'] == 1){
+			$nivel = 'AND OT.NivelOrca = 1';
+		}elseif($_SESSION['Usuario']['Nivel'] == 2){
+			$nivel = 'AND OT.NivelOrca = 2';
+		}else{
+			$nivel = FALSE;
+		}
+
+		$querylimit = '';
+        if ($limit)
+            $querylimit = 'LIMIT ' . $start . ', ' . $limit;
+
+		if($total == TRUE) {
+			
+			$query_total = $this->db->query(
+				'SELECT
+					OT.ValorFinalOrca
+				FROM
+					App_OrcaTrata AS OT
+						LEFT JOIN Sis_Empresa AS EMP ON EMP.idSis_Empresa = OT.idSis_Empresa
+						LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
+						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
+						LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
+				WHERE
+					' . $date_inicio_orca . '
+					' . $date_fim_orca . '
+					' . $date_inicio_entrega . '
+					' . $date_fim_entrega . '
+					' . $date_inicio_entrega_prd . '
+					' . $date_fim_entrega_prd . '
+					' . $hora_inicio_entrega_prd . '
+					' . $hora_fim_entrega_prd . '
+					' . $date_inicio_vnc . '
+					' . $date_fim_vnc . '
+					' . $date_inicio_vnc_prc . '
+					' . $date_fim_vnc_prc . '
+					' . $date_inicio_cadastro . '
+					' . $date_fim_cadastro . '
+					' . $permissao . '
+					' . $permissao_orcam . '
+					' . $permissao2 . '
+					' . $filtro1 . '
+					' . $filtro2 . '
+					' . $filtro3 . '
+					' . $filtro5 . '
+					' . $filtro6 . '
+					' . $filtro7 . '
+					' . $filtro8 . '
+					' . $filtro9 . '
+					' . $filtro10 . '
+					' . $filtro11 . '
+					' . $filtro13 . '
+					' . $filtro17 . '
+					' . $produtos . '
+					' . $parcelas . '
+					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '
+					' . $data['Orcamento'] . '
+					' . $data['Cliente'] . '
+					' . $data['idApp_Cliente'] . '
+					' . $data['TipoFinanceiro'] . ' 
+					' . $data['idTab_TipoRD'] . '
+					' . $DiaAniv . '
+					' . $MesAniv . '
+					' . $AnoAniv . '
+					' . $nivel . '
+				' . $groupby . '
+				' . $querylimit . ''
+			);
+			
+			$count = $query_total->num_rows();
+			
+			if(!isset($count)){
+				return FALSE;
+			}else{
+				if($count >= 20001){
+					return FALSE;
+				}else{
+					if ($completo === FALSE) {
+						return TRUE;
+					} else {
+						$somafinal2=0;
+						foreach ($query_total->result() as $row) {
+							$somafinal2 += $row->ValorFinalOrca;
+						}
+						$query_total->soma2 = new stdClass();
+						$query_total->soma2->somafinal2 = number_format($somafinal2, 2, ',', '.');
+
+						return $query_total;
+					}
+				}
+			}
+		}
+		
+		$query = $this->db->query(
+			'SELECT
+				OT.idApp_OrcaTrata,
+				OT.idSis_Usuario,
+				OT.CombinadoFrete,
+				OT.AprovadoOrca,
+				OT.FinalizadoOrca,
+				OT.CanceladoOrca,
+                OT.ConcluidoOrca,
+                OT.QuitadoOrca,
+                OT.DataOrca,
+				DATE_FORMAT(OT.HoraEntregaOrca, "%H:%i") AS HoraEntregaOrca,
+				OT.ValorRestanteOrca,
+				OT.DescValorOrca,
+				OT.ValorFinalOrca,
+				OT.ValorFrete,
+				OT.ValorExtraOrca,
+				(OT.ValorExtraOrca + OT.ValorRestanteOrca + OT.ValorFrete) AS TotalOrca,
+				OT.CashBackOrca,
+				OT.idTab_TipoRD,
+				OT.Tipo_Orca,
+				OT.NomeRec,
+				OT.ParentescoRec,
+				OT.TelefoneRec,
+                CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,"")) AS NomeCliente,
+                CONCAT(IFNULL(C.NomeCliente,"")) AS Cliente,
+				C.idApp_Cliente,
+				C.CelularCliente,
+				C.DataCadastroCliente,
+				C.DataNascimento,
+				C.Telefone,
+				C.Telefone2,
+				C.Telefone3,
+				EMP.NomeEmpresa,
+				EMP.Site,
+				US.Nome,
+				CONCAT(IFNULL(US.idSis_Usuario,""), " - " ,IFNULL(US.Nome,"")) AS NomeColaborador,
+				TFP.FormaPag,
+				TR.TipoFinanceiro,
+				OT.Modalidade,
+				OT.AVAP,
+				OT.TipoFrete
+            FROM
+                App_OrcaTrata AS OT
+					LEFT JOIN Sis_Empresa AS EMP ON EMP.idSis_Empresa = OT.idSis_Empresa
+					LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
+					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
+					LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
+					LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
+					LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
+					LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
+            WHERE
+                ' . $date_inicio_orca . '
+                ' . $date_fim_orca . '
+                ' . $date_inicio_entrega . '
+                ' . $date_fim_entrega . '
+                ' . $date_inicio_entrega_prd . '
+                ' . $date_fim_entrega_prd . '
+                ' . $hora_inicio_entrega_prd . '
+                ' . $hora_fim_entrega_prd . '
+                ' . $date_inicio_vnc . '
+                ' . $date_fim_vnc . '
+                ' . $date_inicio_vnc_prc . '
+                ' . $date_fim_vnc_prc . '
+                ' . $date_inicio_cadastro . '
+                ' . $date_fim_cadastro . '
+				' . $permissao . '
+				' . $permissao_orcam . '
+				' . $permissao2 . '
+				' . $filtro1 . '
+				' . $filtro2 . '
+				' . $filtro3 . '
+				' . $filtro5 . '
+				' . $filtro6 . '
+				' . $filtro7 . '
+				' . $filtro8 . '
+				' . $filtro9 . '
+				' . $filtro10 . '
+				' . $filtro11 . '
+				' . $filtro13 . '
+				' . $filtro17 . '
+				' . $produtos . '
+				' . $parcelas . '
+				OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '
+                ' . $data['Orcamento'] . '
+                ' . $data['Cliente'] . '
+                ' . $data['idApp_Cliente'] . '
+                ' . $data['TipoFinanceiro'] . ' 
+                ' . $data['idTab_TipoRD'] . '
+				' . $DiaAniv . '
+				' . $MesAniv . '
+				' . $AnoAniv . '
+				' . $nivel . '
+			' . $groupby . '
+			ORDER BY
+				' . $data['Campo'] . '
+				' . $data['Ordenamento'] . '
+			' . $querylimit . ''
+		);
+
+        /*
+		echo $this->db->last_query();
+		echo "<pre>";
+		print_r($query);
+		echo "</pre>";
+		exit();
+		*/
+
+        if ($completo === FALSE) {
+            return TRUE;
+        } else {
+
+            $somasubtotal=0;
+			$subtotal=0;
+			$somadesconto=0;
+			$somarestante=0;
+			$somasubcomissao=0;
+			$somaextra=0;
+			$somafrete=0;
+			$somatotal=0;
+			$somadesc=0;
+			$somacashback=0;
+			$somafinal=0;
+			
+            foreach ($query->result() as $row) {
+				
+				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
+				$row->DataCadastroCliente = $this->basico->mascara_data($row->DataCadastroCliente, 'barras');
+
+				$somaextra += $row->ValorExtraOrca;
+				$row->ValorExtraOrca = number_format($row->ValorExtraOrca, 2, ',', '.');
+				$somarestante += $row->ValorRestanteOrca;
+				$row->ValorRestanteOrca = number_format($row->ValorRestanteOrca, 2, ',', '.');
+				$somafrete += $row->ValorFrete;
+				$row->ValorFrete = number_format($row->ValorFrete, 2, ',', '.');
+				$somatotal += $row->TotalOrca;
+				$row->TotalOrca = number_format($row->TotalOrca, 2, ',', '.');
+				$somadesc += $row->DescValorOrca;
+				$row->DescValorOrca = number_format($row->DescValorOrca, 2, ',', '.');
+				$somacashback += $row->CashBackOrca;
+				$row->CashBackOrca = number_format($row->CashBackOrca, 2, ',', '.');
+				$somafinal += $row->ValorFinalOrca;
+				$row->ValorFinalOrca = number_format($row->ValorFinalOrca, 2, ',', '.');
+
+				if($row->Tipo_Orca == "B"){
+					$row->Tipo_Orca = "NaLoja";
+				}elseif($row->Tipo_Orca == "O"){
+					$row->Tipo_Orca = "OnLine";
+				}else{
+					$row->Tipo_Orca = "Outros";
+				}
+				
+				if($row->Modalidade == "P"){
+					$row->Modalidade = "Dividido";
+				}elseif($row->Modalidade == "M"){
+					$row->Modalidade = "Mensal";
+				}else{
+					$row->Modalidade = "Outros";
+				}
+				
+				if($row->AVAP == "V"){
+					$row->AVAP = "NaLoja";
+				}elseif($row->AVAP == "O"){
+					$row->AVAP = "OnLine";
+				}elseif($row->AVAP == "P"){
+					$row->AVAP = "NaEntr";
+				}else{
+					$row->AVAP = "Outros";
+				}
+				
+				if($row->TipoFrete == 1){
+					$row->TipoFrete = "Retirar/NaLoja";
+				}elseif($row->TipoFrete == 2){
+					$row->TipoFrete = "EmCasa/PelaLoja";
+				}elseif($row->TipoFrete == 3){
+					$row->TipoFrete = "EmCasa/PeloCorreio";
+				}else{
+					$row->TipoFrete = "Outros";
+				}
+            }
+            
+			$query->soma = new stdClass();
+			$query->soma->somaextra = number_format($somaextra, 2, ',', '.');
+			$query->soma->somarestante = number_format($somarestante, 2, ',', '.');
+            $query->soma->somafrete = number_format($somafrete, 2, ',', '.');
+            $query->soma->somatotal = number_format($somatotal, 2, ',', '.');
+            $query->soma->somadesc = number_format($somadesc, 2, ',', '.');
+            $query->soma->somacashback = number_format($somacashback, 2, ',', '.');
+            $query->soma->somafinal = number_format($somafinal, 2, ',', '.');
+			
+            return $query;
+        }
+
+    }
+
     public function list_orcamento($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		if($data != FALSE){
@@ -1161,7 +1608,121 @@ class Relatorio_model extends CI_Model {
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		/*
+		if($total == TRUE) {
 		
+			$query_total = $this->db->query(
+				'SELECT
+					OT.ValorFinalOrca,
+					OT.ValorComissao
+				FROM
+					App_OrcaTrata AS OT
+					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
+					LEFT JOIN App_Fornecedor AS F ON F.idApp_Fornecedor = OT.idApp_Fornecedor
+					LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
+					' . $ultimopedido1 . '
+					LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
+					LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
+					LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
+					LEFT JOIN Tab_Modalidade AS MD ON MD.Abrev = OT.Modalidade
+					LEFT JOIN Tab_AVAP AS VP ON VP.Abrev2 = OT.AVAP
+					LEFT JOIN Sis_Empresa AS EMP ON EMP.idSis_Empresa = OT.idSis_Empresa
+					LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS USA ON USA.idSis_Usuario = OT.Associado
+					LEFT JOIN Tab_TipoFrete AS TTF ON TTF.idTab_TipoFrete = OT.TipoFrete
+				WHERE
+					' . $date_inicio_orca . '
+					' . $date_fim_orca . '
+					' . $date_inicio_entrega . '
+					' . $date_fim_entrega . '
+					' . $date_inicio_entrega_prd . '
+					' . $date_fim_entrega_prd . '
+					' . $hora_inicio_entrega_prd . '
+					' . $hora_fim_entrega_prd . '
+					' . $date_inicio_vnc . '
+					' . $date_fim_vnc . '
+					' . $date_inicio_vnc_prc . '
+					' . $date_fim_vnc_prc . '
+					' . $date_inicio_cadastro . '
+					' . $date_fim_cadastro . '
+					' . $date_inicio_pag_com . '
+					' . $date_fim_pag_com . '
+					' . $permissao . '
+					' . $permissao_orcam . '
+					' . $permissao2 . '
+					' . $filtro1 . '
+					' . $filtro2 . '
+					' . $filtro3 . '
+					' . $filtro4 . '
+					' . $filtro5 . '
+					' . $filtro6 . '
+					' . $filtro7 . '
+					' . $filtro8 . '
+					' . $filtro9 . '
+					' . $filtro10 . '
+					' . $filtro11 . '
+					' . $filtro13 . '
+					' . $filtro12 . '
+					' . $filtro14 . '
+					' . $filtro17 . '
+					' . $filtro18 . '
+					' . $produtos . '
+					' . $parcelas . '
+					' . $data['idSis_Empresa'] . '
+					' . $data['Orcamento'] . '
+					' . $data['Cliente'] . '
+					' . $data['Fornecedor'] . '
+					' . $data['idApp_Cliente'] . '
+					' . $data['idApp_Fornecedor'] . '
+					' . $data['TipoFinanceiro'] . ' 
+					' . $data['idTab_TipoRD'] . '
+					' . $ultimopedido2 . '
+					' . $comissao1 . '
+					' . $comissao2 . '
+					' . $comissao3 . '
+					' . $associado . '
+					' . $vendedor . '
+					' . $DiaAniv . '
+					' . $MesAniv . '
+					' . $AnoAniv . '
+					' . $nivel . '
+				' . $groupby . '
+				ORDER BY
+					' . $data['Campo'] . '
+					' . $data['Ordenamento'] . '
+				' . $querylimit . ''
+			);
+
+			$count = $query_total->num_rows();
+			
+			if(!isset($count)){
+				return FALSE;
+			}else{
+				if($count >= 20001){
+					return FALSE;
+				}else{
+					if ($completo === FALSE) {
+						return TRUE;
+					} else {
+
+						$somafinal2=0;
+						$somacomissao2=0;
+						
+						foreach ($query_total->result() as $row) {
+							$somafinal2 += $row->ValorFinalOrca;
+							$somacomissao2 += $row->ValorComissao;
+						}
+						
+						$query_total->soma2 = new stdClass();
+						$query_total->soma2->somafinal2 = number_format($somafinal2, 2, ',', '.');
+						$query_total->soma2->somacomissao2 = number_format($somacomissao2, 2, ',', '.');
+
+						return $query_total;
+					}
+				}
+			}
+		}
+		*/
 		$query = $this->db->query('
             SELECT
                 CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,"")) AS NomeCliente,
@@ -1314,9 +1875,8 @@ class Relatorio_model extends CI_Model {
         ');
 		
 		#echo $this->db->last_query();
-		
+
 		if($total == TRUE) {
-			//return $query->num_rows();
 			
 			if ($completo === FALSE) {
 				return TRUE;
@@ -1336,7 +1896,6 @@ class Relatorio_model extends CI_Model {
 
 				return $query;
 			}
-			
 		}
 		
         /*

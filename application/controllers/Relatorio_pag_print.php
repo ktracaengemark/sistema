@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Relatorio_pag extends CI_Controller {
+class Relatorio_pag_print extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -523,7 +523,7 @@ class Relatorio_pag extends CI_Controller {
         ), TRUE));
 
         $data['titulo'] = 'Receitas';
-		$data['form_open_path'] = 'relatorio_pag/receitas_pag';
+		$data['form_open_path'] = 'relatorio_pag_print/receitas_pag';
 		$data['baixatodas'] = 'Orcatrata/alterarreceitas/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
         $data['nomeusuario'] = 'NomeColaborador';
@@ -553,8 +553,8 @@ class Relatorio_pag extends CI_Controller {
 
 			$config['total_rows'] = $_SESSION['FiltroReceitas']['total_rows'];
 			
-			$config['base_url'] = base_url() . 'relatorio_pag/receitas_pag/';
-			$config['per_page'] = 12;
+			$config['base_url'] = base_url() . 'relatorio_pag_print/receitas_pag/';
+			$config['per_page'] = 19;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
 			$config['num_links'] = 2;
@@ -599,10 +599,10 @@ class Relatorio_pag extends CI_Controller {
 						
 			$data['pagination'] = $this->pagination->create_links();
 
-            $data['list1'] = $this->load->view('relatorio/list_receitas', $data, TRUE);
+            $data['list1'] = $this->load->view('relatorio_print/list_receitas', $data, TRUE);
         }		
 
-        $this->load->view('relatorio/tela_receitas', $data);
+        $this->load->view('relatorio_print/tela_receitas', $data);
 
         $this->load->view('basico/footer');
 

@@ -83,7 +83,7 @@
 							<td class="col-md-1" scope="col"><?php echo $orcatrata[$i]['AVAP'] ?>/<?php echo $orcatrata[$i]['FormaPag'] ?></td>
 							<td class="col-md-2" scope="col"><?php echo $orcatrata[$i]['NomeRec'] ?></td>
 							<td class="col-md-2" scope="col"><?php echo $orcatrata[$i]['ParentescoRec'] ?></td>
-							<td class="col-md-2" scope="col"><?php echo $orcatrata[$i]['TelefoneRec'] ?>
+							<td class="col-md-2" scope="col"><?php echo $orcatrata[$i]['TelefoneRec'] ?></td>
 						</tr>
 						
 						<?php
