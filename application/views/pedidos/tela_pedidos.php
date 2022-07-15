@@ -7,20 +7,6 @@
 				<div class="panel panel-info">
 					<div class="panel-heading">
 						<div class="row">
-							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 ">
-								<label>Gestor <b><?php echo $titulo; ?></b> de Receitas</label><br>
-								<?php if($_SESSION['log']['idSis_Empresa'] == 5){ ?>
-										<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>orcatrata/cadastrar3" role="button"> 
-											<span class="glyphicon glyphicon-plus"></span> Nova Venda / Receita
-										</a>
-								<?php }else{ ?>
-									<?php if ($_SESSION['Usuario']['Cad_Orcam'] == "S" ) { ?>
-											<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>orcatrata/cadastrar3" role="button"> 
-												<span class="glyphicon glyphicon-plus"></span> Nova Venda / Receita
-											</a>
-									<?php } ?>
-								<?php } ?>
-							</div>
 							<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 text-left">
 								<label>Pesquisar Pedido</label><br>
 								<?php if($paginacao == "N") { ?>
@@ -36,6 +22,20 @@
 									<a class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?><?php echo $pedidos; ?>/pedidos" role="button"> 
 										<span class="glyphicon glyphicon-search"></span> Pesquisar Pedido
 									</a>
+								<?php } ?>
+							</div>
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 ">
+								<label>Gestor <b><?php echo $titulo; ?></b> de Receitas</label><br>
+								<?php if($_SESSION['log']['idSis_Empresa'] == 5){ ?>
+										<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>orcatrata/cadastrar3" role="button"> 
+											<span class="glyphicon glyphicon-plus"></span> Nova Venda / Receita
+										</a>
+								<?php }else{ ?>
+									<?php if ($_SESSION['Usuario']['Cad_Orcam'] == "S" ) { ?>
+											<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>orcatrata/cadastrar3" role="button"> 
+												<span class="glyphicon glyphicon-plus"></span> Nova Venda / Receita
+											</a>
+									<?php } ?>
 								<?php } ?>
 							</div>
 						</div>	

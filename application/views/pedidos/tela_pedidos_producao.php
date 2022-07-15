@@ -7,6 +7,12 @@
 				<div class="panel panel-info">
 					<div class="panel-heading">
 						<div class="row">
+							<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 text-left">
+								<label>Pesquisar Pedido</label><br>
+								<a class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?>pedidos/pedidos" role="button"> 
+									<span class="glyphicon glyphicon-search"></span> Pesquisar Pedido
+								</a>
+							</div>
 							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 ">
 								<label>Gestor <b><?php echo $titulo; ?></b> de Receitas</label><br>
 								<?php if($_SESSION['log']['idSis_Empresa'] == 5){ ?>
@@ -20,12 +26,6 @@
 											</a>
 									<?php } ?>
 								<?php } ?>
-							</div>
-							<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 text-left">
-								<label>Pesquisar Pedido</label><br>
-								<a class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?>pedidos/pedidos" role="button"> 
-									<span class="glyphicon glyphicon-search"></span> Pesquisar Pedido
-								</a>
 							</div>
 						</div>				
 					</div>
