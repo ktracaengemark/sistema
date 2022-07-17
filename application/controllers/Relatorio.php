@@ -1208,7 +1208,7 @@ class Relatorio extends CI_Controller {
 				$_SESSION['FiltroReceitas']['total_rows'] = $config['total_rows'] = $data['pesquisa_query']->num_rows();			
 				
 				$config['base_url'] = base_url() . 'relatorio_pag/receitas_pag/';
-				$config['per_page'] = 12;
+				$config['per_page'] = 19;
 				$config["uri_segment"] = 3;
 				$config['reuse_query_string'] = TRUE;
 				$config['num_links'] = 2;

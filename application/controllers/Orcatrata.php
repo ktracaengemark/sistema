@@ -17321,7 +17321,7 @@ class Orcatrata extends CI_Controller {
 							
 						$data['msg'] = '?m=1';
 
-						redirect(base_url() . 'relatorio/alterarreceitas/' . $data['msg']);
+						redirect(base_url() . 'relatorio/receitas/' . $data['msg']);
 						exit(); 
 					}
 				}
@@ -18180,16 +18180,16 @@ class Orcatrata extends CI_Controller {
 					if($data['pesquisa_query'] === FALSE){
 						
 						$data['msg'] = '?m=4';
-						redirect(base_url() . 'relatorio/alterarreceitas' . $data['msg']);
+						redirect(base_url() . 'relatorio/receitas' . $data['msg']);
 						exit();
 					}else{
 
 						$_SESSION['Pesquisa_Query']['FinalTotal'] = $data['pesquisa_query']->soma2->somafinal2;
 						
 						$config['total_rows'] = $data['pesquisa_query']->num_rows();
-						//$config['total_rows'] = $this->Orcatrata_model->get_alterarreceitas($id, TRUE);
+						
 						$config['base_url'] = base_url() . 'Orcatrata/alterarreceitas/' . $id . '/';	
-						$config['per_page'] = 50;
+						$config['per_page'] = 19;
 						$config["uri_segment"] = 4;
 						$config['reuse_query_string'] = TRUE;
 						$config['num_links'] = 2;
@@ -18277,7 +18277,7 @@ class Orcatrata extends CI_Controller {
 				$data['titulo'] = 'Baixa das Receitas';
 				$data['form_open_path'] = 'orcatrata/alterarreceitas';
 				//$data['relatorio'] = 'relatorio/alterarreceitas/';
-				$data['relatorio'] = 'relatorio_pag/alterarreceitas_pag/';
+				$data['relatorio'] = 'relatorio_pag/receitas_pag/';
 				$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
 				$data['nomeusuario'] = 'NomeColaborador';
 				$data['readonly'] = '';

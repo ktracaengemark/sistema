@@ -131,56 +131,64 @@
 					</button>
 				</div>
 			<?php } ?>
+			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 text-left">
+				<label>Excel</label><br>
+				<a href="<?php echo base_url() . 'gerar_excel/Despesas/Despesas_xls.php'; ?>">
+					<button type='button' class='btn btn-md btn-success btn-block'>
+						C/<span class="glyphicon glyphicon-filter"></span>
+					</button>
+				</a>
+			</div>
 			<?php if($_SESSION['log']['idSis_Empresa'] != 5) {?>
 				<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") {?>
 					<?php if ($editar == 1) { ?>
+						<?php if ($print == 1) { ?>	
+							<div class="col-md-1">
+								<label>Lista</label>
+								<a href="<?php echo base_url() . 'relatorio_pag/despesas_baixa_pag'; ?>">
+									<button class="btn btn-info btn-md btn-block" type="button">
+										<span class="glyphicon glyphicon-list"></span>
+									</button>
+								</a>
+							</div>
+						<?php } ?>
 						<div class="col-md-1">
-							<label>Todas</label>
+							<label>Baixa</label>
 							<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
 								<button class="btn btn-danger btn-md btn-block" type="button">
 									<span class="glyphicon glyphicon-edit"></span>
 								</button>
 							</a>
 						</div>
-						<?php if ($print == 1) { ?>	
-							<div class="col-md-1">
-								<label>Lista</label>
-								<a href="<?php echo base_url() . 'relatorio_pag_print/despesas_pag'; ?>">
-									<button class="btn btn-info btn-md btn-block" type="button">
-										<span class="glyphicon glyphicon-list"></span>
-									</button>
-								</a>
-							</div>
-						<?php } ?>
-					<?php }elseif($editar == 2){ ?>
-						<div class="col-md-1">
-							<label>Baixa</label>
-							<a href="<?php echo base_url() . $alterar; ?>">
-								<button class="btn btn-danger btn-md btn-block" type="button">
-									<span class="glyphicon glyphicon-alert"></span>
+						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 text-left">
+							<label>Editar</label>
+							<a href="<?php echo base_url() . 'relatorio_pag/despesas_pag'; ?>">
+								<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
+									<span class="glyphicon glyphicon-list"></span>
 								</button>
 							</a>
 						</div>
+					<?php }elseif($editar == 2){ ?>
 						<?php if ($print == 1) { ?>	
 							<div class="col-md-1">
 								<label>Lista</label>
-								<a href="<?php echo base_url() . 'relatorio_pag_print/despesas_pag'; ?>">
+								<a href="<?php echo base_url() . 'relatorio_pag/despesas_lista_pag'; ?>">
 									<button class="btn btn-info btn-md btn-block" type="button">
 										<span class="glyphicon glyphicon-list"></span>
 									</button>
 								</a>
 							</div>
 						<?php } ?>
+						<div class="col-md-1">
+							<label>Baixa</label>
+							<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
+								<button class="btn btn-danger btn-md btn-block" type="button">
+									<span class="glyphicon glyphicon-edit"></span>
+								</button>
+							</a>
+						</div>
 					<?php } ?>
 				<?php } ?>	
-				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 text-left">
-					<label>Excel</label><br>
-					<a href="<?php echo base_url() . 'gerar_excel/Despesas/Despesas_xls.php'; ?>">
-						<button type='button' class='btn btn-md btn-success btn-block'>
-							C/<span class="glyphicon glyphicon-filter"></span>
-						</button>
-					</a>
-				</div>
 			<?php } ?>
 		</div>
 	</div>
@@ -193,14 +201,9 @@
 					<tr>
 						<th class="active">Cont.</th>
 						<th class="active">Imp.</th>
-						<?php if($editar == 1) { ?>
-							<?php if($metodo == 3) { ?>
-								<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") {?>
-									<th class="active">Baixa</th>
-								<?php } ?>
-							<?php } ?>
-						<?php }elseif($editar == 2) {?>
-							<th class="active">Editar</th>
+						<th class="active">Editar</th>
+						<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") {?>
+							<th class="active">Baixa</th>
 						<?php } ?>
 						<th class="active">Pdd|Tp|Ct</th>
 						<th class="active">DtPedido</th>
@@ -283,38 +286,33 @@
 									<span class="glyphicon glyphicon-print notclickable"></span>
 								</a>
 							</td>
-							<?php if($editar == 1){ ?>
-								<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
-									<?php if($metodo == 3){ ?>
-										<?php if($row['CanceladoOrca'] == "N"){ ?>	
-											<?php if($row['QuitadoOrca'] == "S" && $row['ConcluidoOrca'] == "S"){ ?>
-												<td class="notclickable">
-													<a class="btn btn-md btn-danger notclickable">
-														<span class="glyphicon glyphicon-ok notclickable"></span>
-													</a>
-												</td>
-											<?php }else{ ?>
-												<td class="notclickable">
-													<a class="btn btn-md btn-success notclickable" href="<?php echo base_url() . $baixa . $row['idApp_OrcaTrata'];?>">
-														<span class="glyphicon glyphicon-ok notclickable"></span>
-													</a>
-												</td>
-											<?php } ?>
-										<?php }else{ ?>
-											<td class="notclickable">
-												<a class="btn btn-md btn-danger notclickable">
-													<span class="glyphicon glyphicon-ok notclickable"></span>
-												</a>
-											</td>
-										<?php } ?>
+							<td class="notclickable">
+								<a class="btn btn-md btn-warning notclickable" href="<?php echo base_url() . $edit . $row['idApp_OrcaTrata'];?>">
+									<span class="glyphicon glyphicon-edit notclickable"></span>
+								</a>
+							</td>
+							<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+								<?php if($row['CanceladoOrca'] == "N"){ ?>	
+									<?php if($row['QuitadoOrca'] == "S" && $row['ConcluidoOrca'] == "S"){ ?>
+										<td class="notclickable">
+											<a class="btn btn-md btn-danger notclickable">
+												<span class="glyphicon glyphicon-ok notclickable"></span>
+											</a>
+										</td>
+									<?php }else{ ?>
+										<td class="notclickable">
+											<a class="btn btn-md btn-success notclickable" href="<?php echo base_url() . $baixa . $row['idApp_OrcaTrata'];?>">
+												<span class="glyphicon glyphicon-ok notclickable"></span>
+											</a>
+										</td>
 									<?php } ?>
+								<?php }else{ ?>
+									<td class="notclickable">
+										<a class="btn btn-md btn-danger notclickable">
+											<span class="glyphicon glyphicon-ok notclickable"></span>
+										</a>
+									</td>
 								<?php } ?>
-							<?php }else if($editar == 2){ ?>
-								<td class="notclickable">
-									<a class="btn btn-md btn-warning notclickable" href="<?php echo base_url() . $edit . $row['idApp_OrcaTrata'];?>">
-										<span class="glyphicon glyphicon-edit notclickable"></span>
-									</a>
-								</td>
 							<?php } ?>
 							<td><?php echo $row['idApp_OrcaTrata'];?> - <?php echo $row['TipoFinanceiro'];?></td>
 							<?php echo '<td>' . $row['DataOrca'] . '</td>';?>	
