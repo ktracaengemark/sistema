@@ -365,11 +365,11 @@ class Relatorio_pag extends CI_Controller {
 
         $data['titulo'] = 'Receitas';
 		$data['form_open_path'] = 'relatorio_pag/ultimopedido_pag';
-		$data['baixatodas'] = 'Orcatrata/alterarreceitas/';
+		$data['baixatodas'] = 'Orcatrata/baixadasreceitas/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
         $data['nomeusuario'] = 'NomeColaborador';
         $data['status'] = 'StatusComissaoOrca';
-		$data['alterar'] = 'relatorio/alterarreceitas/';
+		$data['alterar'] = 'relatorio/receitas/';
 		$data['editar'] = 2;
 		$data['metodo'] = 3;
 		$data['panel'] = 'info';
@@ -524,11 +524,11 @@ class Relatorio_pag extends CI_Controller {
 
         $data['titulo'] = 'Receitas';
 		$data['form_open_path'] = 'relatorio_pag/receitas_pag';
-		$data['baixatodas'] = 'Orcatrata/alterarreceitas/';
+		$data['baixatodas'] = 'Orcatrata/baixadasreceitas/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
         $data['nomeusuario'] = 'NomeColaborador';
         $data['status'] = 'StatusComissaoOrca';
-		$data['alterar'] = 'relatorio/alterarreceitas/';
+		$data['alterar'] = 'relatorio/receitas/';
 		$data['editar'] = 2;
 		$data['metodo'] = 3;
 		$data['panel'] = 'info';
@@ -702,11 +702,11 @@ class Relatorio_pag extends CI_Controller {
 
         $data['titulo'] = 'Receitas';
 		$data['form_open_path'] = 'relatorio_pag/receitas_lista_pag';
-		$data['baixatodas'] = 'Orcatrata/alterarreceitas/';
+		$data['baixatodas'] = 'Orcatrata/baixadasreceitas/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
         $data['nomeusuario'] = 'NomeColaborador';
         $data['status'] = 'StatusComissaoOrca';
-		$data['alterar'] = 'relatorio/alterarreceitas/';
+		$data['alterar'] = 'relatorio/receitas/';
 		$data['editar'] = 2;
 		$data['metodo'] = 3;
 		$data['panel'] = 'info';
@@ -882,11 +882,11 @@ class Relatorio_pag extends CI_Controller {
 
         $data['titulo'] = 'Despesas';
 		$data['form_open_path'] = 'relatorio_pag/despesas_pag';
-		$data['baixatodas'] = 'Orcatrata/alterardespesas/';
+		$data['baixatodas'] = 'Orcatrata/baixadasdespesas/';
 		$data['baixa'] = 'Orcatrata/baixadadespesa/';
         $data['nomeusuario'] = 'NomeColaborador';
         $data['status'] = 'StatusComissaoOrca';
-		$data['alterar'] = 'relatorio/alterardespesas/';
+		$data['alterar'] = 'relatorio/despesas/';
 		$data['editar'] = 2;
 		$data['metodo'] = 3;
 		$data['panel'] = 'danger';
@@ -1060,11 +1060,11 @@ class Relatorio_pag extends CI_Controller {
 
         $data['titulo'] = 'Despesas';
 		$data['form_open_path'] = 'relatorio_pag/despesas_lista_pag';
-		$data['baixatodas'] = 'Orcatrata/alterardespesas/';
+		$data['baixatodas'] = 'Orcatrata/baixadasdespesas/';
 		$data['baixa'] = 'Orcatrata/baixadadespesa/';
         $data['nomeusuario'] = 'NomeColaborador';
         $data['status'] = 'StatusComissaoOrca';
-		$data['alterar'] = 'relatorio/alterardespesas/';
+		$data['alterar'] = 'relatorio/despesas/';
 		$data['editar'] = 2;
 		$data['metodo'] = 3;
 		$data['panel'] = 'danger';
