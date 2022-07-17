@@ -452,76 +452,7 @@ class Relatorio_pag extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-			'Whatsapp',
-        ), TRUE));	
-		
-        $data['query'] = quotes_to_entities($this->input->post(array(
-			'Orcamento',
-			'Cliente',
-			'idApp_Cliente',
-			'idApp_OrcaTrata',
-			'idSis_Usuario',
-			'DataVencimentoOrca',
-			'NomeUsuario',
-			'NomeEmpresa',
-			'DiaAniv',
-			'MesAniv',
-			'AnoAniv',
-			'Dia',
-			'Ano',
-			'Mesvenc',
-			'Mespag',
-			'DataInicio',
-            'DataFim',
-			'DataInicio2',
-            'DataFim2',
-			'DataInicio3',
-            'DataFim3',
-			'DataInicio4',
-            'DataFim4',
-			'DataInicio5',
-            'DataFim5',
-			'DataInicio6',
-            'DataFim6',
-			'DataInicio7',
-            'DataFim7',
-			'HoraInicio5',
-            'HoraFim5',
-			'TipoFinanceiro',
-			'idTab_TipoRD',
-			'Ordenamento',
-            'Campo',
-            'AprovadoOrca',
-			'CombinadoFrete',
-            'QuitadoOrca',
-			'ConcluidoOrca',
-			'FinalizadoOrca',
-			'CanceladoOrca',
-			'Quitado',
-			'Modalidade',
-			'AVAP',
-			'Tipo_Orca',
-			'FormaPagamento',
-			'TipoFrete',
-			'Produtos',
-			'Parcelas',
-			'Agrupar',
-			'Ultimo',
-			'nome',
-			'Texto1',
-			'Texto2',
-			'Texto3',
-			'Texto4',
-			'nomedoCliente',
-			'idCliente',
-			'numerodopedido',
-			'site',
-        ), TRUE));
-
+	
         $data['titulo'] = 'Receitas';
 		$data['form_open_path'] = 'relatorio_pag/receitas_pag';
 		$data['baixatodas'] = 'Orcatrata/baixadasreceitas/';
@@ -549,9 +480,9 @@ class Relatorio_pag extends CI_Controller {
 		
         #run form validation
         
-		if ($this->form_validation->run() !== TRUE) {
+		
 
-			$data['pesquisa_query'] = $this->Relatorio_model->list_receitas(FALSE,TRUE, TRUE);
+			$data['pesquisa_query'] = $this->Relatorio_model->list_receitas($_SESSION['FiltroReceitas'],TRUE, TRUE);
 			
 			if($data['pesquisa_query'] === FALSE){
 				
@@ -560,11 +491,13 @@ class Relatorio_pag extends CI_Controller {
 				exit();
 			}else{
 
-				$_SESSION['FiltroReceitas']['total_valor'] = $data['pesquisa_query']->soma2->somafinal2;
+				//$_SESSION['FiltroReceitas']['total_valor'] = $data['pesquisa_query']->soma2->somafinal2;
 				
-				$_SESSION['FiltroReceitas']['total_rows'] = $config['total_rows'] = $data['pesquisa_query']->num_rows();			
+				//$_SESSION['FiltroReceitas']['total_rows'] = $config['total_rows'] = $data['pesquisa_query']->num_rows();			
 				
 				//$config['total_rows'] = $_SESSION['FiltroReceitas']['total_rows'];
+				
+				$config['total_rows'] = $data['pesquisa_query']->num_rows();
 				
 				$config['base_url'] = base_url() . 'relatorio_pag/receitas_pag/';
 				$config['per_page'] = 19;
@@ -608,13 +541,13 @@ class Relatorio_pag extends CI_Controller {
 				$_SESSION['FiltroReceitas']['Limit'] = $data['per_page'];
 				$_SESSION['FiltroReceitas']['Start'] = $data['linha'];
 
-				$data['report'] = $this->Relatorio_model->list_receitas(FALSE, TRUE, FALSE, $config['per_page'], $data['linha']);
+				$data['report'] = $this->Relatorio_model->list_receitas($_SESSION['FiltroReceitas'], TRUE, FALSE, $config['per_page'], $data['linha']);
 							
 				$data['pagination'] = $this->pagination->create_links();
 
 				$data['list1'] = $this->load->view('relatorio/list_receitas', $data, TRUE);
 			}
-        }		
+       		
 
         $this->load->view('relatorio/tela_receitas', $data);
 
@@ -631,75 +564,6 @@ class Relatorio_pag extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-			'Whatsapp',
-        ), TRUE));	
-		
-        $data['query'] = quotes_to_entities($this->input->post(array(
-			'Orcamento',
-			'Cliente',
-			'idApp_Cliente',
-			'idApp_OrcaTrata',
-			'idSis_Usuario',
-			'DataVencimentoOrca',
-			'NomeUsuario',
-			'NomeEmpresa',
-			'DiaAniv',
-			'MesAniv',
-			'AnoAniv',
-			'Dia',
-			'Ano',
-			'Mesvenc',
-			'Mespag',
-			'DataInicio',
-            'DataFim',
-			'DataInicio2',
-            'DataFim2',
-			'DataInicio3',
-            'DataFim3',
-			'DataInicio4',
-            'DataFim4',
-			'DataInicio5',
-            'DataFim5',
-			'DataInicio6',
-            'DataFim6',
-			'DataInicio7',
-            'DataFim7',
-			'HoraInicio5',
-            'HoraFim5',
-			'TipoFinanceiro',
-			'idTab_TipoRD',
-			'Ordenamento',
-            'Campo',
-            'AprovadoOrca',
-			'CombinadoFrete',
-            'QuitadoOrca',
-			'ConcluidoOrca',
-			'FinalizadoOrca',
-			'CanceladoOrca',
-			'Quitado',
-			'Modalidade',
-			'AVAP',
-			'Tipo_Orca',
-			'FormaPagamento',
-			'TipoFrete',
-			'Produtos',
-			'Parcelas',
-			'Agrupar',
-			'Ultimo',
-			'nome',
-			'Texto1',
-			'Texto2',
-			'Texto3',
-			'Texto4',
-			'nomedoCliente',
-			'idCliente',
-			'numerodopedido',
-			'site',
-        ), TRUE));
-
         $data['titulo'] = 'Receitas';
 		$data['form_open_path'] = 'relatorio_pag/receitas_lista_pag';
 		$data['baixatodas'] = 'Orcatrata/baixadasreceitas/';
@@ -727,9 +591,9 @@ class Relatorio_pag extends CI_Controller {
 		
         #run form validation
         
-		if ($this->form_validation->run() !== TRUE) {
+		
 
-			$data['pesquisa_query'] = $this->Relatorio_model->list_receitas(FALSE,TRUE, TRUE);
+			$data['pesquisa_query'] = $this->Relatorio_model->list_receitas($_SESSION['FiltroReceitas'],TRUE, TRUE);
 			
 			if($data['pesquisa_query'] === FALSE){
 				
@@ -738,11 +602,13 @@ class Relatorio_pag extends CI_Controller {
 				exit();
 			}else{
 
-				$_SESSION['FiltroReceitas']['total_valor'] = $data['pesquisa_query']->soma2->somafinal2;
+				//$_SESSION['FiltroReceitas']['total_valor'] = $data['pesquisa_query']->soma2->somafinal2;
 				
-				$_SESSION['FiltroReceitas']['total_rows'] = $config['total_rows'] = $data['pesquisa_query']->num_rows();			
+				//$_SESSION['FiltroReceitas']['total_rows'] = $config['total_rows'] = $data['pesquisa_query']->num_rows();			
 				
 				//$config['total_rows'] = $_SESSION['FiltroReceitas']['total_rows'];
+				
+				$config['total_rows'] = $data['pesquisa_query']->num_rows();
 				
 				$config['base_url'] = base_url() . 'relatorio_pag/receitas_lista_pag/';
 				$config['per_page'] = 19;
@@ -786,13 +652,13 @@ class Relatorio_pag extends CI_Controller {
 				$_SESSION['FiltroReceitas']['Limit'] = $data['per_page'];
 				$_SESSION['FiltroReceitas']['Start'] = $data['linha'];
 
-				$data['report'] = $this->Relatorio_model->list_receitas(FALSE, TRUE, FALSE, $config['per_page'], $data['linha']);
+				$data['report'] = $this->Relatorio_model->list_receitas($_SESSION['FiltroReceitas'], TRUE, FALSE, $config['per_page'], $data['linha']);
 							
 				$data['pagination'] = $this->pagination->create_links();
 
 				$data['list1'] = $this->load->view('relatorio/list_receitas_lista', $data, TRUE);
 			}
-        }		
+        		
 
         $this->load->view('relatorio/tela_receitas', $data);
 

@@ -5,7 +5,7 @@
 				<label for="DataFim">Cont: Parc / Total</label>
 				<div class="input-group">
 					<span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
-					<input type="text" class="form-control" disabled aria-label="Contagem" value="<?php echo $report->num_rows(); ?> / <?php echo $_SESSION['FiltroReceitas']['total_rows']; ?>">
+					<input type="text" class="form-control" disabled aria-label="Contagem" value="<?php echo $report->num_rows(); ?> / <?php echo $total_rows; ?>">
 				</div>
 			</div>
 			<?php if($_SESSION['log']['idSis_Empresa'] == 5) {?>
@@ -55,7 +55,7 @@
 					<label for="DataFim">Final: Parc / Total</label>
 					<div class="input-group">
 						<span class="input-group-addon">R$</span>
-						<input type="text" class="form-control" disabled aria-label="Total" value="<?php echo $report->soma->somafinal ?> / <?php echo $_SESSION['FiltroReceitas']['total_valor'];?>">
+						<input type="text" class="form-control" disabled aria-label="Total" value="<?php echo $report->soma->somafinal ?> / <?php echo $pesquisa_query->soma2->somafinal2;?>">
 					</div>
 				</div>
 			<?php }else{ ?>
@@ -106,7 +106,7 @@
 						<label for="DataFim">Final: Parc / Total</label>
 						<div class="input-group">
 							<span class="input-group-addon">R$</span>
-							<input type="text" class="form-control" disabled aria-label="Total" value="<?php echo $report->soma->somafinal ?> / <?php echo $_SESSION['FiltroReceitas']['total_valor'];?>">
+							<input type="text" class="form-control" disabled aria-label="Total" value="<?php echo $report->soma->somafinal ?> / <?php echo $pesquisa_query->soma2->somafinal2;?>">
 						</div>
 					</div>
 				<?php } ?>
@@ -287,39 +287,34 @@
 									<span class="glyphicon glyphicon-print notclickable"></span>
 								</a>
 							</td>
-							
-							
-								<td class="notclickable">
-									<a class="btn btn-md btn-warning notclickable" href="<?php echo base_url() . $edit . $row['idApp_OrcaTrata'];?>">
-										<span class="glyphicon glyphicon-edit notclickable"></span>
-									</a>
-								</td>
-								<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
-									
-										<?php if($row['CanceladoOrca'] == "N"){ ?>	
-											<?php if($row['QuitadoOrca'] == "S" && $row['ConcluidoOrca'] == "S"){ ?>
-												<td class="notclickable">
-													<a class="btn btn-md btn-danger notclickable">
-														<span class="glyphicon glyphicon-ok notclickable"></span>
-													</a>
-												</td>
-											<?php }else{ ?>
-												<td class="notclickable">
-													<a class="btn btn-md btn-success notclickable" href="<?php echo base_url() . $baixa . $row['idApp_OrcaTrata'];?>">
-														<span class="glyphicon glyphicon-ok notclickable"></span>
-													</a>
-												</td>
-											<?php } ?>
-										<?php }else{ ?>
-											<td class="notclickable">
-												<a class="btn btn-md btn-danger notclickable">
-													<span class="glyphicon glyphicon-ok notclickable"></span>
-												</a>
-											</td>
-										<?php } ?>
-									
+							<td class="notclickable">
+								<a class="btn btn-md btn-warning notclickable" href="<?php echo base_url() . $edit . $row['idApp_OrcaTrata'];?>">
+									<span class="glyphicon glyphicon-edit notclickable"></span>
+								</a>
+							</td>
+							<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") { ?>
+								<?php if($row['CanceladoOrca'] == "N"){ ?>	
+									<?php if($row['QuitadoOrca'] == "S" && $row['ConcluidoOrca'] == "S"){ ?>
+										<td class="notclickable">
+											<a class="btn btn-md btn-danger notclickable">
+												<span class="glyphicon glyphicon-ok notclickable"></span>
+											</a>
+										</td>
+									<?php }else{ ?>
+										<td class="notclickable">
+											<a class="btn btn-md btn-success notclickable" href="<?php echo base_url() . $baixa . $row['idApp_OrcaTrata'];?>">
+												<span class="glyphicon glyphicon-ok notclickable"></span>
+											</a>
+										</td>
+									<?php } ?>
+								<?php }else{ ?>
+									<td class="notclickable">
+										<a class="btn btn-md btn-danger notclickable">
+											<span class="glyphicon glyphicon-ok notclickable"></span>
+										</a>
+									</td>
 								<?php } ?>
-							
+							<?php } ?>
 							<td><?php echo $row['idApp_OrcaTrata'];?> - <?php echo $row['TipoFinanceiro'];?></td>
 							<?php echo '<td>' . $row['DataOrca'] . '</td>';?>	
 							<?php if($_SESSION['log']['idSis_Empresa'] == 5){ ?>

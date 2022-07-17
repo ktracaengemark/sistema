@@ -8,7 +8,7 @@
 			</button>
 			<div class="btn-menu-print btn-group">
 				<a type="button" class="col-md-6 btn btn-md btn-info " href="">
-					<?php echo $report->num_rows(); ?> / <?php echo $_SESSION['FiltroReceitas']['total_rows']; ?>
+					<?php echo $report->num_rows(); ?> / <?php echo $total_rows; ?>
 				</a>
 				<a type="button" class="col-md-3 btn btn-md btn-default " href="javascript:window.print()">
 					<span class="glyphicon glyphicon-print"></span>
