@@ -20,7 +20,7 @@
 									<div class="col-md-2 text-left">	
 										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<?php echo $total_rows;?> Resultados
+											<?php echo $_SESSION['Contagem'];?> / <?php echo $_SESSION['Pesquisa_Query']['TotalRows'];?> Resultados
 										</a>
 									</div>	
 										<!--
@@ -31,11 +31,11 @@
 									<div class="col-md-2 text-left">	
 										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<span class="glyphicon glyphicon-usd"></span>R$ <?php echo $somatotal; ?> / <?php echo $_SESSION['Pesquisa_Query']['FinalTotal'] ?>
+											<span class="glyphicon glyphicon-usd"></span>R$ <?php echo $_SESSION['SomaTotal']; ?> / <?php echo $_SESSION['Pesquisa_Query']['FinalTotal'] ?>
 										</a>
 									</div>
 									<div class="col-md-6 text-left">
-										<?php echo $pagination; ?>
+										<?php echo $_SESSION['Pagination']; ?>
 									</div>
 								</div>
 							</div>
@@ -43,7 +43,7 @@
 						<div class="panel-body">
 							<div class="panel-group">
 								
-									<div  style="overflow: auto; height: 456px; ">
+									<div  style="overflow: auto; height: auto; ">
 										
 											<!--App_parcelasRec-->
 											<input type="hidden" name="PRCount" id="PRCount" value="<?php echo $count['PRCount']; ?>"/>
@@ -51,7 +51,7 @@
 											<div class="input_fields_wrap21">
 
 											<?php
-											$linha =  $per_page*$pagina;
+											$linha =  $_SESSION['Per_Page']*$_SESSION['Pagina'];
 											for ($i=1; $i <= $count['PRCount']; $i++) {
 												$contagem = ($linha + $i);
 											?>
@@ -65,53 +65,43 @@
 																	<span><?php echo $contagem ?>
 																		- <?php echo $orcamento[$i]['idApp_OrcaTrata'] ?>
 																		
-																		- <?php if($orcamento[$i]['Tipo_Orca'] == "O") {
+																		- <?php if($_SESSION['Orcamento'][$i]['Tipo_Orca'] == "O") {
 																					echo 'On Line';
-																				} elseif($orcamento[$i]['Tipo_Orca'] == "B"){
+																				} elseif($_SESSION['Orcamento'][$i]['Tipo_Orca'] == "B"){
 																					echo 'Na Loja';
 																				}else{
 																					echo 'Outros';
 																				}?><br>
-																		<?php echo $orcamento[$i]['idApp_' . $nome] ?> - 
-																		<?php echo $orcamento[$i]['Nome' . $nome] ?>
+																		- <?php echo $_SESSION['Orcamento'][$i]['Nome' . $nome] ?>
 																	</span>
 																</div>
 																<div class="col-md-2">
 																	<label><?php echo $nomeusuario; ?>:</label><br>
-																	<span><?php echo $orcamento[$i][$nomeusuario] ?></span>	
+																	<span><?php echo $_SESSION['Orcamento'][$i][$nomeusuario] ?></span>	
 																</div>
 																<div class="col-md-2">
-																	<label for="DataOrca">Pedido:</label>
+																	<label for="DataOrca">Dt.Pedido:</label>
 																	<div class="input-group DatePicker">
 																		<span class="input-group-addon" disabled>
 																			<span class="glyphicon glyphicon-calendar"></span>
 																		</span>
-																		<input type="text" class="form-control Date" readonly="" id="DataOrca<?php echo $i ?>" maxlength="10" placeholder="DD/MM/AAAA"
-																			   name="DataOrca<?php echo $i ?>" value="<?php echo $orcamento[$i]['DataOrca'] ?>">																
+																		<input type="text" class="form-control Date" readonly="" value="<?php echo $_SESSION['Orcamento'][$i]['DataOrca'] ?>">																
 																	</div>
 																</div>
 																<div class="col-md-2">
-																	<label for="DataEntregaOrca">Entrega:</label>
+																	<label for="DataEntregaOrca">Dt.Entrega:</label>
 																	<div class="input-group DatePicker">
 																		<span class="input-group-addon" disabled>
 																			<span class="glyphicon glyphicon-calendar"></span>
 																		</span>
-																		<input type="text" class="form-control Date" readonly="" id="DataEntregaOrca<?php echo $i ?>" maxlength="10" placeholder="DD/MM/AAAA"
-																			   name="DataEntregaOrca<?php echo $i ?>" value="<?php echo $orcamento[$i]['DataEntregaOrca'] ?>">																
+																		<input type="text" class="form-control Date" readonly="" value="<?php echo $_SESSION['Orcamento'][$i]['DataEntregaOrca'] ?>">																
 																	</div>
 																</div>
-																<input type="hidden" name="HoraEntregaOrca<?php echo $i ?>" value="<?php echo $orcamento[$i]['HoraEntregaOrca']; ?>"/>
-																<input type="hidden" name="CombinadoFrete<?php echo $i ?>" value="<?php echo $orcamento[$i]['CombinadoFrete']; ?>"/>
-																<input type="hidden" name="AprovadoOrca<?php echo $i ?>" value="<?php echo $orcamento[$i]['AprovadoOrca']; ?>"/>
-																<input type="hidden" name="QuitadoOrca<?php echo $i ?>" value="<?php echo $orcamento[$i]['QuitadoOrca']; ?>"/>
-																<input type="hidden" name="CanceladoOrca<?php echo $i ?>" value="<?php echo $orcamento[$i]['CanceladoOrca']; ?>"/>
-																<input type="hidden" name="idApp_<?php echo $nome; ?><?php echo $i ?>" value="<?php echo $orcamento[$i]['idApp_' . $nome]; ?>"/>
 																<div class="col-md-2">
 																	<label for="ValorFinalOrca">Valor:</label><br>
 																	<div class="input-group" id="txtHint">
 																		<span class="input-group-addon" id="basic-addon1">R$</span>
-																		<input type="text" class="form-control Valor" readonly="" maxlength="10" placeholder="0,00" id="ValorFinalOrca<?php echo $i ?>"
-																			   name="ValorFinalOrca<?php echo $i ?>" value="<?php echo $orcamento[$i]['ValorFinalOrca'] ?>">
+																		<input type="text" class="form-control Valor" readonly="" value="<?php echo $_SESSION['Orcamento'][$i]['ValorFinalOrca'] ?>">
 																	</div>
 																</div>
 																<div class="col-md-2">
@@ -158,11 +148,8 @@
 						
 							<div class="form-group">
 								<div class="row">
-									<!--<input type="hidden" name="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>">-->
-									<!--<input type="hidden" name="idSis_Empresa" value="<?php echo $_SESSION['log']['idSis_Empresa']; ?>">-->
 									<input type="hidden" name="idSis_Empresa" value="<?php echo $empresa['idSis_Empresa']; ?>">
-									
-									<div class="col-md-6 text-left">
+									<div class="col-md-4 text-left">
 										<label for="QuitadoComissão">Todas as Receitas Finalizadas?</label><br>
 										<div class="btn-group" data-toggle="buttons">
 											<?php
@@ -190,13 +177,36 @@
 										<?php #echo form_error('QuitadoComissão'); ?>
 									</div>
 									<!--
-									<div class="col-md-6 text-right">
-										<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
-											<span class="glyphicon glyphicon-save"></span> Salvar
-										</button>
+									<div class="col-md-4 text-left">
+										<label for="Cadastrar">Cadastrar</label><br>
+										<div class="btn-group" data-toggle="buttons">
+											<?php
+											/*
+											foreach ($select['Cadastrar'] as $key => $row) {
+												(!$query['Cadastrar']) ? $query['Cadastrar'] = 'S' : FALSE;
+												if ($query['Cadastrar'] == $key) {
+													echo ''
+													. '<label class="btn btn-warning active" name="radiobutton_Cadastrar' . '" id="radiobutton_Cadastrar' .  $key . '">'
+													. '<input type="radio" name="Cadastrar' . '" id="radiobuttondinamico" '
+													. 'autocomplete="off" value="' . $key . '" checked>' . $row
+													. '</label>'
+													;
+												} else {
+													echo ''
+													. '<label class="btn btn-default" name="radiobutton_Cadastrar' .  '" id="radiobutton_Cadastrar' .  $key . '">'
+													. '<input type="radio" name="Cadastrar' . '" id="radiobuttondinamico" '
+													. 'autocomplete="off" value="' . $key . '" >' . $row
+													. '</label>'
+													;
+												}
+											}
+											*/
+											?>
+										</div>
+										<?php #echo form_error('Cadastrar'); ?>
 									</div>
 									-->
-									<div class="col-md-6 text-right">
+									<div class="col-md-4 text-right">
 										<button  type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 											<span class="glyphicon glyphicon-save"></span> Salvar
 										</button>
