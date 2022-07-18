@@ -18453,10 +18453,6 @@ class Orcatrata extends CI_Controller {
 								$data['update']['orcamento']['bd'] = $this->Orcatrata_model->update_orcatrata($data['update']['orcamento']['alterar'][$j], $data['update']['orcamento']['alterar'][$j]['idApp_OrcaTrata']);
 
 							}
-							/*
-							if (count($data['update']['orcamento']['alterar']))
-								$data['update']['orcamento']['bd']['alterar'] =  $this->Orcatrata_model->update_baixadasreceitas($data['update']['orcamento']['alterar']);
-							*/
 						}
 
 						$data['msg'] = '?m=1';

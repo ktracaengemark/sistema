@@ -4492,13 +4492,6 @@ class Orcatrata_model extends CI_Model {
 
     }	
 
-    public function update_baixadasreceitas($data) {
-
-        $query = $this->db->update_batch('App_OrcaTrata', $data, 'idApp_OrcaTrata');
-        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
-
-    }	
-	
     public function update_procedimento($data) {
 
         $query = $this->db->update_batch('App_Procedimento', $data, 'idApp_Procedimento');
