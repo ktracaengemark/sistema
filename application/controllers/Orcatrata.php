@@ -20093,18 +20093,9 @@ class Orcatrata extends CI_Controller {
 		}else{
 
 			$data['query'] = quotes_to_entities($this->input->post(array(
-				'Dia',
-				'Mesvenc',
-				'Ano',
-				'Orcarec',
-				'NomeCliente',
 				'QuitadoParcelas',
 				'MostrarDataPagamento',
 				'DataPagamento',
-				'UltimaDataPagamento',
-				'AprovadoOrca',
-				'ConcluidoOrca',
-				'QuitadoOrca',
 			), TRUE));
 			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -20114,24 +20105,19 @@ class Orcatrata extends CI_Controller {
 				
 			), TRUE));
 
-			//(!$data['query']['DataPagamento']) ? $data['query']['DataPagamento'] = date('d/m/Y', time()) : FALSE;
 			(!$this->input->post('PRCount')) ? $data['count']['PRCount'] = 0 : $data['count']['PRCount'] = $this->input->post('PRCount');
 			
 			$j = 1;
 			for ($i = 1; $i <= $data['count']['PRCount']; $i++) {
 
-				if ($this->input->post('Parcela' . $i) || $this->input->post('ValorParcela' . $i) ||  
-						$this->input->post('DataVencimento' . $i) || 
-						$this->input->post('DataPago' . $i) || $this->input->post('Quitado' . $i)) {
+				if ($this->input->post('idApp_Parcelas' . $i)) {
 					$data['parcelasrec'][$j]['idApp_Parcelas'] = $this->input->post('idApp_Parcelas' . $i);
-					$data['parcelasrec'][$j]['idApp_OrcaTrata'] = $this->input->post('idApp_OrcaTrata' . $i);
-					$data['parcelasrec'][$j]['Parcela'] = $this->input->post('Parcela' . $i);
 					$data['parcelasrec'][$j]['ValorParcela'] = $this->input->post('ValorParcela' . $i);
 					$data['parcelasrec'][$j]['DataVencimento'] = $this->input->post('DataVencimento' . $i);
-					//$data['parcelasrec'][$j]['ValorPago'] = $this->input->post('ValorPago' . $i);
 					$data['parcelasrec'][$j]['DataPago'] = $this->input->post('DataPago' . $i);
 					$data['parcelasrec'][$j]['Quitado'] = $this->input->post('Quitado' . $i);
 					$data['parcelasrec'][$j]['FormaPagamentoParcela'] = $this->input->post('FormaPagamentoParcela' . $i);
+					$data['parcelasrec'][$j]['idApp_OrcaTrata'] = $this->input->post('idApp_OrcaTrata' . $i);
 					
 					(!$data['parcelasrec'][$j]['Quitado']) ? $data['parcelasrec'][$j]['Quitado'] = 'N' : FALSE;
 					$data['radio'] = array(
@@ -20143,10 +20129,6 @@ class Orcatrata extends CI_Controller {
 				}
 			}
 			$data['count']['PRCount'] = $j - 1;
-			
-			//$this->load->library('pagination');
-
-			$data['Pesquisa'] = '';
 
 			if ($id) {
 				
@@ -20161,81 +20143,95 @@ class Orcatrata extends CI_Controller {
 					
 				}else{
 						
-					$config['total_rows'] = $this->Orcatrata_model->get_alterarparcela($id, TRUE);
-
-					$config['base_url'] = base_url() . 'Orcatrata/alterarparcelarec/' . $id . '/';			
-					$config['per_page'] = 12;
-					$config["uri_segment"] = 4;
-					$config['reuse_query_string'] = TRUE;
-					$config['num_links'] = 2;
-					$config['use_page_numbers'] = TRUE;
-					$config['full_tag_open'] = "<ul class='pagination'>";
-					$config['full_tag_close'] = "</ul>";
-					$config['num_tag_open'] = '<li>';
-					$config['num_tag_close'] = '</li>';
-					$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-					$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-					$config['next_tag_open'] = "<li>";
-					$config['next_tagl_close'] = "</li>";
-					$config['prev_tag_open'] = "<li>";
-					$config['prev_tagl_close'] = "</li>";
-					$config['first_tag_open'] = "<li>";
-					$config['first_tagl_close'] = "</li>";
-					$config['last_tag_open'] = "<li>";
-					$config['last_tagl_close'] = "</li>";		   
+					$data['pesquisa_query'] = $this->Orcatrata_model->get_alterarparcela($_SESSION['FiltroCobrancas'], TRUE);
 					
-					if($config['total_rows'] >= 1){
-						$_SESSION['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
+					if($data['pesquisa_query'] === FALSE){
+						
+						$data['msg'] = '?m=4';
+						redirect(base_url() . 'relatorio/cobrancas' . $data['msg']);
+						exit();
 					}else{
-						$_SESSION['Total_Rows'] = $data['total_rows'] = 0;
-					}
-					
-					$this->pagination->initialize($config);
-					
-					$_SESSION['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-					$_SESSION['Per_Page'] = $data['per_page'] = $config['per_page'];
-					
-					$_SESSION['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 
-					#### App_Parcelas ####
-					$data['parcelasrec'] = $this->Orcatrata_model->get_alterarparcela($id, FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
+						$config['base_url'] = base_url() . 'Orcatrata/alterarparcelarec/' . $id . '/';							
+						$config['total_rows'] = $data['pesquisa_query'];
+						$config['per_page'] = 19;
+						$config["uri_segment"] = 4;
+						$config['reuse_query_string'] = TRUE;
+						$config['num_links'] = 2;
+						$config['use_page_numbers'] = TRUE;
+						$config['full_tag_open'] = "<ul class='pagination'>";
+						$config['full_tag_close'] = "</ul>";
+						$config['num_tag_open'] = '<li>';
+						$config['num_tag_close'] = '</li>';
+						$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+						$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+						$config['next_tag_open'] = "<li>";
+						$config['next_tagl_close'] = "</li>";
+						$config['prev_tag_open'] = "<li>";
+						$config['prev_tagl_close'] = "</li>";
+						$config['first_tag_open'] = "<li>";
+						$config['first_tagl_close'] = "</li>";
+						$config['last_tag_open'] = "<li>";
+						$config['last_tagl_close'] = "</li>";		   
+						
+						if($config['total_rows'] >= 1){
+							$_SESSION['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
+						}else{
+							$_SESSION['Total_Rows'] = $data['total_rows'] = 0;
+						}
+						
+						$this->pagination->initialize($config);
+						
+						$_SESSION['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+						$_SESSION['Per_Page'] = $data['per_page'] = $config['per_page'];
+						
+						$_SESSION['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 
-					if (count($data['parcelasrec']) > 0) {
-						
-						$data['parcelasrec'] = array_combine(range(1, count($data['parcelasrec'])), array_values($data['parcelasrec']));
-						
-						$data['count']['PRCount'] = count($data['parcelasrec']);
-						
-						if (isset($data['parcelasrec'])) {
+						#### App_Parcelas ####
+						$data['parcelasrec'] = $this->Orcatrata_model->get_alterarparcela($_SESSION['FiltroCobrancas'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
 
-							for($j=1; $j <= $data['count']['PRCount']; $j++) {
-								$data['parcelasrec'][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimento'], 'barras');
-								$data['parcelasrec'][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPago'], 'barras');
-								$data['parcelasrec'][$j]['Modalidade'] = $data['parcelasrec'][$j]['Modalidade'];
-								if($data['parcelasrec'][$j]['Modalidade'] == "P"){
-									$_SESSION['Parcelasrec'][$j]['Tipo'] = 'Dividido';
-									$_SESSION['Parcelasrec'][$j]['readonly'] = 'readonly=""';
-								}elseif($data['parcelasrec'][$j]['Modalidade'] == "M"){
-									$_SESSION['Parcelasrec'][$j]['Tipo'] = 'Mensal';
-									$_SESSION['Parcelasrec'][$j]['readonly'] = '';
+						if (count($data['parcelasrec']) > 0) {
+							
+							$data['parcelasrec'] = array_combine(range(1, count($data['parcelasrec'])), array_values($data['parcelasrec']));
+							
+							$data['count']['PRCount'] = count($data['parcelasrec']);
+							
+							if (isset($data['parcelasrec'])) {
+
+								for($j=1; $j <= $data['count']['PRCount']; $j++) {
+									
+									$data['parcelasrec'][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimento'], 'barras');
+									$data['parcelasrec'][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPago'], 'barras');
+
+									if($data['parcelasrec'][$j]['Modalidade'] == "P"){
+										$_SESSION['Parcelasrec'][$j]['Tipo'] = 'Dividido';
+										$_SESSION['Parcelasrec'][$j]['readonly'] = 'readonly=""';
+									}elseif($data['parcelasrec'][$j]['Modalidade'] == "M"){
+										$_SESSION['Parcelasrec'][$j]['Tipo'] = 'Mensal';
+										$_SESSION['Parcelasrec'][$j]['readonly'] = '';
+									}
+									
+									$_SESSION['Parcelasrec'][$j]['Receita'] = $data['parcelasrec'][$j]['Receita'];
+									
+									$_SESSION['Parcelasrec'][$j]['Parcela'] = $data['parcelasrec'][$j]['Parcela'];
+									$_SESSION['Parcelasrec'][$j]['FormaPagamento'] = $data['parcelasrec'][$j]['FormaPagamento'];
+									
+									$data['radio'] = array(
+										'Quitado' . $j => $this->basico->radio_checked($data['parcelasrec'][$j]['Quitado'], 'Quitado' . $j, 'NS'),
+									);
+									($data['parcelasrec'][$j]['Quitado'] == 'S') ? $data['div']['Quitado' . $j] = '' : $data['div']['Quitado' . $j] = 'style="display: none;"';
+									
+									/*        
+									echo '<br>';
+									echo "<pre>";
+									print_r($data['parcelasrec'][$j]['Modalidade']);
+									echo '<br>';
+									print_r($data['readonly'][$j]);
+									echo "</pre>";
+									*/	
 								}
-								//$_SESSION['Parcelasrec'][$j]['DataOrca'] = $data['parcelasrec'][$j]['DataOrca'];
-								$_SESSION['Parcelasrec'][$j]['Receita'] = $data['parcelasrec'][$j]['Receita'];
-								$data['radio'] = array(
-									'Quitado' . $j => $this->basico->radio_checked($data['parcelasrec'][$j]['Quitado'], 'Quitado' . $j, 'NS'),
-								);
-								($data['parcelasrec'][$j]['Quitado'] == 'S') ? $data['div']['Quitado' . $j] = '' : $data['div']['Quitado' . $j] = 'style="display: none;"';
-								
-								/*        
-								echo '<br>';
-								echo "<pre>";
-								print_r($data['parcelasrec'][$j]['Modalidade']);
-								echo '<br>';
-								print_r($data['readonly'][$j]);
-								echo "</pre>";
-								*/	
+								//exit ();
 							}
-							//exit ();
 						}
 					}
 				}	
@@ -20250,15 +20246,7 @@ class Orcatrata extends CI_Controller {
 			}else{
 				
 				$data['select']['QuitadoParcelas'] = $this->Basico_model->select_status_sn();
-				$data['select']['MostrarDataPagamento'] = $this->Basico_model->select_status_sn();
-				$data['select']['Quitado'] = $this->Basico_model->select_status_sn();
-				$data['select']['AprovadoOrca'] = $this->Basico_model->select_status_sn();
-				$data['select']['ConcluidoOrca'] = $this->Basico_model->select_status_sn();
-				$data['select']['QuitadoOrca'] = $this->Basico_model->select_status_sn();
-				$data['select']['Dia'] = $this->Basico_model->select_dia();
-				$data['select']['Mesvenc'] = $this->Basico_model->select_mes();
-				$data['select']['Orcarec'] = $this->Basico_model->select_orcarec();
-				$data['select']['NomeCliente'] = $this->Basico_model->select_cliente();		
+				$data['select']['MostrarDataPagamento'] = $this->Basico_model->select_status_sn();		
 				
 				$data['titulo'] = 'Receitas';
 				$data['form_open_path'] = 'orcatrata/alterarparcelarec';
@@ -20299,15 +20287,6 @@ class Orcatrata extends CI_Controller {
 				($data['query']['MostrarDataPagamento'] == 'S') ?
 					$data['div']['MostrarDataPagamento'] = '' : $data['div']['MostrarDataPagamento'] = 'style="display: none;"';
 
-				//$_SESSION['Query']['UltimaDataPagamento'] = $data['query']['DataPagamento'];
-				/*
-				echo '<br>';
-				echo "<pre>";
-				print_r($_SESSION['Query']['UltimaDataPagamento']);
-				echo "</pre>";
-				exit();
-				*/
-				
 				$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
 				#### Sis_Empresa ####
@@ -20327,44 +20306,18 @@ class Orcatrata extends CI_Controller {
 						redirect(base_url() . 'acesso' . $data['msg']);
 						
 					} else {
-							
-						$data['bd']['Dia'] = $data['query']['Dia'];
-						$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
-						$data['bd']['Ano'] = $data['query']['Ano'];
-						$data['bd']['Orcarec'] = $data['query']['Orcarec'];
-						$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
+
 						$data['bd']['QuitadoParcelas'] = $data['query']['QuitadoParcelas'];
 						$data['bd']['MostrarDataPagamento'] = $data['query']['MostrarDataPagamento'];
 						$data['bd']['DataPagamento'] = $data['query']['DataPagamento'];
-						$data['bd']['UltimaDataPagamento'] = $data['query']['UltimaDataPagamento'];
-						$data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
-						$data['bd']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
-						$data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
 						
 						////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
-						
-						//$_SESSION['Query']['UltimaDataPagamento'] = $data['query']['UltimaDataPagamento'] = $data['query']['DataPagamento'];
-						
+
 						$data['query']['DataPagamento'] = $this->basico->mascara_data($data['query']['DataPagamento'], 'mysql');  
-						
-						#### Sis_Empresa ####
-						/*
-						$data['orcatrata']['DataOrca'] = $this->basico->mascara_data($data['orcatrata']['DataOrca'], 'mysql');
-
-
-						$data['update']['orcatrata']['anterior'] = $this->Orcatrata_model->get_orcatrataalterar($data['orcatrata']['idSis_Empresa']);
-						$data['update']['orcatrata']['campos'] = array_keys($data['orcatrata']);
-						$data['update']['orcatrata']['auditoriaitem'] = $this->basico->set_log(
-							$data['update']['orcatrata']['anterior'],
-							$data['orcatrata'],
-							$data['update']['orcatrata']['campos'],
-							$data['orcatrata']['idSis_Empresa'], TRUE);
-						$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrataalterar($data['orcatrata'], $data['orcatrata']['idSis_Empresa']);
-						*/
 
 						#### App_ParcelasRec ####
 						
-						$data['update']['parcelasrec']['anterior'] = $this->Orcatrata_model->get_alterarparcela($data['empresa']['idSis_Empresa'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
+						$data['update']['parcelasrec']['anterior'] = $this->Orcatrata_model->get_alterarparcela($_SESSION['FiltroCobrancas'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
 						
 						if (isset($data['parcelasrec']) || (!isset($data['parcelasrec']) && isset($data['update']['parcelasrec']['anterior']) ) ) {
 
@@ -20380,10 +20333,10 @@ class Orcatrata extends CI_Controller {
 							
 							for($j=0; $j<$max; $j++) {
 								
-								$data['orcatrata'] = $this->Orcatrata_model->get_orcatrata_baixa($data['update']['parcelasrec']['alterar'][$j]['idApp_OrcaTrata']);
+								//$data['orcatrata'] = $this->Orcatrata_model->get_orcatrata_baixa($data['update']['parcelasrec']['alterar'][$j]['idApp_OrcaTrata']);
 								
 								if(!$data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'] || $data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'] == "0" || empty($data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'])){
-									$data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'] = $data['orcatrata']['FormaPagamento'];
+									$data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'] = $_SESSION['Parcelasrec'][$j]['FormaPagamento'];
 								}
 								
 								if(!$data['update']['parcelasrec']['alterar'][$j]['ValorParcela']  ||  empty($data['update']['parcelasrec']['alterar'][$j]['ValorParcela'])){
@@ -20398,15 +20351,11 @@ class Orcatrata extends CI_Controller {
 									$data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataVencimento'], 'mysql');
 								}                    
 								
-									//$data['update']['parcelasrec']['alterar'][$j]['ValorPago'] = str_replace(',', '.', str_replace('.', '', $data['update']['parcelasrec']['alterar'][$j]['ValorPago']));
-								
 								if(!$data['update']['parcelasrec']['alterar'][$j]['DataPago'] || $data['update']['parcelasrec']['alterar'][$j]['DataPago'] == "00/00/0000" ||  empty($data['update']['parcelasrec']['alterar'][$j]['DataPago'])){
 									$data['update']['parcelasrec']['alterar'][$j]['DataPago'] == "0000-00-00";
 								}else{
 									$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataPago'], 'mysql');
 								}                   
-								
-									//$data['update']['parcelasrec']['alterar'][$j]['idApp_OrcaTrata'] = $data['update']['parcelasrec']['alterar'][$j]['idApp_OrcaTrata'];
 								
 								if ($data['query']['QuitadoParcelas'] == 'S') $data['update']['parcelasrec']['alterar'][$j]['Quitado'] = 'S';
 								
@@ -20428,8 +20377,6 @@ class Orcatrata extends CI_Controller {
 
 								$data['update']['parcelasrec']['bd'] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelasrec']['alterar'][$j], $data['update']['parcelasrec']['alterar'][$j]['idApp_Parcelas']);
 
-								//$data['orcatrata'] = $this->Orcatrata_model->get_orcatrata_baixa($data['update']['parcelasrec']['alterar'][$j]['idApp_OrcaTrata']);	
-								
 								$data['update']['parcelasrec']['posterior'] = $this->Orcatrata_model->get_parcelas_posterior($data['update']['parcelasrec']['alterar'][$j]['idApp_OrcaTrata']);
 								
 								if (isset($data['update']['parcelasrec']['posterior'])){
@@ -20503,7 +20450,6 @@ class Orcatrata extends CI_Controller {
 									$max_produto = count($data['update']['produto']['posterior']);
 									if($max_produto == 0){
 										$data['orcatrata']['CombinadoFrete'] = "S";
-										#$data['orcatrata']['AprovadoOrca'] = "S";
 										$data['orcatrata']['ProntoOrca'] = "S";
 										$data['orcatrata']['EnviadoOrca'] = "S";
 										$data['orcatrata']['ConcluidoOrca'] = "S";
@@ -20566,17 +20512,11 @@ class Orcatrata extends CI_Controller {
 								echo "</pre>";
 								*/
 							}
-
-							/*
-							if (count($data['update']['parcelasrec']['alterar'])){
-								$data['update']['parcelasrec']['bd']['alterar'] =  $this->Orcatrata_model->update_parcelas($data['update']['parcelasrec']['alterar']);
-							}
-							*/	
-							
+	
 						}
 
 						$data['msg'] = '?m=1';
-						//redirect(base_url() . 'relatorio/cobrancas/' . $data['msg']);
+						
 						redirect(base_url() . 'orcatrata/alterarparcelarec/' . $_SESSION['log']['idSis_Empresa'] . $data['msg']);
 
 						exit();

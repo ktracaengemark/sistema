@@ -11,14 +11,17 @@
 					<span class="icon-bar"></span> 
 				</button>
 				<div class="btn-menu-print btn-group">
+					<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
+						<a type="button" class="col-md-6 btn btn-md btn-info "  href="<?php echo base_url() . $imprimirrecibo . $_SESSION['log']['idSis_Empresa']; ?>">
+							<span class="glyphicon glyphicon-pencil"></span> Recibo
+						</a>
+					<?php } ?>
 					<a type="button" class="col-md-3 btn btn-md btn-default " href="javascript:window.print()">
 						<span class="glyphicon glyphicon-print"></span>
 					</a>
-					<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
-						<a type="button" class="col-md-9 btn btn-md btn-warning "  href="<?php echo base_url() . $imprimirrecibo . $_SESSION['log']['idSis_Empresa']; ?>">
-							<span class="glyphicon glyphicon-pencil"></span> Versão Recibo
-						</a>
-					<?php } ?>
+					<a type="button" class="col-md-3 btn btn-md btn-warning "  href="<?php echo base_url() ?>relatorio_pag/cobrancas_pag">
+						<span class="glyphicon glyphicon-edit"></span>
+					</a>
 				</div>
 			</div>
 			<div class="btn-paginacao collapse navbar-collapse" id="myNavbar">

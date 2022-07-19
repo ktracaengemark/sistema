@@ -1342,66 +1342,6 @@ class Relatorio_pag extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-        ), TRUE));	
-
-        $data['query'] = quotes_to_entities($this->input->post(array(
-            'Orcamento',
-            'Cliente',
-            'idApp_Cliente',
-			'Fornecedor',
-            'idApp_Fornecedor',
-			'Dia',
-			'Ano',
-			'Mesvenc',
-			'Mespag',
-			'Tipo_Orca',
-			'AVAP',
-			'TipoFinanceiro',
-			'idTab_TipoRD',
-            'DataInicio',
-            'DataFim',
-			'DataInicio2',
-            'DataFim2',
-			'DataInicio3',
-            'DataFim3',
-			'DataInicio4',
-            'DataFim4',
-			'DataInicio5',
-            'DataFim5',
-			'HoraInicio5',
-            'HoraFim5',
-			'DataInicio6',
-            'DataFim6',
-			'DataInicio7',
-            'DataFim7',
-			'DataInicio8',
-            'DataFim8',
-			'Ordenamento',
-            'Campo',
-			'ObsOrca',
-            'AprovadoOrca',
-            'QuitadoOrca',
-			'ConcluidoOrca',
-			'FinalizadoOrca',
-			'CanceladoOrca',
-			'CombinadoFrete',
-			'Quitado',
-			'ConcluidoProduto',
-			'Modalidade',
-			'Orcarec',
-			'Orcades',
-			'FormaPagamento',
-			'TipoFrete',
-			'Agrupar',
-			'Produtos',
-			'Ultimo',
-			'nome',
-        ), TRUE));
-				
-		
         $data['titulo1'] = 'Parcelas das Receitas';
 		$data['metodo'] = 2;
 		$data['form_open_path'] = 'relatorio_pag/cobrancas_pag';
@@ -1421,9 +1361,18 @@ class Relatorio_pag extends CI_Controller {
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #run form validation
-        if ($this->form_validation->run() !== TRUE) {
 
-			//$this->load->library('pagination');
+		$data['pesquisa_query'] = $this->Relatorio_model->list_cobrancas($_SESSION['FiltroCobrancas'],TRUE, TRUE);
+		
+		if($data['pesquisa_query'] === FALSE){
+			
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'relatorio/cobrancas' . $data['msg']);
+			exit();
+		}else{
+
+			$config['base_url'] = base_url() . 'relatorio_pag/cobrancas_pag/';
+			$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			$config['per_page'] = 12;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -1444,14 +1393,7 @@ class Relatorio_pag extends CI_Controller {
 			$config['last_tag_open'] = "<li>";
 			$config['last_tagl_close'] = "</li>";
 			$data['Pesquisa'] = '';
-			
-			$config['base_url'] = base_url() . 'relatorio_pag/cobrancas_pag/';
-			
-			$data['pesquisa_query'] = $this->Relatorio_model->list_parcelas(FALSE,TRUE, TRUE);
-			$config['total_rows'] = $data['pesquisa_query']->num_rows();			
-			
-			//$config['total_rows'] = $this->Relatorio_model->list_parcelas(FALSE, TRUE, TRUE);
-           
+
 			if($config['total_rows'] >= 1){
 				$data['total_rows'] = $config['total_rows'];
 			}else{
@@ -1461,16 +1403,21 @@ class Relatorio_pag extends CI_Controller {
             $this->pagination->initialize($config);
             
 			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-            $data['pagina'] = $page;
-			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Relatorio_model->list_parcelas(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-			$data['pagination'] = $this->pagination->create_links();
-						
+            
+			$data['pagina'] = $page;
 			
-            $data['list1'] = $this->load->view('relatorio/list_parcelas', $data, TRUE);
-        }
+			$data['per_page'] = $config['per_page'];
+				
+			$data['linha'] = $page * $config['per_page'];
+			
+			$data['report'] = $this->Relatorio_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, FALSE, $config['per_page'], $data['linha']);			
+			
+			$data['pagination'] = $this->pagination->create_links();
 
-        $this->load->view('relatorio/tela_parcelas', $data);
+            $data['list1'] = $this->load->view('relatorio/list_cobrancas', $data, TRUE);
+       
+		}
+        $this->load->view('relatorio/tela_cobrancas', $data);
 
         $this->load->view('basico/footer');
 
