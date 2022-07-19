@@ -71,30 +71,49 @@
 				$filtro10 = ($_SESSION['FiltroReceitas']['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $_SESSION['FiltroReceitas']['FinalizadoOrca'] . '" AND ' : FALSE;
 				$filtro11 = ($_SESSION['FiltroReceitas']['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $_SESSION['FiltroReceitas']['CanceladoOrca'] . '" AND ' : FALSE;
 				$filtro13 = ($_SESSION['FiltroReceitas']['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $_SESSION['FiltroReceitas']['CombinadoFrete'] . '" AND ' : FALSE;
-				$permissao = ($_SESSION['FiltroReceitas']['metodo'] == 3 && $_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 
-				if($_SESSION['log']['idSis_Empresa'] != 5){
-					$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-				}else{
-					$permissao_orcam = FALSE;
-				}			
-				
 				$permissao2 = ($_SESSION['FiltroReceitas']['NomeEmpresa']) ? 'OT.idSis_Empresa = "' . $_SESSION['FiltroReceitas']['NomeEmpresa'] . '" AND ' : FALSE;
 				$filtro17 = ($_SESSION['FiltroReceitas']['NomeUsuario']) ? 'OT.idSis_Usuario = "' . $_SESSION['FiltroReceitas']['NomeUsuario'] . '" AND ' : FALSE;
 
 				$groupby = ($_SESSION['FiltroReceitas']['Agrupar'] != "0") ? 'GROUP BY OT.' . $_SESSION['FiltroReceitas']['Agrupar'] . '' : FALSE;
 
-				$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroReceitas']['Produtos'] != "0") ? 'PRDS.idSis_Empresa ' . $_SESSION['FiltroReceitas']['Produtos'] . ' AND' : FALSE;
-				$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroReceitas']['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $_SESSION['FiltroReceitas']['Parcelas'] . ' AND' : FALSE;
+				//$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroReceitas']['Produtos'] != "0") ? 'PRDS.idSis_Empresa ' . $_SESSION['FiltroReceitas']['Produtos'] . ' AND' : FALSE;
+				//$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroReceitas']['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $_SESSION['FiltroReceitas']['Parcelas'] . ' AND' : FALSE;
+				
+				//$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 && $_SESSION['FiltroReceitas']['metodo'] == 3) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 
-				if($_SESSION['Usuario']['Nivel'] == 0 || $_SESSION['Usuario']['Nivel'] == 1){
-					$nivel = 'AND OT.NivelOrca = 1';
-				}elseif($_SESSION['Usuario']['Nivel'] == 2){
-					$nivel = 'AND OT.NivelOrca = 2';
+				if($_SESSION['log']['idSis_Empresa'] != 5){
+					$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+					$permissao = FALSE;
+					if($_SESSION['Usuario']['Nivel'] == 0 || $_SESSION['Usuario']['Nivel'] == 1){
+						$nivel = 'AND OT.NivelOrca = 1';
+					}elseif($_SESSION['Usuario']['Nivel'] == 2){
+						$nivel = 'AND OT.NivelOrca = 2';
+					}else{
+						$nivel = FALSE;
+					}
+					if($_SESSION['FiltroReceitas']['Produtos'] != "0"){
+						$produtos = 'PRDS.idSis_Empresa ' . $_SESSION['FiltroReceitas']['Produtos'] . ' AND';
+					}else{
+						$produtos = FALSE;
+					}
+					if($_SESSION['FiltroReceitas']['Parcelas'] != "0"){
+						$parcelas = 'PR.idSis_Empresa ' . $_SESSION['FiltroReceitas']['Parcelas'] . ' AND';
+					}else{
+						$parcelas = FALSE;
+					}
 				}else{
+					$permissao_orcam = FALSE;
+					if($_SESSION['FiltroReceitas']['metodo'] == 3){
+						$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+					}else{
+						$permissao = FALSE;
+					}
 					$nivel = FALSE;
+					$produtos = FALSE;
+					$parcelas = FALSE;
 				}
-	
+
 				$result_msg_contatos = '
 										SELECT
 											OT.idApp_OrcaTrata,
@@ -205,7 +224,7 @@
 				
 				// Definimos o nome do arquivo que será exportado
 				$nome = 'Cliente';
-				$tipo = 'Receitas';
+				$tipo = 'Receitas com Filtros';
 				
 				$arquivo = $tipo .'_'. date('d-m-Y') . '.xls';
 

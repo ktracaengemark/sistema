@@ -1293,32 +1293,46 @@ class Orcatrata_model extends CI_Model {
 			$filtro10 = ($data['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $data['FinalizadoOrca'] . '" AND ' : FALSE;
 			$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
-			$permissao = ($data['metodo'] == 3 && $_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-
-			if($_SESSION['log']['idSis_Empresa'] != 5){
-				$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-			}else{
-				$permissao_orcam = FALSE;
-			}
-						
+			
 			$permissao2 = ($data['NomeEmpresa']) ? 'OT.idSis_Empresa = "' . $data['NomeEmpresa'] . '" AND ' : FALSE;
 			$filtro17 = ($data['NomeUsuario']) ? 'OT.idSis_Usuario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;
 
 			$groupby = ($data['Agrupar'] != "0") ? 'GROUP BY OT.' . $data['Agrupar'] . '' : FALSE;
 
-			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Produtos'] != "0") ? 'PRDS.idSis_Empresa ' . $data['Produtos'] . '  AND' : FALSE;
-			$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $data['Parcelas'] . '  AND' : FALSE;
+		}
 
-		}
-		
-		if($_SESSION['Usuario']['Nivel'] == 0 || $_SESSION['Usuario']['Nivel'] == 1){
-			$nivel = 'AND OT.NivelOrca = 1';
-		}elseif($_SESSION['Usuario']['Nivel'] == 2){
-			$nivel = 'AND OT.NivelOrca = 2';
+		if($_SESSION['log']['idSis_Empresa'] != 5){
+			$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+			$permissao = FALSE;
+			if($_SESSION['Usuario']['Nivel'] == 0 || $_SESSION['Usuario']['Nivel'] == 1){
+				$nivel = 'AND OT.NivelOrca = 1';
+			}elseif($_SESSION['Usuario']['Nivel'] == 2){
+				$nivel = 'AND OT.NivelOrca = 2';
+			}else{
+				$nivel = FALSE;
+			}
+			if($data['Produtos'] != "0"){
+				$produtos = 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND';
+			}else{
+				$produtos = FALSE;
+			}
+			if($data['Parcelas'] != "0"){
+				$parcelas = 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND';
+			}else{
+				$parcelas = FALSE;
+			}
 		}else{
+			$permissao_orcam = FALSE;
+			if($data['metodo'] == 3){
+				$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+			}else{
+				$permissao = FALSE;
+			}
 			$nivel = FALSE;
+			$produtos = FALSE;
+			$parcelas = FALSE;
 		}
-		
+
         if ($limit){
 			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
 		}else{
@@ -1393,17 +1407,21 @@ class Orcatrata_model extends CI_Model {
 			if(!isset($count)){
 				return FALSE;
 			}else{
-				if($count >= 20001){
+				if($count >= 12001){
 					return FALSE;
 				}else{
-					$somafinal2=0;
-					foreach ($query_total->result() as $row) {
-						$somafinal2 += $row->ValorFinalOrca;
-					}
-					$query_total->soma2 = new stdClass();
-					$query_total->soma2->somafinal2 = number_format($somafinal2, 2, ',', '.');
+					if($_SESSION['Usuario']['Nivel'] == 2){
+						return FALSE;
+					}else{
+						$somafinal2=0;
+						foreach ($query_total->result() as $row) {
+							$somafinal2 += $row->ValorFinalOrca;
+						}
+						$query_total->soma2 = new stdClass();
+						$query_total->soma2->somafinal2 = number_format($somafinal2, 2, ',', '.');
 
-					return $query_total;
+						return $query_total;
+					}	
 				}
 			}
 		}
@@ -1679,7 +1697,7 @@ class Orcatrata_model extends CI_Model {
 			if(!isset($count)){
 				return FALSE;
 			}else{
-				if($count >= 20001){
+				if($count >= 12001){
 					return FALSE;
 				}else{
 					$somafinal2=0;
@@ -2613,6 +2631,7 @@ class Orcatrata_model extends CI_Model {
 			$filtro10 = ($data['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $data['FinalizadoOrca'] . '" AND ' : FALSE;
 			$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
+			
 			$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 			
 			if($_SESSION['log']['idSis_Empresa'] != 5){
@@ -2706,7 +2725,7 @@ class Orcatrata_model extends CI_Model {
 			if(!isset($count)){
 				return FALSE;
 			}else{
-				if($count >= 20001){
+				if($count >= 12001){
 					return FALSE;
 				}else{
 					return $query_total->num_rows();
@@ -2974,7 +2993,7 @@ class Orcatrata_model extends CI_Model {
 			if(!isset($count)){
 				return FALSE;
 			}else{
-				if($count >= 20001){
+				if($count >= 12001){
 					return FALSE;
 				}else{
 					return $query_total->num_rows();

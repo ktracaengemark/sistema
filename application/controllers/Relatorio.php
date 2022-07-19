@@ -839,7 +839,7 @@ class Relatorio extends CI_Controller {
         elseif ($this->input->get('m') == 3)
             $data['msg'] = $this->basico->msg('<strong>Receita Não Encontrada.</strong>', 'erro', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 4)
-            $data['msg'] = $this->basico->msg('<strong>A Pesquisa está muito grande, ela excedeu 20000 linhas. Refine o seu filtro.</strong>', 'erro', TRUE, TRUE, TRUE);
+            $data['msg'] = $this->basico->msg('<strong>A Pesquisa está muito grande, ela excedeu 12000 linhas. Refine o seu filtro.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
 		
@@ -1223,7 +1223,7 @@ class Relatorio extends CI_Controller {
         elseif ($this->input->get('m') == 3)
             $data['msg'] = $this->basico->msg('<strong>Despesa Não Encontrada.</strong>', 'erro', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 4)
-            $data['msg'] = $this->basico->msg('<strong>A Pesquisa está muito grande, ela excedeu 20000 linhas. Refine o seu filtro.</strong>', 'erro', TRUE, TRUE, TRUE);
+            $data['msg'] = $this->basico->msg('<strong>A Pesquisa está muito grande, ela excedeu 12000 linhas. Refine o seu filtro.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
 		
@@ -2610,6 +2610,10 @@ class Relatorio extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Registro Não Encontrada.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 4)
+            $data['msg'] = $this->basico->msg('<strong>A Pesquisa está muito grande, ela excedeu 12000 linhas. Refine o seu filtro.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
 		

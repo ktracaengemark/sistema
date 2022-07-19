@@ -13,19 +13,21 @@
 				//Selecionar os itens da Tabela
 
 				if($_SESSION['log']['idSis_Empresa'] != 5){
+					$permissao = FALSE;
 					$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
+					if($_SESSION['Usuario']['Nivel'] == 0 || $_SESSION['Usuario']['Nivel'] == 1){
+						$nivel = 'AND OT.NivelOrca = 1';
+					}elseif($_SESSION['Usuario']['Nivel'] == 2){
+						$nivel = 'AND OT.NivelOrca = 2';
+					}else{
+						$nivel = FALSE;
+					}
 				}else{
+					$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
 					$permissao_orcam = FALSE;
+					$nivel = FALSE;
 				}			
 
-				if($_SESSION['Usuario']['Nivel'] == 0 || $_SESSION['Usuario']['Nivel'] == 1){
-					$nivel = 'AND OT.NivelOrca = 1';
-				}elseif($_SESSION['Usuario']['Nivel'] == 2){
-					$nivel = 'AND OT.NivelOrca = 2';
-				}else{
-					$nivel = FALSE;
-				}
-	
 				$result_msg_contatos = '
 										SELECT
 											OT.idApp_OrcaTrata,
@@ -79,6 +81,7 @@
 												LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
 												LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
 										WHERE
+											' . $permissao . '
 											' . $permissao_orcam . '
 											OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 											OT.idTab_TipoRD = 2

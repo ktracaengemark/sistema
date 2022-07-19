@@ -150,7 +150,7 @@ class Orcatrataprintcobranca_model extends CI_Model {
 			if(!isset($count)){
 				return FALSE;
 			}else{
-				if($count >= 20001){
+				if($count >= 12001){
 					return FALSE;
 				}else{
 					return $query_total->num_rows();

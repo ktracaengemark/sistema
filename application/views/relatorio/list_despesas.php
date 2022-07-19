@@ -133,7 +133,7 @@
 			<?php } ?>
 			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 text-left">
 				<label>Excel</label><br>
-				<a href="<?php echo base_url() . 'gerar_excel/Despesas/Despesas_xls.php'; ?>">
+				<a href="<?php echo base_url() . 'gerar_excel/Despesas/Despesas_c_filtro_xls.php'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
 						C/<span class="glyphicon glyphicon-filter"></span>
 					</button>
