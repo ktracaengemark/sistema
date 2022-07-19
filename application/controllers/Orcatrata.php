@@ -20077,7 +20077,7 @@ class Orcatrata extends CI_Controller {
 
     }
 	
-    public function alterarparcelarec($id = FALSE) {
+    public function baixadasparcelasrec($id = FALSE) {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -20143,7 +20143,7 @@ class Orcatrata extends CI_Controller {
 					
 				}else{
 						
-					$data['pesquisa_query'] = $this->Orcatrata_model->get_alterarparcela($_SESSION['FiltroCobrancas'], TRUE);
+					$data['pesquisa_query'] = $this->Orcatrata_model->get_baixadasparcelasrec($_SESSION['FiltroCobrancas'], TRUE);
 					
 					if($data['pesquisa_query'] === FALSE){
 						
@@ -20152,7 +20152,7 @@ class Orcatrata extends CI_Controller {
 						exit();
 					}else{
 
-						$config['base_url'] = base_url() . 'Orcatrata/alterarparcelarec/' . $id . '/';							
+						$config['base_url'] = base_url() . 'Orcatrata/baixadasparcelasrec/' . $id . '/';							
 						$config['total_rows'] = $data['pesquisa_query'];
 						$config['per_page'] = 19;
 						$config["uri_segment"] = 4;
@@ -20188,7 +20188,7 @@ class Orcatrata extends CI_Controller {
 						$_SESSION['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 
 						#### App_Parcelas ####
-						$data['parcelasrec'] = $this->Orcatrata_model->get_alterarparcela($_SESSION['FiltroCobrancas'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
+						$data['parcelasrec'] = $this->Orcatrata_model->get_baixadasparcelasrec($_SESSION['FiltroCobrancas'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
 
 						if (count($data['parcelasrec']) > 0) {
 							
@@ -20246,10 +20246,11 @@ class Orcatrata extends CI_Controller {
 			}else{
 				
 				$data['select']['QuitadoParcelas'] = $this->Basico_model->select_status_sn();
-				$data['select']['MostrarDataPagamento'] = $this->Basico_model->select_status_sn();		
+				$data['select']['MostrarDataPagamento'] = $this->Basico_model->select_status_sn();
+				$data['select']['Quitado'] = $this->Basico_model->select_status_sn();
 				
 				$data['titulo'] = 'Receitas';
-				$data['form_open_path'] = 'orcatrata/alterarparcelarec';
+				$data['form_open_path'] = 'orcatrata/baixadasparcelasrec';
 				$data['readonly'] = 'readonly=""';
 				$data['disabled'] = '';
 				$data['panel'] = 'info';
@@ -20297,7 +20298,7 @@ class Orcatrata extends CI_Controller {
 						
 				#run form validation
 				if ($this->form_validation->run() === FALSE) {
-					$this->load->view('orcatrata/form_alterarparcela', $data);
+					$this->load->view('orcatrata/form_baixadasparcelas', $data);
 				} else {
 
 					if($this->Basico_model->get_dt_validade() === FALSE){
@@ -20317,7 +20318,7 @@ class Orcatrata extends CI_Controller {
 
 						#### App_ParcelasRec ####
 						
-						$data['update']['parcelasrec']['anterior'] = $this->Orcatrata_model->get_alterarparcela($_SESSION['FiltroCobrancas'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
+						$data['update']['parcelasrec']['anterior'] = $this->Orcatrata_model->get_baixadasparcelasrec($_SESSION['FiltroCobrancas'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
 						
 						if (isset($data['parcelasrec']) || (!isset($data['parcelasrec']) && isset($data['update']['parcelasrec']['anterior']) ) ) {
 
@@ -20517,7 +20518,7 @@ class Orcatrata extends CI_Controller {
 
 						$data['msg'] = '?m=1';
 						
-						redirect(base_url() . 'orcatrata/alterarparcelarec/' . $_SESSION['log']['idSis_Empresa'] . $data['msg']);
+						redirect(base_url() . 'orcatrata/baixadasparcelasrec/' . $_SESSION['log']['idSis_Empresa'] . $data['msg']);
 
 						exit();
 						

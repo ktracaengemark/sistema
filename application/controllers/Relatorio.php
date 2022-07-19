@@ -2857,7 +2857,7 @@ class Relatorio extends CI_Controller {
 		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistarec/';
 		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
 		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
-		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';	
+		$data['alterarparc'] = 'Orcatrata/baixadasparcelasrec/';	
 		$data['paginacao'] = 'N';	
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
