@@ -11,8 +11,7 @@
 		<body>
 			<?php
 				//Selecionar os itens da Tabela
-	
-				
+
 				$date_inicio_orca = ($_SESSION['FiltroReceitas']['DataInicio']) ? 'OT.DataOrca >= "' . $_SESSION['FiltroReceitas']['DataInicio'] . '" AND ' : FALSE;
 				$date_fim_orca = ($_SESSION['FiltroReceitas']['DataFim']) ? 'OT.DataOrca <= "' . $_SESSION['FiltroReceitas']['DataFim'] . '" AND ' : FALSE;
 				
@@ -77,20 +76,30 @@
 
 				$groupby = ($_SESSION['FiltroReceitas']['Agrupar'] != "0") ? 'GROUP BY OT.' . $_SESSION['FiltroReceitas']['Agrupar'] . '' : FALSE;
 
-				//$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroReceitas']['Produtos'] != "0") ? 'PRDS.idSis_Empresa ' . $_SESSION['FiltroReceitas']['Produtos'] . ' AND' : FALSE;
-				//$parcelas = ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['FiltroReceitas']['Parcelas'] != "0") ? 'PR.idSis_Empresa ' . $_SESSION['FiltroReceitas']['Parcelas'] . ' AND' : FALSE;
-				
-				//$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 && $_SESSION['FiltroReceitas']['metodo'] == 3) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-
 				if($_SESSION['log']['idSis_Empresa'] != 5){
-					$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-					$permissao = FALSE;
-					if($_SESSION['Usuario']['Nivel'] == 0 || $_SESSION['Usuario']['Nivel'] == 1){
-						$nivel = 'AND OT.NivelOrca = 1';
-					}elseif($_SESSION['Usuario']['Nivel'] == 2){
-						$nivel = 'AND OT.NivelOrca = 2';
+					if($_SESSION['Usuario']['Permissao_Orcam'] == 1){
+						$permissao_orcam = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+					}else{
+						$permissao_orcam = FALSE;
+					}
+					if($_SESSION['Empresa']['Rede'] == "S"){
+						if($_SESSION['Usuario']['Nivel'] == 2){
+							$nivel = 'AND OT.NivelOrca = 2';
+							$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+							$rede = FALSE;
+						}elseif($_SESSION['Usuario']['Nivel'] == 1){
+							$nivel = FALSE;
+							$permissao = '(OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' OR US.QuemCad = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+							$rede = 'LEFT JOIN Sis_Usuario AS QUS ON QUS.QuemCad = US.idSis_Usuario';
+						}else{
+							$nivel = FALSE;
+							$permissao = FALSE;
+							$rede = FALSE;
+						}
 					}else{
 						$nivel = FALSE;
+						$permissao = FALSE;
+						$rede = FALSE;
 					}
 					if($_SESSION['FiltroReceitas']['Produtos'] != "0"){
 						$produtos = 'PRDS.idSis_Empresa ' . $_SESSION['FiltroReceitas']['Produtos'] . ' AND';
@@ -105,14 +114,15 @@
 				}else{
 					$permissao_orcam = FALSE;
 					if($_SESSION['FiltroReceitas']['metodo'] == 3){
-						$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+						$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
 					}else{
 						$permissao = FALSE;
 					}
 					$nivel = FALSE;
 					$produtos = FALSE;
 					$parcelas = FALSE;
-				}
+					$rede = FALSE;
+				}				
 
 				$result_msg_contatos = '
 										SELECT
@@ -161,6 +171,7 @@
 											App_OrcaTrata AS OT
 												LEFT JOIN Sis_Empresa AS EMP ON EMP.idSis_Empresa = OT.idSis_Empresa
 												LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
+												' . $rede . '
 												LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 												LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 												LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata

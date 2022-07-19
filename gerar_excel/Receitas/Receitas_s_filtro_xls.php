@@ -13,19 +13,35 @@
 				//Selecionar os itens da Tabela
 
 				if($_SESSION['log']['idSis_Empresa'] != 5){
-					$permissao = FALSE;
-					$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-					if($_SESSION['Usuario']['Nivel'] == 0 || $_SESSION['Usuario']['Nivel'] == 1){
-						$nivel = 'AND OT.NivelOrca = 1';
-					}elseif($_SESSION['Usuario']['Nivel'] == 2){
-						$nivel = 'AND OT.NivelOrca = 2';
+					if($_SESSION['Usuario']['Permissao_Orcam'] == 1){
+						$permissao_orcam = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+					}else{
+						$permissao_orcam = FALSE;
+					}
+					if($_SESSION['Empresa']['Rede'] == "S"){
+						if($_SESSION['Usuario']['Nivel'] == 2){
+							$nivel = 'AND OT.NivelOrca = 2';
+							$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+							$rede = FALSE;
+						}elseif($_SESSION['Usuario']['Nivel'] == 1){
+							$nivel = FALSE;
+							$permissao = '(OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' OR US.QuemCad = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+							$rede = 'LEFT JOIN Sis_Usuario AS QUS ON QUS.QuemCad = US.idSis_Usuario';
+						}else{
+							$nivel = FALSE;
+							$permissao = FALSE;
+							$rede = FALSE;
+						}
 					}else{
 						$nivel = FALSE;
+						$permissao = FALSE;
+						$rede = FALSE;
 					}
 				}else{
-					$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
 					$permissao_orcam = FALSE;
+					$permissao = FALSE;
 					$nivel = FALSE;
+					$rede = FALSE;
 				}			
 
 				$result_msg_contatos = '
@@ -75,6 +91,7 @@
 											App_OrcaTrata AS OT
 												LEFT JOIN Sis_Empresa AS EMP ON EMP.idSis_Empresa = OT.idSis_Empresa
 												LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
+												' . $rede . '
 												LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 												LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 												LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata

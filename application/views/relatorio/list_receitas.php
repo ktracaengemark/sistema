@@ -206,7 +206,7 @@
 							<?php if($_SESSION['Usuario']['Nivel'] != 2) { ?>
 								<th class="active">Editar</th>
 							<?php } ?>
-							<?php if($_SESSION['Usuario']['Bx_Pag'] == "S" && $_SESSION['Usuario']['Nivel'] != 2) {?>
+							<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S" && $_SESSION['Usuario']['Nivel'] != 2) {?>
 								<th class="active">Baixa</th>
 							<?php } ?>
 						<?php }else{ ?>
@@ -298,7 +298,7 @@
 										</a>
 									</td>
 								<?php } ?>
-								<?php if($_SESSION['Usuario']['Bx_Pag'] == "S"  && $_SESSION['Usuario']['Nivel'] != 2) { ?>
+								<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S"  && $_SESSION['Usuario']['Nivel'] != 2) { ?>
 									<?php if($row['CanceladoOrca'] == "N"){ ?>	
 										<?php if($row['QuitadoOrca'] == "S" && $row['ConcluidoOrca'] == "S"){ ?>
 											<td class="notclickable">
