@@ -40,8 +40,7 @@ class Orcatrataprintcobranca_model extends CI_Model {
 			$date_fim_cadastro = ($data['DataFim6']) ? 'C.DataCadastroCliente <= "' . $data['DataFim6'] . '" AND ' : FALSE;
 			
 			$orcamento = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] : FALSE;
-			$cliente = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['Cliente'] : FALSE;
-			$id_cliente = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['idApp_Cliente'] : FALSE;
+
 			$tipofinanceiro = ($data['TipoFinanceiro']) ? ' AND TR.idTab_TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
 			$tipord = ($data['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $data['idTab_TipoRD'] . ' AND PR.idTab_TipoRD = ' . $data['idTab_TipoRD'] : FALSE;
 			$campo = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
@@ -59,18 +58,66 @@ class Orcatrataprintcobranca_model extends CI_Model {
 			$filtro10 = ($data['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $data['FinalizadoOrca'] . '" AND ' : FALSE;
 			$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 			$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
-			$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-			
-			if($_SESSION['log']['idSis_Empresa'] != 5){
-				$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
-			}else{
-				$permissao_orcam = FALSE;
-			}
-			
-			$groupby = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Agrupar'] != "0") ? 'GROUP BY ' . $data['Agrupar'] . '' : 'GROUP BY PR.idApp_Parcelas';
-			
-			$produtos = ($_SESSION['log']['idSis_Empresa'] != 5 && $data['Produtos'] != "0") ? 'PRDS.idSis_Empresa ' . $data['Produtos'] . '  AND' : FALSE;
 
+			if($_SESSION['log']['idSis_Empresa'] != 5){
+				if($data['Cliente']){
+					$cliente = ' AND OT.idApp_Cliente = ' . $data['Cliente'];
+				}else{
+					$cliente = FALSE;
+				}
+				if($data['idApp_Cliente']){
+					$id_cliente = ' AND OT.idApp_Cliente = ' . $data['idApp_Cliente'];
+				}else{
+					$id_cliente = FALSE;
+				}				
+				if($_SESSION['Usuario']['Permissao_Orcam'] == 1){
+					$permissao_orcam = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+				}else{
+					$permissao_orcam = FALSE;
+				}
+				if($_SESSION['Empresa']['Rede'] == "S"){
+					if($_SESSION['Usuario']['Nivel'] == 2){
+						$nivel = 'AND OT.NivelOrca = 2';
+						$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+						$rede = FALSE;
+					}elseif($_SESSION['Usuario']['Nivel'] == 1){
+						$nivel = FALSE;
+						$permissao = '(OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' OR US.QuemCad = ' . $_SESSION['log']['idSis_Usuario'] . ') AND ';
+						$rede = 'LEFT JOIN Sis_Usuario AS QUS ON QUS.QuemCad = US.idSis_Usuario';
+					}else{
+						$nivel = FALSE;
+						$permissao = FALSE;
+						$rede = FALSE;
+					}
+				}else{
+					$nivel = FALSE;
+					$permissao = FALSE;
+					$rede = FALSE;
+				}
+				if($data['Produtos'] != "0"){
+					$produtos = 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND';
+				}else{
+					$produtos = FALSE;
+				}				
+				if($data['Agrupar'] != "0"){
+					$groupby = 'GROUP BY ' . $data['Agrupar'] . '';
+				}else{
+					$groupby = 'GROUP BY PR.idApp_Parcelas';
+				}
+			}else{
+				$cliente = FALSE;
+				$id_cliente = FALSE;
+				$permissao_orcam = FALSE;
+				if($data['metodo'] == 3){
+					$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+				}else{
+					$permissao = FALSE;
+				}
+				$nivel = FALSE;
+				$produtos = FALSE;
+				$rede = FALSE;
+				$groupby = 'GROUP BY PR.idApp_Parcelas';
+			}
 		}
 		/*	  
 		echo "<pre>";
@@ -96,6 +143,7 @@ class Orcatrataprintcobranca_model extends CI_Model {
 						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
 						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = OT.idSis_Usuario
+						' . $rede . '
 						LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
 						LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
 				WHERE
@@ -138,6 +186,7 @@ class Orcatrataprintcobranca_model extends CI_Model {
 					' . $id_cliente . '
 					' . $tipofinanceiro . '
 					' . $tipord . '
+					' . $nivel . '
 				' . $groupby . '
 				ORDER BY
 					' . $campo . '
@@ -221,6 +270,7 @@ class Orcatrataprintcobranca_model extends CI_Model {
 					LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 					LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
 					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = OT.idSis_Usuario
+					' . $rede . '
 					LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
 					LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
             WHERE
@@ -263,6 +313,7 @@ class Orcatrataprintcobranca_model extends CI_Model {
                 ' . $id_cliente . '
 				' . $tipofinanceiro . '
 				' . $tipord . '
+				' . $nivel . '
 			' . $groupby . '
 			ORDER BY
 				' . $campo . '

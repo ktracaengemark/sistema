@@ -50,16 +50,23 @@
 								<input type="hidden" name="Fornecedor" id="Fornecedor" value=""/>
 							<?php } ?>
 							<div class="col-md-3">
-								<div class="col-md-4">
-									<label>Filtros</label>
-									<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
-										<span class="glyphicon glyphicon-filter"></span>
-									</button>
-								</div>
-								<?php if ($editar == 1) { ?>	
-									<?php if ($print == 1) { ?>
-									<?php } ?>	
-								<?php } ?>	
+								<div class="row">
+							
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-left">
+										<label>Filtros</label>
+										<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
+											<span class="glyphicon glyphicon-filter"></span>
+										</button>
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-left">
+										<label>Excel</label><br>
+										<a href="<?php echo base_url() . 'gerar_excel/Orcamentos/Parcelas_rec_s_filtro_xls.php'; ?>">
+											<button type='button' class='btn btn-md btn-success btn-block'>
+												S/<span class="glyphicon glyphicon-filter"></span>
+											</button>
+										</a>
+									</div>
+								</div>	
 							</div>
 						</div>
 					</div>
