@@ -179,7 +179,43 @@
 					$row_msg_contatos["DescValorOrca"] = number_format($row_msg_contatos["DescValorOrca"], 2, ',', '.');
 					$row_msg_contatos["CashBackOrca"] = number_format($row_msg_contatos["CashBackOrca"], 2, ',', '.');
 					$row_msg_contatos["ValorFinalOrca"] = number_format($row_msg_contatos["ValorFinalOrca"], 2, ',', '.');
-								
+
+					if($row_msg_contatos["Tipo_Orca"] == "B"){
+						$row_msg_contatos["Tipo_Orca"] = "Na Loja";
+					}elseif($row_msg_contatos["Tipo_Orca"] == "O"){
+						$row_msg_contatos["Tipo_Orca"] = "On Line";
+					}else{
+						$row_msg_contatos["Tipo_Orca"] = "Outros";
+					}	
+					
+					if($row_msg_contatos["Modalidade"] == "P"){
+						$row_msg_contatos["Modalidade"] = "Dividido";
+					}elseif($row_msg_contatos["Modalidade"] == "M"){
+						$row_msg_contatos["Modalidade"] = "Mensal";
+					}else{
+						$row_msg_contatos["Modalidade"] = "Outros";
+					}
+				
+					if($row_msg_contatos["AVAP"] == "V"){
+						$row_msg_contatos["AVAP"] = "NaLoja";
+					}elseif($row_msg_contatos["AVAP"] == "O"){
+						$row_msg_contatos["AVAP"] = "OnLine";
+					}elseif($row_msg_contatos["AVAP"] == "P"){
+						$row_msg_contatos["AVAP"] = "NaEntr";
+					}else{
+						$row_msg_contatos["AVAP"] = "Outros";
+					}
+
+					if($row_msg_contatos["TipoFrete"] == 1){
+						$row_msg_contatos["TipoFrete"] = "Retirar/NaLoja";
+					}elseif($row_msg_contatos["TipoFrete"] == 2){
+						$row_msg_contatos["TipoFrete"] = "EmCasa/PelaLoja";
+					}elseif($row_msg_contatos["TipoFrete"] == 3){
+						$row_msg_contatos["TipoFrete"] = "EmCasa/PeloCorreio";
+					}else{
+						$row_msg_contatos["TipoFrete"] = "Outros";
+					}
+					
 					$html .= '<tr>';
 					$html .= '<td>'.$row_msg_contatos["idApp_OrcaTrata"].'</td>';
 					$html .= '<td>'.$row_msg_contatos["DataOrca"].'</td>';
