@@ -1,11 +1,18 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-				<?php if ($nav_secundario) echo $nav_secundario; ?>
+			<?php if ($nav_secundario) echo $nav_secundario; ?>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<?php echo validation_errors(); ?>
 					<?php echo form_open_multipart($form_open_path); ?>
+					<?php 
+						if($_SESSION['log']['idSis_Empresa'] != 5) {
+							$none = '';
+						}else{
+							$none = 'none';
+						}
+					?>
 					<div class="panel panel-<?php echo $panel; ?>">
 						<div class="panel-heading">
 							<h4 class="text-center"><b>Colaborador: <?php echo $_SESSION['Orcatrata']['Nome'] ?></b></h4>
@@ -29,7 +36,7 @@
 												<div class="row">
 													<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 														<h4 class="mb-3">
-															<b>Editar Receita</b> - Nº <?php echo $orcatrata['idApp_OrcaTrata'] ?> - 
+															<b>Editar Receita</b> - <?php echo $orcatrata['idApp_OrcaTrata'] ?> - 
 																						<?php 
 																							if($orcatrata['Tipo_Orca'] == "B"){
 																								echo 'Balcão';
@@ -2454,7 +2461,7 @@
 											<h4 class="mb-3"><b>Pedido</b></h4>
 											<div class="row">
 												<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left">
-													<div class="panel panel-default">
+													<div class="panel panel-default" style="display:<?php echo $none; ?>">
 														<div class="panel-heading">
 															<div class="row">	
 																<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

@@ -1562,7 +1562,7 @@ class Relatorio extends CI_Controller {
 
 				$config['base_url'] = base_url() . 'relatorio_pag/despesas_pag/';
 
-				$config['per_page'] = 12;
+				$config['per_page'] = 19;
 				$config["uri_segment"] = 3;
 				$config['reuse_query_string'] = TRUE;
 				$config['num_links'] = 2;

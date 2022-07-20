@@ -10,48 +10,6 @@
 			</div>
 			<?php if($_SESSION['log']['idSis_Empresa'] == 5) {?>
 				<div class="col-md-2">
-					<label for="DataFim">Prod + Serv:</label>
-					<div class="input-group">
-						<span class="input-group-addon">R$</span>
-						<input type="text" class="form-control" disabled aria-label="Orcamento" value="<?php echo $report->soma->somarestante ?>">
-					</div>
-				</div>
-				<div class="col-md-2">
-					<label for="DataFim">Frete:</label>
-					<div class="input-group">
-						<span class="input-group-addon">R$</span>
-						<input type="text" class="form-control" disabled aria-label="Frete" value="<?php echo $report->soma->somafrete ?>">
-					</div>
-				</div>	
-				<div class="col-md-2">
-					<label for="DataFim">Extra:</label>
-					<div class="input-group">
-						<span class="input-group-addon">R$</span>
-						<input type="text" class="form-control" disabled aria-label="Orcamento" value="<?php echo $report->soma->somaextra; ?>">
-					</div>
-				</div>
-				<div class="col-md-2">
-					<label for="DataFim">Total:</label>
-					<div class="input-group">
-						<span class="input-group-addon">R$</span>
-						<input type="text" class="form-control" disabled aria-label="Total" value="<?php echo $report->soma->somatotal ?>">
-					</div>
-				</div>
-				<div class="col-md-2">
-					<label for="DataFim">Desc:</label>
-					<div class="input-group">
-						<span class="input-group-addon">R$</span>
-						<input type="text" class="form-control" disabled aria-label="Total" value="<?php echo $report->soma->somadesc ?>">
-					</div>
-				</div>
-				<div class="col-md-2">
-					<label for="DataFim">CashBack:</label>
-					<div class="input-group">
-						<span class="input-group-addon">R$</span>
-						<input type="text" class="form-control" disabled aria-label="Total" value="<?php echo $report->soma->somacashback ?>">
-					</div>
-				</div>
-				<div class="col-md-2">
 					<label for="DataFim">Final: Parc / Total</label>
 					<div class="input-group">
 						<span class="input-group-addon">R$</span>
@@ -187,9 +145,25 @@
 								</button>
 							</a>
 						</div>
-						
 					<?php } ?>
 				<?php } ?>	
+			<?php }else{ ?>
+				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 text-left">
+					<label>Lista</label>
+					<a href="<?php echo base_url() . 'relatorio_pag/receitas_lista_pag'; ?>">
+						<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
+							<span class="glyphicon glyphicon-list"></span>
+						</button>
+					</a>
+				</div>
+				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 text-left">
+					<label>Baixa</label>
+					<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
+						<button class="btn btn-danger btn-md btn-block" type="button">
+							<span class="glyphicon glyphicon-ok"></span>
+						</button>
+					</a>
+				</div>
 			<?php } ?>
 		</div>
 	</div>
@@ -205,14 +179,14 @@
 						<?php if($_SESSION['log']['idSis_Empresa'] != 5) {?>
 							<?php if($_SESSION['Usuario']['Nivel'] != 2) { ?>
 								<th class="active">Editar</th>
-							<?php } ?>
-							<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S" && $_SESSION['Usuario']['Nivel'] != 2) {?>
-								<th class="active">Baixa</th>
+								<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") {?>
+									<th class="active">Baixa</th>
+								<?php } ?>
 							<?php } ?>
 						<?php }else{ ?>
 							<th class="active">Baixa</th>
 						<?php } ?>
-						<th class="active">Pdd|Tp|Ct</th>
+						<th class="active">Pdd|Tp</th>
 						<th class="active">DtPedido</th>
 						<?php if($_SESSION['log']['idSis_Empresa'] != 5) {?>
 							<th class="active"><?php echo $nome ?></th>
@@ -228,24 +202,23 @@
 							<?php } ?>
 							<th class="active"><?php echo $nomeusuario ?></th>
 						<?php }else{ ?>	
-							<th class="active">Prd/Srv</th>
-							<th class="active">Frete</th>
 							<th class="active">Extra</th>
-							<th class="active">Total</th>
-							<th class="active">Desc</th>
-							<th class="active">Cash</th>
-							<th class="active">Final</th>
+						<?php } ?>
+						<?php if($_SESSION['log']['idSis_Empresa'] != 5) {?>	
+							<th class="active">Comb.Ent</th>
+							<th class="active">Comb.Pag</th>
+							<th class="active">Entr.</th>
+							<th class="active">Pago</th>
+							<th class="active">Final.</th>
+							<th class="active">Canc.</th>
+							<th class="active">Compra</th>
+							<th class="active">Entrega</th>
+							<th class="active">Pagam.</th>
+							<th class="active">Form.Pag.</th>
+						<?php }else{ ?>
+							<th class="active">Pago</th>
+							<th class="active">Form.Pag.</th>
 						<?php } ?>	
-						<th class="active">Comb.Ent</th>
-						<th class="active">Comb.Pag</th>
-						<th class="active">Entr.</th>
-						<th class="active">Pago</th>
-						<th class="active">Final.</th>
-						<th class="active">Canc.</th>
-						<th class="active">Compra</th>
-						<th class="active">Entrega</th>
-						<th class="active">Pagam.</th>
-						<th class="active">Form.Pag.</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -322,11 +295,27 @@
 									<?php } ?>
 								<?php } ?>
 							<?php }else{ ?>
-								<td class="notclickable">
-									<a class="btn btn-md btn-success notclickable" href="<?php echo base_url() . $baixa . $row['idApp_OrcaTrata'];?>">
-										<span class="glyphicon glyphicon-ok notclickable"></span>
-									</a>
-								</td>
+								<?php if($row['CanceladoOrca'] == "N"){ ?>	
+									<?php if($row['QuitadoOrca'] == "S" && $row['ConcluidoOrca'] == "S"){ ?>
+										<td class="notclickable">
+											<a class="btn btn-md btn-danger notclickable">
+												<span class="glyphicon glyphicon-ok notclickable"></span>
+											</a>
+										</td>
+									<?php }else{ ?>
+										<td class="notclickable">
+											<a class="btn btn-md btn-success notclickable" href="<?php echo base_url() . $baixa . $row['idApp_OrcaTrata'];?>">
+												<span class="glyphicon glyphicon-ok notclickable"></span>
+											</a>
+										</td>
+									<?php } ?>
+								<?php }else{ ?>
+									<td class="notclickable">
+										<a class="btn btn-md btn-danger notclickable">
+											<span class="glyphicon glyphicon-ok notclickable"></span>
+										</a>
+									</td>
+								<?php } ?>
 							<?php } ?>
 							<td><?php echo $row['idApp_OrcaTrata'];?> - <?php echo $row['TipoFinanceiro'];?></td>
 							<?php echo '<td>' . $row['DataOrca'] . '</td>';?>
@@ -353,24 +342,23 @@
 								<?php } ?>
 								<?php echo '<td>' . $row[$nomeusuario] . '</td>';?>	
 							<?php }else{ ?>
-								<td><?php echo $row['ValorRestanteOrca'] ?></td>
-								<td><?php echo $row['ValorFrete'] ?></td>
 								<td><?php echo $row['ValorExtraOrca'] ?></td>
-								<td><?php echo $row['TotalOrca'] ?></td>
-								<td><?php echo $row['DescValorOrca'] ?></td>
-								<td><?php echo $row['CashBackOrca'] ?></td>
-								<td><?php echo $row['ValorFinalOrca'] ?></td>
+							<?php }	 ?>
+							<?php if($_SESSION['log']['idSis_Empresa'] != 5) { ?>
+								<?php echo '<td>' . $row['CombinadoFrete'] . '</td>';?>	
+								<?php echo '<td>' . $row['AprovadoOrca'] . '</td>';?>	
+								<?php echo '<td>' . $row['ConcluidoOrca'] . '</td>';?>	
+								<?php echo '<td>' . $row['QuitadoOrca'] . '</td>';?>	
+								<?php echo '<td>' . $row['FinalizadoOrca'] . '</td>';?>	
+								<?php echo '<td>' . $row['CanceladoOrca'] . '</td>';?>	
+								<?php echo '<td>' . $row['Tipo_Orca'] . '</td>';?>	
+								<?php echo '<td>' . $row['TipoFrete'] . '</td>';?>	
+								<?php echo '<td>' . $row['AVAP'] . '</td>';?>	
+								<?php echo '<td>' . $row['FormaPag'] . '</td>';?>
+							<?php }else{ ?>		
+								<?php echo '<td>' . $row['QuitadoOrca'] . '</td>';?>
+								<?php echo '<td>' . $row['FormaPag'] . '</td>';?>
 							<?php }	 ?>	
-							<?php echo '<td>' . $row['CombinadoFrete'] . '</td>';?>	
-							<?php echo '<td>' . $row['AprovadoOrca'] . '</td>';?>	
-							<?php echo '<td>' . $row['ConcluidoOrca'] . '</td>';?>	
-							<?php echo '<td>' . $row['QuitadoOrca'] . '</td>';?>	
-							<?php echo '<td>' . $row['FinalizadoOrca'] . '</td>';?>	
-							<?php echo '<td>' . $row['CanceladoOrca'] . '</td>';?>	
-							<?php echo '<td>' . $row['Tipo_Orca'] . '</td>';?>	
-							<?php echo '<td>' . $row['TipoFrete'] . '</td>';?>	
-							<?php echo '<td>' . $row['AVAP'] . '</td>';?>	
-							<?php echo '<td>' . $row['FormaPag'] . '</td>';?>							
 						</tr>
 					<?php	
 						$count++;

@@ -84,10 +84,17 @@
 					<h4 class="modal-title"><span class="glyphicon glyphicon-filter"></span> Filtros das <?php echo $titulo; ?></h4>
 				</div>
 				<div class="modal-footer">
+					<?php 
+						if($_SESSION['log']['idSis_Empresa'] != 5) {
+							$none = '';
+						}else{
+							$none = 'none';
+						}
+					?>
 					<div class="panel panel-<?php echo $panel; ?>">
 						<div class="panel-heading text-left">
 							<div class="row">	
-								<div class="col-md-3">
+								<div class="col-md-3" style="display:<?php echo $none; ?>">
 									<label for="CombinadoFrete">Aprovado Entrega</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="CombinadoFrete" name="CombinadoFrete">
@@ -102,7 +109,7 @@
 										?>
 									</select>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-3" style="display:<?php echo $none; ?>">
 									<label for="AprovadoOrca">Aprovado Pagam</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="AprovadoOrca" name="AprovadoOrca">
@@ -117,7 +124,7 @@
 										?>
 									</select>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-3" style="display:<?php echo $none; ?>">
 									<label for="ConcluidoOrca">Entregue</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="ConcluidoOrca" name="ConcluidoOrca">
@@ -149,8 +156,8 @@
 								</div>
 							</div>	
 							<div class="row">
-								<div class="col-md-6"></div>
-								<div class="col-md-3">
+								<div class="col-md-6" style="display:<?php echo $none; ?>"></div>
+								<div class="col-md-3" style="display:<?php echo $none; ?>">
 									<label for="FinalizadoOrca">Finalizado</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="FinalizadoOrca" name="FinalizadoOrca">
@@ -165,7 +172,7 @@
 										?>
 									</select>
 								</div>	
-								<div class="col-md-3">
+								<div class="col-md-3" style="display:<?php echo $none; ?>">
 									<label for="CanceladoOrca">Cancelado</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="CanceladoOrca" name="CanceladoOrca">
@@ -186,7 +193,7 @@
 					<div class="panel panel-<?php echo $panel; ?>">
 						<div class="panel-heading text-left">	
 							<div class="row">	
-								<div class="col-md-3">
+								<div class="col-md-3" style="display:<?php echo $none; ?>">
 									<label for="Ordenamento">Local da Compra</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="Tipo_Orca" name="Tipo_Orca">
@@ -201,7 +208,7 @@
 										?>
 									</select>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-3" style="display:<?php echo $none; ?>">
 									<label for="Ordenamento">Local da Entrega</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="TipoFrete" name="TipoFrete">
@@ -216,7 +223,7 @@
 										?>
 									</select>
 								</div>	
-								<div class="col-md-3">
+								<div class="col-md-3" style="display:<?php echo $none; ?>">
 									<label for="Ordenamento">Local do Pagamento</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="AVAP" name="AVAP">
@@ -305,7 +312,7 @@
 												name="DataFim" value="<?php echo set_value('DataFim', $query['DataFim']); ?>">
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-3" style="display:<?php echo $none; ?>">
 									<label for="Produtos">Produtos & Serviços:</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
 											id="Produtos" name="Produtos">
@@ -336,7 +343,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="row">
+							<div class="row" style="display:<?php echo $none; ?>">
 								<div class="col-md-3">
 									<label for="DataInicio5">Entrega</label>
 									<div class="input-group DatePicker">
@@ -406,7 +413,7 @@
 							<input type="hidden" name="DataFim3" id="DataFim3" value=""/>
 						</div>
 					</div>
-					<div class="panel panel-<?php echo $panel; ?>">
+					<div class="panel panel-<?php echo $panel; ?>" style="display:<?php echo $none; ?>">
 						<div class="panel-heading text-left">
 							<?php if($metodo != 1 && $metodo != 2) { ?>
 								<label for="Aniversario">Aniversário:</label>					

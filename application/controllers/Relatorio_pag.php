@@ -699,7 +699,7 @@ class Relatorio_pag extends CI_Controller {
 				$_SESSION['FiltroDespesas']['total_rows'] = $config['total_rows'] = $data['pesquisa_query']->num_rows();			
 
 				$config['base_url'] = base_url() . 'relatorio_pag/despesas_pag/';
-				$config['per_page'] = 12;
+				$config['per_page'] = 19;
 				$config["uri_segment"] = 3;
 				$config['reuse_query_string'] = TRUE;
 				$config['num_links'] = 2;

@@ -443,4 +443,53 @@
 		  </div>
 		</nav>		
 	<?php } ?>
+<?php }elseif(!isset($evento) && $_SESSION['log']['idSis_Empresa'] == 5) { ?>
+	<?php if ( !isset($evento) && isset($query)) { ?>
+		<?php if (isset($query['idApp_OrcaTrata']) && $query['idApp_OrcaTrata'] != 1 ) { ?>
+			<nav class="navbar navbar-inverse navbar-fixed" role="banner">
+			  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span> 
+					</button>
+					<a class="navbar-brand" href="<?php echo base_url() . 'orcatrata/alterar2/' . $query['idApp_OrcaTrata']; ?>">
+						<span class="glyphicon glyphicon-edit"></span> Editar Receita										
+					</a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav navbar-center">
+						<li class="btn-toolbar btn-lg navbar-form" role="toolbar" aria-label="...">
+							<div class="btn-group " role="group" aria-label="...">
+								<a href="javascript:window.print()">
+									<button type="button" class="btn btn-md btn-default ">
+										<span class="glyphicon glyphicon-print"></span> Imprimir
+									</button>
+								</a>										
+							</div>
+						</li>
+					</ul>
+				</div>
+			  </div>
+			</nav>
+		<?php } ?>	
+	<?php }elseif(!isset($evento) && isset($_SESSION['Orcatrata'])) { ?>
+		<?php if(isset($_SESSION['Orcatrata']['idApp_OrcaTrata']) && $_SESSION['Orcatrata']['idApp_OrcaTrata'] != 1){ ?>
+			<nav class="navbar navbar-inverse navbar-fixed" role="banner">
+			  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span> 
+					</button>
+					<a class="navbar-brand" href="<?php echo base_url() . 'OrcatrataPrint/imprimir/' . $_SESSION['Orcatrata']['idApp_OrcaTrata']; ?>">
+						<span class="glyphicon glyphicon-edit"></span> Ver Receita										
+					</a>
+				</div>
+			  </div>
+			</nav>
+		<?php } ?>
+	<?php } ?>	
 <?php } ?>
