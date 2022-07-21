@@ -101,7 +101,7 @@ class Relatorio_excel extends CI_Controller {
 			exit();
 		}else{
 
-			$data['list1'] = $this->load->view('relatorio/list_receitas_excel', $data, TRUE);
+			$data['list1'] = $this->load->view('relatorio_excel/list_receitas_excel', $data, TRUE);
 		}
 
         $this->load->view('basico/footer');
@@ -154,7 +154,7 @@ class Relatorio_excel extends CI_Controller {
 			exit();
 		}else{
 
-			$data['list1'] = $this->load->view('relatorio/list_despesas_excel', $data, TRUE);
+			$data['list1'] = $this->load->view('relatorio_excel/list_despesas_excel', $data, TRUE);
 		}
 
         $this->load->view('basico/footer');
