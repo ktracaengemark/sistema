@@ -1211,6 +1211,42 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
+
+	public function receitas_excel() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+	
+        $data['titulo'] = 'Receitas com Filtros';
+		$data['metodo'] = 2;
+        $data['nome'] = 'Cliente';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+		$data['pesquisa_query'] = $this->Relatorio_model->list_receitas($_SESSION['FiltroReceitas'],TRUE, TRUE);
+		
+		if($data['pesquisa_query'] === FALSE){
+			
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'relatorio/receitas' . $data['msg']);
+			exit();
+		}else{
+
+			$_SESSION['FiltroReceitas']['Limit'] = $data['per_page'];
+			$_SESSION['FiltroReceitas']['Start'] = $data['linha'];
+
+			$data['report'] = $this->Relatorio_model->list_receitas($_SESSION['FiltroReceitas'], TRUE, FALSE, FALSE, FALSE);
+
+			$data['list1'] = $this->load->view('relatorio/list_receitas_excel', $data, TRUE);
+		}
+
+        $this->load->view('basico/footer');
+
+    }
 	
 	public function despesas() {
 		
