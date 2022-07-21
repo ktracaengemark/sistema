@@ -1063,7 +1063,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
 		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
-		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
+		$data['edit'] = 'Orcatrata/baixadacobranca/';
 		$data['baixacomissao'] = 'Orcatrata/baixadacomissaoservico/';
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'relatoriocomissoes/porservicos/';
@@ -1144,8 +1144,8 @@ class Relatorio_pag extends CI_Controller {
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
 		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
-		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
-		$data['alterarparc'] = 'Orcatrata/baixadasparcelasrec/';	
+		$data['edit'] = 'Orcatrata/baixadacobranca/';
+		$data['alterarparc'] = 'Orcatrata/baixadascobrancas/';	
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'relatorio/cobrancas/';
 		
@@ -1234,8 +1234,8 @@ class Relatorio_pag extends CI_Controller {
 		$data['imprimir'] = 'OrcatrataPrint/imprimirdesp/';
 		$data['imprimirlista'] = 'Relatorio_print/debitos_lista/';
 		$data['imprimirrecibo'] = 'Relatorio_print/debitos_recibo/';
-		$data['edit'] = 'Orcatrata/baixadaparceladesp/';
-		$data['alterarparc'] = 'Orcatrata/baixadasparcelasdesp/';	
+		$data['edit'] = 'Orcatrata/baixadodebito/';
+		$data['alterarparc'] = 'Orcatrata/baixadosdebitos/';	
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'relatorio/debitos/';
 
@@ -1384,7 +1384,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['imprimir'] = 'OrcatrataPrint/imprimirdesp/';
 		$data['imprimirlista'] = 'Relatorio_print/debitos_lista/';
 		$data['imprimirrecibo'] = 'Relatorio_print/debitos_recibo/';
-		$data['edit'] = 'Orcatrata/baixadaparceladesp/';
+		$data['edit'] = 'Orcatrata/baixadodebito/';
 		$data['alterarparc'] = 'Orcatrata/alterarparceladesp/';	
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'relatorio/debitos/';
@@ -1654,7 +1654,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
 		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
-		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
+		$data['edit'] = 'Orcatrata/baixadacobranca/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'relatorio/proc_receitas/';
@@ -1773,7 +1773,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
 		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
-		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
+		$data['edit'] = 'Orcatrata/baixadacobranca/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'N';
 		$data['caminho'] = 'relatorio/proc_despesas/';
@@ -1891,7 +1891,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'Procedimento/imprimir_lista_Sac/';
 		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
-		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
+		$data['edit'] = 'Orcatrata/baixadacobranca/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'relatorio/proc_Sac/';
@@ -2009,7 +2009,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['imprimir'] = 'Procedimento/imprimir/';
 		$data['imprimirlista'] = 'Procedimento/imprimir_lista_Marketing/';
 		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
-		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
+		$data['edit'] = 'Orcatrata/baixadacobranca/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'relatorio/proc_Marketing/';
@@ -2128,7 +2128,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'Sac/imprimir_lista_Sac/';
 		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
-		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
+		$data['edit'] = 'Orcatrata/baixadacobranca/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'relatorio/sac/';
@@ -2246,7 +2246,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['imprimir'] = 'Marketing/imprimir/';
 		$data['imprimirlista'] = 'Marketing/imprimir_lista_Marketing/';
 		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
-		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
+		$data['edit'] = 'Orcatrata/baixadacobranca/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'relatorio/marketing/';
