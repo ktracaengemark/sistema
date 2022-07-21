@@ -571,8 +571,8 @@ class Relatorio_pag extends CI_Controller {
         $data['nome'] = 'Fornecedor';
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimirdesp/';
-		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistadesp/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirrecibodesp/';
+		$data['imprimirlista'] = 'Relatorio_print/debitos_lista/';
+		$data['imprimirrecibo'] = 'Relatorio_print/debitos_recibo/';
 		$data['edit'] = 'Orcatrata/alterardesp/';
 		$data['alterarparc'] = 'Orcatrata/alterarparceladesp/';	
 		$data['paginacao'] = 'S';
@@ -1232,8 +1232,8 @@ class Relatorio_pag extends CI_Controller {
 		$data['editar'] = 1;
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimirdesp/';
-		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistadesp/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirrecibodesp/';
+		$data['imprimirlista'] = 'Relatorio_print/debitos_lista/';
+		$data['imprimirrecibo'] = 'Relatorio_print/debitos_recibo/';
 		$data['edit'] = 'Orcatrata/baixadaparceladesp/';
 		$data['alterarparc'] = 'Orcatrata/baixadasparcelasdesp/';	
 		$data['paginacao'] = 'S';
@@ -1382,8 +1382,8 @@ class Relatorio_pag extends CI_Controller {
 		$data['editar'] = 1;
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimirdesp/';
-		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistadesp/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirrecibodesp/';
+		$data['imprimirlista'] = 'Relatorio_print/debitos_lista/';
+		$data['imprimirrecibo'] = 'Relatorio_print/debitos_recibo/';
 		$data['edit'] = 'Orcatrata/baixadaparceladesp/';
 		$data['alterarparc'] = 'Orcatrata/alterarparceladesp/';	
 		$data['paginacao'] = 'S';
