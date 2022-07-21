@@ -100,7 +100,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'ConsultaPrint/imprimirlista/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
 		$data['edit'] = 'Consulta/alterar/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'S';
@@ -379,7 +379,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistacliente/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
 		$data['edit'] = 'orcatrata/alterarstatus/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		
@@ -469,7 +469,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistacliente/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
 		$data['edit'] = 'orcatrata/alterarstatus/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		
@@ -540,109 +540,6 @@ class Relatorio_pag extends CI_Controller {
 				$data['list1'] = $this->load->view('relatorio/list_receitas', $data, TRUE);
 			}
        		
-
-        $this->load->view('relatorio/tela_receitas', $data);
-
-        $this->load->view('basico/footer');
-
-    }
-
-	public function receitas_lista_pag() {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-		
-        $data['titulo'] = 'Receitas';
-		$data['form_open_path'] = 'relatorio_pag/receitas_lista_pag';
-		$data['baixatodas'] = 'Orcatrata/baixadasreceitas/';
-		$data['baixa'] = 'Orcatrata/baixadareceita/';
-        $data['nomeusuario'] = 'NomeColaborador';
-        $data['status'] = 'StatusComissaoOrca';
-		$data['alterar'] = 'relatorio/receitas/';
-		$data['editar'] = 2;
-		$data['metodo'] = 3;
-		$data['panel'] = 'info';
-		$data['TipoFinanceiro'] = 'Receitas';
-		$data['TipoRD'] = 2;
-        $data['nome'] = 'Cliente';
-		$data['print'] = 1;
-		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistacliente/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
-		$data['edit'] = 'orcatrata/alterarstatus/';
-		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
-		
-		$data['paginacao'] = 'S';
-		$data['caminho'] = 'relatorio/receitas/';
-		
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-		
-        #run form validation
-
-			$data['pesquisa_query'] = $this->Relatorio_model->list_receitas($_SESSION['FiltroReceitas'],TRUE, TRUE);
-			
-			if($data['pesquisa_query'] === FALSE){
-				
-				$data['msg'] = '?m=4';
-				redirect(base_url() . 'relatorio/receitas' . $data['msg']);
-				exit();
-			}else{
-
-				$config['total_rows'] = $data['pesquisa_query']->num_rows();
-				
-				$config['base_url'] = base_url() . 'relatorio_pag/receitas_lista_pag/';
-				$config['per_page'] = 19;
-				$config["uri_segment"] = 3;
-				$config['reuse_query_string'] = TRUE;
-				$config['num_links'] = 2;
-				$config['use_page_numbers'] = TRUE;
-				$config['full_tag_open'] = "<ul class='pagination'>";
-				$config['full_tag_close'] = "</ul>";
-				$config['num_tag_open'] = '<li>';
-				$config['num_tag_close'] = '</li>';
-				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-				$config['next_tag_open'] = "<li>";
-				$config['next_tagl_close'] = "</li>";
-				$config['prev_tag_open'] = "<li>";
-				$config['prev_tagl_close'] = "</li>";
-				$config['first_tag_open'] = "<li>";
-				$config['first_tagl_close'] = "</li>";
-				$config['last_tag_open'] = "<li>";
-				$config['last_tagl_close'] = "</li>";
-				
-				$data['Pesquisa'] = '';
-				
-				if($config['total_rows'] >= 1){
-					$data['total_rows'] = $config['total_rows'];
-				}else{
-					$data['total_rows'] = 0;
-				}
-				
-				$this->pagination->initialize($config);
-				
-				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-				
-				$data['pagina'] = $page;
-				
-				$data['per_page'] = $config['per_page'];
-				
-				$data['linha'] = $page * $config['per_page'];
-			
-				$_SESSION['FiltroReceitas']['Limit'] = $data['per_page'];
-				$_SESSION['FiltroReceitas']['Start'] = $data['linha'];
-
-				$data['report'] = $this->Relatorio_model->list_receitas($_SESSION['FiltroReceitas'], TRUE, FALSE, $config['per_page'], $data['linha']);
-							
-				$data['pagination'] = $this->pagination->create_links();
-
-				$data['list1'] = $this->load->view('relatorio/list_receitas_lista', $data, TRUE);
-			}
-        		
 
         $this->load->view('relatorio/tela_receitas', $data);
 
@@ -754,113 +651,6 @@ class Relatorio_pag extends CI_Controller {
 
     }
 
-	public function despesas_lista_pag() {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-		
-        $data['titulo'] = 'Despesas';
-		$data['form_open_path'] = 'relatorio_pag/despesas_lista_pag';
-		$data['baixatodas'] = 'Orcatrata/baixadasdespesas/';
-		$data['baixa'] = 'Orcatrata/baixadadespesa/';
-        $data['nomeusuario'] = 'NomeColaborador';
-        $data['status'] = 'StatusComissaoOrca';
-		$data['alterar'] = 'relatorio/despesas/';
-		$data['editar'] = 2;
-		$data['metodo'] = 3;
-		$data['panel'] = 'danger';
-		$data['TipoFinanceiro'] = 'Despesas';
-		$data['TipoRD'] = 1;
-        $data['nome'] = 'Fornecedor';
-		$data['print'] = 1;
-		$data['imprimir'] = 'OrcatrataPrint/imprimirdesp/';
-		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistadesp/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirrecibodesp/';
-		$data['edit'] = 'Orcatrata/alterardesp/';
-		$data['alterarparc'] = 'Orcatrata/alterarparceladesp/';	
-		$data['paginacao'] = 'S';
-		$data['caminho'] = 'relatorio/despesas/';		
-
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-		
-        #run form validation
-        
-
-			$data['pesquisa_query'] = $this->Relatorio_model->list_despesas($_SESSION['FiltroDespesas'],TRUE, TRUE);
-			
-			if($data['pesquisa_query'] === FALSE){
-				
-				$data['msg'] = '?m=4';
-				redirect(base_url() . 'relatorio/despesas/' . $data['msg']);
-				exit();
-			}else{
-
-				$_SESSION['FiltroDespesas']['total_valor'] = $data['pesquisa_query']->soma2->somafinal2;
-				
-				$_SESSION['FiltroDespesas']['total_rows'] = $config['total_rows'] = $data['pesquisa_query']->num_rows();			
-
-				//$config['total_rows'] = $_SESSION['FiltroDespesas']['total_rows'];
-
-				$config['base_url'] = base_url() . 'relatorio_pag/despesas_lista_pag/';
-				$config['per_page'] = 12;
-				$config["uri_segment"] = 3;
-				$config['reuse_query_string'] = TRUE;
-				$config['num_links'] = 2;
-				$config['use_page_numbers'] = TRUE;
-				$config['full_tag_open'] = "<ul class='pagination'>";
-				$config['full_tag_close'] = "</ul>";
-				$config['num_tag_open'] = '<li>';
-				$config['num_tag_close'] = '</li>';
-				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-				$config['next_tag_open'] = "<li>";
-				$config['next_tagl_close'] = "</li>";
-				$config['prev_tag_open'] = "<li>";
-				$config['prev_tagl_close'] = "</li>";
-				$config['first_tag_open'] = "<li>";
-				$config['first_tagl_close'] = "</li>";
-				$config['last_tag_open'] = "<li>";
-				$config['last_tagl_close'] = "</li>";
-				
-				$data['Pesquisa'] = '';
-			   
-				if($config['total_rows'] >= 1){
-					$data['total_rows'] = $config['total_rows'];
-				}else{
-					$data['total_rows'] = 0;
-				}
-				
-				$this->pagination->initialize($config);
-				
-				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-				
-				$data['pagina'] = $page;
-				
-				$data['per_page'] = $config['per_page'];
-					
-				$data['linha'] = $page * $config['per_page'];
-			
-				$_SESSION['FiltroDespesas']['Limit'] = $data['per_page'];
-				$_SESSION['FiltroDespesas']['Start'] = $data['linha'];
-
-				$data['report'] = $this->Relatorio_model->list_despesas($_SESSION['FiltroDespesas'], TRUE, FALSE, $config['per_page'], $data['linha']);			
-				
-				$data['pagination'] = $this->pagination->create_links();
-				
-				$data['list1'] = $this->load->view('relatorio/list_despesas_lista', $data, TRUE);
-			}
-       		
-
-        $this->load->view('relatorio/tela_despesas', $data);
-
-        $this->load->view('basico/footer');
-
-    }
-
 	public function comissao_pag() {
 
         if ($this->input->get('m') == 1)
@@ -962,7 +752,7 @@ class Relatorio_pag extends CI_Controller {
 		}	
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'OrcatrataPrint/imprimircomissao/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
 		$data['edit'] = 'orcatrata/alterarstatus/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'S';
@@ -1124,7 +914,7 @@ class Relatorio_pag extends CI_Controller {
 		}
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'OrcatrataPrint/imprimircomissao_online/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
 		$data['edit'] = 'orcatrata/alterarstatus/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'S';
@@ -1271,8 +1061,8 @@ class Relatorio_pag extends CI_Controller {
 		$data['editar'] = 2;
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistarec/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
 		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
 		$data['baixacomissao'] = 'Orcatrata/baixadacomissaoservico/';
 		$data['paginacao'] = 'S';
@@ -1352,8 +1142,8 @@ class Relatorio_pag extends CI_Controller {
 		$data['editar'] = 1;
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistarec/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
 		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
 		$data['alterarparc'] = 'Orcatrata/baixadasparcelasrec/';	
 		$data['paginacao'] = 'S';
@@ -1422,8 +1212,98 @@ class Relatorio_pag extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-
+	
 	public function debitos_pag() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+        $data['titulo1'] = 'Parcelas das Despesas';
+		$data['metodo'] = 1;
+		$data['form_open_path'] = 'relatorio_pag/debitos_pag';
+		$data['panel'] = 'danger';
+		$data['TipoFinanceiro'] = 'Despesas';
+		$data['TipoRD'] = 1;
+        $data['nome'] = 'Fornecedor';
+		$data['editar'] = 1;
+		$data['print'] = 1;
+		$data['imprimir'] = 'OrcatrataPrint/imprimirdesp/';
+		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistadesp/';
+		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirrecibodesp/';
+		$data['edit'] = 'Orcatrata/baixadaparceladesp/';
+		$data['alterarparc'] = 'Orcatrata/baixadasparcelasdesp/';	
+		$data['paginacao'] = 'S';
+		$data['caminho'] = 'relatorio/debitos/';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #run form validation
+
+		$data['pesquisa_query'] = $this->Relatorio_model->list_debitos($_SESSION['FiltroDebitos'],TRUE, TRUE);
+		
+		if($data['pesquisa_query'] === FALSE){
+			
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'relatorio/debitos' . $data['msg']);
+			exit();
+		}else{
+
+			$config['base_url'] = base_url() . 'relatorio_pag/debitos_pag/';
+			$config['total_rows'] = $data['pesquisa_query']->num_rows();
+			$config['per_page'] = 12;
+			$config["uri_segment"] = 3;
+			$config['reuse_query_string'] = TRUE;
+			$config['num_links'] = 2;
+			$config['use_page_numbers'] = TRUE;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			$data['Pesquisa'] = '';
+
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
+			}else{
+				$data['total_rows'] = 0;
+			}
+			
+            $this->pagination->initialize($config);
+            
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+            
+			$data['pagina'] = $page;
+			
+			$data['per_page'] = $config['per_page'];
+				
+			$data['linha'] = $page * $config['per_page'];
+			
+			$data['report'] = $this->Relatorio_model->list_debitos($_SESSION['FiltroDebitos'], TRUE, FALSE, $config['per_page'], $data['linha']);			
+			
+			$data['pagination'] = $this->pagination->create_links();
+
+            $data['list1'] = $this->load->view('relatorio/list_debitos', $data, TRUE);
+       
+		}
+        $this->load->view('relatorio/tela_debitos', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+	public function debitos_pag_antiga() {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -1652,8 +1532,8 @@ class Relatorio_pag extends CI_Controller {
 		$data['editar'] = 2;
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistarec/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
 		$data['edit'] = 'Orcatrata/baixadaprodutorec/';
 		$data['alterarprod'] = 'Orcatrata/alterarprodutorec/';
 		$data['paginacao'] = 'S';
@@ -1772,8 +1652,8 @@ class Relatorio_pag extends CI_Controller {
 		$data['editar'] = 0;
 		$data['print'] = 0;
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistarec/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
 		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'S';
@@ -1891,8 +1771,8 @@ class Relatorio_pag extends CI_Controller {
 		$data['editar'] = 0;
 		$data['print'] = 0;
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistarec/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
 		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'N';
@@ -2010,7 +1890,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'Procedimento/imprimir_lista_Sac/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
 		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'S';
@@ -2128,7 +2008,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['print'] = 1;
 		$data['imprimir'] = 'Procedimento/imprimir/';
 		$data['imprimirlista'] = 'Procedimento/imprimir_lista_Marketing/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
 		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'S';
@@ -2247,7 +2127,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'Sac/imprimir_lista_Sac/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
 		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'S';
@@ -2365,7 +2245,7 @@ class Relatorio_pag extends CI_Controller {
 		$data['print'] = 1;
 		$data['imprimir'] = 'Marketing/imprimir/';
 		$data['imprimirlista'] = 'Marketing/imprimir_lista_Marketing/';
-		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
 		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'S';
