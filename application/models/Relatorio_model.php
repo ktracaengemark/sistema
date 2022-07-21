@@ -835,7 +835,7 @@ class Relatorio_model extends CI_Model {
 
     }
 
-    public function list_receitas($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+    public function list_receitas($data = FALSE, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		$date_inicio_orca = ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;
 		$date_fim_orca = ($data['DataFim']) ? 'OT.DataOrca <= "' . $data['DataFim'] . '" AND ' : FALSE;
@@ -1229,7 +1229,7 @@ class Relatorio_model extends CI_Model {
         }
     }
 
-    public function list_despesas($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+    public function list_despesas($data = FALSE, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		$date_inicio_orca = ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;
 		$date_fim_orca = ($data['DataFim']) ? 'OT.DataOrca <= "' . $data['DataFim'] . '" AND ' : FALSE;
@@ -2377,7 +2377,7 @@ class Relatorio_model extends CI_Model {
 
     }
 
-	public function list_cobrancas($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+	public function list_cobrancas($data = FALSE, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		$date_inicio_orca = ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;
 		$date_fim_orca = ($data['DataFim']) ? 'OT.DataOrca <= "' . $data['DataFim'] . '" AND ' : FALSE;
@@ -2690,70 +2690,71 @@ class Relatorio_model extends CI_Model {
 			' . $querylimit . '
 		');
 		
-        ####################################################################
-        #SOMATÓRIO DAS Parcelas Recebidas
-        $parcelasrecebidas = $this->db->query('
-            SELECT
-                PR.ValorParcela
-            FROM
-                App_OrcaTrata AS OT
-					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
-					LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
-					LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
-					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = OT.idSis_Usuario
-					' . $rede . '
-					LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
-					LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
-            WHERE
-                ' . $date_inicio_orca . '
-                ' . $date_fim_orca . '
-                ' . $date_inicio_entrega . '
-                ' . $date_fim_entrega . '
-                ' . $hora_inicio_entrega_prd . '
-                ' . $hora_fim_entrega_prd . '
-                ' . $date_inicio_vnc . '
-                ' . $date_fim_vnc . '
-                ' . $date_inicio_vnc_prc . '
-                ' . $date_fim_vnc_prc . '
-                ' . $date_inicio_pag_prc . '
-                ' . $date_fim_pag_prc . '
-                ' . $date_inicio_lan_prc . '
-                ' . $date_fim_lan_prc . '
-                ' . $date_inicio_cadastro . '
-                ' . $date_fim_cadastro . '
-                OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-				' . $permissao . '
-				' . $permissao_orcam . '
-				' . $filtro1 . '
-				' . $filtro2 . '
-				' . $filtro3 . '
-				' . $filtro4 . '
-				' . $filtro14 . '
-				' . $filtro5 . '
-				' . $filtro6 . '
-				' . $filtro7 . '
-				' . $filtro8 . '
-				' . $filtro9 . '
-				' . $filtro10 . '
-				' . $filtro11 . '
-				' . $filtro13 . '
-				' . $produtos . '
-                PR.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-				PR.Quitado = "S"
-                ' . $orcamento . '
-                ' . $cliente . '
-                ' . $id_cliente . '
-				' . $tipofinanceiro . '
-				' . $tipord . '
-				' . $nivel . '
-			' . $groupby . '
-			ORDER BY
-				' . $campo . '
-				' . $ordenamento . '
-			' . $querylimit . '
-        ');			
-		$parcelasrecebidas = $parcelasrecebidas->result();		
-
+		if($data){	
+			####################################################################
+			#SOMATÓRIO DAS Parcelas Recebidas
+			$parcelasrecebidas = $this->db->query('
+				SELECT
+					PR.ValorParcela
+				FROM
+					App_OrcaTrata AS OT
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
+						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = OT.idSis_Usuario
+						' . $rede . '
+						LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
+						LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
+				WHERE
+					' . $date_inicio_orca . '
+					' . $date_fim_orca . '
+					' . $date_inicio_entrega . '
+					' . $date_fim_entrega . '
+					' . $hora_inicio_entrega_prd . '
+					' . $hora_fim_entrega_prd . '
+					' . $date_inicio_vnc . '
+					' . $date_fim_vnc . '
+					' . $date_inicio_vnc_prc . '
+					' . $date_fim_vnc_prc . '
+					' . $date_inicio_pag_prc . '
+					' . $date_fim_pag_prc . '
+					' . $date_inicio_lan_prc . '
+					' . $date_fim_lan_prc . '
+					' . $date_inicio_cadastro . '
+					' . $date_fim_cadastro . '
+					OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+					' . $permissao . '
+					' . $permissao_orcam . '
+					' . $filtro1 . '
+					' . $filtro2 . '
+					' . $filtro3 . '
+					' . $filtro4 . '
+					' . $filtro14 . '
+					' . $filtro5 . '
+					' . $filtro6 . '
+					' . $filtro7 . '
+					' . $filtro8 . '
+					' . $filtro9 . '
+					' . $filtro10 . '
+					' . $filtro11 . '
+					' . $filtro13 . '
+					' . $produtos . '
+					PR.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+					PR.Quitado = "S"
+					' . $orcamento . '
+					' . $cliente . '
+					' . $id_cliente . '
+					' . $tipofinanceiro . '
+					' . $tipord . '
+					' . $nivel . '
+				' . $groupby . '
+				ORDER BY
+					' . $campo . '
+					' . $ordenamento . '
+				' . $querylimit . '
+			');			
+			$parcelasrecebidas = $parcelasrecebidas->result();		
+		}	
         if ($completo === FALSE) {
             return TRUE;
         } else {
@@ -2817,12 +2818,16 @@ class Relatorio_model extends CI_Model {
 				}	
 		  
             }
-
-            foreach ($parcelasrecebidas as $row) {
-
-                $somarecebido += $row->ValorParcela;
+			if($data){
+				foreach ($parcelasrecebidas as $row) {
+					$somarecebido += $row->ValorParcela;
+					$row->ValorParcela = number_format($row->ValorParcela, 2, ',', '.');
+				}				
+			}else{
+				$somarecebido = 0;
 				$row->ValorParcela = number_format($row->ValorParcela, 2, ',', '.');
-            }			
+			}
+			
 
             $balanco =  $somareceber - $somarecebido;
 			
