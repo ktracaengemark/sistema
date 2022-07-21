@@ -40,7 +40,7 @@
 					$rede = FALSE;
 				}
 				$produtos = FALSE;
-				$groupby = 'GROUP BY PR.idApp_Parcelas';
+				//$groupby = 'GROUP BY PR.idApp_Parcelas';
 			}else{
 				$cliente = FALSE;
 				$id_cliente = FALSE;
@@ -49,8 +49,10 @@
 				$nivel = FALSE;
 				$produtos = FALSE;
 				$rede = FALSE;
-				$groupby = 'GROUP BY PR.idApp_Parcelas';
+				//$groupby = 'GROUP BY PR.idApp_Parcelas';
 			}
+
+			$groupby = ($data['Agrupar']) ? 'GROUP BY ' . $data['Agrupar'] . '' : 'GROUP BY PR.idApp_Parcelas';
 
 		$result_msg_contatos = '
             SELECT

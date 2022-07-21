@@ -98,11 +98,6 @@ class Orcatrataprintcobranca_model extends CI_Model {
 					$produtos = 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND';
 				}else{
 					$produtos = FALSE;
-				}				
-				if($data['Agrupar'] != "0"){
-					$groupby = 'GROUP BY ' . $data['Agrupar'] . '';
-				}else{
-					$groupby = 'GROUP BY PR.idApp_Parcelas';
 				}
 			}else{
 				$cliente = FALSE;
@@ -116,8 +111,9 @@ class Orcatrataprintcobranca_model extends CI_Model {
 				$nivel = FALSE;
 				$produtos = FALSE;
 				$rede = FALSE;
-				$groupby = 'GROUP BY PR.idApp_Parcelas';
 			}
+			
+			$groupby = ($data['Agrupar']) ? 'GROUP BY ' . $data['Agrupar'] . '' : 'GROUP BY PR.idApp_Parcelas';
 		}
 		/*	  
 		echo "<pre>";

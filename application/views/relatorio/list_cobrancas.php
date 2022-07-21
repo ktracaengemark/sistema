@@ -65,7 +65,7 @@
 			<?php } ?>
 			<div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 text-left">
 				<label>Excel</label><br>
-				<a href="<?php echo base_url() . 'gerar_excel/Orcamentos/Parcelas_rec_total_xls.php'; ?>">
+				<a href="<?php echo base_url() . 'relatorio_excel/cobrancas/2'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
 						<span class="glyphicon glyphicon-print"></span>Total
 					</button>
@@ -73,7 +73,7 @@
 			</div>
 			<div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 text-left">
 				<label>Excel</label><br>
-				<a href="<?php echo base_url() . 'gerar_excel/Orcamentos/Parcelas_rec_parc_xls.php'; ?>">
+				<a href="<?php echo base_url() . 'relatorio_excel/cobrancas/3'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
 						<span class="glyphicon glyphicon-print"></span>Parcial
 					</button>
@@ -167,7 +167,7 @@
 									</a>
 								</td>';
 							if ($_SESSION['log']['idSis_Empresa'] == 5) {
-								if($row['CanceladoOrca'] == "Não" && $row['Quitado'] == "Não"){	
+								if($row['CanceladoOrca'] == "N" && $row['Quitado'] == "N"){	
 									echo '<td class="notclickable">
 											<a class="btn btn-md btn-success notclickable" href="' . base_url() . $edit . $row['idApp_Parcelas'] . '">
 												<span class="glyphicon glyphicon-ok notclickable"></span>
@@ -182,7 +182,7 @@
 								}
 							}else{	
 								if ($_SESSION['Usuario']['Bx_Pag'] == "S") {
-									if($row['CanceladoOrca'] == "Não" && $row['Quitado'] == "Não"){	
+									if($row['CanceladoOrca'] == "N" && $row['Quitado'] == "N"){	
 										echo '<td class="notclickable">
 												<a class="btn btn-md btn-success notclickable" href="' . base_url() . $edit . $row['idApp_Parcelas'] . '">
 													<span class="glyphicon glyphicon-ok notclickable"></span>

@@ -160,5 +160,68 @@ class Relatorio_excel extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
+
+	public function cobrancas($id = FALSE) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		if($id){
+			if($id == 1){
+				$dados = FALSE;
+				$data['titulo'] = 'Cobrancas Sem Filtros';
+				$data['metodo'] = $id;
+			}elseif($id == 2){
+				if(isset($_SESSION['FiltroCobrancas'])){
+					$dados = $_SESSION['FiltroCobrancas'];
+					$data['titulo'] = 'Cobrancas Com Filtros';
+					$data['metodo'] = $id;
+				}else{
+					$dados = FALSE;
+					$data['titulo'] = 'Cobrancas Sem Filtros';
+					$data['metodo'] = 1;
+				}
+			}elseif($id == 3){
+				if(isset($_SESSION['FiltroCobrancas'])){
+					$dados = $_SESSION['FiltroCobrancas'];
+					$data['titulo'] = 'Cobrancas Com Filtros';
+					$data['metodo'] = $id;
+				}else{
+					$dados = FALSE;
+					$data['titulo'] = 'Cobrancas Sem Filtros';
+					$data['metodo'] = 1;
+				}
+			}else{
+				$dados = FALSE;
+				$data['titulo'] = 'Cobrancas Sem Filtros';
+				$data['metodo'] = 1;
+			}
+		}else{
+			$dados = FALSE;
+			$data['titulo'] = 'Cobrancas Sem Filtros';
+			$data['metodo'] = 1;
+		}
+
+        $data['nome'] = 'Cliente';
+
+		$data['report'] = $this->Relatorio_model->list_cobrancas($dados, TRUE, FALSE, FALSE, FALSE);
+		
+		if($data['report'] === FALSE){
+			
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'relatorio/cobrancas' . $data['msg']);
+			exit();
+		}else{
+
+			$data['list1'] = $this->load->view('relatorio_excel/list_cobrancas_excel', $data, TRUE);
+		}
+
+        $this->load->view('basico/footer');
+
+    }
 	
 }
