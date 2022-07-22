@@ -335,7 +335,6 @@ class Agenda extends CI_Controller {
 			$config['last_tagl_close'] = "</li>";			
 			
             #$data['report'] = $this->Agenda_model->cliente_aniversariantes($data['bd'],TRUE);
-            #$data['report'] = $this->Agenda_model->list1_procedimento($data['bd'],TRUE);
 			/*
 			$_SESSION['Tarefas'] = $data['report']->num_rows();
 			echo "<pre>";
@@ -363,18 +362,7 @@ class Agenda extends CI_Controller {
             $data['list'] = $this->load->view('agenda/list_aniversariantes', $data, TRUE);
             //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
         }
-		/*
-		$data['query']['procedimento'] = $this->Agenda_model->procedimento($_SESSION['log']['idSis_Usuario']);
-        $data['query']['estatisticas'] = $this->Agenda_model->resumo_estatisticas($_SESSION['log']['idSis_Usuario']);
-        $data['query']['cliente_aniversariantes'] = $this->Agenda_model->cliente_aniversariantes($_SESSION['log']['idSis_Usuario']);
-        $data['query']['contatocliente_aniversariantes'] = $this->Agenda_model->contatocliente_aniversariantes($_SESSION['log']['idSis_Usuario']);
-        #$data['query']['profissional_aniversariantes'] = $this->Agenda_model->profissional_aniversariantes($_SESSION['log']['idSis_Usuario']);
-		#$data['query']['contatoprof_aniversariantes'] = $this->Agenda_model->contatoprof_aniversariantes($_SESSION['log']['idSis_Usuario']);
-		$data['query']['procedempresa'] = $this->Agenda_model->procedempresa($_SESSION['log']['idSis_Usuario']);
-		$data['query']['procedimentorec'] = $this->Agenda_model->procedimentorec($_SESSION['log']['idSis_Usuario']);
-		*/
-			
-		
+
 		$this->load->view('agenda/tela_agenda', $data);
 
         #load footer view
