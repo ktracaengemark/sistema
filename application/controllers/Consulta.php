@@ -12,7 +12,7 @@ class Consulta extends CI_Controller {
         #load libraries
         $this->load->helper(array('form', 'url', 'date', 'string'));
         $this->load->library(array('basico', 'form_validation'));
-        $this->load->model(array('Basico_model', 'Consulta_model', 'Orcatrata_model', 'Empresafilial_model', 'Cliente_model', 'Clientepet_model', 'Agenda_model'));
+        $this->load->model(array('Basico_model', 'Consulta_model', 'Orcatrata_model', 'Cliente_model', 'Clientepet_model', 'Agenda_model'));
         $this->load->driver('session');
 
         #load header view
