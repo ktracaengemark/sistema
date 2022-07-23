@@ -1627,6 +1627,373 @@ class Relatorio extends CI_Controller {
 
 	public function comissao() {
 		
+		unset($_SESSION['FiltroComissao']);
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Receita Não Encontrada.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 4)
+            $data['msg'] = $this->basico->msg('<strong>A Pesquisa está muito grande, ela excedeu 5000 linhas. Refine o seu filtro.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+			'id_Cliente_Auto',
+			'NomeClienteAuto',
+        ), TRUE));	
+		
+        $data['query'] = quotes_to_entities($this->input->post(array(
+			'Orcamento',
+			'Cliente',
+			'idApp_Cliente',
+			'idApp_OrcaTrata',
+			'idSis_Usuario',
+			'DataVencimentoOrca',
+			'NomeUsuario',
+			'DataInicio',
+            'DataFim',
+			'DataInicio2',
+            'DataFim2',
+			'DataInicio3',
+            'DataFim3',
+			'DataInicio4',
+            'DataFim4',
+			'DataInicio5',
+            'DataFim5',
+			'HoraInicio5',
+            'HoraFim5',
+			'DataInicio6',
+            'DataFim6',
+			'DataInicio7',
+            'DataFim7',
+			'TipoFinanceiro',
+			'idTab_TipoRD',
+			'Ordenamento',
+            'Campo',
+            'AprovadoOrca',
+			'CombinadoFrete',
+            'QuitadoOrca',
+			'ConcluidoOrca',
+			'FinalizadoOrca',
+			'CanceladoOrca',
+			'StatusComissaoOrca',
+			'StatusComissaoOrca_Online',
+			'Quitado',
+			'Modalidade',
+			'AVAP',
+			'Tipo_Orca',
+			'FormaPagamento',
+			'TipoFrete',
+			'Produtos',
+			'Parcelas',
+			'DataValidadeProduto',
+			'ConcluidoProduto',
+			'DevolvidoProduto',
+			'ConcluidoServico',
+			'Agrupar',
+			'Ultimo',
+			'nome',
+        ), TRUE));
+
+        $data['select']['AprovadoOrca'] = array(
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
+        );
+
+        $data['select']['CombinadoFrete'] = array(
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
+        );
+
+        $data['select']['QuitadoOrca'] = array(
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
+        );
+
+		$data['select']['ConcluidoOrca'] = array(
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
+        );
+
+		$data['select']['FinalizadoOrca'] = array(
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
+        );
+
+		$data['select']['CanceladoOrca'] = array(
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
+        );
+
+		$data['select']['Quitado'] = array(
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
+        );
+
+		$data['select']['ConcluidoProduto'] = array(
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
+        );
+
+		$data['select']['DevolvidoProduto'] = array(
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
+        );
+		
+		$data['select']['ConcluidoServico'] = array(
+            '0' => '::TODOS::',
+            'S' => 'Sim',
+            'N' => 'Não',
+        );
+		
+		$data['select']['Modalidade'] = array(
+            '0' => 'TODOS',
+            'P' => 'Parcelas',
+            'M' => 'Mensal',
+        );
+		
+		$data['select']['AVAP'] = array(
+            '0' => 'TODOS',
+            'V' => 'Na Loja',
+			'O' => 'On Line',
+            'P' => 'Na Entrega',
+        );
+		
+		$data['select']['Tipo_Orca'] = array(
+            '0' => '::TODOS::',
+            'B' => 'Na Loja',
+            'O' => 'On Line',
+        );
+		
+		$data['select']['StatusComissaoOrca'] = array(
+            '0' => 'TODOS',
+            'N' => 'NãoPaga',
+            'S' => 'Paga',
+        );
+		
+		$data['select']['StatusComissaoOrca_Online'] = array(
+            '0' => 'TODOS',
+            'N' => 'NãoPaga',
+            'S' => 'Paga',
+        );
+		
+        $data['select']['Agrupar'] = array(
+			'0' => '::Nenhum::',			
+			'idApp_OrcaTrata' => 'Orçamento',
+			'idApp_Cliente' => 'Cliente',
+        );
+		
+        $data['select']['Ultimo'] = array(
+			'0' => '::Nenhum::',			
+			#'1' => 'Último Pedido',			
+			#'2' => 'Última Parcela',
+        );	
+
+        $data['select']['Campo'] = array(
+			'OT.DataOrca' => 'Data do Pedido',
+			'OT.DataEntregaOrca' => 'Data da Entrega',
+			'OT.DataPagoComissaoOrca' => 'Data Pago Comissao',
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'ASC' => 'Crescente',
+            'DESC' => 'Decrescente',
+        );
+		
+        $data['select']['Produtos'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+			'IS NULL' => 'S/ Prd & Srv',
+        );
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Parcelas',
+        );
+
+		$data['select']['NomeUsuario'] = $this->Relatorio_model->select_usuario();
+		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
+		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
+		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
+
+		$data['query']['nome'] = 'Cliente';
+		$data['form_open_path'] = 'relatorio/comissao';
+		$data['baixatodas'] = 'Orcatrata/baixadacomissao/';
+		$data['editartodas'] = 'relatorio/receitas/';
+		$data['baixa'] = 'Orcatrata/baixadareceita/';
+        $data['titulo'] = 'Comissão Colaborador';
+        $data['nomeusuario'] = 'NomeColaborador';
+        $data['status'] = 'StatusComissaoOrca';
+		$data['editar'] = 1;
+		$data['metodo'] = 1;
+		$data['panel'] = 'info';
+		$data['TipoFinanceiro'] = 'Receitas';
+		$data['TipoRD'] = 2;
+        $data['nome'] = 'Cliente';
+		if($_SESSION['Usuario']['Permissao_Comissao'] == 3){
+			$data['print'] = 1;
+		}else{
+			$data['print'] = 0;
+		}	
+		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+		$data['imprimirlista'] = 'OrcatrataPrint/imprimircomissao/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
+		$data['edit'] = 'orcatrata/alterarstatus/';
+		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		$data['paginacao'] = 'N';
+		$data['Associado'] = 0;
+		$data['Vendedor'] = 1;
+		
+		
+		$_SESSION['Imprimir']['idApp_OrcaTrata'] = $data['query']['idApp_OrcaTrata'];		
+		
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        $this->form_validation->set_rules('DataInicio', 'Data Início do Pedido', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim', 'Data Fim do Pedido', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio2', 'Data Início da Entrega', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim2', 'Data Fim da Entrega', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio3', 'Data Início do Vencimento', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim3', 'Data Fim do Vencimento', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio4', 'Data Início do Vnc da Prc', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim4', 'Data Fim do Vnc da Prc', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio5', 'Data Início do Pag Comissao', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim5', 'Data Fim do Pag Comissao', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio6', 'Data Início do Cadastro', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim6', 'Data Fim do Cadastro', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio7', 'Data Pago Com. Início', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim7', 'Data Pago Com.Fim', 'trim|valid_date');
+		$this->form_validation->set_rules('HoraInicio5', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim5', 'Hora Final', 'trim|valid_hour');
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+			$_SESSION['FiltroComissao']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+			$_SESSION['FiltroComissao']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$_SESSION['FiltroComissao']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+			$_SESSION['FiltroComissao']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+			$_SESSION['FiltroComissao']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+			$_SESSION['FiltroComissao']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
+			$_SESSION['FiltroComissao']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
+			$_SESSION['FiltroComissao']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+			$_SESSION['FiltroComissao']['DataInicio5'] = $this->basico->mascara_data($data['query']['DataInicio5'], 'mysql');
+			$_SESSION['FiltroComissao']['DataFim5'] = $this->basico->mascara_data($data['query']['DataFim5'], 'mysql');
+			$_SESSION['FiltroComissao']['DataInicio6'] = $this->basico->mascara_data($data['query']['DataInicio6'], 'mysql');
+			$_SESSION['FiltroComissao']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
+			$_SESSION['FiltroComissao']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
+			$_SESSION['FiltroComissao']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+			$_SESSION['FiltroComissao']['HoraInicio5'] = $data['query']['HoraInicio5'];
+			$_SESSION['FiltroComissao']['HoraFim5'] = $data['query']['HoraFim5'];
+			$_SESSION['FiltroComissao']['Produtos'] = $data['query']['Produtos'];
+			$_SESSION['FiltroComissao']['Parcelas'] = $data['query']['Parcelas'];
+			$_SESSION['FiltroComissao']['NomeUsuario'] = $data['query']['NomeUsuario'];
+			$_SESSION['FiltroComissao']['Quitado'] = $data['query']['Quitado'];
+			$_SESSION['FiltroComissao']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
+			$_SESSION['FiltroComissao']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+			$_SESSION['FiltroComissao']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
+			$_SESSION['FiltroComissao']['FinalizadoOrca'] = $data['query']['FinalizadoOrca'];
+			$_SESSION['FiltroComissao']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
+			$_SESSION['FiltroComissao']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
+			$_SESSION['FiltroComissao']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
+			$_SESSION['FiltroComissao']['FormaPagamento'] = $data['query']['FormaPagamento'];
+			$_SESSION['FiltroComissao']['AVAP'] = $data['query']['AVAP'];
+			$_SESSION['FiltroComissao']['TipoFrete'] = $data['query']['TipoFrete'];
+			$_SESSION['FiltroComissao']['TipoFinanceiro'] = $data['query']['TipoFinanceiro'];
+			$_SESSION['FiltroComissao']['StatusComissaoOrca'] = $data['query']['StatusComissaoOrca'];
+			$_SESSION['FiltroComissao']['StatusComissaoOrca_Online'] = $data['query']['StatusComissaoOrca_Online'];
+			$_SESSION['FiltroComissao']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
+			$_SESSION['FiltroComissao']['DevolvidoProduto'] = $data['query']['DevolvidoProduto'];
+			$_SESSION['FiltroComissao']['ConcluidoServico'] = $data['query']['ConcluidoServico'];
+			$_SESSION['FiltroComissao']['Orcamento'] = $data['query']['Orcamento'];
+			$_SESSION['FiltroComissao']['Cliente'] = $data['query']['Cliente'];
+			$_SESSION['FiltroComissao']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+			$_SESSION['FiltroComissao']['Modalidade'] = $data['query']['Modalidade'];
+			$_SESSION['FiltroComissao']['Campo'] = $data['query']['Campo'];
+			$_SESSION['FiltroComissao']['Ordenamento'] = $data['query']['Ordenamento'];
+			$_SESSION['FiltroComissao']['nome'] = $data['query']['nome'];
+			$_SESSION['FiltroComissao']['Agrupar'] = $data['query']['Agrupar'];
+			$_SESSION['FiltroComissao']['Ultimo'] = $data['query']['Ultimo'];
+			$_SESSION['FiltroComissao']['metodo'] = $data['metodo'];
+			$_SESSION['FiltroComissao']['idTab_TipoRD'] = $data['TipoRD'];
+			$_SESSION['FiltroComissao']['Associado'] = $data['Associado'];
+			$_SESSION['FiltroComissao']['Vendedor'] = $data['Vendedor'];
+		 
+			$data['pesquisa_query'] = $this->Relatorio_model->list_comissao($_SESSION['FiltroComissao'],TRUE, TRUE);
+
+			if($data['pesquisa_query'] === FALSE){
+				
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'relatorio/comissao' . $data['msg']);
+				exit();
+			}else{
+
+				$config['total_rows'] = $data['pesquisa_query']->num_rows();
+
+				$config['base_url'] = base_url() . 'relatorio_pag/comissao_pag/';
+
+				$config['per_page'] = 12;
+				$config["uri_segment"] = 3;
+				$config['reuse_query_string'] = TRUE;
+				$config['num_links'] = 2;
+				$config['use_page_numbers'] = TRUE;
+				$config['full_tag_open'] = "<ul class='pagination'>";
+				$config['full_tag_close'] = "</ul>";
+				$config['num_tag_open'] = '<li>';
+				$config['num_tag_close'] = '</li>';
+				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+				$config['next_tag_open'] = "<li>";
+				$config['next_tagl_close'] = "</li>";
+				$config['prev_tag_open'] = "<li>";
+				$config['prev_tagl_close'] = "</li>";
+				$config['first_tag_open'] = "<li>";
+				$config['first_tagl_close'] = "</li>";
+				$config['last_tag_open'] = "<li>";
+				$config['last_tagl_close'] = "</li>";
+				
+				$data['Pesquisa'] = '';
+				
+				if($config['total_rows'] >= 1){
+					$data['total_rows'] = $config['total_rows'];
+				}else{
+					$data['total_rows'] = 0;
+				}
+				
+				$this->pagination->initialize($config);
+				
+				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+				$data['pagina'] = $page;
+				$data['per_page'] = $config['per_page'];
+
+				$data['report'] = $this->Relatorio_model->list_comissao($_SESSION['FiltroComissao'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+				
+				$data['pagination'] = $this->pagination->create_links();
+
+				$data['list1'] = $this->load->view('relatorio/list_comissao', $data, TRUE);
+			}	
+        }		
+
+        $this->load->view('relatorio/tela_comissao', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+	public function comissao_antigo() {
+		
 		unset($_SESSION['FiltroAlteraParcela']);
 
         if ($this->input->get('m') == 1)
@@ -1720,14 +2087,14 @@ class Relatorio extends CI_Controller {
 
 		if (!$data['query']['Ano'])
            $data['query']['Ano'] = date('Y', time());	   
-		*/
+		
 		
 		if (!$data['query']['DataInicio'])
 			$data['query']['DataInicio'] = "01/01/2022";
 		
 		if (!$data['query']['DataFim'])
 			$data['query']['DataFim'] = "31/12/2022";
-		
+		*/
 		$data['collapse'] = '';	
 
 		$data['collapse1'] = 'class="collapse"';
@@ -2067,11 +2434,17 @@ class Relatorio extends CI_Controller {
 			
 			//$data['report'] = $this->Relatorio_model->list1_comissao($data['bd'],TRUE);
 			//$data['report'] = $this->Relatorio_model->list_orcamento($data['bd'],TRUE);
+			
 			$data['pesquisa_query'] = $this->Relatorio_model->list_orcamento($data['bd'],TRUE, TRUE);
+			
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
+			
 			//$config['total_rows'] = $this->Relatorio_model->list_orcamento($data['bd'],TRUE, TRUE);
+			
 			$config['base_url'] = base_url() . 'relatorio_pag/comissao_pag/';
+			
 			//$this->load->library('pagination');
+			
 			$config['per_page'] = 12;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;

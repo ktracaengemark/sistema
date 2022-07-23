@@ -141,53 +141,6 @@
 													</a>
 												</div>	
 											</div>
-											
-											<!--
-											<div class="form-group col-md-12 text-left">
-												<div class="row">		
-													<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/estoque" role="button"> 
-														<span class="glyphicon glyphicon-barcode"></span> Estoque
-													</a>
-												</div>	
-											</div>
-											<div class="form-group col-md-12 text-left">
-												<div class="row">		
-													<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/produtosvend" role="button"> 
-														<span class="glyphicon glyphicon-barcode"></span> Produtos Vendidos
-													</a>
-												</div>	
-											</div>
-											
-											<div class="form-group col-md-12 text-left">
-												<div class="row">		
-													<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/produtosdevol" role="button"> 
-														<span class="glyphicon glyphicon-barcode"></span> Produtos Devolvidos
-													</a>
-												</div>	
-											</div>
-											<div class="form-group col-md-12 text-left">
-												<div class="row">		
-													<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/consumo" role="button"> 
-														<span class="glyphicon glyphicon-barcode"></span> Produtos Consumidos
-													</a>
-												</div>	
-											</div>
-											
-											<div class="form-group col-md-12 text-left">
-												<div class="row">
-													<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/servicosprest" role="button"> 
-														<span class="glyphicon glyphicon-barcode"></span> Serviços Prestados
-													</a>
-												</div>	
-											</div>
-											<div class="form-group col-md-12 text-left">
-												<div class="row">		
-													<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/orcamentopc" role="button"> 
-														<span class="glyphicon glyphicon-list-alt"></span> Procedimentos
-													</a>
-												</div>	
-											</div>
-											-->
 										</div>
 									<?php }?>	
 								<?php } ?>
@@ -226,7 +179,14 @@
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
 														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/comissao" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span>Por Pedido/ Colaborador
+															<span class="glyphicon glyphicon-usd"></span>Por Pedido/ Vendedor
+														</a>
+													</div>	
+												</div>
+												<div class="form-group col-md-12 text-left">
+													<div class="row">										
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatoriocomissoes/funcionario" role="button"> 
+															<span class="glyphicon glyphicon-usd"></span> Por Pedido/ Funcionário
 														</a>
 													</div>	
 												</div>

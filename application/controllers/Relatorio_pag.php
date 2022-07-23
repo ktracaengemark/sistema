@@ -644,78 +644,6 @@ class Relatorio_pag extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-        ), TRUE));	
-		
-        $data['query'] = quotes_to_entities($this->input->post(array(
-			'Orcamento',
-			'Cliente',
-			'idApp_Cliente',
-			'Fornecedor',
-			'idApp_Fornecedor',
-			'idApp_OrcaTrata',
-			'NomeAssociado',
-			'idSis_Usuario',
-			'DataVencimentoOrca',
-			//'NomeCliente',
-			'NomeUsuario',
-			'NomeEmpresa',
-			'NomeFornecedor',
-			'Dia',
-			'Ano',
-			'Mesvenc',
-			'Mespag',
-			'DataInicio',
-            'DataFim',
-			'DataInicio2',
-            'DataFim2',
-			'DataInicio3',
-            'DataFim3',
-			'DataInicio4',
-            'DataFim4',
-			'DataInicio5',
-            'DataFim5',
-			'HoraInicio5',
-            'HoraFim5',
-			'DataInicio6',
-            'DataFim6',
-			'DataInicio7',
-            'DataFim7',
-			'TipoFinanceiro',
-			'idTab_TipoRD',
-			'Ordenamento',
-            'Campo',
-			'ObsOrca',
-            'AprovadoOrca',
-			'CombinadoFrete',
-            'QuitadoOrca',
-			'ConcluidoOrca',
-			'FinalizadoOrca',
-			'CanceladoOrca',
-			'StatusComissaoOrca',
-			'StatusComissaoOrca_Online',
-			'Quitado',
-			'Modalidade',
-			'AVAP',
-			'Tipo_Orca',
-			'FormaPagamento',
-			'TipoFrete',
-			'Orcarec',
-			'Orcades',
-			'Produtos',
-			'Parcelas',
-			'idTab_Catprod',
-			'DataValidadeProduto',
-			'ConcluidoProduto',
-			'DevolvidoProduto',
-			'ConcluidoServico',
-			'Agrupar',
-			'Ultimo',
-			'nome',
-        ), TRUE));
-
 		$data['query']['nome'] = 'Cliente';
 		$data['form_open_path'] = 'relatorio_pag/comissao_pag';
 		$data['baixatodas'] = 'Orcatrata/baixadacomissao/';
@@ -747,51 +675,60 @@ class Relatorio_pag extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			$data['pesquisa_query'] = $this->Relatorio_model->list_orcamento(FALSE,TRUE, TRUE);
-			$config['total_rows'] = $data['pesquisa_query']->num_rows();
-			//$config['total_rows'] = $this->Relatorio_model->list_orcamento(FALSE, TRUE, TRUE); 
-			$config['base_url'] = base_url() . 'relatorio_pag/comissao_pag/';
-			//$this->load->library('pagination');
-			$config['per_page'] = 12;
-			$config["uri_segment"] = 3;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
+			$data['pesquisa_query'] = $this->Relatorio_model->list_comissao($_SESSION['FiltroComissao'],TRUE, TRUE);
 			
-			$data['Pesquisa'] = '';
-
-			if($config['total_rows'] >= 1){
-				$data['total_rows'] = $config['total_rows'];
+			if($data['pesquisa_query'] === FALSE){
+				
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'relatorio/comissao' . $data['msg']);
+				exit();
 			}else{
-				$data['total_rows'] = 0;
-			}
-			
-            $this->pagination->initialize($config);
-            
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-            $data['pagina'] = $page;
-			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Relatorio_model->list_orcamento(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-			$data['pagination'] = $this->pagination->create_links();
 
-            $data['list1'] = $this->load->view('relatorio/list_orcamento', $data, TRUE);
+				$config['total_rows'] = $data['pesquisa_query']->num_rows();
+
+				$config['base_url'] = base_url() . 'relatorio_pag/comissao_pag/';
+
+				$config['per_page'] = 12;
+				$config["uri_segment"] = 3;
+				$config['reuse_query_string'] = TRUE;
+				$config['num_links'] = 2;
+				$config['use_page_numbers'] = TRUE;
+				$config['full_tag_open'] = "<ul class='pagination'>";
+				$config['full_tag_close'] = "</ul>";
+				$config['num_tag_open'] = '<li>';
+				$config['num_tag_close'] = '</li>';
+				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+				$config['next_tag_open'] = "<li>";
+				$config['next_tagl_close'] = "</li>";
+				$config['prev_tag_open'] = "<li>";
+				$config['prev_tagl_close'] = "</li>";
+				$config['first_tag_open'] = "<li>";
+				$config['first_tagl_close'] = "</li>";
+				$config['last_tag_open'] = "<li>";
+				$config['last_tagl_close'] = "</li>";
+				
+				$data['Pesquisa'] = '';
+
+				if($config['total_rows'] >= 1){
+					$data['total_rows'] = $config['total_rows'];
+				}else{
+					$data['total_rows'] = 0;
+				}
+				
+				$this->pagination->initialize($config);
+				
+				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+				$data['pagina'] = $page;
+				$data['per_page'] = $config['per_page'];
+				$data['report'] = $this->Relatorio_model->list_comissao($_SESSION['FiltroComissao'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+				$data['pagination'] = $this->pagination->create_links();
+
+				$data['list1'] = $this->load->view('relatorio/list_comissao', $data, TRUE);
+			}
         }		
 
-        $this->load->view('relatorio/tela_orcamento', $data);
+        $this->load->view('relatorio/tela_comissao', $data);
 
         $this->load->view('basico/footer');
 
