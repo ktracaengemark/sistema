@@ -93,6 +93,11 @@ $telefone = trim(mb_strtoupper($telefone0, 'ISO-8859-1'));
 $sexo = trim(mb_strtoupper($sexo0, 'ISO-8859-1'));
 
 $usuario 	= $_SESSION['log']['idSis_Usuario'];
+if($_SESSION['Usuario']['Nivel'] == 2){
+	$nivel_cliente = $_SESSION['Usuario']['Nivel'];
+}else{
+	$nivel_cliente = 1;
+}
 $empresa 	= $_SESSION['log']['idSis_Empresa'];
 $modulo 	= $_SESSION['log']['idTab_Modulo'];
 $datacad	= date('Y-m-d H:i:s', time());
@@ -106,6 +111,8 @@ $row_resultado_usuario = mysqli_fetch_array($resultado_usuario, MYSQLI_ASSOC);
 $result_cliente = "SELECT * FROM App_Cliente WHERE  idSis_Empresa = '" .$empresa. "' AND (usuario='". $dados['CelularCliente'] ."' OR CelularCliente='". $dados['CelularCliente'] ."')";
 $resultado_cliente = mysqli_query($conn, $result_cliente);
 $row_resultado_cliente = mysqli_fetch_array($resultado_cliente, MYSQLI_ASSOC);
+
+
 
 if(($resultado_usuario) AND ($resultado_usuario->num_rows != 0)){
 	//  Encontrou o Associado da empresa 5
@@ -146,6 +153,7 @@ if($cadastrar == 1){
 												idSis_Usuario, 
 												idSis_Associado, 
 												NomeCliente, 
+												NivelCliente,
 												CelularCliente,
 												Telefone,
 												Email,
@@ -171,6 +179,7 @@ if($cadastrar == 1){
 												'" .$usuario. "',
 												'" .$row_resultado_usuario['idSis_Associado']. "',
 												'" .$row_resultado_usuario['Nome']. "',
+												'" .$nivel_cliente. "',
 												'" .$row_resultado_usuario['CelularAssociado']. "',
 												'" .$telefone. "',
 												'" .$email. "',
@@ -325,6 +334,7 @@ if($cadastrar == 1){
 													idSis_Usuario, 
 													idSis_Associado, 
 													NomeCliente, 
+													NivelCliente,
 													CelularCliente,
 													Telefone,
 													Email,
@@ -350,6 +360,7 @@ if($cadastrar == 1){
 													'" .$usuario. "',
 													'" .$id_usuario_5. "',
 													'" .$cliente. "',
+													'" .$nivel_cliente. "',
 													'" .$dados['CelularCliente']. "',
 													'" .$telefone. "',
 													'" .$email. "',

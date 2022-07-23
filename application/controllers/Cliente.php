@@ -440,7 +440,11 @@ class Cliente extends CI_Controller {
 								$data['query']['Codigo'] = $data['associado']['Codigo'];
 								$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 								$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-								$data['query']['NivelCliente'] = $_SESSION['Usuario']['Nivel'];
+								if($_SESSION['Usuario']['Nivel'] == 2){
+									$data['query']['NivelCliente'] = $_SESSION['Usuario']['Nivel'];
+								}else{
+									$data['query']['NivelCliente'] = 1;
+								}
 								$data['query']['LocalCadastroCliente'] = "L";
 								
 								$data['campos'] = array_keys($data['query']);
@@ -502,7 +506,11 @@ class Cliente extends CI_Controller {
 							$data['query']['Codigo'] = $data['associado']['Codigo'];
 							$data['query']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 							$data['query']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-							$data['query']['NivelCliente'] = $_SESSION['Usuario']['Nivel'];
+							if($_SESSION['Usuario']['Nivel'] == 2){
+								$data['query']['NivelCliente'] = $_SESSION['Usuario']['Nivel'];
+							}else{
+								$data['query']['NivelCliente'] = 1;
+							}
 							$data['query']['LocalCadastroCliente'] = "L";
 
 							$data['campos'] = array_keys($data['query']);
