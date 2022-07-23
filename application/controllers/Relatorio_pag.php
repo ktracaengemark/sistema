@@ -175,56 +175,36 @@ class Relatorio_pag extends CI_Controller {
 			exit();
 			
 		}else{
-			
-			$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-				'id_Cliente_Auto',
-				'NomeClienteAuto',
-				'id_ClientePet_Auto',
-				'NomeClientePetAuto',
-				'id_ClienteDep_Auto',
-				'NomeClienteDepAuto',
-			), TRUE));	
-			
-			$data['query'] = quotes_to_entities($this->input->post(array(
-				//'NomeCliente',
-				'idApp_Cliente',
-				'idApp_ClientePet',
-				'idApp_ClienteDep',
-				'Ativo',
-				'Motivo',
-				'Ordenamento',
-				'Campo',
-				'DataInicio',
-				'DataFim',
-				'DataInicio2',
-				'DataFim2',
-				'DataInicio3',
-				'DataFim3',
-				'Dia',
-				'Mesvenc',
-				'Ano',
-				'Texto1',
-				'Texto2',
-				'Texto3',
-				'Texto4',
-				'Agrupar',
-				'Pedidos',
-				'Sexo',
-				'Pesquisa',
-			), TRUE));
 
 			$data['titulo'] = 'Clientes';
 			$data['form_open_path'] = 'relatorio_pag/clientes_pag';
 			
 			$data['paginacao'] = 'S';
 			$data['caminho'] = 'relatorio/clientes/';
-			
-			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-			#run form validation
-			if ($this->form_validation->run() !== TRUE) {
+			if(isset($_SESSION['FiltroClientes']['Agrupar']) && $_SESSION['FiltroClientes']['Agrupar'] != "0"){
+				$_SESSION['FiltroClientes']['Aparecer'] = 0;
+				$data['aparecer'] = 0;
+			}else{
+				$_SESSION['FiltroClientes']['Aparecer'] = 1;
+				$data['aparecer'] = 1;
+			}
 
-				//$this->load->library('pagination');
+			$data['pesquisa_query'] = $this->Relatorio_model->list_clientes($_SESSION['FiltroClientes'],TRUE, TRUE);
+
+			if($data['pesquisa_query'] === FALSE){
+				
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'relatorio/clientes' . $data['msg']);
+				exit();
+			}else{
+
+				$config['base_url'] = base_url() . 'relatorio_pag/clientes_pag/';
+				
+				//$config['total_rows'] = $this->Relatorio_model->list_clientes(FALSE, TRUE, TRUE);
+
+				$config['total_rows'] = $data['pesquisa_query'];			   					
+				
 				$config['per_page'] = 10;
 				$config["uri_segment"] = 3;
 				$config['reuse_query_string'] = TRUE;
@@ -245,10 +225,7 @@ class Relatorio_pag extends CI_Controller {
 				$config['last_tag_open'] = "<li>";
 				$config['last_tagl_close'] = "</li>";
 				$data['Pesquisa'] = '';
-				
-				$config['base_url'] = base_url() . 'relatorio_pag/clientes_pag/';
-				$config['total_rows'] = $this->Relatorio_model->list_clientes(FALSE, TRUE, TRUE);
-			   
+
 				if($config['total_rows'] >= 1){
 					$data['total_rows'] = $config['total_rows'];
 				}else{
@@ -260,13 +237,20 @@ class Relatorio_pag extends CI_Controller {
 				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
 				$data['pagina'] = $page;
 				$data['per_page'] = $config['per_page'];
-				$data['report'] = $this->Relatorio_model->list_clientes(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+				$data['report'] = $this->Relatorio_model->list_clientes($_SESSION['FiltroClientes'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+				
 				$data['pagination'] = $this->pagination->create_links();
 
-
+				if($_SESSION['FiltroClientes']['Agrupar'] != "0"){
+					$data['aparecer'] = 0;
+				}else{
+					$data['aparecer'] = 1;
+				}
+				
 				$data['list'] = $this->load->view('relatorio/list_clientes', $data, TRUE);
+			
 			}
-
+			
 			$this->load->view('relatorio/tela_clientes', $data);
 		}
         $this->load->view('basico/footer');

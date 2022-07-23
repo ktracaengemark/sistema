@@ -44,7 +44,7 @@ include_once '../../conexao.php';
 	$date_fim_ultimo = ($_SESSION['FiltroClientes']['DataFim3']) ? 'C.UltimoPedido <= "' . $_SESSION['FiltroClientes']['DataFim3'] . '" AND ' : FALSE;		
 
 	$data['Dia'] = ($_SESSION['FiltroClientes']['Dia']) ? ' AND DAY(C.DataNascimento) = ' . $_SESSION['FiltroClientes']['Dia'] : FALSE;
-	$data['Mesvenc'] = ($_SESSION['FiltroClientes']['Mesvenc']) ? ' AND MONTH(C.DataNascimento) = ' . $_SESSION['FiltroClientes']['Mesvenc'] : FALSE;
+	$data['Mes'] = ($_SESSION['FiltroClientes']['Mes']) ? ' AND MONTH(C.DataNascimento) = ' . $_SESSION['FiltroClientes']['Mes'] : FALSE;
 	$data['Ano'] = ($_SESSION['FiltroClientes']['Ano']) ? ' AND YEAR(C.DataNascimento) = ' . $_SESSION['FiltroClientes']['Ano'] : FALSE;
 
 	if(isset($_SESSION['FiltroClientes']['Sexo'])){
@@ -104,7 +104,7 @@ include_once '../../conexao.php';
 						C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
 						' . $data['idApp_Cliente'] . ' 
 						' . $data['Dia'] . ' 
-						' . $data['Mesvenc'] . '
+						' . $data['Mes'] . '
 						' . $data['Ano'] . '
 						' . $pesquisar . '
 					' . $groupby . '

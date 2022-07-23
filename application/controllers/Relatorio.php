@@ -5865,6 +5865,8 @@ class Relatorio extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 3)
             $data['msg'] = $this->basico->msg('<strong>Cliente Não Encontrado.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 4)
+            $data['msg'] = $this->basico->msg('<strong>A Pesquisa está muito grande, ela excedeu 30000 linhas. Refine o seu filtro.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
 		
@@ -5903,7 +5905,7 @@ class Relatorio extends CI_Controller {
 				'DataInicio3',
 				'DataFim3',
 				'Dia',
-				'Mesvenc',
+				'Mes',
 				'Ano',
 				'Texto1',
 				'Texto2',
@@ -5928,11 +5930,24 @@ class Relatorio extends CI_Controller {
 				'3' => 'Outros',
 			);
 			
-			$data['select']['Agrupar'] = array(
-				'0' => 'Todos',
-				'idApp_Cliente' => 'Cliente',
-			);
-			
+			if($_SESSION['Empresa']['CadastrarPet'] == "S"){
+				$data['select']['Agrupar'] = array(
+					'0' => 'Cliente/Pet',
+					'idApp_Cliente' => 'Cliente',
+				);
+			}else{
+				if($_SESSION['Empresa']['CadastrarDep'] == "S"){
+					$data['select']['Agrupar'] = array(
+						'0' => 'Cliente/Det',
+						'idApp_Cliente' => 'Cliente',
+					);
+				}else{
+					$data['select']['Agrupar'] = array(
+						'idApp_Cliente' => 'Cliente',
+					);
+				}
+			}	
+				
 			$data['select']['Pedidos'] = array(
 				'0' => 'Todos',
 				'1' => 'Clientes S/Pedidos',
@@ -5965,7 +5980,7 @@ class Relatorio extends CI_Controller {
 
 			//$data['select']['NomeCliente'] = $this->Relatorio_model->select_cliente();
 			$data['select']['Dia'] = $this->Relatorio_model->select_dia();
-			$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
+			$data['select']['Mes'] = $this->Relatorio_model->select_mes();
 			$data['select']['Motivo'] = $this->Relatorio_model->select_motivo();
 			
 			$data['select']['option'] = ($_SESSION['log']['Permissao'] <= 2) ? '<option value="">-- Sel. um Prof. --</option>' : FALSE;
@@ -5975,34 +5990,6 @@ class Relatorio extends CI_Controller {
 			
 			$data['paginacao'] = 'N';
 
-			$_SESSION['FiltroClientes']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-			$_SESSION['FiltroClientes']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-			$_SESSION['FiltroClientes']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
-			$_SESSION['FiltroClientes']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
-			$_SESSION['FiltroClientes']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
-			$_SESSION['FiltroClientes']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');        
-			$_SESSION['FiltroClientes']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-			$_SESSION['FiltroClientes']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-			$_SESSION['FiltroClientes']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-			$_SESSION['FiltroClientes']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
-			$_SESSION['FiltroClientes']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
-			$_SESSION['FiltroClientes']['Ativo'] = $data['query']['Ativo'];
-			$_SESSION['FiltroClientes']['Motivo'] = $data['query']['Motivo'];
-			$_SESSION['FiltroClientes']['Campo'] = $data['query']['Campo'];
-			$_SESSION['FiltroClientes']['Ordenamento'] = $data['query']['Ordenamento'];
-			$_SESSION['FiltroClientes']['Dia'] = $data['query']['Dia'];
-			$_SESSION['FiltroClientes']['Mesvenc'] = $data['query']['Mesvenc'];
-			$_SESSION['FiltroClientes']['Ano'] = $data['query']['Ano'];
-			$_SESSION['FiltroClientes']['Agrupar'] = $data['query']['Agrupar'];
-			$_SESSION['FiltroClientes']['Pedidos'] = $data['query']['Pedidos'];
-			$_SESSION['FiltroClientes']['Sexo'] = $data['query']['Sexo'];
-			$_SESSION['FiltroClientes']['Pesquisa'] = $data['query']['Pesquisa'];
-			
-			$_SESSION['FiltroClientes']['Texto1'] = utf8_encode($data['query']['Texto1']);
-			$_SESSION['FiltroClientes']['Texto2'] = utf8_encode($data['query']['Texto2']);
-			$_SESSION['FiltroClientes']['Texto3'] = utf8_encode($data['query']['Texto3']);
-			$_SESSION['FiltroClientes']['Texto4'] = utf8_encode($data['query']['Texto4']);
-			
 			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 			$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'trim');
 			$this->form_validation->set_rules('DataInicio', 'Data Início do Cadastro', 'trim|valid_date');
@@ -6015,80 +6002,102 @@ class Relatorio extends CI_Controller {
 			#run form validation
 			if ($this->form_validation->run() !== FALSE) {
 
-				$data['bd']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-				$data['bd']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-				$data['bd']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
-				$data['bd']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
-				$data['bd']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
-				$data['bd']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
-				//$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
-				$data['bd']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-				$data['bd']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-				$data['bd']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-				$data['bd']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
-				$data['bd']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
-				$data['bd']['Ativo'] = $data['query']['Ativo'];
-				$data['bd']['Motivo'] = $data['query']['Motivo'];
-				$data['bd']['Campo'] = $data['query']['Campo'];
-				$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-				$data['bd']['Dia'] = $data['query']['Dia'];
-				$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
-				$data['bd']['Ano'] = $data['query']['Ano'];
-				$data['bd']['Agrupar'] = $data['query']['Agrupar'];
-				$data['bd']['Pedidos'] = $data['query']['Pedidos'];
-				$data['bd']['Sexo'] = $data['query']['Sexo'];
-				$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
-
-				//$this->load->library('pagination');
-				$config['per_page'] = 10;
-				$config["uri_segment"] = 3;
-				$config['reuse_query_string'] = TRUE;
-				$config['num_links'] = 2;
-				$config['use_page_numbers'] = TRUE;
-				$config['full_tag_open'] = "<ul class='pagination'>";
-				$config['full_tag_close'] = "</ul>";
-				$config['num_tag_open'] = '<li>';
-				$config['num_tag_close'] = '</li>';
-				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-				$config['next_tag_open'] = "<li>";
-				$config['next_tagl_close'] = "</li>";
-				$config['prev_tag_open'] = "<li>";
-				$config['prev_tagl_close'] = "</li>";
-				$config['first_tag_open'] = "<li>";
-				$config['first_tagl_close'] = "</li>";
-				$config['last_tag_open'] = "<li>";
-				$config['last_tagl_close'] = "</li>";
-				
-				$config['base_url'] = base_url() . 'relatorio_pag/clientes_pag/';
-				$config['total_rows'] = $this->Relatorio_model->list_clientes($data['bd'],TRUE, TRUE);
-			   
-				if($config['total_rows'] >= 1){
-					$data['total_rows'] = $config['total_rows'];
+				$_SESSION['FiltroClientes']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+				$_SESSION['FiltroClientes']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+				$_SESSION['FiltroClientes']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+				$_SESSION['FiltroClientes']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+				$_SESSION['FiltroClientes']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+				$_SESSION['FiltroClientes']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');        
+				$_SESSION['FiltroClientes']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+				$_SESSION['FiltroClientes']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+				$_SESSION['FiltroClientes']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+				$_SESSION['FiltroClientes']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
+				$_SESSION['FiltroClientes']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
+				$_SESSION['FiltroClientes']['Ativo'] = $data['query']['Ativo'];
+				$_SESSION['FiltroClientes']['Motivo'] = $data['query']['Motivo'];
+				$_SESSION['FiltroClientes']['Campo'] = $data['query']['Campo'];
+				$_SESSION['FiltroClientes']['Ordenamento'] = $data['query']['Ordenamento'];
+				$_SESSION['FiltroClientes']['Dia'] = $data['query']['Dia'];
+				$_SESSION['FiltroClientes']['Mes'] = $data['query']['Mes'];
+				$_SESSION['FiltroClientes']['Ano'] = $data['query']['Ano'];
+				$_SESSION['FiltroClientes']['Agrupar'] = $data['query']['Agrupar'];
+				$_SESSION['FiltroClientes']['Pedidos'] = $data['query']['Pedidos'];
+				$_SESSION['FiltroClientes']['Sexo'] = $data['query']['Sexo'];
+				$_SESSION['FiltroClientes']['Pesquisa'] = $data['query']['Pesquisa'];
+					
+				if(isset($_SESSION['FiltroClientes']['Agrupar']) && $_SESSION['FiltroClientes']['Agrupar'] != "0"){
+					$_SESSION['FiltroClientes']['Aparecer'] = 0;
+					$data['aparecer'] = 0;
 				}else{
-					$data['total_rows'] = 0;
+					$_SESSION['FiltroClientes']['Aparecer'] = 1;
+					$data['aparecer'] = 1;
 				}
-				
-				$this->pagination->initialize($config);
-				
-				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-				$data['pagina'] = $page;
-				$data['per_page'] = $config['per_page'];
-				
-				$data['report'] = $this->Relatorio_model->list_clientes($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-				$data['pagination'] = $this->pagination->create_links();
+					
+				$data['pesquisa_query'] = $this->Relatorio_model->list_clientes($_SESSION['FiltroClientes'],TRUE, TRUE);
 
-				if($data['query']['idApp_Cliente']){
-					if ($data['report']->num_rows() >= 1) {
-						$info = $data['report']->result_array();
-						redirect('cliente/prontuario/' . $info[0]['idApp_Cliente'] );
-						exit();
-					} else {
+				if($data['pesquisa_query'] === FALSE){
+					
+					$data['msg'] = '?m=4';
+					redirect(base_url() . 'relatorio/clientes' . $data['msg']);
+					exit();
+				}else{
+
+					$config['total_rows'] = $data['pesquisa_query'];
+					
+					$config['base_url'] = base_url() . 'relatorio_pag/clientes_pag/';					
+					$config['per_page'] = 10;
+					$config["uri_segment"] = 3;
+					$config['reuse_query_string'] = TRUE;
+					$config['num_links'] = 2;
+					$config['use_page_numbers'] = TRUE;
+					$config['full_tag_open'] = "<ul class='pagination'>";
+					$config['full_tag_close'] = "</ul>";
+					$config['num_tag_open'] = '<li>';
+					$config['num_tag_close'] = '</li>';
+					$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+					$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+					$config['next_tag_open'] = "<li>";
+					$config['next_tagl_close'] = "</li>";
+					$config['prev_tag_open'] = "<li>";
+					$config['prev_tagl_close'] = "</li>";
+					$config['first_tag_open'] = "<li>";
+					$config['first_tagl_close'] = "</li>";
+					$config['last_tag_open'] = "<li>";
+					$config['last_tagl_close'] = "</li>";
+
+					if($config['total_rows'] >= 1){
+						$data['total_rows'] = $config['total_rows'];
+					}else{
+						$data['total_rows'] = 0;
+					}
+					
+					$this->pagination->initialize($config);
+					
+					$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+					$data['pagina'] = $page;
+					$data['per_page'] = $config['per_page'];
+
+					$data['report'] = $this->Relatorio_model->list_clientes($_SESSION['FiltroClientes'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+					
+					$_SESSION['FiltroClientes']['Texto1'] = utf8_encode($data['query']['Texto1']);
+					$_SESSION['FiltroClientes']['Texto2'] = utf8_encode($data['query']['Texto2']);
+					$_SESSION['FiltroClientes']['Texto3'] = utf8_encode($data['query']['Texto3']);
+					$_SESSION['FiltroClientes']['Texto4'] = utf8_encode($data['query']['Texto4']);					
+
+					$data['pagination'] = $this->pagination->create_links();
+
+					if($data['query']['idApp_Cliente']){
+						if ($data['report']->num_rows() >= 1) {
+							$info = $data['report']->result_array();
+							redirect('cliente/prontuario/' . $info[0]['idApp_Cliente'] );
+							exit();
+						} else {
+							$data['list'] = $this->load->view('relatorio/list_clientes', $data, TRUE);
+						}				
+					}else{
 						$data['list'] = $this->load->view('relatorio/list_clientes', $data, TRUE);
-					}				
-				}else{
-					$data['list'] = $this->load->view('relatorio/list_clientes', $data, TRUE);
-				}
+					}
+				}	
 			}
 
 			$this->load->view('relatorio/tela_clientes', $data);

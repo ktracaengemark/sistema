@@ -11,6 +11,13 @@
 	<head>
 	<body>
 		<?php
+		
+		if($_SESSION['FiltroClientes']['Agrupar'] != "0"){
+			$data['aparecer'] = 0;
+		}else{
+			$data['aparecer'] = 1;
+		}
+
 		// Definimos o nome do arquivo que será exportado
 		//$arquivo = 'clientes.xls';
 		$arquivo = 'Clientes_' . date('d-m-Y') . '.xls';
@@ -24,32 +31,45 @@
 		
 		// Campos da Tabela
 		$html .= '<tr>';
-		$html .= '<td><b>Empresa</b></td>';
-		$html .= '<td><b>Ficha</b></td>';
-		$html .= '<td><b>id_Cliente</b></td>';
-		$html .= '<td><b>Cliente</b></td>';
-		$html .= '<td><b>Nasc.</b></td>';
-		$html .= '<td><b>Sexo</b></td>';
-		$html .= '<td><b>Celular</b></td>';
-		$html .= '<td><b>Telefone</b></td>';
-		$html .= '<td><b>Telefone2</b></td>';
-		$html .= '<td><b>Telefone3</b></td>';
-		$html .= '<td><b>CepCliente</b></td>';
-		$html .= '<td><b>Endereço</b></td>';
-		$html .= '<td><b>NumeroCliente</b></td>';
-		$html .= '<td><b>ComplementoCliente</b></td>';
-		$html .= '<td><b>Bairro</b></td>';
-		$html .= '<td><b>Cidade</b></td>';
-		$html .= '<td><b>EstadoCliente</b></td>';
-		$html .= '<td><b>ReferenciaCliente</b></td>';
-		$html .= '<td><b>Email</b></td>';
-		$html .= '<td><b>Obs</b></td>';
-		$html .= '<td><b>Ativo</b></td>';
-		$html .= '<td><b>Motivo</b></td>';
-		$html .= '<td><b>Cadast.</b></td>';
-		$html .= '<td><b>Ult.Pdd.</b></td>';
-		$html .= '<td><b>ValorCash</b></td>';
-		$html .= '<td><b>Valid.Cash</b></td>';
+			$html .= '<td><b>Empresa</b></td>';
+			$html .= '<td><b>Ficha</b></td>';
+			$html .= '<td><b>id_Cliente</b></td>';
+			$html .= '<td><b>Cliente</b></td>';
+			$html .= '<td><b>Nasc.</b></td>';
+			$html .= '<td><b>Sexo</b></td>';
+			$html .= '<td><b>Celular</b></td>';
+			$html .= '<td><b>Telefone</b></td>';
+			$html .= '<td><b>Telefone2</b></td>';
+			$html .= '<td><b>Telefone3</b></td>';
+			$html .= '<td><b>CepCliente</b></td>';
+			$html .= '<td><b>Endereço</b></td>';
+			$html .= '<td><b>NumeroCliente</b></td>';
+			$html .= '<td><b>ComplementoCliente</b></td>';
+			$html .= '<td><b>Bairro</b></td>';
+			$html .= '<td><b>Cidade</b></td>';
+			$html .= '<td><b>EstadoCliente</b></td>';
+			$html .= '<td><b>ReferenciaCliente</b></td>';
+			$html .= '<td><b>Email</b></td>';
+			$html .= '<td><b>Obs</b></td>';
+			$html .= '<td><b>Ativo</b></td>';
+			$html .= '<td><b>Motivo</b></td>';
+			$html .= '<td><b>Cadast.</b></td>';
+			$html .= '<td><b>Ult.Pdd.</b></td>';
+			$html .= '<td><b>ValorCash</b></td>';
+			$html .= '<td><b>Valid.Cash</b></td>';
+			
+			if(isset($data['aparecer']) && $data['aparecer'] == 1){
+				if($_SESSION['Empresa']['CadastrarPet'] == "S"){
+					$html .= '<td><b>id_Pet</b></td>';
+					$html .= '<td><b>Pet</b></td>';
+				 }else{
+					 if($_SESSION['Empresa']['CadastrarDep'] == "S"){
+						$html .= '<td><b>id_Dep</b></td>';
+						$html .= '<td><b>Dep</b></td>';
+					 }
+				 }
+			}
+			
 		$html .= '</tr>';
 		
 		//Selecionar os itens da Tabela
@@ -93,7 +113,7 @@
 		$date_fim_ultimo = ($_SESSION['FiltroClientes']['DataFim3']) ? 'C.UltimoPedido <= "' . $_SESSION['FiltroClientes']['DataFim3'] . '" AND ' : FALSE;		
 
 		$data['Dia'] = ($_SESSION['FiltroClientes']['Dia']) ? ' AND DAY(C.DataNascimento) = ' . $_SESSION['FiltroClientes']['Dia'] : FALSE;
-		$data['Mesvenc'] = ($_SESSION['FiltroClientes']['Mesvenc']) ? ' AND MONTH(C.DataNascimento) = ' . $_SESSION['FiltroClientes']['Mesvenc'] : FALSE;
+		$data['Mes'] = ($_SESSION['FiltroClientes']['Mes']) ? ' AND MONTH(C.DataNascimento) = ' . $_SESSION['FiltroClientes']['Mes'] : FALSE;
 		$data['Ano'] = ($_SESSION['FiltroClientes']['Ano']) ? ' AND YEAR(C.DataNascimento) = ' . $_SESSION['FiltroClientes']['Ano'] : FALSE;
 
 		if(isset($_SESSION['FiltroClientes']['Sexo'])){
@@ -130,10 +150,45 @@
 		$filtro20 = ($_SESSION['FiltroClientes']['Motivo'] != '0') ? 'C.Motivo = "' . $_SESSION['FiltroClientes']['Motivo'] . '" AND ' : FALSE;
 		$groupby = ($_SESSION['FiltroClientes']['Agrupar'] != "0") ? 'GROUP BY C.' . $_SESSION['FiltroClientes']['Agrupar'] . '' : FALSE;
 
+		if($_SESSION['Empresa']['CadastrarPet'] == "S"){
+			$clientepet = 'LEFT JOIN App_ClientePet AS CP ON CP.idApp_Cliente = C.idApp_Cliente';
+			$cp_id_clientepet = 'CP.idApp_ClientePet,';
+			$cp_nomeclientepet = 'CP.NomeClientePet,';
+			$clientedep = FALSE;
+			$cd_id_clientedep = FALSE;
+			$cd_nomeclientedep = FALSE;
+		}else{
+			$clientepet = FALSE;
+			$cp_id_clientepet = FALSE;
+			$cp_nomeclientepet = FALSE;
+			if($_SESSION['Empresa']['CadastrarDep'] == "S"){
+				$clientedep = 'LEFT JOIN App_ClienteDep AS CD ON CD.idApp_Cliente = C.idApp_Cliente';
+				$cd_id_clientedep = 'CD.idApp_ClienteDep,';
+				$cd_nomeclientedep = 'CD.NomeClienteDep,';
+			}else{
+				$clientedep = FALSE;
+				$cd_id_clientedep = FALSE;
+				$cd_nomeclientedep = FALSE;
+			}
+		}
+
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$revendedor = 'AND (C.NivelCliente = "1" OR C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ')';
+		}else{
+			$revendedor = FALSE;
+		}
+
 		$result_msg_contatos = '
-								SELECT * 
+								SELECT
+									' . $cp_id_clientepet . '
+									' . $cp_nomeclientepet . '
+									' . $cd_id_clientedep . '
+									' . $cd_nomeclientedep . ' 
+									C.* 
 								FROM 
 									App_Cliente AS C
+										' . $clientepet . '
+										' . $clientedep . '
 								WHERE
 									' . $date_inicio_orca . '
 									' . $date_fim_orca . '
@@ -148,9 +203,10 @@
 									C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
 									' . $data['idApp_Cliente'] . ' 
 									' . $data['Dia'] . ' 
-									' . $data['Mesvenc'] . '
+									' . $data['Mes'] . '
 									' . $data['Ano'] . '
 									' . $pesquisar . '
+									' . $revendedor . '
 								' . $groupby . '
 								ORDER BY
 									' . $data['Campo'] . '
@@ -160,40 +216,53 @@
 		
 		while($row_msg_contatos = mysqli_fetch_assoc($resultado_msg_contatos)){
 			$html .= '<tr>';
-			$html .= '<td>'.$row_msg_contatos["idSis_Empresa"].'</td>';
-			$html .= '<td>'.$row_msg_contatos["RegistroFicha"].'</td>';
-			$html .= '<td>'.$row_msg_contatos["idApp_Cliente"].'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["NomeCliente"]).'</td>';
-			$data_nasc = date('d/m/Y',strtotime($row_msg_contatos["DataNascimento"]));
-			$html .= '<td>'.$data_nasc.'</td>';
-			$html .= '<td>'.$row_msg_contatos["Sexo"].'</td>';
-			$html .= '<td>'.$row_msg_contatos["CelularCliente"].'</td>';
-			$html .= '<td>'.$row_msg_contatos["Telefone"].'</td>';
-			$html .= '<td>'.$row_msg_contatos["Telefone2"].'</td>';
-			$html .= '<td>'.$row_msg_contatos["Telefone3"].'</td>';
-			$html .= '<td>'.$row_msg_contatos["CepCliente"].'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["EnderecoCliente"]).'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["NumeroCliente"]).'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["ComplementoCliente"]).'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["BairroCliente"]).'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["CidadeCliente"]).'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["EstadoCliente"]).'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["ReferenciaCliente"]).'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["Email"]).'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["Obs"]).'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["Ativo"]).'</td>';
-			$html .= '<td>'.$row_msg_contatos["Motivo"].'</td>';
-			$data_cad = date('d/m/Y',strtotime($row_msg_contatos["DataCadastroCliente"]));
-			$html .= '<td>'.$data_cad.'</td>';
-			if(!isset($row_msg_contatos["UltimoPedido"]) || $row_msg_contatos["UltimoPedido"] == "0000-00-00"){
-				$dt_ult_pdd = NULL;
-			}else{
-				$dt_ult_pdd = date('d/m/Y',strtotime($row_msg_contatos["UltimoPedido"]));
-			}
-			$html .= '<td>'.$dt_ult_pdd.'</td>';
-			$html .= '<td>'.$row_msg_contatos["CashBackCliente"].'</td>';
-			$data_val = date('d/m/Y',strtotime($row_msg_contatos["ValidadeCashBack"]));
-			$html .= '<td>'.$data_val.'</td>';
+				$html .= '<td>'.$row_msg_contatos["idSis_Empresa"].'</td>';
+				$html .= '<td>'.$row_msg_contatos["RegistroFicha"].'</td>';
+				$html .= '<td>'.$row_msg_contatos["idApp_Cliente"].'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["NomeCliente"]).'</td>';
+				$data_nasc = date('d/m/Y',strtotime($row_msg_contatos["DataNascimento"]));
+				$html .= '<td>'.$data_nasc.'</td>';
+				$html .= '<td>'.$row_msg_contatos["Sexo"].'</td>';
+				$html .= '<td>'.$row_msg_contatos["CelularCliente"].'</td>';
+				$html .= '<td>'.$row_msg_contatos["Telefone"].'</td>';
+				$html .= '<td>'.$row_msg_contatos["Telefone2"].'</td>';
+				$html .= '<td>'.$row_msg_contatos["Telefone3"].'</td>';
+				$html .= '<td>'.$row_msg_contatos["CepCliente"].'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["EnderecoCliente"]).'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["NumeroCliente"]).'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["ComplementoCliente"]).'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["BairroCliente"]).'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["CidadeCliente"]).'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["EstadoCliente"]).'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["ReferenciaCliente"]).'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["Email"]).'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["Obs"]).'</td>';
+				$html .= '<td>'.utf8_encode($row_msg_contatos["Ativo"]).'</td>';
+				$html .= '<td>'.$row_msg_contatos["Motivo"].'</td>';
+				$data_cad = date('d/m/Y',strtotime($row_msg_contatos["DataCadastroCliente"]));
+				$html .= '<td>'.$data_cad.'</td>';
+				if(!isset($row_msg_contatos["UltimoPedido"]) || $row_msg_contatos["UltimoPedido"] == "0000-00-00"){
+					$dt_ult_pdd = NULL;
+				}else{
+					$dt_ult_pdd = date('d/m/Y',strtotime($row_msg_contatos["UltimoPedido"]));
+				}
+				$html .= '<td>'.$dt_ult_pdd.'</td>';
+				$html .= '<td>'.$row_msg_contatos["CashBackCliente"].'</td>';
+				$data_val = date('d/m/Y',strtotime($row_msg_contatos["ValidadeCashBack"]));
+				$html .= '<td>'.$data_val.'</td>';
+
+				if(isset($data['aparecer']) && $data['aparecer'] == 1){
+					if($_SESSION['Empresa']['CadastrarPet'] == "S"){
+						$html .= '<td>'.$row_msg_contatos["idApp_ClientePet"].'</td>';
+						$html .= '<td>'.utf8_encode($row_msg_contatos["NomeClientePet"]).'</td>';
+					 }else{
+						 if($_SESSION['Empresa']['CadastrarDep'] == "S"){
+							$html .= '<td>'.$row_msg_contatos["idApp_ClienteDep"].'</td>';
+							$html .= '<td>'.utf8_encode($row_msg_contatos["NomeClienteDep"]).'</td>';
+						 }
+					 }
+				}
+
 			$html .= '</tr>';
 		}
 		

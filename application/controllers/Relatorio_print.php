@@ -54,6 +54,120 @@ class Relatorio_print extends CI_Controller {
         $this->load->view('basico/footer');
     }
 
+	public function clientes_excel($id = FALSE) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		if($id){
+			if($id == 1){
+				$dados = FALSE;
+				$data['titulo'] = 'Clientes Sem Filtros';
+				$data['metodo'] = $id;
+				$data['aparecer'] = 1;
+			}elseif($id == 2){
+				if(isset($_SESSION['FiltroClientes'])){
+					if(isset($_SESSION['FiltroClientes']['Agrupar']) && $_SESSION['FiltroClientes']['Agrupar'] != "0"){
+						$_SESSION['FiltroClientes']['Aparecer'] = 0;
+						$data['aparecer'] = 0;
+					}else{
+						$_SESSION['FiltroClientes']['Aparecer'] = 1;
+						$data['aparecer'] = 1;
+					}
+					$dados = $_SESSION['FiltroClientes'];
+					$data['titulo'] = 'Clientes Com Filtros';
+					$data['metodo'] = $id;
+				}else{
+					$dados = FALSE;
+					$data['titulo'] = 'Clientes Sem Filtros';
+					$data['metodo'] = 1;
+					$data['aparecer'] = 1;
+				}
+			}else{
+				$dados = FALSE;
+				$data['titulo'] = 'Clientes Sem Filtros';
+				$data['metodo'] = 1;
+				$data['aparecer'] = 1;
+			}
+		}else{
+			$dados = FALSE;
+			$data['titulo'] = 'Clientes Sem Filtros';
+			$data['metodo'] = 1;
+			$data['aparecer'] = 1;
+		}
+
+        $data['nome'] = 'Cliente';
+
+		$data['report'] = $this->Relatorio_model->list_clientes($dados, TRUE, FALSE, FALSE, FALSE);
+		
+		if($data['report'] === FALSE){
+			
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'relatorio/clientes' . $data['msg']);
+			exit();
+		}else{
+
+			$data['list1'] = $this->load->view('Relatorio_print/list_clientes_excel', $data, TRUE);
+		}
+
+        $this->load->view('basico/footer');
+
+    }
+
+	public function clientes_csv($id = FALSE) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		if($id){
+			if($id == 3){
+				if(isset($_SESSION['FiltroClientes'])){
+					$_SESSION['FiltroClientes']['Aparecer'] = 0;
+					$dados = $_SESSION['FiltroClientes'];
+					$data['titulo'] = 'G-mail Com Filtros';
+					$data['metodo'] = $id;
+				}else{
+					$data['msg'] = '?m=4';
+					redirect(base_url() . 'relatorio/clientes' . $data['msg']);
+					exit();
+				}
+			}else{
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'relatorio/clientes' . $data['msg']);
+				exit();
+			}
+		}else{		
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'relatorio/clientes' . $data['msg']);
+			exit();
+		}
+		
+        $data['nome'] = 'Cliente';
+
+		$data['report'] = $this->Relatorio_model->list_clientes($dados, TRUE, FALSE, FALSE, FALSE);
+		
+		if($data['report'] === FALSE){
+			
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'relatorio/clientes' . $data['msg']);
+			exit();
+		}else{
+
+			$data['list1'] = $this->load->view('Relatorio_print/list_clientes_csv', $data, TRUE);
+		}
+
+        $this->load->view('basico/footer');
+
+    }
+
 	public function receitas_excel($id = FALSE) {
 
         if ($this->input->get('m') == 1)
