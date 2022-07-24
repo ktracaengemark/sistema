@@ -27,11 +27,11 @@
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-8 btn-menu btn-group ">
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
 						<a type="button" class="btn btn-secondary btn-sm btn-default" href="<?php echo base_url() ?>relatorio/clientes" role="button">
-							<span class="glyphicon glyphicon-user"></span> Pesquisar Clientes
+							<span class="glyphicon glyphicon-user"></span> Pesquisar
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="btn btn-secondary btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
-								  <span class="caret"></span>
+								 Clientes <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="<?php echo base_url() ?>relatorio/clientes"><span class="glyphicon glyphicon-user"></span> Pesquisar Clientes</a></li>
@@ -58,11 +58,11 @@
 				<li class="botoesnav" >
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
 						<a type="button" class="btn btn-secondary btn-sm btn-success" href="<?php echo base_url() ?>agenda" role="button">
-							 Agenda | Tarefas 
+							 Agenda
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="btn btn-secondary btn-sm btn-success dropdown-toggle" data-toggle="dropdown">
-								 <span class="caret"></span>
+								/ Tarefas <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a class="dropdown-item" href="<?php echo base_url() ?>agenda"><span class="glyphicon glyphicon-calendar"></span> Agenda </a></li>
@@ -77,11 +77,11 @@
 				<li class="botoesnav">
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
 						<a type="button" class="btn btn-secondary btn-sm btn-primary" href="<?php echo base_url() ?>pedidos/pedidos" role="button">
-							 Receitas | Vendas 
+							 Receitas
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="btn btn-secondary btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-								 <span class="caret"></span>
+								 / Vendas <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>
@@ -107,11 +107,11 @@
 				<li class="botoesnav">
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
 						<a type="button" class="btn btn-secondary btn-sm btn-danger" href="<?php echo base_url() ?>despesas_statico/despesas" role="button">
-							 Despesas | Compras 
+							 Despesas
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="btn btn-secondary btn-sm btn-danger dropdown-toggle" data-toggle="dropdown">
-								 <span class="caret"></span>
+								 / Compras <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="<?php echo base_url() ?>despesas_statico/despesas"><span class="glyphicon glyphicon-pencil"></span> Gestor Estatico</a></li>
@@ -141,20 +141,25 @@
 							}
 						?>
 						<a type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning" href="<?php echo $loginempresa ?>" role="button">
-							
 							<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
-								
-								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?>| Admin
+								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?>
 							<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
-								<span class="glyphicon glyphicon-warning-sign"></span>Renovar ! 
-								<span class="glyphicon glyphicon-home"></span>Admin
+								<span class="glyphicon glyphicon-warning-sign"> </span> Renovar ! 
 							<?php } else {?>
-								<span class="glyphicon glyphicon-home"></span> enkontraki|Sair
+								<span class="glyphicon glyphicon-home"></span> enkontraki
 							<?php } ?>
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
-								 <span class="caret"></span>
+								
+								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
+									/ Admin
+								<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
+									/ Admin
+								<?php } else {?>
+									/ Sair
+								<?php } ?>
+								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">						
 								<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>

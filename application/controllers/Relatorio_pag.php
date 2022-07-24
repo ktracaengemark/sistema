@@ -643,91 +643,94 @@ class Relatorio_pag extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-		
-		$data['query']['nome'] = 'Cliente';
+
+		//$data['query']['nome'] = 'Cliente';
+		$data['titulo'] = 'Comissão Colaborador';
 		$data['form_open_path'] = 'relatorio_pag/comissao_pag';
 		$data['baixatodas'] = 'Orcatrata/baixadacomissao/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
-        $data['titulo'] = 'Comissão NaLoja';
-        $data['nomeusuario'] = 'NomeColaborador';
-        $data['status'] = 'StatusComissaoOrca';
+		$data['nomeusuario'] = 'NomeColaborador';
+		$data['status'] = 'StatusComissaoOrca';
+		$data['alterar'] = 'relatorio/comissao/';
 		$data['editar'] = 1;
 		$data['metodo'] = 1;
 		$data['panel'] = 'info';
 		$data['TipoFinanceiro'] = 'Receitas';
 		$data['TipoRD'] = 2;
-        $data['nome'] = 'Cliente';
+		$data['nome'] = 'Cliente';
 		if($_SESSION['Usuario']['Permissao_Comissao'] == 3){
 			$data['print'] = 1;
 		}else{
 			$data['print'] = 0;
 		}	
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'OrcatrataPrint/imprimircomissao/';
-		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
+		$data['imprimirlista'] = 'Relatorio_print/comissao_lista/';
+		$data['imprimirrecibo'] = 'Relatorio_print/comissao_recibo/';
 		$data['edit'] = 'orcatrata/alterarstatus/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'relatorio/comissao/';
 
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+		$data['pesquisa_query'] = $this->Relatorio_model->list_comissao($_SESSION['FiltroComissao'],TRUE, TRUE);
 		
-        #run form validation
-        if ($this->form_validation->run() !== TRUE) {
-
-			$data['pesquisa_query'] = $this->Relatorio_model->list_comissao($_SESSION['FiltroComissao'],TRUE, TRUE);
+		if($data['pesquisa_query'] === FALSE){
 			
-			if($data['pesquisa_query'] === FALSE){
-				
-				$data['msg'] = '?m=4';
-				redirect(base_url() . 'relatorio/comissao' . $data['msg']);
-				exit();
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'relatorio/comissao' . $data['msg']);
+			exit();
+		}else{
+
+			$config['total_rows'] = $data['pesquisa_query']->num_rows();
+			
+			$config['base_url'] = base_url() . 'relatorio_pag/comissao_pag/';
+			$config['per_page'] = 19;
+			$config["uri_segment"] = 3;
+			$config['reuse_query_string'] = TRUE;
+			$config['num_links'] = 2;
+			$config['use_page_numbers'] = TRUE;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			
+			$data['Pesquisa'] = '';
+			
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
 			}else{
-
-				$config['total_rows'] = $data['pesquisa_query']->num_rows();
-
-				$config['base_url'] = base_url() . 'relatorio_pag/comissao_pag/';
-
-				$config['per_page'] = 12;
-				$config["uri_segment"] = 3;
-				$config['reuse_query_string'] = TRUE;
-				$config['num_links'] = 2;
-				$config['use_page_numbers'] = TRUE;
-				$config['full_tag_open'] = "<ul class='pagination'>";
-				$config['full_tag_close'] = "</ul>";
-				$config['num_tag_open'] = '<li>';
-				$config['num_tag_close'] = '</li>';
-				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-				$config['next_tag_open'] = "<li>";
-				$config['next_tagl_close'] = "</li>";
-				$config['prev_tag_open'] = "<li>";
-				$config['prev_tagl_close'] = "</li>";
-				$config['first_tag_open'] = "<li>";
-				$config['first_tagl_close'] = "</li>";
-				$config['last_tag_open'] = "<li>";
-				$config['last_tagl_close'] = "</li>";
-				
-				$data['Pesquisa'] = '';
-
-				if($config['total_rows'] >= 1){
-					$data['total_rows'] = $config['total_rows'];
-				}else{
-					$data['total_rows'] = 0;
-				}
-				
-				$this->pagination->initialize($config);
-				
-				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-				$data['pagina'] = $page;
-				$data['per_page'] = $config['per_page'];
-				$data['report'] = $this->Relatorio_model->list_comissao($_SESSION['FiltroComissao'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-				$data['pagination'] = $this->pagination->create_links();
-
-				$data['list1'] = $this->load->view('relatorio/list_comissao', $data, TRUE);
+				$data['total_rows'] = 0;
 			}
-        }		
+			
+			$this->pagination->initialize($config);
+			
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+			
+			$data['pagina'] = $page;
+			
+			$data['per_page'] = $config['per_page'];
+			
+			$data['linha'] = $page * $config['per_page'];
+		
+			$_SESSION['FiltroComissao']['Limit'] = $data['per_page'];
+			$_SESSION['FiltroComissao']['Start'] = $data['linha'];
 
+			$data['report'] = $this->Relatorio_model->list_comissao($_SESSION['FiltroComissao'], TRUE, FALSE, $config['per_page'], $data['linha']);
+						
+			$data['pagination'] = $this->pagination->create_links();
+
+			$data['list1'] = $this->load->view('relatorio/list_comissao', $data, TRUE);
+		}
         $this->load->view('relatorio/tela_comissao', $data);
 
         $this->load->view('basico/footer');

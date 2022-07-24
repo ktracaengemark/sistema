@@ -18575,7 +18575,7 @@ class Orcatrata extends CI_Controller {
 						$_SESSION['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
 						$_SESSION['Per_Page'] = $data['per_page'] = $config['per_page'];
 						
-						$data['pagination'] = $this->pagination->create_links();		
+						$_SESSION['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 
 						#### App_OrcaTrata ####
 						$data['orcamento'] = $this->Orcatrata_model->get_baixadasdespesas($_SESSION['FiltroDespesas'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
@@ -18831,16 +18831,8 @@ class Orcatrata extends CI_Controller {
 		}else{
 
 			$data['query'] = quotes_to_entities($this->input->post(array(
-				'Dia',
-				'Mesvenc',
-				'Ano',
-				'Orcarec',
-				'NomeCliente',
 				'QuitadoComissão',
 				'DataPagoComissãoPadrao',
-				'AprovadoOrca',
-				'ConcluidoOrca',
-				'QuitadoOrca',
 			), TRUE));
 			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -18850,19 +18842,17 @@ class Orcatrata extends CI_Controller {
 				
 			), TRUE));
 
-			//(!$data['query']['DataPagoComissãoPadrao']) ? $data['query']['DataPagoComissãoPadrao'] = date('d/m/Y', time()) : FALSE;
 			(!$this->input->post('PRCount')) ? $data['count']['PRCount'] = 0 : $data['count']['PRCount'] = $this->input->post('PRCount');
 			
 			$j = 1;
 			for ($i = 1; $i <= $data['count']['PRCount']; $i++) {
 
-				if ($this->input->post('ValorRestanteOrca' . $i) || $this->input->post('DataVencimentoOrca' . $i) || $this->input->post('StatusComissaoOrca' . $i)) {
+				if ($this->input->post('idApp_OrcaTrata' . $i)) {
 					$data['orcamento'][$j]['idApp_OrcaTrata'] = $this->input->post('idApp_OrcaTrata' . $i);
 					$data['orcamento'][$j]['ValorRestanteOrca'] = $this->input->post('ValorRestanteOrca' . $i);
 					$data['orcamento'][$j]['ValorComissao'] = $this->input->post('ValorComissao' . $i);
 					$data['orcamento'][$j]['DataOrca'] = $this->input->post('DataOrca' . $i);
 					$data['orcamento'][$j]['DataPagoComissaoOrca'] = $this->input->post('DataPagoComissaoOrca' . $i);
-					$data['orcamento'][$j]['DataVencimentoOrca'] = $this->input->post('DataVencimentoOrca' . $i);
 					$data['orcamento'][$j]['StatusComissaoOrca'] = $this->input->post('StatusComissaoOrca' . $i);
 					
 					(!$data['orcamento'][$j]['StatusComissaoOrca']) ? $data['orcamento'][$j]['StatusComissaoOrca'] = 'N' : FALSE;
@@ -18895,73 +18885,82 @@ class Orcatrata extends CI_Controller {
 					
 				}else{
 				
-					$data['pesquisa_query'] = $this->Orcatrata_model->get_baixadacomissao($id, TRUE);
-					$_SESSION['Pesquisa_Query']['ComissaoTotal'] = $data['pesquisa_query']->soma2->somacomissao2;
-					$config['total_rows'] = $data['pesquisa_query']->num_rows();
-					
-					//$config['total_rows'] = $this->Orcatrata_model->get_baixadacomissao($id, TRUE);
-					
-					$config['base_url'] = base_url() . 'Orcatrata/baixadacomissao/' . $id . '/';
-					$config['per_page'] = 50;
-					$config["uri_segment"] = 4;
-					$config['reuse_query_string'] = TRUE;
-					$config['num_links'] = 2;
-					$config['use_page_numbers'] = TRUE;
-					$config['full_tag_open'] = "<ul class='pagination'>";
-					$config['full_tag_close'] = "</ul>";
-					$config['num_tag_open'] = '<li>';
-					$config['num_tag_close'] = '</li>';
-					$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-					$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-					$config['next_tag_open'] = "<li>";
-					$config['next_tagl_close'] = "</li>";
-					$config['prev_tag_open'] = "<li>";
-					$config['prev_tagl_close'] = "</li>";
-					$config['first_tag_open'] = "<li>";
-					$config['first_tagl_close'] = "</li>";
-					$config['last_tag_open'] = "<li>";
-					$config['last_tagl_close'] = "</li>";		   
-					
-					if($config['total_rows'] >= 1){
-						$_SESSION['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
-					}else{
-						$_SESSION['Total_Rows'] = $data['total_rows'] = 0;
-					}
-					
-					$this->pagination->initialize($config);
-					
-					$_SESSION['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-					$_SESSION['Per_Page'] = $data['per_page'] = $config['per_page'];
-					
-					$_SESSION['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
-
-					#### App_Parcelas ####
-					$_SESSION['Orcamento'] = $data['orcamento'] = $this->Orcatrata_model->get_baixadacomissao($id, FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
-					if (count($data['orcamento']) > 0) {
-						$data['orcamento'] = array_combine(range(1, count($data['orcamento'])), array_values($data['orcamento']));
-						$data['count']['PRCount'] = count($data['orcamento']);
+					$data['pesquisa_query'] = $this->Orcatrata_model->get_baixadacomissao($_SESSION['FiltroComissao'], TRUE);
+			
+					if($data['pesquisa_query'] === FALSE){
 						
-						if (isset($data['orcamento'])) {
+						$data['msg'] = '?m=4';
+						redirect(base_url() . 'relatorio/comissao' . $data['msg']);
+						exit();
+					}else{
 
-							//$data['somatotal'] = 0;
+						$_SESSION['Comissao']['FinalTotal'] = $data['pesquisa_query']->soma2->somafinal2;
+
+						$_SESSION['Comissao']['ComissaoTotal'] = $data['pesquisa_query']->soma2->somacomissao2;						
+						
+						$_SESSION['Comissao']['TotalRows'] = $config['total_rows'] = $data['pesquisa_query']->num_rows();
+
+						$config['base_url'] = base_url() . 'Orcatrata/baixadacomissao/' . $id . '/';
+						$config['per_page'] = 19;
+						$config["uri_segment"] = 4;
+						$config['reuse_query_string'] = TRUE;
+						$config['num_links'] = 2;
+						$config['use_page_numbers'] = TRUE;
+						$config['full_tag_open'] = "<ul class='pagination'>";
+						$config['full_tag_close'] = "</ul>";
+						$config['num_tag_open'] = '<li>';
+						$config['num_tag_close'] = '</li>';
+						$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+						$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+						$config['next_tag_open'] = "<li>";
+						$config['next_tagl_close'] = "</li>";
+						$config['prev_tag_open'] = "<li>";
+						$config['prev_tagl_close'] = "</li>";
+						$config['first_tag_open'] = "<li>";
+						$config['first_tagl_close'] = "</li>";
+						$config['last_tag_open'] = "<li>";
+						$config['last_tagl_close'] = "</li>";		   
+						
+						if($config['total_rows'] >= 1){
+							$_SESSION['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
+						}else{
+							$_SESSION['Total_Rows'] = $data['total_rows'] = 0;
+						}
+						
+						$this->pagination->initialize($config);
+						
+						$_SESSION['Comissao']['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+						$_SESSION['Comissao']['Per_Page'] = $data['per_page'] = $config['per_page'];
+						
+						$_SESSION['Comissao']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
+
+						#### App_Parcelas ####
+						$_SESSION['Orcamento'] = $data['orcamento'] = $this->Orcatrata_model->get_baixadacomissao($_SESSION['FiltroComissao'], FALSE, $_SESSION['Comissao']['Per_Page'], ($_SESSION['Comissao']['Pagina'] * $_SESSION['Comissao']['Per_Page']));
+						if (count($data['orcamento']) > 0) {
+							$data['orcamento'] = array_combine(range(1, count($data['orcamento'])), array_values($data['orcamento']));
+							$data['count']['PRCount'] = count($data['orcamento']);
 							
-							for($j=1; $j <= $data['count']['PRCount']; $j++) {
+							if (isset($data['orcamento'])) {
+
+								//$data['somatotal'] = 0;
 								
-								$data['somatotal'] += $data['orcamento'][$j]['ValorComissao'];
+								for($j=1; $j <= $data['count']['PRCount']; $j++) {
+									
+									$data['somatotal'] += $data['orcamento'][$j]['ValorComissao'];
+									
+									$data['orcamento'][$j]['DataOrca'] = $this->basico->mascara_data($data['orcamento'][$j]['DataOrca'], 'barras');
+									$data['orcamento'][$j]['DataPagoComissaoOrca'] = $this->basico->mascara_data($data['orcamento'][$j]['DataPagoComissaoOrca'], 'barras');
+									$_SESSION['Orcamento'][$j]['Tipo_Orca'] = $data['orcamento'][$j]['Tipo_Orca'];
+									$_SESSION['Orcamento'][$j]['NomeColaborador'] = $data['orcamento'][$j]['NomeColaborador'];
+									$data['radio'] = array(
+										'StatusComissaoOrca' . $j => $this->basico->radio_checked($data['orcamento'][$j]['StatusComissaoOrca'], 'StatusComissaoOrca' . $j, 'NS'),
+									);
+									($data['orcamento'][$j]['StatusComissaoOrca'] == 'S') ? $data['div']['StatusComissaoOrca' . $j] = '' : $data['div']['StatusComissaoOrca' . $j] = 'style="display: none;"';
 								
-								$data['orcamento'][$j]['DataOrca'] = $this->basico->mascara_data($data['orcamento'][$j]['DataOrca'], 'barras');
-								$data['orcamento'][$j]['DataPagoComissaoOrca'] = $this->basico->mascara_data($data['orcamento'][$j]['DataPagoComissaoOrca'], 'barras');
-								$data['orcamento'][$j]['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcamento'][$j]['DataVencimentoOrca'], 'barras');
-								$_SESSION['Orcamento'][$j]['Tipo_Orca'] = $data['orcamento'][$j]['Tipo_Orca'];
-								$_SESSION['Orcamento'][$j]['NomeColaborador'] = $data['orcamento'][$j]['NomeColaborador'];
-								$data['radio'] = array(
-									'StatusComissaoOrca' . $j => $this->basico->radio_checked($data['orcamento'][$j]['StatusComissaoOrca'], 'StatusComissaoOrca' . $j, 'NS'),
-								);
-								($data['orcamento'][$j]['StatusComissaoOrca'] == 'S') ? $data['div']['StatusComissaoOrca' . $j] = '' : $data['div']['StatusComissaoOrca' . $j] = 'style="display: none;"';
-							
+								}
+								
+								$_SESSION['SomaTotal'] = $data['somatotal'] = number_format($data['somatotal'],2,",",".");
 							}
-							
-							$_SESSION['SomaTotal'] = $data['somatotal'] = number_format($data['somatotal'],2,",",".");
 						}
 					}
 				}
@@ -18983,18 +18982,11 @@ class Orcatrata extends CI_Controller {
 			}else{
 				
 				$data['select']['QuitadoComissão'] = $this->Basico_model->select_status_sn();
-				$data['select']['StatusComissaoOrca'] = $this->Basico_model->select_status_sn();
-				$data['select']['AprovadoOrca'] = $this->Basico_model->select_status_sn();
-				$data['select']['ConcluidoOrca'] = $this->Basico_model->select_status_sn();
-				$data['select']['QuitadoOrca'] = $this->Basico_model->select_status_sn();
-				$data['select']['Dia'] = $this->Basico_model->select_dia();
-				$data['select']['Mesvenc'] = $this->Basico_model->select_mes();
-				$data['select']['Orcarec'] = $this->Basico_model->select_orcarec();
-				$data['select']['NomeCliente'] = $this->Basico_model->select_cliente();		
+				$data['select']['StatusComissaoOrca'] = $this->Basico_model->select_status_sn();	
 				
 				$data['titulo'] = 'Comissao Colaborador';
 				$data['form_open_path'] = 'orcatrata/baixadacomissao';
-				$data['relatorio'] = 'relatorio/comissao/';
+				$data['relatorio'] = 'relatorio_pag/comissao_pag/';
 				$data['imprimir'] = 'OrcatrataPrint/imprimircomissao/';
 				$data['nomeusuario'] = 'NomeColaborador';
 				$data['statuscomissao'] = 'StatusComissaoOrca';
@@ -19034,24 +19026,16 @@ class Orcatrata extends CI_Controller {
 						redirect(base_url() . 'acesso' . $data['msg']);
 						
 					} else {
-								
-						$data['bd']['Dia'] = $data['query']['Dia'];
-						$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
-						$data['bd']['Ano'] = $data['query']['Ano'];
-						$data['bd']['Orcarec'] = $data['query']['Orcarec'];
-						$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
+
 						$data['bd']['QuitadoComissão'] = $data['query']['QuitadoComissão'];
 						$data['bd']['DataPagoComissãoPadrao'] = $data['query']['DataPagoComissãoPadrao'];
-						$data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
-						$data['bd']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
-						$data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
 						
 						////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
 						
 						$data['query']['DataPagoComissãoPadrao'] = $this->basico->mascara_data($data['query']['DataPagoComissãoPadrao'], 'mysql');            
 
 						#### App_ParcelasRec ####
-						$data['update']['orcamento']['anterior'] = $this->Orcatrata_model->get_baixadacomissao($data['empresa']['idSis_Empresa'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
+						$data['update']['orcamento']['anterior'] = $this->Orcatrata_model->get_baixadacomissao($_SESSION['FiltroComissao'], FALSE, $_SESSION['Comissao']['Per_Page'], ($_SESSION['Comissao']['Pagina'] * $_SESSION['Comissao']['Per_Page']));
 						if (isset($data['orcamento']) || (!isset($data['orcamento']) && isset($data['update']['orcamento']['anterior']) ) ) {
 
 							if (isset($data['orcamento']))
@@ -19090,13 +19074,7 @@ class Orcatrata extends CI_Controller {
 								}else{
 									$data['update']['orcamento']['alterar'][$j]['DataPagoComissaoOrca'] = $this->basico->mascara_data($data['update']['orcamento']['alterar'][$j]['DataPagoComissaoOrca'], 'mysql');
 								}                     
-												
-								if(!$data['update']['orcamento']['alterar'][$j]['DataVencimentoOrca'] || $data['update']['orcamento']['alterar'][$j]['DataVencimentoOrca'] == "00/00/0000" || empty($data['update']['orcamento']['alterar'][$j]['DataVencimentoOrca'])){
-									$data['update']['orcamento']['alterar'][$j]['DataVencimentoOrca'] =  "0000-00-00"; 
-								}else{
-									$data['update']['orcamento']['alterar'][$j]['DataVencimentoOrca'] = $this->basico->mascara_data($data['update']['orcamento']['alterar'][$j]['DataVencimentoOrca'], 'mysql');
-								}                     
-								
+
 								if ($data['query']['QuitadoComissão'] == 'S') $data['update']['orcamento']['alterar'][$j]['StatusComissaoOrca'] = 'S';
 								
 								if($data['update']['orcamento']['alterar'][$j]['StatusComissaoOrca'] == 'S'){

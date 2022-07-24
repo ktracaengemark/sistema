@@ -36,11 +36,11 @@
 									<div class="col-md-2 text-left">	
 										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<span class="glyphicon glyphicon-usd"></span>R$ <?php if(isset($_SESSION['SomaTotal'])) echo $_SESSION['SomaTotal']; ?> / <?php echo $_SESSION['Pesquisa_Query']['ComissaoTotal'] ?>
+											<span class="glyphicon glyphicon-usd"></span>R$ <?php if(isset($_SESSION['SomaTotal'])) echo $_SESSION['SomaTotal']; ?> / <?php echo $_SESSION['Comissao']['ComissaoTotal'] ?>
 										</a>
 									</div>
 									<div class="col-md-4 text-left">
-										<?php echo $_SESSION['Pagination']; ?>
+										<?php echo $_SESSION['Comissao']['Pagination']; ?>
 									</div>
 								</div>
 							</div>	
@@ -60,7 +60,7 @@
 											<div class="input_fields_wrap21">
 
 											<?php
-											$linha =  $_SESSION['Per_Page']*$_SESSION['Pagina'];
+											$linha =  $_SESSION['Comissao']['Per_Page']*$_SESSION['Comissao']['Pagina'];
 											for ($i=1; $i <= $count['PRCount']; $i++) {
 												$contagem = ($linha + $i);
 											?>
@@ -85,7 +85,7 @@
 																	<label><?php echo $nomeusuario; ?>:</label><br>
 																	<span><?php echo $_SESSION['Orcamento'][$i][$nomeusuario] ?></span>
 																</div>
-																<input type="hidden" name="DataVencimentoOrca<?php echo $i ?>" value="<?php echo $orcamento[$i]['DataVencimentoOrca']; ?>"/>
+																<!--<input type="hidden" name="DataVencimentoOrca<?php #echo $i ?>" value="<?php #echo $orcamento[$i]['DataVencimentoOrca']; ?>"/>-->
 																<div class="col-md-2">
 																	<label for="DataOrca">Receita</label>
 																	<div class="input-group DatePicker">

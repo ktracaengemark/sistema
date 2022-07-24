@@ -429,7 +429,7 @@ class Relatorio_print extends CI_Controller {
 				//$config['total_rows'] = $_SESSION['FiltroDespesas']['total_rows'];
 
 				$config['base_url'] = base_url() . 'Relatorio_print/despesas_lista/';
-				$config['per_page'] = 12;
+				$config['per_page'] = 19;
 				$config["uri_segment"] = 3;
 				$config['reuse_query_string'] = TRUE;
 				$config['num_links'] = 2;
@@ -1334,6 +1334,157 @@ class Relatorio_print extends CI_Controller {
 				}
 			}
 		}
+        $this->load->view('basico/footer');
+
+    }
+
+	public function comissao_lista() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+		//$data['query']['nome'] = 'Cliente';
+		$data['titulo'] = 'Comissão Colaborador';
+		$data['form_open_path'] = 'relatorio_pag/comissao_pag';
+		$data['baixatodas'] = 'Orcatrata/baixadacomissao/';
+		$data['baixa'] = 'Orcatrata/baixadareceita/';
+		$data['nomeusuario'] = 'NomeColaborador';
+		$data['status'] = 'StatusComissaoOrca';
+		$data['alterar'] = 'relatorio/comissao/';
+		$data['editar'] = 1;
+		$data['metodo'] = 1;
+		$data['panel'] = 'info';
+		$data['TipoFinanceiro'] = 'Receitas';
+		$data['TipoRD'] = 2;
+		$data['nome'] = 'Cliente';
+		if($_SESSION['Usuario']['Permissao_Comissao'] == 3){
+			$data['print'] = 1;
+		}else{
+			$data['print'] = 0;
+		}	
+		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+		$data['imprimirlista'] = 'Relatorio_print/comissao_lista/';
+		$data['imprimirrecibo'] = 'Relatorio_print/comissao_recibo/';
+		$data['edit'] = 'orcatrata/alterarstatus/';
+		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		
+		$data['paginacao'] = 'S';
+		$data['caminho'] = 'relatorio/comissao/';
+
+		$data['pesquisa_query'] = $this->Relatorio_model->list_comissao($_SESSION['FiltroComissao'],TRUE, TRUE);
+		
+		if($data['pesquisa_query'] === FALSE){
+			
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'relatorio/comissao' . $data['msg']);
+			exit();
+		}else{
+
+			$config['total_rows'] = $data['pesquisa_query']->num_rows();
+
+			$config['base_url'] = base_url() . 'relatorio_print/comissao_lista/';
+
+			$config['per_page'] = 19;
+			$config["uri_segment"] = 3;
+			$config['reuse_query_string'] = TRUE;
+			$config['num_links'] = 2;
+			$config['use_page_numbers'] = TRUE;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			
+			$data['Pesquisa'] = '';
+
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
+			}else{
+				$data['total_rows'] = 0;
+			}
+			
+			$this->pagination->initialize($config);
+			
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+			
+			$data['pagina'] = $page;
+			
+			$data['per_page'] = $config['per_page'];
+			
+			$data['report'] = $this->Relatorio_model->list_comissao($_SESSION['FiltroComissao'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+			
+			$data['pagination'] = $this->pagination->create_links();
+
+			$data['list1'] = $this->load->view('Relatorio_print/list_comissao_lista', $data, TRUE);
+		}
+        $this->load->view('relatorio/tela_comissao', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+	public function comissao_excel($id = FALSE) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		if($id){
+			if($id == 1){
+				$dados = FALSE;
+				$data['titulo'] = 'Receitas Sem Filtros';
+				$data['metodo'] = $id;
+			}elseif($id == 2){
+				if(isset($_SESSION['FiltroReceitas'])){
+					$dados = $_SESSION['FiltroReceitas'];
+					$data['titulo'] = 'Receitas Com Filtros';
+					$data['metodo'] = $id;
+				}else{
+					$dados = FALSE;
+					$data['titulo'] = 'Receitas Sem Filtros';
+					$data['metodo'] = 1;
+				}
+			}else{
+				$dados = FALSE;
+				$data['titulo'] = 'Receitas Sem Filtros';
+				$data['metodo'] = 1;
+			}
+		}else{
+			$dados = FALSE;
+			$data['titulo'] = 'Receitas Sem Filtros';
+			$data['metodo'] = 1;
+		}
+
+        $data['nome'] = 'Cliente';
+
+		$data['report'] = $this->Relatorio_model->list_receitas($dados, TRUE, FALSE, FALSE, FALSE);
+		
+		if($data['report'] === FALSE){
+			
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'relatorio/receitas' . $data['msg']);
+			exit();
+		}else{
+
+			$data['list1'] = $this->load->view('Relatorio_print/list_receitas_excel', $data, TRUE);
+		}
+
         $this->load->view('basico/footer');
 
     }

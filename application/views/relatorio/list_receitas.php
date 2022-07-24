@@ -245,7 +245,7 @@
 						}
 													
 						if(isset($_SESSION['FiltroReceitas']['site']) && $_SESSION['FiltroReceitas']['site'] == "S") {
-							$site = "https://enkontraki.com.br/".$row['Site'];
+							$site = "https://enkontraki.com.br/".$_SESSION['Empresa']['Site'];
 						}else{
 							$site = FALSE;
 						}
