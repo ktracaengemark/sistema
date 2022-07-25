@@ -58,11 +58,11 @@
 				<li class="botoesnav" >
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
 						<a type="button" class="btn btn-secondary btn-sm btn-success" href="<?php echo base_url() ?>agenda" role="button">
-							 Agenda
+							 Agenda  
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="btn btn-secondary btn-sm btn-success dropdown-toggle" data-toggle="dropdown">
-								/ Tarefas <span class="caret"></span>
+								Tarefas <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a class="dropdown-item" href="<?php echo base_url() ?>agenda"><span class="glyphicon glyphicon-calendar"></span> Agenda </a></li>
@@ -77,11 +77,11 @@
 				<li class="botoesnav">
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
 						<a type="button" class="btn btn-secondary btn-sm btn-primary" href="<?php echo base_url() ?>pedidos/pedidos" role="button">
-							 Receitas
+							 Receitas 
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="btn btn-secondary btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-								 / Vendas <span class="caret"></span>
+								Vendas <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>
@@ -107,11 +107,11 @@
 				<li class="botoesnav">
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
 						<a type="button" class="btn btn-secondary btn-sm btn-danger" href="<?php echo base_url() ?>despesas_statico/despesas" role="button">
-							 Despesas
+							 Despesas 
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="btn btn-secondary btn-sm btn-danger dropdown-toggle" data-toggle="dropdown">
-								 / Compras <span class="caret"></span>
+								Compras <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="<?php echo base_url() ?>despesas_statico/despesas"><span class="glyphicon glyphicon-pencil"></span> Gestor Estatico</a></li>
@@ -153,11 +153,11 @@
 							<button type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
 								
 								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
-									/ Admin
+									Admin
 								<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
-									/ Admin
+									Admin
 								<?php } else {?>
-									/ Sair
+									Sair
 								<?php } ?>
 								<span class="caret"></span>
 							</button>
