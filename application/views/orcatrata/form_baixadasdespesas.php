@@ -20,7 +20,7 @@
 									<div class="col-md-2 text-left">	
 										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<?php echo $_SESSION['Contagem'];?> / <?php echo $_SESSION['Pesquisa_Query']['TotalRows'];?> Resultados
+											<?php echo $_SESSION['Contagem'];?> / <?php echo $_SESSION['FiltroDespesas']['TotalRows'];?> Resultados
 										</a>
 									</div>	
 										<!--
@@ -31,11 +31,11 @@
 									<div class="col-md-2 text-left">	
 										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<span class="glyphicon glyphicon-usd"></span>R$ <?php echo $_SESSION['SomaTotal']; ?> / <?php echo $_SESSION['Pesquisa_Query']['FinalTotal'] ?>
+											<span class="glyphicon glyphicon-usd"></span>R$ <?php echo $_SESSION['SomaTotal']; ?> / <?php echo $_SESSION['FiltroDespesas']['FinalTotal'] ?>
 										</a>
 									</div>
 									<div class="col-md-6 text-left">
-										<?php echo $_SESSION['Pagination']; ?>
+										<?php echo $_SESSION['FiltroDespesas']['Pagination']; ?>
 									</div>
 								</div>
 							</div>
@@ -51,7 +51,7 @@
 											<div class="input_fields_wrap21">
 
 											<?php
-											$linha =  $_SESSION['Per_Page']*$_SESSION['Pagina'];
+											$linha =  $_SESSION['FiltroDespesas']['Per_Page']*$_SESSION['FiltroDespesas']['Pagina'];
 											for ($i=1; $i <= $count['PRCount']; $i++) {
 												$contagem = ($linha + $i);
 											?>

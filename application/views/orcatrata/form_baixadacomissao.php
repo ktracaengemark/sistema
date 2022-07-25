@@ -29,18 +29,18 @@
 									</div>
 									<div class="col-md-2 text-left">	
 										<br>
-										<a type= "button" class="btn btn-md btn-warning btn-block" type="button" href="<?php echo base_url() . $imprimir . $_SESSION['log']['idSis_Empresa']; ?>">
-											<span class="glyphicon glyphicon-print"></span> Print.
-										</a>
-									</div>
-									<div class="col-md-2 text-left">	
-										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<span class="glyphicon glyphicon-usd"></span>R$ <?php if(isset($_SESSION['SomaTotal'])) echo $_SESSION['SomaTotal']; ?> / <?php echo $_SESSION['Comissao']['ComissaoTotal'] ?>
+											<span class="glyphicon glyphicon-usd"></span>R$ <?php if(isset($_SESSION['SomaTotal'])) echo $_SESSION['SomaTotal']; ?> / <?php echo $_SESSION['FiltroComissao']['ComissaoTotal'] ?>
 										</a>
 									</div>
 									<div class="col-md-4 text-left">
-										<?php echo $_SESSION['Comissao']['Pagination']; ?>
+										<?php echo $_SESSION['FiltroComissao']['Pagination']; ?>
+									</div>
+									<div class="col-md-2 text-left">	
+										<br>
+										<a type= "button" class="btn btn-md btn-info btn-block" type="button" href="<?php echo base_url() . $imprimir; ?>">
+											<span class="glyphicon glyphicon-list"></span> Lista
+										</a>
 									</div>
 								</div>
 							</div>	
@@ -60,7 +60,7 @@
 											<div class="input_fields_wrap21">
 
 											<?php
-											$linha =  $_SESSION['Comissao']['Per_Page']*$_SESSION['Comissao']['Pagina'];
+											$linha =  $_SESSION['FiltroComissao']['Per_Page']*$_SESSION['FiltroComissao']['Pagina'];
 											for ($i=1; $i <= $count['PRCount']; $i++) {
 												$contagem = ($linha + $i);
 											?>
