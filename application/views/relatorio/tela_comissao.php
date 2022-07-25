@@ -83,7 +83,7 @@
 									</div>
 									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-left">
 										<label>Excel</label><br>
-										<a href="<?php echo base_url() . 'Relatorio_print/receitas_excel/1'; ?>">
+										<a href="<?php echo base_url() . 'Relatorio_print/comissao_excel/1'; ?>">
 											<button type='button' class='btn btn-md btn-success btn-block'>
 												S/<span class="glyphicon glyphicon-filter"></span>
 											</button>

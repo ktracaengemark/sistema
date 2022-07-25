@@ -90,7 +90,7 @@
 			<?php } ?>
 			<div class="col-lg-1 col-md-1 col-sm-2 col-xs-6 text-left">
 				<label>Excel</label><br>
-				<a href="<?php echo base_url() . 'Relatorio_print/receitas_excel/2'; ?>">
+				<a href="<?php echo base_url() . 'Relatorio_print/comissao_excel/2'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
 						C/<span class="glyphicon glyphicon-filter"></span>
 					</button>

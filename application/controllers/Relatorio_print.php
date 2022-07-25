@@ -1448,41 +1448,41 @@ class Relatorio_print extends CI_Controller {
 		if($id){
 			if($id == 1){
 				$dados = FALSE;
-				$data['titulo'] = 'Receitas Sem Filtros';
+				$data['titulo'] = 'Comissao Sem Filtros';
 				$data['metodo'] = $id;
 			}elseif($id == 2){
-				if(isset($_SESSION['FiltroReceitas'])){
-					$dados = $_SESSION['FiltroReceitas'];
-					$data['titulo'] = 'Receitas Com Filtros';
+				if(isset($_SESSION['FiltroComissao'])){
+					$dados = $_SESSION['FiltroComissao'];
+					$data['titulo'] = 'Comissao Com Filtros';
 					$data['metodo'] = $id;
 				}else{
 					$dados = FALSE;
-					$data['titulo'] = 'Receitas Sem Filtros';
+					$data['titulo'] = 'Comissao Sem Filtros';
 					$data['metodo'] = 1;
 				}
 			}else{
 				$dados = FALSE;
-				$data['titulo'] = 'Receitas Sem Filtros';
+				$data['titulo'] = 'Comissao Sem Filtros';
 				$data['metodo'] = 1;
 			}
 		}else{
 			$dados = FALSE;
-			$data['titulo'] = 'Receitas Sem Filtros';
+			$data['titulo'] = 'Comissao Sem Filtros';
 			$data['metodo'] = 1;
 		}
 
         $data['nome'] = 'Cliente';
 
-		$data['report'] = $this->Relatorio_model->list_receitas($dados, TRUE, FALSE, FALSE, FALSE);
+		$data['report'] = $this->Relatorio_model->list_comissao($dados, TRUE, FALSE, FALSE, FALSE);
 		
 		if($data['report'] === FALSE){
 			
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'relatorio/receitas' . $data['msg']);
+			redirect(base_url() . 'relatorio/comissao' . $data['msg']);
 			exit();
 		}else{
 
-			$data['list1'] = $this->load->view('Relatorio_print/list_receitas_excel', $data, TRUE);
+			$data['list1'] = $this->load->view('Relatorio_print/list_comissao_excel', $data, TRUE);
 		}
 
         $this->load->view('basico/footer');
