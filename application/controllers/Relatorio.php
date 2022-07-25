@@ -1685,9 +1685,17 @@ class Relatorio extends CI_Controller {
 			'Produtos',
 			'Parcelas',
 			'nome',
+			'Recibo',
+			'id_Recibo',
         ), TRUE));
 
-	
+		
+        $data['select']['Recibo'] = array(
+			'0' => '::TODOS::',
+			'OT.id_Recibo != 0 ' => 'C/ Recibo',
+			'OT.id_Recibo = 0 ' => 'S/ Recibo',
+        );
+
         $data['select']['AprovadoOrca'] = array(
             '0' => '::TODOS::',
             'S' => 'Sim',
@@ -1762,6 +1770,8 @@ class Relatorio extends CI_Controller {
 			'PRDS.HoraConcluidoProduto' => 'Hora da Entrega',
 			'C.idApp_Cliente' => 'id do Cliente',
 			'C.NomeCliente' => 'Nome do Cliente',
+			'US.Nome' => 'Nome do Colaborador',
+			'OT.DataPagoComissaoOrca' => 'Data Pago Comissão',
         );
 
         $data['select']['Ordenamento'] = array(
@@ -1790,6 +1800,7 @@ class Relatorio extends CI_Controller {
 		$data['titulo'] = 'Comissão Colaborador';
 		$data['form_open_path'] = 'relatorio/comissao';
 		$data['baixatodas'] = 'Orcatrata/baixadacomissao/';
+		$data['recibo'] = 'Orcatrata/recibodacomissao/';
 		$data['editartodas'] = 'relatorio/receitas/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
 		$data['nomeusuario'] = 'NomeColaborador';
@@ -1852,6 +1863,8 @@ class Relatorio extends CI_Controller {
 			$_SESSION['FiltroComissao']['HoraFim5'] = $data['query']['HoraFim5'];
 			$_SESSION['FiltroComissao']['Produtos'] = $data['query']['Produtos'];
 			$_SESSION['FiltroComissao']['Parcelas'] = $data['query']['Parcelas'];
+			$_SESSION['FiltroComissao']['Recibo'] = $data['query']['Recibo'];
+			$_SESSION['FiltroComissao']['id_Recibo'] = $data['query']['id_Recibo'];
 			$_SESSION['FiltroComissao']['NomeUsuario'] = $data['query']['NomeUsuario'];
 			$_SESSION['FiltroComissao']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$_SESSION['FiltroComissao']['AprovadoOrca'] = $data['query']['AprovadoOrca'];

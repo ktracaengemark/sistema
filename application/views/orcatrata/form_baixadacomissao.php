@@ -24,13 +24,13 @@
 									<div class="col-md-2 text-left">	
 										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<?php echo $_SESSION['Total_Rows'];?> Resultados
+											<?php echo $_SESSION['FiltroComissao']['Contagem'];?> / <?php echo $_SESSION['FiltroComissao']['Total_Rows'];?> Resultados
 										</a>
 									</div>
 									<div class="col-md-2 text-left">	
 										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<span class="glyphicon glyphicon-usd"></span>R$ <?php if(isset($_SESSION['SomaTotal'])) echo $_SESSION['SomaTotal']; ?> / <?php echo $_SESSION['FiltroComissao']['ComissaoTotal'] ?>
+											<span class="glyphicon glyphicon-usd"></span>R$ <?php if(isset($_SESSION['FiltroComissao']['SomaTotal'])) echo $_SESSION['FiltroComissao']['SomaTotal']; ?> / <?php echo $_SESSION['FiltroComissao']['ComissaoTotal'] ?>
 										</a>
 									</div>
 									<div class="col-md-4 text-left">

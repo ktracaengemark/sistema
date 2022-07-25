@@ -1224,6 +1224,7 @@ class Relatorio_model extends CI_Model {
 		$date_fim_pag_com = ($data['DataFim7']) ? 'OT.DataPagoComissaoOrca <= "' . $data['DataFim7'] . '" AND ' : FALSE;
 
 		$orcamento = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
+		$id_recibo = ($data['id_Recibo']) ? ' AND OT.id_Recibo = ' . $data['id_Recibo'] . '  ': FALSE;
 		$cliente = ($data['Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
 		$id_cliente = ($data['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;
 		$tipofinandeiro = ($data['TipoFinanceiro']) ? ' AND TR.idTab_TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
@@ -1299,6 +1300,11 @@ class Relatorio_model extends CI_Model {
 			}else{
 				$parcelas = FALSE;
 			}
+			if(isset($data['Recibo']) && $data['Recibo'] != "0"){
+				$recibo = '' . $data['Recibo'] . ' AND';
+			}else{
+				$recibo = FALSE;
+			}
 		}else{
 			$permissao_orcam = FALSE;
 			if(isset($data['metodo']) && $data['metodo'] == 3){
@@ -1309,6 +1315,7 @@ class Relatorio_model extends CI_Model {
 			$nivel = FALSE;
 			$produtos = FALSE;
 			$parcelas = FALSE;
+			$recibo = FALSE;
 			$rede = FALSE;
 		}
 
@@ -1331,7 +1338,8 @@ class Relatorio_model extends CI_Model {
 			$query_total = $this->db->query(
 				'SELECT
 					OT.ValorFinalOrca,
-					OT.ValorComissao
+					OT.ValorComissao,
+					OT.ValorRestanteOrca
 				FROM
 					App_OrcaTrata AS OT
 						LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
@@ -1373,8 +1381,10 @@ class Relatorio_model extends CI_Model {
 					' . $filtro12 . '
 					' . $produtos . '
 					' . $parcelas . '
+					' . $recibo . '
 					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '
 					' . $orcamento . '
+					' . $id_recibo . '
 					' . $cliente . '
 					' . $id_cliente . '
 					' . $tipofinandeiro . ' 
@@ -1399,15 +1409,17 @@ class Relatorio_model extends CI_Model {
 					} else {
 						$somafinal2=0;
 						$somacomissao2=0;
-						
+						$somarestante2=0;
 						foreach ($query_total->result() as $row) {
 							$somafinal2 += $row->ValorFinalOrca;
 							$somacomissao2 += $row->ValorComissao;
+							$somarestante2 += $row->ValorRestanteOrca;
 						}
 						
 						$query_total->soma2 = new stdClass();
 						$query_total->soma2->somafinal2 = number_format($somafinal2, 2, ',', '.');
 						$query_total->soma2->somacomissao2 = number_format($somacomissao2, 2, ',', '.');
+						$query_total->soma2->somarestante2 = number_format($somarestante2, 2, ',', '.');
 
 						return $query_total;
 					}
@@ -1443,6 +1455,7 @@ class Relatorio_model extends CI_Model {
 				OT.TelefoneRec,
 				OT.StatusComissaoOrca,
 				OT.DataPagoComissaoOrca,
+				OT.id_Recibo,
 				OT.idApp_Cliente,
                 CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,"")) AS NomeCliente,
                 CONCAT(IFNULL(C.NomeCliente,"")) AS Cliente,
@@ -1499,8 +1512,10 @@ class Relatorio_model extends CI_Model {
 				' . $filtro12 . '
 				' . $produtos . '
 				' . $parcelas . '
+				' . $recibo . '
 				OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '
                 ' . $orcamento . '
+				' . $id_recibo . '
                 ' . $cliente . '
                 ' . $id_cliente . '
                 ' . $tipofinandeiro . ' 

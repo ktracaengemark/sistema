@@ -20,7 +20,7 @@
 									<div class="col-md-2 text-left">	
 										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<?php echo $_SESSION['Contagem'];?> / <?php echo $_SESSION['FiltroReceitas']['TotalRows'];?> Resultados
+											<?php echo $_SESSION['FiltroReceitas']['Contagem'];?> / <?php echo $_SESSION['FiltroReceitas']['TotalRows'];?> Resultados
 										</a>
 									</div>	
 										<!--
@@ -31,7 +31,7 @@
 									<div class="col-md-2 text-left">	
 										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<span class="glyphicon glyphicon-usd"></span>R$ <?php echo $_SESSION['SomaTotal']; ?> / <?php echo $_SESSION['FiltroReceitas']['FinalTotal'] ?>
+											<span class="glyphicon glyphicon-usd"></span>R$ <?php echo $_SESSION['FiltroReceitas']['SomaTotal']; ?> / <?php echo $_SESSION['FiltroReceitas']['FinalTotal'] ?>
 										</a>
 									</div>
 									<div class="col-md-6 text-left">

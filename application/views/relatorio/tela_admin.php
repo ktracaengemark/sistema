@@ -165,7 +165,7 @@
 											<div class="form-group col-md-12 text-left">
 												<div class="row">										
 													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/comissao_online" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span>Por Pedido/ Associado
+														<span class="glyphicon glyphicon-usd"></span>Pedido x Associado
 													</a>
 												</div>	
 											</div>
@@ -179,14 +179,14 @@
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
 														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/comissao" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span>Por Pedido/ Vendedor
+															<span class="glyphicon glyphicon-usd"></span>Pedido x Colaborador
 														</a>
 													</div>	
 												</div>
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
 														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatoriocomissoes/funcionario" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span> Por Pedido/ Funcionário
+															<span class="glyphicon glyphicon-usd"></span>Pedido x Funcionário
 														</a>
 													</div>	
 												</div>
@@ -195,7 +195,7 @@
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
 														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/comissao_online" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span>Por Pedido/ Associado
+															<span class="glyphicon glyphicon-usd"></span>Pedido x Associado
 														</a>
 													</div>	
 												</div>
@@ -204,7 +204,7 @@
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
 														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatoriocomissoes/porservicos" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span> Por Serviços
+															<span class="glyphicon glyphicon-usd"></span>Serviço x Funcionario
 														</a>
 													</div>	
 												</div>

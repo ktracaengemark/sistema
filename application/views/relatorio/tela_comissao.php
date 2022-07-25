@@ -20,8 +20,19 @@
 									<input type="text" placeholder="Nº Pedido" class="form-control Numero btn-sm" name="Orcamento" id="Orcamento" value="<?php echo set_value('Orcamento', $query['Orcamento']); ?>">
 								</div>
 							</div>
+							<div class="col-md-2 text-left">
+								<label>Recibo</label>
+								<div class="input-group">
+									<span class="input-group-btn">
+										<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
+											<span class="glyphicon glyphicon-search"></span> 
+										</button>
+									</span>
+									<input type="text" placeholder="Nº Recibo" class="form-control Numero btn-sm" name="id_Recibo" id="id_Recibo" value="<?php echo set_value('id_Recibo', $query['id_Recibo']); ?>">
+								</div>
+							</div>
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
-								<div class="col-md-4 text-left">
+								<div class="col-md-3 text-left">
 									<label  ><?php echo $nome; ?>: </label>
 									<div class="input-group">
 										<span class="input-group-btn">
@@ -49,7 +60,7 @@
 								<input type="hidden" name="Cliente" id="Cliente" value=""/>
 								<input type="hidden" name="Fornecedor" id="Fornecedor" value=""/>
 							<?php } ?>
-							<div class="col-md-3 text-left">
+							<div class="col-md-2 text-left">
 								<?php if ($_SESSION['Usuario']['Permissao_Comissao'] >= 2 ) { ?>
 									<label for="NomeUsuario">Colaborador:</label>
 									<div class="input-group">
@@ -191,7 +202,21 @@
 											?>
 										</select>
 									</div>
-									<div class="col-md-3" style="display:<?php echo $none; ?>"></div>
+									<div class="col-md-3" style="display:<?php echo $none; ?>">
+										<label for="Recibo">Recibo:</label>
+										<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+												id="Recibo" name="Recibo">
+											<?php
+											foreach ($select['Recibo'] as $key => $row) {
+												if ($query['Recibo'] == $key) {
+													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+												} else {
+													echo '<option value="' . $key . '">' . $row . '</option>';
+												}
+											}
+											?>
+										</select>
+									</div>
 									<div class="col-md-3" style="display:<?php echo $none; ?>">
 										<label for="FinalizadoOrca">Finalizado</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control Chosen"

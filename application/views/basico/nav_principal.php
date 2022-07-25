@@ -62,7 +62,7 @@
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="btn btn-secondary btn-sm btn-success dropdown-toggle" data-toggle="dropdown">
-								Tarefas <span class="caret"></span>
+								Tarefas  <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a class="dropdown-item" href="<?php echo base_url() ?>agenda"><span class="glyphicon glyphicon-calendar"></span> Agenda </a></li>
@@ -81,7 +81,7 @@
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="btn btn-secondary btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-								Vendas <span class="caret"></span>
+								Vendas  <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>
@@ -111,7 +111,7 @@
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="btn btn-secondary btn-sm btn-danger dropdown-toggle" data-toggle="dropdown">
-								Compras <span class="caret"></span>
+								Compras  <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="<?php echo base_url() ?>despesas_statico/despesas"><span class="glyphicon glyphicon-pencil"></span> Gestor Estatico</a></li>
