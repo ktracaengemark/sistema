@@ -1054,7 +1054,7 @@ class Orcatrata_model extends CI_Model {
     }
 
     public function get_produto_comissao_pedido($data) {
-		$query = $this->db->query('SELECT * FROM App_Produto WHERE idApp_OrcaTrata = ' . $data . '');
+		$query = $this->db->query('SELECT idApp_Produto, idApp_OrcaTrata FROM App_Produto WHERE idApp_OrcaTrata = ' . $data . '');
         $query = $query->result_array();
 
         return $query;

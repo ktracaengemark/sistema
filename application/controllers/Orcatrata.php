@@ -19055,6 +19055,7 @@ class Orcatrata extends CI_Controller {
 						////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
 						
 						$data['query']['DataPagoComissãoPadrao'] = $this->basico->mascara_data($data['query']['DataPagoComissãoPadrao'], 'mysql');            
+						
 						if($data['query']['QuitadoComissao'] == 'N'){
 							
 							#### App_ParcelasRec ####
@@ -19177,14 +19178,11 @@ class Orcatrata extends CI_Controller {
 										if (isset($data['update']['produto']['posterior'][$j])){
 											$max_produto = count($data['update']['produto']['posterior'][$j]);
 											for($k=0;$k<$max_produto;$k++) {
-												
-												$data['update']['produto']['posterior'][$j][$k]['StatusComissaoPedido'] = 'S';
-												$data['update']['produto']['posterior'][$j][$k]['DataPagoComissaoPedido'] = $data['query']['DataPagoComissãoPadrao'];
-												
-												$data['update']['produto']['bd'][$j] = $this->Orcatrata_model->update_produto_id($data['update']['produto']['posterior'][$j][$k], $data['update']['produto']['posterior'][$j][$k]['idApp_Produto']);
-												
+												$data['update']['produto']['posterior'][$j][$k]['StatusComissaoPedido'] 	= 'S';
+												$data['update']['produto']['posterior'][$j][$k]['DataPagoComissaoPedido'] 	= $data['query']['DataPagoComissãoPadrao'];
 											}
-											
+											if (count($data['update']['produto']['posterior'][$j]))
+												$data['update']['produto']['bd']['posterior'] =  $this->Orcatrata_model->update_produto($data['update']['produto']['posterior'][$j]);
 										}
 									}
 								}
