@@ -69,7 +69,7 @@
 												<span class="glyphicon glyphicon-search"></span> 
 											</button>
 										</span>
-										<select data-placeholder="Selecione uma opção..." class="form-control" 
+										<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
 												id="NomeUsuario" name="NomeUsuario">
 											<?php
 											foreach ($select['NomeUsuario'] as $key => $row) {
