@@ -150,23 +150,23 @@
 								<div class="row">
 									<input type="hidden" name="idSis_Empresa" value="<?php echo $empresa['idSis_Empresa']; ?>">
 									<div class="col-md-4 text-left">
-										<label for="QuitadoComissão">Todas as Receitas Finalizadas?</label><br>
+										<label for="QuitadoComissao">Todas as Receitas Finalizadas?</label><br>
 										<div class="btn-group" data-toggle="buttons">
 											<?php
-											foreach ($select['QuitadoComissão'] as $key => $row) {
-												(!$query['QuitadoComissão']) ? $query['QuitadoComissão'] = 'N' : FALSE;
+											foreach ($select['QuitadoComissao'] as $key => $row) {
+												(!$query['QuitadoComissao']) ? $query['QuitadoComissao'] = 'N' : FALSE;
 
-												if ($query['QuitadoComissão'] == $key) {
+												if ($query['QuitadoComissao'] == $key) {
 													echo ''
-													. '<label class="btn btn-warning active" name="radiobutton_QuitadoComissão' . '" id="radiobutton_QuitadoComissão' .  $key . '">'
-													. '<input type="radio" name="QuitadoComissão' . '" id="radiobuttondinamico" '
+													. '<label class="btn btn-warning active" name="radiobutton_QuitadoComissao' . '" id="radiobutton_QuitadoComissao' .  $key . '">'
+													. '<input type="radio" name="QuitadoComissao' . '" id="radiobuttondinamico" '
 													. 'autocomplete="off" value="' . $key . '" checked>' . $row
 													. '</label>'
 													;
 												} else {
 													echo ''
-													. '<label class="btn btn-default" name="radiobutton_QuitadoComissão' .  '" id="radiobutton_QuitadoComissão' .  $key . '">'
-													. '<input type="radio" name="QuitadoComissão' . '" id="radiobuttondinamico" '
+													. '<label class="btn btn-default" name="radiobutton_QuitadoComissao' .  '" id="radiobutton_QuitadoComissao' .  $key . '">'
+													. '<input type="radio" name="QuitadoComissao' . '" id="radiobuttondinamico" '
 													. 'autocomplete="off" value="' . $key . '" >' . $row
 													. '</label>'
 													;
@@ -174,7 +174,7 @@
 											}
 											?>
 										</div>
-										<?php #echo form_error('QuitadoComissão'); ?>
+										<?php #echo form_error('QuitadoComissao'); ?>
 									</div>
 									<!--
 									<div class="col-md-4 text-left">
