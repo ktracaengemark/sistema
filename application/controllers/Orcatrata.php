@@ -19096,6 +19096,11 @@ class Orcatrata extends CI_Controller {
 							$data['recibo']['DataOrca'] 			= $data['query']['DataPagoComissãoPadrao'];
 							$data['recibo']['HoraOrca'] 			= date('H:i:s', time());
 							$data['recibo']['id_Usuario_Recibo'] 	= $_SESSION['FiltroComissao']['NomeUsuario'];
+							if($this->Usuario_model->get_usuario($_SESSION['FiltroComissao']['NomeUsuario'])['Nivel'] == 0){
+								$data['recibo']['NivelOrca'] 		= 1;
+							}else{
+								$data['recibo']['NivelOrca']		= $this->Usuario_model->get_usuario($_SESSION['FiltroComissao']['NomeUsuario'])['Nivel'];
+							}
 							$data['recibo']['idTab_TipoRD']			= 1;
 							$data['recibo']['idTab_Modulo']			= 1;
 							$data['recibo']['idSis_Empresa'] 		= $_SESSION['log']['idSis_Empresa'];
