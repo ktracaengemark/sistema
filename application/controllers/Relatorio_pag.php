@@ -652,7 +652,6 @@ class Relatorio_pag extends CI_Controller {
 		$data['titulo'] = 'Comissão Colaborador';
 		$data['form_open_path'] = 'relatorio_pag/comissao_pag';
 		$data['baixatodas'] = 'Orcatrata/baixadacomissao/';
-		$data['recibo'] = 'Orcatrata/recibodacomissao/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
 		$data['nomeusuario'] = 'NomeColaborador';
 		$data['status'] = 'StatusComissaoOrca';

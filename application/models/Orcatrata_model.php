@@ -2445,8 +2445,7 @@ class Orcatrata_model extends CI_Model {
 			
 			$query = $this->db->query(
 				'SELECT
-					OT.idApp_OrcaTrata,
-					OT.id_Recibo
+					OT.idApp_OrcaTrata
 				FROM
 					App_OrcaTrata AS OT
 						LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario

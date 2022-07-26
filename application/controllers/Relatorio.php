@@ -1804,7 +1804,6 @@ class Relatorio extends CI_Controller {
 		$data['titulo'] = 'Comissão Colaborador';
 		$data['form_open_path'] = 'relatorio/comissao';
 		$data['baixatodas'] = 'Orcatrata/baixadacomissao/';
-		$data['recibo'] = 'Orcatrata/recibodacomissao/';
 		$data['editartodas'] = 'relatorio/receitas/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
 		$data['nomeusuario'] = 'NomeColaborador';

@@ -85,23 +85,20 @@
 																	<label><?php echo $nomeusuario; ?>:</label><br>
 																	<span><?php echo $_SESSION['Orcamento'][$i][$nomeusuario] ?></span>
 																</div>
-																<!--<input type="hidden" name="DataVencimentoOrca<?php #echo $i ?>" value="<?php #echo $orcamento[$i]['DataVencimentoOrca']; ?>"/>-->
 																<div class="col-md-2">
 																	<label for="DataOrca">Receita</label>
 																	<div class="input-group DatePicker">
 																		<span class="input-group-addon" disabled>
 																			<span class="glyphicon glyphicon-calendar"></span>
 																		</span>
-																		<input type="text" class="form-control Date" readonly="" id="DataOrca<?php echo $i ?>" maxlength="10" placeholder="DD/MM/AAAA"
-																			   name="DataOrca<?php echo $i ?>" value="<?php echo $orcamento[$i]['DataOrca'] ?>">																
+																		<input type="text" class="form-control Date" readonly="" value="<?php echo $_SESSION['Orcamento'][$i]['DataOrca'] ?>">																
 																	</div>
 																</div>
 																<div class="col-md-2">
 																	<label for="ValorRestanteOrca">Prd+Srv:</label><br>
-																	<div class="input-group" id="txtHint">
+																	<div class="input-group">
 																		<span class="input-group-addon" id="basic-addon1">R$</span>
-																		<input type="text" class="form-control Valor" readonly="" maxlength="10" placeholder="0,00" id="ValorRestanteOrca<?php echo $i ?>"
-																			   name="ValorRestanteOrca<?php echo $i ?>" value="<?php echo $orcamento[$i]['ValorRestanteOrca'] ?>">
+																		<input type="text" class="form-control Valor" readonly="" value="<?php echo $_SESSION['Orcamento'][$i]['ValorRestanteOrca'] ?>">
 																	</div>
 																</div>
 																<div class="col-md-2">
@@ -113,45 +110,21 @@
 																	</div>
 																</div>
 																<div class="col-md-2">
-																	<label for="<?php echo $statuscomissao; ?>">Pago?</label><br>
-																	<div class="form-group">
-																		<div class="btn-group" data-toggle="buttons">
-																			<?php
-																			foreach ($select[$statuscomissao] as $key => $row) {
-																				if (!$orcamento[$i][$statuscomissao])$orcamento[$i][$statuscomissao] = 'N';
-																				($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-																				if ($orcamento[$i][$statuscomissao] == $key) {
-																					echo ''
-																					. '<label class="btn btn-warning active" name="' . $statuscomissao . $i . '_' . $hideshow . '">'
-																					. '<input type="radio" name="' . $statuscomissao . $i . '" id="' . $hideshow . '" '
-																					//. 'onchange="carregaDataPagoComissaoOrca(this.value,this.name,'.$i.',1)" '
-																					. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																					. '</label>'
-																					;
-																				} else {
-																					echo ''
-																					. '<label class="btn btn-default" name="' . $statuscomissao . $i . '_' . $hideshow . '">'
-																					. '<input type="radio" name="' . $statuscomissao . $i . '" id="' . $hideshow . '" '
-																					//. 'onchange="carregaDataPagoComissaoOrca(this.value,this.name,'.$i.',1)" '
-																					. 'autocomplete="off" value="' . $key . '" >' . $row
-																					. '</label>'
-																					;
-																				}
-																			}
-																			?>
-																		</div>
+																	<label for="StatusComissaoOrca">StatusPago</label>
+																	<div class="input-group">
+																		<span class="input-group-addon" disabled>
+																			<span class="glyphicon glyphicon-pencil"></span>
+																		</span>
+																		<input type="text" class="form-control" readonly="" value="<?php echo $_SESSION['Orcamento'][$i]['StatusComissaoOrca'] ?>">																
 																	</div>
 																</div>
-																<div id="<?php echo $statuscomissao; ?><?php echo $i ?>" <?php echo $div[$statuscomissao . $i]; ?>>
-																	<div class="col-md-2">
-																		<label for="DataPagoComissaoOrca">DataPago</label>
-																		<div class="input-group DatePicker">
-																			<span class="input-group-addon" disabled>
-																				<span class="glyphicon glyphicon-calendar"></span>
-																			</span>
-																			<input type="text" class="form-control Date" id="DataPagoComissaoOrca<?php echo $i ?>" maxlength="10" placeholder="DD/MM/AAAA"
-																				   name="DataPagoComissaoOrca<?php echo $i ?>" value="<?php echo $orcamento[$i]['DataPagoComissaoOrca'] ?>">																
-																		</div>
+																<div class="col-md-2">
+																	<label for="DataPagoComissaoOrca">DataPago</label>
+																	<div class="input-group">
+																		<span class="input-group-addon" disabled>
+																			<span class="glyphicon glyphicon-calendar"></span>
+																		</span>
+																		<input type="text" class="form-control Date" readonly="" value="<?php echo $_SESSION['Orcamento'][$i]['DataPagoComissaoOrca'] ?>">																
 																	</div>
 																</div>
 															</div>
@@ -170,8 +143,6 @@
 						
 							<div class="form-group">
 								<div class="row">
-									<!--<input type="hidden" name="idApp_Cliente" value="<?php #echo $_SESSION['Cliente']['idApp_Cliente']; ?>">-->
-									<!--<input type="hidden" name="idSis_Empresa" value="<?php #echo $_SESSION['log']['idSis_Empresa']; ?>">-->
 									<input type="hidden" name="idSis_Empresa" value="<?php echo $empresa['idSis_Empresa']; ?>">
 									
 									<div class="col-md-2 text-left">
