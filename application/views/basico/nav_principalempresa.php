@@ -112,18 +112,19 @@
 						</ul>
 					</div>
 				</li>
-				-->
 				<li class="btn-toolbar navbar-form" role="toolbar" aria-label="...">				
 					<div class="btn-group " role="group" aria-label="...">
 						<a href="<?php echo base_url(); ?>relatorioempresa/login">
 							<button type="button" class="btn btn-sm btn-success ">
-								<span class="glyphicon glyphicon-log-in"></span> Acessar Empresa
+								<span class="glyphicon glyphicon-home"></span> Loja
 							</button>
 						</a>
 					</div>
-				</li>				
-				<li class="btn-toolbar btn-sm navbar-form" role="toolbar" aria-label="...">								
-					<div class="btn-group">
+				</li>
+				-->
+				
+				<li class="botoesnav">
+					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
 						<?php
 							$data1 = new DateTime(); 
 							$data2 = new DateTime($_SESSION['log']['DataDeValidade']); 
@@ -133,31 +134,41 @@
 								$atua_flash = '';
 							}
 						?>
-						<button type="button" class="<?php echo $atua_flash ?> btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
-							
+						<a type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning" href="<?php echo base_url(); ?>relatorioempresa/login" role="button">
 							<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
-								<span class="glyphicon glyphicon-hand-right"></span>
-								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?> 
-								 / <span class="glyphicon glyphicon-home"></span> Admin / Sair
+								Acessar Loja
 							<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
-								<span class="glyphicon glyphicon-warning-sign"></span> Renovar ! 
-								<span class="glyphicon glyphicon-home"></span> Admin / Sair
+								Acessar Loja
 							<?php } else {?>
-								<span class="glyphicon glyphicon-home"></span> enkontraki / Sair
+								Sair
 							<?php } ?>
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<?php if ($_SESSION['log']['NivelEmpresa'] >= 4 ) { ?>
-							<li><a href="<?php echo base_url() ?>../enkontraki/login_cliente.php?id_empresa=<?php echo $_SESSION['log']['idSis_Empresa']; ?>" target="_blank"><span class="glyphicon glyphicon-pencil"></span> Renovar Assinatura</a></li>
-							<li role="separator" class="divider"></li>									
-							<?php } ?>
-							<li><a href="<?php echo base_url() ?>relatorioempresa/empresas"><span class="glyphicon glyphicon-home"></span> Empresas</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="<?php echo base_url() ?>login/sair"><span class="glyphicon glyphicon-log-out"></span> Sair do Sistema</a></li>
-						</ul>
+						</a>
+						<!--<div class="btn-group" role="group">-->
+							<button type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
+								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
+									<span class="glyphicon glyphicon-hand-right"></span>
+									<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?> 
+								<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
+									<span class="glyphicon glyphicon-warning-sign"></span> Renovar
+								<?php } else {?>
+									<span class="glyphicon glyphicon-home"></span> enkontraki
+								<?php } ?>
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="<?php echo base_url() ?>relatorioempresa/login"><span class="glyphicon glyphicon-home"></span> Acessar Loja</a></li>
+								<li role="separator" class="divider"></li>
+								<?php if ($_SESSION['log']['NivelEmpresa'] >= 4 ) { ?>
+								<li><a href="<?php echo base_url() ?>../enkontraki/login_cliente.php?id_empresa=<?php echo $_SESSION['log']['idSis_Empresa']; ?>" target="_blank"><span class="glyphicon glyphicon-pencil"></span> Renovar Assinatura</a></li>
+								<li role="separator" class="divider"></li>									
+								<?php } ?>
+								<li><a href="<?php echo base_url() ?>relatorioempresa/empresas"><span class="glyphicon glyphicon-home"></span> Empresas</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="<?php echo base_url() ?>login/sair"><span class="glyphicon glyphicon-log-out"></span> Sair do Sistema</a></li>
+							</ul>
+						<!--</div>-->
 					</div>
-				</li>				
+				</li>
 			</ul>
 		</div>
 	</div>

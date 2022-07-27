@@ -142,22 +142,22 @@
 						?>
 						<a type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning" href="<?php echo $loginempresa ?>" role="button">
 							<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
-								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?>
+								Admin
 							<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
-								<span class="glyphicon glyphicon-warning-sign"> </span> Renovar ! 
+								Admin
 							<?php } else {?>
-								<span class="glyphicon glyphicon-home"></span> enkontraki
+								Sair
 							<?php } ?>
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
-								
 								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
-									Admin
+									<span class="glyphicon glyphicon-hand-right"></span>
+									<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?>
 								<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
-									Admin
+									<span class="glyphicon glyphicon-warning-sign"> </span> Renovar 
 								<?php } else {?>
-									Sair
+									<span class="glyphicon glyphicon-home"></span> enkontraki
 								<?php } ?>
 								<span class="caret"></span>
 							</button>

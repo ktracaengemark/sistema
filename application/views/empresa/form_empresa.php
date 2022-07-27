@@ -336,8 +336,7 @@
 															</div>
 														</div>
 													</div>	
-													<h3 class="text-left">Dados do E-Comerce</h3>
-													<div class="form-group">
+													<div class="form-group" style="display:none;">
 														<div class="row">
 															<div class="col-md-3 text-left">
 																<label for="EComerce">E-Comerce Ativo?</label><br>
@@ -370,6 +369,8 @@
 														</div>
 													</div>										
 													<div id="EComerce" <?php echo $div['EComerce']; ?>>
+														<br>
+														<h3 class="text-left">Dados do E-Comerce</h3>
 														<div class="form-group">
 															<div class="row">
 																<div class="col-md-2">
