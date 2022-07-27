@@ -373,7 +373,7 @@
 																			</div>
 																		</div>
 																		<div class="col-md-2">
-																			<label for="ComissaoCashBack">CashBack <?php echo $i ?></label>
+																			<label for="ComissaoCashBack">CashBack Cliente<?php echo $i ?></label>
 																			<div class="input-group">
 																				<input type="text" class="form-control Valor text-right" id="ComissaoCashBack<?php echo $i ?>" maxlength="10" placeholder="0,00"
 																					name="ComissaoCashBack<?php echo $i ?>" value="<?php echo $valor[$i]['ComissaoCashBack'] ?>">
@@ -436,7 +436,7 @@
 																				</div>
 																			</div>
 																		</div>
-																		<div class="col-md-2">
+																		<div class="col-md-2" style="display:none">
 																			<label for="TipoPreco">Venda/Revenda?</label><br>
 																			<div class="form-group">
 																				<div class="btn-group" data-toggle="buttons">

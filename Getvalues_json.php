@@ -454,7 +454,7 @@ elseif ($_GET['q'] == 90) {
 			'id_produto' => $row['idTab_Produtos'],
             #'name' => utf8_encode($row['NomeProduto']),
             #'name' => $row['NomeProduto'],
-            'name' => mb_convert_encoding($row['NomeProduto'].' - '.$row['TipoPreco'], "UTF-8", "ISO-8859-1"),
+            'name' => mb_convert_encoding($row['NomeProduto'], "UTF-8", "ISO-8859-1"),
             'value' => $row['ValorProduto'],
         );
     }
@@ -529,7 +529,7 @@ elseif ($_GET['q'] == 902) {
 			'id_produto' => $row['idTab_Produtos'],
             #'name' => utf8_encode($row['NomeProduto']),
             #'name' => $row['NomeProduto'],
-            'name' => mb_convert_encoding($row['NomeProduto'].' - '.$row['TipoPreco'], "UTF-8", "ISO-8859-1"),
+            'name' => mb_convert_encoding($row['NomeProduto'], "UTF-8", "ISO-8859-1"),
             'value' => $row['ValorProduto'],
         );
     }
