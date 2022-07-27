@@ -152,7 +152,7 @@
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
 								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
-									<span class="glyphicon glyphicon-hand-right"></span>
+									
 									<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?>
 								<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
 									<span class="glyphicon glyphicon-warning-sign"> </span> Renovar 
