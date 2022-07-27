@@ -200,7 +200,10 @@
 								<th class="active">Cash</th>
 								<th class="active">Final</th>
 							<?php } ?>
-							<th class="active"><?php echo $nomeusuario ?></th>
+							<th class="active">Vendedor</th>
+							
+								<th class="active">Associado</th>
+							
 						<?php }else{ ?>	
 							<th class="active">Extra</th>
 						<?php } ?>
@@ -341,6 +344,7 @@
 									<td><?php echo $row['ValorFinalOrca'] ?></td>
 								<?php } ?>
 								<?php echo '<td>' . $row[$nomeusuario] . '</td>';?>	
+								<?php echo '<td>' . $row['NomeAssociado'] . '</td>';?>	
 							<?php }else{ ?>
 								<td><?php echo $row['ValorExtraOrca'] ?></td>
 							<?php }	 ?>

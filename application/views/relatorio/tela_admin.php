@@ -179,7 +179,14 @@
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
 														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/comissao" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span>Pedido x Colaborador
+															<span class="glyphicon glyphicon-usd"></span>Pedido x Vendedor
+														</a>
+													</div>	
+												</div>
+												<div class="form-group col-md-12 text-left">
+													<div class="row">										
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/comissaoass" role="button"> 
+															<span class="glyphicon glyphicon-usd"></span>Pedido x Associado
 														</a>
 													</div>	
 												</div>
@@ -191,15 +198,6 @@
 													</div>	
 												</div>
 											<?php } ?>
-											<?php if($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Permissao_Comissao'] >= 2) {?>
-												<div class="form-group col-md-12 text-left">
-													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/comissao_online" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span>Pedido x Associado
-														</a>
-													</div>	
-												</div>
-											<?php }?>	
 											<?php if($_SESSION['log']['idSis_Empresa'] != 5) {?>
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										

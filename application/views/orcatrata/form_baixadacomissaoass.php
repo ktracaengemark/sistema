@@ -24,17 +24,17 @@
 									<div class="col-md-2 text-left">	
 										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<?php echo $_SESSION['FiltroComissao']['Contagem'];?> / <?php echo $_SESSION['FiltroComissao']['Total_Rows'];?> Resultados
+											<?php echo $_SESSION['FiltroComissaoAss']['Contagem'];?> / <?php echo $_SESSION['FiltroComissaoAss']['Total_Rows'];?> Resultados
 										</a>
 									</div>
 									<div class="col-md-2 text-left">	
 										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<span class="glyphicon glyphicon-usd"></span>R$ <?php if(isset($_SESSION['FiltroComissao']['SomaTotal'])) echo $_SESSION['FiltroComissao']['SomaTotal']; ?> / <?php echo $_SESSION['FiltroComissao']['ComissaoTotal'] ?>
+											<span class="glyphicon glyphicon-usd"></span>R$ <?php if(isset($_SESSION['FiltroComissaoAss']['SomaTotal'])) echo $_SESSION['FiltroComissaoAss']['SomaTotal']; ?> / <?php echo $_SESSION['FiltroComissaoAss']['ComissaoTotal'] ?>
 										</a>
 									</div>
 									<div class="col-md-4 text-left">
-										<?php echo $_SESSION['FiltroComissao']['Pagination']; ?>
+										<?php echo $_SESSION['FiltroComissaoAss']['Pagination']; ?>
 									</div>
 									<div class="col-md-2 text-left">	
 										<br>
@@ -60,7 +60,7 @@
 											<div class="input_fields_wrap21">
 
 											<?php
-											$linha =  $_SESSION['FiltroComissao']['Per_Page']*$_SESSION['FiltroComissao']['Pagina'];
+											$linha =  $_SESSION['FiltroComissaoAss']['Per_Page']*$_SESSION['FiltroComissaoAss']['Pagina'];
 											for ($i=1; $i <= $count['PRCount']; $i++) {
 												$contagem = ($linha + $i);
 											?>
@@ -90,11 +90,11 @@
 																	</div>
 																</div>
 																<div class="col-md-2">
-																	<label for="ValorComissao">Comissao:</label><br>
+																	<label for="ValorComissaoAssoc">Comissao:</label><br>
 																	<div class="input-group" id="txtHint">
 																		<span class="input-group-addon" id="basic-addon1">R$</span>
-																		<input type="text" class="form-control Valor"  maxlength="10" placeholder="0,00" id="ValorComissao<?php echo $i ?>"
-																			   name="ValorComissao<?php echo $i ?>" value="<?php echo $orcamento[$i]['ValorComissao'] ?>">
+																		<input type="text" class="form-control Valor"  maxlength="10" placeholder="0,00" id="ValorComissaoAssoc<?php echo $i ?>"
+																			   name="ValorComissaoAssoc<?php echo $i ?>" value="<?php echo $orcamento[$i]['ValorComissaoAssoc'] ?>">
 																	</div>
 																</div>
 																<div class="col-md-2">

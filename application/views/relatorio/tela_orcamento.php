@@ -122,7 +122,27 @@
 									<input type="hidden" name="NomeUsuario" id="NomeUsuario" value="0"/>
 									<div class="col-md-3 text-left">
 										<?php if ($_SESSION['Usuario']['Permissao_Comissao'] >= 2 ) { ?>
-											<label for="Ordenamento">Associado:</label>
+											<label for="NomeAssociado">Associado:</label>
+											<div class="input-group">
+												<span class="input-group-btn">
+													<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
+														<span class="glyphicon glyphicon-search"></span> 
+													</button>
+												</span>
+												<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
+														id="NomeAssociado" name="NomeAssociado">
+													<?php
+													foreach ($select['NomeAssociado'] as $key => $row) {
+														if ($query['NomeAssociado'] == $key) {
+															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+														} else {
+															echo '<option value="' . $key . '">' . $row . '</option>';
+														}
+													}
+													?>
+												</select>
+											</div>
+											<!--
 											<div class="input-group">
 												<span class="input-group-btn">
 													<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
@@ -131,6 +151,7 @@
 												</span>
 												<input type="text" placeholder="Pesquisar Associado" class="form-control Numero btn-sm" name="NomeAssociado" id="NomeAssociado" value="<?php echo set_value('NomeAssociado', $query['NomeAssociado']); ?>">
 											</div>
+											-->
 										<?php } ?>	
 									</div>
 								<?php } else if ($metodo == 3) { ?>
