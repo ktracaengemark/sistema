@@ -20028,8 +20028,8 @@ class Orcatrata extends CI_Controller {
 										if (isset($data['update']['produto']['posterior'][$j])){
 											$max_produto = count($data['update']['produto']['posterior'][$j]);
 											for($k=0;$k<$max_produto;$k++) {
-												$data['update']['produto']['posterior'][$j][$k]['StatusComissaoPedido'] 	= 'S';
-												$data['update']['produto']['posterior'][$j][$k]['DataPagoComissaoPedido'] 	= $data['query']['DataPagoComissãoPadrao'];
+												$data['update']['produto']['posterior'][$j][$k]['StatusComissaoFuncionario'] 	= 'S';
+												$data['update']['produto']['posterior'][$j][$k]['DataPagoComissaoFuncionario'] 	= $data['query']['DataPagoComissãoPadrao'];
 											}
 											if (count($data['update']['produto']['posterior'][$j]))
 												$data['update']['produto']['bd']['posterior'] =  $this->Orcatrata_model->update_produto($data['update']['produto']['posterior'][$j]);
