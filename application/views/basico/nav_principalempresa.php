@@ -15,7 +15,7 @@
 
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-8 btn-menu btn-group ">
 				<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
-					<a type="button" class="btn btn-secondary btn-sm btn-default" href="<?php echo base_url() . 'empresa/prontuario/' . $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>" role="button">
+					<a type="button" class="btn btn-secondary btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Dados da Empresa" href="<?php echo base_url() . 'empresa/prontuario/' . $_SESSION['AdminEmpresa']['idSis_Empresa']; ?>" role="button">
 						<span class="glyphicon glyphicon-home"></span>
 						<strong><?php echo $_SESSION['AdminEmpresa']['NomeEmpresa']; ?></strong>
 					</a>
@@ -88,7 +88,7 @@
 			<ul class="nav navbar-nav navbar-center">
 				<li class="btn-toolbar btn-sm navbar-form" role="toolbar" aria-label="...">
 					<div class="btn-group " role="group" aria-label="Grupo de botões com dropdown aninhado">
-						<a type="button" class="btn btn-secondary btn-sm btn-info " href="<?php echo base_url() ?>relatorioempresa/funcionario" role="button">
+						<a type="button" class="btn btn-secondary btn-sm btn-info " data-toggle="tooltip" data-placement="bottom" title="Lista de Usuarios" href="<?php echo base_url() ?>relatorioempresa/funcionario" role="button">
 							 Usuarios 
 						</a>
 						<!--<div class="btn-group" role="group">-->
@@ -134,11 +134,11 @@
 								$atua_flash = '';
 							}
 						?>
-						<a type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning" href="<?php echo base_url(); ?>relatorioempresa/login" role="button">
+						<a type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning" data-toggle="tooltip" data-placement="bottom" title="Acessar Loja" href="<?php echo base_url(); ?>relatorioempresa/login" role="button">
 							<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
-								Acessar Loja
+								Loja
 							<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
-								Acessar Loja
+								Loja
 							<?php } else {?>
 								Sair
 							<?php } ?>

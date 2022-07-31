@@ -50,7 +50,7 @@
 			<!--<input type="password" id="inputPassword" class="form-control" placeholder="Senha" name="Senha" value="">-->
 			<?php echo form_error('Senha'); ?>
 			<input type="hidden" name="modulo" value="<?php echo $modulo; ?>">
-			<button class="btn btn-lg btn-primary btn-block" type="submit"><span class="glyphicon glyphicon-log-in"></span> Acessar Conta Admin.</button>
+			<button class="btn btn-lg btn-primary btn-block" type="submit"><span class="glyphicon glyphicon-log-in"></span> Acessar Administracao</button>
 		</div>	
 	</div>
 </div>

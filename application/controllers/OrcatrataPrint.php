@@ -493,6 +493,12 @@ class OrcatrataPrint extends CI_Controller {
 							$data['usuario'] = $this->Usuario_model->get_usuario($data['orcatrata']['idSis_Usuario'], TRUE);
 						}
 					}
+
+					if(isset($data['orcatrata']['id_Funcionario']) && $data['orcatrata']['id_Funcionario'] != 0){
+						if($_SESSION['log']['idSis_Empresa'] != 5){
+							$data['funcionario'] = $this->Usuario_model->get_usuario($data['orcatrata']['id_Funcionario'], TRUE);
+						}
+					}
 					
 					$data['query'] = $this->Orcatrataprint_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata'], TRUE);	
 					

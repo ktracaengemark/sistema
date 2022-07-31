@@ -109,6 +109,7 @@ class Orcatrataprint_model extends CI_Model {
 				OT.DataEntradaOrca,
 				OT.idApp_Cliente,
 				OT.idApp_Fornecedor,
+				OT.id_Funcionario,
 				OT.ValorOrca,
 				OT.ValorDev,
 				OT.QtdPrdOrca,

@@ -191,6 +191,7 @@
 						<?php if($_SESSION['log']['idSis_Empresa'] != 5) {?>
 							<th class="active"><?php echo $nome ?></th>
 							<th class="active">Celular</th>
+							<th class="active">Funcionario</th>
 							<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
 								<th class="active">Prd/Srv</th>
 								<th class="active">Frete</th>
@@ -200,7 +201,7 @@
 								<th class="active">Cash</th>
 								<th class="active">Final</th>
 							<?php } ?>
-							<th class="active"><?php echo $nomeusuario ?></th>
+							<th class="active">Colaborador</th>
 						<?php }else{ ?>	
 							<th class="active">Extra</th>
 						<?php } ?>	
@@ -331,6 +332,7 @@
 										</a>
 									<?php } ?>
 								</td>
+								<td><?php echo $row['NomeFuncionario'] ?></td>
 								<?php if($_SESSION['Usuario']['Rel_Pag'] == 'S') { ?>
 									<td><?php echo $row['ValorRestanteOrca'] ?></td>
 									<td><?php echo $row['ValorFrete'] ?></td>

@@ -849,6 +849,7 @@ class Relatorio_model extends CI_Model {
 		$orcamento = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
 		$fornecedor = ($data['Fornecedor']) ? ' AND OT.idApp_Fornecedor = ' . $data['Fornecedor'] . '' : FALSE;
 		$id_fornecedor = ($data['idApp_Fornecedor']) ? ' AND OT.idApp_Fornecedor = ' . $data['idApp_Fornecedor'] . '' : FALSE;
+		$id_func = ($data['id_Funcionario']) ? ' AND OT.id_Funcionario = ' . $data['id_Funcionario'] . '' : FALSE;
 		$tipofinandeiro = ($data['TipoFinanceiro']) ? ' AND TR.idTab_TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
 		$idtipord = ($data['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $data['idTab_TipoRD'] : ' AND OT.idTab_TipoRD = 1';
 		$campo = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
@@ -969,6 +970,7 @@ class Relatorio_model extends CI_Model {
 					' . $orcamento . '
 					' . $fornecedor . '
 					' . $id_fornecedor . '
+					' . $id_func . '
 					' . $tipofinandeiro . ' 
 					' . $idtipord . '
 					' . $DiaAniv . '
@@ -1028,16 +1030,24 @@ class Relatorio_model extends CI_Model {
 				OT.NomeRec,
 				OT.ParentescoRec,
 				OT.TelefoneRec,
+				
+				OT.NivelOrca,
+				
+				US.Nome,
+				CONCAT(IFNULL(US.idSis_Usuario,""), " - " ,IFNULL(US.Nome,"")) AS NomeColaborador,
+				
+				OT.id_Funcionario,
+                CONCAT(IFNULL(UF.idSis_Usuario,""), " - " ,IFNULL(UF.Nome,"")) AS NomeFuncionario,
+				
 				OT.idApp_Fornecedor,
                 CONCAT(IFNULL(C.idApp_Fornecedor,""), " - " ,IFNULL(C.NomeFornecedor,"")) AS NomeFornecedor,
+				
                 CONCAT(IFNULL(C.NomeFornecedor,"")) AS Fornecedor,
 				C.CelularFornecedor,
 				C.DataCadastroFornecedor,
 				C.DataNascimento,
 				C.Telefone2,
 				C.Telefone3,
-				US.Nome,
-				CONCAT(IFNULL(US.idSis_Usuario,""), " - " ,IFNULL(US.Nome,"")) AS NomeColaborador,
 				TFP.FormaPag,
 				TR.TipoFinanceiro,
 				OT.Modalidade,
@@ -1046,6 +1056,8 @@ class Relatorio_model extends CI_Model {
             FROM
                 App_OrcaTrata AS OT
 					LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS UF ON UF.idSis_Usuario = OT.id_Funcionario
+					LEFT JOIN Sis_Usuario AS UV ON UV.idSis_Usuario = OT.id_Vendedor
 					' . $rede . '
 					LEFT JOIN App_Fornecedor AS C ON C.idApp_Fornecedor = OT.idApp_Fornecedor
 					LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
@@ -1087,6 +1099,7 @@ class Relatorio_model extends CI_Model {
                 ' . $orcamento . '
                 ' . $fornecedor . '
                 ' . $id_fornecedor . '
+                ' . $id_func . '
                 ' . $tipofinandeiro . ' 
                 ' . $idtipord . '
 				' . $DiaAniv . '

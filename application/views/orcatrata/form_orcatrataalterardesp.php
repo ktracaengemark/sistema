@@ -108,11 +108,15 @@
 													<?php if ($_SESSION['log']['NivelEmpresa'] >= 4 ) { ?>
 														<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-left">	
 															<div class="row">
-																<div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 text-left">
-																	<label for="Cli_Forn_Orca">Fornec?</label><br>
+																<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 text-left">
+																	<label for="Cli_Forn_Orca">Fornecedor?</label><br>
 																	<input type="text" class="form-control"id="Cli_Forn_Orca" name="Cli_Forn_Orca" value="<?php echo $_SESSION['Orcatrata']['Cli_Forn_Orca']; ?>" readonly="">
 																</div>
-																<div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 text-left">
+																<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 text-left">
+																	<label for="Func_Orca">Funcionario?</label><br>
+																	<input type="text" class="form-control"id="Func_Orca" name="Func_Orca" value="<?php echo $_SESSION['Orcatrata']['Func_Orca']; ?>" readonly="">
+																</div>
+																<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 text-left">
 																	<label for="Prd_Srv_Orca">Prd/Srv?</label><br>
 																	<div class="btn-larg-right btn-group" data-toggle="buttons">
 																		<?php
@@ -139,7 +143,7 @@
 																		?>
 																	</div>
 																</div>
-																<div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 text-left">
+																<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 text-left">
 																	<label for="Entrega_Orca">Entrega?</label><br>
 																	<div class="btn-larg-right btn-group" data-toggle="buttons">
 																		<?php
@@ -151,7 +155,7 @@
 																				echo ''
 																				. '<label class="btn btn-warning active" name="Entrega_Orca_' . $hideshow . '">'
 																				. '<input type="radio" name="Entrega_Orca" id="' . $hideshow . '" '
-																				. 'onchange="comentrega(this.value)" '
+																				. 'onchange="comentrega_for(this.value)" '
 																				. 'autocomplete="off" value="' . $key . '" checked>' . $row
 																				. '</label>'
 																				;
@@ -159,7 +163,7 @@
 																				echo ''
 																				. '<label class="btn btn-default" name="Entrega_Orca_' . $hideshow . '">'
 																				. '<input type="radio" name="Entrega_Orca" id="' . $hideshow . '" '
-																				. 'onchange="comentrega(this.value)" '
+																				. 'onchange="comentrega_for(this.value)" '
 																				. 'autocomplete="off" value="' . $key . '" >' . $row
 																				. '</label>'
 																				;
@@ -172,89 +176,125 @@
 														</div>	
 													<?php }else{ ?>
 														<input type="hidden" name="Cli_Forn_Orca" id="Cli_Forn_Orca" value="<?php echo $_SESSION['Orcatrata']['Cli_Forn_Orca']; ?>"/>
+														<input type="hidden" name="Func_Orca" id="Func_Orca" value="<?php echo $_SESSION['Orcatrata']['Func_Orca']; ?>"/>
 														<input type="hidden" name="Prd_Srv_Orca" id="Prd_Srv_Orca" value="<?php echo $orcatrata['Prd_Srv_Orca']; ?>"/>
 														<input type="hidden" name="Entrega_Orca" id="Entrega_Orca" value="<?php echo $orcatrata['Entrega_Orca']; ?>"/>
 													<?php } ?>
 												</div>
 												<input type="hidden" id="Hidden_Cli_Forn_Orca" value="<?php echo $_SESSION['Orcatrata']['Cli_Forn_Orca']; ?>"/>
+												<input type="hidden" id="Hidden_Func_Orca" value="<?php echo $_SESSION['Orcatrata']['Func_Orca']; ?>"/>
 												<input type="hidden" id="Hidden_Entrega_Orca" value="<?php echo $orcatrata['Entrega_Orca']; ?>"/>
 											</div>
 											<div <?php echo $visivel; ?>>
-												<div id="Cli_Forn_Orca" <?php echo $div['Cli_Forn_Orca']; ?>>
+												<div class="form-group">
 													<div class="row">
-														<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left">
-															<div class="row">	
-																<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">	
-																	<label for="idApp_Fornecedor">Fornecedor</label>
-																	<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="buscaEnderecoFornecedor(this.value),dateDiff()" <?php echo $readonly; ?>
-																			id="idApp_Fornecedor" name="idApp_Fornecedor">
-																		<option value="">-- Sel. Fornecedor --</option>
-																		<?php
-																		foreach ($select['idApp_Fornecedor'] as $key => $row) {
-																				(!$orcatrata['idApp_Fornecedor']) ? $orcatrata['idApp_Fornecedor'] = '0' : FALSE;
-																			if ($orcatrata['idApp_Fornecedor'] == $key) {
-																				echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-																			} else {
-																				echo '<option value="' . $key . '">' . $row . '</option>';
-																			}
-																		}
-																		?>
-																	</select>
-																	<?php echo form_error('idApp_Fornecedor'); ?>
-																</div>
-															</div>	
-														</div>		
-														<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left">
-															<?php if($this->Basico_model->get_dt_validade()) { ?>
+														<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-3 text-left">
+															<div id="Cli_Forn_Orca" <?php echo $div['Cli_Forn_Orca']; ?>>
 																<div class="row">
-																	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 text-left">
-																		<label for="Cadastrar">Forn. encontrado?</label><br>
-																		<div class="btn-larg-right btn-group" data-toggle="buttons">
+																	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3 text-left">	
+																		<label for="idApp_Fornecedor">Fornecedor</label>
+																		<select data-placeholder="Selecione uma opção..." class="form-control Chosen" onchange="buscaEnderecoFornecedor(this.value),dateDiff()" <?php echo $readonly; ?>
+																				id="idApp_Fornecedor" name="idApp_Fornecedor">
+																			<option value="">-- Sel. Fornecedor --</option>
 																			<?php
-																			foreach ($select['Cadastrar'] as $key => $row) {
-																				if (!$cadastrar['Cadastrar']) $cadastrar['Cadastrar'] = 'S';
-																				($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-																				if ($cadastrar['Cadastrar'] == $key) {
-																					echo ''
-																					. '<label class="btn btn-warning active" name="Cadastrar_' . $hideshow . '">'
-																					. '<input type="radio" name="Cadastrar" id="' . $hideshow . '" '
-																					. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																					. '</label>'
-																					;
+																			foreach ($select['idApp_Fornecedor'] as $key => $row) {
+																					(!$orcatrata['idApp_Fornecedor']) ? $orcatrata['idApp_Fornecedor'] = '0' : FALSE;
+																				if ($orcatrata['idApp_Fornecedor'] == $key) {
+																					echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 																				} else {
-																					echo ''
-																					. '<label class="btn btn-default" name="Cadastrar_' . $hideshow . '">'
-																					. '<input type="radio" name="Cadastrar" id="' . $hideshow . '" '
-																					. 'autocomplete="off" value="' . $key . '" >' . $row
-																					. '</label>'
-																					;
+																					echo '<option value="' . $key . '">' . $row . '</option>';
 																				}
 																			}
 																			?>
-																		</div>
-																	</div>
-																	<div id="Cadastrar" <?php echo $div['Cadastrar']; ?>>
-																		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
-																			<label>Recar.</label><br>
-																			<button class="btn btn-md btn-primary btn-block"  id="inputDb" data-loading-text="Aguarde..." type="submit">
-																					<span class="glyphicon glyphicon-refresh"></span> Recar
-																			</button>
-																		</div>
-																		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-left">
-																			<label>Fornec</label><br>
-																			<a class="btn btn-md btn-info btn-block"   target="_blank" href="<?php echo base_url() ?>fornecedor2/cadastrar3/" role="button"> 
-																				<span class="glyphicon glyphicon-plus"></span> <span class="glyphicon glyphicon-edit"></span> Cad/Edit
-																			</a>
-																		</div>	
-																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">	
-																			<?php echo form_error('Cadastrar'); ?>
-																		</div>
+																		</select>
+																		<?php echo form_error('idApp_Fornecedor'); ?>
 																	</div>
 																</div>
-															<?php } ?>
+																<div class="row">
+																	<?php if($this->Basico_model->get_dt_validade()) { ?>
+																		<div class="col-xs-4 col-sm-4  col-md-3 col-lg-3 text-left">
+																			<label for="Cadastrar">Forn.Encont?</label><br>
+																			<div class="btn-larg-right btn-group" data-toggle="buttons">
+																				<?php
+																				foreach ($select['Cadastrar'] as $key => $row) {
+																					if (!$cadastrar['Cadastrar']) $cadastrar['Cadastrar'] = 'S';
+																					($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
+																					if ($cadastrar['Cadastrar'] == $key) {
+																						echo ''
+																						. '<label class="btn btn-warning active" name="Cadastrar_' . $hideshow . '">'
+																						. '<input type="radio" name="Cadastrar" id="' . $hideshow . '" '
+																						. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																						. '</label>'
+																						;
+																					} else {
+																						echo ''
+																						. '<label class="btn btn-default" name="Cadastrar_' . $hideshow . '">'
+																						. '<input type="radio" name="Cadastrar" id="' . $hideshow . '" '
+																						. 'autocomplete="off" value="' . $key . '" >' . $row
+																						. '</label>'
+																						;
+																					}
+																				}
+																				?>
+																			</div>
+																		</div>
+																		<div class="text-left" id="Cadastrar" <?php echo $div['Cadastrar']; ?>>
+																			<div class="col-xs-8 col-sm-8 col-md-9 col-lg-9 text-left">	
+																				<div class="row">
+																					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">
+																						<label>Recar</label><br>
+																						<button class="btn btn-md btn-primary btn-block"  id="inputDb" data-loading-text="Aguarde..." type="submit">
+																								<span class="glyphicon glyphicon-refresh"></span>
+																						</button>
+																					</div>
+																					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">
+																						<label>Novo</label><br>
+																						<button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#addFornecedorModal">
+																							Cad
+																						</button>
+																					</div>	
+																					<!--
+																					<a class="btn btn-md btn-info"   target="_blank" href="<?php echo base_url() ?>fornecedor2/cadastrar3/" role="button"> 
+																						<span class="glyphicon glyphicon-plus"></span> <span class="glyphicon glyphicon-edit"></span> Fornec
+																					</a>
+																					-->	
+																				</div>
+																				<div class="row">
+																					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">
+																						<?php echo form_error('Cadastrar'); ?>
+																					</div>
+																				</div>
+																			</div>	
+																		</div>
+																	<?php } ?>
+																</div>
+															</div>
+														</div>
+														<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-3 text-left">
+															<div id="Func_Orca" <?php echo $div['Func_Orca']; ?>>
+																<div class="row">
+																	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3 text-left">	
+																		<label for="id_Funcionario">Funcionario</label>
+																		<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?>
+																				id="id_Funcionario" name="id_Funcionario">
+																			<option value="">-- Sel. Funcionario --</option>
+																			<?php
+																			foreach ($select['id_Funcionario'] as $key => $row) {
+																					(!$orcatrata['id_Funcionario']) ? $orcatrata['id_Funcionario'] = '0' : FALSE;
+																				if ($orcatrata['id_Funcionario'] == $key) {
+																					echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+																				} else {
+																					echo '<option value="' . $key . '">' . $row . '</option>';
+																				}
+																			}
+																			?>
+																		</select>
+																		<?php echo form_error('id_Funcionario'); ?>
+																	</div>
+																</div>
+															</div>
 														</div>
 													</div>
-													<br>
 												</div>
 											</div>
 											<?php if ($_SESSION['log']['NivelEmpresa'] >= 4 ) { ?>
@@ -2680,6 +2720,130 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+</div>		
+<div id="addFornecedorModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addFornecedorModalLabel">Cadastrar Fornecedor</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<span id="msg-error-fornecedor"></span>
+				<form method="post" id="insert_fornecedor_form">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-6">
+								<label for="NomeFornecedor">Nome do Fornecedor: *</label>
+								<input name="NomeFornecedor" type="text" class="form-control" id="NomeFornecedor" maxlength="255" placeholder="Nome do Fornecedor">
+							</div>
+							<div class="col-md-3">
+								<label for="CelularFornecedor">Celular: *</label>
+								<input type="text" class="form-control Celular" id="CelularFornecedor" maxlength="11" name="CelularFornecedor" placeholder="(XX)999999999">
+							</div>
+							<div class="col-md-3">
+								<label for="DataNascimento">Data do Aniversário:</label>
+								<input type="text" class="form-control Date" maxlength="10" name="DataNascimento" placeholder="DD/MM/AAAA">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6 ">
+								<h4 class="mb-3">Sexo</h4>
+								<div class="col-md-3 mb-3 ">	
+									<div class="custom-control custom-radio">
+										<input type="radio" name="Sexo" class="custom-control-input "  id="Retirada" value="M">
+										<label class="custom-control-label" for="Masculino">Mas</label>
+									</div>
+								</div>
+								<div class="col-md-3 mb-3 ">	
+									<div class="custom-control custom-radio">
+										<input type="radio" name="Sexo" class="custom-control-input " id="Combinar" value="F">
+										<label class="custom-control-label" for="Feminino">Fem </label>
+									</div>
+								</div>
+								<div class="col-md-3 mb-3 ">
+									<div class="custom-control custom-radio">
+										<input type="radio" name="Sexo" class="custom-control-input " id="Correios" value="O" checked>
+										<label class="custom-control-label" for="Outros">Outros</label>
+									</div>
+								</div>
+							</div>
+						</div>								
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-12 text-center">
+								<button class="btn btn-info" type="button" data-toggle="collapse" data-target="#DadosComplementares" aria-expanded="false" aria-controls="DadosComplementares">
+									<span class="glyphicon glyphicon-menu-down"></span> Completar Dados
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="collapse" id="DadosComplementares">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3">
+									<label for="CepFornecedor">Cep:</label>
+									<input type="text" class="form-control Numero" id="CepFornecedor" maxlength="8" name="CepFornecedor">
+								</div>
+								<div class="col-md-6">
+									<label for="EnderecoFornecedor">Endreço:</label>
+									<input type="text" class="form-control" id="EnderecoFornecedor" maxlength="100" name="EnderecoFornecedor">
+								</div>
+								<div class="col-md-3">
+									<label for="NumeroFornecedor">Numero:</label>
+									<input type="text" class="form-control" id="NumeroFornecedor" maxlength="100" name="NumeroFornecedor">
+								</div>
+							</div>	
+							<div class="row">
+								<div class="col-md-3">
+									<label for="ComplementoFornecedor">Complemento:</label>
+									<input type="text" class="form-control" id="ComplementoFornecedor" maxlength="100" name="ComplementoFornecedor" >
+								</div>	
+								<div class="col-md-3">
+									<label for="BairroFornecedor">Bairro:</label>
+									<input type="text" class="form-control" id="BairroFornecedor" maxlength="100" name="BairroFornecedor" >
+								</div>
+								<div class="col-md-3">
+									<label for="CidadeFornecedor">Município:</label>
+									<input type="text" class="form-control" id="CidadeFornecedor" maxlength="100" name="CidadeFornecedor" >
+								</div>
+								<div class="col-md-3">
+									<label for="EstadoFornecedor">Estado:</label>
+									<input type="text" class="form-control" id="EstadoFornecedor" maxlength="2" name="EstadoFornecedor" >
+								</div>
+							</div>	
+							<div class="row">
+								<div class="col-md-3 ">
+									<label class="" for="ReferenciaFornecedor">Referencia:</label>
+									<textarea class="form-control " id="ReferenciaFornecedor" name="ReferenciaFornecedor"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">	
+						<div class="col-sm-6">
+							<br>
+							<button type="submit" class="btn btn-success btn-block" name="botaoCad" id="botaoCad" >
+								<span class="glyphicon glyphicon-plus"></span> Cadastrar
+							</button>
+						</div>
+						<div class="col-sm-6">
+							<br>
+							<button type="button" class="btn btn-primary btn-block" data-dismiss="modal" name="botaoFechar" id="botaoFechar">
+								<span class="glyphicon glyphicon-remove"></span> Fechar
+							</button>
+						</div>	
+						<div class="col-md-12 alert alert-warning aguardar1" role="alert" >
+							Aguarde um instante! Estamos processando sua solicitação!
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>

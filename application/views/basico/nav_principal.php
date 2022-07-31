@@ -26,7 +26,7 @@
 				-->
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-8 btn-menu btn-group ">
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
-						<a type="button" class="btn btn-secondary btn-sm btn-default" href="<?php echo base_url() ?>relatorio/clientes" role="button">
+						<a type="button" class="btn btn-secondary btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Pesquisar Clientes"  href="<?php echo base_url() ?>relatorio/clientes" role="button">
 							<span class="glyphicon glyphicon-user"></span> Pesquisar
 						</a>
 						<!--<div class="btn-group" role="group">-->
@@ -57,7 +57,7 @@
 			<ul class="nav navbar-nav navbar-center">
 				<li class="botoesnav" >
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
-						<a type="button" class="btn btn-secondary btn-sm btn-success" href="<?php echo base_url() ?>agenda" role="button">
+						<a type="button" class="btn btn-secondary btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Vai para a Agenda" href="<?php echo base_url() ?>agenda" role="button">
 							 Agenda  
 						</a>
 						<!--<div class="btn-group" role="group">-->
@@ -76,7 +76,7 @@
 				</li>						
 				<li class="botoesnav">
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
-						<a type="button" class="btn btn-secondary btn-sm btn-primary" href="<?php echo base_url() ?>pedidos/pedidos" role="button">
+						<a type="button" class="btn btn-secondary btn-sm btn-primary" data-toggle="tooltip" data-placement="bottom" title="Gestor de Receitas"  href="<?php echo base_url() ?>pedidos/pedidos" role="button">
 							 Receitas 
 						</a>
 						<!--<div class="btn-group" role="group">-->
@@ -106,7 +106,7 @@
 				</li>
 				<li class="botoesnav">
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
-						<a type="button" class="btn btn-secondary btn-sm btn-danger" href="<?php echo base_url() ?>despesas_statico/despesas" role="button">
+						<a type="button" class="btn btn-secondary btn-sm btn-danger" data-toggle="tooltip" data-placement="bottom" title="Gestor de Despesas"  href="<?php echo base_url() ?>despesas_statico/despesas" role="button">
 							 Despesas 
 						</a>
 						<!--<div class="btn-group" role="group">-->
@@ -140,7 +140,7 @@
 								$loginempresa = '';
 							}
 						?>
-						<a type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning" href="<?php echo $loginempresa ?>" role="button">
+						<a type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning" data-toggle="tooltip" data-placement="bottom" title="Administracao"  href="<?php echo $loginempresa ?>" role="button">
 							<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
 								Admin
 							<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>

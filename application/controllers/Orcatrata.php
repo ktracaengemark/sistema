@@ -1153,7 +1153,8 @@ class Orcatrata extends CI_Controller {
 							$data['orcatrata']['NivelOrca'] = $_SESSION['Consulta']['NivelAgenda'];
 							$data['orcatrata']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 							$data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-							$data['orcatrata']['Associado'] = 0;
+							$data['orcatrata']['id_Funcionario'] 		= $_SESSION['log']['idSis_Usuario'];
+							$data['orcatrata']['Associado'] 	= 0;
 							$data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 							$data['orcatrata']['Cli_Forn_Orca'] = 'S';
 							if ($data['orcatrata']['PrazoEntrega']){
@@ -3355,7 +3356,8 @@ class Orcatrata extends CI_Controller {
 					
 						$data['orcatrata']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 						$data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-						$data['orcatrata']['Associado'] = 0;
+						$data['orcatrata']['id_Funcionario'] 		= $_SESSION['log']['idSis_Usuario'];
+						$data['orcatrata']['Associado'] 	= 0;
 						$data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 						$data['orcatrata']['Cli_Forn_Orca'] = 'S';
 						if ($data['orcatrata']['PrazoEntrega']){
@@ -5019,7 +5021,9 @@ class Orcatrata extends CI_Controller {
 					
 					$data['orcatrata']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa']; 
 					$data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-					$data['orcatrata']['Associado'] = 0;
+					$data['orcatrata']['id_Funcionario'] 		= $_SESSION['log']['idSis_Usuario'];
+					$data['orcatrata']['Associado'] 	= 0;
+					
 					$data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 					if ($data['orcatrata']['PrazoEntrega']){
 						$data['orcatrata']['PrazoEntrega'] = $data['orcatrata']['PrazoEntrega'];
@@ -12442,6 +12446,7 @@ class Orcatrata extends CI_Controller {
 				//'idApp_OrcaTrata',
 				'Tipo_Orca',
 				'idApp_Fornecedor',
+				'id_Funcionario',
 				'DataOrca',
 				'HoraOrca',
 				'TipoFinanceiro',
@@ -12502,6 +12507,7 @@ class Orcatrata extends CI_Controller {
 				'DetalhadaEntrega',
 				'CanceladoOrca',
 				'Cli_Forn_Orca',
+				'Func_Orca',
 				'Prd_Srv_Orca',
 				'Entrega_Orca',
 				'TipoDescOrca',
@@ -12570,12 +12576,15 @@ class Orcatrata extends CI_Controller {
 			//Data de hoje como default
 			$data['orcatrata']['Tipo_Orca'] = "B";
 			(!$data['orcatrata']['idApp_Fornecedor']) ? $data['orcatrata']['idApp_Fornecedor'] = '0' : FALSE;
+			(!$data['orcatrata']['id_Funcionario']) ? $data['orcatrata']['id_Funcionario'] = '0' : FALSE;
 			if($_SESSION['log']['idSis_Empresa'] != 5){
 				(!$data['orcatrata']['Cli_Forn_Orca']) ? $data['orcatrata']['Cli_Forn_Orca'] = 'S' : FALSE;
+				(!$data['orcatrata']['Func_Orca']) ? $data['orcatrata']['Func_Orca'] = 'S' : FALSE;
 				(!$data['orcatrata']['Prd_Srv_Orca']) ? $data['orcatrata']['Prd_Srv_Orca'] = 'S' : FALSE;
 				(!$data['orcatrata']['Entrega_Orca']) ? $data['orcatrata']['Entrega_Orca'] = 'S' : FALSE;
 			}else{
 				$data['orcatrata']['Cli_Forn_Orca'] = 'N';
+				$data['orcatrata']['Func_Orca'] = 'N';
 				$data['orcatrata']['Prd_Srv_Orca'] = 'N';
 				$data['orcatrata']['Entrega_Orca'] = 'N';
 			}
@@ -12907,6 +12916,7 @@ class Orcatrata extends CI_Controller {
 			$data['select']['StatusProdutos'] = $this->Basico_model->select_status_sn();
 			$data['select']['StatusParcelas'] = $this->Basico_model->select_status_sn();
 			$data['select']['Cli_Forn_Orca'] = $this->Basico_model->select_status_sn();
+			$data['select']['Func_Orca'] = $this->Basico_model->select_status_sn();
 			$data['select']['Prd_Srv_Orca'] = $this->Basico_model->select_status_sn();
 			$data['select']['Entrega_Orca'] = $this->Basico_model->select_status_sn();
 			$data['select']['AtualizaEndereco'] = $this->Basico_model->select_status_sn();
@@ -12932,7 +12942,7 @@ class Orcatrata extends CI_Controller {
 			$data['select']['TipoFrete'] = $this->Basico_model->select_tipofrete();
 			$data['select']['QuitadoOrca'] = $this->Basico_model->select_status_sn();
 			$data['select']['Quitado'] = $this->Basico_model->select_status_sn();
-			#$data['select']['Profissional'] = $this->Usuario_model->select_usuario();
+			$data['select']['id_Funcionario'] = $this->Usuario_model->select_usuario();
 			$data['select']['idApp_Fornecedor'] = $this->Fornecedor_model->select_fornecedor();
 			$data['select']['Profissional'] = $this->Usuario_model->select_usuario();
 			$data['select']['ProfissionalServico_1'] = $this->Usuario_model->select_usuario_servicos();
@@ -13122,6 +13132,13 @@ class Orcatrata extends CI_Controller {
 				$data['div']['Cli_Forn_Orca'] = '' : $data['div']['Cli_Forn_Orca'] = 'style="display: none;"';
 			
 			$data['radio'] = array(
+				'Func_Orca' => $this->basico->radio_checked($data['orcatrata']['Func_Orca'], 'Colaborador', 'NS'),
+			);
+			($data['orcatrata']['Func_Orca'] == 'S') ?
+				$data['div']['Func_Orca'] = '' : $data['div']['Func_Orca'] = 'style="display: none;"';
+			
+			
+			$data['radio'] = array(
 				'Prd_Srv_Orca' => $this->basico->radio_checked($data['orcatrata']['Prd_Srv_Orca'], 'Prd/Srv', 'NS'),
 			);
 			($data['orcatrata']['Prd_Srv_Orca'] == 'S') ?
@@ -13218,6 +13235,10 @@ class Orcatrata extends CI_Controller {
 				$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');
 			} else {
 				$data['cadastrar']['Cadastrar'] = 'S';
+			}
+			
+			if ($_SESSION['log']['NivelEmpresa'] >= '4' && $data['orcatrata']['Func_Orca'] == "S") {
+				$this->form_validation->set_rules('id_Funcionario', 'Colaborador', 'required|trim');
 			}
 			$this->form_validation->set_rules('DataOrca', 'Data do Orçamento', 'required|trim|valid_date');
 			$this->form_validation->set_rules('AVAP', 'À Vista ou À Prazo', 'required|trim');
@@ -13361,7 +13382,8 @@ class Orcatrata extends CI_Controller {
 					
 					$data['orcatrata']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa']; 
 					$data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-					$data['orcatrata']['Associado'] = 0;
+					$data['orcatrata']['id_Funcionario'] 		= $_SESSION['log']['idSis_Usuario'];
+					$data['orcatrata']['Associado'] 	= 0;
 					$data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
 					if ($data['orcatrata']['PrazoEntrega']){
 						$data['orcatrata']['PrazoEntrega'] = $data['orcatrata']['PrazoEntrega'];
@@ -13950,6 +13972,7 @@ class Orcatrata extends CI_Controller {
 				'idApp_OrcaTrata',
 				#Não há a necessidade de atualizar o valor do campo a seguir
 				'idApp_Fornecedor',
+				'id_Funcionario',
 				'DataOrca',
 				'TipoFinanceiro',
 				'Descricao',
@@ -14010,6 +14033,7 @@ class Orcatrata extends CI_Controller {
 				'DetalhadaEntrega',
 				'CanceladoOrca',
 				'Cli_Forn_Orca',
+				'Func_Orca',
 				'Prd_Srv_Orca',
 				'Entrega_Orca',
 				'TipoDescOrca',
@@ -14077,7 +14101,9 @@ class Orcatrata extends CI_Controller {
 			
 			#(!$data['orcatrata']['idTab_TipoRD']) ? $data['orcatrata']['idTab_TipoRD'] = "1" : FALSE;
 			(!$data['orcatrata']['idApp_Fornecedor']) ? $data['orcatrata']['idApp_Fornecedor'] = '0' : FALSE;
+			(!$data['orcatrata']['id_Funcionario']) ? $data['orcatrata']['id_Funcionario'] = '0' : FALSE;
 			(!$data['orcatrata']['Cli_Forn_Orca']) ? $data['orcatrata']['Cli_Forn_Orca'] = 'S' : FALSE;
+			(!$data['orcatrata']['Func_Orca']) ? $data['orcatrata']['Func_Orca'] = 'S' : FALSE;
 			(!$data['orcatrata']['Prd_Srv_Orca']) ? $data['orcatrata']['Prd_Srv_Orca'] = 'S' : FALSE;
 			(!$data['orcatrata']['Entrega_Orca']) ? $data['orcatrata']['Entrega_Orca'] = 'S' : FALSE;  
 			(!$data['orcatrata']['DataOrca']) ? $data['orcatrata']['DataOrca'] = date('d/m/Y', time()) : FALSE;
@@ -14586,6 +14612,7 @@ class Orcatrata extends CI_Controller {
 				$data['select']['StatusProdutos'] = $this->Basico_model->select_status_sn();
 				$data['select']['StatusParcelas'] = $this->Basico_model->select_status_sn();
 				$data['select']['Cli_Forn_Orca'] = $this->Basico_model->select_status_sn();
+				$data['select']['Func_Orca'] = $this->Basico_model->select_status_sn();
 				$data['select']['Prd_Srv_Orca'] = $this->Basico_model->select_status_sn();
 				$data['select']['Entrega_Orca'] = $this->Basico_model->select_status_sn();
 				$data['select']['AtualizaEndereco'] = $this->Basico_model->select_status_sn();
@@ -14611,6 +14638,7 @@ class Orcatrata extends CI_Controller {
 				$data['select']['QuitadoOrca'] = $this->Basico_model->select_status_sn();
 				$data['select']['Quitado'] = $this->Basico_model->select_status_sn();
 				$data['select']['idApp_Fornecedor'] = $this->Fornecedor_model->select_fornecedor();
+				$data['select']['id_Funcionario'] = $this->Usuario_model->select_usuario();
 				$data['select']['Profissional'] = $this->Usuario_model->select_usuario();
 				//$data['select']['ProfissionalServico_1'] = $this->Usuario_model->select_usuario_servicos();
 				//$data['select']['ProfissionalServico_2'] = $this->Usuario_model->select_usuario_servicos();
@@ -14763,6 +14791,13 @@ class Orcatrata extends CI_Controller {
 				);
 				($data['orcatrata']['Cli_Forn_Orca'] == 'S') ?
 					$data['div']['Cli_Forn_Orca'] = '' : $data['div']['Cli_Forn_Orca'] = 'style="display: none;"';
+
+				
+				$data['radio'] = array(
+					'Func_Orca' => $this->basico->radio_checked($data['orcatrata']['Func_Orca'], 'Funcionario', 'NS'),
+				);
+				($data['orcatrata']['Func_Orca'] == 'S') ?
+					$data['div']['Func_Orca'] = '' : $data['div']['Func_Orca'] = 'style="display: none;"';
 				
 				$data['radio'] = array(
 					'Prd_Srv_Orca' => $this->basico->radio_checked($data['orcatrata']['Prd_Srv_Orca'], 'Prd/Srv', 'NS'),
@@ -14874,6 +14909,9 @@ class Orcatrata extends CI_Controller {
 					$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');
 				} else {
 					$data['cadastrar']['Cadastrar'] = 'S';
+				}
+				if ($_SESSION['log']['NivelEmpresa'] >= '4' && $data['orcatrata']['Func_Orca'] == "S") {
+					$this->form_validation->set_rules('id_Funcionario', 'Funcionario', 'required|trim');
 				}
 				$this->form_validation->set_rules('DataOrca', 'Data do Orçamento', 'required|trim|valid_date');
 				$this->form_validation->set_rules('AVAP', 'À Vista ou À Prazo', 'required|trim');
@@ -19129,11 +19167,12 @@ class Orcatrata extends CI_Controller {
 							$data['recibo']['NivelOrca']			= $nivel_orca;
 							$data['recibo']['DataOrca'] 			= $data['query']['DataPagoComissãoPadrao'];
 							$data['recibo']['HoraOrca'] 			= date('H:i:s', time());
-							$data['recibo']['id_Vendedor'] 			= $_SESSION['FiltroComissao']['NomeUsuario'];
 							$data['recibo']['idTab_TipoRD']			= 1;
 							$data['recibo']['idTab_Modulo']			= 1;
 							$data['recibo']['idSis_Empresa'] 		= $_SESSION['log']['idSis_Empresa'];
 							$data['recibo']['idSis_Usuario'] 		= $_SESSION['log']['idSis_Usuario'];
+							$data['recibo']['id_Funcionario'] 				= $_SESSION['FiltroComissao']['NomeUsuario'];
+							$data['recibo']['Associado']			= 0;
 							
 							$data['recibo']['TipoFinanceiro']		= 64;
 							$data['recibo']['Cli_Forn_Orca']		= "N";
@@ -19208,7 +19247,7 @@ class Orcatrata extends CI_Controller {
 								if(isset($max) && $max > 0){
 									
 									for($j=0;$j<$max;$j++) {
-										$data['update']['orcamentos'][$j]['id_Recibo'] 				= $data['recibo']['idApp_OrcaTrata'];
+										$data['update']['orcamentos'][$j]['id_Recibo_Vend'] 				= $data['recibo']['idApp_OrcaTrata'];
 										$data['update']['orcamentos'][$j]['StatusComissaoOrca'] 	= 'S';
 										$data['update']['orcamentos'][$j]['DataPagoComissaoOrca'] 	= $data['query']['DataPagoComissãoPadrao'];
 										
@@ -19542,11 +19581,12 @@ class Orcatrata extends CI_Controller {
 							$data['recibo']['NivelOrca']			= 3;
 							$data['recibo']['DataOrca'] 			= $data['query']['DataPagoComissãoPadrao'];
 							$data['recibo']['HoraOrca'] 			= date('H:i:s', time());
-							$data['recibo']['id_Vendedor'] 			= $_SESSION['FiltroComissaoAss']['NomeAssociado'];
 							$data['recibo']['idTab_TipoRD']			= 1;
 							$data['recibo']['idTab_Modulo']			= 1;
 							$data['recibo']['idSis_Empresa'] 		= $_SESSION['log']['idSis_Empresa'];
 							$data['recibo']['idSis_Usuario'] 		= $_SESSION['log']['idSis_Usuario'];
+							$data['recibo']['id_Funcionario'] 				= 0;
+							$data['recibo']['Associado'] 			= $_SESSION['FiltroComissaoAss']['NomeAssociado'];
 							
 							$data['recibo']['TipoFinanceiro']		= 64;
 							$data['recibo']['Cli_Forn_Orca']		= "N";
@@ -19622,7 +19662,7 @@ class Orcatrata extends CI_Controller {
 								if(isset($max) && $max > 0){
 									
 									for($j=0;$j<$max;$j++) {
-										$data['update']['orcamentos'][$j]['id_Recibo'] 				= $data['recibo']['idApp_OrcaTrata'];
+										$data['update']['orcamentos'][$j]['id_Recibo_Vend'] 				= $data['recibo']['idApp_OrcaTrata'];
 										$data['update']['orcamentos'][$j]['StatusComissaoOrca'] 	= 'S';
 										$data['update']['orcamentos'][$j]['DataPagoComissaoOrca'] 	= $data['query']['DataPagoComissãoPadrao'];
 										
@@ -19954,11 +19994,12 @@ class Orcatrata extends CI_Controller {
 							$data['recibo']['NivelOrca']			= 1;
 							$data['recibo']['DataOrca'] 			= $data['query']['DataPagoComissãoPadrao'];
 							$data['recibo']['HoraOrca'] 			= date('H:i:s', time());
-							$data['recibo']['id_Func'] 				= $_SESSION['FiltroComissaoFunc']['NomeUsuario'];
 							$data['recibo']['idTab_TipoRD']			= 1;
 							$data['recibo']['idTab_Modulo']			= 1;
 							$data['recibo']['idSis_Empresa'] 		= $_SESSION['log']['idSis_Empresa'];
 							$data['recibo']['idSis_Usuario'] 		= $_SESSION['log']['idSis_Usuario'];
+							$data['recibo']['id_Funcionario'] 				= $_SESSION['FiltroComissaoFunc']['NomeUsuario'];
+							$data['recibo']['Associado'] 			= 0;
 							
 							$data['recibo']['TipoFinanceiro']		= 64;
 							$data['recibo']['Cli_Forn_Orca']		= "N";
