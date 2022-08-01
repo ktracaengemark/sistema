@@ -71,7 +71,7 @@
 														<h4>Endereço:<?php echo '<small>' . $orcatrata['EnderecoEmpresa'] . '</small> <small>' . $orcatrata['NumeroEmpresa'] . '</small> <small>' . $orcatrata['ComplementoEmpresa'] . '</small><br>
 																				<small>' . $orcatrata['BairroEmpresa'] . '</small> - <small>' . $orcatrata['MunicipioEmpresa'] . '</small> - <small>' . $orcatrata['EstadoEmpresa'] . '</small>' ?></h4>
 													<?php } ?>	
-													<h5>Colaborador.:<?php 
+													<h5>Usuario:<?php 
 																	if(isset($usuario)){
 																		$colaborador = $usuario['Nome'];
 																	}else{
@@ -93,7 +93,10 @@
 											<h5 class="text-left"><b>Tel</b>: <?php echo '' . $fornecedor['Telefone1'] . '' ?> - <b>ID</b>: <?php echo '' . $fornecedor['idApp_Fornecedor'] . '' ?> </h5>
 										<?php } ?>
 										<?php if($orcatrata['id_Funcionario'] != 0) { ?>								
-											<h3 class="text-left"><b>Funcionario</b>: <?php echo '' . $funcionario['Nome'] . '' ?></h3>
+											<h3 class="text-left"><b>Colaborador</b>: <?php echo '' . $funcionario['Nome'] . '' ?></h3>
+										<?php } ?>
+										<?php if($orcatrata['id_Associado'] != 0) { ?>								
+											<h3 class="text-left"><b>Associado</b>: <?php echo '' . $associado['Nome'] . '' ?></h3>
 										<?php } ?>
 										<table class="table table-bordered table-condensed table-striped">
 											<thead>

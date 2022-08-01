@@ -117,6 +117,7 @@
 						<?php } ?>
 						<th class="active">Pdd|Tp</th>
 						<th class="active">DtPedido</th>
+						<th class="active">Receita</th>
 						<th class="active"><?php echo $nome ?></th>
 						<th class="active">Cb.Ent</th>
 						<th class="active">Cb.Pag</th>
@@ -124,15 +125,16 @@
 						<th class="active">Pago</th>
 						<th class="active">Final.</th>
 						<th class="active">Canc.</th>
-						<th class="active">Compra</th>
 						<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
 							<th class="active">Prd/Srv</th>
 						<?php } ?>	
-						<th class="active">Vendedor</th>
+						<th class="active">Supervisor</th>
 						<th class="active">ComFunc</th>
 						<th class="active">Paga?</th>
 						<th class="active">DataPago</th>
 						<th class="active">RecFunc</th>
+						<th class="active">Func/Vend</th>
+						<th class="active">Ass/Vend</th>
 						<th class="active">ComVend</th>
 						<th class="active">Paga?</th>
 						<th class="active">DataPago</th>
@@ -162,6 +164,7 @@
 							<?php } ?>
 							<td><?php echo $row['idApp_OrcaTrata'];?> - <?php echo $row['TipoFinanceiro'];?></td>
 							<?php echo '<td>' . $row['DataOrca'] . '</td>';?>
+							<?php echo '<td>' . $row['Tipo_Orca'] . '</td>';?>
 							<td class="notclickable">
 								<?php echo $row['Nome'.$nome]; ?>
 							</td>
@@ -171,7 +174,6 @@
 							<?php echo '<td>' . $row['QuitadoOrca'] . '</td>';?>	
 							<?php echo '<td>' . $row['FinalizadoOrca'] . '</td>';?>	
 							<?php echo '<td>' . $row['CanceladoOrca'] . '</td>';?>	
-							<?php echo '<td>' . $row['Tipo_Orca'] . '</td>';?>
 							<?php if($_SESSION['Usuario']['Rel_Pag'] == 'S') { ?>
 								<td><?php echo $row['ValorRestanteOrca'] ?></td>
 							<?php } ?>
@@ -179,11 +181,13 @@
 							<?php echo '<td>' . $row['ValorComissaoFunc'] . '</td>';?>
 							<?php echo '<td>' . $row[$status] . '</td>';?>
 							<?php echo '<td>' . $row['DataPagoComissaoFunc'] . '</td>';?>
-							<?php echo '<td>' . $row['id_Recibo_Func'] . '</td>';?>	
+							<?php echo '<td>' . $row['id_ComissaoFunc'] . '</td>';?>
+							<?php echo '<td>' . $row['id_Funcionario'] . '</td>';?>
+							<?php echo '<td>' . $row['id_Associado'] . '</td>';?>
 							<?php echo '<td>' . $row['ValorComissao'] . '</td>';?>
 							<?php echo '<td>' . $row['StatusComissaoOrca'] . '</td>';?>
 							<?php echo '<td>' . $row['DataPagoComissaoOrca'] . '</td>';?>
-							<?php echo '<td>' . $row['id_Recibo'] . '</td>';?>	
+							<?php echo '<td>' . $row['id_Comissao'] . '</td>';?>	
 						</tr>
 					<?php	
 						$count++;

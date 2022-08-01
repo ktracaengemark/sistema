@@ -2,7 +2,7 @@
 	<html lang="pt-br">
 		<head>
 			<meta charset="utf-8">
-			<title>Receitas</title>
+			<title>Comissão</title>
 		<head>
 		<body>
 			<?php
@@ -24,6 +24,7 @@
 				
 					$html .= '<td><b>id_O.S.</b></td>';
 					$html .= '<td><b>DtPedido</b></td>';
+					$html .= '<td><b>Receita</b></td>';
 					
 					$html .= '<td><b>id_'.$nome.'</b></td>';
 					$html .= '<td><b>'.$nome.'</b></td>';
@@ -40,7 +41,6 @@
 					$html .= '<td><b>Cash</b></td>';
 					
 					$html .= '<td><b>Final</b></td>';
-					$html .= '<td><b>Colab</b></td>';
 					$html .= '<td><b>Comb.Ent</b></td>';
 					
 					$html .= '<td><b>Comb.Pag</b></td>';
@@ -49,15 +49,16 @@
 					
 					$html .= '<td><b>Final</b></td>';
 					$html .= '<td><b>Canc</b></td>';
-					$html .= '<td><b>Compra</b></td>';
 					
 					$html .= '<td><b>Entrega</b></td>';
 					$html .= '<td><b>Pagam.</b></td>';
 					$html .= '<td><b>Form.Pag</b></td>';
 					
+					$html .= '<td><b>Vendedor</b></td>';
 					$html .= '<td><b>Comissao</b></td>';
 					$html .= '<td><b>Status</b></td>';
 					$html .= '<td><b>DataPago</b></td>';
+					$html .= '<td><b>Recibo</b></td>';
 
 				$html .= '</tr>';
 				
@@ -68,6 +69,7 @@
 					
 						$html .= '<td>'.$row["idApp_OrcaTrata"].'</td>';
 						$html .= '<td>'.$row["DataOrca"].'</td>';
+						$html .= '<td>'.$row["Tipo_Orca"].'</td>';
 						
 						$html .= '<td>'.$row["idApp_".$nome].'</td>';
 						$html .= '<td>'.utf8_encode($row[$nome]).'</td>';
@@ -84,7 +86,6 @@
 						$html .= '<td>'.$row["CashBackOrca"].'</td>';
 						
 						$html .= '<td>'.$row["ValorFinalOrca"].'</td>';
-						$html .= '<td>'.utf8_encode($row["NomeColaborador"]).'</td>';
 						$html .= '<td>'.$row["CombinadoFrete"].'</td>';
 						
 						$html .= '<td>'.$row["AprovadoOrca"].'</td>';
@@ -93,15 +94,16 @@
 						
 						$html .= '<td>'.$row["FinalizadoOrca"].'</td>';
 						$html .= '<td>'.$row["CanceladoOrca"].'</td>';
-						$html .= '<td>'.$row["Tipo_Orca"].'</td>';
 						
 						$html .= '<td>'.$row["TipoFrete"].'</td>';
 						$html .= '<td>'.$row["AVAP"].'</td>';
 						$html .= '<td>'.utf8_encode($row["FormaPag"]).'</td>';
 						
+						$html .= '<td>'.utf8_encode($row["NomeColaborador"]).'</td>';
 						$html .= '<td>'.$row["ValorComissao"].'</td>';
 						$html .= '<td>'.$row["StatusComissaoOrca"].'</td>';
 						$html .= '<td>'.$row["DataPagoComissaoOrca"].'</td>';
+						$html .= '<td>'.$row["id_Comissao"].'</td>';
 
 					$html .= '</tr>';
 				}

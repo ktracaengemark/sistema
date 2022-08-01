@@ -57,7 +57,7 @@
 			<ul class="nav navbar-nav navbar-center">
 				<li class="botoesnav" >
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
-						<a type="button" class="btn btn-secondary btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Vai para a Agenda" href="<?php echo base_url() ?>agenda" role="button">
+						<a type="button" class="btn btn-secondary btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Acessar a Agenda" href="<?php echo base_url() ?>agenda" role="button">
 							 Agenda  
 						</a>
 						<!--<div class="btn-group" role="group">-->

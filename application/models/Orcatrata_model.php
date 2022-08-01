@@ -1278,7 +1278,7 @@ class Orcatrata_model extends CI_Model {
 			$orcamento = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
 			$cliente = ($data['Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
 			$id_cliente = ($data['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;
-			$tipofinandeiro = ($data['TipoFinanceiro']) ? ' AND TR.idTab_TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
+			$tipofinandeiro = ($data['TipoFinanceiro']) ? ' AND OT.TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
 			$idtipord = ($data['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $data['idTab_TipoRD'] : ' AND OT.idTab_TipoRD = 2';
 			$campo = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
 			$ordenamento = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
@@ -1361,13 +1361,8 @@ class Orcatrata_model extends CI_Model {
 					OT.ValorFinalOrca
 				FROM
 					App_OrcaTrata AS OT
-						LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
-						' . $rede . '
-						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
-						LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
-						LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
 				WHERE
 					' . $date_inicio_orca . '
 					' . $date_fim_orca . '
@@ -1483,7 +1478,6 @@ class Orcatrata_model extends CI_Model {
 			FROM
 				App_OrcaTrata AS OT
 					LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
-					' . $rede . '
 					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 					LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 					LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
@@ -1591,7 +1585,7 @@ class Orcatrata_model extends CI_Model {
 			$orcamento = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
 			$fornecedor = ($data['Fornecedor']) ? ' AND OT.idApp_Fornecedor = ' . $data['Fornecedor'] . '' : FALSE;
 			$id_fornecedor = ($data['idApp_Fornecedor']) ? ' AND OT.idApp_Fornecedor = ' . $data['idApp_Fornecedor'] . '' : FALSE;
-			$tipofinandeiro = ($data['TipoFinanceiro']) ? ' AND TR.idTab_TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
+			$tipofinandeiro = ($data['TipoFinanceiro']) ? ' AND OT.TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
 			$idtipord = ($data['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $data['idTab_TipoRD'] : ' AND OT.idTab_TipoRD = 1';
 			$campo = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
 			$ordenamento = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
@@ -1643,12 +1637,8 @@ class Orcatrata_model extends CI_Model {
 					OT.ValorFinalOrca
 				FROM
 					App_OrcaTrata AS OT
-						LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
-						LEFT JOIN App_Fornecedor AS C ON C.idApp_Fornecedor = OT.idApp_Fornecedor
 						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
-						LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
-						LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
 				WHERE
 					' . $date_inicio_orca . '
 					' . $date_fim_orca . '
@@ -2126,10 +2116,10 @@ class Orcatrata_model extends CI_Model {
 		$date_fim_pag_com = ($data['DataFim7']) ? 'OT.DataPagoComissaoOrca <= "' . $data['DataFim7'] . '" AND ' : FALSE;
 
 		$orcamento = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
-		$id_recibo = ($data['id_Recibo']) ? ' AND OT.id_Recibo = ' . $data['id_Recibo'] . '  ': FALSE;
+		$id_comissao = ($data['id_Comissao']) ? ' AND OT.id_Comissao = ' . $data['id_Comissao'] . '  ': FALSE;
 		$cliente = ($data['Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
 		$id_cliente = ($data['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;
-		$tipofinandeiro = ($data['TipoFinanceiro']) ? ' AND TR.idTab_TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
+		$tipofinandeiro = ($data['TipoFinanceiro']) ? ' AND OT.TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
 		$idtipord = ($data['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $data['idTab_TipoRD'] : ' AND OT.idTab_TipoRD = 2';
 		$campo = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
 		$ordenamento = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
@@ -2144,8 +2134,9 @@ class Orcatrata_model extends CI_Model {
 		$filtro10 = ($data['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $data['FinalizadoOrca'] . '" AND ' : FALSE;
 		$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 		$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
-		$filtro17 = ($data['NomeUsuario']) ? 'OT.idSis_Usuario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;
 		$filtro12 = ($data['StatusComissaoOrca']) ? 'OT.StatusComissaoOrca = "' . $data['StatusComissaoOrca'] . '" AND ' : FALSE;
+		//$filtro17 = ($data['NomeUsuario']) ? 'OT.idSis_Usuario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;
+		$filtro17 = ($data['NomeUsuario']) ? 'OT.id_Funcionario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;
 
 		if($_SESSION['log']['idSis_Empresa'] != 5){
 			if($_SESSION['Usuario']['Permissao_Orcam'] == 1){
@@ -2224,13 +2215,8 @@ class Orcatrata_model extends CI_Model {
 					OT.ValorRestanteOrca
 				FROM
 					App_OrcaTrata AS OT
-						LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
-						' . $rede . '
-						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
-						LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
-						LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
 				WHERE
 					' . $date_inicio_orca . '
 					' . $date_fim_orca . '
@@ -2264,13 +2250,14 @@ class Orcatrata_model extends CI_Model {
 					' . $produtos . '
 					' . $parcelas . '
 					' . $recibo . '
-					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-					OT.Associado = 0 AND 
+					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '  AND 
+					OT.id_Associado = 0  AND 
+					OT.id_Funcionario != 0 AND
 					OT.CanceladoOrca = "N" AND
 					OT.StatusComissaoOrca = "N" AND
-					OT.id_Recibo = 0 
+					OT.id_Comissao = 0 
 					' . $orcamento . '
-					' . $id_recibo . '
+					' . $id_comissao . '
 					' . $cliente . '
 					' . $id_cliente . '
 					' . $tipofinandeiro . ' 
@@ -2313,6 +2300,9 @@ class Orcatrata_model extends CI_Model {
 				'SELECT
 					OT.idApp_OrcaTrata,
 					OT.idSis_Usuario,
+					OT.id_Funcionario,
+					US.Nome,
+					CONCAT(IFNULL(US.idSis_Usuario,""), " - " ,IFNULL(US.Nome,"")) AS NomeColaborador,
 					OT.CombinadoFrete,
 					OT.AprovadoOrca,
 					OT.FinalizadoOrca,
@@ -2337,7 +2327,7 @@ class Orcatrata_model extends CI_Model {
 					OT.TelefoneRec,
 					OT.StatusComissaoOrca,
 					OT.DataPagoComissaoOrca,
-					OT.id_Recibo,
+					OT.id_Comissao,
 					OT.Modalidade,
 					OT.AVAP,
 					OT.TipoFrete,
@@ -2349,14 +2339,11 @@ class Orcatrata_model extends CI_Model {
 					C.Telefone,
 					C.Telefone2,
 					C.Telefone3,
-					US.Nome,
-					CONCAT(IFNULL(US.idSis_Usuario,""), " - " ,IFNULL(US.Nome,"")) AS NomeColaborador,
 					TFP.FormaPag,
 					TR.TipoFinanceiro
 				FROM
 					App_OrcaTrata AS OT
-						LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
-						' . $rede . '
+						LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.id_Funcionario
 						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
@@ -2395,13 +2382,14 @@ class Orcatrata_model extends CI_Model {
 					' . $produtos . '
 					' . $parcelas . '
 					' . $recibo . '
-					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-					OT.Associado = 0 AND 
+					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '  AND 
+					OT.id_Associado = 0  AND 
+					OT.id_Funcionario != 0 AND
 					OT.CanceladoOrca = "N" AND
 					OT.StatusComissaoOrca = "N" AND
-					OT.id_Recibo = 0 
+					OT.id_Comissao = 0 
 					' . $orcamento . '
-					' . $id_recibo . '
+					' . $id_comissao . '
 					' . $cliente . '
 					' . $id_cliente . '
 					' . $tipofinandeiro . ' 
@@ -2426,13 +2414,8 @@ class Orcatrata_model extends CI_Model {
 					OT.idApp_OrcaTrata
 				FROM
 					App_OrcaTrata AS OT
-						LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
-						' . $rede . '
-						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
-						LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
-						LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
 				WHERE
 					' . $date_inicio_orca . '
 					' . $date_fim_orca . '
@@ -2465,12 +2448,14 @@ class Orcatrata_model extends CI_Model {
 					' . $filtro12 . '
 					' . $produtos . '
 					' . $parcelas . '
-					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-					OT.Associado = 0 AND 
+					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '  AND 
+					OT.id_Associado = 0  AND 
+					OT.id_Funcionario != 0 AND
 					OT.CanceladoOrca = "N" AND
 					OT.StatusComissaoOrca = "N" AND
-					OT.id_Recibo = 0 
+					OT.id_Comissao = 0 
 					' . $orcamento . '
+					' . $id_comissao . '
 					' . $cliente . '
 					' . $id_cliente . '
 					' . $tipofinandeiro . ' 
@@ -2520,10 +2505,10 @@ class Orcatrata_model extends CI_Model {
 		$date_fim_pag_com = ($data['DataFim7']) ? 'OT.DataPagoComissaoOrca <= "' . $data['DataFim7'] . '" AND ' : FALSE;
 
 		$orcamento = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
-		$id_recibo = ($data['id_Recibo']) ? ' AND OT.id_Recibo = ' . $data['id_Recibo'] . '  ': FALSE;
+		$id_comissao = ($data['id_Comissao']) ? ' AND OT.id_Comissao = ' . $data['id_Comissao'] . '  ': FALSE;
 		$cliente = ($data['Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
 		$id_cliente = ($data['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;
-		$tipofinandeiro = ($data['TipoFinanceiro']) ? ' AND TR.idTab_TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
+		$tipofinandeiro = ($data['TipoFinanceiro']) ? ' AND OT.TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
 		$idtipord = ($data['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $data['idTab_TipoRD'] : ' AND OT.idTab_TipoRD = 2';
 		$campo = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
 		$ordenamento = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
@@ -2538,7 +2523,7 @@ class Orcatrata_model extends CI_Model {
 		$filtro10 = ($data['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $data['FinalizadoOrca'] . '" AND ' : FALSE;
 		$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 		$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
-		$filtro18 = ($data['NomeAssociado']) ? 'OT.Associado = "' . $data['NomeAssociado'] . '" AND ' : FALSE;
+		$filtro18 = ($data['NomeAssociado']) ? 'OT.id_Associado = "' . $data['NomeAssociado'] . '" AND ' : FALSE;
 		$filtro12 = ($data['StatusComissaoOrca']) ? 'OT.StatusComissaoOrca = "' . $data['StatusComissaoOrca'] . '" AND ' : FALSE;
 
 		if($_SESSION['log']['idSis_Empresa'] != 5){
@@ -2613,12 +2598,8 @@ class Orcatrata_model extends CI_Model {
 					OT.ValorRestanteOrca
 				FROM
 					App_OrcaTrata AS OT
-						LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = OT.Associado
-						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
-						LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
-						LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
 				WHERE
 					' . $date_inicio_orca . '
 					' . $date_fim_orca . '
@@ -2653,12 +2634,13 @@ class Orcatrata_model extends CI_Model {
 					' . $parcelas . '
 					' . $recibo . '
 					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . ' AND 
-					OT.Associado != 0 AND 
+					OT.id_Associado != 0 AND 
+					OT.id_Funcionario = 0 AND
 					OT.CanceladoOrca = "N" AND
 					OT.StatusComissaoOrca = "N" AND
-					OT.id_Recibo = 0 
+					OT.id_Comissao = 0 
 					' . $orcamento . '
-					' . $id_recibo . '
+					' . $id_comissao . '
 					' . $cliente . '
 					' . $id_cliente . '
 					' . $tipofinandeiro . ' 
@@ -2725,7 +2707,7 @@ class Orcatrata_model extends CI_Model {
 					OT.TelefoneRec,
 					OT.StatusComissaoOrca,
 					OT.DataPagoComissaoOrca,
-					OT.id_Recibo,
+					OT.id_Comissao,
 					OT.Modalidade,
 					OT.AVAP,
 					OT.TipoFrete,
@@ -2743,7 +2725,7 @@ class Orcatrata_model extends CI_Model {
 					CONCAT(IFNULL(ASS.idSis_Associado,""), " - " ,IFNULL(ASS.Nome,"")) AS NomeAssociado
 				FROM
 					App_OrcaTrata AS OT
-						LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = OT.Associado
+						LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = OT.id_Associado
 						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
@@ -2783,12 +2765,13 @@ class Orcatrata_model extends CI_Model {
 					' . $parcelas . '
 					' . $recibo . '
 					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . ' AND 
-					OT.Associado != 0 AND 
+					OT.id_Associado != 0 AND 
+					OT.id_Funcionario = 0 AND
 					OT.CanceladoOrca = "N" AND
 					OT.StatusComissaoOrca = "N" AND
-					OT.id_Recibo = 0 
+					OT.id_Comissao = 0 
 					' . $orcamento . '
-					' . $id_recibo . '
+					' . $id_comissao . '
 					' . $cliente . '
 					' . $id_cliente . '
 					' . $tipofinandeiro . ' 
@@ -2813,12 +2796,8 @@ class Orcatrata_model extends CI_Model {
 					OT.idApp_OrcaTrata
 				FROM
 					App_OrcaTrata AS OT
-						LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = OT.Associado
-						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
-						LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
-						LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
 				WHERE
 					' . $date_inicio_orca . '
 					' . $date_fim_orca . '
@@ -2852,11 +2831,13 @@ class Orcatrata_model extends CI_Model {
 					' . $produtos . '
 					' . $parcelas . '
 					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . ' AND 
-					OT.Associado != 0 AND 
+					OT.id_Associado != 0 AND 
+					OT.id_Funcionario = 0 AND
 					OT.CanceladoOrca = "N" AND
 					OT.StatusComissaoOrca = "N" AND
-					OT.id_Recibo = 0 
+					OT.id_Comissao = 0 
 					' . $orcamento . '
+					' . $id_comissao . '
 					' . $cliente . '
 					' . $id_cliente . '
 					' . $tipofinandeiro . ' 
@@ -2906,10 +2887,10 @@ class Orcatrata_model extends CI_Model {
 		$date_fim_pag_com = ($data['DataFim7']) ? 'OT.DataPagoComissaoFunc <= "' . $data['DataFim7'] . '" AND ' : FALSE;
 
 		$orcamento = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
-		$id_recibo = ($data['id_Recibo_Func']) ? ' AND OT.id_Recibo_Func = ' . $data['id_Recibo_Func'] . '  ': FALSE;
+		$id_recibo = ($data['id_ComissaoFunc']) ? ' AND OT.id_ComissaoFunc = ' . $data['id_ComissaoFunc'] . '  ': FALSE;
 		$cliente = ($data['Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
 		$id_cliente = ($data['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;
-		$tipofinandeiro = ($data['TipoFinanceiro']) ? ' AND TR.idTab_TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
+		$tipofinandeiro = ($data['TipoFinanceiro']) ? ' AND OT.TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
 		$idtipord = ($data['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $data['idTab_TipoRD'] : ' AND OT.idTab_TipoRD = 2';
 		$campo = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
 		$ordenamento = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
@@ -2925,17 +2906,7 @@ class Orcatrata_model extends CI_Model {
 		$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 		$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
 		$filtro12 = ($data['StatusComissaoFunc']) ? 'OT.StatusComissaoFunc = "' . $data['StatusComissaoFunc'] . '" AND ' : FALSE;
-
-		if(isset($data['NivelFunc'])){
-			if($data['NivelFunc'] == 1){
-				$revendedor = 'OR US.QuemCad = ' . $data['NomeUsuario'] . '';
-				$filtro17 = ($data['NomeUsuario']) ? '(OT.idSis_Usuario = "' . $data['NomeUsuario'] . '" OR US.QuemCad = ' . $data['NomeUsuario'] . ') AND ' : FALSE;
-			}else{
-				$filtro17 = ($data['NomeUsuario']) ? 'OT.idSis_Usuario = "' . $data['NomeUsuario'] . '"  AND ' : FALSE;
-			}
-		}else{
-			$filtro17 = ($data['NomeUsuario']) ? 'OT.idSis_Usuario = "' . $data['NomeUsuario'] . '"  AND ' : FALSE;
-		}
+		$filtro17 = ($data['NomeUsuario']) ? 'OT.idSis_Usuario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;
 
 		if($_SESSION['log']['idSis_Empresa'] != 5){
 			if($_SESSION['Usuario']['Permissao_Orcam'] == 1){
@@ -3014,13 +2985,8 @@ class Orcatrata_model extends CI_Model {
 					OT.ValorRestanteOrca
 				FROM
 					App_OrcaTrata AS OT
-						LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
-						' . $rede . '
-						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
-						LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
-						LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
 				WHERE
 					' . $date_inicio_orca . '
 					' . $date_fim_orca . '
@@ -3055,10 +3021,9 @@ class Orcatrata_model extends CI_Model {
 					' . $parcelas . '
 					' . $recibo . '
 					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-					OT.Associado = 0 AND 
 					OT.CanceladoOrca = "N" AND
 					OT.StatusComissaoFunc = "N" AND
-					OT.id_Recibo_Func = 0 
+					OT.id_ComissaoFunc = 0 
 					' . $orcamento . '
 					' . $id_recibo . '
 					' . $cliente . '
@@ -3127,7 +3092,7 @@ class Orcatrata_model extends CI_Model {
 					OT.TelefoneRec,
 					OT.StatusComissaoFunc,
 					OT.DataPagoComissaoFunc,
-					OT.id_Recibo_Func,
+					OT.id_ComissaoFunc,
 					OT.Modalidade,
 					OT.AVAP,
 					OT.TipoFrete,
@@ -3186,10 +3151,9 @@ class Orcatrata_model extends CI_Model {
 					' . $parcelas . '
 					' . $recibo . '
 					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-					OT.Associado = 0 AND 
 					OT.CanceladoOrca = "N" AND
 					OT.StatusComissaoFunc = "N" AND
-					OT.id_Recibo_Func = 0 
+					OT.id_ComissaoFunc = 0 
 					' . $orcamento . '
 					' . $id_recibo . '
 					' . $cliente . '
@@ -3216,13 +3180,8 @@ class Orcatrata_model extends CI_Model {
 					OT.idApp_OrcaTrata
 				FROM
 					App_OrcaTrata AS OT
-						LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
-						' . $rede . '
-						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
-						LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
-						LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
 				WHERE
 					' . $date_inicio_orca . '
 					' . $date_fim_orca . '
@@ -3256,10 +3215,9 @@ class Orcatrata_model extends CI_Model {
 					' . $produtos . '
 					' . $parcelas . '
 					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-					OT.Associado = 0 AND 
 					OT.CanceladoOrca = "N" AND
 					OT.StatusComissaoFunc = "N" AND
-					OT.id_Recibo_Func = 0 
+					OT.id_ComissaoFunc = 0 
 					' . $orcamento . '
 					' . $cliente . '
 					' . $id_cliente . '
@@ -5338,6 +5296,33 @@ class Orcatrata_model extends CI_Model {
         $query = $query->result_array();
 
         return $query;
+    }
+	
+    public function get_associado($data) {
+        $query = $this->db->query(
+			'SELECT
+				C.idApp_Cliente,
+				C.NomeCliente
+			FROM 
+				App_Cliente AS C 
+			WHERE 
+				C.idSis_Associado = ' . $data . ' AND
+				C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
+			LIMIT 1'
+		);
+        
+		$count = $query->num_rows();
+		
+		if(isset($count)){
+			if($count == 0){
+				return FALSE;
+			}else{
+				$query = $query->result_array();
+				return $query[0];
+			}
+		}else{
+			return FALSE;
+		}
     }
 	
     public function get_profissional($data) {

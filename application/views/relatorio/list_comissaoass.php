@@ -179,7 +179,7 @@
 							<?php echo '<td>' . $row['ValorComissaoAssoc'] . '</td>';?>
 							<?php echo '<td>' . $row[$status] . '</td>';?>
 							<?php echo '<td>' . $row['DataPagoComissaoOrca'] . '</td>';?>
-							<?php echo '<td>' . $row['id_Recibo'] . '</td>';?>	
+							<?php echo '<td>' . $row['id_Comissao'] . '</td>';?>	
 						</tr>
 					<?php	
 						$count++;

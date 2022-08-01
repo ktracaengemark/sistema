@@ -47,6 +47,7 @@
 						<th class="col-md-1" scope="col">Comissao</th>
 						<th class="col-md-1" scope="col">Pago</th>
 						<th class="col-md-1" scope="col">Data</th>
+						<th class="col-md-1" scope="col">Recibo</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -65,6 +66,7 @@
 							<td class="col-md-1" scope="col"><?php echo $row['ValorComissaoAssoc'] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $row[$status] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $row['DataPagoComissaoOrca'] ?></td>
+							<td class="col-md-1" scope="col"><?php echo $row['id_Comissao'] ?></td>
 						</tr>
 					<?php	
 						$count++;

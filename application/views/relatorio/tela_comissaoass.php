@@ -28,7 +28,7 @@
 											<span class="glyphicon glyphicon-search"></span> 
 										</button>
 									</span>
-									<input type="text" placeholder="Nº Recibo" class="form-control Numero btn-sm" name="id_Recibo" id="id_Recibo" value="<?php echo set_value('id_Recibo', $query['id_Recibo']); ?>">
+									<input type="text" placeholder="Nº Recibo" class="form-control Numero btn-sm" name="id_Comissao" id="id_Comissao" value="<?php echo set_value('id_Comissao', $query['id_Comissao']); ?>">
 								</div>
 							</div>
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>

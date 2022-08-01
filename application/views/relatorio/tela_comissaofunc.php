@@ -28,7 +28,7 @@
 											<span class="glyphicon glyphicon-search"></span> 
 										</button>
 									</span>
-									<input type="text" placeholder="Nº Recibo" class="form-control Numero btn-sm" name="id_Recibo_Func" id="id_Recibo_Func" value="<?php echo set_value('id_Recibo_Func', $query['id_Recibo_Func']); ?>">
+									<input type="text" placeholder="Nº Recibo" class="form-control Numero btn-sm" name="id_ComissaoFunc" id="id_ComissaoFunc" value="<?php echo set_value('id_ComissaoFunc', $query['id_ComissaoFunc']); ?>">
 								</div>
 							</div>
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
@@ -80,7 +80,7 @@
 							</div>
 							<?php if ($_SESSION['Usuario']['Permissao_Comissao'] >= 2 ) { ?>
 								<div class="col-md-4 text-left">
-									<label for="NomeUsuario">Funcionario:</label>
+									<label for="NomeUsuario">Supervisor:</label>
 									<div class="input-group">
 										<span class="input-group-btn">
 											<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">

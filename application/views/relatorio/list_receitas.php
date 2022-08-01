@@ -189,8 +189,12 @@
 						<th class="active">Pdd|Tp</th>
 						<th class="active">DtPedido</th>
 						<?php if($_SESSION['log']['idSis_Empresa'] != 5) {?>
+							<th class="active">Receita</th>
 							<th class="active"><?php echo $nome ?></th>
 							<th class="active">Celular</th>
+							<th class="active">Usuario/QueCad</th>
+							<th class="active">Func/Vendeu</th>
+							<th class="active">Ass/Vendeu</th>
 							<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
 								<th class="active">Prd/Srv</th>
 								<th class="active">Frete</th>
@@ -200,10 +204,6 @@
 								<th class="active">Cash</th>
 								<th class="active">Final</th>
 							<?php } ?>
-							<th class="active">Vendedor</th>
-							
-								<th class="active">Associado</th>
-							
 						<?php }else{ ?>	
 							<th class="active">Extra</th>
 						<?php } ?>
@@ -214,7 +214,6 @@
 							<th class="active">Pago</th>
 							<th class="active">Final.</th>
 							<th class="active">Canc.</th>
-							<th class="active">Compra</th>
 							<th class="active">Entrega</th>
 							<th class="active">Pagam.</th>
 							<th class="active">Form.Pag.</th>
@@ -323,6 +322,7 @@
 							<td><?php echo $row['idApp_OrcaTrata'];?> - <?php echo $row['TipoFinanceiro'];?></td>
 							<?php echo '<td>' . $row['DataOrca'] . '</td>';?>
 							<?php if($_SESSION['log']['idSis_Empresa'] != 5) { ?>
+								<?php echo '<td>' . $row['Tipo_Orca'] . '</td>';?>
 								<td class="notclickable">
 									<?php echo $row['Nome'.$nome]; ?>
 								</td>
@@ -334,6 +334,9 @@
 										</a>
 									<?php } ?>
 								</td>
+								<?php echo '<td>' . $row[$nomeusuario] . '</td>';?>	
+								<?php echo '<td>' . $row['NomeFuncionario'] . '</td>';?>
+								<?php echo '<td>' . $row['NomeAssociado'] . '</td>';?>
 								<?php if($_SESSION['Usuario']['Rel_Pag'] == 'S') { ?>
 									<td><?php echo $row['ValorRestanteOrca'] ?></td>
 									<td><?php echo $row['ValorFrete'] ?></td>
@@ -342,9 +345,7 @@
 									<td><?php echo $row['DescValorOrca'] ?></td>
 									<td><?php echo $row['CashBackOrca'] ?></td>
 									<td><?php echo $row['ValorFinalOrca'] ?></td>
-								<?php } ?>
-								<?php echo '<td>' . $row[$nomeusuario] . '</td>';?>	
-								<?php echo '<td>' . $row['NomeAssociado'] . '</td>';?>	
+								<?php } ?>	
 							<?php }else{ ?>
 								<td><?php echo $row['ValorExtraOrca'] ?></td>
 							<?php }	 ?>
@@ -354,8 +355,7 @@
 								<?php echo '<td>' . $row['ConcluidoOrca'] . '</td>';?>	
 								<?php echo '<td>' . $row['QuitadoOrca'] . '</td>';?>	
 								<?php echo '<td>' . $row['FinalizadoOrca'] . '</td>';?>	
-								<?php echo '<td>' . $row['CanceladoOrca'] . '</td>';?>	
-								<?php echo '<td>' . $row['Tipo_Orca'] . '</td>';?>	
+								<?php echo '<td>' . $row['CanceladoOrca'] . '</td>';?>		
 								<?php echo '<td>' . $row['TipoFrete'] . '</td>';?>	
 								<?php echo '<td>' . $row['AVAP'] . '</td>';?>	
 								<?php echo '<td>' . $row['FormaPag'] . '</td>';?>

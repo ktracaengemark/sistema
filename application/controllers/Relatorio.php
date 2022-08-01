@@ -1654,7 +1654,6 @@ class Relatorio extends CI_Controller {
 			'Cliente',
 			'idApp_Cliente',
 			'idApp_OrcaTrata',
-			'idSis_Usuario',
 			'DataVencimentoOrca',
 			'NomeUsuario',
 			'DataInicio',
@@ -1693,14 +1692,14 @@ class Relatorio extends CI_Controller {
 			'Parcelas',
 			'nome',
 			'Recibo',
-			'id_Recibo',
+			'id_Comissao',
         ), TRUE));
 
 		
         $data['select']['Recibo'] = array(
 			'0' => '::TODOS::',
-			'OT.id_Recibo != 0 ' => 'C/ Recibo',
-			'OT.id_Recibo = 0 ' => 'S/ Recibo',
+			'OT.id_Comissao != 0 ' => 'C/ Recibo',
+			'OT.id_Comissao = 0 ' => 'S/ Recibo',
         );
 
         $data['select']['AprovadoOrca'] = array(
@@ -1870,7 +1869,7 @@ class Relatorio extends CI_Controller {
 			$_SESSION['FiltroComissao']['Produtos'] = $data['query']['Produtos'];
 			$_SESSION['FiltroComissao']['Parcelas'] = $data['query']['Parcelas'];
 			$_SESSION['FiltroComissao']['Recibo'] = $data['query']['Recibo'];
-			$_SESSION['FiltroComissao']['id_Recibo'] = $data['query']['id_Recibo'];
+			$_SESSION['FiltroComissao']['id_Comissao'] = $data['query']['id_Comissao'];
 			$_SESSION['FiltroComissao']['NomeUsuario'] = $data['query']['NomeUsuario'];
 			$_SESSION['FiltroComissao']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$_SESSION['FiltroComissao']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
@@ -1991,7 +1990,6 @@ class Relatorio extends CI_Controller {
 			'Cliente',
 			'idApp_Cliente',
 			'idApp_OrcaTrata',
-			'idSis_Usuario',
 			'DataVencimentoOrca',
 			'NomeAssociado',
 			'DataInicio',
@@ -2030,14 +2028,14 @@ class Relatorio extends CI_Controller {
 			'Parcelas',
 			'nome',
 			'Recibo',
-			'id_Recibo',
+			'id_Comissao',
         ), TRUE));
 
 		
         $data['select']['Recibo'] = array(
 			'0' => '::TODOS::',
-			'OT.id_Recibo != 0 ' => 'C/ Recibo',
-			'OT.id_Recibo = 0 ' => 'S/ Recibo',
+			'OT.id_Comissao != 0 ' => 'C/ Recibo',
+			'OT.id_Comissao = 0 ' => 'S/ Recibo',
         );
 
         $data['select']['AprovadoOrca'] = array(
@@ -2207,7 +2205,7 @@ class Relatorio extends CI_Controller {
 			$_SESSION['FiltroComissaoAss']['Produtos'] = $data['query']['Produtos'];
 			$_SESSION['FiltroComissaoAss']['Parcelas'] = $data['query']['Parcelas'];
 			$_SESSION['FiltroComissaoAss']['Recibo'] = $data['query']['Recibo'];
-			$_SESSION['FiltroComissaoAss']['id_Recibo'] = $data['query']['id_Recibo'];
+			$_SESSION['FiltroComissaoAss']['id_Comissao'] = $data['query']['id_Comissao'];
 			$_SESSION['FiltroComissaoAss']['NomeAssociado'] = $data['query']['NomeAssociado'];
 			$_SESSION['FiltroComissaoAss']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$_SESSION['FiltroComissaoAss']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
@@ -2328,7 +2326,6 @@ class Relatorio extends CI_Controller {
 			'Cliente',
 			'idApp_Cliente',
 			'idApp_OrcaTrata',
-			'idSis_Usuario',
 			'DataVencimentoOrca',
 			'NomeUsuario',
 			'DataInicio',
@@ -2367,14 +2364,14 @@ class Relatorio extends CI_Controller {
 			'Parcelas',
 			'nome',
 			'Recibo',
-			'id_Recibo_Func',
+			'id_ComissaoFunc',
         ), TRUE));
 
 		
         $data['select']['Recibo'] = array(
 			'0' => '::TODOS::',
-			'OT.id_Recibo_Func != 0 ' => 'C/ Recibo',
-			'OT.id_Recibo_Func = 0 ' => 'S/ Recibo',
+			'OT.id_ComissaoFunc != 0 ' => 'C/ Recibo',
+			'OT.id_ComissaoFunc = 0 ' => 'S/ Recibo',
         );
 
         $data['select']['AprovadoOrca'] = array(
@@ -2544,7 +2541,7 @@ class Relatorio extends CI_Controller {
 			$_SESSION['FiltroComissaoFunc']['Produtos'] = $data['query']['Produtos'];
 			$_SESSION['FiltroComissaoFunc']['Parcelas'] = $data['query']['Parcelas'];
 			$_SESSION['FiltroComissaoFunc']['Recibo'] = $data['query']['Recibo'];
-			$_SESSION['FiltroComissaoFunc']['id_Recibo_Func'] = $data['query']['id_Recibo_Func'];
+			$_SESSION['FiltroComissaoFunc']['id_ComissaoFunc'] = $data['query']['id_ComissaoFunc'];
 			$_SESSION['FiltroComissaoFunc']['NomeUsuario'] = $data['query']['NomeUsuario'];
 			$_SESSION['FiltroComissaoFunc']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 			$_SESSION['FiltroComissaoFunc']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
@@ -2568,11 +2565,6 @@ class Relatorio extends CI_Controller {
 			$_SESSION['FiltroComissaoFunc']['Ordenamento'] = $data['query']['Ordenamento'];
 			$_SESSION['FiltroComissaoFunc']['metodo'] = $data['metodo'];
 			$_SESSION['FiltroComissaoFunc']['idTab_TipoRD'] = $data['TipoRD'];
-			if(isset($_SESSION['FiltroComissaoFunc']['NomeUsuario'])){
-				$_SESSION['FiltroComissaoFunc']['NivelFunc'] = $this->Usuario_model->get_usuario($_SESSION['FiltroComissaoFunc']['NomeUsuario'])['Nivel'];
-			}else{
-				$_SESSION['FiltroComissaoFunc']['NivelFunc'] = FALSE;
-			}
 
 			$data['pesquisa_query'] = $this->Relatorio_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'],TRUE, TRUE);
 			

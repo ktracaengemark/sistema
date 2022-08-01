@@ -105,8 +105,17 @@
 																	id="DataOrca" name="DataOrca" value="<?php echo $orcatrata['DataOrca']; ?>">
 														</div>
 													</div>
+													<?php 
+														if(isset($_SESSION['Orcatrata']['id_Associado']) && $_SESSION['Orcatrata']['id_Associado'] !=0){
+															$associado_on 	= false;
+															$associado_off 	= 'display:none';
+														}else{
+															$associado_on 	= 'display:none';
+															$associado_off 	= false;
+														}
+													?>
 													<?php if ($_SESSION['log']['NivelEmpresa'] >= 4 ) { ?>
-														<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-left">	
+														<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-left" style="<?php echo $associado_off; ?>">	
 															<div class="row">
 																<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 text-left">
 																	<label for="Cli_Forn_Orca">Fornecedor?</label><br>
@@ -187,9 +196,10 @@
 											</div>
 											<div <?php echo $visivel; ?>>
 												<div class="form-group">
-													<div class="row">
-														<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-3 text-left">
-															<div id="Cli_Forn_Orca" <?php echo $div['Cli_Forn_Orca']; ?>>
+													<div class="row">	
+														
+														<div id="Cli_Forn_Orca" <?php echo $div['Cli_Forn_Orca']; ?>>
+															<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 mb-3 text-left">
 																<div class="row">
 																	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3 text-left">	
 																		<label for="idApp_Fornecedor">Fornecedor</label>
@@ -270,8 +280,9 @@
 																</div>
 															</div>
 														</div>
-														<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-3 text-left">
-															<div id="Func_Orca" <?php echo $div['Func_Orca']; ?>>
+														
+														<div id="Func_Orca" <?php echo $div['Func_Orca']; ?>>
+															<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 mb-3 text-left">
 																<div class="row">
 																	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3 text-left">	
 																		<label for="id_Funcionario">Funcionario</label>
@@ -291,6 +302,14 @@
 																		</select>
 																		<?php echo form_error('id_Funcionario'); ?>
 																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 mb-3 text-left" style="<?php echo $associado_on; ?>">
+															<div class="row">
+																<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3 text-left">	
+																	<label for="id_Associado">Associado</label>
+																	<input type="text" class="form-control " readonly="" value="<?php echo $_SESSION['Orcatrata']['NomeAssociado']; ?>"/>
 																</div>
 															</div>
 														</div>
