@@ -117,6 +117,7 @@
 						<?php } ?>
 						<th class="active">Pdd|Tp</th>
 						<th class="active">DtPedido</th>
+						<th class="active">Receita</th>
 						<th class="active"><?php echo $nome ?></th>
 						<th class="active">Cb.Ent</th>
 						<th class="active">Cb.Pag</th>
@@ -124,7 +125,6 @@
 						<th class="active">Pago</th>
 						<th class="active">Final.</th>
 						<th class="active">Canc.</th>
-						<th class="active">Compra</th>
 						<th class="active">Pagam.</th>
 						<th class="active">Form.Pag.</th>
 						<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
@@ -160,6 +160,7 @@
 							<?php } ?>
 							<td><?php echo $row['idApp_OrcaTrata'];?> - <?php echo $row['TipoFinanceiro'];?></td>
 							<?php echo '<td>' . $row['DataOrca'] . '</td>';?>
+							<?php echo '<td>' . $row['Tipo_Orca'] . '</td>';?>
 							<td class="notclickable">
 								<?php echo $row['Nome'.$nome]; ?>
 							</td>
@@ -168,8 +169,7 @@
 							<?php echo '<td>' . $row['ConcluidoOrca'] . '</td>';?>	
 							<?php echo '<td>' . $row['QuitadoOrca'] . '</td>';?>	
 							<?php echo '<td>' . $row['FinalizadoOrca'] . '</td>';?>	
-							<?php echo '<td>' . $row['CanceladoOrca'] . '</td>';?>	
-							<?php echo '<td>' . $row['Tipo_Orca'] . '</td>';?>
+							<?php echo '<td>' . $row['CanceladoOrca'] . '</td>';?>
 							<?php echo '<td>' . $row['AVAP'] . '</td>';?>	
 							<?php echo '<td>' . $row['FormaPag'] . '</td>';?>
 							<?php if($_SESSION['Usuario']['Rel_Pag'] == 'S') { ?>

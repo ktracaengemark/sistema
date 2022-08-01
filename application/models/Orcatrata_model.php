@@ -1361,6 +1361,7 @@ class Orcatrata_model extends CI_Model {
 					OT.ValorFinalOrca
 				FROM
 					App_OrcaTrata AS OT
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
 						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
 				WHERE
@@ -1637,6 +1638,7 @@ class Orcatrata_model extends CI_Model {
 					OT.ValorFinalOrca
 				FROM
 					App_OrcaTrata AS OT
+						LEFT JOIN App_Fornecedor AS C ON C.idApp_Fornecedor = OT.idApp_Fornecedor
 						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
 						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
 				WHERE

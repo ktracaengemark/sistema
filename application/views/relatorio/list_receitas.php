@@ -192,9 +192,9 @@
 							<th class="active">Receita</th>
 							<th class="active"><?php echo $nome ?></th>
 							<th class="active">Celular</th>
-							<th class="active">Usuario/QueCad</th>
+							<th class="active">Quem/Cad</th>
 							<th class="active">Func/Vendeu</th>
-							<th class="active">Ass/Vendeu</th>
+							<th class="active">Assoc/Vendeu</th>
 							<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
 								<th class="active">Prd/Srv</th>
 								<th class="active">Frete</th>
