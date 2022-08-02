@@ -56,7 +56,7 @@
 					<?php } ?>
 					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
 						<label>Excel</label><br>
-						<a href="<?php echo base_url() . 'Relatorio_print/comissao_excel/2'; ?>">
+						<a href="<?php echo base_url() . 'Relatorio/comissao_excel/2'; ?>">
 							<button type='button' class='btn btn-md btn-success btn-block'>
 								C/<span class="glyphicon glyphicon-filter"></span>
 							</button>
@@ -130,7 +130,7 @@
 						<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
 							<th class="active">Prd/Srv</th>
 						<?php } ?>	
-						<th class="active">Vendedor</th>
+						<th class="active">Func/Vendeu</th>
 						<th class="active">Comissao</th>
 						<th class="active">Paga?</th>
 						<th class="active">DataPago</th>

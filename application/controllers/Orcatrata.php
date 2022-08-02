@@ -18916,8 +18916,6 @@ class Orcatrata extends CI_Controller {
 			
 			$data['count']['PRCount'] = $j - 1;
 
-			//$this->load->library('pagination');
-
 			$data['Pesquisa'] = '';
 			
 			$data['somatotal'] = 0;
@@ -18941,9 +18939,9 @@ class Orcatrata extends CI_Controller {
 						exit();
 						
 					}else{
-						
-						$data['pesquisa_query'] = $this->Orcatrata_model->get_baixadacomissao($_SESSION['FiltroComissao'], TRUE, FALSE, FALSE, FALSE);
-				
+
+						$data['pesquisa_query'] = $this->Relatorio_model->list_comissao($_SESSION['FiltroComissao'], TRUE, TRUE, FALSE, FALSE, FALSE);
+
 						if($data['pesquisa_query'] === FALSE){
 							$data['msg'] = '?m=4';
 							redirect(base_url() . 'relatorio/comissao' . $data['msg']);
@@ -19000,7 +18998,8 @@ class Orcatrata extends CI_Controller {
 								$_SESSION['FiltroComissao']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 
 								#### App_Parcelas ####
-								$data['orcamento'] = $this->Orcatrata_model->get_baixadacomissao($_SESSION['FiltroComissao'], FALSE, $_SESSION['FiltroComissao']['Per_Page'], ($_SESSION['FiltroComissao']['Pagina'] * $_SESSION['FiltroComissao']['Per_Page']), FALSE);
+								$data['orcamento'] = $this->Relatorio_model->list_comissao($_SESSION['FiltroComissao'], TRUE, FALSE, $_SESSION['FiltroComissao']['Per_Page'], ($_SESSION['FiltroComissao']['Pagina'] * $_SESSION['FiltroComissao']['Per_Page']), TRUE);
+						
 								if (count($data['orcamento']) > 0) {
 									$data['orcamento'] = array_combine(range(1, count($data['orcamento'])), array_values($data['orcamento']));
 									$_SESSION['FiltroComissao']['Contagem'] = $data['count']['PRCount'] = count($data['orcamento']);
@@ -19065,12 +19064,11 @@ class Orcatrata extends CI_Controller {
 			}else{
 				
 				$data['select']['QuitadoComissao'] = $this->Basico_model->select_status_sn();
-				//$data['select']['StatusComissaoOrca'] = $this->Basico_model->select_status_sn();	
-				
+
 				$data['titulo'] = 'Comissao';
 				$data['form_open_path'] = 'orcatrata/baixadacomissao';
-				$data['relatorio'] = 'relatorio_pag/comissao_pag/';
-				$data['imprimir'] = 'Relatorio_print/comissao_lista/';
+				$data['relatorio'] = 'relatorio/comissao_pag/';
+				$data['imprimir'] = 'Relatorio/comissao_lista/';
 				$data['nomeusuario'] = 'NomeColaborador';
 				$data['statuscomissao'] = 'StatusComissaoOrca';
 				$data['readonly'] = '';
@@ -19129,7 +19127,8 @@ class Orcatrata extends CI_Controller {
 						if($data['query']['QuitadoComissao'] == 'N'){
 							
 							#### App_ParcelasRec ####
-							$data['update']['orcamento']['anterior'] = $this->Orcatrata_model->get_baixadacomissao($_SESSION['FiltroComissao'], FALSE, $_SESSION['FiltroComissao']['Per_Page'], ($_SESSION['FiltroComissao']['Pagina'] * $_SESSION['FiltroComissao']['Per_Page']), FALSE);
+							$data['update']['orcamento']['anterior'] = $this->Relatorio_model->list_comissao($_SESSION['FiltroComissao'], TRUE, FALSE, $_SESSION['FiltroComissao']['Per_Page'], ($_SESSION['FiltroComissao']['Pagina'] * $_SESSION['FiltroComissao']['Per_Page']), TRUE);
+
 							if (isset($data['orcamento']) || (!isset($data['orcamento']) && isset($data['update']['orcamento']['anterior']) ) ) {
 
 								if (isset($data['orcamento']))
@@ -19246,9 +19245,8 @@ class Orcatrata extends CI_Controller {
 									$data['parcelasrec']['idApp_Parcelas'] = $this->Orcatrata_model->set_parcelas($data['parcelasrec']);
 								}
 								/////// Corro a lista com o filtro da sessão colocando o id_Comissao em cada orcamento
-								
-								$data['update']['orcamentos'] = $this->Orcatrata_model->get_baixadacomissao($_SESSION['FiltroComissao'], FALSE, FALSE, FALSE, TRUE);// pega as OS que tem essa repeticao			
-								
+								$data['update']['orcamentos'] = $this->Relatorio_model->list_comissao($_SESSION['FiltroComissao'], TRUE, TRUE, FALSE, FALSE, TRUE);
+
 								$max = count($data['update']['orcamentos']);
 								
 								if(isset($max) && $max > 0){
@@ -19259,6 +19257,8 @@ class Orcatrata extends CI_Controller {
 										$data['update']['orcamentos'][$j]['DataPagoComissaoOrca'] 	= $data['query']['DataPagoComissãoPadrao'];
 										
 										$data['update']['orcamentos']['bd'][$j] = $this->Orcatrata_model->update_orcatrata($data['update']['orcamentos'][$j], $data['update']['orcamentos'][$j]['idApp_OrcaTrata']);
+										
+										//desliguei a passagem de status informações para os produtos
 										/*
 										$data['update']['produto']['posterior'][$j] = $this->Orcatrata_model->get_produto_comissao_pedido($data['update']['orcamentos'][$j]['idApp_OrcaTrata']);
 										
