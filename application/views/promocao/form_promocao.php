@@ -424,7 +424,7 @@
 																</div>
 																<div class="row">
 																	<div class="col-md-2">
-																		<label for="ComissaoVenda">ComissaoVenda:</label>
+																		<label for="ComissaoVenda">Comissao Vendedor:</label>
 																		<div class="input-group">
 																		<?php if ($metodo == 3) { ?>
 																			<input type="text" class="form-control Valor text-right" readonly="" value="<?php echo $_SESSION['Item_Promocao'][$i]['ComissaoVenda'] ?>">
@@ -436,7 +436,7 @@
 																		</div>
 																	</div>
 																	<div class="col-md-2">
-																		<label for="ComissaoServico">ComissaoServico:</label>
+																		<label for="ComissaoServico">Comissao Associado:</label>
 																		<div class="input-group">
 																		<?php if ($metodo == 3) { ?>
 																			<input type="text" class="form-control Valor text-right" readonly="" value="<?php echo $_SESSION['Item_Promocao'][$i]['ComissaoServico'] ?>">
@@ -448,7 +448,7 @@
 																		</div>
 																	</div>
 																	<div class="col-md-2">
-																		<label for="ComissaoCashBack">CashBack:</label>
+																		<label for="ComissaoCashBack">CashBack Cliente:</label>
 																		<div class="input-group">
 																		<?php if ($metodo == 3) { ?>
 																			<input type="text" class="form-control Valor text-right" readonly="" value="<?php echo $_SESSION['Item_Promocao'][$i]['ComissaoCashBack'] ?>">
@@ -459,106 +459,6 @@
 																			<span class="input-group-addon" id="basic-addon1">%</span>
 																		</div>
 																	</div>
-																	<!--
-																	<div class="col-md-2">
-																		<label for="AtivoPreco">Ativo?</label><br>
-																		<?php /* if ($metodo == 3) { ?>
-																			<input type="text" class="form-control text-left" readonly="" value="<?php echo $_SESSION['Item_Promocao'][$i]['AtivoPreco'] ?>">
-																		<?php }else{ ?>
-																			<div class="form-group">
-																				<div class="btn-group" data-toggle="buttons">
-																					<?php
-																					
-																					foreach ($select['AtivoPreco'] as $key => $row) {
-																						(!$item_promocao[$i]['AtivoPreco']) ? $item_promocao[$i]['AtivoPreco'] = 'N' : FALSE;
-
-																						if ($item_promocao[$i]['AtivoPreco'] == $key) {
-																							echo ''
-																							. '<label class="btn btn-warning active" name="radiobutton_AtivoPreco' . $i . '" id="radiobutton_AtivoPreco' . $i .  $key . '">'
-																							. '<input type="radio" name="AtivoPreco' . $i . '" id="radiobuttondinamico" '
-																							. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																							. '</label>'
-																							;
-																						} else {
-																							echo ''
-																							. '<label class="btn btn-default" name="radiobutton_AtivoPreco' . $i . '" id="radiobutton_AtivoPreco' . $i .  $key . '">'
-																							. '<input type="radio" name="AtivoPreco' . $i . '" id="radiobuttondinamico" '
-																							. 'autocomplete="off" value="' . $key . '" >' . $row
-																							. '</label>'
-																							;
-																						}
-																					}
-																					?>
-																				</div>
-																			</div>
-																		<?php } ?>
-																	</div>
-																	<div class="col-md-2">
-																		<label for="VendaBalcaoPreco">VendaBalcao?</label><br>
-																		<?php if ($metodo == 3) { ?>
-																			<input type="text" class="form-control text-left" readonly="" value="<?php echo $_SESSION['Item_Promocao'][$i]['VendaBalcaoPreco'] ?>">
-																		<?php }else{ ?>
-																			<div class="form-group">
-																				<div class="btn-group" data-toggle="buttons">
-																					<?php
-																					foreach ($select['VendaBalcaoPreco'] as $key => $row) {
-																						(!$item_promocao[$i]['VendaBalcaoPreco']) ? $item_promocao[$i]['VendaBalcaoPreco'] = 'N' : FALSE;
-
-																						if ($item_promocao[$i]['VendaBalcaoPreco'] == $key) {
-																							echo ''
-																							. '<label class="btn btn-warning active" name="radiobutton_VendaBalcaoPreco' . $i . '" id="radiobutton_VendaBalcaoPreco' . $i .  $key . '">'
-																							. '<input type="radio" name="VendaBalcaoPreco' . $i . '" id="radiobuttondinamico" '
-																							. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																							. '</label>'
-																							;
-																						} else {
-																							echo ''
-																							. '<label class="btn btn-default" name="radiobutton_VendaBalcaoPreco' . $i . '" id="radiobutton_VendaBalcaoPreco' . $i .  $key . '">'
-																							. '<input type="radio" name="VendaBalcaoPreco' . $i . '" id="radiobuttondinamico" '
-																							. 'autocomplete="off" value="' . $key . '" >' . $row
-																							. '</label>'
-																							;
-																						}
-																					}
-																					?>
-																				</div>
-																			</div>
-																		<?php } ?>	
-																	</div>
-																	<div class="col-md-2">
-																		<label for="VendaSitePreco">VendaSite?</label><br>
-																		<?php if ($metodo == 3) { ?>
-																			<input type="text" class="form-control text-left" readonly="" value="<?php echo $_SESSION['Item_Promocao'][$i]['VendaSitePreco'] ?>">
-																		<?php }else{ ?>
-																			<div class="form-group">
-																				<div class="btn-group" data-toggle="buttons">
-																					<?php
-																					foreach ($select['VendaSitePreco'] as $key => $row) {
-																						(!$item_promocao[$i]['VendaSitePreco']) ? $item_promocao[$i]['VendaSitePreco'] = 'N' : FALSE;
-
-																						if ($item_promocao[$i]['VendaSitePreco'] == $key) {
-																							echo ''
-																							. '<label class="btn btn-warning active" name="radiobutton_VendaSitePreco' . $i . '" id="radiobutton_VendaSitePreco' . $i .  $key . '">'
-																							. '<input type="radio" name="VendaSitePreco' . $i . '" id="radiobuttondinamico" '
-																							. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																							. '</label>'
-																							;
-																						} else {
-																							echo ''
-																							. '<label class="btn btn-default" name="radiobutton_VendaSitePreco' . $i . '" id="radiobutton_VendaSitePreco' . $i .  $key . '">'
-																							. '<input type="radio" name="VendaSitePreco' . $i . '" id="radiobuttondinamico" '
-																							. 'autocomplete="off" value="' . $key . '" >' . $row
-																							. '</label>'
-																							;
-																						}
-																					}
-																					
-																					?>
-																				</div>
-																			</div>
-																		<?php } */?>
-																	</div>
-																	-->
 																</div>
 															</div>	
 														</div>		
@@ -575,44 +475,6 @@
 										<div class="form-group">	
 											<div class="row">
 												<div class="col-md-12">
-													<!--
-													<div class="col-md-3 text-left">
-														<label for="ValorPromocao">Valor Promoção:</label><br>
-														<div class="input-group">
-															<span class="input-group-addon" id="basic-addon1">R$</span>
-															<input type="text" class="form-control Valor" maxlength="10" placeholder="0,00"
-																	name="ValorPromocao" value="<?php echo $promocao['ValorPromocao'] ?>">
-														</div>
-													</div>
-													<div class="col-md-3 text-left">
-														<label for="Ativo">Preço Ativo?</label><br>
-														<div class="btn-group" data-toggle="buttons">
-															<?php
-															foreach ($select['Ativo'] as $key => $row) {
-																if (!$promocao['Ativo']) $promocao['Ativo'] = 'N';
-
-																($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-
-																if ($promocao['Ativo'] == $key) {
-																	echo ''
-																	. '<label class="btn btn-warning active" name="Ativo_' . $hideshow . '">'
-																	. '<input type="radio" name="Ativo" id="' . $hideshow . '" '
-																	. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																	. '</label>'
-																	;
-																} else {
-																	echo ''
-																	. '<label class="btn btn-default" name="Ativo_' . $hideshow . '">'
-																	. '<input type="radio" name="Ativo" id="' . $hideshow . '" '
-																	. 'autocomplete="off" value="' . $key . '" >' . $row
-																	. '</label>'
-																	;
-																}
-															}
-															?>
-														</div>
-													</div>
-													-->
 													<div class="col-md-2 text-left">
 														<label for="VendaBalcao">Balcão?</label><br>
 														<?php if ($metodo == 3) { ?>
@@ -677,7 +539,7 @@
 															</div>
 														<?php } ?>	
 													</div>
-													<div class="col-md-2 text-left">
+													<div class="col-md-2 text-left" style="display:none">
 														<label for="TipoPromocao">Venda/Revenda?</label><br>
 														<?php if ($metodo == 3) { ?>
 															<input type="text" class="form-control text-left" readonly="" value="<?php echo $_SESSION['Promocao']['TipoPromocao'] ?>">

@@ -10145,7 +10145,7 @@ function adiciona_item_promocao() {
 					</div>\
 					<div class="row">\
 						<div class="col-md-2">\
-							<label for="ComissaoVenda'+pt+'">ComissaoVenda:</label><br>\
+							<label for="ComissaoVenda'+pt+'">Comissao Vendedor:</label><br>\
 							<div class="input-group id="ComissaoVenda'+pt+'">\
 								<input type="text" class="form-control Valor text-right" id="ComissaoVenda'+pt+'" maxlength="10" placeholder="0,00" \
 									name="ComissaoVenda'+pt+'" value="">\
@@ -10153,7 +10153,7 @@ function adiciona_item_promocao() {
 							</div>\
 						</div>\
 						<div class="col-md-2">\
-							<label for="ComissaoServico'+pt+'">ComissaoServico:</label><br>\
+							<label for="ComissaoServico'+pt+'">Comissao Associado:</label><br>\
 							<div class="input-group id="ComissaoServico'+pt+'">\
 								<input type="text" class="form-control Valor text-right" id="ComissaoServico'+pt+'" maxlength="10" placeholder="0,00" \
 									name="ComissaoServico'+pt+'" value="">\
@@ -10161,7 +10161,7 @@ function adiciona_item_promocao() {
 							</div>\
 						</div>\
 						<div class="col-md-2">\
-							<label for="ComissaoCashBack'+pt+'">CashBack:</label><br>\
+							<label for="ComissaoCashBack'+pt+'">CashBack Cliente:</label><br>\
 							<div class="input-group id="ComissaoCashBack'+pt+'">\
 								<input type="text" class="form-control Valor text-right" id="ComissaoCashBack'+pt+'" maxlength="10" placeholder="0,00" \
 									name="ComissaoCashBack'+pt+'" value="">\
