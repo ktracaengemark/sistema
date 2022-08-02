@@ -574,7 +574,8 @@ class Relatorio_print extends CI_Controller {
 				$data['Imprimir']['DataInicio4'] = $this->basico->mascara_data($_SESSION['FiltroCobrancas']['DataInicio4'], 'barras');
 				$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroCobrancas']['DataFim4'], 'barras');
 		
-				$data['pesquisa_query'] = $this->Relatorio_print_model->get_cobrancas($_SESSION['FiltroCobrancas'], TRUE);
+				//$data['pesquisa_query'] = $this->Relatorio_print_model->get_cobrancas($_SESSION['FiltroCobrancas'], TRUE);
+				$data['pesquisa_query'] = $this->Relatorio_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, TRUE, FALSE, FALSE, FALSE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
@@ -582,9 +583,11 @@ class Relatorio_print extends CI_Controller {
 					redirect(base_url() . 'relatorio/cobrancas' . $data['msg']);
 					exit();
 				}else{
-
+					
+					//$config['total_rows'] = $data['pesquisa_query'];
+					
+					$config['total_rows'] = $data['pesquisa_query']->num_rows();
 					$config['base_url'] = base_url() . 'Relatorio_print/cobrancas_lista/' . $id . '/';
-					$config['total_rows'] = $data['pesquisa_query'];
 					$config['per_page'] = 19;
 					$config["uri_segment"] = 4;
 					$config['reuse_query_string'] = TRUE;
@@ -622,7 +625,15 @@ class Relatorio_print extends CI_Controller {
 					$data['pagination'] = $this->pagination->create_links();		
 						
 					#### App_OrcaTrata ####
-					$data['orcatrata'] = $this->Relatorio_print_model->get_cobrancas($_SESSION['FiltroCobrancas'], FALSE, $config['per_page'], ($page * $config['per_page']));
+					//$data['orcatrata'] = $this->Relatorio_print_model->get_cobrancas($_SESSION['FiltroCobrancas'], FALSE, $config['per_page'], ($page * $config['per_page']));
+					$data['orcatrata'] = $this->Relatorio_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
+					/*
+					echo '<br>';
+					echo "<pre>";
+					print_r($data['orcatrata']);
+					echo "</pre>";
+					exit ();
+					*/
 					if (count($data['orcatrata']) > 0) {
 						$data['orcatrata'] = array_combine(range(1, count($data['orcatrata'])), array_values($data['orcatrata']));
 						$data['count']['POCount'] = count($data['orcatrata']);           
@@ -637,6 +648,17 @@ class Relatorio_print extends CI_Controller {
 								$data['orcatrata'][$i]['ValorFinalOrca'] = number_format(($data['orcatrata'][$i]['ValorFinalOrca']), 2, ',', '.');
 								$data['orcatrata'][$i]['ConcluidoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['ConcluidoOrca'], 'NS');
 								$data['orcatrata'][$i]['QuitadoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['QuitadoOrca'], 'NS');
+													
+								if($data['orcatrata'][$i]['AVAP'] == "V"){
+									$data['orcatrata'][$i]['AVAP'] = "NaLoja";
+								}elseif($data['orcatrata'][$i]['AVAP'] == "O"){
+									$data['orcatrata'][$i]['AVAP'] = "OnLine";
+								}elseif($data['orcatrata'][$i]['AVAP'] == "P"){
+									$data['orcatrata'][$i]['AVAP'] = "NaEntr";
+								}else{
+									$data['orcatrata'][$i]['AVAP'] = "Outros";
+								}
+
 								/*
 								echo '<br>';
 								echo "<pre>";
@@ -644,7 +666,8 @@ class Relatorio_print extends CI_Controller {
 								echo "</pre>";
 								*/
 								#### App_ProdutoVenda ####
-								$data['produto'][$i] = $this->Relatorio_print_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								//$data['produto'][$i] = $this->Relatorio_print_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['produto'][$i] = $this->Relatorio_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['produto'][$i]) > 0) {
 									$data['produto'][$i] = array_combine(range(1, count($data['produto'][$i])), array_values($data['produto'][$i]));
 									$data['count']['PCount'][$i] = count($data['produto'][$i]);
@@ -667,7 +690,8 @@ class Relatorio_print extends CI_Controller {
 								echo "</pre>";
 								*/		
 								#### App_Parcelas####
-								$data['parcelasrec'][$i] = $this->Relatorio_print_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								//$data['parcelasrec'][$i] = $this->Relatorio_print_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['parcelasrec'][$i] = $this->Relatorio_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['parcelasrec'][$i]) > 0) {
 									$data['parcelasrec'][$i] = array_combine(range(1, count($data['parcelasrec'][$i])), array_values($data['parcelasrec'][$i]));
 									$data['count']['PRCount'][$i] = count($data['parcelasrec'][$i]);
@@ -688,7 +712,8 @@ class Relatorio_print extends CI_Controller {
 								echo "</pre>";
 								*/
 								#### App_Procedimento ####
-								$data['procedimento'][$i] = $this->Relatorio_print_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								//$data['procedimento'][$i] = $this->Relatorio_print_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['procedimento'][$i] = $this->Relatorio_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['procedimento'][$i]) > 0) {
 									$data['procedimento'][$i] = array_combine(range(1, count($data['procedimento'][$i])), array_values($data['procedimento'][$i]));
 									$data['count']['PMCount'][$i] = count($data['procedimento'][$i]);
@@ -755,7 +780,8 @@ class Relatorio_print extends CI_Controller {
 				$data['Imprimir']['DataInicio4'] = $this->basico->mascara_data($_SESSION['FiltroCobrancas']['DataInicio4'], 'barras');
 				$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroCobrancas']['DataFim4'], 'barras');
 				
-				$data['pesquisa_query'] = $this->Relatorio_print_model->get_cobrancas($_SESSION['FiltroCobrancas'], TRUE);
+				//$data['pesquisa_query'] = $this->Relatorio_print_model->get_cobrancas($_SESSION['FiltroCobrancas'], TRUE);
+				$data['pesquisa_query'] = $this->Relatorio_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, TRUE, FALSE, FALSE, FALSE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
@@ -764,8 +790,9 @@ class Relatorio_print extends CI_Controller {
 					exit();
 				}else{
 
+					//$config['total_rows'] = $data['pesquisa_query'];
+					$config['total_rows'] = $data['pesquisa_query']->num_rows();
 					$config['base_url'] = base_url() . 'Relatorio_print/cobrancas_recibo/' . $id . '/';
-					$config['total_rows'] = $data['pesquisa_query'];
 					$config['per_page'] = 12;
 					$config["uri_segment"] = 4;
 					$config['reuse_query_string'] = TRUE;
@@ -803,7 +830,8 @@ class Relatorio_print extends CI_Controller {
 					$data['pagination'] = $this->pagination->create_links();		
 
 					#### App_OrcaTrata ####
-					$data['orcatrata'] = $this->Relatorio_print_model->get_cobrancas($_SESSION['FiltroCobrancas'], FALSE, $config['per_page'], ($page * $config['per_page']));
+					//$data['orcatrata'] = $this->Relatorio_print_model->get_cobrancas($_SESSION['FiltroCobrancas'], FALSE, $config['per_page'], ($page * $config['per_page']));
+					$data['orcatrata'] = $this->Relatorio_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
 					if (count($data['orcatrata']) > 0) {
 						$data['orcatrata'] = array_combine(range(1, count($data['orcatrata'])), array_values($data['orcatrata']));
 						$data['count']['POCount'] = count($data['orcatrata']);           
@@ -825,7 +853,8 @@ class Relatorio_print extends CI_Controller {
 								echo "</pre>";
 								*/
 								#### App_ProdutoVenda ####
-								$data['produto'][$i] = $this->Relatorio_print_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								//$data['produto'][$i] = $this->Relatorio_print_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['produto'][$i] = $this->Relatorio_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['produto'][$i]) > 0) {
 									$data['produto'][$i] = array_combine(range(1, count($data['produto'][$i])), array_values($data['produto'][$i]));
 									$data['count']['PCount'][$i] = count($data['produto'][$i]);
@@ -848,7 +877,8 @@ class Relatorio_print extends CI_Controller {
 								echo "</pre>";
 								*/		
 								#### App_Parcelas####
-								$data['parcelasrec'][$i] = $this->Relatorio_print_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								//$data['parcelasrec'][$i] = $this->Relatorio_print_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['parcelasrec'][$i] = $this->Relatorio_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['parcelasrec'][$i]) > 0) {
 									$data['parcelasrec'][$i] = array_combine(range(1, count($data['parcelasrec'][$i])), array_values($data['parcelasrec'][$i]));
 									$data['count']['PRCount'][$i] = count($data['parcelasrec'][$i]);
@@ -869,7 +899,8 @@ class Relatorio_print extends CI_Controller {
 								echo "</pre>";
 								*/
 								#### App_Procedimento ####
-								$data['procedimento'][$i] = $this->Relatorio_print_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								//$data['procedimento'][$i] = $this->Relatorio_print_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['procedimento'][$i] = $this->Relatorio_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['procedimento'][$i]) > 0) {
 									$data['procedimento'][$i] = array_combine(range(1, count($data['procedimento'][$i])), array_values($data['procedimento'][$i]));
 									$data['count']['PMCount'][$i] = count($data['procedimento'][$i]);

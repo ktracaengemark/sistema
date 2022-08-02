@@ -120,18 +120,24 @@ class Usuario extends CI_Controller {
 			$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
 			$data['select']['CompAgenda'] = $this->Basico_model->select_status_sn();
 			#$data['select']['idSis_Empresa'] = $this->Basico_model->select_empresa2();
-			if($_SESSION['AdminEmpresa']['Rede'] == "S"){	
+			if($_SESSION['AdminEmpresa']['Rede'] == "S"){
+				$data['visivel_nivel'] = '';
+				$data['visivel_comissao'] = '';
+				
 				$data['select']['Nivel'] = array(
-					'0' => '0 - Administrador',
-					'1' => '1 - Funcionario',
-					'2' => '2 - Revendedor',
+					'0' => 'Nivel 0 - Administrador',
+					'1' => 'Nivel 1 - Vendedor/Supervisor',
+					'2' => 'Nivel 2 - Vendedor',
 				);
 			}else{	
+				$data['visivel_nivel'] = 'display:none';
+				$data['visivel_comissao'] = 'display:none';
+				
 				$data['select']['Nivel'] = array(
-					'0' => '0 - Administrador',
-					'1' => '1 - Funcionario',
+					'0' => 'Nivel 0 - Administrador',
+					'1' => 'Nivel 1 - Vendedor',
 				);
-			}		
+			}
 			$data['titulo'] = 'Cadastrar Usuário';
 			$data['form_open_path'] = 'usuario/cadastrar';
 			$data['readonly'] = '';
@@ -533,16 +539,22 @@ class Usuario extends CI_Controller {
 				$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
 				$data['select']['CompAgenda'] = $this->Basico_model->select_status_sn();
 				#$data['select']['idSis_Empresa'] = $this->Basico_model->select_empresa2();
-				if($_SESSION['AdminEmpresa']['Rede'] == "S"){	
+				if($_SESSION['AdminEmpresa']['Rede'] == "S"){
+					$data['visivel_nivel'] = '';
+					$data['visivel_comissao'] = '';
+					
 					$data['select']['Nivel'] = array(
-						'0' => '0 - Administrador',
-						'1' => '1 - Funcionario',
-						'2' => '2 - Revendedor',
+						'0' => 'Nivel 0 - Administrador',
+						'1' => 'Nivel 1 - Vendedor/Supervisor',
+						'2' => 'Nivel 2 - Vendedor',
 					);
 				}else{	
+					$data['visivel_nivel'] = 'display:none';
+					$data['visivel_comissao'] = 'display:none';
+					
 					$data['select']['Nivel'] = array(
-						'0' => '0 - Administrador',
-						'1' => '1 - Funcionario',
+						'0' => 'Nivel 0 - Administrador',
+						'1' => 'Nivel 1 - Vendedor',
 					);
 				}	
 				$data['titulo'] = 'Editar Usuário';

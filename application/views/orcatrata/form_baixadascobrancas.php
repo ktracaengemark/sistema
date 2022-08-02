@@ -17,26 +17,18 @@
 								<div class="col-md-12 ">
 									<div class="col-md-2 text-left">
 										<br>
-										<?php if ($titulo == "Receitas" ) { ?>
-											<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>relatorio/cobrancas_pag" role="button">
-												<span class="glyphicon glyphicon-pencil"></span> Parcelas das <?php echo $titulo; ?> 
-											</a>							
-										<?php } else if($titulo == "Despesas"){ ?>
-											<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>relatorio_pag/debitos_pag" role="button">
-												<span class="glyphicon glyphicon-pencil"></span> Parcelas das <?php echo $titulo; ?>
-											</a>
-										<?php } ?>
-										
-										
+										<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>relatorio/cobrancas_pag" role="button">
+											<span class="glyphicon glyphicon-pencil"></span> Parcelas das <?php echo $titulo; ?> 
+										</a>
 									</div>
 									<div class="col-md-2 text-left">	
 										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<?php echo $_SESSION['Total_Rows'];?> Resultados
+											<?php echo $_SESSION['FiltroCobrancas']['Total_Rows'];?> Resultados
 										</a>
 									</div>
 									<div class="col-md-6 text-left">
-										<?php echo $_SESSION['Pagination']; ?>
+										<?php echo $_SESSION['FiltroCobrancas']['Pagination']; ?>
 									</div>
 								</div>
 							</div>
@@ -49,7 +41,7 @@
 									<input type="hidden" name="PRCount" id="PRCount" value="<?php echo $count['PRCount']; ?>"/>
 
 									<?php
-									$linha =  $_SESSION['Per_Page']*$_SESSION['Pagina'];
+									$linha =  $_SESSION['FiltroCobrancas']['Per_Page']*$_SESSION['FiltroCobrancas']['Pagina'];
 									for ($i=1; $i <= $count['PRCount']; $i++) {
 										$contagem = ($linha + $i);
 									?>

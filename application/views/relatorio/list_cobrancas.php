@@ -7,7 +7,8 @@
 					<span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
 					<input type="text" class="form-control" disabled aria-label="Contagem" value="<?php echo $report->num_rows(); ?> / <?php echo $total_rows; ?>">
 				</div>
-			</div>	
+			</div>
+			<!--
 			<div class="col-md-2">
 				<label for="DataFim">
 					<?php if($metodo == 2) {?>
@@ -18,7 +19,7 @@
 				</label>
 				<div class="input-group">
 					<span class="input-group-addon">R$</span>
-					<input type="text" class="form-control" disabled aria-label="Total Recebido" value="<?php echo $report->soma->somarecebido ?>">
+					<input type="text" class="form-control" disabled aria-label="Total Recebido" value="<?php #echo $report->soma->somarecebido ?>">
 				</div>
 			</div>
 			<div class="col-md-2">
@@ -31,9 +32,10 @@
 				</label>
 				<div class="input-group">
 					<span class="input-group-addon">R$</span>
-					<input type="text" class="form-control" disabled aria-label="Total a Receber" value="<?php echo $report->soma->balanco ?>">
+					<input type="text" class="form-control" disabled aria-label="Total a Receber" value="<?php #echo $report->soma->balanco ?>">
 				</div>
 			</div>
+			-->
 			<div class="col-md-2">
 				<label for="DataFim"><?php #echo $titulo1; ?> Total:</label>
 				<div class="input-group">
@@ -65,7 +67,7 @@
 			<?php } ?>
 			<div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 text-left">
 				<label>Excel</label><br>
-				<a href="<?php echo base_url() . 'Relatorio_print/cobrancas_excel/2'; ?>">
+				<a href="<?php echo base_url() . 'Relatorio/cobrancas_excel/2'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
 						<span class="glyphicon glyphicon-print"></span>Total
 					</button>
@@ -73,7 +75,7 @@
 			</div>
 			<div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 text-left">
 				<label>Excel</label><br>
-				<a href="<?php echo base_url() . 'Relatorio_print/cobrancas_excel/3'; ?>">
+				<a href="<?php echo base_url() . 'Relatorio/cobrancas_excel/3'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
 						<span class="glyphicon glyphicon-print"></span>Parcial
 					</button>

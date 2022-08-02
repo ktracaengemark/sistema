@@ -1282,8 +1282,8 @@ class Relatorio_pag extends CI_Controller {
 		$data['editar'] = 1;
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
-		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
+		$data['imprimirlista'] = 'Relatorio/cobrancas_lista/';
+		$data['imprimirrecibo'] = 'Relatorio/cobrancas_recibo/';
 		$data['edit'] = 'Orcatrata/baixadacobranca/';
 		$data['alterarparc'] = 'Orcatrata/baixadascobrancas/';	
 		$data['paginacao'] = 'S';

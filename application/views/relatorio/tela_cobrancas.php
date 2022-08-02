@@ -60,7 +60,7 @@
 									</div>
 									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-left">
 										<label>Excel</label><br>
-										<a href="<?php echo base_url() . 'Relatorio_print/cobrancas_excel/1'; ?>">
+										<a href="<?php echo base_url() . 'Relatorio/cobrancas_excel/1'; ?>">
 											<button type='button' class='btn btn-md btn-success btn-block'>
 												S/<span class="glyphicon glyphicon-filter"></span>
 											</button>
@@ -360,6 +360,21 @@
 										<?php
 										foreach ($select['Produtos'] as $key => $row) {
 											if ($query['Produtos'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
+								<div class="col-md-3">
+									<label for="Parcelas">Parcelas:</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+											id="Parcelas" name="Parcelas">
+										<?php
+										foreach ($select['Parcelas'] as $key => $row) {
+											if ($query['Parcelas'] == $key) {
 												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 											} else {
 												echo '<option value="' . $key . '">' . $row . '</option>';

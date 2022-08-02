@@ -58,7 +58,7 @@
 												</div>
 												<div class="form-group">
 													<div class="row">
-														<div class="col-md-3">	
+														<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 mb-3" style="<?php echo $visivel_nivel; ?>">	
 															<label for="Nivel">Nivel:</label>
 															<select data-placeholder="Selecione uma opção..." class="form-control Chosen" <?php echo $readonly; ?> readonly="" id="Nivel" name="Nivel">
 																<option value="">-- Sel. Nivel --</option>
@@ -73,6 +73,14 @@
 																?>
 															</select>
 															<?php echo form_error('Nivel'); ?>
+														</div>
+														<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 mb-3" style="<?php echo $visivel_comissao; ?>">
+															<label for="Comissao">Comissão Supervisor:</label><br>
+															<div class="input-group" id="txtHint">
+																<span class="input-group-addon ">R$</span>
+																<input type="text" class="form-control Valor" id="Comissao" maxlength="10" placeholder="0,00" 
+																	  name="Comissao" value="<?php echo $query['Comissao']; ?>">
+															</div>
 														</div>
 														<div class="col-md-3">
 															<div class="row">
@@ -153,14 +161,6 @@
 																</div>
 															</div>
 															
-														</div>
-														<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 mb-3">
-															<label for="Comissao">Comissão:</label><br>
-															<div class="input-group" id="txtHint">
-																<span class="input-group-addon ">R$</span>
-																<input type="text" class="form-control Valor" id="Comissao" maxlength="10" placeholder="0,00" 
-																	  name="Comissao" value="<?php echo $query['Comissao']; ?>">
-															</div>
 														</div>
 														<div class="col-md-3">
 															<label for="Permissao">Acesso às Agendas:*</label>

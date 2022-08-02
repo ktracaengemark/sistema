@@ -18199,8 +18199,6 @@ class Orcatrata extends CI_Controller {
 			
 			$data['count']['PRCount'] = $j - 1;
 
-			//$this->load->library('pagination');
-
 			$data['Pesquisa'] = '';
 
 			$data['somatotal'] = 0;
@@ -18216,8 +18214,8 @@ class Orcatrata extends CI_Controller {
 					exit();
 					
 				}else{
-					
-					$data['pesquisa_query'] = $this->Orcatrata_model->get_baixadasreceitas($_SESSION['FiltroReceitas'], TRUE);
+
+					$data['pesquisa_query'] = $this->Relatorio_model->list_receitas($_SESSION['FiltroReceitas'], FALSE, TRUE, FALSE, FALSE, FALSE);
 			
 					if($data['pesquisa_query'] === FALSE){
 						
@@ -18260,13 +18258,15 @@ class Orcatrata extends CI_Controller {
 						$this->pagination->initialize($config);
 						
 						$_SESSION['FiltroReceitas']['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-						
+								
+						$_SESSION['FiltroReceitas']['Pagina_atual'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"])) : 0;
+								
 						$_SESSION['FiltroReceitas']['Per_Page'] = $data['per_page'] = $config['per_page'];
 						
 						$_SESSION['FiltroReceitas']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 						
 						#### App_OrcaTrata ####
-						$data['orcamento'] = $this->Orcatrata_model->get_baixadasreceitas($_SESSION['FiltroReceitas'], FALSE, $_SESSION['FiltroReceitas']['Per_Page'], ($_SESSION['FiltroReceitas']['Pagina'] * $_SESSION['FiltroReceitas']['Per_Page']));
+						$data['orcamento'] = $this->Relatorio_model->list_receitas($_SESSION['FiltroReceitas'], FALSE, TRUE, $_SESSION['FiltroReceitas']['Per_Page'], ($_SESSION['FiltroReceitas']['Pagina'] * $_SESSION['FiltroReceitas']['Per_Page']), TRUE);
 						
 						if (count($data['orcamento']) > 0) {
 							$data['orcamento'] = array_combine(range(1, count($data['orcamento'])), array_values($data['orcamento']));
@@ -18331,7 +18331,7 @@ class Orcatrata extends CI_Controller {
 				
 				$data['titulo'] = 'Baixa das Receitas';
 				$data['form_open_path'] = 'orcatrata/baixadasreceitas';
-				$data['relatorio'] = 'relatorio_pag/receitas_pag/';
+				$data['relatorio'] = 'relatorio/receitas_pag/';
 				$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
 				$data['nomeusuario'] = 'NomeColaborador';
 				$data['readonly'] = '';
@@ -18363,7 +18363,7 @@ class Orcatrata extends CI_Controller {
 				$data['timepicker'] = 'TimePicker';
 				
 				$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-				#### Sis_Empresa ####
+
 				$this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'trim');
 				//$this->form_validation->set_rules('Cadastrar', 'Após Recarregar, Retorne a chave para a posição "Sim"', 'trim|valid_aprovado');
 
@@ -18385,7 +18385,8 @@ class Orcatrata extends CI_Controller {
 						
 						////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
 						#### App_OrcaTrata ####
-						$data['update']['orcamento']['anterior'] = $this->Orcatrata_model->get_baixadasreceitas($_SESSION['FiltroReceitas'], FALSE, $_SESSION['FiltroReceitas']['Per_Page'], ($_SESSION['FiltroReceitas']['Pagina'] * $_SESSION['FiltroReceitas']['Per_Page']));	
+						$data['update']['orcamento']['anterior'] = $this->Relatorio_model->list_receitas($_SESSION['FiltroReceitas'], FALSE, TRUE, $_SESSION['FiltroReceitas']['Per_Page'], ($_SESSION['FiltroReceitas']['Pagina'] * $_SESSION['FiltroReceitas']['Per_Page']), TRUE);
+						
 						if (isset($data['orcamento']) || (!isset($data['orcamento']) && isset($data['update']['orcamento']['anterior']) ) ) {
 
 							if (isset($data['orcamento']))
@@ -18516,8 +18517,8 @@ class Orcatrata extends CI_Controller {
 						$data['msg'] = '?m=1';
 						
 						unset($_SESSION['FiltroReceitas']['SomaTotal']);
-						
-						redirect(base_url() . 'orcatrata/baixadasreceitas/' . $_SESSION['log']['idSis_Empresa'] . $data['msg']);
+
+						redirect(base_url() . 'orcatrata/baixadasreceitas/' . $_SESSION['log']['idSis_Empresa'] . '/' . $_SESSION['FiltroReceitas']['Pagina_atual'] . $data['msg']);
 
 						exit();	
 					}
@@ -21120,8 +21121,8 @@ class Orcatrata extends CI_Controller {
 					exit();
 					
 				}else{
-						
-					$data['pesquisa_query'] = $this->Orcatrata_model->get_baixadascobrancas($_SESSION['FiltroCobrancas'], TRUE);
+
+					$data['pesquisa_query'] = $this->Relatorio_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, TRUE, FALSE, FALSE, FALSE);
 					
 					if($data['pesquisa_query'] === FALSE){
 						
@@ -21130,8 +21131,8 @@ class Orcatrata extends CI_Controller {
 						exit();
 					}else{
 
-						$config['base_url'] = base_url() . 'Orcatrata/baixadascobrancas/' . $id . '/';							
-						$config['total_rows'] = $data['pesquisa_query'];
+						$config['total_rows'] = $data['pesquisa_query']->num_rows();
+						$config['base_url'] = base_url() . 'Orcatrata/baixadascobrancas/' . $id . '/';
 						$config['per_page'] = 19;
 						$config["uri_segment"] = 4;
 						$config['reuse_query_string'] = TRUE;
@@ -21153,22 +21154,24 @@ class Orcatrata extends CI_Controller {
 						$config['last_tagl_close'] = "</li>";		   
 						
 						if($config['total_rows'] >= 1){
-							$_SESSION['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
+							$_SESSION['FiltroCobrancas']['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
 						}else{
-							$_SESSION['Total_Rows'] = $data['total_rows'] = 0;
+							$_SESSION['FiltroCobrancas']['Total_Rows'] = $data['total_rows'] = 0;
 						}
 						
 						$this->pagination->initialize($config);
 						
-						$_SESSION['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+						$_SESSION['FiltroCobrancas']['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+								
+						$_SESSION['FiltroCobrancas']['Pagina_atual'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"])) : 0;
+								
+						$_SESSION['FiltroCobrancas']['Per_Page'] = $data['per_page'] = $config['per_page'];
 						
-						$_SESSION['Per_Page'] = $data['per_page'] = $config['per_page'];
-						
-						$_SESSION['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
+						$_SESSION['FiltroCobrancas']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 
 						#### App_Parcelas ####
-						$data['parcelasrec'] = $this->Orcatrata_model->get_baixadascobrancas($_SESSION['FiltroCobrancas'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
-
+						$data['parcelasrec'] = $this->Relatorio_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, TRUE, $_SESSION['FiltroCobrancas']['Per_Page'], ($_SESSION['FiltroCobrancas']['Pagina'] * $_SESSION['FiltroCobrancas']['Per_Page']), TRUE);
+						
 						if (count($data['parcelasrec']) > 0) {
 							
 							$data['parcelasrec'] = array_combine(range(1, count($data['parcelasrec'])), array_values($data['parcelasrec']));
@@ -21199,15 +21202,7 @@ class Orcatrata extends CI_Controller {
 										'Quitado' . $j => $this->basico->radio_checked($data['parcelasrec'][$j]['Quitado'], 'Quitado' . $j, 'NS'),
 									);
 									($data['parcelasrec'][$j]['Quitado'] == 'S') ? $data['div']['Quitado' . $j] = '' : $data['div']['Quitado' . $j] = 'style="display: none;"';
-									
-									/*        
-									echo '<br>';
-									echo "<pre>";
-									print_r($data['parcelasrec'][$j]['Modalidade']);
-									echo '<br>';
-									print_r($data['readonly'][$j]);
-									echo "</pre>";
-									*/	
+										
 								}
 								//exit ();
 							}
@@ -21277,7 +21272,7 @@ class Orcatrata extends CI_Controller {
 						
 				#run form validation
 				if ($this->form_validation->run() === FALSE) {
-					$this->load->view('orcatrata/form_baixadasparcelas', $data);
+					$this->load->view('orcatrata/form_baixadascobrancas', $data);
 				} else {
 
 					if($this->Basico_model->get_dt_validade() === FALSE){
@@ -21296,8 +21291,7 @@ class Orcatrata extends CI_Controller {
 						$data['query']['DataPagamento'] = $this->basico->mascara_data($data['query']['DataPagamento'], 'mysql');  
 
 						#### App_ParcelasRec ####
-						
-						$data['update']['parcelasrec']['anterior'] = $this->Orcatrata_model->get_baixadascobrancas($_SESSION['FiltroCobrancas'], FALSE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']));
+						$data['update']['parcelasrec']['anterior'] = $this->Relatorio_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, TRUE, $_SESSION['FiltroCobrancas']['Per_Page'], ($_SESSION['FiltroCobrancas']['Pagina'] * $_SESSION['FiltroCobrancas']['Per_Page']), TRUE);
 						
 						if (isset($data['parcelasrec']) || (!isset($data['parcelasrec']) && isset($data['update']['parcelasrec']['anterior']) ) ) {
 
@@ -21312,9 +21306,7 @@ class Orcatrata extends CI_Controller {
 							$max = count($data['update']['parcelasrec']['alterar']);
 							
 							for($j=0; $j<$max; $j++) {
-								
-								//$data['orcatrata'] = $this->Orcatrata_model->get_orcatrata_baixa($data['update']['parcelasrec']['alterar'][$j]['idApp_OrcaTrata']);
-								
+
 								if(!$data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'] || $data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'] == "0" || empty($data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'])){
 									$data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'] = $_SESSION['Parcelasrec'][$j]['FormaPagamento'];
 								}
@@ -21396,23 +21388,7 @@ class Orcatrata extends CI_Controller {
 												$data['update_cashback']['id_cliente'][$j]['ValidadeCashBack'] = date('Y-m-d', strtotime('+' . $_SESSION['Empresa']['PrazoCashBackEmpresa'] . ' day'));
 												
 												$data['update_cashback']['id_cliente']['bd'][$j] = $this->Cliente_model->update_cliente($data['update_cashback']['id_cliente'][$j], $data['ID_Orcamento'][$j]['idApp_Cliente']);
-												/*
-												echo '<br>';
-												echo "<pre>";
-												echo '<br>';
-												//print_r($data['orcatrata']);
-												echo '<br>';
-												print_r($data['ID_Orcamento'][$j]);
-												echo '<br>';
-												print_r($cashback_antigo_cliente[$j]);
-												echo '<br>';
-												print_r($cashback_produtos[$j]);
-												echo '<br>';
-												print_r($data['update_cashback']['id_cliente'][$j]['CashBackCliente']);
-												echo '<br>';
-												print_r($data['update_cashback']['id_cliente']['bd'][$j]);
-												echo "</pre>";									
-												*/
+												
 												unset($cashback_antigo_cliente[$j]);
 												unset($cashback_produtos[$j]);
 											
@@ -21450,55 +21426,13 @@ class Orcatrata extends CI_Controller {
 								
 								$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['update']['parcelasrec']['alterar'][$j]['idApp_OrcaTrata']);					
 								
-								/*
-								echo '<br>';
-								echo "<pre>";
-								print_r($data['update']['parcelasrec']['alterar'][$j]['idApp_Parcelas']);
-								echo '<br>';
-								print_r($data['update']['parcelasrec']['alterar'][$j]['idApp_OrcaTrata']);
-								echo '<br>';
-								print_r($max_parcela);
-								echo '<br>';
-								print_r($max_produto);
-								echo '<br>';
-								print_r($data['orcatrata']['CombinadoFrete']);
-								echo '<br>';
-								print_r($data['orcatrata']['AprovadoOrca']);
-								echo '<br>';
-								print_r($data['orcatrata']['ProntoOrca']);
-								echo '<br>';
-								print_r($data['orcatrata']['EnviadoOrca']);
-								echo '<br>';
-								print_r($data['orcatrata']['QuitadoOrca']);
-								echo '<br>';
-								print_r($data['orcatrata']['ConcluidoOrca']);
-								echo '<br>';
-								print_r($data['orcatrata']['FinalizadoOrca']);
-								echo '<br>';
-								echo "</pre>";
-								echo '<br>';
-								
-								echo "<pre>";
-								echo '<br>';
-								print_r($data['update']['parcelasrec']['posterior']);
-								echo '<br>';
-								print_r($data['update']['produto']['posterior']);
-								echo "</pre>";
-								
-								echo '<br>';
-								echo "<pre>";
-								echo '<br>';
-								print_r($data['orcatrata']);
-								echo "</pre>";
-								*/
 							}
 	
 						}
 
 						$data['msg'] = '?m=1';
 						
-						redirect(base_url() . 'orcatrata/baixadascobrancas/' . $_SESSION['log']['idSis_Empresa'] . $data['msg']);
-
+						redirect(base_url() . 'orcatrata/baixadascobrancas/' . $_SESSION['log']['idSis_Empresa'] . '/' . $_SESSION['FiltroCobrancas']['Pagina_atual'] . $data['msg']);
 						exit();
 						
 					}

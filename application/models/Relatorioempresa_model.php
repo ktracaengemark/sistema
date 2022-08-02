@@ -2155,14 +2155,24 @@ class Relatorioempresa_model extends CI_Model {
         } else {
 
             foreach ($query->result() as $row) {
-				if($row->Nivel == 0){
-					$row->Nivel = "0 - Administrador";
-				}elseif($row->Nivel == 1){
-					$row->Nivel = "1 - Funcionario";
-				}elseif($row->Nivel == 2){
-					$row->Nivel = "2 - Revendedor";
+				if($_SESSION['AdminEmpresa']['Rede'] == "S"){
+					if($row->Nivel == 0){
+						$row->Nivel = "Nivel 0 - Administrador";
+					}elseif($row->Nivel == 1){
+						$row->Nivel = "Nivel 1 - Supervisor/Vendedor";
+					}elseif($row->Nivel == 2){
+						$row->Nivel = "Nivel 2 - Vendedor";
+					}else{
+						$row->Nivel = "N.I.";
+					}
 				}else{
-					$row->Nivel = "N.I.";
+					if($row->Nivel == 0){
+						$row->Nivel = "Nivel 0 - Administrador";
+					}elseif($row->Nivel == 1){
+						$row->Nivel = "Nivel 1 - Funcionario";
+					}else{
+						$row->Nivel = "N.I.";
+					}
 				}
             }
 
