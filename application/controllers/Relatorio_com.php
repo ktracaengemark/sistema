@@ -1337,7 +1337,7 @@ class Relatorio_com extends CI_Controller {
 			$_SESSION['FiltroComissaoAss']['metodo'] = $data['metodo'];
 			$_SESSION['FiltroComissaoAss']['idTab_TipoRD'] = $data['TipoRD'];
 
-			$data['pesquisa_query'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'],TRUE, TRUE);
+			$data['pesquisa_query'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'],FALSE, TRUE);
 			
 			if($data['pesquisa_query'] === FALSE){
 				
@@ -1386,7 +1386,7 @@ class Relatorio_com extends CI_Controller {
 			
 				$data['linha'] = $page * $config['per_page'];
 
-				$data['report'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'], TRUE, FALSE, $config['per_page'], $data['linha']);		
+				$data['report'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'], FALSE, FALSE, $config['per_page'], $data['linha']);		
 
 				$_SESSION['FiltroComissaoAss']['Limit'] = $data['per_page'];
 				$_SESSION['FiltroComissaoAss']['Start'] = $data['linha'];
@@ -1444,7 +1444,7 @@ class Relatorio_com extends CI_Controller {
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'relatorio_com/comissaoass/';
 
-		$data['pesquisa_query'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'],TRUE, TRUE);
+		$data['pesquisa_query'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'],FALSE, TRUE);
 		
 		if($data['pesquisa_query'] === FALSE){
 			
@@ -1497,7 +1497,7 @@ class Relatorio_com extends CI_Controller {
 			$_SESSION['FiltroComissaoAss']['Limit'] = $data['per_page'];
 			$_SESSION['FiltroComissaoAss']['Start'] = $data['linha'];
 
-			$data['report'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'], TRUE, FALSE, $config['per_page'], $data['linha']);
+			$data['report'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'], FALSE, FALSE, $config['per_page'], $data['linha']);
 						
 			$data['pagination'] = $this->pagination->create_links();
 
@@ -1546,7 +1546,7 @@ class Relatorio_com extends CI_Controller {
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'relatorio_com/comissaoass/';
 
-		$data['pesquisa_query'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'],TRUE, TRUE);
+		$data['pesquisa_query'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'],FALSE, TRUE);
 		
 		if($data['pesquisa_query'] === FALSE){
 			
@@ -1595,7 +1595,7 @@ class Relatorio_com extends CI_Controller {
 			
 			$data['per_page'] = $config['per_page'];
 			
-			$data['report'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+			$data['report'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']));			
 			
 			$data['pagination'] = $this->pagination->create_links();
 
@@ -1727,8 +1727,9 @@ class Relatorio_com extends CI_Controller {
 						
 					}else{
 						
-						$data['pesquisa_query'] = $this->Orcatrata_model->get_baixadacomissaoass($_SESSION['FiltroComissaoAss'], TRUE, FALSE, FALSE, FALSE);
-				
+						//$data['pesquisa_query'] = $this->Orcatrata_model->get_baixadacomissaoass($_SESSION['FiltroComissaoAss'], TRUE, FALSE, FALSE, FALSE);
+						$data['pesquisa_query'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'], TRUE, TRUE, FALSE, FALSE, FALSE);
+					
 						if($data['pesquisa_query'] === FALSE){
 							$data['msg'] = '?m=4';
 							redirect(base_url() . 'relatorio_com/comissaoass' . $data['msg']);
@@ -1785,7 +1786,9 @@ class Relatorio_com extends CI_Controller {
 								$_SESSION['FiltroComissaoAss']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 
 								#### App_Parcelas ####
-								$data['orcamento'] = $this->Orcatrata_model->get_baixadacomissaoass($_SESSION['FiltroComissaoAss'], FALSE, $_SESSION['FiltroComissaoAss']['Per_Page'], ($_SESSION['FiltroComissaoAss']['Pagina'] * $_SESSION['FiltroComissaoAss']['Per_Page']), FALSE);
+								//$data['orcamento'] = $this->Orcatrata_model->get_baixadacomissaoass($_SESSION['FiltroComissaoAss'], FALSE, $_SESSION['FiltroComissaoAss']['Per_Page'], ($_SESSION['FiltroComissaoAss']['Pagina'] * $_SESSION['FiltroComissaoAss']['Per_Page']), FALSE);
+								$data['orcamento'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'], TRUE, FALSE, $_SESSION['FiltroComissaoAss']['Per_Page'], ($_SESSION['FiltroComissaoAss']['Pagina'] * $_SESSION['FiltroComissaoAss']['Per_Page']), TRUE);
+								
 								if (count($data['orcamento']) > 0) {
 									$data['orcamento'] = array_combine(range(1, count($data['orcamento'])), array_values($data['orcamento']));
 									$_SESSION['FiltroComissaoAss']['Contagem'] = $data['count']['PRCount'] = count($data['orcamento']);
@@ -1914,7 +1917,10 @@ class Relatorio_com extends CI_Controller {
 						if($data['query']['QuitadoComissao'] == 'N'){
 							
 							#### App_ParcelasRec ####
-							$data['update']['orcamento']['anterior'] = $this->Orcatrata_model->get_baixadacomissaoass($_SESSION['FiltroComissaoAss'], FALSE, $_SESSION['FiltroComissaoAss']['Per_Page'], ($_SESSION['FiltroComissaoAss']['Pagina'] * $_SESSION['FiltroComissaoAss']['Per_Page']), FALSE);
+							//$data['update']['orcamento']['anterior'] = $this->Orcatrata_model->get_baixadacomissaoass($_SESSION['FiltroComissaoAss'], FALSE, $_SESSION['FiltroComissaoAss']['Per_Page'], ($_SESSION['FiltroComissaoAss']['Pagina'] * $_SESSION['FiltroComissaoAss']['Per_Page']), FALSE);
+							$data['update']['orcamento']['anterior'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'], TRUE, FALSE, $_SESSION['FiltroComissaoAss']['Per_Page'], ($_SESSION['FiltroComissaoAss']['Pagina'] * $_SESSION['FiltroComissaoAss']['Per_Page']), TRUE);
+
+							
 							if (isset($data['orcamento']) || (!isset($data['orcamento']) && isset($data['update']['orcamento']['anterior']) ) ) {
 
 								if (isset($data['orcamento']))
@@ -2027,7 +2033,8 @@ class Relatorio_com extends CI_Controller {
 								
 								/////// Corro a lista com o filtro da sessão colocando o id_Comissao em cada orcamento
 								
-								$data['update']['orcamentos'] = $this->Orcatrata_model->get_baixadacomissaoass($_SESSION['FiltroComissaoAss'], FALSE, FALSE, FALSE, TRUE);// pega as OS que tem essa repeticao			
+								//$data['update']['orcamentos'] = $this->Orcatrata_model->get_baixadacomissaoass($_SESSION['FiltroComissaoAss'], FALSE, FALSE, FALSE, TRUE);// pega as OS que tem essa repeticao			
+								$data['update']['orcamentos'] = $this->Relatorio_model->list_comissaoass($_SESSION['FiltroComissaoAss'], TRUE, TRUE, FALSE, FALSE, TRUE);
 								
 								$max = count($data['update']['orcamentos']);
 								

@@ -23,6 +23,12 @@
 									</div>
 									<div class="col-md-2 text-left">	
 										<br>
+										<a type= "button" class="btn btn-md btn-info btn-block" type="button" href="<?php echo base_url() . $imprimir; ?>">
+											<span class="glyphicon glyphicon-list"></span> Lista
+										</a>
+									</div>
+									<div class="col-md-2 text-left">	
+										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
 											<?php echo $_SESSION['FiltroComissaoAss']['Contagem'];?> / <?php echo $_SESSION['FiltroComissaoAss']['Total_Rows'];?> Resultados
 										</a>
@@ -35,12 +41,6 @@
 									</div>
 									<div class="col-md-4 text-left">
 										<?php echo $_SESSION['FiltroComissaoAss']['Pagination']; ?>
-									</div>
-									<div class="col-md-2 text-left">	
-										<br>
-										<a type= "button" class="btn btn-md btn-info btn-block" type="button" href="<?php echo base_url() . $imprimir; ?>">
-											<span class="glyphicon glyphicon-list"></span> Lista
-										</a>
 									</div>
 								</div>
 							</div>	
