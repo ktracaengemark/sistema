@@ -23,7 +23,7 @@
 								<label for="DataFim">Com: Parc / Total</label>
 								<div class="input-group">
 									<span class="input-group-addon">R$</span>
-									<input type="text" class="form-control" disabled aria-label="Comissao" value="<?php echo $report->soma->somacomissaoass ?> / <?php echo $pesquisa_query->soma2->somacomissaoass2 ?>">
+									<input type="text" class="form-control" disabled aria-label="Comissao" value="<?php echo $report->soma->somacomissaofunc ?> / <?php echo $pesquisa_query->soma2->somacomissaofunc2 ?>">
 								</div>
 							</div>
 						<?php } ?>
@@ -56,7 +56,7 @@
 					<?php } ?>
 					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
 						<label>Excel</label><br>
-						<a href="<?php echo base_url() . 'Relatorio/comissaoass_excel/2'; ?>">
+						<a href="<?php echo base_url() . 'Relatorio_com/comissaofunc_excel/2'; ?>">
 							<button type='button' class='btn btn-md btn-success btn-block'>
 								C/<span class="glyphicon glyphicon-filter"></span>
 							</button>
@@ -76,7 +76,7 @@
 							<?php } ?>
 							<?php 
 								if(isset($total_rows) && $total_rows >= 1) { 
-									if(isset($_SESSION['FiltroComissaoAss']['NomeAssociado']) && $_SESSION['FiltroComissaoAss']['NomeAssociado'] != 0){
+									if(isset($_SESSION['FiltroComissaoFunc']['NomeUsuario']) && $_SESSION['FiltroComissaoFunc']['NomeUsuario'] != 0){
 										$exibir_baixa = TRUE;
 									}else{
 										$exibir_baixa = FALSE;
@@ -125,16 +125,20 @@
 						<th class="active">Pago</th>
 						<th class="active">Final.</th>
 						<th class="active">Canc.</th>
-						<th class="active">Pagam.</th>
-						<th class="active">Form.Pag.</th>
 						<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
 							<th class="active">Prd/Srv</th>
 						<?php } ?>	
-						<th class="active">Associado</th>
-						<th class="active">Comissao</th>
+						<th class="active">Supervisor</th>
+						<th class="active">ComFunc</th>
 						<th class="active">Paga?</th>
 						<th class="active">DataPago</th>
-						<th class="active">Recibo</th>	
+						<th class="active">RecFunc</th>
+						<th class="active">Func/Vend</th>
+						<th class="active">Ass/Vend</th>
+						<th class="active">ComVend</th>
+						<th class="active">Paga?</th>
+						<th class="active">DataPago</th>
+						<th class="active">RecVend</th>	
 					</tr>
 				</thead>
 				<tbody>
@@ -169,15 +173,19 @@
 							<?php echo '<td>' . $row['ConcluidoOrca'] . '</td>';?>	
 							<?php echo '<td>' . $row['QuitadoOrca'] . '</td>';?>	
 							<?php echo '<td>' . $row['FinalizadoOrca'] . '</td>';?>	
-							<?php echo '<td>' . $row['CanceladoOrca'] . '</td>';?>
-							<?php echo '<td>' . $row['AVAP'] . '</td>';?>	
-							<?php echo '<td>' . $row['FormaPag'] . '</td>';?>
+							<?php echo '<td>' . $row['CanceladoOrca'] . '</td>';?>	
 							<?php if($_SESSION['Usuario']['Rel_Pag'] == 'S') { ?>
 								<td><?php echo $row['ValorRestanteOrca'] ?></td>
 							<?php } ?>
-							<?php echo '<td>' . $row['NomeAssociado'] . '</td>';?>
-							<?php echo '<td>' . $row['ValorComissaoAssoc'] . '</td>';?>
+							<?php echo '<td>' . $row[$nomeusuario] . '</td>';?>
+							<?php echo '<td>' . $row['ValorComissaoFunc'] . '</td>';?>
 							<?php echo '<td>' . $row[$status] . '</td>';?>
+							<?php echo '<td>' . $row['DataPagoComissaoFunc'] . '</td>';?>
+							<?php echo '<td>' . $row['id_ComissaoFunc'] . '</td>';?>
+							<?php echo '<td>' . $row['id_Funcionario'] . '</td>';?>
+							<?php echo '<td>' . $row['id_Associado'] . '</td>';?>
+							<?php echo '<td>' . $row['ValorComissao'] . '</td>';?>
+							<?php echo '<td>' . $row['StatusComissaoOrca'] . '</td>';?>
 							<?php echo '<td>' . $row['DataPagoComissaoOrca'] . '</td>';?>
 							<?php echo '<td>' . $row['id_Comissao'] . '</td>';?>	
 						</tr>

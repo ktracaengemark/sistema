@@ -23,24 +23,24 @@
 									</div>
 									<div class="col-md-2 text-left">	
 										<br>
-										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<?php echo $_SESSION['FiltroComissaoFunc']['Contagem'];?> / <?php echo $_SESSION['FiltroComissaoFunc']['Total_Rows'];?> Resultados
-										</a>
-									</div>
-									<div class="col-md-2 text-left">	
-										<br>
-										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<span class="glyphicon glyphicon-usd"></span>R$ <?php if(isset($_SESSION['FiltroComissaoFunc']['SomaTotal'])) echo $_SESSION['FiltroComissaoFunc']['SomaTotal']; ?> / <?php echo $_SESSION['FiltroComissaoFunc']['ComissaoTotal'] ?>
-										</a>
-									</div>
-									<div class="col-md-4 text-left">
-										<?php echo $_SESSION['FiltroComissaoFunc']['Pagination']; ?>
-									</div>
-									<div class="col-md-2 text-left">	
-										<br>
 										<a type= "button" class="btn btn-md btn-info btn-block" type="button" href="<?php echo base_url() . $imprimir; ?>">
 											<span class="glyphicon glyphicon-list"></span> Lista
 										</a>
+									</div>
+									<div class="col-md-2 text-left">	
+										<br>
+										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
+											<?php echo $_SESSION['FiltroComissao']['Contagem'];?> / <?php echo $_SESSION['FiltroComissao']['Total_Rows'];?> Resultados
+										</a>
+									</div>
+									<div class="col-md-2 text-left">	
+										<br>
+										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
+											<span class="glyphicon glyphicon-usd"></span>R$ <?php if(isset($_SESSION['FiltroComissao']['SomaTotal'])) echo $_SESSION['FiltroComissao']['SomaTotal']; ?> / <?php echo $_SESSION['FiltroComissao']['ComissaoTotal'] ?>
+										</a>
+									</div>
+									<div class="col-md-4 text-left">
+										<?php echo $_SESSION['FiltroComissao']['Pagination']; ?>
 									</div>
 								</div>
 							</div>	
@@ -60,7 +60,7 @@
 											<div class="input_fields_wrap21">
 
 											<?php
-											$linha =  $_SESSION['FiltroComissaoFunc']['Per_Page']*$_SESSION['FiltroComissaoFunc']['Pagina'];
+											$linha =  $_SESSION['FiltroComissao']['Per_Page']*$_SESSION['FiltroComissao']['Pagina'];
 											for ($i=1; $i <= $count['PRCount']; $i++) {
 												$contagem = ($linha + $i);
 											?>
@@ -90,29 +90,29 @@
 																	</div>
 																</div>
 																<div class="col-md-2">
-																	<label for="ValorComissaoFunc">Comissao:</label><br>
+																	<label for="ValorComissao">Comissao:</label><br>
 																	<div class="input-group" id="txtHint">
 																		<span class="input-group-addon" id="basic-addon1">R$</span>
-																		<input type="text" class="form-control Valor"  maxlength="10" placeholder="0,00" id="ValorComissaoFunc<?php echo $i ?>"
-																			   name="ValorComissaoFunc<?php echo $i ?>" value="<?php echo $orcamento[$i]['ValorComissaoFunc'] ?>">
+																		<input type="text" class="form-control Valor"  maxlength="10" placeholder="0,00" id="ValorComissao<?php echo $i ?>"
+																			   name="ValorComissao<?php echo $i ?>" value="<?php echo $orcamento[$i]['ValorComissao'] ?>">
 																	</div>
 																</div>
 																<div class="col-md-2">
-																	<label for="StatusComissaoFunc">StatusPago</label>
+																	<label for="StatusComissaoOrca">StatusPago</label>
 																	<div class="input-group">
 																		<span class="input-group-addon" disabled>
 																			<span class="glyphicon glyphicon-pencil"></span>
 																		</span>
-																		<input type="text" class="form-control" readonly="" value="<?php echo $_SESSION['Orcamento'][$i]['StatusComissaoFunc'] ?>">																
+																		<input type="text" class="form-control" readonly="" value="<?php echo $_SESSION['Orcamento'][$i]['StatusComissaoOrca'] ?>">																
 																	</div>
 																</div>
 																<div class="col-md-2">
-																	<label for="DataPagoComissaoFunc">DataPago</label>
+																	<label for="DataPagoComissaoOrca">DataPago</label>
 																	<div class="input-group">
 																		<span class="input-group-addon" disabled>
 																			<span class="glyphicon glyphicon-calendar"></span>
 																		</span>
-																		<input type="text" class="form-control Date" readonly="" value="<?php echo $_SESSION['Orcamento'][$i]['DataPagoComissaoFunc'] ?>">																
+																		<input type="text" class="form-control Date" readonly="" value="<?php echo $_SESSION['Orcamento'][$i]['DataPagoComissaoOrca'] ?>">																
 																	</div>
 																</div>
 															</div>

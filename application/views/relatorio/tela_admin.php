@@ -62,14 +62,13 @@
 											</div>
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
-													<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>relatorio/receitas" role="button"> 
+													<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>relatorio_rec/receitas" role="button"> 
 														<span class="glyphicon glyphicon-pencil"></span> Receitas
 													</a>											
 												</div>	
 											</div>
 										</div>
 									<?php } ?>
-									
 								<?php }else{ ?>
 									<div class="col-md-12">											
 										<label for=""><h4><b>Receitas</b></h4></label>
@@ -82,7 +81,7 @@
 										</div>
 										<div class="form-group col-md-12 text-left">
 											<div class="row">		
-												<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>relatorio/receitas" role="button"> 
+												<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>relatorio_rec/receitas" role="button"> 
 													<span class="glyphicon glyphicon-pencil"></span> Receitas
 												</a>											
 											</div>	
@@ -94,7 +93,7 @@
 										<label for=""><h4><b>Pagamentos</b></h4></label>
 										<div class="form-group col-md-12 text-left">
 											<div class="row">										
-												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/cobrancas" role="button"> 
+												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_cob/cobrancas" role="button"> 
 													<span class="glyphicon glyphicon-usd"></span> Parcelas
 												</a>
 											</div>	
@@ -113,7 +112,7 @@
 											<label for=""><h4><b>Pagamentos</b></h4></label>
 											<div class="form-group col-md-12 text-left">
 												<div class="row">										
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/cobrancas" role="button"> 
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_cob/cobrancas" role="button"> 
 														<span class="glyphicon glyphicon-usd"></span> Parcelas
 													</a>
 												</div>	
@@ -178,14 +177,14 @@
 											<?php if($_SESSION['log']['idSis_Empresa'] != 5) {?>
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/comissao" role="button"> 
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_com/comissao" role="button"> 
 															<span class="glyphicon glyphicon-usd"></span>Pedido x Colaborador
 														</a>
 													</div>	
 												</div>
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/comissaoass" role="button"> 
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_com/comissaoass" role="button"> 
 															<span class="glyphicon glyphicon-usd"></span>Pedido x Associado
 														</a>
 													</div>	
@@ -199,7 +198,7 @@
 												</div>
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/comissaofunc" role="button"> 
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_com/comissaofunc" role="button"> 
 															<span class="glyphicon glyphicon-usd"></span>Pedido x Supervisor
 														</a>
 													</div>	

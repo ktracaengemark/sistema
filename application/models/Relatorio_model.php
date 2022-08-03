@@ -1686,7 +1686,7 @@ class Relatorio_model extends CI_Model {
 		}			
 	}
 
-    public function list_comissaoass($data = FALSE, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+    public function list_comissaoass($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		$date_inicio_orca = ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;
 		$date_fim_orca = ($data['DataFim']) ? 'OT.DataOrca <= "' . $data['DataFim'] . '" AND ' : FALSE;
@@ -1867,9 +1867,6 @@ class Relatorio_model extends CI_Model {
 				if($count >= 12001){
 					return FALSE;
 				}else{
-					if ($completo === FALSE) {
-						return TRUE;
-					} else {
 						$somafinal2=0;
 						$somacomissaoass2=0;
 						$somarestante2=0;
@@ -1885,7 +1882,6 @@ class Relatorio_model extends CI_Model {
 						$query_total->soma2->somarestante2 = number_format($somarestante2, 2, ',', '.');
 
 						return $query_total;
-					}
 				}
 			}
 		}
@@ -1993,101 +1989,98 @@ class Relatorio_model extends CI_Model {
 			' . $querylimit . ''
 		);
 
-        if ($completo === FALSE) {
-            return TRUE;
-        } else {
 
-            $somasubtotal=0;
-			$subtotal=0;
-			$somadesconto=0;
-			$somarestante=0;
-			$somasubcomissaoass=0;
-			$somaextra=0;
-			$somafrete=0;
-			$somatotal=0;
-			$somadesc=0;
-			$somacashback=0;
-			$somafinal=0;
-			$somacomissaoass=0;
+		$somasubtotal=0;
+		$subtotal=0;
+		$somadesconto=0;
+		$somarestante=0;
+		$somasubcomissao=0;
+		$somaextra=0;
+		$somafrete=0;
+		$somatotal=0;
+		$somadesc=0;
+		$somacashback=0;
+		$somafinal=0;
+		$somacomissaoass=0;
+		
+		foreach ($query->result() as $row) {
 			
-            foreach ($query->result() as $row) {
-				
-				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
-                $row->DataPagoComissaoOrca = $this->basico->mascara_data($row->DataPagoComissaoOrca, 'barras');
+			$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
+			$row->DataPagoComissaoOrca = $this->basico->mascara_data($row->DataPagoComissaoOrca, 'barras');
 
-				$somaextra += $row->ValorExtraOrca;
-				$row->ValorExtraOrca = number_format($row->ValorExtraOrca, 2, ',', '.');
-				$somarestante += $row->ValorRestanteOrca;
-				$row->ValorRestanteOrca = number_format($row->ValorRestanteOrca, 2, ',', '.');
-				$somafrete += $row->ValorFrete;
-				$row->ValorFrete = number_format($row->ValorFrete, 2, ',', '.');
-				$somatotal += $row->TotalOrca;
-				$row->TotalOrca = number_format($row->TotalOrca, 2, ',', '.');
-				$somadesc += $row->DescValorOrca;
-				$row->DescValorOrca = number_format($row->DescValorOrca, 2, ',', '.');
-				$somacashback += $row->CashBackOrca;
-				$row->CashBackOrca = number_format($row->CashBackOrca, 2, ',', '.');
-				$somafinal += $row->ValorFinalOrca;
-				$row->ValorFinalOrca = number_format($row->ValorFinalOrca, 2, ',', '.');
-				$somacomissaoass += $row->ValorComissaoAssoc;
-				$row->ValorComissaoAssoc = number_format($row->ValorComissaoAssoc, 2, ',', '.');
+			$somaextra += $row->ValorExtraOrca;
+			$row->ValorExtraOrca = number_format($row->ValorExtraOrca, 2, ',', '.');
+			$somarestante += $row->ValorRestanteOrca;
+			$row->ValorRestanteOrca = number_format($row->ValorRestanteOrca, 2, ',', '.');
+			$somafrete += $row->ValorFrete;
+			$row->ValorFrete = number_format($row->ValorFrete, 2, ',', '.');
+			$somatotal += $row->TotalOrca;
+			$row->TotalOrca = number_format($row->TotalOrca, 2, ',', '.');
+			$somadesc += $row->DescValorOrca;
+			$row->DescValorOrca = number_format($row->DescValorOrca, 2, ',', '.');
+			$somacashback += $row->CashBackOrca;
+			$row->CashBackOrca = number_format($row->CashBackOrca, 2, ',', '.');
+			$somafinal += $row->ValorFinalOrca;
+			$row->ValorFinalOrca = number_format($row->ValorFinalOrca, 2, ',', '.');
+			$somacomissaoass += $row->ValorComissaoAssoc;
+			$row->ValorComissaoAssoc = number_format($row->ValorComissaoAssoc, 2, ',', '.');
 
-				if($row->Tipo_Orca == "B"){
-					$row->Tipo_Orca = "NaLoja";
-				}elseif($row->Tipo_Orca == "O"){
-					$row->Tipo_Orca = "OnLine";
-				}else{
-					$row->Tipo_Orca = "Outros";
-				}
-				
-				if($row->Modalidade == "P"){
-					$row->Modalidade = "Dividido";
-				}elseif($row->Modalidade == "M"){
-					$row->Modalidade = "Mensal";
-				}else{
-					$row->Modalidade = "Outros";
-				}
-				
-				if($row->AVAP == "V"){
-					$row->AVAP = "NaLoja";
-				}elseif($row->AVAP == "O"){
-					$row->AVAP = "OnLine";
-				}elseif($row->AVAP == "P"){
-					$row->AVAP = "NaEntr";
-				}else{
-					$row->AVAP = "Outros";
-				}
-				
-				if($row->TipoFrete == 1){
-					$row->TipoFrete = "Retirar/NaLoja";
-				}elseif($row->TipoFrete == 2){
-					$row->TipoFrete = "EmCasa/PelaLoja";
-				}elseif($row->TipoFrete == 3){
-					$row->TipoFrete = "EmCasa/PeloCorreio";
-				}else{
-					$row->TipoFrete = "Outros";
-				}
-            }
-            
-			$query->soma = new stdClass();
-			$query->soma->somaextra = number_format($somaextra, 2, ',', '.');
-			$query->soma->somarestante = number_format($somarestante, 2, ',', '.');
-            $query->soma->somafrete = number_format($somafrete, 2, ',', '.');
-            $query->soma->somatotal = number_format($somatotal, 2, ',', '.');
-            $query->soma->somadesc = number_format($somadesc, 2, ',', '.');
-            $query->soma->somacashback = number_format($somacashback, 2, ',', '.');
-            $query->soma->somafinal = number_format($somafinal, 2, ',', '.');
-			$query->soma->somacomissaoass = number_format($somacomissaoass, 2, ',', '.');
-
-			if(!isset($query)){
-				return FALSE;
-			} else {
-				return $query;
+			if($row->Tipo_Orca == "B"){
+				$row->Tipo_Orca = "NaLoja";
+			}elseif($row->Tipo_Orca == "O"){
+				$row->Tipo_Orca = "OnLine";
+			}else{
+				$row->Tipo_Orca = "Outros";
 			}
-        }
-    }
+			
+			if($row->Modalidade == "P"){
+				$row->Modalidade = "Dividido";
+			}elseif($row->Modalidade == "M"){
+				$row->Modalidade = "Mensal";
+			}else{
+				$row->Modalidade = "Outros";
+			}
+			
+			if($row->AVAP == "V"){
+				$row->AVAP = "NaLoja";
+			}elseif($row->AVAP == "O"){
+				$row->AVAP = "OnLine";
+			}elseif($row->AVAP == "P"){
+				$row->AVAP = "NaEntr";
+			}else{
+				$row->AVAP = "Outros";
+			}
+			
+			if($row->TipoFrete == 1){
+				$row->TipoFrete = "Retirar/NaLoja";
+			}elseif($row->TipoFrete == 2){
+				$row->TipoFrete = "EmCasa/PelaLoja";
+			}elseif($row->TipoFrete == 3){
+				$row->TipoFrete = "EmCasa/PeloCorreio";
+			}else{
+				$row->TipoFrete = "Outros";
+			}
+		}
+		
+		$query->soma = new stdClass();
+		$query->soma->somaextra = number_format($somaextra, 2, ',', '.');
+		$query->soma->somarestante = number_format($somarestante, 2, ',', '.');
+		$query->soma->somafrete = number_format($somafrete, 2, ',', '.');
+		$query->soma->somatotal = number_format($somatotal, 2, ',', '.');
+		$query->soma->somadesc = number_format($somadesc, 2, ',', '.');
+		$query->soma->somacashback = number_format($somacashback, 2, ',', '.');
+		$query->soma->somafinal = number_format($somafinal, 2, ',', '.');
+		$query->soma->somacomissaoass = number_format($somacomissaoass, 2, ',', '.');
 
-    public function list_comissaofunc($data = FALSE, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+		if(!isset($query)){
+			return FALSE;
+		} else {
+			return $query;
+		}
+		
+	}		
+
+    public function list_comissaofunc($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		$date_inicio_orca = ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;
 		$date_fim_orca = ($data['DataFim']) ? 'OT.DataOrca <= "' . $data['DataFim'] . '" AND ' : FALSE;
@@ -2271,25 +2264,21 @@ class Relatorio_model extends CI_Model {
 				if($count >= 12001){
 					return FALSE;
 				}else{
-					if ($completo === FALSE) {
-						return TRUE;
-					} else {
-						$somafinal2=0;
-						$somacomissaofunc2=0;
-						$somarestante2=0;
-						foreach ($query_total->result() as $row) {
-							$somafinal2 += $row->ValorFinalOrca;
-							$somacomissaofunc2 += $row->ValorComissaoFunc;
-							$somarestante2 += $row->ValorRestanteOrca;
-						}
-						
-						$query_total->soma2 = new stdClass();
-						$query_total->soma2->somafinal2 = number_format($somafinal2, 2, ',', '.');
-						$query_total->soma2->somacomissaofunc2 = number_format($somacomissaofunc2, 2, ',', '.');
-						$query_total->soma2->somarestante2 = number_format($somarestante2, 2, ',', '.');
-
-						return $query_total;
+					$somafinal2=0;
+					$somacomissaofunc2=0;
+					$somarestante2=0;
+					foreach ($query_total->result() as $row) {
+						$somafinal2 += $row->ValorFinalOrca;
+						$somacomissaofunc2 += $row->ValorComissaoFunc;
+						$somarestante2 += $row->ValorRestanteOrca;
 					}
+					
+					$query_total->soma2 = new stdClass();
+					$query_total->soma2->somafinal2 = number_format($somafinal2, 2, ',', '.');
+					$query_total->soma2->somacomissaofunc2 = number_format($somacomissaofunc2, 2, ',', '.');
+					$query_total->soma2->somarestante2 = number_format($somarestante2, 2, ',', '.');
+
+					return $query_total;
 				}
 			}
 		}
@@ -2401,103 +2390,99 @@ class Relatorio_model extends CI_Model {
 			' . $querylimit . ''
 		);
 
-        if ($completo === FALSE) {
-            return TRUE;
-        } else {
-
-            $somasubtotal=0;
-			$subtotal=0;
-			$somadesconto=0;
-			$somarestante=0;
-			$somasubcomissaofunc=0;
-			$somaextra=0;
-			$somafrete=0;
-			$somatotal=0;
-			$somadesc=0;
-			$somacashback=0;
-			$somafinal=0;
-			$somacomissao=0;
-			$somacomissaofunc=0;
+		$somasubtotal=0;
+		$subtotal=0;
+		$somadesconto=0;
+		$somarestante=0;
+		$somasubcomissaofunc=0;
+		$somaextra=0;
+		$somafrete=0;
+		$somatotal=0;
+		$somadesc=0;
+		$somacashback=0;
+		$somafinal=0;
+		$somacomissao=0;
+		$somacomissaofunc=0;
+		
+		foreach ($query->result() as $row) {
 			
-            foreach ($query->result() as $row) {
-				
-				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
-                $row->DataPagoComissaoOrca = $this->basico->mascara_data($row->DataPagoComissaoOrca, 'barras');
-                $row->DataPagoComissaoFunc = $this->basico->mascara_data($row->DataPagoComissaoFunc, 'barras');
+			$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
+			$row->DataPagoComissaoOrca = $this->basico->mascara_data($row->DataPagoComissaoOrca, 'barras');
+			$row->DataPagoComissaoFunc = $this->basico->mascara_data($row->DataPagoComissaoFunc, 'barras');
 
-				$somaextra += $row->ValorExtraOrca;
-				$row->ValorExtraOrca = number_format($row->ValorExtraOrca, 2, ',', '.');
-				$somarestante += $row->ValorRestanteOrca;
-				$row->ValorRestanteOrca = number_format($row->ValorRestanteOrca, 2, ',', '.');
-				$somafrete += $row->ValorFrete;
-				$row->ValorFrete = number_format($row->ValorFrete, 2, ',', '.');
-				$somatotal += $row->TotalOrca;
-				$row->TotalOrca = number_format($row->TotalOrca, 2, ',', '.');
-				$somadesc += $row->DescValorOrca;
-				$row->DescValorOrca = number_format($row->DescValorOrca, 2, ',', '.');
-				$somacashback += $row->CashBackOrca;
-				$row->CashBackOrca = number_format($row->CashBackOrca, 2, ',', '.');
-				$somafinal += $row->ValorFinalOrca;
-				$row->ValorFinalOrca = number_format($row->ValorFinalOrca, 2, ',', '.');
-				$somacomissao += $row->ValorComissao;
-				$row->ValorComissao = number_format($row->ValorComissao, 2, ',', '.');
-				$somacomissaofunc += $row->ValorComissaoFunc;
-				$row->ValorComissaoFunc = number_format($row->ValorComissaoFunc, 2, ',', '.');
+			$somaextra += $row->ValorExtraOrca;
+			$row->ValorExtraOrca = number_format($row->ValorExtraOrca, 2, ',', '.');
+			$somarestante += $row->ValorRestanteOrca;
+			$row->ValorRestanteOrca = number_format($row->ValorRestanteOrca, 2, ',', '.');
+			$somafrete += $row->ValorFrete;
+			$row->ValorFrete = number_format($row->ValorFrete, 2, ',', '.');
+			$somatotal += $row->TotalOrca;
+			$row->TotalOrca = number_format($row->TotalOrca, 2, ',', '.');
+			$somadesc += $row->DescValorOrca;
+			$row->DescValorOrca = number_format($row->DescValorOrca, 2, ',', '.');
+			$somacashback += $row->CashBackOrca;
+			$row->CashBackOrca = number_format($row->CashBackOrca, 2, ',', '.');
+			$somafinal += $row->ValorFinalOrca;
+			$row->ValorFinalOrca = number_format($row->ValorFinalOrca, 2, ',', '.');
+			$somacomissao += $row->ValorComissao;
+			$row->ValorComissao = number_format($row->ValorComissao, 2, ',', '.');
+			$somacomissaofunc += $row->ValorComissaoFunc;
+			$row->ValorComissaoFunc = number_format($row->ValorComissaoFunc, 2, ',', '.');
 
-				if($row->Tipo_Orca == "B"){
-					$row->Tipo_Orca = "NaLoja";
-				}elseif($row->Tipo_Orca == "O"){
-					$row->Tipo_Orca = "OnLine";
-				}else{
-					$row->Tipo_Orca = "Outros";
-				}
-				
-				if($row->Modalidade == "P"){
-					$row->Modalidade = "Dividido";
-				}elseif($row->Modalidade == "M"){
-					$row->Modalidade = "Mensal";
-				}else{
-					$row->Modalidade = "Outros";
-				}
-				
-				if($row->AVAP == "V"){
-					$row->AVAP = "NaLoja";
-				}elseif($row->AVAP == "O"){
-					$row->AVAP = "OnLine";
-				}elseif($row->AVAP == "P"){
-					$row->AVAP = "NaEntr";
-				}else{
-					$row->AVAP = "Outros";
-				}
-				
-				if($row->TipoFrete == 1){
-					$row->TipoFrete = "Retirar/NaLoja";
-				}elseif($row->TipoFrete == 2){
-					$row->TipoFrete = "EmCasa/PelaLoja";
-				}elseif($row->TipoFrete == 3){
-					$row->TipoFrete = "EmCasa/PeloCorreio";
-				}else{
-					$row->TipoFrete = "Outros";
-				}
-            }
-            
-			$query->soma = new stdClass();
-			$query->soma->somaextra = number_format($somaextra, 2, ',', '.');
-			$query->soma->somarestante = number_format($somarestante, 2, ',', '.');
-            $query->soma->somafrete = number_format($somafrete, 2, ',', '.');
-            $query->soma->somatotal = number_format($somatotal, 2, ',', '.');
-            $query->soma->somadesc = number_format($somadesc, 2, ',', '.');
-            $query->soma->somacashback = number_format($somacashback, 2, ',', '.');
-            $query->soma->somafinal = number_format($somafinal, 2, ',', '.');
-			$query->soma->somacomissao = number_format($somacomissao, 2, ',', '.');
-			$query->soma->somacomissaofunc = number_format($somacomissaofunc, 2, ',', '.');
-
-			if(!isset($query)){
-				return FALSE;
-			} else {
-				return $query;
+			if($row->Tipo_Orca == "B"){
+				$row->Tipo_Orca = "NaLoja";
+			}elseif($row->Tipo_Orca == "O"){
+				$row->Tipo_Orca = "OnLine";
+			}else{
+				$row->Tipo_Orca = "Outros";
 			}
-        }
+			
+			if($row->Modalidade == "P"){
+				$row->Modalidade = "Dividido";
+			}elseif($row->Modalidade == "M"){
+				$row->Modalidade = "Mensal";
+			}else{
+				$row->Modalidade = "Outros";
+			}
+			
+			if($row->AVAP == "V"){
+				$row->AVAP = "NaLoja";
+			}elseif($row->AVAP == "O"){
+				$row->AVAP = "OnLine";
+			}elseif($row->AVAP == "P"){
+				$row->AVAP = "NaEntr";
+			}else{
+				$row->AVAP = "Outros";
+			}
+			
+			if($row->TipoFrete == 1){
+				$row->TipoFrete = "Retirar/NaLoja";
+			}elseif($row->TipoFrete == 2){
+				$row->TipoFrete = "EmCasa/PelaLoja";
+			}elseif($row->TipoFrete == 3){
+				$row->TipoFrete = "EmCasa/PeloCorreio";
+			}else{
+				$row->TipoFrete = "Outros";
+			}
+		}
+		
+		$query->soma = new stdClass();
+		$query->soma->somaextra = number_format($somaextra, 2, ',', '.');
+		$query->soma->somarestante = number_format($somarestante, 2, ',', '.');
+		$query->soma->somafrete = number_format($somafrete, 2, ',', '.');
+		$query->soma->somatotal = number_format($somatotal, 2, ',', '.');
+		$query->soma->somadesc = number_format($somadesc, 2, ',', '.');
+		$query->soma->somacashback = number_format($somacashback, 2, ',', '.');
+		$query->soma->somafinal = number_format($somafinal, 2, ',', '.');
+		$query->soma->somacomissao = number_format($somacomissao, 2, ',', '.');
+		$query->soma->somacomissaofunc = number_format($somacomissaofunc, 2, ',', '.');
+
+		if(!isset($query)){
+			return FALSE;
+		} else {
+			return $query;
+		}
+        
     }
 	
     public function list_orcamento($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
@@ -10819,3 +10804,4 @@ exit();
     }
 	
 }
+

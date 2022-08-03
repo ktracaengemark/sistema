@@ -13,7 +13,7 @@
 				<a type="button" class="col-md-3 btn btn-md btn-default " href="javascript:window.print()">
 					<span class="glyphicon glyphicon-print"></span>
 				</a>
-				<a type="button" class="col-md-3 btn btn-md btn-warning "  href="<?php echo base_url() ?>relatorio/comissaoass_pag">
+				<a type="button" class="col-md-3 btn btn-md btn-warning "  href="<?php echo base_url() ?>relatorio_com/comissao_pag">
 					<span class="glyphicon glyphicon-edit"></span>
 				</a>
 			</div>
@@ -31,7 +31,7 @@
 					<tr>
 						<td class="col-md-1" scope="col"><img  alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/miniatura/' . $_SESSION['Empresa']['Arquivo'] . ''; ?>"class="img-circle img-responsive" width='100'></td>
 						<td class="col-md-3 text-left" scope="col"><?php echo '<strong>' . $_SESSION['Empresa']['NomeEmpresa'] . '</strong>'?></td>
-						<td class="col-md-3 text-left" scope="col"><?php echo '<strong>' . $titulo . '</strong>'?><br>Total: R$ <?php echo $report->soma->somacomissaoass ?> / <?php echo $pesquisa_query->soma2->somacomissaoass2 ?></td>
+						<td class="col-md-3 text-left" scope="col"><?php echo '<strong>' . $titulo . '</strong>'?><br>Total: R$ <?php echo $report->soma->somacomissao ?> / <?php echo $pesquisa_query->soma2->somacomissao2 ?></td>
 					</tr>
 				</thead>			
 			</table>
@@ -41,9 +41,9 @@
 						<th class="col-md-1" scope="col">Cont</th>
 						<th class="col-md-1" scope="col">Pedido</th>
 						<th class="col-md-1" scope="col">Local</th>
-						<th class="col-md-2" scope="col">Cliente</th>
+						<th class="col-md-2" scope="col">Nome</th>
 						<th class="col-md-1" scope="col">Valor</th>
-						<th class="col-md-2" scope="col">Associado</th>
+						<th class="col-md-2" scope="col">Colab.</th>
 						<th class="col-md-1" scope="col">Comissao</th>
 						<th class="col-md-1" scope="col">Pago</th>
 						<th class="col-md-1" scope="col">Data</th>
@@ -62,8 +62,8 @@
 							<td class="col-md-1" scope="col"><?php echo $row['Tipo_Orca'] ?></td>
 							<td class="col-md-2" scope="col"><?php echo $row[$nome] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $row['ValorRestanteOrca'] ?></td>
-							<td class="col-md-2" scope="col"><?php echo $row['NomeAssociado'] ?></td>
-							<td class="col-md-1" scope="col"><?php echo $row['ValorComissaoAssoc'] ?></td>
+							<td class="col-md-2" scope="col"><?php echo $row['NomeColaborador'] ?></td>
+							<td class="col-md-1" scope="col"><?php echo $row['ValorComissao'] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $row[$status] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $row['DataPagoComissaoOrca'] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $row['id_Comissao'] ?></td>

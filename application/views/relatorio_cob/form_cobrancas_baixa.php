@@ -17,7 +17,7 @@
 								<div class="col-md-12 ">
 									<div class="col-md-2 text-left">
 										<br>
-										<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>relatorio/cobrancas_pag" role="button">
+										<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>relatorio_cob/cobrancas_pag" role="button">
 											<span class="glyphicon glyphicon-pencil"></span> Parcelas das <?php echo $titulo; ?> 
 										</a>
 									</div>

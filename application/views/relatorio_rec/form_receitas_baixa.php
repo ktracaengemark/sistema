@@ -14,7 +14,7 @@
 									<div class="col-md-2 text-left">
 										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() . $relatorio; ?>" role="button">
-											<span class="glyphicon glyphicon-pencil"></span><?php echo $titulo; ?>
+											Relatorio das Receitas
 										</a>
 									</div>
 									<div class="col-md-2 text-left">	
