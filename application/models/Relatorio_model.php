@@ -1684,6 +1684,7 @@ class Relatorio_model extends CI_Model {
 	 
 			return $query;
 		}			
+	
 	}
 
     public function list_comissaoass($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
@@ -2199,149 +2200,17 @@ class Relatorio_model extends CI_Model {
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
 
-		if($total == TRUE) {
-			
-			$query_total = $this->db->query(
-				'SELECT
-					OT.ValorFinalOrca,
-					OT.ValorComissaoFunc,
-					OT.ValorRestanteOrca
-				FROM
-					App_OrcaTrata AS OT
-						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
-						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
-				WHERE
-					' . $date_inicio_orca . '
-					' . $date_fim_orca . '
-					' . $date_inicio_entrega . '
-					' . $date_fim_entrega . '
-					' . $date_inicio_entrega_prd . '
-					' . $date_fim_entrega_prd . '
-					' . $hora_inicio_entrega_prd . '
-					' . $hora_fim_entrega_prd . '
-					' . $date_inicio_vnc . '
-					' . $date_fim_vnc . '
-					' . $date_inicio_vnc_prc . '
-					' . $date_fim_vnc_prc . '
-					' . $date_inicio_pag_com . '
-					' . $date_fim_pag_com . '
-					' . $permissao . '
-					' . $permissao_orcam . '
-					' . $filtro1 . '
-					' . $filtro2 . '
-					' . $filtro3 . '
-					' . $filtro5 . '
-					' . $filtro6 . '
-					' . $filtro7 . '
-					' . $filtro8 . '
-					' . $filtro9 . '
-					' . $filtro10 . '
-					' . $filtro11 . '
-					' . $filtro13 . '
-					' . $filtro17 . '
-					' . $filtro12 . '
-					' . $produtos . '
-					' . $parcelas . '
-					' . $recibo . '
-					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '
-					' . $orcamento . '
-					' . $id_comissaofunc . '
-					' . $cliente . '
-					' . $id_cliente . '
-					' . $tipofinandeiro . ' 
-					' . $idtipord . '
-					' . $nivel . '
-
-				' . $groupby . '
-				' . $querylimit . ''
-			);
-			
-			$count = $query_total->num_rows();
-			
-			if(!isset($count)){
-				return FALSE;
-			}else{
-				if($count >= 12001){
-					return FALSE;
-				}else{
-					$somafinal2=0;
-					$somacomissaofunc2=0;
-					$somarestante2=0;
-					foreach ($query_total->result() as $row) {
-						$somafinal2 += $row->ValorFinalOrca;
-						$somacomissaofunc2 += $row->ValorComissaoFunc;
-						$somarestante2 += $row->ValorRestanteOrca;
-					}
-					
-					$query_total->soma2 = new stdClass();
-					$query_total->soma2->somafinal2 = number_format($somafinal2, 2, ',', '.');
-					$query_total->soma2->somacomissaofunc2 = number_format($somacomissaofunc2, 2, ',', '.');
-					$query_total->soma2->somarestante2 = number_format($somarestante2, 2, ',', '.');
-
-					return $query_total;
-				}
-			}
+		if ($completo === FALSE) {
+			$complemento = FALSE;
+		} else {
+			$complemento = '
+				AND OT.CanceladoOrca = "N" 
+				AND OT.StatusComissaoFunc = "N" 
+				AND OT.id_ComissaoFunc = 0 
+			';
 		}
-		
-		$query = $this->db->query(
-			'SELECT
-				OT.idApp_OrcaTrata,
-				OT.idSis_Usuario,
-				US.Nome,
-				CONCAT(IFNULL(US.idSis_Usuario,""), " - " ,IFNULL(US.Nome,"")) AS NomeColaborador,
-				OT.id_Associado,
-				OT.id_Funcionario,
-				OT.CombinadoFrete,
-				OT.AprovadoOrca,
-				OT.FinalizadoOrca,
-				OT.CanceladoOrca,
-                OT.ConcluidoOrca,
-                OT.QuitadoOrca,
-                OT.DataOrca,
-                OT.DataEntregaOrca,
-				DATE_FORMAT(OT.HoraEntregaOrca, "%H:%i") AS HoraEntregaOrca,
-				OT.ValorRestanteOrca,
-				OT.DescValorOrca,
-				OT.ValorFinalOrca,
-				OT.ValorFrete,
-				OT.ValorExtraOrca,
-				(OT.ValorExtraOrca + OT.ValorRestanteOrca + OT.ValorFrete) AS TotalOrca,
-				OT.CashBackOrca,
-				OT.idTab_TipoRD,
-				OT.Tipo_Orca,
-				OT.NomeRec,
-				OT.ParentescoRec,
-				OT.TelefoneRec,
-				OT.ValorComissao,
-				OT.StatusComissaoOrca,
-				OT.DataPagoComissaoOrca,
-				OT.id_Comissao,
-				OT.ValorComissaoFunc,
-				OT.StatusComissaoFunc,
-				OT.DataPagoComissaoFunc,
-				OT.id_ComissaoFunc,
-				OT.Modalidade,
-				OT.AVAP,
-				OT.TipoFrete,
-				OT.idApp_Cliente,
-                CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,"")) AS NomeCliente,
-                CONCAT(IFNULL(C.NomeCliente,"")) AS Cliente,
-				C.CelularCliente,
-				C.DataNascimento,
-				C.Telefone,
-				C.Telefone2,
-				C.Telefone3,
-				TFP.FormaPag,
-				TR.TipoFinanceiro
-            FROM
-                App_OrcaTrata AS OT
-					LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
-					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
-					LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
-					LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
-					LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
-					LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
-            WHERE
+
+		$filtro_base = '
                 ' . $date_inicio_orca . '
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
@@ -2382,108 +2251,298 @@ class Relatorio_model extends CI_Model {
                 ' . $tipofinandeiro . ' 
                 ' . $idtipord . '
 				' . $nivel . '
-
+				' . $complemento . '
 			' . $groupby . '
 			ORDER BY
 				' . $campo . '
 				' . $ordenamento . '
-			' . $querylimit . ''
-		);
-
-		$somasubtotal=0;
-		$subtotal=0;
-		$somadesconto=0;
-		$somarestante=0;
-		$somasubcomissaofunc=0;
-		$somaextra=0;
-		$somafrete=0;
-		$somatotal=0;
-		$somadesc=0;
-		$somacashback=0;
-		$somafinal=0;
-		$somacomissao=0;
-		$somacomissaofunc=0;
+			' . $querylimit . '
+		';
 		
-		foreach ($query->result() as $row) {
+		####### Contagem e soma total ###########
+		if($total == TRUE && $date == FALSE) {
 			
-			$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
-			$row->DataPagoComissaoOrca = $this->basico->mascara_data($row->DataPagoComissaoOrca, 'barras');
-			$row->DataPagoComissaoFunc = $this->basico->mascara_data($row->DataPagoComissaoFunc, 'barras');
+			$query_total = $this->db->query(
+				'SELECT
+					OT.ValorFinalOrca,
+					OT.ValorComissaoFunc,
+					OT.ValorRestanteOrca
+				FROM
+					App_OrcaTrata AS OT
+						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
+				WHERE
+					' . $filtro_base . ''
+			);
+			
+			$count = $query_total->num_rows();
+			
+			if(!isset($count)){
+				return FALSE;
+			}else{
+				if($count >= 15001){
+					return FALSE;
+				}else{
+					$somafinal2=0;
+					$somacomissaofunc2=0;
+					$somarestante2=0;
+					foreach ($query_total->result() as $row) {
+						$somafinal2 += $row->ValorFinalOrca;
+						$somacomissaofunc2 += $row->ValorComissaoFunc;
+						$somarestante2 += $row->ValorRestanteOrca;
+					}
+					
+					$query_total->soma2 = new stdClass();
+					$query_total->soma2->somafinal2 = number_format($somafinal2, 2, ',', '.');
+					$query_total->soma2->somacomissaofunc2 = number_format($somacomissaofunc2, 2, ',', '.');
+					$query_total->soma2->somarestante2 = number_format($somarestante2, 2, ',', '.');
 
-			$somaextra += $row->ValorExtraOrca;
-			$row->ValorExtraOrca = number_format($row->ValorExtraOrca, 2, ',', '.');
-			$somarestante += $row->ValorRestanteOrca;
-			$row->ValorRestanteOrca = number_format($row->ValorRestanteOrca, 2, ',', '.');
-			$somafrete += $row->ValorFrete;
-			$row->ValorFrete = number_format($row->ValorFrete, 2, ',', '.');
-			$somatotal += $row->TotalOrca;
-			$row->TotalOrca = number_format($row->TotalOrca, 2, ',', '.');
-			$somadesc += $row->DescValorOrca;
-			$row->DescValorOrca = number_format($row->DescValorOrca, 2, ',', '.');
-			$somacashback += $row->CashBackOrca;
-			$row->CashBackOrca = number_format($row->CashBackOrca, 2, ',', '.');
-			$somafinal += $row->ValorFinalOrca;
-			$row->ValorFinalOrca = number_format($row->ValorFinalOrca, 2, ',', '.');
-			$somacomissao += $row->ValorComissao;
-			$row->ValorComissao = number_format($row->ValorComissao, 2, ',', '.');
-			$somacomissaofunc += $row->ValorComissaoFunc;
-			$row->ValorComissaoFunc = number_format($row->ValorComissaoFunc, 2, ',', '.');
-
-			if($row->Tipo_Orca == "B"){
-				$row->Tipo_Orca = "NaLoja";
-			}elseif($row->Tipo_Orca == "O"){
-				$row->Tipo_Orca = "OnLine";
-			}else{
-				$row->Tipo_Orca = "Outros";
-			}
-			
-			if($row->Modalidade == "P"){
-				$row->Modalidade = "Dividido";
-			}elseif($row->Modalidade == "M"){
-				$row->Modalidade = "Mensal";
-			}else{
-				$row->Modalidade = "Outros";
-			}
-			
-			if($row->AVAP == "V"){
-				$row->AVAP = "NaLoja";
-			}elseif($row->AVAP == "O"){
-				$row->AVAP = "OnLine";
-			}elseif($row->AVAP == "P"){
-				$row->AVAP = "NaEntr";
-			}else{
-				$row->AVAP = "Outros";
-			}
-			
-			if($row->TipoFrete == 1){
-				$row->TipoFrete = "Retirar/NaLoja";
-			}elseif($row->TipoFrete == 2){
-				$row->TipoFrete = "EmCasa/PelaLoja";
-			}elseif($row->TipoFrete == 3){
-				$row->TipoFrete = "EmCasa/PeloCorreio";
-			}else{
-				$row->TipoFrete = "Outros";
+					return $query_total;
+				}
 			}
 		}
 		
-		$query->soma = new stdClass();
-		$query->soma->somaextra = number_format($somaextra, 2, ',', '.');
-		$query->soma->somarestante = number_format($somarestante, 2, ',', '.');
-		$query->soma->somafrete = number_format($somafrete, 2, ',', '.');
-		$query->soma->somatotal = number_format($somatotal, 2, ',', '.');
-		$query->soma->somadesc = number_format($somadesc, 2, ',', '.');
-		$query->soma->somacashback = number_format($somacashback, 2, ',', '.');
-		$query->soma->somafinal = number_format($somafinal, 2, ',', '.');
-		$query->soma->somacomissao = number_format($somacomissao, 2, ',', '.');
-		$query->soma->somacomissaofunc = number_format($somacomissaofunc, 2, ',', '.');
+		####### Campos do Relatório/ Lista/ Excel ###########
+		if($total == FALSE && $date == FALSE) {	
+			$query = $this->db->query(
+				'SELECT
+					OT.idApp_OrcaTrata,
+					OT.idSis_Usuario,
+					US.Nome,
+					CONCAT(IFNULL(US.idSis_Usuario,""), " - " ,IFNULL(US.Nome,"")) AS NomeColaborador,
+					OT.id_Associado,
+					OT.id_Funcionario,
+					OT.CombinadoFrete,
+					OT.AprovadoOrca,
+					OT.FinalizadoOrca,
+					OT.CanceladoOrca,
+					OT.ConcluidoOrca,
+					OT.QuitadoOrca,
+					OT.DataOrca,
+					OT.DataEntregaOrca,
+					DATE_FORMAT(OT.HoraEntregaOrca, "%H:%i") AS HoraEntregaOrca,
+					OT.ValorRestanteOrca,
+					OT.DescValorOrca,
+					OT.ValorFinalOrca,
+					OT.ValorFrete,
+					OT.ValorExtraOrca,
+					(OT.ValorExtraOrca + OT.ValorRestanteOrca + OT.ValorFrete) AS TotalOrca,
+					OT.CashBackOrca,
+					OT.idTab_TipoRD,
+					OT.Tipo_Orca,
+					OT.NomeRec,
+					OT.ParentescoRec,
+					OT.TelefoneRec,
+					OT.ValorComissao,
+					OT.StatusComissaoOrca,
+					OT.DataPagoComissaoOrca,
+					OT.id_Comissao,
+					OT.ValorComissaoFunc,
+					OT.StatusComissaoFunc,
+					OT.DataPagoComissaoFunc,
+					OT.id_ComissaoFunc,
+					OT.Modalidade,
+					OT.AVAP,
+					OT.TipoFrete,
+					OT.idApp_Cliente,
+					CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,"")) AS NomeCliente,
+					CONCAT(IFNULL(C.NomeCliente,"")) AS Cliente,
+					C.CelularCliente,
+					C.DataNascimento,
+					C.Telefone,
+					C.Telefone2,
+					C.Telefone3,
+					TFP.FormaPag,
+					TR.TipoFinanceiro
+				FROM
+					App_OrcaTrata AS OT
+						LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
+						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
+						LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
+				WHERE
+					' . $filtro_base . ''
+			);
 
-		if(!isset($query)){
-			return FALSE;
-		} else {
+			$somasubtotal=0;
+			$subtotal=0;
+			$somadesconto=0;
+			$somarestante=0;
+			$somasubcomissaofunc=0;
+			$somaextra=0;
+			$somafrete=0;
+			$somatotal=0;
+			$somadesc=0;
+			$somacashback=0;
+			$somafinal=0;
+			$somacomissao=0;
+			$somacomissaofunc=0;
+			
+			foreach ($query->result() as $row) {
+				
+				$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
+				$row->DataPagoComissaoOrca = $this->basico->mascara_data($row->DataPagoComissaoOrca, 'barras');
+				$row->DataPagoComissaoFunc = $this->basico->mascara_data($row->DataPagoComissaoFunc, 'barras');
+
+				$somaextra += $row->ValorExtraOrca;
+				$row->ValorExtraOrca = number_format($row->ValorExtraOrca, 2, ',', '.');
+				$somarestante += $row->ValorRestanteOrca;
+				$row->ValorRestanteOrca = number_format($row->ValorRestanteOrca, 2, ',', '.');
+				$somafrete += $row->ValorFrete;
+				$row->ValorFrete = number_format($row->ValorFrete, 2, ',', '.');
+				$somatotal += $row->TotalOrca;
+				$row->TotalOrca = number_format($row->TotalOrca, 2, ',', '.');
+				$somadesc += $row->DescValorOrca;
+				$row->DescValorOrca = number_format($row->DescValorOrca, 2, ',', '.');
+				$somacashback += $row->CashBackOrca;
+				$row->CashBackOrca = number_format($row->CashBackOrca, 2, ',', '.');
+				$somafinal += $row->ValorFinalOrca;
+				$row->ValorFinalOrca = number_format($row->ValorFinalOrca, 2, ',', '.');
+				$somacomissao += $row->ValorComissao;
+				$row->ValorComissao = number_format($row->ValorComissao, 2, ',', '.');
+				$somacomissaofunc += $row->ValorComissaoFunc;
+				$row->ValorComissaoFunc = number_format($row->ValorComissaoFunc, 2, ',', '.');
+
+				if($row->Tipo_Orca == "B"){
+					$row->Tipo_Orca = "NaLoja";
+				}elseif($row->Tipo_Orca == "O"){
+					$row->Tipo_Orca = "OnLine";
+				}else{
+					$row->Tipo_Orca = "Outros";
+				}
+				
+				if($row->Modalidade == "P"){
+					$row->Modalidade = "Dividido";
+				}elseif($row->Modalidade == "M"){
+					$row->Modalidade = "Mensal";
+				}else{
+					$row->Modalidade = "Outros";
+				}
+				
+				if($row->AVAP == "V"){
+					$row->AVAP = "NaLoja";
+				}elseif($row->AVAP == "O"){
+					$row->AVAP = "OnLine";
+				}elseif($row->AVAP == "P"){
+					$row->AVAP = "NaEntr";
+				}else{
+					$row->AVAP = "Outros";
+				}
+				
+				if($row->TipoFrete == 1){
+					$row->TipoFrete = "Retirar/NaLoja";
+				}elseif($row->TipoFrete == 2){
+					$row->TipoFrete = "EmCasa/PelaLoja";
+				}elseif($row->TipoFrete == 3){
+					$row->TipoFrete = "EmCasa/PeloCorreio";
+				}else{
+					$row->TipoFrete = "Outros";
+				}
+			}
+			
+			$query->soma = new stdClass();
+			$query->soma->somaextra = number_format($somaextra, 2, ',', '.');
+			$query->soma->somarestante = number_format($somarestante, 2, ',', '.');
+			$query->soma->somafrete = number_format($somafrete, 2, ',', '.');
+			$query->soma->somatotal = number_format($somatotal, 2, ',', '.');
+			$query->soma->somadesc = number_format($somadesc, 2, ',', '.');
+			$query->soma->somacashback = number_format($somacashback, 2, ',', '.');
+			$query->soma->somafinal = number_format($somafinal, 2, ',', '.');
+			$query->soma->somacomissao = number_format($somacomissao, 2, ',', '.');
+			$query->soma->somacomissaofunc = number_format($somacomissaofunc, 2, ',', '.');
+
+			if(!isset($query)){
+				return FALSE;
+			} else {
+				return $query;
+			}
+		}
+
+		####### Ajuste de Valores da Baixa ###########
+		if($total == FALSE && $date == TRUE) {
+			$query = $this->db->query(
+				'SELECT
+					OT.idApp_OrcaTrata,
+					OT.idSis_Usuario,
+					OT.CombinadoFrete,
+					OT.AprovadoOrca,
+					OT.FinalizadoOrca,
+					OT.CanceladoOrca,
+					OT.ConcluidoOrca,
+					OT.QuitadoOrca,
+					OT.DataOrca,
+					OT.DataEntregaOrca,
+					DATE_FORMAT(OT.HoraEntregaOrca, "%H:%i") AS HoraEntregaOrca,
+					OT.ValorRestanteOrca,
+					OT.DescValorOrca,
+					OT.ValorFinalOrca,
+					OT.ValorComissaoFunc,
+					OT.ValorFrete,
+					OT.ValorExtraOrca,
+					(OT.ValorExtraOrca + OT.ValorRestanteOrca + OT.ValorFrete) AS TotalOrca,
+					OT.CashBackOrca,
+					OT.idTab_TipoRD,
+					OT.Tipo_Orca,
+					OT.NomeRec,
+					OT.ParentescoRec,
+					OT.TelefoneRec,
+					OT.StatusComissaoFunc,
+					OT.DataPagoComissaoFunc,
+					OT.id_ComissaoFunc,
+					OT.Modalidade,
+					OT.AVAP,
+					OT.TipoFrete,
+					OT.idApp_Cliente,
+					CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,"")) AS NomeCliente,
+					CONCAT(IFNULL(C.NomeCliente,"")) AS Cliente,
+					C.CelularCliente,
+					C.DataNascimento,
+					C.Telefone,
+					C.Telefone2,
+					C.Telefone3,
+					US.Nome,
+					CONCAT(IFNULL(US.idSis_Usuario,""), " - " ,IFNULL(US.Nome,"")) AS NomeColaborador,
+					TFP.FormaPag,
+					TR.TipoFinanceiro
+				FROM
+					App_OrcaTrata AS OT
+						LEFT JOIN Sis_Usuario AS US ON US.idSis_Usuario = OT.idSis_Usuario
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
+						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
+						LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
+				WHERE
+					' . $filtro_base . ''
+			);
+		
+			$query = $query->result_array();
+	 
 			return $query;
 		}
-        
-    }
+		
+		####### Baixa da comissão ###########
+		if($total == TRUE && $date == TRUE) {
+
+			$query = $this->db->query(
+				'SELECT
+					OT.idApp_OrcaTrata
+				FROM
+					App_OrcaTrata AS OT
+						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
+				WHERE
+					' . $filtro_base . ''
+			);
+		
+			$query = $query->result_array();
+	 
+			return $query;
+		}			
+
+	}
 	
     public function list_orcamento($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
