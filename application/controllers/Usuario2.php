@@ -482,7 +482,7 @@ class Usuario2 extends CI_Controller {
 						$data['list'] = $this->load->view('usuario/list_revendedores', $data, TRUE);
 					
 					
-					$data['titulo'] = 'Revendedor';
+					$data['titulo'] = 'Vendedores';
 					
 					$data['nav_secundario'] = $this->load->view('usuario/nav_secundario2', $data, TRUE);
 

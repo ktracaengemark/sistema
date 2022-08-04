@@ -10,7 +10,7 @@
 							<div class="panel-heading">
 								<?php echo $titulo; ?>
 								<a class="btn btn-sm btn-info" href="<?php echo base_url() ?>revendedor/alterar/<?php echo $query['idSis_Usuario'];?>" role="button"> 
-									<span class="glyphicon glyphicon-edit"></span> Editar. Revendedor
+									<span class="glyphicon glyphicon-edit"></span> Editar. Vendedor
 								</a>
 							</div>
 							<div class="panel-body">
@@ -205,7 +205,7 @@
 								if (!$list) {
 								?>
 									<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>Contatousuario2/cadastrar/<?php echo $query['idSis_Usuario'];?>" role="button"> 
-										<span class="glyphicon glyphicon-plus"></span> Novo Contato Revendedor
+										<span class="glyphicon glyphicon-plus"></span> Novo Contato Vendedor
 									</a>
 									<br><br>
 									<div class="alert alert-info" role="alert"><b>Nenhum Cad.</b></div>

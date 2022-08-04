@@ -9,7 +9,7 @@
 
 		<div class="btn-group" role="group">
 			<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>Contatousuario2/cadastrar/<?php echo $query['idSis_Usuario'];?>" role="button">
-				<span class="glyphicon glyphicon-plus"></span> Novo Contato Revendedor
+				<span class="glyphicon glyphicon-plus"></span> Novo Contato Vendedor
 			</a>
 		</div>
 	</div>

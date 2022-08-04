@@ -67,7 +67,7 @@
 								<li>
 									<a <?php if (preg_match("/usuario2\/revendedores\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>
 										<a href="<?php echo base_url() . 'usuario2/revendedores/' . $_SESSION['Usuario']['idSis_Usuario']; ?>">
-											<span class="glyphicon glyphicon-file"></span> Revendedores
+											<span class="glyphicon glyphicon-file"></span> Vendedores
 										</a>
 									</a>
 								</li>

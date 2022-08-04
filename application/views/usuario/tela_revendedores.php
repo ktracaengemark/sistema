@@ -15,7 +15,7 @@
 								if (!$list) {
 								?>
 									<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>revendedor/cadastrar/<?php echo $_SESSION['Usuario']['idSis_Usuario'];?>" role="button"> 
-										<span class="glyphicon glyphicon-plus"></span> Cad. Revendedor
+										<span class="glyphicon glyphicon-plus"></span> Cad. Vendedor
 									</a>
 									<br><br>
 									<div class="alert alert-info" role="alert"><b>Nenhum Cad.</b></div>

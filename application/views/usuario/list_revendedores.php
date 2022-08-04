@@ -8,7 +8,7 @@
 		</div>
 		<div class="btn-group" role="group">
 			<a class="btn btn-sm btn-warning" href="<?php echo base_url() ?>revendedor/cadastrar/<?php echo $_SESSION['Usuario']['idSis_Usuario'];?>" role="button"> 
-				<span class="glyphicon glyphicon-plus"></span> Novo Revendedor
+				<span class="glyphicon glyphicon-plus"></span> Novo Vendedor
 			</a>
 		</div>
 	</div>        

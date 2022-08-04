@@ -310,7 +310,8 @@ class Revendedor extends CI_Controller {
 								$data['auditoria'] = $this->Basico_model->set_auditoriaempresa($data['auditoriaitem'], 'Sis_Usuario', 'CREATE', $data['auditoriaitem']);
 								$data['msg'] = '?m=1';
 								
-								redirect(base_url() . 'revendedor/pesquisar/' . $data['query']['QuemCad'] . $data['msg']);
+								redirect(base_url() . 'revendedor/prontuario/' . $data['query']['idSis_Usuario'] . $data['msg']);
+								//redirect(base_url() . 'revendedor/pesquisar/' . $data['query']['QuemCad'] . $data['msg']);
 								exit();
 							}
 						}
@@ -382,7 +383,8 @@ class Revendedor extends CI_Controller {
 							$data['auditoria'] = $this->Basico_model->set_auditoriaempresa($data['auditoriaitem'], 'Sis_Usuario', 'CREATE', $data['auditoriaitem']);
 							$data['msg'] = '?m=1';
 							
-							redirect(base_url() . 'revendedor/pesquisar/' . $data['query']['QuemCad'] . $data['msg']);
+							redirect(base_url() . 'revendedor/prontuario/' . $data['query']['idSis_Usuario'] . $data['msg']);
+							//redirect(base_url() . 'revendedor/pesquisar/' . $data['query']['QuemCad'] . $data['msg']);
 							exit();
 						}
 						
@@ -479,7 +481,7 @@ class Revendedor extends CI_Controller {
 				$data['select']['Sexo'] = $this->Basico_model->select_sexo();
 				$data['select']['Inativo'] = $this->Basico_model->select_inativo();
 				$data['select']['Funcao'] = $this->Funcao_model->select_funcao();
-				$data['titulo'] = 'Editar Revendedor';
+				$data['titulo'] = 'Editar Vendedor';
 				$data['form_open_path'] = 'revendedor/alterar';
 				$data['readonly'] = '';
 				$data['disabled'] = '';
@@ -598,7 +600,7 @@ class Revendedor extends CI_Controller {
 					
 				} else {
 
-					$data['titulo'] = 'Revendedor: ' . $data['query']['Nome'];
+					$data['titulo'] = 'Vendedor: ' . $data['query']['Nome'];
 					$data['panel'] = 'primary';
 					$data['metodo'] = 4;
 

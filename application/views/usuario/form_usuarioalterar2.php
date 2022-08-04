@@ -20,7 +20,7 @@
 												<div class="form-group">
 													<div class="row">
 														<div class="col-md-3">
-															<label for="Nome">Nome do Revendedor:</label>
+															<label for="Nome">Nome do Vendedor:</label>
 															<input type="text" class="form-control" id="Nome" maxlength="45" 
 																	autofocus name="Nome"  value="<?php echo $query['Nome']; ?>">
 															<?php echo form_error('Nome'); ?>
