@@ -52,7 +52,7 @@ class Relatoriocomissoes extends CI_Controller {
         $this->load->view('basico/footer');
     }
 
-	public function porservicos() {
+	public function porservicos_original() {
 		
 		unset($_SESSION['Filtro_Porservicos']);
 		/*				
@@ -127,13 +127,13 @@ class Relatoriocomissoes extends CI_Controller {
 			'nome',
 			'RecorrenciaOrca',
         ), TRUE));
-		
+		/*
 		if (!$data['query']['DataInicio8'])
            $data['query']['DataInicio8'] = date("d/m/Y", mktime(0,0,0,date('m'),'01',date('Y')));
 		
 		if (!$data['query']['DataFim8'])
            $data['query']['DataFim8'] = date("t/m/Y", mktime(0,0,0,date('m'),'01',date('Y')));
-		/*			
+					
 		if (!$data['query']['DataInicio'])
            $data['query']['DataInicio'] = date("d/m/Y", mktime(0,0,0,date('m'),date('d'),date('Y')));
 		
@@ -249,6 +249,7 @@ class Relatoriocomissoes extends CI_Controller {
 
 		//$data['select']['Funcionario'] = $this->Relatoriocomissoes_model->select_funcao();
 		$data['select']['Funcionario'] = $this->Relatoriocomissoes_model->select_funcionario();
+		
 		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
 		$data['select']['Categoria'] = $this->Relatorio_model->select_catprod();
 		$data['select']['Orcarec'] = $this->Relatorio_model->select_orcarec();
@@ -392,12 +393,13 @@ class Relatoriocomissoes extends CI_Controller {
             $data['bd']['idTab_TipoRD'] = $data['TipoRD'];
 			$data['bd']['RecorrenciaOrca'] = $data['query']['RecorrenciaOrca'];
 			
-			//$data['report'] = $this->Relatoriocomissoes_model->list_porservicos($data['bd'],TRUE);
-			$data['pesquisa_query'] = $this->Relatoriocomissoes_model->list_porservicos($data['bd'],TRUE, TRUE);
+			//$data['pesquisa_query'] = $this->Relatoriocomissoes_model->list_porservicos($data['bd'],TRUE, TRUE);
+			$data['pesquisa_query'] = $this->Relatorio_model->list_porservicos($data['bd'],TRUE, TRUE);
+			
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
-			//$config['total_rows'] = $this->Relatoriocomissoes_model->list_porservicos($data['bd'],TRUE, TRUE);
+			
 			$config['base_url'] = base_url() . 'relatorio_pag/porservicos_pag/';
-			//$this->load->library('pagination');
+
 			$config['per_page'] = 10;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -431,7 +433,8 @@ class Relatoriocomissoes extends CI_Controller {
 			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
             $data['pagina'] = $page;
 			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Relatoriocomissoes_model->list_porservicos($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+			//$data['report'] = $this->Relatoriocomissoes_model->list_porservicos($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));
+			$data['report'] = $this->Relatorio_model->list_porservicos($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
 			$data['pagination'] = $this->pagination->create_links();
 			
             $data['list1'] = $this->load->view('relatoriocomissoes/list_porservicos', $data, TRUE);

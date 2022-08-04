@@ -1012,7 +1012,7 @@ class Relatorio_pag extends CI_Controller {
 
     }
 
-	public function porservicos_pag() {
+	public function porservicos_pag_original() {
 		/*				
 		echo '<br>';
 		echo "<pre>";
@@ -1103,17 +1103,18 @@ class Relatorio_pag extends CI_Controller {
 		$data['edit'] = 'Orcatrata/baixadacobranca/';
 		$data['baixacomissao'] = 'Orcatrata/baixadacomissaoservico/';
 		$data['paginacao'] = 'S';
-		$data['caminho'] = 'relatoriocomissoes/porservicos/';
+		$data['caminho'] = 'relatorio_com/comissaoporservicos/';
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 		
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			$data['pesquisa_query'] = $this->Relatoriocomissoes_model->list_porservicos(FALSE,TRUE, TRUE);
+			//$data['pesquisa_query'] = $this->Relatoriocomissoes_model->list_porservicos(FALSE,TRUE, TRUE);
+			$data['pesquisa_query'] = $this->Relatorio_model->list_porservicos(FALSE,TRUE, TRUE);
+			
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
-			//$config['total_rows'] = $this->Relatoriocomissoes_model->list_porservicos(FALSE, TRUE, TRUE);
-			//$this->load->library('pagination');
+			
 			$config['base_url'] = base_url() . 'relatorio_pag/porservicos_pag/';
 			$config['per_page'] = 10;
 			$config["uri_segment"] = 3;
@@ -1148,7 +1149,8 @@ class Relatorio_pag extends CI_Controller {
 			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
             $data['pagina'] = $page;
 			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Relatoriocomissoes_model->list_porservicos(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+			//$data['report'] = $this->Relatoriocomissoes_model->list_porservicos(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));
+			$data['report'] = $this->Relatorio_model->list_porservicos(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
 			$data['pagination'] = $this->pagination->create_links();
 			
             $data['list1'] = $this->load->view('relatoriocomissoes/list_porservicos', $data, TRUE);

@@ -13,7 +13,7 @@ class Relatoriocomissoes_model extends CI_Model {
         $this->load->model(array('Basico_model'));
     }
 
-	public function list_porservicos($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+	public function list_porservicos_original($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		if($data != FALSE){
 			

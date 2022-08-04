@@ -191,15 +191,15 @@
 												</div>
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatoriocomissoes/porservicos" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span>Serviço x Funcionario
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_com/comissaofunc" role="button"> 
+															<span class="glyphicon glyphicon-usd"></span>Pedido x Supervisor
 														</a>
 													</div>	
 												</div>
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_com/comissaofunc" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span>Pedido x Supervisor
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_com/comissaoserv" role="button"> 
+															<span class="glyphicon glyphicon-usd"></span>Comissao x Serviço
 														</a>
 													</div>	
 												</div>
