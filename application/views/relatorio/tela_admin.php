@@ -178,14 +178,7 @@
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
 														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_com/comissao" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span>Pedido x Colaborador
-														</a>
-													</div>	
-												</div>
-												<div class="form-group col-md-12 text-left">
-													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_com/comissaoass" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span>Pedido x Associado
+															<span class="glyphicon glyphicon-usd"></span>Pedido x Vendedor
 														</a>
 													</div>	
 												</div>
@@ -193,6 +186,13 @@
 													<div class="row">										
 														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_com/comissaofunc" role="button"> 
 															<span class="glyphicon glyphicon-usd"></span>Pedido x Supervisor
+														</a>
+													</div>	
+												</div>
+												<div class="form-group col-md-12 text-left">
+													<div class="row">										
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_com/comissaoass" role="button"> 
+															<span class="glyphicon glyphicon-usd"></span>Pedido x Associado
 														</a>
 													</div>	
 												</div>

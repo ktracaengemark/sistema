@@ -192,7 +192,7 @@
 							<th class="active">Despesa</th>
 							<th class="active"><?php echo $nome ?></th>
 							<th class="active">Celular</th>
-							<th class="active">Quem/Cad</th>
+							<th class="active">Func/Cad</th>
 							<th class="active">Func/Recebeu</th>
 							<th class="active">Assoc/Recebeu</th>
 							<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>

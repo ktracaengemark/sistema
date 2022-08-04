@@ -12,7 +12,7 @@
 						<div class="col-md-12 ">
 							<div class="col-md-2 text-left">
 								<br>
-								<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>relatoriocomissoes/porservicos" role="button">
+								<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>relatorio_com/comissaoserv_pag" role="button">
 									<span class="glyphicon glyphicon-pencil"></span><?php echo $titulo; ?>
 								</a>
 							</div>

@@ -950,7 +950,7 @@ class Relatorio_com extends CI_Controller {
 							$data['recibo']['id_Funcionario'] 		= $_SESSION['FiltroComissao']['NomeUsuario'];
 							$data['recibo']['id_Associado']			= 0;
 							
-							$data['recibo']['TipoFinanceiro']		= 64;
+							$data['recibo']['TipoFinanceiro']		= 66;
 							$data['recibo']['Cli_Forn_Orca']		= "N";
 							$data['recibo']['Func_Orca']			= "S";
 							$data['recibo']['Prd_Srv_Orca']			= "N";
@@ -1965,7 +1965,7 @@ class Relatorio_com extends CI_Controller {
 							$data['recibo']['id_Funcionario'] 		= 0;
 							$data['recibo']['id_Associado'] 		= $_SESSION['FiltroComissaoAss']['NomeAssociado'];
 							
-							$data['recibo']['TipoFinanceiro']		= 64;
+							$data['recibo']['TipoFinanceiro']		= 68;
 							$data['recibo']['Cli_Forn_Orca']		= "N";
 							$data['recibo']['Func_Orca']			= "N";
 							$data['recibo']['Prd_Srv_Orca']			= "N";
@@ -2828,7 +2828,7 @@ class Relatorio_com extends CI_Controller {
 							$data['recibo']['id_Funcionario'] 		= $_SESSION['FiltroComissaoFunc']['NomeUsuario'];
 							$data['recibo']['id_Associado'] 		= 0;
 							
-							$data['recibo']['TipoFinanceiro']		= 64;
+							$data['recibo']['TipoFinanceiro']		= 67;
 							$data['recibo']['Cli_Forn_Orca']		= "N";
 							$data['recibo']['Func_Orca']			= "S";
 							$data['recibo']['Prd_Srv_Orca']			= "N";
@@ -3140,7 +3140,6 @@ class Relatorio_com extends CI_Controller {
             'DESC' => 'Decrescente',
         );
 
-		//$data['select']['Funcionario'] = $this->Relatoriocomissoes_model->select_funcao();
 		$data['select']['Funcionario'] = $this->Relatorio_model->select_funcionario();
 		
 		$data['select']['Produtos'] = $this->Relatorio_model->select_produtos();
@@ -3170,52 +3169,6 @@ class Relatorio_com extends CI_Controller {
 		$data['baixacomissao'] = 'Orcatrata/baixadacomissaoservico/';
 		$data['paginacao'] = 'N';
 		
-        $_SESSION['Filtro_Porservicos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-		$_SESSION['Filtro_Porservicos']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-        $_SESSION['Filtro_Porservicos']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
-		$_SESSION['Filtro_Porservicos']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
-        $_SESSION['Filtro_Porservicos']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
-		$_SESSION['Filtro_Porservicos']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
-        $_SESSION['Filtro_Porservicos']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
-		$_SESSION['Filtro_Porservicos']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');
-        $_SESSION['Filtro_Porservicos']['ObsOrca'] = $data['query']['ObsOrca'];
-		$_SESSION['Filtro_Porservicos']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
-		$_SESSION['Filtro_Porservicos']['StatusComissaoServico'] = $data['query']['StatusComissaoServico'];
-		$_SESSION['Filtro_Porservicos']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
-		$_SESSION['Filtro_Porservicos']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
-		$_SESSION['Filtro_Porservicos']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
-		$_SESSION['Filtro_Porservicos']['FinalizadoOrca'] = $data['query']['FinalizadoOrca'];
-		$_SESSION['Filtro_Porservicos']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
-		$_SESSION['Filtro_Porservicos']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
-		$_SESSION['Filtro_Porservicos']['Orcarec'] = $data['query']['Orcarec'];
-		$_SESSION['Filtro_Porservicos']['Orcades'] = $data['query']['Orcades'];
-		$_SESSION['Filtro_Porservicos']['FormaPagamento'] = $data['query']['FormaPagamento'];
-		$_SESSION['Filtro_Porservicos']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
-		$_SESSION['Filtro_Porservicos']['AVAP'] = $data['query']['AVAP'];
-		$_SESSION['Filtro_Porservicos']['TipoFrete'] = $data['query']['TipoFrete'];
-		//$_SESSION['Filtro_Porservicos']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
-		$_SESSION['Filtro_Porservicos']['TipoFinanceiro'] = $data['query']['TipoFinanceiro'];
-		$_SESSION['Filtro_Porservicos']['Orcamento'] = $data['query']['Orcamento'];
-		$_SESSION['Filtro_Porservicos']['Cliente'] = $data['query']['Cliente'];
-		$_SESSION['Filtro_Porservicos']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-		$_SESSION['Filtro_Porservicos']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
-		$_SESSION['Filtro_Porservicos']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
-		$_SESSION['Filtro_Porservicos']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
-		$_SESSION['Filtro_Porservicos']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
-		$_SESSION['Filtro_Porservicos']['Fornecedor'] = $data['query']['Fornecedor'];
-		$_SESSION['Filtro_Porservicos']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
-		$_SESSION['Filtro_Porservicos']['Funcionario'] = $data['query']['Funcionario'];
-		$_SESSION['Filtro_Porservicos']['Modalidade'] = $data['query']['Modalidade'];
-		$_SESSION['Filtro_Porservicos']['Produtos'] = $data['query']['Produtos'];
-		$_SESSION['Filtro_Porservicos']['Categoria'] = $data['query']['Categoria'];
-		$_SESSION['Filtro_Porservicos']['Campo'] = $data['query']['Campo'];
-		$_SESSION['Filtro_Porservicos']['Ordenamento'] = $data['query']['Ordenamento'];
-		$_SESSION['Filtro_Porservicos']['nome'] = $data['query']['nome'];
-		$_SESSION['Filtro_Porservicos']['Agrupar'] = $data['query']['Agrupar'];
-		$_SESSION['Filtro_Porservicos']['Ultimo'] = $data['query']['Ultimo'];
-		$_SESSION['Filtro_Porservicos']['metodo'] = $data['metodo'];
-		$_SESSION['Filtro_Porservicos']['idTab_TipoRD'] = $data['TipoRD'];
-		$_SESSION['Filtro_Porservicos']['RecorrenciaOrca'] = $data['query']['RecorrenciaOrca'];
 		/*				
 		echo '<br>';
 		echo "<pre>";
@@ -3238,7 +3191,7 @@ class Relatorio_com extends CI_Controller {
 		
         #run form validation
         if ($this->form_validation->run() !== FALSE) {
-
+			/*
             #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
             $data['bd']['Orcamento'] = $data['query']['Orcamento'];
             $data['bd']['Cliente'] = $data['query']['Cliente'];
@@ -3285,8 +3238,56 @@ class Relatorio_com extends CI_Controller {
 			$data['bd']['metodo'] = $data['metodo'];
             $data['bd']['idTab_TipoRD'] = $data['TipoRD'];
 			$data['bd']['RecorrenciaOrca'] = $data['query']['RecorrenciaOrca'];
-			
-			$data['pesquisa_query'] = $this->Relatorio_model->list_comissaoserv($data['bd'],TRUE, TRUE);
+			*/
+
+			$_SESSION['Filtro_Porservicos']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+			$_SESSION['Filtro_Porservicos']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+			$_SESSION['Filtro_Porservicos']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+			$_SESSION['Filtro_Porservicos']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+			$_SESSION['Filtro_Porservicos']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
+			$_SESSION['Filtro_Porservicos']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+			$_SESSION['Filtro_Porservicos']['DataInicio8'] = $this->basico->mascara_data($data['query']['DataInicio8'], 'mysql');
+			$_SESSION['Filtro_Porservicos']['DataFim8'] = $this->basico->mascara_data($data['query']['DataFim8'], 'mysql');
+			$_SESSION['Filtro_Porservicos']['ObsOrca'] = $data['query']['ObsOrca'];
+			$_SESSION['Filtro_Porservicos']['ConcluidoProduto'] = $data['query']['ConcluidoProduto'];
+			$_SESSION['Filtro_Porservicos']['StatusComissaoServico'] = $data['query']['StatusComissaoServico'];
+			$_SESSION['Filtro_Porservicos']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+			$_SESSION['Filtro_Porservicos']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
+			$_SESSION['Filtro_Porservicos']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
+			$_SESSION['Filtro_Porservicos']['FinalizadoOrca'] = $data['query']['FinalizadoOrca'];
+			$_SESSION['Filtro_Porservicos']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
+			$_SESSION['Filtro_Porservicos']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
+			$_SESSION['Filtro_Porservicos']['Orcarec'] = $data['query']['Orcarec'];
+			$_SESSION['Filtro_Porservicos']['Orcades'] = $data['query']['Orcades'];
+			$_SESSION['Filtro_Porservicos']['FormaPagamento'] = $data['query']['FormaPagamento'];
+			$_SESSION['Filtro_Porservicos']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
+			$_SESSION['Filtro_Porservicos']['AVAP'] = $data['query']['AVAP'];
+			$_SESSION['Filtro_Porservicos']['TipoFrete'] = $data['query']['TipoFrete'];
+			//$_SESSION['Filtro_Porservicos']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
+			$_SESSION['Filtro_Porservicos']['TipoFinanceiro'] = $data['query']['TipoFinanceiro'];
+			$_SESSION['Filtro_Porservicos']['Orcamento'] = $data['query']['Orcamento'];
+			$_SESSION['Filtro_Porservicos']['Cliente'] = $data['query']['Cliente'];
+			$_SESSION['Filtro_Porservicos']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+			$_SESSION['Filtro_Porservicos']['idApp_ClientePet'] = $data['query']['idApp_ClientePet'];
+			$_SESSION['Filtro_Porservicos']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
+			$_SESSION['Filtro_Porservicos']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
+			$_SESSION['Filtro_Porservicos']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
+			$_SESSION['Filtro_Porservicos']['Fornecedor'] = $data['query']['Fornecedor'];
+			$_SESSION['Filtro_Porservicos']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
+			$_SESSION['Filtro_Porservicos']['Funcionario'] = $data['query']['Funcionario'];
+			$_SESSION['Filtro_Porservicos']['Modalidade'] = $data['query']['Modalidade'];
+			$_SESSION['Filtro_Porservicos']['Produtos'] = $data['query']['Produtos'];
+			$_SESSION['Filtro_Porservicos']['Categoria'] = $data['query']['Categoria'];
+			$_SESSION['Filtro_Porservicos']['Campo'] = $data['query']['Campo'];
+			$_SESSION['Filtro_Porservicos']['Ordenamento'] = $data['query']['Ordenamento'];
+			$_SESSION['Filtro_Porservicos']['nome'] = $data['query']['nome'];
+			$_SESSION['Filtro_Porservicos']['Agrupar'] = $data['query']['Agrupar'];
+			$_SESSION['Filtro_Porservicos']['Ultimo'] = $data['query']['Ultimo'];
+			$_SESSION['Filtro_Porservicos']['metodo'] = $data['metodo'];
+			$_SESSION['Filtro_Porservicos']['idTab_TipoRD'] = $data['TipoRD'];
+			$_SESSION['Filtro_Porservicos']['RecorrenciaOrca'] = $data['query']['RecorrenciaOrca'];
+				
+			$data['pesquisa_query'] = $this->Relatorio_model->list_comissaoserv($_SESSION['Filtro_Porservicos'],TRUE, TRUE);
 			
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			
@@ -3325,7 +3326,7 @@ class Relatorio_com extends CI_Controller {
 			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
             $data['pagina'] = $page;
 			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Relatorio_model->list_comissaoserv($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+			$data['report'] = $this->Relatorio_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
 			$data['pagination'] = $this->pagination->create_links();
 			
             $data['list1'] = $this->load->view('relatorio_com/list_comissaoserv', $data, TRUE);
@@ -3354,64 +3355,7 @@ class Relatorio_com extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-			'id_ClientePet_Auto',
-			'NomeClientePetAuto',
-			'id_ClienteDep_Auto',
-			'NomeClienteDepAuto',
-        ), TRUE));	
-		
-        $data['query'] = quotes_to_entities($this->input->post(array(
-            'Orcamento',
-            'Cliente',
-			'idApp_Cliente',
-			'idApp_ClientePet',
-			'idApp_ClientePet2',
-			'idApp_ClienteDep',
-			'idApp_ClienteDep2',
-			'Fornecedor',
-			'idApp_Fornecedor',
-			'Funcionario',
-			'Produtos',
-			'Parcelas',
-			'Categoria',
-			'Tipo_Orca',
-			'AVAP',
-			'TipoFinanceiro',
-			'idTab_TipoRD',
-            'DataInicio',
-            'DataFim',
-			'DataInicio2',
-            'DataFim2',
-			'DataInicio7',
-            'DataFim7',
-			'DataInicio8',
-            'DataFim8',
-			'Ordenamento',
-            'Campo',
-			'ObsOrca',
-            'AprovadoOrca',
-            'QuitadoOrca',
-			'ConcluidoOrca',
-			'FinalizadoOrca',
-			'CanceladoOrca',
-			'CombinadoFrete',
-			'ConcluidoProduto',
-			'StatusComissaoServico',
-			'Modalidade',
-			'Orcarec',
-			'Orcades',
-			'FormaPagamento',
-			'TipoFrete',
-			'Agrupar',
-			'Ultimo',
-			'nome',
-			'RecorrenciaOrca',
-        ), TRUE));
-		
+
 		$data['query']['nome'] = 'Cliente';
         $data['titulo1'] = 'Vendidos';
 		$data['metodo'] = 2;
@@ -3435,7 +3379,7 @@ class Relatorio_com extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			$data['pesquisa_query'] = $this->Relatorio_model->list_comissaoserv(FALSE,TRUE, TRUE);
+			$data['pesquisa_query'] = $this->Relatorio_model->list_comissaoserv($_SESSION['Filtro_Porservicos'],TRUE, TRUE);
 			
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			
@@ -3473,7 +3417,7 @@ class Relatorio_com extends CI_Controller {
 			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
             $data['pagina'] = $page;
 			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Relatorio_model->list_comissaoserv(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+			$data['report'] = $this->Relatorio_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
 			$data['pagination'] = $this->pagination->create_links();
 			
             $data['list1'] = $this->load->view('relatorio_com/list_comissaoserv', $data, TRUE);
