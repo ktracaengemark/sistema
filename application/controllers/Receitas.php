@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Relatorio_rec extends CI_Controller {
+class Receitas extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -273,13 +273,13 @@ class Relatorio_rec extends CI_Controller {
 
 		$data['query']['nome'] = 'Cliente';
         $data['titulo'] = 'Receitas';
-		$data['form_open_path'] = 'relatorio_rec/receitas';
-		$data['baixatodas'] = 'Relatorio_rec/receitas_baixa/';
-		$data['editartodas'] = 'relatorio_rec/receitas/';
+		$data['form_open_path'] = 'receitas/receitas';
+		$data['baixatodas'] = 'Receitas/receitas_baixa/';
+		$data['editartodas'] = 'receitas/receitas/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
         $data['nomeusuario'] = 'NomeColaborador';
         $data['status'] = 'StatusComissaoOrca';
-		$data['alterar'] = 'relatorio_rec/baixadasreceitas/';
+		$data['alterar'] = 'receitas/baixadasreceitas/';
 		$data['editar'] = 2;
 		$data['metodo'] = 3;
 		$data['panel'] = 'info';
@@ -367,13 +367,13 @@ class Relatorio_rec extends CI_Controller {
 			if($data['pesquisa_query'] === FALSE){
 				
 				$data['msg'] = '?m=4';
-				redirect(base_url() . 'relatorio_rec/receitas' . $data['msg']);
+				redirect(base_url() . 'receitas/receitas' . $data['msg']);
 				exit();
 			}else{
 
 				$config['total_rows'] = $data['pesquisa_query']->num_rows();			
 				
-				$config['base_url'] = base_url() . 'relatorio_rec/receitas_pag/';
+				$config['base_url'] = base_url() . 'receitas/receitas_pag/';
 				$config['per_page'] = 19;
 				$config["uri_segment"] = 3;
 				$config['reuse_query_string'] = TRUE;
@@ -426,11 +426,11 @@ class Relatorio_rec extends CI_Controller {
 
 				$data['pagination'] = $this->pagination->create_links();
 				
-				$data['list1'] = $this->load->view('relatorio_rec/list_receitas', $data, TRUE);
+				$data['list1'] = $this->load->view('receitas/list_receitas', $data, TRUE);
 			}	
         }		
 
-        $this->load->view('relatorio_rec/tela_receitas', $data);
+        $this->load->view('receitas/tela_receitas', $data);
 
         $this->load->view('basico/footer');
 
@@ -446,12 +446,12 @@ class Relatorio_rec extends CI_Controller {
             $data['msg'] = '';
 	
         $data['titulo'] = 'Receitas';
-		$data['form_open_path'] = 'relatorio_rec/receitas_pag';
-		$data['baixatodas'] = 'Relatorio_rec/receitas_baixa/';
+		$data['form_open_path'] = 'receitas/receitas_pag';
+		$data['baixatodas'] = 'Receitas/receitas_baixa/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
         $data['nomeusuario'] = 'NomeColaborador';
         $data['status'] = 'StatusComissaoOrca';
-		$data['alterar'] = 'relatorio_rec/receitas/';
+		$data['alterar'] = 'receitas/receitas/';
 		$data['editar'] = 2;
 		$data['metodo'] = 3;
 		$data['panel'] = 'info';
@@ -466,7 +466,7 @@ class Relatorio_rec extends CI_Controller {
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		
 		$data['paginacao'] = 'S';
-		$data['caminho'] = 'relatorio_rec/receitas/';
+		$data['caminho'] = 'receitas/receitas/';
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 		
@@ -477,13 +477,13 @@ class Relatorio_rec extends CI_Controller {
 			if($data['pesquisa_query'] === FALSE){
 				
 				$data['msg'] = '?m=4';
-				redirect(base_url() . 'relatorio_rec/receitas' . $data['msg']);
+				redirect(base_url() . 'receitas/receitas' . $data['msg']);
 				exit();
 			}else{
 
 				$config['total_rows'] = $data['pesquisa_query']->num_rows();
 				
-				$config['base_url'] = base_url() . 'relatorio_rec/receitas_pag/';
+				$config['base_url'] = base_url() . 'receitas/receitas_pag/';
 				$config['per_page'] = 19;
 				$config["uri_segment"] = 3;
 				$config['reuse_query_string'] = TRUE;
@@ -529,11 +529,11 @@ class Relatorio_rec extends CI_Controller {
 							
 				$data['pagination'] = $this->pagination->create_links();
 
-				$data['list1'] = $this->load->view('relatorio_rec/list_receitas', $data, TRUE);
+				$data['list1'] = $this->load->view('receitas/list_receitas', $data, TRUE);
 			}
        		
 
-        $this->load->view('relatorio_rec/tela_receitas', $data);
+        $this->load->view('receitas/tela_receitas', $data);
 
         $this->load->view('basico/footer');
 
@@ -581,11 +581,11 @@ class Relatorio_rec extends CI_Controller {
 		if($data['report'] === FALSE){
 			
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'relatorio_rec/receitas' . $data['msg']);
+			redirect(base_url() . 'receitas/receitas' . $data['msg']);
 			exit();
 		}else{
 
-			$data['list1'] = $this->load->view('Relatorio_rec/list_receitas_excel', $data, TRUE);
+			$data['list1'] = $this->load->view('Receitas/list_receitas_excel', $data, TRUE);
 		}
 
         $this->load->view('basico/footer');
@@ -602,12 +602,12 @@ class Relatorio_rec extends CI_Controller {
             $data['msg'] = '';
 		
         $data['titulo'] = 'Receitas';
-		$data['form_open_path'] = 'Relatorio_rec/receitas_lista';
-		$data['baixatodas'] = 'Relatorio_rec/receitas_baixa/';
+		$data['form_open_path'] = 'Receitas/receitas_lista';
+		$data['baixatodas'] = 'Receitas/receitas_baixa/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
         $data['nomeusuario'] = 'NomeColaborador';
         $data['status'] = 'StatusComissaoOrca';
-		$data['alterar'] = 'relatorio_rec/receitas/';
+		$data['alterar'] = 'receitas/receitas/';
 		$data['editar'] = 2;
 		$data['metodo'] = 3;
 		$data['panel'] = 'info';
@@ -622,7 +622,7 @@ class Relatorio_rec extends CI_Controller {
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		
 		$data['paginacao'] = 'S';
-		$data['caminho'] = 'relatorio_rec/receitas/';
+		$data['caminho'] = 'receitas/receitas/';
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 		
@@ -633,13 +633,13 @@ class Relatorio_rec extends CI_Controller {
 			if($data['pesquisa_query'] === FALSE){
 				
 				$data['msg'] = '?m=4';
-				redirect(base_url() . 'relatorio_rec/receitas' . $data['msg']);
+				redirect(base_url() . 'receitas/receitas' . $data['msg']);
 				exit();
 			}else{
 
 				$config['total_rows'] = $data['pesquisa_query']->num_rows();
 				
-				$config['base_url'] = base_url() . 'Relatorio_rec/receitas_lista/';
+				$config['base_url'] = base_url() . 'Receitas/receitas_lista/';
 				$config['per_page'] = 19;
 				$config["uri_segment"] = 3;
 				$config['reuse_query_string'] = TRUE;
@@ -685,11 +685,11 @@ class Relatorio_rec extends CI_Controller {
 							
 				$data['pagination'] = $this->pagination->create_links();
 
-				$data['list1'] = $this->load->view('Relatorio_rec/list_receitas_lista', $data, TRUE);
+				$data['list1'] = $this->load->view('Receitas/list_receitas_lista', $data, TRUE);
 			}
         		
 
-        $this->load->view('relatorio_rec/tela_receitas', $data);
+        $this->load->view('receitas/tela_receitas', $data);
 
         $this->load->view('basico/footer');
 
@@ -759,7 +759,7 @@ class Relatorio_rec extends CI_Controller {
 					if($data['pesquisa_query'] === FALSE){
 						
 						$data['msg'] = '?m=4';
-						redirect(base_url() . 'relatorio_rec/receitas' . $data['msg']);
+						redirect(base_url() . 'receitas/receitas' . $data['msg']);
 						exit();
 					}else{
 
@@ -767,7 +767,7 @@ class Relatorio_rec extends CI_Controller {
 						
 						$_SESSION['FiltroReceitas']['TotalRows'] = $config['total_rows'] = $data['pesquisa_query']->num_rows();
 						
-						$config['base_url'] = base_url() . 'Relatorio_rec/receitas_baixa/' . $id . '/';	
+						$config['base_url'] = base_url() . 'Receitas/receitas_baixa/' . $id . '/';	
 						$config['per_page'] = 19;
 						$config["uri_segment"] = 4;
 						$config['reuse_query_string'] = TRUE;
@@ -869,8 +869,8 @@ class Relatorio_rec extends CI_Controller {
 				$data['select']['FinalizadoOrca'] = $this->Basico_model->select_status_sn();
 				
 				$data['titulo'] = 'Baixa das Receitas';
-				$data['form_open_path'] = 'relatorio_rec/receitas_baixa';
-				$data['relatorio'] = 'relatorio_rec/receitas_pag/';
+				$data['form_open_path'] = 'receitas/receitas_baixa';
+				$data['relatorio'] = 'receitas/receitas_pag/';
 				$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
 				$data['nomeusuario'] = 'NomeColaborador';
 				$data['readonly'] = '';
@@ -909,7 +909,7 @@ class Relatorio_rec extends CI_Controller {
 				#run form validation
 				if ($this->form_validation->run() === FALSE) {
 					
-					$this->load->view('relatorio_rec/form_receitas_baixa', $data);
+					$this->load->view('receitas/form_receitas_baixa', $data);
 					
 				} else {
 
@@ -1057,7 +1057,7 @@ class Relatorio_rec extends CI_Controller {
 						
 						unset($_SESSION['FiltroReceitas']['SomaTotal']);
 
-						redirect(base_url() . 'relatorio_rec/receitas_baixa/' . $_SESSION['log']['idSis_Empresa'] . '/' . $_SESSION['FiltroReceitas']['Pagina_atual'] . $data['msg']);
+						redirect(base_url() . 'receitas/receitas_baixa/' . $_SESSION['log']['idSis_Empresa'] . '/' . $_SESSION['FiltroReceitas']['Pagina_atual'] . $data['msg']);
 
 						exit();	
 					}
