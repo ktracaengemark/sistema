@@ -93,7 +93,7 @@
 										<label for=""><h4><b>Pagamentos</b></h4></label>
 										<div class="form-group col-md-12 text-left">
 											<div class="row">										
-												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_cob/cobrancas" role="button"> 
+												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>cobrancas/cobrancas" role="button"> 
 													<span class="glyphicon glyphicon-usd"></span> Parcelas
 												</a>
 											</div>	
@@ -112,7 +112,7 @@
 											<label for=""><h4><b>Pagamentos</b></h4></label>
 											<div class="form-group col-md-12 text-left">
 												<div class="row">										
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_cob/cobrancas" role="button"> 
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>cobrancas/cobrancas" role="button"> 
 														<span class="glyphicon glyphicon-usd"></span> Parcelas
 													</a>
 												</div>	
@@ -308,7 +308,7 @@
 										<label for=""><h4><b>Pagamentos</b></h4></label>	
 										<div class="form-group col-md-12 text-left">
 											<div class="row">										
-												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/debitos" role="button"> 
+												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Debitos/debitos" role="button"> 
 													<span class="glyphicon glyphicon-usd"></span> Parcelas
 												</a>
 											</div>	
@@ -327,7 +327,7 @@
 											<label for=""><h4><b>Pagamentos</b></h4></label>	
 											<div class="form-group col-md-12 text-left">
 												<div class="row">										
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/debitos" role="button"> 
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Debitos/debitos" role="button"> 
 														<span class="glyphicon glyphicon-usd"></span> Parcelas
 													</a>
 												</div>	

@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Relatorio_cob extends CI_Controller {
+class Cobrancas extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -47,7 +47,7 @@ class Relatorio_cob extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $this->load->view('relatorio_cob/tela_index', $data);
+        $this->load->view('Cobrancas/tela_index', $data);
 
         #load footer view
         $this->load->view('basico/footer');
@@ -308,7 +308,7 @@ class Relatorio_cob extends CI_Controller {
 		$data['query']['nome'] = 'Cliente';
         $data['titulo1'] = 'Receitas';
 		$data['metodo'] = 2;
-		$data['form_open_path'] = 'relatorio_cob/cobrancas';
+		$data['form_open_path'] = 'Cobrancas/cobrancas';
 		$data['panel'] = 'info';
 		$data['TipoFinanceiro'] = 'Receitas';
 		$data['TipoRD'] = 2;
@@ -316,10 +316,10 @@ class Relatorio_cob extends CI_Controller {
 		$data['editar'] = 1;
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'Relatorio_cob/cobrancas_lista/';
-		$data['imprimirrecibo'] = 'Relatorio_cob/cobrancas_recibo/';
+		$data['imprimirlista'] = 'Cobrancas/cobrancas_lista/';
+		$data['imprimirrecibo'] = 'Cobrancas/cobrancas_recibo/';
 		$data['edit'] = 'Orcatrata/baixadacobranca/';
-		$data['alterarparc'] = 'Relatorio_cob/cobrancas_baixa/';	
+		$data['alterarparc'] = 'Cobrancas/cobrancas_baixa/';	
 		$data['paginacao'] = 'N';	
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -395,13 +395,13 @@ class Relatorio_cob extends CI_Controller {
 			if($data['pesquisa_query'] === FALSE){
 				
 				$data['msg'] = '?m=4';
-				redirect(base_url() . 'relatorio_cob/cobrancas' . $data['msg']);
+				redirect(base_url() . 'Cobrancas/cobrancas' . $data['msg']);
 				exit();
 			}else{
 
 				$config['total_rows'] = $data['pesquisa_query']->num_rows();
 
-				$config['base_url'] = base_url() . 'relatorio_cob/cobrancas_pag/';
+				$config['base_url'] = base_url() . 'Cobrancas/cobrancas_pag/';
 
 				$config['per_page'] = 12;
 				$config["uri_segment"] = 3;
@@ -452,11 +452,11 @@ class Relatorio_cob extends CI_Controller {
 
 				$data['pagination'] = $this->pagination->create_links();
 
-				$data['list1'] = $this->load->view('relatorio_cob/list_cobrancas', $data, TRUE);
+				$data['list1'] = $this->load->view('Cobrancas/list_cobrancas', $data, TRUE);
 			}
         }
 
-        $this->load->view('relatorio_cob/tela_cobrancas', $data);
+        $this->load->view('Cobrancas/tela_cobrancas', $data);
 
         $this->load->view('basico/footer');
 
@@ -473,7 +473,7 @@ class Relatorio_cob extends CI_Controller {
 		
         $data['titulo1'] = 'Parcelas das Receitas';
 		$data['metodo'] = 2;
-		$data['form_open_path'] = 'relatorio_cob/cobrancas_pag';
+		$data['form_open_path'] = 'Cobrancas/cobrancas_pag';
 		$data['panel'] = 'info';
 		$data['TipoFinanceiro'] = 'Receitas';
 		$data['TipoRD'] = 2;
@@ -481,12 +481,12 @@ class Relatorio_cob extends CI_Controller {
 		$data['editar'] = 1;
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'Relatorio_cob/cobrancas_lista/';
-		$data['imprimirrecibo'] = 'Relatorio_cob/cobrancas_recibo/';
+		$data['imprimirlista'] = 'Cobrancas/cobrancas_lista/';
+		$data['imprimirrecibo'] = 'Cobrancas/cobrancas_recibo/';
 		$data['edit'] = 'Orcatrata/baixadacobranca/';
-		$data['alterarparc'] = 'Relatorio_cob/cobrancas_baixa/';	
+		$data['alterarparc'] = 'Cobrancas/cobrancas_baixa/';	
 		$data['paginacao'] = 'S';
-		$data['caminho'] = 'relatorio_cob/cobrancas/';
+		$data['caminho'] = 'Cobrancas/cobrancas/';
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #run form validation
@@ -496,11 +496,11 @@ class Relatorio_cob extends CI_Controller {
 		if($data['pesquisa_query'] === FALSE){
 			
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'relatorio_cob/cobrancas' . $data['msg']);
+			redirect(base_url() . 'Cobrancas/cobrancas' . $data['msg']);
 			exit();
 		}else{
 
-			$config['base_url'] = base_url() . 'relatorio_cob/cobrancas_pag/';
+			$config['base_url'] = base_url() . 'Cobrancas/cobrancas_pag/';
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			$config['per_page'] = 12;
 			$config["uri_segment"] = 3;
@@ -543,10 +543,10 @@ class Relatorio_cob extends CI_Controller {
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-            $data['list1'] = $this->load->view('relatorio_cob/list_cobrancas', $data, TRUE);
+            $data['list1'] = $this->load->view('Cobrancas/list_cobrancas', $data, TRUE);
        
 		}
-        $this->load->view('relatorio_cob/tela_cobrancas', $data);
+        $this->load->view('Cobrancas/tela_cobrancas', $data);
 
         $this->load->view('basico/footer');
 
@@ -604,11 +604,11 @@ class Relatorio_cob extends CI_Controller {
 		if($data['report'] === FALSE){
 			
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'relatorio_cob/cobrancas' . $data['msg']);
+			redirect(base_url() . 'Cobrancas/cobrancas' . $data['msg']);
 			exit();
 		}else{
 
-			$data['list1'] = $this->load->view('Relatorio_cob/list_cobrancas_excel', $data, TRUE);
+			$data['list1'] = $this->load->view('Cobrancas/list_cobrancas_excel', $data, TRUE);
 		}
 
         $this->load->view('basico/footer');
@@ -648,14 +648,14 @@ class Relatorio_cob extends CI_Controller {
 				if($data['pesquisa_query'] === FALSE){
 					
 					$data['msg'] = '?m=4';
-					redirect(base_url() . 'relatorio_cob/cobrancas' . $data['msg']);
+					redirect(base_url() . 'Cobrancas/cobrancas' . $data['msg']);
 					exit();
 				}else{
 					
 					//$config['total_rows'] = $data['pesquisa_query'];
 					
 					$config['total_rows'] = $data['pesquisa_query']->num_rows();
-					$config['base_url'] = base_url() . 'Relatorio_cob/cobrancas_lista/' . $id . '/';
+					$config['base_url'] = base_url() . 'Cobrancas/cobrancas_lista/' . $id . '/';
 					$config['per_page'] = 19;
 					$config["uri_segment"] = 4;
 					$config['reuse_query_string'] = TRUE;
@@ -794,12 +794,12 @@ class Relatorio_cob extends CI_Controller {
 					}
 
 					$data['titulo'] = 'Versão Lista Cobrança';
-					$data['form_open_path'] = 'Relatorio_cob/cobrancas_lista';
+					$data['form_open_path'] = 'Cobrancas/cobrancas_lista';
 					$data['panel'] = 'info';
 					$data['metodo'] = 1;
 					$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-					$data['imprimirlista'] = 'Relatorio_cob/cobrancas_lista/';
-					$data['imprimirrecibo'] = 'Relatorio_cob/cobrancas_recibo/';
+					$data['imprimirlista'] = 'Cobrancas/cobrancas_lista/';
+					$data['imprimirrecibo'] = 'Cobrancas/cobrancas_recibo/';
 					
 					/*
 					  echo '<br>';
@@ -809,7 +809,7 @@ class Relatorio_cob extends CI_Controller {
 					  #exit ();
 					 */
 
-					$this->load->view('Relatorio_cob/list_cobrancas_lista', $data);
+					$this->load->view('Cobrancas/list_cobrancas_lista', $data);
 				}
 			}	
 		}
@@ -849,13 +849,13 @@ class Relatorio_cob extends CI_Controller {
 				if($data['pesquisa_query'] === FALSE){
 					
 					$data['msg'] = '?m=4';
-					redirect(base_url() . 'relatorio_cob/cobrancas' . $data['msg']);
+					redirect(base_url() . 'Cobrancas/cobrancas' . $data['msg']);
 					exit();
 				}else{
 
 					//$config['total_rows'] = $data['pesquisa_query'];
 					$config['total_rows'] = $data['pesquisa_query']->num_rows();
-					$config['base_url'] = base_url() . 'Relatorio_cob/cobrancas_recibo/' . $id . '/';
+					$config['base_url'] = base_url() . 'Cobrancas/cobrancas_recibo/' . $id . '/';
 					$config['per_page'] = 12;
 					$config["uri_segment"] = 4;
 					$config['reuse_query_string'] = TRUE;
@@ -977,12 +977,12 @@ class Relatorio_cob extends CI_Controller {
 					}
 
 					$data['titulo'] = 'Versão Recibo Cobrança';
-					$data['form_open_path'] = 'Relatorio_cob/cobrancas_recibo';
+					$data['form_open_path'] = 'Cobrancas/cobrancas_recibo';
 					$data['panel'] = 'info';
 					$data['metodo'] = 1;
 					$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-					$data['imprimirlista'] = 'Relatorio_cob/cobrancas_lista/';
-					$data['imprimirrecibo'] = 'Relatorio_cob/cobrancas_recibo/';		
+					$data['imprimirlista'] = 'Cobrancas/cobrancas_lista/';
+					$data['imprimirrecibo'] = 'Cobrancas/cobrancas_recibo/';		
 					
 
 					/*
@@ -993,7 +993,7 @@ class Relatorio_cob extends CI_Controller {
 					  #exit ();
 					 */
 
-					$this->load->view('Relatorio_cob/list_cobrancas_recibo', $data);			
+					$this->load->view('Cobrancas/list_cobrancas_recibo', $data);			
 				}
 			}
 		}
@@ -1072,12 +1072,12 @@ class Relatorio_cob extends CI_Controller {
 					if($data['pesquisa_query'] === FALSE){
 						
 						$data['msg'] = '?m=4';
-						redirect(base_url() . 'relatorio_cob/cobrancas' . $data['msg']);
+						redirect(base_url() . 'Cobrancas/cobrancas' . $data['msg']);
 						exit();
 					}else{
 
 						$config['total_rows'] = $data['pesquisa_query']->num_rows();
-						$config['base_url'] = base_url() . 'Relatorio_cob/cobrancas_baixa/' . $id . '/';
+						$config['base_url'] = base_url() . 'Cobrancas/cobrancas_baixa/' . $id . '/';
 						$config['per_page'] = 19;
 						$config["uri_segment"] = 4;
 						$config['reuse_query_string'] = TRUE;
@@ -1169,7 +1169,7 @@ class Relatorio_cob extends CI_Controller {
 				$data['select']['Quitado'] = $this->Basico_model->select_status_sn();
 				
 				$data['titulo'] = 'Receitas';
-				$data['form_open_path'] = 'Relatorio_cob/cobrancas_baixa';
+				$data['form_open_path'] = 'Cobrancas/cobrancas_baixa';
 				$data['readonly'] = 'readonly=""';
 				$data['disabled'] = '';
 				$data['panel'] = 'info';
@@ -1217,7 +1217,7 @@ class Relatorio_cob extends CI_Controller {
 						
 				#run form validation
 				if ($this->form_validation->run() === FALSE) {
-					$this->load->view('Relatorio_cob/form_cobrancas_baixa', $data);
+					$this->load->view('Cobrancas/form_cobrancas_baixa', $data);
 				} else {
 
 					if($this->Basico_model->get_dt_validade() === FALSE){
@@ -1377,7 +1377,7 @@ class Relatorio_cob extends CI_Controller {
 
 						$data['msg'] = '?m=1';
 						
-						redirect(base_url() . 'Relatorio_cob/cobrancas_baixa/' . $_SESSION['log']['idSis_Empresa'] . '/' . $_SESSION['FiltroCobrancas']['Pagina_atual'] . $data['msg']);
+						redirect(base_url() . 'Cobrancas/cobrancas_baixa/' . $_SESSION['log']['idSis_Empresa'] . '/' . $_SESSION['FiltroCobrancas']['Pagina_atual'] . $data['msg']);
 						exit();
 						
 					}

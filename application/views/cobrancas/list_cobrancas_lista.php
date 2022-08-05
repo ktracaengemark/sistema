@@ -19,7 +19,7 @@
 					<a type="button" class="col-md-3 btn btn-md btn-default " href="javascript:window.print()">
 						<span class="glyphicon glyphicon-print"></span>
 					</a>
-					<a type="button" class="col-md-3 btn btn-md btn-warning "  href="<?php echo base_url() ?>relatorio_cob/cobrancas_pag">
+					<a type="button" class="col-md-3 btn btn-md btn-warning "  href="<?php echo base_url() ?>Cobrancas/cobrancas_pag">
 						<span class="glyphicon glyphicon-edit"></span>
 					</a>
 				</div>
