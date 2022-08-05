@@ -26,7 +26,7 @@
 				-->
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-8 btn-menu btn-group ">
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
-						<a type="button" class="btn btn-secondary btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Pesquisar Clientes"  href="<?php echo base_url() ?>relatorio/clientes" role="button">
+						<a type="button" class="btn btn-secondary btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Pesquisar Clientes"  href="<?php echo base_url() ?>Cliente/clientes" role="button">
 							<span class="glyphicon glyphicon-user"></span> Pesquisar
 						</a>
 						<!--<div class="btn-group" role="group">-->
@@ -34,9 +34,9 @@
 								 Clientes <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="<?php echo base_url() ?>relatorio/clientes"><span class="glyphicon glyphicon-user"></span> Pesquisar Clientes</a></li>
+								<li><a href="<?php echo base_url() ?>Cliente/clientes"><span class="glyphicon glyphicon-user"></span> Pesquisar Clientes</a></li>
 								<li role="separator" class="divider"></li>
-								<li><a href="<?php echo base_url() ?>relatorio/rankingvendas"><span class="glyphicon glyphicon-usd"></span> Ranking & CashBack</a></li>
+								<li><a href="<?php echo base_url() ?>Cliente/rankingvendas"><span class="glyphicon glyphicon-usd"></span> Ranking & CashBack</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>relatorio/sac"><span class="glyphicon glyphicon-pencil"></span> Sac</a></li>
 								<li role="separator" class="divider"></li>

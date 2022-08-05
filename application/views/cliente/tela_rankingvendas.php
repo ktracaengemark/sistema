@@ -1,6 +1,5 @@
 <?php if ($msg) echo $msg; ?>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<!--<?php #echo form_open('relatorio/rankingvendas', 'role="form"'); ?>-->
 	<?php echo form_open($form_open_path, 'role="form"'); ?>
 	<?php echo validation_errors(); ?>
 	<div class="panel panel-primary">
