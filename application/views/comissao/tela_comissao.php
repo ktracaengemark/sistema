@@ -1,5 +1,5 @@
 <?php if ($msg) echo $msg; ?>
-<!--<?php #echo form_open('relatorio_com/comissao', 'role="form"'); ?>-->
+<!--<?php #echo form_open('Comissao/comissao', 'role="form"'); ?>-->
 <?php echo form_open($form_open_path, 'role="form"'); ?>
 <div class="col-md-12 ">		
 	<?php echo validation_errors(); ?>
@@ -28,7 +28,7 @@
 											<span class="glyphicon glyphicon-search"></span> 
 										</button>
 									</span>
-									<input type="text" placeholder="Nº Recibo" class="form-control Numero btn-sm" name="id_ComissaoFunc" id="id_ComissaoFunc" value="<?php echo set_value('id_ComissaoFunc', $query['id_ComissaoFunc']); ?>">
+									<input type="text" placeholder="Nº Recibo" class="form-control Numero btn-sm" name="id_Comissao" id="id_Comissao" value="<?php echo set_value('id_Comissao', $query['id_Comissao']); ?>">
 								</div>
 							</div>
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
@@ -70,7 +70,7 @@
 									</div>
 									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-left">
 										<label>Excel</label><br>
-										<a href="<?php echo base_url() . 'Relatorio_com/comissao_excel/1'; ?>">
+										<a href="<?php echo base_url() . 'Comissao/comissao_excel/1'; ?>">
 											<button type='button' class='btn btn-md btn-success btn-block'>
 												S/<span class="glyphicon glyphicon-filter"></span>
 											</button>
@@ -80,7 +80,7 @@
 							</div>
 							<?php if ($_SESSION['Usuario']['Permissao_Comissao'] >= 2 ) { ?>
 								<div class="col-md-4 text-left">
-									<label for="NomeUsuario">Supervisor:</label>
+									<label for="NomeUsuario">Vendedor:</label>
 									<div class="input-group">
 										<span class="input-group-btn">
 											<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
@@ -188,12 +188,12 @@
 								</div>	
 								<div class="row">
 									<div class="col-md-3 text-left">
-										<label for="StatusComissaoFunc">Status Comissão:</label>
+										<label for="StatusComissaoOrca">Status Comissão:</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block" 
-												id="StatusComissaoFunc" name="StatusComissaoFunc">
+												id="StatusComissaoOrca" name="StatusComissaoOrca">
 											<?php
-											foreach ($select['StatusComissaoFunc'] as $key => $row) {
-												if ($query['StatusComissaoFunc'] == $key) {
+											foreach ($select['StatusComissaoOrca'] as $key => $row) {
+												if ($query['StatusComissaoOrca'] == $key) {
 													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 												} else {
 													echo '<option value="' . $key . '">' . $row . '</option>';

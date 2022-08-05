@@ -160,7 +160,7 @@
 								<?php if($_SESSION['log']['idSis_Empresa'] == "5") {?>
 									<div class="col-md-12">											
 										<label for=""><h4><b>Comissões</b></h4></label>
-										<?php if($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Permissao_Comissao'] >= 2) {?>
+										<?php /* if($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Permissao_Comissao'] >= 2) {?>
 											<div class="form-group col-md-12 text-left">
 												<div class="row">										
 													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/comissao_online" role="button"> 
@@ -168,7 +168,7 @@
 													</a>
 												</div>	
 											</div>
-										<?php }?>
+										<?php } */?>
 									</div>
 								<?php }else{ ?>
 									<?php if($_SESSION['Usuario']['Rel_Com'] == "S") {?>	
@@ -177,28 +177,28 @@
 											<?php if($_SESSION['log']['idSis_Empresa'] != 5) {?>
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_com/comissao" role="button"> 
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/comissao" role="button"> 
 															<span class="glyphicon glyphicon-usd"></span>Pedido x Vendedor
 														</a>
 													</div>	
 												</div>
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_com/comissaofunc" role="button"> 
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/comissaofunc" role="button"> 
 															<span class="glyphicon glyphicon-usd"></span>Pedido x Supervisor
 														</a>
 													</div>	
 												</div>
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_com/comissaoass" role="button"> 
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/comissaoass" role="button"> 
 															<span class="glyphicon glyphicon-usd"></span>Pedido x Associado
 														</a>
 													</div>	
 												</div>
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_com/comissaoserv" role="button"> 
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/comissaoserv" role="button"> 
 															<span class="glyphicon glyphicon-usd"></span>Comissao x Serviço
 														</a>
 													</div>	

@@ -1,5 +1,5 @@
 <?php if ($msg) echo $msg; ?>
-<!--<?php #echo form_open('relatorio_com/comissao', 'role="form"'); ?>-->
+<!--<?php #echo form_open('Comissao/comissao', 'role="form"'); ?>-->
 <?php echo form_open($form_open_path, 'role="form"'); ?>
 <div class="col-md-12 ">		
 	<?php echo validation_errors(); ?>
@@ -70,7 +70,7 @@
 									</div>
 									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-left">
 										<label>Excel</label><br>
-										<a href="<?php echo base_url() . 'Relatorio_com/comissao_excel/1'; ?>">
+										<a href="<?php echo base_url() . 'Comissao/comissao_excel/1'; ?>">
 											<button type='button' class='btn btn-md btn-success btn-block'>
 												S/<span class="glyphicon glyphicon-filter"></span>
 											</button>
@@ -80,7 +80,7 @@
 							</div>
 							<?php if ($_SESSION['Usuario']['Permissao_Comissao'] >= 2 ) { ?>
 								<div class="col-md-4 text-left">
-									<label for="NomeUsuario">Vendedor:</label>
+									<label for="NomeAssociado">Associado:</label>
 									<div class="input-group">
 										<span class="input-group-btn">
 											<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
@@ -88,10 +88,10 @@
 											</button>
 										</span>
 										<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
-												id="NomeUsuario" name="NomeUsuario">
+												id="NomeAssociado" name="NomeAssociado">
 											<?php
-											foreach ($select['NomeUsuario'] as $key => $row) {
-												if ($query['NomeUsuario'] == $key) {
+											foreach ($select['NomeAssociado'] as $key => $row) {
+												if ($query['NomeAssociado'] == $key) {
 													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 												} else {
 													echo '<option value="' . $key . '">' . $row . '</option>';
@@ -99,7 +99,17 @@
 											}
 											?>
 										</select>
-									</div>	
+									</div>
+									<!--
+									<div class="input-group">
+										<span class="input-group-btn">
+											<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
+												<span class="glyphicon glyphicon-search"></span> 
+											</button>
+										</span>
+										<input type="text" placeholder="Pesquisar Associado" class="form-control Numero btn-sm" name="NomeAssociado" id="NomeAssociado" value="<?php echo set_value('NomeAssociado', $query['NomeAssociado']); ?>">
+									</div>
+									-->
 								</div>
 							<?php } ?>
 						</div>	

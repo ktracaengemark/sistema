@@ -23,7 +23,7 @@
 								<label for="DataFim">Com: Parc / Total</label>
 								<div class="input-group">
 									<span class="input-group-addon">R$</span>
-									<input type="text" class="form-control" disabled aria-label="Comissao" value="<?php echo $report->soma->somacomissaoass ?> / <?php echo $pesquisa_query->soma2->somacomissaoass2 ?>">
+									<input type="text" class="form-control" disabled aria-label="Comissao" value="<?php echo $report->soma->somacomissao ?> / <?php echo $pesquisa_query->soma2->somacomissao2 ?>">
 								</div>
 							</div>
 						<?php } ?>
@@ -56,7 +56,7 @@
 					<?php } ?>
 					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
 						<label>Excel</label><br>
-						<a href="<?php echo base_url() . 'Relatorio_com/comissaoass_excel/2'; ?>">
+						<a href="<?php echo base_url() . 'Comissao/comissao_excel/2'; ?>">
 							<button type='button' class='btn btn-md btn-success btn-block'>
 								C/<span class="glyphicon glyphicon-filter"></span>
 							</button>
@@ -76,7 +76,7 @@
 							<?php } ?>
 							<?php 
 								if(isset($total_rows) && $total_rows >= 1) { 
-									if(isset($_SESSION['FiltroComissaoAss']['NomeAssociado']) && $_SESSION['FiltroComissaoAss']['NomeAssociado'] != 0){
+									if(isset($_SESSION['FiltroComissao']['NomeUsuario']) && $_SESSION['FiltroComissao']['NomeUsuario'] != 0){
 										$exibir_baixa = TRUE;
 									}else{
 										$exibir_baixa = FALSE;
@@ -130,7 +130,7 @@
 						<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
 							<th class="active">Prd/Srv</th>
 						<?php } ?>	
-						<th class="active">Associado</th>
+						<th class="active">Func/Vendeu</th>
 						<th class="active">Comissao</th>
 						<th class="active">Paga?</th>
 						<th class="active">DataPago</th>
@@ -159,7 +159,7 @@
 								<?php } ?>
 							<?php } ?>
 							<td><?php echo $row['idApp_OrcaTrata'];?> - <?php echo $row['TipoFinanceiro'];?></td>
-							<?php echo '<td>' . $row['DataOrca'] . '</td>';?>
+							<?php echo '<td>' . $row['DataOrca'] . '</td>';?>	
 							<?php echo '<td>' . $row['Tipo_Orca'] . '</td>';?>
 							<td class="notclickable">
 								<?php echo $row['Nome'.$nome]; ?>
@@ -175,8 +175,8 @@
 							<?php if($_SESSION['Usuario']['Rel_Pag'] == 'S') { ?>
 								<td><?php echo $row['ValorRestanteOrca'] ?></td>
 							<?php } ?>
-							<?php echo '<td>' . $row['NomeAssociado'] . '</td>';?>
-							<?php echo '<td>' . $row['ValorComissaoAssoc'] . '</td>';?>
+							<?php echo '<td>' . $row[$nomeusuario] . '</td>';?>
+							<?php echo '<td>' . $row['ValorComissao'] . '</td>';?>
 							<?php echo '<td>' . $row[$status] . '</td>';?>
 							<?php echo '<td>' . $row['DataPagoComissaoOrca'] . '</td>';?>
 							<?php echo '<td>' . $row['id_Comissao'] . '</td>';?>	

@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Relatorio_com extends CI_Controller {
+class Comissao extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -47,7 +47,7 @@ class Relatorio_com extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $this->load->view('relatorio_com/tela_index', $data);
+        $this->load->view('Comissao/tela_index', $data);
 
         #load footer view
         $this->load->view('basico/footer');
@@ -233,8 +233,8 @@ class Relatorio_com extends CI_Controller {
 
 		$data['query']['nome'] = 'Cliente';
 		$data['titulo'] = 'Comissão Vendedor';
-		$data['form_open_path'] = 'relatorio_com/comissao';
-		$data['baixatodas'] = 'Relatorio_com/comissao_baixa/';
+		$data['form_open_path'] = 'Comissao/comissao';
+		$data['baixatodas'] = 'Comissao/comissao_baixa/';
 		$data['editartodas'] = 'relatorio_rec/receitas/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
 		$data['nomeusuario'] = 'NomeColaborador';
@@ -251,8 +251,8 @@ class Relatorio_com extends CI_Controller {
 			$data['print'] = 0;
 		}	
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'Relatorio_com/comissao_lista/';
-		$data['imprimirrecibo'] = 'Relatorio_com/comissao_recibo/';
+		$data['imprimirlista'] = 'Comissao/comissao_lista/';
+		$data['imprimirrecibo'] = 'Comissao/comissao_recibo/';
 		$data['edit'] = 'orcatrata/alterarstatus/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'N';
@@ -328,13 +328,13 @@ class Relatorio_com extends CI_Controller {
 			if($data['pesquisa_query'] === FALSE){
 				
 				$data['msg'] = '?m=4';
-				redirect(base_url() . 'relatorio_com/comissao' . $data['msg']);
+				redirect(base_url() . 'Comissao/comissao' . $data['msg']);
 				exit();
 			}else{
 
 				$config['total_rows'] = $data['pesquisa_query']->num_rows();			
 				
-				$config['base_url'] = base_url() . 'relatorio_com/comissao_pag/';
+				$config['base_url'] = base_url() . 'Comissao/comissao_pag/';
 				$config['per_page'] = 19;
 				$config["uri_segment"] = 3;
 				$config['reuse_query_string'] = TRUE;
@@ -379,11 +379,11 @@ class Relatorio_com extends CI_Controller {
 
 				$data['pagination'] = $this->pagination->create_links();
 				
-				$data['list1'] = $this->load->view('relatorio_com/list_comissao', $data, TRUE);
+				$data['list1'] = $this->load->view('Comissao/list_comissao', $data, TRUE);
 			}	
         }		
 
-        $this->load->view('relatorio_com/tela_comissao', $data);
+        $this->load->view('Comissao/tela_comissao', $data);
 
         $this->load->view('basico/footer');
 
@@ -404,12 +404,12 @@ class Relatorio_com extends CI_Controller {
 
 		//$data['query']['nome'] = 'Cliente';
 		$data['titulo'] = 'Comissão Colaborador';
-		$data['form_open_path'] = 'relatorio_com/comissao_pag';
-		$data['baixatodas'] = 'Relatorio_com/comissao_baixa/';
+		$data['form_open_path'] = 'Comissao/comissao_pag';
+		$data['baixatodas'] = 'Comissao/comissao_baixa/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
 		$data['nomeusuario'] = 'NomeColaborador';
 		$data['status'] = 'StatusComissaoOrca';
-		$data['alterar'] = 'relatorio_com/comissao/';
+		$data['alterar'] = 'Comissao/comissao/';
 		$data['editar'] = 1;
 		$data['metodo'] = 1;
 		$data['panel'] = 'info';
@@ -422,26 +422,26 @@ class Relatorio_com extends CI_Controller {
 			$data['print'] = 0;
 		}	
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'Relatorio_com/comissao_lista/';
-		$data['imprimirrecibo'] = 'Relatorio_com/comissao_recibo/';
+		$data['imprimirlista'] = 'Comissao/comissao_lista/';
+		$data['imprimirrecibo'] = 'Comissao/comissao_recibo/';
 		$data['edit'] = 'orcatrata/alterarstatus/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		
 		$data['paginacao'] = 'S';
-		$data['caminho'] = 'relatorio_com/comissao/';
+		$data['caminho'] = 'Comissao/comissao/';
 
 		$data['pesquisa_query'] = $this->Base_model->list_comissao($_SESSION['FiltroComissao'],FALSE, TRUE);
 		
 		if($data['pesquisa_query'] === FALSE){
 			
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'relatorio_com/comissao' . $data['msg']);
+			redirect(base_url() . 'Comissao/comissao' . $data['msg']);
 			exit();
 		}else{
 
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			
-			$config['base_url'] = base_url() . 'relatorio_com/comissao_pag/';
+			$config['base_url'] = base_url() . 'Comissao/comissao_pag/';
 			$config['per_page'] = 19;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -487,9 +487,9 @@ class Relatorio_com extends CI_Controller {
 						
 			$data['pagination'] = $this->pagination->create_links();
 
-			$data['list1'] = $this->load->view('relatorio_com/list_comissao', $data, TRUE);
+			$data['list1'] = $this->load->view('Comissao/list_comissao', $data, TRUE);
 		}
-        $this->load->view('relatorio_com/tela_comissao', $data);
+        $this->load->view('Comissao/tela_comissao', $data);
 
         $this->load->view('basico/footer');
 
@@ -506,12 +506,12 @@ class Relatorio_com extends CI_Controller {
 
 		//$data['query']['nome'] = 'Cliente';
 		$data['titulo'] = 'Comissão Colaborador';
-		$data['form_open_path'] = 'relatorio_com/comissao_pag';
-		$data['baixatodas'] = 'Relatorio_com/comissao_baixa/';
+		$data['form_open_path'] = 'Comissao/comissao_pag';
+		$data['baixatodas'] = 'Comissao/comissao_baixa/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
 		$data['nomeusuario'] = 'NomeColaborador';
 		$data['status'] = 'StatusComissaoOrca';
-		$data['alterar'] = 'relatorio_com/comissao/';
+		$data['alterar'] = 'Comissao/comissao/';
 		$data['editar'] = 1;
 		$data['metodo'] = 1;
 		$data['panel'] = 'info';
@@ -524,26 +524,26 @@ class Relatorio_com extends CI_Controller {
 			$data['print'] = 0;
 		}	
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'Relatorio_com/comissao_lista/';
-		$data['imprimirrecibo'] = 'Relatorio_com/comissao_recibo/';
+		$data['imprimirlista'] = 'Comissao/comissao_lista/';
+		$data['imprimirrecibo'] = 'Comissao/comissao_recibo/';
 		$data['edit'] = 'orcatrata/alterarstatus/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		
 		$data['paginacao'] = 'S';
-		$data['caminho'] = 'relatorio_com/comissao/';
+		$data['caminho'] = 'Comissao/comissao/';
 
 		$data['pesquisa_query'] = $this->Base_model->list_comissao($_SESSION['FiltroComissao'],FALSE, TRUE);
 		
 		if($data['pesquisa_query'] === FALSE){
 			
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'relatorio_com/comissao' . $data['msg']);
+			redirect(base_url() . 'Comissao/comissao' . $data['msg']);
 			exit();
 		}else{
 
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
 
-			$config['base_url'] = base_url() . 'relatorio_com/comissao_lista/';
+			$config['base_url'] = base_url() . 'Comissao/comissao_lista/';
 
 			$config['per_page'] = 19;
 			$config["uri_segment"] = 3;
@@ -585,9 +585,9 @@ class Relatorio_com extends CI_Controller {
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-			$data['list1'] = $this->load->view('Relatorio_com/list_comissao_lista', $data, TRUE);
+			$data['list1'] = $this->load->view('Comissao/list_comissao_lista', $data, TRUE);
 		}
-        $this->load->view('relatorio_com/tela_comissao', $data);
+        $this->load->view('Comissao/tela_comissao', $data);
 
         $this->load->view('basico/footer');
 
@@ -635,11 +635,11 @@ class Relatorio_com extends CI_Controller {
 		if($data['report'] === FALSE){
 			
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'relatorio_com/comissao' . $data['msg']);
+			redirect(base_url() . 'Comissao/comissao' . $data['msg']);
 			exit();
 		}else{
 
-			$data['list1'] = $this->load->view('Relatorio_com/list_comissao_excel', $data, TRUE);
+			$data['list1'] = $this->load->view('Comissao/list_comissao_excel', $data, TRUE);
 		}
 
         $this->load->view('basico/footer');
@@ -706,7 +706,7 @@ class Relatorio_com extends CI_Controller {
 					if($_SESSION['FiltroComissao']['NomeUsuario'] == 0){
 						
 						$data['msg'] = '?m=5';
-						redirect(base_url() . 'relatorio_com/comissao' . $data['msg']);
+						redirect(base_url() . 'Comissao/comissao' . $data['msg']);
 						exit();
 						
 					}else{
@@ -715,7 +715,7 @@ class Relatorio_com extends CI_Controller {
 
 						if($data['pesquisa_query'] === FALSE){
 							$data['msg'] = '?m=4';
-							redirect(base_url() . 'relatorio_com/comissao' . $data['msg']);
+							redirect(base_url() . 'Comissao/comissao' . $data['msg']);
 							exit();
 						}else{
 
@@ -727,11 +727,11 @@ class Relatorio_com extends CI_Controller {
 
 							if($config['total_rows'] < 1){
 								$data['msg'] = '?m=6';
-								redirect(base_url() . 'relatorio_com/comissao' . $data['msg']);
+								redirect(base_url() . 'Comissao/comissao' . $data['msg']);
 								exit();
 							}else{
 								
-								$config['base_url'] = base_url() . 'Relatorio_com/comissao_baixa/' . $id . '/';
+								$config['base_url'] = base_url() . 'Comissao/comissao_baixa/' . $id . '/';
 								$config['per_page'] = 19;
 								$config["uri_segment"] = 4;
 								$config['reuse_query_string'] = TRUE;
@@ -837,9 +837,9 @@ class Relatorio_com extends CI_Controller {
 				$data['select']['QuitadoComissao'] = $this->Basico_model->select_status_sn();
 
 				$data['titulo'] = 'Comissao';
-				$data['form_open_path'] = 'Relatorio_com/comissao_baixa';
-				$data['relatorio'] = 'relatorio_com/comissao_pag/';
-				$data['imprimir'] = 'Relatorio_com/comissao_lista/';
+				$data['form_open_path'] = 'Comissao/comissao_baixa';
+				$data['relatorio'] = 'Comissao/comissao_pag/';
+				$data['imprimir'] = 'Comissao/comissao_lista/';
 				$data['nomeusuario'] = 'NomeColaborador';
 				$data['statuscomissao'] = 'StatusComissaoOrca';
 				$data['readonly'] = '';
@@ -878,7 +878,7 @@ class Relatorio_com extends CI_Controller {
 
 				#run form validation
 				if ($this->form_validation->run() === FALSE) {
-					$this->load->view('Relatorio_com/form_comissao_baixa', $data);
+					$this->load->view('Comissao/form_comissao_baixa', $data);
 				} else {
 
 					if($this->Basico_model->get_dt_validade() === FALSE){
@@ -928,7 +928,7 @@ class Relatorio_com extends CI_Controller {
 
 							$data['msg'] = '?m=1';
 		
-							redirect(base_url() . 'Relatorio_com/comissao_baixa/' . $_SESSION['log']['idSis_Empresa'] . '/' . $_SESSION['FiltroComissao']['Pagina_atual'] . $data['msg']);
+							redirect(base_url() . 'Comissao/comissao_baixa/' . $_SESSION['log']['idSis_Empresa'] . '/' . $_SESSION['FiltroComissao']['Pagina_atual'] . $data['msg']);
 						
 						}elseif($data['query']['QuitadoComissao'] == 'S'){
 
@@ -988,7 +988,7 @@ class Relatorio_com extends CI_Controller {
 								$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 								$this->basico->erro($msg);
-								$this->load->view('Relatorio_com/form_comissao_baixa', $data);
+								$this->load->view('Comissao/form_comissao_baixa', $data);
 							
 							} else {
 								
@@ -1055,7 +1055,7 @@ class Relatorio_com extends CI_Controller {
 							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 							$this->basico->erro($msg);
-							$this->load->view('Relatorio_com/form_comissao_baixa', $data);
+							$this->load->view('Comissao/form_comissao_baixa', $data);
 							
 						}	
 						exit();
@@ -1247,8 +1247,8 @@ class Relatorio_com extends CI_Controller {
 
 		$data['query']['nome'] = 'Cliente';
 		$data['titulo'] = 'Comissão Associado';
-		$data['form_open_path'] = 'relatorio_com/comissaoass';
-		$data['baixatodas'] = 'Relatorio_com/comissaoass_baixa/';
+		$data['form_open_path'] = 'Comissao/comissaoass';
+		$data['baixatodas'] = 'Comissao/comissaoass_baixa/';
 		$data['editartodas'] = 'relatorio_rec/receitas/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
 		$data['nomeusuario'] = 'NomeAssociado';
@@ -1265,8 +1265,8 @@ class Relatorio_com extends CI_Controller {
 			$data['print'] = 0;
 		}	
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'Relatorio_com/comissaoass_lista/';
-		$data['imprimirrecibo'] = 'Relatorio_com/comissaoass_recibo/';
+		$data['imprimirlista'] = 'Comissao/comissaoass_lista/';
+		$data['imprimirrecibo'] = 'Comissao/comissaoass_recibo/';
 		$data['edit'] = 'orcatrata/alterarstatus/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'N';
@@ -1342,13 +1342,13 @@ class Relatorio_com extends CI_Controller {
 			if($data['pesquisa_query'] === FALSE){
 				
 				$data['msg'] = '?m=4';
-				redirect(base_url() . 'relatorio_com/comissaoass' . $data['msg']);
+				redirect(base_url() . 'Comissao/comissaoass' . $data['msg']);
 				exit();
 			}else{
 
 				$config['total_rows'] = $data['pesquisa_query']->num_rows();			
 				
-				$config['base_url'] = base_url() . 'relatorio_com/comissaoass_pag/';
+				$config['base_url'] = base_url() . 'Comissao/comissaoass_pag/';
 				$config['per_page'] = 19;
 				$config["uri_segment"] = 3;
 				$config['reuse_query_string'] = TRUE;
@@ -1393,11 +1393,11 @@ class Relatorio_com extends CI_Controller {
 
 				$data['pagination'] = $this->pagination->create_links();
 				
-				$data['list1'] = $this->load->view('relatorio_com/list_comissaoass', $data, TRUE);
+				$data['list1'] = $this->load->view('Comissao/list_comissaoass', $data, TRUE);
 			}	
         }		
 
-        $this->load->view('relatorio_com/tela_comissaoass', $data);
+        $this->load->view('Comissao/tela_comissaoass', $data);
 
         $this->load->view('basico/footer');
 
@@ -1418,12 +1418,12 @@ class Relatorio_com extends CI_Controller {
 
 		//$data['query']['nome'] = 'Cliente';
 		$data['titulo'] = 'Comissão Associado';
-		$data['form_open_path'] = 'relatorio_com/comissaoass_pag';
-		$data['baixatodas'] = 'Relatorio_com/comissaoass_baixa/';
+		$data['form_open_path'] = 'Comissao/comissaoass_pag';
+		$data['baixatodas'] = 'Comissao/comissaoass_baixa/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
 		$data['nomeusuario'] = 'NomeAssociado';
 		$data['status'] = 'StatusComissaoOrca';
-		$data['alterar'] = 'relatorio_com/comissaoass/';
+		$data['alterar'] = 'Comissao/comissaoass/';
 		$data['editar'] = 1;
 		$data['metodo'] = 1;
 		$data['panel'] = 'info';
@@ -1436,26 +1436,26 @@ class Relatorio_com extends CI_Controller {
 			$data['print'] = 0;
 		}	
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'Relatorio_com/comissaoass_lista/';
-		$data['imprimirrecibo'] = 'Relatorio_com/comissaoass_recibo/';
+		$data['imprimirlista'] = 'Comissao/comissaoass_lista/';
+		$data['imprimirrecibo'] = 'Comissao/comissaoass_recibo/';
 		$data['edit'] = 'orcatrata/alterarstatus/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		
 		$data['paginacao'] = 'S';
-		$data['caminho'] = 'relatorio_com/comissaoass/';
+		$data['caminho'] = 'Comissao/comissaoass/';
 
 		$data['pesquisa_query'] = $this->Base_model->list_comissaoass($_SESSION['FiltroComissaoAss'],FALSE, TRUE);
 		
 		if($data['pesquisa_query'] === FALSE){
 			
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'relatorio_com/comissaoass' . $data['msg']);
+			redirect(base_url() . 'Comissao/comissaoass' . $data['msg']);
 			exit();
 		}else{
 
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			
-			$config['base_url'] = base_url() . 'relatorio_com/comissaoass_pag/';
+			$config['base_url'] = base_url() . 'Comissao/comissaoass_pag/';
 			$config['per_page'] = 19;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -1501,9 +1501,9 @@ class Relatorio_com extends CI_Controller {
 						
 			$data['pagination'] = $this->pagination->create_links();
 
-			$data['list1'] = $this->load->view('relatorio_com/list_comissaoass', $data, TRUE);
+			$data['list1'] = $this->load->view('Comissao/list_comissaoass', $data, TRUE);
 		}
-        $this->load->view('relatorio_com/tela_comissaoass', $data);
+        $this->load->view('Comissao/tela_comissaoass', $data);
 
         $this->load->view('basico/footer');
 
@@ -1520,12 +1520,12 @@ class Relatorio_com extends CI_Controller {
 
 		//$data['query']['nome'] = 'Cliente';
 		$data['titulo'] = 'Comissão Colaborador';
-		$data['form_open_path'] = 'relatorio_com/comissaoass_pag';
-		$data['baixatodas'] = 'Relatorio_com/comissaoass_baixa/';
+		$data['form_open_path'] = 'Comissao/comissaoass_pag';
+		$data['baixatodas'] = 'Comissao/comissaoass_baixa/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
 		$data['nomeusuario'] = 'NomeColaborador';
 		$data['status'] = 'StatusComissaoOrca';
-		$data['alterar'] = 'relatorio_com/comissaoass/';
+		$data['alterar'] = 'Comissao/comissaoass/';
 		$data['editar'] = 1;
 		$data['metodo'] = 1;
 		$data['panel'] = 'info';
@@ -1538,26 +1538,26 @@ class Relatorio_com extends CI_Controller {
 			$data['print'] = 0;
 		}	
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'Relatorio_com/comissaoass_lista/';
-		$data['imprimirrecibo'] = 'Relatorio_com/comissaoass_recibo/';
+		$data['imprimirlista'] = 'Comissao/comissaoass_lista/';
+		$data['imprimirrecibo'] = 'Comissao/comissaoass_recibo/';
 		$data['edit'] = 'orcatrata/alterarstatus/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		
 		$data['paginacao'] = 'S';
-		$data['caminho'] = 'relatorio_com/comissaoass/';
+		$data['caminho'] = 'Comissao/comissaoass/';
 
 		$data['pesquisa_query'] = $this->Base_model->list_comissaoass($_SESSION['FiltroComissaoAss'],FALSE, TRUE);
 		
 		if($data['pesquisa_query'] === FALSE){
 			
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'relatorio_com/comissaoass' . $data['msg']);
+			redirect(base_url() . 'Comissao/comissaoass' . $data['msg']);
 			exit();
 		}else{
 
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
 
-			$config['base_url'] = base_url() . 'relatorio_com/comissaoass_lista/';
+			$config['base_url'] = base_url() . 'Comissao/comissaoass_lista/';
 
 			$config['per_page'] = 19;
 			$config["uri_segment"] = 3;
@@ -1599,9 +1599,9 @@ class Relatorio_com extends CI_Controller {
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-			$data['list1'] = $this->load->view('Relatorio_com/list_comissaoass_lista', $data, TRUE);
+			$data['list1'] = $this->load->view('Comissao/list_comissaoass_lista', $data, TRUE);
 		}
-        $this->load->view('relatorio_com/tela_comissaoass', $data);
+        $this->load->view('Comissao/tela_comissaoass', $data);
 
         $this->load->view('basico/footer');
 
@@ -1649,11 +1649,11 @@ class Relatorio_com extends CI_Controller {
 		if($data['report'] === FALSE){
 			
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'relatorio_com/comissaoass' . $data['msg']);
+			redirect(base_url() . 'Comissao/comissaoass' . $data['msg']);
 			exit();
 		}else{
 
-			$data['list1'] = $this->load->view('Relatorio_com/list_comissaoass_excel', $data, TRUE);
+			$data['list1'] = $this->load->view('Comissao/list_comissaoass_excel', $data, TRUE);
 		}
 
         $this->load->view('basico/footer');
@@ -1722,7 +1722,7 @@ class Relatorio_com extends CI_Controller {
 					if($_SESSION['FiltroComissaoAss']['NomeAssociado'] == 0){
 						
 						$data['msg'] = '?m=5';
-						redirect(base_url() . 'relatorio_com/comissaoass' . $data['msg']);
+						redirect(base_url() . 'Comissao/comissaoass' . $data['msg']);
 						exit();
 						
 					}else{
@@ -1732,7 +1732,7 @@ class Relatorio_com extends CI_Controller {
 					
 						if($data['pesquisa_query'] === FALSE){
 							$data['msg'] = '?m=4';
-							redirect(base_url() . 'relatorio_com/comissaoass' . $data['msg']);
+							redirect(base_url() . 'Comissao/comissaoass' . $data['msg']);
 							exit();
 						}else{
 
@@ -1744,11 +1744,11 @@ class Relatorio_com extends CI_Controller {
 
 							if($config['total_rows'] < 1){
 								$data['msg'] = '?m=6';
-								redirect(base_url() . 'relatorio_com/comissaoass' . $data['msg']);
+								redirect(base_url() . 'Comissao/comissaoass' . $data['msg']);
 								exit();
 							}else{
 								
-								$config['base_url'] = base_url() . 'Relatorio_com/comissaoass_baixa/' . $id . '/';
+								$config['base_url'] = base_url() . 'Comissao/comissaoass_baixa/' . $id . '/';
 								$config['per_page'] = 19;
 								$config["uri_segment"] = 4;
 								$config['reuse_query_string'] = TRUE;
@@ -1856,9 +1856,9 @@ class Relatorio_com extends CI_Controller {
 				//$data['select']['StatusComissaoOrca'] = $this->Basico_model->select_status_sn();	
 				
 				$data['titulo'] = 'Comissao Associado';
-				$data['form_open_path'] = 'Relatorio_com/comissaoass_baixa';
-				$data['relatorio'] = 'relatorio_com/comissaoass_pag/';
-				$data['imprimir'] = 'Relatorio_com/comissaoass_lista/';
+				$data['form_open_path'] = 'Comissao/comissaoass_baixa';
+				$data['relatorio'] = 'Comissao/comissaoass_pag/';
+				$data['imprimir'] = 'Comissao/comissaoass_lista/';
 				$data['nomeusuario'] = 'NomeAssociado';
 				$data['statuscomissao'] = 'StatusComissaoOrca';
 				$data['readonly'] = '';
@@ -1897,7 +1897,7 @@ class Relatorio_com extends CI_Controller {
 
 				#run form validation
 				if ($this->form_validation->run() === FALSE) {
-					$this->load->view('Relatorio_com/form_comissaoass_baixa', $data);
+					$this->load->view('Comissao/form_comissaoass_baixa', $data);
 				} else {
 
 					if($this->Basico_model->get_dt_validade() === FALSE){
@@ -1949,7 +1949,7 @@ class Relatorio_com extends CI_Controller {
 
 							$data['msg'] = '?m=1';
 		
-							redirect(base_url() . 'Relatorio_com/comissaoass_baixa/' . $_SESSION['log']['idSis_Empresa'] . '/' . $_SESSION['FiltroComissaoAss']['Pagina_atual'] . $data['msg']);
+							redirect(base_url() . 'Comissao/comissaoass_baixa/' . $_SESSION['log']['idSis_Empresa'] . '/' . $_SESSION['FiltroComissaoAss']['Pagina_atual'] . $data['msg']);
 						
 						}elseif($data['query']['QuitadoComissao'] == 'S'){
 
@@ -2003,7 +2003,7 @@ class Relatorio_com extends CI_Controller {
 								$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 								$this->basico->erro($msg);
-								$this->load->view('Relatorio_com/form_comissaoass_baixa', $data);
+								$this->load->view('Comissao/form_comissaoass_baixa', $data);
 							
 							} else {	
 
@@ -2071,7 +2071,7 @@ class Relatorio_com extends CI_Controller {
 							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 							$this->basico->erro($msg);
-							$this->load->view('Relatorio_com/form_comissaoass_baixa', $data);
+							$this->load->view('Comissao/form_comissaoass_baixa', $data);
 							
 						}	
 						exit();
@@ -2262,8 +2262,8 @@ class Relatorio_com extends CI_Controller {
 
 		$data['query']['nome'] = 'Cliente';
 		$data['titulo'] = 'Comissão Funcionario';
-		$data['form_open_path'] = 'relatorio_com/comissaofunc';
-		$data['baixatodas'] = 'Relatorio_com/comissaofunc_baixa/';
+		$data['form_open_path'] = 'Comissao/comissaofunc';
+		$data['baixatodas'] = 'Comissao/comissaofunc_baixa/';
 		$data['editartodas'] = 'relatorio_rec/receitas/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
 		$data['nomeusuario'] = 'NomeColaborador';
@@ -2280,8 +2280,8 @@ class Relatorio_com extends CI_Controller {
 			$data['print'] = 0;
 		}	
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'Relatorio_com/comissaofunc_lista/';
-		$data['imprimirrecibo'] = 'Relatorio_com/comissaofunc_recibo/';
+		$data['imprimirlista'] = 'Comissao/comissaofunc_lista/';
+		$data['imprimirrecibo'] = 'Comissao/comissaofunc_recibo/';
 		$data['edit'] = 'orcatrata/alterarstatus/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'N';
@@ -2357,13 +2357,13 @@ class Relatorio_com extends CI_Controller {
 			if($data['pesquisa_query'] === FALSE){
 				
 				$data['msg'] = '?m=4';
-				redirect(base_url() . 'relatorio_com/comissaofunc' . $data['msg']);
+				redirect(base_url() . 'Comissao/comissaofunc' . $data['msg']);
 				exit();
 			}else{
 
 				$config['total_rows'] = $data['pesquisa_query']->num_rows();			
 				
-				$config['base_url'] = base_url() . 'relatorio_com/comissaofunc_pag/';
+				$config['base_url'] = base_url() . 'Comissao/comissaofunc_pag/';
 				$config['per_page'] = 19;
 				$config["uri_segment"] = 3;
 				$config['reuse_query_string'] = TRUE;
@@ -2408,11 +2408,11 @@ class Relatorio_com extends CI_Controller {
 
 				$data['pagination'] = $this->pagination->create_links();
 				
-				$data['list1'] = $this->load->view('relatorio_com/list_comissaofunc', $data, TRUE);
+				$data['list1'] = $this->load->view('Comissao/list_comissaofunc', $data, TRUE);
 			}	
         }		
 
-        $this->load->view('relatorio_com/tela_comissaofunc', $data);
+        $this->load->view('Comissao/tela_comissaofunc', $data);
 
         $this->load->view('basico/footer');
 
@@ -2433,12 +2433,12 @@ class Relatorio_com extends CI_Controller {
 
 		//$data['query']['nome'] = 'Cliente';
 		$data['titulo'] = 'Comissão Funcionario';
-		$data['form_open_path'] = 'relatorio_com/comissaofunc_pag';
-		$data['baixatodas'] = 'Relatorio_com/comissaofunc_baixa/';
+		$data['form_open_path'] = 'Comissao/comissaofunc_pag';
+		$data['baixatodas'] = 'Comissao/comissaofunc_baixa/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
 		$data['nomeusuario'] = 'NomeColaborador';
 		$data['status'] = 'StatusComissaoFunc';
-		$data['alterar'] = 'relatorio_com/comissaofunc/';
+		$data['alterar'] = 'Comissao/comissaofunc/';
 		$data['editar'] = 1;
 		$data['metodo'] = 1;
 		$data['panel'] = 'info';
@@ -2451,26 +2451,26 @@ class Relatorio_com extends CI_Controller {
 			$data['print'] = 0;
 		}	
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'Relatorio_com/comissaofunc_lista/';
-		$data['imprimirrecibo'] = 'Relatorio_com/comissaofunc_recibo/';
+		$data['imprimirlista'] = 'Comissao/comissaofunc_lista/';
+		$data['imprimirrecibo'] = 'Comissao/comissaofunc_recibo/';
 		$data['edit'] = 'orcatrata/alterarstatus/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		
 		$data['paginacao'] = 'S';
-		$data['caminho'] = 'relatorio_com/comissaofunc/';
+		$data['caminho'] = 'Comissao/comissaofunc/';
 
 		$data['pesquisa_query'] = $this->Base_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'],FALSE, TRUE);
 		
 		if($data['pesquisa_query'] === FALSE){
 			
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'relatorio_com/comissaofunc' . $data['msg']);
+			redirect(base_url() . 'Comissao/comissaofunc' . $data['msg']);
 			exit();
 		}else{
 
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			
-			$config['base_url'] = base_url() . 'relatorio_com/comissaofunc_pag/';
+			$config['base_url'] = base_url() . 'Comissao/comissaofunc_pag/';
 			$config['per_page'] = 19;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -2516,9 +2516,9 @@ class Relatorio_com extends CI_Controller {
 						
 			$data['pagination'] = $this->pagination->create_links();
 
-			$data['list1'] = $this->load->view('relatorio_com/list_comissaofunc', $data, TRUE);
+			$data['list1'] = $this->load->view('Comissao/list_comissaofunc', $data, TRUE);
 		}
-        $this->load->view('relatorio_com/tela_comissaofunc', $data);
+        $this->load->view('Comissao/tela_comissaofunc', $data);
 
         $this->load->view('basico/footer');
 
@@ -2586,7 +2586,7 @@ class Relatorio_com extends CI_Controller {
 					if($_SESSION['FiltroComissaoFunc']['NomeUsuario'] == 0){
 						
 						$data['msg'] = '?m=5';
-						redirect(base_url() . 'relatorio_com/comissaofunc' . $data['msg']);
+						redirect(base_url() . 'Comissao/comissaofunc' . $data['msg']);
 						exit();
 						
 					}else{
@@ -2596,7 +2596,7 @@ class Relatorio_com extends CI_Controller {
 				
 						if($data['pesquisa_query'] === FALSE){
 							$data['msg'] = '?m=4';
-							redirect(base_url() . 'relatorio_com/comissaofunc' . $data['msg']);
+							redirect(base_url() . 'Comissao/comissaofunc' . $data['msg']);
 							exit();
 						}else{
 
@@ -2608,11 +2608,11 @@ class Relatorio_com extends CI_Controller {
 
 							if($config['total_rows'] < 1){
 								$data['msg'] = '?m=6';
-								redirect(base_url() . 'relatorio_com/comissaofunc' . $data['msg']);
+								redirect(base_url() . 'Comissao/comissaofunc' . $data['msg']);
 								exit();
 							}else{
 								
-								$config['base_url'] = base_url() . 'Relatorio_com/comissaofunc_baixa/' . $id . '/';
+								$config['base_url'] = base_url() . 'Comissao/comissaofunc_baixa/' . $id . '/';
 								$config['per_page'] = 19;
 								$config["uri_segment"] = 4;
 								$config['reuse_query_string'] = TRUE;
@@ -2719,9 +2719,9 @@ class Relatorio_com extends CI_Controller {
 				$data['select']['QuitadoComissao'] = $this->Basico_model->select_status_sn();	
 				
 				$data['titulo'] = 'Comissao Vend./Super.';
-				$data['form_open_path'] = 'Relatorio_com/comissaofunc_baixa';
-				$data['relatorio'] = 'relatorio_com/comissaofunc_pag/';
-				$data['imprimir'] = 'Relatorio_com/comissaofunc_lista/';
+				$data['form_open_path'] = 'Comissao/comissaofunc_baixa';
+				$data['relatorio'] = 'Comissao/comissaofunc_pag/';
+				$data['imprimir'] = 'Comissao/comissaofunc_lista/';
 				$data['nomeusuario'] = 'NomeColaborador';
 				$data['statuscomissaofunc'] = 'StatusComissaoFunc';
 				$data['readonly'] = '';
@@ -2760,7 +2760,7 @@ class Relatorio_com extends CI_Controller {
 
 				#run form validation
 				if ($this->form_validation->run() === FALSE) {
-					$this->load->view('Relatorio_com/form_comissaofunc_baixa', $data);
+					$this->load->view('Comissao/form_comissaofunc_baixa', $data);
 				} else {
 
 					if($this->Basico_model->get_dt_validade() === FALSE){
@@ -2811,7 +2811,7 @@ class Relatorio_com extends CI_Controller {
 
 							$data['msg'] = '?m=1';
 		
-							redirect(base_url() . 'Relatorio_com/comissaofunc_baixa/' . $_SESSION['log']['idSis_Empresa'] . '/' . $_SESSION['FiltroComissaoFunc']['Pagina_atual'] . $data['msg']);
+							redirect(base_url() . 'Comissao/comissaofunc_baixa/' . $_SESSION['log']['idSis_Empresa'] . '/' . $_SESSION['FiltroComissaoFunc']['Pagina_atual'] . $data['msg']);
 						
 						}elseif($data['query']['QuitadoComissao'] == 'S'){
 
@@ -2865,7 +2865,7 @@ class Relatorio_com extends CI_Controller {
 								$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 								$this->basico->erro($msg);
-								$this->load->view('Relatorio_com/form_comissaofunc_baixa', $data);
+								$this->load->view('Comissao/form_comissaofunc_baixa', $data);
 							
 							} else {
 								
@@ -2932,7 +2932,7 @@ class Relatorio_com extends CI_Controller {
 							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 							$this->basico->erro($msg);
-							$this->load->view('Relatorio_com/form_comissaofunc_baixa', $data);
+							$this->load->view('Comissao/form_comissaofunc_baixa', $data);
 							
 						}	
 						exit();
@@ -3145,7 +3145,7 @@ class Relatorio_com extends CI_Controller {
 		$data['query']['nome'] = 'Cliente';
         $data['titulo1'] = 'Vendidos';
 		$data['metodo'] = 2;
-		$data['form_open_path'] = 'relatorio_com/comissaoserv';
+		$data['form_open_path'] = 'Comissao/comissaoserv';
 		$data['panel'] = 'info';
 		$data['TipoFinanceiro'] = 'Receitas';
 		$data['TipoRD'] = 2;
@@ -3156,7 +3156,7 @@ class Relatorio_com extends CI_Controller {
 		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistarec/';
 		$data['imprimirrecibo'] = 'OrcatrataPrint/imprimirreciborec/';
 		$data['edit'] = 'Orcatrata/baixadaparcelarec/';
-		$data['baixacomissao'] = 'Relatorio_com/comissaoserv_baixa/';
+		$data['baixacomissao'] = 'Comissao/comissaoserv_baixa/';
 		$data['paginacao'] = 'N';
 		
 		/*				
@@ -3227,7 +3227,7 @@ class Relatorio_com extends CI_Controller {
 			
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			
-			$config['base_url'] = base_url() . 'relatorio_com/comissaoserv_pag/';
+			$config['base_url'] = base_url() . 'Comissao/comissaoserv_pag/';
 
 			$config['per_page'] = 10;
 			$config["uri_segment"] = 3;
@@ -3265,10 +3265,10 @@ class Relatorio_com extends CI_Controller {
 			$data['report'] = $this->Base_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
 			$data['pagination'] = $this->pagination->create_links();
 			
-            $data['list1'] = $this->load->view('relatorio_com/list_comissaoserv', $data, TRUE);
+            $data['list1'] = $this->load->view('Comissao/list_comissaoserv', $data, TRUE);
         }
 
-        $this->load->view('relatorio_com/tela_comissaoserv', $data);
+        $this->load->view('Comissao/tela_comissaoserv', $data);
 
         $this->load->view('basico/footer');
 
@@ -3295,7 +3295,7 @@ class Relatorio_com extends CI_Controller {
 		$data['query']['nome'] = 'Cliente';
         $data['titulo1'] = 'Vendidos';
 		$data['metodo'] = 2;
-		$data['form_open_path'] = 'relatorio_com/comissaoserv_pag';
+		$data['form_open_path'] = 'Comissao/comissaoserv_pag';
 		$data['panel'] = 'info';
 		$data['TipoFinanceiro'] = 'Receitas';
 		$data['TipoRD'] = 2;
@@ -3306,9 +3306,9 @@ class Relatorio_com extends CI_Controller {
 		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
 		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
 		$data['edit'] = 'Orcatrata/baixadacobranca/';
-		$data['baixacomissao'] = 'Relatorio_com/comissaoserv_baixa/';
+		$data['baixacomissao'] = 'Comissao/comissaoserv_baixa/';
 		$data['paginacao'] = 'S';
-		$data['caminho'] = 'relatorio_com/comissaoserv/';
+		$data['caminho'] = 'Comissao/comissaoserv/';
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 		
@@ -3319,7 +3319,7 @@ class Relatorio_com extends CI_Controller {
 			
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			
-			$config['base_url'] = base_url() . 'relatorio_com/comissaoserv_pag/';
+			$config['base_url'] = base_url() . 'Comissao/comissaoserv_pag/';
 			$config['per_page'] = 10;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -3356,10 +3356,10 @@ class Relatorio_com extends CI_Controller {
 			$data['report'] = $this->Base_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
 			$data['pagination'] = $this->pagination->create_links();
 			
-            $data['list1'] = $this->load->view('relatorio_com/list_comissaoserv', $data, TRUE);
+            $data['list1'] = $this->load->view('Comissao/list_comissaoserv', $data, TRUE);
         }
 
-        $this->load->view('relatorio_com/tela_comissaoserv', $data);
+        $this->load->view('Comissao/tela_comissaoserv', $data);
 
         $this->load->view('basico/footer');
 
@@ -3541,11 +3541,11 @@ class Relatorio_com extends CI_Controller {
 			
 					if($data['pesquisa_query'] === FALSE){
 						$data['msg'] = '?m=4';
-						redirect(base_url() . 'relatorio_com/comissaoserv' . $data['msg']);
+						redirect(base_url() . 'Comissao/comissaoserv' . $data['msg']);
 						exit();
 					}else{
 
-						$config['base_url'] = base_url() . 'Relatorio_com/comissaoserv_baixa/' . $id . '/';
+						$config['base_url'] = base_url() . 'Comissao/comissaoserv_baixa/' . $id . '/';
 						
 						$config['total_rows'] = $data['pesquisa_query']->num_rows();					   
 						
@@ -3662,7 +3662,7 @@ class Relatorio_com extends CI_Controller {
 				$data['select']['NomeCliente'] = $this->Basico_model->select_cliente();		
 				
 				$data['titulo'] = 'Servicos';
-				$data['form_open_path'] = 'Relatorio_com/comissaoserv_baixa';
+				$data['form_open_path'] = 'Comissao/comissaoserv_baixa';
 				$data['readonly'] = 'readonly=""';
 				$data['disabled'] = '';
 				$data['panel'] = 'info';
@@ -3711,7 +3711,7 @@ class Relatorio_com extends CI_Controller {
 				
 				#run form validation
 				if ($this->form_validation->run() === FALSE) {
-					$this->load->view('Relatorio_com/form_comissaoserv_baixa', $data);
+					$this->load->view('Comissao/form_comissaoserv_baixa', $data);
 				} else {
 
 					if($this->Basico_model->get_dt_validade() === FALSE){
@@ -3844,7 +3844,7 @@ class Relatorio_com extends CI_Controller {
 						
 						$data['msg'] = '?m=1';
 
-						redirect(base_url() . 'Relatorio_com/comissaoserv_baixa/' . $_SESSION['log']['idSis_Empresa'] . $data['msg']);
+						redirect(base_url() . 'Comissao/comissaoserv_baixa/' . $_SESSION['log']['idSis_Empresa'] . $data['msg']);
 
 						exit();
 					}	
