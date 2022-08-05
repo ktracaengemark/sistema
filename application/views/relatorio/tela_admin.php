@@ -277,7 +277,7 @@
 											</div>
 											<div class="form-group col-md-12 text-left">
 												<div class="row">		
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/despesas" role="button"> 
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_desp/despesas" role="button"> 
 														<span class="glyphicon glyphicon-pencil"></span> Despesas
 													</a>											
 												</div>	
@@ -296,7 +296,7 @@
 										</div>
 										<div class="form-group col-md-12 text-left">
 											<div class="row">		
-												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/despesas" role="button"> 
+												<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio_desp/despesas" role="button"> 
 													<span class="glyphicon glyphicon-pencil"></span> Despesas
 												</a>											
 											</div>	
