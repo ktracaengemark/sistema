@@ -132,7 +132,7 @@
 						<th class="active">ComFunc</th>
 						<th class="active">Paga?</th>
 						<th class="active">DataPago</th>
-						<th class="active">RecFunc</th>
+						<th class="active">RecSuper</th>
 						<th class="active">Func/Vend</th>
 						<th class="active">Ass/Vend</th>
 						<th class="active">ComVend</th>
@@ -182,8 +182,8 @@
 							<?php echo '<td>' . $row[$status] . '</td>';?>
 							<?php echo '<td>' . $row['DataPagoComissaoFunc'] . '</td>';?>
 							<?php echo '<td>' . $row['id_ComissaoFunc'] . '</td>';?>
-							<?php echo '<td>' . $row['id_Funcionario'] . '</td>';?>
-							<?php echo '<td>' . $row['id_Associado'] . '</td>';?>
+							<?php echo '<td>' . $row['NomeFuncionario'] . '</td>';?>
+							<?php echo '<td>' . $row['NomeAssociado'] . '</td>';?>
 							<?php echo '<td>' . $row['ValorComissao'] . '</td>';?>
 							<?php echo '<td>' . $row['StatusComissaoOrca'] . '</td>';?>
 							<?php echo '<td>' . $row['DataPagoComissaoOrca'] . '</td>';?>

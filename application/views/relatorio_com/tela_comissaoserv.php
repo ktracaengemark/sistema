@@ -114,7 +114,22 @@
 								</div>
 							</div>
 						</div>
-						<div class="row">	
+						<div class="row">
+							<div class="col-md-3 text-left">
+								<label for="Ordenamento">Colaborador:</label>
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
+										id="Funcionario" name="Funcionario">
+									<?php
+									foreach ($select['Funcionario'] as $key => $row) {
+										if ($query['Funcionario'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>
+								</select>
+							</div>
 							<div class="col-md-2">
 								<label>Filtros</label>
 								<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
@@ -520,23 +535,6 @@
 						</div>
 						<div class="panel panel-<?php echo $panel; ?>">
 							<div class="panel-heading text-left">
-								<div class="row">
-									<div class="col-md-3 text-left">
-										<label for="Ordenamento">Colaborador:</label>
-										<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
-												id="Funcionario" name="Funcionario">
-											<?php
-											foreach ($select['Funcionario'] as $key => $row) {
-												if ($query['Funcionario'] == $key) {
-													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-												} else {
-													echo '<option value="' . $key . '">' . $row . '</option>';
-												}
-											}
-											?>
-										</select>
-									</div>
-								</div>
 								<div class="row">				
 									<div class="col-md-6 text-left">
 										<label for="Ordenamento">Ordenamento:</label>

@@ -1,34 +1,6 @@
 <div class="panel panel-<?php echo $panel; ?>">
 	<div class="panel-heading">
-		<div class="row">	
-			<!--
-			<div class="col-md-2">
-				<label for="DataFim">
-					<?php if($metodo == 2) {?>
-						Entregues
-					<?php }else{?>	
-						Recebidos
-					<?php } ?>	
-				</label>
-				<div class="input-group">
-					<input type="text" class="form-control" disabled aria-label="Total Recebido" value="<?php echo $report->soma->somaentregue ?>">
-					<span class="input-group-addon">Srvs</span>
-				</div>
-			</div>
-			<div class="col-md-2">
-				<label for="DataFim">
-					<?php if($metodo == 2) {?>
-						à Entregar
-					<?php }else{?>		
-						à Receber
-					<?php } ?>	
-				</label>
-				<div class="input-group">
-					<input type="text" class="form-control" disabled aria-label="Total a Receber" value="<?php echo $report->soma->diferenca ?>">
-					<span class="input-group-addon">Srvs</span>
-				</div>
-			</div>
-			-->
+		<div class="row">
 			<div class="col-md-2">
 				<label for="DataFim">SubTotal/Total</label>
 				<div class="input-group">
@@ -154,7 +126,7 @@
 							<!--<th class="active">NºProf.</th>-->
 							<th class="active">StatusCom</th>
 							<th class="active">DataPago.</th>
-							<!--<th class="active">HoraEntr.</th>-->					
+							<th class="active">Grupo</th>					
 						</tr>
 					</thead>
 					<tbody>
@@ -200,7 +172,7 @@
 								//echo '<td class="text-left">/ ' . $row['Contagem'] . '</td>';
 								echo '<td>' . $row['StatusComissaoServico'] . '</td>';
 								echo '<td>' . $row['DataPagoComissaoServico'] . '</td>';
-								//echo '<td>' . $row['HoraConcluidoProduto'] . '</td>';
+								echo '<td>' . $row['id_GrupoServico'] . '</td>';
 							echo '</tr>';
 							$count++;
 						}
