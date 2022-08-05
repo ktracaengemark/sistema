@@ -13,7 +13,7 @@ class Relatorio_rec extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation', 'pagination'));
-        $this->load->model(array( 	'Basico_model', 'Cliente_model', 'Relatorio_model', 'Relatorio_model_list', 'Orcatrata_model', 'Empresa_model', 
+        $this->load->model(array( 	'Basico_model', 'Cliente_model', 'Relatorio_model', 'Base_model', 'Orcatrata_model', 'Empresa_model', 
 									'Loginempresa_model', 'Associado_model', 'Usuario_model', 'Agenda_model'
 								));
         $this->load->driver('session');
@@ -362,7 +362,7 @@ class Relatorio_rec extends CI_Controller {
 			$_SESSION['FiltroReceitas']['metodo'] = $data['metodo'];
 			$_SESSION['FiltroReceitas']['idTab_TipoRD'] = $data['TipoRD'];
 
-			$data['pesquisa_query'] = $this->Relatorio_model_list->list_receitas($_SESSION['FiltroReceitas'],TRUE, TRUE);
+			$data['pesquisa_query'] = $this->Base_model->list_receitas($_SESSION['FiltroReceitas'],TRUE, TRUE);
 			
 			if($data['pesquisa_query'] === FALSE){
 				
@@ -411,7 +411,7 @@ class Relatorio_rec extends CI_Controller {
 			
 				$data['linha'] = $page * $config['per_page'];
 
-				$data['report'] = $this->Relatorio_model_list->list_receitas($_SESSION['FiltroReceitas'], TRUE, FALSE, $config['per_page'], $data['linha']);		
+				$data['report'] = $this->Base_model->list_receitas($_SESSION['FiltroReceitas'], TRUE, FALSE, $config['per_page'], $data['linha']);		
 
 				$_SESSION['FiltroReceitas']['Limit'] = $data['per_page'];
 				$_SESSION['FiltroReceitas']['Start'] = $data['linha'];
@@ -472,7 +472,7 @@ class Relatorio_rec extends CI_Controller {
 		
         #run form validation
 
-			$data['pesquisa_query'] = $this->Relatorio_model_list->list_receitas($_SESSION['FiltroReceitas'],TRUE, TRUE);
+			$data['pesquisa_query'] = $this->Base_model->list_receitas($_SESSION['FiltroReceitas'],TRUE, TRUE);
 			
 			if($data['pesquisa_query'] === FALSE){
 				
@@ -525,7 +525,7 @@ class Relatorio_rec extends CI_Controller {
 				$_SESSION['FiltroReceitas']['Limit'] = $data['per_page'];
 				$_SESSION['FiltroReceitas']['Start'] = $data['linha'];
 
-				$data['report'] = $this->Relatorio_model_list->list_receitas($_SESSION['FiltroReceitas'], TRUE, FALSE, $config['per_page'], $data['linha']);
+				$data['report'] = $this->Base_model->list_receitas($_SESSION['FiltroReceitas'], TRUE, FALSE, $config['per_page'], $data['linha']);
 							
 				$data['pagination'] = $this->pagination->create_links();
 
@@ -576,7 +576,7 @@ class Relatorio_rec extends CI_Controller {
 
         $data['nome'] = 'Cliente';
 
-		$data['report'] = $this->Relatorio_model_list->list_receitas($dados, TRUE, FALSE, FALSE, FALSE);
+		$data['report'] = $this->Base_model->list_receitas($dados, TRUE, FALSE, FALSE, FALSE);
 		
 		if($data['report'] === FALSE){
 			
@@ -628,7 +628,7 @@ class Relatorio_rec extends CI_Controller {
 		
         #run form validation
 
-			$data['pesquisa_query'] = $this->Relatorio_model_list->list_receitas($_SESSION['FiltroReceitas'],TRUE, TRUE);
+			$data['pesquisa_query'] = $this->Base_model->list_receitas($_SESSION['FiltroReceitas'],TRUE, TRUE);
 			
 			if($data['pesquisa_query'] === FALSE){
 				
@@ -681,7 +681,7 @@ class Relatorio_rec extends CI_Controller {
 				$_SESSION['FiltroReceitas']['Limit'] = $data['per_page'];
 				$_SESSION['FiltroReceitas']['Start'] = $data['linha'];
 
-				$data['report'] = $this->Relatorio_model_list->list_receitas($_SESSION['FiltroReceitas'], TRUE, FALSE, $config['per_page'], $data['linha']);
+				$data['report'] = $this->Base_model->list_receitas($_SESSION['FiltroReceitas'], TRUE, FALSE, $config['per_page'], $data['linha']);
 							
 				$data['pagination'] = $this->pagination->create_links();
 
@@ -754,7 +754,7 @@ class Relatorio_rec extends CI_Controller {
 					
 				}else{
 
-					$data['pesquisa_query'] = $this->Relatorio_model_list->list_receitas($_SESSION['FiltroReceitas'], FALSE, TRUE, FALSE, FALSE, FALSE);
+					$data['pesquisa_query'] = $this->Base_model->list_receitas($_SESSION['FiltroReceitas'], FALSE, TRUE, FALSE, FALSE, FALSE);
 			
 					if($data['pesquisa_query'] === FALSE){
 						
@@ -805,7 +805,7 @@ class Relatorio_rec extends CI_Controller {
 						$_SESSION['FiltroReceitas']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 						
 						#### App_OrcaTrata ####
-						$data['orcamento'] = $this->Relatorio_model_list->list_receitas($_SESSION['FiltroReceitas'], FALSE, TRUE, $_SESSION['FiltroReceitas']['Per_Page'], ($_SESSION['FiltroReceitas']['Pagina'] * $_SESSION['FiltroReceitas']['Per_Page']), TRUE);
+						$data['orcamento'] = $this->Base_model->list_receitas($_SESSION['FiltroReceitas'], FALSE, TRUE, $_SESSION['FiltroReceitas']['Per_Page'], ($_SESSION['FiltroReceitas']['Pagina'] * $_SESSION['FiltroReceitas']['Per_Page']), TRUE);
 						
 						if (count($data['orcamento']) > 0) {
 							$data['orcamento'] = array_combine(range(1, count($data['orcamento'])), array_values($data['orcamento']));
@@ -924,7 +924,7 @@ class Relatorio_rec extends CI_Controller {
 						
 						////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
 						#### App_OrcaTrata ####
-						$data['update']['orcamento']['anterior'] = $this->Relatorio_model_list->list_receitas($_SESSION['FiltroReceitas'], FALSE, TRUE, $_SESSION['FiltroReceitas']['Per_Page'], ($_SESSION['FiltroReceitas']['Pagina'] * $_SESSION['FiltroReceitas']['Per_Page']), TRUE);
+						$data['update']['orcamento']['anterior'] = $this->Base_model->list_receitas($_SESSION['FiltroReceitas'], FALSE, TRUE, $_SESSION['FiltroReceitas']['Per_Page'], ($_SESSION['FiltroReceitas']['Pagina'] * $_SESSION['FiltroReceitas']['Per_Page']), TRUE);
 						
 						if (isset($data['orcamento']) || (!isset($data['orcamento']) && isset($data['update']['orcamento']['anterior']) ) ) {
 
