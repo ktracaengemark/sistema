@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Relatorio_deb extends CI_Controller {
+class Debitos extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -13,8 +13,7 @@ class Relatorio_deb extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation', 'pagination'));
-        $this->load->model(array(
-									'Basico_model', 'Cliente_model', 'Relatorio_model', 'Empresa_model', 
+        $this->load->model(array( 	'Basico_model', 'Cliente_model', 'Relatorio_model', 'Base_model', 'Orcatrata_model',  'Empresa_model', 
 									'Loginempresa_model', 'Associado_model', 'Usuario_model', 'Agenda_model'
 								));
         $this->load->driver('session');
@@ -23,7 +22,6 @@ class Relatorio_deb extends CI_Controller {
         $this->load->view('basico/header');
         $this->load->view('basico/nav_principal');
 
-        #$this->load->view('relatorio/nav_secundario');
         if ($this->agent->is_browser()) {
 
             if (
@@ -49,7 +47,7 @@ class Relatorio_deb extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $this->load->view('relatorio/tela_index', $data);
+        $this->load->view('Debitos/tela_index', $data);
 
         #load footer view
         $this->load->view('basico/footer');
@@ -116,6 +114,7 @@ class Relatorio_deb extends CI_Controller {
 			'TipoFrete',
 			'Agrupar',
 			'Produtos',
+			'Parcelas',
 			'Ultimo',
 			'nome',
 			'Texto1',
@@ -232,7 +231,13 @@ class Relatorio_deb extends CI_Controller {
 			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
 			'IS NULL' => 'S/ Prd & Srv',
         );
-				
+		
+        $data['select']['Parcelas'] = array(
+			'0' => '::TODOS::',
+			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+			'IS NULL' => 'S/ Parcelas',
+        );
+
         $data['select']['Ultimo'] = array(
 			'0' => '::Nenhum::',			
 			#'1' => 'Último Pedido',			
@@ -303,7 +308,7 @@ class Relatorio_deb extends CI_Controller {
 		$data['query']['nome'] = 'Fornecedor';
         $data['titulo1'] = 'Despesas';
 		$data['metodo'] = 1;
-		$data['form_open_path'] = 'relatorio/debitos';
+		$data['form_open_path'] = 'Debitos/debitos';
 		$data['panel'] = 'danger';
 		$data['TipoFinanceiro'] = 'Despesas';
 		$data['TipoRD'] = 1;
@@ -311,10 +316,10 @@ class Relatorio_deb extends CI_Controller {
 		$data['editar'] = 1;
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimirdesp/';
-		$data['imprimirlista'] = 'Relatorio_print/debitos_lista/';
-		$data['imprimirrecibo'] = 'Relatorio_print/debitos_recibo/';
+		$data['imprimirlista'] = 'Debitos/debitos_lista/';
+		$data['imprimirrecibo'] = 'Debitos/debitos_recibo/';
 		$data['edit'] = 'Orcatrata/baixadodebito/';
-		$data['alterarparc'] = 'Orcatrata/baixadosdebitos/';	
+		$data['alterarparc'] = 'Debitos/debitos_baixa/';	
 		$data['paginacao'] = 'N';	
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -383,19 +388,20 @@ class Relatorio_deb extends CI_Controller {
 			$_SESSION['FiltroDebitos']['Ultimo'] = $data['query']['Ultimo'];
 			$_SESSION['FiltroDebitos']['Agrupar'] = $data['query']['Agrupar'];
 			$_SESSION['FiltroDebitos']['Produtos'] = $data['query']['Produtos'];
+			$_SESSION['FiltroDebitos']['Parcelas'] = $data['query']['Parcelas'];
 			
-			$data['pesquisa_query'] = $this->Relatorio_model->list_debitos($_SESSION['FiltroDebitos'],TRUE, TRUE);
+			$data['pesquisa_query'] = $this->Base_model->list_debitos($_SESSION['FiltroDebitos'],FALSE, TRUE, FALSE, FALSE, FALSE);
 			
 			if($data['pesquisa_query'] === FALSE){
 				
 				$data['msg'] = '?m=4';
-				redirect(base_url() . 'relatorio/debitos' . $data['msg']);
+				redirect(base_url() . 'Debitos/debitos' . $data['msg']);
 				exit();
 			}else{
 
 				$config['total_rows'] = $data['pesquisa_query']->num_rows();
 
-				$config['base_url'] = base_url() . 'relatorio_pag/debitos_pag/';
+				$config['base_url'] = base_url() . 'Debitos/debitos_pag/';
 
 				$config['per_page'] = 12;
 				$config["uri_segment"] = 3;
@@ -435,7 +441,7 @@ class Relatorio_deb extends CI_Controller {
 			
 				$data['linha'] = $page * $config['per_page'];
 
-				$data['report'] = $this->Relatorio_model->list_debitos($_SESSION['FiltroDebitos'], TRUE, FALSE, $config['per_page'], $data['linha']);			
+				$data['report'] = $this->Base_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, FALSE, $config['per_page'], $data['linha'], FALSE);			
 				
 				$_SESSION['FiltroDebitos']['Texto1'] = utf8_encode($data['query']['Texto1']);
 				$_SESSION['FiltroDebitos']['Texto2'] = utf8_encode($data['query']['Texto2']);
@@ -446,11 +452,11 @@ class Relatorio_deb extends CI_Controller {
 
 				$data['pagination'] = $this->pagination->create_links();
 
-				$data['list1'] = $this->load->view('relatorio/list_debitos', $data, TRUE);
+				$data['list1'] = $this->load->view('Debitos/list_debitos', $data, TRUE);
 			}
         }
 
-        $this->load->view('relatorio/tela_debitos', $data);
+        $this->load->view('Debitos/tela_debitos', $data);
 
         $this->load->view('basico/footer');
 
@@ -467,7 +473,7 @@ class Relatorio_deb extends CI_Controller {
 		
         $data['titulo1'] = 'Parcelas das Despesas';
 		$data['metodo'] = 1;
-		$data['form_open_path'] = 'relatorio_pag/debitos_pag';
+		$data['form_open_path'] = 'Debitos/debitos_pag';
 		$data['panel'] = 'danger';
 		$data['TipoFinanceiro'] = 'Despesas';
 		$data['TipoRD'] = 1;
@@ -475,26 +481,26 @@ class Relatorio_deb extends CI_Controller {
 		$data['editar'] = 1;
 		$data['print'] = 1;
 		$data['imprimir'] = 'OrcatrataPrint/imprimirdesp/';
-		$data['imprimirlista'] = 'Relatorio_print/debitos_lista/';
-		$data['imprimirrecibo'] = 'Relatorio_print/debitos_recibo/';
+		$data['imprimirlista'] = 'Debitos/debitos_lista/';
+		$data['imprimirrecibo'] = 'Debitos/debitos_recibo/';
 		$data['edit'] = 'Orcatrata/baixadodebito/';
-		$data['alterarparc'] = 'Orcatrata/baixadosdebitos/';	
+		$data['alterarparc'] = 'Debitos/debitos_baixa/';	
 		$data['paginacao'] = 'S';
-		$data['caminho'] = 'relatorio/debitos/';
+		$data['caminho'] = 'Debitos/debitos/';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #run form validation
 
-		$data['pesquisa_query'] = $this->Relatorio_model->list_debitos($_SESSION['FiltroDebitos'],TRUE, TRUE);
+		$data['pesquisa_query'] = $this->Base_model->list_debitos($_SESSION['FiltroDebitos'],FALSE, TRUE, FALSE, FALSE, FALSE);
 		
 		if($data['pesquisa_query'] === FALSE){
 			
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'relatorio/debitos' . $data['msg']);
+			redirect(base_url() . 'Debitos/debitos' . $data['msg']);
 			exit();
 		}else{
 
-			$config['base_url'] = base_url() . 'relatorio_pag/debitos_pag/';
+			$config['base_url'] = base_url() . 'Debitos/debitos_pag/';
 			$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			$config['per_page'] = 12;
 			$config["uri_segment"] = 3;
@@ -533,14 +539,14 @@ class Relatorio_deb extends CI_Controller {
 				
 			$data['linha'] = $page * $config['per_page'];
 			
-			$data['report'] = $this->Relatorio_model->list_debitos($_SESSION['FiltroDebitos'], TRUE, FALSE, $config['per_page'], $data['linha']);			
+			$data['report'] = $this->Base_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, FALSE, $config['per_page'], $data['linha'], FALSE);			
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-            $data['list1'] = $this->load->view('relatorio/list_debitos', $data, TRUE);
+            $data['list1'] = $this->load->view('Debitos/list_debitos', $data, TRUE);
        
 		}
-        $this->load->view('relatorio/tela_debitos', $data);
+        $this->load->view('Debitos/tela_debitos', $data);
 
         $this->load->view('basico/footer');
 
@@ -593,16 +599,16 @@ class Relatorio_deb extends CI_Controller {
 
         $data['nome'] = 'Fornecedor';
 
-		$data['report'] = $this->Relatorio_model->list_debitos($dados, TRUE, FALSE, FALSE, FALSE);
+		$data['report'] = $this->Base_model->list_debitos($dados, FALSE, FALSE, FALSE, FALSE, FALSE);
 		
 		if($data['report'] === FALSE){
 			
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'relatorio/debitos' . $data['msg']);
+			redirect(base_url() . 'Debitos/debitos' . $data['msg']);
 			exit();
 		}else{
 
-			$data['list1'] = $this->load->view('Relatorio_print/list_debitos_excel', $data, TRUE);
+			$data['list1'] = $this->load->view('Debitos/list_debitos_excel', $data, TRUE);
 		}
 
         $this->load->view('basico/footer');
@@ -636,17 +642,17 @@ class Relatorio_deb extends CI_Controller {
 				$data['Imprimir']['DataInicio4'] = $this->basico->mascara_data($_SESSION['FiltroDebitos']['DataInicio4'], 'barras');
 				$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroDebitos']['DataFim4'], 'barras');
 		
-				$data['pesquisa_query'] = $this->Relatorio_print_model->get_debitos($_SESSION['FiltroDebitos'], TRUE);
+				$data['pesquisa_query'] = $this->Base_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, TRUE, FALSE, FALSE, FALSE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
 					$data['msg'] = '?m=4';
-					redirect(base_url() . 'relatorio/debitos' . $data['msg']);
+					redirect(base_url() . 'Debitos/debitos' . $data['msg']);
 					exit();
 				}else{
 
-					$config['base_url'] = base_url() . 'Relatorio_print/debitos_lista/' . $id . '/';
-					$config['total_rows'] = $data['pesquisa_query'];
+					$config['base_url'] = base_url() . 'Debitos/debitos_lista/' . $id . '/';
+					$config['total_rows'] = $data['pesquisa_query']->num_rows();
 					$config['per_page'] = 19;
 					$config["uri_segment"] = 4;
 					$config['reuse_query_string'] = TRUE;
@@ -684,7 +690,7 @@ class Relatorio_deb extends CI_Controller {
 					$data['pagination'] = $this->pagination->create_links();		
 						
 					#### App_OrcaTrata ####
-					$data['orcatrata'] = $this->Relatorio_print_model->get_debitos($_SESSION['FiltroDebitos'], FALSE, $config['per_page'], ($page * $config['per_page']));
+					$data['orcatrata'] = $this->Base_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
 					if (count($data['orcatrata']) > 0) {
 						$data['orcatrata'] = array_combine(range(1, count($data['orcatrata'])), array_values($data['orcatrata']));
 						$data['count']['POCount'] = count($data['orcatrata']);           
@@ -706,7 +712,7 @@ class Relatorio_deb extends CI_Controller {
 								echo "</pre>";
 								*/
 								#### App_ProdutoVenda ####
-								$data['produto'][$i] = $this->Relatorio_print_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['produto'][$i] = $this->Base_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['produto'][$i]) > 0) {
 									$data['produto'][$i] = array_combine(range(1, count($data['produto'][$i])), array_values($data['produto'][$i]));
 									$data['count']['PCount'][$i] = count($data['produto'][$i]);
@@ -729,7 +735,7 @@ class Relatorio_deb extends CI_Controller {
 								echo "</pre>";
 								*/		
 								#### App_Parcelas####
-								$data['parcelasrec'][$i] = $this->Relatorio_print_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['parcelasrec'][$i] = $this->Base_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['parcelasrec'][$i]) > 0) {
 									$data['parcelasrec'][$i] = array_combine(range(1, count($data['parcelasrec'][$i])), array_values($data['parcelasrec'][$i]));
 									$data['count']['PRCount'][$i] = count($data['parcelasrec'][$i]);
@@ -750,7 +756,7 @@ class Relatorio_deb extends CI_Controller {
 								echo "</pre>";
 								*/
 								#### App_Procedimento ####
-								$data['procedimento'][$i] = $this->Relatorio_print_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['procedimento'][$i] = $this->Base_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['procedimento'][$i]) > 0) {
 									$data['procedimento'][$i] = array_combine(range(1, count($data['procedimento'][$i])), array_values($data['procedimento'][$i]));
 									$data['count']['PMCount'][$i] = count($data['procedimento'][$i]);
@@ -767,12 +773,12 @@ class Relatorio_deb extends CI_Controller {
 					}
 
 					$data['titulo'] = 'Versão Lista Cobrança';
-					$data['form_open_path'] = 'Relatorio_print/debitos_lista';
+					$data['form_open_path'] = 'Debitos/debitos_lista';
 					$data['panel'] = 'danger';
 					$data['metodo'] = 1;
 					$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-					$data['imprimirlista'] = 'Relatorio_print/debitos_lista/';
-					$data['imprimirrecibo'] = 'Relatorio_print/debitos_recibo/';
+					$data['imprimirlista'] = 'Debitos/debitos_lista/';
+					$data['imprimirrecibo'] = 'Debitos/debitos_recibo/';
 					
 					/*
 					  echo '<br>';
@@ -782,7 +788,7 @@ class Relatorio_deb extends CI_Controller {
 					  #exit ();
 					 */
 
-					$this->load->view('Relatorio_print/print_debitos_lista', $data);
+					$this->load->view('Debitos/print_debitos_lista', $data);
 				}
 			}	
 		}
@@ -817,17 +823,17 @@ class Relatorio_deb extends CI_Controller {
 				$data['Imprimir']['DataInicio4'] = $this->basico->mascara_data($_SESSION['FiltroDebitos']['DataInicio4'], 'barras');
 				$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroDebitos']['DataFim4'], 'barras');
 				
-				$data['pesquisa_query'] = $this->Relatorio_print_model->get_debitos($_SESSION['FiltroDebitos'], TRUE);
+				$data['pesquisa_query'] = $this->Base_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, TRUE, FALSE, FALSE, FALSE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
 					$data['msg'] = '?m=4';
-					redirect(base_url() . 'relatorio/debitos' . $data['msg']);
+					redirect(base_url() . 'Debitos/debitos' . $data['msg']);
 					exit();
 				}else{
 
-					$config['base_url'] = base_url() . 'Relatorio_print/debitos_recibo/' . $id . '/';
-					$config['total_rows'] = $data['pesquisa_query'];
+					$config['base_url'] = base_url() . 'Debitos/debitos_recibo/' . $id . '/';
+					$config['total_rows'] = $data['pesquisa_query']->num_rows();
 					$config['per_page'] = 12;
 					$config["uri_segment"] = 4;
 					$config['reuse_query_string'] = TRUE;
@@ -865,7 +871,7 @@ class Relatorio_deb extends CI_Controller {
 					$data['pagination'] = $this->pagination->create_links();		
 
 					#### App_OrcaTrata ####
-					$data['orcatrata'] = $this->Relatorio_print_model->get_debitos($_SESSION['FiltroDebitos'], FALSE, $config['per_page'], ($page * $config['per_page']));
+					$data['orcatrata'] = $this->Base_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
 					if (count($data['orcatrata']) > 0) {
 						$data['orcatrata'] = array_combine(range(1, count($data['orcatrata'])), array_values($data['orcatrata']));
 						$data['count']['POCount'] = count($data['orcatrata']);           
@@ -887,7 +893,7 @@ class Relatorio_deb extends CI_Controller {
 								echo "</pre>";
 								*/
 								#### App_ProdutoVenda ####
-								$data['produto'][$i] = $this->Relatorio_print_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['produto'][$i] = $this->Base_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['produto'][$i]) > 0) {
 									$data['produto'][$i] = array_combine(range(1, count($data['produto'][$i])), array_values($data['produto'][$i]));
 									$data['count']['PCount'][$i] = count($data['produto'][$i]);
@@ -910,7 +916,7 @@ class Relatorio_deb extends CI_Controller {
 								echo "</pre>";
 								*/		
 								#### App_Parcelas####
-								$data['parcelasrec'][$i] = $this->Relatorio_print_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['parcelasrec'][$i] = $this->Base_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['parcelasrec'][$i]) > 0) {
 									$data['parcelasrec'][$i] = array_combine(range(1, count($data['parcelasrec'][$i])), array_values($data['parcelasrec'][$i]));
 									$data['count']['PRCount'][$i] = count($data['parcelasrec'][$i]);
@@ -931,7 +937,7 @@ class Relatorio_deb extends CI_Controller {
 								echo "</pre>";
 								*/
 								#### App_Procedimento ####
-								$data['procedimento'][$i] = $this->Relatorio_print_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['procedimento'][$i] = $this->Base_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['procedimento'][$i]) > 0) {
 									$data['procedimento'][$i] = array_combine(range(1, count($data['procedimento'][$i])), array_values($data['procedimento'][$i]));
 									$data['count']['PMCount'][$i] = count($data['procedimento'][$i]);
@@ -949,12 +955,12 @@ class Relatorio_deb extends CI_Controller {
 					}
 
 					$data['titulo'] = 'Versão Recibo Debito';
-					$data['form_open_path'] = 'Relatorio_print/debitos_recibo';
+					$data['form_open_path'] = 'Debitos/debitos_recibo';
 					$data['panel'] = 'danger';
 					$data['metodo'] = 1;
 					$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-					$data['imprimirlista'] = 'Relatorio_print/debitos_lista/';
-					$data['imprimirrecibo'] = 'Relatorio_print/debitos_recibo/';		
+					$data['imprimirlista'] = 'Debitos/debitos_lista/';
+					$data['imprimirrecibo'] = 'Debitos/debitos_recibo/';		
 					
 
 					/*
@@ -965,7 +971,356 @@ class Relatorio_deb extends CI_Controller {
 					  #exit ();
 					 */
 
-					$this->load->view('Relatorio_print/print_debitos_recibo', $data);			
+					$this->load->view('Debitos/print_debitos_recibo', $data);			
+				}
+			}
+		}
+        $this->load->view('basico/footer');
+
+    }
+	
+    public function debitos_baixa($id = FALSE) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+		}else{
+
+			$data['query'] = quotes_to_entities($this->input->post(array(
+				'QuitadoParcelas',
+				'MostrarDataPagamento',
+				'DataPagamento',
+			), TRUE));
+			
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			$data['empresa'] = quotes_to_entities($this->input->post(array(
+				#### Sis_Empresa ####
+				'idSis_Empresa',
+				
+			), TRUE));
+
+			//(!$data['query']['DataPagamento']) ? $data['query']['DataPagamento'] = date('d/m/Y', time()) : FALSE;
+			(!$this->input->post('PRCount')) ? $data['count']['PRCount'] = 0 : $data['count']['PRCount'] = $this->input->post('PRCount');
+
+			$j = 1;
+			for ($i = 1; $i <= $data['count']['PRCount']; $i++) {
+
+				if ($this->input->post('idApp_Parcelas' . $i)) {
+					$data['parcelasrec'][$j]['idApp_Parcelas'] = $this->input->post('idApp_Parcelas' . $i);
+					$data['parcelasrec'][$j]['ValorParcela'] = $this->input->post('ValorParcela' . $i);
+					$data['parcelasrec'][$j]['DataVencimento'] = $this->input->post('DataVencimento' . $i);
+					$data['parcelasrec'][$j]['DataPago'] = $this->input->post('DataPago' . $i);
+					$data['parcelasrec'][$j]['Quitado'] = $this->input->post('Quitado' . $i);
+					$data['parcelasrec'][$j]['FormaPagamentoParcela'] = $this->input->post('FormaPagamentoParcela' . $i);
+					$data['parcelasrec'][$j]['idApp_OrcaTrata'] = $this->input->post('idApp_OrcaTrata' . $i);
+					
+					(!$data['parcelasrec'][$j]['Quitado']) ? $data['parcelasrec'][$j]['Quitado'] = 'N' : FALSE;
+					$data['radio'] = array(
+						'Quitado' . $j => $this->basico->radio_checked($data['parcelasrec'][$j]['Quitado'], 'Quitado' . $j, 'NS'),
+					);
+					($data['parcelasrec'][$j]['Quitado'] == 'S') ? $data['div']['Quitado' . $j] = '' : $data['div']['Quitado' . $j] = 'style="display: none;"';				
+
+					$j++;
+				}
+			}
+			$data['count']['PRCount'] = $j - 1;
+
+			$data['Pesquisa'] = '';		
+
+			if ($id) {
+				
+				#### Sis_Empresa ####
+				$data['empresa'] = $this->Orcatrata_model->get_orcatrataalterar($id);
+			
+				if($data['empresa'] === FALSE){
+					
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				}else{
+						
+					$data['pesquisa_query'] = $this->Base_model->list_debitos($_SESSION['FiltroDebitos'], TRUE, TRUE, FALSE, FALSE, FALSE);
+					
+					if($data['pesquisa_query'] === FALSE){
+						
+						$data['msg'] = '?m=4';
+						redirect(base_url() . 'debitos/debitos' . $data['msg']);
+						exit();
+					}else{
+
+						
+						$config['base_url'] = base_url() . 'Debitos/debitos_baixa/' . $id . '/';
+						$config['total_rows'] = $data['pesquisa_query']->num_rows();
+						$config['per_page'] = 12;
+						$config["uri_segment"] = 4;
+						$config['reuse_query_string'] = TRUE;
+						$config['num_links'] = 2;
+						$config['use_page_numbers'] = TRUE;
+						$config['full_tag_open'] = "<ul class='pagination'>";
+						$config['full_tag_close'] = "</ul>";
+						$config['num_tag_open'] = '<li>';
+						$config['num_tag_close'] = '</li>';
+						$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+						$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+						$config['next_tag_open'] = "<li>";
+						$config['next_tagl_close'] = "</li>";
+						$config['prev_tag_open'] = "<li>";
+						$config['prev_tagl_close'] = "</li>";
+						$config['first_tag_open'] = "<li>";
+						$config['first_tagl_close'] = "</li>";
+						$config['last_tag_open'] = "<li>";
+						$config['last_tagl_close'] = "</li>";		   
+						
+						if($config['total_rows'] >= 1){
+							$_SESSION['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
+						}else{
+							$_SESSION['Total_Rows'] = $data['total_rows'] = 0;
+						}
+						
+						$this->pagination->initialize($config);
+						
+						$_SESSION['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+						$_SESSION['Per_Page'] = $data['per_page'] = $config['per_page'];
+						
+						$_SESSION['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
+
+						#### App_Parcelas ####
+						$_SESSION['Parcelasrec'] = $data['parcelasrec'] = $this->Base_model->list_debitos($_SESSION['FiltroDebitos'], TRUE, TRUE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']), TRUE);
+						if (count($data['parcelasrec']) > 0) {
+							$data['parcelasrec'] = array_combine(range(1, count($data['parcelasrec'])), array_values($data['parcelasrec']));
+							$data['count']['PRCount'] = count($data['parcelasrec']);
+							
+							if (isset($data['parcelasrec'])) {
+
+								for($j=1; $j <= $data['count']['PRCount']; $j++) {
+									
+									$data['parcelasrec'][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimento'], 'barras');
+									$data['parcelasrec'][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPago'], 'barras');
+									
+									if($data['parcelasrec'][$j]['Modalidade'] == "P"){
+										$_SESSION['Parcelasrec'][$j]['Tipo'] = 'Dividido';
+										$_SESSION['Parcelasrec'][$j]['readonly'] = 'readonly=""';
+									}elseif($data['parcelasrec'][$j]['Modalidade'] == "M"){
+										$_SESSION['Parcelasrec'][$j]['Tipo'] = 'Mensal';
+										$_SESSION['Parcelasrec'][$j]['readonly'] = '';
+									}
+
+									$_SESSION['Parcelasrec'][$j]['Despesa'] = $data['parcelasrec'][$j]['Despesa'];
+									
+									$_SESSION['Parcelasrec'][$j]['Parcela'] = $data['parcelasrec'][$j]['Parcela'];
+									$_SESSION['Parcelasrec'][$j]['FormaPagamento'] = $data['parcelasrec'][$j]['FormaPagamento'];
+
+									$data['radio'] = array(
+										'Quitado' . $j => $this->basico->radio_checked($data['parcelasrec'][$j]['Quitado'], 'Quitado' . $j, 'NS'),
+									);
+									($data['parcelasrec'][$j]['Quitado'] == 'S') ? $data['div']['Quitado' . $j] = '' : $data['div']['Quitado' . $j] = 'style="display: none;"';
+								}
+
+							}
+						}
+					}
+				}
+			}
+
+			if(!$data['empresa']['idSis_Empresa'] || $data['empresa']['idSis_Empresa'] !== $_SESSION['log']['idSis_Empresa']){
+				
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'acesso' . $data['msg']);
+				exit();
+				
+			}else{
+
+				$data['select']['QuitadoParcelas'] = $this->Basico_model->select_status_sn();
+				$data['select']['MostrarDataPagamento'] = $this->Basico_model->select_status_sn();
+				$data['select']['Quitado'] = $this->Basico_model->select_status_sn();		
+				
+				$data['titulo'] = 'Despesas';
+				$data['form_open_path'] = 'Debitos/debitos_baixa';
+				$data['readonly'] = 'readonly=""';
+				$data['disabled'] = '';
+				$data['panel'] = 'danger';
+				$data['metodo'] = 1;
+				$data['TipoFinanceiro'] = 'Despesas';
+				$data['TipoRD'] = 1;
+				$data['nome'] = 'Fornecedor';	
+				
+				$data['collapse'] = '';	
+				$data['collapse1'] = 'class="collapse"';		
+				
+				if ($data['count']['PRCount'] > 0 )
+					$data['parcelasin'] = 'in';
+				else
+					$data['parcelasin'] = '';
+
+
+				$data['sidebar'] = 'col-sm-3 col-md-2';
+				$data['main'] = 'col-sm-7 col-md-8';
+
+				$data['datepicker'] = 'DatePicker';
+				$data['timepicker'] = 'TimePicker';
+
+				(!$data['query']['QuitadoParcelas']) ? $data['query']['QuitadoParcelas'] = 'N' : FALSE;
+				$data['radio'] = array(
+					'QuitadoParcelas' => $this->basico->radio_checked($data['query']['QuitadoParcelas'], 'Quitar Parcelas', 'NS'),
+				);
+				($data['query']['QuitadoParcelas'] == 'S') ?
+					$data['div']['QuitadoParcelas'] = '' : $data['div']['QuitadoParcelas'] = 'style="display: none;"';
+				
+				(!$data['query']['MostrarDataPagamento']) ? $data['query']['MostrarDataPagamento'] = 'N' : FALSE;
+				$data['radio'] = array(
+					'MostrarDataPagamento' => $this->basico->radio_checked($data['query']['MostrarDataPagamento'], 'Quitar Parcelas', 'NS'),
+				);
+				($data['query']['MostrarDataPagamento'] == 'S') ?
+					$data['div']['MostrarDataPagamento'] = '' : $data['div']['MostrarDataPagamento'] = 'style="display: none;"';
+					
+				/*
+				  echo '<br>';
+				  echo "<pre>";
+				  print_r($data);
+				  echo "</pre>";
+				  exit ();
+				*/
+				
+				$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+				#### Sis_Empresa ####
+				$this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'trim');
+				if($data['query']['MostrarDataPagamento'] == 'S'){
+					$this->form_validation->set_rules('DataPagamento', 'Data do Pagamento', 'required|trim|valid_date');
+				}
+				
+				#run form validation
+				if ($this->form_validation->run() === FALSE) {
+					$this->load->view('Debitos/form_debitos_baixa', $data);
+				} else {
+
+					if($this->Basico_model->get_dt_validade() === FALSE){
+						
+						$data['msg'] = '?m=3';
+						redirect(base_url() . 'acesso' . $data['msg']);
+						
+					} else {
+							
+						$data['bd']['QuitadoParcelas'] = $data['query']['QuitadoParcelas'];
+						$data['bd']['MostrarDataPagamento'] = $data['query']['MostrarDataPagamento'];
+						$data['bd']['DataPagamento'] = $data['query']['DataPagamento'];
+						
+						////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
+						$_SESSION['Query']['UltimaDataPagamento'] = $data['query']['DataPagamento'];			
+						$data['query']['DataPagamento'] = $this->basico->mascara_data($data['query']['DataPagamento'], 'mysql');
+
+						#### App_ParcelasRec ####
+						$data['update']['parcelasrec']['anterior'] = $this->Base_model->list_debitos($_SESSION['FiltroDebitos'], TRUE, TRUE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']), TRUE);
+						if (isset($data['parcelasrec']) || (!isset($data['parcelasrec']) && isset($data['update']['parcelasrec']['anterior']) ) ) {
+
+							if (isset($data['parcelasrec']))
+								$data['parcelasrec'] = array_values($data['parcelasrec']);
+							else
+								$data['parcelasrec'] = array();
+
+							//faz o tratamento da variável multidimensional, que ira separar o que deve ser inserido, alterado e excluído
+							$data['update']['parcelasrec'] = $this->basico->tratamento_array_multidimensional($data['parcelasrec'], $data['update']['parcelasrec']['anterior'], 'idApp_Parcelas');
+							
+							$max = count($data['update']['parcelasrec']['alterar']);
+							for($j=0; $j<$max; $j++) {
+
+								//$data['orcatrata'] = $this->Orcatrata_model->get_orcatrata_baixa($data['update']['parcelasrec']['alterar'][$j]['idApp_OrcaTrata']);
+								
+								if(!$data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'] || $data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'] == "0" || empty($data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'])){
+									$data['update']['parcelasrec']['alterar'][$j]['FormaPagamentoParcela'] = $_SESSION['Parcelasrec'][$j]['FormaPagamento'];
+								}
+
+								if(!$data['update']['parcelasrec']['alterar'][$j]['ValorParcela']  ||  empty($data['update']['parcelasrec']['alterar'][$j]['ValorParcela'])){
+									$data['update']['parcelasrec']['alterar'][$j]['ValorParcela'] = "0.00";
+								}else{
+									$data['update']['parcelasrec']['alterar'][$j]['ValorParcela'] = str_replace(',', '.', str_replace('.', '', $data['update']['parcelasrec']['alterar'][$j]['ValorParcela']));
+								}
+								
+								if(!$data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] || $data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] == "00/00/0000" ||  empty($data['update']['parcelasrec']['alterar'][$j]['DataVencimento'])){
+									$data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] = "0000-00-00";
+								}else{
+									$data['update']['parcelasrec']['alterar'][$j]['DataVencimento'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataVencimento'], 'mysql');
+								}                    
+
+								if(!$data['update']['parcelasrec']['alterar'][$j]['DataPago'] || $data['update']['parcelasrec']['alterar'][$j]['DataPago'] == "00/00/0000" ||  empty($data['update']['parcelasrec']['alterar'][$j]['DataPago'])){
+									$data['update']['parcelasrec']['alterar'][$j]['DataPago'] == "0000-00-00";
+								}else{
+									$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $this->basico->mascara_data($data['update']['parcelasrec']['alterar'][$j]['DataPago'], 'mysql');
+								}                   
+
+								if ($data['query']['QuitadoParcelas'] == 'S') $data['update']['parcelasrec']['alterar'][$j]['Quitado'] = 'S';
+								
+								if ($data['update']['parcelasrec']['alterar'][$j]['Quitado'] == 'S'){
+									if(!$data['update']['parcelasrec']['alterar'][$j]['DataPago'] || $data['update']['parcelasrec']['alterar'][$j]['DataPago'] == "0000-00-00"){
+										if($data['query']['MostrarDataPagamento'] == 'N'){
+											$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update']['parcelasrec']['alterar'][$j]['DataVencimento'];
+										}else{
+											$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['query']['DataPagamento'];
+										}
+									}else{
+										$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = $data['update']['parcelasrec']['alterar'][$j]['DataPago'];
+									}
+									$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = date('Y-m-d', time());
+								} else {
+									$data['update']['parcelasrec']['alterar'][$j]['DataPago'] = "0000-00-00";
+									$data['update']['parcelasrec']['alterar'][$j]['DataLanc'] = "0000-00-00";
+								}
+								
+								$data['update']['parcelasrec']['bd'] = $this->Orcatrata_model->update_parcelas_id($data['update']['parcelasrec']['alterar'][$j], $data['update']['parcelasrec']['alterar'][$j]['idApp_Parcelas']);
+
+								$data['update']['parcelasrec']['posterior'] = $this->Orcatrata_model->get_parcelas_posterior($data['update']['parcelasrec']['alterar'][$j]['idApp_OrcaTrata']);
+								if (isset($data['update']['parcelasrec']['posterior'])){
+									$max_parcela = count($data['update']['parcelasrec']['posterior']);
+									if($max_parcela == 0){
+										$data['orcatrata']['QuitadoOrca'] = "S";
+										$data['orcatrata']['AprovadoOrca'] = "S";				
+									}else{
+										$data['orcatrata']['QuitadoOrca'] = "N";
+									}
+								}
+								
+								$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_posterior($data['update']['parcelasrec']['alterar'][$j]['idApp_OrcaTrata']);
+								if (isset($data['update']['produto']['posterior'])){
+									$max_produto = count($data['update']['produto']['posterior']);
+									if($max_produto == 0){
+										$data['orcatrata']['CombinadoFrete'] = "S";
+										$data['orcatrata']['ProntoOrca'] = "S";
+										$data['orcatrata']['EnviadoOrca'] = "S";
+										$data['orcatrata']['ConcluidoOrca'] = "S";
+									}else{
+										$data['orcatrata']['ConcluidoOrca'] = "N";
+									}
+								}
+								
+								if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
+									$data['orcatrata']['AprovadoOrca'] = "S";
+									$data['orcatrata']['FinalizadoOrca'] = "S";
+									$data['orcatrata']['CombinadoFrete'] = "S";
+									$data['orcatrata']['ProntoOrca'] = "S";
+									$data['orcatrata']['EnviadoOrca'] = "S";
+								}else{
+									$data['orcatrata']['FinalizadoOrca'] = "N";
+								}					
+								
+								$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['update']['parcelasrec']['alterar'][$j]['idApp_OrcaTrata']);					
+								
+							}	
+							
+						}
+						
+						$data['msg'] = '?m=1';
+						redirect(base_url() . 'Debitos/debitos_baixa/' . $_SESSION['log']['idSis_Empresa'] . $data['msg']);
+
+						exit();
+					}
 				}
 			}
 		}

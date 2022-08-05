@@ -17,17 +17,9 @@
 								<div class="col-md-12 ">
 									<div class="col-md-2 text-left">
 										<br>
-										<?php if ($titulo == "Receitas" ) { ?>
-											<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>relatorio/cobrancas_pag" role="button">
-												<span class="glyphicon glyphicon-pencil"></span> Parcelas das <?php echo $titulo; ?> 
-											</a>							
-										<?php } else if($titulo == "Despesas"){ ?>
-											<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>relatorio_pag/debitos_pag" role="button">
-												<span class="glyphicon glyphicon-pencil"></span> Parcelas das <?php echo $titulo; ?>
-											</a>
-										<?php } ?>
-										
-										
+										<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>debitos/debitos_pag" role="button">
+											<span class="glyphicon glyphicon-pencil"></span> Parcelas das <?php echo $titulo; ?>
+										</a>
 									</div>
 									<div class="col-md-2 text-left">	
 										<br>

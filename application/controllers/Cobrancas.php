@@ -390,7 +390,7 @@ class Cobrancas extends CI_Controller {
 			$_SESSION['FiltroCobrancas']['Produtos'] = $data['query']['Produtos'];
 			$_SESSION['FiltroCobrancas']['Parcelas'] = $data['query']['Parcelas'];
 			
-			$data['pesquisa_query'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'],TRUE, TRUE);
+			$data['pesquisa_query'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'],FALSE , TRUE, FALSE ,FALSE ,FALSE );
 			
 			if($data['pesquisa_query'] === FALSE){
 				
@@ -441,7 +441,7 @@ class Cobrancas extends CI_Controller {
 			
 				$data['linha'] = $page * $config['per_page'];
 
-				$data['report'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, FALSE, $config['per_page'], $data['linha']);			
+				$data['report'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, FALSE, $config['per_page'], $data['linha']);			
 				
 				$_SESSION['FiltroCobrancas']['Texto1'] = utf8_encode($data['query']['Texto1']);
 				$_SESSION['FiltroCobrancas']['Texto2'] = utf8_encode($data['query']['Texto2']);
@@ -491,7 +491,7 @@ class Cobrancas extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #run form validation
 
-		$data['pesquisa_query'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'],TRUE, TRUE);
+		$data['pesquisa_query'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'],FALSE, TRUE);
 		
 		if($data['pesquisa_query'] === FALSE){
 			
@@ -539,7 +539,7 @@ class Cobrancas extends CI_Controller {
 				
 			$data['linha'] = $page * $config['per_page'];
 			
-			$data['report'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, FALSE, $config['per_page'], $data['linha']);			
+			$data['report'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, FALSE, $config['per_page'], $data['linha']);			
 			
 			$data['pagination'] = $this->pagination->create_links();
 
@@ -599,7 +599,7 @@ class Cobrancas extends CI_Controller {
 
         $data['nome'] = 'Cliente';
 
-		$data['report'] = $this->Base_model->list_cobrancas($dados, TRUE, FALSE, FALSE, FALSE);
+		$data['report'] = $this->Base_model->list_cobrancas($dados, FALSE, FALSE, FALSE, FALSE);
 		
 		if($data['report'] === FALSE){
 			
@@ -643,7 +643,7 @@ class Cobrancas extends CI_Controller {
 				$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroCobrancas']['DataFim4'], 'barras');
 		
 				//$data['pesquisa_query'] = $this->Relatorio_print_model->get_cobrancas($_SESSION['FiltroCobrancas'], TRUE);
-				$data['pesquisa_query'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, TRUE, FALSE, FALSE, FALSE);
+				$data['pesquisa_query'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, TRUE, FALSE, FALSE, FALSE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
@@ -693,7 +693,7 @@ class Cobrancas extends CI_Controller {
 					$data['pagination'] = $this->pagination->create_links();		
 						
 					#### App_OrcaTrata ####
-					$data['orcatrata'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
+					$data['orcatrata'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
 					/*
 					echo '<br>';
 					echo "<pre>";
@@ -844,7 +844,7 @@ class Cobrancas extends CI_Controller {
 				$data['Imprimir']['DataInicio4'] = $this->basico->mascara_data($_SESSION['FiltroCobrancas']['DataInicio4'], 'barras');
 				$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroCobrancas']['DataFim4'], 'barras');
 				
-				$data['pesquisa_query'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, TRUE, FALSE, FALSE, FALSE);
+				$data['pesquisa_query'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, TRUE, FALSE, FALSE, FALSE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
@@ -893,7 +893,7 @@ class Cobrancas extends CI_Controller {
 					$data['pagination'] = $this->pagination->create_links();		
 
 					#### App_OrcaTrata ####
-					$data['orcatrata'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
+					$data['orcatrata'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
 					if (count($data['orcatrata']) > 0) {
 						$data['orcatrata'] = array_combine(range(1, count($data['orcatrata'])), array_values($data['orcatrata']));
 						$data['count']['POCount'] = count($data['orcatrata']);           
@@ -1067,7 +1067,7 @@ class Cobrancas extends CI_Controller {
 					
 				}else{
 
-					$data['pesquisa_query'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, TRUE, FALSE, FALSE, FALSE);
+					$data['pesquisa_query'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, TRUE, FALSE, FALSE, FALSE);
 					
 					if($data['pesquisa_query'] === FALSE){
 						
@@ -1115,7 +1115,7 @@ class Cobrancas extends CI_Controller {
 						$_SESSION['FiltroCobrancas']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 
 						#### App_Parcelas ####
-						$data['parcelasrec'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, TRUE, $_SESSION['FiltroCobrancas']['Per_Page'], ($_SESSION['FiltroCobrancas']['Pagina'] * $_SESSION['FiltroCobrancas']['Per_Page']), TRUE);
+						$data['parcelasrec'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, TRUE, $_SESSION['FiltroCobrancas']['Per_Page'], ($_SESSION['FiltroCobrancas']['Pagina'] * $_SESSION['FiltroCobrancas']['Per_Page']), TRUE);
 						
 						if (count($data['parcelasrec']) > 0) {
 							
@@ -1236,7 +1236,7 @@ class Cobrancas extends CI_Controller {
 						$data['query']['DataPagamento'] = $this->basico->mascara_data($data['query']['DataPagamento'], 'mysql');  
 
 						#### App_ParcelasRec ####
-						$data['update']['parcelasrec']['anterior'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, TRUE, $_SESSION['FiltroCobrancas']['Per_Page'], ($_SESSION['FiltroCobrancas']['Pagina'] * $_SESSION['FiltroCobrancas']['Per_Page']), TRUE);
+						$data['update']['parcelasrec']['anterior'] = $this->Base_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, TRUE, $_SESSION['FiltroCobrancas']['Per_Page'], ($_SESSION['FiltroCobrancas']['Pagina'] * $_SESSION['FiltroCobrancas']['Per_Page']), TRUE);
 						
 						if (isset($data['parcelasrec']) || (!isset($data['parcelasrec']) && isset($data['update']['parcelasrec']['anterior']) ) ) {
 
