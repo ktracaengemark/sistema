@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Despesas_model extends CI_Model {
+class Despesas_gestor_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();

@@ -91,7 +91,7 @@
 			<?php } ?>
 			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 text-left">
 				<label>Excel</label><br>
-				<a href="<?php echo base_url() . 'Relatorio_desp/despesas_excel/2'; ?>">
+				<a href="<?php echo base_url() . 'Despesas/despesas_excel/2'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
 						C/<span class="glyphicon glyphicon-filter"></span>
 					</button>
@@ -103,7 +103,7 @@
 						<?php if ($print == 1) { ?>	
 							<div class="col-md-1">
 								<label>Lista</label>
-								<a href="<?php echo base_url() . 'relatorio_desp/despesas_baixa_pag'; ?>">
+								<a href="<?php echo base_url() . 'Despesas/despesas_baixa_pag'; ?>">
 									<button class="btn btn-info btn-md btn-block" type="button">
 										<span class="glyphicon glyphicon-list"></span>
 									</button>
@@ -120,7 +120,7 @@
 						</div>
 						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 text-left">
 							<label>Editar</label>
-							<a href="<?php echo base_url() . 'relatorio_desp/despesas_pag'; ?>">
+							<a href="<?php echo base_url() . 'Despesas/despesas_pag'; ?>">
 								<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
 									<span class="glyphicon glyphicon-list"></span>
 								</button>
@@ -130,7 +130,7 @@
 						<?php if ($print == 1) { ?>	
 							<div class="col-md-1">
 								<label>Lista</label>
-								<a href="<?php echo base_url() . 'Relatorio_desp/despesas_lista'; ?>">
+								<a href="<?php echo base_url() . 'Despesas/despesas_lista'; ?>">
 									<button class="btn btn-info btn-md btn-block" type="button">
 										<span class="glyphicon glyphicon-list"></span>
 									</button>
@@ -150,7 +150,7 @@
 			<?php }else{ ?>
 				<div class="col-md-1">
 					<label>Lista</label>
-					<a href="<?php echo base_url() . 'Relatorio_desp/despesas_lista'; ?>">
+					<a href="<?php echo base_url() . 'Despesas/despesas_lista'; ?>">
 						<button class="btn btn-info btn-md btn-block" type="button">
 							<span class="glyphicon glyphicon-list"></span>
 						</button>

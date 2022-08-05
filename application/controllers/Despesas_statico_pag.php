@@ -13,7 +13,7 @@ class Despesas_statico_pag extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation', 'pagination'));
-        $this->load->model(array('Basico_model', 'Fornecedor_model', 'Despesas_model', 'Relatorio_model', 'Empresa_model', 'Loginempresa_model'));
+        $this->load->model(array('Basico_model', 'Fornecedor_model', 'Despesas_gestor_model', 'Relatorio_model', 'Empresa_model', 'Loginempresa_model'));
         $this->load->driver('session');
 
         #load header view
@@ -133,20 +133,20 @@ class Despesas_statico_pag extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			$data['report_combinar'] = $this->Despesas_model->list_despesas_combinar(FALSE,TRUE, TRUE);
-			$data['report_aprovar'] = $this->Despesas_model->list_despesas_aprovar(FALSE,TRUE, TRUE);
-            $data['report_producao'] = $this->Despesas_model->list_despesas_producao(FALSE,TRUE, TRUE);
-            $data['report_envio'] = $this->Despesas_model->list_despesas_envio(FALSE,TRUE, TRUE);
-            $data['report_entrega'] = $this->Despesas_model->list_despesas_entrega(FALSE,TRUE, TRUE);
-			$data['report_pagamento'] = $this->Despesas_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
+			$data['report_combinar'] = $this->Despesas_gestor_model->list_despesas_combinar(FALSE,TRUE, TRUE);
+			$data['report_aprovar'] = $this->Despesas_gestor_model->list_despesas_aprovar(FALSE,TRUE, TRUE);
+            $data['report_producao'] = $this->Despesas_gestor_model->list_despesas_producao(FALSE,TRUE, TRUE);
+            $data['report_envio'] = $this->Despesas_gestor_model->list_despesas_envio(FALSE,TRUE, TRUE);
+            $data['report_entrega'] = $this->Despesas_gestor_model->list_despesas_entrega(FALSE,TRUE, TRUE);
+			$data['report_pagamento'] = $this->Despesas_gestor_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
 			
             /*
-			$data['report_pagonline'] = $this->Despesas_model->list_despesas_pagonline(FALSE,TRUE);
+			$data['report_pagonline'] = $this->Despesas_gestor_model->list_despesas_pagonline(FALSE,TRUE);
 			*/
 
         }
 
-        $this->load->view('despesas/tela_despesas', $data);
+        $this->load->view('despesas_gestor/tela_despesas', $data);
 
         $this->load->view('basico/footer');
     }
@@ -232,9 +232,9 @@ class Despesas_statico_pag extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			//$data['pesquisa_query'] = $this->Despesas_model->list_despesas_combinar(FALSE,TRUE, TRUE);
+			//$data['pesquisa_query'] = $this->Despesas_gestor_model->list_despesas_combinar(FALSE,TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
-			$config['total_rows'] = $this->Despesas_model->list_despesas_combinar(FALSE,TRUE, TRUE);
+			$config['total_rows'] = $this->Despesas_gestor_model->list_despesas_combinar(FALSE,TRUE, TRUE);
 			$config['base_url'] = base_url() . 'Despesas_statico_pag/despesas_combinar_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
@@ -269,25 +269,25 @@ class Despesas_statico_pag extends CI_Controller {
             $data['pagina'] = $page;
 			$data['per_page'] = $config['per_page'];
 	
-			$data['report_combinar'] = $this->Despesas_model->list_despesas_combinar(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
+			$data['report_combinar'] = $this->Despesas_gestor_model->list_despesas_combinar(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-			$data['list_combinar'] = $this->load->view('despesas/list_despesas_combinar', $data, TRUE);			
+			$data['list_combinar'] = $this->load->view('despesas_gestor/list_despesas_combinar', $data, TRUE);			
 
-			$data['report_aprovar'] = $this->Despesas_model->list_despesas_aprovar(FALSE,TRUE, TRUE);
-            $data['report_producao'] = $this->Despesas_model->list_despesas_producao(FALSE,TRUE, TRUE);
-            $data['report_envio'] = $this->Despesas_model->list_despesas_envio(FALSE,TRUE, TRUE);
-            $data['report_entrega'] = $this->Despesas_model->list_despesas_entrega(FALSE,TRUE, TRUE);
-            $data['report_pagamento'] = $this->Despesas_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
+			$data['report_aprovar'] = $this->Despesas_gestor_model->list_despesas_aprovar(FALSE,TRUE, TRUE);
+            $data['report_producao'] = $this->Despesas_gestor_model->list_despesas_producao(FALSE,TRUE, TRUE);
+            $data['report_envio'] = $this->Despesas_gestor_model->list_despesas_envio(FALSE,TRUE, TRUE);
+            $data['report_entrega'] = $this->Despesas_gestor_model->list_despesas_entrega(FALSE,TRUE, TRUE);
+            $data['report_pagamento'] = $this->Despesas_gestor_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
 
 			/*
-			$data['report_pagonline'] = $this->Despesas_model->list_despesas_pagonline(FALSE,TRUE);
+			$data['report_pagonline'] = $this->Despesas_gestor_model->list_despesas_pagonline(FALSE,TRUE);
 			*/
 
         }
 
-        $this->load->view('despesas/tela_despesas_combinar', $data);
+        $this->load->view('despesas_gestor/tela_despesas_combinar', $data);
 
         $this->load->view('basico/footer');
     }
@@ -373,10 +373,10 @@ class Despesas_statico_pag extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			//$data['pesquisa_query'] = $this->Despesas_model->list_despesas_aprovar(FALSE,TRUE, TRUE);
+			//$data['pesquisa_query'] = $this->Despesas_gestor_model->list_despesas_aprovar(FALSE,TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			
-			$config['total_rows'] = $this->Despesas_model->list_despesas_aprovar(FALSE, TRUE, TRUE);
+			$config['total_rows'] = $this->Despesas_gestor_model->list_despesas_aprovar(FALSE, TRUE, TRUE);
 			$config['base_url'] = base_url() . 'Despesas_statico_pag/despesas_aprovar_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
@@ -411,23 +411,23 @@ class Despesas_statico_pag extends CI_Controller {
             $data['pagina'] = $page;
 			$data['per_page'] = $config['per_page'];
 				
-			$data['report_aprovar'] = $this->Despesas_model->list_despesas_aprovar(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
+			$data['report_aprovar'] = $this->Despesas_gestor_model->list_despesas_aprovar(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-			$data['list_aprovar'] = $this->load->view('despesas/list_despesas_aprovar', $data, TRUE);			
+			$data['list_aprovar'] = $this->load->view('despesas_gestor/list_despesas_aprovar', $data, TRUE);			
 
-			$data['report_combinar'] = $this->Despesas_model->list_despesas_combinar(FALSE,TRUE, TRUE);
-            $data['report_producao'] = $this->Despesas_model->list_despesas_producao(FALSE,TRUE, TRUE);
-            $data['report_envio'] = $this->Despesas_model->list_despesas_envio(FALSE,TRUE, TRUE);
-            $data['report_entrega'] = $this->Despesas_model->list_despesas_entrega(FALSE,TRUE, TRUE);
-            $data['report_pagamento'] = $this->Despesas_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
+			$data['report_combinar'] = $this->Despesas_gestor_model->list_despesas_combinar(FALSE,TRUE, TRUE);
+            $data['report_producao'] = $this->Despesas_gestor_model->list_despesas_producao(FALSE,TRUE, TRUE);
+            $data['report_envio'] = $this->Despesas_gestor_model->list_despesas_envio(FALSE,TRUE, TRUE);
+            $data['report_entrega'] = $this->Despesas_gestor_model->list_despesas_entrega(FALSE,TRUE, TRUE);
+            $data['report_pagamento'] = $this->Despesas_gestor_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
 			/*
-			$data['report_pagonline'] = $this->Despesas_model->list_despesas_pagonline(FALSE,TRUE);
+			$data['report_pagonline'] = $this->Despesas_gestor_model->list_despesas_pagonline(FALSE,TRUE);
 			*/
         }
 
-        $this->load->view('despesas/tela_despesas_aprovar', $data);
+        $this->load->view('despesas_gestor/tela_despesas_aprovar', $data);
 
         $this->load->view('basico/footer');
     }
@@ -513,9 +513,9 @@ class Despesas_statico_pag extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			//$data['pesquisa_query'] = $this->Despesas_model->list_despesas_producao(FALSE,TRUE, TRUE);
+			//$data['pesquisa_query'] = $this->Despesas_gestor_model->list_despesas_producao(FALSE,TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
-			$config['total_rows'] = $this->Despesas_model->list_despesas_producao(FALSE,TRUE, TRUE);
+			$config['total_rows'] = $this->Despesas_gestor_model->list_despesas_producao(FALSE,TRUE, TRUE);
 			$config['base_url'] = base_url() . 'Despesas_statico_pag/despesas_producao_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
@@ -550,25 +550,25 @@ class Despesas_statico_pag extends CI_Controller {
             $data['pagina'] = $page;
 			$data['per_page'] = $config['per_page'];
 	
-			$data['report_producao'] = $this->Despesas_model->list_despesas_producao(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
+			$data['report_producao'] = $this->Despesas_gestor_model->list_despesas_producao(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-			$data['list_producao'] = $this->load->view('despesas/list_despesas_producao', $data, TRUE);			
+			$data['list_producao'] = $this->load->view('despesas_gestor/list_despesas_producao', $data, TRUE);			
 
-			$data['report_aprovar'] = $this->Despesas_model->list_despesas_aprovar(FALSE,TRUE, TRUE);
-            $data['report_combinar'] = $this->Despesas_model->list_despesas_combinar(FALSE,TRUE, TRUE);
-            $data['report_envio'] = $this->Despesas_model->list_despesas_envio(FALSE,TRUE, TRUE);
-            $data['report_entrega'] = $this->Despesas_model->list_despesas_entrega(FALSE,TRUE, TRUE);
-            $data['report_pagamento'] = $this->Despesas_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
+			$data['report_aprovar'] = $this->Despesas_gestor_model->list_despesas_aprovar(FALSE,TRUE, TRUE);
+            $data['report_combinar'] = $this->Despesas_gestor_model->list_despesas_combinar(FALSE,TRUE, TRUE);
+            $data['report_envio'] = $this->Despesas_gestor_model->list_despesas_envio(FALSE,TRUE, TRUE);
+            $data['report_entrega'] = $this->Despesas_gestor_model->list_despesas_entrega(FALSE,TRUE, TRUE);
+            $data['report_pagamento'] = $this->Despesas_gestor_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
 
 			/*
-			$data['report_pagonline'] = $this->Despesas_model->list_despesas_pagonline(FALSE,TRUE);
+			$data['report_pagonline'] = $this->Despesas_gestor_model->list_despesas_pagonline(FALSE,TRUE);
 			*/
 
         }
 
-        $this->load->view('despesas/tela_despesas_producao', $data);
+        $this->load->view('despesas_gestor/tela_despesas_producao', $data);
 
         $this->load->view('basico/footer');
     }
@@ -652,9 +652,9 @@ class Despesas_statico_pag extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			//$data['pesquisa_query'] = $this->Despesas_model->list_despesas_envio(FALSE,TRUE, TRUE);
+			//$data['pesquisa_query'] = $this->Despesas_gestor_model->list_despesas_envio(FALSE,TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
-			$config['total_rows'] = $this->Despesas_model->list_despesas_envio(FALSE,TRUE, TRUE);
+			$config['total_rows'] = $this->Despesas_gestor_model->list_despesas_envio(FALSE,TRUE, TRUE);
 			$config['base_url'] = base_url() . 'Despesas_statico_pag/despesas_envio_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
@@ -689,25 +689,25 @@ class Despesas_statico_pag extends CI_Controller {
             $data['pagina'] = $page;
 			$data['per_page'] = $config['per_page'];
 	
-			$data['report_envio'] = $this->Despesas_model->list_despesas_envio(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
+			$data['report_envio'] = $this->Despesas_gestor_model->list_despesas_envio(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-			$data['list_envio'] = $this->load->view('despesas/list_despesas_envio', $data, TRUE);			
+			$data['list_envio'] = $this->load->view('despesas_gestor/list_despesas_envio', $data, TRUE);			
 
-			$data['report_aprovar'] = $this->Despesas_model->list_despesas_aprovar(FALSE,TRUE, TRUE);
-            $data['report_combinar'] = $this->Despesas_model->list_despesas_combinar(FALSE,TRUE, TRUE);
-            $data['report_producao'] = $this->Despesas_model->list_despesas_producao(FALSE,TRUE, TRUE);
-            $data['report_entrega'] = $this->Despesas_model->list_despesas_entrega(FALSE,TRUE, TRUE);
-            $data['report_pagamento'] = $this->Despesas_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
+			$data['report_aprovar'] = $this->Despesas_gestor_model->list_despesas_aprovar(FALSE,TRUE, TRUE);
+            $data['report_combinar'] = $this->Despesas_gestor_model->list_despesas_combinar(FALSE,TRUE, TRUE);
+            $data['report_producao'] = $this->Despesas_gestor_model->list_despesas_producao(FALSE,TRUE, TRUE);
+            $data['report_entrega'] = $this->Despesas_gestor_model->list_despesas_entrega(FALSE,TRUE, TRUE);
+            $data['report_pagamento'] = $this->Despesas_gestor_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
 
 			/*
-			$data['report_pagonline'] = $this->Despesas_model->list_despesas_pagonline(FALSE,TRUE);
+			$data['report_pagonline'] = $this->Despesas_gestor_model->list_despesas_pagonline(FALSE,TRUE);
 			*/
 
         }
 
-        $this->load->view('despesas/tela_despesas_envio', $data);
+        $this->load->view('despesas_gestor/tela_despesas_envio', $data);
 
         $this->load->view('basico/footer');
     }
@@ -793,9 +793,9 @@ class Despesas_statico_pag extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			//$data['pesquisa_query'] = $this->Despesas_model->list_despesas_entrega(FALSE,TRUE, TRUE);
+			//$data['pesquisa_query'] = $this->Despesas_gestor_model->list_despesas_entrega(FALSE,TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
-			$config['total_rows'] = $this->Despesas_model->list_despesas_entrega(FALSE,TRUE, TRUE);
+			$config['total_rows'] = $this->Despesas_gestor_model->list_despesas_entrega(FALSE,TRUE, TRUE);
 			$config['base_url'] = base_url() . 'Despesas_statico_pag/despesas_entrega_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
@@ -830,25 +830,25 @@ class Despesas_statico_pag extends CI_Controller {
             $data['pagina'] = $page;
 			$data['per_page'] = $config['per_page'];
 	
-			$data['report_entrega'] = $this->Despesas_model->list_despesas_entrega(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
+			$data['report_entrega'] = $this->Despesas_gestor_model->list_despesas_entrega(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-			$data['list_entrega'] = $this->load->view('despesas/list_despesas_entrega', $data, TRUE);			
+			$data['list_entrega'] = $this->load->view('despesas_gestor/list_despesas_entrega', $data, TRUE);			
 
-            $data['report_combinar'] = $this->Despesas_model->list_despesas_combinar(FALSE,TRUE, TRUE);
-			$data['report_aprovar'] = $this->Despesas_model->list_despesas_aprovar(FALSE,TRUE, TRUE);
-            $data['report_producao'] = $this->Despesas_model->list_despesas_producao(FALSE,TRUE, TRUE);
-            $data['report_envio'] = $this->Despesas_model->list_despesas_envio(FALSE,TRUE, TRUE);
-            $data['report_pagamento'] = $this->Despesas_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
+            $data['report_combinar'] = $this->Despesas_gestor_model->list_despesas_combinar(FALSE,TRUE, TRUE);
+			$data['report_aprovar'] = $this->Despesas_gestor_model->list_despesas_aprovar(FALSE,TRUE, TRUE);
+            $data['report_producao'] = $this->Despesas_gestor_model->list_despesas_producao(FALSE,TRUE, TRUE);
+            $data['report_envio'] = $this->Despesas_gestor_model->list_despesas_envio(FALSE,TRUE, TRUE);
+            $data['report_pagamento'] = $this->Despesas_gestor_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
 
 			/*
-			$data['report_pagonline'] = $this->Despesas_model->list_despesas_pagonline(FALSE,TRUE);
+			$data['report_pagonline'] = $this->Despesas_gestor_model->list_despesas_pagonline(FALSE,TRUE);
 			*/
 
         }
 
-        $this->load->view('despesas/tela_despesas_entrega', $data);
+        $this->load->view('despesas_gestor/tela_despesas_entrega', $data);
 
         $this->load->view('basico/footer');
     }
@@ -934,9 +934,9 @@ class Despesas_statico_pag extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			//$data['pesquisa_query'] = $this->Despesas_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
+			//$data['pesquisa_query'] = $this->Despesas_gestor_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
-			$config['total_rows'] = $this->Despesas_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
+			$config['total_rows'] = $this->Despesas_gestor_model->list_despesas_pagamento(FALSE,TRUE, TRUE);
 			$config['base_url'] = base_url() . 'Despesas_statico_pag/despesas_pagamento_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
@@ -971,25 +971,25 @@ class Despesas_statico_pag extends CI_Controller {
             $data['pagina'] = $page;
 			$data['per_page'] = $config['per_page'];
 	
-			$data['report_pagamento'] = $this->Despesas_model->list_despesas_pagamento(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
+			$data['report_pagamento'] = $this->Despesas_gestor_model->list_despesas_pagamento(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-			$data['list_pagamento'] = $this->load->view('despesas/list_despesas_pagamento', $data, TRUE);			
+			$data['list_pagamento'] = $this->load->view('despesas_gestor/list_despesas_pagamento', $data, TRUE);			
 
-            $data['report_combinar'] = $this->Despesas_model->list_despesas_combinar(FALSE,TRUE, TRUE);
-			$data['report_aprovar'] = $this->Despesas_model->list_despesas_aprovar(FALSE,TRUE, TRUE);
-            $data['report_producao'] = $this->Despesas_model->list_despesas_producao(FALSE,TRUE, TRUE);
-            $data['report_envio'] = $this->Despesas_model->list_despesas_envio(FALSE,TRUE, TRUE);
-            $data['report_entrega'] = $this->Despesas_model->list_despesas_entrega(FALSE,TRUE, TRUE);
+            $data['report_combinar'] = $this->Despesas_gestor_model->list_despesas_combinar(FALSE,TRUE, TRUE);
+			$data['report_aprovar'] = $this->Despesas_gestor_model->list_despesas_aprovar(FALSE,TRUE, TRUE);
+            $data['report_producao'] = $this->Despesas_gestor_model->list_despesas_producao(FALSE,TRUE, TRUE);
+            $data['report_envio'] = $this->Despesas_gestor_model->list_despesas_envio(FALSE,TRUE, TRUE);
+            $data['report_entrega'] = $this->Despesas_gestor_model->list_despesas_entrega(FALSE,TRUE, TRUE);
 
 			/*
-			$data['report_pagonline'] = $this->Despesas_model->list_despesas_pagonline(FALSE,TRUE);
+			$data['report_pagonline'] = $this->Despesas_gestor_model->list_despesas_pagonline(FALSE,TRUE);
 			*/
 
         }
 
-        $this->load->view('despesas/tela_despesas_pagamento', $data);
+        $this->load->view('despesas_gestor/tela_despesas_pagamento', $data);
 
         $this->load->view('basico/footer');
     }
