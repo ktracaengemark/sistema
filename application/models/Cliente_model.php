@@ -904,11 +904,7 @@ class Cliente_model extends CI_Model {
 				' . $ordenamento . '
 			' . $querylimit . '
         ');
-		
-		
-		
-		
-		
+
         if ($completo === FALSE) {
             return TRUE;
         } else {
@@ -965,25 +961,7 @@ class Cliente_model extends CI_Model {
 			$data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND TC.idApp_Cliente = ' . $data['idApp_Cliente'] : FALSE;
 			$data['Campo'] = (!$data['Campo']) ? 'F.Valor' : $data['Campo'];
 			$data['Ordenamento'] = (!$data['Ordenamento']) ? 'DESC' : $data['Ordenamento'];
-			
-			if($_SESSION['log']['idSis_Empresa'] != 5){
-				if($data['Ultimo'] != 0){	
-					if($data['Ultimo'] == 1){	
-						$ultimopedido1 = 'LEFT JOIN App_OrcaTrata AS TOT2 ON (TOT.idApp_Cliente = TOT2.idApp_Cliente AND TOT.idApp_OrcaTrata < TOT2.idApp_OrcaTrata)';
-						$ultimopedido2 = 'AND TOT2.idApp_OrcaTrata IS NULL';
-					}else{
-						$ultimopedido1 = FALSE;
-						$ultimopedido2 = FALSE;
-					}
-				}else{
-					$ultimopedido1 = FALSE;
-					$ultimopedido2 = FALSE;
-				}	
-			}else{
-				$ultimopedido1 = FALSE;
-				$ultimopedido2 = FALSE;
-			}
-			
+
 		}else{
 		
 			$permissao_orcam = ($_SESSION['Usuario']['Permissao_Orcam'] == 1 ) ? 'TOT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
@@ -1011,24 +989,7 @@ class Cliente_model extends CI_Model {
 			$data['idApp_Cliente'] = ($_SESSION['FiltroRankingVendas']['idApp_Cliente']) ? ' AND TC.idApp_Cliente = ' . $_SESSION['FiltroRankingVendas']['idApp_Cliente'] : FALSE;
 			$data['Campo'] = (!$_SESSION['FiltroRankingVendas']['Campo']) ? 'F.Valor' : $_SESSION['FiltroRankingVendas']['Campo'];
 			$data['Ordenamento'] = (!$_SESSION['FiltroRankingVendas']['Ordenamento']) ? 'DESC' : $_SESSION['FiltroRankingVendas']['Ordenamento'];
-			
-			if($_SESSION['log']['idSis_Empresa'] != 5){
-				if($_SESSION['FiltroRankingVendas']['Ultimo'] != 0){	
-					if($_SESSION['FiltroRankingVendas']['Ultimo'] == 1){	
-						$ultimopedido1 = 'LEFT JOIN App_OrcaTrata AS TOT2 ON (TOT.idApp_Cliente = TOT2.idApp_Cliente AND TOT.idApp_OrcaTrata < TOT2.idApp_OrcaTrata)';
-						$ultimopedido2 = 'AND TOT2.idApp_OrcaTrata IS NULL';
-					}else{
-						$ultimopedido1 = FALSE;
-						$ultimopedido2 = FALSE;
-					}
-				}else{
-					$ultimopedido1 = FALSE;
-					$ultimopedido2 = FALSE;
-				}	
-			}else{
-				$ultimopedido1 = FALSE;
-				$ultimopedido2 = FALSE;
-			}		
+		
 		}	
 		
 		$querylimit = '';
@@ -1136,19 +1097,6 @@ class Cliente_model extends CI_Model {
 		$rankingvendas->soma->somaqtdclientes = $data['contagem'];
 		$rankingvendas->soma->somaqtdpedidos = $somaqtdpedidos;
 		$rankingvendas->soma->somaqtdparc = number_format($somaqtdparc, 2, ',', '.');
-
-        /*
-        #echo $this->db->last_query();
-        echo "<pre>";
-        print_r($ultimopedido1);
-		 echo "<br>";
-        print_r($ultimopedido2);
-        echo "</pre>";
-        #echo "<pre>";
-        #print_r($query);
-        #echo "</pre>";
-        //exit();
-        */
 
         return $rankingvendas;
 

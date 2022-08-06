@@ -13,7 +13,7 @@ class Relatorio_pag extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation', 'pagination'));
-        $this->load->model(array('Basico_model', 'Cliente_model', 'Relatorio_model', 'Relatoriocomissoes_model', 'Empresa_model', 'Loginempresa_model'));
+        $this->load->model(array('Basico_model', 'Cliente_model', 'Relatorio_model', 'Empresa_model', 'Loginempresa_model'));
         $this->load->driver('session');
 
         #load header view
