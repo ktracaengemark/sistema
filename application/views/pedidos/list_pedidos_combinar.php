@@ -8,13 +8,6 @@
 		<div class="row">
 			<div>
 				<table class="table table-hover">
-					<!--
-					<thead>
-						<tr>
-							<th colspan="5" class="active">Total encontrado: <?php #echo $report_combinar->num_rows(); ?> resultado(s)</th>
-						</tr>
-					</thead>
-					-->
 					<thead>
 						<tr>
 							<th class="active">Cont</th>
@@ -54,5 +47,7 @@
 				</table>
 			</div>
 		</div>
+									
+								
 	</div>
 </div>
