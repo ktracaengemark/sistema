@@ -856,13 +856,13 @@ class Receitas extends CI_Controller {
 				redirect(base_url() . 'acesso' . $data['msg']);
 				exit();
 			}else{				
-				
+				/*
 				  echo '<br>';
 				  echo "<pre>";
 				  print_r($_SESSION['Orcamento']);
 				  echo "</pre>";
 				 // exit ();
-				
+				*/
 
 				$data['select']['QuitadoComissao'] = $this->Basico_model->select_status_sn();
 				$data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();
