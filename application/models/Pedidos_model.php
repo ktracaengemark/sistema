@@ -210,8 +210,8 @@ class Pedidos_model extends CI_Model {
 			GROUP BY
 				OT.idApp_OrcaTrata
 			ORDER BY 
-				OT.DataEntregaOrca ASC,
-				OT.HoraEntregaOrca ASC,
+				PRD.DataConcluidoProduto ASC,
+				PRD.HoraConcluidoProduto ASC,
 				OT.idApp_OrcaTrata
 		';
 
@@ -472,8 +472,8 @@ class Pedidos_model extends CI_Model {
 			GROUP BY
 				OT.idApp_OrcaTrata
 			ORDER BY 
-				OT.DataEntregaOrca ASC,
-				OT.HoraEntregaOrca ASC,
+				PRD.DataConcluidoProduto ASC,
+				PRD.HoraConcluidoProduto ASC,
 				OT.idApp_OrcaTrata
 		';
 
@@ -737,8 +737,8 @@ class Pedidos_model extends CI_Model {
 			GROUP BY
 				OT.idApp_OrcaTrata
 			ORDER BY 
-				OT.DataEntregaOrca ASC,
-				OT.HoraEntregaOrca ASC,
+				PRD.DataConcluidoProduto ASC,
+				PRD.HoraConcluidoProduto ASC,
 				OT.idApp_OrcaTrata
 		';
 
@@ -1002,8 +1002,8 @@ class Pedidos_model extends CI_Model {
 			GROUP BY
 				OT.idApp_OrcaTrata
 			ORDER BY 
-				OT.DataEntregaOrca ASC,
-				OT.HoraEntregaOrca ASC,
+				PRD.DataConcluidoProduto ASC,
+				PRD.HoraConcluidoProduto ASC,
 				OT.idApp_OrcaTrata
 		';
 
@@ -1258,8 +1258,8 @@ class Pedidos_model extends CI_Model {
 			GROUP BY
 				OT.idApp_OrcaTrata
 			ORDER BY 
-				OT.DataEntregaOrca ASC,
-				OT.HoraEntregaOrca ASC,
+				PRD.DataConcluidoProduto ASC,
+				PRD.HoraConcluidoProduto ASC,
 				OT.idApp_OrcaTrata
 		';
 
@@ -1515,8 +1515,7 @@ class Pedidos_model extends CI_Model {
 			GROUP BY
 				OT.idApp_OrcaTrata
 			ORDER BY 
-				OT.DataEntregaOrca ASC,
-				OT.HoraEntregaOrca ASC,
+				PR.DataVencimento ASC,
 				OT.idApp_OrcaTrata
 		';
 

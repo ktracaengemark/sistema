@@ -454,13 +454,21 @@
 										</div>
 									<?php }else{ ?>
 										<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 text-left">
+											<label>Pesquisar Pedido</label><br>
 											<a class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?><?php echo $pedidos; ?>/pedidos" role="button"> 
 												<span class="glyphicon glyphicon-search"></span> Pesquisar Pedido
 											</a>
 										</div>
 										<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left">
+											<label>Pesquisar Cliente</label><br>
 											<a class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?><?php echo $pedidos; ?>/pedidos" role="button"> 
 												<span class="glyphicon glyphicon-search"></span> Pesquisar Cliente
+											</a>
+										</div>
+										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 text-left">
+											<label>Filtros</label><br>
+											<a class="btn btn-md btn-info btn-block" href="<?php echo base_url() ?><?php echo $pedidos; ?>/pedidos" role="button"> 
+												<span class="glyphicon glyphicon-filter"></span> Filtros
 											</a>
 										</div>
 										<input type="hidden" name="Cliente" id="Cliente" value=""/>
