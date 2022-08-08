@@ -13,89 +13,90 @@ class Receitas_model extends CI_Model {
         $this->load->model(array('Basico_model'));
     }
 
-    public function list_pedidos_busca1() {	
+    public function list_pedidos_busca($total = FALSE) {	
 		
-		$busca1 = '
-			SELECT 
-				OT.idApp_OrcaTrata
-			FROM 
-				App_OrcaTrata AS OT
-					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
-					LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
-					LEFT JOIN App_Produto AS PRD ON PRD.idApp_OrcaTrata = OT.idApp_OrcaTrata
-			WHERE
-		';
+		if($total == TRUE) {
+			$busca1 = '
+				SELECT 
+					OT.idApp_OrcaTrata
+				FROM 
+					App_OrcaTrata AS OT
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
+						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN App_Produto AS PRD ON PRD.idApp_OrcaTrata = OT.idApp_OrcaTrata
+				WHERE
+			';
+			
+			return $busca1;
+		}	
 		
-		return $busca1;
-	}
-
-    public function list_pedidos_busca2() {	
-		
-		$busca2 = '
-			SELECT 
-				C.idApp_Cliente,
-				C.NomeCliente,
-				C.CelularCliente,
-				OT.Descricao,
-				OT.idApp_OrcaTrata,
-				OT.AprovadoOrca,
-				DATE_FORMAT(OT.DataOrca, "%d/%m/%Y") AS DataOrca,
-				DATE_FORMAT(OT.DataEntregaOrca, "%d/%m/%Y") AS DataEntregaOrca,
-				DATE_FORMAT(OT.HoraEntregaOrca, "%H:%i") AS HoraEntregaOrca,
-				OT.DataEntradaOrca,
-				OT.DataPrazo,
-				OT.ValorOrca,
-				OT.ValorDev,				
-				OT.ValorEntradaOrca,
-				OT.ValorRestanteOrca,
-				OT.DataVencimentoOrca,
-				OT.ConcluidoOrca,
-				OT.QuitadoOrca,
-				OT.FinalizadoOrca,
-				OT.CanceladoOrca,
-				OT.EnviadoOrca,
-				OT.ProntoOrca,
-				OT.DataConclusao,
-				OT.DataQuitado,
-				OT.DataRetorno,
-				OT.idTab_TipoRD,
-				OT.FormaPagamento,
-				OT.ObsOrca,
-				OT.QtdParcelasOrca,
-				OT.Tipo_Orca,
-				OT.CombinadoFrete,
-				PR.idSis_Empresa,
-				PR.Parcela,
-				CONCAT(PR.Parcela) AS Parcela,
-				DATE_FORMAT(PR.DataVencimento, "%d/%m/%Y") AS DataVencimento,
-				PR.ValorParcela,
-				PR.DataPago,
-				PR.ValorPago,
-				PR.Quitado,
-				PRD.NomeProduto,
-				PRD.ConcluidoProduto,
-				DATE_FORMAT(PRD.DataConcluidoProduto, "%d/%m/%Y") AS DataConcluidoProduto,
-				DATE_FORMAT(PRD.HoraConcluidoProduto, "%H:%i") AS HoraConcluidoProduto,
-				TF.TipoFrete,
-				MD.Modalidade,
-				VP.Abrev2,
-				VP.AVAP,
-				TFP.FormaPag,
-				TR.TipoFinanceiro
-			FROM 
-				App_OrcaTrata AS OT
-					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
-					LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
-					LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
-					LEFT JOIN App_Produto AS PRD ON PRD.idApp_OrcaTrata = OT.idApp_OrcaTrata
-					LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
-					LEFT JOIN Tab_Modalidade AS MD ON MD.Abrev = OT.Modalidade
-					LEFT JOIN Tab_AVAP AS VP ON VP.Abrev2 = OT.AVAP
-					LEFT JOIN Tab_TipoFrete AS TF ON TF.idTab_TipoFrete = OT.TipoFrete
-			WHERE
-		';
-		
-		return $busca2;
+		if($total == FALSE) {
+			$busca2 = '
+				SELECT 
+					C.idApp_Cliente,
+					C.NomeCliente,
+					C.CelularCliente,
+					OT.Descricao,
+					OT.idApp_OrcaTrata,
+					OT.AprovadoOrca,
+					DATE_FORMAT(OT.DataOrca, "%d/%m/%Y") AS DataOrca,
+					DATE_FORMAT(OT.DataEntregaOrca, "%d/%m/%Y") AS DataEntregaOrca,
+					DATE_FORMAT(OT.HoraEntregaOrca, "%H:%i") AS HoraEntregaOrca,
+					OT.DataEntradaOrca,
+					OT.DataPrazo,
+					OT.ValorOrca,
+					OT.ValorDev,				
+					OT.ValorEntradaOrca,
+					OT.ValorRestanteOrca,
+					OT.DataVencimentoOrca,
+					OT.ConcluidoOrca,
+					OT.QuitadoOrca,
+					OT.FinalizadoOrca,
+					OT.CanceladoOrca,
+					OT.EnviadoOrca,
+					OT.ProntoOrca,
+					OT.DataConclusao,
+					OT.DataQuitado,
+					OT.DataRetorno,
+					OT.idTab_TipoRD,
+					OT.FormaPagamento,
+					OT.ObsOrca,
+					OT.QtdParcelasOrca,
+					OT.Tipo_Orca,
+					OT.CombinadoFrete,
+					PR.idSis_Empresa,
+					PR.Parcela,
+					CONCAT(PR.Parcela) AS Parcela,
+					DATE_FORMAT(PR.DataVencimento, "%d/%m/%Y") AS DataVencimento,
+					PR.ValorParcela,
+					PR.DataPago,
+					PR.ValorPago,
+					PR.Quitado,
+					PRD.NomeProduto,
+					PRD.ConcluidoProduto,
+					DATE_FORMAT(PRD.DataConcluidoProduto, "%d/%m/%Y") AS DataConcluidoProduto,
+					DATE_FORMAT(PRD.HoraConcluidoProduto, "%H:%i") AS HoraConcluidoProduto,
+					TF.TipoFrete,
+					MD.Modalidade,
+					VP.Abrev2,
+					VP.AVAP,
+					TFP.FormaPag,
+					TR.TipoFinanceiro
+				FROM 
+					App_OrcaTrata AS OT
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
+						LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
+						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN App_Produto AS PRD ON PRD.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
+						LEFT JOIN Tab_Modalidade AS MD ON MD.Abrev = OT.Modalidade
+						LEFT JOIN Tab_AVAP AS VP ON VP.Abrev2 = OT.AVAP
+						LEFT JOIN Tab_TipoFrete AS TF ON TF.idTab_TipoFrete = OT.TipoFrete
+				WHERE
+			';
+			
+			return $busca2;
+		}	
 	}	
 	
     public function list_pedidos_filtros($data = FALSE) {	
@@ -219,6 +220,35 @@ class Receitas_model extends CI_Model {
 		return $filtro_base;
 		
 	}
+
+    public function list_pedidos_retorno($query = FALSE, $total = FALSE) {
+		
+		if($total == TRUE) {
+			return $query->num_rows();
+		}
+		
+		if($total == FALSE) {
+			foreach ($query->result() as $row) {
+				$row->CombinadoFrete = $this->basico->mascara_palavra_completa($row->CombinadoFrete, 'NS');
+				$row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
+				$row->QuitadoOrca = $this->basico->mascara_palavra_completa($row->QuitadoOrca, 'NS');
+				$row->ConcluidoOrca = $this->basico->mascara_palavra_completa($row->ConcluidoOrca, 'NS');
+				$row->FinalizadoOrca = $this->basico->mascara_palavra_completa($row->FinalizadoOrca, 'NS');
+				$row->CanceladoOrca = $this->basico->mascara_palavra_completa($row->CanceladoOrca, 'NS');
+				$row->Quitado = $this->basico->mascara_palavra_completa($row->Quitado, 'NS');
+				$row->ConcluidoProduto = $this->basico->mascara_palavra_completa($row->ConcluidoProduto, 'NS');
+				
+				if($row->Tipo_Orca == "O"){
+					$row->Tipo_Orca = "On Line";
+				}elseif($row->Tipo_Orca == "B"){
+					$row->Tipo_Orca = "Na Loja";
+				}else{
+					$row->Tipo_Orca = "Outros";
+				}
+			}
+			return $query;
+		}
+	}
 	
     public function list_pedidos_pesquisar($data = FALSE, $completo = FALSE) {
 		/*
@@ -308,63 +338,23 @@ class Receitas_model extends CI_Model {
 				PRD.HoraConcluidoProduto ASC,
 				OT.idApp_OrcaTrata
 		';
-		
-		$busca1 = $this->Receitas_model->list_pedidos_busca1();
-		$busca2 = $this->Receitas_model->list_pedidos_busca2();
+
+		$busca = $this->Receitas_model->list_pedidos_busca($total);
 		$filtro_base = $this->Receitas_model->list_pedidos_filtros($data);
 		
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
 
-		####Contagem e soma total ####
-		if($total == TRUE) {
-			$query = $this->db->query('
-				' . $busca1 . '
-				' . $filtro_base . '
-				' . $complemento . '
-				' . $querylimit . '
-			');
-			return $query->num_rows();
-		}
-			
-			/*
-          echo $this->db->last_query();
-          echo "<pre>";
-          print_r($query);
-          echo "</pre>";
-          exit();
-          */
+		$query = $this->db->query('
+			' . $busca . '
+			' . $filtro_base . '
+			' . $complemento . '
+			' . $querylimit . '
+		');
+		$retorno = $this->Receitas_model->list_pedidos_retorno($query, $total);	
+		return $retorno;
 
-		if($total == FALSE) {
-			$query = $this->db->query('
-				' . $busca2 . '
-				' . $filtro_base . '
-				' . $complemento . '
-				' . $querylimit . '
-			');
-
-			foreach ($query->result() as $row) {
-				$row->CombinadoFrete = $this->basico->mascara_palavra_completa($row->CombinadoFrete, 'NS');
-				$row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
-				$row->QuitadoOrca = $this->basico->mascara_palavra_completa($row->QuitadoOrca, 'NS');
-				$row->ConcluidoOrca = $this->basico->mascara_palavra_completa($row->ConcluidoOrca, 'NS');
-				$row->FinalizadoOrca = $this->basico->mascara_palavra_completa($row->FinalizadoOrca, 'NS');
-				$row->CanceladoOrca = $this->basico->mascara_palavra_completa($row->CanceladoOrca, 'NS');
-				$row->Quitado = $this->basico->mascara_palavra_completa($row->Quitado, 'NS');
-				$row->ConcluidoProduto = $this->basico->mascara_palavra_completa($row->ConcluidoProduto, 'NS');
-				
-				if($row->Tipo_Orca == "O"){
-					$row->Tipo_Orca = "On Line";
-				}elseif($row->Tipo_Orca == "B"){
-					$row->Tipo_Orca = "Na Loja";
-				}else{
-					$row->Tipo_Orca = "Outros";
-				}
-			}
-			return $query;				
-		}		
-       
     }
 
     public function list_pedidos_aprovar($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
@@ -378,55 +368,30 @@ class Receitas_model extends CI_Model {
 				PRD.HoraConcluidoProduto ASC,
 				OT.idApp_OrcaTrata
 		';
-		
-		$busca1 = $this->Receitas_model->list_pedidos_busca1();
-		$busca2 = $this->Receitas_model->list_pedidos_busca2();
+
+		$busca = $this->Receitas_model->list_pedidos_busca($total);
 		$filtro_base = $this->Receitas_model->list_pedidos_filtros($data);
 		
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
 
-		####Contagem e soma total ####
-		if($total == TRUE) {
-			$query = $this->db->query('
-				' . $busca1 . '
-				' . $filtro_base . '
-				' . $complemento . '
-				' . $querylimit . '
-			');
-			return $query->num_rows();
-		}
+		$busca = $this->Receitas_model->list_pedidos_busca($total);
+		$filtro_base = $this->Receitas_model->list_pedidos_filtros($data);
+		
+		$querylimit = '';
+        if ($limit)
+            $querylimit = 'LIMIT ' . $start . ', ' . $limit;
 
-		if($total == FALSE) {
-			$query = $this->db->query('
-				' . $busca2 . '
-				' . $filtro_base . '
-				' . $complemento . '
-				' . $querylimit . '
-			');
-
-			foreach ($query->result() as $row) {
-				$row->CombinadoFrete = $this->basico->mascara_palavra_completa($row->CombinadoFrete, 'NS');
-				$row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
-				$row->QuitadoOrca = $this->basico->mascara_palavra_completa($row->QuitadoOrca, 'NS');
-				$row->ConcluidoOrca = $this->basico->mascara_palavra_completa($row->ConcluidoOrca, 'NS');
-				$row->FinalizadoOrca = $this->basico->mascara_palavra_completa($row->FinalizadoOrca, 'NS');
-				$row->CanceladoOrca = $this->basico->mascara_palavra_completa($row->CanceladoOrca, 'NS');
-				$row->Quitado = $this->basico->mascara_palavra_completa($row->Quitado, 'NS');
-				$row->ConcluidoProduto = $this->basico->mascara_palavra_completa($row->ConcluidoProduto, 'NS');
-				
-				if($row->Tipo_Orca == "O"){
-					$row->Tipo_Orca = "On Line";
-				}elseif($row->Tipo_Orca == "B"){
-					$row->Tipo_Orca = "Na Loja";
-				}else{
-					$row->Tipo_Orca = "Outros";
-				}
-			}
-			return $query;
-			
-        }
+		$query = $this->db->query('
+			' . $busca . '
+			' . $filtro_base . '
+			' . $complemento . '
+			' . $querylimit . '
+		');
+		$retorno = $this->Receitas_model->list_pedidos_retorno($query, $total);	
+		return $retorno;
+		
     }	
 	
     public function list_pedidos_producao($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
@@ -443,55 +408,23 @@ class Receitas_model extends CI_Model {
 				PRD.HoraConcluidoProduto ASC,
 				OT.idApp_OrcaTrata
 		';
-		
-		$busca1 = $this->Receitas_model->list_pedidos_busca1();
-		$busca2 = $this->Receitas_model->list_pedidos_busca2();
+
+		$busca = $this->Receitas_model->list_pedidos_busca($total);
 		$filtro_base = $this->Receitas_model->list_pedidos_filtros($data);
 		
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
 
-		####Contagem e soma total ####
-		if($total == TRUE) {
-			$query = $this->db->query('
-				' . $busca1 . '
-				' . $filtro_base . '
-				' . $complemento . '
-				' . $querylimit . '
-			');
-			return $query->num_rows();
-		}
+		$query = $this->db->query('
+			' . $busca . '
+			' . $filtro_base . '
+			' . $complemento . '
+			' . $querylimit . '
+		');
+		$retorno = $this->Receitas_model->list_pedidos_retorno($query, $total);	
+		return $retorno;
 
-		if($total == FALSE) {
-			$query = $this->db->query('
-				' . $busca2 . '
-				' . $filtro_base . '
-				' . $complemento . '
-				' . $querylimit . '
-			');
-
-			foreach ($query->result() as $row) {
-				$row->CombinadoFrete = $this->basico->mascara_palavra_completa($row->CombinadoFrete, 'NS');
-				$row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
-				$row->QuitadoOrca = $this->basico->mascara_palavra_completa($row->QuitadoOrca, 'NS');
-				$row->ConcluidoOrca = $this->basico->mascara_palavra_completa($row->ConcluidoOrca, 'NS');
-				$row->FinalizadoOrca = $this->basico->mascara_palavra_completa($row->FinalizadoOrca, 'NS');
-				$row->CanceladoOrca = $this->basico->mascara_palavra_completa($row->CanceladoOrca, 'NS');
-				$row->Quitado = $this->basico->mascara_palavra_completa($row->Quitado, 'NS');
-				$row->ConcluidoProduto = $this->basico->mascara_palavra_completa($row->ConcluidoProduto, 'NS');
-				
-				if($row->Tipo_Orca == "O"){
-					$row->Tipo_Orca = "On Line";
-				}elseif($row->Tipo_Orca == "B"){
-					$row->Tipo_Orca = "Na Loja";
-				}else{
-					$row->Tipo_Orca = "Outros";
-				}
-			}
-			return $query;
-			
-		}
     }
 
     public function list_pedidos_envio($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
@@ -508,54 +441,23 @@ class Receitas_model extends CI_Model {
 				PRD.HoraConcluidoProduto ASC,
 				OT.idApp_OrcaTrata
 		';
-		
-		$busca1 = $this->Receitas_model->list_pedidos_busca1();
-		$busca2 = $this->Receitas_model->list_pedidos_busca2();
+
+		$busca = $this->Receitas_model->list_pedidos_busca($total);
 		$filtro_base = $this->Receitas_model->list_pedidos_filtros($data);
 		
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
 
-		####Contagem e soma total ####
-		if($total == TRUE) {
-			$query = $this->db->query('
-				' . $busca1 . '
-				' . $filtro_base . '
-				' . $complemento . '
-				' . $querylimit . '
-			');
-			return $query->num_rows();
-		}
+		$query = $this->db->query('
+			' . $busca . '
+			' . $filtro_base . '
+			' . $complemento . '
+			' . $querylimit . '
+		');
+		$retorno = $this->Receitas_model->list_pedidos_retorno($query, $total);	
+		return $retorno;
 
-		if($total == FALSE) {
-			$query = $this->db->query('
-				' . $busca2 . '
-				' . $filtro_base . '
-				' . $complemento . '
-				' . $querylimit . '
-			');
-			
-			foreach ($query->result() as $row) {
-				$row->CombinadoFrete = $this->basico->mascara_palavra_completa($row->CombinadoFrete, 'NS');
-				$row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
-				$row->QuitadoOrca = $this->basico->mascara_palavra_completa($row->QuitadoOrca, 'NS');
-				$row->ConcluidoOrca = $this->basico->mascara_palavra_completa($row->ConcluidoOrca, 'NS');
-				$row->FinalizadoOrca = $this->basico->mascara_palavra_completa($row->FinalizadoOrca, 'NS');
-				$row->CanceladoOrca = $this->basico->mascara_palavra_completa($row->CanceladoOrca, 'NS');
-				$row->Quitado = $this->basico->mascara_palavra_completa($row->Quitado, 'NS');
-				$row->ConcluidoProduto = $this->basico->mascara_palavra_completa($row->ConcluidoProduto, 'NS');
-				
-				if($row->Tipo_Orca == "O"){
-					$row->Tipo_Orca = "On Line";
-				}elseif($row->Tipo_Orca == "B"){
-					$row->Tipo_Orca = "Na Loja";
-				}else{
-					$row->Tipo_Orca = "Outros";
-				}
-			}
-			return $query;
-		}
     }
 
     public function list_pedidos_entrega($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
@@ -572,55 +474,23 @@ class Receitas_model extends CI_Model {
 				PRD.HoraConcluidoProduto ASC,
 				OT.idApp_OrcaTrata
 		';
-		
-		$busca1 = $this->Receitas_model->list_pedidos_busca1();
-		$busca2 = $this->Receitas_model->list_pedidos_busca2();
+
+		$busca = $this->Receitas_model->list_pedidos_busca($total);
 		$filtro_base = $this->Receitas_model->list_pedidos_filtros($data);
 		
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
 
-		####Contagem e soma total ####
-		if($total == TRUE) {
-			$query = $this->db->query('
-				' . $busca1 . '
-				' . $filtro_base . '
-				' . $complemento . '
-				' . $querylimit . '
-			');
-			return $query->num_rows();
-		}
+		$query = $this->db->query('
+			' . $busca . '
+			' . $filtro_base . '
+			' . $complemento . '
+			' . $querylimit . '
+		');
+		$retorno = $this->Receitas_model->list_pedidos_retorno($query, $total);	
+		return $retorno;
 
-		if($total == FALSE) {
-			$query = $this->db->query('
-				' . $busca2 . '
-				' . $filtro_base . '
-				' . $complemento . '
-				' . $querylimit . '
-			');
-			
-			foreach ($query->result() as $row) {
-				$row->CombinadoFrete = $this->basico->mascara_palavra_completa($row->CombinadoFrete, 'NS');
-				$row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
-				$row->QuitadoOrca = $this->basico->mascara_palavra_completa($row->QuitadoOrca, 'NS');
-				$row->ConcluidoOrca = $this->basico->mascara_palavra_completa($row->ConcluidoOrca, 'NS');
-				$row->FinalizadoOrca = $this->basico->mascara_palavra_completa($row->FinalizadoOrca, 'NS');
-				$row->CanceladoOrca = $this->basico->mascara_palavra_completa($row->CanceladoOrca, 'NS');
-				$row->Quitado = $this->basico->mascara_palavra_completa($row->Quitado, 'NS');
-				$row->ConcluidoProduto = $this->basico->mascara_palavra_completa($row->ConcluidoProduto, 'NS');
-				
-				if($row->Tipo_Orca == "O"){
-					$row->Tipo_Orca = "On Line";
-				}elseif($row->Tipo_Orca == "B"){
-					$row->Tipo_Orca = "Na Loja";
-				}else{
-					$row->Tipo_Orca = "Outros";
-				}
-			}
-			return $query;
-			
-        }
     }
 
     public function list_pedidos_pagamento($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
@@ -636,55 +506,23 @@ class Receitas_model extends CI_Model {
 				PR.DataVencimento ASC,
 				OT.idApp_OrcaTrata
 		';
-		
-		$busca1 = $this->Receitas_model->list_pedidos_busca1();
-		$busca2 = $this->Receitas_model->list_pedidos_busca2();
+
+		$busca = $this->Receitas_model->list_pedidos_busca($total);
 		$filtro_base = $this->Receitas_model->list_pedidos_filtros($data);
 		
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
 
-		####Contagem e soma total ####
-		if($total == TRUE) {
-			$query = $this->db->query('
-				' . $busca1 . '
-				' . $filtro_base . '
-				' . $complemento . '
-				' . $querylimit . '
-			');
-			return $query->num_rows();
-		}
+		$query = $this->db->query('
+			' . $busca . '
+			' . $filtro_base . '
+			' . $complemento . '
+			' . $querylimit . '
+		');
+		$retorno = $this->Receitas_model->list_pedidos_retorno($query, $total);	
+		return $retorno;
 
-		if($total == FALSE) {
-			$query = $this->db->query('
-				' . $busca2 . '
-				' . $filtro_base . '
-				' . $complemento . '
-				' . $querylimit . '
-			');
-			
-			foreach ($query->result() as $row) {
-				$row->CombinadoFrete = $this->basico->mascara_palavra_completa($row->CombinadoFrete, 'NS');
-				$row->AprovadoOrca = $this->basico->mascara_palavra_completa($row->AprovadoOrca, 'NS');
-				$row->QuitadoOrca = $this->basico->mascara_palavra_completa($row->QuitadoOrca, 'NS');
-				$row->ConcluidoOrca = $this->basico->mascara_palavra_completa($row->ConcluidoOrca, 'NS');
-				$row->FinalizadoOrca = $this->basico->mascara_palavra_completa($row->FinalizadoOrca, 'NS');
-				$row->CanceladoOrca = $this->basico->mascara_palavra_completa($row->CanceladoOrca, 'NS');
-				$row->Quitado = $this->basico->mascara_palavra_completa($row->Quitado, 'NS');
-				$row->ConcluidoProduto = $this->basico->mascara_palavra_completa($row->ConcluidoProduto, 'NS');
-				
-				if($row->Tipo_Orca == "O"){
-					$row->Tipo_Orca = "On Line";
-				}elseif($row->Tipo_Orca == "B"){
-					$row->Tipo_Orca = "Na Loja";
-				}else{
-					$row->Tipo_Orca = "Outros";
-				}
-			}
-			return $query;
-		}		
-       
     }
 	
 }
