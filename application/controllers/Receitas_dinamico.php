@@ -4,7 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Pedidos_statico extends CI_Controller {
+class Receitas_dinamico extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -13,11 +13,12 @@ class Pedidos_statico extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation', 'pagination'));
-        $this->load->model(array('Basico_model', 'Cliente_model', 'Pedidos_model', 'Relatorio_model', 'Empresa_model', 'Loginempresa_model'));
+        $this->load->model(array('Basico_model', 'Cliente_model', 'Receitas_model', 'Relatorio_model', 'Empresa_model', 'Loginempresa_model'));
         $this->load->driver('session');
 
         #load header view
-		$this->load->view('basico/header');
+        
+		$this->load->view('basico/header_refresh_pedido');
 		$this->load->view('basico/nav_principal');
 
         #$this->load->view('relatorio/nav_secundario');
@@ -198,7 +199,7 @@ class Pedidos_statico extends CI_Controller {
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();		
 		
         $data['titulo'] = 'Dinâmico';
-        $data['form_open_path'] = 'Pedidos_statico/pedidos';
+        $data['form_open_path'] = 'Receitas_dinamico/pedidos';
 		$data['comissao'] = 'relatorio/comissao/';
         $data['status'] = 'Orcatrata/alterarstatus/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
@@ -208,9 +209,9 @@ class Pedidos_statico extends CI_Controller {
         $data['panel'] = 'info';
         $data['metodo'] = 1;
 		$data['paginacao'] = 'N';
-        $data['pedidos'] = 'Pedidos_statico';
-        $data['alert_combinar'] = FALSE;
-        $data['alert_aprovar'] = FALSE;
+        $data['pedidos'] = 'Receitas_dinamico';
+        $data['alert_combinar'] = TRUE;
+        $data['alert_aprovar'] = TRUE;
 
 		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -253,7 +254,7 @@ class Pedidos_statico extends CI_Controller {
 
 			if(isset($_SESSION['FiltroPedidos']['Orcamento']) && $_SESSION['FiltroPedidos']['Orcamento'] !=""){
 				
-				$data['pesquisar'] = $this->Pedidos_model->list_pedidos_pesquisar($_SESSION['FiltroPedidos'],TRUE);
+				$data['pesquisar'] = $this->Receitas_model->list_pedidos_pesquisar($_SESSION['FiltroPedidos'],TRUE);
 				
 				if ($data['pesquisar']->num_rows() == 1) {
 					
@@ -264,26 +265,26 @@ class Pedidos_statico extends CI_Controller {
 					exit();
 				}else{
 					
-					$data['report_combinar'] = $this->Pedidos_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
-					$data['report_aprovar'] = $this->Pedidos_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
-					$data['report_producao'] = $this->Pedidos_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
-					$data['report_envio'] = $this->Pedidos_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
-					$data['report_entrega'] = $this->Pedidos_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
-					$data['report_pagamento'] = $this->Pedidos_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
+					$data['report_combinar'] = $this->Receitas_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+					$data['report_aprovar'] = $this->Receitas_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+					$data['report_producao'] = $this->Receitas_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
+					$data['report_envio'] = $this->Receitas_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
+					$data['report_entrega'] = $this->Receitas_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
+					$data['report_pagamento'] = $this->Receitas_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
 				}				
 			}else{
 				
-				$data['report_combinar'] = $this->Pedidos_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
-				$data['report_aprovar'] = $this->Pedidos_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
-				$data['report_producao'] = $this->Pedidos_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
-				$data['report_envio'] = $this->Pedidos_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
-				$data['report_entrega'] = $this->Pedidos_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
-				$data['report_pagamento'] = $this->Pedidos_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
+				$data['report_combinar'] = $this->Receitas_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+				$data['report_aprovar'] = $this->Receitas_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+				$data['report_producao'] = $this->Receitas_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
+				$data['report_envio'] = $this->Receitas_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
+				$data['report_entrega'] = $this->Receitas_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
+				$data['report_pagamento'] = $this->Receitas_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
 			}
 
 		}
 
-        $this->load->view('pedidos/tela_pedidos', $data);
+        $this->load->view('receitas/tela_pedidos', $data);
 
         $this->load->view('basico/footer');
     }
@@ -301,7 +302,7 @@ class Pedidos_statico extends CI_Controller {
 		$data['collapse1'] = 'class="collapse"';
 
         $data['titulo'] = 'Dinâmico';
-        $data['form_open_path'] = 'Pedidos_statico/pedidos_combinar_pag';
+        $data['form_open_path'] = 'Receitas_dinamico/pedidos_combinar_pag';
 		$data['comissao'] = 'relatorio/comissao/';
         $data['status'] = 'Orcatrata/alterarstatus/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
@@ -311,9 +312,9 @@ class Pedidos_statico extends CI_Controller {
         $data['panel'] = 'info';
         $data['metodo'] = 1;
 		$data['paginacao'] = 'S';
-        $data['pedidos'] = 'Pedidos_statico';
-        $data['alert_combinar'] = FALSE;
-        $data['alert_aprovar'] = FALSE;
+        $data['pedidos'] = 'Receitas_dinamico';
+        $data['alert_combinar'] = TRUE;
+        $data['alert_aprovar'] = TRUE;
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -321,10 +322,10 @@ class Pedidos_statico extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			//$data['pesquisa_query'] = $this->Receitas_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
-			$config['total_rows'] = $this->Pedidos_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
-			$config['base_url'] = base_url() . 'Pedidos_statico/pedidos_combinar_pag/';
+			$config['total_rows'] = $this->Receitas_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			$config['base_url'] = base_url() . 'Receitas_dinamico/pedidos_combinar_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -360,18 +361,18 @@ class Pedidos_statico extends CI_Controller {
 
 			$data['pagination'] = $this->pagination->create_links();			
 			
-			$data['report_combinar'] = $this->Pedidos_model->list_pedidos_combinar($_SESSION['FiltroPedidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));
-			$data['report_aprovar'] = $this->Pedidos_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
-			$data['report_producao'] = $this->Pedidos_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_envio'] = $this->Pedidos_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_entrega'] = $this->Pedidos_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_pagamento'] = $this->Pedidos_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);			
+			$data['report_combinar'] = $this->Receitas_model->list_pedidos_combinar($_SESSION['FiltroPedidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));
+			$data['report_aprovar'] = $this->Receitas_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			$data['report_producao'] = $this->Receitas_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_envio'] = $this->Receitas_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_entrega'] = $this->Receitas_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_pagamento'] = $this->Receitas_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);			
 			
-			$data['list_combinar'] = $this->load->view('pedidos/list_pedidos_combinar', $data, TRUE);
+			$data['list_combinar'] = $this->load->view('receitas/list_pedidos_combinar', $data, TRUE);
 
         }
 
-        $this->load->view('pedidos/tela_pedidos', $data);
+        $this->load->view('receitas/tela_pedidos', $data);
 
         $this->load->view('basico/footer');
     }
@@ -389,7 +390,7 @@ class Pedidos_statico extends CI_Controller {
 		$data['collapse1'] = 'class="collapse"';
 
         $data['titulo'] = 'Dinâmico';
-        $data['form_open_path'] = 'Pedidos_statico/pedidos_aprovar_pag';
+        $data['form_open_path'] = 'Receitas_dinamico/pedidos_aprovar_pag';
 		$data['comissao'] = 'relatorio/comissao/';
         $data['status'] = 'Orcatrata/alterarstatus/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
@@ -399,9 +400,9 @@ class Pedidos_statico extends CI_Controller {
         $data['panel'] = 'info';
         $data['metodo'] = 1;
 		$data['paginacao'] = 'S';
-        $data['pedidos'] = 'Pedidos_statico';
-        $data['alert_combinar'] = FALSE;
-        $data['alert_aprovar'] = FALSE;
+        $data['pedidos'] = 'Receitas_dinamico';
+        $data['alert_combinar'] = TRUE;
+        $data['alert_aprovar'] = TRUE;
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -409,11 +410,11 @@ class Pedidos_statico extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			//$data['pesquisa_query'] = $this->Receitas_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
 			
-			$config['total_rows'] = $this->Pedidos_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'], TRUE, TRUE);
-			$config['base_url'] = base_url() . 'Pedidos_statico/pedidos_aprovar_pag/';
+			$config['total_rows'] = $this->Receitas_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'], TRUE, TRUE);
+			$config['base_url'] = base_url() . 'Receitas_dinamico/pedidos_aprovar_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -450,20 +451,20 @@ class Pedidos_statico extends CI_Controller {
 			$data['pagination'] = $this->pagination->create_links();
 
 
-			//$data['list_select'] = $this->load->view('pedidos/list_pedidos_aprovar', $data, TRUE);
+			//$data['list_select'] = $this->load->view('receitas/list_pedidos_aprovar', $data, TRUE);
 				
-			$data['report_aprovar'] = $this->Pedidos_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));
-			$data['report_combinar'] = $this->Pedidos_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_producao'] = $this->Pedidos_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_envio'] = $this->Pedidos_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_entrega'] = $this->Pedidos_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_pagamento'] = $this->Pedidos_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			$data['report_aprovar'] = $this->Receitas_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));
+			$data['report_combinar'] = $this->Receitas_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_producao'] = $this->Receitas_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_envio'] = $this->Receitas_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_entrega'] = $this->Receitas_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_pagamento'] = $this->Receitas_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
 			
-			$data['list_aprovar'] = $this->load->view('pedidos/list_pedidos_aprovar', $data, TRUE);			
+			$data['list_aprovar'] = $this->load->view('receitas/list_pedidos_aprovar', $data, TRUE);			
 
         }
 
-        $this->load->view('pedidos/tela_pedidos', $data);
+        $this->load->view('receitas/tela_pedidos', $data);
 
         $this->load->view('basico/footer');
     }
@@ -481,7 +482,7 @@ class Pedidos_statico extends CI_Controller {
 		$data['collapse1'] = 'class="collapse"';
 
         $data['titulo'] = 'Dinâmico';
-        $data['form_open_path'] = 'Pedidos_statico/pedidos_producao_pag';
+        $data['form_open_path'] = 'Receitas_dinamico/pedidos_producao_pag';
 		$data['comissao'] = 'relatorio/comissao/';
         $data['status'] = 'Orcatrata/alterarstatus/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
@@ -491,9 +492,9 @@ class Pedidos_statico extends CI_Controller {
         $data['panel'] = 'info';
         $data['metodo'] = 1;
 		$data['paginacao'] = 'S';
-        $data['pedidos'] = 'Pedidos_statico';
-        $data['alert_combinar'] = FALSE;
-        $data['alert_aprovar'] = FALSE;
+        $data['pedidos'] = 'Receitas_dinamico';
+        $data['alert_combinar'] = TRUE;
+        $data['alert_aprovar'] = TRUE;
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -501,10 +502,10 @@ class Pedidos_statico extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			//$data['pesquisa_query'] = $this->Receitas_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
-			$config['total_rows'] = $this->Pedidos_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
-			$config['base_url'] = base_url() . 'Pedidos_statico/pedidos_producao_pag/';
+			$config['total_rows'] = $this->Receitas_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			$config['base_url'] = base_url() . 'Receitas_dinamico/pedidos_producao_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -538,21 +539,21 @@ class Pedidos_statico extends CI_Controller {
             $data['pagina'] = $page;
 			$data['per_page'] = $config['per_page'];
 	
-			$data['report_producao'] = $this->Pedidos_model->list_pedidos_producao($_SESSION['FiltroPedidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
+			$data['report_producao'] = $this->Receitas_model->list_pedidos_producao($_SESSION['FiltroPedidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-			$data['list_producao'] = $this->load->view('pedidos/list_pedidos_producao', $data, TRUE);			
+			$data['list_producao'] = $this->load->view('receitas/list_pedidos_producao', $data, TRUE);			
 
-			$data['report_aprovar'] = $this->Pedidos_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_combinar'] = $this->Pedidos_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_envio'] = $this->Pedidos_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_entrega'] = $this->Pedidos_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_pagamento'] = $this->Pedidos_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			$data['report_aprovar'] = $this->Receitas_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_combinar'] = $this->Receitas_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_envio'] = $this->Receitas_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_entrega'] = $this->Receitas_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_pagamento'] = $this->Receitas_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
 
         }
 
-        $this->load->view('pedidos/tela_pedidos', $data);
+        $this->load->view('receitas/tela_pedidos', $data);
 
         $this->load->view('basico/footer');
     }
@@ -570,7 +571,7 @@ class Pedidos_statico extends CI_Controller {
 		$data['collapse1'] = 'class="collapse"';
 
         $data['titulo'] = 'Dinâmico';
-        $data['form_open_path'] = 'Pedidos_statico/pedidos_envio_pag';
+        $data['form_open_path'] = 'Receitas_dinamico/pedidos_envio_pag';
 		$data['comissao'] = 'relatorio/comissao/';
         $data['status'] = 'Orcatrata/alterarstatus/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
@@ -580,9 +581,9 @@ class Pedidos_statico extends CI_Controller {
         $data['panel'] = 'info';
         $data['metodo'] = 1;
 		$data['paginacao'] = 'S';
-        $data['pedidos'] = 'Pedidos_statico';
-        $data['alert_combinar'] = FALSE;
-        $data['alert_aprovar'] = FALSE;
+        $data['pedidos'] = 'Receitas_dinamico';
+        $data['alert_combinar'] = TRUE;
+        $data['alert_aprovar'] = TRUE;
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -590,10 +591,10 @@ class Pedidos_statico extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			//$data['pesquisa_query'] = $this->Receitas_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
-			$config['total_rows'] = $this->Pedidos_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
-			$config['base_url'] = base_url() . 'Pedidos_statico/pedidos_envio_pag/';
+			$config['total_rows'] = $this->Receitas_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			$config['base_url'] = base_url() . 'Receitas_dinamico/pedidos_envio_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -627,21 +628,21 @@ class Pedidos_statico extends CI_Controller {
             $data['pagina'] = $page;
 			$data['per_page'] = $config['per_page'];
 	
-			$data['report_envio'] = $this->Pedidos_model->list_pedidos_envio($_SESSION['FiltroPedidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
+			$data['report_envio'] = $this->Receitas_model->list_pedidos_envio($_SESSION['FiltroPedidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-			$data['list_envio'] = $this->load->view('pedidos/list_pedidos_envio', $data, TRUE);			
+			$data['list_envio'] = $this->load->view('receitas/list_pedidos_envio', $data, TRUE);			
 
-			$data['report_aprovar'] = $this->Pedidos_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_combinar'] = $this->Pedidos_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_producao'] = $this->Pedidos_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_entrega'] = $this->Pedidos_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_pagamento'] = $this->Pedidos_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			$data['report_aprovar'] = $this->Receitas_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_combinar'] = $this->Receitas_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_producao'] = $this->Receitas_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_entrega'] = $this->Receitas_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_pagamento'] = $this->Receitas_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
 
         }
 
-        $this->load->view('pedidos/tela_pedidos', $data);
+        $this->load->view('receitas/tela_pedidos', $data);
 
         $this->load->view('basico/footer');
     }
@@ -659,7 +660,7 @@ class Pedidos_statico extends CI_Controller {
 		$data['collapse1'] = 'class="collapse"';
 
         $data['titulo'] = 'Dinâmico';
-        $data['form_open_path'] = 'Pedidos_statico/pedidos_entrega_pag';
+        $data['form_open_path'] = 'Receitas_dinamico/pedidos_entrega_pag';
 		$data['comissao'] = 'relatorio/comissao/';
         $data['status'] = 'Orcatrata/alterarstatus/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
@@ -669,9 +670,9 @@ class Pedidos_statico extends CI_Controller {
         $data['panel'] = 'info';
         $data['metodo'] = 1;
 		$data['paginacao'] = 'S';
-        $data['pedidos'] = 'Pedidos_statico';
-        $data['alert_combinar'] = FALSE;
-        $data['alert_aprovar'] = FALSE;
+        $data['pedidos'] = 'Receitas_dinamico';
+        $data['alert_combinar'] = TRUE;
+        $data['alert_aprovar'] = TRUE;
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -679,10 +680,10 @@ class Pedidos_statico extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			//$data['pesquisa_query'] = $this->Receitas_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
-			$config['total_rows'] = $this->Pedidos_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
-			$config['base_url'] = base_url() . 'Pedidos_statico/pedidos_entrega_pag/';
+			$config['total_rows'] = $this->Receitas_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			$config['base_url'] = base_url() . 'Receitas_dinamico/pedidos_entrega_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -716,21 +717,21 @@ class Pedidos_statico extends CI_Controller {
             $data['pagina'] = $page;
 			$data['per_page'] = $config['per_page'];
 	
-			$data['report_entrega'] = $this->Pedidos_model->list_pedidos_entrega($_SESSION['FiltroPedidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
+			$data['report_entrega'] = $this->Receitas_model->list_pedidos_entrega($_SESSION['FiltroPedidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-			$data['list_entrega'] = $this->load->view('pedidos/list_pedidos_entrega', $data, TRUE);			
+			$data['list_entrega'] = $this->load->view('receitas/list_pedidos_entrega', $data, TRUE);			
 
-            $data['report_combinar'] = $this->Pedidos_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
-			$data['report_aprovar'] = $this->Pedidos_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_producao'] = $this->Pedidos_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_envio'] = $this->Pedidos_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_pagamento'] = $this->Pedidos_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_combinar'] = $this->Receitas_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			$data['report_aprovar'] = $this->Receitas_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_producao'] = $this->Receitas_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_envio'] = $this->Receitas_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_pagamento'] = $this->Receitas_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
 
         }
 
-        $this->load->view('pedidos/tela_pedidos', $data);
+        $this->load->view('receitas/tela_pedidos', $data);
 
         $this->load->view('basico/footer');
     }
@@ -748,7 +749,7 @@ class Pedidos_statico extends CI_Controller {
 		$data['collapse1'] = 'class="collapse"';
 
         $data['titulo'] = 'Dinâmico';
-        $data['form_open_path'] = 'Pedidos_statico/pedidos_pagamento_pag';
+        $data['form_open_path'] = 'Receitas_dinamico/pedidos_pagamento_pag';
 		$data['comissao'] = 'relatorio/comissao/';
         $data['status'] = 'Orcatrata/alterarstatus/';
 		$data['imprimir'] = 'OrcatrataPrintComissao/imprimir/';
@@ -758,9 +759,9 @@ class Pedidos_statico extends CI_Controller {
         $data['panel'] = 'info';
         $data['metodo'] = 1;
 		$data['paginacao'] = 'S';
-        $data['pedidos'] = 'Pedidos_statico';
-        $data['alert_combinar'] = FALSE;
-        $data['alert_aprovar'] = FALSE;
+        $data['pedidos'] = 'Receitas_dinamico';
+        $data['alert_combinar'] = TRUE;
+        $data['alert_aprovar'] = TRUE;
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         //$this->form_validation->set_rules('Orcamento', 'Orcamento', 'trim');
@@ -768,10 +769,10 @@ class Pedidos_statico extends CI_Controller {
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
 
-			//$data['pesquisa_query'] = $this->Pedidos_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			//$data['pesquisa_query'] = $this->Receitas_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
 			//$config['total_rows'] = $data['pesquisa_query']->num_rows();
-			$config['total_rows'] = $this->Pedidos_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
-			$config['base_url'] = base_url() . 'Pedidos_statico/pedidos_pagamento_pag/';
+			$config['total_rows'] = $this->Receitas_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			$config['base_url'] = base_url() . 'Receitas_dinamico/pedidos_pagamento_pag/';
 			$config['per_page'] = 5;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -805,21 +806,21 @@ class Pedidos_statico extends CI_Controller {
             $data['pagina'] = $page;
 			$data['per_page'] = $config['per_page'];
 	
-			$data['report_pagamento'] = $this->Pedidos_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
+			$data['report_pagamento'] = $this->Receitas_model->list_pedidos_pagamento($_SESSION['FiltroPedidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));		
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-			$data['list_pagamento'] = $this->load->view('pedidos/list_pedidos_pagamento', $data, TRUE);			
+			$data['list_pagamento'] = $this->load->view('receitas/list_pedidos_pagamento', $data, TRUE);			
 
-            $data['report_combinar'] = $this->Pedidos_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
-			$data['report_aprovar'] = $this->Pedidos_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_producao'] = $this->Pedidos_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_envio'] = $this->Pedidos_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
-            $data['report_entrega'] = $this->Pedidos_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_combinar'] = $this->Receitas_model->list_pedidos_combinar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+			$data['report_aprovar'] = $this->Receitas_model->list_pedidos_aprovar($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_producao'] = $this->Receitas_model->list_pedidos_producao($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_envio'] = $this->Receitas_model->list_pedidos_envio($_SESSION['FiltroPedidos'],TRUE, TRUE);
+            $data['report_entrega'] = $this->Receitas_model->list_pedidos_entrega($_SESSION['FiltroPedidos'],TRUE, TRUE);
 
         }
 
-        $this->load->view('pedidos/tela_pedidos', $data);
+        $this->load->view('receitas/tela_pedidos', $data);
 
         $this->load->view('basico/footer');
     }

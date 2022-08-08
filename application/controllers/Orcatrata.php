@@ -13,7 +13,7 @@ class Orcatrata extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation', 'pagination'));
-        $this->load->model(array('Basico_model', 'Orcatrata_model', 'Procedimento_model', 'Pedidos_model', 
+        $this->load->model(array(	'Basico_model', 'Orcatrata_model', 'Procedimento_model', 
 									'Produtos_model', 'Usuario_model', 'Cliente_model', 'Clientepet_model', 
 									'Clientedep_model', 'Consulta_model', 'Fornecedor_model', 'Relatorio_model', 
 									'Formapag_model', 'Associado_model', 'Campanha_model'

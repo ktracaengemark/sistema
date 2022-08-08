@@ -76,7 +76,7 @@
 				</li>						
 				<li class="botoesnav">
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
-						<a type="button" class="btn btn-secondary btn-sm btn-primary" data-toggle="tooltip" data-placement="bottom" title="Gestor de Receitas"  href="<?php echo base_url() ?>pedidos/pedidos" role="button">
+						<a type="button" class="btn btn-secondary btn-sm btn-primary" data-toggle="tooltip" data-placement="bottom" title="Gestor de Receitas Dinamico"  href="<?php echo base_url() ?>receitas_dinamico/pedidos" role="button">
 							 Receitas 
 						</a>
 						<!--<div class="btn-group" role="group">-->
@@ -85,10 +85,10 @@
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>
-								<li><a href="<?php echo base_url() ?>pedidos/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor Dinamico</a></li>
+								<li><a href="<?php echo base_url() ?>receitas_dinamico/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor de Receitas Dinamico</a></li>
 									<li role="separator" class="divider"></li>
 								<?php } ?>
-									<li><a href="<?php echo base_url() ?>pedidos_statico/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor Estatico</a></li>
+									<li><a href="<?php echo base_url() ?>receitas_statico/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor de Receitas Estatico</a></li>
 								<?php if ($_SESSION['log']['idSis_Empresa'] == 5 ) { ?>
 									<li role="separator" class="divider"></li>
 									<li><a href="<?php echo base_url() ?>Orcatrata/cadastrar3"><span class="glyphicon glyphicon-plus"></span> Nova Receita</a></li>

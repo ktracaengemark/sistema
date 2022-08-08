@@ -95,16 +95,8 @@ class Base_model extends CI_Model {
 				$nivel = FALSE;
 				$permissao = FALSE;
 			}
-			if(isset($data['Produtos']) && $data['Produtos'] != 0){
-				$produtos = 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND';
-			}else{
-				$produtos = FALSE;
-			}
-			if(isset($data['Parcelas']) && $data['Parcelas'] != 0){
-				$parcelas = 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND';
-			}else{
-				$parcelas = FALSE;
-			}
+			$produtos = ($data['Produtos']) ? 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND' : FALSE;
+			$parcelas = ($data['Parcelas']) ? 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND' : FALSE;
 		}else{
 			$permissao_orcam = FALSE;
 			if(isset($data['metodo']) && $data['metodo'] == 3){
@@ -511,16 +503,8 @@ class Base_model extends CI_Model {
 				$nivel = FALSE;
 				$permissao = FALSE;
 			}
-			if(isset($data['Produtos']) && $data['Produtos'] != 0){
-				$produtos = 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND';
-			}else{
-				$produtos = FALSE;
-			}
-			if(isset($data['Parcelas']) && $data['Parcelas'] != 0){
-				$parcelas = 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND';
-			}else{
-				$parcelas = FALSE;
-			}
+			$produtos = ($data['Produtos']) ? 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND' : FALSE;
+			$parcelas = ($data['Parcelas']) ? 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND' : FALSE;
 		}else{
 			$permissao_orcam = FALSE;
 			if(isset($data['metodo']) && $data['metodo'] == 3){
@@ -928,16 +912,8 @@ class Base_model extends CI_Model {
 				$nivel = FALSE;
 				$permissao = FALSE;
 			}
-			if(isset($data['Produtos']) && $data['Produtos'] != 0){
-				$produtos = 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND';
-			}else{
-				$produtos = FALSE;
-			}
-			if(isset($data['Parcelas']) && $data['Parcelas'] != 0){
-				$parcelas = 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND';
-			}else{
-				$parcelas = FALSE;
-			}
+			$produtos = ($data['Produtos']) ? 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND' : FALSE;
+			$parcelas = ($data['Parcelas']) ? 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND' : FALSE;
 		}else{
 			$cliente = FALSE;
 			$id_cliente = FALSE;
@@ -1441,16 +1417,8 @@ class Base_model extends CI_Model {
 				$nivel = FALSE;
 				$permissao = FALSE;
 			}
-			if(isset($data['Produtos']) && $data['Produtos'] != 0){
-				$produtos = 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND';
-			}else{
-				$produtos = FALSE;
-			}
-			if(isset($data['Parcelas']) && $data['Parcelas'] != 0){
-				$parcelas = 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND';
-			}else{
-				$parcelas = FALSE;
-			}
+			$produtos = ($data['Produtos']) ? 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND' : FALSE;
+			$parcelas = ($data['Parcelas']) ? 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND' : FALSE;
 		}else{
 			$fornecedor = FALSE;
 			$id_fornecedor = FALSE;
@@ -1937,16 +1905,8 @@ class Base_model extends CI_Model {
 				$nivel = FALSE;
 				$permissao = FALSE;
 			}
-			if(isset($data['Produtos']) && $data['Produtos'] != 0){
-				$produtos = 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND';
-			}else{
-				$produtos = FALSE;
-			}
-			if(isset($data['Parcelas']) && $data['Parcelas'] != 0){
-				$parcelas = 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND';
-			}else{
-				$parcelas = FALSE;
-			}
+			$produtos = ($data['Produtos']) ? 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND' : FALSE;
+			$parcelas = ($data['Parcelas']) ? 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND' : FALSE;
 			if(isset($data['Recibo']) && $data['Recibo'] != "0"){
 				$recibo = '' . $data['Recibo'] . ' AND';
 			}else{
@@ -2395,16 +2355,8 @@ class Base_model extends CI_Model {
 				$nivel = FALSE;
 				$permissao = FALSE;
 			}
-			if(isset($data['Produtos']) && $data['Produtos'] != 0){
-				$produtos = 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND';
-			}else{
-				$produtos = FALSE;
-			}
-			if(isset($data['Parcelas']) && $data['Parcelas'] != 0){
-				$parcelas = 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND';
-			}else{
-				$parcelas = FALSE;
-			}
+			$produtos = ($data['Produtos']) ? 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND' : FALSE;
+			$parcelas = ($data['Parcelas']) ? 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND' : FALSE;
 			if(isset($data['Recibo']) && $data['Recibo'] != "0"){
 				$recibo = '' . $data['Recibo'] . ' AND';
 			}else{
@@ -2851,16 +2803,8 @@ class Base_model extends CI_Model {
 				$nivel = FALSE;
 				$permissao = FALSE;
 			}
-			if(isset($data['Produtos']) && $data['Produtos'] != 0){
-				$produtos = 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND';
-			}else{
-				$produtos = FALSE;
-			}
-			if(isset($data['Parcelas']) && $data['Parcelas'] != 0){
-				$parcelas = 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND';
-			}else{
-				$parcelas = FALSE;
-			}
+			$produtos = ($data['Produtos']) ? 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND' : FALSE;
+			$parcelas = ($data['Parcelas']) ? 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND' : FALSE;
 			if(isset($data['Recibo']) && $data['Recibo'] != "0"){
 				$recibo = '' . $data['Recibo'] . ' AND';
 			}else{
