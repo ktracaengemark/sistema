@@ -42,8 +42,8 @@
 								echo '<td>' . $row['NomeFornecedor'] . '</td>';
 								echo '<td>' . $row['Tipo_Orca'] . '</td>';
 								echo '<td>' . $row['NomeProduto'] . '</td>';
-								echo '<td>' . $row['DataEntregaOrca'] . '</td>';
-								echo '<td>' . $row['HoraEntregaOrca'] . '</td>';
+								echo '<td>' . $row['DataConcluidoProduto'] . '</td>';
+								echo '<td>' . $row['HoraConcluidoProduto'] . '</td>';
 								echo '<td>' . $row['TipoFrete'] . '</td>';
 								echo '<td>' . $row['ConcluidoProduto'] . '</td>';
 							echo '</tr>';

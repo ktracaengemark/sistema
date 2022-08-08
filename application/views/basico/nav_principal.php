@@ -106,7 +106,7 @@
 				</li>
 				<li class="botoesnav">
 					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
-						<a type="button" class="btn btn-secondary btn-sm btn-danger" data-toggle="tooltip" data-placement="bottom" title="Gestor de Despesas"  href="<?php echo base_url() ?>despesas_statico/despesas" role="button">
+						<a type="button" class="btn btn-secondary btn-sm btn-danger" data-toggle="tooltip" data-placement="bottom" title="Gestor de Despesas Statico"  href="<?php echo base_url() ?>despesas_statico/pedidos" role="button">
 							 Despesas 
 						</a>
 						<!--<div class="btn-group" role="group">-->
@@ -114,7 +114,7 @@
 								Compras  <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="<?php echo base_url() ?>despesas_statico/despesas"><span class="glyphicon glyphicon-pencil"></span> Gestor Estatico</a></li>
+								<li><a href="<?php echo base_url() ?>despesas_statico/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor Estatico</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>Orcatrata/cadastrardesp"><span class="glyphicon glyphicon-plus"></span> Nova Despesa</a></li>
 								<li role="separator" class="divider"></li>
