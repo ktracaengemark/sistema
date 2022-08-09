@@ -232,7 +232,7 @@ class Comissao extends CI_Controller {
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 
 		$data['query']['nome'] = 'Cliente';
-		$data['titulo'] = 'Comissão Vendedor';
+		$data['titulo'] = 'Com. Vendedor';
 		$data['form_open_path'] = 'Comissao/comissao';
 		$data['baixatodas'] = 'Comissao/comissao_baixa/';
 		$data['editartodas'] = 'relatorio_rec/receitas/';
@@ -403,7 +403,7 @@ class Comissao extends CI_Controller {
             $data['msg'] = '';
 
 		//$data['query']['nome'] = 'Cliente';
-		$data['titulo'] = 'Comissão Colaborador';
+		$data['titulo'] = 'Com. Vendedor';
 		$data['form_open_path'] = 'Comissao/comissao_pag';
 		$data['baixatodas'] = 'Comissao/comissao_baixa/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
@@ -505,7 +505,7 @@ class Comissao extends CI_Controller {
             $data['msg'] = '';
 
 		//$data['query']['nome'] = 'Cliente';
-		$data['titulo'] = 'Comissão Colaborador';
+		$data['titulo'] = 'Com. Vendedor';
 		$data['form_open_path'] = 'Comissao/comissao_pag';
 		$data['baixatodas'] = 'Comissao/comissao_baixa/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
@@ -1246,7 +1246,7 @@ class Comissao extends CI_Controller {
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 
 		$data['query']['nome'] = 'Cliente';
-		$data['titulo'] = 'Comissão Associado';
+		$data['titulo'] = 'Com. Associado';
 		$data['form_open_path'] = 'Comissao/comissaoass';
 		$data['baixatodas'] = 'Comissao/comissaoass_baixa/';
 		$data['editartodas'] = 'relatorio_rec/receitas/';
@@ -1417,7 +1417,7 @@ class Comissao extends CI_Controller {
             $data['msg'] = '';
 
 		//$data['query']['nome'] = 'Cliente';
-		$data['titulo'] = 'Comissão Associado';
+		$data['titulo'] = 'Com. Associado';
 		$data['form_open_path'] = 'Comissao/comissaoass_pag';
 		$data['baixatodas'] = 'Comissao/comissaoass_baixa/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
@@ -1519,7 +1519,7 @@ class Comissao extends CI_Controller {
             $data['msg'] = '';
 
 		//$data['query']['nome'] = 'Cliente';
-		$data['titulo'] = 'Comissão Colaborador';
+		$data['titulo'] = 'Com. Associado';
 		$data['form_open_path'] = 'Comissao/comissaoass_pag';
 		$data['baixatodas'] = 'Comissao/comissaoass_baixa/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
@@ -2261,7 +2261,7 @@ class Comissao extends CI_Controller {
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 
 		$data['query']['nome'] = 'Cliente';
-		$data['titulo'] = 'Comissão Funcionario';
+		$data['titulo'] = 'Com. Supervisor';
 		$data['form_open_path'] = 'Comissao/comissaofunc';
 		$data['baixatodas'] = 'Comissao/comissaofunc_baixa/';
 		$data['editartodas'] = 'relatorio_rec/receitas/';
@@ -2432,7 +2432,7 @@ class Comissao extends CI_Controller {
             $data['msg'] = '';
 
 		//$data['query']['nome'] = 'Cliente';
-		$data['titulo'] = 'Comissão Funcionario';
+		$data['titulo'] = 'Com. Supervisor';
 		$data['form_open_path'] = 'Comissao/comissaofunc_pag';
 		$data['baixatodas'] = 'Comissao/comissaofunc_baixa/';
 		$data['baixa'] = 'Orcatrata/baixadareceita/';
@@ -2718,7 +2718,7 @@ class Comissao extends CI_Controller {
 				
 				$data['select']['QuitadoComissao'] = $this->Basico_model->select_status_sn();	
 				
-				$data['titulo'] = 'Comissao Vend./Super.';
+				$data['titulo'] = 'Com. Super.';
 				$data['form_open_path'] = 'Comissao/comissaofunc_baixa';
 				$data['relatorio'] = 'Comissao/comissaofunc_pag/';
 				$data['imprimir'] = 'Comissao/comissaofunc_lista/';

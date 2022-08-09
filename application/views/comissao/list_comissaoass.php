@@ -1,9 +1,9 @@
 <div class="panel panel-<?php echo $panel; ?>">
 	<div class="panel-heading">
 		<div class="row">
-			<div class="col-lg-6 col-md-6 col-sm-3 col-xs-12 text-left">
-				<div class="row">		
-					<div class="col-lg-4 col-md-4 col-sm-3 col-xs-12 text-left">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">
+				<div class="row">
+					<div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 text-left">
 						<label for="DataFim">Cont: Parc / Total</label>
 						<div class="input-group">
 							<span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
@@ -11,7 +11,7 @@
 						</div>
 					</div>
 					<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
-						<div class="col-lg-4 col-md-4 col-sm-3 col-xs-6 text-left">
+						<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 text-left">
 							<label for="DataFim">Prod + Serv:</label>
 							<div class="input-group">
 								<span class="input-group-addon">R$</span>
@@ -19,7 +19,7 @@
 							</div>
 						</div>
 						<?php if($_SESSION['Usuario']['Rel_Com'] == "S") {?>
-							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-left">
+							<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 text-left">
 								<label for="DataFim">Com: Parc / Total</label>
 								<div class="input-group">
 									<span class="input-group-addon">R$</span>
@@ -28,17 +28,15 @@
 							</div>
 						<?php } ?>
 					<?php } ?>
-				</div>	
-				<div class="row">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">
+					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-left">
 						<?php echo $pagination; ?>
 					</div>
 				</div>	
-			</div>		
-			<div class="col-lg-6 col-md-6 col-sm-3 col-xs-12 text-left">
+			</div>
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">
 				<div class="row">		
 					<?php if($paginacao == "S") { ?>
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+						<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 							<label>Filtros</label>
 							<a href="<?php echo base_url() . $caminho; ?>">
 								<button class="btn btn-warning btn-md btn-block" type="button">
@@ -47,14 +45,14 @@
 							</a>
 						</div>
 					<?php }else{ ?>
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+						<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 							<label>Filtros</label>
 							<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
 								<span class="glyphicon glyphicon-filter"></span>
 							</button>
 						</div>
 					<?php } ?>
-					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 						<label>Excel</label><br>
 						<a href="<?php echo base_url() . 'Comissao/comissaoass_excel/2'; ?>">
 							<button type='button' class='btn btn-md btn-success btn-block'>
@@ -65,7 +63,7 @@
 					<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S" && $_SESSION['Usuario']['Nivel'] != 2) {?>
 						<?php if ($editar == 1) { ?>
 							<?php if ($print == 1) { ?>	
-								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+								<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 									<label>Lista</label>
 									<a href="<?php echo base_url() . $imprimirlista; ?>">
 										<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
@@ -86,7 +84,7 @@
 								}	
 							?>
 							<?php if(isset($exibir_baixa) && $exibir_baixa == TRUE) { ?>
-								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
+								<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 									<label>Baixa</label>
 									<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
 										<button class="btn btn-danger btn-md btn-block" type="button">

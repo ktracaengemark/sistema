@@ -1,15 +1,14 @@
 <?php if ($msg) echo $msg; ?>
-<!--<?php #echo form_open('Comissao/comissao', 'role="form"'); ?>-->
 <?php echo form_open($form_open_path, 'role="form"'); ?>
-<div class="col-md-12 ">		
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">		
 	<?php echo validation_errors(); ?>
 	<?php if($paginacao == "N") { ?>
-		<div class="row">	
-			<div class="col-md-12 ">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">
 				<div class="panel panel-<?php echo $panel; ?>">
 					<div class="panel-heading">
 						<div class="row">
-							<div class="col-md-2 text-left">
+							<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 text-left">
 								<label><?php echo $titulo;?></label>
 								<div class="input-group">
 									<span class="input-group-btn">
@@ -20,7 +19,7 @@
 									<input type="text" placeholder="Nº Pedido" class="form-control Numero btn-sm" name="Orcamento" id="Orcamento" value="<?php echo set_value('Orcamento', $query['Orcamento']); ?>">
 								</div>
 							</div>
-							<div class="col-md-2 text-left">
+							<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 text-left">
 								<label>Recibo</label>
 								<div class="input-group">
 									<span class="input-group-btn">
@@ -31,8 +30,32 @@
 									<input type="text" placeholder="Nº Recibo" class="form-control Numero btn-sm" name="id_Comissao" id="id_Comissao" value="<?php echo set_value('id_Comissao', $query['id_Comissao']); ?>">
 								</div>
 							</div>
+							<?php if ($_SESSION['Usuario']['Permissao_Comissao'] >= 2 ) { ?>
+								<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-left">
+									<label for="NomeUsuario">Vendedor:</label>
+									<div class="input-group">
+										<span class="input-group-btn">
+											<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
+												<span class="glyphicon glyphicon-search"></span> 
+											</button>
+										</span>
+										<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
+												id="NomeUsuario" name="NomeUsuario">
+											<?php
+											foreach ($select['NomeUsuario'] as $key => $row) {
+												if ($query['NomeUsuario'] == $key) {
+													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+												} else {
+													echo '<option value="' . $key . '">' . $row . '</option>';
+												}
+											}
+											?>
+										</select>
+									</div>	
+								</div>
+							<?php } ?>
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
-								<div class="col-md-4 text-left">
+								<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-left">
 									<label  ><?php echo $nome; ?>: </label>
 									<div class="input-group">
 										<span class="input-group-btn">
@@ -60,48 +83,22 @@
 								<input type="hidden" name="Cliente" id="Cliente" value=""/>
 								<input type="hidden" name="Fornecedor" id="Fornecedor" value=""/>
 							<?php } ?>
-							<div class="col-md-3">
-								<div class="row">
-									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-left">
-										<label>Filtros</label>
-										<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
-											<span class="glyphicon glyphicon-filter"></span>
-										</button>
-									</div>
-									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-left">
-										<label>Excel</label><br>
-										<a href="<?php echo base_url() . 'Comissao/comissao_excel/1'; ?>">
-											<button type='button' class='btn btn-md btn-success btn-block'>
-												S/<span class="glyphicon glyphicon-filter"></span>
-											</button>
-										</a>
-									</div>
-								</div>	
+						</div>
+						<div class="row">
+							<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
+								<label>Filtros</label>
+								<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
+									<span class="glyphicon glyphicon-filter"></span>
+								</button>
 							</div>
-							<?php if ($_SESSION['Usuario']['Permissao_Comissao'] >= 2 ) { ?>
-								<div class="col-md-4 text-left">
-									<label for="NomeUsuario">Vendedor:</label>
-									<div class="input-group">
-										<span class="input-group-btn">
-											<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
-												<span class="glyphicon glyphicon-search"></span> 
-											</button>
-										</span>
-										<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
-												id="NomeUsuario" name="NomeUsuario">
-											<?php
-											foreach ($select['NomeUsuario'] as $key => $row) {
-												if ($query['NomeUsuario'] == $key) {
-													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-												} else {
-													echo '<option value="' . $key . '">' . $row . '</option>';
-												}
-											}
-											?>
-										</select>
-									</div>	
-								</div>
-							<?php } ?>
+							<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
+								<label>Excel</label><br>
+								<a href="<?php echo base_url() . 'Comissao/comissao_excel/1'; ?>">
+									<button type='button' class='btn btn-md btn-success btn-block'>
+										S/<span class="glyphicon glyphicon-filter"></span>
+									</button>
+								</a>
+							</div>
 						</div>	
 					</div>
 				</div>			
