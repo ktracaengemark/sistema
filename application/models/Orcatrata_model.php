@@ -621,7 +621,8 @@ class Orcatrata_model extends CI_Model {
 				AprovadoOrca,
 				CanceladoOrca,
 				QuitadoOrca,
-				idApp_Cliente
+				idApp_Cliente,
+				idApp_Fornecedor
 			FROM 
 				App_OrcaTrata
 			WHERE 

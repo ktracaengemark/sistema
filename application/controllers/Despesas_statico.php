@@ -254,12 +254,12 @@ class Despesas_statico extends CI_Controller {
 			if(isset($_SESSION['FiltroDespesas']['Orcamento']) && $_SESSION['FiltroDespesas']['Orcamento'] !=""){
 				
 				$data['pesquisar'] = $this->Despesas_model->list_pedidos_pesquisar($_SESSION['FiltroDespesas'],TRUE);
-				
+
 				if ($data['pesquisar']->num_rows() == 1) {
 					
 					$info = $data['pesquisar']->result_array();
 					
-					redirect('orcatrata/alterarstatus/' . $info[0]['idApp_OrcaTrata'] );
+					redirect('orcatrata/alterardesp/' . $info[0]['idApp_OrcaTrata'] );
 
 					exit();
 				}else{

@@ -13,7 +13,7 @@ class Despesas extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation', 'pagination'));
-        $this->load->model(array(	'Basico_model', 'Cliente_model', 'Relatorio_model', 'Base_model', 'Orcatrata_model', 'Empresa_model', 
+        $this->load->model(array(	'Basico_model', 'Cliente_model', 'Relatorio_model', 'Despesas_model', 'Orcatrata_model', 'Empresa_model', 
 									'Loginempresa_model', 'Associado_model', 'Usuario_model', 'Agenda_model'
 								));
         $this->load->driver('session');
@@ -390,7 +390,7 @@ class Despesas extends CI_Controller {
 			$_SESSION['FiltroDespesas']['Ultimo'] = $data['query']['Ultimo'];
 			$_SESSION['FiltroDespesas']['nome'] = $data['query']['nome'];
 
-			$data['pesquisa_query'] = $this->Base_model->list_despesas($_SESSION['FiltroDespesas'], FALSE, TRUE, FALSE, FALSE, FALSE);
+			$data['pesquisa_query'] = $this->Despesas_model->list_despesas($_SESSION['FiltroDespesas'], FALSE, TRUE, FALSE, FALSE, FALSE);
 			
 			if($data['pesquisa_query'] === FALSE){
 				
@@ -443,7 +443,7 @@ class Despesas extends CI_Controller {
 
 				$data['linha'] = $page * $config['per_page'];
 			
-				$data['report'] = $this->Base_model->list_despesas($_SESSION['FiltroDespesas'], FALSE, FALSE, $config['per_page'], $data['linha'], FALSE);
+				$data['report'] = $this->Despesas_model->list_despesas($_SESSION['FiltroDespesas'], FALSE, FALSE, $config['per_page'], $data['linha'], FALSE);
 			
 				$_SESSION['FiltroDespesas']['Limit'] = $data['per_page'];
 				$_SESSION['FiltroDespesas']['Start'] = $data['linha'];
@@ -503,7 +503,7 @@ class Despesas extends CI_Controller {
 		
         #run form validation
 
-			$data['pesquisa_query'] = $this->Base_model->list_despesas($_SESSION['FiltroDespesas'], FALSE, TRUE, FALSE, FALSE, FALSE);
+			$data['pesquisa_query'] = $this->Despesas_model->list_despesas($_SESSION['FiltroDespesas'], FALSE, TRUE, FALSE, FALSE, FALSE);
 			
 			if($data['pesquisa_query'] === FALSE){
 				
@@ -558,7 +558,7 @@ class Despesas extends CI_Controller {
 				$_SESSION['FiltroDespesas']['Limit'] = $data['per_page'];
 				$_SESSION['FiltroDespesas']['Start'] = $data['linha'];
 
-				$data['report'] = $this->Base_model->list_despesas($_SESSION['FiltroDespesas'], FALSE, FALSE, $config['per_page'], $data['linha'], FALSE);			
+				$data['report'] = $this->Despesas_model->list_despesas($_SESSION['FiltroDespesas'], FALSE, FALSE, $config['per_page'], $data['linha'], FALSE);			
 				
 				$data['pagination'] = $this->pagination->create_links();
 				
@@ -609,7 +609,7 @@ class Despesas extends CI_Controller {
 
         $data['nome'] = 'Fornecedor';
 
-		$data['report'] = $this->Base_model->list_despesas($dados, FALSE, FALSE, FALSE, FALSE, FALSE);
+		$data['report'] = $this->Despesas_model->list_despesas($dados, FALSE, FALSE, FALSE, FALSE, FALSE);
 
 		if($data['report'] === FALSE){
 			
@@ -661,7 +661,7 @@ class Despesas extends CI_Controller {
         #run form validation
         
 
-			$data['pesquisa_query'] = $this->Base_model->list_despesas($_SESSION['FiltroDespesas'], FALSE, TRUE, FALSE, FALSE, FALSE);
+			$data['pesquisa_query'] = $this->Despesas_model->list_despesas($_SESSION['FiltroDespesas'], FALSE, TRUE, FALSE, FALSE, FALSE);
 			
 			if($data['pesquisa_query'] === FALSE){
 				
@@ -718,7 +718,7 @@ class Despesas extends CI_Controller {
 				$_SESSION['FiltroDespesas']['Limit'] = $data['per_page'];
 				$_SESSION['FiltroDespesas']['Start'] = $data['linha'];
 
-				$data['report'] = $this->Base_model->list_despesas($_SESSION['FiltroDespesas'], FALSE, FALSE, $config['per_page'], $data['linha'], FALSE);			
+				$data['report'] = $this->Despesas_model->list_despesas($_SESSION['FiltroDespesas'], FALSE, FALSE, $config['per_page'], $data['linha'], FALSE);			
 				
 				$data['pagination'] = $this->pagination->create_links();
 				
@@ -792,7 +792,7 @@ class Despesas extends CI_Controller {
 					
 				}else{
 						
-					$data['pesquisa_query'] = $this->Base_model->list_despesas($_SESSION['FiltroDespesas'], TRUE, TRUE, FALSE, FALSE, FALSE);
+					$data['pesquisa_query'] = $this->Despesas_model->list_despesas($_SESSION['FiltroDespesas'], TRUE, TRUE, FALSE, FALSE, FALSE);
 			
 					if($data['pesquisa_query'] === FALSE){
 						
@@ -841,7 +841,7 @@ class Despesas extends CI_Controller {
 						$_SESSION['FiltroDespesas']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 
 						#### App_OrcaTrata ####
-						$data['orcamento'] = $this->Base_model->list_despesas($_SESSION['FiltroDespesas'], TRUE, TRUE, $_SESSION['FiltroDespesas']['Per_Page'], ($_SESSION['FiltroDespesas']['Pagina'] * $_SESSION['FiltroDespesas']['Per_Page']), TRUE);
+						$data['orcamento'] = $this->Despesas_model->list_despesas($_SESSION['FiltroDespesas'], TRUE, TRUE, $_SESSION['FiltroDespesas']['Per_Page'], ($_SESSION['FiltroDespesas']['Pagina'] * $_SESSION['FiltroDespesas']['Per_Page']), TRUE);
 						
 						if (count($data['orcamento']) > 0) {
 							$data['orcamento'] = array_combine(range(1, count($data['orcamento'])), array_values($data['orcamento']));
@@ -959,7 +959,7 @@ class Despesas extends CI_Controller {
 						////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
 
 						#### App_OrcaTrata ####
-						$data['update']['orcamento']['anterior'] = $this->Base_model->list_despesas($_SESSION['FiltroDespesas'], TRUE, TRUE, $_SESSION['FiltroDespesas']['Per_Page'], ($_SESSION['FiltroDespesas']['Pagina'] * $_SESSION['FiltroDespesas']['Per_Page']), TRUE);
+						$data['update']['orcamento']['anterior'] = $this->Despesas_model->list_despesas($_SESSION['FiltroDespesas'], TRUE, TRUE, $_SESSION['FiltroDespesas']['Per_Page'], ($_SESSION['FiltroDespesas']['Pagina'] * $_SESSION['FiltroDespesas']['Per_Page']), TRUE);
 						if (isset($data['orcamento']) || (!isset($data['orcamento']) && isset($data['update']['orcamento']['anterior']) ) ) {
 
 							if (isset($data['orcamento']))
@@ -972,7 +972,9 @@ class Despesas extends CI_Controller {
 
 							$max = count($data['update']['orcamento']['alterar']);
 							for($j=0;$j<$max;$j++) {
-					
+								
+								$data['Orcamento_baixa'][$j] = $this->Orcatrata_model->get_orcamento_baixa($data['update']['orcamento']['alterar'][$j]['idApp_OrcaTrata']);
+
 								if ($data['query']['QuitadoComissao'] == 'S') $data['update']['orcamento']['alterar'][$j]['FinalizadoOrca'] = 'S';
 								
 								if ($data['update']['orcamento']['alterar'][$j]['FinalizadoOrca'] == 'S') {
@@ -984,15 +986,15 @@ class Despesas extends CI_Controller {
 											
 											$data['update']['produto']['posterior'][$j][$k]['ConcluidoProduto'] = 'S';
 											if(!$data['update']['produto']['posterior'][$j][$k]['DataConcluidoProduto'] || $data['update']['produto']['posterior'][$j][$k]['DataConcluidoProduto'] == "0000-00-00"){
-												$data['update']['produto']['posterior'][$j][$k]['DataConcluidoProduto'] = $this->basico->mascara_data($_SESSION['Orcamento'][$j]['DataEntregaOrca'], 'mysql');
+												$data['update']['produto']['posterior'][$j][$k]['DataConcluidoProduto'] = $data['Orcamento_baixa'][$j]['DataEntregaOrca'];
 											}
 											if(!$data['update']['produto']['posterior'][$j][$k]['HoraConcluidoProduto'] || $data['update']['produto']['posterior'][$j][$k]['HoraConcluidoProduto'] == "00:00:00"){
-												$data['update']['produto']['posterior'][$j][$k]['HoraConcluidoProduto'] = $_SESSION['Orcamento'][$j]['HoraEntregaOrca'];
+												$data['update']['produto']['posterior'][$j][$k]['HoraConcluidoProduto'] = $data['Orcamento_baixa'][$j]['HoraEntregaOrca'];
 											}
 											$data['update']['produto']['bd'][$j] = $this->Orcatrata_model->update_produto_id($data['update']['produto']['posterior'][$j][$k], $data['update']['produto']['posterior'][$j][$k]['idApp_Produto']);
 										
 											////inicio do desconto do estoque////
-											if(($_SESSION['Orcamento'][$j]['CombinadoFrete'] == "N" || $_SESSION['Orcamento'][$j]['AprovadoOrca'] == "N") && $_SESSION['Orcamento'][$j]['CanceladoOrca'] == "N"){	
+											if(($data['Orcamento_baixa'][$j]['CombinadoFrete'] == "N" || $data['Orcamento_baixa'][$j]['AprovadoOrca'] == "N") && $data['Orcamento_baixa'][$j]['CanceladoOrca'] == "N"){	
 												$data['get']['produto'][$j][$k] = $this->Orcatrata_model->get_tab_produtos($data['update']['produto']['posterior'][$j][$k]['idTab_Produtos_Produto']);
 												if($data['get']['produto'][$j][$k]['ContarEstoque'] == "S"){
 													$qtd_anterior[$j][$k]	= ($data['update']['produto']['posterior'][$j][$k]['QtdProduto'] * $data['update']['produto']['posterior'][$j][$k]['QtdIncrementoProduto']);

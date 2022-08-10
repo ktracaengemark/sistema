@@ -11,7 +11,7 @@
 								<div class="row">
 									<?php if($paginacao == "N") { ?>
 										<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 text-left">
-											<label>Pesquisar Pedido</label><br>	
+											<label>Pesquisar Despesa</label><br>	
 											<div class="input-group">
 												<span class="input-group-btn">
 													<button class="btn btn-primary btn-md" type="submit">

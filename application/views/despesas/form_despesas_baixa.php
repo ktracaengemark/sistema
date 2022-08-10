@@ -43,7 +43,7 @@
 						<div class="panel-body">
 							<div class="panel-group">
 								
-									<div  style="overflow: auto; height: auto; ">
+									<div  style="overflow: auto; height: 400px; ">
 										
 											<!--App_parcelasRec-->
 											<input type="hidden" name="PRCount" id="PRCount" value="<?php echo $count['PRCount']; ?>"/>
