@@ -611,6 +611,36 @@ class Orcatrata_model extends CI_Model {
         return $query[0];
     }	
 				
+    public function get_orcamento_baixa($data) {
+        $query = $this->db->query('
+			SELECT 
+				idApp_OrcaTrata,
+				DataEntregaOrca,
+				HoraEntregaOrca,
+				CombinadoFrete,
+				AprovadoOrca,
+				CanceladoOrca,
+				QuitadoOrca,
+				idApp_Cliente
+			FROM 
+				App_OrcaTrata
+			WHERE 
+				idApp_OrcaTrata = ' . $data . '
+		');
+        $query = $query->result_array();
+		
+        /*
+        //echo $this->db->last_query();
+        echo '<br>';
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit ();
+        */
+
+        return $query[0];
+    }
+					
     public function get_orcamento_baixa_parcela($data) {
         $query = $this->db->query('
 			SELECT 

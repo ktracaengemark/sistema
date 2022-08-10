@@ -828,8 +828,8 @@ class Receitas extends CI_Controller {
 									
 									$_SESSION['Orcamento'][$j]['CombinadoFrete'] = $data['orcamento'][$j]['CombinadoFrete'];
 									$_SESSION['Orcamento'][$j]['AprovadoOrca'] = $data['orcamento'][$j]['AprovadoOrca'];
-									$_SESSION['Orcamento'][$j]['ConcluidoOrca'] = $data['orcamento'][$j]['NomeCliente'];
-									$_SESSION['Orcamento'][$j]['QuitadoOrca'] = $data['orcamento'][$j]['NomeCliente'];
+									$_SESSION['Orcamento'][$j]['ConcluidoOrca'] = $data['orcamento'][$j]['ConcluidoOrca'];
+									$_SESSION['Orcamento'][$j]['QuitadoOrca'] = $data['orcamento'][$j]['QuitadoOrca'];
 									$_SESSION['Orcamento'][$j]['CanceladoOrca'] = $data['orcamento'][$j]['CanceladoOrca'];
 									/*
 									echo '<br>';
@@ -938,6 +938,8 @@ class Receitas extends CI_Controller {
 							
 							$max = count($data['update']['orcamento']['alterar']);
 							for($j=0;$j<$max;$j++) {
+								
+								$data['Orcamento_baixa'][$j] = $this->Orcatrata_model->get_orcamento_baixa($data['update']['orcamento']['alterar'][$j]['idApp_OrcaTrata']);
 
 								if ($data['query']['QuitadoComissao'] == 'S') $data['update']['orcamento']['alterar'][$j]['FinalizadoOrca'] = 'S';
 								
@@ -954,15 +956,15 @@ class Receitas extends CI_Controller {
 											
 											$data['update']['produto']['posterior'][$j][$k]['ConcluidoProduto'] = 'S';
 											if(!$data['update']['produto']['posterior'][$j][$k]['DataConcluidoProduto'] || $data['update']['produto']['posterior'][$j][$k]['DataConcluidoProduto'] == "0000-00-00"){
-												$data['update']['produto']['posterior'][$j][$k]['DataConcluidoProduto'] = $this->basico->mascara_data($_SESSION['Orcamento'][$j]['DataEntregaOrca'], 'mysql');
+												$data['update']['produto']['posterior'][$j][$k]['DataConcluidoProduto'] = $data['Orcamento_baixa'][$j]['DataEntregaOrca'];
 											}
 											if(!$data['update']['produto']['posterior'][$j][$k]['HoraConcluidoProduto'] || $data['update']['produto']['posterior'][$j][$k]['HoraConcluidoProduto'] == "00:00:00"){
-												$data['update']['produto']['posterior'][$j][$k]['HoraConcluidoProduto'] = $_SESSION['Orcamento'][$j]['HoraEntregaOrca'];
+												$data['update']['produto']['posterior'][$j][$k]['HoraConcluidoProduto'] = $data['Orcamento_baixa'][$j]['HoraEntregaOrca'];
 											}
 											
 											$data['update']['produto']['bd'][$j] = $this->Orcatrata_model->update_produto_id($data['update']['produto']['posterior'][$j][$k], $data['update']['produto']['posterior'][$j][$k]['idApp_Produto']);
 											////inicio do desconto do estoque////
-											if(($_SESSION['Orcamento'][$j]['CombinadoFrete'] == "N" || $_SESSION['Orcamento'][$j]['AprovadoOrca'] == "N")  && $_SESSION['Orcamento'][$j]['CanceladoOrca'] == "N"){
+											if(($data['Orcamento_baixa'][$j]['CombinadoFrete'] == "N" || $data['Orcamento_baixa'][$j]['AprovadoOrca'] == "N")  && $data['Orcamento_baixa'][$j]['CanceladoOrca'] == "N"){
 												
 												$data['get']['produto'][$j][$k] = $this->Orcatrata_model->get_tab_produtos($data['update']['produto']['posterior'][$j][$k]['idTab_Produtos_Produto']);
 												if($data['get']['produto'][$j][$k]['ContarEstoque'] == "S"){
@@ -987,9 +989,9 @@ class Receitas extends CI_Controller {
 										
 									}
 									
-									if($_SESSION['Orcamento'][$j]['QuitadoOrca'] == "N" && $_SESSION['Orcamento'][$j]['CanceladoOrca'] == "N"){
-										if(isset($_SESSION['Orcamento'][$j]['idApp_Cliente']) && $_SESSION['Orcamento'][$j]['idApp_Cliente'] !=0 && $_SESSION['Orcamento'][$j]['idApp_Cliente'] != ""){
-											$data['cashback']['id_cliente'][$j] = $this->Orcatrata_model->get_cliente($_SESSION['Orcamento'][$j]['idApp_Cliente']);
+									if($data['Orcamento_baixa'][$j]['QuitadoOrca'] == "N" && $data['Orcamento_baixa'][$j]['CanceladoOrca'] == "N"){
+										if(isset($data['Orcamento_baixa'][$j]['idApp_Cliente']) && $data['Orcamento_baixa'][$j]['idApp_Cliente'] !=0 && $data['Orcamento_baixa'][$j]['idApp_Cliente'] != ""){
+											$data['cashback']['id_cliente'][$j] = $this->Orcatrata_model->get_cliente($data['Orcamento_baixa'][$j]['idApp_Cliente']);
 											
 											$cashback_anterior_cliente[$j] = $data['cashback']['id_cliente'][$j]['CashBackCliente'];
 											
@@ -999,7 +1001,7 @@ class Receitas extends CI_Controller {
 											$data['update']['id_cliente'][$j]['CashBackCliente'] = $cashback_anterior_cliente[$j] + $somacashback_produtos[$j];
 											$data['update']['id_cliente'][$j]['ValidadeCashBack'] = date('Y-m-d', strtotime('+' . $_SESSION['Empresa']['PrazoCashBackEmpresa'] . ' day'));
 											
-											$data['update']['id_cliente']['bd'][$j] = $this->Cliente_model->update_cliente($data['update']['id_cliente'][$j], $_SESSION['Orcamento'][$j]['idApp_Cliente']);
+											$data['update']['id_cliente']['bd'][$j] = $this->Cliente_model->update_cliente($data['update']['id_cliente'][$j], $data['Orcamento_baixa'][$j]['idApp_Cliente']);
 											
 											unset($cashback_anterior_cliente[$j]);
 											unset($somacashback_produtos[$j]);
@@ -1049,7 +1051,6 @@ class Receitas extends CI_Controller {
 								}
 								
 								$data['update']['orcamento']['bd'] = $this->Orcatrata_model->update_orcatrata($data['update']['orcamento']['alterar'][$j], $data['update']['orcamento']['alterar'][$j]['idApp_OrcaTrata']);
-
 							}
 						}
 
