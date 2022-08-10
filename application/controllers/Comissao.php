@@ -13,7 +13,7 @@ class Comissao extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation', 'pagination'));
-        $this->load->model(array(	'Basico_model', 'Cliente_model', 'Relatorio_model', 'Base_model', 'Orcatrata_model', 'Empresa_model', 
+        $this->load->model(array(	'Basico_model', 'Cliente_model', 'Relatorio_model', 'Comissao_model', 'Orcatrata_model', 'Empresa_model', 
 									'Loginempresa_model', 'Associado_model', 'Usuario_model', 'Agenda_model'
 								));
         $this->load->driver('session');
@@ -55,7 +55,7 @@ class Comissao extends CI_Controller {
 
 	public function comissao() {
 
-		$valida = $this->Base_model->valida_comissao()['com_vend'];
+		$valida = $this->Comissao_model->valida_comissao()['com_vend'];
 			/*
 			echo '<pre>';
 			echo '<br>';
@@ -337,7 +337,7 @@ class Comissao extends CI_Controller {
 				$_SESSION['FiltroComissao']['metodo'] = $data['metodo'];
 				$_SESSION['FiltroComissao']['idTab_TipoRD'] = $data['TipoRD'];
 
-				$data['pesquisa_query'] = $this->Base_model->list_comissao($_SESSION['FiltroComissao'], FALSE, TRUE);
+				$data['pesquisa_query'] = $this->Comissao_model->list_comissao($_SESSION['FiltroComissao'], FALSE, TRUE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
@@ -386,7 +386,7 @@ class Comissao extends CI_Controller {
 				
 					$data['linha'] = $page * $config['per_page'];
 
-					$data['report'] = $this->Base_model->list_comissao($_SESSION['FiltroComissao'], FALSE, FALSE, $config['per_page'], $data['linha']);		
+					$data['report'] = $this->Comissao_model->list_comissao($_SESSION['FiltroComissao'], FALSE, FALSE, $config['per_page'], $data['linha']);		
 
 					$_SESSION['FiltroComissao']['Limit'] = $data['per_page'];
 					$_SESSION['FiltroComissao']['Start'] = $data['linha'];
@@ -405,7 +405,7 @@ class Comissao extends CI_Controller {
 
 	public function comissao_pag() {
 
-		$valida = $this->Base_model->valida_comissao()['com_vend'];
+		$valida = $this->Comissao_model->valida_comissao()['com_vend'];
 
 		if($valida === FALSE){
 			$data['msg'] = '?m=3';
@@ -457,7 +457,7 @@ class Comissao extends CI_Controller {
 				$data['paginacao'] = 'S';
 				$data['caminho'] = 'Comissao/comissao/';
 
-				$data['pesquisa_query'] = $this->Base_model->list_comissao($_SESSION['FiltroComissao'],FALSE, TRUE);
+				$data['pesquisa_query'] = $this->Comissao_model->list_comissao($_SESSION['FiltroComissao'],FALSE, TRUE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
@@ -510,7 +510,7 @@ class Comissao extends CI_Controller {
 					$_SESSION['FiltroComissao']['Limit'] = $data['per_page'];
 					$_SESSION['FiltroComissao']['Start'] = $data['linha'];
 
-					$data['report'] = $this->Base_model->list_comissao($_SESSION['FiltroComissao'], FALSE, FALSE, $config['per_page'], $data['linha']);
+					$data['report'] = $this->Comissao_model->list_comissao($_SESSION['FiltroComissao'], FALSE, FALSE, $config['per_page'], $data['linha']);
 								
 					$data['pagination'] = $this->pagination->create_links();
 
@@ -525,7 +525,7 @@ class Comissao extends CI_Controller {
 
 	public function comissao_lista() {
 
-		$valida = $this->Base_model->valida_comissao()['com_vend'];
+		$valida = $this->Comissao_model->valida_comissao()['com_vend'];
 
 		if($valida === FALSE){
 			$data['msg'] = '?m=3';
@@ -573,7 +573,7 @@ class Comissao extends CI_Controller {
 				$data['paginacao'] = 'S';
 				$data['caminho'] = 'Comissao/comissao/';
 
-				$data['pesquisa_query'] = $this->Base_model->list_comissao($_SESSION['FiltroComissao'],FALSE, TRUE);
+				$data['pesquisa_query'] = $this->Comissao_model->list_comissao($_SESSION['FiltroComissao'],FALSE, TRUE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
@@ -622,7 +622,7 @@ class Comissao extends CI_Controller {
 					
 					$data['per_page'] = $config['per_page'];
 					
-					$data['report'] = $this->Base_model->list_comissao($_SESSION['FiltroComissao'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+					$data['report'] = $this->Comissao_model->list_comissao($_SESSION['FiltroComissao'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']));			
 					
 					$data['pagination'] = $this->pagination->create_links();
 
@@ -637,41 +637,31 @@ class Comissao extends CI_Controller {
 
 	public function comissao_excel($id = FALSE) {
 
-		$valida = $this->Base_model->valida_comissao()['com_vend'];
+		$valida = $this->Comissao_model->valida_comissao()['com_vend'];
 
 		if($valida === FALSE){
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 		}else{
-			if(!isset($_SESSION['FiltroComissao'])){
-				$data['msg'] = '?m=3';
-				redirect(base_url() . 'acesso' . $data['msg']);
-				exit();
-			}else{
-				
-				if ($this->input->get('m') == 1)
-					$data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-				elseif ($this->input->get('m') == 2)
-					$data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-				else
-					$data['msg'] = '';
-				
-				if($id){
-					if($id == 1){
-						$dados = FALSE;
-						$data['titulo'] = 'Comissao Sem Filtros';
+
+			if ($this->input->get('m') == 1)
+				$data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+			elseif ($this->input->get('m') == 2)
+				$data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+			else
+				$data['msg'] = '';
+			
+			if($id){
+				if($id == 1){
+					$dados = FALSE;
+					$data['titulo'] = 'Comissao Sem Filtros';
+					$data['metodo'] = $id;
+				}elseif($id == 2){
+					if(isset($_SESSION['FiltroComissao'])){
+						$dados = $_SESSION['FiltroComissao'];
+						$data['titulo'] = 'Comissao Com Filtros';
 						$data['metodo'] = $id;
-					}elseif($id == 2){
-						if(isset($_SESSION['FiltroComissao'])){
-							$dados = $_SESSION['FiltroComissao'];
-							$data['titulo'] = 'Comissao Com Filtros';
-							$data['metodo'] = $id;
-						}else{
-							$dados = FALSE;
-							$data['titulo'] = 'Comissao Sem Filtros';
-							$data['metodo'] = 1;
-						}
 					}else{
 						$dados = FALSE;
 						$data['titulo'] = 'Comissao Sem Filtros';
@@ -682,29 +672,34 @@ class Comissao extends CI_Controller {
 					$data['titulo'] = 'Comissao Sem Filtros';
 					$data['metodo'] = 1;
 				}
-
-				$data['nome'] = 'Cliente';
-
-				$data['report'] = $this->Base_model->list_comissao($dados, FALSE, FALSE, FALSE, FALSE);
-				
-				if($data['report'] === FALSE){
-					
-					$data['msg'] = '?m=4';
-					redirect(base_url() . 'Comissao/comissao' . $data['msg']);
-					exit();
-				}else{
-
-					$data['list1'] = $this->load->view('Comissao/list_comissao_excel', $data, TRUE);
-				}
-
-				$this->load->view('basico/footer');
+			}else{
+				$dados = FALSE;
+				$data['titulo'] = 'Comissao Sem Filtros';
+				$data['metodo'] = 1;
 			}
+
+			$data['nome'] = 'Cliente';
+
+			$data['report'] = $this->Comissao_model->list_comissao($dados, FALSE, FALSE, FALSE, FALSE);
+			
+			if($data['report'] === FALSE){
+				
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'Comissao/comissao' . $data['msg']);
+				exit();
+			}else{
+
+				$data['list1'] = $this->load->view('Comissao/list_comissao_excel', $data, TRUE);
+			}
+
+			$this->load->view('basico/footer');
+			
 		}
     }
 	
     public function comissao_baixa($id = FALSE) {
 
-		$valida = $this->Base_model->valida_comissao()['com_vend'];
+		$valida = $this->Comissao_model->valida_comissao()['com_vend'];
 
 		if($valida === FALSE){
 			$data['msg'] = '?m=3';
@@ -780,7 +775,7 @@ class Comissao extends CI_Controller {
 								
 							}else{
 
-								$data['pesquisa_query'] = $this->Base_model->list_comissao($_SESSION['FiltroComissao'], TRUE, TRUE, FALSE, FALSE, FALSE);
+								$data['pesquisa_query'] = $this->Comissao_model->list_comissao($_SESSION['FiltroComissao'], TRUE, TRUE, FALSE, FALSE, FALSE);
 
 								if($data['pesquisa_query'] === FALSE){
 									$data['msg'] = '?m=4';
@@ -838,7 +833,7 @@ class Comissao extends CI_Controller {
 										$_SESSION['FiltroComissao']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 
 										#### App_Parcelas ####
-										$data['orcamento'] = $this->Base_model->list_comissao($_SESSION['FiltroComissao'], TRUE, FALSE, $_SESSION['FiltroComissao']['Per_Page'], ($_SESSION['FiltroComissao']['Pagina'] * $_SESSION['FiltroComissao']['Per_Page']), TRUE);
+										$data['orcamento'] = $this->Comissao_model->list_comissao($_SESSION['FiltroComissao'], TRUE, FALSE, $_SESSION['FiltroComissao']['Per_Page'], ($_SESSION['FiltroComissao']['Pagina'] * $_SESSION['FiltroComissao']['Per_Page']), TRUE);
 
 										if (count($data['orcamento']) > 0) {
 											$data['orcamento'] = array_combine(range(1, count($data['orcamento'])), array_values($data['orcamento']));
@@ -967,7 +962,7 @@ class Comissao extends CI_Controller {
 								if($data['query']['QuitadoComissao'] == 'N'){
 									
 									#### App_ParcelasRec ####
-									$data['update']['orcamento']['anterior'] = $this->Base_model->list_comissao($_SESSION['FiltroComissao'], TRUE, FALSE, $_SESSION['FiltroComissao']['Per_Page'], ($_SESSION['FiltroComissao']['Pagina'] * $_SESSION['FiltroComissao']['Per_Page']), TRUE);
+									$data['update']['orcamento']['anterior'] = $this->Comissao_model->list_comissao($_SESSION['FiltroComissao'], TRUE, FALSE, $_SESSION['FiltroComissao']['Per_Page'], ($_SESSION['FiltroComissao']['Pagina'] * $_SESSION['FiltroComissao']['Per_Page']), TRUE);
 
 									if (isset($data['orcamento']) || (!isset($data['orcamento']) && isset($data['update']['orcamento']['anterior']) ) ) {
 
@@ -1085,7 +1080,7 @@ class Comissao extends CI_Controller {
 											$data['parcelasrec']['idApp_Parcelas'] = $this->Orcatrata_model->set_parcelas($data['parcelasrec']);
 										}
 										/////// Corro a lista com o filtro da sessão colocando o id_Comissao em cada orcamento
-										$data['update']['orcamentos'] = $this->Base_model->list_comissao($_SESSION['FiltroComissao'], TRUE, TRUE, FALSE, FALSE, TRUE);
+										$data['update']['orcamentos'] = $this->Comissao_model->list_comissao($_SESSION['FiltroComissao'], TRUE, TRUE, FALSE, FALSE, TRUE);
 
 										$max = count($data['update']['orcamentos']);
 										
@@ -1139,7 +1134,7 @@ class Comissao extends CI_Controller {
 
 	public function comissaoass() {
 
-		$valida = $this->Base_model->valida_comissao()['com_ass'];
+		$valida = $this->Comissao_model->valida_comissao()['com_ass'];
 			/*
 			echo '<pre>';
 			echo '<br>';
@@ -1421,7 +1416,7 @@ class Comissao extends CI_Controller {
 				$_SESSION['FiltroComissaoAss']['metodo'] = $data['metodo'];
 				$_SESSION['FiltroComissaoAss']['idTab_TipoRD'] = $data['TipoRD'];
 
-				$data['pesquisa_query'] = $this->Base_model->list_comissaoass($_SESSION['FiltroComissaoAss'],FALSE, TRUE);
+				$data['pesquisa_query'] = $this->Comissao_model->list_comissaoass($_SESSION['FiltroComissaoAss'],FALSE, TRUE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
@@ -1470,7 +1465,7 @@ class Comissao extends CI_Controller {
 				
 					$data['linha'] = $page * $config['per_page'];
 
-					$data['report'] = $this->Base_model->list_comissaoass($_SESSION['FiltroComissaoAss'], FALSE, FALSE, $config['per_page'], $data['linha']);		
+					$data['report'] = $this->Comissao_model->list_comissaoass($_SESSION['FiltroComissaoAss'], FALSE, FALSE, $config['per_page'], $data['linha']);		
 
 					$_SESSION['FiltroComissaoAss']['Limit'] = $data['per_page'];
 					$_SESSION['FiltroComissaoAss']['Start'] = $data['linha'];
@@ -1489,7 +1484,7 @@ class Comissao extends CI_Controller {
 
 	public function comissaoass_pag() {
 
-		$valida = $this->Base_model->valida_comissao()['com_ass'];
+		$valida = $this->Comissao_model->valida_comissao()['com_ass'];
 
 		if($valida === FALSE){
 			$data['msg'] = '?m=3';
@@ -1541,7 +1536,7 @@ class Comissao extends CI_Controller {
 				$data['paginacao'] = 'S';
 				$data['caminho'] = 'Comissao/comissaoass/';
 
-				$data['pesquisa_query'] = $this->Base_model->list_comissaoass($_SESSION['FiltroComissaoAss'],FALSE, TRUE);
+				$data['pesquisa_query'] = $this->Comissao_model->list_comissaoass($_SESSION['FiltroComissaoAss'],FALSE, TRUE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
@@ -1594,7 +1589,7 @@ class Comissao extends CI_Controller {
 					$_SESSION['FiltroComissaoAss']['Limit'] = $data['per_page'];
 					$_SESSION['FiltroComissaoAss']['Start'] = $data['linha'];
 
-					$data['report'] = $this->Base_model->list_comissaoass($_SESSION['FiltroComissaoAss'], FALSE, FALSE, $config['per_page'], $data['linha']);
+					$data['report'] = $this->Comissao_model->list_comissaoass($_SESSION['FiltroComissaoAss'], FALSE, FALSE, $config['per_page'], $data['linha']);
 								
 					$data['pagination'] = $this->pagination->create_links();
 
@@ -1609,7 +1604,7 @@ class Comissao extends CI_Controller {
 
 	public function comissaoass_lista() {
 
-		$valida = $this->Base_model->valida_comissao()['com_ass'];
+		$valida = $this->Comissao_model->valida_comissao()['com_ass'];
 
 		if($valida === FALSE){
 			$data['msg'] = '?m=3';
@@ -1657,7 +1652,7 @@ class Comissao extends CI_Controller {
 				$data['paginacao'] = 'S';
 				$data['caminho'] = 'Comissao/comissaoass/';
 
-				$data['pesquisa_query'] = $this->Base_model->list_comissaoass($_SESSION['FiltroComissaoAss'],FALSE, TRUE);
+				$data['pesquisa_query'] = $this->Comissao_model->list_comissaoass($_SESSION['FiltroComissaoAss'],FALSE, TRUE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
@@ -1706,7 +1701,7 @@ class Comissao extends CI_Controller {
 					
 					$data['per_page'] = $config['per_page'];
 					
-					$data['report'] = $this->Base_model->list_comissaoass($_SESSION['FiltroComissaoAss'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+					$data['report'] = $this->Comissao_model->list_comissaoass($_SESSION['FiltroComissaoAss'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']));			
 					
 					$data['pagination'] = $this->pagination->create_links();
 
@@ -1721,41 +1716,31 @@ class Comissao extends CI_Controller {
 
 	public function comissaoass_excel($id = FALSE) {
 
-		$valida = $this->Base_model->valida_comissao()['com_ass'];
+		$valida = $this->Comissao_model->valida_comissao()['com_ass'];
 
 		if($valida === FALSE){
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 		}else{
-			if(!isset($_SESSION['FiltroComissaoAss'])){
-				$data['msg'] = '?m=3';
-				redirect(base_url() . 'acesso' . $data['msg']);
-				exit();
-			}else{
-				
-				if ($this->input->get('m') == 1)
-					$data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-				elseif ($this->input->get('m') == 2)
-					$data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-				else
-					$data['msg'] = '';
-				
-				if($id){
-					if($id == 1){
-						$dados = FALSE;
-						$data['titulo'] = 'Comissao Sem Filtros';
+
+			if ($this->input->get('m') == 1)
+				$data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+			elseif ($this->input->get('m') == 2)
+				$data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+			else
+				$data['msg'] = '';
+			
+			if($id){
+				if($id == 1){
+					$dados = FALSE;
+					$data['titulo'] = 'Comissao Sem Filtros';
+					$data['metodo'] = $id;
+				}elseif($id == 2){
+					if(isset($_SESSION['FiltroComissaoAss'])){
+						$dados = $_SESSION['FiltroComissaoAss'];
+						$data['titulo'] = 'Comissao Com Filtros';
 						$data['metodo'] = $id;
-					}elseif($id == 2){
-						if(isset($_SESSION['FiltroComissaoAss'])){
-							$dados = $_SESSION['FiltroComissaoAss'];
-							$data['titulo'] = 'Comissao Com Filtros';
-							$data['metodo'] = $id;
-						}else{
-							$dados = FALSE;
-							$data['titulo'] = 'Comissao Sem Filtros';
-							$data['metodo'] = 1;
-						}
 					}else{
 						$dados = FALSE;
 						$data['titulo'] = 'Comissao Sem Filtros';
@@ -1766,29 +1751,34 @@ class Comissao extends CI_Controller {
 					$data['titulo'] = 'Comissao Sem Filtros';
 					$data['metodo'] = 1;
 				}
-
-				$data['nome'] = 'Cliente';
-
-				$data['report'] = $this->Base_model->list_comissaoass($dados, FALSE, FALSE, FALSE, FALSE);
-				
-				if($data['report'] === FALSE){
-					
-					$data['msg'] = '?m=4';
-					redirect(base_url() . 'Comissao/comissaoass' . $data['msg']);
-					exit();
-				}else{
-
-					$data['list1'] = $this->load->view('Comissao/list_comissaoass_excel', $data, TRUE);
-				}
-
-				$this->load->view('basico/footer');
+			}else{
+				$dados = FALSE;
+				$data['titulo'] = 'Comissao Sem Filtros';
+				$data['metodo'] = 1;
 			}
+
+			$data['nome'] = 'Cliente';
+
+			$data['report'] = $this->Comissao_model->list_comissaoass($dados, FALSE, FALSE, FALSE, FALSE);
+			
+			if($data['report'] === FALSE){
+				
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'Comissao/comissaoass' . $data['msg']);
+				exit();
+			}else{
+
+				$data['list1'] = $this->load->view('Comissao/list_comissaoass_excel', $data, TRUE);
+			}
+
+			$this->load->view('basico/footer');
+			
 		}
     }
 	
     public function comissaoass_baixa($id = FALSE) {
 
-		$valida = $this->Base_model->valida_comissao()['com_ass'];
+		$valida = $this->Comissao_model->valida_comissao()['com_ass'];
 
 		if($valida === FALSE){
 			$data['msg'] = '?m=3';
@@ -1867,7 +1857,7 @@ class Comissao extends CI_Controller {
 							}else{
 								
 								//$data['pesquisa_query'] = $this->Orcatrata_model->get_baixadacomissaoass($_SESSION['FiltroComissaoAss'], TRUE, FALSE, FALSE, FALSE);
-								$data['pesquisa_query'] = $this->Base_model->list_comissaoass($_SESSION['FiltroComissaoAss'], TRUE, TRUE, FALSE, FALSE, FALSE);
+								$data['pesquisa_query'] = $this->Comissao_model->list_comissaoass($_SESSION['FiltroComissaoAss'], TRUE, TRUE, FALSE, FALSE, FALSE);
 							
 								if($data['pesquisa_query'] === FALSE){
 									$data['msg'] = '?m=4';
@@ -1926,7 +1916,7 @@ class Comissao extends CI_Controller {
 
 										#### App_Parcelas ####
 										//$data['orcamento'] = $this->Orcatrata_model->get_baixadacomissaoass($_SESSION['FiltroComissaoAss'], FALSE, $_SESSION['FiltroComissaoAss']['Per_Page'], ($_SESSION['FiltroComissaoAss']['Pagina'] * $_SESSION['FiltroComissaoAss']['Per_Page']), FALSE);
-										$data['orcamento'] = $this->Base_model->list_comissaoass($_SESSION['FiltroComissaoAss'], TRUE, FALSE, $_SESSION['FiltroComissaoAss']['Per_Page'], ($_SESSION['FiltroComissaoAss']['Pagina'] * $_SESSION['FiltroComissaoAss']['Per_Page']), TRUE);
+										$data['orcamento'] = $this->Comissao_model->list_comissaoass($_SESSION['FiltroComissaoAss'], TRUE, FALSE, $_SESSION['FiltroComissaoAss']['Per_Page'], ($_SESSION['FiltroComissaoAss']['Pagina'] * $_SESSION['FiltroComissaoAss']['Per_Page']), TRUE);
 										
 										if (count($data['orcamento']) > 0) {
 											$data['orcamento'] = array_combine(range(1, count($data['orcamento'])), array_values($data['orcamento']));
@@ -2057,7 +2047,7 @@ class Comissao extends CI_Controller {
 									
 									#### App_ParcelasRec ####
 									//$data['update']['orcamento']['anterior'] = $this->Orcatrata_model->get_baixadacomissaoass($_SESSION['FiltroComissaoAss'], FALSE, $_SESSION['FiltroComissaoAss']['Per_Page'], ($_SESSION['FiltroComissaoAss']['Pagina'] * $_SESSION['FiltroComissaoAss']['Per_Page']), FALSE);
-									$data['update']['orcamento']['anterior'] = $this->Base_model->list_comissaoass($_SESSION['FiltroComissaoAss'], TRUE, FALSE, $_SESSION['FiltroComissaoAss']['Per_Page'], ($_SESSION['FiltroComissaoAss']['Pagina'] * $_SESSION['FiltroComissaoAss']['Per_Page']), TRUE);
+									$data['update']['orcamento']['anterior'] = $this->Comissao_model->list_comissaoass($_SESSION['FiltroComissaoAss'], TRUE, FALSE, $_SESSION['FiltroComissaoAss']['Per_Page'], ($_SESSION['FiltroComissaoAss']['Pagina'] * $_SESSION['FiltroComissaoAss']['Per_Page']), TRUE);
 
 									
 									if (isset($data['orcamento']) || (!isset($data['orcamento']) && isset($data['update']['orcamento']['anterior']) ) ) {
@@ -2173,7 +2163,7 @@ class Comissao extends CI_Controller {
 										/////// Corro a lista com o filtro da sessão colocando o id_Comissao em cada orcamento
 										
 										//$data['update']['orcamentos'] = $this->Orcatrata_model->get_baixadacomissaoass($_SESSION['FiltroComissaoAss'], FALSE, FALSE, FALSE, TRUE);// pega as OS que tem essa repeticao			
-										$data['update']['orcamentos'] = $this->Base_model->list_comissaoass($_SESSION['FiltroComissaoAss'], TRUE, TRUE, FALSE, FALSE, TRUE);
+										$data['update']['orcamentos'] = $this->Comissao_model->list_comissaoass($_SESSION['FiltroComissaoAss'], TRUE, TRUE, FALSE, FALSE, TRUE);
 										
 										$max = count($data['update']['orcamentos']);
 										
@@ -2225,7 +2215,7 @@ class Comissao extends CI_Controller {
 
 	public function comissaofunc() {
 
-		$valida = $this->Base_model->valida_comissao()['com_super'];
+		$valida = $this->Comissao_model->valida_comissao()['com_super'];
 			/*
 			echo '<pre>';
 			echo '<br>';
@@ -2507,7 +2497,7 @@ class Comissao extends CI_Controller {
 				$_SESSION['FiltroComissaoFunc']['metodo'] = $data['metodo'];
 				$_SESSION['FiltroComissaoFunc']['idTab_TipoRD'] = $data['TipoRD'];
 
-				$data['pesquisa_query'] = $this->Base_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'],FALSE, TRUE);
+				$data['pesquisa_query'] = $this->Comissao_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'],FALSE, TRUE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
@@ -2556,7 +2546,7 @@ class Comissao extends CI_Controller {
 				
 					$data['linha'] = $page * $config['per_page'];
 
-					$data['report'] = $this->Base_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'], FALSE, FALSE, $config['per_page'], $data['linha']);		
+					$data['report'] = $this->Comissao_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'], FALSE, FALSE, $config['per_page'], $data['linha']);		
 
 					$_SESSION['FiltroComissaoFunc']['Limit'] = $data['per_page'];
 					$_SESSION['FiltroComissaoFunc']['Start'] = $data['linha'];
@@ -2575,7 +2565,7 @@ class Comissao extends CI_Controller {
 
 	public function comissaofunc_pag() {
 
-		$valida = $this->Base_model->valida_comissao()['com_super'];
+		$valida = $this->Comissao_model->valida_comissao()['com_super'];
 
 		if($valida === FALSE){
 			$data['msg'] = '?m=3';
@@ -2627,7 +2617,7 @@ class Comissao extends CI_Controller {
 				$data['paginacao'] = 'S';
 				$data['caminho'] = 'Comissao/comissaofunc/';
 
-				$data['pesquisa_query'] = $this->Base_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'],FALSE, TRUE);
+				$data['pesquisa_query'] = $this->Comissao_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'],FALSE, TRUE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
@@ -2680,7 +2670,7 @@ class Comissao extends CI_Controller {
 					$_SESSION['FiltroComissaoFunc']['Limit'] = $data['per_page'];
 					$_SESSION['FiltroComissaoFunc']['Start'] = $data['linha'];
 
-					$data['report'] = $this->Base_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'], FALSE, FALSE, $config['per_page'], $data['linha']);
+					$data['report'] = $this->Comissao_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'], FALSE, FALSE, $config['per_page'], $data['linha']);
 								
 					$data['pagination'] = $this->pagination->create_links();
 
@@ -2695,7 +2685,7 @@ class Comissao extends CI_Controller {
 	
     public function comissaofunc_baixa($id = FALSE) {
 
-		$valida = $this->Base_model->valida_comissao()['com_super'];
+		$valida = $this->Comissao_model->valida_comissao()['com_super'];
 
 		if($valida === FALSE){
 			$data['msg'] = '?m=3';
@@ -2773,7 +2763,7 @@ class Comissao extends CI_Controller {
 								
 							}else{
 								
-								$data['pesquisa_query'] = $this->Base_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'], TRUE, TRUE, FALSE, FALSE, FALSE);
+								$data['pesquisa_query'] = $this->Comissao_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'], TRUE, TRUE, FALSE, FALSE, FALSE);
 
 						
 								if($data['pesquisa_query'] === FALSE){
@@ -2833,7 +2823,7 @@ class Comissao extends CI_Controller {
 
 										#### App_Parcelas ####
 										//$data['orcamento'] = $this->Orcatrata_model->get_baixadacomissaofunc($_SESSION['FiltroComissaoFunc'], FALSE, $_SESSION['FiltroComissaoFunc']['Per_Page'], ($_SESSION['FiltroComissaoFunc']['Pagina'] * $_SESSION['FiltroComissaoFunc']['Per_Page']), FALSE);
-										$data['orcamento'] = $this->Base_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'], TRUE, FALSE, $_SESSION['FiltroComissaoFunc']['Per_Page'], ($_SESSION['FiltroComissaoFunc']['Pagina'] * $_SESSION['FiltroComissaoFunc']['Per_Page']), TRUE);
+										$data['orcamento'] = $this->Comissao_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'], TRUE, FALSE, $_SESSION['FiltroComissaoFunc']['Per_Page'], ($_SESSION['FiltroComissaoFunc']['Pagina'] * $_SESSION['FiltroComissaoFunc']['Per_Page']), TRUE);
 
 										if (count($data['orcamento']) > 0) {
 											$data['orcamento'] = array_combine(range(1, count($data['orcamento'])), array_values($data['orcamento']));
@@ -2963,7 +2953,7 @@ class Comissao extends CI_Controller {
 									
 									#### App_ParcelasRec ####
 									//$data['update']['orcamento']['anterior'] = $this->Orcatrata_model->get_baixadacomissaofunc($_SESSION['FiltroComissaoFunc'], FALSE, $_SESSION['FiltroComissaoFunc']['Per_Page'], ($_SESSION['FiltroComissaoFunc']['Pagina'] * $_SESSION['FiltroComissaoFunc']['Per_Page']), FALSE);
-									$data['update']['orcamento']['anterior'] = $this->Base_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'], TRUE, FALSE, $_SESSION['FiltroComissaoFunc']['Per_Page'], ($_SESSION['FiltroComissaoFunc']['Pagina'] * $_SESSION['FiltroComissaoFunc']['Per_Page']), TRUE);
+									$data['update']['orcamento']['anterior'] = $this->Comissao_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'], TRUE, FALSE, $_SESSION['FiltroComissaoFunc']['Per_Page'], ($_SESSION['FiltroComissaoFunc']['Pagina'] * $_SESSION['FiltroComissaoFunc']['Per_Page']), TRUE);
 
 									if (isset($data['orcamento']) || (!isset($data['orcamento']) && isset($data['update']['orcamento']['anterior']) ) ) {
 
@@ -3077,7 +3067,7 @@ class Comissao extends CI_Controller {
 										/////// Corro a lista com o filtro da sessão colocando o id_Comissao em cada orcamento
 										
 										//$data['update']['orcamentos'] = $this->Orcatrata_model->get_baixadacomissaofunc($_SESSION['FiltroComissaoFunc'], FALSE, FALSE, FALSE, TRUE);// pega as OS que tem essa repeticao			
-										$data['update']['orcamentos'] = $this->Base_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'], TRUE, TRUE, FALSE, FALSE, TRUE);
+										$data['update']['orcamentos'] = $this->Comissao_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'], TRUE, TRUE, FALSE, FALSE, TRUE);
 
 										$max = count($data['update']['orcamentos']);
 										
@@ -3130,7 +3120,7 @@ class Comissao extends CI_Controller {
 
 	public function comissaoserv() {
 
-		$valida = $this->Base_model->valida_comissao()['com_serv'];
+		$valida = $this->Comissao_model->valida_comissao()['com_serv'];
 			/*
 			echo '<pre>';
 			echo '<br>';
@@ -3412,7 +3402,7 @@ class Comissao extends CI_Controller {
 				$_SESSION['Filtro_Porservicos']['idTab_TipoRD'] = $data['TipoRD'];
 				$_SESSION['Filtro_Porservicos']['RecorrenciaOrca'] = $data['query']['RecorrenciaOrca'];
 					
-				$data['pesquisa_query'] = $this->Base_model->list_comissaoserv($_SESSION['Filtro_Porservicos'],FALSE, TRUE, FALSE, FALSE, FALSE);
+				$data['pesquisa_query'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'],FALSE, TRUE, FALSE, FALSE, FALSE);
 				
 				$config['total_rows'] = $data['pesquisa_query']->num_rows();
 				
@@ -3451,7 +3441,7 @@ class Comissao extends CI_Controller {
 				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
 				$data['pagina'] = $page;
 				$data['per_page'] = $config['per_page'];
-				$data['report'] = $this->Base_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
+				$data['report'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
 				$data['pagination'] = $this->pagination->create_links();
 				
 				$data['list1'] = $this->load->view('Comissao/list_comissaoserv', $data, TRUE);
@@ -3465,7 +3455,7 @@ class Comissao extends CI_Controller {
 
 	public function comissaoserv_pag() {
 
-		$valida = $this->Base_model->valida_comissao()['com_serv'];
+		$valida = $this->Comissao_model->valida_comissao()['com_serv'];
 		
 		if($valida === FALSE){
 			$data['msg'] = '?m=3';
@@ -3508,7 +3498,7 @@ class Comissao extends CI_Controller {
 				#run form validation
 				if ($this->form_validation->run() !== TRUE) {
 
-					$data['pesquisa_query'] = $this->Base_model->list_comissaoserv($_SESSION['Filtro_Porservicos'],FALSE, TRUE, FALSE, FALSE, FALSE);
+					$data['pesquisa_query'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'],FALSE, TRUE, FALSE, FALSE, FALSE);
 					
 					$config['total_rows'] = $data['pesquisa_query']->num_rows();
 					
@@ -3546,7 +3536,7 @@ class Comissao extends CI_Controller {
 					$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
 					$data['pagina'] = $page;
 					$data['per_page'] = $config['per_page'];
-					$data['report'] = $this->Base_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
+					$data['report'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
 					$data['pagination'] = $this->pagination->create_links();
 					
 					$data['list1'] = $this->load->view('Comissao/list_comissaoserv', $data, TRUE);
@@ -3561,7 +3551,7 @@ class Comissao extends CI_Controller {
 	
     public function comissaoserv_baixa($id = FALSE) {
 
-		$valida = $this->Base_model->valida_comissao()['com_serv'];
+		$valida = $this->Comissao_model->valida_comissao()['com_serv'];
 		
 		if($valida === FALSE){
 			$data['msg'] = '?m=3';
@@ -3744,7 +3734,7 @@ class Comissao extends CI_Controller {
 							
 						}else{
 
-							$data['pesquisa_query'] = $this->Base_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], TRUE, TRUE, FALSE, FALSE, FALSE);
+							$data['pesquisa_query'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], TRUE, TRUE, FALSE, FALSE, FALSE);
 					
 							if($data['pesquisa_query'] === FALSE){
 								$data['msg'] = '?m=4';
@@ -3772,7 +3762,7 @@ class Comissao extends CI_Controller {
 								#### App_Produto ####
 								
 								//$_SESSION['Produto'] = $data['produto'] = $this->Orcatrata_model->get_baixadacomissaoservico($id, FALSE, $_SESSION['Filtro_Porservicos']['Per_Page'], ($_SESSION['Filtro_Porservicos']['Pagina'] * $_SESSION['Filtro_Porservicos']['Per_Page']));
-								$_SESSION['Produto'] = $data['produto'] = $this->Base_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], TRUE, FALSE, $_SESSION['Filtro_Porservicos']['Per_Page'], ($_SESSION['Filtro_Porservicos']['Pagina'] * $_SESSION['Filtro_Porservicos']['Per_Page']), TRUE);
+								$_SESSION['Produto'] = $data['produto'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], TRUE, FALSE, $_SESSION['Filtro_Porservicos']['Per_Page'], ($_SESSION['Filtro_Porservicos']['Pagina'] * $_SESSION['Filtro_Porservicos']['Per_Page']), TRUE);
 								
 								if (count($data['produto']) > 0) {
 									$_SESSION['Produto'] = $data['produto'] = array_combine(range(1, count($data['produto'])), array_values($data['produto']));
@@ -3947,7 +3937,7 @@ class Comissao extends CI_Controller {
 
 								#### App_Produto ####
 								//$data['update']['produto']['anterior'] = $this->Orcatrata_model->get_baixadacomissaoservico($data['empresa']['idSis_Empresa'], FALSE, $_SESSION['Filtro_Porservicos']['Per_Page'], ($_SESSION['Filtro_Porservicos']['Pagina'] * $_SESSION['Filtro_Porservicos']['Per_Page']));
-								$data['update']['produto']['anterior'] = $this->Base_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], TRUE, FALSE, $_SESSION['Filtro_Porservicos']['Per_Page'], ($_SESSION['Filtro_Porservicos']['Pagina'] * $_SESSION['Filtro_Porservicos']['Per_Page']), TRUE);
+								$data['update']['produto']['anterior'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], TRUE, FALSE, $_SESSION['Filtro_Porservicos']['Per_Page'], ($_SESSION['Filtro_Porservicos']['Pagina'] * $_SESSION['Filtro_Porservicos']['Per_Page']), TRUE);
 
 								if (isset($data['produto']) || (!isset($data['produto']) && isset($data['update']['produto']['anterior']) ) ) {
 
