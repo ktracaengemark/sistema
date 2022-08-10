@@ -13,6 +13,54 @@ class Base_model extends CI_Model {
         $this->load->model(array('Basico_model'));
     }
 
+	public function valida_comissao() {
+
+		$com_vend 	= FALSE;
+		$com_ass 	= FALSE;
+		$com_super 	= FALSE;
+		$com_serv 	= FALSE;
+		
+		if($_SESSION['log']['idSis_Empresa'] != 5){
+			if($_SESSION['Usuario']['Rel_Com'] == "S"){
+				if($_SESSION['Empresa']['EComerce'] == "S"){	
+					if($_SESSION['Empresa']['Rede'] == "S"){
+						
+						if($_SESSION['Usuario']['Nivel'] == 2){
+							$com_vend 	= TRUE;
+						}elseif($_SESSION['Usuario']['Nivel'] == 1){
+							$com_vend 	= TRUE;
+							$com_super 	= TRUE;
+							$com_serv 	= TRUE;
+						}else{
+							$com_vend 	= TRUE;
+							$com_ass 	= TRUE;
+							$com_super 	= TRUE;
+							$com_serv 	= TRUE;
+						}
+					}else{
+						$com_vend 	= TRUE;
+						$com_ass 	= TRUE;
+						$com_serv 	= TRUE;
+					}
+				}else{
+					$com_vend 	= TRUE;
+					$com_serv 	= TRUE;
+				}
+			}
+		}else{
+			$com_ass 	= TRUE;
+		}
+
+		$query = array(
+			'com_vend' 	=> $com_vend,
+			'com_ass' 	=> $com_ass,
+			'com_super' => $com_super,
+			'com_serv' 	=> $com_serv
+		);
+			
+		return $query;
+	}
+	
     public function list_receitas($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		$date_inicio_orca = ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;

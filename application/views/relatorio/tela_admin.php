@@ -182,20 +182,24 @@
 														</a>
 													</div>	
 												</div>
-												<div class="form-group col-md-12 text-left">
-													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/comissaoass" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span>Pedido x Associado
-														</a>
-													</div>	
-												</div>
-												<div class="form-group col-md-12 text-left">
-													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/comissaofunc" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span>Pedido x Supervisor
-														</a>
-													</div>	
-												</div>
+												<?php if($_SESSION['Empresa']['EComerce'] == "S") {?>
+													<div class="form-group col-md-12 text-left">
+														<div class="row">										
+															<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/comissaoass" role="button"> 
+																<span class="glyphicon glyphicon-usd"></span>Pedido x Associado
+															</a>
+														</div>	
+													</div>
+													<?php if($_SESSION['Empresa']['Rede'] == "S") {?>
+														<div class="form-group col-md-12 text-left">
+															<div class="row">										
+																<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/comissaofunc" role="button"> 
+																	<span class="glyphicon glyphicon-usd"></span>Pedido x Supervisor
+																</a>
+															</div>	
+														</div>
+													<?php } ?>	
+												<?php } ?>		
 												<div class="form-group col-md-12 text-left">
 													<div class="row">										
 														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/comissaoserv" role="button"> 
