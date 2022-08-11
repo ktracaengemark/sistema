@@ -833,6 +833,7 @@ class Cliente_model extends CI_Model {
             SELECT
 				C.idSis_Empresa,
 				C.idApp_Cliente,
+				C.idSis_Associado,
                 C.NomeCliente,
 				' . $cp_id_clientepet . '
 				' . $cp_nomeclientepet . '

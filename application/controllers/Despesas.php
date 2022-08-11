@@ -80,6 +80,7 @@ class Despesas extends CI_Controller {
 			'Fornecedor',
 			'idApp_Fornecedor',
 			'id_Funcionario',
+			'id_Associado',
 			'idApp_OrcaTrata',
 			'NomeAssociado',
 			'idSis_Usuario',
@@ -260,6 +261,7 @@ class Despesas extends CI_Controller {
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 		$data['select']['id_Funcionario'] = $this->Relatorio_model->select_usuario();
+		$data['select']['id_Associado'] = $this->Relatorio_model->select_cliente_associado();
 		
         $data['select']['nomedoFornecedor'] = $this->Basico_model->select_status_sn();
         $data['select']['idFornecedor'] = $this->Basico_model->select_status_sn();
@@ -381,6 +383,7 @@ class Despesas extends CI_Controller {
 			$_SESSION['FiltroDespesas']['Fornecedor'] = $data['query']['Fornecedor'];
 			$_SESSION['FiltroDespesas']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
 			$_SESSION['FiltroDespesas']['id_Funcionario'] = $data['query']['id_Funcionario'];
+			$_SESSION['FiltroDespesas']['id_Associado'] = $data['query']['id_Associado'];
 			$_SESSION['FiltroDespesas']['Modalidade'] = $data['query']['Modalidade'];
 			$_SESSION['FiltroDespesas']['Campo'] = $data['query']['Campo'];
 			$_SESSION['FiltroDespesas']['Ordenamento'] = $data['query']['Ordenamento'];

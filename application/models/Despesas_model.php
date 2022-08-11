@@ -561,7 +561,8 @@ class Despesas_model extends CI_Model {
 		$orcamento = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
 		$fornecedor = ($data['Fornecedor']) ? ' AND OT.idApp_Fornecedor = ' . $data['Fornecedor'] . '' : FALSE;
 		$id_fornecedor = ($data['idApp_Fornecedor']) ? ' AND OT.idApp_Fornecedor = ' . $data['idApp_Fornecedor'] . '' : FALSE;
-		$id_func = ($data['id_Funcionario']) ? ' AND OT.id_Funcionario = ' . $data['id_Funcionario'] . '' : FALSE;
+		$id_funcionario = ($data['id_Funcionario']) ? ' AND OT.id_Funcionario = ' . $data['id_Funcionario'] . '' : FALSE;
+		$id_associado = ($data['id_Associado']) ? ' AND OT.id_Associado = ' . $data['id_Associado'] . '' : FALSE;
 		$tipofinandeiro = ($data['TipoFinanceiro']) ? ' AND OT.TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
 		$idtipord = ($data['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $data['idTab_TipoRD'] : ' AND OT.idTab_TipoRD = 1';
 		$campo = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
@@ -669,7 +670,8 @@ class Despesas_model extends CI_Model {
 				' . $orcamento . '
 				' . $fornecedor . '
 				' . $id_fornecedor . '
-				' . $id_func . '
+				' . $id_funcionario . '
+				' . $id_associado . '
 				' . $tipofinandeiro . ' 
 				' . $idtipord . '
 				' . $DiaAniv . '

@@ -26,9 +26,6 @@
 				
 				$html .= '<td><b>id_'.$nome.'</b></td>';
 				$html .= '<td><b>'.$nome.'</b></td>';
-				$html .= '<td><b>Recebedor</b></td>';
-				$html .= '<td><b>TelRec</b></td>';
-				$html .= '<td><b>Relacao</b></td>';
 				
 				$html .= '<td><b>Prd/Srv</b></td>';
 				$html .= '<td><b>Frete</b></td>';
@@ -39,7 +36,9 @@
 				$html .= '<td><b>Cash</b></td>';
 				
 				$html .= '<td><b>Final</b></td>';
-				$html .= '<td><b>Colab</b></td>';
+				$html .= '<td><b>Func/Cad</b></td>';
+				$html .= '<td><b>Func/Receb</b></td>';
+				$html .= '<td><b>Assoc/Receb</b></td>';
 				$html .= '<td><b>Comb.Ent</b></td>';
 				
 				$html .= '<td><b>Comb.Pag</b></td>';
@@ -66,9 +65,6 @@
 					
 					$html .= '<td>'.$row["idApp_".$nome].'</td>';
 					$html .= '<td>'.utf8_encode($row[$nome]).'</td>';
-					$html .= '<td>'.utf8_encode($row["NomeRec"]).'</td>';
-					$html .= '<td>'.$row["TelefoneRec"].'</td>';
-					$html .= '<td>'.utf8_encode($row["ParentescoRec"]).'</td>';
 					
 					$html .= '<td>'.$row["ValorRestanteOrca"].'</td>';
 					$html .= '<td>'.$row["ValorFrete"].'</td>';
@@ -80,6 +76,8 @@
 					
 					$html .= '<td>'.$row["ValorFinalOrca"].'</td>';
 					$html .= '<td>'.utf8_encode($row["NomeColaborador"]).'</td>';
+					$html .= '<td>'.utf8_encode($row["NomeFuncionario"]).'</td>';
+					$html .= '<td>'.utf8_encode($row["NomeAssociado"]).'</td>';
 					$html .= '<td>'.$row["CombinadoFrete"].'</td>';
 					
 					$html .= '<td>'.$row["AprovadoOrca"].'</td>';

@@ -1,7 +1,7 @@
 <div class="panel panel-<?php echo $panel; ?>">
 	<div class="panel-heading">
 		<div class="row">
-			<div class="col-md-2">
+			<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 				<label for="DataFim">Cont: Parc / Total</label>
 				<div class="input-group">
 					<span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
@@ -9,7 +9,7 @@
 				</div>
 			</div>
 			<?php if($_SESSION['log']['idSis_Empresa'] == 5) {?>
-				<div class="col-md-2">
+				<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 					<label for="DataFim">Final: Parc / Total</label>
 					<div class="input-group">
 						<span class="input-group-addon">R$</span>
@@ -18,49 +18,49 @@
 				</div>
 			<?php }else{ ?>
 				<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
-					<div class="col-md-2">
+					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 						<label for="DataFim">Prod + Serv:</label>
 						<div class="input-group">
 							<span class="input-group-addon">R$</span>
 							<input type="text" class="form-control" disabled aria-label="Orcamento" value="<?php echo $report->soma->somarestante ?>">
 						</div>
 					</div>
-					<div class="col-md-2">
+					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 						<label for="DataFim">Frete:</label>
 						<div class="input-group">
 							<span class="input-group-addon">R$</span>
 							<input type="text" class="form-control" disabled aria-label="Frete" value="<?php echo $report->soma->somafrete ?>">
 						</div>
 					</div>	
-					<div class="col-md-2">
+					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 						<label for="DataFim">Extra:</label>
 						<div class="input-group">
 							<span class="input-group-addon">R$</span>
 							<input type="text" class="form-control" disabled aria-label="Orcamento" value="<?php echo $report->soma->somaextra; ?>">
 						</div>
 					</div>
-					<div class="col-md-2">
+					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 						<label for="DataFim">Total:</label>
 						<div class="input-group">
 							<span class="input-group-addon">R$</span>
 							<input type="text" class="form-control" disabled aria-label="Total" value="<?php echo $report->soma->somatotal ?>">
 						</div>
 					</div>
-					<div class="col-md-2">
+					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 						<label for="DataFim">Desc:</label>
 						<div class="input-group">
 							<span class="input-group-addon">R$</span>
 							<input type="text" class="form-control" disabled aria-label="Total" value="<?php echo $report->soma->somadesc ?>">
 						</div>
 					</div>
-					<div class="col-md-2">
+					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 						<label for="DataFim">CashBack:</label>
 						<div class="input-group">
 							<span class="input-group-addon">R$</span>
 							<input type="text" class="form-control" disabled aria-label="Total" value="<?php echo $report->soma->somacashback ?>">
 						</div>
 					</div>
-					<div class="col-md-2">
+					<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 text-left">
 						<label for="DataFim">Final: Parc / Total</label>
 						<div class="input-group">
 							<span class="input-group-addon">R$</span>
@@ -69,11 +69,13 @@
 					</div>
 				<?php } ?>
 			<?php } ?>
-			<div class="col-md-3 text-left">
+			<div class="col-lg-6 col-md-6 col-sm-7 col-xs-12 text-left">
 				<?php echo $pagination; ?>
 			</div>
+		</div>
+		<div class="row">
 			<?php if($paginacao == "S") { ?>
-				<div class="col-md-1">
+				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
 					<label>Filtros</label>
 					<a href="<?php echo base_url() . $caminho; ?>">
 						<button class="btn btn-warning btn-md btn-block" type="button">
@@ -82,14 +84,14 @@
 					</a>
 				</div>
 			<?php }else{ ?>
-				<div class="col-md-1">
+				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
 					<label>Filtros</label>
 					<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
 						<span class="glyphicon glyphicon-filter"></span>
 					</button>
 				</div>
 			<?php } ?>
-			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 text-left">
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
 				<label>Excel</label><br>
 				<a href="<?php echo base_url() . 'Despesas/despesas_excel/2'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
@@ -101,7 +103,7 @@
 				<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") {?>
 					<?php if ($editar == 1) { ?>
 						<?php if ($print == 1) { ?>	
-							<div class="col-md-1">
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
 								<label>Lista</label>
 								<a href="<?php echo base_url() . 'Despesas/despesas_baixa_pag'; ?>">
 									<button class="btn btn-info btn-md btn-block" type="button">
@@ -110,7 +112,7 @@
 								</a>
 							</div>
 						<?php } ?>
-						<div class="col-md-1">
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
 							<label>Baixa</label>
 							<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
 								<button class="btn btn-danger btn-md btn-block" type="button">
@@ -118,7 +120,7 @@
 								</button>
 							</a>
 						</div>
-						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 text-left">
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
 							<label>Editar</label>
 							<a href="<?php echo base_url() . 'Despesas/despesas_pag'; ?>">
 								<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
@@ -128,7 +130,7 @@
 						</div>
 					<?php }elseif($editar == 2){ ?>
 						<?php if ($print == 1) { ?>	
-							<div class="col-md-1">
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
 								<label>Lista</label>
 								<a href="<?php echo base_url() . 'Despesas/despesas_lista'; ?>">
 									<button class="btn btn-info btn-md btn-block" type="button">
@@ -137,7 +139,7 @@
 								</a>
 							</div>
 						<?php } ?>
-						<div class="col-md-1">
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
 							<label>Baixa</label>
 							<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
 								<button class="btn btn-danger btn-md btn-block" type="button">
@@ -148,7 +150,7 @@
 					<?php } ?>
 				<?php } ?>	
 			<?php }else{ ?>
-				<div class="col-md-1">
+				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
 					<label>Lista</label>
 					<a href="<?php echo base_url() . 'Despesas/despesas_lista'; ?>">
 						<button class="btn btn-info btn-md btn-block" type="button">
@@ -156,7 +158,7 @@
 						</button>
 					</a>
 				</div>
-				<div class="col-md-1">
+				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
 					<label>Baixa</label>
 					<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
 						<button class="btn btn-danger btn-md btn-block" type="button">
@@ -164,7 +166,7 @@
 						</button>
 					</a>
 				</div>
-			<?php } ?>	
+			<?php } ?>
 		</div>
 	</div>
 </div>

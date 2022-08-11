@@ -78,7 +78,8 @@
 						<tr>
 							<th class="active">cont</th>
 							<th class=" col-md-1" scope="col">Foto</th>
-							<th class="active">id</th>
+							<th class="active">id_Assoc</th>
+							<th class="active">id_Cliente</th>
 							<th class="active">Cliente</th>
 							<th class="active">Celular</th>	
 							<th class="active">Ficha</th>
@@ -141,6 +142,11 @@
 							<td class="notclickable">
 								<a class="notclickable" href="<?php echo base_url() . 'cliente/prontuario/' . $row['idApp_Cliente'] . ''; ?>">
 									<img  class="img-circle img-responsive" width='50' alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/clientes/miniatura/' . $row['Arquivo'] . ''; ?> ">
+								</a>
+							</td>
+							<td>
+								<a class="notclickable" href="<?php echo base_url() . 'cliente/prontuario/' . $row['idApp_Cliente'] . ''; ?>">
+									<?php echo $row['idSis_Associado'] ?>
 								</a>
 							</td>
 							<td>
