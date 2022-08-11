@@ -2,7 +2,6 @@
 <div class="col-md-12">
 <?php echo validation_errors(); ?>
 <?php echo form_open('relatorio/admin', 'role="form"'); ?>
-	
 	<div class="row">
 		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 			<div class="panel panel-success">
@@ -38,8 +37,7 @@
 					</div>
 				</div>
 			</div>
-		</div>	
-		
+		</div>
 		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 			<div class="panel panel-info">
 				<div class="panel-heading">
@@ -135,7 +133,7 @@
 											<label for=""><h4><b>Produtos & Serviços</b></h4></label>
 											<div class="form-group col-md-12 text-left">
 												<div class="row">										
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/vendidos" role="button"> 
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Vendidos/vendidos" role="button"> 
 														<span class="glyphicon glyphicon-gift"></span> Vendidos
 													</a>
 												</div>	

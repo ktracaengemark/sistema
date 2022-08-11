@@ -1,5 +1,4 @@
 <?php if (isset($msg)) echo $msg; ?>
-
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12 col-lg-12">
@@ -12,15 +11,9 @@
 							<div class="col-md-2 text-left">
 								<br>						
 								<?php if ($_SESSION['log']['NivelEmpresa'] >= 4 ) { ?>
-									<?php if ($titulo == "Vendas" ) { ?>
-										<a class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>relatorio/vendidos" role="button">
-											<span class="glyphicon glyphicon-search"></span> Venidos 
-										</a>
-									<?php } else { ?>	
-										<a class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>relatorio/comprados" role="button">
-											<span class="glyphicon glyphicon-search"></span> Comprados
-										</a>
-									<?php } ?>
+									<a class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>Vendidos/vendidos_pag" role="button">
+										<span class="glyphicon glyphicon-search"></span> Vendidos 
+									</a>
 								<?php } ?>
 							</div>
 							<div class="col-md-2 text-left">	

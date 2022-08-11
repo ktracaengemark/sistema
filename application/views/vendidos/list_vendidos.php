@@ -1,34 +1,6 @@
 <div class="panel panel-<?php echo $panel; ?>">
 	<div class="panel-heading">
-		<div class="row">	
-			<!--
-			<div class="col-md-4">
-				<label for="DataFim">
-					<?php if($metodo == 2) {?>
-						Entregues
-					<?php }else{?>	
-						Recebidos
-					<?php } ?>	
-				</label>
-				<div class="input-group">
-					<span class="input-group-addon">Prds</span>
-					<input type="text" class="form-control" disabled aria-label="Total Recebido" value="<?php echo $report->soma->somaentregue ?>">
-				</div>
-			</div>
-			<div class="col-md-4">
-				<label for="DataFim">
-					<?php if($metodo == 2) {?>
-						à Entregar
-					<?php }else{?>		
-						à Receber
-					<?php } ?>	
-				</label>
-				<div class="input-group">
-					<span class="input-group-addon">Prds</span>
-					<input type="text" class="form-control" disabled aria-label="Total a Receber" value="<?php echo $report->soma->diferenca ?>">
-				</div>
-			</div>
-			-->	
+		<div class="row">
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
 				<label></label><br>
 				<div class="input-group">
@@ -131,42 +103,11 @@
 					$count = 1;
 					foreach ($report->result_array() as $row) {
 						echo '<tr>';
-						#echo '<tr class="clickable-row" data-href="' . base_url() . 'Orcatrata/alterar2/' . $row['idApp_OrcaTrata'] . '">';
-						#echo '<tr class="clickable-row" data-href="' . base_url() . 'orcatrata/alterarparcelarec/' . $row['idSis_Empresa'] . '">';
-							
-							/*echo '<td class="notclickable">
-									<a class="btn btn-md btn-success notclickable" href="' . base_url() . 'Orcatrata/alterar2/' . $row['idApp_OrcaTrata'] . '">
-										<span class="glyphicon glyphicon-edit notclickable"></span>
-									</a>
-								</td>';								
-							
-							echo '<td class="notclickable">
-									<a class="btn btn-md btn-warning notclickable" href="' . base_url() . 'orcatrata/alterarparcelarec/' . $row['idSis_Empresa'] . '">
-										<span class="glyphicon glyphicon-edit notclickable"></span>
-									</a>
-								</td>';
-							*/
 							echo '<td class="notclickable">
 									<a class="btn btn-md btn-' . $panel . ' notclickable" href="' . base_url() . $imprimir . $row['idApp_OrcaTrata'] . '">
 										<span class="glyphicon glyphicon-print notclickable"></span>
 									</a>
 								</td>';
-							/*	
-							if($row['CanceladoOrca'] == "Não" && $row['Quitado'] == "Não"){	
-								echo '<td class="notclickable">
-										<a class="btn btn-md btn-success notclickable" href="' . base_url() . $edit . $row['idApp_Parcelas'] . '">
-											<span class="glyphicon glyphicon-ok notclickable"></span>
-										</a>
-									</td>';
-							}else{
-								echo '<td class="notclickable">
-										<a class="btn btn-md btn-danger notclickable">
-											<span class="glyphicon glyphicon-ok notclickable"></span>
-										</a>
-									</td>';
-							}
-							*/
-							
 							if ($_SESSION['Usuario']['Bx_Prd'] == "S") {
 								if($row['CanceladoOrca'] == "Não" && $row['ConcluidoProduto'] == "Não"){	
 									echo '<td class="notclickable">
@@ -182,7 +123,6 @@
 										</td>';
 								}
 							}
-							
 							echo '<td>' . ($linha + $count) . '/' . $total_rows . '</td>';
 							echo '<td>' . $row['idApp_OrcaTrata'] . '- ' . $row['TipoFinanceiro'] . ' - ' . $row['Descricao'] . '</td>';
 							echo '<td>' . $row['DataOrca'] . '</td>';
