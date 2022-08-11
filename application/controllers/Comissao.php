@@ -1014,6 +1014,8 @@ class Comissao extends CI_Controller {
 										$data['recibo']['NivelOrca']			= $nivel_orca;
 										$data['recibo']['DataOrca'] 			= $data['query']['DataPagoComissãoPadrao'];
 										$data['recibo']['HoraOrca'] 			= date('H:i:s', time());
+										$data['recibo']['DataEntregaOrca'] 		= $data['query']['DataPagoComissãoPadrao'];
+										$data['recibo']['HoraEntregaOrca'] 		= date('H:i:s', time());
 										$data['recibo']['idTab_TipoRD']			= 1;
 										$data['recibo']['idTab_Modulo']			= 1;
 										$data['recibo']['idSis_Empresa'] 		= $_SESSION['log']['idSis_Empresa'];
@@ -2104,6 +2106,8 @@ class Comissao extends CI_Controller {
 										$data['recibo']['NivelOrca']			= 3;
 										$data['recibo']['DataOrca'] 			= $data['query']['DataPagoComissãoPadrao'];
 										$data['recibo']['HoraOrca'] 			= date('H:i:s', time());
+										$data['recibo']['DataEntregaOrca'] 		= $data['query']['DataPagoComissãoPadrao'];
+										$data['recibo']['HoraEntregaOrca'] 		= date('H:i:s', time());
 										$data['recibo']['idTab_TipoRD']			= 1;
 										$data['recibo']['idTab_Modulo']			= 1;
 										$data['recibo']['idSis_Empresa'] 		= $_SESSION['log']['idSis_Empresa'];
@@ -3019,6 +3023,8 @@ class Comissao extends CI_Controller {
 										$data['recibo']['NivelOrca']			= 1;
 										$data['recibo']['DataOrca'] 			= $data['query']['DataPagoComissãoPadrao'];
 										$data['recibo']['HoraOrca'] 			= date('H:i:s', time());
+										$data['recibo']['DataEntregaOrca'] 		= $data['query']['DataPagoComissãoPadrao'];
+										$data['recibo']['HoraEntregaOrca'] 		= date('H:i:s', time());
 										$data['recibo']['idTab_TipoRD']			= 1;
 										$data['recibo']['idTab_Modulo']			= 1;
 										$data['recibo']['idSis_Empresa'] 		= $_SESSION['log']['idSis_Empresa'];
