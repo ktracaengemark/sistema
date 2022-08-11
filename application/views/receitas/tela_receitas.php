@@ -1,7 +1,6 @@
 <?php if ($msg) echo $msg; ?>
-<!--<?php #echo form_open('relatorio/comissao', 'role="form"'); ?>-->
 <?php echo form_open($form_open_path, 'role="form"'); ?>
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">		
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">
 	<?php echo validation_errors(); ?>
 	<?php if($paginacao == "N") { ?>
 		<div class="row">	

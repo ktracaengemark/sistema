@@ -306,7 +306,7 @@ class Cobrancas extends CI_Controller {
             $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
 		
 		$data['query']['nome'] = 'Cliente';
-        $data['titulo1'] = 'Receitas';
+        $data['titulo1'] = 'Parcelas';
 		$data['metodo'] = 2;
 		$data['form_open_path'] = 'Cobrancas/cobrancas';
 		$data['panel'] = 'info';

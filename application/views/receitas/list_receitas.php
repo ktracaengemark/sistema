@@ -75,7 +75,7 @@
 		</div>
 		<div class="row">
 			<?php if($paginacao == "S") { ?>
-				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
+				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 					<label>Filtros</label>
 					<a href="<?php echo base_url() . $caminho; ?>">
 						<button class="btn btn-warning btn-md btn-block" type="button">
@@ -84,14 +84,14 @@
 					</a>
 				</div>
 			<?php }else{ ?>
-				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
+				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 					<label>Filtros</label>
 					<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
 						<span class="glyphicon glyphicon-filter"></span>
 					</button>
 				</div>
 			<?php } ?>
-			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 				<label>Excel</label><br>
 				<a href="<?php echo base_url() . 'Receitas/receitas_excel/2'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
@@ -103,7 +103,7 @@
 				<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S" && $_SESSION['Usuario']['Nivel'] != 2) {?>
 					<?php if ($editar == 1) { ?>
 						<?php if ($print == 1) { ?>	
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 								<label>Lista</label>
 								<a href="<?php echo base_url() . 'Receitas/receitas_lista'; ?>">
 									<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
@@ -112,7 +112,7 @@
 								</a>
 							</div>
 						<?php } ?>
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 							<label>Baixa</label>
 							<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
 								<button class="btn btn-danger btn-md btn-block" type="button">
@@ -120,7 +120,7 @@
 								</button>
 							</a>
 						</div>
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 							<label>Editar</label>
 							<a href="<?php echo base_url() . 'receitas/receitas_pag'; ?>">
 								<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
@@ -130,7 +130,7 @@
 						</div>
 					<?php }elseif($editar == 2){ ?>
 						<?php if ($print == 1) { ?>	
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 								<label>Lista</label>
 								<a href="<?php echo base_url() . 'Receitas/receitas_lista'; ?>">
 									<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
@@ -139,7 +139,7 @@
 								</a>
 							</div>
 						<?php } ?>
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 							<label>Baixa</label>
 							<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
 								<button class="btn btn-danger btn-md btn-block" type="button">
@@ -150,7 +150,7 @@
 					<?php } ?>
 				<?php } ?>	
 			<?php }else{ ?>
-				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
+				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 					<label>Lista</label>
 					<a href="<?php echo base_url() . 'Receitas/receitas_lista'; ?>">
 						<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
@@ -158,7 +158,7 @@
 						</button>
 					</a>
 				</div>
-				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
+				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 					<label>Baixa</label>
 					<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
 						<button class="btn btn-danger btn-md btn-block" type="button">

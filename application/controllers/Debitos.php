@@ -306,7 +306,7 @@ class Debitos extends CI_Controller {
             $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
 		
 		$data['query']['nome'] = 'Fornecedor';
-        $data['titulo1'] = 'Despesas';
+        $data['titulo1'] = 'Parcelas';
 		$data['metodo'] = 1;
 		$data['form_open_path'] = 'Debitos/debitos';
 		$data['panel'] = 'danger';
@@ -705,6 +705,16 @@ class Debitos extends CI_Controller {
 								$data['orcatrata'][$i]['ValorFinalOrca'] = number_format(($data['orcatrata'][$i]['ValorFinalOrca']), 2, ',', '.');
 								$data['orcatrata'][$i]['ConcluidoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['ConcluidoOrca'], 'NS');
 								$data['orcatrata'][$i]['QuitadoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['QuitadoOrca'], 'NS');
+													
+								if($data['orcatrata'][$i]['AVAP'] == "V"){
+									$data['orcatrata'][$i]['AVAP'] = "NaLoja";
+								}elseif($data['orcatrata'][$i]['AVAP'] == "O"){
+									$data['orcatrata'][$i]['AVAP'] = "OnLine";
+								}elseif($data['orcatrata'][$i]['AVAP'] == "P"){
+									$data['orcatrata'][$i]['AVAP'] = "NaEntr";
+								}else{
+									$data['orcatrata'][$i]['AVAP'] = "Outros";
+								}
 								/*
 								echo '<br>';
 								echo "<pre>";
@@ -772,7 +782,7 @@ class Debitos extends CI_Controller {
 						}	
 					}
 
-					$data['titulo'] = 'Versão Lista Cobrança';
+					$data['titulo'] = 'Versão Lista Débitos';
 					$data['form_open_path'] = 'Debitos/debitos_lista';
 					$data['panel'] = 'danger';
 					$data['metodo'] = 1;
