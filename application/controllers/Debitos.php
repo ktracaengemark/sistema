@@ -13,7 +13,7 @@ class Debitos extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation', 'pagination'));
-        $this->load->model(array( 	'Basico_model', 'Cliente_model', 'Relatorio_model', 'Despesas_model', 'Orcatrata_model',  'Empresa_model', 
+        $this->load->model(array( 	'Basico_model', 'Cliente_model', 'Relatorio_model', 'Debitos_model', 'Orcatrata_model',  'Empresa_model', 
 									'Loginempresa_model', 'Associado_model', 'Usuario_model', 'Agenda_model'
 								));
         $this->load->driver('session');
@@ -390,7 +390,7 @@ class Debitos extends CI_Controller {
 			$_SESSION['FiltroDebitos']['Produtos'] = $data['query']['Produtos'];
 			$_SESSION['FiltroDebitos']['Parcelas'] = $data['query']['Parcelas'];
 			
-			$data['pesquisa_query'] = $this->Despesas_model->list_debitos($_SESSION['FiltroDebitos'],FALSE, TRUE, FALSE, FALSE, FALSE);
+			$data['pesquisa_query'] = $this->Debitos_model->list_debitos($_SESSION['FiltroDebitos'],FALSE, TRUE, FALSE, FALSE, FALSE);
 			
 			if($data['pesquisa_query'] === FALSE){
 				
@@ -441,7 +441,7 @@ class Debitos extends CI_Controller {
 			
 				$data['linha'] = $page * $config['per_page'];
 
-				$data['report'] = $this->Despesas_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, FALSE, $config['per_page'], $data['linha'], FALSE);			
+				$data['report'] = $this->Debitos_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, FALSE, $config['per_page'], $data['linha'], FALSE);			
 				
 				$_SESSION['FiltroDebitos']['Texto1'] = utf8_encode($data['query']['Texto1']);
 				$_SESSION['FiltroDebitos']['Texto2'] = utf8_encode($data['query']['Texto2']);
@@ -491,7 +491,7 @@ class Debitos extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #run form validation
 
-		$data['pesquisa_query'] = $this->Despesas_model->list_debitos($_SESSION['FiltroDebitos'],FALSE, TRUE, FALSE, FALSE, FALSE);
+		$data['pesquisa_query'] = $this->Debitos_model->list_debitos($_SESSION['FiltroDebitos'],FALSE, TRUE, FALSE, FALSE, FALSE);
 		
 		if($data['pesquisa_query'] === FALSE){
 			
@@ -539,7 +539,7 @@ class Debitos extends CI_Controller {
 				
 			$data['linha'] = $page * $config['per_page'];
 			
-			$data['report'] = $this->Despesas_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, FALSE, $config['per_page'], $data['linha'], FALSE);			
+			$data['report'] = $this->Debitos_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, FALSE, $config['per_page'], $data['linha'], FALSE);			
 			
 			$data['pagination'] = $this->pagination->create_links();
 
@@ -599,7 +599,7 @@ class Debitos extends CI_Controller {
 
         $data['nome'] = 'Fornecedor';
 
-		$data['report'] = $this->Despesas_model->list_debitos($dados, FALSE, FALSE, FALSE, FALSE, FALSE);
+		$data['report'] = $this->Debitos_model->list_debitos($dados, FALSE, FALSE, FALSE, FALSE, FALSE);
 		
 		if($data['report'] === FALSE){
 			
@@ -642,7 +642,7 @@ class Debitos extends CI_Controller {
 				$data['Imprimir']['DataInicio4'] = $this->basico->mascara_data($_SESSION['FiltroDebitos']['DataInicio4'], 'barras');
 				$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroDebitos']['DataFim4'], 'barras');
 		
-				$data['pesquisa_query'] = $this->Despesas_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, TRUE, FALSE, FALSE, FALSE);
+				$data['pesquisa_query'] = $this->Debitos_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, TRUE, FALSE, FALSE, FALSE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
@@ -690,7 +690,7 @@ class Debitos extends CI_Controller {
 					$data['pagination'] = $this->pagination->create_links();		
 						
 					#### App_OrcaTrata ####
-					$data['orcatrata'] = $this->Despesas_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
+					$data['orcatrata'] = $this->Debitos_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
 					if (count($data['orcatrata']) > 0) {
 						$data['orcatrata'] = array_combine(range(1, count($data['orcatrata'])), array_values($data['orcatrata']));
 						$data['count']['POCount'] = count($data['orcatrata']);           
@@ -722,7 +722,7 @@ class Debitos extends CI_Controller {
 								echo "</pre>";
 								*/
 								#### App_ProdutoVenda ####
-								$data['produto'][$i] = $this->Despesas_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['produto'][$i] = $this->Debitos_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['produto'][$i]) > 0) {
 									$data['produto'][$i] = array_combine(range(1, count($data['produto'][$i])), array_values($data['produto'][$i]));
 									$data['count']['PCount'][$i] = count($data['produto'][$i]);
@@ -745,7 +745,7 @@ class Debitos extends CI_Controller {
 								echo "</pre>";
 								*/		
 								#### App_Parcelas####
-								$data['parcelasrec'][$i] = $this->Despesas_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['parcelasrec'][$i] = $this->Debitos_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['parcelasrec'][$i]) > 0) {
 									$data['parcelasrec'][$i] = array_combine(range(1, count($data['parcelasrec'][$i])), array_values($data['parcelasrec'][$i]));
 									$data['count']['PRCount'][$i] = count($data['parcelasrec'][$i]);
@@ -766,7 +766,7 @@ class Debitos extends CI_Controller {
 								echo "</pre>";
 								*/
 								#### App_Procedimento ####
-								$data['procedimento'][$i] = $this->Despesas_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['procedimento'][$i] = $this->Debitos_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['procedimento'][$i]) > 0) {
 									$data['procedimento'][$i] = array_combine(range(1, count($data['procedimento'][$i])), array_values($data['procedimento'][$i]));
 									$data['count']['PMCount'][$i] = count($data['procedimento'][$i]);
@@ -833,7 +833,7 @@ class Debitos extends CI_Controller {
 				$data['Imprimir']['DataInicio4'] = $this->basico->mascara_data($_SESSION['FiltroDebitos']['DataInicio4'], 'barras');
 				$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroDebitos']['DataFim4'], 'barras');
 				
-				$data['pesquisa_query'] = $this->Despesas_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, TRUE, FALSE, FALSE, FALSE);
+				$data['pesquisa_query'] = $this->Debitos_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, TRUE, FALSE, FALSE, FALSE);
 				
 				if($data['pesquisa_query'] === FALSE){
 					
@@ -881,7 +881,7 @@ class Debitos extends CI_Controller {
 					$data['pagination'] = $this->pagination->create_links();		
 
 					#### App_OrcaTrata ####
-					$data['orcatrata'] = $this->Despesas_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
+					$data['orcatrata'] = $this->Debitos_model->list_debitos($_SESSION['FiltroDebitos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
 					if (count($data['orcatrata']) > 0) {
 						$data['orcatrata'] = array_combine(range(1, count($data['orcatrata'])), array_values($data['orcatrata']));
 						$data['count']['POCount'] = count($data['orcatrata']);           
@@ -903,7 +903,7 @@ class Debitos extends CI_Controller {
 								echo "</pre>";
 								*/
 								#### App_ProdutoVenda ####
-								$data['produto'][$i] = $this->Despesas_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['produto'][$i] = $this->Debitos_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['produto'][$i]) > 0) {
 									$data['produto'][$i] = array_combine(range(1, count($data['produto'][$i])), array_values($data['produto'][$i]));
 									$data['count']['PCount'][$i] = count($data['produto'][$i]);
@@ -926,7 +926,7 @@ class Debitos extends CI_Controller {
 								echo "</pre>";
 								*/		
 								#### App_Parcelas####
-								$data['parcelasrec'][$i] = $this->Despesas_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['parcelasrec'][$i] = $this->Debitos_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['parcelasrec'][$i]) > 0) {
 									$data['parcelasrec'][$i] = array_combine(range(1, count($data['parcelasrec'][$i])), array_values($data['parcelasrec'][$i]));
 									$data['count']['PRCount'][$i] = count($data['parcelasrec'][$i]);
@@ -947,7 +947,7 @@ class Debitos extends CI_Controller {
 								echo "</pre>";
 								*/
 								#### App_Procedimento ####
-								$data['procedimento'][$i] = $this->Despesas_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['procedimento'][$i] = $this->Debitos_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['procedimento'][$i]) > 0) {
 									$data['procedimento'][$i] = array_combine(range(1, count($data['procedimento'][$i])), array_values($data['procedimento'][$i]));
 									$data['count']['PMCount'][$i] = count($data['procedimento'][$i]);
@@ -1058,7 +1058,7 @@ class Debitos extends CI_Controller {
 					
 				}else{
 						
-					$data['pesquisa_query'] = $this->Despesas_model->list_debitos($_SESSION['FiltroDebitos'], TRUE, TRUE, FALSE, FALSE, FALSE);
+					$data['pesquisa_query'] = $this->Debitos_model->list_debitos($_SESSION['FiltroDebitos'], TRUE, TRUE, FALSE, FALSE, FALSE);
 					
 					if($data['pesquisa_query'] === FALSE){
 						
@@ -1104,7 +1104,7 @@ class Debitos extends CI_Controller {
 						$_SESSION['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 
 						#### App_Parcelas ####
-						$_SESSION['Parcelasrec'] = $data['parcelasrec'] = $this->Despesas_model->list_debitos($_SESSION['FiltroDebitos'], TRUE, TRUE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']), TRUE);
+						$_SESSION['Parcelasrec'] = $data['parcelasrec'] = $this->Debitos_model->list_debitos($_SESSION['FiltroDebitos'], TRUE, TRUE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']), TRUE);
 						if (count($data['parcelasrec']) > 0) {
 							$data['parcelasrec'] = array_combine(range(1, count($data['parcelasrec'])), array_values($data['parcelasrec']));
 							$data['count']['PRCount'] = count($data['parcelasrec']);
@@ -1228,7 +1228,7 @@ class Debitos extends CI_Controller {
 						$data['query']['DataPagamento'] = $this->basico->mascara_data($data['query']['DataPagamento'], 'mysql');
 
 						#### App_ParcelasRec ####
-						$data['update']['parcelasrec']['anterior'] = $this->Despesas_model->list_debitos($_SESSION['FiltroDebitos'], TRUE, TRUE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']), TRUE);
+						$data['update']['parcelasrec']['anterior'] = $this->Debitos_model->list_debitos($_SESSION['FiltroDebitos'], TRUE, TRUE, $_SESSION['Per_Page'], ($_SESSION['Pagina'] * $_SESSION['Per_Page']), TRUE);
 						if (isset($data['parcelasrec']) || (!isset($data['parcelasrec']) && isset($data['update']['parcelasrec']['anterior']) ) ) {
 
 							if (isset($data['parcelasrec']))
