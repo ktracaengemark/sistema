@@ -615,14 +615,18 @@ class Orcatrata_model extends CI_Model {
         $query = $this->db->query('
 			SELECT 
 				idApp_OrcaTrata,
+				idTab_TipoRD,
+				idApp_Cliente,
+				idApp_Fornecedor,
+				DataOrca,
 				DataEntregaOrca,
 				HoraEntregaOrca,
 				CombinadoFrete,
 				AprovadoOrca,
-				CanceladoOrca,
+				ConcluidoOrca,
 				QuitadoOrca,
-				idApp_Cliente,
-				idApp_Fornecedor
+				FinalizadoOrca,
+				CanceladoOrca
 			FROM 
 				App_OrcaTrata
 			WHERE 
