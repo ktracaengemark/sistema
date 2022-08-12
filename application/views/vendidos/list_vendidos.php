@@ -10,7 +10,9 @@
 			</div>
 			<div class="col-md-4 text-left">
 				<?php echo $pagination; ?>
-			</div>		
+			</div>
+		</div>	
+		<div class="row">		
 			<?php if($paginacao == "S") { ?>
 				<div class="col-md-2">
 					<label>Filtros</label>
@@ -28,19 +30,19 @@
 					</button>
 				</div>
 			<?php } ?>
-			<div class="col-md-2">
-				<label>Baixa</label>
-				<a href="<?php echo base_url() . $alterarprod . $_SESSION['log']['idSis_Empresa']; ?>">
-					<button class="btn btn-primary btn-md btn-block" type="button">
-						<span class="glyphicon glyphicon-edit"></span>
-					</button>
-				</a>
-			</div>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">
 				<label>Excel</label><br>
 				<a href="<?php echo base_url() . 'gerar_excel/Orcamentos/Produtos_resumido_xls.php'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
 						Gerar Parcial
+					</button>
+				</a>
+			</div>
+			<div class="col-md-2">
+				<label>Baixa</label>
+				<a href="<?php echo base_url() . $alterarprod . $_SESSION['log']['idSis_Empresa']; ?>">
+					<button class="btn btn-danger btn-md btn-block" type="button">
+						<span class="glyphicon glyphicon-edit"></span>
 					</button>
 				</a>
 			</div>

@@ -13,7 +13,7 @@ class Vendidos_model extends CI_Model {
         $this->load->model(array('Basico_model'));
     }
 
-	public function list_vendidos($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+	public function list_vendidos($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		$date_inicio_orca = ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;
 		$date_fim_orca = ($data['DataFim']) ? 'OT.DataOrca <= "' . $data['DataFim'] . '" AND ' : FALSE;
@@ -33,17 +33,15 @@ class Vendidos_model extends CI_Model {
 		$hora_inicio_entrega_prd = ($data['HoraInicio8']) ? 'PRDS.HoraConcluidoProduto >= "' . $data['HoraInicio8'] . '" AND ' : FALSE;
 		$hora_fim_entrega_prd = ($data['HoraFim8']) ? 'PRDS.HoraConcluidoProduto <= "' . $data['HoraFim8'] . '" AND ' : FALSE;
 					
-		$data['Orcamento'] = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] : FALSE;
-		$data['Cliente'] = ($data['Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['Cliente'] : FALSE;
-		$data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['idApp_Cliente'] : FALSE;
-		$data['Fornecedor'] = ($data['Fornecedor']) ? ' AND OT.idApp_Fornecedor = ' . $data['Fornecedor'] : FALSE;
-		$data['idApp_Fornecedor'] = ($data['idApp_Fornecedor']) ? ' AND OT.idApp_Fornecedor = ' . $data['idApp_Fornecedor'] : FALSE;
-		$data['Produto'] = ($data['Produto']) ? ' AND PRDS.idTab_Produtos_Produto = ' . $data['Produto'] : FALSE;
-		$data['Categoria'] = ($data['Categoria']) ? ' AND TCAT.idTab_Catprod = ' . $data['Categoria'] : FALSE;
-		$data['TipoFinanceiro'] = ($data['TipoFinanceiro']) ? ' AND TR.idTab_TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
-		$data['idTab_TipoRD'] = ($data['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $data['idTab_TipoRD'] . ' AND PRDS.idTab_TipoRD = ' . $data['idTab_TipoRD'] : FALSE;
-		$data['Campo'] = (!$data['Campo']) ? 'TCAT.Catprod' : $data['Campo'];
-		$data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+		$Orcamento = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] : FALSE;
+		$Cliente = ($data['Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['Cliente'] : FALSE;
+		$idApp_Cliente = ($data['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['idApp_Cliente'] : FALSE;
+		$Produto = ($data['Produto']) ? ' AND PRDS.idTab_Produtos_Produto = ' . $data['Produto'] : FALSE;
+		$Categoria = ($data['Categoria']) ? ' AND TCAT.idTab_Catprod = ' . $data['Categoria'] : FALSE;
+		$TipoFinanceiro = ($data['TipoFinanceiro']) ? ' AND OT.TipoFinanceiro = ' . $data['TipoFinanceiro'] : FALSE;
+		$idTab_TipoRD = ($data['idTab_TipoRD']) ? ' AND OT.idTab_TipoRD = ' . $data['idTab_TipoRD'] . ' AND PRDS.idTab_TipoRD = ' . $data['idTab_TipoRD'] : FALSE;
+		$Campo = (!$data['Campo']) ? 'TCAT.Catprod' : $data['Campo'];
+		$Ordenamento = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 		$filtro1 = ($data['AprovadoOrca']) ? 'OT.AprovadoOrca = "' . $data['AprovadoOrca'] . '" AND ' : FALSE;
 		$filtro2 = ($data['QuitadoOrca']) ? 'OT.QuitadoOrca = "' . $data['QuitadoOrca'] . '" AND ' : FALSE;
 		$filtro3 = ($data['ConcluidoOrca']) ? 'OT.ConcluidoOrca = "' . $data['ConcluidoOrca'] . '" AND ' : FALSE;
@@ -69,77 +67,20 @@ class Vendidos_model extends CI_Model {
 		
 		$permissao = ($_SESSION['log']['idSis_Empresa'] == 5 ) ? 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ' : FALSE;
 		//$groupby = (1 == 1) ? 'GROUP BY PRDS.idApp_Produto' : FALSE;
-		$groupby = ($data['Agrupar'] != "0") ? 'GROUP BY ' . $data['Agrupar'] . '' : FALSE;
+		$groupby = ($data['Agrupar'] != "0") ? 'GROUP BY ' . $data['Agrupar'] . '' : 'GROUP BY PRDS.idApp_Produto';
 
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
 
-		$query = $this->db->query('
-            SELECT
-				CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,""), " - " ,IFNULL(C.Telefone,""), " - " ,IFNULL(C.Telefone2,""), " - " ,IFNULL(C.Telefone3,"") ) AS NomeCliente,
-				C.CelularCliente,
-				CONCAT(IFNULL(F.idApp_Fornecedor,""), " - " ,IFNULL(F.NomeFornecedor,"")) AS NomeFornecedor,
-                F.CelularFornecedor,
-				OT.idApp_OrcaTrata,
-				OT.Tipo_Orca,
-				OT.idSis_Usuario,
-				OT.idTab_TipoRD,
-                OT.AprovadoOrca,
-                OT.CombinadoFrete,
-				OT.ObsOrca,
-				CONCAT(IFNULL(OT.Descricao,"")) AS Descricao,
-                OT.DataOrca,
-                OT.DataEntradaOrca,
-                OT.DataEntregaOrca,
-                OT.DataVencimentoOrca,
-                OT.ValorEntradaOrca,
-				OT.QuitadoOrca,
-				OT.ConcluidoOrca,
-				OT.FinalizadoOrca,
-				OT.CanceladoOrca,
-				OT.Modalidade,
-				CPT.NomeClientePet,
-				CDP.NomeClienteDep,
-				TR.TipoFinanceiro,
-				MD.Modalidade,
-				PRDS.idApp_Produto,
-				PRDS.idTab_TipoRD,
-				PRDS.NomeProduto,
-				PRDS.ValorProduto,
-				PRDS.QtdProduto,
-				PRDS.QtdIncrementoProduto,
-				(PRDS.QtdProduto * PRDS.QtdIncrementoProduto) AS QuantidadeProduto,
-				PRDS.ConcluidoProduto,
-				PRDS.idTab_Produtos_Produto,
-				PRDS.Prod_Serv_Produto,
-				PRDS.DataConcluidoProduto,
-				PRDS.HoraConcluidoProduto,
-				TPRDS.idTab_Produtos,
-				TPRDS.Nome_Prod,
-				TCAT.idTab_Catprod,
-				TCAT.Catprod,
-				TAV.AVAP,
-				TTF.TipoFrete,
-				TFP.FormaPag
-            FROM
-                App_OrcaTrata AS OT
-					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
-					LEFT JOIN App_ClientePet AS CPT ON CPT.idApp_ClientePet = OT.idApp_ClientePet
-					LEFT JOIN App_ClienteDep AS CDP ON CDP.idApp_ClienteDep = OT.idApp_ClienteDep
-					LEFT JOIN App_Fornecedor AS F ON F.idApp_Fornecedor = OT.idApp_Fornecedor
-					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = OT.idSis_Usuario
-					LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
-					LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
-					LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = PRDS.idTab_Produtos_Produto
-					LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto
-					LEFT JOIN Tab_Catprod AS TCAT ON TCAT.idTab_Catprod = TPRD.idTab_Catprod
-					LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
-					LEFT JOIN Tab_Modalidade AS MD ON MD.Abrev = OT.Modalidade
-					LEFT JOIN Tab_TipoFrete AS TTF ON TTF.idTab_TipoFrete = OT.TipoFrete
-					LEFT JOIN Tab_AVAP AS TAV ON TAV.Abrev2 = OT.AVAP
-					LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
-            WHERE
+		
+		if($completo == FALSE){
+			$complemento = FALSE;
+		}else{
+			$complemento = ' AND OT.CanceladoOrca = "N" AND PR.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND PR.Quitado = "N"';
+		}
+
+		$filtro_base = '
                 ' . $date_inicio_orca . '
                 ' . $date_fim_orca . '
                 ' . $date_inicio_entrega . '
@@ -171,30 +112,124 @@ class Vendidos_model extends CI_Model {
 				' . $parcelas . '
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
                 OT.idTab_TipoRD = 2
-                ' . $data['Orcamento'] . '
-                ' . $data['Cliente'] . '
-                ' . $data['Fornecedor'] . '
-                ' . $data['idApp_Cliente'] . '
-                ' . $data['idApp_Fornecedor'] . '
-				' . $data['TipoFinanceiro'] . '
-				
-                ' . $data['Produto'] . '
-                ' . $data['Categoria'] . '
+                ' . $Orcamento . '
+                ' . $Cliente . '
+                ' . $idApp_Cliente . '
+				' . $TipoFinanceiro . '
+                ' . $Produto . '
+                ' . $Categoria . '
 				' . $query4 . '
 				' . $query42 . '
 				' . $query5 . '
 				' . $query52 . '
 			' . $groupby . '
 			ORDER BY
-				' . $data['Campo'] . '
-				' . $data['Ordenamento'] . '
+				' . $Campo . '
+				' . $Ordenamento . '
 			' . $querylimit . '
-		');
+		';
 
-		if($total == TRUE) {
-			return $query->num_rows();
+
+        ####################################################################
+        #Contagem Dos Produtos e Soma total Para todas as listas e baixas
+		if($total == TRUE && $date == FALSE) {
+			
+			$query = $this->db->query('
+				SELECT
+					OT.idApp_OrcaTrata
+				FROM
+					App_OrcaTrata AS OT
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
+						LEFT JOIN App_ClientePet AS CPT ON CPT.idApp_ClientePet = OT.idApp_ClientePet
+						LEFT JOIN App_ClienteDep AS CDP ON CDP.idApp_ClienteDep = OT.idApp_ClienteDep
+						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = PRDS.idTab_Produtos_Produto
+						LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto
+						LEFT JOIN Tab_Catprod AS TCAT ON TCAT.idTab_Catprod = TPRD.idTab_Catprod
+				WHERE
+					' . $filtro_base . '
+			');
+		
+			$count = $query->num_rows();
+			
+			if(!isset($count)){
+				return FALSE;
+			}else{
+				if($count >= 15001){
+					return FALSE;
+				}else{
+					//return $query->num_rows();
+					return $query;
+				}
+			}
 		}
-				
+		
+        ####################################################################
+        # Relatório/Excel Campos para exibição Dos Produtos
+		if($total == FALSE && $date == FALSE) {	
+			
+			$query = $this->db->query(
+				'SELECT
+					CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,""), " - " ,IFNULL(C.Telefone,""), " - " ,IFNULL(C.Telefone2,""), " - " ,IFNULL(C.Telefone3,"") ) AS NomeCliente,
+					C.CelularCliente,
+					OT.idApp_OrcaTrata,
+					OT.Tipo_Orca,
+					OT.idSis_Usuario,
+					OT.idTab_TipoRD,
+					OT.AprovadoOrca,
+					OT.CombinadoFrete,
+					OT.ObsOrca,
+					CONCAT(IFNULL(OT.Descricao,"")) AS Descricao,
+					OT.DataOrca,
+					OT.DataEntradaOrca,
+					OT.DataEntregaOrca,
+					OT.DataVencimentoOrca,
+					OT.ValorEntradaOrca,
+					OT.QuitadoOrca,
+					OT.ConcluidoOrca,
+					OT.FinalizadoOrca,
+					OT.CanceladoOrca,
+					OT.Modalidade,
+					OT.AVAP,
+					OT.TipoFrete,
+					CPT.NomeClientePet,
+					CDP.NomeClienteDep,
+					TR.TipoFinanceiro,
+					PRDS.idApp_Produto,
+					PRDS.idTab_TipoRD,
+					PRDS.NomeProduto,
+					PRDS.ValorProduto,
+					PRDS.QtdProduto,
+					PRDS.QtdIncrementoProduto,
+					(PRDS.QtdProduto * PRDS.QtdIncrementoProduto) AS QuantidadeProduto,
+					PRDS.ConcluidoProduto,
+					PRDS.idTab_Produtos_Produto,
+					PRDS.Prod_Serv_Produto,
+					PRDS.DataConcluidoProduto,
+					PRDS.HoraConcluidoProduto,
+					TPRDS.idTab_Produtos,
+					TPRDS.Nome_Prod,
+					TCAT.idTab_Catprod,
+					TCAT.Catprod,
+					TFP.FormaPag
+				FROM
+					App_OrcaTrata AS OT
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
+						LEFT JOIN App_ClientePet AS CPT ON CPT.idApp_ClientePet = OT.idApp_ClientePet
+						LEFT JOIN App_ClienteDep AS CDP ON CDP.idApp_ClienteDep = OT.idApp_ClienteDep
+						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = OT.idSis_Usuario
+						LEFT JOIN App_Parcelas AS PR ON PR.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = PRDS.idTab_Produtos_Produto
+						LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto
+						LEFT JOIN Tab_Catprod AS TCAT ON TCAT.idTab_Catprod = TPRD.idTab_Catprod
+						LEFT JOIN Tab_TipoFinanceiro AS TR ON TR.idTab_TipoFinanceiro = OT.TipoFinanceiro
+						LEFT JOIN Tab_FormaPag AS TFP ON TFP.idTab_FormaPag = OT.FormaPagamento
+				WHERE
+					' . $filtro_base . ''
+			);
+	
 			/*
 			  echo $this->db->last_query();
 			  echo "<pre>";
@@ -202,10 +237,6 @@ class Vendidos_model extends CI_Model {
 			  echo "</pre>";
 			  exit();
 			  */
-
-        if ($completo === FALSE) {
-            return TRUE;
-        } else {
 
             $somaentregar=$somareal=$balanco=$ant=0;
             foreach ($query->result() as $row) {
@@ -233,32 +264,44 @@ class Vendidos_model extends CI_Model {
 					$row->Tipo_Orca = "On Line";
 				}else{
 					$row->Tipo_Orca = "Outros";
-				}				
-				/*
-				  echo $this->db->last_query();
-				  echo "<pre>";
-				  print_r($somaentrada);          
-				  echo "</pre>";
-				  exit();
-				*/	
+				}
+
+				if($row->Modalidade == "P"){
+					$row->Modalidade = "Dividido";
+				}elseif($row->Modalidade == "M"){
+					$row->Modalidade = "Mensal";
+				}else{
+					$row->Modalidade = "Outros";
+				}
+				
+				if($row->AVAP == "V"){
+					$row->AVAP = "NaLoja";
+				}elseif($row->AVAP == "O"){
+					$row->AVAP = "OnLine";
+				}elseif($row->AVAP == "P"){
+					$row->AVAP = "NaEntr";
+				}else{
+					$row->AVAP = "Outros";
+				}
+				
+				if($row->TipoFrete == 1){
+					$row->TipoFrete = "Retirar/NaLoja";
+				}elseif($row->TipoFrete == 2){
+					$row->TipoFrete = "EmCasa/PelaLoja";
+				}elseif($row->TipoFrete == 3){
+					$row->TipoFrete = "EmCasa/PeloCorreio";
+				}else{
+					$row->TipoFrete = "Outros";
+				}
 		  
             }
 
-			
-			/*
-			echo $this->db->last_query();
-			echo "<pre>";
-			print_r($balanco);
-			echo "</pre>";
-			exit();			
-			*/
-			
             $query->soma = new stdClass();
             $query->soma->somaentregar = $somaentregar;
             $query->soma->balanco = number_format($balanco, 2, ',', '.');
 			
             return $query;
-        }
+		}
 
     }
 

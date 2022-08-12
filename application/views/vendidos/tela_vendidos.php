@@ -104,6 +104,8 @@
 								<input type="hidden" name="idApp_ClientePet2" id="idApp_ClientePet2" value="" />
 								<input type="hidden" name="idApp_ClienteDep2" id="idApp_ClienteDep2" value="" />
 							<?php } ?>
+						</div>
+						<div class="row">
 							<div class="col-md-2">
 								<label>Filtros</label>
 								<button class="btn btn-warning btn-md btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal2-sm">
@@ -420,7 +422,7 @@
 											?>
 										</select>	
 									</div>
-									<div class="col-md-3 text-left">
+									<div class="col-md-6 text-left">
 										<label for="Produto">Produto:</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
 												id="Produto" name="Produto">

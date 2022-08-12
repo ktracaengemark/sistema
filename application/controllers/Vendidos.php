@@ -61,6 +61,10 @@ class Vendidos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Registro Não Encontrada.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 4)
+            $data['msg'] = $this->basico->msg('<strong>A Pesquisa está muito grande, ela excedeu 15000 linhas. Refine o seu filtro.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
 		
@@ -83,8 +87,6 @@ class Vendidos extends CI_Controller {
 			'idApp_ClientePet2',
 			'idApp_ClienteDep',
 			'idApp_ClienteDep2',
-			'Fornecedor',
-			'idApp_Fornecedor',
 			'Produto',
 			'Produtos',
 			'Parcelas',
@@ -238,8 +240,8 @@ class Vendidos extends CI_Controller {
 			$data['select']['Agrupar'] = array(
 				'PRDS.idApp_Produto' => 'Produto',
 				'OT.idApp_OrcaTrata' => 'Orçamento',
+				'OT.idApp_ClientePet' => 'Pet',
 				'OT.idApp_Cliente' => 'Cliente',
-				'OT.idApp_ClientePet' => 'Animal',
 			);
 			
 			$data['select']['Campo'] = array(
@@ -248,15 +250,15 @@ class Vendidos extends CI_Controller {
 				'PRDS.HoraConcluidoProduto' => 'Hora da Entr Prd',
 				'PRDS.idApp_Produto' => 'Produto',
 				'OT.idApp_OrcaTrata' => 'Orçamento',
+				'OT.idApp_ClientePet' => 'Pet',
 				'OT.idApp_Cliente' => 'Cliente',
-				'OT.idApp_ClientePet' => 'Animal',
 			);
 		}elseif($_SESSION['Empresa']['CadastrarDep'] == "S"){
 			$data['select']['Agrupar'] = array(
 				'PRDS.idApp_Produto' => 'Produto',
 				'OT.idApp_OrcaTrata' => 'Orçamento',
-				'OT.idApp_Cliente' => 'Cliente',
 				'OT.idApp_ClienteDep' => 'Dependente',
+				'OT.idApp_Cliente' => 'Cliente',
 			);
 			
 			$data['select']['Campo'] = array(
@@ -265,8 +267,8 @@ class Vendidos extends CI_Controller {
 				'PRDS.HoraConcluidoProduto' => 'Hora da Entr Prd',
 				'PRDS.idApp_Produto' => 'Produto',
 				'OT.idApp_OrcaTrata' => 'Orçamento',
-				'OT.idApp_Cliente' => 'Cliente',
 				'OT.idApp_ClienteDep' => 'Dependente',
+				'OT.idApp_Cliente' => 'Cliente',
 			);
 		}else{
 			$data['select']['Agrupar'] = array(			
@@ -305,7 +307,6 @@ class Vendidos extends CI_Controller {
 		$data['select']['Produto'] = $this->Relatorio_model->select_produtos();
 		$data['select']['Categoria'] = $this->Relatorio_model->select_catprod();
 		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
-		$data['select']['Despesas'] = $this->Relatorio_model->select_tipofinanceiroD();	
 		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
 		
@@ -389,8 +390,6 @@ class Vendidos extends CI_Controller {
 			$_SESSION['Filtro_Vendidos']['idApp_ClientePet2'] = $data['query']['idApp_ClientePet2'];
 			$_SESSION['Filtro_Vendidos']['idApp_ClienteDep'] = $data['query']['idApp_ClienteDep'];
 			$_SESSION['Filtro_Vendidos']['idApp_ClienteDep2'] = $data['query']['idApp_ClienteDep2'];
-			$_SESSION['Filtro_Vendidos']['Fornecedor'] = $data['query']['Fornecedor'];
-			$_SESSION['Filtro_Vendidos']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
 			$_SESSION['Filtro_Vendidos']['Modalidade'] = $data['query']['Modalidade'];
 			$_SESSION['Filtro_Vendidos']['Campo'] = $data['query']['Campo'];
 			$_SESSION['Filtro_Vendidos']['Ordenamento'] = $data['query']['Ordenamento'];
@@ -399,53 +398,60 @@ class Vendidos extends CI_Controller {
 			$_SESSION['Filtro_Vendidos']['Parcelas'] = $data['query']['Parcelas'];
 			$_SESSION['Filtro_Vendidos']['Categoria'] = $data['query']['Categoria'];
 			$_SESSION['Filtro_Vendidos']['Agrupar'] = $data['query']['Agrupar'];
-
-
-			$config['base_url'] = base_url() . 'Vendidos/vendidos_pag/';
-			$config['total_rows'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'],TRUE, TRUE);
 			
-			//$data['report'] = $this->Relatorio_model->list_vendidos($data['bd'],TRUE);
-			           
-			//$this->load->library('pagination');
-			$config['per_page'] = 12;
-			$config["uri_segment"] = 3;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
-
-			if($config['total_rows'] >= 1){
-				$data['total_rows'] = $config['total_rows'];
+			$data['pesquisa_query'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'],FALSE , TRUE, FALSE ,FALSE ,FALSE );
+			
+			if($data['pesquisa_query'] === FALSE){
+				
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'Vendidos/vendidos' . $data['msg']);
+				exit();
 			}else{
-				$data['total_rows'] = 0;
+
+				//$config['total_rows'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'],TRUE, TRUE);
+
+				$config['total_rows'] = $data['pesquisa_query']->num_rows();
+				$config['base_url'] = base_url() . 'Vendidos/vendidos_pag/';
+				$config['per_page'] = 12;
+				$config["uri_segment"] = 3;
+				$config['reuse_query_string'] = TRUE;
+				$config['num_links'] = 2;
+				$config['use_page_numbers'] = TRUE;
+				$config['full_tag_open'] = "<ul class='pagination'>";
+				$config['full_tag_close'] = "</ul>";
+				$config['num_tag_open'] = '<li>';
+				$config['num_tag_close'] = '</li>';
+				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+				$config['next_tag_open'] = "<li>";
+				$config['next_tagl_close'] = "</li>";
+				$config['prev_tag_open'] = "<li>";
+				$config['prev_tagl_close'] = "</li>";
+				$config['first_tag_open'] = "<li>";
+				$config['first_tagl_close'] = "</li>";
+				$config['last_tag_open'] = "<li>";
+				$config['last_tagl_close'] = "</li>";
+				$data['Pesquisa'] = '';
+
+				if($config['total_rows'] >= 1){
+					$data['total_rows'] = $config['total_rows'];
+				}else{
+					$data['total_rows'] = 0;
+				}
+				
+				$this->pagination->initialize($config);
+				
+				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+				$data['pagina'] = $page;
+				$data['per_page'] = $config['per_page'];
+				$data['report'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+				$data['pagination'] = $this->pagination->create_links();
+
+				$data['list1'] = $this->load->view('vendidos/list_vendidos', $data, TRUE);
 			}
-			
-            $this->pagination->initialize($config);
-            
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-            $data['pagina'] = $page;
-			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-			$data['pagination'] = $this->pagination->create_links();
+		}
 
-            $data['list1'] = $this->load->view('vendidos/list_vendidos', $data, TRUE);
-        }
-
-        $this->load->view('vendidos/tela_vendidos', $data);
+		$this->load->view('vendidos/tela_vendidos', $data);
 
         $this->load->view('basico/footer');
 
@@ -482,50 +488,56 @@ class Vendidos extends CI_Controller {
 		
         #run form validation
         if ($this->form_validation->run() !== TRUE) {
-
-			//$data['report'] = $this->Relatorio_model->list_vendidos($data['bd'],TRUE);
 			
-			$config['base_url'] = base_url() . 'Vendidos/vendidos_pag/';
-			$config['total_rows'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'], TRUE, TRUE);
-           
-			//$this->load->library('pagination');
-			$config['per_page'] = 12;
-			$config["uri_segment"] = 3;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
-
-			if($config['total_rows'] >= 1){
-				$data['total_rows'] = $config['total_rows'];
+			$data['pesquisa_query'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'],FALSE , TRUE, FALSE ,FALSE ,FALSE );
+			
+			if($data['pesquisa_query'] === FALSE){
+				
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'Vendidos/vendidos' . $data['msg']);
+				exit();
 			}else{
-				$data['total_rows'] = 0;
-			}
-			
-            $this->pagination->initialize($config);
-            
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-            $data['pagina'] = $page;
-			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-			$data['pagination'] = $this->pagination->create_links();
 
-            $data['list1'] = $this->load->view('vendidos/list_vendidos', $data, TRUE);
-        }
+				$config['total_rows'] = $data['pesquisa_query']->num_rows();
+				$config['base_url'] = base_url() . 'Vendidos/vendidos_pag/';
+				$config['per_page'] = 12;
+				$config["uri_segment"] = 3;
+				$config['reuse_query_string'] = TRUE;
+				$config['num_links'] = 2;
+				$config['use_page_numbers'] = TRUE;
+				$config['full_tag_open'] = "<ul class='pagination'>";
+				$config['full_tag_close'] = "</ul>";
+				$config['num_tag_open'] = '<li>';
+				$config['num_tag_close'] = '</li>';
+				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+				$config['next_tag_open'] = "<li>";
+				$config['next_tagl_close'] = "</li>";
+				$config['prev_tag_open'] = "<li>";
+				$config['prev_tagl_close'] = "</li>";
+				$config['first_tag_open'] = "<li>";
+				$config['first_tagl_close'] = "</li>";
+				$config['last_tag_open'] = "<li>";
+				$config['last_tagl_close'] = "</li>";
+				$data['Pesquisa'] = '';
+
+				if($config['total_rows'] >= 1){
+					$data['total_rows'] = $config['total_rows'];
+				}else{
+					$data['total_rows'] = 0;
+				}
+				
+				$this->pagination->initialize($config);
+				
+				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+				$data['pagina'] = $page;
+				$data['per_page'] = $config['per_page'];
+				$data['report'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+				$data['pagination'] = $this->pagination->create_links();
+
+				$data['list1'] = $this->load->view('vendidos/list_vendidos', $data, TRUE);
+			}
+		}
 
         $this->load->view('vendidos/tela_vendidos', $data);
 
