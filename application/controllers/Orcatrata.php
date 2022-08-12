@@ -1710,7 +1710,7 @@ class Orcatrata extends CI_Controller {
 								#### Estoque_Produto_posterior ####
 								
 									
-									if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
+									if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
 										
 										$data['busca']['estoque']['posterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
 										
@@ -3937,7 +3937,7 @@ class Orcatrata extends CI_Controller {
 							
 							#### Estoque_Produto_posterior ####
 							
-								if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
+								if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
 									
 									$data['busca']['estoque']['posterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
 									
@@ -5644,7 +5644,7 @@ class Orcatrata extends CI_Controller {
 						
 						#### Estoque_Produto_posterior ####
 						
-							if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
+							if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
 								
 								$data['busca']['estoque']['posterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
 								/*
@@ -6941,7 +6941,7 @@ class Orcatrata extends CI_Controller {
 							
 								
 								#### Estoque_Produto_anterior ####
-								if ($_SESSION['Orcatrata']['CombinadoFrete'] == 'S' && $_SESSION['Orcatrata']['AprovadoOrca'] == 'S') {
+								if ($_SESSION['Orcatrata']['CombinadoFrete'] == 'S') {
 									
 									$data['busca']['estoque']['anterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
 									
@@ -7937,7 +7937,7 @@ class Orcatrata extends CI_Controller {
 							
 								
 								#### Estoque_Produto_posterior ####
-								if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
+								if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
 									
 									$data['busca']['estoque']['posterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
 									
@@ -9196,7 +9196,7 @@ class Orcatrata extends CI_Controller {
 						
 							
 							#### Estoque_Produto_anterior ####
-							if ($_SESSION['Orcatrata']['CombinadoFrete'] == 'S' && $_SESSION['Orcatrata']['AprovadoOrca'] == 'S') {
+							if ($_SESSION['Orcatrata']['CombinadoFrete'] == 'S') {
 								
 								$data['busca']['estoque']['anterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
 								
@@ -10123,7 +10123,7 @@ class Orcatrata extends CI_Controller {
 						
 										
 							#### Estoque_Produto_posterior ####
-							if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
+							if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
 								
 								$data['busca']['estoque']['posterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
 								
@@ -11255,7 +11255,7 @@ class Orcatrata extends CI_Controller {
 						
 							
 							#### Estoque_Produto_anterior ####					
-							if ($_SESSION['Orcatrata']['CombinadoFrete'] == 'S' && $_SESSION['Orcatrata']['AprovadoOrca'] == 'S') {
+							if ($_SESSION['Orcatrata']['CombinadoFrete'] == 'S') {
 								
 								$data['busca']['estoque']['anterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
 								
@@ -12187,7 +12187,7 @@ class Orcatrata extends CI_Controller {
 						
 							
 							#### Estoque_Produto_posterior ####
-							if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
+							if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
 								
 								$data['busca']['estoque']['posterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
 								
@@ -13856,7 +13856,7 @@ class Orcatrata extends CI_Controller {
 						
 						#### Estoque_Produto_posterior ####
 						
-							if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
+							if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
 								
 								$data['busca']['estoque']['posterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
 								
@@ -14942,7 +14942,7 @@ class Orcatrata extends CI_Controller {
 						
 							
 							#### Estoque_Produto_anterior ####
-							if ($_SESSION['Orcatrata']['CombinadoFrete'] == 'S' && $_SESSION['Orcatrata']['AprovadoOrca'] == 'S') {
+							if ($_SESSION['Orcatrata']['CombinadoFrete'] == 'S') {
 								
 								$data['busca']['estoque']['anterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
 								
@@ -15817,7 +15817,7 @@ class Orcatrata extends CI_Controller {
 						
 												
 							#### Estoque_Produto_posterior ####
-							if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['AprovadoOrca'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
+							if ($data['orcatrata']['CombinadoFrete'] == 'S' && $data['orcatrata']['CanceladoOrca'] == 'N') {
 								
 								$data['busca']['estoque']['posterior'] = $this->Orcatrata_model->get_produto_estoque($data['orcatrata']['idApp_OrcaTrata']);
 								
@@ -17979,7 +17979,7 @@ class Orcatrata extends CI_Controller {
 
 			//$this->basico->erro($msg);
 			
-			redirect(base_url() . 'relatorio/vendidos/' . $data['msg']);
+			redirect(base_url() . 'Vendidos/vendidos/' . $data['msg']);
 			exit();
 			
 		}else{
@@ -18000,7 +18000,7 @@ class Orcatrata extends CI_Controller {
 
 				//$this->basico->erro($msg);
 				
-				redirect(base_url() . 'relatorio/vendidos/' . $data['msg']);
+				redirect(base_url() . 'Vendidos/vendidos/' . $data['msg']);
 				exit();
 				
 			}else{
@@ -18028,7 +18028,7 @@ class Orcatrata extends CI_Controller {
 					
 					#### App_Produto ####
 
-					$_SESSION['Orcatrata'] = $data['orcatrata'] = $this->Orcatrata_model->get_orcamento_baixa_produto($data['update']['produto']['anterior']['idApp_OrcaTrata']);			
+					$data['orcatrata_baixa'] = $this->Orcatrata_model->get_orcamento_baixa_produto($data['update']['produto']['anterior']['idApp_OrcaTrata']);			
 
 					//$data['produto']['DataLanc'] = date('Y-m-d', time());
 					$data['produto']['ConcluidoProduto'] = "S";
@@ -18073,7 +18073,7 @@ class Orcatrata extends CI_Controller {
 						}	
 					}
 					
-					if($data['orcatrata']['AprovadoOrca'] == "S" && $_SESSION['Orcatrata']['CombinadoFrete'] == "N" && $data['orcatrata']['CombinadoFrete'] == "S" && $data['orcatrata']['CanceladoOrca'] == "N"){
+					if($data['orcatrata_baixa']['CombinadoFrete'] == "N" && $data['orcatrata_baixa']['CanceladoOrca'] == "N"){
 					
 						$data['busca']['estoque']['posterior'] = $this->Orcatrata_model->get_produto_estoque($data['update']['produto']['anterior']['idApp_OrcaTrata']);
 						/*
@@ -18118,12 +18118,11 @@ class Orcatrata extends CI_Controller {
 						}
 					}			
 
-					if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
-						$data['orcatrata']['AprovadoOrca'] = "S";
-						$data['orcatrata']['FinalizadoOrca'] = "S";
-						$data['orcatrata']['CombinadoFrete'] = "S";
+					if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata_baixa']['QuitadoOrca'] == 'S'){
+						
 						$data['orcatrata']['ProntoOrca'] = "S";
 						$data['orcatrata']['EnviadoOrca'] = "S";
+						$data['orcatrata']['FinalizadoOrca'] = "S";
 					
 						#### App_Procedimento ####
 						$data['update']['procedimento']['alterar'] = $this->Orcatrata_model->get_procedimento_posterior($data['update']['produto']['anterior']['idApp_OrcaTrata']);
@@ -18146,7 +18145,7 @@ class Orcatrata extends CI_Controller {
 
 					$data['msg'] = '?m=1';
 
-					redirect(base_url() . 'relatorio/vendidos/' . $data['msg']);
+					redirect(base_url() . 'Vendidos/vendidos/' . $data['msg']);
 					exit();
 				}
 			}

@@ -444,7 +444,7 @@ class Vendidos extends CI_Controller {
 				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
 				$data['pagina'] = $page;
 				$data['per_page'] = $config['per_page'];
-				$data['report'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+				$data['report'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
 				$data['pagination'] = $this->pagination->create_links();
 
 				$data['list1'] = $this->load->view('vendidos/list_vendidos', $data, TRUE);
@@ -532,7 +532,7 @@ class Vendidos extends CI_Controller {
 				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
 				$data['pagina'] = $page;
 				$data['per_page'] = $config['per_page'];
-				$data['report'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+				$data['report'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
 				$data['pagination'] = $this->pagination->create_links();
 
 				$data['list1'] = $this->load->view('vendidos/list_vendidos', $data, TRUE);
