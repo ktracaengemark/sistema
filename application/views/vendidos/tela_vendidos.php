@@ -16,7 +16,7 @@
 											<span class="glyphicon glyphicon-search"></span> 
 										</button>
 									</span>
-									<input type="text" placeholder="Pesquisar Pedido" class="form-control Numero btn-sm" name="Orcamento" value="<?php echo set_value('Orcamento', $query['Orcamento']); ?>">
+									<input type="text" placeholder="Pesquisar Pedido" class="form-control Numero btn-sm" autofocus name="Orcamento" value="<?php echo set_value('Orcamento', $query['Orcamento']); ?>">
 								</div>
 							</div>	
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
@@ -450,7 +450,7 @@
 												<span class="glyphicon glyphicon-calendar"></span>
 											</span>
 											<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-													autofocus name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
+													name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
 										</div>
 									</div>
 									<div class="col-md-3">

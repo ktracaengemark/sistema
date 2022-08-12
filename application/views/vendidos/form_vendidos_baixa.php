@@ -31,7 +31,7 @@
 				<div class="panel-body">						
 					<div class="panel-group">	
 						<div class="row">
-							<div  style="overflow: auto; height: auto; ">
+							<div  style="overflow: auto; height: 400px; ">
 								<div class="panel-body">	
 									<input type="hidden" name="PCount" id="PCount" value="<?php echo $count['PCount']; ?>"/>
 

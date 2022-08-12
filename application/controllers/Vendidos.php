@@ -606,66 +606,86 @@ class Vendidos extends CI_Controller {
 					
 				}else{
 
-					$config['base_url'] = base_url() . 'Vendidos/vendidos_baixa/' . $id . '/';
-					$config['total_rows'] = $this->Vendidos_model->get_alterarproduto($id, TRUE);
-					
-					$config['per_page'] = 12;
-					$config["uri_segment"] = 4;
-					$config['reuse_query_string'] = TRUE;
-					$config['num_links'] = 2;
-					$config['use_page_numbers'] = TRUE;
-					$config['full_tag_open'] = "<ul class='pagination'>";
-					$config['full_tag_close'] = "</ul>";
-					$config['num_tag_open'] = '<li>';
-					$config['num_tag_close'] = '</li>';
-					$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-					$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-					$config['next_tag_open'] = "<li>";
-					$config['next_tagl_close'] = "</li>";
-					$config['prev_tag_open'] = "<li>";
-					$config['prev_tagl_close'] = "</li>";
-					$config['first_tag_open'] = "<li>";
-					$config['first_tagl_close'] = "</li>";
-					$config['last_tag_open'] = "<li>";
-					$config['last_tagl_close'] = "</li>";		   
-					
-					if($config['total_rows'] >= 1){
-						$_SESSION['Filtro_Vendidos']['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
+					$data['pesquisa_query'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'], TRUE, TRUE, FALSE, FALSE, FALSE);
+
+					if($data['pesquisa_query'] === FALSE){
+						
+						$data['msg'] = '?m=4';
+						redirect(base_url() . 'Vendidos/vendidos' . $data['msg']);
+						exit();
 					}else{
-						$_SESSION['Filtro_Vendidos']['Total_Rows'] = $data['total_rows'] = 0;
-					}
-					
-					$this->pagination->initialize($config);
-					
-					$_SESSION['Filtro_Vendidos']['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-					$_SESSION['Filtro_Vendidos']['Per_Page'] = $data['per_page'] = $config['per_page'];
-					
-					$_SESSION['Filtro_Vendidos']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
+						
+						//$config['total_rows'] = $this->Vendidos_model->get_alterarproduto($id, TRUE);
+						
+						$config['total_rows'] = $data['pesquisa_query']->num_rows();
+						
+						$config['base_url'] = base_url() . 'Vendidos/vendidos_baixa/' . $id . '/';
 
-					#### App_Produto ####
-					$_SESSION['Produto'] = $data['produto'] = $this->Vendidos_model->get_alterarproduto($id, FALSE, $_SESSION['Filtro_Vendidos']['Per_Page'], ($_SESSION['Filtro_Vendidos']['Pagina'] * $_SESSION['Filtro_Vendidos']['Per_Page']));
+						$config['per_page'] = 12;
+						$config["uri_segment"] = 4;
+						$config['reuse_query_string'] = TRUE;
+						$config['num_links'] = 2;
+						$config['use_page_numbers'] = TRUE;
+						$config['full_tag_open'] = "<ul class='pagination'>";
+						$config['full_tag_close'] = "</ul>";
+						$config['num_tag_open'] = '<li>';
+						$config['num_tag_close'] = '</li>';
+						$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+						$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+						$config['next_tag_open'] = "<li>";
+						$config['next_tagl_close'] = "</li>";
+						$config['prev_tag_open'] = "<li>";
+						$config['prev_tagl_close'] = "</li>";
+						$config['first_tag_open'] = "<li>";
+						$config['first_tagl_close'] = "</li>";
+						$config['last_tag_open'] = "<li>";
+						$config['last_tagl_close'] = "</li>";		   
+						
+						if($config['total_rows'] >= 1){
+							$_SESSION['Filtro_Vendidos']['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
+						}else{
+							$_SESSION['Filtro_Vendidos']['Total_Rows'] = $data['total_rows'] = 0;
+						}
+						
+						$this->pagination->initialize($config);
+						
+						$_SESSION['Filtro_Vendidos']['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+						
+						$_SESSION['Filtro_Vendidos']['Per_Page'] = $data['per_page'] = $config['per_page'];
+						
+						$_SESSION['Filtro_Vendidos']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 
-					if (count($data['produto']) > 0) {
-						$_SESSION['Produto'] = $data['produto'] = array_combine(range(1, count($data['produto'])), array_values($data['produto']));
-						$data['count']['PCount'] = count($data['produto']);
+						#### App_Produto ####
+						$data['produto'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'], TRUE, TRUE, $_SESSION['Filtro_Vendidos']['Per_Page'], ($_SESSION['Filtro_Vendidos']['Pagina'] * $_SESSION['Filtro_Vendidos']['Per_Page']), TRUE);
+						 /*
+						 echo "<pre>";
+						  echo '<br>';
+						  print_r($data['produto']);
+						  echo "</pre>";
+						  exit ();
+						  */
+						if (count($data['produto']) > 0) {
+							$_SESSION['Produto'] = $data['produto'] = array_combine(range(1, count($data['produto'])), array_values($data['produto']));
+							$data['count']['PCount'] = count($data['produto']);
 
-						if (isset($data['produto'])) {
+							if (isset($data['produto'])) {
 
-							for($j=1;$j<=$data['count']['PCount'];$j++) {
-								$_SESSION['Produto'][$j]['SubtotalProduto'] = number_format(($data['produto'][$j]['ValorProduto'] * $data['produto'][$j]['QtdProduto']), 2, ',', '.');
-								$_SESSION['Produto'][$j]['SubtotalQtdProduto'] = ($data['produto'][$j]['QtdIncrementoProduto'] * $data['produto'][$j]['QtdProduto']);
-								$_SESSION['Produto'][$j]['DataConcluidoProduto'] = $this->basico->mascara_data($data['produto'][$j]['DataConcluidoProduto'], 'barras');
-								$_SESSION['Produto'][$j]['NomeCliente'] = (strlen($data['produto'][$j]['NomeCliente']) > 12) ? substr($data['produto'][$j]['NomeCliente'], 0, 12) : $data['produto'][$j]['NomeCliente'];
+								for($j=1;$j<=$data['count']['PCount'];$j++) {
+									$_SESSION['Produto'][$j]['SubtotalProduto'] = number_format(($data['produto'][$j]['ValorProduto'] * $data['produto'][$j]['QtdProduto']), 2, ',', '.');
+									$_SESSION['Produto'][$j]['SubtotalQtdProduto'] = ($data['produto'][$j]['QtdIncrementoProduto'] * $data['produto'][$j]['QtdProduto']);
+									$_SESSION['Produto'][$j]['DataConcluidoProduto'] = $this->basico->mascara_data($data['produto'][$j]['DataConcluidoProduto'], 'barras');
+									$_SESSION['Produto'][$j]['NomeCliente'] = (strlen($data['produto'][$j]['NomeCliente']) > 12) ? substr($data['produto'][$j]['NomeCliente'], 0, 12) : $data['produto'][$j]['NomeCliente'];
 
-								(!$data['produto'][$j]['ConcluidoProduto']) ? $data['produto'][$j]['ConcluidoProduto'] = 'N' : FALSE;
-								$data['radio'] = array(
-									'ConcluidoProduto' . $j => $this->basico->radio_checked($data['produto'][$j]['ConcluidoProduto'], 'ConcluidoProduto' . $j, 'NS'),
-								);
-								($data['produto'][$j]['ConcluidoProduto'] == 'S') ? $data['div']['ConcluidoProduto' . $j] = '' : $data['div']['ConcluidoProduto' . $j] = 'style="display: none;"';
-								
+									(!$data['produto'][$j]['ConcluidoProduto']) ? $data['produto'][$j]['ConcluidoProduto'] = 'N' : FALSE;
+									$data['radio'] = array(
+										'ConcluidoProduto' . $j => $this->basico->radio_checked($data['produto'][$j]['ConcluidoProduto'], 'ConcluidoProduto' . $j, 'NS'),
+									);
+									($data['produto'][$j]['ConcluidoProduto'] == 'S') ? $data['div']['ConcluidoProduto' . $j] = '' : $data['div']['ConcluidoProduto' . $j] = 'style="display: none;"';
+									
+								}
 							}
 						}
-					}
+					}	
 				}
 			}
 
@@ -727,8 +747,9 @@ class Vendidos extends CI_Controller {
 						////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
 
 						#### App_Produto ####
-						$data['update']['produto']['anterior'] = $this->Vendidos_model->get_alterarproduto($data['empresa']['idSis_Empresa'], FALSE, $_SESSION['Filtro_Vendidos']['Per_Page'], ($_SESSION['Filtro_Vendidos']['Pagina'] * $_SESSION['Filtro_Vendidos']['Per_Page']));
-
+						//$data['update']['produto']['anterior'] = $this->Vendidos_model->get_alterarproduto($data['empresa']['idSis_Empresa'], FALSE, $_SESSION['Filtro_Vendidos']['Per_Page'], ($_SESSION['Filtro_Vendidos']['Pagina'] * $_SESSION['Filtro_Vendidos']['Per_Page']));
+						$data['update']['produto']['anterior'] = $this->Vendidos_model->list_vendidos($_SESSION['Filtro_Vendidos'], TRUE, TRUE, $_SESSION['Filtro_Vendidos']['Per_Page'], ($_SESSION['Filtro_Vendidos']['Pagina'] * $_SESSION['Filtro_Vendidos']['Per_Page']), TRUE);
+						
 						if (isset($data['produto']) || (!isset($data['produto']) && isset($data['update']['produto']['anterior']) ) ) {
 
 							if (isset($data['produto']))
@@ -742,7 +763,7 @@ class Vendidos extends CI_Controller {
 							$max = count($data['update']['produto']['alterar']);
 							for($j=0;$j<$max;$j++) {
 
-								$_SESSION['Orcatrata'] = $data['orcatrata'] = $this->Orcatrata_model->get_orcatrata_baixa($data['update']['produto']['alterar'][$j]['idApp_OrcaTrata']);
+								$data['orcatrata_baixa'] = $this->Orcatrata_model->get_orcamento_baixa_produto($data['update']['produto']['alterar'][$j]['idApp_OrcaTrata']);
 
 								$data['update']['produto']['alterar'][$j]['ObsProduto'] = trim(mb_strtoupper($data['update']['produto']['alterar'][$j]['ObsProduto'], 'ISO-8859-1'));
 								
@@ -752,7 +773,7 @@ class Vendidos extends CI_Controller {
 
 									$data['orcatrata']['CombinadoFrete'] = "S";
 									
-									if($data['orcatrata']['AprovadoOrca'] == "S" && $_SESSION['Orcatrata']['CombinadoFrete'] == "N" && $data['orcatrata']['CombinadoFrete'] == "S"  && $data['orcatrata']['CanceladoOrca'] == 'N'){
+									if($data['orcatrata_baixa']['CombinadoFrete'] == "N" && $data['orcatrata_baixa']['CanceladoOrca'] == 'N'){
 										$baixa[$j] = 'Dar Baixa';
 							
 										$data['busca']['estoque']['posterior'] = $this->Orcatrata_model->get_produto_estoque($data['update']['produto']['alterar'][$j]['idApp_OrcaTrata']);
@@ -822,9 +843,7 @@ class Vendidos extends CI_Controller {
 				
 								}
 
-								if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
-									$data['orcatrata']['CombinadoFrete'] = "S";
-									$data['orcatrata']['AprovadoOrca'] = "S";
+								if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata_baixa']['QuitadoOrca'] == 'S'){
 									$data['orcatrata']['ProntoOrca'] = "S";
 									$data['orcatrata']['EnviadoOrca'] = "S";
 									$data['orcatrata']['FinalizadoOrca'] = "S";
@@ -843,17 +862,17 @@ class Vendidos extends CI_Controller {
 								echo '<br>';
 								print_r($max_produto);
 								echo '<br>';
-								print_r($baixa[$j]);
+								//print_r($baixa[$j]);
 								echo '<br>';
 								print_r($data['orcatrata']['CombinadoFrete']);
 								echo '<br>';
-								print_r($data['orcatrata']['AprovadoOrca']);
+								//print_r($data['orcatrata']['AprovadoOrca']);
 								echo '<br>';
-								print_r($data['orcatrata']['ProntoOrca']);
+								//print_r($data['orcatrata']['ProntoOrca']);
 								echo '<br>';
-								print_r($data['orcatrata']['EnviadoOrca']);
+								//print_r($data['orcatrata']['EnviadoOrca']);
 								echo '<br>';
-								print_r($data['orcatrata']['QuitadoOrca']);
+								//print_r($data['orcatrata']['QuitadoOrca']);
 								echo '<br>';
 								print_r($data['orcatrata']['ConcluidoOrca']);
 								echo '<br>';
@@ -869,7 +888,7 @@ class Vendidos extends CI_Controller {
 								*/
 							
 							}
-							
+							//exit();
 							/*
 							if (count($data['update']['produto']['alterar']))
 								$data['update']['produto']['bd']['alterar'] =  $this->Orcatrata_model->update_produto($data['update']['produto']['alterar']);
@@ -878,7 +897,6 @@ class Vendidos extends CI_Controller {
 
 							$data['msg'] = '?m=1';
 
-							//redirect(base_url() . 'relatorio/vendidos/' . $data['msg']);
 							redirect(base_url() . 'Vendidos/vendidos_baixa/' . $_SESSION['log']['idSis_Empresa'] . $data['msg']);
 							exit();
 					}
