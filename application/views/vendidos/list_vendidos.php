@@ -111,7 +111,7 @@
 									</a>
 								</td>';
 							if ($_SESSION['Usuario']['Bx_Prd'] == "S") {
-								if($row['CanceladoOrca'] == "Não" && $row['ConcluidoProduto'] == "Não"){	
+								if($row['CanceladoOrca'] == "N" && $row['ConcluidoProduto'] == "N"){	
 									echo '<td class="notclickable">
 											<a class="btn btn-md btn-success notclickable" href="' . base_url() . $edit . $row['idApp_Produto'] . '">
 												<span class="glyphicon glyphicon-ok notclickable"></span>

@@ -318,7 +318,7 @@ class Debitos extends CI_Controller {
 		$data['imprimir'] = 'OrcatrataPrint/imprimirdesp/';
 		$data['imprimirlista'] = 'Debitos/debitos_lista/';
 		$data['imprimirrecibo'] = 'Debitos/debitos_recibo/';
-		$data['edit'] = 'Orcatrata/baixadodebito/';
+		$data['edit'] = 'Debitos/debito_baixa/';
 		$data['alterarparc'] = 'Debitos/debitos_baixa/';	
 		$data['paginacao'] = 'N';	
 
@@ -483,7 +483,7 @@ class Debitos extends CI_Controller {
 		$data['imprimir'] = 'OrcatrataPrint/imprimirdesp/';
 		$data['imprimirlista'] = 'Debitos/debitos_lista/';
 		$data['imprimirrecibo'] = 'Debitos/debitos_recibo/';
-		$data['edit'] = 'Orcatrata/baixadodebito/';
+		$data['edit'] = 'Debitos/debito_baixa/';
 		$data['alterarparc'] = 'Debitos/debitos_baixa/';	
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'Debitos/debitos/';
@@ -1335,6 +1335,159 @@ class Debitos extends CI_Controller {
 			}
 		}
         $this->load->view('basico/footer');
+
+    }
+
+    public function debito_baixa($id = FALSE) {
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+		}else{
+
+			if (!$id) {
+				
+				$data['msg'] = '?m=2';
+				$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+				//$this->basico->erro($msg);
+				
+				redirect(base_url() . 'relatorio/debitos/' . $data['msg']);
+				exit();
+				
+			}else{
+			
+				if ($this->input->get('m') == 1)
+					$data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+				elseif ($this->input->get('m') == 2)
+					$data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+				else
+					$data['msg'] = '';
+				
+				$data['update']['parcela']['anterior'] = $this->Orcatrata_model->get_parcela($id);
+				
+				if ($data['update']['parcela']['anterior'] === FALSE || $data['update']['parcela']['anterior']['idTab_TipoRD'] != 1 || $data['update']['parcela']['anterior']['Quitado'] == "S") {
+					
+					$data['msg'] = '?m=2';
+					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+					//$this->basico->erro($msg);
+					
+					redirect(base_url() . 'relatorio/debitos/' . $data['msg']);
+					exit();
+					
+				}else{
+
+					if($this->Basico_model->get_dt_validade() === FALSE){
+						
+						$data['msg'] = '?m=3';
+						redirect(base_url() . 'acesso' . $data['msg']);
+						
+					} else {
+							
+						$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+						#### App_OrcaTrata ####
+						
+						$data['titulo'] = 'Baixa da Receita';
+						$data['form_open_path'] = 'Debitos/debito_baixa';
+						$data['readonly'] = '';
+						$data['disabled'] = '';
+						$data['panel'] = 'info';
+						$data['metodo'] = 2;
+
+
+						$data['id_orcatrata'] = $data['update']['parcela']['anterior']['idApp_OrcaTrata'];
+						
+						$data['ID_Orcamento'] = $this->Orcatrata_model->get_orcamento_baixa_parcela($data['id_orcatrata']);			
+						
+						if(!$data['update']['parcela']['anterior']['FormaPagamentoParcela'] || $data['update']['parcela']['anterior']['FormaPagamentoParcela'] == "0" || empty($data['update']['parcela']['anterior']['FormaPagamentoParcela'])){
+							$data['parcela']['FormaPagamentoParcela'] = $data['ID_Orcamento']['FormaPagamento'];
+						}			
+									
+						if(!$data['update']['parcela']['anterior']['DataPago'] || $data['update']['parcela']['anterior']['DataPago'] == "0000-00-00" ){
+							$data['parcela']['DataPago'] = $data['update']['parcela']['anterior']['DataVencimento'];
+						}else{
+							$data['parcela']['DataPago'] = $data['update']['parcela']['anterior']['DataPago'];
+						}
+						$data['parcela']['DataLanc'] = date('Y-m-d', time());
+						$data['parcela']['Quitado'] = "S";			
+
+						$data['update']['parcela']['campos'] = array_keys($data['parcela']);
+						$data['update']['parcela']['auditoriaitem'] = $this->basico->set_log(
+							$data['update']['parcela']['anterior'],
+							$data['parcela'],
+							$data['update']['parcela']['campos'],
+							$id, 
+						TRUE);
+						/*
+						echo '<br>';
+						echo "<pre>";
+						print_r($data['parcela']);
+						echo "</pre>";
+						exit();	
+						*/
+						
+						$data['update']['parcela']['bd'] = $this->Orcatrata_model->update_parcela($data['parcela'], $id);			
+
+						$data['update']['parcelasrec']['posterior'] = $this->Orcatrata_model->get_parcelas_posterior($data['id_orcatrata']);
+						if (isset($data['update']['parcelasrec']['posterior'])){
+							$max_parcela = count($data['update']['parcelasrec']['posterior']);
+							if($max_parcela == 0){
+								$data['orcatrata']['AprovadoOrca'] = "S";
+								$data['orcatrata']['QuitadoOrca'] = "S";				
+							}else{
+								$data['orcatrata']['QuitadoOrca'] = "N";
+							}	
+						}
+						
+						$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_posterior($data['id_orcatrata']);
+						if (isset($data['update']['produto']['posterior'])){
+							$max_produto = count($data['update']['produto']['posterior']);
+							if($max_produto == 0){
+								$data['orcatrata']['CombinadoFrete'] = "S";
+								$data['orcatrata']['ProntoOrca'] = "S";
+								$data['orcatrata']['EnviadoOrca'] = "S";
+								$data['orcatrata']['ConcluidoOrca'] = "S";
+							}else{
+								$data['orcatrata']['ConcluidoOrca'] = "N";
+							}
+						}
+						
+						if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata']['QuitadoOrca'] == 'S'){
+							$data['orcatrata']['AprovadoOrca'] = "S";
+							$data['orcatrata']['FinalizadoOrca'] = "S";
+							$data['orcatrata']['CombinadoFrete'] = "S";
+							$data['orcatrata']['ProntoOrca'] = "S";
+							$data['orcatrata']['EnviadoOrca'] = "S";
+						
+							#### App_Procedimento ####
+							$data['update']['procedimento']['alterar'] = $this->Orcatrata_model->get_procedimento_posterior($data['id_orcatrata']);
+							if (isset($data['update']['procedimento']['alterar'])){
+							
+								$max = count($data['update']['procedimento']['alterar']);
+								for($j=0;$j<$max;$j++) {
+									$data['update']['procedimento']['alterar'][$j]['ConcluidoProcedimento'] = 'S';				
+								}
+								if (count($data['update']['procedimento']['alterar']))
+									$data['update']['procedimento']['bd']['alterar'] =  $this->Orcatrata_model->update_procedimento($data['update']['procedimento']['alterar']);
+
+							}
+						
+						}else{
+							$data['orcatrata']['FinalizadoOrca'] = "N";
+						}
+
+						$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['id_orcatrata']);
+
+						redirect(base_url() . 'Debitos/debitos/' . $data['msg']);
+						exit();
+					}
+				}
+			}
+		}	
+		$this->load->view('basico/footer');
 
     }
 	

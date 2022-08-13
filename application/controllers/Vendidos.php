@@ -323,7 +323,7 @@ class Vendidos extends CI_Controller {
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
 		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
-		$data['edit'] = 'Orcatrata/baixadaprodutorec/';
+		$data['edit'] = 'Vendidos/vendido_baixa/';
 		$data['alterarprod'] = 'Vendidos/vendidos_baixa/';
 		$data['paginacao'] = 'N';
 
@@ -479,7 +479,7 @@ class Vendidos extends CI_Controller {
 		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
 		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
 		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
-		$data['edit'] = 'Orcatrata/baixadaprodutorec/';
+		$data['edit'] = 'Vendidos/vendido_baixa/';
 		$data['alterarprod'] = 'Vendidos/vendidos_baixa/';
 		$data['paginacao'] = 'S';
 		$data['caminho'] = 'Vendidos/vendidos/';
@@ -903,6 +903,197 @@ class Vendidos extends CI_Controller {
 				}
 			}
 		}
+		$this->load->view('basico/footer');
+
+    }
+
+    public function vendido_baixa($id = FALSE) {
+		
+		if($_SESSION['Usuario']['Nivel'] == 2){
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+		}else{
+
+			if (!$id) {
+				
+				$data['msg'] = '?m=2';
+				$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+				//$this->basico->erro($msg);
+				
+				redirect(base_url() . 'Vendidos/vendidos/' . $data['msg']);
+				exit();
+				
+			}else{
+			
+				if ($this->input->get('m') == 1)
+					$data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+				elseif ($this->input->get('m') == 2)
+					$data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+				else
+					$data['msg'] = '';
+					
+				$data['update']['produto']['anterior'] = $this->Orcatrata_model->get_produtos($id);
+				
+				if ($data['update']['produto']['anterior'] === FALSE || $data['update']['produto']['anterior']['idTab_TipoRD'] != 2 || $data['update']['produto']['anterior']['ConcluidoProduto'] == "S") {
+					
+					$data['msg'] = '?m=2';
+					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+					//$this->basico->erro($msg);
+					
+					redirect(base_url() . 'Vendidos/vendidos/' . $data['msg']);
+					exit();
+					
+				}else{
+					
+					if($this->Basico_model->get_dt_validade() === FALSE){
+						
+						$data['msg'] = '?m=3';
+						redirect(base_url() . 'acesso' . $data['msg']);
+						
+					} else {
+							
+						$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+						#### App_OrcaTrata ####
+						
+						$data['titulo'] = 'Baixa do Produto';
+						$data['form_open_path'] = 'Vendidos/vendido_baixa';
+						$data['readonly'] = '';
+						$data['disabled'] = '';
+						$data['panel'] = 'info';
+						$data['metodo'] = 2;
+						
+						#run form validation
+						////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
+						
+						#### App_Produto ####
+
+						$data['orcatrata_baixa'] = $this->Orcatrata_model->get_orcamento_baixa_produto($data['update']['produto']['anterior']['idApp_OrcaTrata']);			
+
+						//$data['produto']['DataLanc'] = date('Y-m-d', time());
+						$data['produto']['ConcluidoProduto'] = "S";
+						
+						$data['update']['produto']['campos'] = array_keys($data['produto']);
+						
+						$data['update']['produto']['auditoriaitem'] = $this->basico->set_log(
+							$data['update']['produto']['anterior'],
+							$data['produto'],
+							$data['update']['produto']['campos'],
+							$id, 
+						TRUE);
+						
+						/*
+						echo '<br>';
+						echo "<pre>";
+						print_r($data['update']['produto']['anterior']['idApp_OrcaTrata']);
+						echo '<br>';
+						print_r($data['orcatrata']);
+						echo '<br>';
+						print_r($data['produto']);
+						echo "</pre>";			
+						exit();
+						*/
+						
+						$data['update']['produto']['bd'] = $this->Orcatrata_model->update_produto_id($data['produto'], $id);
+						
+						$data['orcatrata']['CombinadoFrete'] = "S";
+						
+						$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_posterior($data['update']['produto']['anterior']['idApp_OrcaTrata']);
+						
+						if (isset($data['update']['produto']['posterior'])){
+							
+							$max_produto = count($data['update']['produto']['posterior']);
+							
+							if($max_produto == 0){
+								$data['orcatrata']['ProntoOrca'] = "S";
+								$data['orcatrata']['EnviadoOrca'] = "S";
+								$data['orcatrata']['ConcluidoOrca'] = "S";
+							}else{
+								$data['orcatrata']['ConcluidoOrca'] = "N";
+							}	
+						}
+						
+						if($data['orcatrata_baixa']['CombinadoFrete'] == "N" && $data['orcatrata_baixa']['CanceladoOrca'] == "N"){
+						
+							$data['busca']['estoque']['posterior'] = $this->Orcatrata_model->get_produto_estoque($data['update']['produto']['anterior']['idApp_OrcaTrata']);
+							/*
+							echo "<pre>";
+							echo '<br>';
+							print_r($data['busca']['estoque']['posterior']);
+							echo "</pre>";
+							*/
+							
+							if (isset($data['busca']['estoque']['posterior']) && count($data['busca']['estoque']['posterior']) > 0) {
+								
+								$data['busca']['estoque']['posterior'] = array_combine(range(1, count($data['busca']['estoque']['posterior'])), array_values($data['busca']['estoque']['posterior']));
+								$max_estoque = count($data['busca']['estoque']['posterior']);
+								
+								if (isset($data['busca']['estoque']['posterior'])){
+									
+									for($k=1;$k<=$max_estoque;$k++) {
+										
+										$data['get']['produto'][$k] = $this->Orcatrata_model->get_tab_produtos($data['busca']['estoque']['posterior'][$k]['idTab_Produtos_Produto']);
+										
+										if($data['get']['produto'][$k]['ContarEstoque'] == "S"){
+											
+											$qtd_produto[$k]	= ($data['busca']['estoque']['posterior'][$k]['QtdProduto'] * $data['busca']['estoque']['posterior'][$k]['QtdIncrementoProduto']);
+											
+											$diff_estoque[$k] 	= ($data['get']['produto'][$k]['Estoque'] - $qtd_produto[$k]);
+											
+											if($diff_estoque[$k] <= 0){
+												$estoque[$k] = 0; 
+											}else{
+												$estoque[$k] = $diff_estoque[$k]; 
+											}
+											
+											$data['alterar']['produto']['posterior'][$k]['Estoque'] = $estoque[$k];
+											$data['alterar']['produto']['posterior']['bd'] = $this->Orcatrata_model->update_tab_produtos_id($data['alterar']['produto']['posterior'][$k], $data['busca']['estoque']['posterior'][$k]['idTab_Produtos_Produto']);
+											
+											unset($qtd_produto[$k]);
+											unset($diff_estoque[$k]);
+											unset($estoque[$k]);
+										}
+									}
+								}
+							}
+						}			
+
+						if($data['orcatrata']['ConcluidoOrca'] == 'S' && $data['orcatrata_baixa']['QuitadoOrca'] == 'S'){
+							
+							$data['orcatrata']['ProntoOrca'] = "S";
+							$data['orcatrata']['EnviadoOrca'] = "S";
+							$data['orcatrata']['FinalizadoOrca'] = "S";
+						
+							#### App_Procedimento ####
+							$data['update']['procedimento']['alterar'] = $this->Orcatrata_model->get_procedimento_posterior($data['update']['produto']['anterior']['idApp_OrcaTrata']);
+							if (isset($data['update']['procedimento']['alterar'])){
+							
+								$max = count($data['update']['procedimento']['alterar']);
+								for($j=0;$j<$max;$j++) {
+									$data['update']['procedimento']['alterar'][$j]['ConcluidoProcedimento'] = 'S';				
+								}
+								if (count($data['update']['procedimento']['alterar']))
+									$data['update']['procedimento']['bd']['alterar'] =  $this->Orcatrata_model->update_procedimento($data['update']['procedimento']['alterar']);
+
+							}
+						
+						}else{
+							$data['orcatrata']['FinalizadoOrca'] = "N";
+						}			
+						
+						$data['update']['orcatrata']['bd'] = $this->Orcatrata_model->update_orcatrata($data['orcatrata'], $data['update']['produto']['anterior']['idApp_OrcaTrata']);			
+
+						$data['msg'] = '?m=1';
+
+						redirect(base_url() . 'Vendidos/vendidos/' . $data['msg']);
+						exit();
+					}
+				}
+			}
+        }
 		$this->load->view('basico/footer');
 
     }
