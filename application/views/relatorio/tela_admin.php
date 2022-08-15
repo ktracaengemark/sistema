@@ -208,8 +208,7 @@
 											<?php } ?>	
 										</div>
 									<?php }?>								
-								<?php } ?>	
-									
+								<?php } ?>
 								<div class="col-md-12">											
 									<label for=""><h4><b>Estatísticas</b></h4></label>
 									<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
@@ -236,27 +235,16 @@
 													</a>
 												</div>	
 											</div>
-											
-											<div class="form-group col-md-12 text-left">
-												<div class="row">										
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>orcatrata/ultimopedido" role="button"> 
-														<span class="glyphicon glyphicon-usd"></span> Cadastrar Ultimo pedido
-													</a>
-												</div>	
-											</div>
 											-->
 										<?php }?>
-									<?php }?>	
-											
+									<?php }?>
 								</div>
-									
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-			
 		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 			<div class="panel panel-danger">
 				<div class="panel-heading">
@@ -435,7 +423,6 @@
 				</div>
 			</div>
 		</div>
-		
 		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 			<div class="panel panel-warning">
 				<div class="panel-heading">
@@ -443,64 +430,37 @@
 						<h3 class="text-center"><b><?php echo $_SESSION['log']['NomeEmpresa']; ?></b></h3>
 					</div>
 					<div <?php echo $collapse1; ?> id="Administracao">
-						<div class="panel-body">							
-							<label for=""><h4><b>Colaborador</b></h4></label>
-							
-							<?php 
-								if($_SESSION['log']['idSis_Empresa'] == "5"){
-									$usuario = 'associado';
-								}else{
-									
-									$usuario = 'usuario2';
-								}
-							?>
-							<div class="row">
-								<div class="form-group col-md-12 text-left">	
-									<a class="container-img" href="<?php echo base_url() ?><?php echo $usuario; ?>/prontuario/<?php echo $_SESSION['log']['idSis_Usuario']; ?>" > 
-										<?php echo $_SESSION['log']['Nome']; ?>
-									</a>
-								</div>
-							</div>
-							<div class="row">
-								<div class="form-group col-md-12 text-left">	
-									<a class="container-img" href="<?php echo base_url() ?><?php echo $usuario; ?>/prontuario/<?php echo $_SESSION['log']['idSis_Usuario']; ?>" > 
-										<img class="img-circle img-responsive" width='200' height='200' alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Usuario']['idSis_Empresa'] . '/usuarios/miniatura/' . $query['Arquivo'] . ''; ?>">
-									</a>
-								</div>
-							</div>
+						<div class="panel-body">
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
-								
-								<label for=""><h4><b>Empresa</b></h4></label>
+								<label for=""><h4><b>Clientes</b></h4></label>
+								<div class="row">
+									<div class="form-group col-md-12 text-left">																				
+										<a class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Cliente/clientes" role="button"> 
+											<span class="glyphicon glyphicon-user"></span> Pesquisar Clientes
+										</a>
+									</div>
+								</div>
 								<div class="row">
 									<div class="form-group col-md-12 text-left">
-										<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/loginempresa" role="button"> 
-											<span class="glyphicon glyphicon-barcode"></span> Administração
+										<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>Cliente/rankingvendas" role="button"> 
+											<span class="glyphicon glyphicon-pencil"></span>Ranking & CashBack
+										</a>											
+									</div>	
+								</div>
+								<div class="row">
+									<div class="form-group col-md-12 text-left">										
+										<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/proc_Sac" role="button">
+											<span class="glyphicon glyphicon-pencil"></span> SAC
 										</a>
 									</div>	
 								</div>
 								<div class="row">
-									<div class="form-group col-md-12 text-left">
-										<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/loginempresa" role="button"> 
-											<span class="glyphicon glyphicon-barcode"></span> Funcionários
+									<div class="form-group col-md-12 text-left">										
+										<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/proc_Marketing" role="button">
+											<span class="glyphicon glyphicon-pencil"></span> Marketing
 										</a>
 									</div>	
 								</div>
-								<div class="row">
-									<div class="form-group col-md-12 text-left">
-										<a type="button" class="btn btn-md btn-default btn-block"  href="<?php echo base_url() ?>../enkontraki/login_cliente.php?id_empresa=<?php echo $_SESSION['Empresa']['idSis_Empresa'];?>" target="_blank"  role="button">
-											<span class="glyphicon glyphicon-barcode"></span> Assinatura
-										</a>
-									</div>	
-								</div>
-							<?php }?>
-							<div class="row">
-								<div class="form-group col-md-12 text-left">
-									<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/empresas" role="button"> 
-										<span class="glyphicon glyphicon-home"></span> Empresas
-									</a>
-								</div>	
-							</div>
-							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 								<label for=""><h4><b>Fornecedores</b></h4></label>
 								<div class="row">
 									<div class="form-group col-md-12 text-left">
@@ -516,7 +476,7 @@
 										</a>
 									</div>	
 								</div>
-								<label for=""><h4><b>Produtos & Serviços</b></h4></label>
+								<label for=""><h4><b>Produtos & Promoções</b></h4></label>
 								<div class="row">
 									<div class="form-group col-md-12 text-left">	
 										<a class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/produtos" role="button"> 
@@ -528,6 +488,13 @@
 									<div class="form-group col-md-12 text-left">													
 										<a class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/promocao" role="button"> 
 											<span class="glyphicon glyphicon-usd"></span> Promoções
+										</a>
+									</div>	
+								</div>
+								<div class="row">
+									<div class="form-group col-md-12 text-left">										
+										<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>campanha" role="button">
+											<span class="glyphicon glyphicon-pencil"></span>Campanhas & Cupons
 										</a>
 									</div>	
 								</div>
@@ -607,6 +574,28 @@
 							</div>
 							-->	
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
+								<label for=""><h4><b>Empresa</b></h4></label>
+								<div class="row">
+									<div class="form-group col-md-12 text-left">
+										<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/loginempresa" role="button"> 
+											<span class="glyphicon glyphicon-barcode"></span> Administração
+										</a>
+									</div>	
+								</div>
+								<div class="row">
+									<div class="form-group col-md-12 text-left">
+										<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/loginempresa" role="button"> 
+											<span class="glyphicon glyphicon-barcode"></span> Funcionários
+										</a>
+									</div>	
+								</div>
+								<div class="row">
+									<div class="form-group col-md-12 text-left">
+										<a type="button" class="btn btn-md btn-default btn-block"  href="<?php echo base_url() ?>../enkontraki/login_cliente.php?id_empresa=<?php echo $_SESSION['Empresa']['idSis_Empresa'];?>" target="_blank"  role="button">
+											<span class="glyphicon glyphicon-barcode"></span> Assinatura
+										</a>
+									</div>	
+								</div>
 								<label for=""><h4><b>Site</b></h4></label>	
 								<div class="row">
 									<div class="form-group col-md-12 text-left">
@@ -644,6 +633,13 @@
 									</div>	
 								</div>
 							<?php }?>
+							<div class="row">
+								<div class="form-group col-md-12 text-left">
+									<a type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/empresas" role="button"> 
+										<span class="glyphicon glyphicon-home"></span> Empresas
+									</a>
+								</div>	
+							</div>
 							<div class="row">
 								<div class="form-group col-md-12 text-left">
 									<a type="button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() ?>login/sair" role="button"> 

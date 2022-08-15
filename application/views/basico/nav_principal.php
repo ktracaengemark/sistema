@@ -31,7 +31,7 @@
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="btn btn-secondary btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
-								 Clientes <span class="caret"></span>
+								 <span data-toggle="tooltip" data-placement="bottom" title="mais opcoes">Clientes <span class="caret"></span></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="<?php echo base_url() ?>Cliente/clientes"><span class="glyphicon glyphicon-user"></span> Pesquisar Clientes</a></li>
@@ -41,8 +41,6 @@
 								<li><a href="<?php echo base_url() ?>relatorio/sac"><span class="glyphicon glyphicon-pencil"></span> Sac</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>relatorio/marketing"><span class="glyphicon glyphicon-pencil"></span> Marketing</a></li>
-								<li role="separator" class="divider"></li>
-								<li><a href="<?php echo base_url() ?>campanha"><span class="glyphicon glyphicon-pencil"></span> Campanhas</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>
 							</ul>
@@ -62,7 +60,7 @@
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="btn btn-secondary btn-sm btn-success dropdown-toggle" data-toggle="dropdown">
-								Tarefas  <span class="caret"></span>
+								<span data-toggle="tooltip" data-placement="bottom" title="mais opcoes">Tarefas <span class="caret"></span></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a class="dropdown-item" href="<?php echo base_url() ?>agenda"><span class="glyphicon glyphicon-calendar"></span> Agenda </a></li>
@@ -81,7 +79,7 @@
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="btn btn-secondary btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-								Vendas  <span class="caret"></span>
+								<span data-toggle="tooltip" data-placement="bottom" title="mais opcoes">Vendas <span class="caret"></span></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<?php if ($_SESSION['log']['idSis_Empresa'] != 5 ) { ?>
@@ -111,7 +109,7 @@
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="btn btn-secondary btn-sm btn-danger dropdown-toggle" data-toggle="dropdown">
-								Compras  <span class="caret"></span>
+								<span data-toggle="tooltip" data-placement="bottom" title="mais opcoes">Compras <span class="caret"></span></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="<?php echo base_url() ?>despesas_statico/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor Estatico</a></li>
@@ -151,15 +149,16 @@
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
-								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
-									
-									<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?>
-								<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
-									<span class="glyphicon glyphicon-warning-sign"> </span> Renovar 
-								<?php } else {?>
-									<span class="glyphicon glyphicon-home"></span> enkontraki
-								<?php } ?>
-								<span class="caret"></span>
+								<span data-toggle="tooltip" data-placement="bottom" title="mais opcoes">
+									<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
+										<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?>
+									<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
+										<span class="glyphicon glyphicon-warning-sign"> </span> Renovar 
+									<?php } else {?>
+										<span class="glyphicon glyphicon-home"></span> enkontraki
+									<?php } ?>
+									<span class="caret"></span>
+								</span>
 							</button>
 							<ul class="dropdown-menu" role="menu">						
 								<?php if ($_SESSION['log']['idSis_Empresa'] != 5) { ?>
@@ -182,10 +181,10 @@
 							$usuario = 'usuario2';
 						}
 					?>				
-					<a href="<?php echo base_url() ?><?php echo $usuario; ?>/prontuario/<?php echo $_SESSION['log']['idSis_Usuario']; ?>" > 
+					<a type="button" data-toggle="tooltip" data-placement="bottom" title="<?php echo $_SESSION['log']['Nome']; ?>"  href="<?php echo base_url() ?><?php echo $usuario; ?>/prontuario/<?php echo $_SESSION['log']['idSis_Usuario']; ?>" > 
 						<img class="img-circle img-responsive" width='30' height='30' style="margin-top:-15px; margin-bottom:-10px" alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Usuario']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Usuario']['Arquivo'] . ''; ?>">
 					</a>
-				</li>					
+				</li>
 			</ul>
 		</div>
 	</div>
