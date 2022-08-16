@@ -16,8 +16,8 @@
 									<label for=""><h4><b>Agenda</b></h4></label>
 									<div class="form-group col-md-12 text-left">
 										<div class="row">
-											<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>relatorio/agendamentos" role="button"> 
-												<span class="glyphicon glyphicon-pencil"></span> Eventos
+											<a  type="button" class="btn btn-md btn-default btn-block text-left" href="<?php echo base_url() ?>Agenda/agendamentos" role="button"> 
+												<span class="glyphicon glyphicon-pencil"></span> Agendamentos
 											</a>											
 										</div>	
 									</div>										
