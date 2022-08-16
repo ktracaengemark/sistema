@@ -17,7 +17,7 @@
 								</span>
 								<input type="text" placeholder="Pesquisar <?php echo $titulo1;?>" class="form-control Numero btn-sm" name="Orcamento" id="Orcamento" value="<?php echo set_value('Orcamento', $query['Orcamento']); ?>">
 							</div>
-							<input type="hidden" name="idApp_Sac" id="idApp_Sac" value="">
+							<input type="hidden" name="idApp_Marketing" id="idApp_Marketing" value="">
 						<?php }elseif($tipoproc == 3 || $tipoproc == 4){ ?>
 							<div class="input-group">
 								<span class="input-group-btn">
@@ -25,7 +25,7 @@
 										<span class="glyphicon glyphicon-search"></span> 
 									</button>
 								</span>
-								<input type="text" placeholder="Pesquisar <?php echo $titulo1;?>" class="form-control Numero btn-sm" name="idApp_Sac" id="idApp_Sac" value="<?php echo set_value('idApp_Sac', $query['idApp_Sac']); ?>">
+								<input type="text" placeholder="Pesquisar <?php echo $titulo1;?>" class="form-control Numero btn-sm" name="idApp_Marketing" id="idApp_Marketing" value="<?php echo set_value('idApp_Marketing', $query['idApp_Marketing']); ?>">
 							</div>
 							<input type="hidden" name="Orcamento" id="Orcamento" value="">
 						<?php } ?>
@@ -167,12 +167,12 @@
 									<div class="panel-heading text-left">
 										<div class="row">
 											<div class="col-md-3 text-left">
-												<label for="ConcluidoSac">Proc. de <?php echo $titulo1;?> Concl.?</label>
+												<label for="ConcluidoMarketing">Proc. de <?php echo $titulo1;?> Concl.?</label>
 												<select data-placeholder="Selecione uma opção..." class="form-control Chosen btn-block"
-														id="ConcluidoSac" name="ConcluidoSac">
+														id="ConcluidoMarketing" name="ConcluidoMarketing">
 													<?php
-													foreach ($select['ConcluidoSac'] as $key => $row) {
-														if ($query['ConcluidoSac'] == $key) {
+													foreach ($select['ConcluidoMarketing'] as $key => $row) {
+														if ($query['ConcluidoMarketing'] == $key) {
 															echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 														} else {
 															echo '<option value="' . $key . '">' . $row . '</option>';
@@ -243,7 +243,7 @@
 												</div>
 											</div>
 										</div>
-										<?php if ($query['TipoSac'] == 3 || $query['TipoSac'] == 4) { ?>
+										<?php if ($query['TipoMarketing'] == 3 || $query['TipoMarketing'] == 4) { ?>
 											<div class="row">
 												<div class="col-md-3">
 													<label for="DataInicio10">Data Ação de <?php echo $titulo1;?> Inc.</label>
@@ -403,7 +403,7 @@
 			</div>
 		</div>
 	<?php } ?>
-	<?php echo (isset($list)) ? $list : FALSE ?>	
+	<?php echo (isset($list)) ? $list : FALSE ?>
 </div>	
 </form>		
 

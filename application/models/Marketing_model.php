@@ -227,122 +227,6 @@ class Marketing_model extends CI_Model {
 		return $row;
         //return $query[0];
     }	
-	
-    public function get_marketing_empresa($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
-		
-		$date_inicio_prc = ($_SESSION['FiltroMarketing']['DataInicio9']) ? 'PRC.DataMarketing >= "' . $_SESSION['FiltroMarketing']['DataInicio9'] . '" AND ' : FALSE;
-		$date_fim_prc = ($_SESSION['FiltroMarketing']['DataFim9']) ? 'PRC.DataMarketing <= "' . $_SESSION['FiltroMarketing']['DataFim9'] . '" AND ' : FALSE;
-
-		$date_inicio_sub_prc = ($_SESSION['FiltroMarketing']['DataInicio10']) ? 'SPRC.DataSubMarketing >= "' . $_SESSION['FiltroMarketing']['DataInicio10'] . '" AND ' : FALSE;
-		$date_fim_sub_prc = ($_SESSION['FiltroMarketing']['DataFim10']) ? 'SPRC.DataSubMarketing <= "' . $_SESSION['FiltroMarketing']['DataFim10'] . '" AND ' : FALSE;
-
-		$hora_inicio_prc = ($_SESSION['FiltroMarketing']['HoraInicio9']) ? 'PRC.HoraMarketing >= "' . $_SESSION['FiltroMarketing']['HoraInicio9'] . '" AND ' : FALSE;
-		$hora_fim_prc = ($_SESSION['FiltroMarketing']['HoraFim9']) ? 'PRC.HoraMarketing <= "' . $_SESSION['FiltroMarketing']['HoraFim9'] . '" AND ' : FALSE;
-		
-		$hora_inicio_sub_prc = ($_SESSION['FiltroMarketing']['HoraInicio10']) ? 'SPRC.HoraSubMarketing >= "' . $_SESSION['FiltroMarketing']['HoraInicio10'] . '" AND ' : FALSE;
-		$hora_fim_sub_prc = ($_SESSION['FiltroMarketing']['HoraFim10']) ? 'SPRC.HoraSubMarketing <= "' . $_SESSION['FiltroMarketing']['HoraFim10'] . '" AND ' : FALSE;		
-		
-		$data['TipoMarketing'] = $data['TipoMarketing'];
-		$data['idApp_Marketing'] = ($_SESSION['FiltroMarketing']['idApp_Marketing'] != "" ) ? ' AND PRC.idApp_Marketing = ' . $_SESSION['FiltroMarketing']['idApp_Marketing'] . '  ': FALSE;
-		//$data['Marketing'] = ($_SESSION['FiltroMarketing']['Marketing'] != "0" ) ? ' AND PRC.Marketing = ' . $_SESSION['FiltroMarketing']['Marketing'] . '  ': FALSE;
-		$data['CategoriaMarketing'] = ($_SESSION['FiltroMarketing']['CategoriaMarketing'] != "0" ) ? ' AND PRC.CategoriaMarketing = ' . $_SESSION['FiltroMarketing']['CategoriaMarketing'] . '  ': FALSE;
-		$data['Cliente'] = ($_SESSION['FiltroMarketing']['idApp_Cliente']  ) ? ' AND PRC.idApp_Cliente = ' . $_SESSION['FiltroMarketing']['idApp_Cliente'] . '  ': FALSE;
-		$data['Fornecedor'] = ($_SESSION['FiltroMarketing']['idApp_Fornecedor']  ) ? ' AND PRC.idApp_Fornecedor = ' . $_SESSION['FiltroMarketing']['idApp_Fornecedor'] . '  ': FALSE;
-		$data['NomeUsuario'] = ($_SESSION['FiltroMarketing']['NomeUsuario']  ) ? ' AND PRC.idSis_Usuario = ' . $_SESSION['FiltroMarketing']['NomeUsuario'] . '  ': FALSE;
-		$data['Compartilhar'] = ($_SESSION['FiltroMarketing']['Compartilhar']  ) ? ' AND PRC.Compartilhar = ' . $_SESSION['FiltroMarketing']['Compartilhar'] . '  ': FALSE;
-		$data['ConcluidoMarketing'] = ($_SESSION['FiltroMarketing']['ConcluidoMarketing'] != "#" ) ? ' AND PRC.ConcluidoMarketing = "' . $_SESSION['FiltroMarketing']['ConcluidoMarketing'] . '"  ': FALSE;
-		$data['Agrupar'] = ($_SESSION['FiltroMarketing']['Agrupar'] == "0") ? 'PRC.idApp_Marketing': 'PRC.' . $_SESSION['FiltroMarketing']['Agrupar'];
-		$data['Campo'] = (!$_SESSION['FiltroMarketing']['Campo']) ? 'PRC.DataMarketing' : $_SESSION['FiltroMarketing']['Campo'];
-        $data['Ordenamento'] = (!$_SESSION['FiltroMarketing']['Ordenamento']) ? 'DESC' : $_SESSION['FiltroMarketing']['Ordenamento'];
-		/*
-        echo '<br>';
-        echo "<pre>";
-        //print_r($data['idSis_Empresa']);
-		echo '<br>';
-        print_r($data['Agrupar']);
-        echo "</pre>";
-        exit ();
-       	*/
-
-        if ($limit){
-			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
-		}else{
-			$querylimit = '';
-		}
-				
-		$query = $this->db->query('
-            SELECT
-				PRC.idApp_Marketing,
-				PRC.CategoriaMarketing,
-                PRC.Marketing,
-				PRC.DataMarketing,
-				PRC.HoraMarketing,
-				PRC.ConcluidoMarketing,
-				PRC.idSis_Usuario,
-				PRC.Compartilhar,
-				C.idApp_Cliente,
-				C.NomeCliente,
-				U.idSis_Usuario,
-				U.Nome AS NomeUsuario,
-				AU.idSis_Usuario,
-				AU.Nome AS NomeCompartilhar
-            FROM 
-				App_Marketing AS PRC
-				LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = PRC.idApp_Cliente
-				LEFT JOIN App_Fornecedor AS F ON F.idApp_Fornecedor = PRC.idApp_Fornecedor
-				LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = PRC.idSis_Usuario
-				LEFT JOIN Sis_Usuario AS AU ON AU.idSis_Usuario = PRC.Compartilhar
-				LEFT JOIN App_SubMarketing AS SPRC ON SPRC.idApp_Marketing = PRC.idApp_Marketing
-            WHERE
-                ' . $date_inicio_prc . '
-                ' . $date_fim_prc . '
-                ' . $date_inicio_sub_prc . '
-                ' . $date_fim_sub_prc . '
-                ' . $hora_inicio_prc . '
-                ' . $hora_fim_prc . '
-                ' . $hora_inicio_sub_prc . '
-                ' . $hora_fim_sub_prc . '
-				PRC.idSis_Empresa = ' . $data['idSis_Empresa'] . ' AND
-				PRC.TipoMarketing = ' . $data['TipoMarketing'] . '
-				' . $data['idApp_Marketing'] . '
-				' . $data['CategoriaMarketing'] . '
-				' . $data['Cliente'] . '
-				' . $data['Fornecedor'] . '
-				' . $data['NomeUsuario'] . '
-				' . $data['Compartilhar'] . '
-				' . $data['ConcluidoMarketing'] . '
-			GROUP BY
-				idApp_Marketing
-			ORDER BY
-				' . $data['Campo'] . '
-				' . $data['Ordenamento'] . '	
-			' . $querylimit . ' 		
-        ');
-	
-		if($total == TRUE) {
-			return $query->num_rows();
-		}
-
-		$query = $query->result_array();
-       
-	   /*
-        //echo $this->db->last_query();
-        echo '<br>';
-        echo "<pre>";
-        print_r($query);
-        echo "</pre>";
-       // exit ();
-       */
-	   
-        return $query;
-    }
-
-    public function get_submarketing_empresa($data) {
-		$query = $this->db->query('SELECT * FROM App_SubMarketing WHERE idSis_Empresa = ' . $data['idSis_Empresa']);
-        $query = $query->result_array();
-
-        return $query;
-    }	
 
     public function get_profissional($data) {
 		$query = $this->db->query('SELECT NomeProfissional FROM App_Profissional WHERE idApp_Profissional = ' . $data);
@@ -794,6 +678,240 @@ class Marketing_model extends CI_Model {
             }
         }
     }
+
+	public function listar_marketing($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+
+		$date_inicio_prc = ($data['DataInicio9']) ? 'PRC.DataMarketing >= "' . $data['DataInicio9'] . '" AND ' : FALSE;
+		$date_fim_prc = ($data['DataFim9']) ? 'PRC.DataMarketing <= "' . $data['DataFim9'] . '" AND ' : FALSE;
+		
+		$date_inicio_sub_prc = ($data['DataInicio10']) ? 'SPRC.DataSubMarketing >= "' . $data['DataInicio10'] . '" AND ' : FALSE;
+		$date_fim_sub_prc = ($data['DataFim10']) ? 'SPRC.DataSubMarketing <= "' . $data['DataFim10'] . '" AND ' : FALSE;
+
+		$hora_inicio_prc = ($data['HoraInicio9']) ? 'PRC.HoraMarketing >= "' . $data['HoraInicio9'] . '" AND ' : FALSE;
+		$hora_fim_prc = ($data['HoraFim9']) ? 'PRC.HoraMarketing <= "' . $data['HoraFim9'] . '" AND ' : FALSE;
+		
+		$hora_inicio_sub_prc = ($data['HoraInicio10']) ? 'SPRC.HoraSubMarketing >= "' . $data['HoraInicio10'] . '" AND ' : FALSE;
+		$hora_fim_sub_prc = ($data['HoraFim10']) ? 'SPRC.HoraSubMarketing <= "' . $data['HoraFim10'] . '" AND ' : FALSE;
+		
+		$data['Campo'] = (!$data['Campo']) ? 'PRC.DataMarketing' : $data['Campo'];
+		$data['Ordenamento'] = (!$data['Ordenamento']) ? 'DESC' : $data['Ordenamento'];
+		
+		$filtro10 = ($data['ConcluidoMarketing'] != '#') ? 'PRC.ConcluidoMarketing = "' . $data['ConcluidoMarketing'] . '" AND ' : FALSE;
+		
+		$filtro22 = ($data['idTab_TipoRD'] == 2) ? 'AND (OT.idTab_TipoRD = "2" OR C.idApp_Cliente = PRC.idApp_Cliente)' : FALSE;
+		
+		$data['idApp_Marketing'] = ($data['idApp_Marketing']) ? ' AND PRC.idApp_Marketing = ' . $data['idApp_Marketing'] . '  ': FALSE;		
+		$data['Sac'] = ($data['Sac']) ? ' AND PRC.Sac = ' . $data['Sac'] . '  ': FALSE;		
+		$data['CategoriaMarketing'] = ($data['CategoriaMarketing']) ? ' AND PRC.CategoriaMarketing = ' . $data['CategoriaMarketing'] . '  ': FALSE;
+		$data['Orcamento'] = ($data['Orcamento']) ? ' AND PRC.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
+		$data['Cliente'] = ($data['Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
+		$data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;       
+		$filtro17 = ($data['NomeUsuario']) ? 'PRC.idSis_Usuario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;        
+		$filtro18 = ($data['Compartilhar']) ? 'PRC.Compartilhar = "' . $data['Compartilhar'] . '" AND ' : FALSE;		
+
+		$groupby = ($data['Agrupar'] && $data['Agrupar'] != "0") ? 'GROUP BY PRC.' . $data['Agrupar'] . '' : FALSE;
+		
+	
+		/*
+		echo $this->db->last_query();
+		echo "<pre>";
+		print_r($groupby);
+		echo "</pre>";
+		exit();
+        */ 
+		
+		$querylimit = '';
+        if ($limit)
+            $querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		
+		
+		if($completo == FALSE){
+			$complemento = FALSE;
+		}else{
+			$complemento = ' AND OT.CanceladoOrca = "N"';
+		}
+
+		$filtro_base = '
+				' . $date_inicio_prc . '
+				' . $date_fim_prc . '
+				' . $date_inicio_sub_prc . '
+				' . $date_fim_sub_prc . '
+				' . $hora_inicio_prc . '
+				' . $hora_fim_prc . '
+				' . $hora_inicio_sub_prc . '
+				' . $hora_fim_sub_prc . '
+				' . $filtro10 . '
+				' . $filtro17 . '
+				' . $filtro18 . '
+				PRC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				PRC.idApp_OrcaTrata = 0 AND 
+				PRC.idApp_Cliente != 0 AND 
+				PRC.Sac = 0 AND 
+				PRC.CategoriaMarketing != 0 
+				' . $filtro22 . '
+				' . $data['idApp_Marketing'] . '
+				' . $data['Sac'] . '
+				' . $data['CategoriaMarketing'] . '
+				' . $data['Orcamento'] . '
+				' . $data['Cliente'] . '
+				' . $data['idApp_Cliente'] . '
+			' . $groupby . '
+			ORDER BY
+				' . $data['Campo'] . ' 
+				' . $data['Ordenamento'] . '
+			' . $querylimit . '
+		';
+
+        ####################################################################
+        #Contagem Dos MARKs e Soma total Para todas as listas e baixas
+		if($total == TRUE && $date == FALSE) {
+			
+			$query = $this->db->query(
+				'SELECT
+					PRC.idApp_Marketing
+				FROM
+					App_Marketing AS PRC
+						LEFT JOIN App_SubMarketing AS SPRC ON SPRC.idApp_Marketing = PRC.idApp_Marketing
+						LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = PRC.idApp_OrcaTrata
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = PRC.idApp_Cliente
+						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = PRC.idSis_Usuario
+						LEFT JOIN Sis_Usuario AS AU ON AU.idSis_Usuario = PRC.Compartilhar
+						LEFT JOIN Sis_Usuario AS SU ON SU.idSis_Usuario = SPRC.idSis_Usuario
+				WHERE
+					' . $filtro_base . ''
+			);
+			
+			$count = $query->num_rows();
+			
+			if(!isset($count)){
+				return FALSE;
+			}else{
+				if($count >= 15001){
+					return FALSE;
+				}else{
+					return $query;
+				}
+			}
+		}
+
+        ####################################################################
+        # Relatório/Excel Campos para exibição DOs MARKs	
+		if($total == FALSE && $date == FALSE) {
+			$query = $this->db->query(
+				'SELECT
+					PRC.idSis_Empresa,
+					PRC.idApp_Marketing,
+					PRC.Marketing,
+					PRC.DataMarketing,
+					PRC.HoraMarketing,
+					PRC.ConcluidoMarketing,
+					PRC.idApp_Cliente,
+					PRC.idApp_OrcaTrata,
+					PRC.Compartilhar,
+					PRC.Sac,
+					PRC.CategoriaMarketing,
+					SPRC.SubMarketing,
+					SPRC.ConcluidoSubMarketing,
+					SPRC.DataSubMarketing,
+					SPRC.HoraSubMarketing,
+					OT.idTab_TipoRD,
+					CONCAT(IFNULL(C.NomeCliente,"")) AS NomeCliente,
+					U.idSis_Usuario,
+					U.CpfUsuario,
+					U.Nome AS NomeUsuario,
+					SU.idSis_Usuario,
+					SU.Nome AS NomeSubUsuario,
+					AU.idSis_Usuario,
+					AU.Nome AS NomeCompartilhar
+				FROM
+					App_Marketing AS PRC
+						LEFT JOIN App_SubMarketing AS SPRC ON SPRC.idApp_Marketing = PRC.idApp_Marketing
+						LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = PRC.idApp_OrcaTrata
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = PRC.idApp_Cliente
+						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = PRC.idSis_Usuario
+						LEFT JOIN Sis_Usuario AS AU ON AU.idSis_Usuario = PRC.Compartilhar
+						LEFT JOIN Sis_Usuario AS SU ON SU.idSis_Usuario = SPRC.idSis_Usuario
+				WHERE
+					' . $filtro_base . ''
+			);
+
+            foreach ($query->result() as $row) {
+				$row->DataMarketing = $this->basico->mascara_data($row->DataMarketing, 'barras');
+				$row->ConcluidoMarketing = $this->basico->mascara_palavra_completa($row->ConcluidoMarketing, 'NS');
+				$row->DataSubMarketing = $this->basico->mascara_data($row->DataSubMarketing, 'barras');
+				$row->ConcluidoSubMarketing = $this->basico->mascara_palavra_completa($row->ConcluidoSubMarketing, 'NS');
+				
+				if($row->Compartilhar == "0"){
+					$row->NomeCompartilhar = 'Todos';
+				}
+
+				if($row->CategoriaMarketing == 1){
+					$row->CategoriaMarketing = 'Atualização';
+				}elseif($row->CategoriaMarketing == 2){
+					$row->CategoriaMarketing = 'Pesquisa';
+				}elseif($row->CategoriaMarketing == 3){
+					$row->CategoriaMarketing = 'Retorno';
+				}elseif($row->CategoriaMarketing == 4){
+					$row->CategoriaMarketing = 'Promoções';
+				}elseif($row->CategoriaMarketing == 5){
+					$row->CategoriaMarketing = 'Felicitações';
+				}
+				
+            }
+            return $query;
+        }
+		
+
+        ####################################################################
+        # Lista/Campos para Impressão
+		if($total == FALSE && $date == TRUE) {
+		
+			$query = $this->db->query('
+				SELECT
+					PRC.idApp_Marketing,
+					PRC.CategoriaMarketing,
+					PRC.Marketing,
+					PRC.DataMarketing,
+					PRC.HoraMarketing,
+					PRC.ConcluidoMarketing,
+					PRC.idSis_Usuario,
+					PRC.Compartilhar,
+					C.idApp_Cliente,
+					C.NomeCliente,
+					U.idSis_Usuario,
+					U.Nome AS NomeUsuario,
+					AU.idSis_Usuario,
+					AU.Nome AS NomeCompartilhar
+				FROM 
+					App_Marketing AS PRC
+					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = PRC.idApp_Cliente
+					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = PRC.idSis_Usuario
+					LEFT JOIN Sis_Usuario AS AU ON AU.idSis_Usuario = PRC.Compartilhar
+					LEFT JOIN App_SubMarketing AS SPRC ON SPRC.idApp_Marketing = PRC.idApp_Marketing
+				WHERE
+					' . $filtro_base . ' 		
+			');
+
+			$query = $query->result_array();
+		   /*
+			//echo $this->db->last_query();
+			echo '<br>';
+			echo "<pre>";
+			print_r($query);
+			echo "</pre>";
+			//exit ();
+		   */
+			return $query;
+		}
+		
+    }
+
+    public function listar_submarketing($data) {
+		$query = $this->db->query('SELECT * FROM App_SubMarketing WHERE idApp_Marketing = ' . $data);
+        $query = $query->result_array();
+
+        return $query;
+    }	
 
     public function delete_marketing($data) {
 

@@ -13,7 +13,7 @@ class Marketing extends CI_Controller {
         $this->load->helper(array('form', 'url', 'date', 'string'));
         #$this->load->library(array('basico', 'Basico_model', 'form_validation'));
         $this->load->library(array('basico', 'form_validation', 'pagination'));
-        $this->load->model(array('Basico_model', 'Marketing_model', 'Marketing_model', 'Usuario_model', 'Relatorio_model', 'Formapag_model', 'Cliente_model'));
+        $this->load->model(array('Basico_model', 'Marketing_model', 'Usuario_model', 'Relatorio_model', 'Formapag_model', 'Cliente_model'));
         $this->load->driver('session');
 
         #load header view
@@ -629,7 +629,7 @@ class Marketing extends CI_Controller {
 							unset($_SESSION['Marketing'], $_SESSION['Procedtarefa']);
 							//redirect(base_url() . 'marketing/listar_Marketing/' . $_SESSION['Cliente']['idApp_Cliente'] . $data['msg']);
 							//redirect(base_url() . 'Marketing/tela_Marketing/' . $data['orcatrata']['idApp_Marketing'] . $data['msg']);
-							redirect(base_url() . 'relatorio/marketing/' . $data['msg']);
+							redirect(base_url() . 'marketing/marketing/' . $data['msg']);
 
 							exit();
 						}
@@ -955,168 +955,6 @@ class Marketing extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
-
-    public function imprimir_lista_Marketing($id = FALSE) {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';		
-		
-
-		if ($id) {
-			if($_SESSION['log']['idSis_Empresa'] !== $id){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			$seguir = FALSE;
-		}
-	
-		if($seguir === FALSE){
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
-			
-		} else {
-
-			$data['bd']['idSis_Empresa'] = $id;
-			$data['bd']['TipoMarketing'] = 4;
-			
-			$data['titulo'] = 'Marketing';
-			$data['form_open_path'] = 'Marketing/imprimir_lista_Marketing';
-			$data['panel'] = 'warning';
-			$data['metodo'] = 4;
-			$data['editar'] = 1;
-			$data['print'] = 1;
-			$data['imprimir'] = 'Marketing/imprimir/';
-			$data['imprimirlista'] = 'Marketing/imprimir_lista_Marketing/';
-			$data['imprimirrecibo'] = 'Marketing/imprimirreciborec/';
-			$data['caminho'] = 'relatorio/marketing/';		
-			
-			//$data['Imprimir']['DataInicio4'] = $this->basico->mascara_data($_SESSION['FiltroAlteraParcela']['DataInicio4'], 'barras');
-			//$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroAlteraParcela']['DataFim4'], 'barras');
-
-
-			//$this->load->library('pagination');
-			$config['per_page'] = 10;
-			$config["uri_segment"] = 4;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
-			
-			if ($id) {
-
-				$config['base_url'] = base_url() . 'Marketing/imprimir_lista_Marketing/' . $id . '/';
-				$config['total_rows'] = $this->Marketing_model->get_marketing_empresa($data['bd'], TRUE);
-			   
-				if($config['total_rows'] >= 1){
-					$data['total_rows'] = $config['total_rows'];
-				}else{
-					$data['total_rows'] = 0;
-				}
-				
-				$this->pagination->initialize($config);
-				
-				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-				$data['pagina'] = $page;
-				$data['per_page'] = $config['per_page'];
-				
-				$data['pagination'] = $this->pagination->create_links();
-			
-				#### App_Marketing ####
-				$data['marketing'] = $this->Marketing_model->get_marketing_empresa($data['bd'], FALSE, $config['per_page'], ($page * $config['per_page']));
-				if (count($data['marketing']) > 0) {
-					$data['marketing'] = array_combine(range(1, count($data['marketing'])), array_values($data['marketing']));
-					$data['count']['POCount'] = count($data['marketing']);           
-
-					if (isset($data['marketing'])) {
-
-						for($j=1;$j<=$data['count']['POCount'];$j++) {
-							$data['marketing'][$j]['DataMarketing'] = $this->basico->mascara_data($data['marketing'][$j]['DataMarketing'], 'barras');
-							$data['marketing'][$j]['ConcluidoMarketing'] = $this->basico->mascara_palavra_completa($data['marketing'][$j]['ConcluidoMarketing'], 'NS');
-							/*
-							echo '<br>';
-							echo "<pre>";
-							print_r($data['marketing'][$j]['CategoriaMarketing']);
-							echo "</pre>";
-							*/
-							if($data['marketing'][$j]['CategoriaMarketing'] == 1){
-								$data['marketing'][$j]['CategoriaMarketing'] = 'Atualização';
-							}elseif($data['marketing'][$j]['CategoriaMarketing'] == 2){
-								$data['marketing'][$j]['CategoriaMarketing'] = 'Pesquisa';
-							}elseif($data['marketing'][$j]['CategoriaMarketing'] == 3){
-								$data['marketing'][$j]['CategoriaMarketing'] = 'Retorno';
-							}elseif($data['marketing'][$j]['CategoriaMarketing'] == 4){
-								$data['marketing'][$j]['CategoriaMarketing'] = 'Promoções';
-							}elseif($data['marketing'][$j]['CategoriaMarketing'] == 5){
-								$data['marketing'][$j]['CategoriaMarketing'] = 'Felicitações';
-							}else{
-								$data['marketing'][$j]['CategoriaMarketing'] = 'indeterminado';
-							}
-							
-						}
-					}	
-				}
-				
-				/*
-				  echo '<br>';
-				  echo "<pre>";
-				  print_r($data['marketing']);
-				  echo "</pre>";
-				  exit ();
-				  */
-				
-				#### App_Marketing ####
-				$data['submarketing'] = $this->Marketing_model->get_submarketing_empresa($data['bd'],TRUE);
-				
-				if (count($data['submarketing']) > 0) {
-					$data['submarketing'] = array_combine(range(1, count($data['submarketing'])), array_values($data['submarketing']));
-					$data['count']['PMCount'] = count($data['submarketing']);
-
-					if (isset($data['submarketing'])) {
-
-						for($j=1; $j <= $data['count']['PMCount']; $j++){
-							$data['submarketing'][$j]['DataSubMarketing'] = $this->basico->mascara_data($data['submarketing'][$j]['DataSubMarketing'], 'barras');	
-							$data['submarketing'][$j]['ConcluidoSubMarketing'] = $this->basico->mascara_palavra_completa($data['submarketing'][$j]['ConcluidoSubMarketing'], 'NS');					
-						}
-					}
-				}
-				
-
-			}
-			
-			/*
-			  echo '<br>';
-			  echo "<pre>";
-			  print_r($data);
-			  echo "</pre>";
-			  #exit ();
-			 */
-
-			$this->load->view('marketing/print_lista', $data);
-		}
-        $this->load->view('basico/footer');
-
-    }
 	
     public function excluirproc($id = FALSE) {
 
@@ -1177,6 +1015,439 @@ class Marketing extends CI_Controller {
 			}
 		}
         $this->load->view('basico/footer');
+    }
+
+    public function marketing() {
+		
+		unset($_SESSION['FiltroMarketing']);
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Registro Não Encontrada.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 4)
+            $data['msg'] = $this->basico->msg('<strong>A Pesquisa está muito grande, ela excedeu 15000 linhas. Refine o seu filtro.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+			'id_Cliente_Auto',
+			'NomeClienteAuto',
+        ), TRUE));	
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'idApp_Marketing',
+            'Sac',
+            'CategoriaMarketing',
+            'Orcamento',
+			'idTab_TipoRD',
+            'Cliente',
+			'idApp_Cliente',
+			'NomeUsuario',
+			'Compartilhar',
+			'DataInicio9',
+            'DataFim9',
+			'DataInicio10',
+            'DataFim10',
+			'HoraInicio9',
+            'HoraFim9',
+			'HoraInicio10',
+            'HoraFim10',
+			'ConcluidoMarketing',
+            'Ordenamento',
+            'Campo',
+            'TipoMarketing',
+			'Agrupar',
+        ), TRUE));		
+
+        $data['select']['ConcluidoMarketing'] = array(
+			'#' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+		$data['select']['Sac'] = array (
+            '0' => 'Todos',
+            '1' => 'Solicitação',
+            '2' => 'Elogio',
+			'3' => 'Reclamação',
+        );
+		
+		$data['select']['CategoriaMarketing'] = array (
+            '0' => 'Todos',
+            '1' => 'Atualização',
+            '2' => 'Pesquisa',
+			'3' => 'Retorno',
+            '4' => 'Promoções',
+			'5' => 'Felicitações',
+        );
+		
+        $data['select']['Agrupar'] = array(
+			'0' => '::Nenhum::',
+			'idApp_Marketing' => 'Campanha',
+			'idApp_Cliente' => 'Cliente',
+        );
+		
+		$data['select']['Campo'] = array(
+			'PRC.DataMarketing' => 'Data',
+            'PRC.idApp_Marketing' => 'id',
+			'PRC.ConcluidoMarketing' => 'Concl.',
+			'PRC.idSis_Usuario' => 'Quem Cadastrou',
+			'PRC.Compartilhar' => 'Quem Fazer',
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'DESC' => 'Decrescente',
+			'ASC' => 'Crescente',
+        );
+
+        $data['select']['NomeUsuario'] = $this->Relatorio_model->select_usuario();
+		$data['select']['Compartilhar'] = $this->Relatorio_model->select_compartilhar();
+
+		$data['query']['TipoMarketing'] = 4;
+		$data['query']['Sac'] = 0;	
+        $data['titulo1'] = 'Marketing';
+		$data['tipoproc'] = 4;
+		$data['metodo'] = 2;
+		$data['form_open_path'] = 'marketing/marketing';
+		$data['panel'] = 'success';
+		$data['TipoFinanceiro'] = 'Receitas';
+		$data['TipoRD'] = 0;
+        $data['nome'] = 'Cliente';
+		$data['editar'] = 0;
+		$data['print'] = 1;
+		$data['imprimir'] = 'Marketing/imprimir/';
+		$data['imprimirlista'] = 'Marketing/marketing_lista/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
+		$data['edit'] = 'Orcatrata/baixadacobranca/';
+		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		$data['paginacao'] = 'N';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+        #$this->form_validation->set_rules('Pesquisa', 'Pesquisa', 'required|trim');
+		$this->form_validation->set_rules('DataInicio9', 'Data Início do Marketing', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim9', 'Data Fim do Marketing', 'trim|valid_date');
+		$this->form_validation->set_rules('DataInicio10', 'Data Início do SubMarketing', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim10', 'Data Fim do SubMarketing', 'trim|valid_date');
+		$this->form_validation->set_rules('HoraInicio9', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim9', 'Hora Final', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraInicio10', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim10', 'Hora Final', 'trim|valid_hour');
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+			$_SESSION['FiltroMarketing']['idApp_Marketing'] = $data['query']['idApp_Marketing'];
+			$_SESSION['FiltroMarketing']['Sac'] = $data['query']['Sac'];
+			$_SESSION['FiltroMarketing']['CategoriaMarketing'] = $data['query']['CategoriaMarketing'];
+			$_SESSION['FiltroMarketing']['Orcamento'] = $data['query']['Orcamento'];
+			$_SESSION['FiltroMarketing']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
+			$_SESSION['FiltroMarketing']['Cliente'] = $data['query']['Cliente'];
+			$_SESSION['FiltroMarketing']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+			$_SESSION['FiltroMarketing']['NomeUsuario'] = $data['query']['NomeUsuario'];
+			$_SESSION['FiltroMarketing']['Compartilhar'] = $data['query']['Compartilhar'];
+			$_SESSION['FiltroMarketing']['TipoMarketing'] = $data['query']['TipoMarketing'];
+			$_SESSION['FiltroMarketing']['ConcluidoMarketing'] = $data['query']['ConcluidoMarketing'];
+			$_SESSION['FiltroMarketing']['DataInicio9'] = $this->basico->mascara_data($data['query']['DataInicio9'], 'mysql');
+			$_SESSION['FiltroMarketing']['DataFim9'] = $this->basico->mascara_data($data['query']['DataFim9'], 'mysql');
+			$_SESSION['FiltroMarketing']['DataInicio10'] = $this->basico->mascara_data($data['query']['DataInicio10'], 'mysql');
+			$_SESSION['FiltroMarketing']['DataFim10'] = $this->basico->mascara_data($data['query']['DataFim10'], 'mysql');
+			$_SESSION['FiltroMarketing']['HoraInicio9'] = $data['query']['HoraInicio9'];
+			$_SESSION['FiltroMarketing']['HoraFim9'] = $data['query']['HoraFim9'];
+			$_SESSION['FiltroMarketing']['HoraInicio10'] = $data['query']['HoraInicio10'];
+			$_SESSION['FiltroMarketing']['HoraFim10'] = $data['query']['HoraFim10'];
+			$_SESSION['FiltroMarketing']['Agrupar'] = $data['query']['Agrupar'];
+			$_SESSION['FiltroMarketing']['Campo'] = $data['query']['Campo'];
+			$_SESSION['FiltroMarketing']['Ordenamento'] = $data['query']['Ordenamento'];
+
+			$data['pesquisa_query'] = $this->Marketing_model->listar_marketing($_SESSION['FiltroMarketing'], FALSE, TRUE, FALSE, FALSE, FALSE);
+			
+			if($data['pesquisa_query'] === FALSE){
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'Marketing/marketing' . $data['msg']);
+				exit();
+			}else{
+
+				$config['base_url'] = base_url() . 'marketing/marketing_pag/';
+				$config['per_page'] = 10;
+				$config["uri_segment"] = 3;
+				$config['reuse_query_string'] = TRUE;
+				$config['num_links'] = 2;
+				$config['use_page_numbers'] = TRUE;
+				$config['full_tag_open'] = "<ul class='pagination'>";
+				$config['full_tag_close'] = "</ul>";
+				$config['num_tag_open'] = '<li>';
+				$config['num_tag_close'] = '</li>';
+				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+				$config['next_tag_open'] = "<li>";
+				$config['next_tagl_close'] = "</li>";
+				$config['prev_tag_open'] = "<li>";
+				$config['prev_tagl_close'] = "</li>";
+				$config['first_tag_open'] = "<li>";
+				$config['first_tagl_close'] = "</li>";
+				$config['last_tag_open'] = "<li>";
+				$config['last_tagl_close'] = "</li>";
+
+				$config['total_rows'] = $data['pesquisa_query']->num_rows();
+
+				if($config['total_rows'] >= 1){
+					$data['total_rows'] = $config['total_rows'];
+				}else{
+					$data['total_rows'] = 0;
+				}
+				
+				$this->pagination->initialize($config);
+				
+				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+				$data['pagina'] = $page;
+				$data['per_page'] = $config['per_page'];
+				$data['report'] = $this->Marketing_model->listar_marketing($_SESSION['FiltroMarketing'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
+				$data['pagination'] = $this->pagination->create_links();
+				
+				$data['list'] = $this->load->view('marketing/list_marketing2', $data, TRUE);
+				//$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+			}
+		}	
+
+        $this->load->view('marketing/tela_marketing2', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+    public function marketing_pag() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+		$data['query']['TipoMarketing'] = 4;
+		$data['query']['Sac'] = 0;
+		$data['query']['Fornecedor'] = 0;		
+        $data['titulo1'] = 'Marketing';
+		$data['tipoproc'] = 4;
+		$data['metodo'] = 2;
+		$data['form_open_path'] = 'marketing/marketing_pag';
+		$data['panel'] = 'success';
+		$data['TipoFinanceiro'] = 'Receitas';
+		$data['TipoRD'] = 0;
+        $data['nome'] = 'Cliente';
+		$data['editar'] = 0;
+		$data['print'] = 1;
+		$data['imprimir'] = 'Marketing/imprimir/';
+		$data['imprimirlista'] = 'Marketing/marketing_lista/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
+		$data['edit'] = 'Orcatrata/baixadacobranca/';
+		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		$data['paginacao'] = 'S';
+		$data['caminho'] = 'marketing/marketing/';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+		$data['pesquisa_query'] = $this->Marketing_model->listar_marketing($_SESSION['FiltroMarketing'], FALSE, TRUE, FALSE, FALSE, FALSE);
+		
+		if($data['pesquisa_query'] === FALSE){
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'Marketing/marketing' . $data['msg']);
+			exit();
+		}else{
+
+			$config['base_url'] = base_url() . 'marketing/marketing_pag/';
+			$config['per_page'] = 10;
+			$config["uri_segment"] = 3;
+			$config['reuse_query_string'] = TRUE;
+			$config['num_links'] = 2;
+			$config['use_page_numbers'] = TRUE;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			
+			$config['total_rows'] = $data['pesquisa_query']->num_rows();
+           
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
+			}else{
+				$data['total_rows'] = 0;
+			}
+			
+            $this->pagination->initialize($config);
+            
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+            $data['pagina'] = $page;
+			$data['per_page'] = $config['per_page'];
+			$data['report'] = $this->Marketing_model->listar_marketing($_SESSION['FiltroMarketing'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
+			$data['pagination'] = $this->pagination->create_links();
+			
+            $data['list'] = $this->load->view('marketing/list_marketing2', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        }
+
+        $this->load->view('marketing/tela_marketing2', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+    public function marketing_lista($id = FALSE) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';		
+		
+		if (!$id) {
+			
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		} else {
+			
+			if($_SESSION['log']['idSis_Empresa'] !== $id){
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'acesso' . $data['msg']);
+				exit();
+					
+			}else{
+
+				$data['titulo'] = 'Marketing';
+				$data['form_open_path'] = 'Marketing/marketing_lista';
+				$data['panel'] = 'warning';
+				$data['metodo'] = 4;
+				$data['editar'] = 1;
+				$data['print'] = 1;
+				$data['imprimir'] = 'Marketing/imprimir/';
+				$data['imprimirlista'] = 'Marketing/marketing_lista/';
+				$data['imprimirrecibo'] = 'Marketing/imprimirreciborec/';
+				$data['caminho'] = 'marketing/marketing_pag/';		
+
+
+				$data['pesquisa_query'] = $this->Marketing_model->listar_marketing($_SESSION['FiltroMarketing'], FALSE, TRUE, FALSE, FALSE, FALSE);
+		
+				if($data['pesquisa_query'] === FALSE){
+					
+					$data['msg'] = '?m=4';
+					redirect(base_url() . 'Sac/sac' . $data['msg']);
+					exit();
+				}else{
+
+					$config['base_url'] = base_url() . 'Marketing/marketing_lista/' . $id . '/';
+					$config['per_page'] = 10;
+					$config["uri_segment"] = 4;
+					$config['reuse_query_string'] = TRUE;
+					$config['num_links'] = 2;
+					$config['use_page_numbers'] = TRUE;
+					$config['full_tag_open'] = "<ul class='pagination'>";
+					$config['full_tag_close'] = "</ul>";
+					$config['num_tag_open'] = '<li>';
+					$config['num_tag_close'] = '</li>';
+					$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+					$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+					$config['next_tag_open'] = "<li>";
+					$config['next_tagl_close'] = "</li>";
+					$config['prev_tag_open'] = "<li>";
+					$config['prev_tagl_close'] = "</li>";
+					$config['first_tag_open'] = "<li>";
+					$config['first_tagl_close'] = "</li>";
+					$config['last_tag_open'] = "<li>";
+					$config['last_tagl_close'] = "</li>";
+
+					$config['total_rows'] = $data['pesquisa_query']->num_rows();
+					
+					if($config['total_rows'] >= 1){
+						$data['total_rows'] = $config['total_rows'];
+					}else{
+						$data['total_rows'] = 0;
+					}
+					
+					$this->pagination->initialize($config);
+					
+					$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+					$data['pagina'] = $page;
+					$data['per_page'] = $config['per_page'];
+					
+					$data['pagination'] = $this->pagination->create_links();
+				
+					#### App_Marketing ####
+					$data['marketing'] = $this->Marketing_model->listar_marketing($_SESSION['FiltroMarketing'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']),TRUE);
+
+					if (count($data['marketing']) > 0) {
+						$data['marketing'] = array_combine(range(1, count($data['marketing'])), array_values($data['marketing']));
+						$data['count']['POCount'] = count($data['marketing']);           
+
+						if (isset($data['marketing'])) {
+
+							for($j=1;$j<=$data['count']['POCount'];$j++) {
+								$data['marketing'][$j]['DataMarketing'] = $this->basico->mascara_data($data['marketing'][$j]['DataMarketing'], 'barras');
+								$data['marketing'][$j]['ConcluidoMarketing'] = $this->basico->mascara_palavra_completa($data['marketing'][$j]['ConcluidoMarketing'], 'NS');
+								/*
+								echo '<br>';
+								echo "<pre>";
+								print_r($data['marketing'][$j]['CategoriaMarketing']);
+								echo "</pre>";
+								*/
+								if($data['marketing'][$j]['CategoriaMarketing'] == 1){
+									$data['marketing'][$j]['CategoriaMarketing'] = 'Atualização';
+								}elseif($data['marketing'][$j]['CategoriaMarketing'] == 2){
+									$data['marketing'][$j]['CategoriaMarketing'] = 'Pesquisa';
+								}elseif($data['marketing'][$j]['CategoriaMarketing'] == 3){
+									$data['marketing'][$j]['CategoriaMarketing'] = 'Retorno';
+								}elseif($data['marketing'][$j]['CategoriaMarketing'] == 4){
+									$data['marketing'][$j]['CategoriaMarketing'] = 'Promoções';
+								}elseif($data['marketing'][$j]['CategoriaMarketing'] == 5){
+									$data['marketing'][$j]['CategoriaMarketing'] = 'Felicitações';
+								}else{
+									$data['marketing'][$j]['CategoriaMarketing'] = 'indeterminado';
+								}
+								
+
+								#### App_SubMarketing ####
+								$data['submarketing'][$j] = $this->Marketing_model->listar_submarketing($data['marketing'][$j]['idApp_Marketing']);
+	 
+								if (count($data['submarketing'][$j]) > 0) {
+									
+									$data['submarketing'][$j] = array_combine(range(1, count($data['submarketing'][$j])), array_values($data['submarketing'][$j]));
+									
+									$data['count']['PMCount'][$j] = count($data['submarketing'][$j]);
+
+									if (isset($data['submarketing'][$j])) {
+
+										for($k=1; $k<=$data['count']['PMCount'][$j]; $k++){
+											
+											$data['submarketing'][$j][$k]['DataSubMarketing'] 		= $this->basico->mascara_data($data['submarketing'][$j][$k]['DataSubMarketing'], 'barras');	
+											$data['submarketing'][$j][$k]['ConcluidoSubMarketing'] 	= $this->basico->mascara_palavra_completa($data['submarketing'][$j][$k]['ConcluidoSubMarketing'], 'NS');					
+										
+										}
+									}
+								}
+							}
+						}	
+					}
+				}
+				$this->load->view('marketing/print_lista', $data);
+			}
+		}
+        $this->load->view('basico/footer');
+
     }
 	
 }

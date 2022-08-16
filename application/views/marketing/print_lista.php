@@ -65,22 +65,21 @@
 						</tr>
 					</thead>
 					<tbody>
-						<?php if( isset($count['PMCount']) ) { ?>
-							<?php for ($j=1; $j <= $count['PMCount']; $j++) { ?>
-								<?php 
-									if($marketing[$i]['idApp_Marketing'] == $submarketing[$j]['idApp_Marketing']){
-									?>
-									<tr>
-										<td class="col-md-3" scope="col"><?php echo $submarketing[$j]['SubMarketing'] ?></td>
-										<td class="col-md-3" scope="col"><?php echo $submarketing[$j]['DataSubMarketing'] ?> - <?php echo $submarketing[$j]['HoraSubMarketing'] ?></td>
-										<td class="col-md-1" scope="col"><?php echo $submarketing[$j]['ConcluidoSubMarketing'] ?></td>									
-										
-									</tr>
-									<?php 
-									}
-								?>
+						<?php if( isset($count['PMCount'][$i]) ) { ?>
+							<?php for ($j=1; $j <= $count['PMCount'][$i]; $j++) { ?>
+								<tr>
+									<td class="col-md-3" scope="col"><?php echo $submarketing[$i][$j]['SubMarketing'] ?></td>
+									<td class="col-md-3" scope="col"><?php echo $submarketing[$i][$j]['DataSubMarketing'] ?> - <?php echo $submarketing[$i][$j]['HoraSubMarketing'] ?></td>
+									<td class="col-md-1" scope="col"><?php echo $submarketing[$i][$j]['ConcluidoSubMarketing'] ?></td>									
+									
+								</tr>
 							<?php } ?>
-							<?php } else echo '<h3 class="text-center">Nenhuma Ação Realizada!</h3>';{?>
+						<?php } else {?>
+							<tr>
+								<td class="col-md-3" scope="col"></td>
+								<td class="col-md-3" scope="col"></td>
+								<td class="col-md-1" scope="col"></td>										
+							</tr>
 						<?php } ?>
 					</tbody>					
 				</table>
