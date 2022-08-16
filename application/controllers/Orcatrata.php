@@ -6156,10 +6156,7 @@ class Orcatrata extends CI_Controller {
 
 			}
 			$data['count']['PMCount'] = $j - 1;
-			
-			//$data['valortotalorca'] = str_replace(',', '.', $data['orcatrata']['ValorFinalOrca']);
-			$data['valortotalorca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFinalOrca']));
-			$data['valortotalorca'] = floatval ($data['valortotalorca']);
+
 			$data['somatotal'] = 0;	
 
 			$j = 1;
@@ -6869,9 +6866,13 @@ class Orcatrata extends CI_Controller {
 
 					$data['empresa'] = $this->Basico_model->get_end_empresa($_SESSION['log']['idSis_Empresa'], TRUE);
 
+					$data['valortotalorca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFinalOrca']));
+					$data['valortotalorca'] = floatval ($data['valortotalorca']);
+
 					$data['somatotal'] = floatval ($data['somatotal']);
+
 					$data['diferenca'] = $data['valortotalorca'] - $data['somatotal'];
-					
+
 					$epsilon = 0.001;
 
 					if(abs($data['diferenca']) < $epsilon){
@@ -6891,15 +6892,18 @@ class Orcatrata extends CI_Controller {
 					
 					if(isset($data['diferenca']) && $data['orcatrata']['Modalidade'] == "P"){
 						if($data['diferenca'] < 0.00){
+
 							$data['diferenca'] = number_format($data['diferenca'],2,",",".");
 							//$data['diferenca'] = str_replace('.', ',', str_replace('.', ',', $data['diferenca']));
 							$this->form_validation->set_rules('ValorFinalOrca', 'O Valor Final é  R$ ' . $data['diferenca'] . ' menor, que a Soma dos Valores das Parcelas!', 'trim|valid_soma_maior');	
 						}elseif($data['diferenca'] > 0.00){
+
 							$data['diferenca'] = number_format($data['diferenca'],2,",",".");
 							//$data['diferenca'] = str_replace('.', ',', str_replace('.', ',', $data['diferenca']));
 							$this->form_validation->set_rules('ValorFinalOrca', 'O Valor Final é  R$ ' . $data['diferenca'] . ' maior, que a Soma dos Valores das Parcelas!', 'trim|valid_soma_menor');
 						}
 					}
+
 					if ($data['valortotalorca'] <= 0.00 ) {
 						$this->form_validation->set_rules('BrindeOrca', 'Se quiser Permitir Total = 0,00, então coloque a chave na posição "Sim".<br>Com o Total = 0,00, as parcelas geradas não serão salvas.', 'trim|valid_brinde');
 					}
@@ -8617,9 +8621,6 @@ class Orcatrata extends CI_Controller {
 			}
 			$data['count']['PMCount'] = $j - 1;
 
-			//$data['valortotalorca'] = str_replace(',', '.', $data['orcatrata']['ValorFinalOrca']);
-			$data['valortotalorca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFinalOrca']));
-			$data['valortotalorca'] = floatval ($data['valortotalorca']);
 			$data['somatotal'] = 0;	
 
 			$j = 1;
@@ -9123,7 +9124,10 @@ class Orcatrata extends CI_Controller {
 				*/
 
 				$data['empresa'] = $this->Basico_model->get_end_empresa($_SESSION['log']['idSis_Empresa'], TRUE);		
-				
+
+				$data['valortotalorca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFinalOrca']));
+				$data['valortotalorca'] = floatval ($data['valortotalorca']);
+			
 				$data['somatotal'] = floatval ($data['somatotal']);
 				$data['diferenca'] = $data['valortotalorca'] - $data['somatotal'];
 				
@@ -14370,9 +14374,6 @@ class Orcatrata extends CI_Controller {
 			}
 			$data['count']['PMCount'] = $j - 1;
 
-			//$data['valortotalorca'] = str_replace(',', '.', $data['orcatrata']['ValorFinalOrca']);
-			$data['valortotalorca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFinalOrca']));
-			$data['valortotalorca'] = floatval ($data['valortotalorca']);
 			$data['somatotal'] = 0;	
 
 			$j = 1;
@@ -14427,8 +14428,6 @@ class Orcatrata extends CI_Controller {
 					$data['orcatrata']['DataOrca'] = $this->basico->mascara_data($data['orcatrata']['DataOrca'], 'barras');
 					$data['orcatrata']['ValidadeCashBackOrca'] = $this->basico->mascara_data($data['orcatrata']['ValidadeCashBackOrca'], 'barras');
 					$data['orcatrata']['DataEntregaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntregaOrca'], 'barras');
-
-					$data['valortotalorca'] = ($data['orcatrata']['ValorRestanteOrca'] + $data['orcatrata']['ValorExtraOrca'] + $data['orcatrata']['ValorFrete']) ;
 
 					#### App_Servico ####
 					$data['servico'] = $this->Orcatrata_model->get_servicodesp($id);
@@ -14877,6 +14876,9 @@ class Orcatrata extends CI_Controller {
 
 				$data['empresa'] = $this->Basico_model->get_end_empresa($_SESSION['log']['idSis_Empresa'], TRUE);		
 
+				$data['valortotalorca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFinalOrca']));
+				$data['valortotalorca'] = floatval ($data['valortotalorca']);
+			
 				$data['somatotal'] = floatval ($data['somatotal']);
 				$data['diferenca'] = $data['valortotalorca'] - $data['somatotal'];
 				
