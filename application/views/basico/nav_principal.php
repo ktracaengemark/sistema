@@ -38,9 +38,9 @@
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>Cliente/rankingvendas"><span class="glyphicon glyphicon-usd"></span> Ranking & CashBack</a></li>
 								<li role="separator" class="divider"></li>
-								<li><a href="<?php echo base_url() ?>relatorio/sac"><span class="glyphicon glyphicon-pencil"></span> Sac</a></li>
+								<li><a href="<?php echo base_url() ?>Sac/sac"><span class="glyphicon glyphicon-pencil"></span> Sac</a></li>
 								<li role="separator" class="divider"></li>
-								<li><a href="<?php echo base_url() ?>relatorio/marketing"><span class="glyphicon glyphicon-pencil"></span> Marketing</a></li>
+								<li><a href="<?php echo base_url() ?>Marketing/marketing"><span class="glyphicon glyphicon-pencil"></span> Marketing</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>
 							</ul>

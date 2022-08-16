@@ -65,24 +65,23 @@
 						</tr>
 					</thead>
 					<tbody>
-						<?php if( isset($count['PMCount']) ) { ?>
-							<?php for ($j=1; $j <= $count['PMCount']; $j++) { ?>
-								<?php 
-									if($sac[$i]['idApp_Sac'] == $subsac[$j]['idApp_Sac']){
-									?>
-									<tr>
-										<td class="col-md-3" scope="col"><?php echo $subsac[$j]['SubSac'] ?></td>
-										<td class="col-md-3" scope="col"><?php echo $subsac[$j]['DataSubSac'] ?> - <?php echo $subsac[$j]['HoraSubSac'] ?></td>
-										<td class="col-md-1" scope="col"><?php echo $subsac[$j]['ConcluidoSubSac'] ?></td>									
-										
-									</tr>
-									<?php 
-									}
-								?>
+						<?php if( isset($count['PMCount'][$i]) ) { ?>
+							<?php for ($j=1; $j <= $count['PMCount'][$i]; $j++) { ?>
+								<tr>
+									<td class="col-md-3" scope="col"><?php echo $subsac[$i][$j]['SubSac'] ?></td>
+									<td class="col-md-3" scope="col"><?php echo $subsac[$i][$j]['DataSubSac'] ?> - <?php echo $subsac[$i][$j]['HoraSubSac'] ?></td>
+									<td class="col-md-1" scope="col"><?php echo $subsac[$i][$j]['ConcluidoSubSac'] ?></td>									
+									
+								</tr>
 							<?php } ?>
-							<?php } else echo '<h3 class="text-center">Nenhuma Ação Realizada!</h3>';{?>
+						<?php } else {?>
+							<tr>
+								<td class="col-md-3" scope="col"></td>
+								<td class="col-md-3" scope="col"></td>
+								<td class="col-md-1" scope="col"></td>										
+							</tr>
 						<?php } ?>
-					</tbody>					
+					</tbody>
 				</table>
 			</div>
 		<?php } ?>
