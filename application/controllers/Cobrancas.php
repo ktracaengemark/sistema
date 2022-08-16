@@ -915,7 +915,7 @@ class Cobrancas extends CI_Controller {
 								echo "</pre>";
 								*/
 								#### App_ProdutoVenda ####
-								$data['produto'][$i] = $this->Relatorio_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['produto'][$i] = $this->Cobrancas_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['produto'][$i]) > 0) {
 									$data['produto'][$i] = array_combine(range(1, count($data['produto'][$i])), array_values($data['produto'][$i]));
 									$data['count']['PCount'][$i] = count($data['produto'][$i]);
@@ -938,7 +938,7 @@ class Cobrancas extends CI_Controller {
 								echo "</pre>";
 								*/		
 								#### App_Parcelas####
-								$data['parcelasrec'][$i] = $this->Relatorio_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['parcelasrec'][$i] = $this->Cobrancas_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['parcelasrec'][$i]) > 0) {
 									$data['parcelasrec'][$i] = array_combine(range(1, count($data['parcelasrec'][$i])), array_values($data['parcelasrec'][$i]));
 									$data['count']['PRCount'][$i] = count($data['parcelasrec'][$i]);
@@ -959,7 +959,7 @@ class Cobrancas extends CI_Controller {
 								echo "</pre>";
 								*/
 								#### App_Procedimento ####
-								$data['procedimento'][$i] = $this->Relatorio_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
+								$data['procedimento'][$i] = $this->Cobrancas_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['procedimento'][$i]) > 0) {
 									$data['procedimento'][$i] = array_combine(range(1, count($data['procedimento'][$i])), array_values($data['procedimento'][$i]));
 									$data['count']['PMCount'][$i] = count($data['procedimento'][$i]);
