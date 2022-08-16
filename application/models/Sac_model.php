@@ -227,120 +227,6 @@ class Sac_model extends CI_Model {
 		return $row;
         //return $query[0];
     }	
-	
-    public function get_sac_empresa($data, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
-		
-		$date_inicio_prc = ($_SESSION['FiltroSac']['DataInicio9']) ? 'PRC.DataSac >= "' . $_SESSION['FiltroSac']['DataInicio9'] . '" AND ' : FALSE;
-		$date_fim_prc = ($_SESSION['FiltroSac']['DataFim9']) ? 'PRC.DataSac <= "' . $_SESSION['FiltroSac']['DataFim9'] . '" AND ' : FALSE;
-
-		$date_inicio_sub_prc = ($_SESSION['FiltroSac']['DataInicio10']) ? 'SPRC.DataSubSac >= "' . $_SESSION['FiltroSac']['DataInicio10'] . '" AND ' : FALSE;
-		$date_fim_sub_prc = ($_SESSION['FiltroSac']['DataFim10']) ? 'SPRC.DataSubSac <= "' . $_SESSION['FiltroSac']['DataFim10'] . '" AND ' : FALSE;
-
-		$hora_inicio_prc = ($_SESSION['FiltroSac']['HoraInicio9']) ? 'PRC.HoraSac >= "' . $_SESSION['FiltroSac']['HoraInicio9'] . '" AND ' : FALSE;
-		$hora_fim_prc = ($_SESSION['FiltroSac']['HoraFim9']) ? 'PRC.HoraSac <= "' . $_SESSION['FiltroSac']['HoraFim9'] . '" AND ' : FALSE;
-		
-		$hora_inicio_sub_prc = ($_SESSION['FiltroSac']['HoraInicio10']) ? 'SPRC.HoraSubSac >= "' . $_SESSION['FiltroSac']['HoraInicio10'] . '" AND ' : FALSE;
-		$hora_fim_sub_prc = ($_SESSION['FiltroSac']['HoraFim10']) ? 'SPRC.HoraSubSac <= "' . $_SESSION['FiltroSac']['HoraFim10'] . '" AND ' : FALSE;		
-		
-		$data['TipoSac'] = $data['TipoSac'];
-		$data['idApp_Sac'] = ($_SESSION['FiltroSac']['idApp_Sac'] != "" ) ? ' AND PRC.idApp_Sac = ' . $_SESSION['FiltroSac']['idApp_Sac'] . '  ': FALSE;
-		$data['CategoriaSac'] = ($_SESSION['FiltroSac']['CategoriaSac'] != "0" ) ? ' AND PRC.CategoriaSac = ' . $_SESSION['FiltroSac']['CategoriaSac'] . '  ': FALSE;
-		//$data['Marketing'] = ($_SESSION['FiltroSac']['Marketing'] != "0" ) ? ' AND PRC.Marketing = ' . $_SESSION['FiltroSac']['Marketing'] . '  ': FALSE;
-		$data['Cliente'] = ($_SESSION['FiltroSac']['idApp_Cliente']  ) ? ' AND PRC.idApp_Cliente = ' . $_SESSION['FiltroSac']['idApp_Cliente'] . '  ': FALSE;
-		$data['Fornecedor'] = ($_SESSION['FiltroSac']['idApp_Fornecedor']  ) ? ' AND PRC.idApp_Fornecedor = ' . $_SESSION['FiltroSac']['idApp_Fornecedor'] . '  ': FALSE;
-		$data['NomeUsuario'] = ($_SESSION['FiltroSac']['NomeUsuario']  ) ? ' AND PRC.idSis_Usuario = ' . $_SESSION['FiltroSac']['NomeUsuario'] . '  ': FALSE;
-		$data['Compartilhar'] = ($_SESSION['FiltroSac']['Compartilhar']  ) ? ' AND PRC.Compartilhar = ' . $_SESSION['FiltroSac']['Compartilhar'] . '  ': FALSE;
-		$data['ConcluidoSac'] = ($_SESSION['FiltroSac']['ConcluidoSac'] != "#" ) ? ' AND PRC.ConcluidoSac = "' . $_SESSION['FiltroSac']['ConcluidoSac'] . '"  ': FALSE;
-		$data['Agrupar'] = ($_SESSION['FiltroSac']['Agrupar'] == "0") ? 'PRC.idApp_Sac': 'PRC.' . $_SESSION['FiltroSac']['Agrupar'];
-		$data['Campo'] = (!$_SESSION['FiltroSac']['Campo']) ? 'PRC.DataSac' : $_SESSION['FiltroSac']['Campo'];
-        $data['Ordenamento'] = (!$_SESSION['FiltroSac']['Ordenamento']) ? 'DESC' : $_SESSION['FiltroSac']['Ordenamento'];
-		/*
-        echo '<br>';
-        echo "<pre>";
-        //print_r($data['idSis_Empresa']);
-		echo '<br>';
-        print_r($data['Agrupar']);
-        echo "</pre>";
-        exit ();
-       	*/
-
-        if ($limit){
-			$querylimit = 'LIMIT ' . $start . ', ' . $limit;
-		}else{
-			$querylimit = '';
-		}
-				
-		$query = $this->db->query('
-            SELECT
-				PRC.idApp_Sac,
-				PRC.CategoriaSac,
-                PRC.Sac,
-				PRC.DataSac,
-				PRC.HoraSac,
-				PRC.ConcluidoSac,
-				PRC.idSis_Usuario,
-				PRC.Compartilhar,
-				C.idApp_Cliente,
-				C.NomeCliente,
-				U.idSis_Usuario,
-				U.Nome AS NomeUsuario,
-				AU.idSis_Usuario,
-				AU.Nome AS NomeCompartilhar
-            FROM 
-				App_Sac AS PRC
-				LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = PRC.idApp_Cliente
-				LEFT JOIN App_Fornecedor AS F ON F.idApp_Fornecedor = PRC.idApp_Fornecedor
-				LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = PRC.idSis_Usuario
-				LEFT JOIN Sis_Usuario AS AU ON AU.idSis_Usuario = PRC.Compartilhar
-				LEFT JOIN App_SubSac AS SPRC ON SPRC.idApp_Sac = PRC.idApp_Sac
-            WHERE
-                ' . $date_inicio_prc . '
-                ' . $date_fim_prc . '
-                ' . $date_inicio_sub_prc . '
-                ' . $date_fim_sub_prc . '
-                ' . $hora_inicio_prc . '
-                ' . $hora_fim_prc . '
-                ' . $hora_inicio_sub_prc . '
-                ' . $hora_fim_sub_prc . '
-				PRC.idSis_Empresa = ' . $data['idSis_Empresa'] . ' AND
-				PRC.TipoSac = ' . $data['TipoSac'] . '
-				' . $data['idApp_Sac'] . '
-				' . $data['CategoriaSac'] . '
-				' . $data['Cliente'] . '
-				' . $data['Fornecedor'] . '
-				' . $data['NomeUsuario'] . '
-				' . $data['Compartilhar'] . '
-				' . $data['ConcluidoSac'] . '
-			GROUP BY
-				idApp_Sac
-			ORDER BY
-				' . $data['Campo'] . '
-				' . $data['Ordenamento'] . '	
-			' . $querylimit . ' 		
-        ');
-	
-		if($total == TRUE) {
-			return $query->num_rows();
-		}
-
-		$query = $query->result_array();
-       /*
-        //echo $this->db->last_query();
-        echo '<br>';
-        echo "<pre>";
-        print_r($query);
-        echo "</pre>";
-        //exit ();
-       */
-        return $query;
-    }
-
-    public function get_subsac_empresa($data) {
-		$query = $this->db->query('SELECT * FROM App_SubSac WHERE idSis_Empresa = ' . $data['idSis_Empresa']);
-        $query = $query->result_array();
-
-        return $query;
-    }	
 
     public function get_profissional($data) {
 		$query = $this->db->query('SELECT NomeProfissional FROM App_Profissional WHERE idApp_Profissional = ' . $data);
@@ -521,7 +407,18 @@ class Sac_model extends CI_Model {
 					' . $filtro_base . ''
 			);
 			
-			return $query->num_rows();
+			//return $query->num_rows();
+			$count = $query->num_rows();
+			
+			if(!isset($count)){
+				return FALSE;
+			}else{
+				if($count >= 15001){
+					return FALSE;
+				}else{
+					return $query;
+				}
+			}
 		}
 
         ####################################################################

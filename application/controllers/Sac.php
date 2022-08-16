@@ -1016,6 +1016,10 @@ class Sac extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Registro Não Encontrada.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 4)
+            $data['msg'] = $this->basico->msg('<strong>A Pesquisa está muito grande, ela excedeu 15000 linhas. Refine o seu filtro.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
 		
@@ -1148,53 +1152,57 @@ class Sac extends CI_Controller {
 			$_SESSION['FiltroSac']['Agrupar'] = $data['query']['Agrupar'];
 			$_SESSION['FiltroSac']['Campo'] = $data['query']['Campo'];
 			$_SESSION['FiltroSac']['Ordenamento'] = $data['query']['Ordenamento'];		
+
+			$data['pesquisa_query'] = $this->Sac_model->listar_sac($_SESSION['FiltroSac'], FALSE, TRUE, FALSE, FALSE, FALSE);
+			
+			if($data['pesquisa_query'] === FALSE){
 				
-
-            //$data['report'] = $this->Sac_model->list_sac($data['bd'],TRUE);
-
-			//$this->load->library('pagination');
-			$config['per_page'] = 10;
-			$config["uri_segment"] = 3;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
-			
-			$config['base_url'] = base_url() . 'Sac/sac_pag/';
-			$config['total_rows'] = $this->Sac_model->listar_sac($_SESSION['FiltroSac'], FALSE, TRUE, FALSE, FALSE, FALSE);
-           
-			if($config['total_rows'] >= 1){
-				$data['total_rows'] = $config['total_rows'];
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'Sac/sac' . $data['msg']);
+				exit();
 			}else{
-				$data['total_rows'] = 0;
-			}
-			
-            $this->pagination->initialize($config);
-            
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-            $data['pagina'] = $page;
-			$data['per_page'] = $config['per_page'];
-			$data['report'] = $this->Sac_model->listar_sac($_SESSION['FiltroSac'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
-			$data['pagination'] = $this->pagination->create_links();
-			
-            $data['list'] = $this->load->view('Sac/list_sac2', $data, TRUE);
-            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
-        }
 
+				$config['base_url'] = base_url() . 'Sac/sac_pag/';
+				$config['per_page'] = 10;
+				$config["uri_segment"] = 3;
+				$config['reuse_query_string'] = TRUE;
+				$config['num_links'] = 2;
+				$config['use_page_numbers'] = TRUE;
+				$config['full_tag_open'] = "<ul class='pagination'>";
+				$config['full_tag_close'] = "</ul>";
+				$config['num_tag_open'] = '<li>';
+				$config['num_tag_close'] = '</li>';
+				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+				$config['next_tag_open'] = "<li>";
+				$config['next_tagl_close'] = "</li>";
+				$config['prev_tag_open'] = "<li>";
+				$config['prev_tagl_close'] = "</li>";
+				$config['first_tag_open'] = "<li>";
+				$config['first_tagl_close'] = "</li>";
+				$config['last_tag_open'] = "<li>";
+				$config['last_tagl_close'] = "</li>";
+
+				$config['total_rows'] = $data['pesquisa_query']->num_rows();
+
+				if($config['total_rows'] >= 1){
+					$data['total_rows'] = $config['total_rows'];
+				}else{
+					$data['total_rows'] = 0;
+				}
+				
+				$this->pagination->initialize($config);
+				
+				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+				$data['pagina'] = $page;
+				$data['per_page'] = $config['per_page'];
+				$data['report'] = $this->Sac_model->listar_sac($_SESSION['FiltroSac'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
+				$data['pagination'] = $this->pagination->create_links();
+				
+				$data['list'] = $this->load->view('Sac/list_sac2', $data, TRUE);
+				//$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+			}
+		}
         $this->load->view('Sac/tela_sac2', $data);
 
         $this->load->view('basico/footer');
@@ -1233,10 +1241,16 @@ class Sac extends CI_Controller {
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
-        #run form validation
-        if ($this->form_validation->run() !== TRUE) {
+		$data['pesquisa_query'] = $this->Sac_model->listar_sac($_SESSION['FiltroSac'], FALSE, TRUE, FALSE, FALSE, FALSE);
 		
-			//$this->load->library('pagination');
+		if($data['pesquisa_query'] === FALSE){
+			
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'Sac/sac' . $data['msg']);
+			exit();
+		}else{
+
+			$config['base_url'] = base_url() . 'Sac/sac_pag/';
 			$config['per_page'] = 10;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -1256,11 +1270,9 @@ class Sac extends CI_Controller {
 			$config['first_tagl_close'] = "</li>";
 			$config['last_tag_open'] = "<li>";
 			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
 			
-			$config['base_url'] = base_url() . 'Sac/sac_pag/';
-			$config['total_rows'] = $this->Sac_model->listar_sac($_SESSION['FiltroSac'], FALSE, TRUE, FALSE, FALSE, FALSE);
-           
+			$config['total_rows'] = $data['pesquisa_query']->num_rows();
+			
 			if($config['total_rows'] >= 1){
 				$data['total_rows'] = $config['total_rows'];
 			}else{
@@ -1319,33 +1331,38 @@ class Sac extends CI_Controller {
 				$data['imprimirrecibo'] = 'Sac/imprimirreciborec/';
 				$data['caminho'] = 'Sac/sac_pag/';
 
-				$config['per_page'] = 10;
-				$config["uri_segment"] = 4;
-				$config['reuse_query_string'] = TRUE;
-				$config['num_links'] = 2;
-				$config['use_page_numbers'] = TRUE;
-				$config['full_tag_open'] = "<ul class='pagination'>";
-				$config['full_tag_close'] = "</ul>";
-				$config['num_tag_open'] = '<li>';
-				$config['num_tag_close'] = '</li>';
-				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-				$config['next_tag_open'] = "<li>";
-				$config['next_tagl_close'] = "</li>";
-				$config['prev_tag_open'] = "<li>";
-				$config['prev_tagl_close'] = "</li>";
-				$config['first_tag_open'] = "<li>";
-				$config['first_tagl_close'] = "</li>";
-				$config['last_tag_open'] = "<li>";
-				$config['last_tagl_close'] = "</li>";
-				$data['Pesquisa'] = '';
-				
-				if ($id) {
-
-					$config['base_url'] = base_url() . 'Sac/sac_lista/' . $id . '/';
+				$data['pesquisa_query'] = $this->Sac_model->listar_sac($_SESSION['FiltroSac'], FALSE, TRUE, FALSE, FALSE, FALSE);
+		
+				if($data['pesquisa_query'] === FALSE){
 					
-					$config['total_rows'] = $this->Sac_model->listar_sac($_SESSION['FiltroSac'], FALSE, TRUE, FALSE, FALSE, FALSE);
-				   
+					$data['msg'] = '?m=4';
+					redirect(base_url() . 'Sac/sac' . $data['msg']);
+					exit();
+				}else{
+
+					$config['base_url'] = base_url() . 'Sac/sac_lista/' . $id . '/';				
+					$config['per_page'] = 10;
+					$config["uri_segment"] = 4;
+					$config['reuse_query_string'] = TRUE;
+					$config['num_links'] = 2;
+					$config['use_page_numbers'] = TRUE;
+					$config['full_tag_open'] = "<ul class='pagination'>";
+					$config['full_tag_close'] = "</ul>";
+					$config['num_tag_open'] = '<li>';
+					$config['num_tag_close'] = '</li>';
+					$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+					$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+					$config['next_tag_open'] = "<li>";
+					$config['next_tagl_close'] = "</li>";
+					$config['prev_tag_open'] = "<li>";
+					$config['prev_tagl_close'] = "</li>";
+					$config['first_tag_open'] = "<li>";
+					$config['first_tagl_close'] = "</li>";
+					$config['last_tag_open'] = "<li>";
+					$config['last_tagl_close'] = "</li>";
+
+					$config['total_rows'] = $data['pesquisa_query']->num_rows();					
+
 					if($config['total_rows'] >= 1){
 						$data['total_rows'] = $config['total_rows'];
 					}else{
@@ -1403,167 +1420,10 @@ class Sac extends CI_Controller {
 							}
 						}
 					}
-				}
-				
-				/*
-				  echo '<br>';
-				  echo "<pre>";
-				  print_r($data);
-				  echo "</pre>";
-				  #exit ();
-				 */
-
-				$this->load->view('sac/print_lista', $data);
+					$this->load->view('sac/print_lista', $data);
+				}	
 			}
 		}	
-        $this->load->view('basico/footer');
-
-    }
-
-    public function sac_lista_original($id = FALSE) {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-
-		if ($id) {
-			if($_SESSION['log']['idSis_Empresa'] !== $id){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			$seguir = FALSE;
-		}
-	
-		if($seguir === FALSE){
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
-			
-		} else {
-			
-			$data['bd']['idSis_Empresa'] = $id;
-			$data['bd']['TipoSac'] = 3;
-			
-			$data['titulo'] = 'Sac';
-			$data['form_open_path'] = 'Sac/sac_lista';
-			$data['panel'] = 'warning';
-			$data['metodo'] = 3;
-			$data['editar'] = 1;
-			$data['print'] = 1;
-			$data['imprimir'] = 'Sac/imprimir/';
-			$data['imprimirlista'] = 'Sac/sac_lista/';
-			$data['imprimirrecibo'] = 'Sac/imprimirreciborec/';
-			$data['caminho'] = 'Sac/sac_pag/';
-
-			$config['per_page'] = 10;
-			$config["uri_segment"] = 4;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
-			
-			if ($id) {
-
-				$config['base_url'] = base_url() . 'Sac/sac_lista/' . $id . '/';
-				//$config['total_rows'] = $this->Sac_model->get_sac_empresa($data['bd'], TRUE);
-				$config['total_rows'] = $this->Sac_model->listar_sac($_SESSION['FiltroSac'], FALSE, TRUE, FALSE, FALSE, FALSE);
-			   
-				if($config['total_rows'] >= 1){
-					$data['total_rows'] = $config['total_rows'];
-				}else{
-					$data['total_rows'] = 0;
-				}
-				
-				$this->pagination->initialize($config);
-				
-				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-				$data['pagina'] = $page;
-				$data['per_page'] = $config['per_page'];
-				
-				$data['pagination'] = $this->pagination->create_links();
-			
-				#### App_Sac ####
-				//$data['sac'] = $this->Sac_model->get_sac_empresa($data['bd'], FALSE, $config['per_page'], ($page * $config['per_page']));
-				$data['sac'] = $this->Sac_model->listar_sac($_SESSION['FiltroSac'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']),TRUE);
-				if (count($data['sac']) > 0) {
-					$data['sac'] = array_combine(range(1, count($data['sac'])), array_values($data['sac']));
-					$data['count']['POCount'] = count($data['sac']);           
-
-					if (isset($data['sac'])) {
-
-						for($j=1;$j<=$data['count']['POCount'];$j++) {
-							
-							$data['sac'][$j]['DataSac'] = $this->basico->mascara_data($data['sac'][$j]['DataSac'], 'barras');
-							$data['sac'][$j]['ConcluidoSac'] = $this->basico->mascara_palavra_completa($data['sac'][$j]['ConcluidoSac'], 'NS');
-							if($data['sac'][$j]['CategoriaSac'] == 1){
-								$data['sac'][$j]['CategoriaSac'] = 'Solicitação';
-							}elseif($data['sac'][$j]['CategoriaSac'] == 2){
-								$data['sac'][$j]['CategoriaSac'] = 'Elogio';
-							}elseif($data['sac'][$j]['CategoriaSac'] == 3){
-								$data['sac'][$j]['CategoriaSac'] = 'Reclamação';
-							}
-							
-							
-						}
-					}	
-				}
-				
-				/*
-				  echo '<br>';
-				  echo "<pre>";
-				  print_r($data['sac']);
-				  echo "</pre>";
-				  exit ();
-				  */
-				
-				#### App_Sac ####
-				$data['subsac'] = $this->Sac_model->get_subsac_empresa($data['bd'],TRUE);
-				
-				if (count($data['subsac']) > 0) {
-					$data['subsac'] = array_combine(range(1, count($data['subsac'])), array_values($data['subsac']));
-					$data['count']['PMCount'] = count($data['subsac']);
-
-					if (isset($data['subsac'])) {
-
-						for($j=1; $j <= $data['count']['PMCount']; $j++){
-							$data['subsac'][$j]['DataSubSac'] = $this->basico->mascara_data($data['subsac'][$j]['DataSubSac'], 'barras');	
-							$data['subsac'][$j]['ConcluidoSubSac'] = $this->basico->mascara_palavra_completa($data['subsac'][$j]['ConcluidoSubSac'], 'NS');					
-						}
-					}
-				}
-				
-
-			}
-			
-			/*
-			  echo '<br>';
-			  echo "<pre>";
-			  print_r($data);
-			  echo "</pre>";
-			  #exit ();
-			 */
-
-			$this->load->view('sac/print_lista', $data);
-		}
         $this->load->view('basico/footer');
 
     }
