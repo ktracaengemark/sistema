@@ -656,6 +656,16 @@ class Agenda extends CI_Controller {
 			$_SESSION['Agendamentos']['datahora'] = $data['query']['datahora'];
 			$_SESSION['Agendamentos']['site'] = $data['query']['site'];	
 			
+			$data['pesquisa_query'] = $this->Agenda_model->list_agendamentos($_SESSION['Agendamentos'],FALSE , TRUE, FALSE ,FALSE ,FALSE );
+			
+			if($data['pesquisa_query'] === FALSE){
+				
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'Agenda/agendamentos' . $data['msg']);
+				exit();
+			}else{
+
+				$config['base_url'] = base_url() . 'Agenda/agendamentos_pag/';
 				$config['per_page'] = 10;
 				$config["uri_segment"] = 3;
 				$config['reuse_query_string'] = TRUE;
@@ -675,11 +685,9 @@ class Agenda extends CI_Controller {
 				$config['first_tagl_close'] = "</li>";
 				$config['last_tag_open'] = "<li>";
 				$config['last_tagl_close'] = "</li>";
-				$data['Pesquisa'] = '';
+
+				$config['total_rows'] = $data['pesquisa_query']->num_rows();
 				
-				$config['base_url'] = base_url() . 'Agenda/agendamentos_pag/';
-				$config['total_rows'] = $this->Agenda_model->list_agendamentos($_SESSION['Agendamentos'],TRUE, TRUE);
-			   
 				if($config['total_rows'] >= 1){
 					$data['total_rows'] = $config['total_rows'];
 				}else{
@@ -696,7 +704,7 @@ class Agenda extends CI_Controller {
 				
 				$data['list1'] = $this->load->view('agenda/list_agendamentos', $data, TRUE);
 			}
-
+		}
         $this->load->view('agenda/tela_agendamentos', $data);
 
         $this->load->view('basico/footer');
@@ -711,33 +719,6 @@ class Agenda extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-			'id_ClientePet_Auto',
-			'NomeClientePetAuto',
-			'id_ClienteDep_Auto',
-			'NomeClienteDepAuto',
-        ), TRUE));	
-		
-        $data['query'] = quotes_to_entities($this->input->post(array(
-            'idApp_Consulta',
-			'NomeUsuario',
-			'idApp_Cliente',
-			'idApp_ClientePet',
-			'idApp_ClientePet2',
-			'idApp_ClienteDep',
-			'idApp_ClienteDep2',
-            'DataInicio',
-            'DataFim',		
-            'Ordenamento',
-            'Campo',
-			'Recorrencia',
-			'Tipo',
-			'Agrupar',
-			'Repeticao',
-        ), TRUE));
 
 		$data['query']['nome'] = 'Cliente';
         $data['titulo1'] = 'Lista de Agendamentos';
@@ -759,10 +740,17 @@ class Agenda extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 		
-        #run form validation
-        if ($this->form_validation->run() !== TRUE) {
+			
+		$data['pesquisa_query'] = $this->Agenda_model->list_agendamentos($_SESSION['Agendamentos'],FALSE , TRUE, FALSE ,FALSE ,FALSE );
+		
+		if($data['pesquisa_query'] === FALSE){
+			
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'Agenda/agendamentos' . $data['msg']);
+			exit();
+		}else{
 
-			//$this->load->library('pagination');
+			$config['base_url'] = base_url() . 'Agenda/agendamentos_pag/';
 			$config['per_page'] = 10;
 			$config["uri_segment"] = 3;
 			$config['reuse_query_string'] = TRUE;
@@ -784,8 +772,7 @@ class Agenda extends CI_Controller {
 			$config['last_tagl_close'] = "</li>";
 			$data['Pesquisa'] = '';
 			
-			$config['base_url'] = base_url() . 'Agenda/agendamentos_pag/';
-			$config['total_rows'] = $this->Agenda_model->list_agendamentos($_SESSION['Agendamentos'], TRUE, TRUE);
+			$config['total_rows'] = $data['pesquisa_query']->num_rows();
            
 			if($config['total_rows'] >= 1){
 				$data['total_rows'] = $config['total_rows'];

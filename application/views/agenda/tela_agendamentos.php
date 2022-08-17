@@ -8,7 +8,7 @@
 			<div class="panel-heading">
 				<div class="row">
 					<?php if($_SESSION['log']['idSis_Empresa'] != 5) {?>
-						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-left" >
+						<div class="col-lg-4 col-md-3 col-sm-3 col-xs-6 text-left" >
 							<label class="" for="Ordenamento">Profissional:</label>
 							<select data-placeholder="Selecione uma opção..." class="form-control Chosen" id="NomeUsuario" name="NomeUsuario"><!--onchange="this.form.submit()"-->
 								<?php
@@ -63,7 +63,7 @@
 				</div>	
 				<div class="row">
 					<?php if($_SESSION['log']['idSis_Empresa'] != 5) {?>
-						<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 text-left">
+						<div class="col-lg-6 col-md-4 col-sm-4 col-xs-12 text-left">
 							<label>Cliente: </label>
 							<div class="input-group">
 								<span class="input-group-btn">
@@ -106,7 +106,6 @@
 							</div>
 						<?php } else { ?>
 							<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
-								
 								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
 									<label  for="idApp_ClienteDep">Dep</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClienteDep" name="idApp_ClienteDep" onchange="this.form.submit()">
@@ -115,7 +114,6 @@
 									<span class="modal-title" id="Dep"></span>
 								</div>
 								<input type="hidden" id="Hidden_idApp_ClienteDep" name="Hidden_idApp_ClienteDep" value="<?php echo $query['idApp_ClienteDep']; ?>" />
-								
 								<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 text-left">
 									<label>Busca Dep:</label>
 									<div class="input-group">
@@ -136,7 +134,7 @@
 					<?php } ?>
 				</div>	
 				<div class="row">
-					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-left">	
+					<div class="col-lg-2 col-md-3 col-sm-3 col-xs-6 text-left">	
 						<label for="DataInicio"><?php echo $Data;?> Inc.</label>
 						<div class="input-group DatePicker">
 							<span class="input-group-addon" disabled>
@@ -146,7 +144,7 @@
 									name="DataInicio" value="<?php echo set_value('DataInicio', $query['DataInicio']); ?>">
 						</div>
 					</div>
-					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-left">	
+					<div class="col-lg-2 col-md-3 col-sm-3 col-xs-6 text-left">	
 						<label for="DataFim"><?php echo $Data;?> Fim</label>
 						<div class="input-group DatePicker">
 							<span class="input-group-addon" disabled>

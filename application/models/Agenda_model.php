@@ -223,77 +223,111 @@ class Agenda_model extends CI_Model {
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
-				
-		$query = $this->db->query('
-			SELECT
-				CO.*,
-				CO.idSis_Empresa AS Empresa,
-				DATE_FORMAT(CO.DataInicio, "%Y-%m-%d") AS DataInicio,
-				DATE_FORMAT(CO.DataInicio, "%H:%i") AS HoraInicio,
-				DATE_FORMAT(CO.DataFim, "%Y-%m-%d") AS DataFim,
-				DATE_FORMAT(CO.DataFim, "%H:%i") AS HoraFim,
-				P.idApp_Produto,
-				P.NomeProduto,
-				P.QtdProduto,
-				P.ValorProduto,
-				CONCAT(IFNULL(P.ObsProduto,"")) AS ObsProduto,
-				(P.QtdProduto*P.ValorProduto) AS SubTotalProduto,
-				DATE_FORMAT(P.DataConcluidoProduto, "%Y-%m-%d") AS DataProduto,
-				DATE_FORMAT(P.HoraConcluidoProduto, "%H:%i") AS HoraProduto,
-				CONCAT(IFNULL(TCAT.Catprod,"")) AS Catprod,
-				C.idApp_Cliente AS id_Cliente,
-				C.CelularCliente,
-				CONCAT(IFNULL(C.NomeCliente,"")) AS NomeCliente,
-				CONCAT(IFNULL(C.NomeCliente,"")) AS NomeCliente2,
-				CP.*,
-				CONCAT(IFNULL(CP.NomeClientePet,"")) AS NomeClientePet,
-				RP.RacaPet,
-				PEP.PeloPet,
-				POP.PortePet,
-				EPP.EspeciePet,
-				CD.*,
-				CONCAT(IFNULL(CD.NomeClienteDep,"")) AS NomeClienteDep,
-				ASS.Nome
-			FROM
-				App_Consulta AS CO
-					LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = CO.idApp_OrcaTrata
-					LEFT JOIN App_Produto AS P ON P.idApp_OrcaTrata = OT.idApp_OrcaTrata
-					LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = P.idTab_Produtos_Produto
-					LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto
-					LEFT JOIN Tab_Catprod AS TCAT ON TCAT.idTab_Catprod = TPRD.idTab_Catprod
-					LEFT JOIN App_Agenda AS A ON A.idApp_Agenda = CO.idApp_Agenda
-					LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = A.idSis_Associado
-					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = CO.idApp_Cliente
-					LEFT JOIN App_ClientePet AS CP ON CP.idApp_ClientePet = CO.idApp_ClientePet
-					LEFT JOIN Tab_RacaPet AS RP ON RP.idTab_RacaPet = CP.RacaPet
-					LEFT JOIN Tab_PeloPet AS PEP ON PEP.idTab_PeloPet = CP.PeloPet
-					LEFT JOIN Tab_PortePet AS POP ON POP.idTab_PortePet = CP.PortePet
-					LEFT JOIN Tab_EspeciePet AS EPP ON EPP.idTab_EspeciePet = CP.EspeciePet
-					LEFT JOIN App_ClienteDep AS CD ON CD.idApp_ClienteDep = CO.idApp_ClienteDep
-			WHERE
-				' . $date_inicio_orca . '
-				' . $date_fim_orca . '
-				' . $permissao_agenda . '
-				CO.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
-				' . $tipoevento . '
-				' . $cliente . '
-				' . $clientepet . '
-				' . $clientepet2 . '
-				' . $clientedep . '
-				' . $clientedep2 . '
-				' . $recorrencia . '
-				' . $repeticao . '
-				' . $usuario . '
-			' . $groupby . '
-			ORDER BY
-				' . $campo . '
-				' . $ordenamento . '
-			' . $querylimit . '
-        ');
 
-		if($total == TRUE) {
-			return $query->num_rows();
+		if($completo == FALSE){
+			$complemento = FALSE;
+		}else{
+			$complemento = ' AND OT.CanceladoOrca = "N" AND PR.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND PR.Quitado = "N"';
 		}
+
+		$filtro_base = '
+					' . $date_inicio_orca . '
+					' . $date_fim_orca . '
+					' . $permissao_agenda . '
+					CO.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+					' . $tipoevento . '
+					' . $cliente . '
+					' . $clientepet . '
+					' . $clientepet2 . '
+					' . $clientedep . '
+					' . $clientedep2 . '
+					' . $recorrencia . '
+					' . $repeticao . '
+					' . $usuario . '
+				' . $groupby . '
+				ORDER BY
+					' . $campo . '
+					' . $ordenamento . '
+				' . $querylimit . '
+		';
+
+        ####################################################################
+        #Contagem DAS Parcelas e Soma total Para todas as listas e baixas
+		if($total == TRUE && $date == FALSE) {
+		   $query = $this->db->query('
+				SELECT
+					CO.idApp_Consulta,
+					P.idApp_Produto
+				FROM
+					App_Consulta AS CO
+						LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = CO.idApp_OrcaTrata
+						LEFT JOIN App_Produto AS P ON P.idApp_OrcaTrata = OT.idApp_OrcaTrata
+				WHERE
+					' . $filtro_base . '
+			');
+		
+			$count = $query->num_rows();
+			
+			if(!isset($count)){
+				return FALSE;
+			}else{
+				if($count >= 15001){
+					return FALSE;
+				}else{
+					return $query;
+				}
+			}
+		}
+
+        ####################################################################
+        # Relatório/Excel Campos para exibição DAS Parcelas
+		if($total == FALSE && $date == FALSE) {
+			$query = $this->db->query('
+				SELECT
+					CO.*,
+					CO.idSis_Empresa AS Empresa,
+					DATE_FORMAT(CO.DataInicio, "%Y-%m-%d") AS DataInicio,
+					DATE_FORMAT(CO.DataInicio, "%H:%i") AS HoraInicio,
+					DATE_FORMAT(CO.DataFim, "%Y-%m-%d") AS DataFim,
+					DATE_FORMAT(CO.DataFim, "%H:%i") AS HoraFim,
+					P.idApp_Produto,
+					P.NomeProduto,
+					P.QtdProduto,
+					P.ValorProduto,
+					CONCAT(IFNULL(P.ObsProduto,"")) AS ObsProduto,
+					(P.QtdProduto*P.ValorProduto) AS SubTotalProduto,
+					DATE_FORMAT(P.DataConcluidoProduto, "%Y-%m-%d") AS DataProduto,
+					DATE_FORMAT(P.HoraConcluidoProduto, "%H:%i") AS HoraProduto,
+					CONCAT(IFNULL(TCAT.Catprod,"")) AS Catprod,
+					C.idApp_Cliente AS id_Cliente,
+					C.CelularCliente,
+					CONCAT(IFNULL(C.NomeCliente,"")) AS NomeCliente,
+					CONCAT(IFNULL(C.NomeCliente,"")) AS NomeCliente2,
+					CP.*,
+					CONCAT(IFNULL(CP.NomeClientePet,"")) AS NomeClientePet,
+					RP.RacaPet,
+
+					CD.*,
+					CONCAT(IFNULL(CD.NomeClienteDep,"")) AS NomeClienteDep,
+					ASS.Nome
+				FROM
+					App_Consulta AS CO
+						LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = CO.idApp_OrcaTrata
+						LEFT JOIN App_Produto AS P ON P.idApp_OrcaTrata = OT.idApp_OrcaTrata
+						LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = P.idTab_Produtos_Produto
+						LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto
+						LEFT JOIN Tab_Catprod AS TCAT ON TCAT.idTab_Catprod = TPRD.idTab_Catprod
+						LEFT JOIN App_Agenda AS A ON A.idApp_Agenda = CO.idApp_Agenda
+						LEFT JOIN Sis_Associado AS ASS ON ASS.idSis_Associado = A.idSis_Associado
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = CO.idApp_Cliente
+						LEFT JOIN App_ClientePet AS CP ON CP.idApp_ClientePet = CO.idApp_ClientePet
+						LEFT JOIN Tab_RacaPet AS RP ON RP.idTab_RacaPet = CP.RacaPet
+						LEFT JOIN App_ClienteDep AS CD ON CD.idApp_ClienteDep = CO.idApp_ClienteDep
+				WHERE
+					' . $filtro_base . '
+			');
+
+
 		
 			/*
 			  echo $this->db->last_query();
@@ -306,58 +340,59 @@ class Agenda_model extends CI_Model {
 
             $somareceber=0;
             foreach ($query->result() as $row) {
-				//$row->HoraInicio = $this->basico->mascara_hora($row->DataInicio, 'hora');
 				$row->DataInicio = $this->basico->mascara_data($row->DataInicio, 'barras');
-				//$row->HoraFim = $this->basico->mascara_hora($row->DataFim, 'hora');
 				$row->DataFim = $this->basico->mascara_data($row->DataFim, 'barras');
+				//$row->HoraInicio = $this->basico->mascara_hora($row->DataInicio, 'hora');
+				//$row->HoraFim = $this->basico->mascara_hora($row->DataFim, 'hora');
+				$row->DataProduto = $this->basico->mascara_data($row->DataProduto, 'barras');
                 $row->AlergicoPet = $this->basico->mascara_palavra_completa($row->AlergicoPet, 'NS');
-				/*
+				
 				if($row->PeloPet == 1){
-					$row->Pelo = "CURTO";
+					$row->PeloPet = "CURTO";
 				}elseif($row->PeloPet == 2){
-					$row->Pelo = "MÉDIO";
+					$row->PeloPet = "MEDIO";
 				}elseif($row->PeloPet == 3){
-					$row->Pelo = "LONGO";
+					$row->PeloPet = "LONGO";
 				}elseif($row->PeloPet == 4){
-					$row->Pelo = "CACHEADO";
+					$row->PeloPet = "CACHEADO";
 				}else{
-					$row->Pelo = "N.I.";
+					$row->PeloPet = "N.I.";
 				}
 				
 				if($row->PortePet == 1){
-					$row->Porte = "MINI";
+					$row->PortePet = "MINI";
 				}elseif($row->PortePet == 2){
-					$row->Porte = "PEQUENO";
+					$row->PortePet = "PEQUENO";
 				}elseif($row->PortePet == 3){
-					$row->Porte = "MÉDIO";
+					$row->PortePet = "MEDIO";
 				}elseif($row->PortePet == 4){
-					$row->Porte = "GRANDE";
+					$row->PortePet = "GRANDE";
 				}elseif($row->PortePet == 5){
-					$row->Porte = "GIGANTE";
+					$row->PortePet = "GIGANTE";
 				}else{
-					$row->Porte = "N.I.";
+					$row->PortePet = "N.I.";
 				}
 								
 				if($row->EspeciePet == 1){
-					$row->Especie = "CÃO";
+					$row->EspeciePet = "CAO";
 				}elseif($row->EspeciePet == 2){
-					$row->Especie = "GATO";
+					$row->EspeciePet = "GATO";
 				}elseif($row->EspeciePet == 3){
-					$row->Especie = "AVE";
+					$row->EspeciePet = "AVE";
 				}else{
-					$row->Especie = "N.I.";
+					$row->EspeciePet = "N.I.";
 				}
 								
 				if($row->SexoPet == "M"){
-					$row->Sexo = "MACHO";
+					$row->SexoPet = "MACHO";
 				}elseif($row->SexoPet == "F"){
-					$row->Sexo = "FEMEA";
+					$row->SexoPet = "FEMEA";
 				}elseif($row->SexoPet == "O"){
-					$row->Sexo = "OUT";
+					$row->SexoPet = "OUT";
 				}else{
-					$row->Sexo = "N.I.";
+					$row->SexoPet = "N.I.";
 				}				
-				*/
+				
 				/*
 				$data = DateTime::createFromFormat('d/m/Y H:i:s', $data);
 				$data = $data->format('Y-m-d H:i:s');
@@ -384,7 +419,7 @@ class Agenda_model extends CI_Model {
             //$query->soma->somareceber = number_format($somareceber, 2, ',', '.');
 			
             return $query;
-       
+		}
 
     }
 	
