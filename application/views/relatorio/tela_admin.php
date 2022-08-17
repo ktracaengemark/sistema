@@ -147,7 +147,7 @@
 											<label for=""><h4><b>Procedimentos</b></h4></label>
 											<div class="form-group col-md-12 text-left">
 												<div class="row">										
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/proc_receitas" role="button">
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Receitas/procedimentos" role="button">
 														<span class="glyphicon glyphicon-pencil"></span> Procedimentos
 													</a>
 												</div>	
@@ -341,7 +341,7 @@
 											<label for=""><h4><b>Procedimentos</b></h4></label>
 											<div class="form-group col-md-12 text-left">
 												<div class="row">										
-													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/proc_despesas" role="button">
+													<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Despesas/procedimentos" role="button">
 														<span class="glyphicon glyphicon-pencil"></span> Procedimentos
 													</a>
 												</div>	

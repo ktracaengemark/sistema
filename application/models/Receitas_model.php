@@ -933,4 +933,147 @@ class Receitas_model extends CI_Model {
 		
 	}
 
+	public function list_procedimentos($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+	
+			$date_inicio_prc = ($data['DataInicio9']) ? 'PRC.DataProcedimento >= "' . $data['DataInicio9'] . '" AND ' : FALSE;
+			$date_fim_prc = ($data['DataFim9']) ? 'PRC.DataProcedimento <= "' . $data['DataFim9'] . '" AND ' : FALSE;
+
+			$hora_inicio_prc = ($data['HoraInicio9']) ? 'PRC.HoraProcedimento >= "' . $data['HoraInicio9'] . '" AND ' : FALSE;
+			$hora_fim_prc = ($data['HoraFim9']) ? 'PRC.HoraProcedimento <= "' . $data['HoraFim9'] . '" AND ' : FALSE;
+			
+			$data['Campo'] = (!$data['Campo']) ? 'PRC.DataProcedimento' : $data['Campo'];
+			$data['Ordenamento'] = (!$data['Ordenamento']) ? 'DESC' : $data['Ordenamento'];
+			
+			$filtro10 = ($data['ConcluidoProcedimento']) ? 'PRC.ConcluidoProcedimento = "' . $data['ConcluidoProcedimento'] . '" AND ' : FALSE;
+      
+			$filtro17 = ($data['NomeUsuario']) ? 'PRC.idSis_Usuario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;        
+			$filtro18 = ($data['Compartilhar']) ? 'PRC.Compartilhar = "' . $data['Compartilhar'] . '" AND ' : FALSE;
+			
+			$data['idApp_Procedimento'] = ($data['idApp_Procedimento']) ? ' AND PRC.idApp_Procedimento = ' . $data['idApp_Procedimento'] . '  ': FALSE;	
+			$data['Orcamento'] = ($data['Orcamento']) ? ' AND PRC.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
+			$data['Cliente'] = ($data['Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
+			$data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;  		
+
+			$groupby = ($data['Agrupar'] && $data['Agrupar'] != "0") ? 'GROUP BY PRC.' . $data['Agrupar'] . '' : FALSE;
+			
+	
+		/*
+		echo $this->db->last_query();
+		echo "<pre>";
+		print_r($groupby);
+		echo "</pre>";
+		exit();
+        */ 
+		
+		$querylimit = '';
+        if ($limit)
+            $querylimit = 'LIMIT ' . $start . ', ' . $limit;
+		
+		
+		if($completo == FALSE){
+			$complemento = FALSE;
+		}else{
+			$complemento = ' AND PRC.ConcluidoProcedimento = "N" ';
+		}
+
+		$filtro_base = '
+				' . $date_inicio_prc . '
+				' . $date_fim_prc . '
+				' . $hora_inicio_prc . '
+				' . $hora_fim_prc . '
+				' . $filtro10 . '
+				' . $filtro17 . '
+				' . $filtro18 . '
+				PRC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				PRC.TipoProcedimento = 2 
+				' . $data['idApp_Procedimento'] . '
+				' . $data['Orcamento'] . '
+				' . $data['Cliente'] . '
+				' . $data['idApp_Cliente'] . '
+			' . $groupby . '
+			ORDER BY
+				' . $data['Campo'] . ' 
+				' . $data['Ordenamento'] . '
+			' . $querylimit . '
+		';
+
+        ####################################################################
+        #Contagem DAS Parcelas e Soma total Para todas as listas e baixas
+		if($total == TRUE && $date == FALSE) {
+			$query = $this->db->query('
+				SELECT
+					PRC.idApp_Procedimento
+				FROM
+					App_Procedimento AS PRC
+				WHERE
+					' . $filtro_base . '
+			');
+
+			$count = $query->num_rows();
+			
+			if(!isset($count)){
+				return FALSE;
+			}else{
+				if($count >= 20001){
+					return FALSE;
+				}else{
+					return $query;
+				}
+			}
+			
+		}
+
+        ####################################################################
+        # Relatório/Excel Campos para exibição DAS Parcelas
+		if($total == FALSE && $date == FALSE) {	
+			$query = $this->db->query('
+				SELECT
+					PRC.idApp_Procedimento,
+					PRC.idSis_Empresa,
+					PRC.Procedimento,
+					PRC.DataProcedimento,
+					PRC.HoraProcedimento,
+					PRC.ConcluidoProcedimento,
+					PRC.idApp_Cliente,
+					PRC.idApp_OrcaTrata,
+					PRC.Compartilhar,
+					OT.idTab_TipoRD,
+					CONCAT(IFNULL(C.NomeCliente,"")) AS NomeCliente,
+					U.idSis_Usuario,
+					U.CpfUsuario,
+					U.Nome AS NomeUsuario,
+					AU.idSis_Usuario,
+					AU.Nome AS NomeCompartilhar
+				FROM
+					App_Procedimento AS PRC
+						LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = PRC.idApp_OrcaTrata
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = PRC.idApp_Cliente
+						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = PRC.idSis_Usuario
+						LEFT JOIN Sis_Usuario AS AU ON AU.idSis_Usuario = PRC.Compartilhar
+				WHERE
+					' . $filtro_base . '
+			');
+
+            foreach ($query->result() as $row) {
+				$row->DataProcedimento = $this->basico->mascara_data($row->DataProcedimento, 'barras');
+				$row->ConcluidoProcedimento = $this->basico->mascara_palavra_completa($row->ConcluidoProcedimento, 'NS');
+				
+				if($row->Compartilhar == "0"){
+					$row->NomeCompartilhar = 'Todos';
+				}
+
+            }
+          /*
+		  //echo $this->db->last_query();
+		  echo "<br>";
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+		  */
+            return $query;
+        }
+
+    }
+
 }
