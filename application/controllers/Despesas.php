@@ -1304,5 +1304,257 @@ class Despesas extends CI_Controller {
 		$this->load->view('basico/footer');
 
     }
-	
+
+    public function procedimentos() {
+		
+		unset($_SESSION['FiltroDespesasProced']);
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 3)
+            $data['msg'] = $this->basico->msg('<strong>Registro Não Encontrada.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 4)
+            $data['msg'] = $this->basico->msg('<strong>A Pesquisa está muito grande, ela excedeu 20000 linhas. Refine o seu filtro.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+			'id_Fornecedor_Auto',
+			'NomeFornecedorAuto',
+        ), TRUE));	
+
+        $data['query'] = quotes_to_entities($this->input->post(array(
+            'idApp_Procedimento',
+            'Orcamento',
+			'idTab_TipoRD',
+            'Fornecedor',
+			'idApp_Fornecedor',
+			'NomeUsuario',
+			'Compartilhar',
+			'DataInicio9',
+            'DataFim9',
+			'HoraInicio9',
+            'HoraFim9',
+			'ConcluidoProcedimento',
+            'Ordenamento',
+            'Campo',
+			'Agrupar',
+        ), TRUE));		
+
+        $data['select']['ConcluidoProcedimento'] = array(
+			'0' => 'TODOS',
+            'N' => 'Não',
+            'S' => 'Sim',
+        );
+
+        $data['select']['Agrupar'] = array(
+			'0' => '::Nenhum::',
+			'idApp_Procedimento' => 'Procedimento',
+			'idApp_OrcaTrata' => 'Orçamento',
+			'idApp_Fornecedor' => 'Fornecedor',
+        );
+		
+		$data['select']['Campo'] = array(
+			'PRC.DataProcedimento' => 'Data',
+            'PRC.idApp_Procedimento' => 'id',
+			'PRC.ConcluidoProcedimento' => 'Concl.',
+        );
+
+        $data['select']['Ordenamento'] = array(
+            'DESC' => 'Decrescente',
+			'ASC' => 'Crescente',
+        );
+
+        $data['select']['NomeUsuario'] = $this->Relatorio_model->select_usuario();
+		$data['select']['Compartilhar'] = $this->Relatorio_model->select_compartilhar();
+
+        $data['titulo1'] = 'Despesa';
+		$data['tipoproc'] = 1;
+		$data['metodo'] = 1;
+		$data['form_open_path'] = 'Despesas/procedimentos';
+		$data['panel'] = 'info';
+		$data['TipoFinanceiro'] = 'Despesas';
+		$data['TipoRD'] = 1;
+        $data['nome'] = 'Fornecedor';
+		$data['editar'] = 0;
+		$data['print'] = 0;
+		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
+		$data['edit'] = 'Orcatrata/baixadacobranca/';
+		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		$data['paginacao'] = 'N';
+		$data['caminho'] = 'Despesas/procedimentos/';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+		$this->form_validation->set_rules('DataInicio9', 'Data Início do Procedimento', 'trim|valid_date');
+        $this->form_validation->set_rules('DataFim9', 'Data Fim do Procedimento', 'trim|valid_date');
+		$this->form_validation->set_rules('HoraInicio9', 'Hora Inicial', 'trim|valid_hour');
+		$this->form_validation->set_rules('HoraFim9', 'Hora Final', 'trim|valid_hour');
+
+        #run form validation
+        if ($this->form_validation->run() !== FALSE) {
+
+			$_SESSION['FiltroDespesasProced']['DataInicio9'] = $this->basico->mascara_data($data['query']['DataInicio9'], 'mysql');
+			$_SESSION['FiltroDespesasProced']['DataFim9'] = $this->basico->mascara_data($data['query']['DataFim9'], 'mysql');
+			$_SESSION['FiltroDespesasProced']['HoraInicio9'] = $data['query']['HoraInicio9'];
+			$_SESSION['FiltroDespesasProced']['HoraFim9'] = $data['query']['HoraFim9'];
+			$_SESSION['FiltroDespesasProced']['idApp_Procedimento'] = $data['query']['idApp_Procedimento'];
+			$_SESSION['FiltroDespesasProced']['Orcamento'] = $data['query']['Orcamento'];
+			$_SESSION['FiltroDespesasProced']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
+			$_SESSION['FiltroDespesasProced']['Fornecedor'] = $data['query']['Fornecedor'];
+			$_SESSION['FiltroDespesasProced']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
+			$_SESSION['FiltroDespesasProced']['NomeUsuario'] = $data['query']['NomeUsuario'];
+			$_SESSION['FiltroDespesasProced']['Campo'] = $data['query']['Campo'];	
+			$_SESSION['FiltroDespesasProced']['Ordenamento'] = $data['query']['Ordenamento'];
+			$_SESSION['FiltroDespesasProced']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
+			$_SESSION['FiltroDespesasProced']['Compartilhar'] = $data['query']['Compartilhar'];	
+			$_SESSION['FiltroDespesasProced']['Agrupar'] = $data['query']['Agrupar'];	
+							
+			$data['pesquisa_query'] = $this->Despesas_model->list_procedimentos($_SESSION['FiltroDespesasProced'],FALSE , TRUE, FALSE ,FALSE ,FALSE );
+			
+			if($data['pesquisa_query'] === FALSE){
+				
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'Despesas/procedimentos' . $data['msg']);
+				exit();
+			}else{
+
+				$config['base_url'] = base_url() . 'Despesas/procedimentos_pag/';
+				$config['per_page'] = 10;
+				$config["uri_segment"] = 3;
+				$config['reuse_query_string'] = TRUE;
+				$config['num_links'] = 2;
+				$config['use_page_numbers'] = TRUE;
+				$config['full_tag_open'] = "<ul class='pagination'>";
+				$config['full_tag_close'] = "</ul>";
+				$config['num_tag_open'] = '<li>';
+				$config['num_tag_close'] = '</li>';
+				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+				$config['next_tag_open'] = "<li>";
+				$config['next_tagl_close'] = "</li>";
+				$config['prev_tag_open'] = "<li>";
+				$config['prev_tagl_close'] = "</li>";
+				$config['first_tag_open'] = "<li>";
+				$config['first_tagl_close'] = "</li>";
+				$config['last_tag_open'] = "<li>";
+				$config['last_tagl_close'] = "</li>";
+
+				$config['total_rows'] = $data['pesquisa_query']->num_rows();
+				
+				if($config['total_rows'] >= 1){
+					$data['total_rows'] = $config['total_rows'];
+				}else{
+					$data['total_rows'] = 0;
+				}
+				
+				$this->pagination->initialize($config);
+				
+				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+				$data['pagina'] = $page;
+				$data['per_page'] = $config['per_page'];
+				$data['report'] = $this->Despesas_model->list_procedimentos($_SESSION['FiltroDespesasProced'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']),FALSE);			
+				$data['pagination'] = $this->pagination->create_links();
+				
+				$data['list'] = $this->load->view('Despesas/list_procedimentos', $data, TRUE);
+				//$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+			}
+		}
+
+        $this->load->view('Despesas/tela_procedimentos', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
+    public function procedimentos_pag() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+        $data['titulo1'] = 'Despesa';
+		$data['tipoproc'] = 1;
+		$data['metodo'] = 1;
+		$data['form_open_path'] = 'Despesas/procedimentos_pag';
+		$data['panel'] = 'info';
+		$data['TipoFinanceiro'] = 'Despesas';
+		$data['TipoRD'] = 1;
+        $data['nome'] = 'Fornecedor';
+		$data['editar'] = 0;
+		$data['print'] = 0;
+		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
+		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
+		$data['edit'] = 'Orcatrata/baixadacobranca/';
+		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+		$data['paginacao'] = 'S';
+		$data['caminho'] = 'Despesas/procedimentos/';
+
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+							
+		$data['pesquisa_query'] = $this->Despesas_model->list_procedimentos($_SESSION['FiltroDespesasProced'],FALSE , TRUE, FALSE ,FALSE ,FALSE );
+		
+		if($data['pesquisa_query'] === FALSE){
+			
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'Despesas/procedimentos' . $data['msg']);
+			exit();
+		}else{
+
+			$config['base_url'] = base_url() . 'Despesas/procedimentos_pag/';
+			$config['per_page'] = 10;
+			$config["uri_segment"] = 3;
+			$config['reuse_query_string'] = TRUE;
+			$config['num_links'] = 2;
+			$config['use_page_numbers'] = TRUE;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			
+			$config['total_rows'] = $data['pesquisa_query']->num_rows();
+           
+			if($config['total_rows'] >= 1){
+				$data['total_rows'] = $config['total_rows'];
+			}else{
+				$data['total_rows'] = 0;
+			}
+			
+            $this->pagination->initialize($config);
+            
+			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+            $data['pagina'] = $page;
+			$data['per_page'] = $config['per_page'];
+			$data['report'] = $this->Despesas_model->list_procedimentos($_SESSION['FiltroDespesasProced'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
+			$data['pagination'] = $this->pagination->create_links();
+			
+            $data['list'] = $this->load->view('Despesas/list_procedimentos', $data, TRUE);
+            //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+        
+		}
+
+        $this->load->view('Despesas/tela_procedimentos', $data);
+
+        $this->load->view('basico/footer');
+
+    }
+
 }

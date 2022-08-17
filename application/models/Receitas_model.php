@@ -941,18 +941,18 @@ class Receitas_model extends CI_Model {
 			$hora_inicio_prc = ($data['HoraInicio9']) ? 'PRC.HoraProcedimento >= "' . $data['HoraInicio9'] . '" AND ' : FALSE;
 			$hora_fim_prc = ($data['HoraFim9']) ? 'PRC.HoraProcedimento <= "' . $data['HoraFim9'] . '" AND ' : FALSE;
 			
-			$data['Campo'] = (!$data['Campo']) ? 'PRC.DataProcedimento' : $data['Campo'];
-			$data['Ordenamento'] = (!$data['Ordenamento']) ? 'DESC' : $data['Ordenamento'];
+			$Campo = (!$data['Campo']) ? 'PRC.DataProcedimento' : $data['Campo'];
+			$Ordenamento = (!$data['Ordenamento']) ? 'DESC' : $data['Ordenamento'];
 			
 			$filtro10 = ($data['ConcluidoProcedimento']) ? 'PRC.ConcluidoProcedimento = "' . $data['ConcluidoProcedimento'] . '" AND ' : FALSE;
       
 			$filtro17 = ($data['NomeUsuario']) ? 'PRC.idSis_Usuario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;        
 			$filtro18 = ($data['Compartilhar']) ? 'PRC.Compartilhar = "' . $data['Compartilhar'] . '" AND ' : FALSE;
 			
-			$data['idApp_Procedimento'] = ($data['idApp_Procedimento']) ? ' AND PRC.idApp_Procedimento = ' . $data['idApp_Procedimento'] . '  ': FALSE;	
-			$data['Orcamento'] = ($data['Orcamento']) ? ' AND PRC.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
-			$data['Cliente'] = ($data['Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
-			$data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;  		
+			$idApp_Procedimento = ($data['idApp_Procedimento']) ? ' AND PRC.idApp_Procedimento = ' . $data['idApp_Procedimento'] . '  ': FALSE;	
+			$Orcamento = ($data['Orcamento']) ? ' AND PRC.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
+			$Cliente = ($data['Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
+			$idApp_Cliente = ($data['idApp_Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;  		
 
 			$groupby = ($data['Agrupar'] && $data['Agrupar'] != "0") ? 'GROUP BY PRC.' . $data['Agrupar'] . '' : FALSE;
 			
@@ -986,14 +986,14 @@ class Receitas_model extends CI_Model {
 				' . $filtro18 . '
 				PRC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				PRC.TipoProcedimento = 2 
-				' . $data['idApp_Procedimento'] . '
-				' . $data['Orcamento'] . '
-				' . $data['Cliente'] . '
-				' . $data['idApp_Cliente'] . '
+				' . $idApp_Procedimento . '
+				' . $Orcamento . '
+				' . $Cliente . '
+				' . $idApp_Cliente . '
 			' . $groupby . '
 			ORDER BY
-				' . $data['Campo'] . ' 
-				' . $data['Ordenamento'] . '
+				' . $Campo . ' 
+				' . $Ordenamento . '
 			' . $querylimit . '
 		';
 

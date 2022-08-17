@@ -1404,6 +1404,7 @@ class Receitas extends CI_Controller {
 		$data['edit'] = 'Orcatrata/baixadacobranca/';
 		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
 		$data['paginacao'] = 'N';
+		$data['caminho'] = 'Receitas/procedimentos/';
 
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 		$this->form_validation->set_rules('DataInicio9', 'Data Início do Procedimento', 'trim|valid_date');
