@@ -1437,6 +1437,7 @@ class Comissao_model extends CI_Model {
 		
 		$Funcionario 			= ($data['Funcionario']) ? ' AND (UP1.idSis_Usuario = ' . $data['Funcionario'] . ' OR UP2.idSis_Usuario = ' . $data['Funcionario'] . ' OR UP3.idSis_Usuario = ' . $data['Funcionario'] . ' OR UP4.idSis_Usuario = ' . $data['Funcionario'] . ' )' : FALSE;
 		$Orcamento 				= ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] : FALSE;
+		$id_gruposervico 		= ($data['id_GrupoServico']) ? ' AND PRDS.id_GrupoServico = ' . $data['id_GrupoServico'] . '  ': FALSE;
 		$Cliente 				= ($data['Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['Cliente'] : FALSE;
 		$idApp_Cliente 			= ($data['idApp_Cliente']) ? ' AND OT.idApp_Cliente = ' . $data['idApp_Cliente'] : FALSE;
 		$Produtos 				= ($data['Produtos']) ? ' AND PRDS.idTab_Produtos_Produto = ' . $data['Produtos'] : FALSE;
@@ -1467,10 +1468,15 @@ class Comissao_model extends CI_Model {
 		$query5 				= ($data['idApp_ClienteDep'] && isset($data['idApp_ClienteDep'])) ? 'AND OT.idApp_ClienteDep = ' . $data['idApp_ClienteDep'] . '  ' : FALSE;
 		$query52 				= ($data['idApp_ClienteDep2'] && isset($data['idApp_ClienteDep2'])) ? 'AND OT.idApp_ClienteDep = ' . $data['idApp_ClienteDep2'] . '  ' : FALSE;			
 
+		if(isset($data['Grupo']) && $data['Grupo'] != "0"){
+			$grupo = '' . $data['Grupo'] . ' AND';
+		}else{
+			$grupo = FALSE;
+		}
+		
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
-		
 
 		if ($completo === FALSE) {
 			$complemento = FALSE;
@@ -1506,10 +1512,12 @@ class Comissao_model extends CI_Model {
 				' . $RecorrenciaOrca . '
 				' . $ConcluidoProduto . '
 				' . $StatusComissaoServico . '
+				' . $grupo . '
                 OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				PRDS.Prod_Serv_Produto = "S" AND
                 PRDS.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
                 ' . $Orcamento . '
+				' . $id_gruposervico . '
                 ' . $Cliente . '
                 ' . $idApp_Cliente . '
 				' . $TipoFinanceiro . '

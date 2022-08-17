@@ -28,7 +28,10 @@
 					<span class="input-group-addon">R$</span>
 					<input type="text" class="form-control" disabled aria-label="Total de Entradas" value="<?php echo $report->soma->Soma_Valor_Com_Total_Prof ?> / <?php echo $pesquisa_query->soma2->Soma_Valor_Com_Total_Prof2 ?>">
 				</div>
-			</div>				
+			</div>
+			<div class="col-md-4 text-left">
+				<?php echo $pagination; ?>
+			</div>					
 		</div>
 		<div class="row">
 			<?php if($paginacao == "S") { ?>
@@ -63,14 +66,11 @@
 			<div class="col-md-2">
 				<label>Baixa</label>
 				<a href="<?php echo base_url() . $baixacomissao . $_SESSION['log']['idSis_Empresa']; ?>">
-					<button class="btn btn-primary btn-md btn-block" type="button">
+					<button class="btn btn-danger btn-md btn-block" type="button">
 						<span class="glyphicon glyphicon-edit"></span>
 					</button>
 				</a>
-			</div>
-			<div class="col-md-4 text-left">
-				<?php echo $pagination; ?>
-			</div>			
+			</div>		
 		</div>
 	</div>
 </div>

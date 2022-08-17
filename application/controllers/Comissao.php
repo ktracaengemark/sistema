@@ -3227,34 +3227,20 @@ class Comissao extends CI_Controller {
 				'Ultimo',
 				'nome',
 				'RecorrenciaOrca',
+				'Grupo',
+				'id_GrupoServico',
 			), TRUE));
-			/*
-			if (!$data['query']['DataInicio8'])
-			   $data['query']['DataInicio8'] = date("d/m/Y", mktime(0,0,0,date('m'),'01',date('Y')));
-			
-			if (!$data['query']['DataFim8'])
-			   $data['query']['DataFim8'] = date("t/m/Y", mktime(0,0,0,date('m'),'01',date('Y')));
-						
-			if (!$data['query']['DataInicio'])
-			   $data['query']['DataInicio'] = date("d/m/Y", mktime(0,0,0,date('m'),date('d'),date('Y')));
-			
-			if (!$data['query']['DataFim'])
-			  $data['query']['DataFim'] = date("t/m/Y", mktime(0,0,0,date('m'),'01',date('Y')));
-			   
-			if (!$data['query']['Mesvenc'])
-			   $data['query']['Mesvenc'] = date('m', time());
-	   
-		   if (!$data['query']['Mespag'])
-			   $data['query']['Mespag'] = date('m', time());
-
-			if (!$data['query']['Ano'])
-			   $data['query']['Ano'] = date('Y', time());	   
-			*/
 
 			$data['collapse'] = '';	
 
 			$data['collapse1'] = 'class="collapse"';
-			
+						
+			$data['select']['Grupo'] = array(
+				'0' => '::TODOS::',
+				'PRDS.id_GrupoServico != 0 ' => 'C/ Grupo',
+				'PRDS.id_GrupoServico = 0 ' => 'S/ Grupo',
+			);
+
 			$data['select']['AprovadoOrca'] = array(
 				'0' => '::TODOS::',		
 				'S' => 'Aprovado',
@@ -3436,6 +3422,8 @@ class Comissao extends CI_Controller {
 				$_SESSION['Filtro_Porservicos']['metodo'] = $data['metodo'];
 				$_SESSION['Filtro_Porservicos']['idTab_TipoRD'] = $data['TipoRD'];
 				$_SESSION['Filtro_Porservicos']['RecorrenciaOrca'] = $data['query']['RecorrenciaOrca'];
+				$_SESSION['Filtro_Porservicos']['Grupo'] = $data['query']['Grupo'];
+				$_SESSION['Filtro_Porservicos']['id_GrupoServico'] = $data['query']['id_GrupoServico'];
 					
 				$data['pesquisa_query'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'],FALSE, TRUE, FALSE, FALSE, FALSE);
 				
@@ -3613,18 +3601,9 @@ class Comissao extends CI_Controller {
 				}else{
 
 					$data['query'] = quotes_to_entities($this->input->post(array(
-						'Dia',
-						'Mesvenc',
-						'Ano',
-						'Orcarec',
-						'NomeCliente',
 						'QuitadoParcelas',
 						'MostrarDataPagamento',
 						'DataPagamento',
-						'UltimaDataPagamento',
-						'AprovadoOrca',
-						'ConcluidoOrca',
-						'QuitadoOrca',
 					), TRUE));
 					
 					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3642,16 +3621,15 @@ class Comissao extends CI_Controller {
 					$j = 1;
 					for ($i = 1; $i <= $data['count']['PRCount']; $i++) {
 
-						if ($this->input->post('DataPagoComissaoServico' . $i) || $this->input->post('StatusComissaoServico' . $i)) {
-							//$data['produto'][$j]['idApp_OrcaTrata'] = $this->input->post('idApp_OrcaTrata' . $i);
-							//$data['produto'][$j]['QtdProduto'] = $this->input->post('QtdProduto' . $i);
-							//$data['produto'][$j]['ValorProduto'] = $this->input->post('ValorProduto' . $i);
-							//$data['produto'][$j]['ComissaoServicoProduto'] = $this->input->post('ComissaoServicoProduto' . $i);
-							$data['produto'][$j]['DataConcluidoProduto'] = $this->input->post('DataConcluidoProduto' . $i);
+						if ($this->input->post('idApp_Produto' . $i)) {
 							$data['produto'][$j]['idApp_Produto'] = $this->input->post('idApp_Produto' . $i);
 							$data['produto'][$j]['ObsProduto'] = $this->input->post('ObsProduto' . $i);
 							$data['produto'][$j]['ValorComissaoServico'] = $this->input->post('ValorComissaoServico' . $i);
+							/*
+							//$data['produto'][$j]['DataConcluidoProduto'] = $this->input->post('DataConcluidoProduto' . $i);
+							
 							$data['produto'][$j]['DataPagoComissaoServico'] = $this->input->post('DataPagoComissaoServico' . $i);
+							
 							$data['produto'][$j]['StatusComissaoServico'] = $this->input->post('StatusComissaoServico' . $i);
 							
 							(!$data['produto'][$j]['StatusComissaoServico']) ? $data['produto'][$j]['StatusComissaoServico'] = 'N' : FALSE;
@@ -3659,7 +3637,7 @@ class Comissao extends CI_Controller {
 								'StatusComissaoServico' . $j => $this->basico->radio_checked($data['produto'][$j]['StatusComissaoServico'], 'StatusComissaoServico' . $j, 'NS'),
 							);
 							($data['produto'][$j]['StatusComissaoServico'] == 'S') ? $data['div']['StatusComissaoServico' . $j] = '' : $data['div']['StatusComissaoServico' . $j] = 'style="display: none;"';				
-							
+							*/
 							$data['produto'][$j]['ProfissionalProduto_1'] = $this->input->post('ProfissionalProduto_1' . $i);
 							$data['produto'][$j]['ProfissionalProduto_2'] = $this->input->post('ProfissionalProduto_2' . $i);
 							$data['produto'][$j]['ProfissionalProduto_3'] = $this->input->post('ProfissionalProduto_3' . $i);
@@ -3733,29 +3711,7 @@ class Comissao extends CI_Controller {
 						}
 					}
 					$data['count']['PRCount'] = $j - 1;
-					
-					//$this->load->library('pagination');
-					$config['per_page'] = 10;
-					$config["uri_segment"] = 4;
-					$config['reuse_query_string'] = TRUE;
-					$config['num_links'] = 2;
-					$config['use_page_numbers'] = TRUE;
-					$config['full_tag_open'] = "<ul class='pagination'>";
-					$config['full_tag_close'] = "</ul>";
-					$config['num_tag_open'] = '<li>';
-					$config['num_tag_close'] = '</li>';
-					$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-					$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-					$config['next_tag_open'] = "<li>";
-					$config['next_tagl_close'] = "</li>";
-					$config['prev_tag_open'] = "<li>";
-					$config['prev_tagl_close'] = "</li>";
-					$config['first_tag_open'] = "<li>";
-					$config['first_tagl_close'] = "</li>";
-					$config['last_tag_open'] = "<li>";
-					$config['last_tagl_close'] = "</li>";
-					$data['Pesquisa'] = '';
-					
+
 					if ($id) {
 						
 						#### Sis_Empresa ####
@@ -3778,7 +3734,25 @@ class Comissao extends CI_Controller {
 							}else{
 
 								$config['base_url'] = base_url() . 'Comissao/comissaoserv_baixa/' . $id . '/';
-								
+								$config['per_page'] = 10;
+								$config["uri_segment"] = 4;
+								$config['reuse_query_string'] = TRUE;
+								$config['num_links'] = 2;
+								$config['use_page_numbers'] = TRUE;
+								$config['full_tag_open'] = "<ul class='pagination'>";
+								$config['full_tag_close'] = "</ul>";
+								$config['num_tag_open'] = '<li>';
+								$config['num_tag_close'] = '</li>';
+								$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+								$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+								$config['next_tag_open'] = "<li>";
+								$config['next_tagl_close'] = "</li>";
+								$config['prev_tag_open'] = "<li>";
+								$config['prev_tagl_close'] = "</li>";
+								$config['first_tag_open'] = "<li>";
+								$config['first_tagl_close'] = "</li>";
+								$config['last_tag_open'] = "<li>";
+								$config['last_tagl_close'] = "</li>";
 								$config['total_rows'] = $data['pesquisa_query']->num_rows();					   
 								
 								if($config['total_rows'] >= 1){
@@ -3786,18 +3760,19 @@ class Comissao extends CI_Controller {
 								}else{
 									$_SESSION['Filtro_Porservicos']['Total_Rows'] = $data['total_rows'] = 0;
 								}
-								
+
+								$_SESSION['Filtro_Porservicos']['ComissaoTotal'] = $data['pesquisa_query']->soma2->Soma_Valor_Com_Total2;
+																
 								$this->pagination->initialize($config);
 								
 								$_SESSION['Filtro_Porservicos']['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+								
 								$_SESSION['Filtro_Porservicos']['Per_Page'] = $data['per_page'] = $config['per_page'];
 								
 								$_SESSION['Filtro_Porservicos']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 
 								#### App_Produto ####
-								
-								//$_SESSION['Produto'] = $data['produto'] = $this->Orcatrata_model->get_baixadacomissaoservico($id, FALSE, $_SESSION['Filtro_Porservicos']['Per_Page'], ($_SESSION['Filtro_Porservicos']['Pagina'] * $_SESSION['Filtro_Porservicos']['Per_Page']));
-								$_SESSION['Produto'] = $data['produto'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], TRUE, FALSE, $_SESSION['Filtro_Porservicos']['Per_Page'], ($_SESSION['Filtro_Porservicos']['Pagina'] * $_SESSION['Filtro_Porservicos']['Per_Page']), TRUE);
+								$data['produto'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], TRUE, FALSE, $_SESSION['Filtro_Porservicos']['Per_Page'], ($_SESSION['Filtro_Porservicos']['Pagina'] * $_SESSION['Filtro_Porservicos']['Per_Page']), TRUE);
 								
 								if (count($data['produto']) > 0) {
 									$_SESSION['Produto'] = $data['produto'] = array_combine(range(1, count($data['produto'])), array_values($data['produto']));
@@ -3805,21 +3780,29 @@ class Comissao extends CI_Controller {
 									
 									if (isset($data['produto'])) {
 
+										$data['somatotal'] = 0;
+										
 										for($j=1; $j <= $data['count']['PRCount']; $j++) {
 											
-											$_SESSION['Produto'][$j]['SubtotalProduto'] = number_format(($data['produto'][$j]['ValorProduto'] * $data['produto'][$j]['QtdProduto']), 2, ',', '.');
-											$data['produto'][$j]['ValorComissaoServico'] = number_format(($data['produto'][$j]['ValorComissaoServico']), 2, ',', '.');
-											$data['produto'][$j]['DataConcluidoProduto'] = $this->basico->mascara_data($data['produto'][$j]['DataConcluidoProduto'], 'barras');
-											
-											$data['produto'][$j]['DataPagoComissaoServico'] = $this->basico->mascara_data($data['produto'][$j]['DataPagoComissaoServico'], 'barras');
-											
+											$data['somatotal'] += $data['produto'][$j]['ValorComissaoServico'];
+
 											$_SESSION['Produto'][$j]['Receita'] = $data['produto'][$j]['Receita'];
-											//$_SESSION['Produto'][$j]['Valor'] = $data['produto'][$j]['Valor'];
+																						
+											$_SESSION['Produto'][$j]['SubtotalProduto'] = number_format(($data['produto'][$j]['ValorProduto'] * $data['produto'][$j]['QtdProduto']), 2, ',', '.');
 											
+											$_SESSION['Produto'][$j]['DataConcluidoProduto'] = $this->basico->mascara_data($data['produto'][$j]['DataConcluidoProduto'], 'barras');
+											
+											$_SESSION['Produto'][$j]['StatusComissaoServico'] = $data['produto'][$j]['StatusComissaoServico'];
+											/*
+											$data['produto'][$j]['DataPagoComissaoServico'] = $this->basico->mascara_data($data['produto'][$j]['DataPagoComissaoServico'], 'barras');
+
 											$data['radio'] = array(
 												'StatusComissaoServico' . $j => $this->basico->radio_checked($data['produto'][$j]['StatusComissaoServico'], 'StatusComissaoServico' . $j, 'NS'),
 											);
 											($data['produto'][$j]['StatusComissaoServico'] == 'S') ? $data['div']['StatusComissaoServico' . $j] = '' : $data['div']['StatusComissaoServico' . $j] = 'style="display: none;"';
+											*/
+											
+											$data['produto'][$j]['ValorComissaoServico'] = number_format(($data['produto'][$j]['ValorComissaoServico']), 2, ',', '.');
 
 											$data['produto'][$j]['ValorComProf_1'] = number_format(($data['produto'][$j]['ValorComProf_1']), 2, ',', '.');
 											$data['produto'][$j]['ValorComProf_2'] = number_format(($data['produto'][$j]['ValorComProf_2']), 2, ',', '.');
@@ -3864,11 +3847,13 @@ class Comissao extends CI_Controller {
 												$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = 'readonly=""';
 											}else{
 												$data['cadastrar_servico'][$j]['Hidden_readonly_6'] = '';
-											}						
-											
+											}
 										}
-										
+										$_SESSION['Filtro_Porservicos']['SomaTotal'] = number_format($data['somatotal'],2,",",".");
 									}
+								}else{
+									$_SESSION['Filtro_Porservicos']['Contagem'] = 0;
+									$_SESSION['Filtro_Porservicos']['SomaTotal'] = 0;
 								}
 							}
 						}
@@ -3884,14 +3869,7 @@ class Comissao extends CI_Controller {
 						
 						$data['select']['QuitadoParcelas'] = $this->Basico_model->select_status_sn();
 						$data['select']['MostrarDataPagamento'] = $this->Basico_model->select_status_sn();
-						$data['select']['StatusComissaoServico'] = $this->Basico_model->select_status_sn();
-						$data['select']['AprovadoOrca'] = $this->Basico_model->select_status_sn();
-						$data['select']['ConcluidoOrca'] = $this->Basico_model->select_status_sn();
-						$data['select']['QuitadoOrca'] = $this->Basico_model->select_status_sn();
-						$data['select']['Dia'] = $this->Basico_model->select_dia();
-						$data['select']['Mesvenc'] = $this->Basico_model->select_mes();
-						$data['select']['Orcarec'] = $this->Basico_model->select_orcarec();
-						$data['select']['NomeCliente'] = $this->Basico_model->select_cliente();		
+						$data['select']['StatusComissaoServico'] = $this->Basico_model->select_status_sn();	
 						
 						$data['titulo'] = 'Servicos';
 						$data['form_open_path'] = 'Comissao/comissaoserv_baixa';
@@ -3952,26 +3930,12 @@ class Comissao extends CI_Controller {
 								redirect(base_url() . 'acesso' . $data['msg']);
 								
 							} else {
-									
-								$data['bd']['Dia'] = $data['query']['Dia'];
-								$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
-								$data['bd']['Ano'] = $data['query']['Ano'];
-								$data['bd']['Orcarec'] = $data['query']['Orcarec'];
-								$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
-								$data['bd']['QuitadoParcelas'] = $data['query']['QuitadoParcelas'];
-								$data['bd']['MostrarDataPagamento'] = $data['query']['MostrarDataPagamento'];
-								$data['bd']['DataPagamento'] = $data['query']['DataPagamento'];
-								$data['bd']['UltimaDataPagamento'] = $data['query']['UltimaDataPagamento'];
-								$data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
-								$data['bd']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
-								$data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
-								
+
 								////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
 								
 								$data['query']['DataPagamento'] = $this->basico->mascara_data($data['query']['DataPagamento'], 'mysql');  
 
 								#### App_Produto ####
-								//$data['update']['produto']['anterior'] = $this->Orcatrata_model->get_baixadacomissaoservico($data['empresa']['idSis_Empresa'], FALSE, $_SESSION['Filtro_Porservicos']['Per_Page'], ($_SESSION['Filtro_Porservicos']['Pagina'] * $_SESSION['Filtro_Porservicos']['Per_Page']));
 								$data['update']['produto']['anterior'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], TRUE, FALSE, $_SESSION['Filtro_Porservicos']['Per_Page'], ($_SESSION['Filtro_Porservicos']['Pagina'] * $_SESSION['Filtro_Porservicos']['Per_Page']), TRUE);
 
 								if (isset($data['produto']) || (!isset($data['produto']) && isset($data['update']['produto']['anterior']) ) ) {
@@ -3986,18 +3950,16 @@ class Comissao extends CI_Controller {
 
 									$max = count($data['update']['produto']['alterar']);
 									for($j=0; $j<$max; $j++) {
+										
 										//$data['update']['produto']['alterar'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['alterar'][$j]['ValorProduto']));
+										//$data['update']['produto']['alterar'][$j]['DataConcluidoProduto'] = $this->basico->mascara_data($data['update']['produto']['alterar'][$j]['DataConcluidoProduto'], 'mysql');
+										//$data['update']['produto']['alterar'][$j]['idApp_OrcaTrata'] = $data['update']['produto']['alterar'][$j]['idApp_OrcaTrata'];
+										//$data['update']['produto']['alterar'][$j]['DataPagoComissaoServico'] = $this->basico->mascara_data($data['update']['produto']['alterar'][$j]['DataPagoComissaoServico'], 'mysql');
 										
 										$data['update']['produto']['alterar'][$j]['ObsProduto'] = trim(mb_strtoupper($data['update']['produto']['alterar'][$j]['ObsProduto'], 'ISO-8859-1'));
-										
-										$data['update']['produto']['alterar'][$j]['DataConcluidoProduto'] = $this->basico->mascara_data($data['update']['produto']['alterar'][$j]['DataConcluidoProduto'], 'mysql');
-										
-										//$data['update']['produto']['alterar'][$j]['idApp_OrcaTrata'] = $data['update']['produto']['alterar'][$j]['idApp_OrcaTrata'];
-										
+																				
 										$data['update']['produto']['alterar'][$j]['ValorComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['alterar'][$j]['ValorComissaoServico']));
-										
-										$data['update']['produto']['alterar'][$j]['DataPagoComissaoServico'] = $this->basico->mascara_data($data['update']['produto']['alterar'][$j]['DataPagoComissaoServico'], 'mysql');
-									
+																			
 										if(!$data['update']['produto']['alterar'][$j]['ProfissionalProduto_1']){
 											$data['update']['produto']['alterar'][$j]['ProfissionalProduto_1'] = 0;
 										}
@@ -4052,7 +4014,7 @@ class Comissao extends CI_Controller {
 										}else{
 											$data['update']['produto']['alterar'][$j]['ValorComProf_6'] = str_replace(',', '.', str_replace('.', '', $data['update']['produto']['alterar'][$j]['ValorComProf_6']));
 										}
-
+										/*
 										if ($data['query']['QuitadoParcelas'] == 'S') $data['update']['produto']['alterar'][$j]['StatusComissaoServico'] = 'S';
 										
 										if ($data['update']['produto']['alterar'][$j]['StatusComissaoServico'] == 'S'){
@@ -4068,7 +4030,7 @@ class Comissao extends CI_Controller {
 										} else {
 											$data['update']['produto']['alterar'][$j]['DataPagoComissaoServico'] = "0000-00-00";
 										}
-										
+										*/
 										$data['update']['produto']['bd'] = $this->Orcatrata_model->update_produto_id($data['update']['produto']['alterar'][$j], $data['update']['produto']['alterar'][$j]['idApp_Produto']);
 
 									}

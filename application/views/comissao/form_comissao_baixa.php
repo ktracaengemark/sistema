@@ -37,18 +37,12 @@
 					</div>	
 				</div>
 				<div class="panel-body">
-
-					<div class="panel-group">	
-						
+					<div class="panel-group">
 						<div class="panel panel-primary">
-
 							<div  style="overflow: auto; height: 456px; ">
-							
 								<div class="panel-body">
 									<!--App_parcelasRec-->
 									<input type="hidden" name="PRCount" id="PRCount" value="<?php echo $count['PRCount']; ?>"/>
-
-									<div class="input_fields_wrap21">
 
 									<?php
 									$linha =  $_SESSION['FiltroComissao']['Per_Page']*$_SESSION['FiltroComissao']['Pagina'];
@@ -114,12 +108,11 @@
 									<?php
 									}
 									?>
-									</div>
+									
 								</div>
 							</div>									
 						</div>
 					</div>
-				
 					<div class="form-group">
 						<div class="row">
 							<input type="hidden" name="idSis_Empresa" value="<?php echo $empresa['idSis_Empresa']; ?>">
