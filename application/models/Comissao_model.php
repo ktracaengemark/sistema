@@ -1421,7 +1421,7 @@ class Comissao_model extends CI_Model {
 
 	}
 
-	public function list_comissaoserv($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+	public function list_comissaoserv($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE, $func = FALSE) {
 
 		$date_inicio_orca 		= ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;
 		$date_fim_orca 			= ($data['DataFim']) ? 'OT.DataOrca <= "' . $data['DataFim'] . '" AND ' : FALSE;
@@ -1481,62 +1481,85 @@ class Comissao_model extends CI_Model {
 		if ($completo === FALSE) {
 			$complemento = FALSE;
 		} else {
-			$complemento = '
-				AND OT.CanceladoOrca = "N" 
-				AND PRDS.StatusComissaoServico = "N" 
-				AND PRDS.id_GrupoServico = 0 
+			if($func === FALSE){
+				$complemento = '
+					AND OT.CanceladoOrca = "N" 
+					AND PRDS.StatusComissaoServico = "N" 
+					AND PRDS.id_GrupoServico = 0 
+				';				
+			}else{
+				$complemento = '
+					AND OT.CanceladoOrca = "N" 
+					AND PRDS.StatusComissaoServico = "S" 
+					AND PRDS.id_GrupoServico != 0 
+				';
+			}
+		}
+		if($func === FALSE){
+			$filtro_base = '
+					' . $date_inicio_orca . '
+					' . $date_fim_orca . '
+					' . $date_inicio_entrega . '
+					' . $date_fim_entrega . '
+					' . $date_inicio_pg_com . '
+					' . $date_fim_pg_com . '
+					' . $date_inicio_prd_entr . '
+					' . $date_fim_prd_entr . '
+					' . $permissao . '
+					' . $AprovadoOrca . '
+					' . $QuitadoOrca . '
+					' . $ConcluidoOrca . '
+					' . $Modalidade . '
+					' . $FormaPagamento . '
+					' . $Tipo_Orca . '
+					' . $TipoFrete . '
+					' . $AVAP . '
+					' . $FinalizadoOrca . '
+					' . $CanceladoOrca . '
+					' . $CombinadoFrete . '
+					' . $RecorrenciaOrca . '
+					' . $ConcluidoProduto . '
+					' . $StatusComissaoServico . '
+					' . $grupo . '
+					OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+					PRDS.Prod_Serv_Produto = "S" AND
+					PRDS.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
+					' . $Orcamento . '
+					' . $id_gruposervico . '
+					' . $Cliente . '
+					' . $idApp_Cliente . '
+					' . $TipoFinanceiro . '
+					' . $idTab_TipoRD . '
+					' . $Produtos . '
+					' . $Categoria . '
+					' . $Funcionario . '
+					' . $query4 . '
+					' . $query42 . '
+					' . $query5 . '
+					' . $query52 . '
+					' . $complemento . '
+				' . $groupby . '
+				ORDER BY
+					' . $Campo . '
+					' . $Ordenamento . '
+				' . $querylimit . '
+			';
+		}else{
+			$filtro_base = '
+					OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+					PRDS.Prod_Serv_Produto = "S" AND
+					PRDS.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+					' . $id_gruposervico . '
+					' . $Funcionario . '
+					' . $complemento . '
+				' . $groupby . '
+				ORDER BY
+					' . $Campo . '
+					' . $Ordenamento . '
+				' . $querylimit . '
 			';
 		}
-		
-		$filtro_base = '
-                ' . $date_inicio_orca . '
-                ' . $date_fim_orca . '
-                ' . $date_inicio_entrega . '
-                ' . $date_fim_entrega . '
-                ' . $date_inicio_pg_com . '
-                ' . $date_fim_pg_com . '
-                ' . $date_inicio_prd_entr . '
-                ' . $date_fim_prd_entr . '
-				' . $permissao . '
-				' . $AprovadoOrca . '
-				' . $QuitadoOrca . '
-				' . $ConcluidoOrca . '
-				' . $Modalidade . '
-				' . $FormaPagamento . '
-				' . $Tipo_Orca . '
-				' . $TipoFrete . '
-				' . $AVAP . '
-				' . $FinalizadoOrca . '
-				' . $CanceladoOrca . '
-				' . $CombinadoFrete . '
-				' . $RecorrenciaOrca . '
-				' . $ConcluidoProduto . '
-				' . $StatusComissaoServico . '
-				' . $grupo . '
-                OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
-				PRDS.Prod_Serv_Produto = "S" AND
-                PRDS.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
-                ' . $Orcamento . '
-				' . $id_gruposervico . '
-                ' . $Cliente . '
-                ' . $idApp_Cliente . '
-				' . $TipoFinanceiro . '
-				' . $idTab_TipoRD . '
-                ' . $Produtos . '
-                ' . $Categoria . '
-				' . $Funcionario . '
-				' . $query4 . '
-				' . $query42 . '
-				' . $query5 . '
-				' . $query52 . '
-				' . $complemento . '
-			' . $groupby . '
-			ORDER BY
-				' . $Campo . '
-                ' . $Ordenamento . '
-			' . $querylimit . '
-		';
-		
+
 		####### Contagem e soma total ###########
 		if($total == TRUE && $date == FALSE) {
 			$query_total = $this->db->query(
@@ -1710,7 +1733,6 @@ class Comissao_model extends CI_Model {
 
 		####### Campos do Relatório/ Lista/ Excel ###########
 		if($total == FALSE && $date == FALSE) {
-			
 			$query = $this->db->query(
 				'SELECT
 					CONCAT(IFNULL(C.idApp_Cliente,""), " - " ,IFNULL(C.NomeCliente,"")) AS NomeCliente,
@@ -1962,7 +1984,6 @@ class Comissao_model extends CI_Model {
 
 		####### Ajuste de Valores da Baixa ###########
 		if($total == FALSE && $date == TRUE) {
-
 			$query = $this->db->query(
 				'SELECT
 					CONCAT(IFNULL(C.NomeCliente,"")) AS NomeCliente,
@@ -2092,7 +2113,49 @@ class Comissao_model extends CI_Model {
 
 		####### Baixa da comissão / Gerar Grupo ###########
 		if($total == TRUE && $date == TRUE) {
-			
+			$query = $this->db->query(
+				'SELECT
+					PRDS.idApp_Produto
+				FROM
+					App_OrcaTrata AS OT
+						LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = OT.idApp_Cliente
+						LEFT JOIN App_ClientePet AS CP ON CP.idApp_ClientePet = OT.idApp_ClientePet
+						LEFT JOIN App_ClienteDep AS CD ON CD.idApp_ClienteDep = OT.idApp_ClienteDep
+						LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = OT.idSis_Usuario
+						LEFT JOIN App_Produto AS PRDS ON PRDS.idApp_OrcaTrata = OT.idApp_OrcaTrata
+
+						LEFT JOIN App_Funcao AS AF1 ON AF1.idApp_Funcao = PRDS.ProfissionalProduto_1
+						LEFT JOIN App_Funcao AS AF2 ON AF2.idApp_Funcao = PRDS.ProfissionalProduto_2
+						LEFT JOIN App_Funcao AS AF3 ON AF3.idApp_Funcao = PRDS.ProfissionalProduto_3
+						LEFT JOIN App_Funcao AS AF4 ON AF4.idApp_Funcao = PRDS.ProfissionalProduto_4
+						LEFT JOIN App_Funcao AS AF5 ON AF5.idApp_Funcao = PRDS.ProfissionalProduto_5
+						LEFT JOIN App_Funcao AS AF6 ON AF6.idApp_Funcao = PRDS.ProfissionalProduto_6
+						
+						LEFT JOIN Tab_Funcao AS TF1 ON TF1.idTab_Funcao = AF1.idTab_Funcao
+						LEFT JOIN Tab_Funcao AS TF2 ON TF2.idTab_Funcao = AF2.idTab_Funcao
+						LEFT JOIN Tab_Funcao AS TF3 ON TF3.idTab_Funcao = AF3.idTab_Funcao
+						LEFT JOIN Tab_Funcao AS TF4 ON TF4.idTab_Funcao = AF4.idTab_Funcao
+						LEFT JOIN Tab_Funcao AS TF5 ON TF5.idTab_Funcao = AF5.idTab_Funcao
+						LEFT JOIN Tab_Funcao AS TF6 ON TF6.idTab_Funcao = AF6.idTab_Funcao					
+						
+						
+						LEFT JOIN Sis_Usuario AS UP1 ON UP1.idSis_Usuario = AF1.idSis_Usuario
+						LEFT JOIN Sis_Usuario AS UP2 ON UP2.idSis_Usuario = AF2.idSis_Usuario
+						LEFT JOIN Sis_Usuario AS UP3 ON UP3.idSis_Usuario = AF3.idSis_Usuario
+						LEFT JOIN Sis_Usuario AS UP4 ON UP4.idSis_Usuario = AF4.idSis_Usuario
+						LEFT JOIN Sis_Usuario AS UP5 ON UP5.idSis_Usuario = AF5.idSis_Usuario
+						LEFT JOIN Sis_Usuario AS UP6 ON UP6.idSis_Usuario = AF6.idSis_Usuario
+						
+						LEFT JOIN Tab_Produtos AS TPRDS ON TPRDS.idTab_Produtos = PRDS.idTab_Produtos_Produto
+						LEFT JOIN Tab_Produto AS TPRD ON TPRD.idTab_Produto = TPRDS.idTab_Produto
+						LEFT JOIN Tab_Catprod AS TCAT ON TCAT.idTab_Catprod = TPRD.idTab_Catprod
+				WHERE
+					' . $filtro_base . ''
+			);
+		
+			$query = $query->result_array();
+	 
+			return $query;
 		}
 		
 		####### Gerar Recibo da comissão Para cada funcionário ###########

@@ -63,14 +63,48 @@
 					</button>
 				</div>				
 			<?php } ?>
-			<div class="col-md-2">
-				<label>Baixa</label>
-				<a href="<?php echo base_url() . $baixacomissao . $_SESSION['log']['idSis_Empresa']; ?>">
-					<button class="btn btn-danger btn-md btn-block" type="button">
-						<span class="glyphicon glyphicon-edit"></span>
-					</button>
-				</a>
-			</div>		
+			<?php 
+				if(isset($total_rows) && $total_rows >= 1) { 
+					if((!isset($_SESSION['Filtro_Porservicos']['Funcionario']) || $_SESSION['Filtro_Porservicos']['Funcionario'] == 0) && (!isset($_SESSION['Filtro_Porservicos']['id_GrupoServico']) || $_SESSION['Filtro_Porservicos']['id_GrupoServico'] == 0)){
+						$exibir_baixa = TRUE;
+					}else{
+						$exibir_baixa = FALSE;
+					}
+				}else{
+					$exibir_baixa = FALSE;
+				}	
+			?>
+			<?php if(isset($exibir_baixa) && $exibir_baixa === TRUE) { ?>	
+				<div class="col-md-2">
+					<label>Baixa da Comissão</label>
+					<a href="<?php echo base_url() . $baixacomissao . $_SESSION['log']['idSis_Empresa']; ?>">
+						<button class="btn btn-danger btn-md btn-block" type="button">
+							<span class="glyphicon glyphicon-edit"></span>
+						</button>
+					</a>
+				</div>
+			<?php } ?>	
+			<?php 
+				if(isset($total_rows) && $total_rows >= 1) { 
+					if(isset($_SESSION['Filtro_Porservicos']['Funcionario']) && $_SESSION['Filtro_Porservicos']['Funcionario'] != 0 && isset($_SESSION['Filtro_Porservicos']['id_GrupoServico']) && $_SESSION['Filtro_Porservicos']['id_GrupoServico'] != 0){
+						$exibir_grupo = TRUE;
+					}else{
+						$exibir_grupo = FALSE;
+					}
+				}else{
+					$exibir_grupo = FALSE;
+				}	
+			?>
+			<?php if(isset($exibir_grupo) && $exibir_grupo == TRUE) { ?>
+				<div class="col-md-2">
+					<label>Comissão Grupo</label>
+					<a href="<?php echo base_url() . $comissaofunc . $_SESSION['log']['idSis_Empresa']; ?>">
+						<button class="btn btn-danger btn-md btn-block" type="button">
+							<span class="glyphicon glyphicon-edit"></span>
+						</button>
+					</a>
+				</div>
+			<?php } ?>		
 		</div>
 	</div>
 </div>

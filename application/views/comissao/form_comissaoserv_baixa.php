@@ -71,7 +71,7 @@
 														</div>
 														<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 															<label >
-																<?php echo $_SESSION['Produto'][$i]['RecorrenciaOrca']; ?> | 
+																<?php echo $_SESSION['Produto'][$i]['RecorrenciaOrca']; ?> | <?php echo $produto[$i]['idApp_Produto'];?> |
 																<a class="notclickable" href="<?php echo base_url() . 'orcatrata/alterarstatus/' . $_SESSION['Produto'][$i]['idApp_OrcaTrata']; ?>">
 																	<span class="glyphicon glyphicon-edit notclickable"></span> <?php echo $_SESSION['Produto'][$i]['idApp_OrcaTrata']; ?>
 																</a>
@@ -352,7 +352,7 @@
 							<input type="hidden" name="idSis_Empresa" value="<?php echo $_SESSION['log']['idSis_Empresa']; ?>">
 							<!--<input type="hidden" name="idSis_Empresa" value="<?php echo $orcatrata['idSis_Empresa']; ?>">-->
 							<div class="col-md-2 text-left">
-								<label for="QuitadoParcelas">Dar Baixa em Todas?</label><br>
+								<label for="QuitadoParcelas">Dar Baixa nas Comissões?</label><br>
 								<div class="btn-group" data-toggle="buttons">
 									<?php
 									foreach ($select['QuitadoParcelas'] as $key => $row) {
@@ -380,61 +380,27 @@
 								</div>
 								<?php #echo form_error('QuitadoParcelas'); ?>
 							</div>
-							<div class="col-md-2 text-left">
-								<div id="QuitadoParcelas" <?php echo $div['QuitadoParcelas']; ?>>
+							<div id="QuitadoParcelas" <?php echo $div['QuitadoParcelas']; ?>>
+								<div class="col-md-3 text-left">
 									<h4 style="color: #FF0000">Atenção</h4>
 									<h5 style="color: #FF0000">Todas as Comissões receberão:</h5>
 									<h4 style="color: #FF0000">" Status Comissao = Sim "</h4>
 								</div>
-							</div>
-							<div class="col-md-2 text-left">
-								<label for="MostrarDataPagamento">Definir Data Pagamento?</label><br>
-								<div class="btn-group" data-toggle="buttons">
-									<?php
-									foreach ($select['MostrarDataPagamento'] as $key => $row) {
-										if (!$query['MostrarDataPagamento'])$query['MostrarDataPagamento'] = 'N';
-
-										($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-
-										if ($query['MostrarDataPagamento'] == $key) {
-											echo ''
-											. '<label class="btn btn-warning active" name="MostrarDataPagamento_' . $hideshow . '">'
-											. '<input type="radio" name="MostrarDataPagamento" id="' . $hideshow . '" '
-											. 'autocomplete="off" value="' . $key . '" checked>' . $row
-											. '</label>'
-											;
-										} else {
-											echo ''
-											. '<label class="btn btn-default" name="MostrarDataPagamento_' . $hideshow . '">'
-											. '<input type="radio" name="MostrarDataPagamento" id="' . $hideshow . '" '
-											. 'autocomplete="off" value="' . $key . '" >' . $row
-											. '</label>'
-											;
-										}
-									}
-									?>
-								</div>
-								<?php #echo form_error('MostrarDataPagamento'); ?>
-							</div>
-							<div class="col-md-4 text-left">
-								<div id="MostrarDataPagamento" <?php echo $div['MostrarDataPagamento']; ?>>
-									<div class="row">	
-										<div class="col-md-6 text-left">
-											<label for="DataPagamento">Data do Pagamento</label>
-											<div class="input-group <?php echo $datepicker; ?>">
-												<span class="input-group-addon" disabled>
-													<span class="glyphicon glyphicon-calendar"></span>
-												</span>
-												<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-														id="DataPagamento" name="DataPagamento" value="<?php echo $query['DataPagamento']; ?>">
-											</div>
-											<?php echo form_error('DataPagamento'); ?>
-										</div>
-									</div>	
+								<div class="col-md-2 text-left">
+									<label for="DataPagamento">Data do Pagamento</label>
+									<div class="input-group <?php echo $datepicker; ?>">
+										<span class="input-group-addon" disabled>
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+												id="DataPagamento" name="DataPagamento" value="<?php echo $query['DataPagamento']; ?>">
+									</div>
+									<?php echo form_error('DataPagamento'); ?>
 								</div>
 							</div>
 							<div class="col-md-2 text-right">
-								<button  type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
+								<label ></label><br>
+								<button  type="button" class="btn btn-md btn-primary" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 									<span class="glyphicon glyphicon-save"></span> Salvar
 								</button>
 							</div>
