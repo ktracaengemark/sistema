@@ -28,12 +28,28 @@
 								</a>
 							</div>
 							-->
-							<div class="col-md-2 text-left">	
-								<br>
-								<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-									<span class="glyphicon glyphicon-usd"></span>R$ <?php echo $_SESSION['Filtro_Porservicos']['SomaTotal']; ?> / R$ <?php echo $_SESSION['Filtro_Porservicos']['ComissaoTotal']; ?>
-								</a>
-							</div>
+
+							<?php if(isset($_SESSION['Filtro_Porservicos']['Funcionario']) && $_SESSION['Filtro_Porservicos']['Funcionario'] != 0){ ?>
+								<div class="col-md-2 text-left">	
+									<br>
+									<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
+										<span class="glyphicon glyphicon-user"></span><?php echo $_SESSION['Filtro_Porservicos']['NomeFuncionario']; ?>
+									</a>
+								</div>
+								<div class="col-md-2 text-left">	
+									<br>
+									<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
+										<span class="glyphicon glyphicon-usd"></span>R$ <?php echo $_SESSION['Filtro_Porservicos']['ComissaoFunc']; ?> / R$ <?php echo $_SESSION['Filtro_Porservicos']['ComissaoTotal']; ?>
+									</a>
+								</div>
+							<?php }else{ ?>
+								<div class="col-md-2 text-left">	
+									<br>
+									<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
+										<span class="glyphicon glyphicon-usd"></span>R$ <?php echo $_SESSION['Filtro_Porservicos']['SomaTotal']; ?> / R$ <?php echo $_SESSION['Filtro_Porservicos']['ComissaoTotal']; ?>
+									</a>
+								</div>
+							<?php } ?>
 							<div class="col-md-4 text-left">
 								<?php echo $_SESSION['Filtro_Porservicos']['Pagination']; ?>
 							</div>

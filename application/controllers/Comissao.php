@@ -4106,7 +4106,7 @@ class Comissao extends CI_Controller {
 										
 										$data['recibo']['ValorExtraOrca'] 		= str_replace(',', '.', str_replace('.', '', $_SESSION['Filtro_Porservicos']['ComissaoTotal']));
 										$data['recibo']['ValorTotalOrca'] 		= $data['recibo']['ValorExtraOrca'];
-										
+										$data['recibo']['TipoDescOrca'] 		= "P";
 										$data['recibo']['DescPercOrca'] 		= 100;
 										$data['recibo']['DescValorOrca'] 		= $data['recibo']['ValorExtraOrca'];
 										
@@ -4406,8 +4406,12 @@ class Comissao extends CI_Controller {
 										$_SESSION['Filtro_Porservicos']['Total_Rows'] = $data['total_rows'] = 0;
 									}
 
-									$_SESSION['Filtro_Porservicos']['ComissaoTotal'] = $data['pesquisa_query']->soma2->Soma_Valor_Com_Total2;
-																	
+									$_SESSION['Filtro_Porservicos']['ComissaoTotal'] 	= $data['pesquisa_query']->soma2->Soma_Valor_Com_Total2;
+									
+									$_SESSION['Filtro_Porservicos']['ComissaoFunc'] 	= $data['pesquisa_query']->soma2->Soma_Valor_Com_Total_Prof2;
+
+									$_SESSION['Filtro_Porservicos']['NomeFuncionario'] = $this->Usuario_model->get_usuario($_SESSION['Filtro_Porservicos']['Funcionario'])['Nome'];																	
+									
 									$this->pagination->initialize($config);
 									
 									$_SESSION['Filtro_Porservicos']['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
@@ -4418,6 +4422,13 @@ class Comissao extends CI_Controller {
 									
 									$_SESSION['Filtro_Porservicos']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
 
+									/*
+									echo "<pre>";
+									echo "<br>";
+									print_r($_SESSION['Filtro_Porservicos']['NomeFuncionario']);
+									echo "</pre>";
+									exit();
+									*/
 									#### App_Produto ####
 									$data['produto'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], TRUE, FALSE, $_SESSION['Filtro_Porservicos']['Per_Page'], ($_SESSION['Filtro_Porservicos']['Pagina'] * $_SESSION['Filtro_Porservicos']['Per_Page']), TRUE,TRUE);
 									
@@ -4701,7 +4712,7 @@ class Comissao extends CI_Controller {
 
 										//////// vou gerar uma despesa e pegar o id . Posso os dados da despesa com uma linha de parcela
 
-										$nivel_orca		= 4;
+										$nivel_orca		= 5;
 										$data['recibo']['NivelOrca']			= $nivel_orca;
 										$data['recibo']['DataOrca'] 			= $data['query']['DataPagamento'];
 										$data['recibo']['HoraOrca'] 			= date('H:i:s', time());
@@ -4711,10 +4722,11 @@ class Comissao extends CI_Controller {
 										$data['recibo']['idTab_Modulo']			= 1;
 										$data['recibo']['idSis_Empresa'] 		= $_SESSION['log']['idSis_Empresa'];
 										$data['recibo']['idSis_Usuario'] 		= $_SESSION['log']['idSis_Usuario'];
-										$data['recibo']['id_Funcionario'] 		= 0;
+										$data['recibo']['id_GrupoOrca'] 		= $_SESSION['Filtro_Porservicos']['id_GrupoServico'];
+										$data['recibo']['id_Funcionario'] 		= $_SESSION['Filtro_Porservicos']['Funcionario'];
 										$data['recibo']['id_Associado']			= 0;
 										
-										$data['recibo']['TipoFinanceiro']		= 69;
+										$data['recibo']['TipoFinanceiro']		= 70;
 										$data['recibo']['Cli_Forn_Orca']		= "N";
 										$data['recibo']['Func_Orca']			= "N";
 										$data['recibo']['Prd_Srv_Orca']			= "N";
@@ -4763,8 +4775,6 @@ class Comissao extends CI_Controller {
 										
 										} else {
 											
-											/*
-											//////Não crio a parcela /////
 											#### App_ParcelasRec ####
 											if(isset($data['recibo']['ValorExtraOrca']) && $data['recibo']['ValorExtraOrca'] > 0){	
 												$max = 1;
@@ -4788,11 +4798,10 @@ class Comissao extends CI_Controller {
 												}
 												$data['parcelasrec']['idApp_Parcelas'] = $this->Orcatrata_model->set_parcelas($data['parcelasrec']);
 											}
-											*/
-
+											
+											/*
 											/////// Corro a lista com o filtro da sessão colocando o id_Comissao em cada orcamento
 											$data['update']['servico'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], TRUE, TRUE, FALSE, FALSE, TRUE,TRUE);
-
 											$max = count($data['update']['servico']);													
 											if(isset($max) && $max > 0){
 
@@ -4806,6 +4815,7 @@ class Comissao extends CI_Controller {
 												}
 												
 											}
+											*/
 											/////// Ao terminar abro a despesa/Recibo criado
 											$data['msg'] = '?m=1';
 											redirect(base_url() . 'OrcatrataPrint/imprimirdesp/' . $data['recibo']['idApp_OrcaTrata'] . $data['msg']);

@@ -2095,17 +2095,13 @@ class Comissao_model extends CI_Model {
 				WHERE
 					' . $filtro_base . ''
 			);
-	
-			if($total == TRUE) {
-				return $query->num_rows();
-			}	
 
 			foreach ($query->result() as $row) {
 				$row->NomeCliente = (strlen($row->NomeCliente) > 12) ? substr($row->NomeCliente, 0, 12) : $row->NomeCliente;
 				$row->NomeClientePet = (strlen($row->NomeClientePet) > 12) ? substr($row->NomeClientePet, 0, 12) : $row->NomeClientePet;
 				$row->NomeClienteDep = (strlen($row->NomeClienteDep) > 12) ? substr($row->NomeClienteDep, 0, 12) : $row->NomeClienteDep;
 			}
-			
+
 			$query = $query->result_array();
 			return $query;
 			
