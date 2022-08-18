@@ -3244,8 +3244,8 @@ class Comissao extends CI_Controller {
 						
 			$data['select']['Grupo'] = array(
 				'0' => '::TODOS::',
-				'PRDS.id_GrupoServico != 0 ' => 'C/ Grupo',
-				'PRDS.id_GrupoServico = 0 ' => 'S/ Grupo',
+				'1' => 'C/ Grupo',
+				'2' => 'S/ Grupo',
 			);
 
 			$data['select']['AprovadoOrca'] = array(
@@ -3893,7 +3893,11 @@ class Comissao extends CI_Controller {
 						
 					}else{
 						
-						$data['select']['QuitadoParcelas'] = $this->Basico_model->select_status_sn();
+						//$data['select']['QuitadoParcelas'] = $this->Basico_model->select_status_sn();
+						$data['select']['QuitadoParcelas'] = array(
+							'N' => 'Ajustar Valores',
+							'S' => 'Baixa/Agrupar',
+						);
 						$data['select']['MostrarDataPagamento'] = $this->Basico_model->select_status_sn();
 						$data['select']['StatusComissaoServico'] = $this->Basico_model->select_status_sn();	
 						
@@ -3905,7 +3909,8 @@ class Comissao extends CI_Controller {
 						$data['metodo'] = 2;
 						$data['TipoFinanceiro'] = 'Receitas';
 						$data['TipoRD'] = 2;
-						$data['nome'] = 'Cliente';		
+						$data['nome'] = 'Cliente';
+						$data['mensagem'] = 'Todos os Serviços receberão: "StatusComissão=Sim"';	
 
 						$data['collapse'] = '';	
 						$data['collapse1'] = 'class="collapse"';		
@@ -4526,7 +4531,11 @@ class Comissao extends CI_Controller {
 						
 					}else{
 						
-						$data['select']['QuitadoParcelas'] = $this->Basico_model->select_status_sn();
+						//$data['select']['QuitadoParcelas'] = $this->Basico_model->select_status_sn();
+						$data['select']['QuitadoParcelas'] = array(
+							'N' => 'Ajustar Valores',
+							'S' => 'Comissão/Recibo',
+						);
 						$data['select']['MostrarDataPagamento'] = $this->Basico_model->select_status_sn();
 						$data['select']['StatusComissaoServico'] = $this->Basico_model->select_status_sn();	
 						
@@ -4538,7 +4547,8 @@ class Comissao extends CI_Controller {
 						$data['metodo'] = 2;
 						$data['TipoFinanceiro'] = 'Receitas';
 						$data['TipoRD'] = 2;
-						$data['nome'] = 'Cliente';		
+						$data['nome'] = 'Cliente';
+						$data['mensagem'] = 'Será gerado um recibo para o funcionário selecionado';			
 
 						$data['collapse'] = '';	
 						$data['collapse1'] = 'class="collapse"';		

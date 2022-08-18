@@ -21,7 +21,7 @@
 								</div>
 							</div>
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
-								<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-left">
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-left">
 									<label  ><?php echo $nome; ?>: </label>
 									<div class="input-group">
 										<span class="input-group-btn">
@@ -43,36 +43,35 @@
 										<input type="hidden" name="Cliente" id="Cliente" value="">
 									<?php } ?>
 								</div>
-								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-left">
-									<label for="id_Funcionario">Func/Receb</label>
+								<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 text-left">
+									<label>Grupo</label>
 									<div class="input-group">
 										<span class="input-group-btn">
 											<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
 												<span class="glyphicon glyphicon-search"></span> 
 											</button>
 										</span>
-										<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
-												id="id_Funcionario" name="id_Funcionario">
-											<?php
-											foreach ($select['id_Funcionario'] as $key => $row) {
-												if ($query['id_Funcionario'] == $key) {
-													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-												} else {
-													echo '<option value="' . $key . '">' . $row . '</option>';
-												}
-											}
-											?>
-										</select>
-									</div>	
+										<input type="text" placeholder="NºGrupo" class="form-control Numero btn-sm" name="id_GrupoOrca" id="id_GrupoOrca" value="<?php echo set_value('id_GrupoOrca', $query['id_GrupoOrca']); ?>">
+									</div>
 								</div>
 								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-left">
-									<label for="id_Associado">Assoc/Receb</label>
-									<div class="input-group">
-										<span class="input-group-btn">
-											<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
-												<span class="glyphicon glyphicon-search"></span> 
-											</button>
-										</span>
+									<label for="id_Funcionario">Func/Receb</label>
+									<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
+											id="id_Funcionario" name="id_Funcionario">
+										<?php
+										foreach ($select['id_Funcionario'] as $key => $row) {
+											if ($query['id_Funcionario'] == $key) {
+												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+											} else {
+												echo '<option value="' . $key . '">' . $row . '</option>';
+											}
+										}
+										?>
+									</select>
+								</div>
+								<?php if($_SESSION['Empresa']['EComerce'] == "S") {?>
+									<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 text-left">
+										<label for="id_Associado">Assoc/Receb</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
 												id="id_Associado" name="id_Associado">
 											<?php
@@ -86,7 +85,9 @@
 											?>
 										</select>
 									</div>
-								</div>
+								<?php }else{ ?>
+									<input type="hidden" name="id_Associado" id="id_Associado" value=""/>
+								<?php } ?>
 							<?php }else{ ?>
 								<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value=""/>
 								<input type="hidden" name="idApp_Fornecedor" id="idApp_Fornecedor" value=""/>
@@ -94,6 +95,7 @@
 								<input type="hidden" name="Fornecedor" id="Fornecedor" value=""/>
 								<input type="hidden" name="id_Funcionario" id="id_Funcionario" value=""/>
 								<input type="hidden" name="id_Associado" id="id_Associado" value=""/>
+								<input type="hidden" name="id_GrupoOrca" id="id_GrupoOrca" value=""/>
 							<?php } ?>
 						</div>
 						<div class="row">						

@@ -150,7 +150,7 @@
 								<div class="row">
 									<input type="hidden" name="idSis_Empresa" value="<?php echo $empresa['idSis_Empresa']; ?>">
 									<div class="col-md-4 text-left">
-										<label for="QuitadoComissao">Todas as Receitas Finalizadas?</label><br>
+										<label for="QuitadoComissao">Todas as Despesas Finalizadas?</label><br>
 										<div class="btn-group" data-toggle="buttons">
 											<?php
 											foreach ($select['QuitadoComissao'] as $key => $row) {

@@ -559,6 +559,7 @@ class Despesas_model extends CI_Model {
 		$AnoAniv = ($data['AnoAniv']) ? ' AND YEAR(C.DataNascimento) = ' . $data['AnoAniv'] : FALSE;
 
 		$orcamento = ($data['Orcamento']) ? ' AND OT.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
+		$id_grupoorca = ($data['id_GrupoOrca']) ? ' AND OT.id_GrupoOrca = ' . $data['id_GrupoOrca'] . '  ': FALSE;
 		$fornecedor = ($data['Fornecedor']) ? ' AND OT.idApp_Fornecedor = ' . $data['Fornecedor'] . '' : FALSE;
 		$id_fornecedor = ($data['idApp_Fornecedor']) ? ' AND OT.idApp_Fornecedor = ' . $data['idApp_Fornecedor'] . '' : FALSE;
 		$id_funcionario = ($data['id_Funcionario']) ? ' AND OT.id_Funcionario = ' . $data['id_Funcionario'] . '' : FALSE;
@@ -668,6 +669,7 @@ class Despesas_model extends CI_Model {
 				' . $parcelas . '
 				OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '
 				' . $orcamento . '
+				' . $id_grupoorca . '
 				' . $fornecedor . '
 				' . $id_fornecedor . '
 				' . $id_funcionario . '
@@ -726,6 +728,7 @@ class Despesas_model extends CI_Model {
 			$query = $this->db->query(
 				'SELECT
 					OT.idApp_OrcaTrata,
+					OT.id_GrupoOrca,
 					OT.CombinadoFrete,
 					OT.AprovadoOrca,
 					OT.FinalizadoOrca,
@@ -821,6 +824,12 @@ class Despesas_model extends CI_Model {
 				$row->CashBackOrca = number_format($row->CashBackOrca, 2, ',', '.');
 				$somafinal += $row->ValorFinalOrca;
 				$row->ValorFinalOrca = number_format($row->ValorFinalOrca, 2, ',', '.');
+				
+				if($row->id_GrupoOrca == 0){
+					$row->Grupo = '';
+				}else{
+					$row->Grupo = $row->id_GrupoOrca;
+				}
 
 				if($row->Tipo_Orca == "B"){
 					$row->Tipo_Orca = "NaLoja";

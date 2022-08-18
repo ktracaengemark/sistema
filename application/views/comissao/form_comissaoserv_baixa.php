@@ -367,8 +367,8 @@
 						<div class="row">
 							<input type="hidden" name="idSis_Empresa" value="<?php echo $_SESSION['log']['idSis_Empresa']; ?>">
 							<!--<input type="hidden" name="idSis_Empresa" value="<?php echo $orcatrata['idSis_Empresa']; ?>">-->
-							<div class="col-md-2 text-left">
-								<label for="QuitadoParcelas">Dar Baixa nas Comissões?</label><br>
+							<div class="col-md-4 text-left">
+								<label for="QuitadoParcelas">Seletor da função</label><br>
 								<div class="btn-group" data-toggle="buttons">
 									<?php
 									foreach ($select['QuitadoParcelas'] as $key => $row) {
@@ -397,10 +397,9 @@
 								<?php #echo form_error('QuitadoParcelas'); ?>
 							</div>
 							<div id="QuitadoParcelas" <?php echo $div['QuitadoParcelas']; ?>>
-								<div class="col-md-3 text-left">
+								<div class="col-md-4 text-left">
 									<h4 style="color: #FF0000">Atenção</h4>
-									<h5 style="color: #FF0000">Todas as Comissões receberão:</h5>
-									<h4 style="color: #FF0000">" Status Comissao = Sim "</h4>
+									<h5 style="color: #FF0000"><?php if(isset($mensagem)) echo $mensagem ;?></h5>
 								</div>
 								<div class="col-md-2 text-left">
 									<label for="DataPagamento">Data do Pagamento</label>
@@ -416,7 +415,7 @@
 							</div>
 							<div class="col-md-2 text-right">
 								<label ></label><br>
-								<button  type="button" class="btn btn-md btn-primary" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
+								<button  type="button" class="btn btn-md btn-primary btn-block" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 									<span class="glyphicon glyphicon-save"></span> Salvar
 								</button>
 							</div>

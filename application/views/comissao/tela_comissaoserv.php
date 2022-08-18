@@ -56,6 +56,21 @@
 									?>
 								</select>
 							</div>
+							<div class="col-md-3">
+								<label for="Grupo">Grupo:</label>
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+										id="Grupo" name="Grupo">
+									<?php
+									foreach ($select['Grupo'] as $key => $row) {
+										if ($query['Grupo'] == $key) {
+											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
+										} else {
+											echo '<option value="' . $key . '">' . $row . '</option>';
+										}
+									}
+									?>
+								</select>
+							</div>
 						</div>
 						<div class="row">							
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
@@ -313,23 +328,6 @@
 										<input type="hidden" name="FinalizadoOrca" id="FinalizadoOrca" value="0"/>
 										<input type="hidden" name="CanceladoOrca" id="CanceladoOrca" value="0"/>
 									<?php } ?>
-								</div>
-								<div class="row">
-									<div class="col-md-3">
-										<label for="Grupo">Grupo:</label>
-										<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-												id="Grupo" name="Grupo">
-											<?php
-											foreach ($select['Grupo'] as $key => $row) {
-												if ($query['Grupo'] == $key) {
-													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
-												} else {
-													echo '<option value="' . $key . '">' . $row . '</option>';
-												}
-											}
-											?>
-										</select>
-									</div>
 								</div>
 							</div>
 						</div>

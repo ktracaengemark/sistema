@@ -195,8 +195,11 @@
 							<th class="active"><?php echo $nome ?></th>
 							<th class="active">Celular</th>
 							<th class="active">Func/Cad</th>
+							<th class="active">Grupo</th>
 							<th class="active">Func/Recebeu</th>
-							<th class="active">Assoc/Recebeu</th>
+							<?php if($_SESSION['Empresa']['EComerce'] == "S") {?>
+								<th class="active">Assoc/Recebeu</th>
+							<?php } ?>	
 							<?php if($_SESSION['Usuario']['Rel_Pag'] == "S") {?>
 								<th class="active">Prd/Srv</th>
 								<th class="active">Frete</th>
@@ -336,9 +339,12 @@
 										</a>
 									<?php } ?>
 								</td>	
-								<?php echo '<td>' . $row[$nomeusuario] . '</td>';?>	
+								<?php echo '<td>' . $row[$nomeusuario] . '</td>';?>
+								<td><?php echo $row['Grupo'] ?></td>
 								<td><?php echo $row['NomeFuncionario'] ?></td>
-								<td><?php echo $row['NomeAssociado'] ?></td>
+								<?php if($_SESSION['Empresa']['EComerce'] == "S") {?>
+									<td><?php echo $row['NomeAssociado'] ?></td>
+								<?php } ?>
 								<?php if($_SESSION['Usuario']['Rel_Pag'] == 'S') { ?>
 									<td><?php echo $row['ValorRestanteOrca'] ?></td>
 									<td><?php echo $row['ValorFrete'] ?></td>

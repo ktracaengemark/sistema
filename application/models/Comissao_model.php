@@ -1468,8 +1468,14 @@ class Comissao_model extends CI_Model {
 		$query5 				= ($data['idApp_ClienteDep'] && isset($data['idApp_ClienteDep'])) ? 'AND OT.idApp_ClienteDep = ' . $data['idApp_ClienteDep'] . '  ' : FALSE;
 		$query52 				= ($data['idApp_ClienteDep2'] && isset($data['idApp_ClienteDep2'])) ? 'AND OT.idApp_ClienteDep = ' . $data['idApp_ClienteDep2'] . '  ' : FALSE;			
 
-		if(isset($data['Grupo']) && $data['Grupo'] != "0"){
-			$grupo = '' . $data['Grupo'] . ' AND';
+		if(isset($data['Grupo']) && $data['Grupo'] != 0){
+			if($data['Grupo'] == 1){
+				$grupo = 'PRDS.id_GrupoServico != 0 AND';
+			}elseif($data['Grupo'] == 2){
+				$grupo = 'PRDS.id_GrupoServico = 0 AND';
+			}else{
+				$grupo = FALSE;
+			}
 		}else{
 			$grupo = FALSE;
 		}
@@ -1761,7 +1767,6 @@ class Comissao_model extends CI_Model {
 					MD.Modalidade,
 					PRDS.*,
 					(PRDS.QtdProduto * PRDS.QtdIncrementoProduto) AS QuantidadeProduto,
-
 					UP1.idSis_Usuario AS id_Usu_Prof_1,
 					UP2.idSis_Usuario AS id_Usu_Prof_2,
 					UP3.idSis_Usuario AS id_Usu_Prof_3,
@@ -1880,6 +1885,12 @@ class Comissao_model extends CI_Model {
                 $row->DataConcluidoProduto = $this->basico->mascara_data($row->DataConcluidoProduto, 'barras');
                 $row->DataPagoComissaoServico = $this->basico->mascara_data($row->DataPagoComissaoServico, 'barras');
 				
+				if($row->id_GrupoServico == 0){
+					$row->Grupo = '';
+				}else{
+					$row->Grupo = $row->id_GrupoServico;
+				}
+
 				$somaentregar += $row->QuantidadeProduto;
 				#esse trecho pode ser melhorado, serve para somar apenas uma vez
                 #o valor da entrada que pode aparecer mais de uma vez

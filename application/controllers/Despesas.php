@@ -77,6 +77,7 @@ class Despesas extends CI_Controller {
 		
         $data['query'] = quotes_to_entities($this->input->post(array(
 			'Orcamento',
+			'id_GrupoOrca',
 			'Fornecedor',
 			'idApp_Fornecedor',
 			'id_Funcionario',
@@ -380,6 +381,7 @@ class Despesas extends CI_Controller {
 			$_SESSION['FiltroDespesas']['ConcluidoServico'] = $data['query']['ConcluidoServico'];
 			$_SESSION['FiltroDespesas']['TipoFinanceiro'] = $data['query']['TipoFinanceiro'];
 			$_SESSION['FiltroDespesas']['Orcamento'] = $data['query']['Orcamento'];
+			$_SESSION['FiltroDespesas']['id_GrupoOrca'] = $data['query']['id_GrupoOrca'];
 			$_SESSION['FiltroDespesas']['Fornecedor'] = $data['query']['Fornecedor'];
 			$_SESSION['FiltroDespesas']['idApp_Fornecedor'] = $data['query']['idApp_Fornecedor'];
 			$_SESSION['FiltroDespesas']['id_Funcionario'] = $data['query']['id_Funcionario'];
