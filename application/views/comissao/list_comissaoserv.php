@@ -76,7 +76,7 @@
 			?>
 			<?php if(isset($exibir_baixa) && $exibir_baixa === TRUE) { ?>	
 				<div class="col-md-2">
-					<label>Baixa da Comissão</label>
+					<label>Baixa & Agrupar</label>
 					<a href="<?php echo base_url() . $baixacomissao . $_SESSION['log']['idSis_Empresa']; ?>">
 						<button class="btn btn-danger btn-md btn-block" type="button">
 							<span class="glyphicon glyphicon-edit"></span>
@@ -97,7 +97,7 @@
 			?>
 			<?php if(isset($exibir_grupo) && $exibir_grupo == TRUE) { ?>
 				<div class="col-md-2">
-					<label>Comissão Grupo</label>
+					<label>Comissão Func</label>
 					<a href="<?php echo base_url() . $comissaofunc . $_SESSION['log']['idSis_Empresa']; ?>">
 						<button class="btn btn-danger btn-md btn-block" type="button">
 							<span class="glyphicon glyphicon-edit"></span>

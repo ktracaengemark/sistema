@@ -4085,7 +4085,7 @@ class Comissao extends CI_Controller {
 										$data['recibo']['HoraOrca'] 			= date('H:i:s', time());
 										$data['recibo']['DataEntregaOrca'] 		= $data['query']['DataPagamento'];
 										$data['recibo']['HoraEntregaOrca'] 		= date('H:i:s', time());
-										$data['recibo']['idTab_TipoRD']			= 1;
+										$data['recibo']['idTab_TipoRD']			= 4;
 										$data['recibo']['idTab_Modulo']			= 1;
 										$data['recibo']['idSis_Empresa'] 		= $_SESSION['log']['idSis_Empresa'];
 										$data['recibo']['idSis_Usuario'] 		= $_SESSION['log']['idSis_Usuario'];
@@ -4186,7 +4186,7 @@ class Comissao extends CI_Controller {
 											}
 											/////// Ao terminar abro a despesa/Recibo criado
 											$data['msg'] = '?m=1';
-											redirect(base_url() . 'OrcatrataPrint/imprimirdesp/' . $data['recibo']['idApp_OrcaTrata'] . $data['msg']);
+											redirect(base_url() . 'OrcatrataPrint/imprimirgrupo/' . $data['recibo']['idApp_OrcaTrata'] . $data['msg']);
 											exit();
 										}
 									}
@@ -4728,7 +4728,7 @@ class Comissao extends CI_Controller {
 										
 										$data['recibo']['TipoFinanceiro']		= 70;
 										$data['recibo']['Cli_Forn_Orca']		= "N";
-										$data['recibo']['Func_Orca']			= "N";
+										$data['recibo']['Func_Orca']			= "S";
 										$data['recibo']['Prd_Srv_Orca']			= "N";
 										$data['recibo']['Entrega_Orca']			= "N";
 										
@@ -4738,32 +4738,33 @@ class Comissao extends CI_Controller {
 										$data['recibo']['DataVencimentoOrca'] 	= $data['query']['DataPagamento'];
 										$data['recibo']['Modalidade']			= "P";
 										
-										$data['recibo']['ValorExtraOrca'] 		= str_replace(',', '.', str_replace('.', '', $_SESSION['Filtro_Porservicos']['ComissaoTotal']));
+										$data['recibo']['ValorExtraOrca'] 		= str_replace(',', '.', str_replace('.', '', $_SESSION['Filtro_Porservicos']['ComissaoFunc']));
 										$data['recibo']['ValorTotalOrca'] 		= $data['recibo']['ValorExtraOrca'];
-										
-										$data['recibo']['DescPercOrca'] 		= 100;
-										$data['recibo']['DescValorOrca'] 		= $data['recibo']['ValorExtraOrca'];
-										
-										$data['recibo']['SubValorFinal'] 		= 0;
-										$data['recibo']['ValorFinalOrca'] 		= 0;
+										$data['recibo']['SubValorFinal'] 		= $data['recibo']['ValorExtraOrca'];
+										$data['recibo']['ValorFinalOrca'] 		= $data['recibo']['ValorExtraOrca'];
 										
 										if(isset($data['recibo']['ValorExtraOrca']) && $data['recibo']['ValorExtraOrca'] > 0){
-											$data['recibo']['BrindeOrca'] 		= "S";
-											$data['recibo']['QuitadoOrca'] 		= "S";
-											$data['recibo']['FinalizadoOrca'] 	= "S";
+											$data['recibo']['BrindeOrca'] 		= "N";
+											$data['recibo']['QuitadoOrca'] 		= "N";
+											$data['recibo']['FinalizadoOrca'] 	= "N";
 										}else{
 											$data['recibo']['BrindeOrca'] 		= "S";
 											$data['recibo']['QuitadoOrca'] 		= "S";
 											$data['recibo']['FinalizadoOrca'] 	= "S";
 										}
+										
 										$data['recibo']['CombinadoFrete'] 		= "S";
 										$data['recibo']['AprovadoOrca'] 		= "S";
 										$data['recibo']['ProntoOrca'] 			= "S";
 										$data['recibo']['EnviadoOrca'] 			= "S";
 										$data['recibo']['ConcluidoOrca'] 		= "S";
-										$data['recibo']['QuitadoOrca'] 			= "S";
-										$data['recibo']['FinalizadoOrca'] 		= "S";
-
+										/*
+										echo "<pre>";
+										echo "<br>";
+										print_r($data['recibo']);
+										echo "</pre>";
+										exit();
+										*/
 										$data['recibo']['idApp_OrcaTrata'] = $this->Orcatrata_model->set_orcatrata($data['recibo']);
 									
 										if ($data['recibo']['idApp_OrcaTrata'] === FALSE) {
@@ -4799,23 +4800,6 @@ class Comissao extends CI_Controller {
 												$data['parcelasrec']['idApp_Parcelas'] = $this->Orcatrata_model->set_parcelas($data['parcelasrec']);
 											}
 											
-											/*
-											/////// Corro a lista com o filtro da sessão colocando o id_Comissao em cada orcamento
-											$data['update']['servico'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], TRUE, TRUE, FALSE, FALSE, TRUE,TRUE);
-											$max = count($data['update']['servico']);													
-											if(isset($max) && $max > 0){
-
-												for($j=0;$j<$max;$j++) {
-													$data['update']['servico'][$j]['id_GrupoServico'] 			= $data['recibo']['idApp_OrcaTrata'];
-													$data['update']['servico'][$j]['StatusComissaoServico'] 		= 'S';
-													$data['update']['servico'][$j]['DataPagoComissaoServico'] 	= $data['query']['DataPagamento'];
-
-													$data['update']['servico']['bd'][$j] = $this->Orcatrata_model->update_produto_id($data['update']['servico'][$j], $data['update']['servico'][$j]['idApp_Produto']);
-												
-												}
-												
-											}
-											*/
 											/////// Ao terminar abro a despesa/Recibo criado
 											$data['msg'] = '?m=1';
 											redirect(base_url() . 'OrcatrataPrint/imprimirdesp/' . $data['recibo']['idApp_OrcaTrata'] . $data['msg']);

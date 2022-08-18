@@ -1705,7 +1705,7 @@ class Comissao_model extends CI_Model {
 						$valor_com_filtro_Prof_6 = $valor_com_Prof_6;
 					}
 					
-					$Valor_Com_Total_Prof2 = ($valor_com_filtro_Prof_1 + $valor_com_filtro_Prof_2 + $valor_com_filtro_Prof_3 + $valor_com_filtro_Prof_4 + $valor_com_filtro_Prof_6 + $valor_com_filtro_Prof_6);
+					$Valor_Com_Total_Prof2 = ($valor_com_filtro_Prof_1 + $valor_com_filtro_Prof_2 + $valor_com_filtro_Prof_3 + $valor_com_filtro_Prof_4 + $valor_com_filtro_Prof_5 + $valor_com_filtro_Prof_6);
 					$Soma_Valor_Com_Total_Prof2 += $Valor_Com_Total_Prof2;
 					
 					$row->valor_com_Prof_1 = number_format($valor_com_Prof_1, 2, ',', '.');
