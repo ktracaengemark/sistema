@@ -585,50 +585,6 @@ class OrcatrataPrint extends CI_Controller {
 
     }
 
-    public function imprimirgrupo($id = FALSE) {
-
-        if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
-
-		if (!$id) {
-
-			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
-			exit();
-			
-		} else {
-
-			#### App_OrcaTrata ####
-			$data['orcatrata'] = $this->Orcatrataprint_model->get_orcatrata($id);
-		
-			if($data['orcatrata'] === FALSE || $data['orcatrata']['idTab_TipoRD'] != 4){
-				
-				$data['msg'] = '?m=3';
-				redirect(base_url() . 'acesso' . $data['msg']);
-				exit();
-				
-			} else {			
-				
-				$data['orcatrata']['DataOrca'] = $this->basico->mascara_data($data['orcatrata']['DataOrca'], 'barras');
-
-				if(isset($data['orcatrata']['idSis_Usuario']) && $data['orcatrata']['idSis_Usuario'] != 0){
-					if($_SESSION['log']['idSis_Empresa'] == 5){
-						$data['usuario'] = $this->Associado_model->get_associado($data['orcatrata']['idSis_Usuario'], TRUE);
-					}else{
-						$data['usuario'] = $this->Usuario_model->get_usuario($data['orcatrata']['idSis_Usuario'], TRUE);
-					}
-				}
-			}
-			$this->load->view('orcatrata/print_grupo', $data);
-		}
-        $this->load->view('basico/footer');
-
-    }
-
     public function imprimirrecibodesp($id = FALSE) {
 
         if ($this->input->get('m') == 1)

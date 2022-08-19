@@ -23,9 +23,9 @@
 					<?php
 					foreach ($report->result_array() as $row) {
 
-						echo '<tr>';
-						//echo '<tr class="clickable-row" data-href="' . base_url() . 'OrcatrataPrint/imprimirgrupo/' . $row['idApp_OrcaTrata'] . '">';
-							echo '<td>' . $row['idApp_OrcaTrata'] . '</td>';
+						//echo '<tr>';
+						echo '<tr class="clickable-row" data-href="' . base_url() . 'Comissao/grupos_print/' . $row['idApp_Grupos'] . '">';
+							echo '<td>' . $row['idApp_Grupos'] . '</td>';
 							echo '<td>' . $row['DataOrca'] . '</td>';
 							echo '<td>' . $row['ValorExtraOrca'] . '</td>';
 							echo '<td>' . $row['Descricao'] . '</td>';

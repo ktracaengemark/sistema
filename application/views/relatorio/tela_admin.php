@@ -207,7 +207,7 @@
 												</div>
 												<div class="form-group col-md-12 text-left">
 													<div class="row">		
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/grupos" role="button"> 
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/grupos" role="button"> 
 															<span class="glyphicon glyphicon-pencil"></span> Grupos
 														</a>											
 													</div>	

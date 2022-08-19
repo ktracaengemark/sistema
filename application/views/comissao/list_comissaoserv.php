@@ -64,16 +64,31 @@
 				</div>				
 			<?php } ?>
 			<?php
-				if(isset($total_rows) && $total_rows >= 1) { 
-					if((!isset($_SESSION['Filtro_Porservicos']['Funcionario']) || $_SESSION['Filtro_Porservicos']['Funcionario'] == 0) && 
-						(!isset($_SESSION['Filtro_Porservicos']['id_GrupoServico']) || $_SESSION['Filtro_Porservicos']['id_GrupoServico'] == 0) &&
-						(isset($_SESSION['Filtro_Porservicos']['Grupo']) && $_SESSION['Filtro_Porservicos']['Grupo'] == 2)){
-						$exibir_baixa = TRUE;
-					}else{
+				$exibir_baixa = FALSE;
+				$exibir_grupo = FALSE;
+				$exibir_func = FALSE;
+				if(isset($total_rows) && $total_rows >= 1) {
+					
+					if(isset($_SESSION['Filtro_Porservicos']['id_GrupoServico']) && $_SESSION['Filtro_Porservicos']['id_GrupoServico'] != 0){
+						
+						$exibir_grupo = TRUE;
+						
 						$exibir_baixa = FALSE;
+						
+						if(isset($_SESSION['Filtro_Porservicos']['Funcionario']) && $_SESSION['Filtro_Porservicos']['Funcionario'] != 0){
+							$exibir_func = TRUE;
+						}else{
+							$exibir_func = FALSE;
+						}
+						
+					}else{
+						
+						if(isset($_SESSION['Filtro_Porservicos']['Grupo']) && $_SESSION['Filtro_Porservicos']['Grupo'] == 2){
+							$exibir_baixa = TRUE;
+						}else{
+							$exibir_baixa = FALSE;
+						}
 					}
-				}else{
-					$exibir_baixa = FALSE;
 				}	
 			?>
 			<?php if(isset($exibir_baixa) && $exibir_baixa === TRUE) { ?>	
@@ -85,19 +100,18 @@
 						</button>
 					</a>
 				</div>
-			<?php } ?>	
-			<?php 
-				if(isset($total_rows) && $total_rows >= 1) { 
-					if(isset($_SESSION['Filtro_Porservicos']['Funcionario']) && $_SESSION['Filtro_Porservicos']['Funcionario'] != 0 && isset($_SESSION['Filtro_Porservicos']['id_GrupoServico']) && $_SESSION['Filtro_Porservicos']['id_GrupoServico'] != 0){
-						$exibir_grupo = TRUE;
-					}else{
-						$exibir_grupo = FALSE;
-					}
-				}else{
-					$exibir_grupo = FALSE;
-				}	
-			?>
+			<?php } ?>
 			<?php if(isset($exibir_grupo) && $exibir_grupo == TRUE) { ?>
+				<div class="col-md-2">
+					<label>Ajuste do Grupo</label>
+					<a href="<?php echo base_url() . $ajustegrupo . $_SESSION['log']['idSis_Empresa']; ?>">
+						<button class="btn btn-danger btn-md btn-block" type="button">
+							<span class="glyphicon glyphicon-edit"></span>
+						</button>
+					</a>
+				</div>
+			<?php } ?>	
+			<?php if(isset($exibir_func) && $exibir_func == TRUE) { ?>
 				<div class="col-md-2">
 					<label>Comissão Func</label>
 					<a href="<?php echo base_url() . $comissaofunc . $_SESSION['log']['idSis_Empresa']; ?>">

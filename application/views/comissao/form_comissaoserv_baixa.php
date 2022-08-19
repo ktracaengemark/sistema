@@ -367,14 +367,19 @@
 						<div class="row">
 							<input type="hidden" name="idSis_Empresa" value="<?php echo $_SESSION['log']['idSis_Empresa']; ?>">
 							<!--<input type="hidden" name="idSis_Empresa" value="<?php echo $orcatrata['idSis_Empresa']; ?>">-->
+							
+							<?php if($metodo == 2) { ?>
+								<input type="hidden" name="idApp_Grupos" id="idApp_Grupos "value="<?php echo $query['idApp_Grupos']; ?>">
+							<?php } ?>
+							
 							<div class="col-md-3 text-left">
 								<label for="QuitadoParcelas">Seletor da função</label><br>
 								<div class="btn-group" data-toggle="buttons">
 									<?php
 									foreach ($select['QuitadoParcelas'] as $key => $row) {
-										if (!$query['QuitadoParcelas'])$query['QuitadoParcelas'] = 'N';
+										if (!$cadastrar['QuitadoParcelas'])$cadastrar['QuitadoParcelas'] = 'N';
 										($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-										if ($query['QuitadoParcelas'] == $key) {
+										if ($cadastrar['QuitadoParcelas'] == $key) {
 											echo ''
 											. '<label class="btn btn-warning active" name="QuitadoParcelas_' . $hideshow . '">'
 											. '<input type="radio" name="QuitadoParcelas" id="' . $hideshow . '" '
@@ -405,15 +410,15 @@
 									<?php echo form_error('Descricao'); ?>
 								</div>
 								<div class="col-md-2 text-left">
-									<label for="DataPagamento">Data do Pagamento</label>
+									<label for="DataOrca">Data</label>
 									<div class="input-group <?php echo $datepicker; ?>">
 										<span class="input-group-addon" disabled>
 											<span class="glyphicon glyphicon-calendar"></span>
 										</span>
 										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
-												id="DataPagamento" name="DataPagamento" value="<?php echo $query['DataPagamento']; ?>">
+												id="DataOrca" name="DataOrca" value="<?php echo $query['DataOrca']; ?>">
 									</div>
-									<?php echo form_error('DataPagamento'); ?>
+									<?php echo form_error('DataOrca'); ?>
 								</div>
 							</div>
 							<div class="col-md-2 text-right">

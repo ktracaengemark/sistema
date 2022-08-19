@@ -61,6 +61,18 @@ class Comissao_model extends CI_Model {
 		return $query;
 	}
 
+    public function set_grupos($data) {
+
+        $query = $this->db->insert('App_Grupos', $data);
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+		} else {
+            #return TRUE;
+            return $this->db->insert_id();
+        }
+    }	
+
     public function list_comissao($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		$date_inicio_orca = ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;
@@ -2169,6 +2181,44 @@ class Comissao_model extends CI_Model {
 		
     }
 
+	public function list_grupos($data, $completo) {
+
+        $data['Campo'] = (!$data['Campo']) ? 'OT.idApp_Grupos' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+
+        $query = $this->db->query('
+            SELECT
+                OT.idApp_Grupos,
+				OT.DataOrca,
+				OT.ValorExtraOrca,
+				OT.Descricao
+            FROM
+                App_Grupos AS OT
+            WHERE
+                OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				OT.idTab_TipoRD = 4
+			ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+
+        /*
+
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+
+		foreach ($query->result() as $row) {
+			$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
+			$row->ValorExtraOrca = number_format($row->ValorExtraOrca, 2, ',', '.');
+		}
+
+		return $query;
+       
+    }
+
     public function get_produto($data) {
 		$query = $this->db->query('
 			SELECT  
@@ -2208,6 +2258,43 @@ class Comissao_model extends CI_Model {
         */		
 		
         return $query;
+    }
+
+    public function get_grupo($data) {
+		$query = $this->db->query('
+			SELECT  
+				GR.*
+			FROM 
+				App_Grupos AS GR
+			WHERE 
+				GR.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				GR.idApp_Grupos = ' . $data . ' 			
+		
+		');
+        $query = $query->result_array();
+
+        /*
+        //echo $this->db->last_query();
+        echo '<br>';
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit ();
+        */
+
+        //return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
+	
+    public function update_grupo($data, $id) {
+
+        unset($data['Id']);
+        $query = $this->db->update('App_Grupos', $data, array('idApp_Grupos' => $id));
+        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
     }
 	
 }
