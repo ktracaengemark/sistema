@@ -205,6 +205,13 @@
 														</a>
 													</div>	
 												</div>
+												<div class="form-group col-md-12 text-left">
+													<div class="row">		
+														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>relatorio/grupos" role="button"> 
+															<span class="glyphicon glyphicon-pencil"></span> Grupos
+														</a>											
+													</div>	
+												</div>
 											<?php } ?>	
 										</div>
 									<?php }?>								

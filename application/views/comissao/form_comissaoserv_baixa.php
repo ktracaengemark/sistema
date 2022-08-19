@@ -367,15 +367,13 @@
 						<div class="row">
 							<input type="hidden" name="idSis_Empresa" value="<?php echo $_SESSION['log']['idSis_Empresa']; ?>">
 							<!--<input type="hidden" name="idSis_Empresa" value="<?php echo $orcatrata['idSis_Empresa']; ?>">-->
-							<div class="col-md-4 text-left">
+							<div class="col-md-3 text-left">
 								<label for="QuitadoParcelas">Seletor da função</label><br>
 								<div class="btn-group" data-toggle="buttons">
 									<?php
 									foreach ($select['QuitadoParcelas'] as $key => $row) {
 										if (!$query['QuitadoParcelas'])$query['QuitadoParcelas'] = 'N';
-
 										($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-
 										if ($query['QuitadoParcelas'] == $key) {
 											echo ''
 											. '<label class="btn btn-warning active" name="QuitadoParcelas_' . $hideshow . '">'
@@ -397,9 +395,14 @@
 								<?php #echo form_error('QuitadoParcelas'); ?>
 							</div>
 							<div id="QuitadoParcelas" <?php echo $div['QuitadoParcelas']; ?>>
-								<div class="col-md-4 text-left">
+								<div class="col-md-2 text-left">
 									<h4 style="color: #FF0000">Atenção</h4>
 									<h5 style="color: #FF0000"><?php if(isset($mensagem)) echo $mensagem ;?></h5>
+								</div>
+								<div class="col-md-3 text-left">
+									<label for="Descricao">Descricao</label>
+										<input type="text" class="form-control" maxlength="100" id="Descricao" name="Descricao" value="<?php echo $query['Descricao']; ?>">
+									<?php echo form_error('Descricao'); ?>
 								</div>
 								<div class="col-md-2 text-left">
 									<label for="DataPagamento">Data do Pagamento</label>

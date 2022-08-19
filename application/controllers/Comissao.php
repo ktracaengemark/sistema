@@ -3619,6 +3619,7 @@ class Comissao extends CI_Controller {
 						'QuitadoParcelas',
 						'MostrarDataPagamento',
 						'DataPagamento',
+						'Descricao',
 					), TRUE));
 					
 					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4090,6 +4091,7 @@ class Comissao extends CI_Controller {
 										$data['recibo']['HoraOrca'] 			= date('H:i:s', time());
 										$data['recibo']['DataEntregaOrca'] 		= $data['query']['DataPagamento'];
 										$data['recibo']['HoraEntregaOrca'] 		= date('H:i:s', time());
+										$data['recibo']['Descricao'] 			= $data['query']['Descricao'];
 										$data['recibo']['idTab_TipoRD']			= 4;
 										$data['recibo']['idTab_Modulo']			= 1;
 										$data['recibo']['idSis_Empresa'] 		= $_SESSION['log']['idSis_Empresa'];
@@ -4246,6 +4248,7 @@ class Comissao extends CI_Controller {
 						'QuitadoParcelas',
 						'MostrarDataPagamento',
 						'DataPagamento',
+						'Descricao',
 					), TRUE));
 					
 					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4728,6 +4731,7 @@ class Comissao extends CI_Controller {
 										$data['recibo']['HoraOrca'] 			= date('H:i:s', time());
 										$data['recibo']['DataEntregaOrca'] 		= $data['query']['DataPagamento'];
 										$data['recibo']['HoraEntregaOrca'] 		= date('H:i:s', time());
+										$data['recibo']['Descricao'] 			= $data['query']['Descricao'];
 										$data['recibo']['idTab_TipoRD']			= 1;
 										$data['recibo']['idTab_Modulo']			= 1;
 										$data['recibo']['idSis_Empresa'] 		= $_SESSION['log']['idSis_Empresa'];

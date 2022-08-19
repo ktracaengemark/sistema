@@ -22,10 +22,7 @@ class OrcatrataPrint extends CI_Controller {
 
         #load header view
         $this->load->view('basico/header');
-		#$this->load->view('basico/header_refresh_print');
         $this->load->view('basico/nav_principal');
-        #$this->load->view('basico/nav_impressao');
-        #$this->load->view('orcatrata/nav_secundario');
     }
 
     public function index() {
@@ -599,136 +596,34 @@ class OrcatrataPrint extends CI_Controller {
 
 		if (!$id) {
 
-			unset($_SESSION['Orcatrata']);
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 			
 		} else {
 
-				#### App_OrcaTrata ####
-				$_SESSION['Orcatrata'] = $data['orcatrata'] = $this->Orcatrataprint_model->get_orcatrata($id);
-			
-				if($data['orcatrata'] === FALSE || $data['orcatrata']['idTab_TipoRD'] != 4){
-					unset($_SESSION['Orcatrata']);
-					$data['msg'] = '?m=3';
-					redirect(base_url() . 'acesso' . $data['msg']);
-					exit();
-					
-				} else {			
-					
-					$data['orcatrata']['DataOrca'] = $this->basico->mascara_data($data['orcatrata']['DataOrca'], 'barras');
-					$data['orcatrata']['DataEntregaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntregaOrca'], 'barras');
-					$data['orcatrata']['DataPrazo'] = $this->basico->mascara_data($data['orcatrata']['DataPrazo'], 'barras');
-					$data['orcatrata']['DataConclusao'] = $this->basico->mascara_data($data['orcatrata']['DataConclusao'], 'barras');
-					$data['orcatrata']['DataRetorno'] = $this->basico->mascara_data($data['orcatrata']['DataRetorno'], 'barras');
-					$data['orcatrata']['DataQuitado'] = $this->basico->mascara_data($data['orcatrata']['DataQuitado'], 'barras');
-					$data['orcatrata']['DataEntradaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntradaOrca'], 'barras');
-					$data['orcatrata']['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata']['DataVencimentoOrca'], 'barras');
+			#### App_OrcaTrata ####
+			$data['orcatrata'] = $this->Orcatrataprint_model->get_orcatrata($id);
+		
+			if($data['orcatrata'] === FALSE || $data['orcatrata']['idTab_TipoRD'] != 4){
+				
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'acesso' . $data['msg']);
+				exit();
+				
+			} else {			
+				
+				$data['orcatrata']['DataOrca'] = $this->basico->mascara_data($data['orcatrata']['DataOrca'], 'barras');
 
-
-					#### Carrega os dados do fornrcedor nas variáves de sessão ####
-					$this->load->model('Fornecedor_model');
-					if($data['orcatrata']['idApp_Fornecedor'] != 0){
-						$data['fornecedor'] = $this->Fornecedor_model->get_fornecedor($data['orcatrata']['idApp_Fornecedor'], TRUE);
-					}
-					
-					if(isset($data['orcatrata']['idSis_Usuario']) && $data['orcatrata']['idSis_Usuario'] != 0){
-						if($_SESSION['log']['idSis_Empresa'] == 5){
-							$data['usuario'] = $this->Associado_model->get_associado($data['orcatrata']['idSis_Usuario'], TRUE);
-						}else{
-							$data['usuario'] = $this->Usuario_model->get_usuario($data['orcatrata']['idSis_Usuario'], TRUE);
-						}
-					}
-
-					if(isset($data['orcatrata']['id_Funcionario']) && $data['orcatrata']['id_Funcionario'] != 0){
-						if($_SESSION['log']['idSis_Empresa'] != 5){
-							$data['funcionario'] = $this->Usuario_model->get_usuario($data['orcatrata']['id_Funcionario'], TRUE);
-						}
-					}
-
-					if(isset($data['orcatrata']['id_Associado']) && $data['orcatrata']['id_Associado'] != 0){
-						if($_SESSION['log']['idSis_Empresa'] != 5){
-							$data['associado'] = $this->Associado_model->get_associado($data['orcatrata']['id_Associado'], TRUE);
-						}
-					}
-					
-					$data['query'] = $this->Orcatrataprint_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata'], TRUE);	
-					
-					#### App_ServicoVenda ####
-					$data['servico'] = $this->Orcatrataprint_model->get_servico_desp($id);
-					if (count($data['servico']) > 0) {
-						$data['servico'] = array_combine(range(1, count($data['servico'])), array_values($data['servico']));
-						$data['count']['SCount'] = count($data['servico']);
-
-						if (isset($data['servico'])) {
-
-							for($j=1;$j<=$data['count']['SCount'];$j++) {
-								$data['servico'][$j]['SubtotalProduto'] = number_format(($data['servico'][$j]['ValorProduto'] * $data['servico'][$j]['QtdProduto']), 2, ',', '.');
-								$data['servico'][$j]['DataValidadeProduto'] = $this->basico->mascara_data($data['servico'][$j]['DataValidadeProduto'], 'barras');
-							}
-						}
-					}
-					
-					#### App_ProdutoVenda ####
-					$data['produto'] = $this->Orcatrataprint_model->get_produto_desp($id);
-					if (count($data['produto']) > 0) {
-						$data['produto'] = array_combine(range(1, count($data['produto'])), array_values($data['produto']));
-						$data['count']['PCount'] = count($data['produto']);
-
-						if (isset($data['produto'])) {
-
-							for($j=1;$j<=$data['count']['PCount'];$j++) {
-								$data['produto'][$j]['SubtotalProduto'] = number_format(($data['produto'][$j]['ValorProduto'] * $data['produto'][$j]['QtdProduto']), 2, ',', '.');
-								$data['produto'][$j]['DataValidadeProduto'] = $this->basico->mascara_data($data['produto'][$j]['DataValidadeProduto'], 'barras');
-								$data['produto'][$j]['ConcluidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$j]['ConcluidoProduto'], 'NS');
-								$data['produto'][$j]['DevolvidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$j]['DevolvidoProduto'], 'NS');
-							}
-
-						}
-					}
-
-					#### App_Parcelas####
-					$data['parcelasrec'] = $this->Orcatrataprint_model->get_parcelasrec($id);
-					if (count($data['parcelasrec']) > 0) {
-						$data['parcelasrec'] = array_combine(range(1, count($data['parcelasrec'])), array_values($data['parcelasrec']));
-						$data['count']['PRCount'] = count($data['parcelasrec']);
-						if (isset($data['parcelasrec'])) {
-
-							for($j=1; $j <= $data['count']['PRCount']; $j++) {
-								$data['parcelasrec'][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimento'], 'barras');
-								$data['parcelasrec'][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPago'], 'barras');
-							}
-
-						}
-					}
-
-					#### App_Procedimento ####
-					$data['procedimento'] = $this->Orcatrataprint_model->get_procedimento($id);
-					if (count($data['procedimento']) > 0) {
-						$data['procedimento'] = array_combine(range(1, count($data['procedimento'])), array_values($data['procedimento']));
-						$data['count']['PMCount'] = count($data['procedimento']);
-
-						if (isset($data['procedimento'])) {
-
-							for($j=1; $j <= $data['count']['PMCount']; $j++)
-								$data['procedimento'][$j]['DataProcedimento'] = $this->basico->mascara_data($data['procedimento'][$j]['DataProcedimento'], 'barras');
-
-
-						}
+				if(isset($data['orcatrata']['idSis_Usuario']) && $data['orcatrata']['idSis_Usuario'] != 0){
+					if($_SESSION['log']['idSis_Empresa'] == 5){
+						$data['usuario'] = $this->Associado_model->get_associado($data['orcatrata']['idSis_Usuario'], TRUE);
+					}else{
+						$data['usuario'] = $this->Usuario_model->get_usuario($data['orcatrata']['idSis_Usuario'], TRUE);
 					}
 				}
-			
-
-			/*
-			  echo '<br>';
-			  echo "<pre>";
-			  print_r($data);
-			  echo "</pre>";
-			  #exit ();
-			 */
-
-			$this->load->view('orcatrata/print_orcatratadesp', $data);
+			}
+			$this->load->view('orcatrata/print_grupo', $data);
 		}
         $this->load->view('basico/footer');
 

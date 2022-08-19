@@ -1603,6 +1603,44 @@ exit();
         }
 
     }
+
+	public function list_grupos($data, $completo) {
+
+        $data['Campo'] = (!$data['Campo']) ? 'OT.idApp_OrcaTrata' : $data['Campo'];
+        $data['Ordenamento'] = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
+
+        $query = $this->db->query('
+            SELECT
+                OT.idApp_OrcaTrata,
+				OT.DataOrca,
+				OT.ValorExtraOrca,
+				OT.Descricao
+            FROM
+                App_OrcaTrata AS OT
+            WHERE
+                OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				OT.idTab_TipoRD = 4
+			ORDER BY
+                ' . $data['Campo'] . ' ' . $data['Ordenamento'] . '
+        ');
+
+        /*
+
+          echo $this->db->last_query();
+          echo "<pre>";
+          print_r($query);
+          echo "</pre>";
+          exit();
+        */
+
+		foreach ($query->result() as $row) {
+			$row->DataOrca = $this->basico->mascara_data($row->DataOrca, 'barras');
+			$row->ValorExtraOrca = number_format($row->ValorExtraOrca, 2, ',', '.');
+		}
+
+		return $query;
+       
+    }
 	
 	public function list_produtos($data, $completo) {
 		
