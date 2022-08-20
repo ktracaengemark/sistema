@@ -92,6 +92,8 @@ class Relatorio extends CI_Controller {
 	
     public function balanco() {
 
+		unset($_SESSION['FiltroBalanco']);
+	
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 2)
@@ -107,34 +109,12 @@ class Relatorio extends CI_Controller {
 		$data['query'] = quotes_to_entities($this->input->post(array(
 			'Ano',
 			'Mesvenc',
-			'Mespag',
 			'Diavenc',
-			'Diapag',
-			'TipoFinanceiro',
-            'DataInicio',
-            'DataFim',
-			'DataInicio2',
-            'DataFim2',
-			'DataInicio3',
-            'DataFim3',
-			'Ordenamento',
-            'Campo',
-			'ObsOrca',
             'AprovadoOrca',
             'CombinadoFrete',
-            'QuitadoOrca',
-			'ConcluidoOrca',
 			'Quitado',
-			'Modalidade',
         ), TRUE));
-		
-		$_SESSION['FiltroBalanco']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
-		$_SESSION['FiltroBalanco']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
-		$_SESSION['FiltroBalanco']['Quitado'] = $data['query']['Quitado'];
-        $_SESSION['FiltroBalanco']['Diavenc'] = $data['query']['Diavenc'];
-        $_SESSION['FiltroBalanco']['Mesvenc'] = $data['query']['Mesvenc'];
-        $_SESSION['FiltroBalanco']['Ano'] = $data['query']['Ano'];
-		
+
         $data['select']['AprovadoOrca'] = array(
 			'0' => 'TODOS',
             'S' => 'Aprovado',
@@ -147,160 +127,43 @@ class Relatorio extends CI_Controller {
 			'N' => 'Não Aprovado',
         );
 
-        $data['select']['QuitadoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
-            'S' => 'Sim',
-        );
-
-		$data['select']['ConcluidoOrca'] = array(
-            '0' => 'TODOS',
-            'N' => 'Não',
-            'S' => 'Sim',
-        );
-
 		$data['select']['Quitado'] = array(
 			'0' => 'TODAS',
 			'S' => 'Pagas',
 			'N' => 'Não Pagas',
         );
-		
-		$data['select']['Modalidade'] = array(
-            '0' => 'TODOS',
-            'P' => 'Parcelas',
-            'M' => 'Mensal',
-        );
 
-        $data['select']['Campo'] = array(
-            'PR.DataVencimento' => 'Data do Venc.',
-			'PR.Quitado' => 'Quit.Parc.',
-			'OT.Modalidade' => 'Modalidade',
-            'OT.idApp_OrcaTrata' => 'Número da Receita',
-            'OT.ValorOrca' => 'Valor da Receita',
-            'OT.ConcluidoOrca' => 'Receita Concluída?',
-			'OT.TipoFinanceiro' => 'Tipo de Receita',
-
-        );
-
-        $data['select']['Ordenamento'] = array(
-            'ASC' => 'Crescente',
-            'DESC' => 'Decrescente',
-        );
-
-		$data['select']['ObsOrca'] = $this->Relatorio_model->select_obsorca();
-		$data['select']['TipoFinanceiro'] = $this->Relatorio_model->select_tipofinanceiro();
 		$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
-		$data['select']['Mespag'] = $this->Relatorio_model->select_mes();
 		$data['select']['Diavenc'] = $this->Relatorio_model->select_dia();
-		$data['select']['Diapag'] = $this->Relatorio_model->select_dia();
 		$data['select']['Ano'] = $this->Relatorio_model->select_ano();
-		/*
-		if (!$data['query']['Ano'])
-           $data['query']['Ano'] = '2018';
-		*/
-		
+
 		if (!$data['query']['Diavenc'])
            $data['query']['Diavenc'] = date('d', time());
 	   
 		if (!$data['query']['Mesvenc'])
            $data['query']['Mesvenc'] = date('m', time());
-/*	   
-		if (!$data['query']['Mespag'])
-           $data['query']['Mespag'] = date('m', time());	   
-*/	   
+	   
 		if (!$data['query']['Ano'])
            $data['query']['Ano'] = date('Y', time());
 		
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        #$this->form_validation->set_rules('Ano', 'Ano', 'required|trim|integer|greater_than[1900]');
+        $_SESSION['FiltroBalanco']['Ano'] = $data['query']['Ano'];
+        $_SESSION['FiltroBalanco']['Mesvenc'] = $data['query']['Mesvenc'];
+        $_SESSION['FiltroBalanco']['Diavenc'] = $data['query']['Diavenc'];
+		$_SESSION['FiltroBalanco']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+		$_SESSION['FiltroBalanco']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
+		$_SESSION['FiltroBalanco']['Quitado'] = $data['query']['Quitado'];
 
-        $data['titulo1'] = 'Receita';
-
-        #run form validation
-        if ($this->form_validation->run() !== TRUE) {
-
-            $data['bd']['TipoFinanceiro'] = $data['query']['TipoFinanceiro'];
-			$data['bd']['Ano'] = $data['query']['Ano'];
-			$data['bd']['Diavenc'] = $data['query']['Diavenc'];
-			$data['bd']['Diapag'] = $data['query']['Diapag'];
-			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
-			$data['bd']['Mespag'] = $data['query']['Mespag'];			
-			$data['bd']['ObsOrca'] = $data['query']['ObsOrca'];
-			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];
-            $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
-            $data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
-            $data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
-			$data['bd']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
-			$data['bd']['Quitado'] = $data['query']['Quitado'];
-			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
-            
-			$data['report'] = $this->Relatorio_model->list1_receitadiaria($data['bd'],TRUE);
-
-            /*
-              echo "<pre>";
-              print_r($data['report']);
-              echo "</pre>";
-              exit();
-              */
-
-            $data['list1'] = $this->load->view('relatorio/list1_receitadiaria', $data, TRUE);
-
-        }
 		
-        $data['titulo2'] = 'Despesa';
-        #run form validation
-        if ($this->form_validation->run() !== TRUE) {
+		$data['balancodiario'] = $this->Relatorio_model->list_balancodiario($_SESSION['FiltroBalanco']);
 
-            #$data['bd']['Pesquisa'] = $data['query']['Pesquisa'];
-            #$data['bd']['NomeCliente'] = $data['query']['NomeCliente'];
-            $data['bd']['TipoFinanceiro'] = $data['query']['TipoFinanceiro'];
-			$data['bd']['Ano'] = $data['query']['Ano'];
-			$data['bd']['Diavenc'] = $data['query']['Diavenc'];
-			$data['bd']['Diapag'] = $data['query']['Diapag'];
-			$data['bd']['Mesvenc'] = $data['query']['Mesvenc'];
-			$data['bd']['Mespag'] = $data['query']['Mespag'];			
-			$data['bd']['ObsOrca'] = $data['query']['ObsOrca'];
-			$data['bd']['Ordenamento'] = $data['query']['Ordenamento'];
-            $data['bd']['Campo'] = $data['query']['Campo'];
-            $data['bd']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
-            $data['bd']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
-            $data['bd']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
-			$data['bd']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
-			$data['bd']['Quitado'] = $data['query']['Quitado'];
-			$data['bd']['Modalidade'] = $data['query']['Modalidade'];
-            
-			$data['report'] = $this->Relatorio_model->list2_despesadiaria($data['bd'],TRUE);
-
-            /*
-              echo "<pre>";
-              print_r($data['report']);
-              echo "</pre>";
-              exit();
-              */
-
-            $data['list2'] = $this->load->view('relatorio/list2_despesadiaria', $data, TRUE);
-
-        }		
-				
         $data['titulo3'] = 'Anual';
-        #run form validation
-        if ($this->form_validation->run() !== TRUE) {
+		$data['report'] = $this->Relatorio_model->list_balancoanual($_SESSION['FiltroBalanco']);
 
-            $data['report'] = $this->Relatorio_model->list_balancoanual($data['query']);
+		$data['list3'] = $this->load->view('relatorio/list_balancodiaria', $data, TRUE);
 
-            /*
-              echo "<pre>";
-              print_r($data['report']);
-              echo "</pre>";
-              exit();
-              */
+		$data['list'] = $this->load->view('relatorio/list_balancoanual', $data, TRUE);
 
-            $data['list3'] = $this->load->view('relatorio/list_balancoanual', $data, TRUE);
-
-        }
 		
-
         $this->load->view('relatorio/tela_balanco', $data);
 
         $this->load->view('basico/footer');
