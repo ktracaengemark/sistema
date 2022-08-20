@@ -13,11 +13,11 @@
 						<span class="icon-bar"></span> 
 					</button>
 					<div class="btn-menu-print btn-group">
-						<a type="button" class="col-md-6 btn btn-md btn-default " href="javascript:window.print()">
-							<span class="glyphicon glyphicon-print"></span>
-						</a>
 						<a type="button" class="col-md-6 btn btn-md btn-warning "  href="<?php echo base_url() ?>Relatorio/balanco">
 							<span class="glyphicon glyphicon-edit"></span>
+						</a>
+						<a type="button" class="col-md-6 btn btn-md btn-default " href="javascript:window.print()">
+							<span class="glyphicon glyphicon-print"></span>
 						</a>
 					</div>
 				</div>
