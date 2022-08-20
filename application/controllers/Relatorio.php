@@ -169,6 +169,25 @@ class Relatorio extends CI_Controller {
         $this->load->view('basico/footer');
 
     }
+	
+    public function balanco_print() {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+
+		$data['balancodiario'] = $this->Relatorio_model->list_balancodiario($_SESSION['FiltroBalanco']);
+
+		$data['list3'] = $this->load->view('relatorio/list_balancodiaria_print', $data, TRUE);
+
+        $this->load->view('relatorio/tela_balanco_print', $data);
+
+        $this->load->view('basico/footer');
+
+    }
 			
     public function estoque() {
 

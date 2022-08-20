@@ -12,6 +12,9 @@
 			</a>			
 			<a class="btn btn-sm btn-danger" href="<?php echo base_url() ?>Debitos/debitos" role="button">
 				<span class="glyphicon glyphicon-search"></span>Saidas
+			</a>			
+			<a class="btn btn-sm btn-default" href="<?php echo base_url() ?>Relatorio/balanco_print" role="button">
+				<span class="glyphicon glyphicon-print"></span>Imprimir
 			</a>
 		</div>
 		<div <?php echo $collapse; ?> id="Anual">
