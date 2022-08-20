@@ -1,7 +1,7 @@
-<div style="overflow: auto; height: 450px;">
+<div style="overflow: auto; height: auto;">
 	<div class="container-fluid">
 		<div class="row">
-			<div>
+			
 				<table class="table table-bordered table-condensed table-striped">
 
 					<thead>
@@ -148,7 +148,7 @@
 				  }
 				</script>			
 				<div id="columnchart_material" ></div>
-			</div>
+			
 		</div>
 	</div>
 </div>

@@ -9,7 +9,7 @@
 					<div class="panel-heading">	
 						<div class="row">
 							<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 text-left">
-								<label><?php echo $titulo1;?></label>
+								<label><?php echo $titulo1;?> Despesas</label>
 								<div class="input-group">
 									<span class="input-group-btn">
 										<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
@@ -61,6 +61,14 @@
 								<a href="<?php echo base_url() . 'Debitos/debitos_excel/1'; ?>">
 									<button type='button' class='btn btn-md btn-success btn-block'>
 										S/<span class="glyphicon glyphicon-filter"></span>
+									</button>
+								</a>
+							</div>
+							<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 text-left">
+								<label>Balanco</label><br>
+								<a href="<?php echo base_url() . 'Relatorio/balanco'; ?>">
+									<button type='button' class='btn btn-md btn-info btn-block'>
+										<span class="glyphicon glyphicon-usd"></span>
 									</button>
 								</a>
 							</div>
