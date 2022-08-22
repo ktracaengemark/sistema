@@ -61,19 +61,7 @@ class Comissao_model extends CI_Model {
 		return $query;
 	}
 
-    public function set_grupos($data) {
-
-        $query = $this->db->insert('App_Grupos', $data);
-
-        if ($this->db->affected_rows() === 0) {
-            return FALSE;
-		} else {
-            #return TRUE;
-            return $this->db->insert_id();
-        }
-    }	
-
-    public function list_comissao($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+    public function list_comissao($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE, $ajuste = FALSE) {
 
 		$date_inicio_orca = ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;
 		$date_fim_orca = ($data['DataFim']) ? 'OT.DataOrca <= "' . $data['DataFim'] . '" AND ' : FALSE;
@@ -190,63 +178,87 @@ class Comissao_model extends CI_Model {
 		if ($completo === FALSE) {
 			$complemento = FALSE;
 		} else {
-			$complemento = '
-				AND OT.CanceladoOrca = "N" 
-				AND OT.StatusComissaoOrca = "N" 
-				AND OT.id_Comissao = 0 
+			if($ajuste === FALSE){
+				$complemento = '
+					AND OT.CanceladoOrca = "N" 
+					AND OT.StatusComissaoOrca = "N" 
+					AND OT.id_Comissao = 0 
+				';
+			}else{
+				$complemento = '
+					AND OT.CanceladoOrca = "N" 
+					AND OT.StatusComissaoOrca = "S" 
+					AND OT.id_Comissao != 0 
+				';
+			}
+		}
+
+		
+		if($ajuste === FALSE){		
+			$filtro_base = ' 
+					' . $date_inicio_orca . '
+					' . $date_fim_orca . '
+					' . $date_inicio_entrega . '
+					' . $date_fim_entrega . '
+					' . $date_inicio_entrega_prd . '
+					' . $date_fim_entrega_prd . '
+					' . $hora_inicio_entrega_prd . '
+					' . $hora_fim_entrega_prd . '
+					' . $date_inicio_vnc . '
+					' . $date_fim_vnc . '
+					' . $date_inicio_vnc_prc . '
+					' . $date_fim_vnc_prc . '
+					' . $date_inicio_pag_com . '
+					' . $date_fim_pag_com . '
+					' . $permissao . '
+					' . $permissao_orcam . '
+					' . $filtro1 . '
+					' . $filtro2 . '
+					' . $filtro3 . '
+					' . $filtro5 . '
+					' . $filtro6 . '
+					' . $filtro7 . '
+					' . $filtro8 . '
+					' . $filtro9 . '
+					' . $filtro10 . '
+					' . $filtro11 . '
+					' . $filtro13 . '
+					' . $filtro17 . '
+					' . $filtro12 . '
+					' . $produtos . '
+					' . $parcelas . '
+					' . $recibo . '
+					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . ' AND 
+					OT.id_Associado = 0  AND 
+					OT.id_Funcionario != 0
+					' . $orcamento . '
+					' . $id_comissao . '
+					' . $cliente . '
+					' . $id_cliente . '
+					' . $tipofinandeiro . ' 
+					' . $idtipord . '
+					' . $nivel . '
+					' . $complemento . '
+				' . $groupby . '
+				ORDER BY
+					' . $campo . '
+					' . $ordenamento . '
+				' . $querylimit . '
+			';
+		}else{
+			$filtro_base = ' 
+					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . ' AND 
+					OT.id_Associado = 0  AND 
+					OT.id_Funcionario != 0
+					' . $id_comissao . '
+					' . $complemento . '
+				' . $groupby . '
+				ORDER BY
+					' . $campo . '
+					' . $ordenamento . '
+				' . $querylimit . '
 			';
 		}
-		
-		$filtro_base = ' 
-				' . $date_inicio_orca . '
-				' . $date_fim_orca . '
-				' . $date_inicio_entrega . '
-				' . $date_fim_entrega . '
-				' . $date_inicio_entrega_prd . '
-				' . $date_fim_entrega_prd . '
-				' . $hora_inicio_entrega_prd . '
-				' . $hora_fim_entrega_prd . '
-				' . $date_inicio_vnc . '
-				' . $date_fim_vnc . '
-				' . $date_inicio_vnc_prc . '
-				' . $date_fim_vnc_prc . '
-				' . $date_inicio_pag_com . '
-				' . $date_fim_pag_com . '
-				' . $permissao . '
-				' . $permissao_orcam . '
-				' . $filtro1 . '
-				' . $filtro2 . '
-				' . $filtro3 . '
-				' . $filtro5 . '
-				' . $filtro6 . '
-				' . $filtro7 . '
-				' . $filtro8 . '
-				' . $filtro9 . '
-				' . $filtro10 . '
-				' . $filtro11 . '
-				' . $filtro13 . '
-				' . $filtro17 . '
-				' . $filtro12 . '
-				' . $produtos . '
-				' . $parcelas . '
-				' . $recibo . '
-				OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . ' AND 
-				OT.id_Associado = 0  AND 
-				OT.id_Funcionario != 0
-				' . $orcamento . '
-				' . $id_comissao . '
-				' . $cliente . '
-				' . $id_cliente . '
-				' . $tipofinandeiro . ' 
-				' . $idtipord . '
-				' . $nivel . '
-				' . $complemento . '
-			' . $groupby . '
-			ORDER BY
-				' . $campo . '
-				' . $ordenamento . '
-			' . $querylimit . '
-		';
 		
 		####### Contagem e soma total ###########
 		if($total == TRUE && $date == FALSE) {
@@ -385,6 +397,11 @@ class Comissao_model extends CI_Model {
 				$somacomissao += $row->ValorComissao;
 				$row->ValorComissao = number_format($row->ValorComissao, 2, ',', '.');
 
+								
+				if($row->id_Comissao == 0){
+					$row->id_Comissao = "";
+				}
+				
 				if($row->Tipo_Orca == "B"){
 					$row->Tipo_Orca = "NaLoja";
 				}elseif($row->Tipo_Orca == "O"){
@@ -2260,6 +2277,18 @@ class Comissao_model extends CI_Model {
         return $query;
     }
 
+    public function set_grupo($data) {
+
+        $query = $this->db->insert('App_Grupos', $data);
+
+        if ($this->db->affected_rows() === 0) {
+            return FALSE;
+		} else {
+            #return TRUE;
+            return $this->db->insert_id();
+        }
+    }	
+
     public function get_grupo($data) {
 		$query = $this->db->query('
 			SELECT  
@@ -2289,11 +2318,55 @@ class Comissao_model extends CI_Model {
 			return FALSE;
 		}
     }
+
+    public function get_recibo($data) {
+		$query = $this->db->query('
+			SELECT  
+				OT.idApp_OrcaTrata,
+				OT.id_Funcionario,
+				OT.id_Associado,
+				OT.DataOrca,
+				OT.Descricao,
+				OT.ValorExtraOrca,
+				OT.FinalizadoOrca,
+				OT.QuitadoOrca
+			FROM 
+				App_OrcaTrata AS OT
+			WHERE 
+				OT.idApp_OrcaTrata = ' . $data . '  AND
+				OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '			
+		
+		');
+        $query = $query->result_array();
+
+        /*
+        //echo $this->db->last_query();
+        echo '<br>';
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit ();
+        */
+
+        //return $query[0];
+		if($query){
+			return $query[0];
+		}else{
+			return FALSE;
+		}
+    }
 	
     public function update_grupo($data, $id) {
 
         unset($data['Id']);
         $query = $this->db->update('App_Grupos', $data, array('idApp_Grupos' => $id));
+        return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
+    }
+	
+    public function update_recibo($data, $id) {
+
+        unset($data['Id']);
+        $query = $this->db->update('App_OrcaTrata', $data, array('idApp_OrcaTrata' => $id));
         return ($this->db->affected_rows() === 0) ? FALSE : TRUE;
     }
 	

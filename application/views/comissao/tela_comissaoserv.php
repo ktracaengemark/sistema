@@ -31,7 +31,7 @@
 								</div>
 							</div>
 							<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 text-left">
-								<label>Grupo</label>
+								<label>id_Grupo</label>
 								<div class="input-group">
 									<span class="input-group-btn">
 										<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
@@ -41,13 +41,13 @@
 									<input type="text" placeholder="Nº Grupo" class="form-control Numero btn-sm" name="id_GrupoServico" id="id_GrupoServico" value="<?php echo set_value('id_GrupoServico', $query['id_GrupoServico']); ?>">
 								</div>
 							</div>
-							<div class="col-md-3 text-left">
-								<label for="Ordenamento">Colaborador:</label>
-								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
-										id="Funcionario" name="Funcionario">
+							<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 text-left">
+								<label for="Grupo">Grupo:</label>
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
+										id="Grupo" name="Grupo">
 									<?php
-									foreach ($select['Funcionario'] as $key => $row) {
-										if ($query['Funcionario'] == $key) {
+									foreach ($select['Grupo'] as $key => $row) {
+										if ($query['Grupo'] == $key) {
 											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 										} else {
 											echo '<option value="' . $key . '">' . $row . '</option>';
@@ -56,13 +56,13 @@
 									?>
 								</select>
 							</div>
-							<div class="col-md-3">
-								<label for="Grupo">Grupo:</label>
-								<select data-placeholder="Selecione uma opção..." class="form-control Chosen"
-										id="Grupo" name="Grupo">
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-left">
+								<label for="Ordenamento">Colaborador:</label>
+								<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
+										id="Funcionario" name="Funcionario">
 									<?php
-									foreach ($select['Grupo'] as $key => $row) {
-										if ($query['Grupo'] == $key) {
+									foreach ($select['Funcionario'] as $key => $row) {
+										if ($query['Funcionario'] == $key) {
 											echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 										} else {
 											echo '<option value="' . $key . '">' . $row . '</option>';
