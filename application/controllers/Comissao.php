@@ -741,8 +741,8 @@ class Comissao extends CI_Controller {
 					), TRUE));
 					
 					$data['query'] = quotes_to_entities($this->input->post(array(
-						'DataOrca',
-						'Descricao',
+						'DataRecibo',
+						'DescricaoRecibo',
 					), TRUE));
 					
 					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -957,7 +957,7 @@ class Comissao extends CI_Controller {
 						#### Sis_Empresa ####
 						$this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'trim');
 						if($data['cadastrar']['QuitadoComissao'] == 'S'){
-							$this->form_validation->set_rules('DataOrca', 'Data do Pagamento', 'required|trim|valid_date');
+							$this->form_validation->set_rules('DataRecibo', 'Data do Pagamento', 'required|trim|valid_date');
 						}
 
 						#run form validation
@@ -973,7 +973,7 @@ class Comissao extends CI_Controller {
 							} else {
 								////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
 								
-								$data['query']['DataOrca'] = $this->basico->mascara_data($data['query']['DataOrca'], 'mysql');            
+								$data['query']['DataRecibo'] = $this->basico->mascara_data($data['query']['DataRecibo'], 'mysql');            
 								
 								if($data['cadastrar']['QuitadoComissao'] == 'N'){
 									
@@ -1027,9 +1027,9 @@ class Comissao extends CI_Controller {
 											$nivel_orca		= $data['nivel_comissionado'];
 										}
 										$data['recibo']['NivelOrca']			= $nivel_orca;
-										$data['recibo']['DataOrca'] 			= $data['query']['DataOrca'];
+										$data['recibo']['DataOrca'] 			= $data['query']['DataRecibo'];
 										$data['recibo']['HoraOrca'] 			= date('H:i:s', time());
-										$data['recibo']['DataEntregaOrca'] 		= $data['query']['DataOrca'];
+										$data['recibo']['DataEntregaOrca'] 		= $data['query']['DataRecibo'];
 										$data['recibo']['HoraEntregaOrca'] 		= date('H:i:s', time());
 										$data['recibo']['idTab_TipoRD']			= 1;
 										$data['recibo']['idTab_Modulo']			= 1;
@@ -1037,7 +1037,7 @@ class Comissao extends CI_Controller {
 										$data['recibo']['idSis_Usuario'] 		= $_SESSION['log']['idSis_Usuario'];
 										$data['recibo']['id_Funcionario'] 		= $_SESSION['FiltroComissao']['NomeUsuario'];
 										$data['recibo']['id_Associado']			= 0;
-										$data['recibo']['Descricao'] 			= $data['query']['Descricao'];
+										$data['recibo']['Descricao'] 			= $data['query']['DescricaoRecibo'];
 										
 										$data['recibo']['TipoFinanceiro']		= 66;
 										$data['recibo']['Cli_Forn_Orca']		= "N";
@@ -1048,7 +1048,7 @@ class Comissao extends CI_Controller {
 										$data['recibo']['AVAP']					= "V";
 										$data['recibo']['FormaPagamento']		= 7;
 										$data['recibo']['QtdParcelasOrca']		= 1;
-										$data['recibo']['DataVencimentoOrca'] 	= $data['query']['DataOrca'];
+										$data['recibo']['DataVencimentoOrca'] 	= $data['query']['DataRecibo'];
 										$data['recibo']['Modalidade']			= "P";
 										
 										$data['recibo']['ValorExtraOrca'] 		= str_replace(',', '.', str_replace('.', '', $_SESSION['FiltroComissao']['ComissaoTotal']));
@@ -1096,7 +1096,7 @@ class Comissao extends CI_Controller {
 													$data['parcelasrec'][$j]['Parcela'] 				= "1/1";
 													$data['parcelasrec'][$j]['ValorParcela'] 			= $data['recibo']['ValorExtraOrca'];
 													$data['parcelasrec'][$j]['FormaPagamentoParcela'] 	= $data['recibo']['FormaPagamento'];									
-													$data['parcelasrec'][$j]['DataVencimento'] 			= $data['query']['DataOrca'];
+													$data['parcelasrec'][$j]['DataVencimento'] 			= $data['query']['DataRecibo'];
 													$data['parcelasrec'][$j]['Quitado'] 				= 'N';
 													$data['parcelasrec'][$j]['DataPago'] 				= "0000-00-00";
 													$data['parcelasrec'][$j]['DataLanc'] 				= "0000-00-00";
@@ -1114,7 +1114,7 @@ class Comissao extends CI_Controller {
 												for($j=0;$j<$max;$j++) {
 													$data['update']['orcamentos'][$j]['id_Comissao'] 			= $data['recibo']['idApp_OrcaTrata'];
 													$data['update']['orcamentos'][$j]['StatusComissaoOrca'] 	= 'S';
-													$data['update']['orcamentos'][$j]['DataPagoComissaoOrca'] 	= $data['query']['DataOrca'];
+													$data['update']['orcamentos'][$j]['DataPagoComissaoOrca'] 	= $data['query']['DataRecibo'];
 													
 													$data['update']['orcamentos']['bd'][$j] = $this->Orcatrata_model->update_orcatrata($data['update']['orcamentos'][$j], $data['update']['orcamentos'][$j]['idApp_OrcaTrata']);
 													
@@ -1126,7 +1126,7 @@ class Comissao extends CI_Controller {
 														$max_produto = count($data['update']['produto']['posterior'][$j]);
 														for($k=0;$k<$max_produto;$k++) {
 															$data['update']['produto']['posterior'][$j][$k]['StatusComissaoPedido'] 	= 'S';
-															$data['update']['produto']['posterior'][$j][$k]['DataPagoComissaoPedido'] 	= $data['query']['DataOrca'];
+															$data['update']['produto']['posterior'][$j][$k]['DataPagoComissaoPedido'] 	= $data['query']['DataRecibo'];
 														}
 														if (count($data['update']['produto']['posterior'][$j]))
 															$data['update']['produto']['bd']['posterior'] =  $this->Orcatrata_model->update_produto($data['update']['produto']['posterior'][$j]);
@@ -1192,8 +1192,8 @@ class Comissao extends CI_Controller {
 					), TRUE));
 					
 					$data['query'] = quotes_to_entities($this->input->post(array(
-						'DataOrca',
-						'Descricao',
+						'DataRecibo',
+						'DescricaoRecibo',
 					), TRUE));
 					
 					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1274,9 +1274,9 @@ class Comissao extends CI_Controller {
 											exit();
 										}else{
 
-											$data['query']['Descricao'] = $data['recibo']['Descricao'];
+											$data['query']['DescricaoRecibo'] = $data['recibo']['Descricao'];
 											
-											$data['query']['DataOrca'] = $this->basico->mascara_data($data['recibo']['DataOrca'], 'barras');
+											$data['query']['DataRecibo'] = $this->basico->mascara_data($data['recibo']['DataOrca'], 'barras');
 
 											$_SESSION['FiltroComissao']['NomeFuncionario'] = $this->Usuario_model->get_usuario($data['recibo']['id_Funcionario'])['Nome'];
 											
@@ -1439,7 +1439,7 @@ class Comissao extends CI_Controller {
 						#### Sis_Empresa ####
 						$this->form_validation->set_rules('idSis_Empresa', 'Empresa', 'trim');
 						if($data['cadastrar']['QuitadoComissao'] == 'S'){
-							$this->form_validation->set_rules('DataOrca', 'Data do Pagamento', 'required|trim|valid_date');
+							$this->form_validation->set_rules('DataRecibo', 'Data do Pagamento', 'required|trim|valid_date');
 						}
 
 						#run form validation
@@ -1455,7 +1455,7 @@ class Comissao extends CI_Controller {
 							} else {
 								////////////////////////////////Preparar Dados para Inserção Ex. Datas "mysql" //////////////////////////////////////////////
 								
-								$data['query']['DataOrca'] = $this->basico->mascara_data($data['query']['DataOrca'], 'mysql');            
+								$data['query']['DataRecibo'] = $this->basico->mascara_data($data['query']['DataRecibo'], 'mysql');            
 								
 								if($data['cadastrar']['QuitadoComissao'] == 'N'){
 									
@@ -1508,22 +1508,21 @@ class Comissao extends CI_Controller {
 									$data['recibo']['ProntoOrca'] 			= "S";
 									$data['recibo']['EnviadoOrca'] 			= "S";
 									$data['recibo']['ConcluidoOrca'] 		= "S";
-
-									$data['update']['recibo']['bd'] = $this->Comissao_model->update_recibo($data['recibo'], $_SESSION['FiltroComissao']['id_Comissao']);
-									  
-									  /*
+										/*
 									  echo '<br>';
 									  echo "<pre>";
-									  print_r($data['novoComissaoTotal']);
+									  print_r($data['recibo']);
 									  echo "</pre>";
 									  exit ();
-									*/
+										*/
+									$data['update']['recibo']['bd'] = $this->Comissao_model->update_recibo($data['recibo'], $_SESSION['FiltroComissao']['id_Comissao']);
+									  
 									$data['msg'] = '?m=1';
 									redirect(base_url() . 'Comissao/comissao_ajuste/' . $_SESSION['log']['idSis_Empresa'] . '/' . $_SESSION['FiltroComissao']['Pagina_atual'] . $data['msg']);
 								
 								}elseif($data['cadastrar']['QuitadoComissao'] == 'S'){
 
-									$data['recibo']['Descricao'] = $data['query']['Descricao'];
+									$data['recibo']['Descricao'] = $data['query']['DescricaoRecibo'];
 									
 									$data['update']['recibo']['bd'] = $this->Comissao_model->update_recibo($data['recibo'], $_SESSION['FiltroComissao']['id_Comissao']);
 									

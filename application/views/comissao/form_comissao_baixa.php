@@ -159,9 +159,9 @@
 									<h5 style="color: #FF0000"><?php if(isset($mensagem)) echo $mensagem ;?></h5>
 								</div>
 								<div class="col-md-3 text-left">
-									<label for="Descricao">Descricao</label>
-										<input type="text" class="form-control" maxlength="100" id="Descricao" name="Descricao" value="<?php echo $query['Descricao']; ?>">
-									<?php echo form_error('Descricao'); ?>
+									<label for="DescricaoRecibo">Descricao</label>
+										<input type="text" class="form-control" maxlength="100" id="DescricaoRecibo" name="DescricaoRecibo" value="<?php echo $query['DescricaoRecibo']; ?>">
+									<?php echo form_error('DescricaoRecibo'); ?>
 								</div>
 								<?php 
 									$editarData = FALSE;
@@ -172,15 +172,15 @@
 									}
 								?>
 								<div class="col-md-2 text-left">
-									<label for="DataOrca">Data do Pagamento</label>
+									<label for="DataRecibo">Data do Pagamento</label>
 									<div class="input-group <?php echo $datepicker; ?>">
 										<span class="input-group-addon" disabled>
 											<span class="glyphicon glyphicon-calendar"></span>
 										</span>
 										<input type="text" class="form-control Date" <?php echo $editarData; ?> maxlength="10" placeholder="DD/MM/AAAA"
-												id="DataOrca" name="DataOrca" value="<?php echo $query['DataOrca']; ?>">
+												id="DataRecibo" name="DataRecibo" value="<?php echo $query['DataRecibo']; ?>">
 									</div>
-									<?php echo form_error('DataOrca'); ?>
+									<?php echo form_error('DataRecibo'); ?>
 								</div>
 							</div>	
 							<div class="col-md-2 text-left">
