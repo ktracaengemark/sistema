@@ -24,14 +24,11 @@
 				
 					$html .= '<td><b>id_O.S.</b></td>';
 					$html .= '<td><b>DtPedido</b></td>';
-					$html .= '<td><b>Receita</b></td>';
+					$html .= '<td><b>Compra</b></td>';
 					
 					$html .= '<td><b>id_'.$nome.'</b></td>';
 					$html .= '<td><b>'.$nome.'</b></td>';
-					$html .= '<td><b>Recebedor</b></td>';
-					$html .= '<td><b>TelRec</b></td>';
-					$html .= '<td><b>Relacao</b></td>';
-					
+
 					$html .= '<td><b>Prd/Srv</b></td>';
 					$html .= '<td><b>Frete</b></td>';
 					$html .= '<td><b>Extra</b></td>';
@@ -73,10 +70,7 @@
 						
 						$html .= '<td>'.$row["idApp_".$nome].'</td>';
 						$html .= '<td>'.utf8_encode($row[$nome]).'</td>';
-						$html .= '<td>'.utf8_encode($row["NomeRec"]).'</td>';
-						$html .= '<td>'.$row["TelefoneRec"].'</td>';
-						$html .= '<td>'.utf8_encode($row["ParentescoRec"]).'</td>';
-						
+
 						$html .= '<td>'.$row["ValorRestanteOrca"].'</td>';
 						$html .= '<td>'.$row["ValorFrete"].'</td>';
 						$html .= '<td>'.$row["ValorExtraOrca"].'</td>';

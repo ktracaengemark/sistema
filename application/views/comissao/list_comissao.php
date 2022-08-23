@@ -73,14 +73,19 @@
 								</div>
 							<?php } ?>
 							<?php 
+								$exibir_baixa = FALSE;
+								$exibir_ajuste = FALSE;
 								if(isset($total_rows) && $total_rows >= 1) { 
 									if(isset($_SESSION['FiltroComissao']['NomeUsuario']) && $_SESSION['FiltroComissao']['NomeUsuario'] != 0){
-										$exibir_baixa = TRUE;
-									}else{
-										$exibir_baixa = FALSE;
+										if(!isset($_SESSION['FiltroComissao']['id_Comissao']) || $_SESSION['FiltroComissao']['id_Comissao'] == 0){
+											$exibir_baixa = TRUE;
+										}else{
+											$exibir_ajuste = TRUE;
+										}
 									}
-								}else{
-									$exibir_baixa = FALSE;
+									if(isset($_SESSION['FiltroComissao']['id_Comissao']) && $_SESSION['FiltroComissao']['id_Comissao'] != 0){
+										$exibir_ajuste = TRUE;
+									}
 								}	
 							?>
 							<?php if(isset($exibir_baixa) && $exibir_baixa == TRUE) { ?>
@@ -93,7 +98,7 @@
 									</a>
 								</div>
 							<?php } ?>
-
+							<?php if(isset($exibir_ajuste) && $exibir_ajuste == TRUE) { ?>
 								<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 									<label>Ajuste</label>
 									<a href="<?php echo base_url() . $ajuste . $_SESSION['log']['idSis_Empresa']; ?>">
@@ -102,6 +107,7 @@
 										</button>
 									</a>
 								</div>
+							<?php } ?>
 						<?php } ?>
 					<?php } ?>
 				</div>	
