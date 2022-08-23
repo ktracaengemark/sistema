@@ -104,7 +104,7 @@ class Comissao extends CI_Controller {
 				'idApp_Cliente',
 				'idApp_OrcaTrata',
 				'DataVencimentoOrca',
-				'NomeUsuario',
+				'id_Funcionario',
 				'DataInicio',
 				'DataFim',
 				'DataInicio2',
@@ -246,7 +246,7 @@ class Comissao extends CI_Controller {
 				'IS NULL' => 'S/ Parcelas',
 			);
 
-			$data['select']['NomeUsuario'] = $this->Relatorio_model->select_usuario();
+			$data['select']['id_Funcionario'] = $this->Relatorio_model->select_usuario();
 			$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
 			$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
 			$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
@@ -320,7 +320,7 @@ class Comissao extends CI_Controller {
 				$_SESSION['FiltroComissao']['Parcelas'] = $data['query']['Parcelas'];
 				$_SESSION['FiltroComissao']['Recibo'] = $data['query']['Recibo'];
 				$_SESSION['FiltroComissao']['id_Comissao'] = $data['query']['id_Comissao'];
-				$_SESSION['FiltroComissao']['NomeUsuario'] = $data['query']['NomeUsuario'];
+				$_SESSION['FiltroComissao']['id_Funcionario'] = $data['query']['id_Funcionario'];
 				$_SESSION['FiltroComissao']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
 				$_SESSION['FiltroComissao']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
 				$_SESSION['FiltroComissao']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
@@ -769,6 +769,7 @@ class Comissao extends CI_Controller {
 					$data['Pesquisa'] = '';
 					
 					$data['somatotal'] = 0;
+					
 					if ($id) {
 									
 						#### Sis_Empresa ####
@@ -782,7 +783,13 @@ class Comissao extends CI_Controller {
 							
 						}else{
 							
-							if($_SESSION['FiltroComissao']['NomeUsuario'] == 0){
+							if($_SESSION['FiltroComissao']['id_Comissao']){
+								$id_comissao = TRUE;
+							}else{
+								$id_comissao = FALSE;
+							}
+							
+							if($_SESSION['FiltroComissao']['id_Funcionario'] == 0 && $id_comissao !== FALSE){
 								
 								$data['msg'] = '?m=5';
 								redirect(base_url() . 'Comissao/comissao' . $data['msg']);
@@ -798,7 +805,7 @@ class Comissao extends CI_Controller {
 									exit();
 								}else{
 
-									$_SESSION['FiltroComissao']['NomeFuncionario'] = $this->Usuario_model->get_usuario($_SESSION['FiltroComissao']['NomeUsuario'])['Nome'];
+									$_SESSION['FiltroComissao']['NomeFuncionario'] = $this->Usuario_model->get_usuario($_SESSION['FiltroComissao']['id_Funcionario'])['Nome'];
 										
 									$_SESSION['FiltroComissao']['FinalTotal'] = $data['pesquisa_query']->soma2->somafinal2;
 
@@ -919,7 +926,7 @@ class Comissao extends CI_Controller {
 							'N' => 'Ajustar Valores',
 							'S' => 'Baixa das Comissoes',
 						);
-						$data['titulo'] = 'Comissao';
+						$data['titulo'] = 'Vendedor';
 						$data['form_open_path'] = 'Comissao/comissao_baixa';
 						$data['relatorio'] = 'Comissao/comissao_pag/';
 						$data['imprimir'] = 'Comissao/comissao_lista/';
@@ -1020,7 +1027,7 @@ class Comissao extends CI_Controller {
 									}else{
 										//////// vou gerar uma despesa e pegar o id . Posso os dados da despesa com uma linha de parcela
 
-										$data['nivel_comissionado'] = $this->Usuario_model->get_usuario($_SESSION['FiltroComissao']['NomeUsuario'])['Nivel'];
+										$data['nivel_comissionado'] = $this->Usuario_model->get_usuario($_SESSION['FiltroComissao']['id_Funcionario'])['Nivel'];
 										if($data['nivel_comissionado'] == 0){
 											$nivel_orca	= 1;
 										}else{
@@ -1035,7 +1042,7 @@ class Comissao extends CI_Controller {
 										$data['recibo']['idTab_Modulo']			= 1;
 										$data['recibo']['idSis_Empresa'] 		= $_SESSION['log']['idSis_Empresa'];
 										$data['recibo']['idSis_Usuario'] 		= $_SESSION['log']['idSis_Usuario'];
-										$data['recibo']['id_Funcionario'] 		= $_SESSION['FiltroComissao']['NomeUsuario'];
+										$data['recibo']['id_Funcionario'] 		= $_SESSION['FiltroComissao']['id_Funcionario'];
 										$data['recibo']['id_Associado']			= 0;
 										$data['recibo']['Descricao'] 			= $data['query']['DescricaoRecibo'];
 										
@@ -1220,6 +1227,7 @@ class Comissao extends CI_Controller {
 					$data['Pesquisa'] = '';
 					
 					$data['somatotal'] = 0;
+					
 					if ($id) {
 									
 						#### Sis_Empresa ####
@@ -1401,7 +1409,7 @@ class Comissao extends CI_Controller {
 							'N' => 'Ajustar Valores',
 							'S' => 'Editar Descrição',
 						);
-						$data['titulo'] = 'Comissao';
+						$data['titulo'] = 'Vendedor/Rec-' . $_SESSION['FiltroComissao']['id_Comissao'];
 						$data['form_open_path'] = 'Comissao/comissao_ajuste';
 						$data['relatorio'] = 'Comissao/comissao_pag/';
 						$data['imprimir'] = 'Comissao/comissao_lista/';
@@ -2280,7 +2288,13 @@ class Comissao extends CI_Controller {
 							
 						}else{
 							
-							if($_SESSION['FiltroComissaoAss']['id_Associado'] == 0){
+							if($_SESSION['FiltroComissaoAss']['id_Comissao']){
+								$id_comissao = TRUE;
+							}else{
+								$id_comissao = FALSE;
+							}
+
+							if($_SESSION['FiltroComissaoAss']['id_Associado'] == 0 && $id_comissao !== FALSE){
 								
 								$data['msg'] = '?m=5';
 								redirect(base_url() . 'Comissao/comissaoass' . $data['msg']);
@@ -2720,6 +2734,7 @@ class Comissao extends CI_Controller {
 					$data['Pesquisa'] = '';
 					
 					$data['somatotal'] = 0;
+					
 					if ($id) {
 									
 						#### Sis_Empresa ####
@@ -2903,7 +2918,7 @@ class Comissao extends CI_Controller {
 							'N' => 'Ajustar Valores',
 							'S' => 'Editar Descrição',
 						);
-						$data['titulo'] = 'Comissao Associado';
+						$data['titulo'] = 'Associado/Rec-' . $_SESSION['FiltroComissaoAss']['id_Comissao'];
 						$data['form_open_path'] = 'Comissao/comissaoass_ajuste';
 						$data['relatorio'] = 'Comissao/comissaoass_pag/';
 						$data['imprimir'] = 'Comissao/comissaoass_lista/';
@@ -3611,7 +3626,13 @@ class Comissao extends CI_Controller {
 							
 						}else{
 							
-							if($_SESSION['FiltroComissaoFunc']['id_Usuario'] == 0){
+							if($_SESSION['FiltroComissaoFunc']['id_ComissaoFunc']){
+								$id_comissao = TRUE;
+							}else{
+								$id_comissao = FALSE;
+							}
+
+							if($_SESSION['FiltroComissaoFunc']['id_Usuario'] == 0 && $id_comissao !== FALSE){
 								
 								$data['msg'] = '?m=5';
 								redirect(base_url() . 'Comissao/comissaofunc' . $data['msg']);
@@ -4230,7 +4251,7 @@ class Comissao extends CI_Controller {
 							'N' => 'Ajustar Valores',
 							'S' => 'Editar Descrição',
 						);
-						$data['titulo'] = 'Super. - ' . $_SESSION['FiltroComissaoFunc']['id_ComissaoFunc'];
+						$data['titulo'] = 'Supervisor/Rec-' . $_SESSION['FiltroComissaoFunc']['id_ComissaoFunc'];
 						$data['form_open_path'] = 'Comissao/comissaofunc_ajuste';
 						$data['relatorio'] = 'Comissao/comissaofunc_pag/';
 						$data['imprimir'] = 'Comissao/comissaofunc_lista/';
@@ -5704,7 +5725,7 @@ class Comissao extends CI_Controller {
 						$data['select']['MostrarDataPagamento'] = $this->Basico_model->select_status_sn();
 						$data['select']['StatusComissaoServico'] = $this->Basico_model->select_status_sn();	
 						
-						$data['titulo'] = 'Servicos';
+						$data['titulo'] = 'Servicos - ' . $_SESSION['Filtro_Porservicos']['id_GrupoServico'];
 						$data['form_open_path'] = 'Comissao/comissaoserv_ajuste';
 						$data['readonly'] = 'readonly=""';
 						$data['disabled'] = '';
@@ -6212,7 +6233,7 @@ class Comissao extends CI_Controller {
 						$data['select']['MostrarDataPagamento'] = $this->Basico_model->select_status_sn();
 						$data['select']['StatusComissaoServico'] = $this->Basico_model->select_status_sn();	
 						
-						$data['titulo'] = 'Servicos';
+						$data['titulo'] = 'Servicos/Grupo-' . $_SESSION['Filtro_Porservicos']['id_GrupoServico'];
 						$data['form_open_path'] = 'Comissao/comissaoserv_func';
 						$data['readonly'] = 'readonly=""';
 						$data['disabled'] = '';

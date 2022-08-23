@@ -110,7 +110,7 @@ class Comissao_model extends CI_Model {
 		$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 		$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
 		$filtro12 = ($data['StatusComissaoOrca']) ? 'OT.StatusComissaoOrca = "' . $data['StatusComissaoOrca'] . '" AND ' : FALSE;
-		$filtro17 = ($data['NomeUsuario']) ? 'OT.id_Funcionario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;
+		$filtro17 = ($data['id_Funcionario']) ? 'OT.id_Funcionario = "' . $data['id_Funcionario'] . '" AND ' : FALSE;
 
 		if($_SESSION['log']['idSis_Empresa'] != 5){
 			if($_SESSION['Empresa']['Rede'] == "S"){

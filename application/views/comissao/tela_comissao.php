@@ -47,12 +47,12 @@
 							</div>
 							<?php if ($_SESSION['Usuario']['Permissao_Comissao'] >= 2 ) { ?>
 								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-left">
-									<label for="NomeUsuario">Vendedor:</label>
+									<label for="id_Funcionario">Vendedor:</label>
 									<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
-											id="NomeUsuario" name="NomeUsuario">
+											id="id_Funcionario" name="id_Funcionario">
 										<?php
-										foreach ($select['NomeUsuario'] as $key => $row) {
-											if ($query['NomeUsuario'] == $key) {
+										foreach ($select['id_Funcionario'] as $key => $row) {
+											if ($query['id_Funcionario'] == $key) {
 												echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 											} else {
 												echo '<option value="' . $key . '">' . $row . '</option>';

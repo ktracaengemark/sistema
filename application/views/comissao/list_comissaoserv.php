@@ -65,16 +65,16 @@
 			<?php } ?>
 			<?php
 				$exibir_baixa = FALSE;
-				$exibir_grupo = FALSE;
+				$exibir_ajuste = FALSE;
 				$exibir_func = FALSE;
 				if(isset($total_rows) && $total_rows >= 1) {
 					if(isset($_SESSION['Filtro_Porservicos']['id_GrupoServico']) && $_SESSION['Filtro_Porservicos']['id_GrupoServico'] != 0){
-						$exibir_grupo = TRUE;
+						$exibir_ajuste = TRUE;
 						if(isset($_SESSION['Filtro_Porservicos']['Funcionario']) && $_SESSION['Filtro_Porservicos']['Funcionario'] != 0){
 							$exibir_func = TRUE;
 						}
 					}else{
-						if(isset($_SESSION['Filtro_Porservicos']['Grupo']) && $_SESSION['Filtro_Porservicos']['Grupo'] == 2){
+						if(!isset($_SESSION['Filtro_Porservicos']['Funcionario']) || $_SESSION['Filtro_Porservicos']['Funcionario'] == 0){
 							$exibir_baixa = TRUE;
 						}
 					}
@@ -90,7 +90,7 @@
 					</a>
 				</div>
 			<?php } ?>
-			<?php if(isset($exibir_grupo) && $exibir_grupo == TRUE) { ?>
+			<?php if(isset($exibir_ajuste) && $exibir_ajuste == TRUE) { ?>
 				<div class="col-md-2">
 					<label>Ajuste do Grupo</label>
 					<a href="<?php echo base_url() . $ajustegrupo . $_SESSION['log']['idSis_Empresa']; ?>">

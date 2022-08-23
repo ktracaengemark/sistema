@@ -7,19 +7,19 @@
 			<div class="panel panel-<?php echo $panel; ?>">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-lg-2 col-md-3 col-sm-6 col-xs-6 ">
+						<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 ">
 							<br>
 							<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() . $relatorio; ?>" role="button">
 								<span class="glyphicon glyphicon-pencil"></span><?php echo $titulo; ?>
 							</a>
 						</div>
-						<div class="col-lg-2 col-md-3 col-sm-6 col-xs-6 ">	
+						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6 ">	
 							<br>
 							<a type= "button" class="btn btn-md btn-info btn-block" type="button" href="<?php echo base_url() . $imprimir; ?>">
 								<span class="glyphicon glyphicon-list"></span> Lista
 							</a>
 						</div>
-						<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12 ">	
+						<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 ">	
 							<br>
 							<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
 								<?php echo $_SESSION['FiltroComissaoAss']['Contagem'];?> / <?php echo $_SESSION['FiltroComissaoAss']['Total_Rows'];?> Resultados
@@ -37,7 +37,7 @@
 								<span class="glyphicon glyphicon-usd"></span>R$ <?php if(isset($_SESSION['FiltroComissaoAss']['SomaTotal'])) echo $_SESSION['FiltroComissaoAss']['SomaTotal']; ?> / <?php echo $_SESSION['FiltroComissaoAss']['ComissaoTotal'] ?>
 							</a>
 						</div>
-						<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+						<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
 							<?php echo $_SESSION['FiltroComissaoAss']['Pagination']; ?>
 						</div>
 					</div>	

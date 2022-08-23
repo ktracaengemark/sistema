@@ -7,7 +7,7 @@
 			<div class="panel panel-<?php echo $panel; ?>">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+						<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 ">
 							<br>
 							<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() . $relatorio; ?>" role="button">
 								<span class="glyphicon glyphicon-pencil"></span><?php echo $titulo; ?>
@@ -37,7 +37,7 @@
 								<span class="glyphicon glyphicon-usd"></span>R$ <?php if(isset($_SESSION['FiltroComissao']['SomaTotal'])) echo $_SESSION['FiltroComissao']['SomaTotal']; ?> / <?php echo $_SESSION['FiltroComissao']['ComissaoTotal'] ?>
 							</a>
 						</div>
-						<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+						<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
 							<?php echo $_SESSION['FiltroComissao']['Pagination']; ?>
 						</div>
 					</div>	

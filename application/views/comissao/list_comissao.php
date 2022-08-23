@@ -76,7 +76,7 @@
 								$exibir_baixa = FALSE;
 								$exibir_ajuste = FALSE;
 								if(isset($total_rows) && $total_rows >= 1) { 
-									if(isset($_SESSION['FiltroComissao']['NomeUsuario']) && $_SESSION['FiltroComissao']['NomeUsuario'] != 0){
+									if(isset($_SESSION['FiltroComissao']['id_Funcionario']) && $_SESSION['FiltroComissao']['id_Funcionario'] != 0){
 										if(!isset($_SESSION['FiltroComissao']['id_Comissao']) || $_SESSION['FiltroComissao']['id_Comissao'] == 0){
 											$exibir_baixa = TRUE;
 										}else{
