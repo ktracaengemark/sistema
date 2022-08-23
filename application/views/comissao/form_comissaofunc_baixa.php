@@ -7,22 +7,28 @@
 			<div class="panel panel-<?php echo $panel; ?>">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-lg-2 col-md-3 col-sm-6 col-xs-6 ">
+						<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 ">
 							<br>
 							<a type= "button" class="btn btn-md btn-warning btn-block" href="<?php echo base_url() . $relatorio; ?>" role="button">
 								<span class="glyphicon glyphicon-pencil"></span><?php echo $titulo; ?>
 							</a>
 						</div>
-						<div class="col-lg-2 col-md-3 col-sm-6 col-xs-6 ">	
+						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6 ">	
 							<br>
 							<a type= "button" class="btn btn-md btn-info btn-block" type="button" href="<?php echo base_url() . $imprimir; ?>">
 								<span class="glyphicon glyphicon-list"></span> Lista
 							</a>
 						</div>
-						<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12 ">	
+						<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 ">	
 							<br>
 							<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
 								<?php echo $_SESSION['FiltroComissaoFunc']['Contagem'];?> / <?php echo $_SESSION['FiltroComissaoFunc']['Total_Rows'];?> Resultados
+							</a>
+						</div>
+						<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 ">		
+							<br>
+							<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
+								<span class="glyphicon glyphicon-user"></span><?php echo $_SESSION['FiltroComissaoFunc']['NomeFuncionario']; ?>
 							</a>
 						</div>
 						<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12 ">	
@@ -31,7 +37,7 @@
 								<span class="glyphicon glyphicon-usd"></span>R$ <?php if(isset($_SESSION['FiltroComissaoFunc']['SomaTotal'])) echo $_SESSION['FiltroComissaoFunc']['SomaTotal']; ?> / <?php echo $_SESSION['FiltroComissaoFunc']['ComissaoTotal'] ?>
 							</a>
 						</div>
-						<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+						<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
 							<?php echo $_SESSION['FiltroComissaoFunc']['Pagination']; ?>
 						</div>
 					</div>	
@@ -123,17 +129,16 @@
 					<div class="form-group">
 						<div class="row">
 							<input type="hidden" name="idSis_Empresa" value="<?php echo $empresa['idSis_Empresa']; ?>">
-							
-							<div class="col-md-2 text-left">
-								<label for="QuitadoComissao">Confirma Baixa?</label><br>
+							<div class="col-md-3 text-left">
+								<label for="QuitadoComissao">Seletor de Função</label><br>
 								<div class="btn-group" data-toggle="buttons">
 									<?php
 									foreach ($select['QuitadoComissao'] as $key => $row) {
-										if (!$query['QuitadoComissao'])$query['QuitadoComissao'] = 'N';
+										if (!$cadastrar['QuitadoComissao'])$cadastrar['QuitadoComissao'] = 'N';
 
 										($key == 'S') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
 
-										if ($query['QuitadoComissao'] == $key) {
+										if ($cadastrar['QuitadoComissao'] == $key) {
 											echo ''
 											. '<label class="btn btn-warning active" name="QuitadoComissao_' . $hideshow . '">'
 											. '<input type="radio" name="QuitadoComissao" id="' . $hideshow . '" '
@@ -153,26 +158,39 @@
 								</div>
 								<?php #echo form_error('QuitadoComissao'); ?>
 							</div>
-
 							<div id="QuitadoComissao" <?php echo $div['QuitadoComissao']; ?>>
-								<div class="col-md-4 text-left">
-									<h4 style="color: #FF0000">Atenção</h4>
-									<h5 style="color: #FF0000">Todas as Comissões receberão:" Pago = Sim "</h5>
-								</div>
 								<div class="col-md-2 text-left">
-									<label for="DataPagoComissãoPadrao">Data do Pagamento Padrao</label>
+									<h4 style="color: #FF0000">Atenção</h4>
+									<h5 style="color: #FF0000"><?php if(isset($mensagem)) echo $mensagem ;?></h5>
+								</div>
+								<div class="col-md-3 text-left">
+									<label for="DescricaoRecibo">Descricao</label>
+										<input type="text" class="form-control" maxlength="100" id="DescricaoRecibo" name="DescricaoRecibo" value="<?php echo $query['DescricaoRecibo']; ?>">
+									<?php echo form_error('DescricaoRecibo'); ?>
+								</div>
+								<?php 
+									$editarData = FALSE;
+									if(isset($metodo)) {
+										if($metodo == 2){
+											$editarData = 'readonly=""';
+										}
+									}
+								?>
+								<div class="col-md-2 text-left">
+									<label for="DataRecibo">Data do Pagamento</label>
 									<div class="input-group <?php echo $datepicker; ?>">
 										<span class="input-group-addon" disabled>
 											<span class="glyphicon glyphicon-calendar"></span>
 										</span>
-										<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA"
-												id="DataPagoComissãoPadrao" name="DataPagoComissãoPadrao" value="<?php echo $query['DataPagoComissãoPadrao']; ?>">
+										<input type="text" class="form-control Date" <?php echo $editarData; ?> maxlength="10" placeholder="DD/MM/AAAA"
+												id="DataRecibo" name="DataRecibo" value="<?php echo $query['DataRecibo']; ?>">
 									</div>
-									<?php echo form_error('DataPagoComissãoPadrao'); ?>
+									<?php echo form_error('DataRecibo'); ?>
 								</div>
 							</div>	
-							<div class="col-md-4 text-right">
-								<button class="btn btn-lg btn-primary" id="inputDb" data-loading-text="Aguarde..." type="submit">
+							<div class="col-md-2 text-left">
+								<label>Confirmar Ação</label>
+								<button class="btn btn-md btn-primary btn-block" id="inputDb" data-loading-text="Aguarde..." type="submit">
 									<span class="glyphicon glyphicon-save"></span> Salvar
 								</button>
 							</div>

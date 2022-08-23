@@ -110,7 +110,6 @@ class Comissao_model extends CI_Model {
 		$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 		$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
 		$filtro12 = ($data['StatusComissaoOrca']) ? 'OT.StatusComissaoOrca = "' . $data['StatusComissaoOrca'] . '" AND ' : FALSE;
-		//$filtro17 = ($data['NomeUsuario']) ? 'OT.idSis_Usuario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;
 		$filtro17 = ($data['NomeUsuario']) ? 'OT.id_Funcionario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;
 
 		if($_SESSION['log']['idSis_Empresa'] != 5){
@@ -588,8 +587,8 @@ class Comissao_model extends CI_Model {
 		$filtro10 = ($data['FinalizadoOrca']) ? 'OT.FinalizadoOrca = "' . $data['FinalizadoOrca'] . '" AND ' : FALSE;
 		$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 		$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
-		$filtro18 = ($data['id_Associado']) ? 'OT.id_Associado = "' . $data['id_Associado'] . '" AND ' : FALSE;
 		$filtro12 = ($data['StatusComissaoOrca']) ? 'OT.StatusComissaoOrca = "' . $data['StatusComissaoOrca'] . '" AND ' : FALSE;
+		$filtro18 = ($data['id_Associado']) ? 'OT.id_Associado = "' . $data['id_Associado'] . '" AND ' : FALSE;
 
 		if($_SESSION['log']['idSis_Empresa'] != 5){
 			if($_SESSION['Empresa']['Rede'] == "S"){
@@ -1015,7 +1014,7 @@ class Comissao_model extends CI_Model {
 		
 	}		
 
-    public function list_comissaofunc($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+    public function list_comissaofunc($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE, $ajuste = FALSE) {
 
 		$date_inicio_orca = ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;
 		$date_fim_orca = ($data['DataFim']) ? 'OT.DataOrca <= "' . $data['DataFim'] . '" AND ' : FALSE;
@@ -1064,7 +1063,7 @@ class Comissao_model extends CI_Model {
 		$filtro11 = ($data['CanceladoOrca']) ? 'OT.CanceladoOrca = "' . $data['CanceladoOrca'] . '" AND ' : FALSE;
 		$filtro13 = ($data['CombinadoFrete']) ? 'OT.CombinadoFrete = "' . $data['CombinadoFrete'] . '" AND ' : FALSE;
 		$filtro12 = ($data['StatusComissaoFunc']) ? 'OT.StatusComissaoFunc = "' . $data['StatusComissaoFunc'] . '" AND ' : FALSE;
-		$filtro17 = ($data['NomeUsuario']) ? 'OT.idSis_Usuario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;
+		$filtro17 = ($data['id_Usuario']) ? 'OT.idSis_Usuario = "' . $data['id_Usuario'] . '" AND ' : FALSE;
 
 		if($_SESSION['log']['idSis_Empresa'] != 5){
 			if($_SESSION['Empresa']['Rede'] == "S"){
@@ -1131,61 +1130,82 @@ class Comissao_model extends CI_Model {
 		if ($completo === FALSE) {
 			$complemento = FALSE;
 		} else {
-			$complemento = '
-				AND OT.CanceladoOrca = "N" 
-				AND OT.StatusComissaoFunc = "N" 
-				AND OT.id_ComissaoFunc = 0 
-			';
+			if($ajuste === FALSE){
+				$complemento = '
+					AND OT.CanceladoOrca = "N" 
+					AND OT.StatusComissaoFunc = "N" 
+					AND OT.id_ComissaoFunc = 0 
+				';
+			}else{
+				$complemento = '
+					AND OT.CanceladoOrca = "N" 
+					AND OT.StatusComissaoFunc = "S" 
+					AND OT.id_ComissaoFunc != 0 
+				';
+			}
 		}
 
-		$filtro_base = '
-                ' . $date_inicio_orca . '
-                ' . $date_fim_orca . '
-                ' . $date_inicio_entrega . '
-                ' . $date_fim_entrega . '
-                ' . $date_inicio_entrega_prd . '
-                ' . $date_fim_entrega_prd . '
-                ' . $hora_inicio_entrega_prd . '
-                ' . $hora_fim_entrega_prd . '
-                ' . $date_inicio_vnc . '
-                ' . $date_fim_vnc . '
-                ' . $date_inicio_vnc_prc . '
-                ' . $date_fim_vnc_prc . '
-                ' . $date_inicio_pag_com . '
-                ' . $date_fim_pag_com . '
-				' . $permissao . '
-				' . $permissao_orcam . '
-				' . $filtro1 . '
-				' . $filtro2 . '
-				' . $filtro3 . '
-				' . $filtro5 . '
-				' . $filtro6 . '
-				' . $filtro7 . '
-				' . $filtro8 . '
-				' . $filtro9 . '
-				' . $filtro10 . '
-				' . $filtro11 . '
-				' . $filtro13 . '
-				' . $filtro17 . '
-				' . $filtro12 . '
-				' . $produtos . '
-				' . $parcelas . '
-				' . $recibo . '
-				OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '
-                ' . $orcamento . '
-				' . $id_comissaofunc . '
-                ' . $cliente . '
-                ' . $id_cliente . '
-                ' . $tipofinandeiro . ' 
-                ' . $idtipord . '
-				' . $nivel . '
-				' . $complemento . '
-			' . $groupby . '
-			ORDER BY
-				' . $campo . '
-				' . $ordenamento . '
-			' . $querylimit . '
-		';
+		if($ajuste === FALSE){
+			$filtro_base = '
+					' . $date_inicio_orca . '
+					' . $date_fim_orca . '
+					' . $date_inicio_entrega . '
+					' . $date_fim_entrega . '
+					' . $date_inicio_entrega_prd . '
+					' . $date_fim_entrega_prd . '
+					' . $hora_inicio_entrega_prd . '
+					' . $hora_fim_entrega_prd . '
+					' . $date_inicio_vnc . '
+					' . $date_fim_vnc . '
+					' . $date_inicio_vnc_prc . '
+					' . $date_fim_vnc_prc . '
+					' . $date_inicio_pag_com . '
+					' . $date_fim_pag_com . '
+					' . $permissao . '
+					' . $permissao_orcam . '
+					' . $filtro1 . '
+					' . $filtro2 . '
+					' . $filtro3 . '
+					' . $filtro5 . '
+					' . $filtro6 . '
+					' . $filtro7 . '
+					' . $filtro8 . '
+					' . $filtro9 . '
+					' . $filtro10 . '
+					' . $filtro11 . '
+					' . $filtro13 . '
+					' . $filtro17 . '
+					' . $filtro12 . '
+					' . $produtos . '
+					' . $parcelas . '
+					' . $recibo . '
+					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '
+					' . $orcamento . '
+					' . $id_comissaofunc . '
+					' . $cliente . '
+					' . $id_cliente . '
+					' . $tipofinandeiro . ' 
+					' . $idtipord . '
+					' . $nivel . '
+					' . $complemento . '
+				' . $groupby . '
+				ORDER BY
+					' . $campo . '
+					' . $ordenamento . '
+				' . $querylimit . '
+			';
+		}else{
+			$filtro_base = ' 
+					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '
+					' . $id_comissaofunc . '
+					' . $complemento . '
+				' . $groupby . '
+				ORDER BY
+					' . $campo . '
+					' . $ordenamento . '
+				' . $querylimit . '
+			';
+		}
 		
 		####### Contagem e soma total ###########
 		if($total == TRUE && $date == FALSE) {
@@ -1564,6 +1584,7 @@ class Comissao_model extends CI_Model {
 				';
 			}
 		}
+		
 		if($ajuste === FALSE){
 			$filtro_base = '
 					' . $date_inicio_orca . '
