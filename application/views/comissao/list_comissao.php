@@ -18,15 +18,15 @@
 								<input type="text" class="form-control" disabled aria-label="Orcamento" value="<?php echo $report->soma->somarestante ?> / <?php echo $pesquisa_query->soma2->somarestante2 ?>">
 							</div>
 						</div>
-						<?php if($_SESSION['Usuario']['Rel_Com'] == "S") {?>
-							<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 text-left">
-								<label for="DataFim">Com: Parc / Total</label>
-								<div class="input-group">
-									<span class="input-group-addon">R$</span>
-									<input type="text" class="form-control" disabled aria-label="Comissao" value="<?php echo $report->soma->somacomissao ?> / <?php echo $pesquisa_query->soma2->somacomissao2 ?>">
-								</div>
+					<?php } ?>
+					<?php if($_SESSION['Usuario']['Rel_Com'] == "S") {?>
+						<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 text-left">
+							<label for="DataFim">Com: Parc / Total</label>
+							<div class="input-group">
+								<span class="input-group-addon">R$</span>
+								<input type="text" class="form-control" disabled aria-label="Comissao" value="<?php echo $report->soma->somacomissao ?> / <?php echo $pesquisa_query->soma2->somacomissao2 ?>">
 							</div>
-						<?php } ?>
+						</div>
 					<?php } ?>
 					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-left">
 						<?php echo $pagination; ?>
@@ -52,17 +52,17 @@
 							</button>
 						</div>
 					<?php } ?>
-					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
-						<label>Excel</label><br>
-						<a href="<?php echo base_url() . 'Comissao/comissao_excel/2'; ?>">
-							<button type='button' class='btn btn-md btn-success btn-block'>
-								C/<span class="glyphicon glyphicon-filter"></span>
-							</button>
-						</a>
-					</div>
-					<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S" && $_SESSION['Usuario']['Nivel'] != 2) {?>
+					<?php if($_SESSION['Usuario']['Bx_Pag'] == "S" && $_SESSION['Usuario']['Permissao_Comissao'] == 3 && $_SESSION['Usuario']['Nivel'] != 2) {?>
 						<?php if ($editar == 1) { ?>
 							<?php if ($print == 1) { ?>	
+								<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
+									<label>Excel</label><br>
+									<a href="<?php echo base_url() . 'Comissao/comissao_excel/2'; ?>">
+										<button type='button' class='btn btn-md btn-success btn-block'>
+											C/<span class="glyphicon glyphicon-filter"></span>
+										</button>
+									</a>
+								</div>
 								<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 									<label>Lista</label>
 									<a href="<?php echo base_url() . $imprimirlista; ?>">
@@ -75,16 +75,48 @@
 							<?php 
 								$exibir_baixa = FALSE;
 								$exibir_ajuste = FALSE;
+								$exibir_antigas = FALSE;
 								if(isset($total_rows) && $total_rows >= 1) { 
 									if(isset($_SESSION['FiltroComissao']['id_Funcionario']) && $_SESSION['FiltroComissao']['id_Funcionario'] != 0){
 										if(!isset($_SESSION['FiltroComissao']['id_Comissao']) || $_SESSION['FiltroComissao']['id_Comissao'] == 0){
-											$exibir_baixa = TRUE;
+											if(isset($_SESSION['FiltroComissao']['StatusComissaoOrca']) && $_SESSION['FiltroComissao']['StatusComissaoOrca'] == "S"){
+												if(isset($_SESSION['FiltroComissao']['Recibo']) && $_SESSION['FiltroComissao']['Recibo'] == 2){
+													$exibir_antigas = TRUE;
+												}	
+											}elseif(isset($_SESSION['FiltroComissao']['StatusComissaoOrca']) && $_SESSION['FiltroComissao']['StatusComissaoOrca'] == "N"){
+												
+													$exibir_baixa = TRUE;
+												
+											}else{
+												
+											}
 										}else{
-											$exibir_ajuste = TRUE;
+											
+										}
+									}else{
+										if(!isset($_SESSION['FiltroComissao']['id_Comissao']) || $_SESSION['FiltroComissao']['id_Comissao'] == 0){
+											if(isset($_SESSION['FiltroComissao']['StatusComissaoOrca']) && $_SESSION['FiltroComissao']['StatusComissaoOrca'] == "S"){
+												if(isset($_SESSION['FiltroComissao']['Recibo']) && $_SESSION['FiltroComissao']['Recibo'] == 2){
+													$exibir_antigas = TRUE;
+												}	
+											}elseif(isset($_SESSION['FiltroComissao']['StatusComissaoOrca']) && $_SESSION['FiltroComissao']['StatusComissaoOrca'] == "N"){
+												
+												
+											}else{
+												
+											}
+										}else{
+											
 										}
 									}
 									if(isset($_SESSION['FiltroComissao']['id_Comissao']) && $_SESSION['FiltroComissao']['id_Comissao'] != 0){
 										$exibir_ajuste = TRUE;
+									}else{
+										if(isset($_SESSION['FiltroComissao']['StatusComissaoOrca']) && $_SESSION['FiltroComissao']['StatusComissaoOrca'] == "S"){
+											if(isset($_SESSION['FiltroComissao']['Recibo']) && $_SESSION['FiltroComissao']['Recibo'] == 2){
+												$exibir_antigas = TRUE;
+											}	
+										}
 									}
 								}	
 							?>
@@ -102,6 +134,16 @@
 								<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
 									<label>Ajuste</label>
 									<a href="<?php echo base_url() . $ajuste . $_SESSION['log']['idSis_Empresa']; ?>">
+										<button class="btn btn-danger btn-md btn-block" type="button">
+											<span class="glyphicon glyphicon-ok"></span>
+										</button>
+									</a>
+								</div>
+							<?php } ?>
+							<?php if(isset($exibir_antigas) && $exibir_antigas == TRUE) { ?>
+								<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
+									<label>Ajustar Antigas</label>
+									<a href="<?php echo base_url() . $antigas . $_SESSION['log']['idSis_Empresa']; ?>">
 										<button class="btn btn-danger btn-md btn-block" type="button">
 											<span class="glyphicon glyphicon-ok"></span>
 										</button>

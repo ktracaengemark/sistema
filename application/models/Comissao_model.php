@@ -61,7 +61,7 @@ class Comissao_model extends CI_Model {
 		return $query;
 	}
 
-    public function list_comissao($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE, $ajuste = FALSE) {
+    public function list_comissao($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE, $ajuste = FALSE, $antigo = FALSE) {
 
 		$date_inicio_orca = ($data['DataInicio']) ? 'OT.DataOrca >= "' . $data['DataInicio'] . '" AND ' : FALSE;
 		$date_fim_orca = ($data['DataFim']) ? 'OT.DataOrca <= "' . $data['DataFim'] . '" AND ' : FALSE;
@@ -118,6 +118,7 @@ class Comissao_model extends CI_Model {
 					$nivel = 'AND OT.NivelOrca = 2';
 					$permissao = 'OT.id_Funcionario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
 					$permissao_orcam = 'OT.id_Funcionario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+					$permissao_comissao = 'OT.id_Funcionario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
 				}elseif($_SESSION['Usuario']['Nivel'] == 1){
 					$nivel = FALSE;
 					$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
@@ -126,10 +127,18 @@ class Comissao_model extends CI_Model {
 					}else{
 						$permissao_orcam = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
 					}
+					if($_SESSION['Usuario']['Permissao_Comissao'] == 1){
+						$permissao_comissao = 'OT.id_Funcionario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+					}elseif($_SESSION['Usuario']['Permissao_Comissao'] == 2){
+						$permissao_comissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+					}else{
+						$permissao_comissao = FALSE;
+					}
 				}else{
 					$nivel = FALSE;
 					$permissao = FALSE;
 					$permissao_orcam = FALSE;
+					$permissao_comissao = FALSE;
 				}
 			}else{
 				if($_SESSION['Usuario']['Permissao_Orcam'] == 1){
@@ -137,18 +146,34 @@ class Comissao_model extends CI_Model {
 				}else{
 					$permissao_orcam = FALSE;
 				}
+				if($_SESSION['Usuario']['Permissao_Comissao'] == 1){
+					$permissao_comissao = 'OT.id_Funcionario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+				}elseif($_SESSION['Usuario']['Permissao_Comissao'] == 2){
+					$permissao_comissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+				}else{
+					$permissao_comissao = FALSE;
+				}
 				$nivel = FALSE;
 				$permissao = FALSE;
 			}
 			$produtos = ($data['Produtos']) ? 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND' : FALSE;
 			$parcelas = ($data['Parcelas']) ? 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND' : FALSE;
-			if(isset($data['Recibo']) && $data['Recibo'] != "0"){
-				$recibo = '' . $data['Recibo'] . ' AND';
+
+			if(isset($data['Recibo']) && $data['Recibo'] != 0){
+				if($data['Recibo'] == 1){
+					$recibo = 'OT.id_Comissao != 0 AND';
+				}elseif($data['Recibo'] == 2){
+					$recibo = 'OT.id_Comissao = 0 AND';
+				}else{
+					$recibo = FALSE;
+				}
 			}else{
 				$recibo = FALSE;
 			}
+
 		}else{
 			$permissao_orcam = FALSE;
+			$permissao_comissao = FALSE;
 			if(isset($data['metodo']) && $data['metodo'] == 3){
 				$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
 			}else{
@@ -178,11 +203,19 @@ class Comissao_model extends CI_Model {
 			$complemento = FALSE;
 		} else {
 			if($ajuste === FALSE){
-				$complemento = '
-					AND OT.CanceladoOrca = "N" 
-					AND OT.StatusComissaoOrca = "N" 
-					AND OT.id_Comissao = 0 
-				';
+				if($antigo === FALSE){
+					$complemento = '
+						AND OT.CanceladoOrca = "N" 
+						AND OT.StatusComissaoOrca = "N" 
+						AND OT.id_Comissao = 0 
+					';
+				}else{
+					$complemento = '
+						AND OT.CanceladoOrca = "N" 
+						AND OT.StatusComissaoOrca = "S"
+						AND OT.id_Comissao = 0 
+					';
+				}
 			}else{
 				$complemento = '
 					AND OT.CanceladoOrca = "N" 
@@ -211,6 +244,7 @@ class Comissao_model extends CI_Model {
 					' . $date_fim_pag_com . '
 					' . $permissao . '
 					' . $permissao_orcam . '
+					' . $permissao_comissao . '
 					' . $filtro1 . '
 					' . $filtro2 . '
 					' . $filtro3 . '

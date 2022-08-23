@@ -25,12 +25,14 @@
 								<?php echo $_SESSION['FiltroComissao']['Contagem'];?> / <?php echo $_SESSION['FiltroComissao']['Total_Rows'];?> Resultados
 							</a>
 						</div>
-						<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 ">		
-							<br>
-							<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-								<span class="glyphicon glyphicon-user"></span><?php echo $_SESSION['FiltroComissao']['NomeFuncionario']; ?>
-							</a>
-						</div>
+						<?php if(isset($_SESSION['FiltroComissao']['NomeFuncionario'])) { ?>
+							<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 ">		
+								<br>
+								<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
+									<span class="glyphicon glyphicon-user"></span><?php echo $_SESSION['FiltroComissao']['NomeFuncionario']; ?>
+								</a>
+							</div>
+						<?php } ?>	
 						<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 ">	
 							<br>
 							<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
@@ -158,20 +160,24 @@
 									<h4 style="color: #FF0000">Atenção</h4>
 									<h5 style="color: #FF0000"><?php if(isset($mensagem)) echo $mensagem ;?></h5>
 								</div>
-								<div class="col-md-3 text-left">
-									<label for="DescricaoRecibo">Descricao</label>
-										<input type="text" class="form-control" maxlength="100" id="DescricaoRecibo" name="DescricaoRecibo" value="<?php echo $query['DescricaoRecibo']; ?>">
-									<?php echo form_error('DescricaoRecibo'); ?>
-								</div>
 								<?php 
 									$editarData = FALSE;
+									$antigas = FALSE;
 									if(isset($metodo)) {
 										if($metodo == 2){
 											$editarData = 'readonly=""';
 										}
+										if($metodo == 3){
+											$antigas = 'display:none';
+										}
 									}
 								?>
-								<div class="col-md-2 text-left">
+								<div class="col-md-3 text-left" style="<?php echo $antigas; ?>">
+									<label for="DescricaoRecibo">Descricao</label>
+										<input type="text" class="form-control" maxlength="100" id="DescricaoRecibo" name="DescricaoRecibo" value="<?php echo $query['DescricaoRecibo']; ?>">
+									<?php echo form_error('DescricaoRecibo'); ?>
+								</div>
+								<div class="col-md-2 text-left" style="<?php echo $antigas; ?>">
 									<label for="DataRecibo">Data do Pagamento</label>
 									<div class="input-group <?php echo $datepicker; ?>">
 										<span class="input-group-addon" disabled>

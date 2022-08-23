@@ -99,14 +99,20 @@
 									<span class="glyphicon glyphicon-filter"></span>
 								</button>
 							</div>
-							<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
-								<label>Excel</label><br>
-								<a href="<?php echo base_url() . 'Comissao/comissao_excel/1'; ?>">
-									<button type='button' class='btn btn-md btn-success btn-block'>
-										S/<span class="glyphicon glyphicon-filter"></span>
-									</button>
-								</a>
-							</div>
+							<?php if($_SESSION['Usuario']['Bx_Pag'] == "S" && $_SESSION['Usuario']['Permissao_Comissao'] == 3 && $_SESSION['Usuario']['Nivel'] != 2) {?>
+								<?php if ($editar == 1) { ?>
+									<?php if ($print == 1) { ?>	
+										<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 text-left">
+											<label>Excel</label><br>
+											<a href="<?php echo base_url() . 'Comissao/comissao_excel/1'; ?>">
+												<button type='button' class='btn btn-md btn-success btn-block'>
+													S/<span class="glyphicon glyphicon-filter"></span>
+												</button>
+											</a>
+										</div>
+									<?php } ?>
+								<?php } ?>
+							<?php } ?>
 						</div>	
 					</div>
 				</div>			
