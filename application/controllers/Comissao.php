@@ -3776,7 +3776,7 @@ class Comissao extends CI_Controller {
 			$data['edit'] = 'Orcatrata/baixadaparcelarec/';
 			$data['baixacomissao'] = 'Comissao/comissaoserv_baixa/';
 			$data['comissaofunc'] = 'Comissao/comissaoserv_func/';
-			$data['ajustegrupo'] = 'Comissao/comissaoserv_grupo/';
+			$data['ajustegrupo'] = 'Comissao/comissaoserv_ajuste/';
 			$data['paginacao'] = 'N';
 			
 			/*				
@@ -3940,7 +3940,7 @@ class Comissao extends CI_Controller {
 				$data['edit'] = 'Orcatrata/baixadacobranca/';
 				$data['baixacomissao'] = 'Comissao/comissaoserv_baixa/';
 				$data['comissaofunc'] = 'Comissao/comissaoserv_func/';
-				$data['ajustegrupo'] = 'Comissao/comissaoserv_grupo/';
+				$data['ajustegrupo'] = 'Comissao/comissaoserv_ajuste/';
 				$data['paginacao'] = 'S';
 				$data['caminho'] = 'Comissao/comissaoserv/';
 				
@@ -4520,7 +4520,7 @@ class Comissao extends CI_Controller {
 											}
 											/////// Ao terminar abro a despesa/Recibo criado
 											$data['msg'] = '?m=1';
-											redirect(base_url() . 'OrcatrataPrint/imprimirgrupo/' . $data['recibo']['idApp_Grupos'] . $data['msg']);
+											redirect(base_url() . 'Comissao/grupo_print/' . $data['recibo']['idApp_Grupos'] . $data['msg']);
 											exit();
 										}
 									}
@@ -4543,7 +4543,7 @@ class Comissao extends CI_Controller {
 		}
     }
 	
-    public function comissaoserv_grupo($id = FALSE) {
+    public function comissaoserv_ajuste($id = FALSE) {
 
 		$valida = $this->Comissao_model->valida_comissao()['com_serv'];
 		
@@ -4728,7 +4728,7 @@ class Comissao extends CI_Controller {
 									exit();
 									*/
 									
-									$config['base_url'] = base_url() . 'Comissao/comissaoserv_grupo/' . $id . '/';
+									$config['base_url'] = base_url() . 'Comissao/comissaoserv_ajuste/' . $id . '/';
 									$config['per_page'] = 10;
 									$config["uri_segment"] = 4;
 									$config['reuse_query_string'] = TRUE;
@@ -4884,7 +4884,7 @@ class Comissao extends CI_Controller {
 						$data['select']['StatusComissaoServico'] = $this->Basico_model->select_status_sn();	
 						
 						$data['titulo'] = 'Servicos';
-						$data['form_open_path'] = 'Comissao/comissaoserv_grupo';
+						$data['form_open_path'] = 'Comissao/comissaoserv_ajuste';
 						$data['readonly'] = 'readonly=""';
 						$data['disabled'] = '';
 						$data['panel'] = 'info';
@@ -5035,7 +5035,7 @@ class Comissao extends CI_Controller {
 									}
 									
 									$data['msg'] = '?m=1';
-									redirect(base_url() . 'Comissao/comissaoserv_grupo/' . $_SESSION['log']['idSis_Empresa'] . '/' . $_SESSION['Filtro_Porservicos']['Pagina_atual'] . $data['msg']);
+									redirect(base_url() . 'Comissao/comissaoserv_ajuste/' . $_SESSION['log']['idSis_Empresa'] . '/' . $_SESSION['Filtro_Porservicos']['Pagina_atual'] . $data['msg']);
 									exit();
 									
 								}elseif($data['cadastrar']['QuitadoParcelas'] == 'S'){
@@ -5043,7 +5043,7 @@ class Comissao extends CI_Controller {
 									$data['update']['query']['bd'] = $this->Comissao_model->update_grupo($data['query'], $data['query']['idApp_Grupos']);
 									/////// Ao terminar abro Grupo
 									$data['msg'] = '?m=1';
-									redirect(base_url() . 'Comissao/imprimirgrupo/' . $data['query']['idApp_Grupos'] . $data['msg']);
+									redirect(base_url() . 'Comissao/grupo_print/' . $data['query']['idApp_Grupos'] . $data['msg']);
 									exit();
 								} else {
 										
@@ -5722,7 +5722,7 @@ class Comissao extends CI_Controller {
 
     }
 
-    public function grupos_print($id = FALSE) {
+    public function grupo_print($id = FALSE) {
 
         if ($this->input->get('m') == 1)
             $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
@@ -5756,7 +5756,7 @@ class Comissao extends CI_Controller {
 					$data['usuario'] = $this->Usuario_model->get_usuario($data['orcatrata']['idSis_Usuario'], TRUE);
 				}
 			}
-			$this->load->view('comissao/print_grupo', $data);
+			$this->load->view('comissao/grupo_print', $data);
 		}
         $this->load->view('basico/footer');
 

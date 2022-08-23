@@ -148,7 +148,6 @@
 							<th class="active">Recor</th>
 							<th class="active">Produto</th>
 							<th class="active">ValorR$</th>
-							<th class="active">Grupo</th>
 							<th class="active">Profissional_1.</th>
 							<!--<th class="active">Com1.</th>-->
 							<th class="active">Profissional_2.</th>
@@ -165,7 +164,8 @@
 							<th class="active">ValorProf.</th>
 							<!--<th class="active">NºProf.</th>-->
 							<th class="active">StatusCom</th>
-							<th class="active">DataPago.</th>					
+							<th class="active">DataPago.</th>
+							<th class="active">Grupo</th>				
 						</tr>
 					</thead>
 					<tbody>
@@ -200,7 +200,6 @@
 								echo '<td>' . $row['RecorrenciaOrca'] . '</td>';
 								echo '<td class="text-left">' . $row['NomeProduto'] . '</td>';
 								echo '<td class="text-left">R$' . $row['ValorTotalProduto'] . '</td>';
-								echo '<td>' . $row['Grupo'] . '</td>';
 								echo '<td>' . $row['Abrev1'] . ' | ' . $row['Nome1'] . ' | ' . $row['ComFunProf_1'] . '% | R$' . $row['ValorComProf_1'] . '</td>';
 								echo '<td>' . $row['Abrev2'] . ' | ' . $row['Nome2'] . ' | ' . $row['ComFunProf_2'] . '% | R$' . $row['ValorComProf_2'] . '</td>';
 								echo '<td>' . $row['Abrev3'] . ' | ' . $row['Nome3'] . ' | ' . $row['ComFunProf_3'] . '% | R$' . $row['ValorComProf_3'] . '</td>';
@@ -212,6 +211,7 @@
 								//echo '<td class="text-left">/ ' . $row['Contagem'] . '</td>';
 								echo '<td>' . $row['StatusComissaoServico'] . '</td>';
 								echo '<td>' . $row['DataPagoComissaoServico'] . '</td>';
+								echo '<td>' . $row['Grupo'] . '</td>';
 							echo '</tr>';
 							$count++;
 						}

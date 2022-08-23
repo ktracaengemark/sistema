@@ -409,13 +409,21 @@
 										<input type="text" class="form-control" maxlength="100" id="Descricao" name="Descricao" value="<?php echo $query['Descricao']; ?>">
 									<?php echo form_error('Descricao'); ?>
 								</div>
+								<?php 
+									$editarData = FALSE;
+									if(isset($metodo)) {
+										if($metodo == 2){
+											$editarData = 'readonly=""';
+										}
+									}
+								?>
 								<div class="col-md-2 text-left">
 									<label for="DataOrca">Data</label>
 									<div class="input-group <?php echo $datepicker; ?>">
 										<span class="input-group-addon" disabled>
 											<span class="glyphicon glyphicon-calendar"></span>
 										</span>
-										<input type="text" class="form-control Date" maxlength="10" placeholder="DD/MM/AAAA"
+										<input type="text" class="form-control Date" <?php echo $editarData; ?> maxlength="10" placeholder="DD/MM/AAAA"
 												id="DataOrca" name="DataOrca" value="<?php echo $query['DataOrca']; ?>">
 									</div>
 									<?php echo form_error('DataOrca'); ?>

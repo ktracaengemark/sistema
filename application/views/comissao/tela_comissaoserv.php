@@ -19,17 +19,6 @@
 									<input type="text" placeholder="Pesquisar Pedido" class="form-control Numero btn-sm" name="Orcamento" value="<?php echo set_value('Orcamento', $query['Orcamento']); ?>">
 								</div>
 							</div>
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">	
-								<label for="RecorrenciaOrca">Recor.</label>
-								<div class="input-group">
-									<span class="input-group-btn">
-										<button class="btn btn-primary btn-md" type="submit">
-											<span class="glyphicon glyphicon-search"></span> 
-										</button>
-									</span>
-									<input type="text" class="form-control " maxlength="7" placeholder="Ex: 4/4, 2/2" name="RecorrenciaOrca" id="RecorrenciaOrca" value="<?php echo set_value('RecorrenciaOrca', $query['RecorrenciaOrca']); ?>">
-								</div>
-							</div>
 							<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 text-left">
 								<label>id_Grupo</label>
 								<div class="input-group">
@@ -72,7 +61,18 @@
 								</select>
 							</div>
 						</div>
-						<div class="row">							
+						<div class="row">
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 text-left">	
+								<label for="RecorrenciaOrca">Recor.</label>
+								<div class="input-group">
+									<span class="input-group-btn">
+										<button class="btn btn-primary btn-md" type="submit">
+											<span class="glyphicon glyphicon-search"></span> 
+										</button>
+									</span>
+									<input type="text" class="form-control " maxlength="7" placeholder="Ex: 4/4, 2/2" name="RecorrenciaOrca" id="RecorrenciaOrca" value="<?php echo set_value('RecorrenciaOrca', $query['RecorrenciaOrca']); ?>">
+								</div>
+							</div>							
 							<?php if($_SESSION['log']['idSis_Empresa'] != "5") {?>
 								<div class="col-lg-4 col-md-4 col-sm-3 col-xs-12 text-left">
 									<label  ><?php echo $nome; ?>: </label>
@@ -97,7 +97,7 @@
 									<?php } ?>
 								</div>	
 								<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
-									<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-left" >
+									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
 										<label  for="idApp_ClientePet">Pet</label>
 										<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClientePet" name="idApp_ClientePet" onchange="this.form.submit()">
 											<option value=""></option>
@@ -122,7 +122,7 @@
 									</div>
 								<?php } else { ?>
 									<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
-										<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-left" >
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left" >
 											<label  for="idApp_ClienteDep">Dep</label>
 											<select data-placeholder="Selecione uma opção..." class="form-control" id="idApp_ClienteDep" name="idApp_ClienteDep" onchange="this.form.submit()">
 												<option value=""></option>
