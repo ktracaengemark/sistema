@@ -1336,7 +1336,15 @@ class Comissao_model extends CI_Model {
 				$row->ValorComissao = number_format($row->ValorComissao, 2, ',', '.');
 				$somacomissaofunc += $row->ValorComissaoFunc;
 				$row->ValorComissaoFunc = number_format($row->ValorComissaoFunc, 2, ',', '.');
-
+			
+				if($row->id_Comissao == 0){
+					$row->id_Comissao = "";
+				}
+			
+				if($row->id_ComissaoFunc == 0){
+					$row->id_ComissaoFunc = "";
+				}
+				
 				if($row->Tipo_Orca == "B"){
 					$row->Tipo_Orca = "NaLoja";
 				}elseif($row->Tipo_Orca == "O"){

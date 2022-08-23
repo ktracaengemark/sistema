@@ -2297,6 +2297,8 @@ class Comissao extends CI_Controller {
 									exit();
 								}else{
 
+									$_SESSION['FiltroComissaoAss']['NomeAssociado'] = $this->Associado_model->get_associado($_SESSION['FiltroComissaoAss']['id_Associado'])['Nome'];
+											
 									$_SESSION['FiltroComissaoAss']['FinalTotal'] = $data['pesquisa_query']->soma2->somafinal2;
 
 									$_SESSION['FiltroComissaoAss']['ComissaoTotal'] = $data['pesquisa_query']->soma2->somacomissaoass2;						
@@ -2532,6 +2534,7 @@ class Comissao extends CI_Controller {
 										$data['recibo']['idSis_Usuario'] 		= $_SESSION['log']['idSis_Usuario'];
 										$data['recibo']['id_Funcionario'] 		= 0;
 										$data['recibo']['id_Associado'] 		= $_SESSION['FiltroComissaoAss']['id_Associado'];
+										$data['recibo']['Descricao'] 			= $data['query']['DescricaoRecibo'];
 										
 										$data['recibo']['TipoFinanceiro']		= 68;
 										$data['recibo']['Cli_Forn_Orca']		= "N";
