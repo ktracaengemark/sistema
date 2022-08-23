@@ -32,7 +32,7 @@
 							</div>
 							<?php if ($_SESSION['Usuario']['Permissao_Comissao'] >= 2 ) { ?>
 								<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-left">
-									<label for="NomeAssociado">Associado:</label>
+									<label for="id_Associado">Associado:</label>
 									<div class="input-group">
 										<span class="input-group-btn">
 											<button class="btn btn-<?php echo $panel; ?> btn-md" type="submit">
@@ -40,10 +40,10 @@
 											</button>
 										</span>
 										<select data-placeholder="Selecione uma opção..." class="form-control Chosen" 
-												id="NomeAssociado" name="NomeAssociado">
+												id="id_Associado" name="id_Associado">
 											<?php
-											foreach ($select['NomeAssociado'] as $key => $row) {
-												if ($query['NomeAssociado'] == $key) {
+											foreach ($select['id_Associado'] as $key => $row) {
+												if ($query['id_Associado'] == $key) {
 													echo '<option value="' . $key . '" selected="selected">' . $row . '</option>';
 												} else {
 													echo '<option value="' . $key . '">' . $row . '</option>';
