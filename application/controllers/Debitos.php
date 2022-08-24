@@ -68,7 +68,7 @@ class Debitos extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Usu_Des'] == "N"){
+		if($_SESSION['Usuario']['Usu_Des'] == "N" || $_SESSION['Usuario']['Rel_Pag'] == "N"){
 			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();

@@ -100,72 +100,80 @@ class Relatorio extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
+			
+		if ($_SESSION['Usuario']['Rel_Pag'] == "N" ||  $_SESSION['Usuario']['Rel_Est'] == "N") {
 
-		$data['datepicker'] = 'DatePicker';
-        $data['timepicker'] = 'TimePicker';
-		$data['collapse'] = '';	
-		$data['collapse1'] = 'class="collapse"';
-		
-		$data['query'] = quotes_to_entities($this->input->post(array(
-			'Ano',
-			'Mesvenc',
-			'Diavenc',
-            'AprovadoOrca',
-            'CombinadoFrete',
-			'Quitado',
-        ), TRUE));
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		} else {
+			
+			$data['datepicker'] = 'DatePicker';
+			$data['timepicker'] = 'TimePicker';
+			$data['collapse'] = '';	
+			$data['collapse1'] = 'class="collapse"';
+			
+			$data['query'] = quotes_to_entities($this->input->post(array(
+				'Ano',
+				'Mesvenc',
+				'Diavenc',
+				'AprovadoOrca',
+				'CombinadoFrete',
+				'Quitado',
+			), TRUE));
 
-        $data['select']['AprovadoOrca'] = array(
-			'0' => 'TODOS',
-            'S' => 'Aprovado',
-			'N' => 'Não Aprovado',
-        );
-		
-        $data['select']['CombinadoFrete'] = array(
-			'0' => 'TODOS',
-            'S' => 'Aprovado',
-			'N' => 'Não Aprovado',
-        );
+			$data['select']['AprovadoOrca'] = array(
+				'0' => 'TODOS',
+				'S' => 'Aprovado',
+				'N' => 'Não Aprovado',
+			);
+			
+			$data['select']['CombinadoFrete'] = array(
+				'0' => 'TODOS',
+				'S' => 'Aprovado',
+				'N' => 'Não Aprovado',
+			);
 
-		$data['select']['Quitado'] = array(
-			'0' => 'TODAS',
-			'S' => 'Pagas',
-			'N' => 'Não Pagas',
-        );
+			$data['select']['Quitado'] = array(
+				'0' => 'TODAS',
+				'S' => 'Pagas',
+				'N' => 'Não Pagas',
+			);
 
-		$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
-		$data['select']['Diavenc'] = $this->Relatorio_model->select_dia();
-		$data['select']['Ano'] = $this->Relatorio_model->select_ano();
+			$data['select']['Mesvenc'] = $this->Relatorio_model->select_mes();
+			$data['select']['Diavenc'] = $this->Relatorio_model->select_dia();
+			$data['select']['Ano'] = $this->Relatorio_model->select_ano();
 
-		if (!$data['query']['Diavenc'])
-           $data['query']['Diavenc'] = date('d', time());
-	   
-		if (!$data['query']['Mesvenc'])
-           $data['query']['Mesvenc'] = date('m', time());
-	   
-		if (!$data['query']['Ano'])
-           $data['query']['Ano'] = date('Y', time());
-		
-        $_SESSION['FiltroBalanco']['Ano'] = $data['query']['Ano'];
-        $_SESSION['FiltroBalanco']['Mesvenc'] = $data['query']['Mesvenc'];
-        $_SESSION['FiltroBalanco']['Diavenc'] = $data['query']['Diavenc'];
-		$_SESSION['FiltroBalanco']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
-		$_SESSION['FiltroBalanco']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
-		$_SESSION['FiltroBalanco']['Quitado'] = $data['query']['Quitado'];
+			if (!$data['query']['Diavenc'])
+			   $data['query']['Diavenc'] = date('d', time());
+		   
+			if (!$data['query']['Mesvenc'])
+			   $data['query']['Mesvenc'] = date('m', time());
+		   
+			if (!$data['query']['Ano'])
+			   $data['query']['Ano'] = date('Y', time());
+			
+			$_SESSION['FiltroBalanco']['Ano'] = $data['query']['Ano'];
+			$_SESSION['FiltroBalanco']['Mesvenc'] = $data['query']['Mesvenc'];
+			$_SESSION['FiltroBalanco']['Diavenc'] = $data['query']['Diavenc'];
+			$_SESSION['FiltroBalanco']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+			$_SESSION['FiltroBalanco']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
+			$_SESSION['FiltroBalanco']['Quitado'] = $data['query']['Quitado'];
 
-		
-		$data['balancodiario'] = $this->Relatorio_model->list_balancodiario($_SESSION['FiltroBalanco']);
+			
+			$data['balancodiario'] = $this->Relatorio_model->list_balancodiario($_SESSION['FiltroBalanco']);
 
-        $data['titulo3'] = 'Anual';
-		$data['report'] = $this->Relatorio_model->list_balancoanual($_SESSION['FiltroBalanco']);
+			$data['titulo3'] = 'Anual';
+			$data['report'] = $this->Relatorio_model->list_balancoanual($_SESSION['FiltroBalanco']);
 
-		$data['list3'] = $this->load->view('relatorio/list_balancodiaria', $data, TRUE);
+			$data['list3'] = $this->load->view('relatorio/list_balancodiaria', $data, TRUE);
 
-		$data['list'] = $this->load->view('relatorio/list_balancoanual', $data, TRUE);
+			$data['list'] = $this->load->view('relatorio/list_balancoanual', $data, TRUE);
 
-		
-        $this->load->view('relatorio/tela_balanco', $data);
-
+			
+			$this->load->view('relatorio/tela_balanco', $data);
+		}
         $this->load->view('basico/footer');
 
     }
