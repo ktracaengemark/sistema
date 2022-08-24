@@ -156,6 +156,7 @@ class Comissao_model extends CI_Model {
 				$nivel = FALSE;
 				$permissao = FALSE;
 			}
+			
 			$produtos = ($data['Produtos']) ? 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND' : FALSE;
 			$parcelas = ($data['Parcelas']) ? 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND' : FALSE;
 
@@ -224,7 +225,6 @@ class Comissao_model extends CI_Model {
 				';
 			}
 		}
-
 		
 		if($ajuste === FALSE){		
 			$filtro_base = ' 
@@ -654,11 +654,19 @@ class Comissao_model extends CI_Model {
 			}
 			$produtos = ($data['Produtos']) ? 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND' : FALSE;
 			$parcelas = ($data['Parcelas']) ? 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND' : FALSE;
-			if(isset($data['Recibo']) && $data['Recibo'] != "0"){
-				$recibo = '' . $data['Recibo'] . ' AND';
+
+			if(isset($data['Recibo']) && $data['Recibo'] != 0){
+				if($data['Recibo'] == 1){
+					$recibo = 'OT.id_Comissao != 0 AND';
+				}elseif($data['Recibo'] == 2){
+					$recibo = 'OT.id_Comissao = 0 AND';
+				}else{
+					$recibo = FALSE;
+				}
 			}else{
 				$recibo = FALSE;
 			}
+
 		}else{
 			$permissao_orcam = FALSE;
 			if(isset($data['metodo']) && $data['metodo'] == 3){
@@ -703,7 +711,6 @@ class Comissao_model extends CI_Model {
 				';
 			}
 		}
-
 		
 		if($ajuste === FALSE){
 			$filtro_base = '
@@ -1127,13 +1134,22 @@ class Comissao_model extends CI_Model {
 				$nivel = FALSE;
 				$permissao = FALSE;
 			}
+			
 			$produtos = ($data['Produtos']) ? 'PRDS.idSis_Empresa ' . $data['Produtos'] . ' AND' : FALSE;
 			$parcelas = ($data['Parcelas']) ? 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND' : FALSE;
-			if(isset($data['Recibo']) && $data['Recibo'] != "0"){
-				$recibo = '' . $data['Recibo'] . ' AND';
+
+			if(isset($data['Recibo']) && $data['Recibo'] != 0){
+				if($data['Recibo'] == 1){
+					$recibo = 'OT.id_ComissaoFunc != 0 AND';
+				}elseif($data['Recibo'] == 2){
+					$recibo = 'OT.id_ComissaoFunc = 0 AND';
+				}else{
+					$recibo = FALSE;
+				}
 			}else{
 				$recibo = FALSE;
 			}
+
 		}else{
 			$permissao_orcam = FALSE;
 			if(isset($data['metodo']) && $data['metodo'] == 3){

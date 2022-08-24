@@ -1979,11 +1979,10 @@ class Comissao extends CI_Controller {
 				'id_Comissao',
 			), TRUE));
 
-			
 			$data['select']['Recibo'] = array(
 				'0' => '::TODOS::',
-				'OT.id_Comissao != 0 ' => 'C/ Recibo',
-				'OT.id_Comissao = 0 ' => 'S/ Recibo',
+				'1' => 'C/ Recibo',
+				'2' => 'S/ Recibo',
 			);
 
 			$data['select']['AprovadoOrca'] = array(
@@ -3492,11 +3491,10 @@ class Comissao extends CI_Controller {
 				'id_ComissaoFunc',
 			), TRUE));
 
-			
 			$data['select']['Recibo'] = array(
 				'0' => '::TODOS::',
-				'OT.id_ComissaoFunc != 0 ' => 'C/ Recibo',
-				'OT.id_ComissaoFunc = 0 ' => 'S/ Recibo',
+				'1' => 'C/ Recibo',
+				'2' => 'S/ Recibo',
 			);
 
 			$data['select']['AprovadoOrca'] = array(
