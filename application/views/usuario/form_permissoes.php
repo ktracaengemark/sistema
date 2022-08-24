@@ -13,41 +13,116 @@
 								<?php echo $titulo; ?>
 							</div>
 							<div class="panel-body">
-								<div class="panel panel-info">
-									<div class="panel-heading">
-										<h4>Horário de Atendimento</h4>
-										<div class="row">
-											<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-												<label for="Horario_Atend">Verificar?</label><br>
-												<div class="form-group">
-													<div class="btn-larg-right btn-group" data-toggle="buttons">
-														<?php
-														foreach ($select['Horario_Atend'] as $key => $row) {
-															(!$query['Horario_Atend']) ? $query['Horario_Atend'] = 'N' : FALSE;
-
-															if ($query['Horario_Atend'] == $key) {
-																echo ''
-																. '<label class="btn btn-warning active" name="radiobutton_Horario_Atend" id="radiobutton_Horario_Atend' . $key . '">'
-																. '<input type="radio" name="Horario_Atend" id="radiobutton" '
-																. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																. '</label>'
-																;
-															} else {
-																echo ''
-																. '<label class="btn btn-default" name="radiobutton_Horario_Atend" id="radiobutton_Horario_Atend' . $key . '">'
-																. '<input type="radio" name="Horario_Atend" id="radiobutton" '
-																. 'autocomplete="off" value="' . $key . '" >' . $row
-																. '</label>'
-																;
-															}
-														}
-														?>
+								<div class="row">
+									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+										<div class="panel panel-info">
+											<div class="panel-heading">
+												<h4>Horário de Atendimento</h4>
+												<div class="row">
+													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+														<label for="Horario_Atend">Verificar?</label><br>
+														<div class="form-group">
+															<div class="btn-larg-right btn-group" data-toggle="buttons">
+																<?php
+																foreach ($select['Horario_Atend'] as $key => $row) {
+																	(!$query['Horario_Atend']) ? $query['Horario_Atend'] = 'N' : FALSE;
+																	if ($query['Horario_Atend'] == $key) {
+																		echo ''
+																		. '<label class="btn btn-warning active" name="radiobutton_Horario_Atend" id="radiobutton_Horario_Atend' . $key . '">'
+																		. '<input type="radio" name="Horario_Atend" id="radiobutton" '
+																		. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																		. '</label>'
+																		;
+																	} else {
+																		echo ''
+																		. '<label class="btn btn-default" name="radiobutton_Horario_Atend" id="radiobutton_Horario_Atend' . $key . '">'
+																		. '<input type="radio" name="Horario_Atend" id="radiobutton" '
+																		. 'autocomplete="off" value="' . $key . '" >' . $row
+																		. '</label>'
+																		;
+																	}
+																}
+																?>
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
+									<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+										<div class="panel panel-info">
+											<div class="panel-heading">
+												<h4>Acesso</h4>
+												<div class="row">
+													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+														<label for="Usu_Rec">Receitas?</label><br>
+														<div class="form-group">
+															<div class="btn-larg-right btn-group" data-toggle="buttons">
+																<?php
+																foreach ($select['Usu_Rec'] as $key => $row) {
+																	(!$query['Usu_Rec']) ? $query['Usu_Rec'] = 'S' : FALSE;
+																	if ($query['Usu_Rec'] == $key) {
+																		echo ''
+																		. '<label class="btn btn-warning active" name="radiobutton_Usu_Rec" id="radiobutton_Usu_Rec' . $key . '">'
+																		. '<input type="radio" name="Usu_Rec" id="radiobutton" '
+																		. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																		. '</label>'
+																		;
+																	} else {
+																		echo ''
+																		. '<label class="btn btn-default" name="radiobutton_Usu_Rec" id="radiobutton_Usu_Rec' . $key . '">'
+																		. '<input type="radio" name="Usu_Rec" id="radiobutton" '
+																		. 'autocomplete="off" value="' . $key . '" >' . $row
+																		. '</label>'
+																		;
+																	}
+																}
+																?>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+										<div class="panel panel-info">
+											<div class="panel-heading">
+												<h4>Acesso</h4>
+												<div class="row">
+													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+														<label for="Usu_Des">Despesas?</label><br>
+														<div class="form-group">
+															<div class="btn-larg-right btn-group" data-toggle="buttons">
+																<?php
+																foreach ($select['Usu_Des'] as $key => $row) {
+																	(!$query['Usu_Des']) ? $query['Usu_Des'] = 'S' : FALSE;
+																	if ($query['Usu_Des'] == $key) {
+																		echo ''
+																		. '<label class="btn btn-warning active" name="radiobutton_Usu_Des" id="radiobutton_Usu_Des' . $key . '">'
+																		. '<input type="radio" name="Usu_Des" id="radiobutton" '
+																		. 'autocomplete="off" value="' . $key . '" checked>' . $row
+																		. '</label>'
+																		;
+																	} else {
+																		echo ''
+																		. '<label class="btn btn-default" name="radiobutton_Usu_Des" id="radiobutton_Usu_Des' . $key . '">'
+																		. '<input type="radio" name="Usu_Des" id="radiobutton" '
+																		. 'autocomplete="off" value="' . $key . '" >' . $row
+																		. '</label>'
+																		;
+																	}
+																}
+																?>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>	
 								<div class="panel panel-info">
 									<div class="panel-heading">
 										<h4>Agendamentos</h4>

@@ -1108,6 +1108,8 @@ class Usuario extends CI_Controller {
 				'Permissao_Agend',
 				'Permissao_Comissao',
 				'Horario_Atend',
+				'Usu_Rec',
+				'Usu_Des',
 			), TRUE);
 
 			if ($id) {
@@ -1158,6 +1160,8 @@ class Usuario extends CI_Controller {
 				$data['select']['Bx_Prd'] = $this->Basico_model->select_status_sn();
 				$data['select']['Bx_Prc'] = $this->Basico_model->select_status_sn();
 				$data['select']['Horario_Atend'] = $this->Basico_model->select_status_sn();
+				$data['select']['Usu_Rec'] = $this->Basico_model->select_status_sn();
+				$data['select']['Usu_Des'] = $this->Basico_model->select_status_sn();
 				$data['select']['Permissao_Orcam'] = array (
 					'1' => '1-Retrito',
 					'2' => '2-Irrestrito',
