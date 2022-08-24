@@ -58,7 +58,15 @@ class OrcatrataPrint extends CI_Controller {
 			exit();
 			
 		} else {
+			
+			if ($_SESSION['Usuario']['Usu_Rec'] == "N") {
 
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'acesso' . $data['msg']);
+				exit();
+				
+			} else {
+				
 				#### App_OrcaTrata ####
 				$_SESSION['Orcatrata'] = $data['orcatrata'] = $this->Orcatrataprint_model->get_orcatrata($id);
 			
@@ -158,7 +166,6 @@ class OrcatrataPrint extends CI_Controller {
 					
 					$data['query'] = $this->Orcatrataprint_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata'], TRUE);
 
-
 					#### App_ServicoVenda ####
 					$data['servico'] = $this->Orcatrataprint_model->get_servico($id);
 					if (count($data['servico']) > 0) {
@@ -175,7 +182,6 @@ class OrcatrataPrint extends CI_Controller {
 							}
 						}
 					}
-					
 
 					#### App_ProdutoVenda ####
 					$data['produto'] = $this->Orcatrataprint_model->get_produto($id);
@@ -226,38 +232,38 @@ class OrcatrataPrint extends CI_Controller {
 						}
 					}
 				}
-			
-			
-			$data['titulo'] = 'Versão Entrega';
-			$data['form_open_path'] = 'OrcatrataPrint/imprimir';
-			$data['panel'] = 'info';
-			$data['metodo'] = 1;		
-			
-			$data['cor_cli'] 	= 'default';
-			$data['cor_cons'] 	= 'default';
-			$data['cor_orca'] 	= 'warning';
-			$data['cor_sac'] 	= 'default';
-			$data['cor_mark'] 	= 'default';
-			
-			$data['nav_orca'] 		= 'S';
-			$data['nav_status'] 	= 'S';
-			$data['nav_alterar'] 	= 'N';
-			
-			$data['nav_imprimir'] 	= 'S';
-			$data['nav_entrega'] 	= 'N';
-			$data['nav_cobranca'] 	= 'S';
 
-			$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
+				$data['titulo'] = 'Versão Entrega';
+				$data['form_open_path'] = 'OrcatrataPrint/imprimir';
+				$data['panel'] = 'info';
+				$data['metodo'] = 1;		
+				
+				$data['cor_cli'] 	= 'default';
+				$data['cor_cons'] 	= 'default';
+				$data['cor_orca'] 	= 'warning';
+				$data['cor_sac'] 	= 'default';
+				$data['cor_mark'] 	= 'default';
+				
+				$data['nav_orca'] 		= 'S';
+				$data['nav_status'] 	= 'S';
+				$data['nav_alterar'] 	= 'N';
+				
+				$data['nav_imprimir'] 	= 'S';
+				$data['nav_entrega'] 	= 'N';
+				$data['nav_cobranca'] 	= 'S';
 
-			/*
-			  echo '<br>';
-			  echo "<pre>";
-			  print_r($data);
-			  echo "</pre>";
-			  #exit ();
-			 */
+				$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 
-			$this->load->view('orcatrata/print_orcatrata', $data);
+				/*
+				  echo '<br>';
+				  echo "<pre>";
+				  print_r($data);
+				  echo "</pre>";
+				  #exit ();
+				 */
+
+				$this->load->view('orcatrata/print_orcatrata', $data);
+			}
 		}
         $this->load->view('basico/footer');
 
@@ -450,18 +456,25 @@ class OrcatrataPrint extends CI_Controller {
 
 		if (!$id) {
 
-			unset($_SESSION['Orcatrata']);
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 			
 		} else {
+			
+			if ($_SESSION['Usuario']['Usu_Des'] == "N") {
 
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'acesso' . $data['msg']);
+				exit();
+				
+			} else {
+				
 				#### App_OrcaTrata ####
-				$_SESSION['Orcatrata'] = $data['orcatrata'] = $this->Orcatrataprint_model->get_orcatrata($id);
+				$data['orcatrata'] = $this->Orcatrataprint_model->get_orcatrata($id);
 			
 				if($data['orcatrata'] === FALSE || $data['orcatrata']['idTab_TipoRD'] != 1){
-					unset($_SESSION['Orcatrata']);
+
 					$data['msg'] = '?m=3';
 					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
@@ -570,16 +583,16 @@ class OrcatrataPrint extends CI_Controller {
 					}
 				}
 			
+				/*
+				  echo '<br>';
+				  echo "<pre>";
+				  print_r($data);
+				  echo "</pre>";
+				  #exit ();
+				 */
 
-			/*
-			  echo '<br>';
-			  echo "<pre>";
-			  print_r($data);
-			  echo "</pre>";
-			  #exit ();
-			 */
-
-			$this->load->view('orcatrata/print_orcatratadesp', $data);
+				$this->load->view('orcatrata/print_orcatratadesp', $data);
+			}
 		}
         $this->load->view('basico/footer');
 

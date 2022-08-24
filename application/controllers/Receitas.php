@@ -68,368 +68,376 @@ class Receitas extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>A Pesquisa está muito grande, ela excedeu 15000 linhas. Refine o seu filtro.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-			'Whatsapp',
-        ), TRUE));	
-		
-        $data['query'] = quotes_to_entities($this->input->post(array(
-			'Orcamento',
-			'Cliente',
-			'idApp_Cliente',
-			'idApp_OrcaTrata',
-			'idSis_Usuario',
-			'DataVencimentoOrca',
-			'NomeUsuario',
-			'DiaAniv',
-			'MesAniv',
-			'AnoAniv',
-			'DataInicio',
-            'DataFim',
-			'DataInicio2',
-            'DataFim2',
-			'DataInicio3',
-            'DataFim3',
-			'DataInicio4',
-            'DataFim4',
-			'DataInicio5',
-            'DataFim5',
-			'DataInicio6',
-            'DataFim6',
-			'DataInicio7',
-            'DataFim7',
-			'HoraInicio5',
-            'HoraFim5',
-			'TipoFinanceiro',
-			'idTab_TipoRD',
-			'Ordenamento',
-            'Campo',
-            'AprovadoOrca',
-			'CombinadoFrete',
-            'QuitadoOrca',
-			'ConcluidoOrca',
-			'FinalizadoOrca',
-			'CanceladoOrca',
-			'Quitado',
-			'Modalidade',
-			'AVAP',
-			'Tipo_Orca',
-			'FormaPagamento',
-			'TipoFrete',
-			'Produtos',
-			'Parcelas',
-			'Agrupar',
-			'Ultimo',
-			'nome',
-			'Texto1',
-			'Texto2',
-			'Texto3',
-			'Texto4',
-			'nomedoCliente',
-			'idCliente',
-			'numerodopedido',
-			'site',
-        ), TRUE));
-
-	
-        $data['select']['AprovadoOrca'] = array(
-            '0' => '::TODOS::',
-            'S' => 'Sim',
-            'N' => 'Não',
-        );
-
-        $data['select']['CombinadoFrete'] = array(
-            '0' => '::TODOS::',
-            'S' => 'Sim',
-            'N' => 'Não',
-        );
-
-        $data['select']['QuitadoOrca'] = array(
-            '0' => '::TODOS::',
-            'S' => 'Sim',
-            'N' => 'Não',
-        );
-
-		$data['select']['ConcluidoOrca'] = array(
-            '0' => '::TODOS::',
-            'S' => 'Sim',
-            'N' => 'Não',
-        );
-
-		$data['select']['FinalizadoOrca'] = array(
-            '0' => '::TODOS::',
-            'S' => 'Sim',
-            'N' => 'Não',
-        );
-
-		$data['select']['CanceladoOrca'] = array(
-            '0' => '::TODOS::',
-            'S' => 'Sim',
-            'N' => 'Não',
-        );
-
-		$data['select']['Quitado'] = array(
-            '0' => '::TODOS::',
-            'S' => 'Sim',
-            'N' => 'Não',
-        );
-
-		$data['select']['Modalidade'] = array(
-            '0' => 'TODOS',
-            'P' => 'Parcelas',
-            'M' => 'Mensal',
-        );
-		
-		$data['select']['AVAP'] = array(
-            '0' => 'TODOS',
-            'V' => 'Na Loja',
-			'O' => 'On Line',
-            'P' => 'Na Entrega',
-        );
-		
-		$data['select']['Tipo_Orca'] = array(
-            '0' => 'TODOS',
-            'B' => 'Na Loja',
-            'O' => 'On Line',
-        );
-
-        $data['select']['Agrupar'] = array(
-			'idApp_OrcaTrata' => 'Orçamento',
-			'idApp_Cliente' => 'Cliente',
-        );
-		
-        $data['select']['Ultimo'] = array(
-			'0' => '::Nenhum::',			
-			#'1' => 'Último Pedido',
-        );		
-
-        $data['select']['Campo'] = array(
-			'OT.idApp_OrcaTrata' => 'id do Pedido',
-			'OT.DataOrca' => 'Data do Pedido',
-			'PRDS.DataConcluidoProduto' => 'Data da Entrega',
-			'PRDS.HoraConcluidoProduto' => 'Hora da Entrega',
-			'C.idApp_Cliente' => 'id do Cliente',
-			'C.NomeCliente' => 'Nome do Cliente',
-			'C.DataCadastroCliente' => 'Data do Cadastro',
-        );
-
-        $data['select']['Ordenamento'] = array(
-            'ASC' => 'Crescente',
-            'DESC' => 'Decrescente',
-        );
-		
-        $data['select']['Produtos'] = array(
-			'0' => '::TODOS::',
-			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
-			'IS NULL' => 'S/ Prd & Srv',
-        );
-		
-        $data['select']['Parcelas'] = array(
-			'0' => '::TODOS::',
-			' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
-			'IS NULL' => 'S/ Parcelas',
-        );
-
-		$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
-		$data['select']['DiaAniv'] = $this->Relatorio_model->select_dia();
-		$data['select']['MesAniv'] = $this->Relatorio_model->select_mes();
-		$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
-		$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
-		
-        $data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
-        $data['select']['idCliente'] = $this->Basico_model->select_status_sn();
-        $data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
-        $data['select']['site'] = $this->Basico_model->select_status_sn();
-		
- 		(!$data['query']['nomedoCliente']) ? $data['query']['nomedoCliente'] = 'N' : FALSE;
-		$data['radio'] = array(
-            'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
-        );
-        ($data['query']['nomedoCliente'] == 'S') ?
-            $data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
-
- 		(!$data['query']['idCliente']) ? $data['query']['idCliente'] = 'N' : FALSE;
-		$data['radio'] = array(
-            'idCliente' => $this->basico->radio_checked($data['query']['idCliente'], 'idCliente', 'NS'),
-        );
-        ($data['query']['idCliente'] == 'S') ?
-            $data['div']['idCliente'] = '' : $data['div']['idCliente'] = 'style="display: none;"';
 			
- 		(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'N' : FALSE;
-		$data['radio'] = array(
-            'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
-        );
-        ($data['query']['numerodopedido'] == 'S') ?
-            $data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
+		if ($_SESSION['Usuario']['Usu_Rec'] == "N") {
 
- 		(!$data['query']['site']) ? $data['query']['site'] = 'N' : FALSE;
-		$data['radio'] = array(
-            'site' => $this->basico->radio_checked($data['query']['site'], 'site', 'NS'),
-        );
-        ($data['query']['site'] == 'S') ?
-            $data['div']['site'] = '' : $data['div']['site'] = 'style="display: none;"';		
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		} else {
+			
+			$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+				'id_Cliente_Auto',
+				'NomeClienteAuto',
+				'Whatsapp',
+			), TRUE));	
+			
+			$data['query'] = quotes_to_entities($this->input->post(array(
+				'Orcamento',
+				'Cliente',
+				'idApp_Cliente',
+				'idApp_OrcaTrata',
+				'idSis_Usuario',
+				'DataVencimentoOrca',
+				'NomeUsuario',
+				'DiaAniv',
+				'MesAniv',
+				'AnoAniv',
+				'DataInicio',
+				'DataFim',
+				'DataInicio2',
+				'DataFim2',
+				'DataInicio3',
+				'DataFim3',
+				'DataInicio4',
+				'DataFim4',
+				'DataInicio5',
+				'DataFim5',
+				'DataInicio6',
+				'DataFim6',
+				'DataInicio7',
+				'DataFim7',
+				'HoraInicio5',
+				'HoraFim5',
+				'TipoFinanceiro',
+				'idTab_TipoRD',
+				'Ordenamento',
+				'Campo',
+				'AprovadoOrca',
+				'CombinadoFrete',
+				'QuitadoOrca',
+				'ConcluidoOrca',
+				'FinalizadoOrca',
+				'CanceladoOrca',
+				'Quitado',
+				'Modalidade',
+				'AVAP',
+				'Tipo_Orca',
+				'FormaPagamento',
+				'TipoFrete',
+				'Produtos',
+				'Parcelas',
+				'Agrupar',
+				'Ultimo',
+				'nome',
+				'Texto1',
+				'Texto2',
+				'Texto3',
+				'Texto4',
+				'nomedoCliente',
+				'idCliente',
+				'numerodopedido',
+				'site',
+			), TRUE));
 
-		$data['query']['nome'] = 'Cliente';
-        $data['titulo'] = 'Receitas';
-		$data['form_open_path'] = 'receitas/receitas';
-		$data['baixatodas'] = 'Receitas/receitas_baixa/';
-		$data['editartodas'] = 'receitas/receitas/';
-		$data['baixa'] = 'Receitas/receita_baixa/';
-        $data['nomeusuario'] = 'NomeColaborador';
-        $data['status'] = 'StatusComissaoOrca';
-		$data['alterar'] = 'receitas/baixadasreceitas/';
-		$data['editar'] = 2;
-		$data['metodo'] = 3;
-		$data['panel'] = 'info';
-		$data['TipoFinanceiro'] = 'Receitas';
-		$data['TipoRD'] = 2;
-        $data['nome'] = 'Cliente';
-		$data['print'] = 1;
-		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistacliente/';
-		$data['imprimirrecibo'] = 'Relatorio_cob/cobrancas_recibo/';
-		$data['edit'] = 'orcatrata/alterarstatus/';
-		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';	
-		$data['paginacao'] = 'N';	
 		
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-        
-		$this->form_validation->set_rules('DataInicio', 'Data Início do Pedido', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim', 'Data Fim do Pedido', 'trim|valid_date');
-		$this->form_validation->set_rules('DataInicio2', 'Data Início da Entrega', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim2', 'Data Fim da Entrega', 'trim|valid_date');
-		$this->form_validation->set_rules('DataInicio3', 'Data Início do Vencimento', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim3', 'Data Fim do Vencimento', 'trim|valid_date');
-		$this->form_validation->set_rules('DataInicio4', 'Data Início do Vnc da Prc', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim4', 'Data Fim do Vnc da Prc', 'trim|valid_date');
-		$this->form_validation->set_rules('DataInicio5', 'Data Início do Pag Comissao', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim5', 'Data Fim do Pag Comissao', 'trim|valid_date');
-		$this->form_validation->set_rules('DataInicio6', 'Data Início do Cadastro', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim6', 'Data Fim do Cadastro', 'trim|valid_date');
-		$this->form_validation->set_rules('DataInicio7', 'Data Pago Com. Início', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim7', 'Data Pago Com.Fim', 'trim|valid_date');
-		$this->form_validation->set_rules('HoraInicio5', 'Hora Inicial', 'trim|valid_hour');
-		$this->form_validation->set_rules('HoraFim5', 'Hora Final', 'trim|valid_hour');
-				
-        #run form validation
-        if ($this->form_validation->run() !== FALSE) {
+			$data['select']['AprovadoOrca'] = array(
+				'0' => '::TODOS::',
+				'S' => 'Sim',
+				'N' => 'Não',
+			);
+
+			$data['select']['CombinadoFrete'] = array(
+				'0' => '::TODOS::',
+				'S' => 'Sim',
+				'N' => 'Não',
+			);
+
+			$data['select']['QuitadoOrca'] = array(
+				'0' => '::TODOS::',
+				'S' => 'Sim',
+				'N' => 'Não',
+			);
+
+			$data['select']['ConcluidoOrca'] = array(
+				'0' => '::TODOS::',
+				'S' => 'Sim',
+				'N' => 'Não',
+			);
+
+			$data['select']['FinalizadoOrca'] = array(
+				'0' => '::TODOS::',
+				'S' => 'Sim',
+				'N' => 'Não',
+			);
+
+			$data['select']['CanceladoOrca'] = array(
+				'0' => '::TODOS::',
+				'S' => 'Sim',
+				'N' => 'Não',
+			);
+
+			$data['select']['Quitado'] = array(
+				'0' => '::TODOS::',
+				'S' => 'Sim',
+				'N' => 'Não',
+			);
+
+			$data['select']['Modalidade'] = array(
+				'0' => 'TODOS',
+				'P' => 'Parcelas',
+				'M' => 'Mensal',
+			);
 			
-			$_SESSION['FiltroReceitas']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
-			$_SESSION['FiltroReceitas']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
-			$_SESSION['FiltroReceitas']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
-			$_SESSION['FiltroReceitas']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
-			$_SESSION['FiltroReceitas']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
-			$_SESSION['FiltroReceitas']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
-			$_SESSION['FiltroReceitas']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
-			$_SESSION['FiltroReceitas']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
-			$_SESSION['FiltroReceitas']['DataInicio5'] = $this->basico->mascara_data($data['query']['DataInicio5'], 'mysql');
-			$_SESSION['FiltroReceitas']['DataFim5'] = $this->basico->mascara_data($data['query']['DataFim5'], 'mysql');
-			$_SESSION['FiltroReceitas']['DataInicio6'] = $this->basico->mascara_data($data['query']['DataInicio6'], 'mysql');
-			$_SESSION['FiltroReceitas']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
-			$_SESSION['FiltroReceitas']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
-			$_SESSION['FiltroReceitas']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
-			$_SESSION['FiltroReceitas']['HoraInicio5'] = $data['query']['HoraInicio5'];
-			$_SESSION['FiltroReceitas']['HoraFim5'] = $data['query']['HoraFim5'];
-			$_SESSION['FiltroReceitas']['Produtos'] = $data['query']['Produtos'];
-			$_SESSION['FiltroReceitas']['Parcelas'] = $data['query']['Parcelas'];
-			$_SESSION['FiltroReceitas']['NomeUsuario'] = $data['query']['NomeUsuario'];
-			$_SESSION['FiltroReceitas']['DiaAniv'] = $data['query']['DiaAniv'];
-			$_SESSION['FiltroReceitas']['MesAniv'] = $data['query']['MesAniv'];
-			$_SESSION['FiltroReceitas']['AnoAniv'] = $data['query']['AnoAniv'];
-			$_SESSION['FiltroReceitas']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
-			$_SESSION['FiltroReceitas']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
-			$_SESSION['FiltroReceitas']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
-			$_SESSION['FiltroReceitas']['FinalizadoOrca'] = $data['query']['FinalizadoOrca'];
-			$_SESSION['FiltroReceitas']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
-			$_SESSION['FiltroReceitas']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
-			$_SESSION['FiltroReceitas']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
-			$_SESSION['FiltroReceitas']['Quitado'] = $data['query']['Quitado'];
-			$_SESSION['FiltroReceitas']['FormaPagamento'] = $data['query']['FormaPagamento'];
-			$_SESSION['FiltroReceitas']['AVAP'] = $data['query']['AVAP'];
-			$_SESSION['FiltroReceitas']['TipoFrete'] = $data['query']['TipoFrete'];
-			$_SESSION['FiltroReceitas']['TipoFinanceiro'] = $data['query']['TipoFinanceiro'];
-			$_SESSION['FiltroReceitas']['Orcamento'] = $data['query']['Orcamento'];
-			$_SESSION['FiltroReceitas']['Cliente'] = $data['query']['Cliente'];
-			$_SESSION['FiltroReceitas']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-			$_SESSION['FiltroReceitas']['Modalidade'] = $data['query']['Modalidade'];
-			$_SESSION['FiltroReceitas']['Agrupar'] = $data['query']['Agrupar'];
-			$_SESSION['FiltroReceitas']['Ultimo'] = $data['query']['Ultimo'];
-			$_SESSION['FiltroReceitas']['nome'] = $data['query']['nome'];
-			$_SESSION['FiltroReceitas']['Campo'] = $data['query']['Campo'];
-			$_SESSION['FiltroReceitas']['Ordenamento'] = $data['query']['Ordenamento'];
-			$_SESSION['FiltroReceitas']['metodo'] = $data['metodo'];
-			$_SESSION['FiltroReceitas']['idTab_TipoRD'] = $data['TipoRD'];
-
-			$data['pesquisa_query'] = $this->Receitas_model->list_receitas($_SESSION['FiltroReceitas'], FALSE, TRUE, FALSE, FALSE, FALSE);
+			$data['select']['AVAP'] = array(
+				'0' => 'TODOS',
+				'V' => 'Na Loja',
+				'O' => 'On Line',
+				'P' => 'Na Entrega',
+			);
 			
-			if($data['pesquisa_query'] === FALSE){
-				
-				$data['msg'] = '?m=4';
-				redirect(base_url() . 'receitas/receitas' . $data['msg']);
-				exit();
-			}else{
+			$data['select']['Tipo_Orca'] = array(
+				'0' => 'TODOS',
+				'B' => 'Na Loja',
+				'O' => 'On Line',
+			);
 
-				$config['total_rows'] = $data['pesquisa_query']->num_rows();			
-				
-				$config['base_url'] = base_url() . 'receitas/receitas_pag/';
-				$config['per_page'] = 19;
-				$config["uri_segment"] = 3;
-				$config['reuse_query_string'] = TRUE;
-				$config['num_links'] = 2;
-				$config['use_page_numbers'] = TRUE;
-				$config['full_tag_open'] = "<ul class='pagination'>";
-				$config['full_tag_close'] = "</ul>";
-				$config['num_tag_open'] = '<li>';
-				$config['num_tag_close'] = '</li>';
-				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-				$config['next_tag_open'] = "<li>";
-				$config['next_tagl_close'] = "</li>";
-				$config['prev_tag_open'] = "<li>";
-				$config['prev_tagl_close'] = "</li>";
-				$config['first_tag_open'] = "<li>";
-				$config['first_tagl_close'] = "</li>";
-				$config['last_tag_open'] = "<li>";
-				$config['last_tagl_close'] = "</li>";
-				$data['Pesquisa'] = '';
+			$data['select']['Agrupar'] = array(
+				'idApp_OrcaTrata' => 'Orçamento',
+				'idApp_Cliente' => 'Cliente',
+			);
+			
+			$data['select']['Ultimo'] = array(
+				'0' => '::Nenhum::',			
+				#'1' => 'Último Pedido',
+			);		
 
-				if($config['total_rows'] >= 1){
-					$data['total_rows'] = $config['total_rows'];
+			$data['select']['Campo'] = array(
+				'OT.idApp_OrcaTrata' => 'id do Pedido',
+				'OT.DataOrca' => 'Data do Pedido',
+				'PRDS.DataConcluidoProduto' => 'Data da Entrega',
+				'PRDS.HoraConcluidoProduto' => 'Hora da Entrega',
+				'C.idApp_Cliente' => 'id do Cliente',
+				'C.NomeCliente' => 'Nome do Cliente',
+				'C.DataCadastroCliente' => 'Data do Cadastro',
+			);
+
+			$data['select']['Ordenamento'] = array(
+				'ASC' => 'Crescente',
+				'DESC' => 'Decrescente',
+			);
+			
+			$data['select']['Produtos'] = array(
+				'0' => '::TODOS::',
+				' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Prd & Srv',
+				'IS NULL' => 'S/ Prd & Srv',
+			);
+			
+			$data['select']['Parcelas'] = array(
+				'0' => '::TODOS::',
+				' = ' . $_SESSION['log']['idSis_Empresa'] . '' => 'C/ Parcelas',
+				'IS NULL' => 'S/ Parcelas',
+			);
+
+			$data['select']['Receitas'] = $this->Relatorio_model->select_tipofinanceiroR();
+			$data['select']['DiaAniv'] = $this->Relatorio_model->select_dia();
+			$data['select']['MesAniv'] = $this->Relatorio_model->select_mes();
+			$data['select']['FormaPagamento'] = $this->Relatorio_model->select_formapag();
+			$data['select']['TipoFrete'] = $this->Relatorio_model->select_tipofrete();
+			
+			$data['select']['nomedoCliente'] = $this->Basico_model->select_status_sn();
+			$data['select']['idCliente'] = $this->Basico_model->select_status_sn();
+			$data['select']['numerodopedido'] = $this->Basico_model->select_status_sn();
+			$data['select']['site'] = $this->Basico_model->select_status_sn();
+			
+			(!$data['query']['nomedoCliente']) ? $data['query']['nomedoCliente'] = 'N' : FALSE;
+			$data['radio'] = array(
+				'nomedoCliente' => $this->basico->radio_checked($data['query']['nomedoCliente'], 'nomedoCliente', 'NS'),
+			);
+			($data['query']['nomedoCliente'] == 'S') ?
+				$data['div']['nomedoCliente'] = '' : $data['div']['nomedoCliente'] = 'style="display: none;"';		
+
+			(!$data['query']['idCliente']) ? $data['query']['idCliente'] = 'N' : FALSE;
+			$data['radio'] = array(
+				'idCliente' => $this->basico->radio_checked($data['query']['idCliente'], 'idCliente', 'NS'),
+			);
+			($data['query']['idCliente'] == 'S') ?
+				$data['div']['idCliente'] = '' : $data['div']['idCliente'] = 'style="display: none;"';
+				
+			(!$data['query']['numerodopedido']) ? $data['query']['numerodopedido'] = 'N' : FALSE;
+			$data['radio'] = array(
+				'numerodopedido' => $this->basico->radio_checked($data['query']['numerodopedido'], 'numerodopedido', 'NS'),
+			);
+			($data['query']['numerodopedido'] == 'S') ?
+				$data['div']['numerodopedido'] = '' : $data['div']['numerodopedido'] = 'style="display: none;"';		
+
+			(!$data['query']['site']) ? $data['query']['site'] = 'N' : FALSE;
+			$data['radio'] = array(
+				'site' => $this->basico->radio_checked($data['query']['site'], 'site', 'NS'),
+			);
+			($data['query']['site'] == 'S') ?
+				$data['div']['site'] = '' : $data['div']['site'] = 'style="display: none;"';		
+
+			$data['query']['nome'] = 'Cliente';
+			$data['titulo'] = 'Receitas';
+			$data['form_open_path'] = 'receitas/receitas';
+			$data['baixatodas'] = 'Receitas/receitas_baixa/';
+			$data['editartodas'] = 'receitas/receitas/';
+			$data['baixa'] = 'Receitas/receita_baixa/';
+			$data['nomeusuario'] = 'NomeColaborador';
+			$data['status'] = 'StatusComissaoOrca';
+			$data['alterar'] = 'receitas/baixadasreceitas/';
+			$data['editar'] = 2;
+			$data['metodo'] = 3;
+			$data['panel'] = 'info';
+			$data['TipoFinanceiro'] = 'Receitas';
+			$data['TipoRD'] = 2;
+			$data['nome'] = 'Cliente';
+			$data['print'] = 1;
+			$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+			$data['imprimirlista'] = 'OrcatrataPrint/imprimirlistacliente/';
+			$data['imprimirrecibo'] = 'Relatorio_cob/cobrancas_recibo/';
+			$data['edit'] = 'orcatrata/alterarstatus/';
+			$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';	
+			$data['paginacao'] = 'N';	
+			
+			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+			
+			$this->form_validation->set_rules('DataInicio', 'Data Início do Pedido', 'trim|valid_date');
+			$this->form_validation->set_rules('DataFim', 'Data Fim do Pedido', 'trim|valid_date');
+			$this->form_validation->set_rules('DataInicio2', 'Data Início da Entrega', 'trim|valid_date');
+			$this->form_validation->set_rules('DataFim2', 'Data Fim da Entrega', 'trim|valid_date');
+			$this->form_validation->set_rules('DataInicio3', 'Data Início do Vencimento', 'trim|valid_date');
+			$this->form_validation->set_rules('DataFim3', 'Data Fim do Vencimento', 'trim|valid_date');
+			$this->form_validation->set_rules('DataInicio4', 'Data Início do Vnc da Prc', 'trim|valid_date');
+			$this->form_validation->set_rules('DataFim4', 'Data Fim do Vnc da Prc', 'trim|valid_date');
+			$this->form_validation->set_rules('DataInicio5', 'Data Início do Pag Comissao', 'trim|valid_date');
+			$this->form_validation->set_rules('DataFim5', 'Data Fim do Pag Comissao', 'trim|valid_date');
+			$this->form_validation->set_rules('DataInicio6', 'Data Início do Cadastro', 'trim|valid_date');
+			$this->form_validation->set_rules('DataFim6', 'Data Fim do Cadastro', 'trim|valid_date');
+			$this->form_validation->set_rules('DataInicio7', 'Data Pago Com. Início', 'trim|valid_date');
+			$this->form_validation->set_rules('DataFim7', 'Data Pago Com.Fim', 'trim|valid_date');
+			$this->form_validation->set_rules('HoraInicio5', 'Hora Inicial', 'trim|valid_hour');
+			$this->form_validation->set_rules('HoraFim5', 'Hora Final', 'trim|valid_hour');
+					
+			#run form validation
+			if ($this->form_validation->run() !== FALSE) {
+				
+				$_SESSION['FiltroReceitas']['DataInicio'] = $this->basico->mascara_data($data['query']['DataInicio'], 'mysql');
+				$_SESSION['FiltroReceitas']['DataFim'] = $this->basico->mascara_data($data['query']['DataFim'], 'mysql');
+				$_SESSION['FiltroReceitas']['DataInicio2'] = $this->basico->mascara_data($data['query']['DataInicio2'], 'mysql');
+				$_SESSION['FiltroReceitas']['DataFim2'] = $this->basico->mascara_data($data['query']['DataFim2'], 'mysql');
+				$_SESSION['FiltroReceitas']['DataInicio3'] = $this->basico->mascara_data($data['query']['DataInicio3'], 'mysql');
+				$_SESSION['FiltroReceitas']['DataFim3'] = $this->basico->mascara_data($data['query']['DataFim3'], 'mysql');
+				$_SESSION['FiltroReceitas']['DataInicio4'] = $this->basico->mascara_data($data['query']['DataInicio4'], 'mysql');
+				$_SESSION['FiltroReceitas']['DataFim4'] = $this->basico->mascara_data($data['query']['DataFim4'], 'mysql');
+				$_SESSION['FiltroReceitas']['DataInicio5'] = $this->basico->mascara_data($data['query']['DataInicio5'], 'mysql');
+				$_SESSION['FiltroReceitas']['DataFim5'] = $this->basico->mascara_data($data['query']['DataFim5'], 'mysql');
+				$_SESSION['FiltroReceitas']['DataInicio6'] = $this->basico->mascara_data($data['query']['DataInicio6'], 'mysql');
+				$_SESSION['FiltroReceitas']['DataFim6'] = $this->basico->mascara_data($data['query']['DataFim6'], 'mysql');
+				$_SESSION['FiltroReceitas']['DataInicio7'] = $this->basico->mascara_data($data['query']['DataInicio7'], 'mysql');
+				$_SESSION['FiltroReceitas']['DataFim7'] = $this->basico->mascara_data($data['query']['DataFim7'], 'mysql');
+				$_SESSION['FiltroReceitas']['HoraInicio5'] = $data['query']['HoraInicio5'];
+				$_SESSION['FiltroReceitas']['HoraFim5'] = $data['query']['HoraFim5'];
+				$_SESSION['FiltroReceitas']['Produtos'] = $data['query']['Produtos'];
+				$_SESSION['FiltroReceitas']['Parcelas'] = $data['query']['Parcelas'];
+				$_SESSION['FiltroReceitas']['NomeUsuario'] = $data['query']['NomeUsuario'];
+				$_SESSION['FiltroReceitas']['DiaAniv'] = $data['query']['DiaAniv'];
+				$_SESSION['FiltroReceitas']['MesAniv'] = $data['query']['MesAniv'];
+				$_SESSION['FiltroReceitas']['AnoAniv'] = $data['query']['AnoAniv'];
+				$_SESSION['FiltroReceitas']['CombinadoFrete'] = $data['query']['CombinadoFrete'];
+				$_SESSION['FiltroReceitas']['AprovadoOrca'] = $data['query']['AprovadoOrca'];
+				$_SESSION['FiltroReceitas']['ConcluidoOrca'] = $data['query']['ConcluidoOrca'];
+				$_SESSION['FiltroReceitas']['FinalizadoOrca'] = $data['query']['FinalizadoOrca'];
+				$_SESSION['FiltroReceitas']['CanceladoOrca'] = $data['query']['CanceladoOrca'];
+				$_SESSION['FiltroReceitas']['QuitadoOrca'] = $data['query']['QuitadoOrca'];
+				$_SESSION['FiltroReceitas']['Tipo_Orca'] = $data['query']['Tipo_Orca'];
+				$_SESSION['FiltroReceitas']['Quitado'] = $data['query']['Quitado'];
+				$_SESSION['FiltroReceitas']['FormaPagamento'] = $data['query']['FormaPagamento'];
+				$_SESSION['FiltroReceitas']['AVAP'] = $data['query']['AVAP'];
+				$_SESSION['FiltroReceitas']['TipoFrete'] = $data['query']['TipoFrete'];
+				$_SESSION['FiltroReceitas']['TipoFinanceiro'] = $data['query']['TipoFinanceiro'];
+				$_SESSION['FiltroReceitas']['Orcamento'] = $data['query']['Orcamento'];
+				$_SESSION['FiltroReceitas']['Cliente'] = $data['query']['Cliente'];
+				$_SESSION['FiltroReceitas']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+				$_SESSION['FiltroReceitas']['Modalidade'] = $data['query']['Modalidade'];
+				$_SESSION['FiltroReceitas']['Agrupar'] = $data['query']['Agrupar'];
+				$_SESSION['FiltroReceitas']['Ultimo'] = $data['query']['Ultimo'];
+				$_SESSION['FiltroReceitas']['nome'] = $data['query']['nome'];
+				$_SESSION['FiltroReceitas']['Campo'] = $data['query']['Campo'];
+				$_SESSION['FiltroReceitas']['Ordenamento'] = $data['query']['Ordenamento'];
+				$_SESSION['FiltroReceitas']['metodo'] = $data['metodo'];
+				$_SESSION['FiltroReceitas']['idTab_TipoRD'] = $data['TipoRD'];
+
+				$data['pesquisa_query'] = $this->Receitas_model->list_receitas($_SESSION['FiltroReceitas'], FALSE, TRUE, FALSE, FALSE, FALSE);
+				
+				if($data['pesquisa_query'] === FALSE){
+					
+					$data['msg'] = '?m=4';
+					redirect(base_url() . 'receitas/receitas' . $data['msg']);
+					exit();
 				}else{
-					$data['total_rows'] = 0;
-				}
-				
-				$this->pagination->initialize($config);
-				
-				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-				
-				$data['pagina'] = $page;
-				
-				$data['per_page'] = $config['per_page'];
-			
-				$data['linha'] = $page * $config['per_page'];
 
-				$data['report'] = $this->Receitas_model->list_receitas($_SESSION['FiltroReceitas'], FALSE, FALSE, $config['per_page'], $data['linha']);		
+					$config['total_rows'] = $data['pesquisa_query']->num_rows();			
+					
+					$config['base_url'] = base_url() . 'receitas/receitas_pag/';
+					$config['per_page'] = 19;
+					$config["uri_segment"] = 3;
+					$config['reuse_query_string'] = TRUE;
+					$config['num_links'] = 2;
+					$config['use_page_numbers'] = TRUE;
+					$config['full_tag_open'] = "<ul class='pagination'>";
+					$config['full_tag_close'] = "</ul>";
+					$config['num_tag_open'] = '<li>';
+					$config['num_tag_close'] = '</li>';
+					$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+					$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+					$config['next_tag_open'] = "<li>";
+					$config['next_tagl_close'] = "</li>";
+					$config['prev_tag_open'] = "<li>";
+					$config['prev_tagl_close'] = "</li>";
+					$config['first_tag_open'] = "<li>";
+					$config['first_tagl_close'] = "</li>";
+					$config['last_tag_open'] = "<li>";
+					$config['last_tagl_close'] = "</li>";
+					$data['Pesquisa'] = '';
 
-				$_SESSION['FiltroReceitas']['Limit'] = $data['per_page'];
-				$_SESSION['FiltroReceitas']['Start'] = $data['linha'];
-				$_SESSION['FiltroReceitas']['Texto1'] = utf8_encode($data['query']['Texto1']);
-				$_SESSION['FiltroReceitas']['Texto2'] = utf8_encode($data['query']['Texto2']);
-				$_SESSION['FiltroReceitas']['Texto3'] = utf8_encode($data['query']['Texto3']);
-				$_SESSION['FiltroReceitas']['Texto4'] = utf8_encode($data['query']['Texto4']);
-				$_SESSION['FiltroReceitas']['nomedoCliente'] = $data['query']['nomedoCliente'];
-				$_SESSION['FiltroReceitas']['idCliente'] = $data['query']['idCliente'];
-				$_SESSION['FiltroReceitas']['numerodopedido'] = $data['query']['numerodopedido'];
-				$_SESSION['FiltroReceitas']['site'] = $data['query']['site'];
-
-				$data['pagination'] = $this->pagination->create_links();
+					if($config['total_rows'] >= 1){
+						$data['total_rows'] = $config['total_rows'];
+					}else{
+						$data['total_rows'] = 0;
+					}
+					
+					$this->pagination->initialize($config);
+					
+					$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+					
+					$data['pagina'] = $page;
+					
+					$data['per_page'] = $config['per_page'];
 				
-				$data['list1'] = $this->load->view('receitas/list_receitas', $data, TRUE);
-			}	
-        }		
+					$data['linha'] = $page * $config['per_page'];
 
+					$data['report'] = $this->Receitas_model->list_receitas($_SESSION['FiltroReceitas'], FALSE, FALSE, $config['per_page'], $data['linha']);		
+
+					$_SESSION['FiltroReceitas']['Limit'] = $data['per_page'];
+					$_SESSION['FiltroReceitas']['Start'] = $data['linha'];
+					$_SESSION['FiltroReceitas']['Texto1'] = utf8_encode($data['query']['Texto1']);
+					$_SESSION['FiltroReceitas']['Texto2'] = utf8_encode($data['query']['Texto2']);
+					$_SESSION['FiltroReceitas']['Texto3'] = utf8_encode($data['query']['Texto3']);
+					$_SESSION['FiltroReceitas']['Texto4'] = utf8_encode($data['query']['Texto4']);
+					$_SESSION['FiltroReceitas']['nomedoCliente'] = $data['query']['nomedoCliente'];
+					$_SESSION['FiltroReceitas']['idCliente'] = $data['query']['idCliente'];
+					$_SESSION['FiltroReceitas']['numerodopedido'] = $data['query']['numerodopedido'];
+					$_SESSION['FiltroReceitas']['site'] = $data['query']['site'];
+
+					$data['pagination'] = $this->pagination->create_links();
+					
+					$data['list1'] = $this->load->view('receitas/list_receitas', $data, TRUE);
+				}	
+			}		
+		}
         $this->load->view('receitas/tela_receitas', $data);
 
         $this->load->view('basico/footer');
@@ -1337,151 +1345,159 @@ class Receitas extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>A Pesquisa está muito grande, ela excedeu 20000 linhas. Refine o seu filtro.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-		
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'id_Cliente_Auto',
-			'NomeClienteAuto',
-        ), TRUE));	
-
-        $data['query'] = quotes_to_entities($this->input->post(array(
-            'idApp_Procedimento',
-            'Orcamento',
-			'idTab_TipoRD',
-            'Cliente',
-			'idApp_Cliente',
-			'NomeUsuario',
-			'Compartilhar',
-			'DataInicio9',
-            'DataFim9',
-			'HoraInicio9',
-            'HoraFim9',
-			'ConcluidoProcedimento',
-            'Ordenamento',
-            'Campo',
-			'Agrupar',
-        ), TRUE));		
-
-        $data['select']['ConcluidoProcedimento'] = array(
-			'0' => 'TODOS',
-            'N' => 'Não',
-            'S' => 'Sim',
-        );
-
-        $data['select']['Agrupar'] = array(
-			'0' => '::Nenhum::',
-			'idApp_Procedimento' => 'Procedimento',
-			'idApp_OrcaTrata' => 'Orçamento',
-			'idApp_Cliente' => 'Cliente',
-        );
-		
-		$data['select']['Campo'] = array(
-			'PRC.DataProcedimento' => 'Data',
-            'PRC.idApp_Procedimento' => 'id',
-			'PRC.ConcluidoProcedimento' => 'Concl.',
-        );
-
-        $data['select']['Ordenamento'] = array(
-            'DESC' => 'Decrescente',
-			'ASC' => 'Crescente',
-        );
-
-        $data['select']['NomeUsuario'] = $this->Relatorio_model->select_usuario();
-		$data['select']['Compartilhar'] = $this->Relatorio_model->select_compartilhar();
-
-        $data['titulo1'] = 'Receita';
-		$data['tipoproc'] = 2;
-		$data['metodo'] = 2;
-		$data['form_open_path'] = 'Receitas/procedimentos';
-		$data['panel'] = 'info';
-		$data['TipoFinanceiro'] = 'Receitas';
-		$data['TipoRD'] = 2;
-        $data['nome'] = 'Cliente';
-		$data['editar'] = 0;
-		$data['print'] = 0;
-		$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-		$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
-		$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
-		$data['edit'] = 'Orcatrata/baixadacobranca/';
-		$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
-		$data['paginacao'] = 'N';
-		$data['caminho'] = 'Receitas/procedimentos/';
-
-        $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-		$this->form_validation->set_rules('DataInicio9', 'Data Início do Procedimento', 'trim|valid_date');
-        $this->form_validation->set_rules('DataFim9', 'Data Fim do Procedimento', 'trim|valid_date');
-		$this->form_validation->set_rules('HoraInicio9', 'Hora Inicial', 'trim|valid_hour');
-		$this->form_validation->set_rules('HoraFim9', 'Hora Final', 'trim|valid_hour');
-
-        #run form validation
-        if ($this->form_validation->run() !== FALSE) {
-
-			$_SESSION['FiltroReceitasProced']['DataInicio9'] = $this->basico->mascara_data($data['query']['DataInicio9'], 'mysql');
-			$_SESSION['FiltroReceitasProced']['DataFim9'] = $this->basico->mascara_data($data['query']['DataFim9'], 'mysql');
-			$_SESSION['FiltroReceitasProced']['HoraInicio9'] = $data['query']['HoraInicio9'];
-			$_SESSION['FiltroReceitasProced']['HoraFim9'] = $data['query']['HoraFim9'];
-			$_SESSION['FiltroReceitasProced']['idApp_Procedimento'] = $data['query']['idApp_Procedimento'];
-			$_SESSION['FiltroReceitasProced']['Orcamento'] = $data['query']['Orcamento'];
-			$_SESSION['FiltroReceitasProced']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
-			$_SESSION['FiltroReceitasProced']['Cliente'] = $data['query']['Cliente'];
-			$_SESSION['FiltroReceitasProced']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
-			$_SESSION['FiltroReceitasProced']['NomeUsuario'] = $data['query']['NomeUsuario'];
-			$_SESSION['FiltroReceitasProced']['Campo'] = $data['query']['Campo'];	
-			$_SESSION['FiltroReceitasProced']['Ordenamento'] = $data['query']['Ordenamento'];
-			$_SESSION['FiltroReceitasProced']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
-			$_SESSION['FiltroReceitasProced']['Compartilhar'] = $data['query']['Compartilhar'];	
-			$_SESSION['FiltroReceitasProced']['Agrupar'] = $data['query']['Agrupar'];	
-							
-			$data['pesquisa_query'] = $this->Receitas_model->list_procedimentos($_SESSION['FiltroReceitasProced'],FALSE , TRUE, FALSE ,FALSE ,FALSE );
 			
-			if($data['pesquisa_query'] === FALSE){
-				
-				$data['msg'] = '?m=4';
-				redirect(base_url() . 'Receitas/procedimentos' . $data['msg']);
-				exit();
-			}else{
+		if ($_SESSION['Usuario']['Usu_Rec'] == "N") {
 
-				$config['base_url'] = base_url() . 'Receitas/procedimentos_pag/';
-				$config['per_page'] = 10;
-				$config["uri_segment"] = 3;
-				$config['reuse_query_string'] = TRUE;
-				$config['num_links'] = 2;
-				$config['use_page_numbers'] = TRUE;
-				$config['full_tag_open'] = "<ul class='pagination'>";
-				$config['full_tag_close'] = "</ul>";
-				$config['num_tag_open'] = '<li>';
-				$config['num_tag_close'] = '</li>';
-				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-				$config['next_tag_open'] = "<li>";
-				$config['next_tagl_close'] = "</li>";
-				$config['prev_tag_open'] = "<li>";
-				$config['prev_tagl_close'] = "</li>";
-				$config['first_tag_open'] = "<li>";
-				$config['first_tagl_close'] = "</li>";
-				$config['last_tag_open'] = "<li>";
-				$config['last_tagl_close'] = "</li>";
-
-				$config['total_rows'] = $data['pesquisa_query']->num_rows();
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		} else {
 				
-				if($config['total_rows'] >= 1){
-					$data['total_rows'] = $config['total_rows'];
+			$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+				'id_Cliente_Auto',
+				'NomeClienteAuto',
+			), TRUE));	
+
+			$data['query'] = quotes_to_entities($this->input->post(array(
+				'idApp_Procedimento',
+				'Orcamento',
+				'idTab_TipoRD',
+				'Cliente',
+				'idApp_Cliente',
+				'NomeUsuario',
+				'Compartilhar',
+				'DataInicio9',
+				'DataFim9',
+				'HoraInicio9',
+				'HoraFim9',
+				'ConcluidoProcedimento',
+				'Ordenamento',
+				'Campo',
+				'Agrupar',
+			), TRUE));		
+
+			$data['select']['ConcluidoProcedimento'] = array(
+				'0' => 'TODOS',
+				'N' => 'Não',
+				'S' => 'Sim',
+			);
+
+			$data['select']['Agrupar'] = array(
+				'0' => '::Nenhum::',
+				'idApp_Procedimento' => 'Procedimento',
+				'idApp_OrcaTrata' => 'Orçamento',
+				'idApp_Cliente' => 'Cliente',
+			);
+			
+			$data['select']['Campo'] = array(
+				'PRC.DataProcedimento' => 'Data',
+				'PRC.idApp_Procedimento' => 'id',
+				'PRC.ConcluidoProcedimento' => 'Concl.',
+			);
+
+			$data['select']['Ordenamento'] = array(
+				'DESC' => 'Decrescente',
+				'ASC' => 'Crescente',
+			);
+
+			$data['select']['NomeUsuario'] = $this->Relatorio_model->select_usuario();
+			$data['select']['Compartilhar'] = $this->Relatorio_model->select_compartilhar();
+
+			$data['titulo1'] = 'Receita';
+			$data['tipoproc'] = 2;
+			$data['metodo'] = 2;
+			$data['form_open_path'] = 'Receitas/procedimentos';
+			$data['panel'] = 'info';
+			$data['TipoFinanceiro'] = 'Receitas';
+			$data['TipoRD'] = 2;
+			$data['nome'] = 'Cliente';
+			$data['editar'] = 0;
+			$data['print'] = 0;
+			$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+			$data['imprimirlista'] = 'Relatorio_print/cobrancas_lista/';
+			$data['imprimirrecibo'] = 'Relatorio_print/cobrancas_recibo/';
+			$data['edit'] = 'Orcatrata/baixadacobranca/';
+			$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+			$data['paginacao'] = 'N';
+			$data['caminho'] = 'Receitas/procedimentos/';
+
+			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+			$this->form_validation->set_rules('DataInicio9', 'Data Início do Procedimento', 'trim|valid_date');
+			$this->form_validation->set_rules('DataFim9', 'Data Fim do Procedimento', 'trim|valid_date');
+			$this->form_validation->set_rules('HoraInicio9', 'Hora Inicial', 'trim|valid_hour');
+			$this->form_validation->set_rules('HoraFim9', 'Hora Final', 'trim|valid_hour');
+
+			#run form validation
+			if ($this->form_validation->run() !== FALSE) {
+
+				$_SESSION['FiltroReceitasProced']['DataInicio9'] = $this->basico->mascara_data($data['query']['DataInicio9'], 'mysql');
+				$_SESSION['FiltroReceitasProced']['DataFim9'] = $this->basico->mascara_data($data['query']['DataFim9'], 'mysql');
+				$_SESSION['FiltroReceitasProced']['HoraInicio9'] = $data['query']['HoraInicio9'];
+				$_SESSION['FiltroReceitasProced']['HoraFim9'] = $data['query']['HoraFim9'];
+				$_SESSION['FiltroReceitasProced']['idApp_Procedimento'] = $data['query']['idApp_Procedimento'];
+				$_SESSION['FiltroReceitasProced']['Orcamento'] = $data['query']['Orcamento'];
+				$_SESSION['FiltroReceitasProced']['idTab_TipoRD'] = $data['query']['idTab_TipoRD'];
+				$_SESSION['FiltroReceitasProced']['Cliente'] = $data['query']['Cliente'];
+				$_SESSION['FiltroReceitasProced']['idApp_Cliente'] = $data['query']['idApp_Cliente'];
+				$_SESSION['FiltroReceitasProced']['NomeUsuario'] = $data['query']['NomeUsuario'];
+				$_SESSION['FiltroReceitasProced']['Campo'] = $data['query']['Campo'];	
+				$_SESSION['FiltroReceitasProced']['Ordenamento'] = $data['query']['Ordenamento'];
+				$_SESSION['FiltroReceitasProced']['ConcluidoProcedimento'] = $data['query']['ConcluidoProcedimento'];
+				$_SESSION['FiltroReceitasProced']['Compartilhar'] = $data['query']['Compartilhar'];	
+				$_SESSION['FiltroReceitasProced']['Agrupar'] = $data['query']['Agrupar'];	
+								
+				$data['pesquisa_query'] = $this->Receitas_model->list_procedimentos($_SESSION['FiltroReceitasProced'],FALSE , TRUE, FALSE ,FALSE ,FALSE );
+				
+				if($data['pesquisa_query'] === FALSE){
+					
+					$data['msg'] = '?m=4';
+					redirect(base_url() . 'Receitas/procedimentos' . $data['msg']);
+					exit();
 				}else{
-					$data['total_rows'] = 0;
+
+					$config['base_url'] = base_url() . 'Receitas/procedimentos_pag/';
+					$config['per_page'] = 10;
+					$config["uri_segment"] = 3;
+					$config['reuse_query_string'] = TRUE;
+					$config['num_links'] = 2;
+					$config['use_page_numbers'] = TRUE;
+					$config['full_tag_open'] = "<ul class='pagination'>";
+					$config['full_tag_close'] = "</ul>";
+					$config['num_tag_open'] = '<li>';
+					$config['num_tag_close'] = '</li>';
+					$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+					$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+					$config['next_tag_open'] = "<li>";
+					$config['next_tagl_close'] = "</li>";
+					$config['prev_tag_open'] = "<li>";
+					$config['prev_tagl_close'] = "</li>";
+					$config['first_tag_open'] = "<li>";
+					$config['first_tagl_close'] = "</li>";
+					$config['last_tag_open'] = "<li>";
+					$config['last_tagl_close'] = "</li>";
+
+					$config['total_rows'] = $data['pesquisa_query']->num_rows();
+					
+					if($config['total_rows'] >= 1){
+						$data['total_rows'] = $config['total_rows'];
+					}else{
+						$data['total_rows'] = 0;
+					}
+					
+					$this->pagination->initialize($config);
+					
+					$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+					$data['pagina'] = $page;
+					$data['per_page'] = $config['per_page'];
+					$data['report'] = $this->Receitas_model->list_procedimentos($_SESSION['FiltroReceitasProced'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']),FALSE);			
+					$data['pagination'] = $this->pagination->create_links();
+					
+					$data['list'] = $this->load->view('Receitas/list_procedimentos', $data, TRUE);
+					//$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 				}
-				
-				$this->pagination->initialize($config);
-				
-				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-				$data['pagina'] = $page;
-				$data['per_page'] = $config['per_page'];
-				$data['report'] = $this->Receitas_model->list_procedimentos($_SESSION['FiltroReceitasProced'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']),FALSE);			
-				$data['pagination'] = $this->pagination->create_links();
-				
-				$data['list'] = $this->load->view('Receitas/list_procedimentos', $data, TRUE);
-				//$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 			}
 		}
-
         $this->load->view('Receitas/tela_procedimentos', $data);
 
         $this->load->view('basico/footer');

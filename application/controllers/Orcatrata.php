@@ -80,8 +80,8 @@ class Orcatrata extends CI_Controller {
 			}
 		}
 				
-		if($_SESSION['Usuario']['Nivel'] == 2){
-			$data['msg'] = '?m=3';
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
+			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 		}else{
@@ -2334,8 +2334,8 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Nivel'] == 2){
-			$data['msg'] = '?m=3';
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
+			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 		}else{
@@ -4019,8 +4019,8 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Nivel'] == 2){
-			$data['msg'] = '?m=3';
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
+			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 		}else{
@@ -5726,8 +5726,8 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Nivel'] == 2){
-			$data['msg'] = '?m=3';
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
+			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 		}else{
@@ -8191,8 +8191,8 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Nivel'] == 2){
-			$data['msg'] = '?m=3';
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
+			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 		}else{
@@ -10217,8 +10217,8 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Nivel'] == 2){
-			$data['msg'] = '?m=3';
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
+			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 		}else{
@@ -12422,8 +12422,8 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Nivel'] == 2){
-			$data['msg'] = '?m=3';
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Des'] == "N"){
+			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 		}else{
@@ -13947,8 +13947,8 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Nivel'] == 2){
-			$data['msg'] = '?m=3';
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Des'] == "N"){
+			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 		}else{
@@ -15908,8 +15908,8 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Nivel'] == 2){
-			$data['msg'] = '?m=3';
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
+			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 		}else{
@@ -15971,8 +15971,8 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Nivel'] == 2){
-			$data['msg'] = '?m=3';
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
+			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 		}else{
@@ -16020,8 +16020,8 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Nivel'] == 2){
-			$data['msg'] = '?m=3';
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Des'] == "N"){
+			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 		}else{

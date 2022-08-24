@@ -91,18 +91,18 @@
 					</button>
 				</div>
 			<?php } ?>
-			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
-				<label>Excel</label><br>
-				<a href="<?php echo base_url() . 'Receitas/receitas_excel/2'; ?>">
-					<button type='button' class='btn btn-md btn-success btn-block'>
-						C/<span class="glyphicon glyphicon-filter"></span>
-					</button>
-				</a>
-			</div>
 			<?php if($_SESSION['log']['idSis_Empresa'] != 5) {?>
 				<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S" && $_SESSION['Usuario']['Nivel'] != 2) {?>
 					<?php if ($editar == 1) { ?>
-						<?php if ($print == 1) { ?>	
+						<?php if ($print == 1) { ?>
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
+								<label>Excel</label><br>
+								<a href="<?php echo base_url() . 'Receitas/receitas_excel/2'; ?>">
+									<button type='button' class='btn btn-md btn-success btn-block'>
+										C/<span class="glyphicon glyphicon-filter"></span>
+									</button>
+								</a>
+							</div>	
 							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 								<label>Lista</label>
 								<a href="<?php echo base_url() . 'Receitas/receitas_lista'; ?>">

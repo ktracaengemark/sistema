@@ -180,38 +180,40 @@
 														</a>
 													</div>	
 												</div>
-												<?php if($_SESSION['Empresa']['EComerce'] == "S") {?>
-													<div class="form-group col-md-12 text-left">
-														<div class="row">										
-															<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/comissaoass" role="button"> 
-																<span class="glyphicon glyphicon-usd"></span>Pedido x Associado
-															</a>
-														</div>	
-													</div>
-													<?php if($_SESSION['Empresa']['Rede'] == "S") {?>
+												<?php if($_SESSION['Usuario']['Permissao_Comissao'] == 3 && $_SESSION['Usuario']['Nivel'] != 2) {?>
+													<?php if($_SESSION['Empresa']['EComerce'] == "S") {?>
 														<div class="form-group col-md-12 text-left">
 															<div class="row">										
-																<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/comissaofunc" role="button"> 
-																	<span class="glyphicon glyphicon-usd"></span>Pedido x Supervisor
+																<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/comissaoass" role="button"> 
+																	<span class="glyphicon glyphicon-usd"></span>Pedido x Associado
 																</a>
 															</div>	
 														</div>
-													<?php } ?>	
-												<?php } ?>		
-												<div class="form-group col-md-12 text-left">
-													<div class="row">										
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/comissaoserv" role="button"> 
-															<span class="glyphicon glyphicon-usd"></span>Comissao x Serviço
-														</a>
-													</div>	
-												</div>
-												<div class="form-group col-md-12 text-left">
-													<div class="row">		
-														<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/grupos" role="button"> 
-															<span class="glyphicon glyphicon-pencil"></span> Grupos
-														</a>											
-													</div>	
-												</div>
+														<?php if($_SESSION['Empresa']['Rede'] == "S") {?>
+															<div class="form-group col-md-12 text-left">
+																<div class="row">										
+																	<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/comissaofunc" role="button"> 
+																		<span class="glyphicon glyphicon-usd"></span>Pedido x Supervisor
+																	</a>
+																</div>	
+															</div>
+														<?php } ?>	
+													<?php } ?>
+													<div class="form-group col-md-12 text-left">
+														<div class="row">										
+															<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/comissaoserv" role="button"> 
+																<span class="glyphicon glyphicon-usd"></span>Comissao x Serviço
+															</a>
+														</div>	
+													</div>
+													<div class="form-group col-md-12 text-left">
+														<div class="row">		
+															<a  type="button" class="btn btn-md btn-default btn-block" href="<?php echo base_url() ?>Comissao/grupos" role="button"> 
+																<span class="glyphicon glyphicon-pencil"></span> Grupos
+															</a>											
+														</div>	
+													</div>
+												<?php } ?>
 											<?php } ?>	
 										</div>
 									<?php }?>								

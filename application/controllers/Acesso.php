@@ -32,6 +32,8 @@ class Acesso extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         elseif ($this->input->get('m') == 3)
             $data['msg'] = $this->basico->msg('<strong>Registro Não Encontrado.</strong>', 'erro', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 4)
+            $data['msg'] = $this->basico->msg('<strong>Acesso Negado.</strong>', 'alert', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
 
