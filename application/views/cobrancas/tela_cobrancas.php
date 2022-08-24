@@ -67,7 +67,7 @@
 							<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 text-left">
 								<label>Balanco</label><br>
 								<a href="<?php echo base_url() . 'Relatorio/balanco'; ?>">
-									<button type='button' class='btn btn-md btn-info btn-block'>
+									<button type='button' class='btn btn-md btn-primary btn-block'>
 										<span class="glyphicon glyphicon-usd"></span>
 									</button>
 								</a>

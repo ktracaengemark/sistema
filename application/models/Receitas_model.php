@@ -432,7 +432,8 @@ class Receitas_model extends CI_Model {
 		$complemento = ' 
 				AND OT.CombinadoFrete = "S" 
 				AND OT.AprovadoOrca = "S" 
-				AND OT.ConcluidoOrca = "N" 
+				AND OT.ConcluidoOrca = "N"
+				AND OT.ProntoOrca = "S"
 				AND OT.EnviadoOrca = "N" 
 			GROUP BY
 				OT.idApp_OrcaTrata

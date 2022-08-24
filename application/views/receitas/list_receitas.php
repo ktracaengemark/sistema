@@ -92,53 +92,24 @@
 				</div>
 			<?php } ?>
 			<?php if($_SESSION['log']['idSis_Empresa'] != 5) {?>
-				<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S" && $_SESSION['Usuario']['Nivel'] != 2) {?>
-					<?php if ($editar == 1) { ?>
-						<?php if ($print == 1) { ?>
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
-								<label>Excel</label><br>
-								<a href="<?php echo base_url() . 'Receitas/receitas_excel/2'; ?>">
-									<button type='button' class='btn btn-md btn-success btn-block'>
-										C/<span class="glyphicon glyphicon-filter"></span>
-									</button>
-								</a>
-							</div>	
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
-								<label>Lista</label>
-								<a href="<?php echo base_url() . 'Receitas/receitas_lista'; ?>">
-									<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
-										<span class="glyphicon glyphicon-list"></span>
-									</button>
-								</a>
-							</div>
-						<?php } ?>
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
-							<label>Baixa</label>
-							<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
-								<button class="btn btn-danger btn-md btn-block" type="button">
-									<span class="glyphicon glyphicon-ok"></span>
-								</button>
-							</a>
-						</div>
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
-							<label>Editar</label>
-							<a href="<?php echo base_url() . 'receitas/receitas_pag'; ?>">
-								<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
-									<span class="glyphicon glyphicon-list"></span>
-								</button>
-							</a>
-						</div>
-					<?php }elseif($editar == 2){ ?>
-						<?php if ($print == 1) { ?>	
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
-								<label>Lista</label>
-								<a href="<?php echo base_url() . 'Receitas/receitas_lista'; ?>">
-									<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
-										<span class="glyphicon glyphicon-list"></span>
-									</button>
-								</a>
-							</div>
-						<?php } ?>
+				<?php if($_SESSION['Usuario']['Nivel'] != 2) {?>
+					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
+						<label>Excel</label><br>
+						<a href="<?php echo base_url() . 'Receitas/receitas_excel/2'; ?>">
+							<button type='button' class='btn btn-md btn-success btn-block'>
+								C/<span class="glyphicon glyphicon-filter"></span>
+							</button>
+						</a>
+					</div>
+					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
+						<label>Lista</label>
+						<a href="<?php echo base_url() . 'Receitas/receitas_lista'; ?>">
+							<button class="btn btn-<?php echo $panel; ?> btn-md btn-block" type="button">
+								<span class="glyphicon glyphicon-list"></span>
+							</button>
+						</a>
+					</div>
+					<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S") {?>
 						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 							<label>Baixa</label>
 							<a href="<?php echo base_url() . $baixatodas . $_SESSION['log']['idSis_Empresa']; ?>">
@@ -148,7 +119,7 @@
 							</a>
 						</div>
 					<?php } ?>
-				<?php } ?>	
+				<?php } ?>
 			<?php }else{ ?>
 				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 					<label>Lista</label>
