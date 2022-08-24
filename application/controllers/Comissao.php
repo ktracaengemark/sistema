@@ -3878,6 +3878,182 @@ class Comissao extends CI_Controller {
 			}
 		}
     }
+
+	public function comissaofunc_lista() {
+
+		$valida = $this->Comissao_model->valida_comissao()['com_vend'];
+
+		if($valida === FALSE){
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+		}else{
+			if(!isset($_SESSION['FiltroComissaoFunc'])){
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'acesso' . $data['msg']);
+				exit();
+			}else{
+				
+				if ($this->input->get('m') == 1)
+					$data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+				elseif ($this->input->get('m') == 2)
+					$data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+				else
+					$data['msg'] = '';
+
+				//$data['query']['nome'] = 'Cliente';
+				$data['titulo'] = 'Com. Vendedor';
+				$data['form_open_path'] = 'Comissao/comissaofunc_pag';
+				$data['baixatodas'] = 'Comissao/comissaofunc_baixa/';
+				$data['ajuste'] = 'Comissao/comissaofunc_ajuste/';
+				$data['antigas'] = 'Comissao/comissaofunc_antigas/';
+				$data['baixa'] = 'Orcatrata/baixadareceita/';
+				$data['nomeusuario'] = 'NomeColaborador';
+				$data['status'] = 'StatusComissaoFunc';
+				$data['alterar'] = 'Comissao/comissaofunc/';
+				$data['editar'] = 1;
+				$data['metodo'] = 1;
+				$data['panel'] = 'info';
+				$data['TipoFinanceiro'] = 'Receitas';
+				$data['TipoRD'] = 2;
+				$data['nome'] = 'Cliente';
+				if($_SESSION['Usuario']['Permissao_Comissao'] == 3){
+					$data['print'] = 1;
+				}else{
+					$data['print'] = 0;
+				}	
+				$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+				$data['imprimirlista'] = 'Comissao/comissaofunc_lista/';
+				$data['imprimirrecibo'] = 'Comissao/comissaofunc_recibo/';
+				$data['edit'] = 'orcatrata/alterarstatus/';
+				$data['alterarparc'] = 'Orcatrata/alterarparcelarec/';
+				
+				$data['paginacao'] = 'S';
+				$data['caminho'] = 'Comissao/comissaofunc/';
+
+				$data['pesquisa_query'] = $this->Comissao_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'],FALSE, TRUE);
+				
+				if($data['pesquisa_query'] === FALSE){
+					
+					$data['msg'] = '?m=4';
+					redirect(base_url() . 'Comissao/comissaofunc' . $data['msg']);
+					exit();
+				}else{
+
+					$config['total_rows'] = $data['pesquisa_query']->num_rows();
+
+					$config['base_url'] = base_url() . 'Comissao/comissaofunc_lista/';
+
+					$config['per_page'] = 19;
+					$config["uri_segment"] = 3;
+					$config['reuse_query_string'] = TRUE;
+					$config['num_links'] = 2;
+					$config['use_page_numbers'] = TRUE;
+					$config['full_tag_open'] = "<ul class='pagination'>";
+					$config['full_tag_close'] = "</ul>";
+					$config['num_tag_open'] = '<li>';
+					$config['num_tag_close'] = '</li>';
+					$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+					$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+					$config['next_tag_open'] = "<li>";
+					$config['next_tagl_close'] = "</li>";
+					$config['prev_tag_open'] = "<li>";
+					$config['prev_tagl_close'] = "</li>";
+					$config['first_tag_open'] = "<li>";
+					$config['first_tagl_close'] = "</li>";
+					$config['last_tag_open'] = "<li>";
+					$config['last_tagl_close'] = "</li>";
+					
+					$data['Pesquisa'] = '';
+
+					if($config['total_rows'] >= 1){
+						$data['total_rows'] = $config['total_rows'];
+					}else{
+						$data['total_rows'] = 0;
+					}
+					
+					$this->pagination->initialize($config);
+					
+					$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+					
+					$data['pagina'] = $page;
+					
+					$data['per_page'] = $config['per_page'];
+					
+					$data['report'] = $this->Comissao_model->list_comissaofunc($_SESSION['FiltroComissaoFunc'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+					
+					$data['pagination'] = $this->pagination->create_links();
+
+					$data['list1'] = $this->load->view('Comissao/list_comissaofunc_lista', $data, TRUE);
+				}
+				$this->load->view('Comissao/tela_comissaofunc', $data);
+
+				$this->load->view('basico/footer');
+			}
+		}
+    }
+
+	public function comissaofunc_excel($id = FALSE) {
+
+		$valida = $this->Comissao_model->valida_comissao()['com_vend'];
+
+		if($valida === FALSE){
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+		}else{
+
+			if ($this->input->get('m') == 1)
+				$data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+			elseif ($this->input->get('m') == 2)
+				$data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+			else
+				$data['msg'] = '';
+			
+			if($id){
+				if($id == 1){
+					$dados = FALSE;
+					$data['titulo'] = 'Comissao Sem Filtros';
+					$data['metodo'] = $id;
+				}elseif($id == 2){
+					if(isset($_SESSION['FiltroComissaoFunc'])){
+						$dados = $_SESSION['FiltroComissaoFunc'];
+						$data['titulo'] = 'Comissao Com Filtros';
+						$data['metodo'] = $id;
+					}else{
+						$dados = FALSE;
+						$data['titulo'] = 'Comissao Sem Filtros';
+						$data['metodo'] = 1;
+					}
+				}else{
+					$dados = FALSE;
+					$data['titulo'] = 'Comissao Sem Filtros';
+					$data['metodo'] = 1;
+				}
+			}else{
+				$dados = FALSE;
+				$data['titulo'] = 'Comissao Sem Filtros';
+				$data['metodo'] = 1;
+			}
+
+			$data['nome'] = 'Cliente';
+
+			$data['report'] = $this->Comissao_model->list_comissaofunc($dados, FALSE, FALSE, FALSE, FALSE);
+			
+			if($data['report'] === FALSE){
+				
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'Comissao/comissaofunc' . $data['msg']);
+				exit();
+			}else{
+
+				$data['list1'] = $this->load->view('Comissao/list_comissaofunc_excel', $data, TRUE);
+			}
+
+			$this->load->view('basico/footer');
+			
+		}
+    }
 	
     public function comissaofunc_baixa($id = FALSE) {
 

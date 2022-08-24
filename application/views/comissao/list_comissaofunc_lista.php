@@ -10,7 +10,7 @@
 				<a type="button" class="col-md-6 btn btn-md btn-info " href="">
 					<?php echo $report->num_rows(); ?> / <?php echo $total_rows; ?>
 				</a>
-				<a type="button" class="col-md-3 btn btn-md btn-warning "  href="<?php echo base_url() ?>Comissao/comissaoass_pag">
+				<a type="button" class="col-md-3 btn btn-md btn-warning "  href="<?php echo base_url() ?>Comissao/comissaofunc_pag">
 					<span class="glyphicon glyphicon-edit"></span>
 				</a>
 				<a type="button" class="col-md-3 btn btn-md btn-default " href="javascript:window.print()">
@@ -31,7 +31,7 @@
 					<tr>
 						<td class="col-md-1" scope="col"><img  alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/documentos/miniatura/' . $_SESSION['Empresa']['Arquivo'] . ''; ?>"class="img-circle img-responsive" width='100'></td>
 						<td class="col-md-3 text-left" scope="col"><?php echo '<strong>' . $_SESSION['Empresa']['NomeEmpresa'] . '</strong>'?></td>
-						<td class="col-md-3 text-left" scope="col"><?php echo '<strong>' . $titulo . '</strong>'?><br>Total: R$ <?php echo $report->soma->somacomissaoass ?> / <?php echo $pesquisa_query->soma2->somacomissaoass2 ?></td>
+						<td class="col-md-3 text-left" scope="col"><?php echo '<strong>' . $titulo . '</strong>'?><br>Total: R$ <?php echo $report->soma->somacomissaofunc ?> / <?php echo $pesquisa_query->soma2->somacomissaofunc2 ?></td>
 					</tr>
 				</thead>			
 			</table>
@@ -43,9 +43,17 @@
 						<th class="col-md-1" scope="col">Local</th>
 						<th class="col-md-2" scope="col">Cliente</th>
 						<th class="col-md-1" scope="col">Valor</th>
-						<th class="col-md-2" scope="col">Associado</th>
+						
+						<th class="col-md-2" scope="col">Supervisor</th>
+						<th class="col-md-2" scope="col">Comissao</th>
+						<th class="col-md-2" scope="col">Status</th>
+						<th class="col-md-2" scope="col">DataPago</th>
+						<th class="col-md-2" scope="col">RecSuper</th>
+						
+						<th class="col-md-2" scope="col">Func/Vend.</th>
+						<th class="col-md-2" scope="col">Ass/Vend.</th>
 						<th class="col-md-1" scope="col">Comissao</th>
-						<th class="col-md-1" scope="col">Pago</th>
+						<th class="col-md-1" scope="col">Status</th>
 						<th class="col-md-1" scope="col">Data</th>
 						<th class="col-md-1" scope="col">Recibo</th>
 					</tr>
@@ -62,8 +70,16 @@
 							<td class="col-md-1" scope="col"><?php echo $row['Tipo_Orca'] ?></td>
 							<td class="col-md-2" scope="col"><?php echo $row[$nome] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $row['ValorRestanteOrca'] ?></td>
+							
+							<td class="col-md-2" scope="col"><?php echo $row['NomeColaborador'] ?></td>
+							<td class="col-md-2" scope="col"><?php echo $row['ValorComissaoFunc'] ?></td>
+							<td class="col-md-2" scope="col"><?php echo $row[$status] ?></td>
+							<td class="col-md-2" scope="col"><?php echo $row['DataPagoComissaoFunc'] ?></td>
+							<td class="col-md-2" scope="col"><?php echo $row['id_ComissaoFunc'] ?></td>
+
+							<td class="col-md-2" scope="col"><?php echo $row['NomeFuncionario'] ?></td>
 							<td class="col-md-2" scope="col"><?php echo $row['NomeAssociado'] ?></td>
-							<td class="col-md-1" scope="col"><?php echo $row['ValorComissaoAssoc'] ?></td>
+							<td class="col-md-1" scope="col"><?php echo $row['ValorComissao'] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $row[$status] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $row['DataPagoComissaoOrca'] ?></td>
 							<td class="col-md-1" scope="col"><?php echo $row['id_Comissao'] ?></td>

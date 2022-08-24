@@ -20,85 +20,68 @@
 				$html .= '</tr>';
 				*/
 				// Campos da Tabela
-				$html .= '<tr>';
 				
+				$html .= '<tr>';
 					$html .= '<td><b>id_O.S.</b></td>';
 					$html .= '<td><b>DtPedido</b></td>';
-					$html .= '<td><b>Receita</b></td>';
-					
+					$html .= '<td><b>Compra</b></td>';
 					$html .= '<td><b>id_'.$nome.'</b></td>';
 					$html .= '<td><b>'.$nome.'</b></td>';
-					
-					$html .= '<td><b>Prd/Srv</b></td>';
-					$html .= '<td><b>Frete</b></td>';
-					$html .= '<td><b>Extra</b></td>';
-					
-					$html .= '<td><b>Total</b></td>';
-					$html .= '<td><b>Desc</b></td>';
-					$html .= '<td><b>Cash</b></td>';
-					
-					$html .= '<td><b>Final</b></td>';
+
 					$html .= '<td><b>Comb.Ent</b></td>';
-					
 					$html .= '<td><b>Comb.Pag</b></td>';
 					$html .= '<td><b>Entr.</b></td>';
 					$html .= '<td><b>Pago</b></td>';
-					
 					$html .= '<td><b>Final</b></td>';
 					$html .= '<td><b>Canc</b></td>';
+
+					$html .= '<td><b>Prd/Srv</th>';
 					
-					$html .= '<td><b>Entrega</b></td>';
-					$html .= '<td><b>Pagam.</b></td>';
-					$html .= '<td><b>Form.Pag</b></td>';
-					
-					$html .= '<td><b>Vendedor</b></td>';
+					$html .= '<td><b>Supervisor</th>';
+					$html .= '<td><b>ComFunc</th>';
+					$html .= '<td><b>Status</th>';
+					$html .= '<td><b>DataPago</th>';
+					$html .= '<td><b>RecSuper</th>';
+
+					$html .= '<td><b>Func/Vend</b></td>';
+					$html .= '<td><b>Ass/Vend</b></td>';
 					$html .= '<td><b>Comissao</b></td>';
 					$html .= '<td><b>Status</b></td>';
 					$html .= '<td><b>DataPago</b></td>';
 					$html .= '<td><b>Recibo</b></td>';
-
 				$html .= '</tr>';
 				
 				//Alocando os itens na Tabela
 				foreach ($report->result_array() as $row) {
 
 					$html .= '<tr>';
-					
 						$html .= '<td>'.$row["idApp_OrcaTrata"].'</td>';
 						$html .= '<td>'.$row["DataOrca"].'</td>';
 						$html .= '<td>'.$row["Tipo_Orca"].'</td>';
-						
 						$html .= '<td>'.$row["idApp_".$nome].'</td>';
 						$html .= '<td>'.utf8_encode($row[$nome]).'</td>';
-						
-						$html .= '<td>'.$row["ValorRestanteOrca"].'</td>';
-						$html .= '<td>'.$row["ValorFrete"].'</td>';
-						$html .= '<td>'.$row["ValorExtraOrca"].'</td>';
-						
-						$html .= '<td>'.$row["TotalOrca"].'</td>';
-						$html .= '<td>'.$row["DescValorOrca"].'</td>';
-						$html .= '<td>'.$row["CashBackOrca"].'</td>';
-						
-						$html .= '<td>'.$row["ValorFinalOrca"].'</td>';
+
 						$html .= '<td>'.$row["CombinadoFrete"].'</td>';
-						
 						$html .= '<td>'.$row["AprovadoOrca"].'</td>';
 						$html .= '<td>'.$row["ConcluidoOrca"].'</td>';
 						$html .= '<td>'.$row["QuitadoOrca"].'</td>';
-						
 						$html .= '<td>'.$row["FinalizadoOrca"].'</td>';
 						$html .= '<td>'.$row["CanceladoOrca"].'</td>';
 						
-						$html .= '<td>'.$row["TipoFrete"].'</td>';
-						$html .= '<td>'.$row["AVAP"].'</td>';
-						$html .= '<td>'.utf8_encode($row["FormaPag"]).'</td>';
+						$html .= '<td>'.$row['ValorRestanteOrca'].'</td>';
 						
+						$html .= '<td>'.utf8_encode($row["NomeColaborador"]).'</td>';
+						$html .= '<td>'.$row['ValorComissaoFunc'] . '</td>';
+						$html .= '<td>'.$row['StatusComissaoFunc'] . '</td>';
+						$html .= '<td>'.$row['DataPagoComissaoFunc'] . '</td>';
+						$html .= '<td>'.$row['id_ComissaoFunc'] . '</td>';
+
+						$html .= '<td>'.utf8_encode($row["NomeFuncionario"]).'</td>';
 						$html .= '<td>'.utf8_encode($row["NomeAssociado"]).'</td>';
-						$html .= '<td>'.$row["ValorComissaoAssoc"].'</td>';
+						$html .= '<td>'.$row["ValorComissao"].'</td>';
 						$html .= '<td>'.$row["StatusComissaoOrca"].'</td>';
 						$html .= '<td>'.$row["DataPagoComissaoOrca"].'</td>';
 						$html .= '<td>'.$row["id_Comissao"].'</td>';
-
 					$html .= '</tr>';
 				}
 
