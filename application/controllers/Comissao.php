@@ -6743,7 +6743,7 @@ class Comissao extends CI_Controller {
 										$data['recibo']['id_Funcionario'] 		= $_SESSION['Filtro_Porservicos']['Funcionario'];
 										$data['recibo']['id_Associado']			= 0;
 										
-										$data['recibo']['TipoFinanceiro']		= 70;
+										$data['recibo']['TipoFinanceiro']		= 69;
 										$data['recibo']['Cli_Forn_Orca']		= "N";
 										$data['recibo']['Func_Orca']			= "S";
 										$data['recibo']['Prd_Srv_Orca']			= "N";
