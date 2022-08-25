@@ -4,7 +4,7 @@
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
 		<div class="row">	
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-				<div class="panel panel-info">
+				<div class="panel panel-danger">
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 text-left">
@@ -14,7 +14,7 @@
 											<label>Pesquisar Despesa</label><br>	
 											<div class="input-group">
 												<span class="input-group-btn">
-													<button class="btn btn-primary btn-md" type="submit">
+													<button class="btn btn-danger btn-md" type="submit">
 														<span class="glyphicon glyphicon-search"></span> 
 													</button>
 												</span>
@@ -27,7 +27,7 @@
 												<label>Pesquisar Fornecedor</label><br>	
 												<div class="input-group">
 													<span class="input-group-btn">
-														<button class="btn btn-primary btn-md" type="submit">
+														<button class="btn btn-danger btn-md" type="submit">
 															<span class="glyphicon glyphicon-search"></span> 
 														</button>
 													</span>
@@ -478,12 +478,12 @@
 							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 ">
 								<label>Gestor <b><?php echo $titulo; ?></b> de Despesas</label><br>
 								<?php if($_SESSION['log']['idSis_Empresa'] == 5){ ?>
-										<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>orcatrata/cadastrardesp" role="button"> 
+										<a class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>orcatrata/cadastrardesp" role="button"> 
 											<span class="glyphicon glyphicon-plus"></span> Nova Compra / Despesa
 										</a>
 								<?php }else{ ?>
 									<?php if ($_SESSION['Usuario']['Cad_Orcam'] == "S" ) { ?>
-											<a class="btn btn-md btn-primary btn-block" href="<?php echo base_url() ?>orcatrata/cadastrardesp" role="button"> 
+											<a class="btn btn-md btn-danger btn-block" href="<?php echo base_url() ?>orcatrata/cadastrardesp" role="button"> 
 												<span class="glyphicon glyphicon-plus"></span> Nova Compra / Despesa
 											</a>
 									<?php } ?>
