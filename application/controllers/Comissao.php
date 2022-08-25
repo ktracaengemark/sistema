@@ -732,8 +732,8 @@ class Comissao extends CI_Controller {
 				else
 					$data['msg'] = '';
 				
-				if($_SESSION['Usuario']['Nivel'] == 2){
-					$data['msg'] = '?m=3';
+				if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Permissao_Comissao'] != 3){
+					$data['msg'] = '?m=4';
 					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
 				}else{
@@ -1190,8 +1190,8 @@ class Comissao extends CI_Controller {
 				else
 					$data['msg'] = '';
 				
-				if($_SESSION['Usuario']['Nivel'] == 2){
-					$data['msg'] = '?m=3';
+				if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Permissao_Comissao'] != 3){
+					$data['msg'] = '?m=4';
 					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
 				}else{
@@ -1581,8 +1581,8 @@ class Comissao extends CI_Controller {
 				else
 					$data['msg'] = '';
 				
-				if($_SESSION['Usuario']['Nivel'] == 2){
-					$data['msg'] = '?m=3';
+				if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Permissao_Comissao'] != 3){
+					$data['msg'] = '?m=4';
 					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
 				}else{
@@ -2564,8 +2564,8 @@ class Comissao extends CI_Controller {
 				else
 					$data['msg'] = '';
 				
-				if($_SESSION['Usuario']['Nivel'] == 2){
-					$data['msg'] = '?m=3';
+				if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Permissao_Comissao'] != 3){
+					$data['msg'] = '?m=4';
 					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
 				}else{
@@ -3023,8 +3023,8 @@ class Comissao extends CI_Controller {
 				else
 					$data['msg'] = '';
 				
-				if($_SESSION['Usuario']['Nivel'] == 2){
-					$data['msg'] = '?m=3';
+				if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Permissao_Comissao'] != 3){
+					$data['msg'] = '?m=4';
 					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
 				}else{
@@ -4077,8 +4077,8 @@ class Comissao extends CI_Controller {
 				else
 					$data['msg'] = '';
 				
-				if($_SESSION['Usuario']['Nivel'] == 2){
-					$data['msg'] = '?m=3';
+				if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Permissao_Comissao'] != 3){
+					$data['msg'] = '?m=4';
 					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
 				}else{
@@ -4534,8 +4534,8 @@ class Comissao extends CI_Controller {
 				else
 					$data['msg'] = '';
 				
-				if($_SESSION['Usuario']['Nivel'] == 2){
-					$data['msg'] = '?m=3';
+				if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Permissao_Comissao'] != 3){
+					$data['msg'] = '?m=4';
 					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
 				}else{
@@ -5369,8 +5369,8 @@ class Comissao extends CI_Controller {
 				else
 					$data['msg'] = '';
 				
-				if($_SESSION['Usuario']['Nivel'] == 2){
-					$data['msg'] = '?m=3';
+				if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Permissao_Comissao'] != 3){
+					$data['msg'] = '?m=4';
 					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
 				}else{
@@ -5912,8 +5912,8 @@ class Comissao extends CI_Controller {
 				else
 					$data['msg'] = '';
 				
-				if($_SESSION['Usuario']['Nivel'] == 2){
-					$data['msg'] = '?m=3';
+				if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Permissao_Comissao'] != 3){
+					$data['msg'] = '?m=4';
 					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
 				}else{
@@ -6432,8 +6432,8 @@ class Comissao extends CI_Controller {
 				else
 					$data['msg'] = '';
 				
-				if($_SESSION['Usuario']['Nivel'] == 2){
-					$data['msg'] = '?m=3';
+				if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Permissao_Comissao'] != 3){
+					$data['msg'] = '?m=4';
 					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
 				}else{
