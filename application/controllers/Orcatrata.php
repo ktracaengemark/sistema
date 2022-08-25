@@ -14410,7 +14410,7 @@ class Orcatrata extends CI_Controller {
 			if ($id) {
 				#### App_OrcaTrata ####
 				$_SESSION['Orcatrata'] = $data['orcatrata'] = $this->Orcatrata_model->get_orcatrata($id);
-			
+
 				if($data['orcatrata'] === FALSE || $data['orcatrata']['idTab_TipoRD'] != 1){
 					
 					unset($_SESSION['Orcatrata']);
@@ -14424,7 +14424,38 @@ class Orcatrata extends CI_Controller {
 					}else{
 						unset($_SESSION['Orcatrata']['NomeAssociado']);
 					}
-
+					if(isset($data['orcatrata']['id_Funcionario']) && $data['orcatrata']['id_Funcionario'] !=0){
+						$_SESSION['Orcatrata']['NomeFuncionario'] = $this->Usuario_model->get_usuario($data['orcatrata']['id_Funcionario'])['Nome'];
+					}else{
+						unset($_SESSION['Orcatrata']['NomeFuncionario']);
+					}
+					
+					if(isset($data['orcatrata']['NivelOrca']) && $data['orcatrata']['NivelOrca'] !=0){
+						switch ($data['orcatrata']['TipoFinanceiro']) {
+						   case 66:
+							   $tipofinac = 'COMISSAO VENDEDOR';
+							   break;
+						   case 67:
+							   $tipofinac = 'COMISSAO SUPERVISOR';
+							   break;
+						   case 68:
+							   $tipofinac = 'COMISSAO ASSOCIADO';
+							   break;
+						   case 69:
+							   $tipofinac = 'COMISSAO SERVICO';
+							   break;
+						}
+						$_SESSION['Orcatrata']['Tipo_Financeiro'] = $tipofinac;	
+					}else{
+						unset($_SESSION['Orcatrata']['Tipo_Financeiro']);
+					}
+					/*
+				  echo '<br>';
+				  echo "<pre>";
+				  print_r($_SESSION['Orcatrata']['Tipo_Financeiro']);
+				  echo "</pre>";
+				  exit ();
+				  */
 					$data['orcatrata']['DataOrca'] = $this->basico->mascara_data($data['orcatrata']['DataOrca'], 'barras');
 					$data['orcatrata']['ValidadeCashBackOrca'] = $this->basico->mascara_data($data['orcatrata']['ValidadeCashBackOrca'], 'barras');
 					$data['orcatrata']['DataEntregaOrca'] = $this->basico->mascara_data($data['orcatrata']['DataEntregaOrca'], 'barras');
@@ -14931,7 +14962,11 @@ class Orcatrata extends CI_Controller {
 				
 				#run form validation
 				if ($this->form_validation->run() === FALSE) {
-					$this->load->view('orcatrata/form_orcatrataalterardesp', $data);
+					if($_SESSION['Orcatrata']['NivelOrca'] == 0){
+						$this->load->view('orcatrata/form_orcatrataalterardesp', $data);
+					}else{
+						$this->load->view('orcatrata/form_orcatrataalterarrecibo', $data);
+					}
 				} else {
 
 					if($this->Basico_model->get_dt_validade() === FALSE){
@@ -15879,7 +15914,13 @@ class Orcatrata extends CI_Controller {
 							$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 							$this->basico->erro($msg);
-							$this->load->view('orcatrata/form_orcatrataalterardesp', $data);
+
+							if($_SESSION['Orcatrata']['NivelOrca'] == 0){
+								$this->load->view('orcatrata/form_orcatrataalterardesp', $data);
+							}else{
+								$this->load->view('orcatrata/form_orcatrataalterarrecibo', $data);
+							}
+							
 						} else {
 
 							//$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idApp_OrcaTrata'], FALSE);
