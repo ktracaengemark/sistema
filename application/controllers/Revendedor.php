@@ -47,7 +47,7 @@ class Revendedor extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if ($_SESSION['Empresa']['idSis_Empresa'] == 5 || $_SESSION['Empresa']['Rede'] != "S" || $_SESSION['log']['idSis_Empresa'] != 1) {
+		if ($_SESSION['Empresa']['idSis_Empresa'] == 5 || $_SESSION['Empresa']['Rede'] == "N" || $_SESSION['Usuario']['Nivel'] != 1) {
 				
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'login/sair' . $data['msg']);
@@ -405,7 +405,7 @@ class Revendedor extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if ($_SESSION['Empresa']['idSis_Empresa'] == 5 || $_SESSION['Empresa']['Rede'] != "S" ) {
+		if ($_SESSION['Empresa']['idSis_Empresa'] == 5 || $_SESSION['Empresa']['Rede'] == "N" || $_SESSION['Usuario']['Nivel'] != 1) {
 				
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'login/sair' . $data['msg']);
@@ -574,7 +574,7 @@ class Revendedor extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if ($_SESSION['Empresa']['idSis_Empresa'] == 5 || $_SESSION['Empresa']['Rede'] != "S" ) {
+		if ($_SESSION['Empresa']['idSis_Empresa'] == 5 || $_SESSION['Empresa']['Rede'] == "N" || $_SESSION['Usuario']['Nivel'] != 1) {
 				
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'login/sair' . $data['msg']);
@@ -764,7 +764,7 @@ class Revendedor extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if ($_SESSION['Empresa']['idSis_Empresa'] == 5 || $_SESSION['Empresa']['Rede'] != "S" ) {
+		if ($_SESSION['Empresa']['idSis_Empresa'] == 5 || $_SESSION['Empresa']['Rede'] == "N" || $_SESSION['Usuario']['Nivel'] != 1) {
 				
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'login/sair' . $data['msg']);
