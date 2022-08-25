@@ -165,25 +165,38 @@
 									<li><a href="<?php echo base_url() ?>relatorio/loginempresa"><span class="glyphicon glyphicon-barcode"></span> Administracao</a></li>
 									<li role="separator" class="divider"></li>
 								<?php } ?>
-								<li><a href="<?php echo base_url() ?>login/sair"><span class="glyphicon glyphicon-log-out"></span> Sair do Sistema</a></li>
-								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>
 							</ul>
 						<!--</div>-->
 					</div>
 				</li>
 				<li class="botoesnav">
-					<?php 
-						if($_SESSION['log']['idSis_Empresa'] == "5"){
-							$usuario = 'associado';
-						}else{
-							
-							$usuario = 'usuario2';
-						}
-					?>				
-					<a type="button" data-toggle="tooltip" data-placement="bottom" title="<?php echo $_SESSION['log']['Nome']; ?>"  href="<?php echo base_url() ?><?php echo $usuario; ?>/prontuario/<?php echo $_SESSION['log']['idSis_Usuario']; ?>" > 
-						<img class="img-circle img-responsive" width='30' height='30' style="margin-top:-15px; margin-bottom:-10px" alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Usuario']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Usuario']['Arquivo'] . ''; ?>">
-					</a>
+					<div class="btn-group" role="group" aria-label="Grupo de botões com dropdown aninhado">
+						<?php 
+							if($_SESSION['log']['idSis_Empresa'] == "5"){
+								$usuario = 'associado';
+							}else{
+								
+								$usuario = 'usuario2';
+							}
+						?>
+						<!--<div class="btn-group" role="group">-->
+							<a type="button" class="dropdown-toggle" data-toggle="dropdown">
+								<span data-toggle="tooltip" data-placement="bottom" title="<?php echo $_SESSION['log']['Nome']; ?>">
+									<img class="img-circle img-responsive" width='30' height='30' style="margin-top:0px; margin-bottom:-10px" alt="User Pic" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Usuario']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Usuario']['Arquivo'] . ''; ?>">
+								</span>
+							</a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="<?php echo base_url() ?><?php echo $usuario; ?>/prontuario/<?php echo $_SESSION['log']['idSis_Usuario']; ?>"><span class="glyphicon glyphicon-user"></span> Perfil</a></li>
+								<?php if($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['Empresa']['Rede'] == "S" && $_SESSION['Usuario']['Nivel'] == 1 ) { ?>
+									<li role="separator" class="divider"></li>
+									<li><a href="<?php echo base_url() ?>Usuario2/revendedores/<?php echo $_SESSION['log']['idSis_Usuario']; ?>"><span class="glyphicon glyphicon-user"></span> Revendedores</a></li>
+								<?php } ?>
+								<li role="separator" class="divider"></li>
+								<li><a href="<?php echo base_url() ?>login/sair"><span class="glyphicon glyphicon-log-out"></span> Sair do Sistema</a></li>
+							</ul>
+						<!--</div>-->
+					</div>							
 				</li>
 			</ul>
 		</div>

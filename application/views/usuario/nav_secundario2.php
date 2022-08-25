@@ -62,7 +62,7 @@
 									</a>
 								</a>
 							</li>
-							<?php if ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['Empresa']['Rede'] == "S") { ?>
+							<?php if ($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['Empresa']['Rede'] == "S" && $_SESSION['Usuario']['Nivel'] == 1) { ?>
 								<li role="separator" class="divider"></li>
 								<li>
 									<a <?php if (preg_match("/usuario2\/revendedores\b/", $_SERVER['REQUEST_URI'])) echo 'class=active'; ///(.)+\/alterar/    ?>>

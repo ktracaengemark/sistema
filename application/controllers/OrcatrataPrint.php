@@ -96,7 +96,6 @@ class OrcatrataPrint extends CI_Controller {
 					}	
 
 					#### Carrega os dados do cliente nas variáves de sessão ####
-					
 					if($data['orcatrata']['idApp_Cliente'] != 0 && $data['orcatrata']['idApp_Cliente'] != 1){
 						
 						$_SESSION['Cliente'] = $data['cliente'] = $this->Cliente_model->get_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
@@ -164,6 +163,16 @@ class OrcatrataPrint extends CI_Controller {
 						}
 					}
 					
+					#### Carrega os dados do Vendedor nas variáves de sessão ####
+					if($_SESSION['log']['idSis_Empresa'] != 5){
+						if(isset($data['orcatrata']['id_Funcionario']) && $data['orcatrata']['id_Funcionario'] != 0){
+							$data['funcionario']['Nome'] = $this->Usuario_model->get_usuario($data['orcatrata']['id_Funcionario'], TRUE)['Nome'];
+						}
+						if(isset($data['orcatrata']['id_Associado']) && $data['orcatrata']['id_Associado'] != 0){
+							$data['associado']['Nome'] = $this->Associado_model->get_associado($data['orcatrata']['id_Associado'], TRUE)['Nome'];
+						}
+					}
+
 					$data['query'] = $this->Orcatrataprint_model->get_orcatrata($data['orcatrata']['idApp_OrcaTrata'], TRUE);
 
 					#### App_ServicoVenda ####
@@ -497,6 +506,7 @@ class OrcatrataPrint extends CI_Controller {
 						$data['fornecedor'] = $this->Fornecedor_model->get_fornecedor($data['orcatrata']['idApp_Fornecedor'], TRUE);
 					}
 					
+					#### Carrega os dados do Usuario ou Associado nas variáves de sessão ####
 					if(isset($data['orcatrata']['idSis_Usuario']) && $data['orcatrata']['idSis_Usuario'] != 0){
 						if($_SESSION['log']['idSis_Empresa'] == 5){
 							$data['usuario'] = $this->Associado_model->get_associado($data['orcatrata']['idSis_Usuario'], TRUE);
@@ -504,16 +514,14 @@ class OrcatrataPrint extends CI_Controller {
 							$data['usuario'] = $this->Usuario_model->get_usuario($data['orcatrata']['idSis_Usuario'], TRUE);
 						}
 					}
-
-					if(isset($data['orcatrata']['id_Funcionario']) && $data['orcatrata']['id_Funcionario'] != 0){
-						if($_SESSION['log']['idSis_Empresa'] != 5){
-							$data['funcionario'] = $this->Usuario_model->get_usuario($data['orcatrata']['id_Funcionario'], TRUE);
+					
+					#### Carrega os dados do Vendedor nas variáves de sessão ####
+					if($_SESSION['log']['idSis_Empresa'] != 5){
+						if(isset($data['orcatrata']['id_Funcionario']) && $data['orcatrata']['id_Funcionario'] != 0){
+							$data['funcionario']['Nome'] = $this->Usuario_model->get_usuario($data['orcatrata']['id_Funcionario'], TRUE)['Nome'];
 						}
-					}
-
-					if(isset($data['orcatrata']['id_Associado']) && $data['orcatrata']['id_Associado'] != 0){
-						if($_SESSION['log']['idSis_Empresa'] != 5){
-							$data['associado'] = $this->Associado_model->get_associado($data['orcatrata']['id_Associado'], TRUE);
+						if(isset($data['orcatrata']['id_Associado']) && $data['orcatrata']['id_Associado'] != 0){
+							$data['associado']['Nome'] = $this->Associado_model->get_associado($data['orcatrata']['id_Associado'], TRUE)['Nome'];
 						}
 					}
 					

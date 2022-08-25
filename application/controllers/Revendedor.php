@@ -47,7 +47,7 @@ class Revendedor extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if ($_SESSION['Empresa']['idSis_Empresa'] == 5 || $_SESSION['Empresa']['Rede'] != "S" ) {
+		if ($_SESSION['Empresa']['idSis_Empresa'] == 5 || $_SESSION['Empresa']['Rede'] != "S" || $_SESSION['log']['idSis_Empresa'] != 1) {
 				
 			$data['msg'] = '?m=3';
 			redirect(base_url() . 'login/sair' . $data['msg']);
@@ -561,6 +561,196 @@ class Revendedor extends CI_Controller {
 					}
 				}
 			}
+		}
+        $this->load->view('basico/footer');
+    }
+
+    public function alterarlogo($id = FALSE) {
+
+        if ($this->input->get('m') == 1)
+            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+        elseif ($this->input->get('m') == 2)
+            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+        else
+            $data['msg'] = '';
+		
+		if ($_SESSION['Empresa']['idSis_Empresa'] == 5 || $_SESSION['Empresa']['Rede'] != "S" ) {
+				
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'login/sair' . $data['msg']);
+			exit();
+			
+		}else{
+			
+			$data['query'] = $this->input->post(array(
+				'idSis_Usuario',
+			), TRUE);
+			
+			$data['file'] = $this->input->post(array(
+				'Arquivo',
+			), TRUE);
+
+			if ($id) {
+				$_SESSION['Revendedor'] = $data['query'] = $this->Usuario_model->get_revendedor($id);
+
+				if($data['query'] === FALSE){
+					
+					unset($_SESSION['Revendedor']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
+					
+				} else {
+					$data['file']['idSis_Usuario'] = $id;
+				}
+			}
+
+			if(!$data['query']['idSis_Usuario'] || !$_SESSION['Revendedor']){
+				
+				unset($_SESSION['Revendedor']);
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'acesso' . $data['msg']);
+				exit();
+				
+			} else {
+				
+				$data['file']['idSis_Usuario'] = $data['query']['idSis_Usuario'];
+				
+				$data['titulo'] = 'Alterar Foto';
+				$data['form_open_path'] = 'Revendedor/alterarlogo';
+				$data['readonly'] = 'readonly';
+				$data['panel'] = 'primary';
+				$data['metodo'] = 2;
+
+				$data['nav_secundario'] = $this->load->view('usuario/nav_secundario2', $data, TRUE);
+				
+				$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+
+				if (isset($_FILES['Arquivo']) && $_FILES['Arquivo']['name']) {
+					
+					$data['file']['Arquivo'] = $this->basico->renomeiausuario($_FILES['Arquivo']['name']);
+					$this->form_validation->set_rules('Arquivo', 'Arquivo', 'file_allowed_type[jpg, jpeg, gif, png]|file_size_max[1000]');
+				} else {
+					$this->form_validation->set_rules('Arquivo', 'Arquivo', 'required');
+				}
+
+				#run form validation
+				if ($this->form_validation->run() === FALSE) {
+					#load login view
+					$this->load->view('usuario/form_perfil_revend', $data);
+				} else {
+
+					if($this->Basico_model->get_dt_validade() === FALSE){
+						$data['msg'] = '?m=3';
+						redirect(base_url() . 'acesso' . $data['msg']);
+					} else {
+
+						$config['upload_path'] = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/';
+						$config['max_size'] = 1000;
+						$config['allowed_types'] = ['jpg','jpeg','pjpeg','png','x-png'];
+						$config['file_name'] = $data['file']['Arquivo'];
+
+						$this->load->library('upload', $config);
+						if (!$this->upload->do_upload('Arquivo')) {
+							$data['msg'] = $this->basico->msg($this->upload->display_errors(), 'erro', FALSE, FALSE, FALSE);
+							$this->load->view('usuario/form_perfil_revend', $data);
+						} else {
+						
+							$dir = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/';		
+							$foto = $data['file']['Arquivo'];
+							$diretorio = $dir.$foto;					
+							$dir2 = '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/';
+
+							switch($_FILES['Arquivo']['type']):
+								case 'image/jpg';
+								case 'image/jpeg';
+								case 'image/pjpeg';
+							
+									list($largura, $altura, $tipo) = getimagesize($diretorio);
+									
+									$img = imagecreatefromjpeg($diretorio);
+
+									$thumb = imagecreatetruecolor(200, 200);
+									
+									imagecopyresampled($thumb, $img, 0, 0, 0, 0, 200, 200, $largura, $altura);
+									
+									imagejpeg($thumb, $dir2 . $foto);
+									imagedestroy($img);
+									imagedestroy($thumb);				      
+								
+								break;					
+
+								case 'image/png';
+								case 'image/x-png';
+									
+									list($width, $height) = getimagesize($diretorio);
+									$newwidth = 200;
+									$newheight = 200;
+
+									$thumb = imagecreatetruecolor($newwidth, $newheight);
+									imagealphablending($thumb, false);
+									imagesavealpha($thumb, true);
+									$source = imagecreatefrompng($diretorio);
+									imagealphablending($source, true);
+									imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+									imagepng($thumb, $dir2 . $foto);
+									imagedestroy($thumb);
+									imagedestroy($source);				      
+								
+								break;
+								
+							endswitch;			
+
+							$data['camposfile'] = array_keys($data['file']);
+							$data['idSis_Arquivo'] = $this->Usuario_model->set_arquivo($data['file']);
+
+							if ($data['idSis_Arquivo'] === FALSE) {
+								$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+								$this->basico->erro($msg);
+								$this->load->view('usuario/form_perfil_revend', $data);
+							} else {
+
+								$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['file'], $data['camposfile'], $data['idSis_Arquivo'], FALSE);
+								$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'idSis_Arquivo', 'CREATE', $data['auditoriaitem']);
+								
+								$data['query']['Arquivo'] = $data['file']['Arquivo'];
+								$data['anterior'] = $this->Usuario_model->get_usuario($data['query']['idSis_Usuario']);
+								$data['campos'] = array_keys($data['query']);
+
+								$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['query']['idSis_Usuario'], TRUE);
+
+								if ($data['auditoriaitem'] && $this->Usuario_model->update_usuario($data['query'], $data['query']['idSis_Usuario']) === FALSE) {
+									$data['msg'] = '?m=2';
+									redirect(base_url() . 'usuario/form_perfil_revend/' . $data['query']['idSis_Usuario'] . $data['msg']);
+									exit();
+								} else {
+									
+									if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/' . $_SESSION['Revendedor']['Arquivo'] . ''))
+										&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/' . $_SESSION['Revendedor']['Arquivo'] . '')
+										!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/SuaFoto.jpg'))){
+										unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/original/' . $_SESSION['Revendedor']['Arquivo'] . '');						
+									}
+									if((null!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Revendedor']['Arquivo'] . ''))
+										&& (('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Revendedor']['Arquivo'] . '')
+										!==('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/SuaFoto.jpg'))){
+										unlink('../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/usuarios/miniatura/' . $_SESSION['Revendedor']['Arquivo'] . '');						
+									}						
+									
+									if ($data['auditoriaitem'] === FALSE) {
+										$data['msg'] = '';
+									} else {
+										$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Sis_Usuario', 'UPDATE', $data['auditoriaitem']);
+										$data['msg'] = '?m=1';
+									}
+
+									redirect(base_url() . 'Revendedor/prontuario/' . $data['query']['idSis_Usuario'] . $data['msg']);
+									exit();
+								}				
+							}
+						}
+					}
+				}
+			}	
 		}
         $this->load->view('basico/footer');
     }

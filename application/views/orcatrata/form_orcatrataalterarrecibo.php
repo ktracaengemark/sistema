@@ -52,7 +52,7 @@
 					?>
 					<div class="panel panel-<?php echo $panel; ?>">
 						<div class="panel-heading">
-							<h4 class="text-center"><b><?php echo $titulo; ?> - Colaborador: <?php echo $_SESSION['Orcatrata']['Nome'] ?></b></h4>
+							<h4 class="text-center"><b>Colaborador: <?php echo $_SESSION['Orcatrata']['Nome'] ?></b></h4>
 							<?php if (isset($msg)) echo $msg; ?>
 							<div style="overflow: auto; height: auto; ">
 								<div class="panel-group">

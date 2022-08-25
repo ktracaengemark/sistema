@@ -8,7 +8,22 @@
 					<?php echo form_open_multipart($form_open_path); ?>
 					<div class="panel panel-<?php echo $panel; ?>">
 						<div class="panel-heading">
-							<h4 class="text-center"><b>Colaborador: <?php echo $_SESSION['Orcatrata']['Nome'] ?></b></h4>
+							<h4 class="text-center">
+								<?php 
+									if(isset($_SESSION['Orcatrata']['id_Funcionario']) && $_SESSION['Orcatrata']['id_Funcionario'] !=0){
+										if(isset($funcionario)){
+											$colaborador = 'Vendedor: ' . $funcionario['Nome'];
+										}
+									}elseif(isset($_SESSION['Orcatrata']['id_Associado']) && $_SESSION['Orcatrata']['id_Associado'] !=0){
+										if(isset($associado)){
+											$colaborador = 'Associado: ' . $associado['Nome'];
+										}
+									}else{
+										$colaborador = "Sem Vendedor";
+									}
+								?>
+								<b><?php echo $colaborador; ?></b>
+							</h4>
 							<?php if (isset($msg)) echo $msg; ?>
 							<div style="overflow: auto; height: auto; ">
 								<div class="panel-group">

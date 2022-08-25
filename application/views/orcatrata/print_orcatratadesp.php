@@ -10,7 +10,7 @@
 				</div>
 			<?php } ?>
 			<div class="row">
-				<div class="col-sm-offset-1 col-md-10 ">		
+				<div class="col-md-12 ">		
 					<?php if ( !isset($evento) && isset($query)) { ?>
 						<?php if ($query['idApp_OrcaTrata'] != 1 ) { ?>
 							<nav class="navbar navbar-inverse navbar-fixed" role="banner">
@@ -71,13 +71,14 @@
 														<h4>Endereço:<?php echo '<small>' . $orcatrata['EnderecoEmpresa'] . '</small> <small>' . $orcatrata['NumeroEmpresa'] . '</small> <small>' . $orcatrata['ComplementoEmpresa'] . '</small><br>
 																				<small>' . $orcatrata['BairroEmpresa'] . '</small> - <small>' . $orcatrata['MunicipioEmpresa'] . '</small> - <small>' . $orcatrata['EstadoEmpresa'] . '</small>' ?></h4>
 													<?php } ?>	
-													<h5>Usuario:<?php 
-																	if(isset($usuario)){
-																		$colaborador = $usuario['Nome'];
-																	}else{
-																		$colaborador = "O Cliente";
-																	} echo '<strong>' . $colaborador . '</strong>'
-																?>
+													<h5>Colaborador: <?php 
+																		if(isset($usuario)){
+																			$colaborador = $usuario['Nome'];
+																		}else{
+																			$colaborador = FALSE;
+																		} 
+																		echo '<strong>' . $colaborador . '</strong>'
+																	?>
 													</h5>
 													<h4 class="text-center">Despesa<?php echo ' - <strong>' . $query['idApp_OrcaTrata'] . '</strong>' ?> </h4>
 												</td>

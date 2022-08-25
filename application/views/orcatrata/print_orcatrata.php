@@ -10,7 +10,7 @@
 				</div>
 			<?php } ?>
 			<div class="row">
-				<div class="col-sm-offset-1 col-md-10 ">
+				<div class="col-md-12 ">
 					<?php echo validation_errors(); ?>
 					<?php 
 						if($_SESSION['log']['idSis_Empresa'] != 5) {
@@ -35,13 +35,22 @@
 															<h4>Endereço:<?php echo '<small>' . $orcatrata['EnderecoEmpresa'] . '</small> <small>' . $orcatrata['NumeroEmpresa'] . '</small> <small>' . $orcatrata['ComplementoEmpresa'] . '</small><br>
 																					<small>' . $orcatrata['BairroEmpresa'] . '</small> - <small>' . $orcatrata['MunicipioEmpresa'] . '</small> - <small>' . $orcatrata['EstadoEmpresa'] . '</small><br><strong>Tel: </strong>'  . $orcatrata['Telefone'] ?></h4>
 														<?php } ?>	
-														<h5>Colab.:<?php 
-																		if(isset($usuario)){
-																			$colaborador = $usuario['Nome'];
-																		}else{
-																			$colaborador = "O Cliente";
-																		} echo '<strong>' . $colaborador . '</strong>'
-																	?>
+														<h5>		
+															<?php 
+																if(isset($orcatrata['id_Funcionario']) && $orcatrata['id_Funcionario'] !=0){
+																	if(isset($funcionario)){
+																		$colaborador = 'Vendedor: ' . $funcionario['Nome'];
+																	}
+																}elseif(isset($orcatrata['id_Associado']) && $orcatrata['id_Associado'] !=0){
+																	if(isset($associado)){
+																		$colaborador = 'Associado: ' . $associado['Nome'];
+																	}
+																}else{
+																	$colaborador = "Sem Vendedor";
+																}	
+																
+																echo '<strong>' . $colaborador . '</strong>'
+															?>
 														</h5>
 																						
 														

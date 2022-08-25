@@ -5726,7 +5726,7 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
+		if($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
 			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
@@ -6426,6 +6426,16 @@ class Orcatrata extends CI_Controller {
 					exit();
 					
 				} else {
+					
+					#### Carrega os dados do Vendedor nas variáves de sessão ####
+					if($_SESSION['log']['idSis_Empresa'] != 5){
+						if(isset($_SESSION['Orcatrata']['id_Funcionario']) && $_SESSION['Orcatrata']['id_Funcionario'] != 0){
+							$data['funcionario']['Nome'] = $this->Usuario_model->get_usuario($_SESSION['Orcatrata']['id_Funcionario'], TRUE)['Nome'];
+						}
+						if(isset($_SESSION['Orcatrata']['id_Associado']) && $_SESSION['Orcatrata']['id_Associado'] != 0){
+							$data['associado']['Nome'] = $this->Associado_model->get_associado($_SESSION['Orcatrata']['id_Associado'], TRUE)['Nome'];
+						}
+					}
 					
 					$_SESSION['Cliente']['NomeCliente'] = (strlen($data['query']['NomeCliente']) > 12) ? substr($data['query']['NomeCliente'], 0, 12) : $data['query']['NomeCliente'];
 
@@ -8836,6 +8846,16 @@ class Orcatrata extends CI_Controller {
 				exit();
 				
 			} else {
+					
+				#### Carrega os dados do Vendedor nas variáves de sessão ####
+				if($_SESSION['log']['idSis_Empresa'] != 5){
+					if(isset($_SESSION['Orcatrata']['id_Funcionario']) && $_SESSION['Orcatrata']['id_Funcionario'] != 0){
+						$data['funcionario']['Nome'] = $this->Usuario_model->get_usuario($_SESSION['Orcatrata']['id_Funcionario'], TRUE)['Nome'];
+					}
+					if(isset($_SESSION['Orcatrata']['id_Associado']) && $_SESSION['Orcatrata']['id_Associado'] != 0){
+						$data['associado']['Nome'] = $this->Associado_model->get_associado($_SESSION['Orcatrata']['id_Associado'], TRUE)['Nome'];
+					}
+				}
 				
 				#### Carrega os dados da Campanha nas variáves de sessão ####
 				$_SESSION['Campanha'] = $this->Campanha_model->get_campanha_cupom($_SESSION['Orcatrata']['Cupom']);
@@ -10821,9 +10841,18 @@ class Orcatrata extends CI_Controller {
 				exit();
 				
 			} else {			
-				
+					
+				#### Carrega os dados do Vendedor nas variáves de sessão ####
+				if($_SESSION['log']['idSis_Empresa'] != 5){
+					if(isset($_SESSION['Orcatrata']['id_Funcionario']) && $_SESSION['Orcatrata']['id_Funcionario'] != 0){
+						$data['funcionario']['Nome'] = $this->Usuario_model->get_usuario($_SESSION['Orcatrata']['id_Funcionario'], TRUE)['Nome'];
+					}
+					if(isset($_SESSION['Orcatrata']['id_Associado']) && $_SESSION['Orcatrata']['id_Associado'] != 0){
+						$data['associado']['Nome'] = $this->Associado_model->get_associado($_SESSION['Orcatrata']['id_Associado'], TRUE)['Nome'];
+					}
+				}
+					
 				#### Carrega os dados do cliente nas variáves de sessão ####
-				
 				if($_SESSION['Orcatrata']['idApp_Cliente'] != 0){
 
 					$_SESSION['Cliente'] = $data['query'] = $this->Cliente_model->get_cliente($_SESSION['Orcatrata']['idApp_Cliente'], TRUE);
