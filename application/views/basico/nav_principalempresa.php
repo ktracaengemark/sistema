@@ -19,9 +19,9 @@
 						<span class="glyphicon glyphicon-home"></span>
 						<strong><?php echo $_SESSION['AdminEmpresa']['NomeEmpresa']; ?></strong>
 					</a>
-					<!--<div class="btn-group" role="group">-->				
-						<button type="button" class="btn btn-secondary btn-sm btn-default  dropdown-toggle" data-toggle="dropdown">
-							<span class="caret"></span>
+					<!--<div class="btn-group" role="group">-->
+						<button type="button" class="btn btn-secondary btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+							 <span data-toggle="tooltip" data-placement="bottom" title="mais opcoes"><span class="caret"></span></span>
 						</button>
 						<ul class="dropdown-menu" role="menu">							
 							<li>
@@ -92,8 +92,8 @@
 							 Usuarios 
 						</a>
 						<!--<div class="btn-group" role="group">-->
-							<button type="button" class="btn btn-sm btn-info  dropdown-toggle" data-toggle="dropdown">
-								<span class="caret"></span>
+							<button type="button" class="btn btn-secondary btn-sm btn-info dropdown-toggle" data-toggle="dropdown">
+								<span data-toggle="tooltip" data-placement="bottom" title="mais opcoes"><span class="caret"></span></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">							
 								<li><a href="<?php echo base_url() ?>relatorioempresa/funcionario"><span class="glyphicon glyphicon-user"></span> Lista de Usuários </a></li>
@@ -145,14 +145,16 @@
 						</a>
 						<!--<div class="btn-group" role="group">-->
 							<button type="button" class="<?php echo $atua_flash ?> btn btn-secondary btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
-								<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
-									
-									<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?> 
-								<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
-									<span class="glyphicon glyphicon-warning-sign"></span> Renovar
-								<?php } else {?>
-									<span class="glyphicon glyphicon-home"></span> enkontraki
-								<?php } ?>
+								<span data-toggle="tooltip" data-placement="bottom" title="mais opcoes">
+									<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); if (($data2 > $data1) && ($_SESSION['log']['idSis_Empresa'] != 5))  { ?>
+										
+										<?php $data1 = new DateTime(); $data2 = new DateTime($_SESSION['log']['DataDeValidade']); $intervalo = $data1->diff($data2); echo $intervalo->format('%a dias'); ?> 
+									<?php } else if ($_SESSION['log']['idSis_Empresa'] != 5){?>
+										<span class="glyphicon glyphicon-warning-sign"></span> Renovar
+									<?php } else {?>
+										<span class="glyphicon glyphicon-home"></span> enkontraki
+									<?php } ?>
+								</span>	
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
