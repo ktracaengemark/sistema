@@ -59,7 +59,7 @@ class OrcatrataPrint extends CI_Controller {
 			
 		} else {
 			
-			if ($_SESSION['Usuario']['Usu_Rec'] == "N") {
+			if ($_SESSION['Usuario']['Usu_Rec'] == "N" || $_SESSION['Usuario']['Ver_Orcam'] == "N") {
 
 				$data['msg'] = '?m=4';
 				redirect(base_url() . 'acesso' . $data['msg']);

@@ -47,291 +47,299 @@ class Promocao extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		$caracteres_sem_acento = array(
-			'Љ'=>'S', 'љ'=>'s', 'Р'=>'Dj','Ћ'=>'Z', 'ћ'=>'z', 'А'=>'A', 'Б'=>'A', 'В'=>'A', 'Г'=>'A', 'Д'=>'A',
-			'Е'=>'A', 'Ж'=>'A', 'З'=>'C', 'И'=>'E', 'Й'=>'E', 'К'=>'E', 'Л'=>'E', 'М'=>'I', 'Н'=>'I', 'О'=>'I',
-			'П'=>'I', 'С'=>'N', 'N'=>'N', 'Т'=>'O', 'У'=>'O', 'Ф'=>'O', 'Х'=>'O', 'Ц'=>'O', 'Ш'=>'O', 'Щ'=>'U', 'Ъ'=>'U',
-			'Ы'=>'U', 'Ь'=>'U', 'Э'=>'Y', 'Ю'=>'B', 'Я'=>'Ss','а'=>'a', 'б'=>'a', 'в'=>'a', 'г'=>'a', 'д'=>'a',
-			'е'=>'a', 'ж'=>'a', 'з'=>'c', 'и'=>'e', 'й'=>'e', 'к'=>'e', 'л'=>'e', 'м'=>'i', 'н'=>'i', 'о'=>'i',
-			'п'=>'i', 'р'=>'o', 'с'=>'n', 'n'=>'n', 'т'=>'o', 'у'=>'o', 'ф'=>'o', 'х'=>'o', 'ц'=>'o', 'ш'=>'o', 'щ'=>'u',
-			'ъ'=>'u', 'ы'=>'u', 'ь'=>'u', 'э'=>'y', 'э'=>'y', 'ю'=>'b', 'я'=>'y', 'ѓ'=>'f',
-			'a'=>'a', 'о'=>'i', 'в'=>'a', '?'=>'s', '?'=>'t', 'A'=>'A', 'О'=>'I', 'В'=>'A', '?'=>'S', '?'=>'T',
-		);
-
-		//$convdesc1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($data['valor']['Convdesc'], $caracteres_sem_acento));		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Cad_Prd'] == "N") {
 				
-		$data['cadastrar'] = quotes_to_entities($this->input->post(array(
-			'Cadastrar',
-			//'TipoCatprod',
-			'PTCount2',
-        ), TRUE));
-		
-        $data['promocao'] = quotes_to_entities($this->input->post(array(
-            #### Tab_Promocao ####
-            //'idTab_Promocao', 
-            'idTab_Catprom',  
-            'Promocao',  
-            'Descricao',
-			'DataInicioProm',
-			'DataFimProm',
-			'TodoDiaProm',
-			'VendaSite',
-			'VendaBalcao',
-			'TipoPromocao',
-        ), TRUE));
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
+			$caracteres_sem_acento = array(
+				'Љ'=>'S', 'љ'=>'s', 'Р'=>'Dj','Ћ'=>'Z', 'ћ'=>'z', 'А'=>'A', 'Б'=>'A', 'В'=>'A', 'Г'=>'A', 'Д'=>'A',
+				'Е'=>'A', 'Ж'=>'A', 'З'=>'C', 'И'=>'E', 'Й'=>'E', 'К'=>'E', 'Л'=>'E', 'М'=>'I', 'Н'=>'I', 'О'=>'I',
+				'П'=>'I', 'С'=>'N', 'N'=>'N', 'Т'=>'O', 'У'=>'O', 'Ф'=>'O', 'Х'=>'O', 'Ц'=>'O', 'Ш'=>'O', 'Щ'=>'U', 'Ъ'=>'U',
+				'Ы'=>'U', 'Ь'=>'U', 'Э'=>'Y', 'Ю'=>'B', 'Я'=>'Ss','а'=>'a', 'б'=>'a', 'в'=>'a', 'г'=>'a', 'д'=>'a',
+				'е'=>'a', 'ж'=>'a', 'з'=>'c', 'и'=>'e', 'й'=>'e', 'к'=>'e', 'л'=>'e', 'м'=>'i', 'н'=>'i', 'о'=>'i',
+				'п'=>'i', 'р'=>'o', 'с'=>'n', 'n'=>'n', 'т'=>'o', 'у'=>'o', 'ф'=>'o', 'х'=>'o', 'ц'=>'o', 'ш'=>'o', 'щ'=>'u',
+				'ъ'=>'u', 'ы'=>'u', 'ь'=>'u', 'э'=>'y', 'э'=>'y', 'ю'=>'b', 'я'=>'y', 'ѓ'=>'f',
+				'a'=>'a', 'о'=>'i', 'в'=>'a', '?'=>'s', '?'=>'t', 'A'=>'A', 'О'=>'I', 'В'=>'A', '?'=>'S', '?'=>'T',
+			);
 
- 		(!$this->input->post('PTCount')) ? $data['count']['PTCount'] = 0 : $data['count']['PTCount'] = $this->input->post('PTCount');
-		(!$this->input->post('DiaCount')) ? $data['count']['DiaCount'] = 0 : $data['count']['DiaCount'] = $this->input->post('DiaCount');		
+			//$convdesc1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($data['valor']['Convdesc'], $caracteres_sem_acento));		
+					
+			$data['cadastrar'] = quotes_to_entities($this->input->post(array(
+				'Cadastrar',
+				//'TipoCatprod',
+				'PTCount2',
+			), TRUE));
+			
+			$data['promocao'] = quotes_to_entities($this->input->post(array(
+				#### Tab_Promocao ####
+				//'idTab_Promocao', 
+				'idTab_Catprom',  
+				'Promocao',  
+				'Descricao',
+				'DataInicioProm',
+				'DataFimProm',
+				'TodoDiaProm',
+				'VendaSite',
+				'VendaBalcao',
+				'TipoPromocao',
+			), TRUE));
 
-        $j = 1;
-        for ($i = 1; $i <= $data['count']['PTCount']; $i++) {
+			(!$this->input->post('PTCount')) ? $data['count']['PTCount'] = 0 : $data['count']['PTCount'] = $this->input->post('PTCount');
+			(!$this->input->post('DiaCount')) ? $data['count']['DiaCount'] = 0 : $data['count']['DiaCount'] = $this->input->post('DiaCount');		
 
-            if ($this->input->post('ValorProduto' . $i) && $this->input->post('idTab_Produtos' . $i) && 
-				$this->input->post('QtdProdutoDesconto' . $i) && $this->input->post('QtdProdutoIncremento' . $i)) {
-				$data['item_promocao'][$j]['idTab_Valor'] = $this->input->post('idTab_Valor' . $i);
-                $data['item_promocao'][$j]['QtdProdutoDesconto'] = $this->input->post('QtdProdutoDesconto' . $i);
-				$data['item_promocao'][$j]['QtdProdutoIncremento'] = $this->input->post('QtdProdutoIncremento' . $i);
-				$data['item_promocao'][$j]['idTab_Produtos'] = $this->input->post('idTab_Produtos' . $i);
-				$data['item_promocao'][$j]['ValorProduto'] = $this->input->post('ValorProduto' . $i);
-				$data['item_promocao'][$j]['ComissaoVenda'] = $this->input->post('ComissaoVenda' . $i);
-				$data['item_promocao'][$j]['ComissaoServico'] = $this->input->post('ComissaoServico' . $i);
-				$data['item_promocao'][$j]['ComissaoCashBack'] = $this->input->post('ComissaoCashBack' . $i);
-				$data['item_promocao'][$j]['TempoDeEntrega'] = $this->input->post('TempoDeEntrega' . $i);
-				//$data['item_promocao'][$j]['Convdesc'] = $this->input->post('Convdesc' . $i);
-				$data['item_promocao'][$j]['Convdesc'] = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($this->input->post('Convdesc' . $i), $caracteres_sem_acento));
-				//$data['item_promocao'][$j]['AtivoPreco'] = $this->input->post('AtivoPreco' . $i);
-				//$data['item_promocao'][$j]['VendaSitePreco'] = $this->input->post('VendaSitePreco' . $i);
-				//$data['item_promocao'][$j]['VendaBalcaoPreco'] = $this->input->post('VendaBalcaoPreco' . $i);
-                $j++;
-            }
-						
-        }
-        $data['count']['PTCount'] = $j - 1;
+			$j = 1;
+			for ($i = 1; $i <= $data['count']['PTCount']; $i++) {
 
-		if (isset($data['item_promocao'])) {
-			if ($data['item_promocao']) {
-				$data['conta_produto'] = 1;
+				if ($this->input->post('ValorProduto' . $i) && $this->input->post('idTab_Produtos' . $i) && 
+					$this->input->post('QtdProdutoDesconto' . $i) && $this->input->post('QtdProdutoIncremento' . $i)) {
+					$data['item_promocao'][$j]['idTab_Valor'] = $this->input->post('idTab_Valor' . $i);
+					$data['item_promocao'][$j]['QtdProdutoDesconto'] = $this->input->post('QtdProdutoDesconto' . $i);
+					$data['item_promocao'][$j]['QtdProdutoIncremento'] = $this->input->post('QtdProdutoIncremento' . $i);
+					$data['item_promocao'][$j]['idTab_Produtos'] = $this->input->post('idTab_Produtos' . $i);
+					$data['item_promocao'][$j]['ValorProduto'] = $this->input->post('ValorProduto' . $i);
+					$data['item_promocao'][$j]['ComissaoVenda'] = $this->input->post('ComissaoVenda' . $i);
+					$data['item_promocao'][$j]['ComissaoServico'] = $this->input->post('ComissaoServico' . $i);
+					$data['item_promocao'][$j]['ComissaoCashBack'] = $this->input->post('ComissaoCashBack' . $i);
+					$data['item_promocao'][$j]['TempoDeEntrega'] = $this->input->post('TempoDeEntrega' . $i);
+					//$data['item_promocao'][$j]['Convdesc'] = $this->input->post('Convdesc' . $i);
+					$data['item_promocao'][$j]['Convdesc'] = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($this->input->post('Convdesc' . $i), $caracteres_sem_acento));
+					//$data['item_promocao'][$j]['AtivoPreco'] = $this->input->post('AtivoPreco' . $i);
+					//$data['item_promocao'][$j]['VendaSitePreco'] = $this->input->post('VendaSitePreco' . $i);
+					//$data['item_promocao'][$j]['VendaBalcaoPreco'] = $this->input->post('VendaBalcaoPreco' . $i);
+					$j++;
+				}
+							
+			}
+			$data['count']['PTCount'] = $j - 1;
+
+			if (isset($data['item_promocao'])) {
+				if ($data['item_promocao']) {
+					$data['conta_produto'] = 1;
+				}else{
+					$data['conta_produto'] = 0;
+				}	
 			}else{
 				$data['conta_produto'] = 0;
-			}	
-		}else{
-			$data['conta_produto'] = 0;
-		}		
-		
-		if (1==1) {
+			}		
 			
-            for ($i = 1; $i <= 7; $i++) {
+			if (1==1) {
+				
+				for ($i = 1; $i <= 7; $i++) {
 
-				if ($this->input->post('Aberto_Prom' . $i)){
-					
-					$data['dia_promocao'][$i]['Aberto_Prom'] = $this->input->post('Aberto_Prom' . $i);
+					if ($this->input->post('Aberto_Prom' . $i)){
+						
+						$data['dia_promocao'][$i]['Aberto_Prom'] = $this->input->post('Aberto_Prom' . $i);
+					}
+					/*
+					(!$data['dia_promocao'][$i]['Aberto_Prom']) ? $data['dia_promocao'][$i]['Aberto_Prom'] = 'N' : FALSE;
+					$data['radio'] = array(
+						'Aberto_Prom' . $i => $this->basico->radio_checked($data['dia_promocao'][$i]['Aberto_Prom'], 'Aberto_Prom' . $i, 'NS'),
+					);
+					($data['dia_promocao'][$i]['Aberto_Prom'] == 'S') ? $data['div']['Aberto_Prom' . $i] = '' : $data['div']['Aberto_Prom' . $i] = 'style="display: none;"';
+					*/
 				}
-				/*
-				(!$data['dia_promocao'][$i]['Aberto_Prom']) ? $data['dia_promocao'][$i]['Aberto_Prom'] = 'N' : FALSE;
-				$data['radio'] = array(
-					'Aberto_Prom' . $i => $this->basico->radio_checked($data['dia_promocao'][$i]['Aberto_Prom'], 'Aberto_Prom' . $i, 'NS'),
-				);
-				($data['dia_promocao'][$i]['Aberto_Prom'] == 'S') ? $data['div']['Aberto_Prom' . $i] = '' : $data['div']['Aberto_Prom' . $i] = 'style="display: none;"';
-				*/
-            }
+				
+			}		
 			
-        }		
-		
-		$data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();	
-		//$data['select']['TipoCatprod'] = $this->Basico_model->select_prod_serv();
-		$data['select']['idTab_Catprom'] = $this->Basico_model->select_catprom();		
-		$data['select']['idTab_Produtos'] = $this->Basico_model->select_produto_promocao();
-		$data['select']['VendaBalcao'] = $this->Basico_model->select_status_sn();
-		$data['select']['VendaSite'] = $this->Basico_model->select_status_sn();
-		//$data['select']['AtivoPreco'] = $this->Basico_model->select_status_sn();
-		//$data['select']['VendaSitePreco'] = $this->Basico_model->select_status_sn();
-		//$data['select']['VendaBalcaoPreco'] = $this->Basico_model->select_status_sn();		
-		$data['select']['TodoDiaProm'] = $this->Basico_model->select_status_sn();
-		$data['select']['Aberto_Prom'] = $this->Basico_model->select_status_sn();
-        $data['select']['TipoPromocao'] = array(
-            'V' => 'Venda',
-            'R' => 'Revenda',
-        );
-				
-		$data['radio'] = array(
-            'TodoDiaProm' => $this->basico->radio_checked($data['promocao']['TodoDiaProm'], 'Todos os Dias', 'NS'),
-        );
-        ($data['promocao']['TodoDiaProm'] == 'N') ?
-            $data['div']['TodoDiaProm'] = '' : $data['div']['TodoDiaProm'] = 'style="display: none;"';		
-				
-        $data['titulo'] = 'Cadastrar Promocao';
-        $data['form_open_path'] = 'promocao/cadastrar';
-        $data['readonly'] = '';
-        $data['disabled'] = '';
-        $data['panel'] = 'primary';
-        $data['metodo'] = 1;
-
-        $data['sidebar'] = 'col-sm-3 col-md-2';
-        $data['main'] = 'col-sm-7 col-md-8';
-
-        $data['datepicker'] = 'DatePicker';
-        $data['timepicker'] = 'TimePicker';
-		
- 		(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;       
-		
-		$data['radio'] = array(
-            'Cadastrar' => $this->basico->radio_checked($data['cadastrar']['Cadastrar'], 'Cadastrar', 'NS'),
-        );
-        ($data['cadastrar']['Cadastrar'] == 'N') ?
-            $data['div']['Cadastrar'] = '' : $data['div']['Cadastrar'] = 'style="display: none;"';		
-
-		$data['q1'] = $this->Promocao_model->list_categoria($_SESSION['log'], TRUE);
-		$data['list1'] = $this->load->view('promocao/list_categoria', $data, TRUE);			
-        
-		$data['q_promocoes'] = $this->Promocao_model->list_promocoes($_SESSION['log'], TRUE);
-		$data['list_promocoes'] = $this->load->view('promocao/list_promocoes', $data, TRUE);		
-		
-		
-		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-		$this->form_validation->set_rules('Promocao', 'Titulo', 'required|trim');
-		$this->form_validation->set_rules('Descricao', 'Descriзгo', 'required|trim');
-		$this->form_validation->set_rules('DataInicioProm', 'Data do Inicio', 'required|trim|valid_date');
-		$this->form_validation->set_rules('DataFimProm', 'Data do Fim', 'required|trim|valid_date');
-		$this->form_validation->set_rules('PTCount2', 'A promoзгo deve possuir , pelo menos, 1 produto!', 'trim|valid_promocao');
-		$this->form_validation->set_rules('idTab_Catprom', 'Categoria', 'required|trim');	
-		$this->form_validation->set_rules('Cadastrar', 'Apуs Recarregar, Retorne a chave para a posiзгo "Sim"', 'trim|valid_aprovado');	
-		/*
-          echo '<br>';
-          echo "<pre>";
-          print_r($data);
-          echo "</pre>";
-          exit ();
-          */
-
-        #run form validation
-        if ($this->form_validation->run() === FALSE) {
-            $this->load->view('promocao/form_promocao', $data);
-        } else {
-			////////////////////////////////Preparar Dados para Inserзгo Ex. Datas "mysql" //////////////////////////////////////////////
-
-			#### Tab_Promocao ####
-			$data['promocao']['Promocao'] = trim(mb_strtoupper($data['promocao']['Promocao'], 'UTF-8'));
-			$data['promocao']['Descricao'] = trim(mb_strtoupper($data['promocao']['Descricao'], 'UTF-8'));
-			$data['promocao']['DataInicioProm'] = $this->basico->mascara_data($data['promocao']['DataInicioProm'], 'mysql');
-			$data['promocao']['DataFimProm'] = $this->basico->mascara_data($data['promocao']['DataFimProm'], 'mysql');
-			$data['promocao']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];            
-            $data['promocao']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-            $data['promocao']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-            $data['promocao']['Desconto'] = 2;
-            $data['promocao']['idTab_Promocao'] = $this->Promocao_model->set_promocao($data['promocao']);
-            
-			if ($data['promocao']['idTab_Promocao'] === FALSE) {
-                $msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
-
-                $this->basico->erro($msg);
-                $this->load->view('promocao/form_promocao', $data);
-            } else {            
-				#### Tab_Dia_Prom ####
-				if (isset($data['dia_promocao'])) {
+			$data['select']['Cadastrar'] = $this->Basico_model->select_status_sn();	
+			//$data['select']['TipoCatprod'] = $this->Basico_model->select_prod_serv();
+			$data['select']['idTab_Catprom'] = $this->Basico_model->select_catprom();		
+			$data['select']['idTab_Produtos'] = $this->Basico_model->select_produto_promocao();
+			$data['select']['VendaBalcao'] = $this->Basico_model->select_status_sn();
+			$data['select']['VendaSite'] = $this->Basico_model->select_status_sn();
+			//$data['select']['AtivoPreco'] = $this->Basico_model->select_status_sn();
+			//$data['select']['VendaSitePreco'] = $this->Basico_model->select_status_sn();
+			//$data['select']['VendaBalcaoPreco'] = $this->Basico_model->select_status_sn();		
+			$data['select']['TodoDiaProm'] = $this->Basico_model->select_status_sn();
+			$data['select']['Aberto_Prom'] = $this->Basico_model->select_status_sn();
+			$data['select']['TipoPromocao'] = array(
+				'V' => 'Venda',
+				'R' => 'Revenda',
+			);
 					
-					$data['dia_promocao']['1']['Dia_Semana_Prom'] = "SEGUNDA";
-					$data['dia_promocao']['2']['Dia_Semana_Prom'] = "TERCA";
-					$data['dia_promocao']['3']['Dia_Semana_Prom'] = "QUARTA";
-					$data['dia_promocao']['4']['Dia_Semana_Prom'] = "QUINTA";
-					$data['dia_promocao']['5']['Dia_Semana_Prom'] = "SEXTA";
-					$data['dia_promocao']['6']['Dia_Semana_Prom'] = "SABADO";
-					$data['dia_promocao']['7']['Dia_Semana_Prom'] = "DOMINGO";
+			$data['radio'] = array(
+				'TodoDiaProm' => $this->basico->radio_checked($data['promocao']['TodoDiaProm'], 'Todos os Dias', 'NS'),
+			);
+			($data['promocao']['TodoDiaProm'] == 'N') ?
+				$data['div']['TodoDiaProm'] = '' : $data['div']['TodoDiaProm'] = 'style="display: none;"';		
 					
-					$max = count($data['dia_promocao']);
-					for($j=1;$j<=$max;$j++) {
-						$data['dia_promocao'][$j]['idTab_Promocao'] = $data['promocao']['idTab_Promocao'];
-						$data['dia_promocao'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];					
-						$data['dia_promocao'][$j]['id_Dia_Prom'] = $j;					
-						$data['dia_promocao'][$j]['Dia_Semana_Prom'] = $data['dia_promocao'][$j]['Dia_Semana_Prom'];
-						$data['dia_promocao'][$j]['Hora_Abre_Prom'] = "00:00:00";
-						$data['dia_promocao'][$j]['Hora_Fecha_Prom'] = "23:59:59";
+			$data['titulo'] = 'Cadastrar Promocao';
+			$data['form_open_path'] = 'promocao/cadastrar';
+			$data['readonly'] = '';
+			$data['disabled'] = '';
+			$data['panel'] = 'primary';
+			$data['metodo'] = 1;
+
+			$data['sidebar'] = 'col-sm-3 col-md-2';
+			$data['main'] = 'col-sm-7 col-md-8';
+
+			$data['datepicker'] = 'DatePicker';
+			$data['timepicker'] = 'TimePicker';
+			
+			(!$data['cadastrar']['Cadastrar']) ? $data['cadastrar']['Cadastrar'] = 'S' : FALSE;       
+			
+			$data['radio'] = array(
+				'Cadastrar' => $this->basico->radio_checked($data['cadastrar']['Cadastrar'], 'Cadastrar', 'NS'),
+			);
+			($data['cadastrar']['Cadastrar'] == 'N') ?
+				$data['div']['Cadastrar'] = '' : $data['div']['Cadastrar'] = 'style="display: none;"';		
+
+			$data['q1'] = $this->Promocao_model->list_categoria($_SESSION['log'], TRUE);
+			$data['list1'] = $this->load->view('promocao/list_categoria', $data, TRUE);			
+			
+			$data['q_promocoes'] = $this->Promocao_model->list_promocoes($_SESSION['log'], TRUE);
+			$data['list_promocoes'] = $this->load->view('promocao/list_promocoes', $data, TRUE);		
+			
+			
+			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+			$this->form_validation->set_rules('Promocao', 'Titulo', 'required|trim');
+			$this->form_validation->set_rules('Descricao', 'Descriзгo', 'required|trim');
+			$this->form_validation->set_rules('DataInicioProm', 'Data do Inicio', 'required|trim|valid_date');
+			$this->form_validation->set_rules('DataFimProm', 'Data do Fim', 'required|trim|valid_date');
+			$this->form_validation->set_rules('PTCount2', 'A promoзгo deve possuir , pelo menos, 1 produto!', 'trim|valid_promocao');
+			$this->form_validation->set_rules('idTab_Catprom', 'Categoria', 'required|trim');	
+			$this->form_validation->set_rules('Cadastrar', 'Apуs Recarregar, Retorne a chave para a posiзгo "Sim"', 'trim|valid_aprovado');	
+			/*
+			  echo '<br>';
+			  echo "<pre>";
+			  print_r($data);
+			  echo "</pre>";
+			  exit ();
+			  */
+
+			#run form validation
+			if ($this->form_validation->run() === FALSE) {
+				$this->load->view('promocao/form_promocao', $data);
+			} else {
+				////////////////////////////////Preparar Dados para Inserзгo Ex. Datas "mysql" //////////////////////////////////////////////
+
+				#### Tab_Promocao ####
+				$data['promocao']['Promocao'] = trim(mb_strtoupper($data['promocao']['Promocao'], 'UTF-8'));
+				$data['promocao']['Descricao'] = trim(mb_strtoupper($data['promocao']['Descricao'], 'UTF-8'));
+				$data['promocao']['DataInicioProm'] = $this->basico->mascara_data($data['promocao']['DataInicioProm'], 'mysql');
+				$data['promocao']['DataFimProm'] = $this->basico->mascara_data($data['promocao']['DataFimProm'], 'mysql');
+				$data['promocao']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];            
+				$data['promocao']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+				$data['promocao']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+				$data['promocao']['Desconto'] = 2;
+				$data['promocao']['idTab_Promocao'] = $this->Promocao_model->set_promocao($data['promocao']);
+				
+				if ($data['promocao']['idTab_Promocao'] === FALSE) {
+					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
+
+					$this->basico->erro($msg);
+					$this->load->view('promocao/form_promocao', $data);
+				} else {            
+					#### Tab_Dia_Prom ####
+					if (isset($data['dia_promocao'])) {
 						
-						if ($data['promocao']['TodoDiaProm'] == 'S') {
-							$data['dia_promocao'][$j]['Aberto_Prom'] = 'S';
-						} else {
-							$data['dia_promocao'][$j]['Aberto_Prom'] = $data['dia_promocao'][$j]['Aberto_Prom'];
+						$data['dia_promocao']['1']['Dia_Semana_Prom'] = "SEGUNDA";
+						$data['dia_promocao']['2']['Dia_Semana_Prom'] = "TERCA";
+						$data['dia_promocao']['3']['Dia_Semana_Prom'] = "QUARTA";
+						$data['dia_promocao']['4']['Dia_Semana_Prom'] = "QUINTA";
+						$data['dia_promocao']['5']['Dia_Semana_Prom'] = "SEXTA";
+						$data['dia_promocao']['6']['Dia_Semana_Prom'] = "SABADO";
+						$data['dia_promocao']['7']['Dia_Semana_Prom'] = "DOMINGO";
+						
+						$max = count($data['dia_promocao']);
+						for($j=1;$j<=$max;$j++) {
+							$data['dia_promocao'][$j]['idTab_Promocao'] = $data['promocao']['idTab_Promocao'];
+							$data['dia_promocao'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];					
+							$data['dia_promocao'][$j]['id_Dia_Prom'] = $j;					
+							$data['dia_promocao'][$j]['Dia_Semana_Prom'] = $data['dia_promocao'][$j]['Dia_Semana_Prom'];
+							$data['dia_promocao'][$j]['Hora_Abre_Prom'] = "00:00:00";
+							$data['dia_promocao'][$j]['Hora_Fecha_Prom'] = "23:59:59";
+							
+							if ($data['promocao']['TodoDiaProm'] == 'S') {
+								$data['dia_promocao'][$j]['Aberto_Prom'] = 'S';
+							} else {
+								$data['dia_promocao'][$j]['Aberto_Prom'] = $data['dia_promocao'][$j]['Aberto_Prom'];
+							}
 						}
+						$data['dia_promocao']['idTab_Dia_Prom'] = $this->Promocao_model->set_dia_promocao1($data['dia_promocao']);
 					}
-					$data['dia_promocao']['idTab_Dia_Prom'] = $this->Promocao_model->set_dia_promocao1($data['dia_promocao']);
-				}
-				
-				
-				#### Tab_Dia_Prom ####
-				if (isset($data['item_promocao'])) {
-					$max = count($data['item_promocao']);
-					for($j=1;$j<=$max;$j++) {
-						$data['item_promocao'][$j]['Item_Promocao'] = "1";
-						$data['item_promocao'][$j]['Convdesc'] = trim(mb_strtoupper($data['item_promocao'][$j]['Convdesc'], 'UTF-8'));
-						$data['item_promocao'][$j]['Desconto'] = 2;
-						$data['item_promocao'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
-						$data['item_promocao'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
-						$data['item_promocao'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
-						$data['item_promocao'][$j]['idTab_Promocao'] = $data['promocao']['idTab_Promocao'];
-						
-						if(empty($data['item_promocao'][$j]['ValorProduto'])){
-							$data['item_promocao'][$j]['ValorProduto'] = "0.00";
-						}else{
-							$data['item_promocao'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['item_promocao'][$j]['ValorProduto']));
-						}
-						if(empty($data['item_promocao'][$j]['ComissaoVenda'])){
-							$data['item_promocao'][$j]['ComissaoVenda'] = "0.00";
-						}else{
-							$data['item_promocao'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['item_promocao'][$j]['ComissaoVenda']));
-						}
-						if(empty($data['item_promocao'][$j]['ComissaoServico'])){
-							$data['item_promocao'][$j]['ComissaoServico'] = "0.00";
-						}else{
-							$data['item_promocao'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['item_promocao'][$j]['ComissaoServico']));
-						}
-						if(empty($data['item_promocao'][$j]['ComissaoCashBack'])){
-							$data['item_promocao'][$j]['ComissaoCashBack'] = "0.00";
-						}else{
-							$data['item_promocao'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['item_promocao'][$j]['ComissaoCashBack']));
-						}							
-						
-						if(empty($data['item_promocao'][$j]['QtdProdutoDesconto'])){
-							$data['item_promocao'][$j]['QtdProdutoDesconto'] = "1";
-						}
-						if(empty($data['item_promocao'][$j]['QtdProdutoIncremento'])){
-							$data['item_promocao'][$j]['QtdProdutoIncremento'] = "1";
-						}
-						if(empty($data['item_promocao'][$j]['TempoDeEntrega'])){
-							$data['item_promocao'][$j]['TempoDeEntrega'] = "0";
-						}	
 					
+					
+					#### Tab_Dia_Prom ####
+					if (isset($data['item_promocao'])) {
+						$max = count($data['item_promocao']);
+						for($j=1;$j<=$max;$j++) {
+							$data['item_promocao'][$j]['Item_Promocao'] = "1";
+							$data['item_promocao'][$j]['Convdesc'] = trim(mb_strtoupper($data['item_promocao'][$j]['Convdesc'], 'UTF-8'));
+							$data['item_promocao'][$j]['Desconto'] = 2;
+							$data['item_promocao'][$j]['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
+							$data['item_promocao'][$j]['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+							$data['item_promocao'][$j]['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
+							$data['item_promocao'][$j]['idTab_Promocao'] = $data['promocao']['idTab_Promocao'];
+							
+							if(empty($data['item_promocao'][$j]['ValorProduto'])){
+								$data['item_promocao'][$j]['ValorProduto'] = "0.00";
+							}else{
+								$data['item_promocao'][$j]['ValorProduto'] = str_replace(',', '.', str_replace('.', '', $data['item_promocao'][$j]['ValorProduto']));
+							}
+							if(empty($data['item_promocao'][$j]['ComissaoVenda'])){
+								$data['item_promocao'][$j]['ComissaoVenda'] = "0.00";
+							}else{
+								$data['item_promocao'][$j]['ComissaoVenda'] = str_replace(',', '.', str_replace('.', '', $data['item_promocao'][$j]['ComissaoVenda']));
+							}
+							if(empty($data['item_promocao'][$j]['ComissaoServico'])){
+								$data['item_promocao'][$j]['ComissaoServico'] = "0.00";
+							}else{
+								$data['item_promocao'][$j]['ComissaoServico'] = str_replace(',', '.', str_replace('.', '', $data['item_promocao'][$j]['ComissaoServico']));
+							}
+							if(empty($data['item_promocao'][$j]['ComissaoCashBack'])){
+								$data['item_promocao'][$j]['ComissaoCashBack'] = "0.00";
+							}else{
+								$data['item_promocao'][$j]['ComissaoCashBack'] = str_replace(',', '.', str_replace('.', '', $data['item_promocao'][$j]['ComissaoCashBack']));
+							}							
+							
+							if(empty($data['item_promocao'][$j]['QtdProdutoDesconto'])){
+								$data['item_promocao'][$j]['QtdProdutoDesconto'] = "1";
+							}
+							if(empty($data['item_promocao'][$j]['QtdProdutoIncremento'])){
+								$data['item_promocao'][$j]['QtdProdutoIncremento'] = "1";
+							}
+							if(empty($data['item_promocao'][$j]['TempoDeEntrega'])){
+								$data['item_promocao'][$j]['TempoDeEntrega'] = "0";
+							}	
+						
+						}
+						$data['item_promocao']['idTab_Valor'] = $this->Promocao_model->set_item_promocao($data['item_promocao']);
 					}
-					$data['item_promocao']['idTab_Valor'] = $this->Promocao_model->set_item_promocao($data['item_promocao']);
-				}
-				
-				$data['update']['dia_promocao']['posterior'] = $this->Promocao_model->get_dia_promocao_posterior($data['promocao']['idTab_Promocao']);
-				if (isset($data['update']['dia_promocao']['posterior'])){
-					$max_dia_promocao = count($data['update']['dia_promocao']['posterior']);
-					if($max_dia_promocao == 0){
-						$data['promocao']['TodoDiaProm'] = "S";				
-					}else{
-						$data['promocao']['TodoDiaProm'] = "N";
+					
+					$data['update']['dia_promocao']['posterior'] = $this->Promocao_model->get_dia_promocao_posterior($data['promocao']['idTab_Promocao']);
+					if (isset($data['update']['dia_promocao']['posterior'])){
+						$max_dia_promocao = count($data['update']['dia_promocao']['posterior']);
+						if($max_dia_promocao == 0){
+							$data['promocao']['TodoDiaProm'] = "S";				
+						}else{
+							$data['promocao']['TodoDiaProm'] = "N";
+						}
+
 					}
+					
+					$data['update']['promocao']['anterior'] = $this->Promocao_model->get_promocao($data['promocao']['idTab_Promocao']);
+					$data['update']['promocao']['campos'] = array_keys($data['promocao']);
+					$data['update']['promocao']['auditoriaitem'] = $this->basico->set_log(
+						$data['update']['promocao']['anterior'],
+						$data['promocao'],
+						$data['update']['promocao']['campos'],
+						$data['promocao']['idTab_Promocao'], TRUE);
+					$data['update']['promocao']['bd'] = $this->Promocao_model->update_promocao($data['promocao'], $data['promocao']['idTab_Promocao']);	
 
+					//$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Produtos'], FALSE);
+					//$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
+					$data['msg'] = '?m=1';
+
+					redirect(base_url() . 'promocao/tela_promocao/' . $data['promocao']['idTab_Promocao'] . $data['msg']);
+					exit();
 				}
-				
-				$data['update']['promocao']['anterior'] = $this->Promocao_model->get_promocao($data['promocao']['idTab_Promocao']);
-				$data['update']['promocao']['campos'] = array_keys($data['promocao']);
-				$data['update']['promocao']['auditoriaitem'] = $this->basico->set_log(
-					$data['update']['promocao']['anterior'],
-					$data['promocao'],
-					$data['update']['promocao']['campos'],
-					$data['promocao']['idTab_Promocao'], TRUE);
-				$data['update']['promocao']['bd'] = $this->Promocao_model->update_promocao($data['promocao'], $data['promocao']['idTab_Promocao']);	
-
-				//$data['auditoriaitem'] = $this->basico->set_log($data['anterior'], $data['query'], $data['campos'], $data['idTab_Produtos'], FALSE);
-                //$data['auditoria'] = $this->Basico_model->set_auditoria($data['auditoriaitem'], 'Tab_Produtos', 'CREATE', $data['auditoriaitem']);
-                $data['msg'] = '?m=1';
-
-				redirect(base_url() . 'promocao/tela_promocao/' . $data['promocao']['idTab_Promocao'] . $data['msg']);
-                exit();
-            }
-        }
-
+			}
+		}
         $this->load->view('basico/footer');
     }
 	
@@ -343,7 +351,15 @@ class Promocao extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-	
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Edit_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
 			$caracteres_sem_acento = array(
 				'Љ'=>'S', 'љ'=>'s', 'Р'=>'Dj','Ћ'=>'Z', 'ћ'=>'z', 'А'=>'A', 'Б'=>'A', 'В'=>'A', 'Г'=>'A', 'Д'=>'A',
 				'Е'=>'A', 'Ж'=>'A', 'З'=>'C', 'И'=>'E', 'Й'=>'E', 'К'=>'E', 'Л'=>'E', 'М'=>'I', 'Н'=>'I', 'О'=>'I',
@@ -784,7 +800,7 @@ class Promocao extends CI_Controller {
 					}	
 				}
 			}
-		
+		}
         $this->load->view('basico/footer');
 
     }
@@ -797,7 +813,15 @@ class Promocao extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Ver_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
 			$caracteres_sem_acento = array(
 				'Љ'=>'S', 'љ'=>'s', 'Р'=>'Dj','Ћ'=>'Z', 'ћ'=>'z', 'А'=>'A', 'Б'=>'A', 'В'=>'A', 'Г'=>'A', 'Д'=>'A',
 				'Е'=>'A', 'Ж'=>'A', 'З'=>'C', 'И'=>'E', 'Й'=>'E', 'К'=>'E', 'Л'=>'E', 'М'=>'I', 'Н'=>'I', 'О'=>'I',
@@ -1114,7 +1138,7 @@ class Promocao extends CI_Controller {
 					}
 				}
 			}
-		
+		}
         $this->load->view('basico/footer');
 
     }
@@ -1127,7 +1151,15 @@ class Promocao extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Edit_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
 			$data['catprom'] = $this->input->post(array(
 				'idTab_Catprom',
 			), TRUE);
@@ -1299,7 +1331,7 @@ class Promocao extends CI_Controller {
 					}	
 				}
 			}
-		
+		}
         $this->load->view('basico/footer');
     }
 	
@@ -1311,29 +1343,14 @@ class Promocao extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-		
-		if ($id) {
-            $verificacao = $this->Promocao_model->get_promocao_verificacao($id);
-			if($verificacao === FALSE){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}else{
-			if(!$_SESSION['Promocao']){
-				$seguir = FALSE;
-			}else{
-				$seguir = TRUE;
-			}
-		}
-	
-		if($seguir === FALSE){
-			unset($_SESSION['Promocao']);
-			$data['msg'] = '?m=3';
+
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Edit_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 			
-		} else {
+		}else{
 			
 			$data['promocao'] = $this->input->post(array(
 				'idTab_Promocao',
@@ -1518,45 +1535,54 @@ class Promocao extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-
-		if (!$id) {
-			unset($_SESSION['Promocao']);
-			$data['msg'] = '?m=3';
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Delet_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 			
-		} else {
-			$_SESSION['Promocao'] = $data['promocao'] = $this->Promocao_model->get_promocao($id, TRUE);
-
-			if($data['promocao'] === FALSE){
-				
+		}else{
+			
+			if (!$id) {
 				unset($_SESSION['Promocao']);
 				$data['msg'] = '?m=3';
 				redirect(base_url() . 'acesso' . $data['msg']);
 				exit();
 				
 			} else {
-	
-				if($this->Basico_model->get_dt_validade() === FALSE){
+				$_SESSION['Promocao'] = $data['promocao'] = $this->Promocao_model->get_promocao($id, TRUE);
+
+				if($data['promocao'] === FALSE){
 					
 					unset($_SESSION['Promocao']);
 					$data['msg'] = '?m=3';
 					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
 					
 				} else {
-					
-					$this->Promocao_model->delete_promocao($id);
-					
-					unset($_SESSION['Promocao']);
+		
+					if($this->Basico_model->get_dt_validade() === FALSE){
+						
+						unset($_SESSION['Promocao']);
+						$data['msg'] = '?m=3';
+						redirect(base_url() . 'acesso' . $data['msg']);
+						
+					} else {
+						
+						$this->Promocao_model->delete_promocao($id);
+						
+						unset($_SESSION['Promocao']);
 
-					$data['msg'] = '?m=1';
+						$data['msg'] = '?m=1';
 
-					redirect(base_url() . 'relatorio/promocao/' . $data['msg']);
-					exit();
+						redirect(base_url() . 'relatorio/promocao/' . $data['msg']);
+						exit();
+					}
 				}
 			}
 		}
-        $this->load->view('basico/footer');
+		$this->load->view('basico/footer');
     }
 
 /*	

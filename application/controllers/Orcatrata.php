@@ -80,7 +80,7 @@ class Orcatrata extends CI_Controller {
 			}
 		}
 				
-		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N" || $_SESSION['Usuario']['Cad_Orcam'] == "N"){
 			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
@@ -2334,7 +2334,7 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N" || $_SESSION['Usuario']['Cad_Orcam'] == "N"){
 			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
@@ -4019,7 +4019,7 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N" || $_SESSION['Usuario']['Cad_Orcam'] == "N"){
 			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
@@ -5726,7 +5726,7 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
+		if($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N" || $_SESSION['Usuario']['Edit_Orcam'] == "N"){
 			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
@@ -8201,7 +8201,7 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N" || $_SESSION['Usuario']['Edit_Orcam'] == "N"){
 			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
@@ -10237,7 +10237,7 @@ class Orcatrata extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N"){
+		if($_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Usu_Rec'] == "N" || $_SESSION['Usuario']['Edit_Orcam'] == "N"){
 			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();

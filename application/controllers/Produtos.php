@@ -49,9 +49,9 @@ class Produtos extends CI_Controller {
         else
             $data['msg'] = '';
 		
-		if ($_SESSION['log']['idSis_Empresa'] == 5) {
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Cad_Prd'] == "N") {
 				
-			$data['msg'] = '?m=3';
+			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 			
@@ -169,6 +169,14 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Edit_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
 			
 			$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 				'Cadastrar',
@@ -436,7 +444,7 @@ class Produtos extends CI_Controller {
 					}
 				}
 			}
-		
+		}
         $this->load->view('basico/footer');
 
     }
@@ -451,7 +459,15 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
-
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Edit_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
 			$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 				'Cadastrar',
 				'TipoCatprod',
@@ -710,7 +726,7 @@ class Produtos extends CI_Controller {
 					}
 				}
 			}
-		
+		}
         $this->load->view('basico/footer');
 
     }
@@ -725,7 +741,15 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
-
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Ver_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
 			$data['cadastrar'] = quotes_to_entities($this->input->post(array(
 				'Cadastrar',
 				'idCat_Atributo',
@@ -938,7 +962,7 @@ class Produtos extends CI_Controller {
 					}
 				}
 			}
-		
+		}
         $this->load->view('basico/footer');
 
     }
@@ -953,7 +977,15 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
-
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Ver_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
 			$data['produtos'] = quotes_to_entities($this->input->post(array(
 				#### Tab_Produtos ####
 				'idTab_Produtos',
@@ -1034,7 +1066,7 @@ class Produtos extends CI_Controller {
 					}
 				}
 			}
-			
+		}	
         $this->load->view('basico/footer');
 
     }
@@ -1049,7 +1081,15 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
-
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Edit_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
 			$caracteres_sem_acento = array(
 				'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
 				'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
@@ -1330,7 +1370,7 @@ class Produtos extends CI_Controller {
 					}
 				}
 			}
-		
+		}
         $this->load->view('basico/footer');
 
     }
@@ -1345,6 +1385,14 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Ver_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
 			
 			$data['valor'] = quotes_to_entities($this->input->post(array(
 				#### Tab_Valor ####
@@ -1448,7 +1496,7 @@ class Produtos extends CI_Controller {
 					}
 				}	
 			}
-		
+		}
         $this->load->view('basico/footer');
 
     }
@@ -1463,7 +1511,15 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Não é possível salvar as alterações.<br>Não identificamos o pagamento da sua última Fatura.<br>Por favor, Entre em contato com a administração da Plataforma Enkontraki.</strong>', 'alerta', TRUE, TRUE, FALSE);
         else
             $data['msg'] = '';
-
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Edit_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
 			$data['valor'] = quotes_to_entities($this->input->post(array(
 				#### Tab_Valor ####
 				'idTab_Valor',			
@@ -1655,7 +1711,7 @@ class Produtos extends CI_Controller {
 					}
 				}
 			}
-		
+		}
         $this->load->view('basico/footer');
 
     }
@@ -1668,7 +1724,15 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Edit_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
 			$data['catprod'] = $this->input->post(array(
 				'idTab_Catprod',
 			), TRUE);
@@ -1842,7 +1906,7 @@ class Produtos extends CI_Controller {
 					}	
 				}
 			}
-		
+		}
         $this->load->view('basico/footer');
     }
 	
@@ -1854,7 +1918,15 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Edit_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
 			$data['query'] = $this->input->post(array(
 				'idTab_Produto',
 			), TRUE);
@@ -2028,7 +2100,7 @@ class Produtos extends CI_Controller {
 					}
 				}
 			}
-		
+		}
         $this->load->view('basico/footer');
     }
 
@@ -2040,7 +2112,15 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Edit_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{
+			
 			$data['derivado'] = $this->input->post(array(
 				'idTab_Produtos',
 			), TRUE);
@@ -2220,7 +2300,7 @@ class Produtos extends CI_Controller {
 					}	
 				}
 			}
-		
+		}
         $this->load->view('basico/footer');
     }
 	
@@ -2232,79 +2312,88 @@ class Produtos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-
-		if (!$id) {
-
-			unset($_SESSION['Produtos']);
-			$data['msg'] = '?m=3';
+		
+		if ($_SESSION['log']['idSis_Empresa'] == 5 || $_SESSION['Usuario']['Nivel'] == 2 || $_SESSION['Usuario']['Delet_Prd'] == "N") {
+				
+			$data['msg'] = '?m=4';
 			redirect(base_url() . 'acesso' . $data['msg']);
 			exit();
 			
-		} else {
-				
-			#### Tab_Produtos ####
-			$_SESSION['Produtos'] = $data['produtos'] = $this->Produtos_model->get_produtos($id);
-		
-			if($data['produtos'] === FALSE){
-				
+		}else{
+			
+			if (!$id) {
+
 				unset($_SESSION['Produtos']);
 				$data['msg'] = '?m=3';
 				redirect(base_url() . 'acesso' . $data['msg']);
 				exit();
 				
 			} else {
-						
-				if($this->Basico_model->get_dt_validade() === FALSE){
+					
+				#### Tab_Produtos ####
+				$_SESSION['Produtos'] = $data['produtos'] = $this->Produtos_model->get_produtos($id);
+			
+				if($data['produtos'] === FALSE){
 					
 					unset($_SESSION['Produtos']);
 					$data['msg'] = '?m=3';
 					redirect(base_url() . 'acesso' . $data['msg']);
+					exit();
 					
 				} else {
-					
-					#### Busca Se o produto já foi usado###
-					$data['usado'] = $this->Produtos_model->get_app_produto($_SESSION['Produtos']);
-					if (isset($data['usado'])){
-						$max_produto = count($data['usado']);
-						if($max_produto >= 1){
-							$data['usado']['produto'] = "S";
-						}else{
-							$data['usado']['produto'] = "N";
-						}
-					}
-					#### Busca Se o produto pertence a promoções###
-					$data['promocao'] = $this->Produtos_model->get_tab_valor($_SESSION['Produtos']);
-					if (isset($data['promocao'])){
-						$max_promocao = count($data['promocao']);
-						if($max_promocao >= 1){
-							$data['promocao']['produto'] = "S";
-						}else{
-							$data['promocao']['produto'] = "N";
-						}
-					}	
-
-					if($data['usado']['produto'] == "S" || $data['promocao']['produto'] == "S"){
-					
+							
+					if($this->Basico_model->get_dt_validade() === FALSE){
+						
 						unset($_SESSION['Produtos']);
 						$data['msg'] = '?m=3';
 						redirect(base_url() . 'acesso' . $data['msg']);
-						exit();
-					
-					}else{
-						$this->Produtos_model->delete_produtos($id);
+						
+					} else {
+						
+						#### Busca Se o produto já foi usado###
+						$data['usado'] = $this->Produtos_model->get_app_produto($_SESSION['Produtos']);
+						if (isset($data['usado'])){
+							$max_produto = count($data['usado']);
+							if($max_produto >= 1){
+								$data['usado']['produto'] = "S";
+							}else{
+								$data['usado']['produto'] = "N";
+							}
+						}
+						#### Busca Se o produto pertence a promoções###
+						$data['promocao'] = $this->Produtos_model->get_tab_valor($_SESSION['Produtos']);
+						if (isset($data['promocao'])){
+							$max_promocao = count($data['promocao']);
+							if($max_promocao >= 1){
+								$data['promocao']['produto'] = "S";
+							}else{
+								$data['promocao']['produto'] = "N";
+							}
+						}	
 
-						$data['msg'] = '?m=1';
+						if($data['usado']['produto'] == "S" || $data['promocao']['produto'] == "S"){
+						
+							unset($_SESSION['Produtos']);
+							$data['msg'] = '?m=3';
+							redirect(base_url() . 'acesso' . $data['msg']);
+							exit();
+						
+						}else{
+							$this->Produtos_model->delete_produtos($id);
 
-						unset($_SESSION['Produtos']);
-						unset($_SESSION['Atributo']);
+							$data['msg'] = '?m=1';
 
-						redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
-						exit();
-					}
-				}	
+							unset($_SESSION['Produtos']);
+							unset($_SESSION['Atributo']);
+
+							redirect(base_url() . 'relatorio/produtos/' . $data['msg']);
+							exit();
+						}
+					}	
+				}
 			}
-		}
-        $this->load->view('basico/footer');
+		}	
+		$this->load->view('basico/footer');
     }
 
 /*	
