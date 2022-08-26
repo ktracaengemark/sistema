@@ -95,7 +95,7 @@
 				<?php if($_SESSION['Usuario']['Nivel'] != 2) {?>
 					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 						<label>Excel</label><br>
-						<a href="<?php echo base_url() . 'Receitas/receitas_excel/2'; ?>">
+						<a href="<?php echo base_url() . 'gerar_excel/Receitas/Receitas_c_filtro_xls.php'; ?>">
 							<button type='button' class='btn btn-md btn-success btn-block'>
 								C/<span class="glyphicon glyphicon-filter"></span>
 							</button>

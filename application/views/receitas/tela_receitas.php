@@ -57,14 +57,16 @@
 								</button>
 							</div>
 							<?php if($_SESSION['Usuario']['Bx_Prd'] == "S" && $_SESSION['Usuario']['Bx_Pag'] == "S" && $_SESSION['Usuario']['Nivel'] != 2) {?>
+								<!--
 								<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 text-left">
 									<label>Excel</label><br>
-									<a href="<?php echo base_url() . 'Receitas/receitas_excel/1'; ?>">
+									<a href="<?php #echo base_url() . 'gerar_excel/Receitas/Receitas_s_filtro_xls.php'; ?>">
 										<button type='button' class='btn btn-md btn-success btn-block'>
 											S/<span class="glyphicon glyphicon-filter"></span>
 										</button>
 									</a>
 								</div>
+								-->
 							<?php } ?>
 						</div>	
 					</div>

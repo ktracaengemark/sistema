@@ -26,7 +26,7 @@
 			</div>
 			<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
 				<label></label><br>
-				<a href="<?php echo base_url() . 'gerar_excel/Cliente/Cashback.php'; ?>">
+				<a href="<?php echo base_url() . 'gerar_excel/Clientes/Cashback.php'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
 						Excel
 					</button>
