@@ -39,7 +39,7 @@
 			<?php } ?>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 				<label>Excel</label><br>
-				<a href="<?php echo base_url() . 'Cobrancas/cobrancas_excel/2'; ?>">
+				<a href="<?php echo base_url() . 'gerar_excel/Cobrancas/Cobrancas_total_xls.php'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
 						<span class="glyphicon glyphicon-print"></span>Total
 					</button>
@@ -47,12 +47,12 @@
 			</div>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 				<label>Excel</label><br>
-				<a href="<?php echo base_url() . 'Cobrancas/cobrancas_excel/3'; ?>">
+				<a href="<?php echo base_url() . 'gerar_excel/Cobrancas/Cobrancas_parcial_xls.php'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
 						<span class="glyphicon glyphicon-print"></span>Parcial
 					</button>
 				</a>
-			</div>	
+			</div>
 			<?php if ($editar == 1) { ?>
 				<?php if ($_SESSION['log']['idSis_Empresa'] == 5) { ?>
 					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">

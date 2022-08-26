@@ -16,11 +16,11 @@
 							<span class="glyphicon glyphicon-pencil"></span> Recibo
 						</a>
 					<?php } ?>
-					<a type="button" class="col-md-3 btn btn-md btn-default " href="javascript:window.print()">
-						<span class="glyphicon glyphicon-print"></span>
-					</a>
 					<a type="button" class="col-md-3 btn btn-md btn-warning "  href="<?php echo base_url() ?>Cobrancas/cobrancas_pag">
 						<span class="glyphicon glyphicon-edit"></span>
+					</a>
+					<a type="button" class="col-md-3 btn btn-md btn-default " href="javascript:window.print()">
+						<span class="glyphicon glyphicon-print"></span>
 					</a>
 				</div>
 			</div>

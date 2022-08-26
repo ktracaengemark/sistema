@@ -966,6 +966,7 @@ class Cobrancas extends CI_Controller {
 								print_r($data['parcelasrec'][$i]);
 								echo "</pre>";
 								*/
+								/*
 								#### App_Procedimento ####
 								$data['procedimento'][$i] = $this->Cobrancas_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
 								if (count($data['procedimento'][$i]) > 0) {
@@ -979,7 +980,7 @@ class Cobrancas extends CI_Controller {
 										}
 									}
 								}						
-								
+								*/
 							}
 						}	
 					}
