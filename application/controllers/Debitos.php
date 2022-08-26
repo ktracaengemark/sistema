@@ -47,7 +47,7 @@ class Debitos extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $this->load->view('Debitos/tela_index', $data);
+        $this->load->view('debitos/tela_index', $data);
 
         #load footer view
         $this->load->view('basico/footer');
@@ -458,11 +458,11 @@ class Debitos extends CI_Controller {
 
 					$data['pagination'] = $this->pagination->create_links();
 
-					$data['list1'] = $this->load->view('Debitos/list_debitos', $data, TRUE);
+					$data['list1'] = $this->load->view('debitos/list_debitos', $data, TRUE);
 				}
 			}
 		}
-        $this->load->view('Debitos/tela_debitos', $data);
+        $this->load->view('debitos/tela_debitos', $data);
 
         $this->load->view('basico/footer');
 
@@ -549,10 +549,10 @@ class Debitos extends CI_Controller {
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-            $data['list1'] = $this->load->view('Debitos/list_debitos', $data, TRUE);
+            $data['list1'] = $this->load->view('debitos/list_debitos', $data, TRUE);
        
 		}
-        $this->load->view('Debitos/tela_debitos', $data);
+        $this->load->view('debitos/tela_debitos', $data);
 
         $this->load->view('basico/footer');
 
@@ -614,7 +614,7 @@ class Debitos extends CI_Controller {
 			exit();
 		}else{
 
-			$data['list1'] = $this->load->view('Debitos/list_debitos_excel', $data, TRUE);
+			$data['list1'] = $this->load->view('debitos/list_debitos_excel', $data, TRUE);
 		}
 
         $this->load->view('basico/footer');
@@ -804,7 +804,7 @@ class Debitos extends CI_Controller {
 					  #exit ();
 					 */
 
-					$this->load->view('Debitos/print_debitos_lista', $data);
+					$this->load->view('debitos/print_debitos_lista', $data);
 				}
 			}	
 		}
@@ -987,7 +987,7 @@ class Debitos extends CI_Controller {
 					  #exit ();
 					 */
 
-					$this->load->view('Debitos/print_debitos_recibo', $data);			
+					$this->load->view('debitos/print_debitos_recibo', $data);			
 				}
 			}
 		}
@@ -1215,7 +1215,7 @@ class Debitos extends CI_Controller {
 				
 				#run form validation
 				if ($this->form_validation->run() === FALSE) {
-					$this->load->view('Debitos/form_debitos_baixa', $data);
+					$this->load->view('debitos/form_debitos_baixa', $data);
 				} else {
 
 					if($this->Basico_model->get_dt_validade() === FALSE){

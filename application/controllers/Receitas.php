@@ -48,7 +48,7 @@ class Receitas extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $this->load->view('Receitas/tela_index', $data);
+        $this->load->view('receitas/tela_index', $data);
 
         #load footer view
         $this->load->view('basico/footer');
@@ -593,7 +593,7 @@ class Receitas extends CI_Controller {
 			exit();
 		}else{
 
-			$data['list1'] = $this->load->view('Receitas/list_receitas_excel', $data, TRUE);
+			$data['list1'] = $this->load->view('receitas/list_receitas_excel', $data, TRUE);
 		}
 
         $this->load->view('basico/footer');
@@ -693,7 +693,7 @@ class Receitas extends CI_Controller {
 							
 				$data['pagination'] = $this->pagination->create_links();
 
-				$data['list1'] = $this->load->view('Receitas/list_receitas_lista', $data, TRUE);
+				$data['list1'] = $this->load->view('receitas/list_receitas_lista', $data, TRUE);
 			}
         		
 
@@ -1493,12 +1493,12 @@ class Receitas extends CI_Controller {
 					$data['report'] = $this->Receitas_model->list_procedimentos($_SESSION['FiltroReceitasProced'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']),FALSE);			
 					$data['pagination'] = $this->pagination->create_links();
 					
-					$data['list'] = $this->load->view('Receitas/list_procedimentos', $data, TRUE);
+					$data['list'] = $this->load->view('receitas/list_procedimentos', $data, TRUE);
 					//$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 				}
 			}
 		}
-        $this->load->view('Receitas/tela_procedimentos', $data);
+        $this->load->view('receitas/tela_procedimentos', $data);
 
         $this->load->view('basico/footer');
 
@@ -1580,12 +1580,12 @@ class Receitas extends CI_Controller {
 			$data['report'] = $this->Receitas_model->list_procedimentos($_SESSION['FiltroReceitasProced'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
 			$data['pagination'] = $this->pagination->create_links();
 			
-            $data['list'] = $this->load->view('Receitas/list_procedimentos', $data, TRUE);
+            $data['list'] = $this->load->view('receitas/list_procedimentos', $data, TRUE);
             //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
         
 		}
 
-        $this->load->view('Receitas/tela_procedimentos', $data);
+        $this->load->view('receitas/tela_procedimentos', $data);
 
         $this->load->view('basico/footer');
 

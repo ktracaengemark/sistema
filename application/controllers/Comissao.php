@@ -47,7 +47,7 @@ class Comissao extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $this->load->view('Comissao/tela_index', $data);
+        $this->load->view('comissao/tela_index', $data);
 
         #load footer view
         $this->load->view('basico/footer');
@@ -400,11 +400,11 @@ class Comissao extends CI_Controller {
 
 					$data['pagination'] = $this->pagination->create_links();
 					
-					$data['list1'] = $this->load->view('Comissao/list_comissao', $data, TRUE);
+					$data['list1'] = $this->load->view('comissao/list_comissao', $data, TRUE);
 				}	
 			}		
 
-			$this->load->view('Comissao/tela_comissao', $data);
+			$this->load->view('comissao/tela_comissao', $data);
 
 			$this->load->view('basico/footer');
 		}
@@ -525,9 +525,9 @@ class Comissao extends CI_Controller {
 								
 					$data['pagination'] = $this->pagination->create_links();
 
-					$data['list1'] = $this->load->view('Comissao/list_comissao', $data, TRUE);
+					$data['list1'] = $this->load->view('comissao/list_comissao', $data, TRUE);
 				}
-				$this->load->view('Comissao/tela_comissao', $data);
+				$this->load->view('comissao/tela_comissao', $data);
 
 				$this->load->view('basico/footer');
 			}
@@ -639,9 +639,9 @@ class Comissao extends CI_Controller {
 					
 					$data['pagination'] = $this->pagination->create_links();
 
-					$data['list1'] = $this->load->view('Comissao/list_comissao_lista', $data, TRUE);
+					$data['list1'] = $this->load->view('comissao/list_comissao_lista', $data, TRUE);
 				}
-				$this->load->view('Comissao/tela_comissao', $data);
+				$this->load->view('comissao/tela_comissao', $data);
 
 				$this->load->view('basico/footer');
 			}
@@ -702,7 +702,7 @@ class Comissao extends CI_Controller {
 				exit();
 			}else{
 
-				$data['list1'] = $this->load->view('Comissao/list_comissao_excel', $data, TRUE);
+				$data['list1'] = $this->load->view('comissao/list_comissao_excel', $data, TRUE);
 			}
 
 			$this->load->view('basico/footer');
@@ -971,7 +971,7 @@ class Comissao extends CI_Controller {
 
 						#run form validation
 						if ($this->form_validation->run() === FALSE) {
-							$this->load->view('Comissao/form_comissao_baixa', $data);
+							$this->load->view('comissao/form_comissao_baixa', $data);
 						} else {
 
 							if($this->Basico_model->get_dt_validade() === FALSE){
@@ -1086,7 +1086,7 @@ class Comissao extends CI_Controller {
 											$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 											$this->basico->erro($msg);
-											$this->load->view('Comissao/form_comissao_baixa', $data);
+											$this->load->view('comissao/form_comissao_baixa', $data);
 										
 										} else {
 											
@@ -1155,7 +1155,7 @@ class Comissao extends CI_Controller {
 									$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 									$this->basico->erro($msg);
-									$this->load->view('Comissao/form_comissao_baixa', $data);
+									$this->load->view('comissao/form_comissao_baixa', $data);
 									
 								}	
 								exit();
@@ -1454,7 +1454,7 @@ class Comissao extends CI_Controller {
 
 						#run form validation
 						if ($this->form_validation->run() === FALSE) {
-							$this->load->view('Comissao/form_comissao_baixa', $data);
+							$this->load->view('comissao/form_comissao_baixa', $data);
 						} else {
 
 							if($this->Basico_model->get_dt_validade() === FALSE){
@@ -1546,7 +1546,7 @@ class Comissao extends CI_Controller {
 									$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 									$this->basico->erro($msg);
-									$this->load->view('Comissao/form_comissao_baixa', $data);
+									$this->load->view('comissao/form_comissao_baixa', $data);
 									
 								}	
 								exit();
@@ -1822,7 +1822,7 @@ class Comissao extends CI_Controller {
 
 						#run form validation
 						if ($this->form_validation->run() === FALSE) {
-							$this->load->view('Comissao/form_comissao_baixa', $data);
+							$this->load->view('comissao/form_comissao_baixa', $data);
 						} else {
 
 							if($this->Basico_model->get_dt_validade() === FALSE){
@@ -1875,7 +1875,7 @@ class Comissao extends CI_Controller {
 									$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 									$this->basico->erro($msg);
-									$this->load->view('Comissao/form_comissao_baixa', $data);
+									$this->load->view('comissao/form_comissao_baixa', $data);
 									
 								}	
 								exit();
@@ -2234,11 +2234,11 @@ class Comissao extends CI_Controller {
 
 					$data['pagination'] = $this->pagination->create_links();
 					
-					$data['list1'] = $this->load->view('Comissao/list_comissaoass', $data, TRUE);
+					$data['list1'] = $this->load->view('comissao/list_comissaoass', $data, TRUE);
 				}	
 			}		
 
-			$this->load->view('Comissao/tela_comissaoass', $data);
+			$this->load->view('comissao/tela_comissaoass', $data);
 
 			$this->load->view('basico/footer');
 		}
@@ -2358,9 +2358,9 @@ class Comissao extends CI_Controller {
 								
 					$data['pagination'] = $this->pagination->create_links();
 
-					$data['list1'] = $this->load->view('Comissao/list_comissaoass', $data, TRUE);
+					$data['list1'] = $this->load->view('comissao/list_comissaoass', $data, TRUE);
 				}
-				$this->load->view('Comissao/tela_comissaoass', $data);
+				$this->load->view('comissao/tela_comissaoass', $data);
 
 				$this->load->view('basico/footer');
 			}
@@ -2471,9 +2471,9 @@ class Comissao extends CI_Controller {
 					
 					$data['pagination'] = $this->pagination->create_links();
 
-					$data['list1'] = $this->load->view('Comissao/list_comissaoass_lista', $data, TRUE);
+					$data['list1'] = $this->load->view('comissao/list_comissaoass_lista', $data, TRUE);
 				}
-				$this->load->view('Comissao/tela_comissaoass', $data);
+				$this->load->view('comissao/tela_comissaoass', $data);
 
 				$this->load->view('basico/footer');
 			}
@@ -2534,7 +2534,7 @@ class Comissao extends CI_Controller {
 				exit();
 			}else{
 
-				$data['list1'] = $this->load->view('Comissao/list_comissaoass_excel', $data, TRUE);
+				$data['list1'] = $this->load->view('comissao/list_comissaoass_excel', $data, TRUE);
 			}
 
 			$this->load->view('basico/footer');
@@ -2806,7 +2806,7 @@ class Comissao extends CI_Controller {
 
 						#run form validation
 						if ($this->form_validation->run() === FALSE) {
-							$this->load->view('Comissao/form_comissaoass_baixa', $data);
+							$this->load->view('comissao/form_comissaoass_baixa', $data);
 						} else {
 
 							if($this->Basico_model->get_dt_validade() === FALSE){
@@ -2918,7 +2918,7 @@ class Comissao extends CI_Controller {
 											$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 											$this->basico->erro($msg);
-											$this->load->view('Comissao/form_comissaoass_baixa', $data);
+											$this->load->view('comissao/form_comissaoass_baixa', $data);
 										
 										} else {	
 
@@ -2988,7 +2988,7 @@ class Comissao extends CI_Controller {
 									$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 									$this->basico->erro($msg);
-									$this->load->view('Comissao/form_comissaoass_baixa', $data);
+									$this->load->view('comissao/form_comissaoass_baixa', $data);
 									
 								}	
 								exit();
@@ -3291,7 +3291,7 @@ class Comissao extends CI_Controller {
 
 						#run form validation
 						if ($this->form_validation->run() === FALSE) {
-							$this->load->view('Comissao/form_comissaoass_baixa', $data);
+							$this->load->view('comissao/form_comissaoass_baixa', $data);
 						} else {
 
 							if($this->Basico_model->get_dt_validade() === FALSE){
@@ -3387,7 +3387,7 @@ class Comissao extends CI_Controller {
 									$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 									$this->basico->erro($msg);
-									$this->load->view('Comissao/form_comissaoass_baixa', $data);
+									$this->load->view('comissao/form_comissaoass_baixa', $data);
 									
 								}	
 								exit();
@@ -3746,11 +3746,11 @@ class Comissao extends CI_Controller {
 
 					$data['pagination'] = $this->pagination->create_links();
 					
-					$data['list1'] = $this->load->view('Comissao/list_comissaofunc', $data, TRUE);
+					$data['list1'] = $this->load->view('comissao/list_comissaofunc', $data, TRUE);
 				}	
 			}		
 
-			$this->load->view('Comissao/tela_comissaofunc', $data);
+			$this->load->view('comissao/tela_comissaofunc', $data);
 
 			$this->load->view('basico/footer');
 		}
@@ -3870,9 +3870,9 @@ class Comissao extends CI_Controller {
 								
 					$data['pagination'] = $this->pagination->create_links();
 
-					$data['list1'] = $this->load->view('Comissao/list_comissaofunc', $data, TRUE);
+					$data['list1'] = $this->load->view('comissao/list_comissaofunc', $data, TRUE);
 				}
-				$this->load->view('Comissao/tela_comissaofunc', $data);
+				$this->load->view('comissao/tela_comissaofunc', $data);
 
 				$this->load->view('basico/footer');
 			}
@@ -3984,9 +3984,9 @@ class Comissao extends CI_Controller {
 					
 					$data['pagination'] = $this->pagination->create_links();
 
-					$data['list1'] = $this->load->view('Comissao/list_comissaofunc_lista', $data, TRUE);
+					$data['list1'] = $this->load->view('comissao/list_comissaofunc_lista', $data, TRUE);
 				}
-				$this->load->view('Comissao/tela_comissaofunc', $data);
+				$this->load->view('comissao/tela_comissaofunc', $data);
 
 				$this->load->view('basico/footer');
 			}
@@ -4047,7 +4047,7 @@ class Comissao extends CI_Controller {
 				exit();
 			}else{
 
-				$data['list1'] = $this->load->view('Comissao/list_comissaofunc_excel', $data, TRUE);
+				$data['list1'] = $this->load->view('comissao/list_comissaofunc_excel', $data, TRUE);
 			}
 
 			$this->load->view('basico/footer');
@@ -4318,7 +4318,7 @@ class Comissao extends CI_Controller {
 
 						#run form validation
 						if ($this->form_validation->run() === FALSE) {
-							$this->load->view('Comissao/form_comissaofunc_baixa', $data);
+							$this->load->view('comissao/form_comissaofunc_baixa', $data);
 						} else {
 
 							if($this->Basico_model->get_dt_validade() === FALSE){
@@ -4429,7 +4429,7 @@ class Comissao extends CI_Controller {
 											$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 											$this->basico->erro($msg);
-											$this->load->view('Comissao/form_comissaofunc_baixa', $data);
+											$this->load->view('comissao/form_comissaofunc_baixa', $data);
 										
 										} else {
 											
@@ -4498,7 +4498,7 @@ class Comissao extends CI_Controller {
 									$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 									$this->basico->erro($msg);
-									$this->load->view('Comissao/form_comissaofunc_baixa', $data);
+									$this->load->view('comissao/form_comissaofunc_baixa', $data);
 									
 								}	
 								exit();
@@ -4799,7 +4799,7 @@ class Comissao extends CI_Controller {
 
 						#run form validation
 						if ($this->form_validation->run() === FALSE) {
-							$this->load->view('Comissao/form_comissaofunc_baixa', $data);
+							$this->load->view('comissao/form_comissaofunc_baixa', $data);
 						} else {
 
 							if($this->Basico_model->get_dt_validade() === FALSE){
@@ -4892,7 +4892,7 @@ class Comissao extends CI_Controller {
 									$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 									$this->basico->erro($msg);
-									$this->load->view('Comissao/form_comissaofunc_baixa', $data);
+									$this->load->view('comissao/form_comissaofunc_baixa', $data);
 									
 								}	
 								exit();
@@ -5234,10 +5234,10 @@ class Comissao extends CI_Controller {
 				$data['report'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
 				$data['pagination'] = $this->pagination->create_links();
 				
-				$data['list1'] = $this->load->view('Comissao/list_comissaoserv', $data, TRUE);
+				$data['list1'] = $this->load->view('comissao/list_comissaoserv', $data, TRUE);
 			}
 
-			$this->load->view('Comissao/tela_comissaoserv', $data);
+			$this->load->view('comissao/tela_comissaoserv', $data);
 
 			$this->load->view('basico/footer');
 		}
@@ -5337,10 +5337,10 @@ class Comissao extends CI_Controller {
 					$data['report'] = $this->Comissao_model->list_comissaoserv($_SESSION['Filtro_Porservicos'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
 					$data['pagination'] = $this->pagination->create_links();
 					
-					$data['list1'] = $this->load->view('Comissao/list_comissaoserv', $data, TRUE);
+					$data['list1'] = $this->load->view('comissao/list_comissaoserv', $data, TRUE);
 				}
 
-				$this->load->view('Comissao/tela_comissaoserv', $data);
+				$this->load->view('comissao/tela_comissaoserv', $data);
 
 				$this->load->view('basico/footer');
 			}
@@ -5715,7 +5715,7 @@ class Comissao extends CI_Controller {
 						
 						#run form validation
 						if ($this->form_validation->run() === FALSE) {
-							$this->load->view('Comissao/form_comissaoserv_baixa', $data);
+							$this->load->view('comissao/form_comissaoserv_baixa', $data);
 						} else {
 
 							if($this->Basico_model->get_dt_validade() === FALSE){
@@ -5845,7 +5845,7 @@ class Comissao extends CI_Controller {
 											$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 											$this->basico->erro($msg);
-											$this->load->view('Comissao/form_comissaoserv_baixa', $data);
+											$this->load->view('comissao/form_comissaoserv_baixa', $data);
 										
 										} else {
 
@@ -5877,7 +5877,7 @@ class Comissao extends CI_Controller {
 									$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 									$this->basico->erro($msg);
-									$this->load->view('Comissao/form_comissaoserv_baixa', $data);
+									$this->load->view('comissao/form_comissaoserv_baixa', $data);
 									
 								}	
 								exit();
@@ -6281,7 +6281,7 @@ class Comissao extends CI_Controller {
 						
 						#run form validation
 						if ($this->form_validation->run() === FALSE) {
-							$this->load->view('Comissao/form_comissaoserv_baixa', $data);
+							$this->load->view('comissao/form_comissaoserv_baixa', $data);
 						} else {
 
 							if($this->Basico_model->get_dt_validade() === FALSE){
@@ -6397,7 +6397,7 @@ class Comissao extends CI_Controller {
 									$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 									$this->basico->erro($msg);
-									$this->load->view('Comissao/form_comissaoserv_baixa', $data);
+									$this->load->view('comissao/form_comissaoserv_baixa', $data);
 									
 								}	
 								exit();
@@ -6789,7 +6789,7 @@ class Comissao extends CI_Controller {
 						
 						#run form validation
 						if ($this->form_validation->run() === FALSE) {
-							$this->load->view('Comissao/form_comissaoserv_baixa', $data);
+							$this->load->view('comissao/form_comissaoserv_baixa', $data);
 						} else {
 
 							if($this->Basico_model->get_dt_validade() === FALSE){
@@ -6965,7 +6965,7 @@ class Comissao extends CI_Controller {
 											$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 											$this->basico->erro($msg);
-											$this->load->view('Comissao/form_comissaoserv_baixa', $data);
+											$this->load->view('comissao/form_comissaoserv_baixa', $data);
 										
 										} else {
 											
@@ -7005,7 +7005,7 @@ class Comissao extends CI_Controller {
 									$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 									$this->basico->erro($msg);
-									$this->load->view('Comissao/form_comissaoserv_baixa', $data);
+									$this->load->view('comissao/form_comissaoserv_baixa', $data);
 									
 								}	
 								exit();

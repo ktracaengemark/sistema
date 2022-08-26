@@ -2585,15 +2585,15 @@ class Cliente extends CI_Controller {
 							redirect('cliente/prontuario/' . $info[0]['idApp_Cliente'] );
 							exit();
 						} else {
-							$data['list'] = $this->load->view('Cliente/list_clientes', $data, TRUE);
+							$data['list'] = $this->load->view('cliente/list_clientes', $data, TRUE);
 						}				
 					}else{
-						$data['list'] = $this->load->view('Cliente/list_clientes', $data, TRUE);
+						$data['list'] = $this->load->view('cliente/list_clientes', $data, TRUE);
 					}
 				}	
 			}
 
-			$this->load->view('Cliente/tela_clientes', $data);
+			$this->load->view('cliente/tela_clientes', $data);
 		}
         $this->load->view('basico/footer');
 
@@ -2687,11 +2687,11 @@ class Cliente extends CI_Controller {
 					$data['aparecer'] = 1;
 				}
 				
-				$data['list'] = $this->load->view('Cliente/list_clientes', $data, TRUE);
+				$data['list'] = $this->load->view('cliente/list_clientes', $data, TRUE);
 			
 			}
 			
-			$this->load->view('Cliente/tela_clientes', $data);
+			$this->load->view('cliente/tela_clientes', $data);
 		}
         $this->load->view('basico/footer');
 
@@ -2754,7 +2754,7 @@ class Cliente extends CI_Controller {
 			exit();
 		}else{
 
-			$data['list1'] = $this->load->view('Cliente/list_clientes_excel', $data, TRUE);
+			$data['list1'] = $this->load->view('cliente/list_clientes_excel', $data, TRUE);
 		}
 
         $this->load->view('basico/footer');
@@ -2804,7 +2804,7 @@ class Cliente extends CI_Controller {
 			exit();
 		}else{
 
-			$data['list1'] = $this->load->view('Cliente/list_clientes_csv', $data, TRUE);
+			$data['list1'] = $this->load->view('cliente/list_clientes_csv', $data, TRUE);
 		}
 
         $this->load->view('basico/footer');
@@ -3163,11 +3163,11 @@ class Cliente extends CI_Controller {
 				$data['report'] = $this->Cliente_model->list_rankingvendas($data['bd'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
 				$data['pagination'] = $this->pagination->create_links();
 				
-				$data['list'] = $this->load->view('Cliente/list_rankingvendas', $data, TRUE);
+				$data['list'] = $this->load->view('cliente/list_rankingvendas', $data, TRUE);
 				//$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 			}
 
-			$this->load->view('Cliente/tela_rankingvendas', $data);
+			$this->load->view('cliente/tela_rankingvendas', $data);
 		}
 		$this->load->view('basico/footer');
 
@@ -3273,11 +3273,11 @@ class Cliente extends CI_Controller {
 				$data['report'] = $this->Cliente_model->list_rankingvendas(FALSE, TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
 				$data['pagination'] = $this->pagination->create_links();
 				
-				$data['list'] = $this->load->view('Cliente/list_rankingvendas', $data, TRUE);
+				$data['list'] = $this->load->view('cliente/list_rankingvendas', $data, TRUE);
 				//$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 			}
 
-			$this->load->view('Cliente/tela_rankingvendas', $data);
+			$this->load->view('cliente/tela_rankingvendas', $data);
 		}
 		$this->load->view('basico/footer');
 

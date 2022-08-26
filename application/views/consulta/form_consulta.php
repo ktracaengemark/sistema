@@ -690,7 +690,7 @@
 															<input type="hidden" name="idApp_Consulta" value="<?php echo $query['idApp_Consulta']; ?>">
 														<?php } ?>
 														<?php if ($alterarcliente == 2) { ?>
-															<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $_SESSION['Consulta']['idApp_Cliente']; ?>">
+															<input type="hidden" name="idApp_Cliente" id="idApp_Cliente" value="<?php echo $_SESSION['Cliente']['idApp_Cliente']; ?>">
 														<?php } ?>
 														<!--
 														<input type="hidden" name="Evento" value="1">

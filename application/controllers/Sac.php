@@ -1199,11 +1199,11 @@ class Sac extends CI_Controller {
 				$data['report'] = $this->Sac_model->listar_sac($_SESSION['FiltroSac'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
 				$data['pagination'] = $this->pagination->create_links();
 				
-				$data['list'] = $this->load->view('Sac/list_sac2', $data, TRUE);
+				$data['list'] = $this->load->view('sac/list_sac2', $data, TRUE);
 				//$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 			}
 		}
-        $this->load->view('Sac/tela_sac2', $data);
+        $this->load->view('sac/tela_sac2', $data);
 
         $this->load->view('basico/footer');
 
@@ -1287,10 +1287,10 @@ class Sac extends CI_Controller {
 			$data['report'] = $this->Sac_model->listar_sac($_SESSION['FiltroSac'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
 			$data['pagination'] = $this->pagination->create_links();
 			
-            $data['list'] = $this->load->view('Sac/list_sac2', $data, TRUE);
+            $data['list'] = $this->load->view('sac/list_sac2', $data, TRUE);
         }
 
-        $this->load->view('Sac/tela_sac2', $data);
+        $this->load->view('sac/tela_sac2', $data);
 
         $this->load->view('basico/footer');
 

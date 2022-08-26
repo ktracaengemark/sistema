@@ -48,7 +48,7 @@ class Despesas extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $this->load->view('Despesas/tela_index', $data);
+        $this->load->view('despesas/tela_index', $data);
 
         #load footer view
         $this->load->view('basico/footer');
@@ -469,11 +469,11 @@ class Despesas extends CI_Controller {
 
 					$data['pagination'] = $this->pagination->create_links();
 
-					$data['list1'] = $this->load->view('Despesas/list_despesas', $data, TRUE);
+					$data['list1'] = $this->load->view('despesas/list_despesas', $data, TRUE);
 				}	
 			}		
 		}
-        $this->load->view('Despesas/tela_despesas', $data);
+        $this->load->view('despesas/tela_despesas', $data);
 
         $this->load->view('basico/footer');
 
@@ -573,11 +573,11 @@ class Despesas extends CI_Controller {
 				
 				$data['pagination'] = $this->pagination->create_links();
 				
-				$data['list1'] = $this->load->view('Despesas/list_despesas', $data, TRUE);
+				$data['list1'] = $this->load->view('despesas/list_despesas', $data, TRUE);
 			}
        		
 
-        $this->load->view('Despesas/tela_despesas', $data);
+        $this->load->view('despesas/tela_despesas', $data);
 
         $this->load->view('basico/footer');
 
@@ -629,7 +629,7 @@ class Despesas extends CI_Controller {
 			exit();
 		}else{
 
-			$data['list1'] = $this->load->view('Despesas/list_despesas_excel', $data, TRUE);
+			$data['list1'] = $this->load->view('despesas/list_despesas_excel', $data, TRUE);
 		}
 
         $this->load->view('basico/footer');
@@ -733,11 +733,11 @@ class Despesas extends CI_Controller {
 				
 				$data['pagination'] = $this->pagination->create_links();
 				
-				$data['list1'] = $this->load->view('Despesas/list_despesas_lista', $data, TRUE);
+				$data['list1'] = $this->load->view('despesas/list_despesas_lista', $data, TRUE);
 			}
        		
 
-        $this->load->view('Despesas/tela_despesas', $data);
+        $this->load->view('despesas/tela_despesas', $data);
 
         $this->load->view('basico/footer');
 
@@ -955,7 +955,7 @@ class Despesas extends CI_Controller {
 
 				#run form validation
 				if ($this->form_validation->run() === FALSE) {
-					$this->load->view('Despesas/form_despesas_baixa', $data);
+					$this->load->view('despesas/form_despesas_baixa', $data);
 					} else {
 
 					if($this->Basico_model->get_dt_validade() === FALSE){
@@ -1473,12 +1473,12 @@ class Despesas extends CI_Controller {
 					$data['report'] = $this->Despesas_model->list_procedimentos($_SESSION['FiltroDespesasProced'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']),FALSE);			
 					$data['pagination'] = $this->pagination->create_links();
 					
-					$data['list'] = $this->load->view('Despesas/list_procedimentos', $data, TRUE);
+					$data['list'] = $this->load->view('despesas/list_procedimentos', $data, TRUE);
 					//$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
 				}
 			}
 		}
-        $this->load->view('Despesas/tela_procedimentos', $data);
+        $this->load->view('despesas/tela_procedimentos', $data);
 
         $this->load->view('basico/footer');
 
@@ -1560,12 +1560,12 @@ class Despesas extends CI_Controller {
 			$data['report'] = $this->Despesas_model->list_procedimentos($_SESSION['FiltroDespesasProced'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), FALSE);			
 			$data['pagination'] = $this->pagination->create_links();
 			
-            $data['list'] = $this->load->view('Despesas/list_procedimentos', $data, TRUE);
+            $data['list'] = $this->load->view('despesas/list_procedimentos', $data, TRUE);
             //$data['nav_secundario'] = $this->load->view('cliente/nav_secundario', $data, TRUE);
         
 		}
 
-        $this->load->view('Despesas/tela_procedimentos', $data);
+        $this->load->view('despesas/tela_procedimentos', $data);
 
         $this->load->view('basico/footer');
 

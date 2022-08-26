@@ -47,7 +47,7 @@ class Cobrancas extends CI_Controller {
         else
             $data['msg'] = '';
 
-        $this->load->view('Cobrancas/tela_index', $data);
+        $this->load->view('cobrancas/tela_index', $data);
 
         #load footer view
         $this->load->view('basico/footer');
@@ -460,11 +460,11 @@ class Cobrancas extends CI_Controller {
 
 					$data['pagination'] = $this->pagination->create_links();
 
-					$data['list1'] = $this->load->view('Cobrancas/list_cobrancas', $data, TRUE);
+					$data['list1'] = $this->load->view('cobrancas/list_cobrancas', $data, TRUE);
 				}
 			}
 		}
-        $this->load->view('Cobrancas/tela_cobrancas', $data);
+        $this->load->view('cobrancas/tela_cobrancas', $data);
 
         $this->load->view('basico/footer');
 
@@ -551,10 +551,10 @@ class Cobrancas extends CI_Controller {
 			
 			$data['pagination'] = $this->pagination->create_links();
 
-            $data['list1'] = $this->load->view('Cobrancas/list_cobrancas', $data, TRUE);
+            $data['list1'] = $this->load->view('cobrancas/list_cobrancas', $data, TRUE);
        
 		}
-        $this->load->view('Cobrancas/tela_cobrancas', $data);
+        $this->load->view('cobrancas/tela_cobrancas', $data);
 
         $this->load->view('basico/footer');
 
@@ -616,7 +616,7 @@ class Cobrancas extends CI_Controller {
 			exit();
 		}else{
 
-			$data['list1'] = $this->load->view('Cobrancas/list_cobrancas_excel', $data, TRUE);
+			$data['list1'] = $this->load->view('cobrancas/list_cobrancas_excel', $data, TRUE);
 		}
 
         $this->load->view('basico/footer');
@@ -817,7 +817,7 @@ class Cobrancas extends CI_Controller {
 					  #exit ();
 					 */
 
-					$this->load->view('Cobrancas/list_cobrancas_lista', $data);
+					$this->load->view('cobrancas/list_cobrancas_lista', $data);
 				}
 			}	
 		}
@@ -1001,7 +1001,7 @@ class Cobrancas extends CI_Controller {
 					  #exit ();
 					 */
 
-					$this->load->view('Cobrancas/list_cobrancas_recibo', $data);			
+					$this->load->view('cobrancas/list_cobrancas_recibo', $data);			
 				}
 			}
 		}
@@ -1225,7 +1225,7 @@ class Cobrancas extends CI_Controller {
 						
 				#run form validation
 				if ($this->form_validation->run() === FALSE) {
-					$this->load->view('Cobrancas/form_cobrancas_baixa', $data);
+					$this->load->view('cobrancas/form_cobrancas_baixa', $data);
 				} else {
 
 					if($this->Basico_model->get_dt_validade() === FALSE){
