@@ -1838,8 +1838,8 @@ class Login extends CI_Controller {
                 $config['protocol'] = 'smtp';
                 $config['mailpath'] = "/usr/sbin/sendmail";
                 $config['smtp_host'] = 'smtp.zoho.com';
-                $config['smtp_user'] = 'contato@enkontraki.com.br';
-                $config['smtp_pass'] = '#20ContatoKtraca21!';
+                $config['smtp_user'] = 'atendimento@enkontraki.com.br';
+                $config['smtp_pass'] = '#22Pl@taforma02!';
                 $config['charset'] = 'iso-8859-1';
                 $config['mailtype'] = 'html';
                 $config['wrapchars'] = '50';
@@ -1849,13 +1849,11 @@ class Login extends CI_Controller {
 
                 $this->email->initialize($config);
 
-                $this->email->from('contato@enkontraki.com.br', 'Enkontraki');
+                $this->email->from('atendimento@enkontraki.com.br', 'Enkontraki');
                 $this->email->to($associado['Email']);
 
                 $this->email->subject('[Enkontraki] Alteração de Senha - Associado: ' . $data['query']['Associado']);
-                $this->email->message('Por favor, clique no link a seguir para alterar sua senha: '
-                        //. 'http://www.romati.com.br/app/login/trocar_senha/' . $associado['Codigo']);
-                    . base_url() . 'login/trocar_senha/' . $associado['Codigo']);
+                $this->email->message('Por favor, clique no link a seguir para alterar sua senha: ' . base_url() . 'login/trocar_senha/' . $associado['Codigo']);
 
                 $this->email->send();
 				/*
