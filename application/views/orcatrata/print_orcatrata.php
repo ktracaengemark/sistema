@@ -146,9 +146,9 @@
 															</td>
 															<td class="col-md-9" scope="col">
 																<h4>
-																	<?php echo $produto[$i]['NomeProduto'] ?> <br>
-																	<?php if(!empty($produto[$i]['ObsProduto'])) echo 'Obs: ' . $produto[$i]['ObsProduto'] ?>
+																	<?php echo $produto[$i]['NomeProduto'] ?>
 																</h4>
+																<?php if(!empty($produto[$i]['ObsProduto'])) echo 'Obs: ' . $produto[$i]['ObsProduto'] ?>
 															</td>
 															<td class="col-md-1" scope="col">
 																<?php echo $produto[$i]['SubtotalProduto'] ?>
