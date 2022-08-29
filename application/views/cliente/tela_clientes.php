@@ -91,14 +91,6 @@
 							</button>
 						</div>
 						<div class="col-lg-1 col-md-2 col-sm-3 col-xs-4 text-left">
-							<label>Excel</label><br>
-							<a href="<?php echo base_url() . 'Cliente/clientes_excel/1'; ?>">
-								<button type='button' class='btn btn-md btn-success btn-block'>
-									S/<span class="glyphicon glyphicon-filter"></span>
-								</button>
-							</a>
-						</div>
-						<div class="col-lg-1 col-md-2 col-sm-3 col-xs-4 text-left">
 							<label>Cadastrar</label><br>
 							<button  class="btn btn-md btn-danger btn-block" type="button" data-toggle="modal" data-loading-text="Aguarde..." data-target=".bs-excluir-modal-sm">
 								<span class="glyphicon glyphicon-plus"></span> Novo

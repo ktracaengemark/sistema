@@ -2425,18 +2425,18 @@ class Cliente extends CI_Controller {
 			
 			if($_SESSION['Empresa']['CadastrarPet'] == "S"){
 				$data['select']['Agrupar'] = array(
-					'0' => 'Cliente/Pet',
-					'idApp_Cliente' => 'Cliente',
+					'0' => 'Cliente & Pet',
+					'1' => 'Cliente',
 				);
 			}else{
 				if($_SESSION['Empresa']['CadastrarDep'] == "S"){
 					$data['select']['Agrupar'] = array(
-						'0' => 'Cliente/Det',
-						'idApp_Cliente' => 'Cliente',
+						'0' => 'Cliente & Dep',
+						'1' => 'Cliente',
 					);
 				}else{
 					$data['select']['Agrupar'] = array(
-						'idApp_Cliente' => 'Cliente',
+						'0' => 'Cliente',
 					);
 				}
 			}	
@@ -2517,15 +2517,7 @@ class Cliente extends CI_Controller {
 				$_SESSION['FiltroClientes']['Pedidos'] = $data['query']['Pedidos'];
 				$_SESSION['FiltroClientes']['Sexo'] = $data['query']['Sexo'];
 				$_SESSION['FiltroClientes']['Pesquisa'] = $data['query']['Pesquisa'];
-					
-				if(isset($_SESSION['FiltroClientes']['Agrupar']) && $_SESSION['FiltroClientes']['Agrupar'] != "0"){
-					$_SESSION['FiltroClientes']['Aparecer'] = 0;
-					$data['aparecer'] = 0;
-				}else{
-					$_SESSION['FiltroClientes']['Aparecer'] = 1;
-					$data['aparecer'] = 1;
-				}
-					
+
 				$data['pesquisa_query'] = $this->Cliente_model->list_clientes($_SESSION['FiltroClientes'],TRUE, TRUE);
 
 				if($data['pesquisa_query'] === FALSE){
@@ -2621,76 +2613,76 @@ class Cliente extends CI_Controller {
 			
 			$data['paginacao'] = 'S';
 			$data['caminho'] = 'Cliente/clientes/';
-
-			if(isset($_SESSION['FiltroClientes']['Agrupar']) && $_SESSION['FiltroClientes']['Agrupar'] != "0"){
-				$_SESSION['FiltroClientes']['Aparecer'] = 0;
-				$data['aparecer'] = 0;
-			}else{
-				$_SESSION['FiltroClientes']['Aparecer'] = 1;
-				$data['aparecer'] = 1;
-			}
-
-			$data['pesquisa_query'] = $this->Cliente_model->list_clientes($_SESSION['FiltroClientes'],TRUE, TRUE);
-
-			if($data['pesquisa_query'] === FALSE){
 				
-				$data['msg'] = '?m=4';
-				redirect(base_url() . 'Cliente/clientes' . $data['msg']);
+			if(!isset($_SESSION['FiltroClientes'])){
+				
+				$data['msg'] = '?m=3';
+				redirect(base_url() . 'acesso' . $data['msg']);
 				exit();
-			}else{
-
-				$config['base_url'] = base_url() . 'Cliente/clientes_pag/';
 				
-				//$config['total_rows'] = $this->Cliente_model->list_clientes(FALSE, TRUE, TRUE);
+			}else{							
 
-				$config['total_rows'] = $data['pesquisa_query'];			   					
-				
-				$config['per_page'] = 10;
-				$config["uri_segment"] = 3;
-				$config['reuse_query_string'] = TRUE;
-				$config['num_links'] = 2;
-				$config['use_page_numbers'] = TRUE;
-				$config['full_tag_open'] = "<ul class='pagination'>";
-				$config['full_tag_close'] = "</ul>";
-				$config['num_tag_open'] = '<li>';
-				$config['num_tag_close'] = '</li>';
-				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-				$config['next_tag_open'] = "<li>";
-				$config['next_tagl_close'] = "</li>";
-				$config['prev_tag_open'] = "<li>";
-				$config['prev_tagl_close'] = "</li>";
-				$config['first_tag_open'] = "<li>";
-				$config['first_tagl_close'] = "</li>";
-				$config['last_tag_open'] = "<li>";
-				$config['last_tagl_close'] = "</li>";
-				$data['Pesquisa'] = '';
+				$data['pesquisa_query'] = $this->Cliente_model->list_clientes($_SESSION['FiltroClientes'],TRUE, TRUE);
 
-				if($config['total_rows'] >= 1){
-					$data['total_rows'] = $config['total_rows'];
+				if($data['pesquisa_query'] === FALSE){
+					
+					$data['msg'] = '?m=4';
+					redirect(base_url() . 'Cliente/clientes' . $data['msg']);
+					exit();
 				}else{
-					$data['total_rows'] = 0;
-				}
-				
-				$this->pagination->initialize($config);
-				
-				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-				$data['pagina'] = $page;
-				$data['per_page'] = $config['per_page'];
-				$data['report'] = $this->Cliente_model->list_clientes($_SESSION['FiltroClientes'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
-				
-				$data['pagination'] = $this->pagination->create_links();
 
-				if($_SESSION['FiltroClientes']['Agrupar'] != "0"){
-					$data['aparecer'] = 0;
-				}else{
-					$data['aparecer'] = 1;
-				}
+					$config['base_url'] = base_url() . 'Cliente/clientes_pag/';
+					
+					//$config['total_rows'] = $this->Cliente_model->list_clientes(FALSE, TRUE, TRUE);
+
+					$config['total_rows'] = $data['pesquisa_query'];			   					
+					
+					$config['per_page'] = 10;
+					$config["uri_segment"] = 3;
+					$config['reuse_query_string'] = TRUE;
+					$config['num_links'] = 2;
+					$config['use_page_numbers'] = TRUE;
+					$config['full_tag_open'] = "<ul class='pagination'>";
+					$config['full_tag_close'] = "</ul>";
+					$config['num_tag_open'] = '<li>';
+					$config['num_tag_close'] = '</li>';
+					$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+					$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+					$config['next_tag_open'] = "<li>";
+					$config['next_tagl_close'] = "</li>";
+					$config['prev_tag_open'] = "<li>";
+					$config['prev_tagl_close'] = "</li>";
+					$config['first_tag_open'] = "<li>";
+					$config['first_tagl_close'] = "</li>";
+					$config['last_tag_open'] = "<li>";
+					$config['last_tagl_close'] = "</li>";
+					$data['Pesquisa'] = '';
+
+					if($config['total_rows'] >= 1){
+						$data['total_rows'] = $config['total_rows'];
+					}else{
+						$data['total_rows'] = 0;
+					}
+					
+					$this->pagination->initialize($config);
+					
+					$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+					$data['pagina'] = $page;
+					$data['per_page'] = $config['per_page'];
+					$data['report'] = $this->Cliente_model->list_clientes($_SESSION['FiltroClientes'], TRUE, FALSE, $config['per_page'], ($page * $config['per_page']));			
+					
+					$data['pagination'] = $this->pagination->create_links();
+
+					if($_SESSION['FiltroClientes']['Agrupar'] != "0"){
+						$data['aparecer'] = 0;
+					}else{
+						$data['aparecer'] = 1;
+					}
+					
+					$data['list'] = $this->load->view('cliente/list_clientes', $data, TRUE);
 				
-				$data['list'] = $this->load->view('cliente/list_clientes', $data, TRUE);
-			
-			}
-			
+				}
+			}	
 			$this->load->view('cliente/tela_clientes', $data);
 		}
         $this->load->view('basico/footer');

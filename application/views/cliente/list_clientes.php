@@ -23,40 +23,20 @@
 					<span class="glyphicon glyphicon-filter"></span>
 				</button>
 			</div>
-		<?php } ?>		
-		<!--
+		<?php } ?>	
 		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
 			<label></label><br>
-			<a href="<?php #echo base_url() . 'gerar_excel/Cliente/Clientes.php'; ?>">
+			<a href="<?php echo base_url() . 'gerar_excel/Clientes/Clientes.php'; ?>">
 				<button type='button' class='btn btn-md btn-success btn-block'>
-					Excel C/<span class="glyphicon glyphicon-filter"></span>
+					Excel
 				</button>
 			</a>
 		</div>
-		-->
 		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
 			<label></label><br>
-			<a href="<?php echo base_url() . 'Cliente/clientes_excel/2'; ?>">
-				<button type='button' class='btn btn-md btn-success btn-block'>
-					Excel C/<span class="glyphicon glyphicon-filter"></span>
-				</button>
-			</a>
-		</div>
-		<!--
-		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-			<label></label><br>
-			<a href="<?php echo base_url() . 'gerar_excel/Cliente/Clientes_csv.php'; ?>">
+			<a href="<?php echo base_url() . 'gerar_excel/Clientes/Clientes_csv.php'; ?>">
 				<button type='button' class='btn btn-md btn-success btn-block'>
 					G-mail
-				</button>
-			</a>
-		</div>
-		-->
-		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-			<label></label><br>
-			<a href="<?php echo base_url() . 'Cliente/clientes_csv/3'; ?>">
-				<button type='button' class='btn btn-md btn-success btn-block'>
-					G-mail C/<span class="glyphicon glyphicon-filter"></span>
 				</button>
 			</a>
 		</div>
@@ -98,19 +78,7 @@
 							<th class="active">Ult.Pedido</th>
 							<th class="active">CashBack</th>
 							<th class="active">Val.Cash.</th>
-							<?php if(isset($aparecer)){?>
-								<?php if($aparecer == 1){?>
-									<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
-										<th class="active">idPet</th>
-										<th class="active">Pet</th>
-									<?php }else{ ?>
-										<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
-										<th class="active">idDep</th>
-											<th class="active">Dep</th>
-										<?php } ?>
-									<?php } ?>
-								<?php } ?>
-							<?php }else{ ?>
+							<?php if(!$_SESSION['FiltroClientes']['Agrupar']){?>
 								<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
 									<th class="active">idPet</th>
 									<th class="active">Pet</th>
@@ -183,19 +151,7 @@
 							<td><?php echo $row['UltimoPedido'] ?></td>
 							<td><?php echo $row['CashBackCliente'] ?></td>
 							<td><?php echo $row['ValidadeCashBack'] ?></td>
-							<?php if(isset($aparecer)){?>
-								<?php if($aparecer == 1){?>	
-									<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
-										<td><?php echo $row['idApp_ClientePet'] ?></td>
-										<td><?php echo $row['NomeClientePet'] ?></td>
-									<?php }else{ ?>
-										<?php if($_SESSION['Empresa']['CadastrarDep'] == "S"){?>
-											<td><?php echo $row['idApp_ClienteDep'] ?></td>
-											<td><?php echo $row['NomeClienteDep'] ?></td>
-										<?php } ?>
-									<?php } ?>
-								<?php } ?>	
-							<?php }else{ ?>
+							<?php if(!$_SESSION['FiltroClientes']['Agrupar']){?>	
 								<?php if($_SESSION['Empresa']['CadastrarPet'] == "S"){?>
 									<td><?php echo $row['idApp_ClientePet'] ?></td>
 									<td><?php echo $row['NomeClientePet'] ?></td>

@@ -612,7 +612,7 @@ class Cliente_model extends CI_Model {
 
     }	
 
-	public function list_clientes($data, $completo, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
+	public function list_clientes($data = FALSE, $completo = FALSE, $total = FALSE, $limit = FALSE, $start = FALSE, $date = FALSE) {
 
 		if($data['Pesquisa']){
 			if (preg_match("/^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](1[89][0-9][0-9]|2[0189][0-9][0-9])$/", $data['Pesquisa'])) {
@@ -655,7 +655,6 @@ class Cliente_model extends CI_Model {
 		$dia = ($data['Dia']) ? ' AND DAY(C.DataNascimento) = ' . $data['Dia'] : FALSE;
 		$mes = ($data['Mes']) ? ' AND MONTH(C.DataNascimento) = ' . $data['Mes'] : FALSE;
 		$ano = ($data['Ano']) ? ' AND YEAR(C.DataNascimento) = ' . $data['Ano'] : FALSE;
-		
 
 		$id_cliente = ($data['idApp_Cliente']) ? ' AND C.idApp_Cliente = ' . $data['idApp_Cliente'] : FALSE;
 		
@@ -675,6 +674,7 @@ class Cliente_model extends CI_Model {
 			$id_clientepet = FALSE;
 			$id_clientepet2 = FALSE;
 		}
+		
 		if(isset($data['Sexo'])){
 			if($data['Sexo'] == 0){
 				$sexo = FALSE;
@@ -703,64 +703,31 @@ class Cliente_model extends CI_Model {
 		$ordenamento = (!$data['Ordenamento']) ? 'ASC' : $data['Ordenamento'];
 		$filtro10 = (isset($data['Ativo']) && $data['Ativo'] != '#') ? 'C.Ativo = "' . $data['Ativo'] . '" AND ' : FALSE;
 		$filtro20 = (isset($data['Motivo']) && $data['Motivo'] != '0') ? 'C.Motivo = "' . $data['Motivo'] . '" AND ' : FALSE;
-		
-		$groupby = (isset($data['Agrupar']) && $data['Agrupar'] != "0") ? 'GROUP BY C.' . $data['Agrupar'] . '' : FALSE;
 
-		if($data){
-			if($data['Aparecer'] == 1){
-				if($_SESSION['Empresa']['CadastrarPet'] == "S"){
-					$clientepet = 'LEFT JOIN App_ClientePet AS CP ON CP.idApp_Cliente = C.idApp_Cliente';
-					$cp_id_clientepet = 'CP.idApp_ClientePet,';
-					$cp_nomeclientepet = 'CP.NomeClientePet,';
-					$clientedep = FALSE;
-					$cd_id_clientedep = FALSE;
-					$cd_nomeclientedep = FALSE;
-				}else{
-					$clientepet = FALSE;
-					$cp_id_clientepet = FALSE;
-					$cp_nomeclientepet = FALSE;
-					if($_SESSION['Empresa']['CadastrarDep'] == "S"){
-						$clientedep = 'LEFT JOIN App_ClienteDep AS CD ON CD.idApp_Cliente = C.idApp_Cliente';
-						$cd_id_clientedep = 'CD.idApp_ClienteDep,';
-						$cd_nomeclientedep = 'CD.NomeClienteDep,';
-					}else{
-						$clientedep = FALSE;
-						$cd_id_clientedep = FALSE;
-						$cd_nomeclientedep = FALSE;
-					}
-				}
-			}else{
-				$clientepet = FALSE;
-				$cp_id_clientepet = FALSE;
-				$cp_nomeclientepet = FALSE;
-				$clientedep = FALSE;
-				$cd_id_clientedep = FALSE;
-				$cd_nomeclientedep = FALSE;
-			}
+		$groupby = ($data['Agrupar']) ? 'GROUP BY C.idApp_Cliente' : FALSE;
+
+		if($_SESSION['Empresa']['CadastrarPet'] == "S"){
+			$clientepet = 'LEFT JOIN App_ClientePet AS CP ON CP.idApp_Cliente = C.idApp_Cliente';
+			$cp_id_clientepet = 'CP.idApp_ClientePet,';
+			$cp_nomeclientepet = 'CP.NomeClientePet,';
+			$clientedep = FALSE;
+			$cd_id_clientedep = FALSE;
+			$cd_nomeclientedep = FALSE;
 		}else{
-			if($_SESSION['Empresa']['CadastrarPet'] == "S"){
-				$clientepet = 'LEFT JOIN App_ClientePet AS CP ON CP.idApp_Cliente = C.idApp_Cliente';
-				$cp_id_clientepet = 'CP.idApp_ClientePet,';
-				$cp_nomeclientepet = 'CP.NomeClientePet,';
+			$clientepet = FALSE;
+			$cp_id_clientepet = FALSE;
+			$cp_nomeclientepet = FALSE;
+			if($_SESSION['Empresa']['CadastrarDep'] == "S"){
+				$clientedep = 'LEFT JOIN App_ClienteDep AS CD ON CD.idApp_Cliente = C.idApp_Cliente';
+				$cd_id_clientedep = 'CD.idApp_ClienteDep,';
+				$cd_nomeclientedep = 'CD.NomeClienteDep,';
+			}else{
 				$clientedep = FALSE;
 				$cd_id_clientedep = FALSE;
 				$cd_nomeclientedep = FALSE;
-			}else{
-				$clientepet = FALSE;
-				$cp_id_clientepet = FALSE;
-				$cp_nomeclientepet = FALSE;
-				if($_SESSION['Empresa']['CadastrarDep'] == "S"){
-					$clientedep = 'LEFT JOIN App_ClienteDep AS CD ON CD.idApp_Cliente = C.idApp_Cliente';
-					$cd_id_clientedep = 'CD.idApp_ClienteDep,';
-					$cd_nomeclientedep = 'CD.NomeClienteDep,';
-				}else{
-					$clientedep = FALSE;
-					$cd_id_clientedep = FALSE;
-					$cd_nomeclientedep = FALSE;
-				}
 			}
 		}
-			
+	
 		if($_SESSION['Usuario']['Nivel'] == 2){
 			$revendedor = 'AND (C.NivelCliente = "1" OR C.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ')';
 		}else{
@@ -770,7 +737,6 @@ class Cliente_model extends CI_Model {
 		$querylimit = '';
         if ($limit)
             $querylimit = 'LIMIT ' . $start . ', ' . $limit;
-		
 
 		if($total == TRUE) {
 
@@ -779,7 +745,6 @@ class Cliente_model extends CI_Model {
 					C.idApp_Cliente
 				FROM
 					App_Cliente AS C
-						LEFT JOIN Tab_Municipio AS M ON C.MunicipioCliente = M.idTab_Municipio
 						LEFT JOIN Tab_Motivo AS MT ON  MT.idTab_Motivo = C.Motivo
 						' . $clientepet . '
 						' . $clientedep . '
@@ -820,117 +785,108 @@ class Cliente_model extends CI_Model {
 				if($count >= 30001){
 					return FALSE;
 				}else{
-					if ($completo === FALSE) {
-						return TRUE;
-					} else {
-						return $count;
-					}
+					return $count;
 				}
 			}
 		}
 
-		$query = $this->db->query('
-            SELECT
-				C.idSis_Empresa,
-				C.idApp_Cliente,
-				C.idSis_Associado,
-                C.NomeCliente,
-				' . $cp_id_clientepet . '
-				' . $cp_nomeclientepet . '
-				' . $cd_id_clientedep . '
-				' . $cd_nomeclientedep . '
-				C.Arquivo,
-				C.Ativo,
-				C.Motivo,
-                C.DataNascimento,
-				C.DataCadastroCliente,
-				DATE_FORMAT(C.DataNascimento, "%d/%m/%Y") AS Aniversario,
-				DATE_FORMAT(C.DataCadastroCliente, "%d/%m/%Y") AS Cadastro,
-                C.CelularCliente,
-                C.Telefone,
-                C.Telefone2,
-                C.Telefone3,
-                C.Sexo,
-                C.EnderecoCliente,
-				C.NumeroCliente,
-				C.ComplementoCliente,
-                C.BairroCliente,
-				C.CidadeCliente,
-				C.EstadoCliente,
-				C.ReferenciaCliente,
-				C.CepCliente,
-				C.Obs,
-                CONCAT(M.NomeMunicipio, "/", M.Uf) AS MunicipioCliente,
-                C.Email,
-				C.RegistroFicha,
-				C.usuario,
-				C.senha,
-				C.CodInterno,
-				C.CashBackCliente,
-				C.ValidadeCashBack,
-				C.id_UltimoPedido,
-				C.UltimoPedido,
-				MT.Motivo
-            FROM
-				App_Cliente AS C
-                    LEFT JOIN Tab_Municipio AS M ON C.MunicipioCliente = M.idTab_Municipio
-                    LEFT JOIN Tab_Motivo AS MT ON  MT.idTab_Motivo = C.Motivo
-					' . $clientepet . '
-					' . $clientedep . '
-			WHERE
-				' . $date_inicio_orca . '
-				' . $date_fim_orca . '
-				' . $date_inicio_cash . '
-				' . $date_fim_cash . '
-				' . $date_inicio_ultimo . '
-				' . $date_fim_ultimo . '
-				' . $filtro10 . '
-				' . $filtro20 . '
-				' . $pedidos . '
-				' . $sexo . '
-				C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
-				' . $id_cliente . ' 
-				' . $id_clientepet . '
-				' . $id_clientedep . '
-				' . $id_clientepet2 . '
-				' . $id_clientedep2 . '
-				' . $dia . ' 
-				' . $mes . '
-				' . $ano . '
-				' . $pesquisar . '
-				' . $revendedor . '
-			' . $groupby . '
-            ORDER BY
-                ' . $campo . '
-				' . $ordenamento . '
-			' . $querylimit . '
-        ');
+		if($total == FALSE) {
+			$query = $this->db->query('
+				SELECT
+					C.idApp_Cliente,
+					C.idSis_Empresa,
+					C.idSis_Associado,
+					C.NomeCliente,
+					' . $cp_id_clientepet . '
+					' . $cp_nomeclientepet . '
+					' . $cd_id_clientedep . '
+					' . $cd_nomeclientedep . '
+					C.Arquivo,
+					C.Ativo,
+					C.Motivo,
+					C.DataNascimento,
+					C.DataCadastroCliente,
+					DATE_FORMAT(C.DataNascimento, "%d/%m/%Y") AS Aniversario,
+					DATE_FORMAT(C.DataCadastroCliente, "%d/%m/%Y") AS Cadastro,
+					C.CelularCliente,
+					C.Telefone,
+					C.Telefone2,
+					C.Telefone3,
+					C.Sexo,
+					C.EnderecoCliente,
+					C.NumeroCliente,
+					C.ComplementoCliente,
+					C.BairroCliente,
+					C.CidadeCliente,
+					C.EstadoCliente,
+					C.ReferenciaCliente,
+					C.CepCliente,
+					C.Obs,
+					C.Email,
+					C.RegistroFicha,
+					C.usuario,
+					C.senha,
+					C.CodInterno,
+					C.CashBackCliente,
+					C.ValidadeCashBack,
+					C.id_UltimoPedido,
+					C.UltimoPedido,
+					MT.Motivo
+				FROM
+					App_Cliente AS C
+						LEFT JOIN Tab_Motivo AS MT ON  MT.idTab_Motivo = C.Motivo
+						' . $clientepet . '
+						' . $clientedep . '
+				WHERE
+					' . $date_inicio_orca . '
+					' . $date_fim_orca . '
+					' . $date_inicio_cash . '
+					' . $date_fim_cash . '
+					' . $date_inicio_ultimo . '
+					' . $date_fim_ultimo . '
+					' . $filtro10 . '
+					' . $filtro20 . '
+					' . $pedidos . '
+					' . $sexo . '
+					C.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' 
+					' . $id_cliente . ' 
+					' . $id_clientepet . '
+					' . $id_clientedep . '
+					' . $id_clientepet2 . '
+					' . $id_clientedep2 . '
+					' . $dia . ' 
+					' . $mes . '
+					' . $ano . '
+					' . $pesquisar . '
+					' . $revendedor . '
+				' . $groupby . '
+				ORDER BY
+					' . $campo . '
+					' . $ordenamento . '
+				' . $querylimit . '
+			');
 
-        if ($completo === FALSE) {
-            return TRUE;
-        } else {
-
-            foreach ($query->result() as $row) {
+			foreach ($query->result() as $row) {
 				$row->DataNascimento = $this->basico->mascara_data($row->DataNascimento, 'barras');
 				$row->DataCadastroCliente = $this->basico->mascara_data($row->DataCadastroCliente, 'barras');
 				$row->UltimoPedido = $this->basico->mascara_data($row->UltimoPedido, 'barras');
 				$row->ValidadeCashBack = $this->basico->mascara_data($row->ValidadeCashBack, 'barras');
 				$row->Ativo = $this->basico->mascara_palavra_completa($row->Ativo, 'NS');
-                $row->NomeEmpresa = $_SESSION['Empresa']['NomeEmpresa'];
+				$row->NomeEmpresa = $_SESSION['Empresa']['NomeEmpresa'];
 				#$row->Sexo = $this->basico->get_sexo($row->Sexo);
-                #$row->Sexo = ($row->Sexo == 2) ? 'F' : 'M';
+				#$row->Sexo = ($row->Sexo == 2) ? 'F' : 'M';
 
-                $row->CelularCliente = ($row->CelularCliente) ? $row->CelularCliente : FALSE;
+				$row->CelularCliente = ($row->CelularCliente) ? $row->CelularCliente : FALSE;
 				$row->Telefone2 = ($row->Telefone2) ? $row->Telefone2 : FALSE;
 				$row->Telefone3 = ($row->Telefone3) ? $row->Telefone3 : FALSE;
 
-                #$row->Telefone .= ($row->Telefone2) ? ' / ' . $row->Telefone2 : FALSE;
-                #$row->Telefone .= ($row->Telefone3) ? ' / ' . $row->Telefone3 : FALSE;
+				#$row->Telefone .= ($row->Telefone2) ? ' / ' . $row->Telefone2 : FALSE;
+				#$row->Telefone .= ($row->Telefone3) ? ' / ' . $row->Telefone3 : FALSE;
 
-            }
+			}
 
-            return $query;
-        }
+			return $query;
+		}
 
     }
 
