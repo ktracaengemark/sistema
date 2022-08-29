@@ -667,7 +667,8 @@ class Despesas_model extends CI_Model {
 				' . $filtro17 . '
 				' . $produtos . '
 				' . $parcelas . '
-				OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . '
+				OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . ' AND
+				OT.idTab_TipoRD = 1
 				' . $orcamento . '
 				' . $id_grupoorca . '
 				' . $fornecedor . '
@@ -675,7 +676,6 @@ class Despesas_model extends CI_Model {
 				' . $id_funcionario . '
 				' . $id_associado . '
 				' . $tipofinandeiro . ' 
-				' . $idtipord . '
 				' . $DiaAniv . '
 				' . $MesAniv . '
 				' . $AnoAniv . '

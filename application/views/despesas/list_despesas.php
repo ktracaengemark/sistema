@@ -93,7 +93,7 @@
 			<?php } ?>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
 				<label>Excel</label><br>
-				<a href="<?php echo base_url() . 'Despesas/despesas_excel/2'; ?>">
+				<a href="<?php echo base_url() . 'gerar_excel/Despesas/Despesas_xls.php'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
 						C/<span class="glyphicon glyphicon-filter"></span>
 					</button>
