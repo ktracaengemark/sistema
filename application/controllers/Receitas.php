@@ -479,7 +479,15 @@ class Receitas extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 		
         #run form validation
-
+				
+		if(!isset($_SESSION['FiltroReceitas'])){
+			
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{							
+			
 			$data['pesquisa_query'] = $this->Receitas_model->list_receitas($_SESSION['FiltroReceitas'],FALSE, TRUE);
 			
 			if($data['pesquisa_query'] === FALSE){
@@ -539,7 +547,7 @@ class Receitas extends CI_Controller {
 
 				$data['list1'] = $this->load->view('receitas/list_receitas', $data, TRUE);
 			}
-       		
+       	}	
 
         $this->load->view('receitas/tela_receitas', $data);
 
@@ -635,7 +643,15 @@ class Receitas extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 		
         #run form validation
-
+				
+		if(!isset($_SESSION['FiltroReceitas'])){
+			
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
+			
+		}else{							
+			
 			$data['pesquisa_query'] = $this->Receitas_model->list_receitas($_SESSION['FiltroReceitas'],FALSE, TRUE);
 			
 			if($data['pesquisa_query'] === FALSE){
@@ -695,7 +711,7 @@ class Receitas extends CI_Controller {
 
 				$data['list1'] = $this->load->view('receitas/list_receitas_lista', $data, TRUE);
 			}
-        		
+		}	
 
         $this->load->view('receitas/tela_receitas', $data);
 
@@ -761,99 +777,108 @@ class Receitas extends CI_Controller {
 					exit();
 					
 				}else{
-
-					$data['pesquisa_query'] = $this->Receitas_model->list_receitas($_SESSION['FiltroReceitas'], TRUE, TRUE, FALSE, FALSE, FALSE);
-			
-					if($data['pesquisa_query'] === FALSE){
+				
+					if(!isset($_SESSION['FiltroReceitas'])){
 						
-						$data['msg'] = '?m=4';
-						redirect(base_url() . 'receitas/receitas' . $data['msg']);
+						$data['msg'] = '?m=3';
+						redirect(base_url() . 'acesso' . $data['msg']);
 						exit();
-					}else{
-
-						$_SESSION['FiltroReceitas']['FinalTotal'] = $data['pesquisa_query']->soma2->somafinal2;
 						
-						$_SESSION['FiltroReceitas']['TotalRows'] = $config['total_rows'] = $data['pesquisa_query']->num_rows();
-						
-						$config['base_url'] = base_url() . 'Receitas/receitas_baixa/' . $id . '/';	
-						$config['per_page'] = 19;
-						$config["uri_segment"] = 4;
-						$config['reuse_query_string'] = TRUE;
-						$config['num_links'] = 2;
-						$config['use_page_numbers'] = TRUE;
-						$config['full_tag_open'] = "<ul class='pagination'>";
-						$config['full_tag_close'] = "</ul>";
-						$config['num_tag_open'] = '<li>';
-						$config['num_tag_close'] = '</li>';
-						$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-						$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-						$config['next_tag_open'] = "<li>";
-						$config['next_tagl_close'] = "</li>";
-						$config['prev_tag_open'] = "<li>";
-						$config['prev_tagl_close'] = "</li>";
-						$config['first_tag_open'] = "<li>";
-						$config['first_tagl_close'] = "</li>";
-						$config['last_tag_open'] = "<li>";
-						$config['last_tagl_close'] = "</li>";
-						
-						if($config['total_rows'] >= 1){
-							$data['total_rows'] = $config['total_rows'];
-						}else{
-							$data['total_rows'] = 0;
-						}
-						
-						$this->pagination->initialize($config);
-						
-						$_SESSION['FiltroReceitas']['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-								
-						$_SESSION['FiltroReceitas']['Pagina_atual'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"])) : 0;
-								
-						$_SESSION['FiltroReceitas']['Per_Page'] = $data['per_page'] = $config['per_page'];
-						
-						$_SESSION['FiltroReceitas']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
-						
-						#### App_OrcaTrata ####
-						$data['orcamento'] = $this->Receitas_model->list_receitas($_SESSION['FiltroReceitas'], TRUE, TRUE, $_SESSION['FiltroReceitas']['Per_Page'], ($_SESSION['FiltroReceitas']['Pagina'] * $_SESSION['FiltroReceitas']['Per_Page']), TRUE);
-						
-						if (count($data['orcamento']) > 0) {
-							$data['orcamento'] = array_combine(range(1, count($data['orcamento'])), array_values($data['orcamento']));
-							$_SESSION['FiltroReceitas']['Contagem'] = $data['count']['PRCount'] = count($data['orcamento']);
+					}else{							
+			
+						$data['pesquisa_query'] = $this->Receitas_model->list_receitas($_SESSION['FiltroReceitas'], TRUE, TRUE, FALSE, FALSE, FALSE);
+				
+						if($data['pesquisa_query'] === FALSE){
 							
-							if (isset($data['orcamento'])) {
-								
-								for($j=1; $j <= $data['count']['PRCount']; $j++) {
-									
-									$data['somatotal'] += $data['orcamento'][$j]['ValorFinalOrca'];
-									
-									$_SESSION['Orcamento'][$j]['DataOrca'] = $this->basico->mascara_data($data['orcamento'][$j]['DataOrca'], 'barras');
-									$_SESSION['Orcamento'][$j]['DataEntregaOrca'] = $this->basico->mascara_data($data['orcamento'][$j]['DataEntregaOrca'], 'barras');
-									$_SESSION['Orcamento'][$j]['HoraEntregaOrca'] = $data['orcamento'][$j]['HoraEntregaOrca'];
-									$_SESSION['Orcamento'][$j]['ValorFinalOrca'] = $data['orcamento'][$j]['ValorFinalOrca'];
-									$_SESSION['Orcamento'][$j]['Tipo_Orca'] = $data['orcamento'][$j]['Tipo_Orca'];
-									$_SESSION['Orcamento'][$j]['NomeColaborador'] = $data['orcamento'][$j]['NomeColaborador'];
-									$_SESSION['Orcamento'][$j]['idApp_Cliente'] = $data['orcamento'][$j]['idApp_Cliente'];
-									$_SESSION['Orcamento'][$j]['NomeCliente'] = $data['orcamento'][$j]['NomeCliente'];
-									
-									$_SESSION['Orcamento'][$j]['CombinadoFrete'] = $data['orcamento'][$j]['CombinadoFrete'];
-									$_SESSION['Orcamento'][$j]['AprovadoOrca'] = $data['orcamento'][$j]['AprovadoOrca'];
-									$_SESSION['Orcamento'][$j]['ConcluidoOrca'] = $data['orcamento'][$j]['ConcluidoOrca'];
-									$_SESSION['Orcamento'][$j]['QuitadoOrca'] = $data['orcamento'][$j]['QuitadoOrca'];
-									$_SESSION['Orcamento'][$j]['CanceladoOrca'] = $data['orcamento'][$j]['CanceladoOrca'];
-									/*
-									echo '<br>';
-									echo "<pre>";
-									print_r($data['orcamento'][$j]['HoraEntregaOrca']);
-									echo "</pre>";
-									*/
-								}
-								
-								$_SESSION['FiltroReceitas']['SomaTotal'] = $data['somatotal'] = number_format($data['somatotal'],2,",",".");
-							}
+							$data['msg'] = '?m=4';
+							redirect(base_url() . 'receitas/receitas' . $data['msg']);
+							exit();
 						}else{
-							$_SESSION['FiltroReceitas']['Contagem'] = 0;
-							$_SESSION['FiltroReceitas']['SomaTotal'] = 0;
+
+							$_SESSION['FiltroReceitas']['FinalTotal'] = $data['pesquisa_query']->soma2->somafinal2;
+							
+							$_SESSION['FiltroReceitas']['TotalRows'] = $config['total_rows'] = $data['pesquisa_query']->num_rows();
+							
+							$config['base_url'] = base_url() . 'Receitas/receitas_baixa/' . $id . '/';	
+							$config['per_page'] = 19;
+							$config["uri_segment"] = 4;
+							$config['reuse_query_string'] = TRUE;
+							$config['num_links'] = 2;
+							$config['use_page_numbers'] = TRUE;
+							$config['full_tag_open'] = "<ul class='pagination'>";
+							$config['full_tag_close'] = "</ul>";
+							$config['num_tag_open'] = '<li>';
+							$config['num_tag_close'] = '</li>';
+							$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+							$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+							$config['next_tag_open'] = "<li>";
+							$config['next_tagl_close'] = "</li>";
+							$config['prev_tag_open'] = "<li>";
+							$config['prev_tagl_close'] = "</li>";
+							$config['first_tag_open'] = "<li>";
+							$config['first_tagl_close'] = "</li>";
+							$config['last_tag_open'] = "<li>";
+							$config['last_tagl_close'] = "</li>";
+							
+							if($config['total_rows'] >= 1){
+								$data['total_rows'] = $config['total_rows'];
+							}else{
+								$data['total_rows'] = 0;
+							}
+							
+							$this->pagination->initialize($config);
+							
+							$_SESSION['FiltroReceitas']['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+									
+							$_SESSION['FiltroReceitas']['Pagina_atual'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"])) : 0;
+									
+							$_SESSION['FiltroReceitas']['Per_Page'] = $data['per_page'] = $config['per_page'];
+							
+							$_SESSION['FiltroReceitas']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
+							
+							#### App_OrcaTrata ####
+							$data['orcamento'] = $this->Receitas_model->list_receitas($_SESSION['FiltroReceitas'], TRUE, TRUE, $_SESSION['FiltroReceitas']['Per_Page'], ($_SESSION['FiltroReceitas']['Pagina'] * $_SESSION['FiltroReceitas']['Per_Page']), TRUE);
+							
+							if (count($data['orcamento']) > 0) {
+								$data['orcamento'] = array_combine(range(1, count($data['orcamento'])), array_values($data['orcamento']));
+								$_SESSION['FiltroReceitas']['Contagem'] = $data['count']['PRCount'] = count($data['orcamento']);
+								
+								if (isset($data['orcamento'])) {
+									
+									for($j=1; $j <= $data['count']['PRCount']; $j++) {
+										
+										$data['somatotal'] += $data['orcamento'][$j]['ValorFinalOrca'];
+										
+										$_SESSION['Orcamento'][$j]['DataOrca'] = $this->basico->mascara_data($data['orcamento'][$j]['DataOrca'], 'barras');
+										$_SESSION['Orcamento'][$j]['DataEntregaOrca'] = $this->basico->mascara_data($data['orcamento'][$j]['DataEntregaOrca'], 'barras');
+										$_SESSION['Orcamento'][$j]['HoraEntregaOrca'] = $data['orcamento'][$j]['HoraEntregaOrca'];
+										$_SESSION['Orcamento'][$j]['ValorFinalOrca'] = $data['orcamento'][$j]['ValorFinalOrca'];
+										$_SESSION['Orcamento'][$j]['Tipo_Orca'] = $data['orcamento'][$j]['Tipo_Orca'];
+										$_SESSION['Orcamento'][$j]['NomeColaborador'] = $data['orcamento'][$j]['NomeColaborador'];
+										$_SESSION['Orcamento'][$j]['idApp_Cliente'] = $data['orcamento'][$j]['idApp_Cliente'];
+										$_SESSION['Orcamento'][$j]['NomeCliente'] = $data['orcamento'][$j]['NomeCliente'];
+										
+										$_SESSION['Orcamento'][$j]['CombinadoFrete'] = $data['orcamento'][$j]['CombinadoFrete'];
+										$_SESSION['Orcamento'][$j]['AprovadoOrca'] = $data['orcamento'][$j]['AprovadoOrca'];
+										$_SESSION['Orcamento'][$j]['ConcluidoOrca'] = $data['orcamento'][$j]['ConcluidoOrca'];
+										$_SESSION['Orcamento'][$j]['QuitadoOrca'] = $data['orcamento'][$j]['QuitadoOrca'];
+										$_SESSION['Orcamento'][$j]['CanceladoOrca'] = $data['orcamento'][$j]['CanceladoOrca'];
+										/*
+										echo '<br>';
+										echo "<pre>";
+										print_r($data['orcamento'][$j]['HoraEntregaOrca']);
+										echo "</pre>";
+										*/
+									}
+									
+									$_SESSION['FiltroReceitas']['SomaTotal'] = $data['somatotal'] = number_format($data['somatotal'],2,",",".");
+								}
+							}else{
+								$_SESSION['FiltroReceitas']['Contagem'] = 0;
+								$_SESSION['FiltroReceitas']['SomaTotal'] = 0;
+							}
+							
 						}
-						
 					}
 				}
 			}

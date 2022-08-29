@@ -498,63 +498,72 @@ class Cobrancas extends CI_Controller {
 		
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
         #run form validation
-
-		$data['pesquisa_query'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'],FALSE, TRUE);
-		
-		if($data['pesquisa_query'] === FALSE){
-			
-			$data['msg'] = '?m=4';
-			redirect(base_url() . 'Cobrancas/cobrancas' . $data['msg']);
-			exit();
-		}else{
-
-			$config['base_url'] = base_url() . 'Cobrancas/cobrancas_pag/';
-			$config['total_rows'] = $data['pesquisa_query']->num_rows();
-			$config['per_page'] = 12;
-			$config["uri_segment"] = 3;
-			$config['reuse_query_string'] = TRUE;
-			$config['num_links'] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['full_tag_open'] = "<ul class='pagination'>";
-			$config['full_tag_close'] = "</ul>";
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-			$config['next_tag_open'] = "<li>";
-			$config['next_tagl_close'] = "</li>";
-			$config['prev_tag_open'] = "<li>";
-			$config['prev_tagl_close'] = "</li>";
-			$config['first_tag_open'] = "<li>";
-			$config['first_tagl_close'] = "</li>";
-			$config['last_tag_open'] = "<li>";
-			$config['last_tagl_close'] = "</li>";
-			$data['Pesquisa'] = '';
-
-			if($config['total_rows'] >= 1){
-				$data['total_rows'] = $config['total_rows'];
-			}else{
-				$data['total_rows'] = 0;
-			}
-			
-            $this->pagination->initialize($config);
-            
-			$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-            
-			$data['pagina'] = $page;
-			
-			$data['per_page'] = $config['per_page'];
 				
-			$data['linha'] = $page * $config['per_page'];
+		if(!isset($_SESSION['FiltroCobrancas'])){
 			
-			$data['report'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, FALSE, $config['per_page'], $data['linha']);			
+			$data['msg'] = '?m=3';
+			redirect(base_url() . 'acesso' . $data['msg']);
+			exit();
 			
-			$data['pagination'] = $this->pagination->create_links();
+		}else{							
+			
+			$data['pesquisa_query'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'],FALSE, TRUE);
+			
+			if($data['pesquisa_query'] === FALSE){
+				
+				$data['msg'] = '?m=4';
+				redirect(base_url() . 'Cobrancas/cobrancas' . $data['msg']);
+				exit();
+			}else{
 
-            $data['list1'] = $this->load->view('cobrancas/list_cobrancas', $data, TRUE);
-       
+				$config['base_url'] = base_url() . 'Cobrancas/cobrancas_pag/';
+				$config['total_rows'] = $data['pesquisa_query']->num_rows();
+				$config['per_page'] = 12;
+				$config["uri_segment"] = 3;
+				$config['reuse_query_string'] = TRUE;
+				$config['num_links'] = 2;
+				$config['use_page_numbers'] = TRUE;
+				$config['full_tag_open'] = "<ul class='pagination'>";
+				$config['full_tag_close'] = "</ul>";
+				$config['num_tag_open'] = '<li>';
+				$config['num_tag_close'] = '</li>';
+				$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+				$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+				$config['next_tag_open'] = "<li>";
+				$config['next_tagl_close'] = "</li>";
+				$config['prev_tag_open'] = "<li>";
+				$config['prev_tagl_close'] = "</li>";
+				$config['first_tag_open'] = "<li>";
+				$config['first_tagl_close'] = "</li>";
+				$config['last_tag_open'] = "<li>";
+				$config['last_tagl_close'] = "</li>";
+				$data['Pesquisa'] = '';
+
+				if($config['total_rows'] >= 1){
+					$data['total_rows'] = $config['total_rows'];
+				}else{
+					$data['total_rows'] = 0;
+				}
+				
+				$this->pagination->initialize($config);
+				
+				$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+				
+				$data['pagina'] = $page;
+				
+				$data['per_page'] = $config['per_page'];
+					
+				$data['linha'] = $page * $config['per_page'];
+				
+				$data['report'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, FALSE, $config['per_page'], $data['linha']);			
+				
+				$data['pagination'] = $this->pagination->create_links();
+
+				$data['list1'] = $this->load->view('cobrancas/list_cobrancas', $data, TRUE);
+		   
+			}
 		}
-        $this->load->view('cobrancas/tela_cobrancas', $data);
+		$this->load->view('cobrancas/tela_cobrancas', $data);
 
         $this->load->view('basico/footer');
 
@@ -647,177 +656,185 @@ class Cobrancas extends CI_Controller {
 					
 			}else{			
 				
-				$data['Imprimir']['DataInicio4'] = $this->basico->mascara_data($_SESSION['FiltroCobrancas']['DataInicio4'], 'barras');
-				$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroCobrancas']['DataFim4'], 'barras');
-		
-				//$data['pesquisa_query'] = $this->Relatorio_print_model->get_cobrancas($_SESSION['FiltroCobrancas'], TRUE);
-				$data['pesquisa_query'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, TRUE, FALSE, FALSE, FALSE);
-				
-				if($data['pesquisa_query'] === FALSE){
+				if(!isset($_SESSION['FiltroCobrancas'])){
 					
-					$data['msg'] = '?m=4';
-					redirect(base_url() . 'Cobrancas/cobrancas' . $data['msg']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
-				}else{
 					
-					//$config['total_rows'] = $data['pesquisa_query'];
+				}else{							
+			
+					$data['Imprimir']['DataInicio4'] = $this->basico->mascara_data($_SESSION['FiltroCobrancas']['DataInicio4'], 'barras');
+					$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroCobrancas']['DataFim4'], 'barras');
+			
+					$data['pesquisa_query'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, TRUE, FALSE, FALSE, FALSE);
 					
-					$config['total_rows'] = $data['pesquisa_query']->num_rows();
-					$config['base_url'] = base_url() . 'Cobrancas/cobrancas_lista/' . $id . '/';
-					$config['per_page'] = 19;
-					$config["uri_segment"] = 4;
-					$config['reuse_query_string'] = TRUE;
-					$config['num_links'] = 2;
-					$config['use_page_numbers'] = TRUE;
-					$config['full_tag_open'] = "<ul class='pagination'>";
-					$config['full_tag_close'] = "</ul>";
-					$config['num_tag_open'] = '<li>';
-					$config['num_tag_close'] = '</li>';
-					$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-					$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-					$config['next_tag_open'] = "<li>";
-					$config['next_tagl_close'] = "</li>";
-					$config['prev_tag_open'] = "<li>";
-					$config['prev_tagl_close'] = "</li>";
-					$config['first_tag_open'] = "<li>";
-					$config['first_tagl_close'] = "</li>";
-					$config['last_tag_open'] = "<li>";
-					$config['last_tagl_close'] = "</li>";		   
-					
-					if($config['total_rows'] >= 1){
-						$data['total_rows'] = $config['total_rows'];
-					}else{
-						$data['total_rows'] = 0;
-					}
-					
-					$this->pagination->initialize($config);
-					
-					$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-					
-					$data['pagina'] = $page;
-					
-					$data['per_page'] = $config['per_page'];
-					
-					$data['pagination'] = $this->pagination->create_links();		
+					if($data['pesquisa_query'] === FALSE){
 						
-					#### App_OrcaTrata ####
-					$data['orcatrata'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
-					/*
-					echo '<br>';
-					echo "<pre>";
-					print_r($data['orcatrata']);
-					echo "</pre>";
-					exit ();
-					*/
-					if (count($data['orcatrata']) > 0) {
-						$data['orcatrata'] = array_combine(range(1, count($data['orcatrata'])), array_values($data['orcatrata']));
-						$data['count']['POCount'] = count($data['orcatrata']);           
+						$data['msg'] = '?m=4';
+						redirect(base_url() . 'Cobrancas/cobrancas' . $data['msg']);
+						exit();
+					}else{
+						
+						//$config['total_rows'] = $data['pesquisa_query'];
+						
+						$config['total_rows'] = $data['pesquisa_query']->num_rows();
+						$config['base_url'] = base_url() . 'Cobrancas/cobrancas_lista/' . $id . '/';
+						$config['per_page'] = 19;
+						$config["uri_segment"] = 4;
+						$config['reuse_query_string'] = TRUE;
+						$config['num_links'] = 2;
+						$config['use_page_numbers'] = TRUE;
+						$config['full_tag_open'] = "<ul class='pagination'>";
+						$config['full_tag_close'] = "</ul>";
+						$config['num_tag_open'] = '<li>';
+						$config['num_tag_close'] = '</li>';
+						$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+						$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+						$config['next_tag_open'] = "<li>";
+						$config['next_tagl_close'] = "</li>";
+						$config['prev_tag_open'] = "<li>";
+						$config['prev_tagl_close'] = "</li>";
+						$config['first_tag_open'] = "<li>";
+						$config['first_tagl_close'] = "</li>";
+						$config['last_tag_open'] = "<li>";
+						$config['last_tagl_close'] = "</li>";		   
+						
+						if($config['total_rows'] >= 1){
+							$data['total_rows'] = $config['total_rows'];
+						}else{
+							$data['total_rows'] = 0;
+						}
+						
+						$this->pagination->initialize($config);
+						
+						$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+						
+						$data['pagina'] = $page;
+						
+						$data['per_page'] = $config['per_page'];
+						
+						$data['pagination'] = $this->pagination->create_links();		
+							
+						#### App_OrcaTrata ####
+						$data['orcatrata'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
+						/*
+						echo '<br>';
+						echo "<pre>";
+						print_r($data['orcatrata']);
+						echo "</pre>";
+						exit ();
+						*/
+						if (count($data['orcatrata']) > 0) {
+							$data['orcatrata'] = array_combine(range(1, count($data['orcatrata'])), array_values($data['orcatrata']));
+							$data['count']['POCount'] = count($data['orcatrata']);           
 
-						if (isset($data['orcatrata'])) {
+							if (isset($data['orcatrata'])) {
 
-							for($i=1;$i<=$data['count']['POCount'];$i++) {
+								for($i=1;$i<=$data['count']['POCount'];$i++) {
 
-								$data['orcatrata'][$i]['DataOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataOrca'], 'barras');
-								$data['orcatrata'][$i]['DataEntregaOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataEntregaOrca'], 'barras');
-								$data['orcatrata'][$i]['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataVencimentoOrca'], 'barras');
-								$data['orcatrata'][$i]['ValorFinalOrca'] = number_format(($data['orcatrata'][$i]['ValorFinalOrca']), 2, ',', '.');
-								$data['orcatrata'][$i]['ConcluidoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['ConcluidoOrca'], 'NS');
-								$data['orcatrata'][$i]['QuitadoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['QuitadoOrca'], 'NS');
-													
-								if($data['orcatrata'][$i]['AVAP'] == "V"){
-									$data['orcatrata'][$i]['AVAP'] = "NaLoja";
-								}elseif($data['orcatrata'][$i]['AVAP'] == "O"){
-									$data['orcatrata'][$i]['AVAP'] = "OnLine";
-								}elseif($data['orcatrata'][$i]['AVAP'] == "P"){
-									$data['orcatrata'][$i]['AVAP'] = "NaEntr";
-								}else{
-									$data['orcatrata'][$i]['AVAP'] = "Outros";
-								}
+									$data['orcatrata'][$i]['DataOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataOrca'], 'barras');
+									$data['orcatrata'][$i]['DataEntregaOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataEntregaOrca'], 'barras');
+									$data['orcatrata'][$i]['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataVencimentoOrca'], 'barras');
+									$data['orcatrata'][$i]['ValorFinalOrca'] = number_format(($data['orcatrata'][$i]['ValorFinalOrca']), 2, ',', '.');
+									$data['orcatrata'][$i]['ConcluidoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['ConcluidoOrca'], 'NS');
+									$data['orcatrata'][$i]['QuitadoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['QuitadoOrca'], 'NS');
+														
+									if($data['orcatrata'][$i]['AVAP'] == "V"){
+										$data['orcatrata'][$i]['AVAP'] = "NaLoja";
+									}elseif($data['orcatrata'][$i]['AVAP'] == "O"){
+										$data['orcatrata'][$i]['AVAP'] = "OnLine";
+									}elseif($data['orcatrata'][$i]['AVAP'] == "P"){
+										$data['orcatrata'][$i]['AVAP'] = "NaEntr";
+									}else{
+										$data['orcatrata'][$i]['AVAP'] = "Outros";
+									}
 
-								/*
-								echo '<br>';
-								echo "<pre>";
-								print_r($data['orcatrata'][$i]);
-								echo "</pre>";
-								*/
-								#### App_ProdutoVenda ####
-								$data['produto'][$i] = $this->Relatorio_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
-								if (count($data['produto'][$i]) > 0) {
-									$data['produto'][$i] = array_combine(range(1, count($data['produto'][$i])), array_values($data['produto'][$i]));
-									$data['count']['PCount'][$i] = count($data['produto'][$i]);
+									/*
+									echo '<br>';
+									echo "<pre>";
+									print_r($data['orcatrata'][$i]);
+									echo "</pre>";
+									*/
+									#### App_ProdutoVenda ####
+									$data['produto'][$i] = $this->Relatorio_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
+									if (count($data['produto'][$i]) > 0) {
+										$data['produto'][$i] = array_combine(range(1, count($data['produto'][$i])), array_values($data['produto'][$i]));
+										$data['count']['PCount'][$i] = count($data['produto'][$i]);
 
-									if (isset($data['produto'][$i])) {
+										if (isset($data['produto'][$i])) {
 
-										for($k=1;$k<=$data['count']['PCount'][$i];$k++) {
-											$data['produto'][$i][$k]['SubtotalProduto'] = number_format(($data['produto'][$i][$k]['ValorProduto'] * $data['produto'][$i][$k]['QtdProduto']), 2, ',', '.');
-											$data['produto'][$i][$k]['ValorProduto'] = number_format(($data['produto'][$i][$k]['ValorProduto']), 2, ',', '.');
-											$data['produto'][$i][$k]['DataValidadeProduto'] = $this->basico->mascara_data($data['produto'][$i][$k]['DataValidadeProduto'], 'barras');
-											$data['produto'][$i][$k]['ConcluidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$i][$k]['ConcluidoProduto'], 'NS');
-											$data['produto'][$i][$k]['DevolvidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$i][$k]['DevolvidoProduto'], 'NS');
+											for($k=1;$k<=$data['count']['PCount'][$i];$k++) {
+												$data['produto'][$i][$k]['SubtotalProduto'] = number_format(($data['produto'][$i][$k]['ValorProduto'] * $data['produto'][$i][$k]['QtdProduto']), 2, ',', '.');
+												$data['produto'][$i][$k]['ValorProduto'] = number_format(($data['produto'][$i][$k]['ValorProduto']), 2, ',', '.');
+												$data['produto'][$i][$k]['DataValidadeProduto'] = $this->basico->mascara_data($data['produto'][$i][$k]['DataValidadeProduto'], 'barras');
+												$data['produto'][$i][$k]['ConcluidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$i][$k]['ConcluidoProduto'], 'NS');
+												$data['produto'][$i][$k]['DevolvidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$i][$k]['DevolvidoProduto'], 'NS');
+											}
 										}
 									}
-								}
-								/*
-								echo '<br>';
-								echo "<pre>";
-								print_r($data['produto'][$i]);
-								echo "</pre>";
-								*/		
-								#### App_Parcelas####
-								$data['parcelasrec'][$i] = $this->Relatorio_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
-								if (count($data['parcelasrec'][$i]) > 0) {
-									$data['parcelasrec'][$i] = array_combine(range(1, count($data['parcelasrec'][$i])), array_values($data['parcelasrec'][$i]));
-									$data['count']['PRCount'][$i] = count($data['parcelasrec'][$i]);
-									
-									if (isset($data['parcelasrec'][$i])) {
+									/*
+									echo '<br>';
+									echo "<pre>";
+									print_r($data['produto'][$i]);
+									echo "</pre>";
+									*/		
+									#### App_Parcelas####
+									$data['parcelasrec'][$i] = $this->Relatorio_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
+									if (count($data['parcelasrec'][$i]) > 0) {
+										$data['parcelasrec'][$i] = array_combine(range(1, count($data['parcelasrec'][$i])), array_values($data['parcelasrec'][$i]));
+										$data['count']['PRCount'][$i] = count($data['parcelasrec'][$i]);
+										
+										if (isset($data['parcelasrec'][$i])) {
 
-										for($j=1; $j <= $data['count']['PRCount'][$i]; $j++) {
-											$data['parcelasrec'][$i][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataVencimento'], 'barras');
-											$data['parcelasrec'][$i][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataPago'], 'barras');
-											$data['parcelasrec'][$i][$j]['DataLanc'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataLanc'], 'barras');
+											for($j=1; $j <= $data['count']['PRCount'][$i]; $j++) {
+												$data['parcelasrec'][$i][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataVencimento'], 'barras');
+												$data['parcelasrec'][$i][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataPago'], 'barras');
+												$data['parcelasrec'][$i][$j]['DataLanc'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataLanc'], 'barras');
+											}
 										}
 									}
-								}
-								/*
-								echo '<br>';
-								echo "<pre>";
-								print_r($data['parcelasrec'][$i]);
-								echo "</pre>";
-								*/
-								#### App_Procedimento ####
-								$data['procedimento'][$i] = $this->Relatorio_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
-								if (count($data['procedimento'][$i]) > 0) {
-									$data['procedimento'][$i] = array_combine(range(1, count($data['procedimento'][$i])), array_values($data['procedimento'][$i]));
-									$data['count']['PMCount'][$i] = count($data['procedimento'][$i]);
+									/*
+									echo '<br>';
+									echo "<pre>";
+									print_r($data['parcelasrec'][$i]);
+									echo "</pre>";
+									*/
+									#### App_Procedimento ####
+									$data['procedimento'][$i] = $this->Relatorio_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
+									if (count($data['procedimento'][$i]) > 0) {
+										$data['procedimento'][$i] = array_combine(range(1, count($data['procedimento'][$i])), array_values($data['procedimento'][$i]));
+										$data['count']['PMCount'][$i] = count($data['procedimento'][$i]);
 
-									if (isset($data['procedimento'][$i])) {
+										if (isset($data['procedimento'][$i])) {
 
-										for($j=1; $j <= $data['count']['PMCount'][$i]; $j++){
-											$data['procedimento'][$i][$j]['DataProcedimento'] = $this->basico->mascara_data($data['procedimento'][$i][$j]['DataProcedimento'], 'barras');						
+											for($j=1; $j <= $data['count']['PMCount'][$i]; $j++){
+												$data['procedimento'][$i][$j]['DataProcedimento'] = $this->basico->mascara_data($data['procedimento'][$i][$j]['DataProcedimento'], 'barras');						
+											}
 										}
-									}
-								}					
-							}
-						}	
+									}					
+								}
+							}	
+						}
+
+						$data['titulo'] = 'Versão Lista Cobrança';
+						$data['form_open_path'] = 'Cobrancas/cobrancas_lista';
+						$data['panel'] = 'info';
+						$data['metodo'] = 1;
+						$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+						$data['imprimirlista'] = 'Cobrancas/cobrancas_lista/';
+						$data['imprimirrecibo'] = 'Cobrancas/cobrancas_recibo/';
+						
+						/*
+						  echo '<br>';
+						  echo "<pre>";
+						  print_r($data);
+						  echo "</pre>";
+						  #exit ();
+						 */
+
+						$this->load->view('cobrancas/list_cobrancas_lista', $data);
 					}
-
-					$data['titulo'] = 'Versão Lista Cobrança';
-					$data['form_open_path'] = 'Cobrancas/cobrancas_lista';
-					$data['panel'] = 'info';
-					$data['metodo'] = 1;
-					$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-					$data['imprimirlista'] = 'Cobrancas/cobrancas_lista/';
-					$data['imprimirrecibo'] = 'Cobrancas/cobrancas_recibo/';
-					
-					/*
-					  echo '<br>';
-					  echo "<pre>";
-					  print_r($data);
-					  echo "</pre>";
-					  #exit ();
-					 */
-
-					$this->load->view('cobrancas/list_cobrancas_lista', $data);
 				}
 			}	
 		}
@@ -848,161 +865,170 @@ class Cobrancas extends CI_Controller {
 				exit();
 					
 			}else{			
-						
-				$data['Imprimir']['DataInicio4'] = $this->basico->mascara_data($_SESSION['FiltroCobrancas']['DataInicio4'], 'barras');
-				$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroCobrancas']['DataFim4'], 'barras');
 				
-				$data['pesquisa_query'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, TRUE, FALSE, FALSE, FALSE);
-				
-				if($data['pesquisa_query'] === FALSE){
+				if(!isset($_SESSION['FiltroCobrancas'])){
 					
-					$data['msg'] = '?m=4';
-					redirect(base_url() . 'Cobrancas/cobrancas' . $data['msg']);
+					$data['msg'] = '?m=3';
+					redirect(base_url() . 'acesso' . $data['msg']);
 					exit();
-				}else{
-
-					//$config['total_rows'] = $data['pesquisa_query'];
-					$config['total_rows'] = $data['pesquisa_query']->num_rows();
-					$config['base_url'] = base_url() . 'Cobrancas/cobrancas_recibo/' . $id . '/';
-					$config['per_page'] = 12;
-					$config["uri_segment"] = 4;
-					$config['reuse_query_string'] = TRUE;
-					$config['num_links'] = 2;
-					$config['use_page_numbers'] = TRUE;
-					$config['full_tag_open'] = "<ul class='pagination'>";
-					$config['full_tag_close'] = "</ul>";
-					$config['num_tag_open'] = '<li>';
-					$config['num_tag_close'] = '</li>';
-					$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-					$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-					$config['next_tag_open'] = "<li>";
-					$config['next_tagl_close'] = "</li>";
-					$config['prev_tag_open'] = "<li>";
-					$config['prev_tagl_close'] = "</li>";
-					$config['first_tag_open'] = "<li>";
-					$config['first_tagl_close'] = "</li>";
-					$config['last_tag_open'] = "<li>";
-					$config['last_tagl_close'] = "</li>";		   
 					
-					if($config['total_rows'] >= 1){
-						$data['total_rows'] = $config['total_rows'];
+				}else{							
+			
+					$data['Imprimir']['DataInicio4'] = $this->basico->mascara_data($_SESSION['FiltroCobrancas']['DataInicio4'], 'barras');
+					$data['Imprimir']['DataFim4'] = $this->basico->mascara_data($_SESSION['FiltroCobrancas']['DataFim4'], 'barras');
+					
+					$data['pesquisa_query'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, TRUE, FALSE, FALSE, FALSE);
+					
+					if($data['pesquisa_query'] === FALSE){
+						
+						$data['msg'] = '?m=4';
+						redirect(base_url() . 'Cobrancas/cobrancas' . $data['msg']);
+						exit();
 					}else{
-						$data['total_rows'] = 0;
-					}
-					
-					$this->pagination->initialize($config);
-					
-					$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
-					
-					$data['pagina'] = $page;
-					
-					$data['per_page'] = $config['per_page'];
-					
-					$data['pagination'] = $this->pagination->create_links();		
 
-					#### App_OrcaTrata ####
-					$data['orcatrata'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
-					if (count($data['orcatrata']) > 0) {
-						$data['orcatrata'] = array_combine(range(1, count($data['orcatrata'])), array_values($data['orcatrata']));
-						$data['count']['POCount'] = count($data['orcatrata']);           
+						//$config['total_rows'] = $data['pesquisa_query'];
+						$config['total_rows'] = $data['pesquisa_query']->num_rows();
+						$config['base_url'] = base_url() . 'Cobrancas/cobrancas_recibo/' . $id . '/';
+						$config['per_page'] = 12;
+						$config["uri_segment"] = 4;
+						$config['reuse_query_string'] = TRUE;
+						$config['num_links'] = 2;
+						$config['use_page_numbers'] = TRUE;
+						$config['full_tag_open'] = "<ul class='pagination'>";
+						$config['full_tag_close'] = "</ul>";
+						$config['num_tag_open'] = '<li>';
+						$config['num_tag_close'] = '</li>';
+						$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+						$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+						$config['next_tag_open'] = "<li>";
+						$config['next_tagl_close'] = "</li>";
+						$config['prev_tag_open'] = "<li>";
+						$config['prev_tagl_close'] = "</li>";
+						$config['first_tag_open'] = "<li>";
+						$config['first_tagl_close'] = "</li>";
+						$config['last_tag_open'] = "<li>";
+						$config['last_tagl_close'] = "</li>";		   
+						
+						if($config['total_rows'] >= 1){
+							$data['total_rows'] = $config['total_rows'];
+						}else{
+							$data['total_rows'] = 0;
+						}
+						
+						$this->pagination->initialize($config);
+						
+						$page = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+						
+						$data['pagina'] = $page;
+						
+						$data['per_page'] = $config['per_page'];
+						
+						$data['pagination'] = $this->pagination->create_links();		
 
-						if (isset($data['orcatrata'])) {
+						#### App_OrcaTrata ####
+						$data['orcatrata'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'], FALSE, FALSE, $config['per_page'], ($page * $config['per_page']), TRUE);
+						if (count($data['orcatrata']) > 0) {
+							$data['orcatrata'] = array_combine(range(1, count($data['orcatrata'])), array_values($data['orcatrata']));
+							$data['count']['POCount'] = count($data['orcatrata']);           
 
-							for($i=1;$i<=$data['count']['POCount'];$i++) {
+							if (isset($data['orcatrata'])) {
 
-								$data['orcatrata'][$i]['DataOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataOrca'], 'barras');
-								$data['orcatrata'][$i]['DataEntregaOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataEntregaOrca'], 'barras');
-								$data['orcatrata'][$i]['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataVencimentoOrca'], 'barras');
-								$data['orcatrata'][$i]['ValorFinalOrca'] = number_format(($data['orcatrata'][$i]['ValorFinalOrca']), 2, ',', '.');
-								$data['orcatrata'][$i]['ConcluidoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['ConcluidoOrca'], 'NS');
-								$data['orcatrata'][$i]['QuitadoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['QuitadoOrca'], 'NS');
-								/*
-								echo '<br>';
-								echo "<pre>";
-								print_r($data['orcatrata'][$i]);
-								echo "</pre>";
-								*/
-								#### App_ProdutoVenda ####
-								$data['produto'][$i] = $this->Cobrancas_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
-								if (count($data['produto'][$i]) > 0) {
-									$data['produto'][$i] = array_combine(range(1, count($data['produto'][$i])), array_values($data['produto'][$i]));
-									$data['count']['PCount'][$i] = count($data['produto'][$i]);
+								for($i=1;$i<=$data['count']['POCount'];$i++) {
 
-									if (isset($data['produto'][$i])) {
+									$data['orcatrata'][$i]['DataOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataOrca'], 'barras');
+									$data['orcatrata'][$i]['DataEntregaOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataEntregaOrca'], 'barras');
+									$data['orcatrata'][$i]['DataVencimentoOrca'] = $this->basico->mascara_data($data['orcatrata'][$i]['DataVencimentoOrca'], 'barras');
+									$data['orcatrata'][$i]['ValorFinalOrca'] = number_format(($data['orcatrata'][$i]['ValorFinalOrca']), 2, ',', '.');
+									$data['orcatrata'][$i]['ConcluidoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['ConcluidoOrca'], 'NS');
+									$data['orcatrata'][$i]['QuitadoOrca'] = $this->basico->mascara_palavra_completa($data['orcatrata'][$i]['QuitadoOrca'], 'NS');
+									/*
+									echo '<br>';
+									echo "<pre>";
+									print_r($data['orcatrata'][$i]);
+									echo "</pre>";
+									*/
+									#### App_ProdutoVenda ####
+									$data['produto'][$i] = $this->Cobrancas_model->get_produto($data['orcatrata'][$i]['idApp_OrcaTrata']);
+									if (count($data['produto'][$i]) > 0) {
+										$data['produto'][$i] = array_combine(range(1, count($data['produto'][$i])), array_values($data['produto'][$i]));
+										$data['count']['PCount'][$i] = count($data['produto'][$i]);
 
-										for($k=1;$k<=$data['count']['PCount'][$i];$k++) {
-											$data['produto'][$i][$k]['SubtotalProduto'] = number_format(($data['produto'][$i][$k]['ValorProduto'] * $data['produto'][$i][$k]['QtdProduto']), 2, ',', '.');
-											$data['produto'][$i][$k]['ValorProduto'] = number_format(($data['produto'][$i][$k]['ValorProduto']), 2, ',', '.');
-											$data['produto'][$i][$k]['DataValidadeProduto'] = $this->basico->mascara_data($data['produto'][$i][$k]['DataValidadeProduto'], 'barras');
-											$data['produto'][$i][$k]['ConcluidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$i][$k]['ConcluidoProduto'], 'NS');
-											$data['produto'][$i][$k]['DevolvidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$i][$k]['DevolvidoProduto'], 'NS');
+										if (isset($data['produto'][$i])) {
+
+											for($k=1;$k<=$data['count']['PCount'][$i];$k++) {
+												$data['produto'][$i][$k]['SubtotalProduto'] = number_format(($data['produto'][$i][$k]['ValorProduto'] * $data['produto'][$i][$k]['QtdProduto']), 2, ',', '.');
+												$data['produto'][$i][$k]['ValorProduto'] = number_format(($data['produto'][$i][$k]['ValorProduto']), 2, ',', '.');
+												$data['produto'][$i][$k]['DataValidadeProduto'] = $this->basico->mascara_data($data['produto'][$i][$k]['DataValidadeProduto'], 'barras');
+												$data['produto'][$i][$k]['ConcluidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$i][$k]['ConcluidoProduto'], 'NS');
+												$data['produto'][$i][$k]['DevolvidoProduto'] = $this->basico->mascara_palavra_completa($data['produto'][$i][$k]['DevolvidoProduto'], 'NS');
+											}
 										}
 									}
+									/*
+									echo '<br>';
+									echo "<pre>";
+									print_r($data['produto'][$i]);
+									echo "</pre>";
+									*/		
+									#### App_Parcelas####
+									$data['parcelasrec'][$i] = $this->Cobrancas_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
+									if (count($data['parcelasrec'][$i]) > 0) {
+										$data['parcelasrec'][$i] = array_combine(range(1, count($data['parcelasrec'][$i])), array_values($data['parcelasrec'][$i]));
+										$data['count']['PRCount'][$i] = count($data['parcelasrec'][$i]);
+										
+										if (isset($data['parcelasrec'][$i])) {
+
+											for($j=1; $j <= $data['count']['PRCount'][$i]; $j++) {
+												$data['parcelasrec'][$i][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataVencimento'], 'barras');
+												$data['parcelasrec'][$i][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataPago'], 'barras');
+												$data['parcelasrec'][$i][$j]['DataLanc'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataLanc'], 'barras');
+											}
+										}
+									}
+									/*
+									echo '<br>';
+									echo "<pre>";
+									print_r($data['parcelasrec'][$i]);
+									echo "</pre>";
+									*/
+									/*
+									#### App_Procedimento ####
+									$data['procedimento'][$i] = $this->Cobrancas_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
+									if (count($data['procedimento'][$i]) > 0) {
+										$data['procedimento'][$i] = array_combine(range(1, count($data['procedimento'][$i])), array_values($data['procedimento'][$i]));
+										$data['count']['PMCount'][$i] = count($data['procedimento'][$i]);
+
+										if (isset($data['procedimento'][$i])) {
+
+											for($j=1; $j <= $data['count']['PMCount'][$i]; $j++){
+												$data['procedimento'][$i][$j]['DataProcedimento'] = $this->basico->mascara_data($data['procedimento'][$i][$j]['DataProcedimento'], 'barras');						
+											}
+										}
+									}						
+									*/
 								}
-								/*
-								echo '<br>';
-								echo "<pre>";
-								print_r($data['produto'][$i]);
-								echo "</pre>";
-								*/		
-								#### App_Parcelas####
-								$data['parcelasrec'][$i] = $this->Cobrancas_model->get_parcelasrec($data['orcatrata'][$i]['idApp_OrcaTrata']);
-								if (count($data['parcelasrec'][$i]) > 0) {
-									$data['parcelasrec'][$i] = array_combine(range(1, count($data['parcelasrec'][$i])), array_values($data['parcelasrec'][$i]));
-									$data['count']['PRCount'][$i] = count($data['parcelasrec'][$i]);
-									
-									if (isset($data['parcelasrec'][$i])) {
+							}	
+						}
 
-										for($j=1; $j <= $data['count']['PRCount'][$i]; $j++) {
-											$data['parcelasrec'][$i][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataVencimento'], 'barras');
-											$data['parcelasrec'][$i][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataPago'], 'barras');
-											$data['parcelasrec'][$i][$j]['DataLanc'] = $this->basico->mascara_data($data['parcelasrec'][$i][$j]['DataLanc'], 'barras');
-										}
-									}
-								}
-								/*
-								echo '<br>';
-								echo "<pre>";
-								print_r($data['parcelasrec'][$i]);
-								echo "</pre>";
-								*/
-								/*
-								#### App_Procedimento ####
-								$data['procedimento'][$i] = $this->Cobrancas_model->get_procedimento($data['orcatrata'][$i]['idApp_OrcaTrata']);
-								if (count($data['procedimento'][$i]) > 0) {
-									$data['procedimento'][$i] = array_combine(range(1, count($data['procedimento'][$i])), array_values($data['procedimento'][$i]));
-									$data['count']['PMCount'][$i] = count($data['procedimento'][$i]);
+						$data['titulo'] = 'Versão Recibo Cobrança';
+						$data['form_open_path'] = 'Cobrancas/cobrancas_recibo';
+						$data['panel'] = 'info';
+						$data['metodo'] = 1;
+						$data['imprimir'] = 'OrcatrataPrint/imprimir/';
+						$data['imprimirlista'] = 'Cobrancas/cobrancas_lista/';
+						$data['imprimirrecibo'] = 'Cobrancas/cobrancas_recibo/';		
+						
 
-									if (isset($data['procedimento'][$i])) {
+						/*
+						  echo '<br>';
+						  echo "<pre>";
+						  print_r($data);
+						  echo "</pre>";
+						  #exit ();
+						 */
 
-										for($j=1; $j <= $data['count']['PMCount'][$i]; $j++){
-											$data['procedimento'][$i][$j]['DataProcedimento'] = $this->basico->mascara_data($data['procedimento'][$i][$j]['DataProcedimento'], 'barras');						
-										}
-									}
-								}						
-								*/
-							}
-						}	
+						$this->load->view('cobrancas/list_cobrancas_recibo', $data);			
 					}
-
-					$data['titulo'] = 'Versão Recibo Cobrança';
-					$data['form_open_path'] = 'Cobrancas/cobrancas_recibo';
-					$data['panel'] = 'info';
-					$data['metodo'] = 1;
-					$data['imprimir'] = 'OrcatrataPrint/imprimir/';
-					$data['imprimirlista'] = 'Cobrancas/cobrancas_lista/';
-					$data['imprimirrecibo'] = 'Cobrancas/cobrancas_recibo/';		
-					
-
-					/*
-					  echo '<br>';
-					  echo "<pre>";
-					  print_r($data);
-					  echo "</pre>";
-					  #exit ();
-					 */
-
-					$this->load->view('cobrancas/list_cobrancas_recibo', $data);			
 				}
 			}
 		}
@@ -1075,90 +1101,99 @@ class Cobrancas extends CI_Controller {
 					exit();
 					
 				}else{
-
-					$data['pesquisa_query'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, TRUE, FALSE, FALSE, FALSE);
-					
-					if($data['pesquisa_query'] === FALSE){
+				
+					if(!isset($_SESSION['FiltroCobrancas'])){
 						
-						$data['msg'] = '?m=4';
-						redirect(base_url() . 'Cobrancas/cobrancas' . $data['msg']);
+						$data['msg'] = '?m=3';
+						redirect(base_url() . 'acesso' . $data['msg']);
 						exit();
-					}else{
-
-						$config['total_rows'] = $data['pesquisa_query']->num_rows();
-						$config['base_url'] = base_url() . 'Cobrancas/cobrancas_baixa/' . $id . '/';
-						$config['per_page'] = 19;
-						$config["uri_segment"] = 4;
-						$config['reuse_query_string'] = TRUE;
-						$config['num_links'] = 2;
-						$config['use_page_numbers'] = TRUE;
-						$config['full_tag_open'] = "<ul class='pagination'>";
-						$config['full_tag_close'] = "</ul>";
-						$config['num_tag_open'] = '<li>';
-						$config['num_tag_close'] = '</li>';
-						$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-						$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-						$config['next_tag_open'] = "<li>";
-						$config['next_tagl_close'] = "</li>";
-						$config['prev_tag_open'] = "<li>";
-						$config['prev_tagl_close'] = "</li>";
-						$config['first_tag_open'] = "<li>";
-						$config['first_tagl_close'] = "</li>";
-						$config['last_tag_open'] = "<li>";
-						$config['last_tagl_close'] = "</li>";		   
 						
-						if($config['total_rows'] >= 1){
-							$_SESSION['FiltroCobrancas']['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
+					}else{							
+			
+						$data['pesquisa_query'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, TRUE, FALSE, FALSE, FALSE);
+						
+						if($data['pesquisa_query'] === FALSE){
+							
+							$data['msg'] = '?m=4';
+							redirect(base_url() . 'Cobrancas/cobrancas' . $data['msg']);
+							exit();
 						}else{
-							$_SESSION['FiltroCobrancas']['Total_Rows'] = $data['total_rows'] = 0;
-						}
-						
-						$this->pagination->initialize($config);
-						
-						$_SESSION['FiltroCobrancas']['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+
+							$config['total_rows'] = $data['pesquisa_query']->num_rows();
+							$config['base_url'] = base_url() . 'Cobrancas/cobrancas_baixa/' . $id . '/';
+							$config['per_page'] = 19;
+							$config["uri_segment"] = 4;
+							$config['reuse_query_string'] = TRUE;
+							$config['num_links'] = 2;
+							$config['use_page_numbers'] = TRUE;
+							$config['full_tag_open'] = "<ul class='pagination'>";
+							$config['full_tag_close'] = "</ul>";
+							$config['num_tag_open'] = '<li>';
+							$config['num_tag_close'] = '</li>';
+							$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+							$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+							$config['next_tag_open'] = "<li>";
+							$config['next_tagl_close'] = "</li>";
+							$config['prev_tag_open'] = "<li>";
+							$config['prev_tagl_close'] = "</li>";
+							$config['first_tag_open'] = "<li>";
+							$config['first_tagl_close'] = "</li>";
+							$config['last_tag_open'] = "<li>";
+							$config['last_tagl_close'] = "</li>";		   
+							
+							if($config['total_rows'] >= 1){
+								$_SESSION['FiltroCobrancas']['Total_Rows'] = $data['total_rows'] = $config['total_rows'];
+							}else{
+								$_SESSION['FiltroCobrancas']['Total_Rows'] = $data['total_rows'] = 0;
+							}
+							
+							$this->pagination->initialize($config);
+							
+							$_SESSION['FiltroCobrancas']['Pagina'] = $data['pagina'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"]) - 1) : 0;
+									
+							$_SESSION['FiltroCobrancas']['Pagina_atual'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"])) : 0;
+									
+							$_SESSION['FiltroCobrancas']['Per_Page'] = $data['per_page'] = $config['per_page'];
+							
+							$_SESSION['FiltroCobrancas']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
+
+							#### App_Parcelas ####
+							$data['parcelasrec'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, TRUE, $_SESSION['FiltroCobrancas']['Per_Page'], ($_SESSION['FiltroCobrancas']['Pagina'] * $_SESSION['FiltroCobrancas']['Per_Page']), TRUE);
+							
+							if (count($data['parcelasrec']) > 0) {
 								
-						$_SESSION['FiltroCobrancas']['Pagina_atual'] = ($this->uri->segment($config["uri_segment"])) ? ($this->uri->segment($config["uri_segment"])) : 0;
+								$data['parcelasrec'] = array_combine(range(1, count($data['parcelasrec'])), array_values($data['parcelasrec']));
 								
-						$_SESSION['FiltroCobrancas']['Per_Page'] = $data['per_page'] = $config['per_page'];
-						
-						$_SESSION['FiltroCobrancas']['Pagination'] = $data['pagination'] = $this->pagination->create_links();		
+								$data['count']['PRCount'] = count($data['parcelasrec']);
+								
+								if (isset($data['parcelasrec'])) {
 
-						#### App_Parcelas ####
-						$data['parcelasrec'] = $this->Cobrancas_model->list_cobrancas($_SESSION['FiltroCobrancas'], TRUE, TRUE, $_SESSION['FiltroCobrancas']['Per_Page'], ($_SESSION['FiltroCobrancas']['Pagina'] * $_SESSION['FiltroCobrancas']['Per_Page']), TRUE);
-						
-						if (count($data['parcelasrec']) > 0) {
-							
-							$data['parcelasrec'] = array_combine(range(1, count($data['parcelasrec'])), array_values($data['parcelasrec']));
-							
-							$data['count']['PRCount'] = count($data['parcelasrec']);
-							
-							if (isset($data['parcelasrec'])) {
-
-								for($j=1; $j <= $data['count']['PRCount']; $j++) {
-									
-									$data['parcelasrec'][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimento'], 'barras');
-									$data['parcelasrec'][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPago'], 'barras');
-
-									if($data['parcelasrec'][$j]['Modalidade'] == "P"){
-										$_SESSION['Parcelasrec'][$j]['Tipo'] = 'Dividido';
-										$_SESSION['Parcelasrec'][$j]['readonly'] = 'readonly=""';
-									}elseif($data['parcelasrec'][$j]['Modalidade'] == "M"){
-										$_SESSION['Parcelasrec'][$j]['Tipo'] = 'Mensal';
-										$_SESSION['Parcelasrec'][$j]['readonly'] = '';
-									}
-									
-									$_SESSION['Parcelasrec'][$j]['Receita'] = $data['parcelasrec'][$j]['Receita'];
-									
-									$_SESSION['Parcelasrec'][$j]['Parcela'] = $data['parcelasrec'][$j]['Parcela'];
-									$_SESSION['Parcelasrec'][$j]['FormaPagamento'] = $data['parcelasrec'][$j]['FormaPagamento'];
-									
-									$data['radio'] = array(
-										'Quitado' . $j => $this->basico->radio_checked($data['parcelasrec'][$j]['Quitado'], 'Quitado' . $j, 'NS'),
-									);
-									($data['parcelasrec'][$j]['Quitado'] == 'S') ? $data['div']['Quitado' . $j] = '' : $data['div']['Quitado' . $j] = 'style="display: none;"';
+									for($j=1; $j <= $data['count']['PRCount']; $j++) {
 										
+										$data['parcelasrec'][$j]['DataVencimento'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataVencimento'], 'barras');
+										$data['parcelasrec'][$j]['DataPago'] = $this->basico->mascara_data($data['parcelasrec'][$j]['DataPago'], 'barras');
+
+										if($data['parcelasrec'][$j]['Modalidade'] == "P"){
+											$_SESSION['Parcelasrec'][$j]['Tipo'] = 'Dividido';
+											$_SESSION['Parcelasrec'][$j]['readonly'] = 'readonly=""';
+										}elseif($data['parcelasrec'][$j]['Modalidade'] == "M"){
+											$_SESSION['Parcelasrec'][$j]['Tipo'] = 'Mensal';
+											$_SESSION['Parcelasrec'][$j]['readonly'] = '';
+										}
+										
+										$_SESSION['Parcelasrec'][$j]['Receita'] = $data['parcelasrec'][$j]['Receita'];
+										
+										$_SESSION['Parcelasrec'][$j]['Parcela'] = $data['parcelasrec'][$j]['Parcela'];
+										$_SESSION['Parcelasrec'][$j]['FormaPagamento'] = $data['parcelasrec'][$j]['FormaPagamento'];
+										
+										$data['radio'] = array(
+											'Quitado' . $j => $this->basico->radio_checked($data['parcelasrec'][$j]['Quitado'], 'Quitado' . $j, 'NS'),
+										);
+										($data['parcelasrec'][$j]['Quitado'] == 'S') ? $data['div']['Quitado' . $j] = '' : $data['div']['Quitado' . $j] = 'style="display: none;"';
+											
+									}
+									//exit ();
 								}
-								//exit ();
 							}
 						}
 					}
