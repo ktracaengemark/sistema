@@ -39,7 +39,7 @@
 			<?php } ?>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 				<label>Excel</label><br>
-				<a href="<?php echo base_url() . 'Debitos/debitos_excel/2'; ?>">
+				<a href="<?php echo base_url() . 'gerar_excel/Debitos/Debitos_total_xls.php'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
 						<span class="glyphicon glyphicon-print"></span>Total
 					</button>
@@ -47,7 +47,7 @@
 			</div>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-left">
 				<label>Excel</label><br>
-				<a href="<?php echo base_url() . 'Debitos/debitos_excel/3'; ?>">
+				<a href="<?php echo base_url() . 'gerar_excel/Debitos/Debitos_parcial_xls.php'; ?>">
 					<button type='button' class='btn btn-md btn-success btn-block'>
 						<span class="glyphicon glyphicon-print"></span>Parcial
 					</button>

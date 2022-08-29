@@ -168,12 +168,12 @@ class Debitos_model extends CI_Model {
 				' . $filtro13 . '
 				' . $produtos . '
 				' . $parcelas . '
-				OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '  
+				OT.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND  
+				OT.idTab_TipoRD = 1
 				' . $orcamento . '
 				' . $fornecedor . '
 				' . $id_fornecedor . '
 				' . $tipofinanceiro . '
-				' . $tipord . '
 				' . $nivel . '
 				' . $complemento . '
 			' . $groupby . '
@@ -223,18 +223,6 @@ class Debitos_model extends CI_Model {
 		if($total == FALSE && $date == FALSE) {
 			$query = $this->db->query(
 				'SELECT
-					C.NomeFornecedor,
-					C.CelularFornecedor,
-					C.Telefone2,
-					C.Telefone3,
-					C.DataCadastroFornecedor,
-					C.EnderecoFornecedor,
-					C.NumeroFornecedor,
-					C.ComplementoFornecedor,
-					C.BairroFornecedor,
-					C.CidadeFornecedor,
-					C.EstadoFornecedor,
-					C.ReferenciaFornecedor,
 					OT.idApp_OrcaTrata,
 					OT.idApp_Fornecedor,
 					OT.Tipo_Orca,
@@ -242,7 +230,7 @@ class Debitos_model extends CI_Model {
 					OT.idTab_TipoRD,
 					OT.AprovadoOrca,
 					OT.CombinadoFrete,
-					CONCAT(IFNULL(OT.Descricao,"")) AS Descricao,
+					OT.Descricao,
 					OT.DataOrca,
 					OT.DataEntregaOrca,
 					OT.DataVencimentoOrca,
@@ -257,23 +245,20 @@ class Debitos_model extends CI_Model {
 					OT.NomeRec,
 					OT.ParentescoRec,
 					OT.FormaPagamento,
+					TFP.FormaPag,
 					TR.TipoFinanceiro,
+					C.NomeFornecedor,
+					C.CelularFornecedor,
+					C.Telefone2,
+					C.Telefone3,
 					PR.idApp_Parcelas,
-					PR.idSis_Empresa,
-					PR.idSis_Usuario,
-					PR.idApp_Fornecedor,
 					PR.Parcela,
 					PR.DataVencimento,
 					PR.ValorParcela,
 					PR.DataPago,
 					PR.DataLanc,
-					PR.ValorPago,
 					PR.Quitado,
-					PR.idTab_TipoRD,
-					PR.FormaPagamentoParcela,
-					PRDS.DataConcluidoProduto,
-					PRDS.ConcluidoProduto,
-					TFP.FormaPag
+					PR.FormaPagamentoParcela
 				FROM
 					App_OrcaTrata AS OT
 						LEFT JOIN App_Fornecedor AS C ON C.idApp_Fornecedor = OT.idApp_Fornecedor
@@ -361,18 +346,6 @@ class Debitos_model extends CI_Model {
 		if($total == FALSE && $date == TRUE) {
 			$query = $this->db->query('
 				SELECT
-					C.NomeFornecedor,
-					C.CelularFornecedor,
-					C.Telefone2,
-					C.Telefone3,
-					C.DataCadastroFornecedor,
-					C.EnderecoFornecedor,
-					C.NumeroFornecedor,
-					C.ComplementoFornecedor,
-					C.BairroFornecedor,
-					C.CidadeFornecedor,
-					C.EstadoFornecedor,
-					C.ReferenciaFornecedor,
 					OT.idApp_OrcaTrata,
 					OT.idApp_Fornecedor,
 					OT.Tipo_Orca,
@@ -380,7 +353,7 @@ class Debitos_model extends CI_Model {
 					OT.idTab_TipoRD,
 					OT.AprovadoOrca,
 					OT.CombinadoFrete,
-					CONCAT(IFNULL(OT.Descricao,"")) AS Descricao,
+					OT.Descricao,
 					OT.DataOrca,
 					OT.DataEntregaOrca,
 					OT.DataVencimentoOrca,
@@ -395,24 +368,27 @@ class Debitos_model extends CI_Model {
 					OT.NomeRec,
 					OT.ParentescoRec,
 					OT.FormaPagamento,
+					TFP.FormaPag,
 					TR.TipoFinanceiro,
+					C.NomeFornecedor,
+					C.CelularFornecedor,
+					C.Telefone2,
+					C.Telefone3,
+					C.EnderecoFornecedor,
+					C.NumeroFornecedor,
+					C.ComplementoFornecedor,
+					C.BairroFornecedor,
+					C.CidadeFornecedor,
+					C.EstadoFornecedor,
+					C.ReferenciaFornecedor,
 					PR.idApp_Parcelas,
-					PR.idSis_Empresa,
-					PR.idSis_Usuario,
-					PR.idApp_Fornecedor,
 					PR.Parcela,
-					CONCAT(PR.Parcela) AS Parcela,
 					PR.DataVencimento,
 					PR.ValorParcela,
 					PR.DataPago,
 					PR.DataLanc,
-					PR.ValorPago,
 					PR.Quitado,
-					PR.idTab_TipoRD,
-					PR.FormaPagamentoParcela,
-					PRDS.DataConcluidoProduto,
-					PRDS.ConcluidoProduto,
-					TFP.FormaPag
+					PR.FormaPagamentoParcela
 				FROM
 					App_OrcaTrata AS OT
 						LEFT JOIN App_Fornecedor AS C ON C.idApp_Fornecedor = OT.idApp_Fornecedor
@@ -435,18 +411,6 @@ class Debitos_model extends CI_Model {
 		if($total == TRUE && $date == TRUE) {
 			$query = $this->db->query(
 				'SELECT
-					C.NomeFornecedor,
-					C.CelularFornecedor,
-					C.Telefone2,
-					C.Telefone3,
-					C.DataCadastroFornecedor,
-					C.EnderecoFornecedor,
-					C.NumeroFornecedor,
-					C.ComplementoFornecedor,
-					C.BairroFornecedor,
-					C.CidadeFornecedor,
-					C.EstadoFornecedor,
-					C.ReferenciaFornecedor,
 					OT.idApp_OrcaTrata,
 					OT.idApp_Fornecedor,
 					OT.Tipo_Orca,
@@ -454,7 +418,7 @@ class Debitos_model extends CI_Model {
 					OT.idTab_TipoRD,
 					OT.AprovadoOrca,
 					OT.CombinadoFrete,
-					CONCAT(IFNULL(OT.Descricao,"")) AS Descricao,
+					OT.Descricao,
 					OT.DataOrca,
 					OT.DataEntregaOrca,
 					OT.DataVencimentoOrca,
@@ -469,24 +433,21 @@ class Debitos_model extends CI_Model {
 					OT.NomeRec,
 					OT.ParentescoRec,
 					OT.FormaPagamento,
-					CONCAT(IFNULL(PR.idApp_OrcaTrata,""), "--", IFNULL(TR.TipoFinanceiro,""), "--", IFNULL(C.idApp_Fornecedor,""), "--", IFNULL(C.NomeFornecedor,""), "--", IFNULL(OT.Descricao,"")) AS Despesa,
+					TFP.FormaPag,
 					TR.TipoFinanceiro,
+					C.NomeFornecedor,
+					C.CelularFornecedor,
+					C.Telefone2,
+					C.Telefone3,
+					CONCAT(IFNULL(OT.idApp_OrcaTrata,""), "--", IFNULL(TR.TipoFinanceiro,""), "--", IFNULL(OT.idApp_Fornecedor,""), "--", IFNULL(C.NomeFornecedor,""), "--", IFNULL(OT.Descricao,"")) AS Despesa,
 					PR.idApp_Parcelas,
-					PR.idSis_Empresa,
-					PR.idSis_Usuario,
-					PR.idApp_Fornecedor,
 					PR.Parcela,
 					PR.DataVencimento,
 					PR.ValorParcela,
 					PR.DataPago,
 					PR.DataLanc,
-					PR.ValorPago,
 					PR.Quitado,
-					PR.idTab_TipoRD,
-					PR.FormaPagamentoParcela,
-					PRDS.DataConcluidoProduto,
-					PRDS.ConcluidoProduto,
-					TFP.FormaPag
+					PR.FormaPagamentoParcela
 				FROM
 					App_OrcaTrata AS OT
 						LEFT JOIN App_Fornecedor AS C ON C.idApp_Fornecedor = OT.idApp_Fornecedor

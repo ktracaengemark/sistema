@@ -24,11 +24,11 @@
 									<div class="col-md-2 text-left">	
 										<br>
 										<a type= "button" class="btn btn-md btn-warning btn-block" role="button">
-											<?php echo $_SESSION['Total_Rows'];?> Resultados
+											<?php echo $_SESSION['FiltroDebitos']['Total_Rows'];?> Resultados
 										</a>
 									</div>
 									<div class="col-md-6 text-left">
-										<?php echo $_SESSION['Pagination']; ?>
+										<?php echo $_SESSION['FiltroDebitos']['Pagination']; ?>
 									</div>
 								</div>
 							</div>
@@ -41,7 +41,7 @@
 									<input type="hidden" name="PRCount" id="PRCount" value="<?php echo $count['PRCount']; ?>"/>
 
 									<?php
-									$linha =  $_SESSION['Per_Page']*$_SESSION['Pagina'];
+									$linha =  $_SESSION['FiltroDebitos']['Per_Page']*$_SESSION['FiltroDebitos']['Pagina'];
 									for ($i=1; $i <= $count['PRCount']; $i++) {
 										$contagem = ($linha + $i);
 									?>
