@@ -67,10 +67,20 @@ class Debitos extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>A Pesquisa está muito grande, ela excedeu 12000 linhas. Refine o seu filtro.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
+
+		$acesso = FALSE;
 		
-		if($_SESSION['Usuario']['Usu_Des'] == "N" || $_SESSION['Usuario']['Rel_Pag'] == "N"){
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$acesso = TRUE;
+		}else{
+			if ($_SESSION['Usuario']['Usu_Des'] == "S") {
+				$acesso = TRUE;
+			}	
+		}
+		
+		if ($acesso === FALSE) {
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 		}else{
 
@@ -500,7 +510,7 @@ class Debitos extends CI_Controller {
 		if(!isset($_SESSION['FiltroDebitos'])){
 			
 			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 			
 		}else{							
@@ -642,14 +652,14 @@ class Debitos extends CI_Controller {
 		if (!$id) {
 			
 			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 			
 		} else {
 			
 			if($_SESSION['log']['idSis_Empresa'] !== $id){
 				$data['msg'] = '?m=3';
-				redirect(base_url() . 'acesso' . $data['msg']);
+				redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 				exit();
 					
 			}else{			
@@ -657,7 +667,7 @@ class Debitos extends CI_Controller {
 				if(!isset($_SESSION['FiltroDebitos'])){
 					
 					$data['msg'] = '?m=3';
-					redirect(base_url() . 'acesso' . $data['msg']);
+					redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 					exit();
 					
 				}else{							
@@ -842,14 +852,14 @@ class Debitos extends CI_Controller {
 		if (!$id) {
 			
 			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 			
 		} else {
 			
 			if($_SESSION['log']['idSis_Empresa'] !== $id){
 				$data['msg'] = '?m=3';
-				redirect(base_url() . 'acesso' . $data['msg']);
+				redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 				exit();
 					
 			}else{			
@@ -857,7 +867,7 @@ class Debitos extends CI_Controller {
 				if(!isset($_SESSION['FiltroDebitos'])){
 					
 					$data['msg'] = '?m=3';
-					redirect(base_url() . 'acesso' . $data['msg']);
+					redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 					exit();
 					
 				}else{							
@@ -1034,7 +1044,7 @@ class Debitos extends CI_Controller {
 		
 		if($_SESSION['Usuario']['Nivel'] == 2){
 			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 		}else{
 
@@ -1087,7 +1097,7 @@ class Debitos extends CI_Controller {
 				if($data['empresa'] === FALSE){
 					
 					$data['msg'] = '?m=3';
-					redirect(base_url() . 'acesso' . $data['msg']);
+					redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 					exit();
 					
 				}else{
@@ -1095,7 +1105,7 @@ class Debitos extends CI_Controller {
 					if(!isset($_SESSION['FiltroDebitos'])){
 						
 						$data['msg'] = '?m=3';
-						redirect(base_url() . 'acesso' . $data['msg']);
+						redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 						exit();
 						
 					}else{							
@@ -1188,7 +1198,7 @@ class Debitos extends CI_Controller {
 			if(!$data['empresa']['idSis_Empresa'] || $data['empresa']['idSis_Empresa'] !== $_SESSION['log']['idSis_Empresa']){
 				
 				$data['msg'] = '?m=3';
-				redirect(base_url() . 'acesso' . $data['msg']);
+				redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 				exit();
 				
 			}else{
@@ -1259,7 +1269,7 @@ class Debitos extends CI_Controller {
 					if($this->Basico_model->get_dt_validade() === FALSE){
 						
 						$data['msg'] = '?m=3';
-						redirect(base_url() . 'acesso' . $data['msg']);
+						redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 						
 					} else {
 							
@@ -1386,18 +1396,18 @@ class Debitos extends CI_Controller {
 		
 		if($_SESSION['Usuario']['Nivel'] == 2){
 			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 		}else{
 
 			if (!$id) {
 				
-				$data['msg'] = '?m=2';
+				$data['msg'] = '?m=3';
 				$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 				//$this->basico->erro($msg);
 				
-				redirect(base_url() . 'relatorio/debitos/' . $data['msg']);
+				redirect(base_url() . 'Debitos/debitos/' . $data['msg']);
 				exit();
 				
 			}else{
@@ -1411,14 +1421,14 @@ class Debitos extends CI_Controller {
 				
 				$data['update']['parcela']['anterior'] = $this->Orcatrata_model->get_parcela($id);
 				
-				if ($data['update']['parcela']['anterior'] === FALSE || $data['update']['parcela']['anterior']['idTab_TipoRD'] != 1 || $data['update']['parcela']['anterior']['Quitado'] == "S") {
+				if ($data['update']['parcela']['anterior'] === FALSE || $data['update']['parcela']['anterior']['idTab_TipoRD'] != 1 || $data['update']['parcela']['anterior']['Quitado'] == "S" || $data['update']['parcela']['anterior']['CanceladoOrca'] == "S") {
 					
-					$data['msg'] = '?m=2';
+					$data['msg'] = '?m=3';
 					$msg = "<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>";
 
 					//$this->basico->erro($msg);
 					
-					redirect(base_url() . 'relatorio/debitos/' . $data['msg']);
+					redirect(base_url() . 'Debitos/debitos/' . $data['msg']);
 					exit();
 					
 				}else{
@@ -1426,7 +1436,7 @@ class Debitos extends CI_Controller {
 					if($this->Basico_model->get_dt_validade() === FALSE){
 						
 						$data['msg'] = '?m=3';
-						redirect(base_url() . 'acesso' . $data['msg']);
+						redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 						
 					} else {
 							

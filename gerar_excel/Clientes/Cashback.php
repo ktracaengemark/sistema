@@ -41,7 +41,7 @@
 		$html .= '<td><b>EstadoCliente</b></td>';
 		$html .= '<td><b>ReferenciaCliente</b></td>';
 		$html .= '<td><b>Email</b></td>';
-		$html .= '<td><b>Obs</b></td>';
+		//$html .= '<td><b>Obs</b></td>';
 		$html .= '<td><b>Ativo</b></td>';
 		$html .= '<td><b>Motivo</b></td>';
 		$html .= '<td><b>Cadast.</b></td>';
@@ -133,7 +133,7 @@
 			$html .= '<td>'.utf8_encode($row_msg_contatos["EstadoCliente"]).'</td>';
 			$html .= '<td>'.utf8_encode($row_msg_contatos["ReferenciaCliente"]).'</td>';
 			$html .= '<td>'.utf8_encode($row_msg_contatos["Email"]).'</td>';
-			$html .= '<td>'.utf8_encode($row_msg_contatos["Obs"]).'</td>';
+			//$html .= '<td>'.utf8_encode($row_msg_contatos["Obs"]).'</td>';
 			$html .= '<td>'.utf8_encode($row_msg_contatos["Ativo"]).'</td>';
 			$html .= '<td>'.$row_msg_contatos["Motivo"].'</td>';
 			$data_cad = date('d/m/Y',strtotime($row_msg_contatos["DataCadastroCliente"]));

@@ -120,6 +120,18 @@ class Basico_model extends CI_Model {
         }
     }
 
+    public function acesso() {
+
+		if ($_SESSION['log']['idSis_Empresa'] == 5) {
+			return 'acesso_associado';
+		}elseif($_SESSION['log']['idSis_Empresa'] != 5){
+			return 'acesso';
+		}else{
+			return 'login/sair';
+		}
+		
+    }
+
     public function get_dt_validade() {
 
         if (isset($_SESSION['log']['idSis_Empresa'])) {

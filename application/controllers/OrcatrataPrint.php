@@ -54,15 +54,25 @@ class OrcatrataPrint extends CI_Controller {
 			unset($_SESSION['Orcatrata']);
 			unset($_SESSION['Cliente']);
 			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 			
 		} else {
+
+			$acesso = FALSE;
 			
-			if ($_SESSION['Usuario']['Usu_Rec'] == "N" || $_SESSION['Usuario']['Ver_Orcam'] == "N") {
+			if($_SESSION['log']['idSis_Empresa'] == 5){
+				$acesso = TRUE;
+			}else{
+				if ($_SESSION['Usuario']['Usu_Rec'] == "S" && $_SESSION['Usuario']['Ver_Orcam'] == "S") {
+					$acesso = TRUE;
+				}	
+			}
+			
+			if ($acesso === FALSE) {
 
 				$data['msg'] = '?m=4';
-				redirect(base_url() . 'acesso' . $data['msg']);
+				redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 				exit();
 				
 			} else {
@@ -75,7 +85,7 @@ class OrcatrataPrint extends CI_Controller {
 					unset($_SESSION['Orcatrata']);
 					unset($_SESSION['Cliente']);
 					$data['msg'] = '?m=3';
-					redirect(base_url() . 'acesso' . $data['msg']);
+					redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 					exit();
 					
 				} else {			
@@ -105,7 +115,7 @@ class OrcatrataPrint extends CI_Controller {
 							unset($_SESSION['Orcatrata']);
 							unset($_SESSION['Cliente']);
 							$data['msg'] = '?m=3';
-							redirect(base_url() . 'acesso' . $data['msg']);
+							redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 							exit();
 							
 						} else {
@@ -292,7 +302,7 @@ class OrcatrataPrint extends CI_Controller {
 			unset($_SESSION['Orcatrata']);
 			unset($_SESSION['Cliente']);
 			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 			
 		} else {
@@ -306,7 +316,7 @@ class OrcatrataPrint extends CI_Controller {
 					unset($_SESSION['Orcatrata']);
 					unset($_SESSION['Cliente']);
 					$data['msg'] = '?m=3';
-					redirect(base_url() . 'acesso' . $data['msg']);
+					redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 					exit();
 					
 				} else {			
@@ -331,7 +341,7 @@ class OrcatrataPrint extends CI_Controller {
 							unset($_SESSION['Orcatrata']);
 							unset($_SESSION['Cliente']);
 							$data['msg'] = '?m=3';
-							redirect(base_url() . 'acesso' . $data['msg']);
+							redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 							exit();
 							
 						} else {
@@ -466,7 +476,7 @@ class OrcatrataPrint extends CI_Controller {
 		if (!$id) {
 
 			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 			
 		} else {
@@ -474,7 +484,7 @@ class OrcatrataPrint extends CI_Controller {
 			if ($_SESSION['Usuario']['Usu_Des'] == "N") {
 
 				$data['msg'] = '?m=4';
-				redirect(base_url() . 'acesso' . $data['msg']);
+				redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 				exit();
 				
 			} else {
@@ -485,7 +495,7 @@ class OrcatrataPrint extends CI_Controller {
 				if($data['orcatrata'] === FALSE || $data['orcatrata']['idTab_TipoRD'] != 1){
 
 					$data['msg'] = '?m=3';
-					redirect(base_url() . 'acesso' . $data['msg']);
+					redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 					exit();
 					
 				} else {			
@@ -618,14 +628,14 @@ class OrcatrataPrint extends CI_Controller {
 		if (!$id) {
 			
 			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 			
 		} else {
 			
 			if($_SESSION['log']['idSis_Empresa'] !== $id){
 				$data['msg'] = '?m=3';
-				redirect(base_url() . 'acesso' . $data['msg']);
+				redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 				exit();
 					
 			}else{			
@@ -798,7 +808,7 @@ class OrcatrataPrint extends CI_Controller {
 		if (!$id) {
 
 			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 			
 		} else {
@@ -806,7 +816,7 @@ class OrcatrataPrint extends CI_Controller {
 			if($_SESSION['log']['idSis_Empresa'] !== $id){
 					
 				$data['msg'] = '?m=3';
-				redirect(base_url() . 'acesso' . $data['msg']);
+				redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 				exit();
 				
 			}else{

@@ -68,11 +68,21 @@ class Receitas extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>A Pesquisa está muito grande, ela excedeu 15000 linhas. Refine o seu filtro.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-			
-		if ($_SESSION['Usuario']['Usu_Rec'] == "N") {
+
+		$acesso = FALSE;
+		
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$acesso = TRUE;
+		}else{
+			if ($_SESSION['Usuario']['Usu_Rec'] == "S" && $_SESSION['Usuario']['Rel_Orc'] == "S") {
+				$acesso = TRUE;
+			}	
+		}
+		
+		if ($acesso === FALSE) {
 
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 			
 		} else {
@@ -483,7 +493,7 @@ class Receitas extends CI_Controller {
 		if(!isset($_SESSION['FiltroReceitas'])){
 			
 			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 			
 		}else{							
@@ -647,7 +657,7 @@ class Receitas extends CI_Controller {
 		if(!isset($_SESSION['FiltroReceitas'])){
 			
 			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 			
 		}else{							
@@ -730,7 +740,7 @@ class Receitas extends CI_Controller {
 		
 		if($_SESSION['Usuario']['Nivel'] == 2){
 			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 		}else{
 
@@ -773,7 +783,7 @@ class Receitas extends CI_Controller {
 				if($data['empresa'] === FALSE){
 					
 					$data['msg'] = '?m=3';
-					redirect(base_url() . 'acesso' . $data['msg']);
+					redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 					exit();
 					
 				}else{
@@ -781,7 +791,7 @@ class Receitas extends CI_Controller {
 					if(!isset($_SESSION['FiltroReceitas'])){
 						
 						$data['msg'] = '?m=3';
-						redirect(base_url() . 'acesso' . $data['msg']);
+						redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 						exit();
 						
 					}else{							
@@ -886,7 +896,7 @@ class Receitas extends CI_Controller {
 			if(!$data['empresa']['idSis_Empresa'] || $data['empresa']['idSis_Empresa'] !== $_SESSION['log']['idSis_Empresa']){
 				
 				$data['msg'] = '?m=3';
-				redirect(base_url() . 'acesso' . $data['msg']);
+				redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 				exit();
 			}else{				
 				/*
@@ -949,7 +959,7 @@ class Receitas extends CI_Controller {
 					if($this->Basico_model->get_dt_validade() === FALSE){
 						
 						$data['msg'] = '?m=3';
-						redirect(base_url() . 'acesso' . $data['msg']);
+						redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 						
 					} else {
 
@@ -1103,17 +1113,17 @@ class Receitas extends CI_Controller {
     }
 
     public function receita_baixa($id = FALSE) {
-		
+
 		if($_SESSION['Usuario']['Nivel'] == 2){
 			$data['msg'] = '?m=3';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 		}else{
 
 			if (!$id) {
 				
 				$data['msg'] = '?m=3';
-				redirect(base_url() . 'acesso' . $data['msg']);
+				redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 				exit();
 				
 			}else{            
@@ -1127,11 +1137,11 @@ class Receitas extends CI_Controller {
 				
 				#### App_OrcaTrata ####
 				$data['baixaorca'] = $this->Orcatrata_model->get_orcamento_baixa($id);
-				
-				if ($data['baixaorca'] === FALSE || $data['baixaorca']['idTab_TipoRD'] != 2 || $data['baixaorca']['FinalizadoOrca'] == "S") {
+
+				if ($data['baixaorca'] === FALSE || $data['baixaorca']['idTab_TipoRD'] != 2 || $data['baixaorca']['FinalizadoOrca'] == "S" || $data['baixaorca']['CanceladoOrca'] == "S") {
 					
 					$data['msg'] = '?m=3';
-					redirect(base_url() . 'acesso' . $data['msg']);
+					redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 					exit();
 					
 				}else{
@@ -1139,7 +1149,7 @@ class Receitas extends CI_Controller {
 					if($this->Basico_model->get_dt_validade() === FALSE){
 						
 						$data['msg'] = '?m=3';
-						redirect(base_url() . 'acesso' . $data['msg']);
+						redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 						
 					} else {
 							
@@ -1374,7 +1384,7 @@ class Receitas extends CI_Controller {
 		if ($_SESSION['Usuario']['Usu_Rec'] == "N") {
 
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 			
 		} else {

@@ -168,11 +168,7 @@ class Receitas_model extends CI_Model {
 			$parcelas = ($data['Parcelas']) ? 'PR.idSis_Empresa ' . $data['Parcelas'] . ' AND' : FALSE;
 		}else{
 			$permissao_orcam = FALSE;
-			if(isset($data['metodo']) && $data['metodo'] == 3){
-				$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
-			}else{
-				$permissao = FALSE;
-			}
+			$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
 			$nivel = FALSE;
 			$produtos = FALSE;
 			$parcelas = FALSE;

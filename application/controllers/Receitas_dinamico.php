@@ -63,11 +63,21 @@ class Receitas_dinamico extends CI_Controller {
             $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
         else
             $data['msg'] = '';
-			
-		if ($_SESSION['Usuario']['Usu_Rec'] == "N") {
+		
+		$acesso = FALSE;
+		
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$acesso = TRUE;
+		}else{
+			if ($_SESSION['Usuario']['Usu_Rec'] == "S" && $_SESSION['Usuario']['Rel_Orc'] == "S") {
+				$acesso = TRUE;
+			}	
+		}
+		
+		if ($acesso === FALSE) {
 
 			$data['msg'] = '?m=4';
-			redirect(base_url() . 'acesso' . $data['msg']);
+			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 			
 		} else {

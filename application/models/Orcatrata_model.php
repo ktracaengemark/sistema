@@ -612,7 +612,14 @@ class Orcatrata_model extends CI_Model {
     }	
 				
     public function get_orcamento_baixa($data) {
-        $query = $this->db->query('
+		
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$permissao = ' AND idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . '';
+		}else{
+			$permissao = FALSE;
+		}
+		
+		$query = $this->db->query('
 			SELECT 
 				idApp_OrcaTrata,
 				idTab_TipoRD,
@@ -630,20 +637,19 @@ class Orcatrata_model extends CI_Model {
 			FROM 
 				App_OrcaTrata
 			WHERE 
-				idApp_OrcaTrata = ' . $data . '
-		');
-        $query = $query->result_array();
+				idApp_OrcaTrata = ' . $data . ' AND
+				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+				' . $permissao . '
 		
-        /*
-        //echo $this->db->last_query();
-        echo '<br>';
-        echo "<pre>";
-        print_r($query);
-        echo "</pre>";
-        exit ();
-        */
+		');
 
-        return $query[0];
+        if ($query->num_rows() === 0) {
+            return FALSE;
+        } else {
+			$query = $query->result_array();
+			return $query[0];
+        }
+
     }
 					
     public function get_orcamento_baixa_parcela($data) {
@@ -1210,18 +1216,25 @@ class Orcatrata_model extends CI_Model {
     }
 	
     public function get_parcela($data) {
-        $query = $this->db->query(
-			' SELECT
-				* 
-			FROM 
-				App_Parcelas 
-			WHERE 
-				idApp_Parcelas = ' . $data . ' AND
-				idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '' 
-		);
 		
-        //$query = $query->result_array();
-        //return $query[0];
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$permissao = ' AND PR.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . '';
+		}else{
+			$permissao = FALSE;
+		}
+		
+        $query = $this->db->query(
+			'SELECT
+				PR.*,
+				OT.CanceladoOrca
+			FROM 
+				App_Parcelas AS PR
+					LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = PR.idApp_OrcaTrata
+			WHERE 
+				PR.idApp_Parcelas = ' . $data . ' AND
+				PR.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . '
+				' . $permissao . '
+		');
 
         if ($query->num_rows() === 0) {
             return FALSE;
