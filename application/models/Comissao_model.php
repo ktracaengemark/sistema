@@ -761,7 +761,8 @@ class Comissao_model extends CI_Model {
 				ORDER BY
 					' . $campo . '
 					' . $ordenamento . '
-				' . $querylimit . '';
+				' . $querylimit . '
+			';
 		}else{
 			$filtro_base = ' 
 					OT.idSis_Empresa= ' . $_SESSION['log']['idSis_Empresa'] . ' AND
