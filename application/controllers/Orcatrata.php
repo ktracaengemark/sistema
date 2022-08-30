@@ -16072,7 +16072,7 @@ class Orcatrata extends CI_Controller {
 
 					$data['msg'] = '?m=1';
 
-					redirect(base_url() . 'relatorio/receitas/' . $data['msg']);
+					redirect(base_url() . 'Receitas/receitas/' . $data['msg']);
 					
 					exit();
 				}
@@ -16118,7 +16118,7 @@ class Orcatrata extends CI_Controller {
 					
 					$this->Orcatrata_model->delete_orcatrata($id);
 					$data['msg'] = '?m=1';
-					redirect(base_url() . 'relatorio/despesas/' . $data['msg']);
+					redirect(base_url() . 'Despesas/despesas/' . $data['msg']);
 					exit();
 				}
 			}
