@@ -693,19 +693,19 @@ class Marketing_model extends CI_Model {
 		$hora_inicio_sub_prc = ($data['HoraInicio10']) ? 'SPRC.HoraSubMarketing >= "' . $data['HoraInicio10'] . '" AND ' : FALSE;
 		$hora_fim_sub_prc = ($data['HoraFim10']) ? 'SPRC.HoraSubMarketing <= "' . $data['HoraFim10'] . '" AND ' : FALSE;
 		
-		$data['Campo'] = (!$data['Campo']) ? 'PRC.DataMarketing' : $data['Campo'];
-		$data['Ordenamento'] = (!$data['Ordenamento']) ? 'DESC' : $data['Ordenamento'];
+		$campo = (!$data['Campo']) ? 'PRC.DataMarketing' : $data['Campo'];
+		$ordenamento = (!$data['Ordenamento']) ? 'DESC' : $data['Ordenamento'];
 		
 		$filtro10 = ($data['ConcluidoMarketing'] != '#') ? 'PRC.ConcluidoMarketing = "' . $data['ConcluidoMarketing'] . '" AND ' : FALSE;
 		
 		$filtro22 = ($data['idTab_TipoRD'] == 2) ? 'AND (OT.idTab_TipoRD = "2" OR C.idApp_Cliente = PRC.idApp_Cliente)' : FALSE;
 		
-		$data['idApp_Marketing'] = ($data['idApp_Marketing']) ? ' AND PRC.idApp_Marketing = ' . $data['idApp_Marketing'] . '  ': FALSE;		
-		$data['Sac'] = ($data['Sac']) ? ' AND PRC.Sac = ' . $data['Sac'] . '  ': FALSE;		
-		$data['CategoriaMarketing'] = ($data['CategoriaMarketing']) ? ' AND PRC.CategoriaMarketing = ' . $data['CategoriaMarketing'] . '  ': FALSE;
-		$data['Orcamento'] = ($data['Orcamento']) ? ' AND PRC.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
-		$data['Cliente'] = ($data['Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
-		$data['idApp_Cliente'] = ($data['idApp_Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;       
+		$id_marketing = ($data['idApp_Marketing']) ? ' AND PRC.idApp_Marketing = ' . $data['idApp_Marketing'] . '  ': FALSE;		
+		$sac = ($data['Sac']) ? ' AND PRC.Sac = ' . $data['Sac'] . '  ': FALSE;		
+		$categoria_mark = ($data['CategoriaMarketing']) ? ' AND PRC.CategoriaMarketing = ' . $data['CategoriaMarketing'] . '  ': FALSE;
+		$orcamento = ($data['Orcamento']) ? ' AND PRC.idApp_OrcaTrata = ' . $data['Orcamento'] . '  ': FALSE;
+		$cliente = ($data['Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['Cliente'] . '' : FALSE;
+		$id_cliente = ($data['idApp_Cliente']) ? ' AND PRC.idApp_Cliente = ' . $data['idApp_Cliente'] . '' : FALSE;       
 		$filtro17 = ($data['NomeUsuario']) ? 'PRC.idSis_Usuario = "' . $data['NomeUsuario'] . '" AND ' : FALSE;        
 		$filtro18 = ($data['Compartilhar']) ? 'PRC.Compartilhar = "' . $data['Compartilhar'] . '" AND ' : FALSE;		
 
@@ -749,16 +749,16 @@ class Marketing_model extends CI_Model {
 				PRC.Sac = 0 AND 
 				PRC.CategoriaMarketing != 0 
 				' . $filtro22 . '
-				' . $data['idApp_Marketing'] . '
-				' . $data['Sac'] . '
-				' . $data['CategoriaMarketing'] . '
-				' . $data['Orcamento'] . '
-				' . $data['Cliente'] . '
-				' . $data['idApp_Cliente'] . '
+				' . $id_marketing . '
+				' . $sac . '
+				' . $categoria_mark . '
+				' . $orcamento . '
+				' . $cliente . '
+				' . $id_cliente . '
 			' . $groupby . '
 			ORDER BY
-				' . $data['Campo'] . ' 
-				' . $data['Ordenamento'] . '
+				' . $campo . ' 
+				' . $ordenamento . '
 			' . $querylimit . '
 		';
 

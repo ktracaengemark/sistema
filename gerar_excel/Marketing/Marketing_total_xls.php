@@ -23,34 +23,24 @@
 		$hora_inicio_sub_prc = ($_SESSION['FiltroMarketing']['HoraInicio10']) ? 'SPRC.HoraSubMarketing >= "' . $_SESSION['FiltroMarketing']['HoraInicio10'] . '" AND ' : FALSE;
 		$hora_fim_sub_prc = ($_SESSION['FiltroMarketing']['HoraFim10']) ? 'SPRC.HoraSubMarketing <= "' . $_SESSION['FiltroMarketing']['HoraFim10'] . '" AND ' : FALSE;
 		
-		$data['Dia'] = ($_SESSION['FiltroMarketing']['Dia']) ? ' AND DAY(PRC.DataMarketing) = ' . $_SESSION['FiltroMarketing']['Dia'] : FALSE;
-		$data['Mesvenc'] = ($_SESSION['FiltroMarketing']['Mesvenc']) ? ' AND MONTH(PRC.DataMarketing) = ' . $_SESSION['FiltroMarketing']['Mesvenc'] : FALSE;
-		$data['Ano'] = ($_SESSION['FiltroMarketing']['Ano']) ? ' AND YEAR(PRC.DataMarketing) = ' . $_SESSION['FiltroMarketing']['Ano'] : FALSE;
-		$data['Campo'] = (!$_SESSION['FiltroMarketing']['Campo']) ? 'PRC.DataMarketing' : $_SESSION['FiltroMarketing']['Campo'];
-		$data['Ordenamento'] = (!$_SESSION['FiltroMarketing']['Ordenamento']) ? 'DESC' : $_SESSION['FiltroMarketing']['Ordenamento'];
+		$campo = (!$_SESSION['FiltroMarketing']['Campo']) ? 'PRC.DataMarketing' : $_SESSION['FiltroMarketing']['Campo'];
+		$ordenamento = (!$_SESSION['FiltroMarketing']['Ordenamento']) ? 'DESC' : $_SESSION['FiltroMarketing']['Ordenamento'];
 		
 		$filtro10 = ($_SESSION['FiltroMarketing']['ConcluidoMarketing'] != '#') ? 'PRC.ConcluidoMarketing = "' . $_SESSION['FiltroMarketing']['ConcluidoMarketing'] . '" AND ' : FALSE;
 		
-		$filtro21 = ($_SESSION['FiltroMarketing']['idTab_TipoRD'] == 1) ? 'AND (OT.idTab_TipoRD = "1" OR F.idApp_Fornecedor = PRC.idApp_Fornecedor)' : FALSE;
 		$filtro22 = ($_SESSION['FiltroMarketing']['idTab_TipoRD'] == 2) ? 'AND (OT.idTab_TipoRD = "2" OR C.idApp_Cliente = PRC.idApp_Cliente)' : FALSE;
 		
-		$data['idApp_Marketing'] = ($_SESSION['FiltroMarketing']['idApp_Marketing']) ? ' AND PRC.idApp_Marketing = ' . $_SESSION['FiltroMarketing']['idApp_Marketing'] . '  ': FALSE;		
-		$data['Sac'] = ($_SESSION['FiltroMarketing']['Sac']) ? ' AND PRC.Sac = ' . $_SESSION['FiltroMarketing']['Sac'] . '  ': FALSE;		
-		$data['CategoriaMarketing'] = ($_SESSION['FiltroMarketing']['CategoriaMarketing']) ? ' AND PRC.CategoriaMarketing = ' . $_SESSION['FiltroMarketing']['CategoriaMarketing'] . '  ': FALSE;
-		$data['Orcamento'] = ($_SESSION['FiltroMarketing']['Orcamento']) ? ' AND PRC.idApp_OrcaTrata = ' . $_SESSION['FiltroMarketing']['Orcamento'] . '  ': FALSE;
-		$data['Cliente'] = ($_SESSION['FiltroMarketing']['Cliente']) ? ' AND PRC.idApp_Cliente = ' . $_SESSION['FiltroMarketing']['Cliente'] . '' : FALSE;
-		$data['idApp_Cliente'] = ($_SESSION['FiltroMarketing']['idApp_Cliente']) ? ' AND PRC.idApp_Cliente = ' . $_SESSION['FiltroMarketing']['idApp_Cliente'] . '' : FALSE;
-		$data['Fornecedor'] = ($_SESSION['FiltroMarketing']['Fornecedor']) ? ' AND PRC.idApp_Fornecedor = ' . $_SESSION['FiltroMarketing']['Fornecedor'] . '' : FALSE;
-		$data['idApp_Fornecedor'] = ($_SESSION['FiltroMarketing']['idApp_Fornecedor']) ? ' AND PRC.idApp_Cliente = ' . $_SESSION['FiltroMarketing']['idApp_Fornecedor'] . '' : FALSE;        
+		$id_marketing = ($_SESSION['FiltroMarketing']['idApp_Marketing']) ? ' AND PRC.idApp_Marketing = ' . $_SESSION['FiltroMarketing']['idApp_Marketing'] . '  ': FALSE;		
+		$sac = ($_SESSION['FiltroMarketing']['Sac']) ? ' AND PRC.Sac = ' . $_SESSION['FiltroMarketing']['Sac'] . '  ': FALSE;		
+		$categoria_mark = ($_SESSION['FiltroMarketing']['CategoriaMarketing']) ? ' AND PRC.CategoriaMarketing = ' . $_SESSION['FiltroMarketing']['CategoriaMarketing'] . '  ': FALSE;
+		$orcamento = ($_SESSION['FiltroMarketing']['Orcamento']) ? ' AND PRC.idApp_OrcaTrata = ' . $_SESSION['FiltroMarketing']['Orcamento'] . '  ': FALSE;
+		$cliente = ($_SESSION['FiltroMarketing']['Cliente']) ? ' AND PRC.idApp_Cliente = ' . $_SESSION['FiltroMarketing']['Cliente'] . '' : FALSE;
+		$id_cliente = ($_SESSION['FiltroMarketing']['idApp_Cliente']) ? ' AND PRC.idApp_Cliente = ' . $_SESSION['FiltroMarketing']['idApp_Cliente'] . '' : FALSE;        
 		$filtro17 = ($_SESSION['FiltroMarketing']['NomeUsuario']) ? 'PRC.idSis_Usuario = "' . $_SESSION['FiltroMarketing']['NomeUsuario'] . '" AND ' : FALSE;        
 		$filtro18 = ($_SESSION['FiltroMarketing']['Compartilhar']) ? 'PRC.Compartilhar = "' . $_SESSION['FiltroMarketing']['Compartilhar'] . '" AND ' : FALSE;		
-		
-		$data['TipoMarketing'] = $_SESSION['FiltroMarketing']['TipoMarketing'];
 
 		$groupby = ($_SESSION['FiltroMarketing']['Agrupar'] && $_SESSION['FiltroMarketing']['Agrupar'] != "0") ? 'GROUP BY PRC.' . $_SESSION['FiltroMarketing']['Agrupar'] . '' : FALSE;
-		
-
-			
+	
 		$result_msg_contatos = '
             SELECT
 				PRC.idSis_Empresa,
@@ -60,7 +50,6 @@
 				PRC.HoraMarketing,
 				PRC.ConcluidoMarketing,
 				PRC.idApp_Cliente,
-				PRC.idApp_Fornecedor,
 				PRC.idApp_OrcaTrata,
 				PRC.Compartilhar,
 				PRC.Sac,
@@ -71,7 +60,6 @@
 				SPRC.HoraSubMarketing,
 				OT.idTab_TipoRD,
 				CONCAT(IFNULL(C.NomeCliente,"")) AS NomeCliente,
-				CONCAT(IFNULL(F.NomeFornecedor,"")) AS NomeFornecedor,
 				U.idSis_Usuario,
 				U.CpfUsuario,
 				U.Nome AS NomeUsuario,
@@ -84,7 +72,6 @@
 					LEFT JOIN App_SubMarketing AS SPRC ON SPRC.idApp_Marketing = PRC.idApp_Marketing
 					LEFT JOIN App_OrcaTrata AS OT ON OT.idApp_OrcaTrata = PRC.idApp_OrcaTrata
 					LEFT JOIN App_Cliente AS C ON C.idApp_Cliente = PRC.idApp_Cliente
-					LEFT JOIN App_Fornecedor AS F ON F.idApp_Fornecedor = PRC.idApp_Fornecedor
 					LEFT JOIN Sis_Usuario AS U ON U.idSis_Usuario = PRC.idSis_Usuario
 					LEFT JOIN Sis_Usuario AS AU ON AU.idSis_Usuario = PRC.Compartilhar
 					LEFT JOIN Sis_Usuario AS SU ON SU.idSis_Usuario = SPRC.idSis_Usuario
@@ -103,23 +90,19 @@
 				PRC.idSis_Empresa = ' . $_SESSION['log']['idSis_Empresa'] . ' AND
 				PRC.idApp_OrcaTrata = 0 AND 
 				PRC.idApp_Cliente != 0 AND 
-				PRC.idApp_Fornecedor = 0 AND 
 				PRC.Sac = 0 AND 
 				PRC.CategoriaMarketing != 0 
-                ' . $filtro21 . ' 
                 ' . $filtro22 . '
-                ' . $data['idApp_Marketing'] . '
-                ' . $data['Sac'] . '
-                ' . $data['CategoriaMarketing'] . '
-                ' . $data['Orcamento'] . '
-                ' . $data['Cliente'] . '
-                ' . $data['Fornecedor'] . '
-                ' . $data['idApp_Cliente'] . '
-                ' . $data['idApp_Fornecedor'] . '
+                ' . $id_marketing . '
+                ' . $sac . '
+                ' . $categoria_mark . '
+                ' . $orcamento . '
+                ' . $cliente . '
+                ' . $id_cliente . '
 			' . $groupby . '
             ORDER BY
-                ' . $data['Campo'] . ' 
-				' . $data['Ordenamento'] . '
+                ' . $campo . ' 
+				' . $ordenamento . '
 		';
 		$resultado_msg_contatos = mysqli_query($conn , $result_msg_contatos);
 
