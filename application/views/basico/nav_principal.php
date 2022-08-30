@@ -97,6 +97,8 @@
 									<?php } ?>
 								<?php } ?>	
 								<li role="separator" class="divider"></li>
+								<li><a href="<?php echo base_url() ?>relatorio/balanco"><span class="glyphicon glyphicon-usd"></span> Balanco</a></li>
+								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes</a></li>						
 							</ul>
 						<!--</div>-->
@@ -115,6 +117,8 @@
 								<li><a href="<?php echo base_url() ?>despesas_statico/pedidos"><span class="glyphicon glyphicon-pencil"></span> Gestor Estatico</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>Orcatrata/cadastrardesp"><span class="glyphicon glyphicon-plus"></span> Nova Despesa</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="<?php echo base_url() ?>relatorio/balanco"><span class="glyphicon glyphicon-usd"></span> Balanco</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo base_url() ?>relatorio/admin"><span class="glyphicon glyphicon-list"></span> Mais Opcoes </a></li>							
 							</ul>
