@@ -570,7 +570,7 @@
 															<?php if ($metodo == 7) { ?>
 																<div class="col-md-2">
 																<label >Preço e Prazo</label><br>
-																	<a class="btn btn-md btn-danger btn-block"  name="submeter2" id="submeter2" onclick="adiciona_precos()">
+																	<a class="btn btn-md btn-success btn-block"  name="submeter2" id="submeter2" onclick="adiciona_precos()">
 																		<span class="glyphicon glyphicon-plus"></span> Adicionar
 																	</a>
 																</div>
@@ -593,7 +593,7 @@
 														<?php if ($metodo == 4) { ?>
 															<div class="col-md-2">
 																<label >Preço, Prazo e Promoção</label><br>
-																<a class="btn btn-success btn-block" href="<?php echo base_url() . 'produtos/tela_precos/' . $produtos['idTab_Produtos'] ?>" role="button">
+																<a class="btn btn-info btn-block" href="<?php echo base_url() . 'produtos/tela_precos/' . $produtos['idTab_Produtos'] ?>" role="button">
 																	<span class="glyphicon glyphicon-usd"></span> Ver
 																</a>
 															</div>
