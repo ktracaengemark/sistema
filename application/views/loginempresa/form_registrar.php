@@ -25,7 +25,9 @@
 												<?php echo form_error('Site'); ?>
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-												<label for="CepEmpresa">Cep:</label><br>
+												<label for="CepEmpresa">
+												Cep: <a href="http://www.buscacep.correios.com.br/sistemas/buscacep/default.cfm" target="_blank">Não sei meu CEP!!</a>
+												</label><br>
 												<div class="input-group">
 													<input type="text" class="form-control Cep" id="CepEmpresa" maxlength="8" name="CepEmpresa" value="<?php echo $query['CepEmpresa']; ?>">
 													<span class="input-group-btn">
