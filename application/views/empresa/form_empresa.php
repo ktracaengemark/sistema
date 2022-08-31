@@ -162,75 +162,34 @@
 															</div>
 														</div>
 													</div>
+													<br>
+													<h3 class="text-left">Dados Operacionais</h3>
 													<div class="form-group">
 														<div class="row">
 															<div class="col-md-2">
-																<h3 class="text-left">Cadastro:</h3>
+																<h4 class="text-left">Cadastro Aux.:</h4>
 															</div>
-															<div class="col-md-2 text-left">
-																<label for="CadastrarPet">Cadastra Pets?</label><br>
-																<div class="btn-group" data-toggle="buttons">
-																	<?php
-																	foreach ($select['CadastrarPet'] as $key => $row) {
-																		if (!$query['CadastrarPet'])$query['CadastrarPet'] = 'N';
-
-																		($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-
-																		if ($query['CadastrarPet'] == $key) {
-																			echo ''
-																			. '<label class="btn btn-warning active" name="CadastrarPet_' . $hideshow . '">'
-																			. '<input type="radio" name="CadastrarPet" id="' . $hideshow . '" '
-																			. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																			. '</label>'
-																			;
-																		} else {
-																			echo ''
-																			. '<label class="btn btn-default" name="CadastrarPet_' . $hideshow . '">'
-																			. '<input type="radio" name="CadastrarPet" id="' . $hideshow . '" '
-																			. 'autocomplete="off" value="' . $key . '" >' . $row
-																			. '</label>'
-																			;
-																		}
-																	}
-																	?>
-																</div>
-															</div>
-															<div id="CadastrarPet" <?php echo $div['CadastrarPet']; ?>>
-																<div class="col-md-3 text-left">
-																	<label for="CadastrarDep">Cadastra Dependentes?</label><br>
-																	<div class="btn-group" data-toggle="buttons">
-																		<?php
-																		foreach ($select['CadastrarDep'] as $key => $row) {
-																			if (!$query['CadastrarDep'])$query['CadastrarDep'] = 'N';
-
-																			($key == 'N') ? $hideshow = 'showradio' : $hideshow = 'hideradio';
-
-																			if ($query['CadastrarDep'] == $key) {
-																				echo ''
-																				. '<label class="btn btn-warning active" name="CadastrarDep_' . $hideshow . '">'
-																				. '<input type="radio" name="CadastrarDep" id="' . $hideshow . '" '
-																				. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																				. '</label>'
-																				;
-																			} else {
-																				echo ''
-																				. '<label class="btn btn-default" name="CadastrarDep_' . $hideshow . '">'
-																				. '<input type="radio" name="CadastrarDep" id="' . $hideshow . '" '
-																				. 'autocomplete="off" value="' . $key . '" >' . $row
-																				. '</label>'
-																				;
-																			}
-																		}
-																		?>
-																	</div>
-																</div>
+															<input type="hidden" name="CadastrarPet" value="<?php echo $query['CadastrarPet']; ?>">
+															<input type="hidden" name="CadastrarDep" value="<?php echo $query['CadastrarDep']; ?>">
+															<?php
+																if($query['CadastrarPet'] == "S"){
+																	$cadastro = 'Pets';
+																}elseif($query['CadastrarDep'] == "S"){
+																	$cadastro = 'Dependentes';
+																}else{
+																	$cadastro = 'Nenhum';
+																}
+															?>
+															<div class="col-md-2">
+																<label>Tipo:</label><br>
+																<input type="text" class="form-control" readonly="" value="<?php echo $cadastro; ?>">
 															</div>
 														</div>
 													</div>
 													<div class="form-group">
 														<div class="row">
 															<div class="col-md-2">
-																<h3 class="text-left">Entrega:</h3>
+																<h4 class="text-left">Entrega:</h4>
 															</div>
 															<div class="col-md-2">
 																<label for="TaxaEntrega">Taxa de Entrega:</label><br>
@@ -245,7 +204,7 @@
 													<div class="form-group">
 														<div class="row">
 															<div class="col-md-2">
-																<h3 class="text-left">Valor Mínimo:</h3>
+																<h4 class="text-left">Valor Mínimo:</h4>
 															</div>
 															<div class="col-md-2">
 																<label for="ValorMinimo">A Partir de:</label><br>
@@ -260,7 +219,7 @@
 													<div class="form-group">
 														<div class="row">
 															<div class="col-md-2">
-																<h3 class="text-left">Conta:</h3>
+																<h4 class="text-left">Conta:</h4>
 															</div>	
 															<div class="col-md-3">
 																<label for="BancoEmpresa">Banco:</label>
@@ -282,7 +241,7 @@
 													<div class="form-group">
 														<div class="row">
 															<div class="col-md-2">
-																<h3 class="text-left">Chave:</h3>
+																<h4 class="text-left">Chave:</h4>
 															</div>	
 															<div class="col-md-3">
 																<label for="PixEmpresa">Pix:</label>
@@ -294,7 +253,7 @@
 													<div class="form-group">
 														<div class="row">
 															<div class="col-md-2">
-																<h3 class="text-left">CashBack:</h3>
+																<h4 class="text-left">CashBack:</h4>
 															</div>
 															<div class="col-md-3 text-left">
 																<label for="CashBackAtivo">Ativo?</label><br>
@@ -367,14 +326,14 @@
 																</div>
 															</div>
 														</div>
-													</div>										
+													</div>
 													<div id="EComerce" <?php echo $div['EComerce']; ?>>
 														<br>
 														<h3 class="text-left">Dados do E-Comerce</h3>
 														<div class="form-group">
 															<div class="row">
 																<div class="col-md-2">
-																	<h3 class="text-left">Entrega:</h3>
+																	<h4 class="text-left">Entrega:</h4>
 																</div>
 																<div class="col-md-2">
 																	<label for="RetirarLoja">Retirar na Loja?</label><br>
@@ -465,7 +424,7 @@
 														<div class="form-group">
 															<div class="row">
 																<div class="col-md-2">
-																	<h3 class="text-left">Pagamento:</h3>
+																	<h4 class="text-left">Pagamento:</h4>
 																</div>
 																<div class="col-md-2">
 																	<label for="NaLoja">NaLoja?</label><br>
@@ -557,7 +516,7 @@
 															<div class="form-group">
 																<div class="row">
 																	<div class="col-md-2">
-																		<h3 class="text-left">OnLine:</h3>
+																		<h4 class="text-left">OnLine:</h4>
 																	</div>
 																	<div class="col-md-2">
 																		<label for="Debito">Debito?</label><br>
@@ -679,7 +638,7 @@
 														<div class="form-group">
 															<div class="row">
 																<div class="col-md-2">
-																	<h3 class="text-left">Associado:</h3>
+																	<h4 class="text-left">Associado:</h4>
 																</div>
 																<div class="col-md-3 text-left">
 																	<label for="AssociadoAtivo">Ativo?</label><br>

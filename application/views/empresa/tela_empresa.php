@@ -121,6 +121,24 @@
 														';
 
 														}
+
+														if($query['CadastrarPet'] == "S"){
+															$cadastro = 'Pets';
+														}elseif($query['CadastrarDep'] == "S"){
+															$cadastro = 'Dependentes';
+														}else{
+															$cadastro = 'Nenhum';
+														}
+														
+														if ($cadastro) {
+														
+														echo '
+														<tr>
+															<td><span class="glyphicon glyphicon-pencil"></span> Cadastro Aux.:</td>
+															<td>' . $cadastro . '</td>
+														</tr>
+														';
+														}
 														
 														if ($query['SobreNos']) {
 

@@ -181,6 +181,10 @@ class Loginempresa extends CI_Controller {
 			'DataDeValidade',
 			'NumUsuarios',
 			'Site',
+			'CadastrarPet',
+			'CadastrarDep',
+			'EComerce',
+			'Rede',
 		), TRUE);
 		
 		$caracteres_sem_acento = array(
@@ -229,8 +233,40 @@ class Loginempresa extends CI_Controller {
 		}
 
 		$data['select']['NumUsuarios'] = $this->Basico_model->select_numusuarios();
-		$data['select']['Sexo'] = $this->Basico_model->select_sexo();		
-		
+		$data['select']['Sexo'] = $this->Basico_model->select_sexo();
+		$data['select']['EComerce'] = $this->Basico_model->select_status_sn();
+		$data['select']['Rede'] = $this->Basico_model->select_status_sn();
+		$data['select']['CadastrarPet'] = $this->Basico_model->select_status_sn();
+		$data['select']['CadastrarDep'] = $this->Basico_model->select_status_sn();
+
+		(!$data['query']['CadastrarPet']) ? $data['query']['CadastrarPet'] = 'N' : FALSE;
+		$data['radio'] = array(
+			'CadastrarPet' => $this->basico->radio_checked($data['query']['CadastrarPet'], 'E-Comerce', 'NS'),
+		);
+		($data['query']['CadastrarPet'] == 'N') ?
+			$data['div']['CadastrarPet'] = '' : $data['div']['CadastrarPet'] = 'style="display: none;"';
+
+		(!$data['query']['CadastrarDep']) ? $data['query']['CadastrarDep'] = 'N' : FALSE;
+		$data['radio'] = array(
+			'CadastrarDep' => $this->basico->radio_checked($data['query']['CadastrarDep'], 'E-Comerce', 'NS'),
+		);
+		($data['query']['CadastrarDep'] == 'N') ?
+			$data['div']['CadastrarDep'] = '' : $data['div']['CadastrarDep'] = 'style="display: none;"';
+			
+		(!$data['query']['EComerce']) ? $data['query']['EComerce'] = 'N' : FALSE;
+		$data['radio'] = array(
+			'EComerce' => $this->basico->radio_checked($data['query']['EComerce'], 'E-Comerce', 'NS'),
+		);
+		($data['query']['EComerce'] == 'S') ?
+			$data['div']['EComerce'] = '' : $data['div']['EComerce'] = 'style="display: none;"';
+			
+		(!$data['query']['Rede']) ? $data['query']['Rede'] = 'N' : FALSE;
+		$data['radio'] = array(
+			'Rede' => $this->basico->radio_checked($data['query']['Rede'], 'Rede', 'NS'),
+		);
+		($data['query']['Rede'] == 'N') ?
+			$data['div']['Rede'] = '' : $data['div']['Rede'] = 'style="display: none;"';
+			
 		$this->form_validation->set_error_delimiters('<h5 style="color: red;">', '</h5>');
 		$this->form_validation->set_rules('Site', 'Nome do Site', 'required|trim|is_unique_site[Sis_Empresa.Site]');		
 		$this->form_validation->set_rules('NomeEmpresa', 'Nome da empresa', 'required|trim|is_unique[Sis_Empresa.NomeEmpresa]');
@@ -292,6 +328,19 @@ class Loginempresa extends CI_Controller {
 			#$data['query']['Inativo'] = 1;
 			//ACESSO LIBERADO PRA QUEM REALIZAR O CADASTRO
 			$data['query']['Inativo'] = 0;
+
+			if($data['query']['CadastrarPet'] == 'S'){
+				$data['query']['CadastrarDep'] = 'N';
+			}elseif($data['query']['CadastrarDep'] == 'S'){
+				$data['query']['CadastrarPet'] = 'N';
+			}else{
+				$data['query']['CadastrarPet'] = 'N';
+				$data['query']['CadastrarDep'] = 'N';
+			}
+
+			if($data['query']['Rede'] == 'S'){
+				$data['query']['EComerce'] = 'S';
+			}
 			/*
 			echo "<br>";
 			echo "<pre>";
