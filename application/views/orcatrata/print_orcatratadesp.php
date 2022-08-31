@@ -71,33 +71,34 @@
 														<h4>Endereço:<?php echo '<small>' . $orcatrata['EnderecoEmpresa'] . '</small> <small>' . $orcatrata['NumeroEmpresa'] . '</small> <small>' . $orcatrata['ComplementoEmpresa'] . '</small><br>
 																				<small>' . $orcatrata['BairroEmpresa'] . '</small> - <small>' . $orcatrata['MunicipioEmpresa'] . '</small> - <small>' . $orcatrata['EstadoEmpresa'] . '</small>' ?></h4>
 													<?php } ?>	
-													<h5>Colaborador: <?php 
-																		if(isset($usuario)){
-																			$colaborador = $usuario['Nome'];
-																		}else{
-																			$colaborador = FALSE;
-																		} 
-																		echo '<strong>' . $colaborador . '</strong>'
-																	?>
+													<h5>
+														<?php 
+															if(isset($usuario)){
+																$colaborador = $usuario['Nome'];
+															}else{
+																$colaborador = FALSE;
+															} 
+															echo '<strong>' . $colaborador . '</strong>'
+														?>
 													</h5>
 													<h4 class="text-center">Despesa<?php echo ' - <strong>' . $query['idApp_OrcaTrata'] . '</strong>' ?> </h4>
 												</td>
 											</tr>
 										</tbody>
 									</table>
-										
 									<div class="panel-body">
-
 										<!--<hr />-->
-										<?php if($orcatrata['idApp_Fornecedor'] != 0) { ?>								
-											<h3 class="text-left"><b>Fornecedor</b>: <?php echo '' . $fornecedor['NomeFornecedor'] . '' ?></h3>
-											<h5 class="text-left"><b>Tel</b>: <?php echo '' . $fornecedor['Telefone1'] . '' ?> - <b>ID</b>: <?php echo '' . $fornecedor['idApp_Fornecedor'] . '' ?> </h5>
-										<?php } ?>
-										<?php if($orcatrata['id_Funcionario'] != 0) { ?>								
-											<h3 class="text-left"><b>Colaborador</b>: <?php echo '' . $funcionario['Nome'] . '' ?></h3>
-										<?php } ?>
-										<?php if($orcatrata['id_Associado'] != 0) { ?>								
-											<h3 class="text-left"><b>Associado</b>: <?php echo '' . $associado['Nome'] . '' ?></h3>
+										<?php if($_SESSION['log']['idSis_Empresa'] != 5) { ?>
+											<?php if($orcatrata['idApp_Fornecedor'] != 0) { ?>
+												<h3 class="text-left"><b>Fornecedor</b>: <?php echo '' . $fornecedor['NomeFornecedor'] . '' ?></h3>
+												<h5 class="text-left"><b>Tel</b>: <?php echo '' . $fornecedor['Telefone1'] . '' ?> - <b>ID</b>: <?php echo '' . $fornecedor['idApp_Fornecedor'] . '' ?> </h5>
+											<?php } ?>
+											<?php if($orcatrata['id_Funcionario'] != 0) { ?>								
+												<h3 class="text-left"><b>Colaborador</b>: <?php echo '' . $funcionario['Nome'] . '' ?></h3>
+											<?php } ?>
+											<?php if($orcatrata['id_Associado'] != 0) { ?>								
+												<h3 class="text-left"><b>Associado</b>: <?php echo '' . $associado['Nome'] . '' ?></h3>
+											<?php } ?>
 										<?php } ?>
 										<table class="table table-bordered table-condensed table-striped">
 											<thead>

@@ -64,31 +64,38 @@ class Orcatrataprint_model extends CI_Model {
     }
 
     public function get_orcatrata($data) {
-
-		if($_SESSION['Empresa']['Rede'] == "S"){
-			if($_SESSION['Usuario']['Nivel'] == 2){
-				$nivel = 'AND OT.NivelOrca = 2';
-				$revendedor = 'OT.id_Funcionario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
-				$permissao_orcam = 'OT.id_Funcionario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
-			}elseif($_SESSION['Usuario']['Nivel'] == 1){
-				$nivel = FALSE;
-				$revendedor = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
-				if($_SESSION['Usuario']['Permissao_Orcam'] == 1){
+		
+		if($_SESSION['log']['idSis_Empresa'] != 5){
+			if($_SESSION['Empresa']['Rede'] == "S"){
+				if($_SESSION['Usuario']['Nivel'] == 2){
+					$nivel = 'AND OT.NivelOrca = 2';
+					$revendedor = 'OT.id_Funcionario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
 					$permissao_orcam = 'OT.id_Funcionario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+				}elseif($_SESSION['Usuario']['Nivel'] == 1){
+					$nivel = FALSE;
+					$revendedor = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+					if($_SESSION['Usuario']['Permissao_Orcam'] == 1){
+						$permissao_orcam = 'OT.id_Funcionario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+					}else{
+						$permissao_orcam = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+					}
 				}else{
-					$permissao_orcam = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+					$nivel = FALSE;
+					$revendedor = FALSE;
+					$permissao_orcam = FALSE;
 				}
 			}else{
+				if($_SESSION['Usuario']['Permissao_Orcam'] == 1){
+					$permissao_orcam = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
+				}else{
+					$permissao_orcam = FALSE;
+				}
 				$nivel = FALSE;
 				$revendedor = FALSE;
-				$permissao_orcam = FALSE;
 			}
 		}else{
-			if($_SESSION['Usuario']['Permissao_Orcam'] == 1){
-				$permissao_orcam = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
-			}else{
-				$permissao_orcam = FALSE;
-			}
+			$permissao_orcam = FALSE;
+			$permissao = 'OT.idSis_Usuario = ' . $_SESSION['log']['idSis_Usuario'] . ' AND ';
 			$nivel = FALSE;
 			$revendedor = FALSE;
 		}

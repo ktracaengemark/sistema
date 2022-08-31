@@ -1407,7 +1407,7 @@
 																		</div>	
 																	</div>
 																	<div class="row">
-																		<?php if(isset($_SESSION['Consulta']['NivelAgenda']) && $_SESSION['Consulta']['NivelAgenda'] == 1) { ?>
+																		<?php if(isset($_SESSION['Consulta']['NivelAgenda']) && $_SESSION['Consulta']['NivelAgenda'] != 2) { ?>
 																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-left">
 																				<label for="UsarCupom">Usar Cupom?</label><br>
 																				<div class="btn-group" data-toggle="buttons">
@@ -1481,7 +1481,7 @@
 																				<input type="text" class="form-control Valor" name="SubValorFinal" id="SubValorFinal" value="<?php echo $orcatrata['SubValorFinal'] ?>" readonly=''/>
 																			</div>
 																		</div>
-																		<?php if(isset($_SESSION['Consulta']['NivelAgenda']) && $_SESSION['Consulta']['NivelAgenda'] == 1) { ?>
+																		<?php if(isset($_SESSION['Consulta']['NivelAgenda']) && $_SESSION['Consulta']['NivelAgenda'] != 2) { ?>
 																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-left">
 																				<label for="UsarCashBack">Usar CashBack?</label><br>
 																				<div class="btn-group" data-toggle="buttons">

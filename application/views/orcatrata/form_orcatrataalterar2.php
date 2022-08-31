@@ -15,7 +15,28 @@
 					?>
 					<div class="panel panel-<?php echo $panel; ?>">
 						<div class="panel-heading">
-							<h4 class="text-center"><b>Colaborador: <?php echo $_SESSION['Orcatrata']['Nome'] ?></b></h4>
+							<h4 class="text-center">
+								<?php 
+									if($_SESSION['log']['idSis_Empresa'] == 5){
+										if(isset($associado)){
+											$colaborador = $associado['Nome'];
+										}
+									}else{
+										if(isset($orcatrata['id_Funcionario']) && $orcatrata['id_Funcionario'] !=0){
+											if(isset($funcionario)){
+												$colaborador = 'Vendedor: ' . $funcionario['Nome'];
+											}
+										}elseif(isset($orcatrata['id_Associado']) && $orcatrata['id_Associado'] !=0){
+											if(isset($associado)){
+												$colaborador = 'Associado: ' . $associado['Nome'];
+											}
+										}else{
+											$colaborador = "Sem Vendedor";
+										}
+									}	
+									echo '<strong>' . $colaborador . '</strong>'
+								?>
+							</h4>
 							<?php if (isset($msg)) echo $msg; ?>
 							<div style="overflow: auto; height: auto; ">
 								<div class="panel-group">

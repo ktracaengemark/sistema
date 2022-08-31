@@ -9,17 +9,27 @@
 					<div class="panel panel-<?php echo $panel; ?>">
 						<div class="panel-heading">
 							<h4 class="text-center">
-								<?php 
-									if(isset($_SESSION['Orcatrata']['id_Funcionario']) && $_SESSION['Orcatrata']['id_Funcionario'] !=0){
-										if(isset($funcionario)){
-											$colaborador = 'Vendedor: ' . $funcionario['Nome'];
-										}
-									}elseif(isset($_SESSION['Orcatrata']['id_Associado']) && $_SESSION['Orcatrata']['id_Associado'] !=0){
-										if(isset($associado)){
-											$colaborador = 'Associado: ' . $associado['Nome'];
+								<?php
+									if($_SESSION['log']['idSis_Empresa'] == 5){
+										if(isset($_SESSION['Orcatrata']['id_Funcionario']) && $_SESSION['Orcatrata']['id_Funcionario'] !=0){
+											if(isset($associado)){
+												$colaborador = $associado['Nome'];
+											}
+										}else{
+											$colaborador = FALSE;
 										}
 									}else{
-										$colaborador = "Sem Vendedor";
+										if(isset($_SESSION['Orcatrata']['id_Funcionario']) && $_SESSION['Orcatrata']['id_Funcionario'] !=0){
+											if(isset($funcionario)){
+												$colaborador = 'Vendedor: ' . $funcionario['Nome'];
+											}
+										}elseif(isset($_SESSION['Orcatrata']['id_Associado']) && $_SESSION['Orcatrata']['id_Associado'] !=0){
+											if(isset($associado)){
+												$colaborador = 'Associado: ' . $associado['Nome'];
+											}
+										}else{
+											$colaborador = "Sem Vendedor";
+										}
 									}
 								?>
 								<b><?php echo $colaborador; ?></b>

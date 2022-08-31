@@ -41,45 +41,45 @@ class OrcatrataPrint extends CI_Controller {
     }
 
     public function imprimir($id = FALSE) {
-        
-		if ($this->input->get('m') == 1)
-            $data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
-        elseif ($this->input->get('m') == 2)
-            $data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
-        else
-            $data['msg'] = '';
 
-		if (!$id) {
+		$acesso = FALSE;
+		
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$acesso = TRUE;
+		}else{
+			if ($_SESSION['Usuario']['Usu_Rec'] == "S" && $_SESSION['Usuario']['Ver_Orcam'] == "S") {
+				$acesso = TRUE;
+			}	
+		}
+		
+		if ($acesso === FALSE) {
 
-			unset($_SESSION['Orcatrata']);
-			unset($_SESSION['Cliente']);
-			$data['msg'] = '?m=3';
+			$data['msg'] = '?m=4';
 			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 			
-		} else {
+		} else { 
+		
+			if ($this->input->get('m') == 1)
+				$data['msg'] = $this->basico->msg('<strong>Informações salvas com sucesso</strong>', 'sucesso', TRUE, TRUE, TRUE);
+			elseif ($this->input->get('m') == 2)
+				$data['msg'] = $this->basico->msg('<strong>Erro no Banco de dados. Entre em contato com o administrador deste sistema.</strong>', 'erro', TRUE, TRUE, TRUE);
+			else
+				$data['msg'] = '';
 
-			$acesso = FALSE;
-			
-			if($_SESSION['log']['idSis_Empresa'] == 5){
-				$acesso = TRUE;
-			}else{
-				if ($_SESSION['Usuario']['Usu_Rec'] == "S" && $_SESSION['Usuario']['Ver_Orcam'] == "S") {
-					$acesso = TRUE;
-				}	
-			}
-			
-			if ($acesso === FALSE) {
+			if (!$id) {
 
-				$data['msg'] = '?m=4';
+				unset($_SESSION['Orcatrata']);
+				unset($_SESSION['Cliente']);
+				$data['msg'] = '?m=3';
 				redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 				exit();
 				
 			} else {
-				
+
 				#### App_OrcaTrata ####
 				$_SESSION['Orcatrata'] = $data['orcatrata'] = $this->Orcatrataprint_model->get_orcatrata($id);
-			
+
 				if($data['orcatrata'] === FALSE || $data['orcatrata']['idTab_TipoRD'] != 2){
 					
 					unset($_SESSION['Orcatrata']);
@@ -106,60 +106,62 @@ class OrcatrataPrint extends CI_Controller {
 					}	
 
 					#### Carrega os dados do cliente nas variáves de sessão ####
-					if($data['orcatrata']['idApp_Cliente'] != 0 && $data['orcatrata']['idApp_Cliente'] != 1){
+					if($data['orcatrata']['idApp_Cliente'] != 0 && $data['orcatrata']['idApp_Cliente'] != 1 && $data['orcatrata']['idApp_Cliente'] != 150001){
 						
-						$_SESSION['Cliente'] = $data['cliente'] = $this->Cliente_model->get_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+						if($_SESSION['log']['idSis_Empresa'] != 5){	
 							
-						if($data['cliente'] === FALSE){
+							$_SESSION['Cliente'] = $data['cliente'] = $this->Cliente_model->get_cliente($data['orcatrata']['idApp_Cliente'], TRUE);
+								
+							if($data['cliente'] === FALSE){
+								
+								unset($_SESSION['Orcatrata']);
+								unset($_SESSION['Cliente']);
+								$data['msg'] = '?m=3';
+								redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
+								exit();
+								
+							} else {
 							
-							unset($_SESSION['Orcatrata']);
-							unset($_SESSION['Cliente']);
-							$data['msg'] = '?m=3';
-							redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
-							exit();
-							
-						} else {
-						
-							$_SESSION['Cliente']['NomeCliente'] = (strlen($data['cliente']['NomeCliente']) > 12) ? substr($data['cliente']['NomeCliente'], 0, 12) : $data['cliente']['NomeCliente'];
-				
-							if(!empty($data['orcatrata']['idApp_ClientePet']) && $data['orcatrata']['idApp_ClientePet'] != 0){
-								//$this->load->model('Clientepet_model');
-								$_SESSION['ClientePet'] = $data['clientepet'] = $this->Clientepet_model->get_clientepet($data['orcatrata']['idApp_ClientePet'], TRUE);
-								$_SESSION['ClientePet']['NomeClientePet'] = (strlen($data['clientepet']['NomeClientePet']) > 20) ? substr($data['clientepet']['NomeClientePet'], 0, 20) : $data['clientepet']['NomeClientePet'];
-							}
-
-							if(!empty($data['orcatrata']['idApp_ClienteDep']) && $data['orcatrata']['idApp_ClienteDep'] != 0){
-								//$this->load->model('Clientedep_model');
-								$_SESSION['ClienteDep'] = $data['clientedep'] = $this->Clientedep_model->get_clientedep($data['orcatrata']['idApp_ClienteDep'], TRUE);
-								$_SESSION['ClienteDep']['NomeClienteDep'] = (strlen($data['clientedep']['NomeClienteDep']) > 20) ? substr($data['clientedep']['NomeClienteDep'], 0, 20) : $data['clientedep']['NomeClienteDep'];
-							}
-
-							#### Carrega os dados do Pedido nas variáves de sessão do Whatsapp ####	
-							if(isset($_SESSION['bd_orcamento']['Whatsapp']) && $_SESSION['bd_orcamento']['Whatsapp'] == "S"){
-								if(isset($_SESSION['Empresa']['ClientePedido']) && $_SESSION['Empresa']['ClientePedido'] == "S") {
-									$nomecliente = '*'.$data['cliente']['NomeCliente'].'*';
-								}else{
-									$nomecliente = FALSE;
-								}						
-								if(isset($_SESSION['Empresa']['idClientePedido']) && $_SESSION['Empresa']['idClientePedido'] == "S") {
-									$idcliente = '*'.$data['orcatrata']['idApp_Cliente'].'*';
-								}else{
-									$idcliente = FALSE;
+								$_SESSION['Cliente']['NomeCliente'] = (strlen($data['cliente']['NomeCliente']) > 12) ? substr($data['cliente']['NomeCliente'], 0, 12) : $data['cliente']['NomeCliente'];
+					
+								if(!empty($data['orcatrata']['idApp_ClientePet']) && $data['orcatrata']['idApp_ClientePet'] != 0){
+									//$this->load->model('Clientepet_model');
+									$_SESSION['ClientePet'] = $data['clientepet'] = $this->Clientepet_model->get_clientepet($data['orcatrata']['idApp_ClientePet'], TRUE);
+									$_SESSION['ClientePet']['NomeClientePet'] = (strlen($data['clientepet']['NomeClientePet']) > 20) ? substr($data['clientepet']['NomeClientePet'], 0, 20) : $data['clientepet']['NomeClientePet'];
 								}
-								if(isset($_SESSION['Empresa']['idPedido']) && $_SESSION['Empresa']['idPedido'] == "S") {
-									$idpedido = '*'.$id.'*';
-								}else{
-									$idpedido = FALSE;
-								}											
-								if(isset($_SESSION['Empresa']['SitePedido']) && $_SESSION['Empresa']['SitePedido'] == "S") {
-									$sitepedido = "https://enkontraki.com.br/".$_SESSION['Empresa']['Site'];
-								}else{
-									$sitepedido = FALSE;
+
+								if(!empty($data['orcatrata']['idApp_ClienteDep']) && $data['orcatrata']['idApp_ClienteDep'] != 0){
+									//$this->load->model('Clientedep_model');
+									$_SESSION['ClienteDep'] = $data['clientedep'] = $this->Clientedep_model->get_clientedep($data['orcatrata']['idApp_ClienteDep'], TRUE);
+									$_SESSION['ClienteDep']['NomeClienteDep'] = (strlen($data['clientedep']['NomeClienteDep']) > 20) ? substr($data['clientedep']['NomeClienteDep'], 0, 20) : $data['clientedep']['NomeClienteDep'];
 								}
-								$data['whatsapp'] = utf8_encode($_SESSION['Empresa']['TextoPedido_1'].' '.$nomecliente. ' ' .$_SESSION['Empresa']['TextoPedido_2']. ' ' . $idcliente . ' ' .$_SESSION['Empresa']['TextoPedido_3']. ' ' . $idpedido . ' ' .$_SESSION['Empresa']['TextoPedido_4']. ' ' . $sitepedido);
-							}
+
+								#### Carrega os dados do Pedido nas variáves de sessão do Whatsapp ####	
+								if(isset($_SESSION['bd_orcamento']['Whatsapp']) && $_SESSION['bd_orcamento']['Whatsapp'] == "S"){
+									if(isset($_SESSION['Empresa']['ClientePedido']) && $_SESSION['Empresa']['ClientePedido'] == "S") {
+										$nomecliente = '*'.$data['cliente']['NomeCliente'].'*';
+									}else{
+										$nomecliente = FALSE;
+									}						
+									if(isset($_SESSION['Empresa']['idClientePedido']) && $_SESSION['Empresa']['idClientePedido'] == "S") {
+										$idcliente = '*'.$data['orcatrata']['idApp_Cliente'].'*';
+									}else{
+										$idcliente = FALSE;
+									}
+									if(isset($_SESSION['Empresa']['idPedido']) && $_SESSION['Empresa']['idPedido'] == "S") {
+										$idpedido = '*'.$id.'*';
+									}else{
+										$idpedido = FALSE;
+									}											
+									if(isset($_SESSION['Empresa']['SitePedido']) && $_SESSION['Empresa']['SitePedido'] == "S") {
+										$sitepedido = "https://enkontraki.com.br/".$_SESSION['Empresa']['Site'];
+									}else{
+										$sitepedido = FALSE;
+									}
+									$data['whatsapp'] = utf8_encode($_SESSION['Empresa']['TextoPedido_1'].' '.$nomecliente. ' ' .$_SESSION['Empresa']['TextoPedido_2']. ' ' . $idcliente . ' ' .$_SESSION['Empresa']['TextoPedido_3']. ' ' . $idpedido . ' ' .$_SESSION['Empresa']['TextoPedido_4']. ' ' . $sitepedido);
+								}
+							}	
 						}	
-						
 					}else{
 						unset($_SESSION['Cliente']);
 					}
@@ -473,22 +475,32 @@ class OrcatrataPrint extends CI_Controller {
         else
             $data['msg'] = '';
 
-		if (!$id) {
+		$acesso = FALSE;
+		
+		if($_SESSION['log']['idSis_Empresa'] == 5){
+			$acesso = TRUE;
+		}else{
+			if($_SESSION['log']['idSis_Empresa'] != 5 && $_SESSION['Usuario']['Usu_Des'] == "S"){
+				$acesso = TRUE;
+			}	
+		}
+		
+		if($acesso === FALSE){
 
-			$data['msg'] = '?m=3';
+			$data['msg'] = '?m=4';
 			redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 			exit();
 			
 		} else {
 			
-			if ($_SESSION['Usuario']['Usu_Des'] == "N") {
+			if (!$id) {
 
-				$data['msg'] = '?m=4';
+				$data['msg'] = '?m=3';
 				redirect(base_url() . $this->Basico_model->acesso() . $data['msg']);
 				exit();
 				
 			} else {
-				
+
 				#### App_OrcaTrata ####
 				$data['orcatrata'] = $this->Orcatrataprint_model->get_orcatrata($id);
 			
