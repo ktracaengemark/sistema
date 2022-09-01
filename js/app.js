@@ -7867,12 +7867,20 @@ function calculaTroco(entrada) {
     $('#ValorTroco').val(resta);
 	
 }
- 
+
+function modalidade(valor){
+	//alert('modalidade');
+	$('#Hidden_Modalidade').val(valor);
+	calculaParcelas(valor);
+}
+
 function calculaParcelas(mod) {
     //alert();
 	//captura os valores dos campos indicados
     //var resta = $("#ValorRestanteOrca").val();
 	//console.log(mod + ' - mod');
+	var hid_mod = $('#Hidden_Modalidade').val();
+	//console.log('Modalidade = ' + hid_mod);
 	var formapag = $("#FormaPagamento").val();
 	//console.log(formapag + ' - forma de pagamento');
 	var resta = $("#ValorFinalOrca").val();
@@ -7897,8 +7905,8 @@ function calculaParcelas(mod) {
 		var vencimento = $("#DataVencimentoOrca").val();
 
 		//valor de cada parcela
-		if(mod){
-			if(mod == "P"){
+		if(hid_mod){
+			if(hid_mod == "P"){
 				var parcorca = (resta.replace(".","").replace(",",".") / parcelas);
 			}else{
 				var parcorca = (resta.replace(".","").replace(",",".") / 1);

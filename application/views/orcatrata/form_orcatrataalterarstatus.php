@@ -1434,9 +1434,9 @@
 																	<?php 
 																		if($orcatrata['Modalidade'] == "P") {
 																			$modalidade = 'Dividido';
-																			} elseif($orcatrata['Modalidade'] == "M"){
+																		} elseif($orcatrata['Modalidade'] == "M"){
 																			$modalidade = 'Mensal';
-																			}else{
+																		}else{
 																			$modalidade = 'Mensal';
 																		}
 																	?>

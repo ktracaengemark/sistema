@@ -94,7 +94,7 @@
 															<span class="input-group-addon" disabled>
 																<span class="glyphicon glyphicon-calendar"></span>
 															</span>
-															<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA" onchange="dateDiff()"
+															<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA" onchange="dateDiff()" onkeyup="dateDiff()"
 																	id="DataOrca" name="DataOrca" value="<?php echo $orcatrata['DataOrca']; ?>">
 														</div>
 													</div>
@@ -1167,7 +1167,7 @@
 																				<span class="input-group-addon" disabled>
 																					<span class="glyphicon glyphicon-calendar"></span>
 																				</span>
-																				<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA" onchange="dateDiff()"
+																				<input type="text" class="form-control Date" <?php echo $readonly; ?> maxlength="10" placeholder="DD/MM/AAAA" onchange="dateDiff()" onkeyup="dateDiff()"
 																						id="DataEntregaOrca" name="DataEntregaOrca" value="<?php echo $orcatrata['DataEntregaOrca']; ?>">
 																			</div>
 																		</div>
@@ -1656,34 +1656,20 @@
 													<div class="panel panel-default">
 														<div class="panel-heading">
 															<div class="row">
-																<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+																<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 ">
 																	<label for="Modalidade">Dividido/ Mensal</label><br>
-																	<div class="btn-block" data-toggle="buttons">
-																		<?php
-																		foreach ($select['Modalidade'] as $key => $row) {
-																			(!$orcatrata['Modalidade']) ? $orcatrata['Modalidade'] = 'P' : FALSE;
-
-																			if ($orcatrata['Modalidade'] == $key) {
-																				echo ''
-																				. '<label class="btn btn-warning active" name="radiobutton_Modalidade" id="radiobutton_Modalidade' .  $key . '">'
-																				. '<input type="radio" name="Modalidade" id="radiobuttondinamico" ' 
-																				//. 'onchange="calculaParcelas(this.value)" '
-																				. 'autocomplete="off" value="' . $key . '" checked>' . $row
-																				. '</label>'
-																				;
-																			} else {
-																				echo ''
-																				. '<label class="btn btn-default" name="radiobutton_Modalidade" id="radiobutton_Modalidade' .  $key . '">'
-																				. '<input type="radio" name="Modalidade" id="radiobuttondinamico" '
-																				//. 'onchange="calculaParcelas(this.value)" '
-																				. 'autocomplete="off" value="' . $key . '" >' . $row
-																				. '</label>'
-																				;
-																			}
+																	<?php 
+																		if($orcatrata['Modalidade'] == "P") {
+																			$modalidade = 'Dividido';
+																		} elseif($orcatrata['Modalidade'] == "M"){
+																			$modalidade = 'Mensal';
+																		}else{
+																			$modalidade = 'Mensal';
 																		}
-																		?>
-																	</div>
-																</div>	
+																	?>
+																	<input type="text" class="form-control" value="<?php echo $modalidade; ?>" readonly=""/>
+																</div>
+																<input type="hidden" name="Modalidade" value="<?php echo $orcatrata['Modalidade'] ?>"/>	
 																<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-left">
 																	<label for="BrindeOrca">PermitirTotal=0,00?</label><br>
 																	<div class="btn-group" data-toggle="buttons">

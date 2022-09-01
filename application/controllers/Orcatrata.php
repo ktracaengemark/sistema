@@ -1155,16 +1155,24 @@ class Orcatrata extends CI_Controller {
 							$data['orcatrata']['id_Associado'] 	= 0;
 							$data['orcatrata']['idTab_Modulo'] 	= $_SESSION['log']['idTab_Modulo'];
 							$data['orcatrata']['Cli_Forn_Orca'] = 'S';
-							if ($data['orcatrata']['PrazoEntrega']){
-								$data['orcatrata']['PrazoEntrega'] = $data['orcatrata']['PrazoEntrega'];
-							}else{
+
+							if($data['orcatrata']['Entrega_Orca'] == "N"){
+								$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
+								$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
+								$data['orcatrata']['PrazoProdServ'] = 0;
+								$data['orcatrata']['PrazoCorreios'] = 0;
+								$data['orcatrata']['PrazoEntrega'] = 0;
+							}
+							
+							if (!$data['orcatrata']['PrazoEntrega']){
 								//$data1 = date('Y-m-d', time());
 								$data1 = $data['orcatrata']['DataOrca'];
 								$data2 = $data['orcatrata']['DataEntregaOrca'];
 								$intervalo = strtotime($data2)-strtotime($data1); 
 								$dias = floor($intervalo / (60 * 60 * 24));
 								$data['orcatrata']['PrazoEntrega'] = $dias;
-							}			
+							}
+			
 							$data['orcatrata']['ValorFatura'] = $data['orcatrata']['ValorFinalOrca'];
 							
 							if($data['orcatrata']['AVAP'] == "O" && ($data['orcatrata']['FormaPagamento'] == "1" || $data['orcatrata']['FormaPagamento'] == "2" || $data['orcatrata']['FormaPagamento'] == "3")){
@@ -3358,16 +3366,24 @@ class Orcatrata extends CI_Controller {
 						$data['orcatrata']['id_Associado'] 		= 0;
 						$data['orcatrata']['idTab_Modulo'] 		= $_SESSION['log']['idTab_Modulo'];
 						$data['orcatrata']['Cli_Forn_Orca'] 	= 'S';
-						if ($data['orcatrata']['PrazoEntrega']){
-							$data['orcatrata']['PrazoEntrega'] = $data['orcatrata']['PrazoEntrega'];
-						}else{
+
+						if($data['orcatrata']['Entrega_Orca'] == "N"){
+							$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
+							$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
+							$data['orcatrata']['PrazoProdServ'] = 0;
+							$data['orcatrata']['PrazoCorreios'] = 0;
+							$data['orcatrata']['PrazoEntrega'] = 0;
+						}
+						
+						if (!$data['orcatrata']['PrazoEntrega']){
 							//$data1 = date('Y-m-d', time());
 							$data1 = $data['orcatrata']['DataOrca'];
 							$data2 = $data['orcatrata']['DataEntregaOrca'];
 							$intervalo = strtotime($data2)-strtotime($data1); 
 							$dias = floor($intervalo / (60 * 60 * 24));
 							$data['orcatrata']['PrazoEntrega'] = $dias;
-						}			
+						}
+			
 						$data['orcatrata']['ValorFatura'] = $data['orcatrata']['ValorFinalOrca'];
 						
 						if($data['orcatrata']['AVAP'] == "O" && ($data['orcatrata']['FormaPagamento'] == "1" || $data['orcatrata']['FormaPagamento'] == "2" || $data['orcatrata']['FormaPagamento'] == "3")){
@@ -5032,11 +5048,16 @@ class Orcatrata extends CI_Controller {
 					$data['orcatrata']['idSis_Usuario'] 	= $_SESSION['log']['idSis_Usuario']; // quem cadastrou o pedido
 					$data['orcatrata']['id_Funcionario'] 	= $_SESSION['log']['idSis_Usuario']; // quem vendeu
 					$data['orcatrata']['id_Associado'] 		= 0;
+
+					if($data['orcatrata']['Entrega_Orca'] == "N"){
+						$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
+						$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
+						$data['orcatrata']['PrazoProdServ'] = 0;
+						$data['orcatrata']['PrazoCorreios'] = 0;
+						$data['orcatrata']['PrazoEntrega'] = 0;
+					}
 					
-					$data['orcatrata']['idTab_Modulo'] 		= $_SESSION['log']['idTab_Modulo'];
-					if ($data['orcatrata']['PrazoEntrega']){
-						$data['orcatrata']['PrazoEntrega'] = $data['orcatrata']['PrazoEntrega'];
-					}else{
+					if (!$data['orcatrata']['PrazoEntrega']){
 						//$data1 = date('Y-m-d', time());
 						$data1 = $data['orcatrata']['DataOrca'];
 						$data2 = $data['orcatrata']['DataEntregaOrca'];
@@ -5044,6 +5065,7 @@ class Orcatrata extends CI_Controller {
 						$dias = floor($intervalo / (60 * 60 * 24));
 						$data['orcatrata']['PrazoEntrega'] = $dias;
 					}
+
 					//$data['orcatrata']['ValorFatura'] = $data['orcatrata']['ValorTotalOrca'];
 					$data['orcatrata']['ValorFatura'] = $data['orcatrata']['ValorFinalOrca'];
 					
@@ -7226,17 +7248,24 @@ class Orcatrata extends CI_Controller {
 							#$data['orcatrata']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 							#$data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 							#$data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+
+							if($data['orcatrata']['Entrega_Orca'] == "N"){
+								$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
+								$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
+								$data['orcatrata']['PrazoProdServ'] = 0;
+								$data['orcatrata']['PrazoCorreios'] = 0;
+								$data['orcatrata']['PrazoEntrega'] = 0;
+							}
 							
-							if ($data['orcatrata']['PrazoEntrega']){
-								$data['orcatrata']['PrazoEntrega'] = $data['orcatrata']['PrazoEntrega'];
-							}else{
+							if (!$data['orcatrata']['PrazoEntrega']){
 								//$data1 = date('Y-m-d', time());
 								$data1 = $data['orcatrata']['DataOrca'];
 								$data2 = $data['orcatrata']['DataEntregaOrca'];
 								$intervalo = strtotime($data2)-strtotime($data1); 
 								$dias = floor($intervalo / (60 * 60 * 24));
 								$data['orcatrata']['PrazoEntrega'] = $dias;
-							}			
+							}
+			
 							$data['orcatrata']['ValorFatura'] = $data['orcatrata']['ValorFinalOrca'];
 							
 							if($data['orcatrata']['AVAP'] == "O" && ($data['orcatrata']['FormaPagamento'] == "1" || $data['orcatrata']['FormaPagamento'] == "2" || $data['orcatrata']['FormaPagamento'] == "3")){
@@ -9433,17 +9462,24 @@ class Orcatrata extends CI_Controller {
 						#$data['orcatrata']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 						#$data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 						#$data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+
+						if($data['orcatrata']['Entrega_Orca'] == "N"){
+							$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
+							$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
+							$data['orcatrata']['PrazoProdServ'] = 0;
+							$data['orcatrata']['PrazoCorreios'] = 0;
+							$data['orcatrata']['PrazoEntrega'] = 0;
+						}
 						
-						if ($data['orcatrata']['PrazoEntrega']){
-							$data['orcatrata']['PrazoEntrega'] = $data['orcatrata']['PrazoEntrega'];
-						}else{
+						if (!$data['orcatrata']['PrazoEntrega']){
 							//$data1 = date('Y-m-d', time());
 							$data1 = $data['orcatrata']['DataOrca'];
 							$data2 = $data['orcatrata']['DataEntregaOrca'];
 							$intervalo = strtotime($data2)-strtotime($data1); 
 							$dias = floor($intervalo / (60 * 60 * 24));
 							$data['orcatrata']['PrazoEntrega'] = $dias;
-						}			
+						}
+			
 						$data['orcatrata']['ValorFatura'] = $data['orcatrata']['ValorFinalOrca'];
 						
 						if($data['orcatrata']['AVAP'] == "O" && ($data['orcatrata']['FormaPagamento'] == "1" || $data['orcatrata']['FormaPagamento'] == "2" || $data['orcatrata']['FormaPagamento'] == "3")){
@@ -11568,19 +11604,24 @@ class Orcatrata extends CI_Controller {
 						
 						$data['orcatrata']['ValorFinalOrca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFinalOrca']));
 						$data['orcatrata']['SubValorFinal'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['SubValorFinal']));
-					
 
+						if($data['orcatrata']['Entrega_Orca'] == "N"){
+							$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
+							$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
+							$data['orcatrata']['PrazoProdServ'] = 0;
+							$data['orcatrata']['PrazoCorreios'] = 0;
+							$data['orcatrata']['PrazoEntrega'] = 0;
+						}
 						
-						if ($data['orcatrata']['PrazoEntrega']){
-							$data['orcatrata']['PrazoEntrega'] = $data['orcatrata']['PrazoEntrega'];
-						}else{
+						if (!$data['orcatrata']['PrazoEntrega']){
 							//$data1 = date('Y-m-d', time());
 							$data1 = $data['orcatrata']['DataOrca'];
 							$data2 = $data['orcatrata']['DataEntregaOrca'];
 							$intervalo = strtotime($data2)-strtotime($data1); 
 							$dias = floor($intervalo / (60 * 60 * 24));
 							$data['orcatrata']['PrazoEntrega'] = $dias;
-						}			
+						}
+
 						$data['orcatrata']['ValorFatura'] = $data['orcatrata']['ValorFinalOrca'];
 						
 						if($data['orcatrata']['AVAP'] == "O" && ($data['orcatrata']['FormaPagamento'] == "1" || $data['orcatrata']['FormaPagamento'] == "2" || $data['orcatrata']['FormaPagamento'] == "3")){
@@ -13473,7 +13514,7 @@ class Orcatrata extends CI_Controller {
 
 					if($data['orcatrata']['Entrega_Orca'] == "N"){
 						$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
-						$data['orcatrata']['HoraEntregaOrca'] = "00:00:00";
+						$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
 						$data['orcatrata']['PrazoProdServ'] = 0;
 						$data['orcatrata']['PrazoCorreios'] = 0;
 						$data['orcatrata']['PrazoEntrega'] = 0;
@@ -15271,7 +15312,7 @@ class Orcatrata extends CI_Controller {
 
 						if($data['orcatrata']['Entrega_Orca'] == "N"){
 							$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
-							$data['orcatrata']['HoraEntregaOrca'] = "00:00:00";
+							$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
 							$data['orcatrata']['PrazoProdServ'] = 0;
 							$data['orcatrata']['PrazoCorreios'] = 0;
 							$data['orcatrata']['PrazoEntrega'] = 0;
