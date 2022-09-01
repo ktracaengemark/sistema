@@ -4294,6 +4294,7 @@ class Orcatrata extends CI_Controller {
 			}
 			$data['count']['SCount'] = $j - 1;
 			*/
+			
 			$j = 1;
 			for ($i = 1; $i <= $data['count']['SCount']; $i++) {
 
@@ -12755,6 +12756,7 @@ class Orcatrata extends CI_Controller {
 			}
 			$data['count']['SCount'] = $j - 1;
 			*/
+			
 			$j = 1;
 			for ($i = 1; $i <= $data['count']['SCount']; $i++) {
 
@@ -12936,6 +12938,7 @@ class Orcatrata extends CI_Controller {
 			//$data['valortotalorca'] = str_replace(',', '.', $data['orcatrata']['ValorFinalOrca']);
 			$data['valortotalorca'] = str_replace(',', '.', str_replace('.', '', $data['orcatrata']['ValorFinalOrca']));
 			$data['valortotalorca'] = floatval ($data['valortotalorca']);
+			
 			$data['somatotal'] = 0;
 			
 			if ($data['valortotalorca'] > 0.00 && $data['orcatrata']['QtdParcelasOrca'] >=1) {
@@ -13467,9 +13470,16 @@ class Orcatrata extends CI_Controller {
 					$data['orcatrata']['id_Funcionario'] 	= $_SESSION['log']['idSis_Usuario'];
 					$data['orcatrata']['id_Associado'] 		= 0;
 					$data['orcatrata']['idTab_Modulo'] 		= $_SESSION['log']['idTab_Modulo'];
-					if ($data['orcatrata']['PrazoEntrega']){
-						$data['orcatrata']['PrazoEntrega'] = $data['orcatrata']['PrazoEntrega'];
-					}else{
+
+					if($data['orcatrata']['Entrega_Orca'] == "N"){
+						$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
+						$data['orcatrata']['HoraEntregaOrca'] = "00:00:00";
+						$data['orcatrata']['PrazoProdServ'] = 0;
+						$data['orcatrata']['PrazoCorreios'] = 0;
+						$data['orcatrata']['PrazoEntrega'] = 0;
+					}
+					
+					if (!$data['orcatrata']['PrazoEntrega']){
 						//$data1 = date('Y-m-d', time());
 						$data1 = $data['orcatrata']['DataOrca'];
 						$data2 = $data['orcatrata']['DataEntregaOrca'];
@@ -13477,6 +13487,7 @@ class Orcatrata extends CI_Controller {
 						$dias = floor($intervalo / (60 * 60 * 24));
 						$data['orcatrata']['PrazoEntrega'] = $dias;
 					}
+					
 					if($data['orcatrata']['UsarCupom'] == "S"){
 						$data['orcatrata']['TipoDescOrca'] = $data['cadastrar']['UsarE'];
 						if($data['cadastrar']['ValidaCupom'] == 0 || !$data['orcatrata']['Cupom'] || empty($data['orcatrata']['Cupom'])){
@@ -13490,14 +13501,7 @@ class Orcatrata extends CI_Controller {
 					$data['orcatrata']['ComissaoFunc'] = 0;
 					$data['orcatrata']['ValorComissaoFunc'] = 0;
 					$data['orcatrata']['ValorComissaoAssoc'] = 0;
-					
-					/*
-					echo "<pre>";
-					echo '<br>';
-					print_r($data['orcatrata']['ValorComissao']);
-					echo "</pre>";
-					exit ();			
-					*/
+
 					$data['orcatrata']['idApp_OrcaTrata'] = $this->Orcatrata_model->set_orcatrata($data['orcatrata']);
 					
 					if ($data['orcatrata']['idApp_OrcaTrata'] === FALSE) {
@@ -15264,10 +15268,16 @@ class Orcatrata extends CI_Controller {
 						#$data['orcatrata']['idSis_Empresa'] = $_SESSION['log']['idSis_Empresa'];
 						#$data['orcatrata']['idSis_Usuario'] = $_SESSION['log']['idSis_Usuario'];
 						#$data['orcatrata']['idTab_Modulo'] = $_SESSION['log']['idTab_Modulo'];
+
+						if($data['orcatrata']['Entrega_Orca'] == "N"){
+							$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
+							$data['orcatrata']['HoraEntregaOrca'] = "00:00:00";
+							$data['orcatrata']['PrazoProdServ'] = 0;
+							$data['orcatrata']['PrazoCorreios'] = 0;
+							$data['orcatrata']['PrazoEntrega'] = 0;
+						}
 						
-						if ($data['orcatrata']['PrazoEntrega']){
-							$data['orcatrata']['PrazoEntrega'] = $data['orcatrata']['PrazoEntrega'];
-						}else{
+						if (!$data['orcatrata']['PrazoEntrega']){
 							//$data1 = date('Y-m-d', time());
 							$data1 = $data['orcatrata']['DataOrca'];
 							$data2 = $data['orcatrata']['DataEntregaOrca'];
@@ -15275,7 +15285,7 @@ class Orcatrata extends CI_Controller {
 							$dias = floor($intervalo / (60 * 60 * 24));
 							$data['orcatrata']['PrazoEntrega'] = $dias;
 						}
-						
+
 						if($_SESSION['Orcatrata']['UsarCupom'] == "N"){
 							if($data['orcatrata']['UsarCupom'] == "S"){
 								$data['orcatrata']['TipoDescOrca'] = $data['cadastrar']['UsarE'];
