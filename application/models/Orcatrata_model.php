@@ -1050,6 +1050,13 @@ class Orcatrata_model extends CI_Model {
         return $query;
     }
 		
+    public function get_produto_contagem($data) {
+		$query = $this->db->query('SELECT idApp_Produto FROM App_Produto WHERE idApp_OrcaTrata = ' . $data . '');
+        $query = $query->result_array();
+
+        return $query;
+    }
+			
     public function get_produto_posterior($data) {
 		$query = $this->db->query('SELECT * FROM App_Produto WHERE idApp_OrcaTrata = ' . $data . ' AND ConcluidoProduto = "N"');
         $query = $query->result_array();

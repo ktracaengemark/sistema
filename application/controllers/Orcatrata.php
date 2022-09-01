@@ -1158,7 +1158,7 @@ class Orcatrata extends CI_Controller {
 
 							if($data['orcatrata']['Entrega_Orca'] == "N"){
 								$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
-								$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
+								$data['orcatrata']['HoraEntregaOrca'] = "00:00:00";
 								$data['orcatrata']['PrazoProdServ'] = 0;
 								$data['orcatrata']['PrazoCorreios'] = 0;
 								$data['orcatrata']['PrazoEntrega'] = 0;
@@ -1587,7 +1587,15 @@ class Orcatrata extends CI_Controller {
 									}
 									$data['procedimento']['idApp_Procedimento'] = $this->Orcatrata_model->set_procedimento($data['procedimento']);
 								}
-								
+						
+								$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_contagem($data['orcatrata']['idApp_OrcaTrata']);
+								if (isset($data['update']['produto']['posterior'])){
+									$max_produto = count($data['update']['produto']['posterior']);
+									if($max_produto > 0){
+										$data['orcatrata']['Prd_Srv_Orca'] = "S";
+									}
+								}
+						
 								$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_posterior($data['orcatrata']['idApp_OrcaTrata']);
 								if (isset($data['update']['produto']['posterior'])){
 									$max_produto = count($data['update']['produto']['posterior']);
@@ -3369,7 +3377,7 @@ class Orcatrata extends CI_Controller {
 
 						if($data['orcatrata']['Entrega_Orca'] == "N"){
 							$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
-							$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
+							$data['orcatrata']['HoraEntregaOrca'] = "00:00:00";
 							$data['orcatrata']['PrazoProdServ'] = 0;
 							$data['orcatrata']['PrazoCorreios'] = 0;
 							$data['orcatrata']['PrazoEntrega'] = 0;
@@ -3815,6 +3823,14 @@ class Orcatrata extends CI_Controller {
 
 								}
 								$data['procedimento']['idApp_Procedimento'] = $this->Orcatrata_model->set_procedimento($data['procedimento']);
+							}
+						
+							$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_contagem($data['orcatrata']['idApp_OrcaTrata']);
+							if (isset($data['update']['produto']['posterior'])){
+								$max_produto = count($data['update']['produto']['posterior']);
+								if($max_produto > 0){
+									$data['orcatrata']['Prd_Srv_Orca'] = "S";
+								}
 							}
 							
 							$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_posterior($data['orcatrata']['idApp_OrcaTrata']);
@@ -5051,7 +5067,7 @@ class Orcatrata extends CI_Controller {
 
 					if($data['orcatrata']['Entrega_Orca'] == "N"){
 						$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
-						$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
+						$data['orcatrata']['HoraEntregaOrca'] = "00:00:00";
 						$data['orcatrata']['PrazoProdServ'] = 0;
 						$data['orcatrata']['PrazoCorreios'] = 0;
 						$data['orcatrata']['PrazoEntrega'] = 0;
@@ -5539,6 +5555,15 @@ class Orcatrata extends CI_Controller {
 							}
 						}
 						*/
+						
+						$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_contagem($data['orcatrata']['idApp_OrcaTrata']);
+						if (isset($data['update']['produto']['posterior'])){
+							$max_produto = count($data['update']['produto']['posterior']);
+							if($max_produto > 0){
+								$data['orcatrata']['Prd_Srv_Orca'] = "S";
+							}
+						}
+						
 						$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_posterior($data['orcatrata']['idApp_OrcaTrata']);
 						if (isset($data['update']['produto']['posterior'])){
 							$max_produto = count($data['update']['produto']['posterior']);
@@ -7251,7 +7276,7 @@ class Orcatrata extends CI_Controller {
 
 							if($data['orcatrata']['Entrega_Orca'] == "N"){
 								$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
-								$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
+								$data['orcatrata']['HoraEntregaOrca'] = "00:00:00";
 								$data['orcatrata']['PrazoProdServ'] = 0;
 								$data['orcatrata']['PrazoCorreios'] = 0;
 								$data['orcatrata']['PrazoEntrega'] = 0;
@@ -7912,6 +7937,14 @@ class Orcatrata extends CI_Controller {
 										$data['orcatrata']['ValorComissaoFunc'] += $data['update']['produto']['atual'][$j]['ValorComissaoFuncionario'];
 										$data['orcatrata']['ValorComissaoAssoc'] += $data['update']['produto']['atual'][$j]['ValorComissaoAssociado'];
 									}
+								}
+							}
+						
+							$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_contagem($data['orcatrata']['idApp_OrcaTrata']);
+							if (isset($data['update']['produto']['posterior'])){
+								$max_produto = count($data['update']['produto']['posterior']);
+								if($max_produto > 0){
+									$data['orcatrata']['Prd_Srv_Orca'] = "S";
 								}
 							}
 							
@@ -9465,7 +9498,7 @@ class Orcatrata extends CI_Controller {
 
 						if($data['orcatrata']['Entrega_Orca'] == "N"){
 							$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
-							$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
+							$data['orcatrata']['HoraEntregaOrca'] = "00:00:00";
 							$data['orcatrata']['PrazoProdServ'] = 0;
 							$data['orcatrata']['PrazoCorreios'] = 0;
 							$data['orcatrata']['PrazoEntrega'] = 0;
@@ -10138,6 +10171,14 @@ class Orcatrata extends CI_Controller {
 									$data['orcatrata']['ValorComissaoFunc'] += $data['update']['produto']['atual'][$j]['ValorComissaoFuncionario'];
 									$data['orcatrata']['ValorComissaoAssoc'] += $data['update']['produto']['atual'][$j]['ValorComissaoAssociado'];
 								}
+							}
+						}
+						
+						$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_contagem($data['orcatrata']['idApp_OrcaTrata']);
+						if (isset($data['update']['produto']['posterior'])){
+							$max_produto = count($data['update']['produto']['posterior']);
+							if($max_produto > 0){
+								$data['orcatrata']['Prd_Srv_Orca'] = "S";
 							}
 						}
 						
@@ -11607,7 +11648,7 @@ class Orcatrata extends CI_Controller {
 
 						if($data['orcatrata']['Entrega_Orca'] == "N"){
 							$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
-							$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
+							$data['orcatrata']['HoraEntregaOrca'] = "00:00:00";
 							$data['orcatrata']['PrazoProdServ'] = 0;
 							$data['orcatrata']['PrazoCorreios'] = 0;
 							$data['orcatrata']['PrazoEntrega'] = 0;
@@ -12224,7 +12265,15 @@ class Orcatrata extends CI_Controller {
 								}
 							}
 						}
-							
+						
+						$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_contagem($data['orcatrata']['idApp_OrcaTrata']);
+						if (isset($data['update']['produto']['posterior'])){
+							$max_produto = count($data['update']['produto']['posterior']);
+							if($max_produto > 0){
+								$data['orcatrata']['Prd_Srv_Orca'] = "S";
+							}
+						}
+						
 						$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_posterior($data['orcatrata']['idApp_OrcaTrata']);
 						if (isset($data['update']['produto']['posterior'])){
 							$max_produto = count($data['update']['produto']['posterior']);
@@ -13514,7 +13563,7 @@ class Orcatrata extends CI_Controller {
 
 					if($data['orcatrata']['Entrega_Orca'] == "N"){
 						$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
-						$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
+						$data['orcatrata']['HoraEntregaOrca'] = "00:00:00";
 						$data['orcatrata']['PrazoProdServ'] = 0;
 						$data['orcatrata']['PrazoCorreios'] = 0;
 						$data['orcatrata']['PrazoEntrega'] = 0;
@@ -13912,6 +13961,15 @@ class Orcatrata extends CI_Controller {
 							}
 						}
 						*/
+						
+						$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_contagem($data['orcatrata']['idApp_OrcaTrata']);
+						if (isset($data['update']['produto']['posterior'])){
+							$max_produto = count($data['update']['produto']['posterior']);
+							if($max_produto > 0){
+								$data['orcatrata']['Prd_Srv_Orca'] = "S";
+							}
+						}
+						
 						$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_posterior($data['orcatrata']['idApp_OrcaTrata']);
 						if (isset($data['update']['produto']['posterior'])){
 							$max_produto = count($data['update']['produto']['posterior']);
@@ -15312,7 +15370,7 @@ class Orcatrata extends CI_Controller {
 
 						if($data['orcatrata']['Entrega_Orca'] == "N"){
 							$data['orcatrata']['DataEntregaOrca'] = $data['orcatrata']['DataOrca'];
-							$data['orcatrata']['HoraEntregaOrca'] = $data['orcatrata']['HoraOrca'];
+							$data['orcatrata']['HoraEntregaOrca'] = "00:00:00";
 							$data['orcatrata']['PrazoProdServ'] = 0;
 							$data['orcatrata']['PrazoCorreios'] = 0;
 							$data['orcatrata']['PrazoEntrega'] = 0;
@@ -15931,6 +15989,14 @@ class Orcatrata extends CI_Controller {
 							if (count($data['update']['procedimento']['excluir']))
 								$data['update']['procedimento']['bd']['excluir'] = $this->Orcatrata_model->delete_procedimento($data['update']['procedimento']['excluir']);
 
+						}
+						
+						$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_contagem($data['orcatrata']['idApp_OrcaTrata']);
+						if (isset($data['update']['produto']['posterior'])){
+							$max_produto = count($data['update']['produto']['posterior']);
+							if($max_produto > 0){
+								$data['orcatrata']['Prd_Srv_Orca'] = "S";
+							}
 						}
 						
 						$data['update']['produto']['posterior'] = $this->Orcatrata_model->get_produto_posterior($data['orcatrata']['idApp_OrcaTrata']);
