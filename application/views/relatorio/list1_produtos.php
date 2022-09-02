@@ -3,7 +3,7 @@
 			if($prod){
 				foreach ($prod as $row){
 				?>		
-				<div class="col-lg-4 col-md-4 mb-4">
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-4">
 					<div class="card h-100">
 						<!--<img class="img-responsive" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $row['Arquivo'] . ''; ?>">-->
 						<a href="<?php echo base_url() . 'produtos/alterarlogo/' . $row['idTab_Produto'] . ''; ?>"><img class="img-responsive" src="<?php echo base_url() . '../'.$_SESSION['log']['Site'].'/' . $_SESSION['Empresa']['idSis_Empresa'] . '/produtos/miniatura/' . $row['Arquivo'] . ''; ?>"></a>					 

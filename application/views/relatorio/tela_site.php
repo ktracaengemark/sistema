@@ -1,7 +1,7 @@
 <?php if ($msg) echo $msg; ?>
 <?php if ( !isset($evento) && isset($_SESSION['Empresa'] ) && isset($_SESSION['Documentos'] ) && isset($_SESSION['Produtos'] )) { ?>
-<div class="col-lg-2"></div>
-<div class="col-lg-8">
+<div class="col-lg-2 col-md-2 col-sm-1"></div>
+<div class="col-lg-8 col-md-8 col-sm-10 col-xs-12">
 	<div class="panel-body">
 		<h1 class="text-center">Site</h1>
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -26,16 +26,16 @@
 			<?php if (isset($list3)) echo $list3; ?>
 		</div>			
 		<hr class="botm-line">
-		<div class="col-md-12">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<h2 class="ser-title">Slides! (1902 x 448)px</h2>
-			<div class="col-md-12">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<a class="btn btn-info btn-block" href="<?php echo base_url() ?>relatorio/slides" role="button">
 					<span class="glyphicon glyphicon-edit"></span> Editar Slides
 				</a>
 			</div>	
 			<?php if (isset($list2)) echo $list2; ?>
 		</div>
-		<div class="col-md-12">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<h2 class="ser-title">A Empresa!</h2>
 			<a href="<?php echo base_url() . 'documentos/alterar_a_empresa/' . $query['idSis_Empresa'] . ''; ?>">
 				<h3>"<?php if (isset($query['AEmpresa'])) echo $query['AEmpresa']; ?>"</h3>
@@ -82,9 +82,9 @@
 			</div>
 		<?php } ?>	
 		<hr class="botm-line">
-		<div class="col-md-12">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<h2 class="ser-title">O que Fazemos! (300 x 300)px</h2>
-			<div class="col-md-12">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<a class="btn btn-info btn-block" href="<?php echo base_url() ?>relatorio/atuacao" role="button">
 					<span class="glyphicon glyphicon-edit"></span>Editar O que Fazemos
 				</a>
@@ -92,9 +92,9 @@
 			<?php if (isset($list7)) echo $list7; ?>
 		</div>
 		<hr class="botm-line">
-		<div class="col-md-12">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<h2 class="ser-title">Depoimentos! (300 x 300)px</h2>
-			<div class="col-md-12">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<a class="btn btn-info btn-block" href="<?php echo base_url() ?>relatorio/depoimento" role="button">
 					<span class="glyphicon glyphicon-edit"></span>Editar Depoimentos
 				</a>
@@ -102,9 +102,9 @@
 			<?php if (isset($list6)) echo $list6; ?>
 		</div>	
 		<hr class="botm-line">
-		<div class="col-md-12">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<h2 class="ser-title">Equipe! (300 x 300)px</h2>
-			<div class="col-md-12">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<a class="btn btn-info btn-block" href="<?php echo base_url() ?>relatorio/colaborador" role="button">
 					<span class="glyphicon glyphicon-edit"></span>Editar Equipe
 				</a>
