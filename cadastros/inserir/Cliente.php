@@ -59,7 +59,7 @@ $caracteres_sem_acento = array(
     'a'=>'a', 'î'=>'i', 'â'=>'a', 'ș'=>'s', 'ț'=>'t', 'A'=>'A', 'Î'=>'I', 'Â'=>'A', 'Ș'=>'S', 'Ț'=>'T',
 );
 
-$cliente1 = preg_replace("/[^a-zA-Z]/", " ", strtr($cliente0, $caracteres_sem_acento));
+$cliente1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($cliente0, $caracteres_sem_acento));
 $cliente = trim(mb_strtoupper($cliente1, 'ISO-8859-1'));
 
 $endereco1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($endereco0, $caracteres_sem_acento));

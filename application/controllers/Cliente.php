@@ -213,7 +213,7 @@ class Cliente extends CI_Controller {
 				'a'=>'a', 'î'=>'i', 'â'=>'a', '?'=>'s', '?'=>'t', 'A'=>'A', 'Î'=>'I', 'Â'=>'A', '?'=>'S', '?'=>'T',
 			);
 
-			$cliente1 = preg_replace("/[^a-zA-Z]/", " ", strtr($data['query']['NomeCliente'], $caracteres_sem_acento));		
+			$cliente1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($data['query']['NomeCliente'], $caracteres_sem_acento));		
 			
 			$endereco1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($data['query']['EnderecoCliente'], $caracteres_sem_acento));
 
@@ -999,7 +999,7 @@ class Cliente extends CI_Controller {
 				'a'=>'a', 'î'=>'i', 'â'=>'a', '?'=>'s', '?'=>'t', 'A'=>'A', 'Î'=>'I', 'Â'=>'A', '?'=>'S', '?'=>'T',
 			);
 
-			$cliente1 = preg_replace("/[^a-zA-Z]/", " ", strtr($data['query']['NomeCliente'], $caracteres_sem_acento));		
+			$cliente1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($data['query']['NomeCliente'], $caracteres_sem_acento));		
 			
 			$endereco1 = preg_replace("/[^a-zA-Z0-9]/", " ", strtr($data['query']['EnderecoCliente'], $caracteres_sem_acento));
 
